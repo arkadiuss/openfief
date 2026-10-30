@@ -10,7 +10,9 @@ import (
 // ErrUnknownTaxWrapper reports a TaxWrapper outside the declared constants.
 var ErrUnknownTaxWrapper = errors.New("unknown tax wrapper")
 
-// TaxWrapper is the tax regime of the account a lot is held in.
+// TaxWrapper is the tax regime of an account (D-76): a standard taxable
+// account, IKE, IKZE or OKI. Its text form, String, is the account's
+// jurisdiction.Wrapper.
 type TaxWrapper int
 
 const (
@@ -24,10 +26,44 @@ const (
 	IKE
 	// IKZE is an individual retirement security account; no Belka tax is
 	// withheld inside it and, as for IKE, no early-redemption fee is charged
-	// on a withdrawal. The flat tax on IKZE withdrawals applies to the whole
-	// account, not per bond, and is not part of a bond's value.
+	// on a withdrawal. Its withdrawals are taxed on their whole amount
+	// instead (IKZEExitRate, and the owner's marginal rate before 65, D-78).
 	IKZE
+	// OKI is a personal investment account (osobiste konto inwestycyjne,
+	// D-76): no Belka tax is due inside it; a yearly tax on the part of the
+	// average balance above the act's limit replaces it (OKIAct). The issue
+	// letters waive the early-redemption fee for IKE and IKZE only, so an
+	// OKI's bonds pay it.
+	OKI
 )
+
+// TaxWrappers returns the Polish tax wrappers, the default (Taxable) first.
+func TaxWrappers() []TaxWrapper { return []TaxWrapper{Taxable, IKE, IKZE, OKI} }
+
+// String returns the wrapper's key: taxable, ike, ikze or oki.
+func (w TaxWrapper) String() string {
+	switch w {
+	case Taxable:
+		return "taxable"
+	case IKE:
+		return "ike"
+	case IKZE:
+		return "ikze"
+	case OKI:
+		return "oki"
+	}
+	return fmt.Sprintf("TaxWrapper(%d)", int(w))
+}
+
+// ParseTaxWrapper parses a wrapper's key as String writes it.
+func ParseTaxWrapper(key string) (TaxWrapper, error) {
+	for _, w := range TaxWrappers() {
+		if w.String() == key {
+			return w, nil
+		}
+	}
+	return 0, fmt.Errorf("%w: %q", ErrUnknownTaxWrapper, key)
+}
 
 // BelkaRate returns the 19% flat tax rate on interest and discount of
 // securities (art. 30a ust. 1 pkt 2 of the PIT act: "z odsetek i dyskonta od
@@ -43,7 +79,7 @@ func BelkaRate() kernel.Decimal {
 
 // BelkaTax returns the Belka tax withheld from interest earned in wrapper:
 // 19% of interest, rounded half up to whole grosze; zero when interest is not
-// positive or inside IKE and IKZE.
+// positive or inside IKE, IKZE and OKI.
 //
 // The rounding follows the issuer's worked examples, which disagree with the
 // statute's wording. Art. 63 § 1a of the tax ordinance (t.j. Dz. U. z 2026 r.
@@ -64,19 +100,25 @@ func BelkaTax(interest kernel.Money, wrapper TaxWrapper) (kernel.Money, error) {
 
 func belkaTax(interest kernel.Decimal, wrapper TaxWrapper) (kernel.Decimal, error) {
 	switch wrapper {
-	case IKE, IKZE:
+	case IKE, IKZE, OKI:
 		return kernel.Decimal{}, nil
 	case Taxable:
-		if interest.Sign() <= 0 {
-			return kernel.Decimal{}, nil
-		}
-		tax, err := interest.Mul(BelkaRate()).Round(grosze, kernel.RoundHalfUp)
-		if err != nil {
-			return kernel.Decimal{}, fmt.Errorf("belka tax: %w", err)
-		}
-		return tax, nil
+		return taxAt(interest, BelkaRate())
 	}
 	return kernel.Decimal{}, fmt.Errorf("%w: %d", ErrUnknownTaxWrapper, wrapper)
+}
+
+// taxAt returns rate of base, rounded half up to whole grosze, and zero
+// when base is not positive.
+func taxAt(base, rate kernel.Decimal) (kernel.Decimal, error) {
+	if base.Sign() <= 0 {
+		return kernel.Decimal{}, nil
+	}
+	tax, err := base.Mul(rate).Round(grosze, kernel.RoundHalfUp)
+	if err != nil {
+		return kernel.Decimal{}, fmt.Errorf("tax at %s: %w", rate, err)
+	}
+	return tax, nil
 }
 
 // TaxRateCutoff returns the latest date whose NBP table A rate may convert

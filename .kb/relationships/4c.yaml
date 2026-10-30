@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69cd7104d466
+  - type: implements
+    from: SYM-views-app-views-accounts-in
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:18:45.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f375cdb2539c
+  - type: covered_by
+    from: SYM-views-app-views-accounts-in
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:45.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49b86dd9bded

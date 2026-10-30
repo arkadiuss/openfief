@@ -132,13 +132,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f801b722977
-  - type: implements
-    from: SYM-core-command
-    to: REQ-core-config
-    created_at: 2026-10-28T14:33:33.952Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9adb726ee628
   - type: covered_by
     from: SYM-core-command
     to: TEST-core-unit
@@ -216,13 +209,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d5c2a09591d
-  - type: implements
-    from: SYM-ui-account-row
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:53:50.627Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f9efbff20c42
   - type: implements
     from: SYM-ui-account-row
     to: REQ-decision-d36-7-ui-valuation-status
@@ -356,6 +342,69 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5deb44fde4d
+  - type: constrains
+    from: REQ-valuation-account-terms-inputs
+    to: FACT-SUBJECT-CC4B465E3F9D6625
+    created_at: 2026-10-29T21:49:10.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4406e927a711
+  - type: requires_property
+    from: REQ-valuation-account-terms-inputs
+    to: FACT-PROP-A1207CFAC2288C44
+    created_at: 2026-10-29T21:49:10.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dfa2d2dbc5b
+  - type: specified_by
+    from: REQ-valuation-account-terms-inputs
+    to: SCEN-valuation-account-terms-inputs
+    created_at: 2026-10-29T21:49:10.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4a67d0cfbd2
+  - type: implements
+    from: SYM-core-command
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:53:09.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2225ad380d7
+  - type: implements
+    from: SYM-ingestv1-fee-rule-get-minimum
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:13:41.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bd7e81b1800
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule-get-minimum
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:13:41.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84004941232b
+  - type: implements
+    from: SYM-views-app-views-value-settings
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:18:24.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bf48ede4e18
+  - type: implements
+    from: SYM-views-app-views-value-settings
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:18:24.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b429b78443
+  - type: covered_by
+    from: SYM-views-app-views-value-settings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:18:24.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-543c0683cd2a
   - type: implements
     from: SYM-exp-identity-kube-core-access-allowed-origins
     to: REQ-identity-enroll-origin
@@ -370,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d59e0f1a0c80
+  - type: implements
+    from: SYM-ui-account-row
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:40:19.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f17d016097

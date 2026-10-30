@@ -307,6 +307,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e37bbc984e7c
+  - type: constrains
+    from: REQ-core-bond-lot-service
+    to: FACT-SUBJECT-6166007EBA87AC71
+    created_at: 2026-10-29T23:10:41.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d3155c698b3
+  - type: requires_property
+    from: REQ-core-bond-lot-service
+    to: FACT-PROP-58E2B3EAFBDC19CA
+    created_at: 2026-10-29T23:10:41.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d357cbb000c8
   - type: specified_by
     from: REQ-core-bond-lot-service
     to: SCEN-core-bond-lot-service
@@ -419,17 +433,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ef9c3f2f988
-  - type: constrains
-    from: REQ-core-bond-lot-service
-    to: FACT-SUBJECT-6166007EBA87AC71
-    created_at: 2026-10-29T23:10:41.404Z
+  - type: implements
+    from: SYM-jurisdiction-fee-rule-validate
+    to: REQ-jurisdiction-fee-rule-sale-cost
+    created_at: 2026-10-29T22:01:06.302Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-3d3155c698b3
-  - type: requires_property
-    from: REQ-core-bond-lot-service
-    to: FACT-PROP-58E2B3EAFBDC19CA
-    created_at: 2026-10-29T23:10:41.456Z
+    id: rel-a04c90d13ebb
+  - type: implements
+    from: SYM-jurisdiction-fee-rule-validate
+    to: REQ-valuation-sale-fee-rule
+    created_at: 2026-10-29T22:01:06.345Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-d357cbb000c8
+    id: rel-64437184738d
+  - type: covered_by
+    from: SYM-jurisdiction-fee-rule-validate
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:06.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ff6d901198b
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-fee-rule
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:14:20.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62d1a73b5fcd
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-get-fee-rule
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:14:21.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88e7e2328af5
+  - type: implements
+    from: SYM-views-cash-value
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:25:05.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f86b09495402
+  - type: implements
+    from: SYM-views-cash-value
+    to: REQ-pl-ikze-liquidation-missing
+    created_at: 2026-10-30T01:25:05.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82264b9e70ed
+  - type: covered_by
+    from: SYM-views-cash-value
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:05.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9bec4a885d3
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-settings-set-marginal-rate
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:03:59.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f27d319f9b32

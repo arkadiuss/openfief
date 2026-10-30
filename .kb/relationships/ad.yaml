@@ -615,3 +615,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b34181f21ae1
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-average
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:31:01.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a60e1a74f15
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-average
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:31:01.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c685ac43c297
+  - type: implements
+    from: SYM-ui-is-zero
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T03:03:02.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-906eb796cd4b
+  - type: covered_by
+    from: SYM-ui-is-zero
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:03:02.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f3dd7e90e8b
+  - type: executable_for
+    from: SYM-ui-test-overview-three-values
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:04:17.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47b060c31df4
+  - type: verified_by
+    from: SCEN-ui-model-portfolio
+    to: TEST-ui-format
+    created_at: 2026-10-30T03:45:15.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bf78db5255f

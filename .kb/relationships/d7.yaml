@@ -454,3 +454,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff24b31846fe
+  - type: executable_for
+    from: SYM-pl-test-helper-values-case
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:37.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6155b8d26520
+  - type: executable_for
+    from: SYM-core-test-helper-settings-api
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:08:40.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e1bd7655d8e
+  - type: implements
+    from: SYM-views-app-default-number-format
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:17:56.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19f22486b7a1
+  - type: covered_by
+    from: SYM-views-app-default-number-format
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:17:56.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4361d8afa37
+  - type: implements
+    from: SYM-views-connectapi-pb-yearly-tax
+    to: REQ-views-settings
+    created_at: 2026-10-30T01:21:58.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08bf1be1976a
+  - type: implements
+    from: SYM-views-connectapi-pb-yearly-tax
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-30T01:21:58.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48229e19f10a
+  - type: covered_by
+    from: SYM-views-connectapi-pb-yearly-tax
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:21:58.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a23370acc8e
+  - type: executable_for
+    from: SYM-views-connectapi-test-values-over-rest
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:22:48.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a519b7ed966e
+  - type: implements
+    from: SYM-viewsv1-list-yearly-taxes-response
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:36:32.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac7ea22acc04
+  - type: covered_by
+    from: SYM-viewsv1-list-yearly-taxes-response
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:36:32.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-598c7f680d37

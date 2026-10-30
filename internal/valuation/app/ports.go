@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -35,9 +36,29 @@ type Inputs interface {
 	// BondTerms returns the series terms of the retail treasury bond with
 	// isin, and false when isin is not a bond with stored terms.
 	BondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms, bool, error)
-	// TaxWrapper returns account's tax wrapper: pl.Taxable unless one was
+	AccountTermsReader
+	SettingsReader
+}
+
+// AccountTermsReader reads what an account's values depend on besides its
+// holdings (D-76, D-78).
+type AccountTermsReader interface {
+	// TaxWrapper returns account's recorded tax wrapper, and false when none
+	// was recorded: the pack's default wrapper applies then.
+	TaxWrapper(ctx context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error)
+	// FeeRule returns account's fee rule: the zero rule unless one was
 	// recorded.
-	TaxWrapper(ctx context.Context, account ledger.AccountID) (pl.TaxWrapper, error)
+	FeeRule(ctx context.Context, account ledger.AccountID) (jurisdiction.FeeRule, error)
+}
+
+// SettingsReader reads the owner's settings.
+type SettingsReader interface {
+	// ValueSettings returns the owner's settings the values need (D-78):
+	// the marginal income tax rate, unset until the owner enters it.
+	ValueSettings(ctx context.Context) (jurisdiction.Settings, error)
+	// NumberFormat returns the owner's number format (D-113), and false
+	// when the owner has not chosen one: the pack's default applies then.
+	NumberFormat(ctx context.Context) (jurisdiction.NumberFormat, bool, error)
 }
 
 // ValuationStore stores valuations and each account's valued-through date.
@@ -72,12 +93,27 @@ type Recorder interface {
 	SaveIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error
 	// SaveBondTerms upserts the series terms of the bond with isin.
 	SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, revals []valuation.Revaluation) error
-	// SaveTaxWrapper records account's tax wrapper.
-	SaveTaxWrapper(ctx context.Context, account ledger.AccountID, wrapper pl.TaxWrapper, revals []valuation.Revaluation) error
-	// SaveBondBasis records the configured bond basis and, only when it
-	// differs from the one recorded before, enqueues revals. It reports
-	// whether it enqueued them.
-	SaveBondBasis(ctx context.Context, basis valuation.Basis, revals []valuation.Revaluation) (bool, error)
 	// Enqueue enqueues revals.
 	Enqueue(ctx context.Context, revals []valuation.Revaluation) error
+	TermsRecorder
+}
+
+// TermsRecorder stores the accounts' terms, the owner's settings and the
+// rules version, each with the revaluations it causes in one database
+// transaction (D-36).
+type TermsRecorder interface {
+	// SaveTaxWrapper records account's tax wrapper.
+	SaveTaxWrapper(ctx context.Context, account ledger.AccountID, wrapper jurisdiction.Wrapper, revals []valuation.Revaluation) error
+	// SaveFeeRule records account's fee rule.
+	SaveFeeRule(ctx context.Context, account ledger.AccountID, rule *jurisdiction.FeeRule, revals []valuation.Revaluation) error
+	// SaveMarginalRate records the owner's marginal income tax rate.
+	SaveMarginalRate(ctx context.Context, rate kernel.Decimal, revals []valuation.Revaluation) error
+	// SaveNumberFormat records the owner's number format. No value depends
+	// on it, so it causes no revaluation.
+	SaveNumberFormat(ctx context.Context, format jurisdiction.NumberFormat) error
+	// SaveRulesVersion records the version of the jurisdiction pack's rules
+	// the stored values were computed under and, only when it differs from
+	// the one recorded before, enqueues revals. It reports whether it
+	// enqueued them.
+	SaveRulesVersion(ctx context.Context, version string, revals []valuation.Revaluation) (bool, error)
 }

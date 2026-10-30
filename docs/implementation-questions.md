@@ -84,3 +84,20 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Problem:* D-64 (amended) derives a bond's symbol from the plugin instance and the series code, so two installs sharing one Ghostfolio never collide. Ghostfolio's symbols are unique across all its users, and two installs can name their instances alike (an install names an instance after the plugin's catalog name unless told otherwise); then they would collide. D-108's fee asset per currency has the same problem.
    - *Today:* both symbols are UUIDs derived from the instance's name, the Ghostfolio user's ID and the series code or currency. Two instances writing to the same Ghostfolio user still meet in Ghostfolio's name-based reuse of `MANUAL` assets, which the dry run catches.
    - *Options:* keep; or the instance's name alone, as D-64 says; or a per-install ID, which a plugin can't read today.
+
+## Values
+
+14. **OKI's act: its in-force date, limit and rate.**
+   - *Problem:* D-76 computes OKI's yearly tax "only once the act is in force, with the limit and rate taken from the act". The code knows no act in force, nor its numbers, and doesn't know how a year the act enters mid-way is counted, or whether the average balance is taken over every calendar day or only the days with a valuation.
+   - *Today:* `pl.OKIAct` holds the in-force date, the limit and the rate as data, and `pl.CurrentOKIAct` is not in force (no date), so no tax is ever computed and the read API says so. Under an act, the tax would be the rate of the part above the limit of the average of the daily balances (gross values with cash, summed over every OKI account) of the days of the year on or after the in-force date that are valued, rounded half up to grosze.
+   - *Needed:* the act's in-force date, limit and rate, and how it defines the average balance; then `CurrentOKIAct` gets them.
+
+15. **How the taxes inside the values are counted.**
+   - *Problem:* D-77 has the pack compute net and liquidation values "after the taxes due then", per holding. Polish tax counts gains per tax year over all disposals (PIT-38), rounds the base and the tax to whole złoty, and taxes a return from IKE on what is withdrawn above what was paid in.
+   - *Today:* each holding is taxed on its own gain over its open lots' cost, at 19%, rounded half up to grosze (as D-37 rounds bond interest), and a loss is untaxed but offsets nothing. An IKE's early return is taxed the same way per holding, so dividends and realized gains kept as cash in the IKE are not taxed in its liquidation value. IKZE's 10% exit tax and the owner's marginal rate before 65 apply to every holding and to cash, each rounded half up to grosze.
+   - *Options:* keep; or compute each account's taxes over its total (losses offsetting gains, IKE on payments in), which needs the account's contributions; or round as PIT-38 does.
+
+16. **What a sale's cost covers.**
+   - *Problem:* D-78's fee rule is "a percentage with a minimum, plus a currency-conversion percentage for instruments in a foreign currency". It doesn't say which currency the minimum is in, whether bonds, whose redemption costs no commission, pay it, or what foreign is relative to.
+   - *Today:* the minimum is an amount in any currency, converted at the FX rate of the valuation's day (a missing rate leaves the liquidation value missing); the commission applies to holdings priced at market only, not to bonds or cash; and foreign means priced in another currency than the pack's, PLN for Poland. The minimum applies to the commission alone, before the conversion percentage is added.
+   - *Options:* keep; or tie the minimum to the instrument's currency; or charge the conversion percentage on foreign cash too.

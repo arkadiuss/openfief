@@ -370,3 +370,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e90991656f18
+  - type: implements
+    from: SYM-ingest-app-accounts-check-terms
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:09:51.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32868e1a28d9
+  - type: implements
+    from: SYM-ingest-app-accounts-check-terms
+    to: REQ-valuation-sale-fee-rule-zero
+    created_at: 2026-10-29T23:09:51.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a067ce5eb8ff
+  - type: covered_by
+    from: SYM-ingest-app-accounts-check-terms
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:09:51.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f06bc406a905
+  - type: implements
+    from: SYM-views-app-marked-holdings
+    to: REQ-views-holdings-lots-mark
+    created_at: 2026-10-30T01:19:00.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f88f0cdaa40
+  - type: implements
+    from: SYM-views-app-marked-holdings
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:19:00.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f225c98d714
+  - type: covered_by
+    from: SYM-views-app-marked-holdings
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:00.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-368264882100

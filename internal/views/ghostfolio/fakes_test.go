@@ -141,7 +141,7 @@ func syntheticRecord() *fakeRecord {
 func bondValuation(day, value string) *viewsv1.Valuation {
 	return &viewsv1.Valuation{
 		Date: day, Instrument: &viewsv1.Instrument{Isin: isinPL, Symbol: "EDO0136"},
-		Basis: viewsv1.ValuationBasis_VALUATION_BASIS_NET_IF_REDEEMED, Source: "test", Value: pbMoney(value, "PLN"),
+		Basis: viewsv1.ValuationBasis_VALUATION_BASIS_GROSS_ACCRUED, Source: "test", Value: pbMoney(value, "PLN"),
 	}
 }
 

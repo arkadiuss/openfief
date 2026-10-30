@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f42f837dd0bd
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms-tax-wrapper
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:19:34.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d1024fbae05

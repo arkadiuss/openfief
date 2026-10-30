@@ -511,12 +511,40 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-3f65253a7cd4
   - type: implements
-    from: SYM-exp-core-listen
-    to: REQ-core-config
-    created_at: 2026-10-29T21:00:11.318Z
+    from: SYM-ingest-app-accounts-new-entry
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:09:44.577Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-e0389fd9c7b1
+    id: rel-6b1c3c138d98
+  - type: implements
+    from: SYM-ingest-app-accounts-new-entry
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:09:44.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e9f794eac02
+  - type: covered_by
+    from: SYM-ingest-app-accounts-new-entry
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:09:44.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a13ce6ca88fa
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-tax-wrapper
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:30.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18d3eb783455
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-tax-wrapper
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:30.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-326a127a2f5d
   - type: covered_by
     from: SYM-exp-core-listen
     to: TEST-core-unit
@@ -531,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e0a0b85d55d
+  - type: implements
+    from: SYM-exp-core-listen
+    to: REQ-core-serve-flags
+    created_at: 2026-10-30T02:09:57.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43685a025eec

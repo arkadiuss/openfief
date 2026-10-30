@@ -34,13 +34,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02eb732067ec
-  - type: implements
-    from: SYM-valuation-app-input-cache-bond-terms
-    to: REQ-valuation-bond-holding
-    created_at: 2026-10-28T07:34:40.544Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f7e65f20adc6
   - type: covered_by
     from: SYM-valuation-app-input-cache-bond-terms
     to: TEST-valuation-app-revalue
@@ -405,3 +398,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f315699fffde
+  - type: implements
+    from: SYM-valuation-app-input-cache-bond-terms
+    to: REQ-valuation-bond-holding-values
+    created_at: 2026-10-29T21:55:39.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-812a61f83f0d
+  - type: verified_by
+    from: SCEN-views-totals-with-cash
+    to: TEST-views-values
+    created_at: 2026-10-30T00:04:52.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f268fabaee
+  - type: verified_by
+    from: SCEN-views-totals-with-cash
+    to: TEST-views-app-values
+    created_at: 2026-10-30T00:04:52.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd9ae6ae9f8d
+  - type: verified_by
+    from: SCEN-views-totals-with-cash
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T00:04:52.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7edcc77d183
+  - type: implements
+    from: SYM-views-app-terms
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:17:18.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9c471fe9b65
+  - type: implements
+    from: SYM-views-app-terms
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T01:17:18.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53df84c89187
+  - type: covered_by
+    from: SYM-views-app-terms
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:17:18.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25cf7f6a512a
+  - type: verified_by
+    from: SCEN-views-totals-with-cash
+    to: TEST-views-valuation
+    created_at: 2026-10-30T02:13:04.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d55d0291b43

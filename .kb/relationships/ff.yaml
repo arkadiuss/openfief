@@ -475,3 +475,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1e080fd8cb5
+  - type: implements
+    from: SYM-valuation-postgres-optional-value
+    to: REQ-decision-d36-9-three-values-stored
+    created_at: 2026-10-29T22:13:41.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dcb9a5ae636
+  - type: covered_by
+    from: SYM-valuation-postgres-optional-value
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-29T22:13:41.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a657b627457
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-request-reset
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:15:28.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0ad5f9e6d4c
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-request-reset
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:15:28.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e355420f833

@@ -307,20 +307,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4457cea8cf80
-  - type: implements
-    from: SYM-ui-chart-data-encode
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:25.140Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d45e06e39d4c
-  - type: implements
-    from: SYM-ui-chart-data-encode
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:54:25.164Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-369e74d3ce59
   - type: covered_by
     from: SYM-ui-chart-data-encode
     to: TEST-ui-format
@@ -552,3 +538,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2231a6b12413
+  - type: implements
+    from: SYM-ingestv1-fee-rule-string
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:13:09.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d1d158f4392
+  - type: covered_by
+    from: SYM-ingestv1-fee-rule-string
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:13:09.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f90123983300
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-request-descriptor
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:19:54.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c930e837180
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-request-descriptor
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:19:54.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd482e655b1e
+  - type: implements
+    from: SYM-ui-chart-data-encode
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:39:28.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9a47f5c3da7
+  - type: implements
+    from: SYM-ui-chart-data-encode
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:42:10.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d07afd94987e

@@ -517,3 +517,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e185adca3d8
+  - type: constrains
+    from: REQ-views-settings
+    to: FACT-SUBJECT-32B414739B338134
+    created_at: 2026-10-30T00:05:28.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e091ceab02b
+  - type: requires_property
+    from: REQ-views-settings
+    to: FACT-PROP-EA490F19EF27EC22
+    created_at: 2026-10-30T00:05:28.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1290d4ec49dd
+  - type: specified_by
+    from: REQ-views-settings
+    to: SCEN-views-settings
+    created_at: 2026-10-30T00:05:28.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f2047dc4892

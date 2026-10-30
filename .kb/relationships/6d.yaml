@@ -489,3 +489,143 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-646151bc9972
+  - type: implements
+    from: SYM-jurisdiction-accrued
+    to: REQ-jurisdiction-in-process
+    created_at: 2026-10-29T22:03:56.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcd408d24e7a
+  - type: implements
+    from: SYM-jurisdiction-accrued
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:03:56.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd9ca331a3e8
+  - type: covered_by
+    from: SYM-jurisdiction-accrued
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:03:56.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1a6d5e7b0ee
+  - type: executable_for
+    from: SYM-views-test-removed-behind-lots
+    to: TEST-views-stale
+    created_at: 2026-10-30T01:24:11.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7b8f9d5ebe8
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-ui-three-values-tables
+    created_at: 2026-10-30T02:37:09.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8e287d166a3
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T02:37:09.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c42d0a0bd161
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-ui-value-chart-money-with-cash
+    created_at: 2026-10-30T02:37:09.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cacbcf01f9b0
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-ui-value-chart-value-switch
+    created_at: 2026-10-30T02:37:10.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b0e38e791a2
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-ui-value-performance-separate-charts
+    created_at: 2026-10-30T02:37:10.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cf203e8ef3c
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T02:37:10.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47166817d9f8
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:37:10.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7568b3276dd2
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-ui-charts-number-format
+    created_at: 2026-10-30T02:37:10.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-248174b78558
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-AUTO-718AA30AAFD0E6E8
+    created_at: 2026-10-30T02:37:10.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e78b2802a33
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-pl-ikze-liquidation-missing
+    created_at: 2026-10-30T02:37:10.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03971db20ad6
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T02:37:10.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-515b86cc5881
+  - type: implements
+    from: SYM-ui-terms-fields
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T02:57:36.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dc6b0b20157
+  - type: covered_by
+    from: SYM-ui-terms-fields
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:57:36.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-907cbe3d0f5d
+  - type: implements
+    from: SYM-ui-server-set-number-format
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T02:59:42.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-817b47653742
+  - type: implements
+    from: SYM-ui-server-set-number-format
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T02:59:42.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1078aa759336
+  - type: covered_by
+    from: SYM-ui-server-set-number-format
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:59:42.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8efb8ea8df0

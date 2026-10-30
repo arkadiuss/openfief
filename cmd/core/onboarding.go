@@ -23,11 +23,14 @@ func newSleeves(l *ledgerapp.Ledger, auth *identityapp.Auth, origins identity.Or
 }
 
 // newAccounts returns the owner's account entries (D-72, D-79) over d: the
-// ledger's accounts, and the ingest schema's connector bindings and broker
-// accounts.
-func newAccounts(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Accounts {
+// ledger's accounts, the ingest schema's connector bindings and broker
+// accounts, and terms, the accounts' tax wrappers and fee rules (D-76,
+// D-78) in the Polish pack.
+func newAccounts(d *connectorDeps, owners ingestapp.Owners, terms ingestapp.AccountTerms) *ingestapp.Accounts {
 	store := ingestpg.New(d.pool)
-	return &ingestapp.Accounts{Owners: owners, Ledger: d.ledger, Bindings: store, Brokers: store, Now: d.now}
+	return &ingestapp.Accounts{
+		Owners: owners, Ledger: d.ledger, Bindings: store, Brokers: store, Terms: terms, Pack: jurisdictionPack(), Now: d.now,
+	}
 }
 
 // withOnboardingServices returns h with the SleeveService and the

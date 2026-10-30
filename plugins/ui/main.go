@@ -97,6 +97,7 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		Sleeves:    portfoliov1connect.NewSleeveServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Accounts:   ingestv1connect.NewAccountServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		MarketData: valuationv1connect.NewMarketDataServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		Settings:   valuationv1connect.NewSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Read:       viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:        log,
 	})

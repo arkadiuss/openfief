@@ -41,13 +41,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fdce2c6207f8
-  - type: implements
-    from: SYM-valuation-bond-holding
-    to: REQ-valuation-bond-holding
-    created_at: 2026-10-28T07:32:19.609Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ca6216e3eeea
   - type: covered_by
     from: SYM-valuation-bond-holding
     to: TEST-valuation-revaluation
@@ -217,12 +210,26 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b5d8352567ac
   - type: implements
-    from: SYM-exp-core-close-all
-    to: REQ-core-config
-    created_at: 2026-10-29T21:00:21.436Z
+    from: SYM-valuation-bond-holding
+    to: REQ-valuation-bond-holding-values
+    created_at: 2026-10-29T21:56:03.569Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-758ddcd4ad6f
+    id: rel-34d6277d1576
+  - type: implements
+    from: SYM-viewsv1-date-total-get-cash-reporting
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:32:52.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d2a0628fd2
+  - type: covered_by
+    from: SYM-viewsv1-date-total-get-cash-reporting
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:32:52.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d921a602a2c1
   - type: covered_by
     from: SYM-exp-core-close-all
     to: TEST-core-unit
@@ -251,3 +258,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f7dab62f93e
+  - type: implements
+    from: SYM-exp-core-close-all
+    to: REQ-core-serve-flags
+    created_at: 2026-10-30T02:09:46.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecc61db122c1

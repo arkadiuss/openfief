@@ -295,13 +295,6 @@ relationships:
     id: rel-7efce2326d30
   - type: implements
     from: SYM-ui-allocation-view-link
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:03.738Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-17d949f96c3b
-  - type: implements
-    from: SYM-ui-allocation-view-link
     to: REQ-AUTO-68636F42D98D4CF7
     created_at: 2026-10-28T19:54:03.764Z
     created_by: kibi/upsert
@@ -538,3 +531,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50f2fe7de924
+  - type: verified_by
+    from: SCEN-valuation-owner-settings
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T21:48:03.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-995813613a7d
+  - type: implements
+    from: SYM-valuation-account-terms
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:16:09.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-180a596d303d
+  - type: implements
+    from: SYM-valuation-account-terms
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:16:09.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fec9dfdce16b
+  - type: covered_by
+    from: SYM-valuation-account-terms
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:16:09.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e004d8c36fc5
+  - type: implements
+    from: SYM-core-with-settings-service
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:08:33.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3170d6ea5e15
+  - type: implements
+    from: SYM-core-with-settings-service
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T23:08:33.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fa31c3f1fb0
+  - type: covered_by
+    from: SYM-core-with-settings-service
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:08:33.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-495dc52414ee
+  - type: implements
+    from: SYM-valuationv1-set-number-format-request-get-key
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:18:28.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64f9a74a13ad
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-request-get-key
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:18:28.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cab4e690e8bc
+  - type: implements
+    from: SYM-ui-allocation-view-link
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:41:01.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7800433ac733
+  - type: implements
+    from: SYM-ui-number-format-balance
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:58:29.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a58144e249be
+  - type: implements
+    from: SYM-ui-number-format-balance
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:58:29.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aea5ef92cde
+  - type: covered_by
+    from: SYM-ui-number-format-balance
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:58:29.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e62f1351eab
+  - type: executable_for
+    from: SYM-ui-test-value-switches
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:04:35.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e07dee6d9393

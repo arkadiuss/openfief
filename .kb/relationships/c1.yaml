@@ -384,3 +384,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ef077e25eb3
+  - type: implements
+    from: SYM-pl-tax-wrapper-string
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:08:49.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50042dd7f375
+  - type: implements
+    from: SYM-pl-tax-wrapper-string
+    to: REQ-pl-oki-no-belka-tax
+    created_at: 2026-10-29T22:08:49.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b0919f3cb75
+  - type: covered_by
+    from: SYM-pl-tax-wrapper-string
+    to: TEST-pl-tax
+    created_at: 2026-10-29T22:08:49.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62f8d6285432
+  - type: validates
+    from: TEST-ingest-connectapi-accounts
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T22:58:54.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce59c36ac009
+  - type: implements
+    from: SYM-valuationv1-set-number-format-request-proto-message
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:17:54.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3120eab8d298
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-request-proto-message
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:17:54.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9abb0671934b
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-account-values-json
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:22:41.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c0960af2680

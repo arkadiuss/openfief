@@ -10,7 +10,7 @@ import (
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
-// performanceView is the value-over-time chart (D-30): the portfolio's
+// performanceView is the performance chart (D-30, D-106): the portfolio's
 // time-weighted return from go-live (D-61) and, while the model portfolio
 // is on, its backtest as a second line, both 100 on the first day (D-53).
 type performanceView struct {
@@ -105,10 +105,11 @@ func buildModel(m *viewsv1.GetModelPortfolioResponse) *modelView {
 }
 
 // buildPerformance turns GetPerformance's answer, and the model portfolio's
-// when it is on, into the value-over-time chart: the time-weighted return
-// index per day and the model's index on the same days.
-func buildPerformance(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPortfolioResponse) performanceView {
-	chart := chartData{Kind: "line", Label: "Portfolio (time-weighted return)", Currency: "index"}
+// when it is on, into the performance chart: the time-weighted return
+// index per day and the model's index on the same days, its numbers
+// written in f.
+func buildPerformance(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPortfolioResponse, f numberFormat) performanceView {
+	chart := chartData{Kind: "line", Label: "Portfolio (time-weighted return)", Currency: "index", Group: f.Group, Decimal: f.Decimal}
 	v := performanceView{Currency: p.GetReportingCurrency(), Pending: p.GetRevaluationPending()}
 	for _, d := range p.GetDays() {
 		chart.Labels = append(chart.Labels, d.GetDate())
@@ -154,5 +155,5 @@ func (s *server) performance(r *http.Request, sess session, date kernel.Date) (p
 	case connect.CodeOf(err) != connect.CodeNotFound:
 		return performanceView{}, fmt.Errorf("GetModelPortfolio: %w", err)
 	}
-	return buildPerformance(perf.Msg, on), nil
+	return buildPerformance(perf.Msg, on, requestFormat(r)), nil
 }

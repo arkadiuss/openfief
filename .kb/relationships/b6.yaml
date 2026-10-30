@@ -300,3 +300,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f6e18dd8563
+  - type: executable_for
+    from: SYM-views-test-holding-value
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:59.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07e26ba96ea3

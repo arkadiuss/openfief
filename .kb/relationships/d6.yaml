@@ -664,3 +664,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73ac438052c4
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-terms
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:11:14.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9918a56dc0c
+  - type: implements
+    from: SYM-valuationv1-number-format-proto-message
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:14:44.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cdb65bc912c
+  - type: covered_by
+    from: SYM-valuationv1-number-format-proto-message
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:14:44.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0e7b2ae941b
+  - type: implements
+    from: SYM-views-non-zero-cash
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T01:25:39.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a026c0563e1
+  - type: implements
+    from: SYM-views-non-zero-cash
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T01:25:39.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12d4e5e16395
+  - type: covered_by
+    from: SYM-views-non-zero-cash
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:39.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d1e8fa077a1

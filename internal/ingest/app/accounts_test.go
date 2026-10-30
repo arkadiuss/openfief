@@ -11,6 +11,9 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 )
@@ -37,6 +40,31 @@ func (m *memAccounts) SaveAccount(_ context.Context, a ledger.Account) error {
 	return nil
 }
 
+// memTerms is app.AccountTerms in memory.
+type memTerms struct {
+	wrappers map[ledger.AccountID]jurisdiction.Wrapper
+	fees     map[ledger.AccountID]jurisdiction.FeeRule
+}
+
+func (m *memTerms) RecordTaxWrapper(_ context.Context, account ledger.AccountID, w jurisdiction.Wrapper) error {
+	m.wrappers[account] = w
+	return nil
+}
+
+func (m *memTerms) RecordFeeRule(_ context.Context, account ledger.AccountID, r *jurisdiction.FeeRule) error {
+	m.fees[account] = *r
+	return nil
+}
+
+func (m *memTerms) TaxWrapper(_ context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error) {
+	w, ok := m.wrappers[account]
+	return w, ok, nil
+}
+
+func (m *memTerms) FeeRule(_ context.Context, account ledger.AccountID) (jurisdiction.FeeRule, error) {
+	return m.fees[account], nil
+}
+
 // newAccounts returns the account entries over in-memory fakes holding
 // one stored account, acc-bonds, and the synthetic broker accounts
 // U0000001, unmapped, and U0000002, mapped to acc-bonds, reported by
@@ -51,7 +79,8 @@ func newAccounts() (*app.Accounts, *memAccounts, *memBindings, *fakeBrokers) {
 	now := time.Date(2026, time.March, 2, 6, 0, 0, 0, time.UTC)
 	a := &app.Accounts{
 		Owners: fakeOwners{err: app.ErrNotOwner}, Ledger: ledgerFake, Bindings: bindings, Brokers: brokers,
-		Now: func() time.Time { return now },
+		Terms: &memTerms{wrappers: map[ledger.AccountID]jurisdiction.Wrapper{}, fees: map[ledger.AccountID]jurisdiction.FeeRule{}},
+		Pack:  pl.NewPack(), Now: func() time.Time { return now },
 	}
 	return a, ledgerFake, bindings, brokers
 }
@@ -61,7 +90,7 @@ func TestAccountsCreate(t *testing.T) {
 	tests := []struct {
 		name        string
 		in          app.NewAccount
-		want        ledger.Account
+		want        app.AccountEntry
 		wantErr     error
 		wantBound   []ledger.AccountID
 		wantMapping ledger.AccountID
@@ -69,19 +98,29 @@ func TestAccountsCreate(t *testing.T) {
 		{
 			name:      "a broker account the connector reported, its institution taken from it",
 			in:        app.NewAccount{Name: "IBKR main", Sleeve: "satellite", Instance: "ibkr-main", BrokerAccount: "U0000001"},
-			want:      ledger.Account{ID: "ibkr-main", Institution: "ibkr", Name: "IBKR main", Sleeve: "satellite"},
+			want:      entry(ledger.Account{ID: "ibkr-main", Institution: "ibkr", Name: "IBKR main", Sleeve: "satellite"}, "taxable", nil),
 			wantBound: []ledger.AccountID{"ibkr-main"}, wantMapping: "ibkr-main",
 		},
 		{
 			name:      "an account of a connector that names its accounts itself",
 			in:        app.NewAccount{Name: "Obligacje skarbowe", Institution: "treasury-bonds", Sleeve: "bonds", Instance: "bonds-main"},
-			want:      ledger.Account{ID: "obligacje-skarbowe", Institution: "treasury-bonds", Name: "Obligacje skarbowe", Sleeve: "bonds"},
+			want:      entry(ledger.Account{ID: "obligacje-skarbowe", Institution: "treasury-bonds", Name: "Obligacje skarbowe", Sleeve: "bonds"}, "taxable", nil),
 			wantBound: []ledger.AccountID{"obligacje-skarbowe"},
 		},
 		{
 			name: "an account with no connector yet",
 			in:   app.NewAccount{Name: "XTB", Institution: "xtb", Sleeve: "core"},
-			want: ledger.Account{ID: "xtb", Institution: "xtb", Name: "XTB", Sleeve: "core"},
+			want: entry(ledger.Account{ID: "xtb", Institution: "xtb", Name: "XTB", Sleeve: "core"}, "taxable", nil),
+		},
+		{
+			name: "an IKZE with its broker's fee rule",
+			in:   app.NewAccount{Name: "XTB IKZE", Institution: "xtb", Sleeve: "core", Wrapper: "ikze", Fee: brokerFee()},
+			want: entry(ledger.Account{ID: "xtb-ikze", Institution: "xtb", Name: "XTB IKZE", Sleeve: "core"}, "ikze", brokerFee()),
+		},
+		{name: "a wrapper the pack doesn't have", in: app.NewAccount{Name: "PPK", Institution: "x", Sleeve: "core", Wrapper: "ppk"}, wantErr: ledger.ErrInvalidAccount},
+		{
+			name: "a fee rate of 100%", wantErr: ledger.ErrInvalidAccount,
+			in: app.NewAccount{Name: "Cash", Institution: "x", Sleeve: "core", Fee: &jurisdiction.FeeRule{Rate: kernel.NewDecimal(1, 0)}},
 		},
 		{name: "a name whose ID is taken", in: app.NewAccount{Name: "acc bonds", Institution: "x", Sleeve: "core"}, wantErr: app.ErrAccountExists},
 		{name: "no ID from the name", in: app.NewAccount{Name: "--", Institution: "x", Sleeve: "core"}, wantErr: ledger.ErrInvalidAccount},
@@ -104,7 +143,42 @@ func TestAccountsCreate(t *testing.T) {
 				t.Errorf("Create (-want +got):\n%s", diff)
 			}
 			checkStored(t, tt.wantErr == nil, l, bindings, brokers, tt.wantBound, tt.wantMapping)
+			checkTerms(t, a, &tt.want)
 		})
+	}
+}
+
+// brokerFee is a synthetic fee rule: 0.29% at least 14 PLN.
+func brokerFee() *jurisdiction.FeeRule {
+	c, err := kernel.ParseCurrency("PLN")
+	if err != nil {
+		return nil
+	}
+	return &jurisdiction.FeeRule{Rate: kernel.NewDecimal(29, -4), Minimum: kernel.NewMoney(kernel.NewDecimal(14, 0), c)}
+}
+
+// entry returns acc with wrapper and fee, the zero rule when fee is nil.
+func entry(acc ledger.Account, wrapper jurisdiction.Wrapper, fee *jurisdiction.FeeRule) app.AccountEntry {
+	e := app.AccountEntry{Account: acc, Wrapper: wrapper}
+	if fee != nil {
+		e.Fee = *fee
+	}
+	return e
+}
+
+// checkTerms fails t unless want's wrapper is recorded for its account,
+// and its fee rule when it is not the zero rule; nothing for no account.
+func checkTerms(t *testing.T, a *app.Accounts, want *app.AccountEntry) {
+	t.Helper()
+	terms, ok := a.Terms.(*memTerms)
+	if !ok {
+		t.Fatal("not memTerms")
+	}
+	if diff := cmp.Diff(want.Wrapper, terms.wrappers[want.ID]); diff != "" {
+		t.Errorf("recorded wrapper (-want +got):\n%s", diff)
+	}
+	if diff := cmp.Diff(want.Fee, terms.fees[want.ID]); diff != "" {
+		t.Errorf("recorded fee rule (-want +got):\n%s", diff)
 	}
 }
 
@@ -127,19 +201,33 @@ func TestAccountsUpdate(t *testing.T) {
 	t.Parallel()
 	a, l, _, _ := newAccounts()
 	ctx := t.Context()
-	got, err := a.Update(ctx, "https://ui.example.com", "owner", bondsAccount, "Treasury bonds", "core")
-	want := ledger.Account{ID: bondsAccount, Institution: "treasury-bonds", Name: "Treasury bonds", Sleeve: "core"}
+	got, err := a.Update(ctx, "https://ui.example.com", "owner", bondsAccount, &app.AccountChange{Name: "Treasury bonds", Sleeve: "core"})
+	want := entry(ledger.Account{ID: bondsAccount, Institution: "treasury-bonds", Name: "Treasury bonds", Sleeve: "core"}, "taxable", nil)
 	if diff := cmp.Diff(want, got); err != nil || diff != "" {
 		t.Errorf("Update = %v (-want +got):\n%s", err, diff)
 	}
-	if _, err := a.Update(ctx, "https://ui.example.com", "owner", "acc-none", "X", "core"); !cmp.Equal(err, app.ErrNoAccount, cmpopts.EquateErrors()) {
-		t.Errorf("Update of an unknown account = %v, want ErrNoAccount", err)
+	got, err = a.Update(ctx, "https://ui.example.com", "owner", bondsAccount, &app.AccountChange{Name: "Treasury bonds", Sleeve: "core", Wrapper: "ike", Fee: brokerFee()})
+	want = entry(want.Account, "ike", brokerFee())
+	if diff := cmp.Diff(want, got); err != nil || diff != "" {
+		t.Errorf("Update of the terms = %v (-want +got):\n%s", err, diff)
 	}
-	if _, err := a.Update(ctx, "https://ui.example.com", "owner", bondsAccount, "X", "gold"); !cmp.Equal(err, app.ErrNoSleeve, cmpopts.EquateErrors()) {
-		t.Errorf("Update into an unknown sleeve = %v, want ErrNoSleeve", err)
+	checkTerms(t, a, &want)
+	refusals := []struct {
+		id      ledger.AccountID
+		change  app.AccountChange
+		wantErr error
+	}{
+		{id: "acc-none", change: app.AccountChange{Name: "X", Sleeve: "core"}, wantErr: app.ErrNoAccount},
+		{id: bondsAccount, change: app.AccountChange{Name: "X", Sleeve: "gold"}, wantErr: app.ErrNoSleeve},
+		{id: bondsAccount, change: app.AccountChange{Name: "X", Sleeve: "core", Wrapper: "ppk"}, wantErr: ledger.ErrInvalidAccount},
 	}
-	if l.saves != 1 {
-		t.Errorf("%d account saves, want the one update", l.saves)
+	for _, r := range refusals {
+		if _, err := a.Update(ctx, "https://ui.example.com", "owner", r.id, &r.change); !cmp.Equal(err, r.wantErr, cmpopts.EquateErrors()) {
+			t.Errorf("Update(%s, %+v) = %v, want %v", r.id, r.change, err, r.wantErr)
+		}
+	}
+	if l.saves != 2 {
+		t.Errorf("%d account saves, want the two updates", l.saves)
 	}
 }
 
@@ -177,7 +265,7 @@ func TestAccountsOwnerOnly(t *testing.T) {
 		a.Owners = fakeOwners{err: refusal}
 		ctx, origin, read := t.Context(), "https://ui.example.com", "read"
 		_, errCreate := a.Create(ctx, origin, read, &app.NewAccount{Name: "X", Institution: "x", Sleeve: "core"})
-		_, errUpdate := a.Update(ctx, origin, read, bondsAccount, "X", "core")
+		_, errUpdate := a.Update(ctx, origin, read, bondsAccount, &app.AccountChange{Name: "X", Sleeve: "core"})
 		errBind := a.Bind(ctx, origin, read, bondsAccount, "ibkr-main", "")
 		for _, err := range []error{errCreate, errUpdate, errBind} {
 			if !cmp.Equal(refusal, err, cmpopts.EquateErrors()) {

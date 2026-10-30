@@ -440,3 +440,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-307f8a1261d2
+  - type: implements
+    from: SYM-jurisdiction-fee-rule-sale-cost
+    to: REQ-jurisdiction-fee-rule-sale-cost
+    created_at: 2026-10-29T22:01:12.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea26d8007d3c
+  - type: implements
+    from: SYM-jurisdiction-fee-rule-sale-cost
+    to: REQ-valuation-sale-fee-rule
+    created_at: 2026-10-29T22:01:12.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd8adf0ca109
+  - type: covered_by
+    from: SYM-jurisdiction-fee-rule-sale-cost
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:12.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d37a32a1e35
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-in-force
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:46.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9908963d072d
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-in-force
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:46.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-217b54cffee9

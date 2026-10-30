@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"cmp"
 	"fmt"
 	"net/http"
 	"slices"
@@ -8,6 +9,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -29,8 +31,11 @@ type accountsData struct {
 	// instances offered are only those it has seen.
 	InstancesUnknown bool
 	Brokers          []*viewsv1.BrokerAccount
-	Next             string
-	Error            string
+	// Wrappers are the tax wrappers an account can have, the pack's
+	// default first (D-76).
+	Wrappers []string
+	Next     string
+	Error    string
 }
 
 // accountEntry is one account with the connector instances bound to it.
@@ -72,6 +77,7 @@ func (s *server) loadAccounts(r *http.Request, sess session, next string) (*acco
 	}
 	data := &accountsData{
 		Owner: sess.Owner(), Sleeves: sleeves.Msg.GetSleeves(), Brokers: brokers.Msg.GetBrokerAccounts(), Next: next,
+		Wrappers: sess.Settings.GetTaxWrappers(),
 	}
 	for _, a := range accounts.Msg.GetAccounts() {
 		e := accountEntry{Account: a}
@@ -166,7 +172,7 @@ func brokerChoice(v string) brokerPick {
 }
 
 // createAccount hands a new account to the core (CreateAccount): its name,
-// institution, sleeve, and the connector instance that feeds it, or a
+// institution, sleeve, tax wrapper (D-76), sale fee rule (D-78), and the connector instance that feeds it, or a
 // broker account that instance reported, picked from a list so the owner
 // never types an account number (D-72).
 func (s *server) createAccount(w http.ResponseWriter, r *http.Request, sess session) {
@@ -180,16 +186,18 @@ func (s *server) createAccount(w http.ResponseWriter, r *http.Request, sess sess
 		Origin: sess.Origin, SessionToken: sess.Token, Name: strings.TrimSpace(r.PostFormValue("name")),
 		Institution: strings.TrimSpace(r.PostFormValue("institution")), Sleeve: r.PostFormValue("sleeve"),
 		ConnectorInstance: instance, BrokerAccount: broker,
+		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r),
 	}))
 	s.accountEntryDone(w, r, sess, "CreateAccount", err)
 }
 
-// updateAccount hands an account's new name or sleeve to the core
-// (UpdateAccount).
+// updateAccount hands an account's new name, sleeve, tax wrapper or sale
+// fee rule to the core (UpdateAccount).
 func (s *server) updateAccount(w http.ResponseWriter, r *http.Request, sess session) {
 	_, err := s.accounts.UpdateAccount(r.Context(), connect.NewRequest(&ingestv1.UpdateAccountRequest{
 		Origin: sess.Origin, SessionToken: sess.Token, AccountId: r.PathValue("id"),
 		Name: strings.TrimSpace(r.PostFormValue("name")), Sleeve: r.PostFormValue("sleeve"),
+		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r),
 	}))
 	s.accountEntryDone(w, r, sess, "UpdateAccount", err)
 }
@@ -222,4 +230,71 @@ type sleeveChoice struct {
 // chosen.
 func sleeveSelect(id string, sleeves []*viewsv1.Sleeve, current string) sleeveChoice {
 	return sleeveChoice{ID: id, Sleeves: sleeves, Current: current}
+}
+
+// fromPercent turns a percentage the owner typed, such as "0,29" or
+// "0.29", into the decimal fraction the core takes, "0.0029". Text that
+// isn't a decimal goes to the core as typed, which refuses it with its
+// reason.
+func fromPercent(typed string) string {
+	typed = strings.ReplaceAll(strings.TrimSpace(typed), ",", ".")
+	d, err := kernel.ParseDecimal(typed)
+	if err != nil {
+		return typed
+	}
+	return d.Mul(kernel.NewDecimal(1, -2)).String()
+}
+
+// toPercent writes a decimal fraction as the percentage a form field
+// shows, without the sign: "0.0029" is "0.29"; empty for zero or none.
+func toPercent(fraction string) string {
+	if isZero(fraction) {
+		return ""
+	}
+	return strings.TrimSuffix(percent(fraction), "%")
+}
+
+// postedFeeRule reads the fee rule fields of an account form (D-78): the
+// sale rate and conversion rate in percent, and the minimum with its
+// currency. All empty is nil: no rule on a new account, the account's own
+// on a change.
+func postedFeeRule(r *http.Request) *ingestv1.FeeRule {
+	rate, conversion := r.PostFormValue("fee_rate"), r.PostFormValue("fee_conversion")
+	minimum := strings.ReplaceAll(strings.TrimSpace(r.PostFormValue("fee_minimum")), ",", ".")
+	currency := strings.ToUpper(strings.TrimSpace(r.PostFormValue("fee_minimum_currency")))
+	if strings.TrimSpace(rate) == "" && strings.TrimSpace(conversion) == "" && minimum == "" {
+		return nil
+	}
+	rule := &ingestv1.FeeRule{Rate: cmp.Or(fromPercent(rate), "0"), ConversionRate: cmp.Or(fromPercent(conversion), "0")}
+	if minimum != "" && !isZero(minimum) {
+		rule.Minimum, rule.MinimumCurrency = minimum, currency
+	}
+	return rule
+}
+
+// termsForm is what an account form's tax wrapper and fee rule fields
+// show: their ID prefix, the wrappers to pick from, and the account's own
+// terms, or none for a new account.
+type termsForm struct {
+	Prefix     string
+	Wrappers   []string
+	Wrapper    string
+	Rate       string
+	Minimum    string
+	Currency   string
+	Conversion string
+}
+
+// termsFields returns the tax wrapper and fee rule fields with IDs under
+// prefix over wrappers, filled with acc's terms; nil acc is a new account.
+func termsFields(prefix string, wrappers []string, acc *viewsv1.Account) termsForm {
+	rule := acc.GetFeeRule()
+	f := termsForm{
+		Prefix: prefix, Wrappers: wrappers, Wrapper: acc.GetTaxWrapper(),
+		Rate: toPercent(rule.GetRate()), Conversion: toPercent(rule.GetConversionRate()),
+	}
+	if !isZero(rule.GetMinimum().GetAmount()) {
+		f.Minimum, f.Currency = rule.GetMinimum().GetAmount(), rule.GetMinimum().GetCurrency()
+	}
+	return f
 }

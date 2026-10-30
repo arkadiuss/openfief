@@ -433,3 +433,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1dcc7ad46b2
+  - type: executable_for
+    from: SYM-views-test-value-kind-names
+    to: TEST-views-values
+    created_at: 2026-10-30T01:25:46.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba9a7b77410e
+  - type: implements
+    from: SYM-ui-to-percent
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T02:57:12.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42a24173f8bd
+  - type: covered_by
+    from: SYM-ui-to-percent
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:57:12.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7695ef0061fc

@@ -167,13 +167,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-632855691b2d
-  - type: implements
-    from: SYM-core-split-command
-    to: REQ-core-config
-    created_at: 2026-10-28T14:33:49.642Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6cde49eb7cb2
   - type: covered_by
     from: SYM-core-split-command
     to: TEST-core-unit
@@ -552,3 +545,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0bfb85eb8e34
+  - type: implements
+    from: SYM-core-split-command
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:54:42.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b94ee7551f2
+  - type: implements
+    from: SYM-pl-pack-value-cash
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:06:26.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-705508ec2751
+  - type: implements
+    from: SYM-pl-pack-value-cash
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:06:26.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aac14e3178a
+  - type: covered_by
+    from: SYM-pl-pack-value-cash
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:06:26.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0816f90a7f29
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-check-terms
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:10:48.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac1c4fad09b8
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-proto-reflect
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:16:42.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84c3c75b4139
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-proto-reflect
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:16:42.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b3bebe64f03
+  - type: implements
+    from: SYM-viewsv1-value-kind-type
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:26:56.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b51536ca61d0
+  - type: covered_by
+    from: SYM-viewsv1-value-kind-type
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:26:56.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd14d8065708

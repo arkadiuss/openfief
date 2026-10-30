@@ -27,13 +27,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cfa3c924effa
-  - type: implements
-    from: SYM-pl-tax-wrapper
-    to: REQ-pl-tax-wrapper-exempt
-    created_at: 2026-10-28T05:23:45.965Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-91aec2fc2856
   - type: covered_by
     from: SYM-pl-tax-wrapper
     to: TEST-pl-tax
@@ -475,3 +468,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24f46990b240
+  - type: implements
+    from: SYM-pl-tax-wrapper
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T21:55:26.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a921d791f77
+  - type: implements
+    from: SYM-valuation-account-terms-tax-cost
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:16:23.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab3b1290e5d8
+  - type: implements
+    from: SYM-valuation-account-terms-tax-cost
+    to: REQ-AUTO-C17116F5350E97D6
+    created_at: 2026-10-29T22:16:23.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eb2a81c1e41
+  - type: covered_by
+    from: SYM-valuation-account-terms-tax-cost
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-29T22:16:23.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44365b2da05d
+  - type: implements
+    from: SYM-pl-tax-wrapper
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:16:59.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-824eda1f5c74
+  - type: implements
+    from: SYM-valuationv1connect-unimplemented-settings-service-handler-get-owner-settings
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:22:34.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b7f87234f1d
+  - type: covered_by
+    from: SYM-valuationv1connect-unimplemented-settings-service-handler-get-owner-settings
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:22:34.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3964ada6309
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-string
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:00.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4eb73890268
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:00.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83a3b0c80e10
+  - type: implements
+    from: SYM-ui-value-chart-view-fragment-link
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:00:37.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c306ef7e2e9
+  - type: implements
+    from: SYM-ui-value-chart-view-fragment-link
+    to: REQ-ui-value-chart-value-switch
+    created_at: 2026-10-30T03:00:37.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52f57a9fb15e
+  - type: covered_by
+    from: SYM-ui-value-chart-view-fragment-link
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:00:37.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03acd996fa2c

@@ -90,20 +90,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12186fcbeada
-  - type: implements
-    from: SYM-valuation-postgres-store-save-tax-wrapper
-    to: REQ-valuation-enqueue-same-transaction
-    created_at: 2026-10-28T08:02:03.263Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dd2bb80daade
-  - type: covered_by
-    from: SYM-valuation-postgres-store-save-tax-wrapper
-    to: TEST-valuation-postgres-queue
-    created_at: 2026-10-28T08:02:03.305Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-29850210ad77
   - type: executable_for
     from: SYM-sdk-go-test-helper-fake-proxy-seen
     to: TEST-sdk-go-egress
@@ -412,3 +398,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ab24c28decc
+  - type: implements
+    from: SYM-valuation-postgres-store-save-tax-wrapper
+    to: REQ-valuation-account-terms-inputs
+    created_at: 2026-10-29T22:14:20.631Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aca3ddf0fb8
+  - type: implements
+    from: SYM-valuation-postgres-store-save-tax-wrapper
+    to: REQ-ledger-account-tax-wrapper
+    created_at: 2026-10-29T22:14:20.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29e3b46779a1
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-tax-wrapper
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-29T22:14:20.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dd93b4be77d
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-descriptor
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:16:49.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3ac1d02c187
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-descriptor
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:16:49.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d43c6ee69bb8
+  - type: implements
+    from: SYM-valuationv1-set-marginal-rate-request-reset
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:19:27.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dfb8302f641
+  - type: covered_by
+    from: SYM-valuationv1-set-marginal-rate-request-reset
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:19:27.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f204e44bd23
+  - type: executable_for
+    from: SYM-views-test-value-holdings-of-a-kind
+    to: TEST-views-values
+    created_at: 2026-10-30T01:26:22.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a2716a78553

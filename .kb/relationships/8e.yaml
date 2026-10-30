@@ -153,13 +153,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85ae2ae32589
-  - type: implements
-    from: SYM-valuation-postgres-end-of-day-insert-opts
-    to: REQ-valuation-settings
-    created_at: 2026-10-28T08:06:52.421Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bed3b15c9296
   - type: covered_by
     from: SYM-valuation-postgres-end-of-day-insert-opts
     to: TEST-valuation-postgres-worker
@@ -559,3 +552,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fc41a25c6a1
+  - type: implements
+    from: SYM-valuation-postgres-end-of-day-insert-opts
+    to: REQ-valuation-revaluation-config
+    created_at: 2026-10-29T21:56:45.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cdd1d95560a
+  - type: executable_for
+    from: SYM-valuation-app-test-apply-rules
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:09:25.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12e057421fe3
+  - type: implements
+    from: SYM-ingestv1-create-account-request-get-tax-wrapper
+    to: REQ-ingest-account-terms
+    created_at: 2026-10-29T23:14:01.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a44067e59743
+  - type: covered_by
+    from: SYM-ingestv1-create-account-request-get-tax-wrapper
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:14:01.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3df8211f588e
+  - type: implements
+    from: SYM-viewsv1-get-settings-response
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:34:18.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c9b87134d6a
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-response
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:34:18.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-821575a85ecd

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
@@ -200,7 +201,10 @@ func newLedger(t *testing.T) *fakeLedger {
 			{Account: "acc-1", Instrument: bond, Date: on, Quantity: kernel.NewQuantity(dec(t, "10"))},
 			{Account: "acc-1", Instrument: etf, Date: on, Quantity: kernel.NewQuantity(dec(t, "3"))},
 		},
-		lots: []ledger.Lot{{Instrument: bond, Opened: date(t, "2025-05-01"), Quantity: kernel.NewQuantity(dec(t, "10")), Cost: money(t, "1000.00", "PLN"), Opening: true, Origin: opening.Key}},
+		lots: []ledger.Lot{
+			{Instrument: bond, Opened: date(t, "2025-05-01"), Quantity: kernel.NewQuantity(dec(t, "10")), Cost: money(t, "1000.00", "PLN"), Opening: true, Origin: opening.Key},
+			{Instrument: etf, Opened: on, Quantity: kernel.NewQuantity(dec(t, "3")), Cost: money(t, "90.00", "USD"), Origin: buy.Key},
+		},
 		cash: []kernel.Money{money(t, "100.00", "USD")},
 		checks: []ledgerapp.AssertionCheck{
 			{Assertion: ledger.CashAssertion("acc-1", on, money(t, "100.00", "USD")), Status: ledgerapp.AssertionMatched, Derived: dec(t, "100.00")},
@@ -209,14 +213,37 @@ func newLedger(t *testing.T) *fakeLedger {
 	}
 }
 
+// fakeTerms keeps acc-1 in IKZE with a fee rule; the owner has set no
+// marginal rate and no number format.
+type fakeTerms struct{}
+
+func (fakeTerms) TaxWrapper(_ context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error) {
+	if account == "acc-1" {
+		return "ikze", true, nil
+	}
+	return "", false, nil
+}
+
+func (fakeTerms) FeeRule(context.Context, ledger.AccountID) (jurisdiction.FeeRule, error) {
+	return jurisdiction.FeeRule{Rate: kernel.NewDecimal(29, -4)}, nil
+}
+
+func (fakeTerms) ValueSettings(context.Context) (jurisdiction.Settings, error) {
+	return jurisdiction.Settings{}, nil
+}
+
+func (fakeTerms) NumberFormat(context.Context) (jurisdiction.NumberFormat, bool, error) {
+	return jurisdiction.NumberFormat{}, false, nil
+}
+
 // newViews returns the views over l with a bond and an ETF valued on
 // 2026-03-02 and USD at 4.00 PLN, configured by opts.
 func newViews(t *testing.T, l *fakeLedger, opts ...app.Option) *app.Views {
 	t.Helper()
 	on := date(t, "2026-03-02")
 	vals := fakeValuations{
-		{Account: "acc-1", Instrument: instrument(t, isinPL, "EDO0334"), Date: on, Basis: valuation.NetIfRedeemed, Source: "statutory", Quantity: kernel.NewQuantity(dec(t, "10")), Value: money(t, "1043.21", "PLN"), PLN: money(t, "1043.21", "PLN")},
-		{Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: on, Basis: valuation.Market, Source: "test-prices", Quantity: kernel.NewQuantity(dec(t, "3")), Value: money(t, "31.5", "USD"), PLN: money(t, "126.00", "PLN")},
+		{Account: "acc-1", Instrument: instrument(t, isinPL, "EDO0334"), Date: on, Basis: valuation.GrossAccrued, Source: "statutory", Quantity: kernel.NewQuantity(dec(t, "10")), Value: money(t, "1043.21", "PLN"), PLN: money(t, "1043.21", "PLN"), Net: money(t, "1035.00", "PLN"), Liquidation: money(t, "1020.00", "PLN")},
+		{Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: on, Basis: valuation.Market, Source: "test-prices", Quantity: kernel.NewQuantity(dec(t, "3")), Value: money(t, "31.5", "USD"), PLN: money(t, "126.00", "PLN"), Net: money(t, "120.00", "PLN"), LiquidationMissing: valuation.MissingMarginalRate},
 	}
 	rates := fakeRates{{Currency: cur(t, "USD"), Date: on, Rate: dec(t, "4.00"), Source: "test"}}
 	v, err := app.New(l, vals, fakeStatuses{through: on}, rates, cur(t, "PLN"), opts...)

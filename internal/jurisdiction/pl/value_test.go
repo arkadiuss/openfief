@@ -6,6 +6,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 )
@@ -49,10 +50,16 @@ func TestValueLot(t *testing.T) {
 			gross: "1030.20", interest: "30.20", wantFee: "20.00", tax: "1.94", net: "1008.26",
 		},
 		{
-			// Same lot in IKE: no fee on a withdrawal and no tax, net = gross 1030.20.
-			name: "same EDO lot inside IKE pays no fee and no Belka tax", series: "EDO0334", first: "0.06", margin: "0.02", fee: "2.00",
+			// Same lot in IKE: no fee on a withdrawal (TestValueAccrued has its values).
+			name: "same EDO lot inside IKE pays no fee", series: "EDO0334", first: "0.06", margin: "0.02", fee: "2.00",
 			quantity: "10", purchased: "2024-03-15", wrapper: pl.IKE, on: "2024-09-15",
 			gross: "1030.20", interest: "30.20", wantFee: "0", tax: "0", net: "1030.20",
+		},
+		{
+			// Same lot in OKI: the letters waive the fee for IKE and IKZE only.
+			name: "same EDO lot inside OKI pays the fee", series: "EDO0334", first: "0.06", margin: "0.02", fee: "2.00",
+			quantity: "10", purchased: "2024-03-15", wrapper: pl.OKI, on: "2024-09-15",
+			gross: "1030.20", interest: "30.20", wantFee: "20.00",
 		},
 		{
 			// Same lot bought by exchange at 99.90: the 0.10 discount per bond is taxed too.
@@ -159,8 +166,8 @@ func TestValueLot(t *testing.T) {
 			gross: "106.47", interest: "6.47", wantFee: "1.00", tax: "1.04", net: "104.43",
 		},
 		{
-			// IKZE: same as the TOS case without fee or tax: net = gross 106.47.
-			name: "TOS inside IKZE pays no fee and withholds no tax", series: "TOS0227", first: "0.0595", margin: "0", fee: "1.00",
+			// IKZE: same as the TOS case without the fee (TestValueAccrued has its values).
+			name: "TOS inside IKZE pays no fee", series: "TOS0227", first: "0.0595", margin: "0", fee: "1.00",
 			quantity: "1", purchased: "2024-02-29", wrapper: pl.IKZE, on: "2025-03-30",
 			gross: "106.47", interest: "6.47", wantFee: "0", tax: "0", net: "106.47",
 		},
@@ -169,7 +176,10 @@ func TestValueLot(t *testing.T) {
 }
 
 // runLotCases values each case's lot in a parallel subtest and compares the
-// whole LotValue with the case's expected amounts.
+// LotValue with the case's expected amounts. A taxable case's tax and net
+// are what an early redemption pays: its liquidation value (D-77), which the
+// pack's ValueAccrued computes from the LotValue; cases in other wrappers
+// check the LotValue only, and TestValueAccrued covers their values.
 func runLotCases(t *testing.T, tests []lotCase) {
 	t.Helper()
 	for i := range tests {
@@ -181,14 +191,39 @@ func runLotCases(t *testing.T, tests []lotCase) {
 			if err != nil {
 				t.Fatalf("ValueLot: %v", err)
 			}
+			discount := pl.Nominal().Amount().Sub(a.purchase.Price.Amount()).Mul(a.quantity.Decimal())
 			want := pl.LotValue{
 				Gross: plnMoney(t, tt.gross), Interest: plnMoney(t, tt.interest), Fee: plnMoney(t, tt.wantFee),
-				Tax: plnMoney(t, tt.tax), Net: plnMoney(t, tt.net), Matured: tt.matured,
+				Discount: kernel.NewMoney(discount, pl.Nominal().Currency()), Matured: tt.matured,
 			}
 			if diff := cmp.Diff(want, got); diff != "" {
 				t.Errorf("(-want +got):\n%s", diff)
 			}
+			if tt.wrapper == pl.Taxable {
+				checkLiquidation(t, tt, &got)
+			}
 		})
+	}
+}
+
+// checkLiquidation checks a taxable case's tax and net columns against the
+// liquidation value the pack computes from got, comparing decimals by value
+// so "100.00" equals "100".
+func checkLiquidation(t *testing.T, tt *lotCase, got *pl.LotValue) {
+	t.Helper()
+	income, err := got.Interest.Add(got.Discount)
+	if err != nil {
+		t.Fatal(err)
+	}
+	v, err := pl.NewPack().ValueAccrued(&jurisdiction.Accrued{
+		Wrapper: jurisdiction.Wrapper(tt.wrapper.String()), Gross: got.Gross, Income: income, EarlyFee: got.Fee,
+	}, &jurisdiction.Settings{})
+	if err != nil {
+		t.Fatalf("ValueAccrued: %v", err)
+	}
+	tax := got.Gross.Amount().Sub(got.Fee.Amount()).Sub(v.Liquidation.Amount())
+	if !tax.Equal(dec(t, tt.tax)) || !v.Liquidation.Amount().Equal(dec(t, tt.net)) {
+		t.Errorf("tax %s and liquidation value %s, want %s and %s", tax, v.Liquidation.Amount(), tt.tax, tt.net)
 	}
 }
 

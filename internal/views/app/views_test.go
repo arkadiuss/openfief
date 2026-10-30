@@ -32,7 +32,7 @@ func TestAllocation(t *testing.T) {
 		t.Run(tt.by.String(), func(t *testing.T) {
 			t.Parallel()
 			f := newFixture(t)
-			got, err := f.views(t).Allocation(context.Background(), f.on, tt.by)
+			got, err := f.views(t).Allocation(context.Background(), f.on, tt.by, views.Gross)
 			if err != nil {
 				t.Fatalf("Allocation() error = %v", err)
 			}
@@ -43,7 +43,7 @@ func TestAllocation(t *testing.T) {
 			if diff := cmp.Diff(want, got.Allocation); diff != "" {
 				t.Errorf("Allocation() mismatch (-want +got):\n%s", diff)
 			}
-			wantUnvalued := []ledger.Holding{f.ledger.holdings["acc-1"][2]}
+			wantUnvalued := []views.Unvalued{{Account: "acc-1", Holding: f.ledger.holdings["acc-1"][2], Missing: "price"}}
 			if diff := cmp.Diff(wantUnvalued, got.Unvalued); diff != "" {
 				t.Errorf("Allocation() unvalued mismatch (-want +got):\n%s", diff)
 			}
@@ -57,7 +57,7 @@ func TestAllocationFailures(t *testing.T) {
 		t.Parallel()
 		f := newFixture(t)
 		f.rates = f.rates[:1] // no EUR rate
-		if _, err := f.views(t).Allocation(context.Background(), f.on, views.BySleeve); !errors.Is(err, valuation.ErrNoRate) {
+		if _, err := f.views(t).Allocation(context.Background(), f.on, views.BySleeve, views.Gross); !errors.Is(err, valuation.ErrNoRate) {
 			t.Errorf("Allocation() error = %v, want %v", err, valuation.ErrNoRate)
 		}
 	})
@@ -65,7 +65,7 @@ func TestAllocationFailures(t *testing.T) {
 		t.Parallel()
 		f := newFixture(t)
 		f.valuations.fail = errStore
-		if _, err := f.views(t).Allocation(context.Background(), f.on, views.BySleeve); !errors.Is(err, errStore) {
+		if _, err := f.views(t).Allocation(context.Background(), f.on, views.BySleeve, views.Gross); !errors.Is(err, errStore) {
 			t.Errorf("Allocation() error = %v, want %v", err, errStore)
 		}
 	})
@@ -98,6 +98,7 @@ func TestAccountValuations(t *testing.T) {
 		Totals: []views.DateTotal{{
 			Date: f.on, Reporting: money(t, "1170.00", "PLN"),
 			ByCurrency: []kernel.Money{money(t, "1050.00", "PLN"), money(t, "30", "USD")},
+			Net:        money(t, "1170.00", "PLN"), Liquidation: money(t, "1170.00", "PLN"), Cash: money(t, "0", "PLN"),
 		}},
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
@@ -119,8 +120,14 @@ func TestValuationTotals(t *testing.T) {
 		t.Fatalf("ValuationTotals() error = %v", err)
 	}
 	want := []views.DateTotal{
-		{Date: date(t, "2026-03-01"), Reporting: money(t, "1165.00", "PLN"), ByCurrency: []kernel.Money{money(t, "1049.00", "PLN"), money(t, "29", "USD")}},
-		{Date: f.on, Reporting: money(t, "1170.00", "PLN"), ByCurrency: []kernel.Money{money(t, "1050.00", "PLN"), money(t, "30", "USD")}},
+		{
+			Date: date(t, "2026-03-01"), Reporting: money(t, "1165.00", "PLN"), ByCurrency: []kernel.Money{money(t, "1049.00", "PLN"), money(t, "29", "USD")},
+			Net: money(t, "1165.00", "PLN"), Liquidation: money(t, "1165.00", "PLN"), Cash: money(t, "0", "PLN"),
+		},
+		{
+			Date: f.on, Reporting: money(t, "1170.00", "PLN"), ByCurrency: []kernel.Money{money(t, "1050.00", "PLN"), money(t, "30", "USD")},
+			Net: money(t, "1170.00", "PLN"), Liquidation: money(t, "1170.00", "PLN"), Cash: money(t, "0", "PLN"),
+		},
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("ValuationTotals() mismatch (-want +got):\n%s", diff)

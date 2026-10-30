@@ -440,3 +440,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24e40f92d1d7
+  - type: implements
+    from: SYM-jurisdiction-default-wrapper
+    to: REQ-pl-tax-wrappers
+    created_at: 2026-10-29T22:04:35.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b65d7c8d1b38
+  - type: covered_by
+    from: SYM-jurisdiction-default-wrapper
+    to: TEST-jurisdiction-pack
+    created_at: 2026-10-29T22:04:35.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eed71341e429
+  - type: implements
+    from: SYM-valuation-app-input-cache-prices
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:10:30.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-958915207111
+  - type: implements
+    from: SYM-valuation-app-input-cache-prices
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:10:30.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-734b06f8b2a3
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-prices
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:30.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7be677ebc0f
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-terms-tax-wrapper
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-10-29T23:11:35.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65ac609e689c
+  - type: verified_by
+    from: SCEN-ui-value-switches
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:37:14.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed3f49ba99a5

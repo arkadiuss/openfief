@@ -2,8 +2,10 @@ package app
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -15,19 +17,15 @@ import (
 type Revaluer struct {
 	log   TransactionLog
 	store Store
-	basis valuation.Basis
+	pack  jurisdiction.Pack
 	today func() kernel.Date
 }
 
 // NewRevaluer returns a Revaluer that reads the log from log, inputs and
-// valuations from store, values bonds on the configured basis (D-25; zero
-// means the default, net if redeemed) and values through today().
-func NewRevaluer(log TransactionLog, store Store, basis valuation.Basis, today func() kernel.Date) (*Revaluer, error) {
-	b, err := valuation.BondBasis(basis)
-	if err != nil {
-		return nil, fmt.Errorf("revaluer: %w", err)
-	}
-	return &Revaluer{log: log, store: store, basis: b, today: today}, nil
+// valuations from store, computes each holding's three values (D-77) with
+// pack, and values through today().
+func NewRevaluer(log TransactionLog, store Store, pack jurisdiction.Pack, today func() kernel.Date) *Revaluer {
+	return &Revaluer{log: log, store: store, pack: pack, today: today}
 }
 
 // RevalueResult is what one revaluation did.
@@ -42,15 +40,16 @@ type RevalueResult struct {
 	Missing int
 }
 
-// Revalue rebuilds account's valuations from the date from to today: for each day it
-// derives the holdings from the log and values each one, at market price
-// converted to PLN, or, for a bond with stored series terms, at its lots'
-// statutory value on the configured basis. It then replaces the stored
-// valuations dated on or after from with the new rows and records the
-// valued-through date (valuation.ValuedThrough). A missing price, FX rate or
-// index reading is stored as a row with the gap, not an error. The rows
-// depend only on the log, the stored inputs, the basis and today, so running
-// it again gives the same result.
+// Revalue rebuilds account's valuations from the date from to today: for
+// each day it derives the holdings from the log and values each one, at
+// market price converted to PLN, or, for a bond with stored series terms,
+// at its lots' statutory value, with its net and liquidation values in the
+// account's tax wrapper under its fee rule and the owner's settings. It
+// then replaces the stored valuations dated on or after from with the new
+// rows and records the valued-through date (valuation.ValuedThrough). A
+// missing price, FX rate or index reading is stored as a row with the gap,
+// not an error. The rows depend only on the log, the stored inputs and
+// today, so running it again gives the same result.
 func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from kernel.Date) (RevalueResult, error) {
 	today := r.today()
 	log, err := r.log.Log(ctx, account)
@@ -86,14 +85,21 @@ func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from k
 // then instrument order; none when log is empty.
 func (r *Revaluer) rows(ctx context.Context, log []ledger.VersionedTransaction, account ledger.AccountID, start, today kernel.Date) ([]valuation.HoldingValuation, error) {
 	in := newInputCache(r.store, account, today)
+	if len(log) == 0 {
+		return nil, nil
+	}
+	terms, err := in.accountTerms(ctx, r.pack)
+	if err != nil {
+		return nil, err
+	}
 	var rows []valuation.HoldingValuation
-	for day := start; len(log) > 0 && !day.After(today); day = day.AddDays(1) {
+	for day := start; !day.After(today); day = day.AddDays(1) {
 		holdings, err := ledger.HoldingsOn(log, account, day)
 		if err != nil {
 			return nil, fmt.Errorf("revaluing %s on %s: %w", account, day, err)
 		}
 		for i := range holdings {
-			row, err := r.value(ctx, in, log, &holdings[i])
+			row, err := r.value(ctx, in, log, &holdings[i], terms)
 			if err != nil {
 				return nil, fmt.Errorf("revaluing %s on %s: %w", account, day, err)
 			}
@@ -105,33 +111,52 @@ func (r *Revaluer) rows(ctx context.Context, log []ledger.VersionedTransaction, 
 
 // value values one holding: as a bond when its ISIN has series terms, at
 // market otherwise.
-func (r *Revaluer) value(ctx context.Context, in *inputCache, log []ledger.VersionedTransaction, h *ledger.Holding) (valuation.HoldingValuation, error) {
-	terms, isBond, err := in.bondTerms(ctx, h.Instrument.ISIN)
+func (r *Revaluer) value(ctx context.Context, in *inputCache, log []ledger.VersionedTransaction, h *ledger.Holding, terms *valuation.AccountTerms) (valuation.HoldingValuation, error) {
+	bondTerms, isBond, err := in.bondTerms(ctx, h.Instrument.ISIN)
 	if err != nil {
 		return valuation.HoldingValuation{}, err
 	}
-	if !isBond {
-		prices, rates, loadErr := in.market(ctx, h.Instrument.String())
-		if loadErr != nil {
-			return valuation.HoldingValuation{}, loadErr
-		}
-		row, valueErr := valuation.ValueMarketHolding(h, prices, rates)
-		if valueErr != nil {
-			return valuation.HoldingValuation{}, fmt.Errorf("valuing %s: %w", h.Instrument, valueErr)
-		}
-		return row, nil
-	}
 	lots, err := ledger.LotsOn(log, h.Account, h.Instrument, h.Date)
+	if _, oversold := errors.AsType[*ledger.OversellError](err); oversold && !isBond {
+		return r.valueMarket(ctx, in, h, &valuation.MarketHolding{LotsUnknown: true, Terms: terms})
+	}
 	if err != nil {
 		return valuation.HoldingValuation{}, fmt.Errorf("lots of %s: %w", h.Instrument, err)
 	}
-	readings, wrapper, err := in.bondInputs(ctx)
+	if !isBond {
+		return r.valueMarket(ctx, in, h, &valuation.MarketHolding{Lots: lots, Terms: terms})
+	}
+	readings, err := in.indexReadings(ctx)
 	if err != nil {
 		return valuation.HoldingValuation{}, err
 	}
-	row, err := valuation.ValueBondHolding(h, &valuation.BondHolding{
-		Lots: lots, Terms: &terms, Readings: readings, Wrapper: wrapper, Basis: r.basis,
-	})
+	row, err := valuation.ValueBondHolding(h, &valuation.BondHolding{Lots: lots, Terms: &bondTerms, Readings: readings, Account: terms})
+	if err != nil {
+		return valuation.HoldingValuation{}, fmt.Errorf("valuing %s: %w", h.Instrument, err)
+	}
+	return row, nil
+}
+
+// valueMarket values h at market with m's lots and terms, loading the
+// prices of its instrument and the FX rates of every currency they, its
+// lots' costs and the fee rule's minimum are in.
+func (r *Revaluer) valueMarket(ctx context.Context, in *inputCache, h *ledger.Holding, m *valuation.MarketHolding) (valuation.HoldingValuation, error) {
+	prices, err := in.prices(ctx, h.Instrument.String())
+	if err != nil {
+		return valuation.HoldingValuation{}, err
+	}
+	currencies := []kernel.Currency{m.Terms.Fee.Minimum.Currency()}
+	for i := range prices {
+		currencies = append(currencies, prices[i].Close.Currency())
+	}
+	for i := range m.Lots {
+		currencies = append(currencies, m.Lots[i].Cost.Currency())
+	}
+	if m.Rates, err = in.rates(ctx, currencies); err != nil {
+		return valuation.HoldingValuation{}, err
+	}
+	m.Prices = prices
+	row, err := valuation.ValueMarketHolding(h, m)
 	if err != nil {
 		return valuation.HoldingValuation{}, fmt.Errorf("valuing %s: %w", h.Instrument, err)
 	}
@@ -151,21 +176,42 @@ func firstDate(log []ledger.VersionedTransaction) (kernel.Date, bool) {
 
 // inputCache loads each input of one revaluation from the store once.
 type inputCache struct {
-	store    Inputs
-	account  ledger.AccountID
-	through  kernel.Date
-	terms    map[ledger.ISIN]*pl.Terms // nil value: not a bond
-	prices   map[string][]valuation.Price
-	rates    map[kernel.Currency][]valuation.FXRate
-	readings []valuation.IndexReading
-	wrapper  pl.TaxWrapper // zero until loaded
+	store      Inputs
+	account    ledger.AccountID
+	through    kernel.Date
+	terms      map[ledger.ISIN]*pl.Terms // nil value: not a bond
+	pricesOf   map[string][]valuation.Price
+	ratesOf    map[kernel.Currency][]valuation.FXRate
+	readings   []valuation.IndexReading
+	haveIndexR bool
 }
 
 func newInputCache(store Inputs, account ledger.AccountID, through kernel.Date) *inputCache {
 	return &inputCache{
 		store: store, account: account, through: through,
-		terms: map[ledger.ISIN]*pl.Terms{}, prices: map[string][]valuation.Price{}, rates: map[kernel.Currency][]valuation.FXRate{},
+		terms: map[ledger.ISIN]*pl.Terms{}, pricesOf: map[string][]valuation.Price{}, ratesOf: map[kernel.Currency][]valuation.FXRate{},
 	}
+}
+
+// accountTerms loads the account's tax wrapper, the pack's default unless
+// one was recorded, its fee rule and the owner's settings.
+func (c *inputCache) accountTerms(ctx context.Context, pack jurisdiction.Pack) (*valuation.AccountTerms, error) {
+	w, recorded, err := c.store.TaxWrapper(ctx, c.account)
+	if err != nil {
+		return nil, fmt.Errorf("loading the tax wrapper of %s: %w", c.account, err)
+	}
+	if !recorded {
+		w = jurisdiction.DefaultWrapper(pack)
+	}
+	fee, err := c.store.FeeRule(ctx, c.account)
+	if err != nil {
+		return nil, fmt.Errorf("loading the fee rule of %s: %w", c.account, err)
+	}
+	settings, err := c.store.ValueSettings(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("loading the owner's settings: %w", err)
+	}
+	return &valuation.AccountTerms{Pack: pack, Wrapper: w, Fee: fee, Settings: settings}, nil
 }
 
 // bondTerms returns the series terms of isin, and false when it is no bond.
@@ -187,50 +233,50 @@ func (c *inputCache) bondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms,
 	return t, ok, nil
 }
 
-// market returns the prices of instrument and the FX rates of their
-// currencies.
-func (c *inputCache) market(ctx context.Context, instrument string) ([]valuation.Price, []valuation.FXRate, error) {
-	prices, ok := c.prices[instrument]
+// prices returns the prices of instrument.
+func (c *inputCache) prices(ctx context.Context, instrument string) ([]valuation.Price, error) {
+	prices, ok := c.pricesOf[instrument]
 	if !ok {
 		var err error
 		if prices, err = c.store.Prices(ctx, instrument, c.through); err != nil {
-			return nil, nil, fmt.Errorf("loading prices of %s: %w", instrument, err)
+			return nil, fmt.Errorf("loading prices of %s: %w", instrument, err)
 		}
-		c.prices[instrument] = prices
+		c.pricesOf[instrument] = prices
 	}
-	var rates []valuation.FXRate
+	return prices, nil
+}
+
+// rates returns the FX rates of currencies, each once; PLN and a zero
+// currency need none.
+func (c *inputCache) rates(ctx context.Context, currencies []kernel.Currency) ([]valuation.FXRate, error) {
+	var out []valuation.FXRate
 	seen := map[kernel.Currency]bool{}
-	for i := range prices {
-		cur := prices[i].Close.Currency()
-		if seen[cur] || cur.Equal(valuation.PLN()) {
+	for _, cur := range currencies {
+		if seen[cur] || cur.IsZero() || cur.Equal(valuation.PLN()) {
 			continue
 		}
 		seen[cur] = true
-		got, ok := c.rates[cur]
+		got, ok := c.ratesOf[cur]
 		if !ok {
 			var err error
 			if got, err = c.store.FXRates(ctx, cur, c.through); err != nil {
-				return nil, nil, fmt.Errorf("loading FX rates of %s: %w", cur, err)
+				return nil, fmt.Errorf("loading FX rates of %s: %w", cur, err)
 			}
-			c.rates[cur] = got
+			c.ratesOf[cur] = got
 		}
-		rates = append(rates, got...)
+		out = append(out, got...)
 	}
-	return prices, rates, nil
+	return out, nil
 }
 
-// bondInputs returns the index readings and the account's tax wrapper.
-func (c *inputCache) bondInputs(ctx context.Context) ([]valuation.IndexReading, pl.TaxWrapper, error) {
-	if c.wrapper == 0 {
-		w, err := c.store.TaxWrapper(ctx, c.account)
-		if err != nil {
-			return nil, 0, fmt.Errorf("loading the tax wrapper of %s: %w", c.account, err)
-		}
+// indexReadings returns every period index reading.
+func (c *inputCache) indexReadings(ctx context.Context) ([]valuation.IndexReading, error) {
+	if !c.haveIndexR {
 		readings, err := c.store.IndexReadings(ctx)
 		if err != nil {
-			return nil, 0, fmt.Errorf("loading index readings: %w", err)
+			return nil, fmt.Errorf("loading index readings: %w", err)
 		}
-		c.wrapper, c.readings = w, readings
+		c.readings, c.haveIndexR = readings, true
 	}
-	return c.readings, c.wrapper, nil
+	return c.readings, nil
 }

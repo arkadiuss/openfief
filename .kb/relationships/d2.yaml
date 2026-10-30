@@ -434,6 +434,76 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e3becc77e2f5
   - type: implements
+    from: SYM-valuation-app-display-settings
+    to: REQ-valuation-owner-settings
+    created_at: 2026-10-29T22:11:01.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1008e608e8d2
+  - type: implements
+    from: SYM-valuation-app-display-settings
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-29T22:11:01.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b59d900bb8ee
+  - type: covered_by
+    from: SYM-valuation-app-display-settings
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-29T22:11:01.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63ab7f8e3ca7
+  - type: validates
+    from: TEST-views-connectapi-values
+    to: REQ-valuation-three-values
+    created_at: 2026-10-30T00:04:48.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed2418b98364
+  - type: validates
+    from: TEST-views-connectapi-values
+    to: REQ-valuation-totals-include-cash
+    created_at: 2026-10-30T00:04:48.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3427ca2c568b
+  - type: validates
+    from: TEST-views-connectapi-values
+    to: REQ-valuation-reporting-currency
+    created_at: 2026-10-30T00:04:48.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfe1adb5f67a
+  - type: validates
+    from: TEST-views-connectapi-values
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T01:16:55.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83529726b6a5
+  - type: executable_for
+    from: SYM-views-connectapi-test-allocation-of-a-kind-over-rest
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:23:03.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b7aad5c02b9
+  - type: implements
+    from: SYM-viewsv1-get-settings-response-reset
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:34:28.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d07a43273e8
+  - type: covered_by
+    from: SYM-viewsv1-get-settings-response-reset
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:34:28.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a6d9c97219e
+  - type: implements
     from: SYM-exp-plugins-app-check-browser-view
     to: REQ-plugins-cli-refuses-second-browser-view
     created_at: 2026-10-29T22:00:03.610Z

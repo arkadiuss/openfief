@@ -188,13 +188,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-067ac27363c1
-  - type: implements
-    from: SYM-views-sum-per-currency
-    to: REQ-views-valuation-totals
-    created_at: 2026-10-28T07:22:03.898Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-93c7457b7804
   - type: covered_by
     from: SYM-views-sum-per-currency
     to: TEST-views-valuation
@@ -475,3 +468,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-794d4914e121
+  - type: validates
+    from: TEST-valuation-app-revalue
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T21:47:25.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e5c2c3d8f71
+  - type: implements
+    from: SYM-valuation-app-input-cache-index-readings
+    to: REQ-valuation-holding-three-values
+    created_at: 2026-10-29T22:10:43.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-129c6e3f8d59
+  - type: implements
+    from: SYM-valuation-app-input-cache-index-readings
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:10:43.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6dced12f192
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-index-readings
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:10:43.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70c4538bdd87
+  - type: implements
+    from: SYM-views-sum-per-currency
+    to: REQ-views-totals-with-cash
+    created_at: 2026-10-30T02:13:26.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcc156e0fae8

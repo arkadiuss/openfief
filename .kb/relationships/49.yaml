@@ -34,20 +34,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-266caf124360
-  - type: implements
-    from: SYM-valuation-bond-basis
-    to: REQ-valuation-bond-basis
-    created_at: 2026-10-28T05:31:05.050Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e19e5f81cae4
-  - type: covered_by
-    from: SYM-valuation-bond-basis
-    to: TEST-valuation-valuation
-    created_at: 2026-10-28T05:31:05.062Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b3f79a99d895
   - id: rel-f946b0df16aa
     type: implements
     from: SYM-ledger-fee-book
@@ -356,3 +342,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55e2d0a99f0e
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-request-string
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:15:35.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6936e06fe9ec
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-request-string
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:15:35.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-524cc849b127
+  - type: implements
+    from: SYM-ui-allocation-view-value-link
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T02:58:59.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03a7edd9bdc4
+  - type: implements
+    from: SYM-ui-allocation-view-value-link
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T02:58:59.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53ba5ba58ee0
+  - type: covered_by
+    from: SYM-ui-allocation-view-value-link
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:58:59.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c667a775fc3

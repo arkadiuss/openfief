@@ -13,13 +13,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f67dc455010d
-  - type: implements
-    from: SYM-pl-capped-fee
-    to: REQ-pl-early-redemption-fee-cap
-    created_at: 2026-10-28T05:24:12.082Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e7e43d71df84
   - type: covered_by
     from: SYM-pl-capped-fee
     to: TEST-pl-value
@@ -454,3 +447,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9231b0ce491
+  - type: implements
+    from: SYM-pl-capped-fee
+    to: REQ-pl-early-redemption-fee-by-wrapper
+    created_at: 2026-10-29T21:55:13.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ed88ab62732
+  - type: implements
+    from: SYM-pl-pack-number-format
+    to: REQ-jurisdiction-pl-number-format
+    created_at: 2026-10-29T22:05:52.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a92a06a4451
+  - type: covered_by
+    from: SYM-pl-pack-number-format
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:05:52.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cc1184c5c7d
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-check-bond-row
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:32:16.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a97ae8208682
+  - type: implements
+    from: SYM-valuation-connectapi-pb-number-format
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:12:38.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f97d6d2b2b3
+  - type: implements
+    from: SYM-valuation-connectapi-pb-number-format
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T23:12:38.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc0a90451358
+  - type: covered_by
+    from: SYM-valuation-connectapi-pb-number-format
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:12:38.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fa0a5273020
+  - type: implements
+    from: SYM-viewsv1-value-kind
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:26:27.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acc606e02ccd
+  - type: covered_by
+    from: SYM-viewsv1-value-kind
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:26:27.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dce9a6617a5
+  - type: implements
+    from: SYM-ui-server-value-chart
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:01:02.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17a3b0b8d0e2
+  - type: implements
+    from: SYM-ui-server-value-chart
+    to: REQ-ui-value-chart-money-with-cash
+    created_at: 2026-10-30T03:01:02.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd182d1c6ab2
+  - type: covered_by
+    from: SYM-ui-server-value-chart
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:01:02.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c1ded0ff832
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-settings-get-owner-settings
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:03:40.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ff2321aab18

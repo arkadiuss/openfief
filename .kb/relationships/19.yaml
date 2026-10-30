@@ -461,3 +461,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f628357bdd46
+  - type: executable_for
+    from: SYM-jurisdiction-test-fee-rule-sale-cost
+    to: TEST-jurisdiction-fee
+    created_at: 2026-10-29T22:01:24.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce00ab4f1735
+  - type: executable_for
+    from: SYM-valuation-postgres-test-owner-settings-round-trip
+    to: TEST-valuation-postgres-terms
+    created_at: 2026-10-29T22:32:27.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c859fcbc633
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-terms-tax-wrapper
+    to: TEST-ingest-app-accounts
+    created_at: 2026-10-29T23:10:21.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d638f7a39ac6
+  - type: implements
+    from: SYM-valuationv1-set-number-format-request-get-session-token
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:18:20.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a044e022cd10
+  - type: covered_by
+    from: SYM-valuationv1-set-number-format-request-get-session-token
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:18:20.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9df905f3659
+  - type: executable_for
+    from: SYM-views-app-test-allocation-of-a-kind
+    to: TEST-views-app-values
+    created_at: 2026-10-30T01:20:32.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8a8f9681950

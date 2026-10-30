@@ -8,4 +8,4 @@ origin:
 id: TEST-core-onboarding
 type: test
 ---
-PostgreSQL test under task test:pg: the core starts with the default sleeves, the owner logs in with a virtual passkey, adds a kind and a sleeve through SleeveService and is refused a role other than the kind's; a broker connector's sync books nothing for its two unmapped synthetic broker accounts, which the read API lists; the owner creates the account for one through AccountService; the next sync books the deposit there with the account in its key, and the read API lists the binding and only the other as unmapped.
+PostgreSQL test through the real core (task test:pg) after a passkey login: sleeves and kinds through the SleeveService, an IKZE account with a USD-minimum fee rule for the broker account U0000001 through the AccountService, answered with its terms, a second mapping refused, and a delivery booked into the mapped account.

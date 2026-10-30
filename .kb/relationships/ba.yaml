@@ -91,27 +91,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-91fe280e663f
   - type: implements
-    from: SYM-valuation-app-input-recorder-apply-bond-basis
-    to: REQ-valuation-basis-change
-    created_at: 2026-10-28T07:36:17.805Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b379c4345385
-  - type: implements
-    from: SYM-valuation-app-input-recorder-apply-bond-basis
-    to: REQ-decision-d36-9-basis-change-revalues-all
-    created_at: 2026-10-28T07:36:17.828Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7a6e45a8f774
-  - type: covered_by
-    from: SYM-valuation-app-input-recorder-apply-bond-basis
-    to: TEST-valuation-app-plan
-    created_at: 2026-10-28T07:36:17.837Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cc959c13ca72
-  - type: implements
     from: SYM-valuation-postgres-store-index-readings
     to: REQ-valuation-schema
     created_at: 2026-10-28T08:03:28.028Z
@@ -517,3 +496,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9500428b2df5
+  - type: implements
+    from: SYM-pl-pack
+    to: REQ-pl-values-per-wrapper
+    created_at: 2026-10-29T22:05:12.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09431dd510e8
+  - type: implements
+    from: SYM-pl-pack
+    to: REQ-valuation-three-values
+    created_at: 2026-10-29T22:05:12.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f57d11cac35d
+  - type: covered_by
+    from: SYM-pl-pack
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:05:12.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3eae336e9c9
+  - type: validates
+    from: TEST-views-stale
+    to: REQ-views-removed-instance-holdings-lots
+    created_at: 2026-10-30T00:04:44.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83f1149bbc97
+  - type: validates
+    from: TEST-views-stale
+    to: REQ-views-removed-instance-mark-at-read
+    created_at: 2026-10-30T00:04:44.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd5a9a2e6bde
+  - type: implements
+    from: SYM-viewsv1-valuation-get-liquidation-reporting
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:32:15.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d141b8a0a5fe
+  - type: covered_by
+    from: SYM-viewsv1-valuation-get-liquidation-reporting
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:32:15.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4496d5d78cbf

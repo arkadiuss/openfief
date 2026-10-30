@@ -1,6 +1,6 @@
 ---
 title: A bond lot held in an IKE or IKZE tax wrapper must have no Belka tax deducted from its net-if-redeemed value.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-25
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ A bond lot held in an IKE or IKZE tax wrapper must have no Belka tax deducted fr
 
 ## Context
 
-D-25 names IKE explicitly. IKZE was added by the orchestrating agent's task: no Belka tax is withheld inside IKZE either, and the flat IKZE withdrawal tax applies to the whole account, so it is not part of one bond's value. Refines REQ-AUTO-E10BE8CE13E67657. Modeled by Claude Code for the M0 valuation task; the author has not reviewed it yet. obligacjeskarbowe.pl and gov.pl were not reachable from the agent's sandbox, so the rule was checked only against search-result excerpts of issue letters and secondary calculators.
-
-## Source
-
-> no tax inside IKE
-
-docs/DESIGN.md D-25
+Closed: superseded by REQ-pl-values-per-wrapper. An early return from IKE is taxed on its gain in the liquidation value (D-77). Modeled by Claude Code for the values work package; the author has not reviewed it yet.

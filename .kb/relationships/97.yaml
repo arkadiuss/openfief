@@ -552,6 +552,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bc83a26c775
+  - type: implements
+    from: SYM-pl-pack-tax-rate-date
+    to: REQ-AUTO-C17116F5350E97D6
+    created_at: 2026-10-29T22:05:39.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70cb58fb8a37
+  - type: covered_by
+    from: SYM-pl-pack-tax-rate-date
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:05:39.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05019ede02b3
   - type: validates
     from: TEST-operator-manifests
     to: REQ-platform-exposes-nothing-by-default

@@ -22,14 +22,6 @@ var ErrNotReportingCurrency = errors.New("value is not in the reporting currency
 // one valuation query may span: about ten years of daily values.
 const MaxRangeDays = 3700
 
-// DateTotal is the sum of the valuations dated on one date: in the reporting
-// currency, and per original currency, in currency code order.
-type DateTotal struct {
-	Date       kernel.Date
-	Reporting  kernel.Money
-	ByCurrency []kernel.Money
-}
-
 // ValidateRange reports whether from..to, both inclusive, is a date range one
 // valuation query may ask for.
 func ValidateRange(from, to kernel.Date) error {
@@ -42,32 +34,109 @@ func ValidateRange(from, to kernel.Date) error {
 	return nil
 }
 
-// TotalsByDate sums the valued holding valuations in vals per date, in date
-// order: one total per date that has one. A holding valuation that lacks an
-// input counts nowhere. Each one's converted value must be in the reporting
-// currency; stored valuations convert to PLN (D-20), so only PLN reporting
-// adds up, and any other is an error wrapping ErrNotReportingCurrency.
-func TotalsByDate(vals []valuation.HoldingValuation, reporting kernel.Currency) ([]DateTotal, error) {
-	byDate := map[kernel.Date][]kernel.Money{}
-	sums := map[kernel.Date]kernel.Money{}
-	for i := range vals {
-		v := &vals[i]
-		if !v.Valued() {
-			continue
+// DateTotal is the sum of the valued holdings and the cash on one date
+// (D-106): its three values (D-77) in the reporting currency, and every
+// amount per original currency, in currency code order.
+type DateTotal struct {
+	Date kernel.Date
+	// Reporting is the gross total, cash included.
+	Reporting  kernel.Money
+	ByCurrency []kernel.Money
+	// Net and Liquidation are the totals of those values; NetMissing and
+	// LiquidationMissing report that some valued holding or converted cash
+	// lacks it, so the total is not given.
+	Net, Liquidation               kernel.Money
+	NetMissing, LiquidationMissing bool
+	// Cash is the cash in the totals, in the reporting currency.
+	Cash kernel.Money
+	// CashUnconverted reports cash with no FX rate on or before the date,
+	// in no total but ByCurrency.
+	CashUnconverted bool
+}
+
+// dayTotal accumulates one date's total.
+type dayTotal struct {
+	DateTotal
+
+	originals []kernel.Money
+}
+
+// TotalsByDate sums the valued holding valuations in vals and the cash in
+// cash per date, in date order: one total per date that has either. A
+// holding valuation that lacks an input counts nowhere; one that lacks its
+// net or liquidation value leaves that total missing. Each value must be
+// in the reporting currency; stored valuations convert to PLN (D-20), so
+// only PLN reporting adds up, and any other is an error wrapping
+// ErrNotReportingCurrency.
+func TotalsByDate(vals []valuation.HoldingValuation, cash []DayCash, reporting kernel.Currency) ([]DateTotal, error) {
+	days := map[kernel.Date]*dayTotal{}
+	day := func(d kernel.Date) *dayTotal {
+		if t, ok := days[d]; ok {
+			return t
 		}
-		sum, err := addIn(reporting, sums[v.Date], v.PLN)
-		if err != nil {
-			return nil, fmt.Errorf("total on %s: %w", v.Date, err)
-		}
-		sums[v.Date] = sum
-		byDate[v.Date] = append(byDate[v.Date], v.Value)
+		zero := kernel.NewMoney(kernel.Decimal{}, reporting)
+		t := &dayTotal{DateTotal: DateTotal{Date: d, Reporting: zero, Net: zero, Liquidation: zero, Cash: zero}}
+		days[d] = t
+		return t
 	}
-	out := make([]DateTotal, 0, len(sums))
-	for d, sum := range sums {
-		out = append(out, DateTotal{Date: d, Reporting: sum, ByCurrency: sumPerCurrency(byDate[d])})
+	for i := range vals {
+		if v := &vals[i]; v.Valued() {
+			if err := day(v.Date).addHolding(v, reporting); err != nil {
+				return nil, fmt.Errorf("total on %s: %w", v.Date, err)
+			}
+		}
+	}
+	for i := range cash {
+		if err := day(cash[i].Date).addCash(&cash[i], reporting); err != nil {
+			return nil, fmt.Errorf("total on %s: %w", cash[i].Date, err)
+		}
+	}
+	out := make([]DateTotal, 0, len(days))
+	for _, t := range days {
+		t.ByCurrency = sumPerCurrency(t.originals)
+		out = append(out, t.DateTotal)
 	}
 	slices.SortFunc(out, func(a, b DateTotal) int { return a.Date.Compare(b.Date) })
 	return out, nil
+}
+
+// addHolding adds a valued holding valuation.
+func (t *dayTotal) addHolding(v *valuation.HoldingValuation, reporting kernel.Currency) error {
+	t.originals = append(t.originals, v.Value)
+	return t.add(reporting, v.PLN, v.Net, v.Liquidation, !v.NetValued(), !v.LiquidationValued())
+}
+
+// addCash adds one account's cash in one currency.
+func (t *dayTotal) addCash(c *DayCash, reporting kernel.Currency) error {
+	t.originals = append(t.originals, c.Amount)
+	if c.Unconverted {
+		t.CashUnconverted = true
+		return nil
+	}
+	var err error
+	if t.Cash, err = addIn(reporting, t.Cash, c.Values.Gross); err != nil {
+		return err
+	}
+	return t.add(reporting, c.Values.Gross, c.Values.Net, c.Values.Liquidation, false, c.Values.LiquidationUnknown)
+}
+
+// add adds the three values, each unless it is missing.
+func (t *dayTotal) add(reporting kernel.Currency, gross, net, liquidation kernel.Money, noNet, noLiquidation bool) error {
+	var err error
+	if t.Reporting, err = addIn(reporting, t.Reporting, gross); err != nil {
+		return err
+	}
+	if noNet {
+		t.NetMissing = true
+	} else if t.Net, err = addIn(reporting, t.Net, net); err != nil {
+		return err
+	}
+	if noLiquidation {
+		t.LiquidationMissing = true
+	} else if t.Liquidation, err = addIn(reporting, t.Liquidation, liquidation); err != nil {
+		return err
+	}
+	return nil
 }
 
 // addIn adds m to sum, both in currency c; a sum with no currency is

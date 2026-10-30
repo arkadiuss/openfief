@@ -195,20 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a022a11e8b5a
-  - type: implements
-    from: SYM-ui-share
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:53:06.659Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5273c4caa140
-  - type: implements
-    from: SYM-ui-share
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:53:06.674Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a4cb9da51712
   - type: covered_by
     from: SYM-ui-share
     to: TEST-ui-format
@@ -489,3 +475,136 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6c67108f471
+  - type: constrains
+    from: REQ-valuation-holding-three-values
+    to: FACT-SUBJECT-6A2F87E606504707
+    created_at: 2026-10-29T21:48:54.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecacfb891329
+  - type: requires_property
+    from: REQ-valuation-holding-three-values
+    to: FACT-PROP-3CB61F89A6EDC32D
+    created_at: 2026-10-29T21:48:54.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93caee72cfc9
+  - type: specified_by
+    from: REQ-valuation-holding-three-values
+    to: SCEN-valuation-holding-three-values
+    created_at: 2026-10-29T21:48:54.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb6609f52318
+  - type: implements
+    from: SYM-valuation-connectapi-offered-format
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:12:31.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2169bac16ac
+  - type: implements
+    from: SYM-valuation-connectapi-offered-format
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-29T23:12:31.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b76c2fabd1bd
+  - type: covered_by
+    from: SYM-valuation-connectapi-offered-format
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:12:31.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e671b5a84db
+  - type: implements
+    from: SYM-valuationv1-get-owner-settings-response-string
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:16:28.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b74cec760470
+  - type: covered_by
+    from: SYM-valuationv1-get-owner-settings-response-string
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:16:28.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa7a3cf51c6f
+  - type: implements
+    from: SYM-valuationv1connect-settings-service-client-set-marginal-rate
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:22:09.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9da5cf8786f3
+  - type: covered_by
+    from: SYM-valuationv1connect-settings-service-client-set-marginal-rate
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:22:09.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae1469fa9f54
+  - type: implements
+    from: SYM-ui-share
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:40:07.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95336971a366
+  - type: implements
+    from: SYM-ui-share
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:45:19.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07b24c21051f
+  - type: implements
+    from: SYM-ui-separators
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:58:04.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c955d2fecf3f
+  - type: implements
+    from: SYM-ui-separators
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:58:04.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-034bdfe9f314
+  - type: covered_by
+    from: SYM-ui-separators
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:58:04.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e3d37fbf557
+  - type: constrains
+    from: REQ-ui-model-portfolio-performance-chart
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-30T03:39:40.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3907290982e
+  - type: requires_property
+    from: REQ-ui-model-portfolio-performance-chart
+    to: FACT-PROP-275863621DE61517
+    created_at: 2026-10-30T03:39:41.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-825a03680a3d
+  - type: specified_by
+    from: REQ-ui-model-portfolio-performance-chart
+    to: SCEN-ui-model-portfolio
+    created_at: 2026-10-30T03:39:41.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6568d9dc6ee1
+  - type: supersedes
+    from: REQ-ui-model-portfolio-performance-chart
+    to: REQ-ui-model-portfolio
+    created_at: 2026-10-30T03:39:41.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abac5943b69e

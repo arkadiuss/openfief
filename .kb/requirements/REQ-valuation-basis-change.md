@@ -1,6 +1,6 @@
 ---
 title: Applying the configured bond basis must revalue every account from its first transaction when it differs from the recorded basis, must not revalue anything when it is the same, and must reject the market basis.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-36
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ Applying the configured bond basis must revalue every account from its first tra
 
 ## Context
 
-D-36 makes the bond basis configurable and says changing it revalues everything; comparing with the recorded basis keeps an unchanged restart from revaluing. Refines REQ-decision-d36-9-basis-change-revalues-all. Modeled by Claude Code for the M0 revaluation task (D-36); the author has not reviewed it yet.
-
-## Source
-
-> Configurable: worker concurrency, the end-of-day schedule and the bond basis (D-25); changing the basis revalues everything.
-
-docs/DESIGN.md D-36
+Closed: superseded by REQ-valuation-rules-version-revalues. D-36 no longer revalues on a basis change. Modeled by Claude Code for the values work package; the author has not reviewed it yet.

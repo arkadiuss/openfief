@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-655716c5b69e
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-days
+    to: REQ-views-three-values
+    created_at: 2026-10-30T01:30:54.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afecd50bdd29
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-days
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-30T01:30:54.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d87a15fd1302

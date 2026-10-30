@@ -239,13 +239,6 @@ relationships:
     id: rel-990b94f96c1e
   - type: implements
     from: SYM-core-parse-revoke
-    to: REQ-core-config
-    created_at: 2026-10-28T14:34:15.325Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e7736003080d
-  - type: implements
-    from: SYM-core-parse-revoke
     to: REQ-core-token-commands
     created_at: 2026-10-28T14:34:15.347Z
     created_by: kibi/upsert
@@ -524,3 +517,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4585e18423e
+  - type: implements
+    from: SYM-core-parse-revoke
+    to: REQ-core-serve-flags
+    created_at: 2026-10-29T21:54:08.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22a2fcdef532
+  - type: executable_for
+    from: SYM-pl-test-pack-defaults
+    to: TEST-pl-pack
+    created_at: 2026-10-29T22:07:31.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cc0498ec2b0
+  - type: implements
+    from: SYM-valuationv1-number-format
+    to: REQ-valuation-settings-service
+    created_at: 2026-10-29T23:14:26.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a9ef62dfa6
+  - type: covered_by
+    from: SYM-valuationv1-number-format
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:14:26.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c39c56ab38b5
