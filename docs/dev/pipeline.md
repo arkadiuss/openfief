@@ -109,14 +109,15 @@ The tool sorts each changed path by the first rule that matches it, in [classify
 | Operator code, through its imports | `gen:check` |
 | A deleted file | `docs:build`, since a page may link to it |
 
-`docs:check` (a second) and `kibi:staged` always run, and the commit-msg hook's `docs:fresh:commit` is unchanged. So a commit of docs or requirements alone runs `docs:check`, `docs:build`, `kibi:staged` and the staleness gate, and no Go step. Collecting the inputs and compiling the tool take about eight seconds. Measured on this repository's 66 packages, with a warm Go cache:
+`docs:check` (a second) and `kibi:staged` always run, and the commit-msg hook's `docs:fresh:commit` is unchanged. So a commit of docs or requirements alone runs `docs:check`, `docs:build`, `kibi:staged` and the staleness gate, and no Go step. Collecting the inputs and compiling the tool take a few seconds. Measured with `task check:commit` on this repository's 66 packages, a warm Go cache and other work on the machine:
 
 | Staged change | Steps | Time |
 |---|---|---|
-| A page under `docs/` | docs:check, docs:build, kibi:staged | about 3 minutes, almost all in docs:build |
-| One plugin's `main.go` | fmt, lint, govulncheck and tests of that plugin, kibi:staged | under a minute |
-| `internal/kernel` (41 packages import it) | fmt, lint, govulncheck and tests of 41 packages, kibi:staged | like the full Go steps, without the docs build |
-| `go.mod` | check:commit:full | about 6 minutes |
+| A page under `docs/` | docs:check, docs:build, kibi:staged | 3 minutes, almost all in docs:build |
+| One plugin's `main.go` | fmt, lint, govulncheck and tests of that plugin; plugin-labels.test.sh, which reads `plugins/`; kibi:staged | 22 seconds |
+| `internal/plugins/egress` (two packages import it) | fmt, lint, govulncheck and tests of 3 packages, kibi:staged | 30 seconds |
+| `internal/kernel` (41 packages import it) | fmt, lint, govulncheck and tests of 41 packages, kibi:staged | 63 seconds |
+| `go.mod` | check:commit:full | 7 minutes |
 
 The hook is less strict than CI by design: CI's `task check` stays whole, and runs on every pull request and every push to `main`. Linting a subset of packages can miss a finding that needs other packages (`dupl` compares code across packages), and a test that reads a file through a path built at run time, rather than a literal, isn't rerun when that file changes. [testing.md](testing.md#stability) asks tests to name such files with literal paths.
 
