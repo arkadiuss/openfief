@@ -171,7 +171,7 @@ func wantStaticAsset(t *testing.T, h *harness, asset string) {
 
 // underPage returns the page or API path asset is or sits under, or "".
 func underPage(asset string) string {
-	for _, page := range []string{"/", "/login", "/enroll", "/accounts", "/allocation", "/value-chart", "/settings", "/price-checks", "/v1", workerPath} {
+	for _, page := range []string{"/", "/login", "/enroll", "/accounts", "/allocation", "/value-chart", "/settings", "/price-checks", "/transfers", "/v1", workerPath} {
 		if asset == page || (page != "/" && strings.HasPrefix(asset, page+"/")) {
 			return page
 		}

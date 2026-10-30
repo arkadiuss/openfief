@@ -43,7 +43,7 @@ async function serve() {
 // The fakes' one account is acc-synthetic-1 (internal/views/ui/fakes_test.go).
 const pages = {
   overview: '/', accounts: '/accounts', account: '/accounts/acc-synthetic-1', assertions: '/assertions',
-  'price-checks': '/price-checks', sleeves: '/sleeves', plugins: '/plugins', settings: '/settings', setup: '/setup',
+  'price-checks': '/price-checks', transfers: '/transfers', sleeves: '/sleeves', plugins: '/plugins', settings: '/settings', setup: '/setup',
 };
 const signedOut = { login: '/login', enroll: '/enroll', offline: '/static/offline.html' };
 
