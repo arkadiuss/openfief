@@ -52497,32 +52497,6 @@ symbols:
         target: TEST-ui-auth
       - type: implements
         target: REQ-ui-login-flows
-  - id: SYM-ui-format-amount
-    title: formatAmount
-    sourceFile: internal/views/ui/format.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:52:54.668Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-format
-      - type: implements
-        target: REQ-ui-formatting
-  - id: SYM-ui-format-money
-    title: formatMoney
-    sourceFile: internal/views/ui/format.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:53:00.027Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-format
-      - type: implements
-        target: REQ-ui-formatting
   - id: SYM-ui-share
     title: share
     sourceFile: internal/views/ui/format.go
@@ -52535,9 +52509,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-formatting
+        target: REQ-ui-formatting-number-format
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-dimension
     title: dimension
     sourceFile: internal/views/ui/format.go
@@ -52552,7 +52526,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-dimensions
     title: dimensions
     sourceFile: internal/views/ui/format.go
@@ -52567,7 +52541,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-parse-dimension
     title: parseDimension
     sourceFile: internal/views/ui/format.go
@@ -52582,7 +52556,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-book-label
     title: bookLabel
     sourceFile: internal/views/ui/format.go
@@ -52595,7 +52569,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-formatting
+        target: REQ-ui-formatting-number-format
   - id: SYM-ui-instrument-label
     title: instrumentLabel
     sourceFile: internal/views/ui/format.go
@@ -52608,7 +52582,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-formatting
+        target: REQ-ui-formatting-number-format
   - id: SYM-ui-enum-label
     title: enumLabel
     sourceFile: internal/views/ui/format.go
@@ -52621,7 +52595,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-formatting
+        target: REQ-ui-formatting-number-format
   - id: SYM-ui-scope-label
     title: scopeLabel
     sourceFile: internal/views/ui/format.go
@@ -52634,7 +52608,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-formatting
+        target: REQ-ui-formatting-number-format
   - id: SYM-ui-account-row
     title: accountRow
     sourceFile: internal/views/ui/overview.go
@@ -52649,7 +52623,7 @@ symbols:
       - type: implements
         target: REQ-decision-d36-7-ui-valuation-status
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-allocation-row
     title: allocationRow
     sourceFile: internal/views/ui/overview.go
@@ -52664,7 +52638,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-allocation-view
     title: allocationView
     sourceFile: internal/views/ui/overview.go
@@ -52680,7 +52654,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-allocation-view-link
     title: allocationView.Link
     sourceFile: internal/views/ui/overview.go
@@ -52695,7 +52669,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-allocation-view-fragment-link
     title: allocationView.FragmentLink
     sourceFile: internal/views/ui/overview.go
@@ -52710,7 +52684,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-overview-data
     title: overviewData
     sourceFile: internal/views/ui/overview.go
@@ -52723,7 +52697,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pages
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-chart-data
     title: chartData
     sourceFile: internal/views/ui/overview.go
@@ -52737,9 +52711,11 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-formatting
+        target: REQ-ui-charts-number-format
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-overview-values
   - id: SYM-ui-chart-data-encode
     title: chartData.encode
     sourceFile: internal/views/ui/overview.go
@@ -52752,9 +52728,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-formatting
+        target: REQ-ui-formatting-number-format
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-as-of-date
     title: asOfDate
     sourceFile: internal/views/ui/overview.go
@@ -52767,7 +52743,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-build-allocation
     title: buildAllocation
     sourceFile: internal/views/ui/overview.go
@@ -52782,7 +52758,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-server-overview
     title: server.overview
     sourceFile: internal/views/ui/overview.go
@@ -52795,7 +52771,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pages
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
       - type: implements
         target: REQ-valuation-reporting-currency
   - id: SYM-ui-server-allocation
@@ -52812,7 +52788,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-server-account-rows
     title: server.accountRows
     sourceFile: internal/views/ui/overview.go
@@ -52827,7 +52803,7 @@ symbols:
       - type: implements
         target: REQ-decision-d36-7-ui-valuation-status
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-server-allocation-fragment
     title: server.allocationFragment
     sourceFile: internal/views/ui/overview.go
@@ -52842,7 +52818,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-config
     title: Config
     sourceFile: internal/views/ui/server.go
@@ -53224,7 +53200,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-format
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-settings-data
     title: settingsData
     sourceFile: internal/views/ui/settings.go
@@ -63943,7 +63919,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-model-view
     title: modelView
     sourceFile: internal/views/ui/performance.go
@@ -63958,7 +63934,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-drawdown-row
     title: drawdownRow
     sourceFile: internal/views/ui/performance.go
@@ -63973,7 +63949,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-chart-series
     title: chartSeries
     sourceFile: internal/views/ui/performance.go
@@ -63988,7 +63964,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-target-label
     title: targetLabel
     sourceFile: internal/views/ui/performance.go
@@ -64003,7 +63979,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-gap-label
     title: gapLabel
     sourceFile: internal/views/ui/performance.go
@@ -64018,7 +63994,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-drawdown-of
     title: drawdownOf
     sourceFile: internal/views/ui/performance.go
@@ -64033,7 +64009,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-build-model
     title: buildModel
     sourceFile: internal/views/ui/performance.go
@@ -64048,7 +64024,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-build-performance
     title: buildPerformance
     sourceFile: internal/views/ui/performance.go
@@ -64063,7 +64039,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-ui-server-performance
     title: server.performance
     sourceFile: internal/views/ui/performance.go
@@ -64078,7 +64054,7 @@ symbols:
       - type: implements
         target: REQ-ui-model-portfolio
       - type: implements
-        target: REQ-ui-overview
+        target: REQ-ui-overview-values
   - id: SYM-views-ghostfolio-activity-type
     title: ActivityType
     sourceFile: internal/views/ghostfolio/model.go
@@ -75776,19 +75752,6 @@ symbols:
         target: TEST-ui-design
       - type: implements
         target: REQ-ui-plugin-trust-badges
-  - id: SYM-ui-balance-label
-    title: balanceLabel
-    sourceFile: internal/views/ui/format.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T09:58:02.791Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-format
-      - type: implements
-        target: REQ-ui-formatting
   - id: SYM-ui-test-no-colors-outside-tokens
     title: TestNoColorsOutsideTokens
     sourceFile: internal/views/ui/design_test.go
@@ -89276,6 +89239,10 @@ symbols:
       - type: implements
         target: REQ-pl-values-per-wrapper
       - type: implements
+        target: REQ-valuation-gross-value
+      - type: implements
+        target: REQ-valuation-liquidation-value
+      - type: implements
         target: REQ-valuation-three-values
   - id: SYM-pl-all-pln
     title: allPLN
@@ -94858,3 +94825,786 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-kube-core-access
+  - id: SYM-ui-from-percent
+    title: fromPercent
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:57:01.235Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-to-percent
+    title: toPercent
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:57:10.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-posted-fee-rule
+    title: postedFeeRule
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:57:18.659Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-terms-form
+    title: termsForm
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:57:26.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-terms-fields
+    title: termsFields
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:57:33.608Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-test-helper-fake-read-get-settings
+    title: fakeRead.GetSettings
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:57:41.319Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pages
+  - id: SYM-ui-number-format
+    title: numberFormat
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:57:47.296Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-ui-format-of
+    title: formatOf
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:57:54.560Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-ui-separators
+    title: separators
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:58:02.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-ui-number-format-amount
+    title: numberFormat.amount
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:58:09.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-ui-number-format-money
+    title: numberFormat.money
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:58:17.375Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-ui-number-format-balance
+    title: numberFormat.balance
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:58:25.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-separators-only
+  - id: SYM-ui-test-helper-fake-accounts-last-create
+    title: fakeAccounts.lastCreate
+    sourceFile: internal/views/ui/onboarding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:58:34.875Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-onboarding
+  - id: SYM-ui-test-helper-fake-accounts-last-update
+    title: fakeAccounts.lastUpdate
+    sourceFile: internal/views/ui/onboarding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:58:42.031Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-onboarding
+  - id: SYM-ui-allocation-view-query
+    title: allocationView.query
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:58:49.341Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-allocation-view-value-link
+    title: allocationView.ValueLink
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:58:56.730Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-money-charts-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-allocation-view-value-fragment-link
+    title: allocationView.ValueFragmentLink
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:59:07.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-money-charts-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-format-choice
+    title: formatChoice
+    sourceFile: internal/views/ui/ownersettings.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:59:16.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-values-settings
+    title: valuesSettings
+    sourceFile: internal/views/ui/ownersettings.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:59:24.169Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-server-load-values-settings
+    title: server.loadValuesSettings
+    sourceFile: internal/views/ui/ownersettings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:59:32.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-server-set-number-format
+    title: server.setNumberFormat
+    sourceFile: internal/views/ui/ownersettings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:59:40.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-server-set-marginal-rate
+    title: server.setMarginalRate
+    sourceFile: internal/views/ui/ownersettings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:59:50.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-number-format-setting
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-chart-kinds
+    title: chartKinds
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T02:59:58.158Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-money-charts-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-parse-chart-kind
+    title: parseChartKind
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:00:06.308Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-money-charts-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-value-chart-view
+    title: valueChartView
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:00:12.468Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-chart-money-with-cash
+      - type: implements
+        target: REQ-ui-value-performance-separate-charts
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-value-chart-view-query
+    title: valueChartView.query
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:00:19.381Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-chart-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-value-chart-view-link
+    title: valueChartView.Link
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:00:26.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-chart-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-value-chart-view-fragment-link
+    title: valueChartView.FragmentLink
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:00:34.195Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-chart-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-build-value-chart
+    title: buildValueChart
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:00:44.297Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-chart-money-with-cash
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-server-value-chart
+    title: server.valueChart
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:00:58.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-chart-money-with-cash
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-server-value-chart-fragment
+    title: server.valueChartFragment
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:01:10.727Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-chart-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-format-key
+    title: formatKey
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:01:23.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+  - id: SYM-ui-with-format
+    title: withFormat
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:01:37.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-setting
+  - id: SYM-ui-request-format
+    title: requestFormat
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:01:48.101Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+      - type: implements
+        target: REQ-ui-number-format-setting
+  - id: SYM-ui-value-kind
+    title: valueKind
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:01:58.357Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-money-charts-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-value-kinds
+    title: valueKinds
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:02:07.868Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-money-charts-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-parse-value-kind
+    title: parseValueKind
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:02:17.492Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-money-charts-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-total-of
+    title: totalOf
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:02:27.182Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-three-values-tables
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-missing-label
+    title: missingLabel
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:02:36.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-pl-ikze-liquidation-missing
+      - type: implements
+        target: REQ-ui-three-values-shown
+  - id: SYM-ui-wrapper-label
+    title: wrapperLabel
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:02:46.878Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-is-zero
+    title: isZero
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:02:58.971Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-number-format-fee-rule
+    title: numberFormat.feeRule
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:03:08.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-value-settings-forms
+  - id: SYM-ui-test-helper-fake-settings
+    title: fakeSettings
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:03:15.788Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-helper-fake-formats
+    title: fakeFormats
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:03:26.609Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-helper-fake-settings-get-owner-settings
+    title: fakeSettings.GetOwnerSettings
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:03:37.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-helper-fake-settings-set-number-format
+    title: fakeSettings.SetNumberFormat
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:03:47.133Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-helper-fake-settings-set-marginal-rate
+    title: fakeSettings.SetMarginalRate
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:03:56.525Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-helper-fake-settings-locked
+    title: fakeSettings.locked
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:04:05.152Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-overview-three-values
+    title: TestOverviewThreeValues
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:04:13.966Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-helper-value-names
+    title: valueNames
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:04:23.659Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-value-switches
+    title: TestValueSwitches
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:04:33.097Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-account-three-values-and-marks
+    title: TestAccountThreeValuesAndMarks
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:04:42.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-number-format-setting
+    title: TestNumberFormatSetting
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:04:56.314Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-account-terms-forms
+    title: TestAccountTermsForms
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:05:07.905Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-number-formats
+    title: TestNumberFormats
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:05:16.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-test-value-labels
+    title: TestValueLabels
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:05:25.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-ui-plain-format
+    title: plainFormat
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:09:47.351Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-formatting-number-format
+  - id: SYM-ui-all-values
+    title: allValues
+    sourceFile: internal/views/ui/valuechart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:09:59.586Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-money-charts-value-switch
+      - type: implements
+        target: REQ-ui-value-switches
+  - id: SYM-ui-server-charts
+    title: server.charts
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:10:09.628Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-overview-values
+      - type: implements
+        target: REQ-ui-value-switches

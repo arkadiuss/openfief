@@ -209,20 +209,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d4fc9c6d10e
-  - type: implements
-    from: SYM-ui-chart-data
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:20.763Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3d70448ecded
-  - type: implements
-    from: SYM-ui-chart-data
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:54:20.780Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-02964ad6ff0d
   - type: covered_by
     from: SYM-ui-chart-data
     to: TEST-ui-format
@@ -489,3 +475,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9fb53145e945
+  - type: implements
+    from: SYM-ui-chart-data
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:39:17.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0b3bc3780f8
+  - type: implements
+    from: SYM-ui-chart-data
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:41:59.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b130038b4609
+  - type: implements
+    from: SYM-ui-chart-data
+    to: REQ-ui-charts-number-format
+    created_at: 2026-10-30T03:06:59.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb4b50e0255d

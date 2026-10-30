@@ -197,13 +197,6 @@ relationships:
     id: rel-4c8464227a5c
   - type: implements
     from: SYM-ui-drawdown-row
-    to: REQ-ui-overview
-    created_at: 2026-10-29T00:14:37.238Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cb268d696381
-  - type: implements
-    from: SYM-ui-drawdown-row
     to: REQ-ui-model-portfolio
     created_at: 2026-10-29T00:14:37.259Z
     created_by: kibi/upsert
@@ -447,3 +440,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76067391a3e6
+  - type: implements
+    from: SYM-ui-drawdown-row
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:43:06.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60e2aa1fa39b

@@ -253,13 +253,6 @@ relationships:
     id: rel-33f74e35101e
   - type: implements
     from: SYM-ui-performance-view
-    to: REQ-ui-overview
-    created_at: 2026-10-29T00:14:27.048Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5a3b9158e639
-  - type: implements
-    from: SYM-ui-performance-view
     to: REQ-ui-model-portfolio
     created_at: 2026-10-29T00:14:27.074Z
     created_by: kibi/upsert
@@ -363,3 +356,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c97d3a79dd0d
+  - type: implements
+    from: SYM-ui-performance-view
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:44:05.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75170193abf4
+  - type: implements
+    from: SYM-ui-number-format-amount
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:58:11.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a308e056b613
+  - type: implements
+    from: SYM-ui-number-format-amount
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:58:11.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0512eed87e08
+  - type: covered_by
+    from: SYM-ui-number-format-amount
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:58:11.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d23169d2ee4f
+  - type: implements
+    from: SYM-ui-value-kinds
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:02:10.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12bdb8601355
+  - type: implements
+    from: SYM-ui-value-kinds
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T03:02:10.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24d268d2e2de
+  - type: covered_by
+    from: SYM-ui-value-kinds
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:02:10.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc0fe688d337

@@ -1,17 +1,23 @@
 {{define "allocation"}}
 <section id="allocation" class="card" aria-labelledby="allocation-title">
   <h2 id="allocation-title">Allocation on {{.Date}}</h2>
+  {{$a := .}}
+  <nav class="switch" aria-label="Value">
+    {{range .Values}}
+    <a href="{{$a.ValueLink .}}" hx-get="{{$a.ValueFragmentLink .}}" hx-target="#allocation" hx-swap="outerHTML" hx-push-url="{{$a.ValueLink .}}"
+       {{if eq .Key $a.Value.Key}}aria-current="true"{{end}}>{{.Label}}</a>
+    {{end}}
+  </nav>
   <nav class="switch" aria-label="Split by">
-    {{$a := .}}
     {{range .Dimensions}}
     <a href="{{$a.Link .}}" hx-get="{{$a.FragmentLink .}}" hx-target="#allocation" hx-swap="outerHTML" hx-push-url="{{$a.Link .}}"
        {{if eq .Key $a.Dimension.Key}}aria-current="true"{{end}}>{{.Label}}</a>
     {{end}}
   </nav>
   {{if .Groups}}
-  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Allocation by {{.Dimension.Label}}, as in the table below"></canvas></div>
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="{{.Value.Label}} value by {{.Dimension.Label}}, as in the table below"></canvas></div>
   <div class="table"><table>
-    <thead><tr><th scope="col">{{.Dimension.Label}}</th><th scope="col" class="num">Value</th><th scope="col" class="num">Share</th></tr></thead>
+    <thead><tr><th scope="col">{{.Dimension.Label}}</th><th scope="col" class="num">{{.Value.Label}} value</th><th scope="col" class="num">Share</th></tr></thead>
     <tbody>
     {{range .Groups}}<tr><td>{{.Key}}</td><td class="num">{{money .Value}}</td><td class="num">{{.Share}}</td></tr>{{end}}
     </tbody>
@@ -21,8 +27,8 @@
   <p class="muted">Nothing is valued on this date yet.</p>
   {{end}}
   {{if .Unvalued}}
-  <p class="alert alert-warn">Left out for lack of a valuation on {{.Date}}:
-    {{range $i, $u := .Unvalued}}{{if $i}}, {{end}}{{instrument $u.Instrument}} in {{$u.AccountId}}{{end}}.</p>
+  <p class="alert alert-warn">Left out for lack of a {{.Value.Label}} value on {{.Date}}:
+    {{range $i, $u := .Unvalued}}{{if $i}}, {{end}}{{with $u.Cash}}cash of {{money .}}{{else}}{{instrument $u.Instrument}}{{end}} in {{$u.AccountId}}{{with $u.Missing}} ({{missing .}}){{end}}{{end}}.</p>
   {{end}}
 </section>
 {{end}}

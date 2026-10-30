@@ -158,12 +158,12 @@
   <h2 id="account-list-title">Accounts</h2>
   {{if $d.Accounts}}
   <div class="table"><table>
-    <thead><tr><th scope="col">Account</th><th scope="col">Institution</th><th scope="col">Sleeve</th><th scope="col">Fed by</th>{{if $d.Owner}}<th scope="col"><span class="sr-only">Change</span></th>{{end}}</tr></thead>
+    <thead><tr><th scope="col">Account</th><th scope="col">Institution</th><th scope="col">Sleeve</th><th scope="col">Tax wrapper</th><th scope="col">Fed by</th>{{if $d.Owner}}<th scope="col"><span class="sr-only">Change</span></th>{{end}}</tr></thead>
     <tbody>
     {{range $d.Accounts}}
     <tr>
       <td><a href="/accounts/{{.Account.GetId}}">{{.Account.GetName}}</a> <span class="muted mono">{{.Account.GetId}}</span></td>
-      <td>{{.Account.GetInstitution}}</td><td>{{.Account.GetSleeve}}</td>
+      <td>{{.Account.GetInstitution}}</td><td>{{.Account.GetSleeve}}</td><td>{{wrapper .Account.GetTaxWrapper}}</td>
       <td>{{range .Instances}}<span class="pill pill-neutral mono">{{.}}</span> {{else}}<span class="muted">no connector</span>{{end}}</td>
       {{if $d.Owner}}<td>
         <details class="change"><summary>Change</summary>
@@ -172,6 +172,7 @@
           <div class="fields">
             <div class="field"><label for="acc-{{.Account.GetId}}-name">Name</label><input id="acc-{{.Account.GetId}}-name" name="name" value="{{.Account.GetName}}" required maxlength="100" autocomplete="off"></div>
             <div class="field"><label for="acc-{{.Account.GetId}}-sleeve">Sleeve</label>{{template "sleeve-select" (sleeveSelect (print "acc-" .Account.GetId "-sleeve") $d.Sleeves .Account.GetSleeve)}}</div>
+            {{template "terms-fields" (terms (print "acc-" .Account.GetId) $d.Wrappers .Account)}}
           </div>
           <div class="actions"><button type="submit">Save account</button></div>
         </form>
@@ -208,6 +209,7 @@
     <div class="fields">
       <div class="field"><label for="new-account-name">Name</label><input id="new-account-name" name="name" required maxlength="100" autocomplete="off" aria-describedby="new-account-name-help"><p class="help" id="new-account-name-help">Its ID is made from the name and never changes.</p></div>
       <div class="field"><label for="new-account-sleeve">Sleeve</label>{{template "sleeve-select" (sleeveSelect "new-account-sleeve" $d.Sleeves "")}}</div>
+      {{template "terms-fields" (terms "new-account" $d.Wrappers nil)}}
       <div class="field"><label for="new-account-instance">Connector instance</label>
         <select id="new-account-instance" name="instance" aria-describedby="new-account-instance-help"><option value="">None yet</option>{{range $d.Instances}}<option value="{{.}}">{{.}}</option>{{end}}</select>
         <p class="help" id="new-account-instance-help">The installed plugin that brings this account's data in.{{if $d.InstancesUnknown}} The core can't read its cluster now, so only connectors it has seen are listed.{{end}}</p></div>
@@ -239,4 +241,17 @@
   </table></div>
 </section>
 {{end}}
+{{end}}
+
+{{/* An account's tax wrapper (D-76) and sale fee rule (D-78). */}}
+{{define "terms-fields"}}
+<div class="field"><label for="{{.Prefix}}-wrapper">Tax wrapper</label>
+  <select id="{{.Prefix}}-wrapper" name="tax_wrapper">{{$cur := .Wrapper}}{{range $i, $w := .Wrappers}}<option value="{{$w}}"{{if or (eq $w $cur) (and (not $cur) (eq $i 0))}} selected{{end}}>{{wrapper $w}}</option>{{end}}</select></div>
+<div class="field"><label for="{{.Prefix}}-fee-rate">Sale commission</label>
+  <div class="unit"><input id="{{.Prefix}}-fee-rate" name="fee_rate" value="{{.Rate}}" inputmode="decimal" size="6" autocomplete="off" aria-describedby="{{.Prefix}}-fee-help"><span>%</span></div>
+  <p class="help" id="{{.Prefix}}-fee-help">Of the value sold, for the liquidation value. Empty keeps the rule; a new account's is zero until set.</p></div>
+<div class="field"><label for="{{.Prefix}}-fee-minimum">Minimum commission</label>
+  <div class="unit"><input id="{{.Prefix}}-fee-minimum" name="fee_minimum" value="{{.Minimum}}" inputmode="decimal" size="8" autocomplete="off"><input id="{{.Prefix}}-fee-currency" name="fee_minimum_currency" value="{{.Currency}}" aria-label="Minimum's currency" maxlength="3" size="4" autocomplete="off" pattern="[A-Za-z]{3}"></div></div>
+<div class="field"><label for="{{.Prefix}}-fee-conversion">Currency conversion</label>
+  <div class="unit"><input id="{{.Prefix}}-fee-conversion" name="fee_conversion" value="{{.Conversion}}" inputmode="decimal" size="6" autocomplete="off"><span>%</span></div></div>
 {{end}}

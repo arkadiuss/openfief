@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-20a65f8dc0a7
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-get-settings
+    to: TEST-ui-pages
+    created_at: 2026-10-30T02:57:43.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-695850c3a783

@@ -412,3 +412,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf85bca8dfdb
+  - type: implements
+    from: SYM-ui-value-chart-view-link
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:00:28.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1516d1188d5
+  - type: implements
+    from: SYM-ui-value-chart-view-link
+    to: REQ-ui-value-chart-value-switch
+    created_at: 2026-10-30T03:00:28.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e85ef4da6243
+  - type: covered_by
+    from: SYM-ui-value-chart-view-link
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:00:28.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c546b7f1ea9
+  - type: implements
+    from: SYM-ui-total-of
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:02:30.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-885e5248d2d6
+  - type: covered_by
+    from: SYM-ui-total-of
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:02:30.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03f9918aa25f
+  - type: implements
+    from: SYM-ui-total-of
+    to: REQ-ui-three-values-tables
+    created_at: 2026-10-30T03:07:11.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dff90acd9616

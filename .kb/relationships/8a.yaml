@@ -225,13 +225,6 @@ relationships:
     id: rel-9c5906b6c0ab
   - type: implements
     from: SYM-ui-server-allocation
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:47.296Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-40d9e6c1ce58
-  - type: implements
-    from: SYM-ui-server-allocation
     to: REQ-AUTO-68636F42D98D4CF7
     created_at: 2026-10-28T19:54:47.319Z
     created_by: kibi/upsert
@@ -412,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b10661890a1b
+  - type: implements
+    from: SYM-ui-server-allocation
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:44:30.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2726f1d50f60

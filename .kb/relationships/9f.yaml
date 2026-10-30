@@ -211,13 +211,6 @@ relationships:
     id: rel-4d5c2a09591d
   - type: implements
     from: SYM-ui-account-row
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:53:50.627Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f9efbff20c42
-  - type: implements
-    from: SYM-ui-account-row
     to: REQ-decision-d36-7-ui-valuation-status
     created_at: 2026-10-28T19:53:50.653Z
     created_by: kibi/upsert
@@ -426,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d59e0f1a0c80
+  - type: implements
+    from: SYM-ui-account-row
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:40:19.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81f17d016097

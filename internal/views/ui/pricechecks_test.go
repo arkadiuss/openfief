@@ -39,7 +39,7 @@ func TestPriceChecksPage(t *testing.T) {
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/price-checks", ""), demoSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "Flagged price checks", "2026-03-13", "XX0000000001", "84.125 GBP", "eodhd", "86.5 GBP", "ibkr-main",
+	wantBody(t, rec, "Flagged price checks", "2026-03-13", "XX0000000001", "84,125 GBP", "eodhd", "86,5 GBP", "ibkr-main",
 		"2.8232%", "by more than 1%")
 	wantNoBody(t, rec, "<script>", "style=")
 	rec = h.serve(t, request(http.MethodGet, "/price-checks", ""))

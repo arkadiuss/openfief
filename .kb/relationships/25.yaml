@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83a3b0c80e10
+  - type: implements
+    from: SYM-ui-value-chart-view-fragment-link
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:00:37.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c306ef7e2e9
+  - type: implements
+    from: SYM-ui-value-chart-view-fragment-link
+    to: REQ-ui-value-chart-value-switch
+    created_at: 2026-10-30T03:00:37.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52f57a9fb15e
+  - type: covered_by
+    from: SYM-ui-value-chart-view-fragment-link
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:00:37.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03acd996fa2c

@@ -195,20 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a022a11e8b5a
-  - type: implements
-    from: SYM-ui-share
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:53:06.659Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5273c4caa140
-  - type: implements
-    from: SYM-ui-share
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:53:06.674Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a4cb9da51712
   - type: covered_by
     from: SYM-ui-share
     to: TEST-ui-format
@@ -559,3 +545,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae1469fa9f54
+  - type: implements
+    from: SYM-ui-share
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:40:07.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95336971a366
+  - type: implements
+    from: SYM-ui-share
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:45:19.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07b24c21051f
+  - type: implements
+    from: SYM-ui-separators
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:58:04.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c955d2fecf3f
+  - type: implements
+    from: SYM-ui-separators
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:58:04.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-034bdfe9f314
+  - type: covered_by
+    from: SYM-ui-separators
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:58:04.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e3d37fbf557

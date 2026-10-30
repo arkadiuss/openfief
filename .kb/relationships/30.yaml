@@ -426,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c3d545f1f9e
+  - type: executable_for
+    from: SYM-ui-test-account-three-values-and-marks
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:04:46.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efc1b98e31d5

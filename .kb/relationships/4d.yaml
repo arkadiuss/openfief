@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f62c942dc593
+  - type: implements
+    from: SYM-ui-parse-value-kind
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:02:20.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b580407be36
+  - type: implements
+    from: SYM-ui-parse-value-kind
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T03:02:20.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b02ecdd57a3
+  - type: covered_by
+    from: SYM-ui-parse-value-kind
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:02:20.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ef54057841d

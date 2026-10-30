@@ -475,3 +475,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6b398846011
+  - type: implements
+    from: SYM-ui-parse-chart-kind
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:00:08.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b37ad332e45
+  - type: implements
+    from: SYM-ui-parse-chart-kind
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T03:00:08.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f56a188abcb3
+  - type: covered_by
+    from: SYM-ui-parse-chart-kind
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:00:08.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c7e41ee5993
+  - type: implements
+    from: SYM-ui-number-format-fee-rule
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T03:03:11.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f201046662ca
+  - type: covered_by
+    from: SYM-ui-number-format-fee-rule
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:03:11.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cf2bf0997e4

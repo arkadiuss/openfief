@@ -489,3 +489,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f538dc1cb8a
+  - type: implements
+    from: SYM-ui-format-of
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:57:57.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4e050f009a1
+  - type: implements
+    from: SYM-ui-format-of
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:57:57.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-232ac1154f3a
+  - type: covered_by
+    from: SYM-ui-format-of
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:57:57.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-188891df4e53

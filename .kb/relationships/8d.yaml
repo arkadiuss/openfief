@@ -197,13 +197,6 @@ relationships:
     id: rel-ac62ca649dbb
   - type: implements
     from: SYM-ui-build-allocation
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:33.946Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1957d2827777
-  - type: implements
-    from: SYM-ui-build-allocation
     to: REQ-AUTO-68636F42D98D4CF7
     created_at: 2026-10-28T19:54:33.964Z
     created_by: kibi/upsert
@@ -405,3 +398,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8a7d4a9f64f8
+  - type: implements
+    from: SYM-ui-build-allocation
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:41:23.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5631a516a446
+  - type: implements
+    from: SYM-ui-build-value-chart
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:00:47.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba39ad165ec8
+  - type: implements
+    from: SYM-ui-build-value-chart
+    to: REQ-ui-value-chart-money-with-cash
+    created_at: 2026-10-30T03:00:48.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07806c49094a
+  - type: covered_by
+    from: SYM-ui-build-value-chart
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:00:48.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-606fd19999c0
+  - type: implements
+    from: SYM-ui-with-format
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T03:01:41.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49f00529df5f
+  - type: implements
+    from: SYM-ui-with-format
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T03:01:41.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ac839cd94af
+  - type: covered_by
+    from: SYM-ui-with-format
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:01:41.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79f411370a37

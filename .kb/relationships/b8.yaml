@@ -295,13 +295,6 @@ relationships:
     id: rel-7efce2326d30
   - type: implements
     from: SYM-ui-allocation-view-link
-    to: REQ-ui-overview
-    created_at: 2026-10-28T19:54:03.738Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-17d949f96c3b
-  - type: implements
-    from: SYM-ui-allocation-view-link
     to: REQ-AUTO-68636F42D98D4CF7
     created_at: 2026-10-28T19:54:03.764Z
     created_by: kibi/upsert
@@ -601,3 +594,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cab4e690e8bc
+  - type: implements
+    from: SYM-ui-allocation-view-link
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:41:01.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7800433ac733
+  - type: implements
+    from: SYM-ui-number-format-balance
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:58:29.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a58144e249be
+  - type: implements
+    from: SYM-ui-number-format-balance
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:58:29.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aea5ef92cde
+  - type: covered_by
+    from: SYM-ui-number-format-balance
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:58:29.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e62f1351eab
+  - type: executable_for
+    from: SYM-ui-test-value-switches
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:04:35.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e07dee6d9393

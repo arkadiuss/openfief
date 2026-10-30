@@ -337,13 +337,6 @@ relationships:
     id: rel-77dd6c8f69bf
   - type: implements
     from: SYM-ui-gap-label
-    to: REQ-ui-overview
-    created_at: 2026-10-29T00:14:52.622Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5d5a3116424e
-  - type: implements
-    from: SYM-ui-gap-label
     to: REQ-ui-model-portfolio
     created_at: 2026-10-29T00:14:52.645Z
     created_by: kibi/upsert
@@ -559,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aeefb7f6a42e
+  - type: implements
+    from: SYM-ui-gap-label
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:43:18.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d37e1dd25d6

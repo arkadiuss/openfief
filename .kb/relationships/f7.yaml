@@ -384,3 +384,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55b70c037cbf
+  - type: implements
+    from: SYM-ui-number-format-money
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:58:20.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82a4275166d3
+  - type: implements
+    from: SYM-ui-number-format-money
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:58:20.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-406a7adf7509
+  - type: covered_by
+    from: SYM-ui-number-format-money
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:58:20.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12f60a3f340f

@@ -209,13 +209,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f39eb661dae
-  - type: implements
-    from: SYM-ui-enum-label
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:53:41.362Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ec3d796d28d3
   - type: covered_by
     from: SYM-ui-enum-label
     to: TEST-ui-format
@@ -391,3 +384,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c904196ea2da
+  - type: implements
+    from: SYM-ui-enum-label
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:39:38.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4dd1655912d

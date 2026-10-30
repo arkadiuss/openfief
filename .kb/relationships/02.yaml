@@ -489,3 +489,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9bec4a885d3
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-settings-set-marginal-rate
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:03:59.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f27d319f9b32

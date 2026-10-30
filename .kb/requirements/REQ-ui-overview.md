@@ -1,6 +1,6 @@
 ---
 title: The built-in UI's overview must show the portfolio's total in the reporting currency, each account's valuation status, the allocation by asset class, currency, institution or sleeve, and the value over time as the portfolio's time-weighted return index from go-live, 100 on go-live, from the read API, without computing performance itself.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-30
 tags:
   - strict-modeling
@@ -34,14 +34,4 @@ The built-in UI's overview must show the portfolio's total in the reporting curr
 
 ## Context
 
-D-30 (two charts), D-36 (valuation status in the UI), D-62 (reporting currency), D-61 (the portfolio's line is its time-weighted return, served by GetPerformance), D-53 (both lines start at 100 on go-live). Revised when the read API gained GetPerformance: the UI no longer says 'TWR: not built'. Modeled by Claude Code for the model portfolio task; the author has not reviewed it yet.
-
-## Source
-
-> **[D-30]** The built-in UI draws two charts in M0: allocation (by asset class, currency, broker or sleeve) and value over time, which starts at go-live (D-23).
-
-docs/DESIGN.md#D-30
-
-> **[D-61]** Both lines are in the reporting currency (D-62). The model's backtest also needs exchange rates into that currency, so it starts no earlier than they do; NBP's rates begin on 2002-01-02.
-
-docs/DESIGN.md#D-61
+Closed: superseded by REQ-ui-overview-values. D-106 separates the value and performance charts; D-77 gives three values. Modeled by Claude Code for the values work package; the author has not reviewed it yet.

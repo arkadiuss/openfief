@@ -224,20 +224,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-9a5875fe9ec2
   - type: implements
-    from: SYM-ui-format-amount
-    to: REQ-ui-formatting
-    created_at: 2026-10-28T19:52:56.022Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c9c61e5e79c2
-  - type: covered_by
-    from: SYM-ui-format-amount
-    to: TEST-ui-format
-    created_at: 2026-10-28T19:52:56.046Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3a1a7e55ea30
-  - type: implements
     from: SYM-valuation-pg-scan-index-level
     to: REQ-valuation-index-levels
     created_at: 2026-10-28T22:47:19.971Z
@@ -279,13 +265,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b57be1116a51
-  - type: implements
-    from: SYM-ui-chart-series
-    to: REQ-ui-overview
-    created_at: 2026-10-29T00:14:42.377Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a9bbf80f74a2
   - type: implements
     from: SYM-ui-chart-series
     to: REQ-ui-model-portfolio
@@ -531,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d39fc4d410f
+  - type: implements
+    from: SYM-ui-chart-series
+    to: REQ-ui-overview-values
+    created_at: 2026-10-30T02:42:20.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e933dc5dbe0

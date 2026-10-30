@@ -482,3 +482,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dce9a6617a5
+  - type: implements
+    from: SYM-ui-server-value-chart
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T03:01:02.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17a3b0b8d0e2
+  - type: implements
+    from: SYM-ui-server-value-chart
+    to: REQ-ui-value-chart-money-with-cash
+    created_at: 2026-10-30T03:01:02.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd182d1c6ab2
+  - type: covered_by
+    from: SYM-ui-server-value-chart
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:01:02.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c1ded0ff832
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-settings-get-owner-settings
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:03:40.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ff2321aab18

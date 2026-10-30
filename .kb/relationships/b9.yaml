@@ -755,3 +755,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-373c7d718ab6
+  - type: constrains
+    from: REQ-ui-formatting-number-format
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-30T02:37:41.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52c10dd47683
+  - type: requires_property
+    from: REQ-ui-formatting-number-format
+    to: FACT-PROP-D2DE894910F46839
+    created_at: 2026-10-30T02:37:41.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7125db0a19b
+  - type: specified_by
+    from: REQ-ui-formatting-number-format
+    to: SCEN-ui-formatting-number-format
+    created_at: 2026-10-30T02:37:41.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-234fdfad53dd
+  - type: supersedes
+    from: REQ-ui-formatting-number-format
+    to: REQ-ui-formatting
+    created_at: 2026-10-30T02:37:41.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e981d6b2805

@@ -40,9 +40,12 @@ func (t transactionsView) NextFragment() string {
 
 // accountData is what an account's page shows.
 type accountData struct {
-	Date         string
-	Account      *viewsv1.Account
-	Status       *viewsv1.ValuationStatus
+	Date    string
+	Account *viewsv1.Account
+	Status  *viewsv1.ValuationStatus
+	// Total is the account's gross, net and liquidation values with cash
+	// on Date (D-77, D-106); nil when nothing is valued.
+	Total        *viewsv1.DateTotal
 	Holdings     []holdingRow
 	Lots         []*viewsv1.Lot
 	Cash         []*viewsv1.Money
@@ -156,6 +159,9 @@ func (s *server) positions(r *http.Request, sess session, data *accountData) (st
 		return "ListAssertionChecks", fmt.Errorf("ListAssertionChecks: %w", err)
 	}
 	data.Holdings = joinValuations(holdings.Msg.GetHoldings(), vals.Msg.GetValuations())
+	if totals := vals.Msg.GetTotals(); len(totals) > 0 {
+		data.Total = totals[len(totals)-1]
+	}
 	data.Lots, data.Cash, data.Checks = lots.Msg.GetLots(), cash.Msg.GetBalances(), checks.Msg.GetChecks()
 	return "", nil
 }

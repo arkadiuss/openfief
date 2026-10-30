@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-431eecf4d256
+  - type: constrains
+    from: REQ-ui-three-values-shown
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-30T02:37:28.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb081c862c31
+  - type: requires_property
+    from: REQ-ui-three-values-shown
+    to: FACT-PROP-39982716BF41DC5C
+    created_at: 2026-10-30T02:37:28.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0a307d044cb
+  - type: specified_by
+    from: REQ-ui-three-values-shown
+    to: SCEN-ui-three-values-shown
+    created_at: 2026-10-30T02:37:28.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a4f34958f0c

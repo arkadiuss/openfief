@@ -113,6 +113,24 @@
   </form>
 </section>
 {{end}}
+{{with .Values}}
+<section class="card" aria-labelledby="values-title">
+  <h2 id="values-title">Values and number format</h2>
+  <p class="muted">Amounts are in the reporting currency, {{.ReportingCurrency}}, and written in your number format. It changes only the separators, never the digits or the currency, in tables and charts alike.</p>
+  <form method="post" action="/settings/number-format">
+    <div class="field"><label for="number-format">Number format</label>
+      <select id="number-format" name="number_format" aria-describedby="number-format-help">{{range .Formats}}<option value="{{.Key}}"{{if .Chosen}} selected{{end}}>{{.Example}}</option>{{end}}</select>
+      <p class="help" id="number-format-help">{{if .FormatDefault}}The jurisdiction pack's default; you haven't picked one.{{else}}Your choice.{{end}}</p></div>
+    <div class="actions"><button type="submit">Save number format</button></div>
+  </form>
+  <form method="post" action="/settings/marginal-rate">
+    <div class="field"><label for="marginal-rate">Marginal PIT rate</label>
+      <div class="unit"><input id="marginal-rate" name="marginal_rate" value="{{.MarginalRate}}" required inputmode="decimal" size="6" autocomplete="off" aria-describedby="marginal-rate-help"><span>%</span></div>
+      <p class="help" id="marginal-rate-help">Your income tax rate, such as 12 or 32. Withdrawing from IKZE before 65 is taxed at it, so an IKZE's liquidation value stays missing until it is set{{if not .MarginalRate}}, as it is now{{end}}. Saving it revalues every account.</p></div>
+    <div class="actions"><button type="submit">Save marginal rate</button></div>
+  </form>
+</section>
+{{end}}
 {{with .MarketData}}
 <section class="card" aria-labelledby="market-data-title">
   <h2 id="market-data-title">Market-data sources</h2>

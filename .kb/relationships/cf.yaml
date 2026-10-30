@@ -405,3 +405,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07c802f292be
+  - type: verified_by
+    from: SCEN-ui-overview-values
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:37:21.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5e32a45d0d5
+  - type: verified_by
+    from: SCEN-ui-overview-values
+    to: TEST-ui-pages
+    created_at: 2026-10-30T02:37:22.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2c556cb3ff9
+  - type: verified_by
+    from: SCEN-ui-overview-values
+    to: TEST-ui-format
+    created_at: 2026-10-30T02:45:56.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fcb841d4e0c
+  - type: verified_by
+    from: SCEN-ui-overview-values
+    to: TEST-ui-model
+    created_at: 2026-10-30T02:45:56.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3489c09ddba0

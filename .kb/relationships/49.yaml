@@ -356,3 +356,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-524cc849b127
+  - type: implements
+    from: SYM-ui-allocation-view-value-link
+    to: REQ-ui-value-switches
+    created_at: 2026-10-30T02:58:59.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03a7edd9bdc4
+  - type: implements
+    from: SYM-ui-allocation-view-value-link
+    to: REQ-ui-money-charts-value-switch
+    created_at: 2026-10-30T02:58:59.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53ba5ba58ee0
+  - type: covered_by
+    from: SYM-ui-allocation-view-value-link
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:58:59.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c667a775fc3

@@ -398,3 +398,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d3a2e8d8a04
+  - type: implements
+    from: SYM-ui-server-load-values-settings
+    to: REQ-ui-value-settings-forms
+    created_at: 2026-10-30T02:59:35.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00a6aaf52cc3
+  - type: implements
+    from: SYM-ui-server-load-values-settings
+    to: REQ-ui-number-format-setting
+    created_at: 2026-10-30T02:59:35.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac13f7fa4fcd
+  - type: covered_by
+    from: SYM-ui-server-load-values-settings
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:59:35.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dd0d40380d6

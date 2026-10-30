@@ -35,28 +35,33 @@ type page struct {
 	Data    any
 }
 
-// templateFuncs are the helpers templates format values with.
-func templateFuncs() template.FuncMap {
+// templateFuncs are the helpers templates format values with, amounts in
+// the number format f (D-113).
+func templateFuncs(f numberFormat) template.FuncMap {
 	return template.FuncMap{
-		"money":        formatMoney,
-		"amount":       formatAmount,
+		"money":        f.money,
+		"amount":       f.amount,
 		"share":        share,
 		"percent":      percent,
 		"book":         bookLabel,
 		"instrument":   instrumentLabel,
 		"enum":         enumLabel,
-		"balance":      balanceLabel,
+		"balance":      f.balance,
+		"missing":      missingLabel,
+		"wrapper":      wrapperLabel,
+		"feeRule":      f.feeRule,
 		"trust":        trustLabel,
 		"badge":        badgeOf,
 		"roleFields":   roleFields,
 		"sleeveSelect": sleeveSelect,
+		"terms":        termsFields,
 	}
 }
 
 // parsePages parses every page under web/templates/pages with the layout
 // and the fragments.
 func parsePages() (*pages, error) {
-	base, err := template.New("layout.html").Funcs(templateFuncs()).ParseFS(webFS,
+	base, err := template.New("layout.html").Funcs(templateFuncs(plainFormat())).ParseFS(webFS,
 		"web/templates/layout.html", "web/templates/fragments/*.html")
 	if err != nil {
 		return nil, fmt.Errorf("parse layout: %w", err)
@@ -79,16 +84,22 @@ func parsePages() (*pages, error) {
 	return p, nil
 }
 
-// render writes a template of a page with status, buffered so a template
-// error never sends half a page: tmpl is "layout.html" for the whole page
-// or a fragment's name for an htmx swap.
-func (p *pages) render(w http.ResponseWriter, status int, name, tmpl string, data any) error {
-	set, ok := p.sets[name]
+// render writes a template of a page with status, its amounts in the
+// number format f, buffered so a template error never sends half a page:
+// tmpl is "layout.html" for the whole page or a fragment's name for an
+// htmx swap. Each render executes a clone of the parsed set with f's
+// helpers, so the parsed set is never executed and stays clonable.
+func (p *pages) render(w http.ResponseWriter, status int, name, tmpl string, data any, f numberFormat) error {
+	parsed, ok := p.sets[name]
 	if !ok {
 		return fmt.Errorf("%w: %s", errNoPage, name)
 	}
+	set, err := parsed.Clone()
+	if err != nil {
+		return fmt.Errorf("clone %s: %w", name, err)
+	}
 	var buf bytes.Buffer
-	if err := set.ExecuteTemplate(&buf, tmpl, data); err != nil {
+	if err := set.Funcs(templateFuncs(f)).ExecuteTemplate(&buf, tmpl, data); err != nil {
 		return fmt.Errorf("render %s: %w", name, err)
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -104,9 +115,11 @@ func (s *server) show(w http.ResponseWriter, r *http.Request, status int, name s
 	s.showTemplate(w, r, status, name, "layout.html", data)
 }
 
-// showTemplate renders one template of a page, or a plain 500 when it fails.
+// showTemplate renders one template of a page, with amounts in the number
+// format the request's session read (plainFormat() without one), or a plain
+// 500 when it fails.
 func (s *server) showTemplate(w http.ResponseWriter, r *http.Request, status int, name, tmpl string, data any) {
-	if err := s.pages.render(w, status, name, tmpl, data); err != nil {
+	if err := s.pages.render(w, status, name, tmpl, data, requestFormat(r)); err != nil {
 		s.log.ErrorContext(r.Context(), "render page", "page", name, "error", err.Error())
 		http.Error(w, "the page could not be rendered", http.StatusInternalServerError)
 	}

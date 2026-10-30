@@ -11,6 +11,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
+	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
 // cookieName is the session cookie's name. The __Host- prefix makes the
@@ -36,6 +37,9 @@ type session struct {
 	Token  string
 	Scope  identityv1.SessionScope
 	Origin string
+	// Settings are the read API's settings: the number format amounts are
+	// written in (D-113) and the tax wrappers an account can have (D-76).
+	Settings *viewsv1.GetSettingsResponse
 }
 
 // Owner reports whether the session may do what only the owner may: manage
@@ -121,7 +125,8 @@ func isHTMX(r *http.Request) bool { return r.Header.Get(hxRequest) == "true" }
 type sessionHandler func(w http.ResponseWriter, r *http.Request, sess session)
 
 // withSession runs h with the browser's session after the core confirmed
-// it with WhoAmI. Without a session, or with one the core no longer
+// it with WhoAmI, and with the read API's settings, whose number format
+// every page and fragment h renders writes amounts in (D-113). Without a session, or with one the core no longer
 // accepts, the browser goes to the login page instead.
 func (s *server) withSession(h sessionHandler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -136,7 +141,14 @@ func (s *server) withSession(h sessionHandler) http.HandlerFunc {
 			s.coreFailed(w, r, "WhoAmI", err)
 			return
 		}
-		h(w, r, session{Token: token, Scope: who.Msg.GetSession().GetScope(), Origin: origin})
+		sess := session{Token: token, Scope: who.Msg.GetSession().GetScope(), Origin: origin}
+		settings, err := s.read.GetSettings(r.Context(), bearer(&viewsv1.GetSettingsRequest{}, sess))
+		if err != nil {
+			s.coreFailed(w, r, "GetSettings", err)
+			return
+		}
+		sess.Settings = settings.Msg
+		h(w, withFormat(r, formatOf(settings.Msg.GetNumberFormat())), sess)
 	}
 }
 

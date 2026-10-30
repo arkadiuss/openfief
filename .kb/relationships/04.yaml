@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-804bacc1a979
+  - type: implements
+    from: SYM-ui-missing-label
+    to: REQ-ui-three-values-shown
+    created_at: 2026-10-30T03:02:39.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b10e75a86c
+  - type: implements
+    from: SYM-ui-missing-label
+    to: REQ-pl-ikze-liquidation-missing
+    created_at: 2026-10-30T03:02:39.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b364b941335
+  - type: covered_by
+    from: SYM-ui-missing-label
+    to: TEST-ui-values
+    created_at: 2026-10-30T03:02:39.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f9b24478028
