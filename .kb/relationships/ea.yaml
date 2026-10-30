@@ -272,3 +272,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d86d9e84cb9d
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-ghostfolio-set-balance
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:28:47.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-510f45bed3ea

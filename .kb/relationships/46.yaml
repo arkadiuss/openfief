@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-863e220f2c6a
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-generator-assets
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:28:28.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5829350b6b7e

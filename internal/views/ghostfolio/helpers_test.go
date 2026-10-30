@@ -23,6 +23,18 @@ const (
 	yahoo    = "YAHOO"
 )
 
+// gfUser is the synthetic Ghostfolio user of the offline tests.
+const gfUser = "5a1e0f6c-0000-4000-8000-00000000c0de"
+
+// bondSym and feeSym are the MANUAL assets' symbols of the tests' instance
+// and user.
+func bondSym(series string) string { return ghostfolio.BondSymbol(instance, gfUser, series) }
+
+func feeSym(t *testing.T, code string) string {
+	t.Helper()
+	return ghostfolio.FeeSymbol(instance, gfUser, cur(t, code))
+}
+
 func dec(t *testing.T, s string) kernel.Decimal {
 	t.Helper()
 	d, err := kernel.ParseDecimal(s)

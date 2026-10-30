@@ -24,7 +24,7 @@ const (
 )
 
 // DataSourceManual is Ghostfolio's data source for an asset priced only by
-// the market data sent to it: bonds and fees here (D-64).
+// the market data sent to it: bonds and fees here (D-64, D-108).
 const DataSourceManual = "MANUAL"
 
 // CommentPrefix starts the comment of every activity the view writes; the
@@ -103,16 +103,36 @@ func AccountUUID(instance string, account ledger.AccountID) string {
 }
 
 // BondSymbol returns the symbol of the MANUAL asset for the bond series
-// with the given code, such as "EDO0536": a UUID derived from the code
-// (D-64).
-func BondSymbol(series string) string {
-	return uuidV5("bond\x00" + series)
+// with the given code, such as "EDO0536", that the view instance named
+// instance writes for the Ghostfolio user with ID user: a UUID derived from
+// all three (D-64). Ghostfolio's asset symbols are unique across its users,
+// so two installs that share one Ghostfolio never write to each other's
+// asset, even when their instances have the same name.
+func BondSymbol(instance, user, series string) string {
+	return uuidV5("bond\x00" + instance + "\x00" + user + "\x00" + series)
 }
 
-// FeeSymbol returns the symbol of the MANUAL asset that fees in currency c
-// are booked against: a UUID derived from the currency.
-func FeeSymbol(c kernel.Currency) string {
-	return uuidV5("fee\x00" + c.String())
+// FeeSymbol returns the symbol of the MANUAL asset the view instance named
+// instance books fees in currency c against, for the Ghostfolio user with
+// ID user: a UUID derived from all three, for the same reason as
+// BondSymbol's (D-108).
+func FeeSymbol(instance, user string, c kernel.Currency) string {
+	return uuidV5("fee\x00" + instance + "\x00" + user + "\x00" + c.String())
+}
+
+// Balance is an owned account's cash balance at the end of a date, in the
+// account's currency (D-108). ID is Ghostfolio's own; a desired balance has
+// none.
+type Balance struct {
+	ID        string
+	AccountID string
+	Date      kernel.Date
+	Value     kernel.Decimal
+}
+
+// sameAs reports whether b and o agree in account, date and value.
+func (b *Balance) sameAs(o *Balance) bool {
+	return b.AccountID == o.AccountID && b.Date == o.Date && b.Value.Equal(o.Value)
 }
 
 // uuidV5 returns the name-based UUID, version 5 (RFC 9562), of name in

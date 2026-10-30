@@ -440,3 +440,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67935d7aaee8
+  - type: verified_by
+    from: SCEN-views-ghostfolio-reconcile-cash
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-30T01:20:58.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e7b7535da94
+  - type: verified_by
+    from: SCEN-views-ghostfolio-reconcile-cash
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-30T01:20:58.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a230a91acd59
+  - type: verified_by
+    from: SCEN-views-ghostfolio-reconcile-cash
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:20:58.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8625f7a3ee65
+  - type: verified_by
+    from: SCEN-views-ghostfolio-reconcile-cash
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-30T01:20:58.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0ee1554a88f

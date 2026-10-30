@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Content-Length: 433
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Date: Fri, 30 Oct 2026 00:00:57 GMT
+Etag: W/"1b1-Evdggb6RB1XAQ2XleKHJluQRwXs"
+Keep-Alive: timeout=5
+X-Powered-By: Express
+
+{"balances":[{"account":{"comment":null,"createdAt":"2026-10-30T00:00:45.337Z","currency":"USD","id":"adf13c77-ee3a-4f55-9920-0b5a50a4e181","name":"My Account","platformId":null,"updatedAt":"2026-10-30T00:00:45.337Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"},"date":"2025-01-02T00:00:00.000Z","id":"c0ebd7b3-b61f-49d2-b8bf-ec6098875917","value":42,"accountId":"adf13c77-ee3a-4f55-9920-0b5a50a4e181","valueInBaseCurrency":42}]}

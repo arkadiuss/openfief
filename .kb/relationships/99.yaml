@@ -433,3 +433,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fe7966e3d6d
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-cash-balance
+    created_at: 2026-10-30T01:21:34.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a9c29a5245a
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-bond-asset-symbol
+    created_at: 2026-10-30T01:21:34.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dcd3b912c42
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-standalone-fee
+    created_at: 2026-10-30T01:21:34.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-259f2b1d0245
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-dividend-booking
+    created_at: 2026-10-30T01:21:34.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9491932a8763
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-isin-mapping
+    created_at: 2026-10-30T01:21:34.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c61663f90223

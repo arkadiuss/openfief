@@ -1,0 +1,6 @@
+DELETE http://127.0.0.1:3333/api/v1/activities/88e23b49-5508-46d0-a288-3ef4b68fc9e0 HTTP/1.1
+Host: 127.0.0.1:3333
+User-Agent: Go-http-client/1.1
+Accept: application/json
+Authorization: SANITIZED
+

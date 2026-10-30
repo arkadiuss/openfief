@@ -545,3 +545,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b14e07b1e18
+  - type: verified_by
+    from: SCEN-views-ghostfolio-cash-balances
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-30T01:20:53.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5717d6acc3ef
+  - type: verified_by
+    from: SCEN-views-ghostfolio-cash-balances
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-30T01:20:54.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e8261d894f4
+  - type: verified_by
+    from: SCEN-views-ghostfolio-cash-balances
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:20:54.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23bd77040b4b
+  - type: verified_by
+    from: SCEN-views-ghostfolio-cash-balances
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-30T01:20:54.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d16c19622de

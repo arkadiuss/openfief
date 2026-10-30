@@ -1,0 +1,6 @@
+DELETE http://127.0.0.1:3333/api/v1/account-balance/2523828e-2aaa-4858-9c04-583fefe97499 HTTP/1.1
+Host: 127.0.0.1:3333
+User-Agent: Go-http-client/1.1
+Accept: application/json
+Authorization: SANITIZED
+

@@ -64366,7 +64366,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-4F8D1E2BADB7AED0
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-activity-duplicate-of
     title: Activity.duplicateOf
     sourceFile: internal/views/ghostfolio/model.go
@@ -64379,7 +64379,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-asset-profile
     title: AssetProfile
     sourceFile: internal/views/ghostfolio/model.go
@@ -64392,7 +64392,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-bond-assets
+        target: REQ-views-ghostfolio-asset-keys
   - id: SYM-views-ghostfolio-price
     title: Price
     sourceFile: internal/views/ghostfolio/model.go
@@ -64405,7 +64405,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-bond-assets
+        target: REQ-views-ghostfolio-asset-keys
   - id: SYM-views-ghostfolio-namespace
     title: namespace
     sourceFile: internal/views/ghostfolio/model.go
@@ -64444,7 +64444,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-bond-assets
+        target: REQ-views-ghostfolio-asset-keys
   - id: SYM-views-ghostfolio-fee-symbol
     title: FeeSymbol
     sourceFile: internal/views/ghostfolio/model.go
@@ -64457,7 +64457,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-projection
+        target: REQ-views-ghostfolio-asset-keys
   - id: SYM-views-ghostfolio-uuid-v5
     title: uuidV5
     sourceFile: internal/views/ghostfolio/model.go
@@ -64522,7 +64522,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-bond-assets
+        target: REQ-views-ghostfolio-asset-keys
   - id: SYM-views-ghostfolio-listing
     title: Listing
     sourceFile: internal/views/ghostfolio/project.go
@@ -64723,7 +64723,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-bond-assets
+        target: REQ-views-ghostfolio-asset-keys
       - type: implements
         target: REQ-views-ghostfolio-projection
   - id: SYM-views-ghostfolio-projector-prices
@@ -64738,7 +64738,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-bond-assets
+        target: REQ-views-ghostfolio-asset-keys
   - id: SYM-views-ghostfolio-projector-assets
     title: projector.assets
     sourceFile: internal/views/ghostfolio/project.go
@@ -64751,7 +64751,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-bond-assets
+        target: REQ-views-ghostfolio-asset-keys
   - id: SYM-views-ghostfolio-held-on
     title: heldOn
     sourceFile: internal/views/ghostfolio/project.go
@@ -64764,7 +64764,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-bond-assets
+        target: REQ-views-ghostfolio-asset-keys
   - id: SYM-views-ghostfolio-holding-posting
     title: holdingPosting
     sourceFile: internal/views/ghostfolio/project.go
@@ -64842,7 +64842,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-plan
     title: Plan
     sourceFile: internal/views/ghostfolio/plan.go
@@ -64856,7 +64856,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-plan-is-empty
     title: Plan.IsEmpty
     sourceFile: internal/views/ghostfolio/plan.go
@@ -64869,7 +64869,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-make-plan
     title: MakePlan
     sourceFile: internal/views/ghostfolio/plan.go
@@ -64884,7 +64884,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-54773934AD125DF8
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-keep
     title: keep
     sourceFile: internal/views/ghostfolio/plan.go
@@ -64897,7 +64897,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-plan-split-stale
     title: Plan.splitStale
     sourceFile: internal/views/ghostfolio/plan.go
@@ -64910,7 +64910,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-imported-activity
     title: ImportedActivity
     sourceFile: internal/views/ghostfolio/plan.go
@@ -65502,7 +65502,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-syncer
     title: Syncer
     sourceFile: internal/views/ghostfolio/sync.go
@@ -65516,7 +65516,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-new-syncer
     title: NewSyncer
     sourceFile: internal/views/ghostfolio/sync.go
@@ -65529,7 +65529,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-report
     title: Report
     sourceFile: internal/views/ghostfolio/sync.go
@@ -65542,7 +65542,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-syncer-sync
     title: Syncer.Sync
     sourceFile: internal/views/ghostfolio/sync.go
@@ -65555,7 +65555,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
       - type: implements
         target: REQ-views-ghostfolio-restricted-view
   - id: SYM-views-ghostfolio-syncer-actual
@@ -65585,7 +65585,7 @@ symbols:
       - type: implements
         target: REQ-views-ghostfolio-import-before-delete
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-syncer-delete
     title: Syncer.delete
     sourceFile: internal/views/ghostfolio/sync.go
@@ -65598,7 +65598,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-reconcile
+        target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-syncer-import-batch
     title: Syncer.importBatch
     sourceFile: internal/views/ghostfolio/sync.go
@@ -89192,3 +89192,405 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-kube-core-access
+  - id: SYM-views-ghostfolio-balance
+    title: Balance
+    sourceFile: internal/views/ghostfolio/model.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:41.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-plan
+      - type: implements
+        target: REQ-views-ghostfolio-cash-balances
+  - id: SYM-views-ghostfolio-balance-same-as
+    title: Balance.sameAs
+    sourceFile: internal/views/ghostfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:48.231Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-plan
+      - type: implements
+        target: REQ-views-ghostfolio-reconcile-cash
+  - id: SYM-views-ghostfolio-projector-balances
+    title: projector.balances
+    sourceFile: internal/views/ghostfolio/project.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:25:55.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-cash-balances
+  - id: SYM-views-ghostfolio-cash-moves
+    title: cashMoves
+    sourceFile: internal/views/ghostfolio/project.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:01.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-cash-balances
+  - id: SYM-views-ghostfolio-cash-changes
+    title: cashChanges
+    sourceFile: internal/views/ghostfolio/project.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:08.353Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-cash-balances
+  - id: SYM-views-ghostfolio-plan-balances
+    title: Plan.balances
+    sourceFile: internal/views/ghostfolio/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:14.815Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-plan
+      - type: implements
+        target: REQ-views-ghostfolio-reconcile-cash
+  - id: SYM-views-ghostfolio-plan-blocks-import
+    title: Plan.blocksImport
+    sourceFile: internal/views/ghostfolio/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:20.997Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-plan
+      - type: implements
+        target: REQ-views-ghostfolio-reconcile-cash
+  - id: SYM-views-ghostfolio-client-balances
+    title: Client.Balances
+    sourceFile: internal/views/ghostfolio/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:27.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-contract
+      - type: implements
+        target: REQ-views-ghostfolio-cash-balances
+      - type: implements
+        target: REQ-views-ghostfolio-client
+  - id: SYM-views-ghostfolio-client-set-balance
+    title: Client.SetBalance
+    sourceFile: internal/views/ghostfolio/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:33.759Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-contract
+      - type: implements
+        target: REQ-views-ghostfolio-cash-balances
+      - type: implements
+        target: REQ-views-ghostfolio-client
+  - id: SYM-views-ghostfolio-client-delete-balance
+    title: Client.DeleteBalance
+    sourceFile: internal/views/ghostfolio/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:40.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-contract
+      - type: implements
+        target: REQ-views-ghostfolio-cash-balances
+      - type: implements
+        target: REQ-views-ghostfolio-client
+  - id: SYM-views-ghostfolio-wire-date-of
+    title: wireDateOf
+    sourceFile: internal/views/ghostfolio/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:47.356Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-contract
+      - type: implements
+        target: REQ-views-ghostfolio-client
+  - id: SYM-views-ghostfolio-cash-balances
+    title: CashBalances
+    sourceFile: internal/views/ghostfolio/sync.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:26:54.139Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-sync
+      - type: implements
+        target: REQ-views-ghostfolio-cash-balances
+  - id: SYM-views-ghostfolio-syncer-apply-balances
+    title: Syncer.applyBalances
+    sourceFile: internal/views/ghostfolio/sync.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:00.937Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-sync
+      - type: implements
+        target: REQ-views-ghostfolio-reconcile-cash
+  - id: SYM-views-ghostfolio-test-helper-bond-sym
+    title: bondSym
+    sourceFile: internal/views/ghostfolio/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:07.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-client
+      - type: executable_for
+        target: TEST-views-ghostfolio-contract
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+      - type: executable_for
+        target: TEST-views-ghostfolio-project
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-helper-fee-sym
+    title: feeSym
+    sourceFile: internal/views/ghostfolio/helpers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:14.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-client
+      - type: executable_for
+        target: TEST-views-ghostfolio-contract
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+      - type: executable_for
+        target: TEST-views-ghostfolio-project
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-project-balances
+    title: TestProjectBalances
+    sourceFile: internal/views/ghostfolio/project_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:20.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-project
+  - id: SYM-views-ghostfolio-test-helper-bond-series
+    title: bondSeries
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:27.145Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+  - id: SYM-views-ghostfolio-test-helper-legacy-symbol
+    title: legacySymbol
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:33.355Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+  - id: SYM-views-ghostfolio-test-helper-new-model
+    title: newModel
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:39.758Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-helper-ghostfolio-model-add-balance
+    title: ghostfolioModel.addBalance
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:46.221Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-helper-ghostfolio-model-import-one
+    title: ghostfolioModel.importOne
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:53.187Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+  - id: SYM-views-ghostfolio-test-helper-ghostfolio-model-apply-balances
+    title: ghostfolioModel.applyBalances
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:27:59.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+  - id: SYM-views-ghostfolio-test-helper-ghostfolio-model-drop-unused
+    title: ghostfolioModel.dropUnused
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:06.929Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+  - id: SYM-views-ghostfolio-test-helper-ghostfolio-model-balances-in
+    title: ghostfolioModel.balancesIn
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:13.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-helper-generator-balances
+    title: generator.balances
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:19.735Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+  - id: SYM-views-ghostfolio-test-helper-generator-assets
+    title: generator.assets
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:26.358Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+  - id: SYM-views-ghostfolio-test-helper-converged
+    title: converged
+    sourceFile: internal/views/ghostfolio/plan_property_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:32.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-plan-properties
+  - id: SYM-views-ghostfolio-test-helper-fake-ghostfolio-balances
+    title: fakeGhostfolio.Balances
+    sourceFile: internal/views/ghostfolio/sync_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:38.715Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-helper-fake-ghostfolio-set-balance
+    title: fakeGhostfolio.SetBalance
+    sourceFile: internal/views/ghostfolio/sync_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:45.265Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-helper-fake-ghostfolio-delete-balance
+    title: fakeGhostfolio.DeleteBalance
+    sourceFile: internal/views/ghostfolio/sync_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:51.962Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-helper-check-own-untouched
+    title: checkOwnUntouched
+    sourceFile: internal/views/ghostfolio/contract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:28:59.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-contract
+  - id: SYM-views-ghostfolio-test-helper-add-legacy-bond
+    title: addLegacyBond
+    sourceFile: internal/views/ghostfolio/contract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:05.916Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-contract
+  - id: SYM-views-ghostfolio-test-helper-set-balance
+    title: setBalance
+    sourceFile: internal/views/ghostfolio/contract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T01:29:12.565Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-contract

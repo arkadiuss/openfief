@@ -67,3 +67,20 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Problem:* D-80 requires the origin to be one the core allows, but `core enroll-link` runs as its own process in the core's pod, without `serve`'s flags.
    - *Today:* the CLI reads the `--auth-origin` flags from the running core pod's container spec (none means the core's default, `http://localhost:8080`) and refuses any other origin before it runs `core enroll-link`.
    - *Options:* keep; or move the allowed origins into a ConfigMap or environment variable that both `serve` and `enroll-link` read, so the core itself refuses.
+
+## Ghostfolio view
+
+11. **Cash in a currency other than the owned account's.**
+   - *Problem:* D-108 has each owned account's cash balance follow OpenFief's cash, so Ghostfolio's totals include it. A Ghostfolio account has one balance in one currency, and the view creates its accounts in the Ghostfolio user's base currency; an account such as IBKR's holds cash in several.
+   - *Today:* the balance history follows the account's cash in the owned account's currency, one balance at the end of each date it changes. Cash in any other currency is left out and counted among the sync's problems, so Ghostfolio's totals miss it.
+   - *Options:* keep; or give each other currency an owned cash account of its own, its UUID derived from the instance, the account and the currency, holding only a balance; or convert the cash at OpenFief's exchange rates, which the read API would have to serve; or create each owned account in its account's cash currency when it has only one.
+
+12. **Assets left by an earlier version are deleted before the import.**
+   - *Problem:* D-64 (amended) keys a bond's `MANUAL` asset by the instance, so an install that synced before holds activities on assets keyed by the series code alone. D-64's import-first rule allows one exception, a stale activity Ghostfolio's duplicate check would match. But Ghostfolio's import reuses the user's `MANUAL` asset that has the same name as a new one, so while the old asset (named by the same code) exists, every import of the new one is stored on the old one, the dry run refuses it, and the sync never settles.
+   - *Today:* when a sync imports onto a `MANUAL` asset, the stale activities on `MANUAL` assets it doesn't want go before the import too, with the duplicates. Nothing it wants loses its price history; an old asset goes with its last activity. The same holds for the fee assets, which are keyed the same way now. An old asset the owner also used in an account of their own survives, and the dry run then stops the sync until the owner moves that activity.
+   - *Options:* keep as a second exception to import-first; or name the new assets differently from the old ones (the code plus a suffix), so no import reuses an old asset and import-first holds without exception.
+
+13. **What the bond and fee assets' symbols are derived from.**
+   - *Problem:* D-64 (amended) derives a bond's symbol from the plugin instance and the series code, so two installs sharing one Ghostfolio never collide. Ghostfolio's symbols are unique across all its users, and two installs can name their instances alike (an install names an instance after the plugin's catalog name unless told otherwise); then they would collide. D-108's fee asset per currency has the same problem.
+   - *Today:* both symbols are UUIDs derived from the instance's name, the Ghostfolio user's ID and the series code or currency. Two instances writing to the same Ghostfolio user still meet in Ghostfolio's name-based reuse of `MANUAL` assets, which the dry run catches.
+   - *Options:* keep; or the instance's name alone, as D-64 says; or a per-install ID, which a plugin can't read today.

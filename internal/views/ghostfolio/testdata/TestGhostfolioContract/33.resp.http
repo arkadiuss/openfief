@@ -1,11 +1,11 @@
 HTTP/1.1 200 OK
-Content-Length: 1490
+Content-Length: 870
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:54 GMT
-Etag: W/"5d2-wvfEgNCesffvToVkRDi7zPagRZE"
+Date: Fri, 30 Oct 2026 00:00:56 GMT
+Etag: W/"366-8dqu+2F9F4hGbCa/6Y5vyLW9QOU"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"accounts":[{"comment":null,"createdAt":"2026-10-29T00:38:33.036Z","currency":"USD","id":"6f2518ca-5394-442f-9e2d-b17303fc27d7","name":"My Account","platformId":null,"updatedAt":"2026-10-29T00:38:33.036Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1","platform":null,"tags":[],"balance":0,"activitiesCount":1,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":0,"allocationInPercentage":0,"balanceInBaseCurrency":0,"value":0},{"comment":null,"createdAt":"2026-10-29T00:38:53.324Z","currency":"USD","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-29T00:38:53.324Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1","platform":null,"tags":[],"balance":0,"activitiesCount":3,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":0,"allocationInPercentage":0,"balanceInBaseCurrency":0,"value":0},{"comment":null,"createdAt":"2026-10-29T00:38:53.342Z","currency":"USD","id":"e9ba7ed7-cf9d-5b65-ba7e-1a064226aa56","name":"Synthetic cash","platformId":null,"updatedAt":"2026-10-29T00:38:53.342Z","userId":"3699c05d-f0c4-489d-879a-324b3cc499d1","platform":null,"tags":[],"balance":0,"activitiesCount":0,"dividendInBaseCurrency":0,"interestInBaseCurrency":0,"valueInBaseCurrency":0,"allocationInPercentage":0,"balanceInBaseCurrency":0,"value":0}],"activitiesCount":4,"totalBalanceInBaseCurrency":0,"totalDividendInBaseCurrency":0,"totalInterestInBaseCurrency":0,"totalValueInBaseCurrency":0}
+{"balances":[{"account":{"comment":null,"createdAt":"2026-10-30T00:00:54.571Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-30T00:00:54.571Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"},"date":"2025-01-03T00:00:00.000Z","id":"d5737127-b5bf-44f4-a100-8d700173cdf9","value":-500,"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","valueInBaseCurrency":-500},{"account":{"comment":null,"createdAt":"2026-10-30T00:00:54.571Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-30T00:00:54.571Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"},"date":"2025-01-06T00:00:00.000Z","id":"c93b51ee-3c0a-427a-a9bf-6622fd310146","value":-502,"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","valueInBaseCurrency":-502}]}

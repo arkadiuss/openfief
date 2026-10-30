@@ -1,11 +1,11 @@
 HTTP/1.1 201 Created
-Content-Length: 17
+Content-Length: 2071
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Thu, 29 Oct 2026 00:38:53 GMT
-Etag: W/"11-gtL/pr+hEMbNUsu/dvqFc60lE4A"
+Date: Fri, 30 Oct 2026 00:00:55 GMT
+Etag: W/"817-OE1NHtpVIQ3cuSotVDmq3Kbqj5I"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"activities":[]}
+{"activities":[{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"0f51f620-82d8-4744-885e-457d56daad1d","comment":"openfief:test/bonds/open-1","createdAt":"2026-10-30T00:00:55.458Z","currency":"PLN","date":"2024-11-04T00:00:00.000Z","fee":0,"id":"6d405042-26f1-449d-9269-4afbdcf9a703","quantity":10,"symbolProfileId":"444e0dd9-346e-483d-9254-202720cc2f8b","type":"BUY","unitPrice":100,"updatedAt":"2026-10-30T00:00:55.458Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","assetProfile":{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","isin":"PLTEST000010","name":"EDO0136","dataSource":"MANUAL","symbol":"751886d2-3583-55a8-9e96-37ef67241dd8"},"value":1000,"valueInBaseCurrency":1000},{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"0f51f620-82d8-4744-885e-457d56daad1d","comment":"openfief:test/bonds/buy-1","createdAt":"2026-10-30T00:00:55.429Z","currency":"PLN","date":"2025-01-03T00:00:00.000Z","fee":0,"id":"b485f3c5-47eb-4272-9c3e-c8f93c9aaf7a","quantity":5,"symbolProfileId":"444e0dd9-346e-483d-9254-202720cc2f8b","type":"BUY","unitPrice":100,"updatedAt":"2026-10-30T00:00:55.429Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","assetProfile":{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","isin":"PLTEST000010","name":"EDO0136","dataSource":"MANUAL","symbol":"751886d2-3583-55a8-9e96-37ef67241dd8"},"value":500,"valueInBaseCurrency":500},{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"0f51f620-82d8-4744-885e-457d56daad1d","comment":"openfief:test/bonds/fee-1","createdAt":"2026-10-30T00:00:55.445Z","currency":"PLN","date":"2025-01-06T00:00:00.000Z","fee":2,"id":"88e23b49-5508-46d0-a288-3ef4b68fc9e0","quantity":0,"symbolProfileId":"017e3552-b86c-4230-acba-eb4623919b40","type":"FEE","unitPrice":0,"updatedAt":"2026-10-30T00:00:55.445Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","assetProfile":{"currency":"PLN","name":"OpenFief fees (PLN)","dataSource":"MANUAL","symbol":"042c0ae6-d931-5ac9-834d-4104ff2e9b26"},"value":0,"valueInBaseCurrency":0}]}

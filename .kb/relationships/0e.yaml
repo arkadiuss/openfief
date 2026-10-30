@@ -230,13 +230,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28b3ba3d2ffc
-  - type: implements
-    from: SYM-views-ghostfolio-activity-duplicate-of
-    to: REQ-views-ghostfolio-reconcile
-    created_at: 2026-10-29T00:55:44.061Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c7aa151ae986
   - type: covered_by
     from: SYM-views-ghostfolio-activity-duplicate-of
     to: TEST-views-ghostfolio-plan
@@ -363,3 +356,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e85026d08802
+  - type: implements
+    from: SYM-views-ghostfolio-activity-duplicate-of
+    to: REQ-views-ghostfolio-reconcile-cash
+    created_at: 2026-10-30T01:23:07.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-900e8b0aa41e

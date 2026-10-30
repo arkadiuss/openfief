@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-364f3b80e211
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-helper-fake-ghostfolio-delete-balance
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-30T01:28:54.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-633713245e72
