@@ -420,6 +420,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-70f18b84c366
   - type: implements
+    from: SYM-ui-pwa-design-colors
+    to: REQ-ui-installable-app
+    created_at: 2026-10-30T08:34:17.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e48fd6279b54
+  - type: covered_by
+    from: SYM-ui-pwa-design-colors
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:34:17.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-841e256445e0
+  - type: implements
     from: SYM-views-transfer-pair
     to: REQ-views-transfer-suggestions
     created_at: 2026-10-30T06:49:24.377Z

@@ -370,41 +370,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7105f074990e
-  - type: executable_for
-    from: SYM-core-test-helper-check-settings-refusals
-    to: TEST-core-settings
-    created_at: 2026-10-29T23:09:00.032Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-55b70c037cbf
-  - type: implements
-    from: SYM-ui-number-format-money
-    to: REQ-ui-formatting-number-format
-    created_at: 2026-10-30T02:58:20.007Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-82a4275166d3
-  - type: implements
-    from: SYM-ui-number-format-money
-    to: REQ-ui-number-format-separators-only
-    created_at: 2026-10-30T02:58:20.039Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-406a7adf7509
-  - type: covered_by
-    from: SYM-ui-number-format-money
-    to: TEST-ui-values
-    created_at: 2026-10-30T02:58:20.077Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-12f60a3f340f
-  - type: executable_for
-    from: SYM-ledger-test-transfer-amount
-    to: TEST-ledger-transfers
-    created_at: 2026-10-30T06:44:20.862Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8f7bce1a363c
   - type: implements
     from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-symbol
     to: REQ-valuation-price-check-service
@@ -440,3 +405,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-409c40983474
+  - type: executable_for
+    from: SYM-core-test-helper-check-settings-refusals
+    to: TEST-core-settings
+    created_at: 2026-10-29T23:09:00.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55b70c037cbf
+  - type: implements
+    from: SYM-ui-number-format-money
+    to: REQ-ui-formatting-number-format
+    created_at: 2026-10-30T02:58:20.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82a4275166d3
+  - type: implements
+    from: SYM-ui-number-format-money
+    to: REQ-ui-number-format-separators-only
+    created_at: 2026-10-30T02:58:20.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-406a7adf7509
+  - type: covered_by
+    from: SYM-ui-number-format-money
+    to: TEST-ui-values
+    created_at: 2026-10-30T02:58:20.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12f60a3f340f
+  - type: implements
+    from: SYM-ui-pwa-app-icon
+    to: REQ-ui-installable-app
+    created_at: 2026-10-30T08:34:09.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb77f6be7556
+  - type: covered_by
+    from: SYM-ui-pwa-app-icon
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:34:09.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9cd19633d03
+  - type: executable_for
+    from: SYM-ledger-test-transfer-amount
+    to: TEST-ledger-transfers
+    created_at: 2026-10-30T06:44:20.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f7bce1a363c

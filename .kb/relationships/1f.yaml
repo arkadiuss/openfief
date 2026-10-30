@@ -511,6 +511,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ee46a2831341
   - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-descriptor
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:19:40.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47d55833e1cd
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-descriptor
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:19:40.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29c00f50fea5
+  - type: executable_for
+    from: SYM-ui-pwa-test-test-worker-version
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:37:52.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5384a5990047
+  - type: implements
     from: SYM-ledger-app-transfers
     to: REQ-ui-transfer-confirmation
     created_at: 2026-10-30T06:36:38.596Z
@@ -566,17 +587,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-948dbdbb44c5
-  - type: implements
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-descriptor
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:19:40.668Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-47d55833e1cd
-  - type: covered_by
-    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-descriptor
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:19:40.744Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-29c00f50fea5

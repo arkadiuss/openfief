@@ -29,6 +29,7 @@ Everything OpenFief shows people (the docs site, the landing page and the built-
 - The wordmark is `openfief`, lower case, in the display face at weight 800, to the right of the Gate, which is as tall as the word's cap height plus descender.
 - Keep clear space of a quarter of the mark's width around it. On a dark or vert ground, use the reversed file.
 - The square inside the gate is always gold. It is the one fixed point of the brand.
+- The app icons, `marks/app-icon-*.png`, are the Seal on argent, rendered from `seal.svg` and the `--argent` token by [`app-icons.mjs`](../../scripts/app-icons.mjs) (`task design:icons`): 180 px for Apple's touch icon, 192 and 512 px, and a maskable 512 px one whose seal stays inside the central circle a platform's mask keeps. They are the only raster files in `design/`; regenerate them, never edit them.
 
 ## Icons
 
@@ -92,7 +93,8 @@ The pattern library, as drawn. M0 needs only the first group; the rest belong to
 
 - **Buttons.** Primary: `--accent` fill, `--on-accent` text. Secondary: 1.5 px `--accent` outline. Quiet: underlined text. Destructive: `--danger` fill. One primary per view.
 - **Status pills.** A plugin's trust badge (D-56, D-87): *Verified* (ok, check icon), *Yours* (neutral), *Unreviewed* (warn), *Blocked* (danger, cross icon), with the exact signer under it. Valuation state (D-36): *Revaluation pending* or *running* (neutral pill with a gold dot), and *valued through* a date in monospace.
-- **Tables.** Holdings and transactions: monospace, right-aligned figures; a sunken header row; no zebra stripes. Wide tables scroll inside their own box on a phone.
+- **Tables.** Holdings and transactions: monospace, right-aligned figures; a sunken header row; no zebra stripes. On a phone each row becomes a card, one line per cell with its column's header on the left and the value on the right, figures still monospaced, right-aligned and with their currency **(P)**; where that can't be done (no script), wide tables scroll inside their own box.
+- **Navigation.** On a phone it folds behind a *Menu* button in the top bar and opens as a full-width list **(P)**.
 - **Inputs.** A label above every field, a 1.5 px `--border-strong` border with the 2 px input radius, a currency suffix inside amount fields, and help text under the field in `--muted`.
 - **Charts.** The allocation and value-over-time charts (D-30) use vert, then or, kasztan, a grey and the vert tint, in that order, with direct labels where they fit.
 - **Empty states.** Kasztan asleep, one line saying what's missing, and the action that fills it.

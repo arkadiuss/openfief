@@ -504,6 +504,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d76a86ad885f
   - type: implements
+    from: SYM-valuation-gen-pc-connect-unimplemented-price-check-service-handler-set-price-check-threshold
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:23:41.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d53f3a9ef8a
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-unimplemented-price-check-service-handler-set-price-check-threshold
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:23:42.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b28b3a7aae6a
+  - type: implements
     from: SYM-ui-book-label
     to: REQ-ui-formatting-number-format
     created_at: 2026-10-30T02:39:07.667Z
@@ -525,16 +539,16 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0960f4d30d36
   - type: implements
-    from: SYM-valuation-gen-pc-connect-unimplemented-price-check-service-handler-set-price-check-threshold
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:23:41.891Z
+    from: SYM-ui-pwa-serve-bytes
+    to: REQ-ui-service-worker-static-only
+    created_at: 2026-10-30T08:35:33.929Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-6d53f3a9ef8a
+    id: rel-533f274ada20
   - type: covered_by
-    from: SYM-valuation-gen-pc-connect-unimplemented-price-check-service-handler-set-price-check-threshold
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:23:42.014Z
+    from: SYM-ui-pwa-serve-bytes
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:35:33.982Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-b28b3a7aae6a
+    id: rel-f664fd8f97a8

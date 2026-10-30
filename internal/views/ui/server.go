@@ -19,11 +19,16 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
 
-// contentSecurityPolicy lets the page load scripts, styles, fonts, images
-// and fetches from the UI itself only, nothing inline and nothing from
+// contentSecurityPolicy lets the page load scripts, styles, fonts, images,
+// fetches and the web app manifest from the UI itself only (the service
+// worker is a script, so script-src covers it), nothing inline and nothing from
 // another host; no page may frame it, and forms post only to it.
 const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; " +
-	"connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+	"connect-src 'self'; manifest-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+// staticCacheControl lets browsers keep the static files for an hour: they
+// change only with the image.
+const staticCacheControl = "public, max-age=3600"
 
 // hstsValue is the Strict-Transport-Security header on HTTPS origins.
 const hstsValue = "max-age=31536000"
@@ -98,6 +103,7 @@ type server struct {
 	priceChecks valuationv1connect.PriceCheckServiceClient
 	read        viewsv1connect.ReadServiceClient
 	pages       *pages
+	pwa         *pwa
 	today       func() kernel.Date
 	log         *slog.Logger
 	settings    valuationv1connect.SettingsServiceClient
@@ -115,21 +121,25 @@ func New(cfg *Config) (http.Handler, error) {
 	if err != nil {
 		return nil, err
 	}
+	static, err := fs.Sub(webFS, "web/static")
+	if err != nil {
+		return nil, fmt.Errorf("ui: static files: %w", err)
+	}
+	app, err := buildPWA(p, static)
+	if err != nil {
+		return nil, err
+	}
 	s := &server{
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
 		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
 		settings: cfg.Settings, transfers: cfg.Transfers,
-		pages: p, today: cfg.Today, log: cfg.Log,
+		pages: p, pwa: app, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
 		s.today = utcToday
 	}
 	if s.log == nil {
 		s.log = slog.New(slog.DiscardHandler)
-	}
-	static, err := fs.Sub(webFS, "web/static")
-	if err != nil {
-		return nil, fmt.Errorf("ui: static files: %w", err)
 	}
 	return securityHeaders(sameOrigin(s.routes(static))), nil
 }
@@ -140,6 +150,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.Handle("GET /static/", staticFiles("/static/", static))
 	mux.Handle("GET /static/design/", staticFiles("/static/design/", design.Files))
 	mux.HandleFunc("GET /healthz", healthz)
+	s.pwa.routes(mux)
 	mux.HandleFunc("GET /login", s.loginPage)
 	mux.HandleFunc("POST /login/passkey/begin", s.loginBegin)
 	mux.HandleFunc("POST /login/passkey/finish", s.loginFinish)
@@ -183,7 +194,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 func staticFiles(prefix string, static fs.FS) http.Handler {
 	files := http.StripPrefix(prefix, http.FileServerFS(static))
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", "public, max-age=3600")
+		w.Header().Set("Cache-Control", staticCacheControl)
 		files.ServeHTTP(w, r)
 	})
 }

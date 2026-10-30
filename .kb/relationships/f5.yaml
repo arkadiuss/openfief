@@ -574,20 +574,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-1bb7a5b7d113
   - type: implements
-    from: SYM-ledger-app-import-mode
-    to: REQ-ledger-opening-lots-one-at-a-time
-    created_at: 2026-10-30T05:02:43.193Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-182ab82abd00
-  - type: covered_by
-    from: SYM-ledger-app-import-mode
-    to: TEST-ledger-app-seed
-    created_at: 2026-10-30T05:02:43.231Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b648c90482fb
-  - type: implements
     from: SYM-views-gen-pb-pc-price-check-get-acknowledged
     to: REQ-views-price-checks
     created_at: 2026-10-30T03:24:51.209Z
@@ -601,3 +587,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f33b283d50ad
+  - type: executable_for
+    from: SYM-ui-pwa-test-test-offline-page
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:37:23.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69375041a819
+  - type: implements
+    from: SYM-ledger-app-import-mode
+    to: REQ-ledger-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:02:43.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-182ab82abd00
+  - type: covered_by
+    from: SYM-ledger-app-import-mode
+    to: TEST-ledger-app-seed
+    created_at: 2026-10-30T05:02:43.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b648c90482fb

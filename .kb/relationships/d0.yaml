@@ -406,6 +406,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-78342e24663c
   - type: implements
+    from: SYM-ui-upload-parts
+    to: REQ-ui-statement-upload-owner-form
+    created_at: 2026-10-30T05:19:13.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92fc5b2ac512
+  - type: implements
+    from: SYM-ui-uc-latest-per-instrument
+    to: REQ-ui-price-check-latest-per-instrument
+    created_at: 2026-10-30T06:18:28.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b882adc72336
+  - type: covered_by
+    from: SYM-ui-uc-latest-per-instrument
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:18:28.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cbafaf34dbc
+  - type: implements
     from: SYM-jurisdiction-validate-marginal-rate
     to: REQ-pl-ikze-early-withdrawal-tax
     created_at: 2026-10-29T22:03:42.971Z
@@ -469,20 +490,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-784ae671703e
   - type: implements
-    from: SYM-connectorv1-bond-lot-key-reset
-    to: REQ-ingest-bond-lot-messages
-    created_at: 2026-10-30T05:04:46.573Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-60d522b8c805
-  - type: covered_by
-    from: SYM-connectorv1-bond-lot-key-reset
-    to: TEST-ingest-connectrpc-bonds
-    created_at: 2026-10-30T05:04:46.628Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2e01e3a48035
-  - type: implements
     from: SYM-affected-docs-only
     to: REQ-tooling-ci-docs-only-pr
     created_at: 2026-10-30T03:50:30.743Z
@@ -496,24 +503,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d674c5fe2343
-  - type: implements
-    from: SYM-ui-upload-parts
-    to: REQ-ui-statement-upload-owner-form
-    created_at: 2026-10-30T05:19:13.854Z
+  - type: constrains
+    from: REQ-ui-responsive-layout
+    to: FACT-SUBJECT-31D30CC9E41C8213
+    created_at: 2026-10-30T08:08:07.721Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-92fc5b2ac512
-  - type: implements
-    from: SYM-ui-uc-latest-per-instrument
-    to: REQ-ui-price-check-latest-per-instrument
-    created_at: 2026-10-30T06:18:28.274Z
+    id: rel-510c626a1c53
+  - type: requires_property
+    from: REQ-ui-responsive-layout
+    to: FACT-PROP-9902CF401466E409
+    created_at: 2026-10-30T08:08:07.795Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-b882adc72336
+    id: rel-fc5ab3c405df
+  - type: specified_by
+    from: REQ-ui-responsive-layout
+    to: SCEN-ui-phone-width
+    created_at: 2026-10-30T08:08:07.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6001a039c551
+  - type: executable_for
+    from: SYM-ui-pwa-test-test-serve-for-browser
+    to: TEST-ui-browser-checks
+    created_at: 2026-10-30T08:35:59.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c14f06534ad
+  - type: implements
+    from: SYM-connectorv1-bond-lot-key-reset
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:04:46.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60d522b8c805
   - type: covered_by
-    from: SYM-ui-uc-latest-per-instrument
-    to: TEST-ui-pricechecks
-    created_at: 2026-10-30T06:18:28.314Z
+    from: SYM-connectorv1-bond-lot-key-reset
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:04:46.628Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-8cbafaf34dbc
+    id: rel-2e01e3a48035

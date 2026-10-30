@@ -553,6 +553,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-bf5f3f32d78e
   - type: implements
+    from: SYM-ui-pwa-manifest-icon
+    to: REQ-ui-installable-app
+    created_at: 2026-10-30T08:34:34.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4018d1a04dee
+  - type: covered_by
+    from: SYM-ui-pwa-manifest-icon
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:34:34.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7a5905db54e
+  - type: implements
     from: SYM-delivery-transaction-kinds
     to: REQ-ingest-delivery-contract-messages
     created_at: 2026-10-30T05:15:15.463Z
