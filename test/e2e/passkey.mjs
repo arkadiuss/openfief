@@ -35,9 +35,13 @@ function browserOptions() {
   return { channel: 'chrome' };
 }
 
-// expectHome waits for the overview at the origin's root and checks it is the owner's.
+// expectHome waits for the owner's landing page and checks the session is signed in. That is the overview at
+// the origin's root, or the first-run wizard under /setup while the owner has no account yet (D-73): the demo
+// dataset may still be loading when the passkey is created.
 async function expectHome(page, step) {
-  await page.waitForURL(origin + '/', { timeout });
+  await page.waitForURL((url) => url.origin === origin && (url.pathname === '/' || url.pathname === '/setup'), {
+    timeout,
+  });
   const signOut = page.getByRole('button', { name: 'Sign out' });
   await signOut.waitFor({ timeout });
   console.log(`passkey: ${step}: on ${page.url()}, signed in`);
