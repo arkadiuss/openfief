@@ -153,6 +153,16 @@ type Manifest struct {
 	// owner picks at install (D-74).
 	// +optional
 	ClusterService *ClusterServiceRequest `json:"clusterService,omitempty"`
+
+	// CrossCheckPrices declares that a connector sends cross-check prices,
+	// which the core stores only from a connector that declares it (D-112).
+	// +optional
+	CrossCheckPrices bool `json:"crossCheckPrices,omitempty"`
+
+	// StatementFiles declares that a connector takes statement files the
+	// owner uploads (D-109).
+	// +optional
+	StatementFiles bool `json:"statementFiles,omitempty"`
 }
 
 // SecretMount asks for the instance's Secret of one role to be mounted

@@ -1,0 +1,71 @@
+// OpenFief's price check contract (docs/DESIGN.md D-110, D-112, D-79).
+//
+// A price check compares an institution's own price of an instrument, a
+// cross-check price such as IBKR's mark price, with the latest stored price
+// of the instrument on or before its date (D-111). It is flagged when the
+// two differ by more than 1% of the stored price, in either direction,
+// unless the owner set another threshold for the instrument (D-110). The
+// owner can acknowledge a flagged check; each acknowledgement is recorded
+// append-only and covers the check only while both prices stay the same
+// (D-112). The read API lists the checks (ListPriceChecks in
+// proto/openfief/views/v1/read_service.proto).
+//
+// The core serves PriceCheckService to VIEW plugins only, next to the
+// AuthService, as the owner's entry service for this kind of entry (D-79).
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto):
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - A request without an instrument, a threshold that isn't a decimal
+//   fraction greater than 0 and less than 1, a malformed date, or an
+//   acknowledgement of a check that isn't flagged fails with
+//   INVALID_ARGUMENT and nothing changes; an acknowledgement of a check
+//   that doesn't exist fails with NOT_FOUND.
+syntax = "proto3";
+
+package openfief.valuation.v1;
+
+// PriceCheckService changes the owner's price check thresholds and
+// acknowledges flagged price checks.
+service PriceCheckService {
+  // SetPriceCheckThreshold sets the threshold of one instrument's price
+  // checks, or puts the instrument back on 1% (D-110).
+  rpc SetPriceCheckThreshold(SetPriceCheckThresholdRequest) returns (SetPriceCheckThresholdResponse);
+
+  // AcknowledgePriceCheck records the owner's acknowledgement of a flagged
+  // price check (D-112). Acknowledging it again records another.
+  rpc AcknowledgePriceCheck(AcknowledgePriceCheckRequest) returns (AcknowledgePriceCheckResponse);
+}
+
+message SetPriceCheckThresholdRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The instrument, as the read API names it.
+  string isin = 3;
+  string symbol = 4;
+  // A decimal fraction greater than 0 and less than 1, such as "0.03" for
+  // 3%; empty puts the instrument back on the default, 1%.
+  string threshold = 5;
+}
+
+message SetPriceCheckThresholdResponse {}
+
+message AcknowledgePriceCheckRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The instrument, as the read API names it.
+  string isin = 3;
+  string symbol = 4;
+  // The cross-check price's date, YYYY-MM-DD, and the connector instance
+  // it came from: the check's date and cross_check_source in the read API.
+  string date = 5;
+  string source = 6;
+}
+
+message AcknowledgePriceCheckResponse {}

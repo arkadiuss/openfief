@@ -490,6 +490,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-edf54d26945d
   - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-isin
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:17:14.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-067bc2ab43b1
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-isin
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:17:14.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd2357fd5818
+  - type: implements
     from: SYM-ingestv1-fee-rule
     to: REQ-ingest-account-terms
     created_at: 2026-10-29T23:12:56.497Z

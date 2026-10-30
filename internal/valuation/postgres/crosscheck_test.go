@@ -38,7 +38,7 @@ func TestCrossCheckPricesRoundTrip(t *testing.T) {
 		t.Fatalf("SaveCrossCheckPrices again: %v", err)
 	}
 	gotPrices, gotChecks, err := store.CrossCheckedPrices(ctx)
-	check(t, "cross-checked prices", []valuation.Price{prices[1]}, gotPrices, err)
+	check(t, "cross-checked prices: every date of the instrument", prices[:2], gotPrices, err)
 	check(t, "cross-check prices", []valuation.CrossCheckPrice{first[2], again, first[0]}, gotChecks, err)
 
 	// Cross-check prices change no valuation input, so they enqueue nothing,

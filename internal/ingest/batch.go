@@ -3,6 +3,7 @@ package ingest
 import (
 	"errors"
 	"fmt"
+	"slices"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -101,6 +102,13 @@ type Batch struct {
 	Imported     ImportSummary
 	// Problems are the source rows the mapping left out, with their reasons.
 	Problems []Problem
+	// Accounts are the OpenFief accounts the batch's transactions and
+	// balance assertions are in, in ID order: every mapped account a
+	// statement of several accounts books (D-109).
+	Accounts []ledger.AccountID
+	// Unmapped are the broker accounts the delivery named that are not
+	// mapped to an OpenFief account: nothing of them was booked (D-72).
+	Unmapped []BrokerAccountID
 }
 
 // NewBatch starts an import batch, before anything is read.
@@ -127,6 +135,21 @@ func (b *Batch) Complete(m *Mapping, imported ImportSummary) {
 	b.Assertions = len(m.Assertions)
 	b.Imported = imported
 	b.Problems = append([]Problem(nil), m.Problems...)
+	b.Accounts = MappedAccounts(m)
+}
+
+// MappedAccounts returns the accounts m's transactions and balance
+// assertions are in, each once, in ID order.
+func MappedAccounts(m *Mapping) []ledger.AccountID {
+	out := make([]ledger.AccountID, 0, len(m.Transactions)+len(m.Assertions))
+	for i := range m.Transactions {
+		out = append(out, m.Transactions[i].Account)
+	}
+	for i := range m.Assertions {
+		out = append(out, m.Assertions[i].Account)
+	}
+	slices.Sort(out)
+	return slices.Compact(out)
 }
 
 // Mapping is what a connector makes of one source: ledger transactions,

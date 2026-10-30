@@ -216,6 +216,8 @@ The label holds one JSON object. [ParseManifestLabel](../../internal/plugins/man
 | `dataTiers` | Names of classes of data, 1 to 32 letters, digits, `-` or `_`. Only names today: nothing enforces them (P-33). | No first-party plugin declares one |
 | `configSchema` | A JSON Schema for the instance's config. Its `$ref` may reach only the schema itself and the standard meta-schemas, never a file or URL. Without one, any config is accepted. | nbp-fx's schema above |
 | `browserPath` | For a view that serves browsers: the path prefix the core proxies to it (D-81). See [View plugins](#view-plugins). | `"/"` |
+| `crossCheckPrices` | A connector that sends [cross-check prices](../glossary.md) in its deliveries declares it; the core stores none from one that doesn't (D-112). | `true` (ibkr-flex) |
+| `statementFiles` | A connector that takes statement files the owner uploads declares it; the UI offers the upload form only on accounts bound to one (D-109). | `true` (ibkr-flex) |
 
 Because the manifest names a role and each instance mounts `<instance>-<role>`, two instances of one image, such as one per IBKR account, never share a Secret: `ibkr-joint` mounts `ibkr-joint-flex-token`.
 

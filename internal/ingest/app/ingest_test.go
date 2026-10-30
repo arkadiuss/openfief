@@ -142,6 +142,7 @@ func TestIngestFile(t *testing.T) {
 	want := ingest.Batch{
 		ID: "batch-1", Institution: "ibkr", Source: app.SourceFile, Mode: ingest.ModeTransactions, Started: march2(t),
 		Transactions: 1, Assertions: 1, Imported: ingest.ImportSummary{New: 1}, Problems: m.Problems,
+		Accounts: []ledger.AccountID{"acc-1"},
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("batch (-want +got):\n%s", diff)

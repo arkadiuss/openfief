@@ -400,6 +400,10 @@ const (
 	PriceCheckStatus_PRICE_CHECK_STATUS_MATCHED PriceCheckStatus = 1
 	// Beyond the threshold, in either direction.
 	PriceCheckStatus_PRICE_CHECK_STATUS_FLAGGED PriceCheckStatus = 2
+	// The two prices are in different currencies, so the market-data
+	// connector may price another listing than the one held (D-111); no
+	// difference is computed.
+	PriceCheckStatus_PRICE_CHECK_STATUS_CURRENCY_MISMATCH PriceCheckStatus = 3
 )
 
 // Enum value maps for PriceCheckStatus.
@@ -408,11 +412,13 @@ var (
 		0: "PRICE_CHECK_STATUS_UNSPECIFIED",
 		1: "PRICE_CHECK_STATUS_MATCHED",
 		2: "PRICE_CHECK_STATUS_FLAGGED",
+		3: "PRICE_CHECK_STATUS_CURRENCY_MISMATCH",
 	}
 	PriceCheckStatus_value = map[string]int32{
-		"PRICE_CHECK_STATUS_UNSPECIFIED": 0,
-		"PRICE_CHECK_STATUS_MATCHED":     1,
-		"PRICE_CHECK_STATUS_FLAGGED":     2,
+		"PRICE_CHECK_STATUS_UNSPECIFIED":       0,
+		"PRICE_CHECK_STATUS_MATCHED":           1,
+		"PRICE_CHECK_STATUS_FLAGGED":           2,
+		"PRICE_CHECK_STATUS_CURRENCY_MISMATCH": 3,
 	}
 )
 
@@ -2283,12 +2289,12 @@ func (x *ValuationStatus) GetRunning() bool {
 	return false
 }
 
-// PriceCheck is a stored end-of-day price compared with an institution's
-// own price of the same instrument on the same date, in the same currency
-// (D-22).
+// PriceCheck is an institution's own price of an instrument compared with
+// the latest stored end-of-day price of the instrument on or before its
+// date (D-22, D-111).
 type PriceCheck struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// YYYY-MM-DD.
+	// The cross-check price's date, YYYY-MM-DD.
 	Date       string      `protobuf:"bytes,1,opt,name=date,proto3" json:"date,omitempty"`
 	Instrument *Instrument `protobuf:"bytes,2,opt,name=instrument,proto3" json:"instrument,omitempty"`
 	// The price holdings are valued at, from the market-data connector.
@@ -2300,11 +2306,22 @@ type PriceCheck struct {
 	// The connector instance the cross-check price came from.
 	CrossCheckSource string `protobuf:"bytes,6,opt,name=cross_check_source,json=crossCheckSource,proto3" json:"cross_check_source,omitempty"`
 	// (cross_check - price) / price as a decimal string, rounded half-even
-	// to six places: "0.0123" is 1.23% above the price.
+	// to six places: "0.0123" is 1.23% above the price. Empty for a currency
+	// mismatch.
 	RelativeDifference string           `protobuf:"bytes,7,opt,name=relative_difference,json=relativeDifference,proto3" json:"relative_difference,omitempty"`
 	Status             PriceCheckStatus `protobuf:"varint,8,opt,name=status,proto3,enum=openfief.views.v1.PriceCheckStatus" json:"status,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	// The price's date, YYYY-MM-DD: the cross-check price's date or the
+	// latest one before it with a price (D-111).
+	PriceDate string `protobuf:"bytes,9,opt,name=price_date,json=priceDate,proto3" json:"price_date,omitempty"`
+	// The relative difference beyond which this check is flagged, as a
+	// decimal fraction: "0.01", or the owner's threshold for the instrument
+	// (D-110).
+	Threshold string `protobuf:"bytes,10,opt,name=threshold,proto3" json:"threshold,omitempty"`
+	// Whether the owner acknowledged this flagged check with these two
+	// prices (D-112).
+	Acknowledged  bool `protobuf:"varint,11,opt,name=acknowledged,proto3" json:"acknowledged,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *PriceCheck) Reset() {
@@ -2391,6 +2408,27 @@ func (x *PriceCheck) GetStatus() PriceCheckStatus {
 		return x.Status
 	}
 	return PriceCheckStatus_PRICE_CHECK_STATUS_UNSPECIFIED
+}
+
+func (x *PriceCheck) GetPriceDate() string {
+	if x != nil {
+		return x.PriceDate
+	}
+	return ""
+}
+
+func (x *PriceCheck) GetThreshold() string {
+	if x != nil {
+		return x.Threshold
+	}
+	return ""
+}
+
+func (x *PriceCheck) GetAcknowledged() bool {
+	if x != nil {
+		return x.Acknowledged
+	}
+	return false
 }
 
 // AllocationGroup is one group's value in the reporting currency. Its key is
@@ -4272,8 +4310,9 @@ func (x *ListPriceChecksRequest) GetStatus() PriceCheckStatus {
 
 type ListPriceChecksResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The relative difference beyond which a check is flagged, as a decimal
-	// fraction such as "0.01"; empty when this core compares no prices.
+	// The relative difference beyond which a check is flagged unless the
+	// owner set another for its instrument, as a decimal fraction: "0.01"
+	// (D-110); empty when this core compares no prices.
 	Threshold     string        `protobuf:"bytes,1,opt,name=threshold,proto3" json:"threshold,omitempty"`
 	Checks        []*PriceCheck `protobuf:"bytes,2,rep,name=checks,proto3" json:"checks,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -5641,7 +5680,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x12%\n" +
 	"\x0evalued_through\x18\x02 \x01(\tR\rvaluedThrough\x12\x18\n" +
 	"\apending\x18\x03 \x01(\bR\apending\x12\x18\n" +
-	"\arunning\x18\x04 \x01(\bR\arunning\"\x89\x03\n" +
+	"\arunning\x18\x04 \x01(\bR\arunning\"\xea\x03\n" +
 	"\n" +
 	"PriceCheck\x12\x12\n" +
 	"\x04date\x18\x01 \x01(\tR\x04date\x12=\n" +
@@ -5654,7 +5693,12 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"crossCheck\x12,\n" +
 	"\x12cross_check_source\x18\x06 \x01(\tR\x10crossCheckSource\x12/\n" +
 	"\x13relative_difference\x18\a \x01(\tR\x12relativeDifference\x12;\n" +
-	"\x06status\x18\b \x01(\x0e2#.openfief.views.v1.PriceCheckStatusR\x06status\"f\n" +
+	"\x06status\x18\b \x01(\x0e2#.openfief.views.v1.PriceCheckStatusR\x06status\x12\x1d\n" +
+	"\n" +
+	"price_date\x18\t \x01(\tR\tpriceDate\x12\x1c\n" +
+	"\tthreshold\x18\n" +
+	" \x01(\tR\tthreshold\x12\"\n" +
+	"\facknowledged\x18\v \x01(\bR\facknowledged\"f\n" +
 	"\x0fAllocationGroup\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12A\n" +
 	"\x0fvalue_reporting\x18\x02 \x01(\v2\x18.openfief.views.v1.MoneyR\x0evalueReporting\"\xd3\x01\n" +
@@ -5905,11 +5949,12 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x1bVALUATION_BASIS_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16VALUATION_BASIS_MARKET\x10\x01\x12!\n" +
 	"\x1dVALUATION_BASIS_GROSS_ACCRUED\x10\x02\x12#\n" +
-	"\x1fVALUATION_BASIS_NET_IF_REDEEMED\x10\x03*v\n" +
+	"\x1fVALUATION_BASIS_NET_IF_REDEEMED\x10\x03*\xa0\x01\n" +
 	"\x10PriceCheckStatus\x12\"\n" +
 	"\x1ePRICE_CHECK_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
 	"\x1aPRICE_CHECK_STATUS_MATCHED\x10\x01\x12\x1e\n" +
-	"\x1aPRICE_CHECK_STATUS_FLAGGED\x10\x02*\xcb\x01\n" +
+	"\x1aPRICE_CHECK_STATUS_FLAGGED\x10\x02\x12(\n" +
+	"$PRICE_CHECK_STATUS_CURRENCY_MISMATCH\x10\x03*\xcb\x01\n" +
 	"\x13AllocationDimension\x12$\n" +
 	" ALLOCATION_DIMENSION_UNSPECIFIED\x10\x00\x12$\n" +
 	" ALLOCATION_DIMENSION_ASSET_CLASS\x10\x01\x12!\n" +

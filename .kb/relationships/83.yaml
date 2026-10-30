@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-061313824474
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-string
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:11:40.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f36a90fe0a2
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-string
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:11:40.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-912450144c3d

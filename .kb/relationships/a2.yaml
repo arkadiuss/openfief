@@ -454,6 +454,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0ee1554a88f
+  - type: executable_for
+    from: SYM-ingest-app-test-fa-test-uploads-file-accounts
+    to: TEST-ingest-app-file-accounts
+    created_at: 2026-10-30T04:27:59.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca8e95b5f947
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-proto-reflect
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:38:06.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6062c3e36069
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-proto-reflect
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:38:07.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2587f1889da1
   - type: verified_by
     from: SCEN-jurisdiction-number-format-choices
     to: TEST-jurisdiction-number-format

@@ -615,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c3ec958418a
+  - type: implements
+    from: SYM-valuation-gen-pc-connect-new-price-check-service-handler
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:23:12.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e04ae67ca2f2
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-new-price-check-service-handler
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:23:12.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-510ef665996e
+  - type: executable_for
+    from: SYM-ui-uc-test-pc-test-fraction-of
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:20:48.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-965af50a45ff

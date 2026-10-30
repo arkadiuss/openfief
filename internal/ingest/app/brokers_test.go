@@ -195,23 +195,41 @@ func TestConnectorsBrokerAccountsNeedAStore(t *testing.T) {
 	}
 }
 
+// TestConnectorsImportFileByBrokerAccount checks that an uploaded statement
+// of linked accounts books every mapped broker account bound to the
+// instance, lists the unmapped one and books nothing of it (D-109), and
+// that a broker account mapped to an account not bound to the instance
+// refuses the statement whole.
 func TestConnectorsImportFileByBrokerAccount(t *testing.T) {
 	t.Parallel()
 	d := delivery(t)
 	m := mapping(t)
-	d.Mapping = byBroker(&m, "U0000001")
+	one, two, three := byBroker(&m, "U0000001"), byBroker(&m, "U0000002"), byBroker(&m, "U0000003")
+	d.Mapping = ingest.Mapping{
+		BrokerAccounts:  []ingest.BrokerAccountID{"U0000001", "U0000002", "U0000003"},
+		ByBrokerAccount: append(append(one.ByBrokerAccount, two.ByBrokerAccount...), three.ByBrokerAccount...),
+	}
 	l := &fakeLedger{}
 	c := connectors(t, &fakeCaller{delivery: d}, l, &fakeStores{})
-	c.Brokers = &fakeBrokers{accounts: []ingest.BrokerAccount{{Instance: "ibkr-main", ID: "U0000001", Account: "acc-1"}}}
-	b, err := c.ImportFile(t.Context(), "ibkr-main", "b-1", "acc-1", ingest.ModeTransactions, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("x")})
+	c.Bindings = &fakeBindings{accounts: []ledger.AccountID{"acc-1", "acc-2"}}
+	brokers := &fakeBrokers{accounts: []ingest.BrokerAccount{
+		{Instance: "ibkr-main", ID: "U0000001", Account: "acc-1"},
+		{Instance: "ibkr-main", ID: "U0000002", Account: "acc-2"},
+		{Instance: "ibkr-main", ID: "U0000003"},
+	}}
+	c.Brokers = brokers
+	b, err := c.ImportFile(t.Context(), "ibkr-main", "b-1", ingest.ModeTransactions, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("x")})
 	if err != nil {
 		t.Fatalf("ImportFile: %v", err)
 	}
-	if b.Transactions != 1 || len(l.txs) != 1 || l.txs[0].Account != "acc-1" {
-		t.Errorf("batch = %+v, booked %+v; want one transaction in acc-1", b, l.txs)
+	got := []any{b.Transactions, b.Accounts, b.Unmapped, len(l.txs)}
+	want := []any{2, []ledger.AccountID{"acc-1", "acc-2"}, []ingest.BrokerAccountID{"U0000003"}, 2}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("transactions, accounts, unmapped, booked (-want +got):\n%s", diff)
 	}
-	_, err = c.ImportFile(t.Context(), "ibkr-main", "b-2", "acc-2", ingest.ModeTransactions, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("x")})
+	brokers.accounts[1].Account = "acc-9"
+	_, err = c.ImportFile(t.Context(), "ibkr-main", "b-2", ingest.ModeTransactions, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("x")})
 	if diff := cmp.Diff(ingest.ErrAccountNotBound, err, cmpopts.EquateErrors()); diff != "" {
-		t.Errorf("ImportFile into another account error (-want +got):\n%s", diff)
+		t.Errorf("ImportFile into an account not bound to the instance error (-want +got):\n%s", diff)
 	}
 }

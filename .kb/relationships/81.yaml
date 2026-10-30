@@ -349,3 +349,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccec2acd1e05
+  - type: verified_by
+    from: SCEN-ui-price-checks-page
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T05:17:56.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51fc10290c49

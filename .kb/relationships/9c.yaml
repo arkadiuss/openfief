@@ -538,6 +538,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2231a6b12413
+  - type: executable_for
+    from: SYM-ingest-app-test-conn-cross-check-delivery
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-30T04:26:36.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3101ece8a38b
   - type: implements
     from: SYM-ingestv1-fee-rule-string
     to: REQ-ingest-account-terms

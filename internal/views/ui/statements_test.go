@@ -39,6 +39,23 @@ type fakeStatements struct {
 	headers []*ingestv1.StatementHeader
 	sizes   []int
 	head    []byte
+	// noFiles answers that no account takes statement files.
+	noFiles bool
+}
+
+// ListStatementAccounts answers that the test account takes files, its
+// next upload in opening mode, unless noFiles.
+func (f *fakeStatements) ListStatementAccounts(_ context.Context, req *connect.Request[ingestv1.ListStatementAccountsRequest]) (*connect.Response[ingestv1.ListStatementAccountsResponse], error) {
+	if err := owner(req.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	out := &ingestv1.ListStatementAccountsResponse{}
+	f.locked(func() {
+		if !f.noFiles {
+			out.Accounts = []*ingestv1.StatementAccount{{AccountId: accountID, Instance: "flex-main", Mode: ingestv1.Mode_MODE_OPENING}}
+		}
+	})
+	return connect.NewResponse(out), nil
 }
 
 func (f *fakeStatements) UploadStatement(_ context.Context, stream *connect.ClientStream[ingestv1.UploadStatementRequest]) (*connect.Response[ingestv1.UploadStatementResponse], error) {
@@ -73,12 +90,22 @@ func (f *fakeStatements) UploadStatement(_ context.Context, stream *connect.Clie
 		return nil, codeErr(connect.CodeUnavailable, errFlexDown)
 	}
 	return connect.NewResponse(&ingestv1.UploadStatementResponse{
+		Mode: chosenMode(h), AccountIds: []string{accountID, "acc-linked"}, UnmappedBrokerAccounts: []string{"U0000009"},
 		BatchId: "b-7", Institution: "ibkr", Transactions: 10, Assertions: 4, New: 9, Unchanged: 1, FailedAssertions: 1,
 		ProblemsTotal: 3, Problems: []*ingestv1.Problem{
 			{Kind: ingestv1.ProblemKind_PROBLEM_KIND_UNSUPPORTED, Ref: "FlexStatement#1/Trades#8[tradeID=9000106]", Reason: `asset category "OPT" is not supported`},
 			{Kind: ingestv1.ProblemKind_PROBLEM_KIND_SKIPPED, Ref: "FlexStatement#2", Reason: "statement of an IBKR account that feeds no ledger account"},
 		},
 	}), nil
+}
+
+// chosenMode is the mode the fake core imports in: the header's, or
+// opening when it names none, as for an account not yet seeded.
+func chosenMode(h *ingestv1.StatementHeader) ingestv1.Mode {
+	if h.GetMode() == ingestv1.Mode_MODE_UNSPECIFIED {
+		return ingestv1.Mode_MODE_OPENING
+	}
+	return h.GetMode()
 }
 
 // locked runs fn with the fake's lock held.
@@ -147,21 +174,45 @@ func (zeros) Read(p []byte) (int, error) {
 }
 
 // TestAccountUploadForm checks that only the owner sees the "Upload
-// statement" form, on any account's page, as a multipart form that sends
-// the mode before the file.
+// statement" form, only on an account whose connector takes files, as the
+// core's StatementService says (D-109), with the core's choice of mode
+// preselected, as a multipart form that sends the mode before the file.
 func TestAccountUploadForm(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, `<h2 id="upload-title">Upload statement</h2>`, `action="/accounts/`+accountID+`/statements"`,
-		`enctype="multipart/form-data"`, `name="statement" type="file"`)
+		`enctype="multipart/form-data"`, `name="statement" type="file"`, "The core hands it to flex-main",
+		`<option value="auto" selected>opening: the account isn't seeded yet</option>`)
 	if body := rec.Body.String(); strings.Index(body, `name="mode"`) > strings.Index(body, `name="statement"`) {
 		t.Error("the form sends the file before the mode; the UI reads the mode first")
 	}
 	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantNoBody(t, rec, "Upload statement")
+	h.statements.locked(func() { h.statements.noFiles = true })
+	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), ownerSession))
+	wantStatus(t, rec, http.StatusOK)
+	wantNoBody(t, rec, "Upload statement")
+}
+
+// TestUploadStatementCoreChooses checks that the preselected choice sends
+// no mode, so the core chooses it, and that the page says which it chose,
+// which accounts a statement of linked accounts was booked into, and which
+// broker accounts aren't mapped (D-109).
+func TestUploadStatementCoreChooses(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	rec := h.serve(t, withSession(uploadRequest(modePart("auto"), filePart("flex.xml", flexLike(1000))), ownerSession))
+	wantStatus(t, rec, http.StatusOK)
+	wantBody(t, rec, "Import batch b-7 from ibkr, in opening mode", `booked into each: <a href="/accounts/`+accountID+`">`,
+		`<a href="/accounts/acc-linked">acc-linked</a>`, "no account is mapped to", `<span class="mono">U0000009</span>`)
+	var headers []*ingestv1.StatementHeader
+	h.statements.locked(func() { headers = h.statements.headers })
+	if len(headers) != 1 || headers[0].GetMode() != ingestv1.Mode_MODE_UNSPECIFIED {
+		t.Errorf("headers handed to the core = %v, want one with no mode", headers)
+	}
 }
 
 // TestUploadStatement checks that the posted file is streamed to the core
@@ -173,7 +224,7 @@ func TestUploadStatement(t *testing.T) {
 	h := newHarness(t)
 	rec := h.serve(t, withSession(uploadRequest(modePart("opening"), filePart("flex.xml", flexLike(300000))), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "Statement imported", "Import batch b-7 from ibkr: 10 transactions (9 new, 0 new versions, 1 unchanged)",
+	wantBody(t, rec, "Statement imported", "Import batch b-7 from ibkr, in opening mode: 10 transactions (9 new, 0 new versions, 1 unchanged)",
 		"4 balance assertions, 1 of them flagged", "3 rows were left out of the ledger; the first 2 are listed",
 		"FlexStatement#1/Trades#8[tradeID=9000106]", "asset category &#34;OPT&#34; is not supported", "<td>skipped</td>")
 	var headers []*ingestv1.StatementHeader

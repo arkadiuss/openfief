@@ -814,8 +814,9 @@ components:
           type: string
           title: threshold
           description: |-
-            The relative difference beyond which a check is flagged, as a decimal
-             fraction such as "0.01"; empty when this core compares no prices.
+            The relative difference beyond which a check is flagged unless the
+             owner set another for its instrument, as a decimal fraction: "0.01"
+             (D-110); empty when this core compares no prices.
         checks:
           type: array
           items:
@@ -1250,7 +1251,7 @@ components:
         date:
           type: string
           title: date
-          description: YYYY-MM-DD.
+          description: The cross-check price's date, YYYY-MM-DD.
         instrument:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Instrument'
@@ -1278,17 +1279,37 @@ components:
           title: relative_difference
           description: |-
             (cross_check - price) / price as a decimal string, rounded half-even
-             to six places: "0.0123" is 1.23% above the price.
+             to six places: "0.0123" is 1.23% above the price. Empty for a currency
+             mismatch.
         status:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.PriceCheckStatus'
           title: status
+        priceDate:
+          type: string
+          title: price_date
+          description: |-
+            The price's date, YYYY-MM-DD: the cross-check price's date or the
+             latest one before it with a price (D-111).
+        threshold:
+          type: string
+          title: threshold
+          description: |-
+            The relative difference beyond which this check is flagged, as a
+             decimal fraction: "0.01", or the owner's threshold for the instrument
+             (D-110).
+        acknowledged:
+          type: boolean
+          title: acknowledged
+          description: |-
+            Whether the owner acknowledged this flagged check with these two
+             prices (D-112).
       title: PriceCheck
       additionalProperties: false
       description: |-
-        PriceCheck is a stored end-of-day price compared with an institution's
-         own price of the same instrument on the same date, in the same currency
-         (D-22).
+        PriceCheck is an institution's own price of an instrument compared with
+         the latest stored end-of-day price of the instrument on or before its
+         date (D-22, D-111).
     openfief.views.v1.PriceCheckStatus:
       type: string
       title: PriceCheckStatus
@@ -1296,6 +1317,7 @@ components:
         - PRICE_CHECK_STATUS_UNSPECIFIED
         - PRICE_CHECK_STATUS_MATCHED
         - PRICE_CHECK_STATUS_FLAGGED
+        - PRICE_CHECK_STATUS_CURRENCY_MISMATCH
       description: |-
         PriceCheckStatus is the result of comparing a price with a cross-check
          price.
@@ -2070,11 +2092,12 @@ paths:
         - ReadService
       summary: ListPriceChecks
       description: |-
-        ListPriceChecks returns every price compared with an institution's own
-         price of the same instrument, date and currency, such as IBKR's mark
-         price (D-22), in date, instrument and cross-check source order, with
-         the threshold beyond which a check is flagged. A flagged check is for
-         the owner to look at; it changes no price or valuation.
+        ListPriceChecks returns every institution's own price, such as IBKR's
+         mark price, compared with the latest stored price of its instrument on
+         or before its date (D-22, D-111), in date, instrument and cross-check
+         source order, each with the threshold it was flagged at (D-110) and
+         whether the owner acknowledged it (D-112). A flagged check is for the
+         owner to look at; it changes no price or valuation.
       operationId: openfief.views.v1.ReadService.ListPriceChecks
       parameters:
         - name: status

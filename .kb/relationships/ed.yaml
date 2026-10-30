@@ -356,6 +356,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fca6489a3ce1
+  - type: implements
+    from: SYM-valuation-postgres-store-append-price-check-acknowledgement
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T03:10:06.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c840ec5f03d
+  - type: covered_by
+    from: SYM-valuation-postgres-store-append-price-check-acknowledgement
+    to: TEST-valuation-postgres-price-check-settings
+    created_at: 2026-10-30T03:10:06.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1d1e4c63824
+  - type: implements
+    from: SYM-valuation-gen-pc-connect-price-check-service-client-impl
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:22:07.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1754cb7de3fe
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-price-check-service-client-impl
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:22:07.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5190143b0eba
   - type: constrains
     from: REQ-views-totals-with-cash
     to: FACT-SUBJECT-5FCF5B63A486FB72

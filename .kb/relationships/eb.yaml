@@ -321,6 +321,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c86ffab641e
+  - type: constrains
+    from: REQ-ui-statement-upload-owner-form
+    to: FACT-SUBJECT-C329120788EF2E04
+    created_at: 2026-10-30T05:18:06.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fec148071dce
+  - type: requires_property
+    from: REQ-ui-statement-upload-owner-form
+    to: FACT-PROP-6D1B1B3C6973E0FA
+    created_at: 2026-10-30T05:18:06.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3faf850cdf4b
+  - type: specified_by
+    from: REQ-ui-statement-upload-owner-form
+    to: SCEN-ui-statement-upload-owner-form
+    created_at: 2026-10-30T05:18:06.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b75a515917cb
   - type: implements
     from: SYM-viewsv1-unvalued-holding-get-missing
     to: REQ-views-three-values

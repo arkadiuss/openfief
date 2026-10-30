@@ -265,13 +265,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b959dbbd7c1d
-  - type: executable_for
-    from: SYM-valuation-app-test-new-cross-checks
-    to: TEST-valuation-app-crosscheck
-    created_at: 2026-10-29T05:39:56.217Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6ca25a07fc8a
   - type: implements
     from: SYM-core-conn-cross-check-inputs
     to: REQ-ingest-cross-check-prices
@@ -342,6 +335,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-246c920c5153
+  - type: implements
+    from: SYM-valuation-postgres-scan-acknowledgement
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T03:10:21.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9ccf389d9c4
+  - type: covered_by
+    from: SYM-valuation-postgres-scan-acknowledgement
+    to: TEST-valuation-postgres-price-check-settings
+    created_at: 2026-10-30T03:10:21.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f025565e6225
+  - type: executable_for
+    from: SYM-ingest-app-test-conn-fake-declarations-declarations
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-30T04:26:23.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cdaee0f861a
   - type: validates
     from: TEST-jurisdiction-number-format
     to: REQ-ui-number-format-separators-only

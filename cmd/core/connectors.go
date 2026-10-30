@@ -120,10 +120,8 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 			return fmt.Errorf("valuation store: %w", err)
 		}
 		l, recorder := ingestDeps(p.pool, vstore)
-		checks, err := valuationapp.NewCrossChecks(vstore, kernel.Decimal{})
-		if err != nil {
-			return fmt.Errorf("cross checks: %w", err)
-		}
+		// The connector commands record cross-check prices for no owner.
+		checks := valuationapp.NewCrossChecks(vstore, nil)
 		// The model's targets need no owner: no session is checked.
 		models, err := portfolioapp.New(portfoliopg.New(p.pool), vstore, nil, valuation.PLN())
 		if err != nil {
@@ -141,8 +139,9 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 // and their addresses come from discovery, the core's tokens for them from
 // the TokenRequest API (D-59), the sync state, bindings and broker accounts
 // (D-72) from the ingest schema, each account's seeding from the ledger
-// (D-95), and what market-data connectors price from the holdings, the
-// bond terms and the model portfolio (D-93).
+// (D-95), what market-data connectors price from the holdings, the bond
+// terms and the model portfolio (D-93), and which instances may send
+// cross-check prices from their manifests (D-112).
 func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery, cfg *syncConfig) *ingestapp.Scheduler {
 	tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
 	store := ingestpg.New(d.pool)
@@ -153,7 +152,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 			Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
 			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
 			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
-			Seeding: d.ledger, Sources: sourceInputs{rankings: d.rankings},
+			Seeding: d.ledger, Sources: sourceInputs{rankings: d.rankings}, Declarations: discovery,
 		},
 		Instances:  discovery,
 		Store:      store,
@@ -180,6 +179,7 @@ func runConnectors(ctx context.Context, d *connectorDeps, c *cluster, cfg *syncC
 	if d.entries != nil {
 		tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
 		d.entries.set(connectrpc.NewClient(connectrpc.H2CClient(), discovery.BaseURL, tokens))
+		d.entries.setDiscovery(discovery)
 	}
 	ticker := time.NewTicker(schedulerTick)
 	defer ticker.Stop()

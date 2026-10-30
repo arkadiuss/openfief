@@ -678,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5764c6015fe
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-origin
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:16:47.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45780e1c4c91
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-origin
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:16:47.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61af7a9a23f7
+  - type: implements
+    from: SYM-ingest-gen-st-pb-statement-account-get-account-id
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:36:16.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0877c56e4772
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-statement-account-get-account-id
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:36:16.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f53146857a25

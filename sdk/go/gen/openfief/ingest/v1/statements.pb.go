@@ -1,4 +1,4 @@
-// OpenFief's statement upload contract (docs/DESIGN.md D-7, D-49).
+// OpenFief's statement upload contract (docs/DESIGN.md D-7, D-49, D-109).
 //
 // The owner uploads a statement file for an account in the built-in UI,
 // which streams it to the core (D-49). The core hands it to the connector
@@ -6,7 +6,12 @@
 // ImportFile (proto/openfief/connector/v1/connector.proto), and imports what
 // that connector delivers as one import batch, like any other: data enters
 // the ledger only through a connector's ingest path (D-7). The connector
-// decides which files it takes. The core serves StatementService to VIEW
+// decides which files it takes, and declares in its manifest that it takes
+// any (statementFiles, D-109). A statement that covers several accounts,
+// such as an IBKR Flex statement of linked accounts, books every mapped
+// account bound to that instance and reports the broker accounts that
+// aren't mapped (D-72). The core chooses the mode, opening for an account
+// not yet seeded and transactions after that; the owner may override it. The core serves StatementService to VIEW
 // plugins only, next to the AuthService. It is not part of the public read
 // API (D-6), which stays read-only.
 //
@@ -20,8 +25,8 @@
 //   unknown, expired or revoked session fails with UNAUTHENTICATED; a
 //   read-scoped session, or an origin off the core's allow-list, fails with
 //   PERMISSION_DENIED. The core checks them before it reads the file.
-// - A stream without a header first, a second header, no mode, an empty
-//   file, or a file the connector refuses (it can't read it, or it isn't a
+// - A stream without a header first, a second header, an empty file, or a
+//   file the connector refuses (it can't read it, or it isn't a
 //   statement it takes) fails with INVALID_ARGUMENT and the reason, and
 //   nothing is imported. A file larger than the core's limit (64 MiB) fails
 //   with RESOURCE_EXHAUSTED.
@@ -164,14 +169,17 @@ type StatementHeader struct {
 	state        protoimpl.MessageState `protogen:"open.v1"`
 	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
 	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
-	// The OpenFief account the statement is for.
+	// The OpenFief account the statement is for; its bound connector
+	// instance gets the file.
 	AccountId string `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
 	// The file's name as the owner's browser gave it, such as
 	// "statement.xml"; only a hint for the connector, never a path. The core
 	// keeps its last path element, without control characters, cut to 255
 	// bytes.
-	FileName      string `protobuf:"bytes,4,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
-	Mode          Mode   `protobuf:"varint,5,opt,name=mode,proto3,enum=openfief.ingest.v1.Mode" json:"mode,omitempty"`
+	FileName string `protobuf:"bytes,4,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	// The owner's override; unspecified lets the core choose: opening for an
+	// account not yet seeded, transactions after that (D-109).
+	Mode          Mode `protobuf:"varint,5,opt,name=mode,proto3,enum=openfief.ingest.v1.Mode" json:"mode,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -410,8 +418,18 @@ type UploadStatementResponse struct {
 	Problems []*Problem `protobuf:"bytes,9,rep,name=problems,proto3" json:"problems,omitempty"`
 	// How many ingest problems there were in all.
 	ProblemsTotal int32 `protobuf:"varint,10,opt,name=problems_total,json=problemsTotal,proto3" json:"problems_total,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// The mode the statement was imported in: the owner's, or the one the
+	// core chose.
+	Mode Mode `protobuf:"varint,11,opt,name=mode,proto3,enum=openfief.ingest.v1.Mode" json:"mode,omitempty"`
+	// The OpenFief accounts the statement booked into, in ID order: every
+	// mapped account of a statement that covers several (D-109).
+	AccountIds []string `protobuf:"bytes,12,rep,name=account_ids,json=accountIds,proto3" json:"account_ids,omitempty"`
+	// The institution's own accounts the statement named that no OpenFief
+	// account is mapped to: nothing of them was booked (D-72). The owner maps
+	// them on the accounts page; they are shown, never logged.
+	UnmappedBrokerAccounts []string `protobuf:"bytes,13,rep,name=unmapped_broker_accounts,json=unmappedBrokerAccounts,proto3" json:"unmapped_broker_accounts,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *UploadStatementResponse) Reset() {
@@ -514,6 +532,187 @@ func (x *UploadStatementResponse) GetProblemsTotal() int32 {
 	return 0
 }
 
+func (x *UploadStatementResponse) GetMode() Mode {
+	if x != nil {
+		return x.Mode
+	}
+	return Mode_MODE_UNSPECIFIED
+}
+
+func (x *UploadStatementResponse) GetAccountIds() []string {
+	if x != nil {
+		return x.AccountIds
+	}
+	return nil
+}
+
+func (x *UploadStatementResponse) GetUnmappedBrokerAccounts() []string {
+	if x != nil {
+		return x.UnmappedBrokerAccounts
+	}
+	return nil
+}
+
+type ListStatementAccountsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken  string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListStatementAccountsRequest) Reset() {
+	*x = ListStatementAccountsRequest{}
+	mi := &file_openfief_ingest_v1_statements_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListStatementAccountsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListStatementAccountsRequest) ProtoMessage() {}
+
+func (x *ListStatementAccountsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_statements_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListStatementAccountsRequest.ProtoReflect.Descriptor instead.
+func (*ListStatementAccountsRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_statements_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListStatementAccountsRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *ListStatementAccountsRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+// StatementAccount is an account the owner can upload statements for.
+type StatementAccount struct {
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	AccountId string                 `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	// The connector instance bound to it, which takes the file.
+	Instance string `protobuf:"bytes,2,opt,name=instance,proto3" json:"instance,omitempty"`
+	// The mode the core chooses for its next upload.
+	Mode          Mode `protobuf:"varint,3,opt,name=mode,proto3,enum=openfief.ingest.v1.Mode" json:"mode,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StatementAccount) Reset() {
+	*x = StatementAccount{}
+	mi := &file_openfief_ingest_v1_statements_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StatementAccount) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StatementAccount) ProtoMessage() {}
+
+func (x *StatementAccount) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_statements_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StatementAccount.ProtoReflect.Descriptor instead.
+func (*StatementAccount) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_statements_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *StatementAccount) GetAccountId() string {
+	if x != nil {
+		return x.AccountId
+	}
+	return ""
+}
+
+func (x *StatementAccount) GetInstance() string {
+	if x != nil {
+		return x.Instance
+	}
+	return ""
+}
+
+func (x *StatementAccount) GetMode() Mode {
+	if x != nil {
+		return x.Mode
+	}
+	return Mode_MODE_UNSPECIFIED
+}
+
+type ListStatementAccountsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// In account ID order.
+	Accounts      []*StatementAccount `protobuf:"bytes,1,rep,name=accounts,proto3" json:"accounts,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListStatementAccountsResponse) Reset() {
+	*x = ListStatementAccountsResponse{}
+	mi := &file_openfief_ingest_v1_statements_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListStatementAccountsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListStatementAccountsResponse) ProtoMessage() {}
+
+func (x *ListStatementAccountsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_statements_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListStatementAccountsResponse.ProtoReflect.Descriptor instead.
+func (*ListStatementAccountsResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_statements_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListStatementAccountsResponse) GetAccounts() []*StatementAccount {
+	if x != nil {
+		return x.Accounts
+	}
+	return nil
+}
+
 var File_openfief_ingest_v1_statements_proto protoreflect.FileDescriptor
 
 const file_openfief_ingest_v1_statements_proto_rawDesc = "" +
@@ -533,7 +732,7 @@ const file_openfief_ingest_v1_statements_proto_rawDesc = "" +
 	"\aProblem\x123\n" +
 	"\x04kind\x18\x01 \x01(\x0e2\x1f.openfief.ingest.v1.ProblemKindR\x04kind\x12\x10\n" +
 	"\x03ref\x18\x02 \x01(\tR\x03ref\x12\x16\n" +
-	"\x06reason\x18\x03 \x01(\tR\x06reason\"\xfa\x02\n" +
+	"\x06reason\x18\x03 \x01(\tR\x06reason\"\x83\x04\n" +
 	"\x17UploadStatementResponse\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12\"\n" +
@@ -547,7 +746,21 @@ const file_openfief_ingest_v1_statements_proto_rawDesc = "" +
 	"\x11failed_assertions\x18\b \x01(\x05R\x10failedAssertions\x127\n" +
 	"\bproblems\x18\t \x03(\v2\x1b.openfief.ingest.v1.ProblemR\bproblems\x12%\n" +
 	"\x0eproblems_total\x18\n" +
-	" \x01(\x05R\rproblemsTotal*E\n" +
+	" \x01(\x05R\rproblemsTotal\x12,\n" +
+	"\x04mode\x18\v \x01(\x0e2\x18.openfief.ingest.v1.ModeR\x04mode\x12\x1f\n" +
+	"\vaccount_ids\x18\f \x03(\tR\n" +
+	"accountIds\x128\n" +
+	"\x18unmapped_broker_accounts\x18\r \x03(\tR\x16unmappedBrokerAccounts\"[\n" +
+	"\x1cListStatementAccountsRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"{\n" +
+	"\x10StatementAccount\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x01 \x01(\tR\taccountId\x12\x1a\n" +
+	"\binstance\x18\x02 \x01(\tR\binstance\x12,\n" +
+	"\x04mode\x18\x03 \x01(\x0e2\x18.openfief.ingest.v1.ModeR\x04mode\"a\n" +
+	"\x1dListStatementAccountsResponse\x12@\n" +
+	"\baccounts\x18\x01 \x03(\v2$.openfief.ingest.v1.StatementAccountR\baccounts*E\n" +
 	"\x04Mode\x12\x14\n" +
 	"\x10MODE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fMODE_OPENING\x10\x01\x12\x15\n" +
@@ -555,9 +768,10 @@ const file_openfief_ingest_v1_statements_proto_rawDesc = "" +
 	"\vProblemKind\x12\x1c\n" +
 	"\x18PROBLEM_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18PROBLEM_KIND_UNSUPPORTED\x10\x01\x12\x18\n" +
-	"\x14PROBLEM_KIND_SKIPPED\x10\x022\x80\x01\n" +
+	"\x14PROBLEM_KIND_SKIPPED\x10\x022\x84\x02\n" +
 	"\x10StatementService\x12l\n" +
-	"\x0fUploadStatement\x12*.openfief.ingest.v1.UploadStatementRequest\x1a+.openfief.ingest.v1.UploadStatementResponse(\x01B\xd9\x01\n" +
+	"\x0fUploadStatement\x12*.openfief.ingest.v1.UploadStatementRequest\x1a+.openfief.ingest.v1.UploadStatementResponse(\x01\x12\x81\x01\n" +
+	"\x15ListStatementAccounts\x120.openfief.ingest.v1.ListStatementAccountsRequest\x1a1.openfief.ingest.v1.ListStatementAccountsResponse\"\x03\x90\x02\x01B\xd9\x01\n" +
 	"\x16com.openfief.ingest.v1B\x0fStatementsProtoP\x01ZDgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1;ingestv1\xa2\x02\x03OIX\xaa\x02\x12Openfief.Ingest.V1\xca\x02\x12Openfief\\Ingest\\V1\xe2\x02\x1eOpenfief\\Ingest\\V1\\GPBMetadata\xea\x02\x14Openfief::Ingest::V1b\x06proto3"
 
 var (
@@ -573,27 +787,35 @@ func file_openfief_ingest_v1_statements_proto_rawDescGZIP() []byte {
 }
 
 var file_openfief_ingest_v1_statements_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_openfief_ingest_v1_statements_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_openfief_ingest_v1_statements_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_openfief_ingest_v1_statements_proto_goTypes = []any{
-	(Mode)(0),                       // 0: openfief.ingest.v1.Mode
-	(ProblemKind)(0),                // 1: openfief.ingest.v1.ProblemKind
-	(*StatementHeader)(nil),         // 2: openfief.ingest.v1.StatementHeader
-	(*UploadStatementRequest)(nil),  // 3: openfief.ingest.v1.UploadStatementRequest
-	(*Problem)(nil),                 // 4: openfief.ingest.v1.Problem
-	(*UploadStatementResponse)(nil), // 5: openfief.ingest.v1.UploadStatementResponse
+	(Mode)(0),                             // 0: openfief.ingest.v1.Mode
+	(ProblemKind)(0),                      // 1: openfief.ingest.v1.ProblemKind
+	(*StatementHeader)(nil),               // 2: openfief.ingest.v1.StatementHeader
+	(*UploadStatementRequest)(nil),        // 3: openfief.ingest.v1.UploadStatementRequest
+	(*Problem)(nil),                       // 4: openfief.ingest.v1.Problem
+	(*UploadStatementResponse)(nil),       // 5: openfief.ingest.v1.UploadStatementResponse
+	(*ListStatementAccountsRequest)(nil),  // 6: openfief.ingest.v1.ListStatementAccountsRequest
+	(*StatementAccount)(nil),              // 7: openfief.ingest.v1.StatementAccount
+	(*ListStatementAccountsResponse)(nil), // 8: openfief.ingest.v1.ListStatementAccountsResponse
 }
 var file_openfief_ingest_v1_statements_proto_depIdxs = []int32{
 	0, // 0: openfief.ingest.v1.StatementHeader.mode:type_name -> openfief.ingest.v1.Mode
 	2, // 1: openfief.ingest.v1.UploadStatementRequest.header:type_name -> openfief.ingest.v1.StatementHeader
 	1, // 2: openfief.ingest.v1.Problem.kind:type_name -> openfief.ingest.v1.ProblemKind
 	4, // 3: openfief.ingest.v1.UploadStatementResponse.problems:type_name -> openfief.ingest.v1.Problem
-	3, // 4: openfief.ingest.v1.StatementService.UploadStatement:input_type -> openfief.ingest.v1.UploadStatementRequest
-	5, // 5: openfief.ingest.v1.StatementService.UploadStatement:output_type -> openfief.ingest.v1.UploadStatementResponse
-	5, // [5:6] is the sub-list for method output_type
-	4, // [4:5] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	0, // 4: openfief.ingest.v1.UploadStatementResponse.mode:type_name -> openfief.ingest.v1.Mode
+	0, // 5: openfief.ingest.v1.StatementAccount.mode:type_name -> openfief.ingest.v1.Mode
+	7, // 6: openfief.ingest.v1.ListStatementAccountsResponse.accounts:type_name -> openfief.ingest.v1.StatementAccount
+	3, // 7: openfief.ingest.v1.StatementService.UploadStatement:input_type -> openfief.ingest.v1.UploadStatementRequest
+	6, // 8: openfief.ingest.v1.StatementService.ListStatementAccounts:input_type -> openfief.ingest.v1.ListStatementAccountsRequest
+	5, // 9: openfief.ingest.v1.StatementService.UploadStatement:output_type -> openfief.ingest.v1.UploadStatementResponse
+	8, // 10: openfief.ingest.v1.StatementService.ListStatementAccounts:output_type -> openfief.ingest.v1.ListStatementAccountsResponse
+	9, // [9:11] is the sub-list for method output_type
+	7, // [7:9] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_openfief_ingest_v1_statements_proto_init() }
@@ -611,7 +833,7 @@ func file_openfief_ingest_v1_statements_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_ingest_v1_statements_proto_rawDesc), len(file_openfief_ingest_v1_statements_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   4,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

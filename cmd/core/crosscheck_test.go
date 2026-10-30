@@ -27,16 +27,29 @@ func (m *memCrossChecks) CrossCheckedPrices(context.Context) ([]valuation.Price,
 	return nil, m.saved, nil
 }
 
+func (*memCrossChecks) PriceCheckThresholds(context.Context) (valuation.Thresholds, error) {
+	return valuation.Thresholds{}, nil
+}
+
+func (*memCrossChecks) SavePriceCheckThreshold(context.Context, string, *kernel.Decimal) error {
+	return nil
+}
+
+func (*memCrossChecks) PriceCheckAcknowledgements(context.Context) ([]valuation.PriceCheckAcknowledgement, error) {
+	return nil, nil
+}
+
+func (*memCrossChecks) AppendPriceCheckAcknowledgement(context.Context, *valuation.PriceCheckAcknowledgement) error {
+	return nil
+}
+
 // TestCrossCheckInputs checks that the core hands a delivery's cross-check
 // prices to valuation's cross-check use cases, which store valid ones and
 // refuse a batch with an invalid one.
 func TestCrossCheckInputs(t *testing.T) {
 	t.Parallel()
 	store := &memCrossChecks{}
-	checks, err := valuationapp.NewCrossChecks(store, kernel.Decimal{})
-	if err != nil {
-		t.Fatalf("NewCrossChecks: %v", err)
-	}
+	checks := valuationapp.NewCrossChecks(store, nil)
 	usd, err := kernel.ParseCurrency("USD")
 	if err != nil {
 		t.Fatalf("ParseCurrency: %v", err)

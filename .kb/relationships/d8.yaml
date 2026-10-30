@@ -413,6 +413,48 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d6d407ccf893
   - type: implements
+    from: SYM-valuation-thresholds-for
+    to: REQ-valuation-price-check-one-percent
+    created_at: 2026-10-30T03:07:16.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee235d46fc32
+  - type: implements
+    from: SYM-valuation-thresholds-for
+    to: REQ-valuation-price-check-instrument-threshold
+    created_at: 2026-10-30T03:07:16.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d98088034af7
+  - type: covered_by
+    from: SYM-valuation-thresholds-for
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-30T03:07:16.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7264684acdb3
+  - type: validates
+    from: TEST-plugins-manifest-label
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:10:51.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca49b3111ebe
+  - type: implements
+    from: SYM-ingest-gen-st-connect-statement-service-client-list-statement-accounts
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:31:51.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-189a4305a664
+  - type: covered_by
+    from: SYM-ingest-gen-st-connect-statement-service-client-list-statement-accounts
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:31:51.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e68a9e57fce0
+  - type: implements
     from: SYM-ingestv1-fee-rule-get-rate
     to: REQ-ingest-account-terms
     created_at: 2026-10-29T23:13:34.852Z

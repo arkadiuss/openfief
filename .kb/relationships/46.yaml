@@ -503,6 +503,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5829350b6b7e
+  - type: executable_for
+    from: SYM-ingest-app-test-fa-per-instance-bindings
+    to: TEST-ingest-app-file-accounts
+    created_at: 2026-10-30T04:27:23.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75a661322bea
+  - type: implements
+    from: SYM-ingest-kube-deployed-declarations
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:31:29.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b94304d21f89
+  - type: implements
+    from: SYM-ingest-kube-deployed-declarations
+    to: REQ-plugins-manifest-declarations
+    created_at: 2026-10-30T04:31:29.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae2a70c6a1c2
+  - type: covered_by
+    from: SYM-ingest-kube-deployed-declarations
+    to: TEST-ingest-kube
+    created_at: 2026-10-30T04:31:29.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb97a6f86923
+  - type: executable_for
+    from: SYM-ui-uc-test-pc-other-instrument
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:19:37.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a17997aa6fa
   - type: implements
     from: SYM-valuationv1-set-number-format-request-proto-reflect
     to: REQ-valuation-settings-service

@@ -83,6 +83,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be9c66334728
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-tax-wrapper
+    to: TEST-valuation-app-revalue
+    created_at: 2026-10-29T22:12:35.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df9752cb287c
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-store-tax-wrapper
+    to: TEST-valuation-app-plan
+    created_at: 2026-10-29T22:12:35.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-533ffc36394c
   - type: implements
     from: SYM-plugins-smokescreen-fn-new-config
     to: REQ-plugins-egress-proxy-embedded-buildproxy
@@ -314,6 +328,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78b3af5fadfa
+  - type: implements
+    from: SYM-fd-plugins-core-serves-path
+    to: REQ-core-only-browser-entry-point
+    created_at: 2026-10-29T21:01:19.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd2c4ea0b913
+  - type: implements
+    from: SYM-exp-plugins-app-check-browser-view-all
+    to: REQ-plugins-cli-refuses-second-browser-view
+    created_at: 2026-10-29T22:00:14.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32252add8ddd
+  - type: covered_by
+    from: SYM-exp-plugins-app-check-browser-view-all
+    to: TEST-plugins-cli-browser-view
+    created_at: 2026-10-29T22:00:14.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a7d4a9f64f8
+  - type: implements
+    from: SYM-ingest-app-connector-declarations
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:25:47.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2171193b91e4
+  - type: covered_by
+    from: SYM-ingest-app-connector-declarations
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-30T04:25:47.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7aadd3dc435c
+  - type: executable_for
+    from: SYM-ingest-test-decl-test-upload-mode
+    to: TEST-ingest-declarations
+    created_at: 2026-10-30T04:30:53.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c48e74e6f15
   - type: constrains
     from: REQ-valuation-owner-settings
     to: FACT-SUBJECT-6A5B146B76C8BD67
@@ -335,20 +391,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce667cb2e895
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-store-tax-wrapper
-    to: TEST-valuation-app-revalue
-    created_at: 2026-10-29T22:12:35.525Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-df9752cb287c
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-store-tax-wrapper
-    to: TEST-valuation-app-plan
-    created_at: 2026-10-29T22:12:35.554Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-533ffc36394c
   - type: executable_for
     from: SYM-valuation-app-test-helper-fake-store-tax-wrapper
     to: TEST-valuation-app-settings
@@ -377,27 +419,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0958620222ac
-  - type: implements
-    from: SYM-fd-plugins-core-serves-path
-    to: REQ-core-only-browser-entry-point
-    created_at: 2026-10-29T21:01:19.093Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dd2c4ea0b913
-  - type: implements
-    from: SYM-exp-plugins-app-check-browser-view-all
-    to: REQ-plugins-cli-refuses-second-browser-view
-    created_at: 2026-10-29T22:00:14.603Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-32252add8ddd
-  - type: covered_by
-    from: SYM-exp-plugins-app-check-browser-view-all
-    to: TEST-plugins-cli-browser-view
-    created_at: 2026-10-29T22:00:14.641Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8a7d4a9f64f8
   - type: implements
     from: SYM-ui-build-allocation
     to: REQ-ui-overview-values

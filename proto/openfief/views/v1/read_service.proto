@@ -149,11 +149,12 @@ service ReadService {
     option (google.api.http) = {get: "/v1/valuation-status"};
   }
 
-  // ListPriceChecks returns every price compared with an institution's own
-  // price of the same instrument, date and currency, such as IBKR's mark
-  // price (D-22), in date, instrument and cross-check source order, with
-  // the threshold beyond which a check is flagged. A flagged check is for
-  // the owner to look at; it changes no price or valuation.
+  // ListPriceChecks returns every institution's own price, such as IBKR's
+  // mark price, compared with the latest stored price of its instrument on
+  // or before its date (D-22, D-111), in date, instrument and cross-check
+  // source order, each with the threshold it was flagged at (D-110) and
+  // whether the owner acknowledged it (D-112). A flagged check is for the
+  // owner to look at; it changes no price or valuation.
   rpc ListPriceChecks(ListPriceChecksRequest) returns (ListPriceChecksResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/price-checks"};
@@ -532,13 +533,17 @@ enum PriceCheckStatus {
   PRICE_CHECK_STATUS_MATCHED = 1;
   // Beyond the threshold, in either direction.
   PRICE_CHECK_STATUS_FLAGGED = 2;
+  // The two prices are in different currencies, so the market-data
+  // connector may price another listing than the one held (D-111); no
+  // difference is computed.
+  PRICE_CHECK_STATUS_CURRENCY_MISMATCH = 3;
 }
 
-// PriceCheck is a stored end-of-day price compared with an institution's
-// own price of the same instrument on the same date, in the same currency
-// (D-22).
+// PriceCheck is an institution's own price of an instrument compared with
+// the latest stored end-of-day price of the instrument on or before its
+// date (D-22, D-111).
 message PriceCheck {
-  // YYYY-MM-DD.
+  // The cross-check price's date, YYYY-MM-DD.
   string date = 1;
   Instrument instrument = 2;
   // The price holdings are valued at, from the market-data connector.
@@ -550,9 +555,20 @@ message PriceCheck {
   // The connector instance the cross-check price came from.
   string cross_check_source = 6;
   // (cross_check - price) / price as a decimal string, rounded half-even
-  // to six places: "0.0123" is 1.23% above the price.
+  // to six places: "0.0123" is 1.23% above the price. Empty for a currency
+  // mismatch.
   string relative_difference = 7;
   PriceCheckStatus status = 8;
+  // The price's date, YYYY-MM-DD: the cross-check price's date or the
+  // latest one before it with a price (D-111).
+  string price_date = 9;
+  // The relative difference beyond which this check is flagged, as a
+  // decimal fraction: "0.01", or the owner's threshold for the instrument
+  // (D-110).
+  string threshold = 10;
+  // Whether the owner acknowledged this flagged check with these two
+  // prices (D-112).
+  bool acknowledged = 11;
 }
 
 // AllocationDimension is what an allocation groups by.
@@ -767,8 +783,9 @@ message ListPriceChecksRequest {
 }
 
 message ListPriceChecksResponse {
-  // The relative difference beyond which a check is flagged, as a decimal
-  // fraction such as "0.01"; empty when this core compares no prices.
+  // The relative difference beyond which a check is flagged unless the
+  // owner set another for its instrument, as a decimal fraction: "0.01"
+  // (D-110); empty when this core compares no prices.
   string threshold = 1;
   repeated PriceCheck checks = 2;
 }

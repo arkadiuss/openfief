@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9cf967862e81
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-proto-reflect
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:12:13.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b29e29f070c
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-proto-reflect
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:12:13.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c3f166522d9
