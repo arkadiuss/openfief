@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b937160fb12
+  - type: executable_for
+    from: SYM-ingest-kube-test-check-declarations
+    to: TEST-ingest-kube
+    created_at: 2026-10-30T04:50:05.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d054f429fc57

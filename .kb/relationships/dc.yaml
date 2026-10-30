@@ -377,3 +377,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9c1dd4b4626
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-string
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:15:41.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6495cd33565
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-string
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:15:41.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1722cf2171e4
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-descriptor
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:16:32.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edfb6afe36b8
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-descriptor
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:16:32.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfa4093e791f

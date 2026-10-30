@@ -19,6 +19,7 @@ import (
 	"time"
 
 	corev1 "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/labels"
@@ -28,6 +29,8 @@ import (
 	"k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/cache"
+
+	"github.com/arkadiuss/openfief/internal/ingest"
 )
 
 // The operator's runtime contract (internal/plugins/operator).
@@ -64,6 +67,7 @@ type Discovery struct {
 	services cache.SharedIndexInformer
 	factory  dynamicinformer.DynamicSharedInformerFactory
 	core     informers.SharedInformerFactory
+	ns       string
 	started  bool
 }
 
@@ -78,6 +82,7 @@ func NewDiscovery(dyn dynamic.Interface, client kubernetes.Interface, namespace 
 		services: core.Core().V1().Services().Informer(),
 		factory:  factory,
 		core:     core,
+		ns:       namespace,
 	}
 }
 
@@ -116,6 +121,39 @@ func (d *Discovery) ConnectorInstances(context.Context) ([]string, error) {
 	}
 	slices.Sort(names)
 	return names, nil
+}
+
+// Declarations returns what the running version of instance declares in
+// its manifest (D-112, D-109): its Plugin resource's
+// status.deployed.manifest, the version the operator verified and runs.
+// An instance with no such resource, or nothing running, declares nothing.
+func (d *Discovery) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
+	if !d.started {
+		return ingest.Declarations{}, ErrNotStarted
+	}
+	o, err := d.plugins.Lister().ByNamespace(d.ns).Get(instance)
+	if err != nil {
+		if apierrors.IsNotFound(err) {
+			return ingest.Declarations{}, nil
+		}
+		return ingest.Declarations{}, fmt.Errorf("plugin %s: %w", instance, err)
+	}
+	u, ok := o.(*unstructured.Unstructured)
+	if !ok {
+		return ingest.Declarations{}, nil
+	}
+	return DeployedDeclarations(u), nil
+}
+
+// DeployedDeclarations reads the declarations of a Plugin resource's
+// running version from status.deployed.manifest; a field that is missing or
+// not a boolean declares nothing.
+func DeployedDeclarations(u *unstructured.Unstructured) ingest.Declarations {
+	flag := func(field string) bool {
+		v, found, err := unstructured.NestedBool(u.Object, "status", "deployed", "manifest", field)
+		return found && err == nil && v
+	}
+	return ingest.Declarations{CrossCheckPrices: flag("crossCheckPrices"), StatementFiles: flag("statementFiles")}
 }
 
 // BaseURL returns the URL the core calls instance at: http:// and its

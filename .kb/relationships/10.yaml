@@ -195,20 +195,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef6dab164f04
-  - type: constrains
-    from: REQ-e2e-demo-stack-local-clusters
-    to: FACT-SUBJECT-7B6EC379C4C091D6
-    created_at: 2026-10-29T23:11:01.954Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f92a04f24a15
-  - type: requires_property
-    from: REQ-e2e-demo-stack-local-clusters
-    to: FACT-PROP-426E35DA6AEADB48
-    created_at: 2026-10-29T23:11:01.997Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ef3b9b6a8949
   - type: specified_by
     from: REQ-e2e-demo-stack-local-clusters
     to: SCEN-e2e-core-ready
@@ -510,6 +496,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-192640ecf6ee
+  - type: constrains
+    from: REQ-e2e-demo-stack-local-clusters
+    to: FACT-SUBJECT-7B6EC379C4C091D6
+    created_at: 2026-10-29T23:11:01.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f92a04f24a15
+  - type: requires_property
+    from: REQ-e2e-demo-stack-local-clusters
+    to: FACT-PROP-426E35DA6AEADB48
+    created_at: 2026-10-29T23:11:01.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef3b9b6a8949
+  - type: implements
+    from: SYM-valuation-gen-pc-connect-new-price-check-service-handler
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:23:12.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e04ae67ca2f2
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-new-price-check-service-handler
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:23:12.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-510ef665996e
+  - type: executable_for
+    from: SYM-ui-uc-test-pc-test-fraction-of
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:20:48.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-965af50a45ff
   - type: validates
     from: TEST-pl-pack
     to: REQ-jurisdiction-in-process

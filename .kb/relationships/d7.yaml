@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b21716986e2
+  - type: executable_for
+    from: SYM-demo-test-cc-test-cross-check-prices-flag-one
+    to: TEST-demo-cross-checks
+    created_at: 2026-10-30T06:17:05.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0184e10e5900

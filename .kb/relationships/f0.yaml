@@ -496,3 +496,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ac4c7d6519f
+  - type: implements
+    from: SYM-valuation-connectapi-pc-price-checks
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:05:42.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2deca7136ca0
+  - type: covered_by
+    from: SYM-valuation-connectapi-pc-price-checks
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:05:42.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a286a322e356

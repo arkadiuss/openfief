@@ -482,6 +482,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e33078b28ba2
+  - type: verified_by
+    from: SCEN-plugins-manifest-declarations
+    to: TEST-plugins-manifest-label
+    created_at: 2026-10-30T04:10:55.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f172673837e8
+  - type: verified_by
+    from: SCEN-plugins-manifest-declarations
+    to: TEST-ingest-kube
+    created_at: 2026-10-30T04:10:55.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04970a8d81de
+  - type: executable_for
+    from: SYM-core-test-up-statement-accounts
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:25:23.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-961e988916de
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-reset
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:33:10.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78b91ef5bd86
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-reset
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:33:10.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-476196de596c
   - type: implements
     from: SYM-jurisdiction-number-format
     to: REQ-jurisdiction-number-format-choices

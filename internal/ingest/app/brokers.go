@@ -46,26 +46,26 @@ type BrokerAccountStore interface {
 
 // resolveBrokerAccounts records the broker accounts d reports for instance
 // and returns d's mapping with the entries it names by broker account
-// resolved into the OpenFief accounts they are mapped to
-// (ingest.ResolveBrokerAccounts), and the broker accounts an opening batch
-// of it seeds. A delivery that reports none keeps its mapping.
-func (c *Connectors) resolveBrokerAccounts(ctx context.Context, instance string, mode ingest.Mode, d *Delivery) (ingest.Mapping, []ingest.BrokerAccountID, error) {
+// resolved into the OpenFief accounts they are mapped to, the broker
+// accounts left unmapped and those an opening batch of it seeds
+// (ingest.ResolveBrokerAccounts). A delivery that reports none keeps its
+// mapping.
+func (c *Connectors) resolveBrokerAccounts(ctx context.Context, instance string, mode ingest.Mode, d *Delivery) (ingest.Resolution, error) {
 	reported := ingest.ReportedBrokerAccounts(&d.Mapping)
 	if len(reported) == 0 {
-		return d.Mapping, nil, nil
+		return ingest.Resolution{Mapping: d.Mapping}, nil
 	}
 	if c.Brokers == nil {
-		return ingest.Mapping{}, nil, ErrNoBrokerAccountStore
+		return ingest.Resolution{}, ErrNoBrokerAccountStore
 	}
 	if err := c.Brokers.RecordBrokerAccounts(ctx, instance, d.Institution, reported, c.Today()); err != nil {
-		return ingest.Mapping{}, nil, fmt.Errorf("recording broker accounts: %w", err)
+		return ingest.Resolution{}, fmt.Errorf("recording broker accounts: %w", err)
 	}
 	known, err := c.Brokers.BrokerAccounts(ctx, instance)
 	if err != nil {
-		return ingest.Mapping{}, nil, fmt.Errorf("loading broker accounts: %w", err)
+		return ingest.Resolution{}, fmt.Errorf("loading broker accounts: %w", err)
 	}
-	r := ingest.ResolveBrokerAccounts(&d.Mapping, known, mode)
-	return r.Mapping, r.Seeding, nil
+	return ingest.ResolveBrokerAccounts(&d.Mapping, known, mode), nil
 }
 
 // markSeeded records that an opening batch of instance seeded the broker

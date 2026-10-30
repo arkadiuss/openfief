@@ -671,3 +671,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-637f088d9cb4
+  - type: validates
+    from: TEST-valuation-app-crosscheck
+    to: REQ-valuation-price-check-instrument-threshold
+    created_at: 2026-10-30T02:58:26.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9e346596432
+  - type: validates
+    from: TEST-valuation-app-crosscheck
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T02:58:26.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-443c7be5a1b3

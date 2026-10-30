@@ -531,3 +531,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c6f633e5b6f
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:32:56.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfe2a225ff22
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:32:56.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20ecb9c09ff9
+  - type: implements
+    from: SYM-ingest-gen-st-pb-statement-account-string
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:35:17.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2d352521260
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-statement-account-string
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:35:17.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7324c3955bda

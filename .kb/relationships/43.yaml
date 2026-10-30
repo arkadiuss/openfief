@@ -587,3 +587,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82e959bac8b3
+  - type: validates
+    from: TEST-demo-cross-checks
+    to: REQ-valuation-price-check-one-percent
+    created_at: 2026-10-30T05:17:48.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c2c1f453d7

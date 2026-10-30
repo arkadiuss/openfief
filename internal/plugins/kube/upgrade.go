@@ -90,6 +90,8 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 			BrowserPath:      m.BrowserPath,
 			EgressFromConfig: m.EgressFromConfig,
 			ConfigSchema:     rawOf(m.ConfigSchema),
+			CrossCheckPrices: m.CrossCheckPrices,
+			StatementFiles:   m.StatementFiles,
 		},
 		Config: rawOf(r.Spec.Config),
 	}

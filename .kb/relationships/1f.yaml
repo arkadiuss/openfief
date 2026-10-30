@@ -566,3 +566,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-948dbdbb44c5
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-descriptor
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:19:40.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47d55833e1cd
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-descriptor
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:19:40.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29c00f50fea5

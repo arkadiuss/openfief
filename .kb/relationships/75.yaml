@@ -475,3 +475,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a53b43623029
+  - type: constrains
+    from: REQ-valuation-price-check-rounding
+    to: FACT-SUBJECT-ECF86A4CFE17F2A3
+    created_at: 2026-10-30T02:58:41.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2fe44f9258f
+  - type: requires_property
+    from: REQ-valuation-price-check-rounding
+    to: FACT-PROP-8570932D6ACF47B4
+    created_at: 2026-10-30T02:58:41.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-908d0feb9367
+  - type: specified_by
+    from: REQ-valuation-price-check-rounding
+    to: SCEN-valuation-price-check-rounding
+    created_at: 2026-10-30T02:58:41.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6d0ee8eefe
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-symbol
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:13:33.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a6760733bdf
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-symbol
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:13:33.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90d2dd965cc2

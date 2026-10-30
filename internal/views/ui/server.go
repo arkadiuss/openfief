@@ -6,6 +6,7 @@ import (
 	"io/fs"
 	"log/slog"
 	"net/http"
+	"slices"
 	"strings"
 
 	"github.com/arkadiuss/openfief/design"
@@ -28,7 +29,7 @@ const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, SettingsService, TransferService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -54,6 +55,9 @@ type Config struct {
 	// MarketData calls the core's MarketDataService (D-94, D-79) like
 	// Auth: the owner's ranking of market-data sources.
 	MarketData valuationv1connect.MarketDataServiceClient
+	// PriceChecks calls the core's PriceCheckService (D-110, D-112, D-79)
+	// like Auth: the owner's thresholds and acknowledgements.
+	PriceChecks valuationv1connect.PriceCheckServiceClient
 	// Settings calls the core's SettingsService (D-78, D-113, D-79) like
 	// Auth: the owner's number format and marginal PIT rate.
 	Settings valuationv1connect.SettingsServiceClient
@@ -73,8 +77,11 @@ type Config struct {
 // missingClient reports whether cfg lacks any of the clients the UI calls
 // the core with.
 func (cfg *Config) missingClient() bool {
-	return cfg.Auth == nil || cfg.Model == nil || cfg.BondLots == nil || cfg.Statements == nil || cfg.Read == nil ||
-		cfg.Sleeves == nil || cfg.Accounts == nil || cfg.MarketData == nil || cfg.Settings == nil || cfg.Transfers == nil
+	clients := []any{
+		cfg.Auth, cfg.Model, cfg.BondLots, cfg.Statements, cfg.Read, cfg.Sleeves, cfg.Accounts, cfg.MarketData,
+		cfg.PriceChecks, cfg.Settings, cfg.Transfers,
+	}
+	return slices.Contains(clients, nil)
 }
 
 // server holds the UI's handlers.
@@ -86,12 +93,15 @@ type server struct {
 	sleeves    portfoliov1connect.SleeveServiceClient
 	accounts   ingestv1connect.AccountServiceClient
 	marketData valuationv1connect.MarketDataServiceClient
-	settings   valuationv1connect.SettingsServiceClient
-	transfers  ledgerv1connect.TransferServiceClient
-	read       viewsv1connect.ReadServiceClient
-	pages      *pages
-	today      func() kernel.Date
-	log        *slog.Logger
+	// priceChecks takes the owner's price check thresholds and
+	// acknowledgements.
+	priceChecks valuationv1connect.PriceCheckServiceClient
+	read        viewsv1connect.ReadServiceClient
+	pages       *pages
+	today       func() kernel.Date
+	log         *slog.Logger
+	settings    valuationv1connect.SettingsServiceClient
+	transfers   ledgerv1connect.TransferServiceClient
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
@@ -107,8 +117,9 @@ func New(cfg *Config) (http.Handler, error) {
 	}
 	s := &server{
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
-		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, settings: cfg.Settings,
-		transfers: cfg.Transfers, pages: p, today: cfg.Today, log: cfg.Log,
+		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
+		settings: cfg.Settings, transfers: cfg.Transfers,
+		pages: p, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
 		s.today = utcToday
@@ -146,6 +157,8 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("POST /accounts/{id}/statements", s.withOwner(s.uploadStatement))
 	mux.HandleFunc("GET /assertions", s.withSession(s.assertionsPage))
 	mux.HandleFunc("GET /price-checks", s.withSession(s.priceChecksPage))
+	mux.HandleFunc("POST /price-checks/acknowledge", s.withOwner(s.acknowledgePriceCheck))
+	mux.HandleFunc("POST /price-checks/threshold", s.withOwner(s.setPriceCheckThreshold))
 	mux.HandleFunc("GET /transfers", s.withSession(s.transfersPage))
 	mux.HandleFunc("POST /transfers/confirm", s.withOwner(s.confirmTransfer))
 	mux.HandleFunc("POST /transfers/reject", s.withOwner(s.rejectTransfer))

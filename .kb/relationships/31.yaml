@@ -329,6 +329,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-00ace910cd74
   - type: implements
+    from: SYM-exp-plugins-browser-view-senior
+    to: REQ-operator-refuses-second-browser-view
+    created_at: 2026-10-29T21:59:20.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b052f05d10
+  - type: covered_by
+    from: SYM-exp-plugins-browser-view-senior
+    to: TEST-plugins-browser-view
+    created_at: 2026-10-29T21:59:20.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5860e8e5f677
+  - type: executable_for
+    from: SYM-valuation-app-test-cc-fake-cross-checks-append-price-check-acknowledgement
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T03:03:44.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d925e9fe99c
+  - type: implements
     from: SYM-pl-after-tax
     to: REQ-pl-values-per-wrapper
     created_at: 2026-10-29T22:06:39.643Z
@@ -398,20 +419,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68753c430b08
-  - type: implements
-    from: SYM-exp-plugins-browser-view-senior
-    to: REQ-operator-refuses-second-browser-view
-    created_at: 2026-10-29T21:59:20.815Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-18b052f05d10
-  - type: covered_by
-    from: SYM-exp-plugins-browser-view-senior
-    to: TEST-plugins-browser-view
-    created_at: 2026-10-29T21:59:20.854Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5860e8e5f677
   - type: constrains
     from: REQ-tooling-ci-affected-images
     to: FACT-SUBJECT-45A3FBAEFD0DA57A

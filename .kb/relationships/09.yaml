@@ -573,3 +573,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1547589fe0f5
+  - type: executable_for
+    from: SYM-core-test-up-flex-discovery-connector-instances
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:25:00.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24bcd2a3da49
+  - type: validates
+    from: TEST-ui-pricechecks
+    to: REQ-ui-price-check-latest-per-instrument
+    created_at: 2026-10-30T05:17:52.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ef28fb7a065
+  - type: validates
+    from: TEST-ui-pricechecks
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T05:17:52.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42951e6a5c3d
+  - type: validates
+    from: TEST-ui-pricechecks
+    to: REQ-valuation-price-check-instrument-threshold
+    created_at: 2026-10-30T05:17:52.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f82a3499743

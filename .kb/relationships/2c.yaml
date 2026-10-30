@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-083e7e815226
+  - type: executable_for
+    from: SYM-ui-uc-test-pc-fake-price-checks-acknowledge-price-check
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:20:12.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-256e0b46bd3d

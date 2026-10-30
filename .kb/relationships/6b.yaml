@@ -462,6 +462,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-f4ec81903902
   - type: implements
+    from: SYM-valuation-connectapi-pc-price-checks-acknowledge-price-check
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:06:16.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2995293f6e01
+  - type: covered_by
+    from: SYM-valuation-connectapi-pc-price-checks-acknowledge-price-check
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:06:16.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13e85246f245
+  - type: implements
     from: SYM-valuationv1-get-owner-settings-response-proto-message
     to: REQ-valuation-settings-service
     created_at: 2026-10-29T23:16:35.869Z

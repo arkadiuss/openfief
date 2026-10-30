@@ -1,36 +1,76 @@
+{{define "price-check-status"}}{{if eq .Status.String "PRICE_CHECK_STATUS_FLAGGED"}}{{if .Acknowledged}}<span class="pill pill-neutral">acknowledged</span>{{else}}<span class="pill pill-warn">flagged</span>{{end}}{{else if eq .Status.String "PRICE_CHECK_STATUS_CURRENCY_MISMATCH"}}<span class="pill pill-warn">currency mismatch</span>{{else}}<span class="pill pill-ok">matched</span>{{end}}{{end}}
+
+{{define "price-check-row"}}
+<td class="mono">{{.Check.Date}}</td>
+<td class="num">{{money .Check.Price}}</td><td>{{.Check.PriceSource}}{{if ne .Check.PriceDate .Check.Date}} <span class="muted">({{.Check.PriceDate}})</span>{{end}}</td>
+<td class="num">{{money .Check.CrossCheck}}</td><td>{{.Check.CrossCheckSource}}</td>
+<td class="num">{{if .Check.RelativeDifference}}{{percent .Check.RelativeDifference}}{{else}}<span class="muted">none</span>{{end}}</td>
+<td>{{template "price-check-status" .Check}}</td>
+<td>{{if .Acknowledge}}<form method="post" action="/price-checks/acknowledge" class="inline">
+  <input type="hidden" name="isin" value="{{.Check.Instrument.Isin}}"><input type="hidden" name="symbol" value="{{.Check.Instrument.Symbol}}">
+  <input type="hidden" name="date" value="{{.Check.Date}}"><input type="hidden" name="source" value="{{.Check.CrossCheckSource}}">
+  <button type="submit">Acknowledge</button></form>{{end}}</td>
+{{end}}
+
 {{define "content"}}
 {{with .Data}}
 {{if .Threshold}}
-<p class="lede">A flagged price check is a day on which an institution's own price of an instrument, such as IBKR's mark price, differs from the price its holdings are valued at by more than {{.Threshold}}. Holdings keep their valuation: look at which price is wrong, such as a wrong listing, a split or pence read as pounds.</p>
+<p class="lede">A price check compares an institution's own price of an instrument, such as IBKR's mark price, with the latest price its holdings are valued at on or before that day. It is flagged when the two differ by more than {{.Threshold}}, or the threshold set for the instrument. Holdings keep their valuation: look at which price is wrong, such as a wrong listing, a split or pence read as pounds, then acknowledge the check. A pair in two currencies is shown as a currency mismatch: the market-data connector may be pricing another listing than the one held.</p>
 {{else}}
 <p class="lede">This core compares no prices.</p>
 {{end}}
-<section class="card" aria-label="Flagged price checks">
-{{if .Checks}}
-<div class="table"><table>
-  <thead><tr>
-    <th scope="col">Date</th><th scope="col">Instrument</th>
-    <th scope="col" class="num">Price</th><th scope="col">From</th>
-    <th scope="col" class="num">Cross-check</th><th scope="col">From</th>
-    <th scope="col" class="num">Difference</th>
-  </tr></thead>
-  <tbody>
-  {{range .Checks}}
-  <tr>
-    <td class="mono">{{.Date}}</td><td>{{instrument .Instrument}}</td>
-    <td class="num">{{money .Price}}</td><td>{{.PriceSource}}</td>
-    <td class="num">{{money .CrossCheck}}</td><td>{{.CrossCheckSource}}</td>
-    <td class="num"><span class="pill pill-warn">{{percent .RelativeDifference}}</span></td>
-  </tr>
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+{{if .Open}}<p class="alert alert-warn">{{.Open}} instrument(s) have a flagged price check that is not acknowledged.</p>{{end}}
+{{range .Instruments}}
+<section class="card" aria-label="Price checks of {{instrument .Instrument}}">
+  <h2>{{instrument .Instrument}}</h2>
+  <p class="muted">Flagged beyond {{.Threshold}}{{if .Custom}}, this instrument's own threshold{{end}}.</p>
+  <div class="table"><table>
+    <thead><tr>
+      <th scope="col">Date</th>
+      <th scope="col" class="num">Price</th><th scope="col">From</th>
+      <th scope="col" class="num">Cross-check</th><th scope="col">From</th>
+      <th scope="col" class="num">Difference</th><th scope="col">Status</th><th scope="col"><span class="sr-only">Action</span></th>
+    </tr></thead>
+    <tbody><tr>{{template "price-check-row" .Latest}}</tr></tbody>
+  </table></div>
+  {{if .History}}
+  <details class="change">
+    <summary>History: {{len .History}} earlier check(s)</summary>
+    <div class="table"><table>
+      <thead><tr>
+        <th scope="col">Date</th>
+        <th scope="col" class="num">Price</th><th scope="col">From</th>
+        <th scope="col" class="num">Cross-check</th><th scope="col">From</th>
+        <th scope="col" class="num">Difference</th><th scope="col">Status</th><th scope="col"><span class="sr-only">Action</span></th>
+      </tr></thead>
+      <tbody>
+      {{range .History}}<tr>{{template "price-check-row" .}}</tr>{{end}}
+      </tbody>
+    </table></div>
+  </details>
   {{end}}
-  </tbody>
-</table></div>
-{{else}}
-<div class="state">{{template "kasztan" "asleep"}}<div>
-  <p class="state-title">No flagged price checks.</p>
-  <p class="muted">Every institution's own price agrees with the valuation price, or no connector reports one yet.</p>
-</div></div>
-{{end}}
+  {{if .Owner}}
+  <form method="post" action="/price-checks/threshold">
+    <input type="hidden" name="isin" value="{{.Instrument.Isin}}"><input type="hidden" name="symbol" value="{{.Instrument.Symbol}}">
+    <div class="fields">
+      <div class="field">
+        <label for="threshold-{{.Instrument.Isin}}-{{.Instrument.Symbol}}">Threshold for this instrument, in percent</label>
+        <input id="threshold-{{.Instrument.Isin}}-{{.Instrument.Symbol}}" name="threshold" inputmode="decimal" maxlength="12" value="{{.Custom}}" aria-describedby="threshold-help-{{.Instrument.Isin}}-{{.Instrument.Symbol}}">
+        <p class="help" id="threshold-help-{{.Instrument.Isin}}-{{.Instrument.Symbol}}">Empty for the default, 1%. A thinly traded listing may need more.</p>
+      </div>
+    </div>
+    <div class="actions"><button type="submit">Set threshold</button></div>
+  </form>
+  {{end}}
 </section>
+{{else}}
+<section class="card" aria-label="Price checks">
+<div class="state">{{template "kasztan" "asleep"}}<div>
+  <p class="state-title">No price checks.</p>
+  <p class="muted">No connector has sent an institution's own price yet.</p>
+</div></div>
+</section>
+{{end}}
 {{end}}
 {{end}}

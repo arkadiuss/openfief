@@ -482,3 +482,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb7eb62ad049
+  - type: validates
+    from: TEST-valuation-crosscheck
+    to: REQ-valuation-price-check-latest-price
+    created_at: 2026-10-30T02:58:24.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f9b4af96a40
+  - type: validates
+    from: TEST-valuation-crosscheck
+    to: REQ-valuation-price-check-currency-mismatch
+    created_at: 2026-10-30T02:58:24.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4adddbd2919
+  - type: validates
+    from: TEST-valuation-crosscheck
+    to: REQ-valuation-price-check-one-percent
+    created_at: 2026-10-30T02:58:24.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-039650ce71ca
+  - type: executable_for
+    from: SYM-core-test-pc-check-thresholds
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:01:49.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5428845f264c
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-proto-reflect
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:33:59.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4793f5f91e25
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-proto-reflect
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:33:59.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df0b866c1404

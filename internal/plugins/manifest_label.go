@@ -31,12 +31,15 @@ type manifestDoc struct {
 	ClusterService   *struct {
 		Description string `json:"description"`
 	} `json:"clusterService,omitempty"`
+	CrossCheckPrices bool `json:"crossCheckPrices,omitempty"`
+	StatementFiles   bool `json:"statementFiles,omitempty"`
 }
 
 // ParseManifestLabel reads a manifest from the value of an image's
 // ManifestLabel: a JSON object with the fields of spec.manifest
 // (capabilities, egress, secrets, dataTiers, configSchema, browserPath,
-// egressFromConfig, clusterService). Unknown fields are refused, so a
+// egressFromConfig, clusterService, crossCheckPrices, statementFiles).
+// Unknown fields are refused, so a
 // manifest is never half-read. The manifest is validated.
 func ParseManifestLabel(value string) (Manifest, error) {
 	var doc manifestDoc
@@ -45,7 +48,7 @@ func ParseManifestLabel(value string) (Manifest, error) {
 	}
 	m := Manifest{
 		Capabilities: doc.Capabilities, DataTiers: doc.DataTiers, BrowserPath: doc.BrowserPath,
-		EgressFromConfig: doc.EgressFromConfig,
+		EgressFromConfig: doc.EgressFromConfig, CrossCheckPrices: doc.CrossCheckPrices, StatementFiles: doc.StatementFiles,
 	}
 	if doc.ClusterService != nil {
 		m.ClusterService = &ClusterServiceRequest{Description: doc.ClusterService.Description}
@@ -76,8 +79,9 @@ func ParseManifestLabel(value string) (Manifest, error) {
 
 // Equal reports whether m and o declare the same thing: the same sets of
 // capabilities, egress hosts, secret mounts, data tiers and config fields
-// giving egress hosts, in any order, the same browser path and in-cluster
-// service request, and config schemas that are the same JSON value.
+// giving egress hosts, in any order, the same browser path, in-cluster
+// service request and connector declarations, and config schemas that are
+// the same JSON value.
 func (m *Manifest) Equal(o *Manifest) bool {
 	return slices.Equal(sortedCopy(m.Capabilities, cmp.Compare[Capability]), sortedCopy(o.Capabilities, cmp.Compare[Capability])) &&
 		slices.Equal(sortedCopy(m.Egress, compareEgressHosts), sortedCopy(o.Egress, compareEgressHosts)) &&
@@ -86,6 +90,7 @@ func (m *Manifest) Equal(o *Manifest) bool {
 		m.BrowserPath == o.BrowserPath &&
 		slices.Equal(sortedCopy(m.EgressFromConfig, strings.Compare), sortedCopy(o.EgressFromConfig, strings.Compare)) &&
 		equalPtr(m.ClusterService, o.ClusterService) &&
+		m.CrossCheckPrices == o.CrossCheckPrices && m.StatementFiles == o.StatementFiles &&
 		sameJSON(m.ConfigSchema, o.ConfigSchema)
 }
 

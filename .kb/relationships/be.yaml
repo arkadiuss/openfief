@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62780a618219
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-isin
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:13:20.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-335e444061f9
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-isin
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:13:20.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6819318c4c1
+  - type: executable_for
+    from: SYM-ingest-app-test-fa-per-account-bindings-bound-instances
+    to: TEST-ingest-app-file-accounts
+    created_at: 2026-10-30T04:27:11.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f12449a62124

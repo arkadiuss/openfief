@@ -1,4 +1,4 @@
-// OpenFief's statement upload contract (docs/DESIGN.md D-7, D-49).
+// OpenFief's statement upload contract (docs/DESIGN.md D-7, D-49, D-109).
 //
 // The owner uploads a statement file for an account in the built-in UI,
 // which streams it to the core (D-49). The core hands it to the connector
@@ -6,7 +6,12 @@
 // ImportFile (proto/openfief/connector/v1/connector.proto), and imports what
 // that connector delivers as one import batch, like any other: data enters
 // the ledger only through a connector's ingest path (D-7). The connector
-// decides which files it takes. The core serves StatementService to VIEW
+// decides which files it takes, and declares in its manifest that it takes
+// any (statementFiles, D-109). A statement that covers several accounts,
+// such as an IBKR Flex statement of linked accounts, books every mapped
+// account bound to that instance and reports the broker accounts that
+// aren't mapped (D-72). The core chooses the mode, opening for an account
+// not yet seeded and transactions after that; the owner may override it. The core serves StatementService to VIEW
 // plugins only, next to the AuthService. It is not part of the public read
 // API (D-6), which stays read-only.
 //
@@ -20,8 +25,8 @@
 //   unknown, expired or revoked session fails with UNAUTHENTICATED; a
 //   read-scoped session, or an origin off the core's allow-list, fails with
 //   PERMISSION_DENIED. The core checks them before it reads the file.
-// - A stream without a header first, a second header, no mode, an empty
-//   file, or a file the connector refuses (it can't read it, or it isn't a
+// - A stream without a header first, a second header, an empty file, or a
+//   file the connector refuses (it can't read it, or it isn't a
 //   statement it takes) fails with INVALID_ARGUMENT and the reason, and
 //   nothing is imported. A file larger than the core's limit (64 MiB) fails
 //   with RESOURCE_EXHAUSTED.
@@ -41,6 +46,15 @@ service StatementService {
   // hands the file to the connector bound to the account and answers with
   // the import batch it became.
   rpc UploadStatement(stream UploadStatementRequest) returns (UploadStatementResponse);
+
+  // ListStatementAccounts returns the accounts the owner can upload
+  // statements for: those whose one bound connector instance runs and
+  // declares in its manifest that it takes statement files (D-109), each
+  // with the mode the core chooses for its next upload. The built-in UI
+  // shows the upload form only on them.
+  rpc ListStatementAccounts(ListStatementAccountsRequest) returns (ListStatementAccountsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 // Mode says what an import batch takes from the statement (D-23).
@@ -57,13 +71,16 @@ enum Mode {
 message StatementHeader {
   string origin = 1;
   string session_token = 2;
-  // The OpenFief account the statement is for.
+  // The OpenFief account the statement is for; its bound connector
+  // instance gets the file.
   string account_id = 3;
   // The file's name as the owner's browser gave it, such as
   // "statement.xml"; only a hint for the connector, never a path. The core
   // keeps its last path element, without control characters, cut to 255
   // bytes.
   string file_name = 4;
+  // The owner's override; unspecified lets the core choose: opening for an
+  // account not yet seeded, transactions after that (D-109).
   Mode mode = 5;
 }
 
@@ -115,4 +132,33 @@ message UploadStatementResponse {
   repeated Problem problems = 9;
   // How many ingest problems there were in all.
   int32 problems_total = 10;
+  // The mode the statement was imported in: the owner's, or the one the
+  // core chose.
+  Mode mode = 11;
+  // The OpenFief accounts the statement booked into, in ID order: every
+  // mapped account of a statement that covers several (D-109).
+  repeated string account_ids = 12;
+  // The institution's own accounts the statement named that no OpenFief
+  // account is mapped to: nothing of them was booked (D-72). The owner maps
+  // them on the accounts page; they are shown, never logged.
+  repeated string unmapped_broker_accounts = 13;
+}
+
+message ListStatementAccountsRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+// StatementAccount is an account the owner can upload statements for.
+message StatementAccount {
+  string account_id = 1;
+  // The connector instance bound to it, which takes the file.
+  string instance = 2;
+  // The mode the core chooses for its next upload.
+  Mode mode = 3;
+}
+
+message ListStatementAccountsResponse {
+  // In account ID order.
+  repeated StatementAccount accounts = 1;
 }

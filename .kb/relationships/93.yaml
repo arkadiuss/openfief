@@ -727,3 +727,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-630c778a6c39
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-reset
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:18:35.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fb593f9a315
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-reset
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:18:36.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d94aa903a135
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-string
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:37:34.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-062648ae14ad
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-string
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:37:34.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b2faedc6cfd
+  - type: executable_for
+    from: SYM-ui-uc-test-pc-fake-price-checks-set-price-check-threshold
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:20:00.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df359d51ba82

@@ -405,3 +405,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc097d79783f
+  - type: executable_for
+    from: SYM-valuation-test-cc-test-acknowledge
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-30T03:08:49.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be4da5407c4a

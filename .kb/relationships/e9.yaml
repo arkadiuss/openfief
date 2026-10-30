@@ -335,3 +335,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fae1f1db934f
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-st-test-list-statement-accounts
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:29:59.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee1a9c956cb
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:37:06.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50a44b332b6a
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:37:06.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1ca6ee5979e

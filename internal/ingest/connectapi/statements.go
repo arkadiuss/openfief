@@ -73,6 +73,20 @@ func (s *statements) UploadStatement(ctx context.Context, stream *connect.Client
 	return connect.NewResponse(uploadResponse(&b)), nil
 }
 
+// ListStatementAccounts returns the accounts the owner can upload
+// statements for, with the mode of each one's next upload (D-109).
+func (s *statements) ListStatementAccounts(ctx context.Context, req *connect.Request[ingestv1.ListStatementAccountsRequest]) (*connect.Response[ingestv1.ListStatementAccountsResponse], error) {
+	accounts, err := s.uploads.FileAccounts(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &ingestv1.ListStatementAccountsResponse{Accounts: make([]*ingestv1.StatementAccount, 0, len(accounts))}
+	for _, a := range accounts {
+		out.Accounts = append(out.Accounts, &ingestv1.StatementAccount{AccountId: string(a.Account), Instance: a.Instance, Mode: modeTo(a.Mode)})
+	}
+	return connect.NewResponse(out), nil
+}
+
 // fail maps err to its Connect error. A refusal carries its text, which
 // names the rule, the account or the connector's reason, so the owner can
 // fix it; it never carries an amount.
@@ -139,7 +153,7 @@ func (c *chunkReader) Read(p []byte) (int, error) {
 }
 
 // modeFrom reads a request's mode; an unspecified or unknown one is the
-// zero ingest.Mode, which the use case refuses.
+// zero ingest.Mode, which lets the core choose (D-109).
 func modeFrom(m ingestv1.Mode) ingest.Mode {
 	switch m {
 	case ingestv1.Mode_MODE_OPENING:
@@ -151,21 +165,41 @@ func modeFrom(m ingestv1.Mode) ingest.Mode {
 	return 0
 }
 
-// uploadResponse is the answer for batch b: its counts and its first
-// maxProblems ingest problems.
+// modeTo is a mode's message enum; the zero mode is unspecified.
+func modeTo(m ingest.Mode) ingestv1.Mode {
+	switch m {
+	case ingest.ModeOpening:
+		return ingestv1.Mode_MODE_OPENING
+	case ingest.ModeTransactions:
+		return ingestv1.Mode_MODE_TRANSACTIONS
+	}
+	return ingestv1.Mode_MODE_UNSPECIFIED
+}
+
+// uploadResponse is the answer for batch b: its mode, counts, accounts,
+// unmapped broker accounts and first maxProblems ingest problems.
 func uploadResponse(b *ingest.Batch) *ingestv1.UploadStatementResponse {
 	shown := b.Problems[:min(len(b.Problems), maxProblems)]
 	problems := make([]*ingestv1.Problem, len(shown))
 	for i, p := range shown {
 		problems[i] = &ingestv1.Problem{Kind: problemKindTo(p.Kind), Ref: p.Ref, Reason: p.Reason}
 	}
-	return &ingestv1.UploadStatementResponse{
+	out := &ingestv1.UploadStatementResponse{
 		BatchId: string(b.ID), Institution: string(b.Institution),
 		Transactions: count(b.Transactions), Assertions: count(b.Assertions),
 		New: count(b.Imported.New), NewVersions: count(b.Imported.NewVersions), Unchanged: count(b.Imported.Unchanged),
 		FailedAssertions: count(b.Imported.FailedAssertions),
 		Problems:         problems, ProblemsTotal: count(len(b.Problems)),
+		Mode: modeTo(b.Mode), AccountIds: make([]string, 0, len(b.Accounts)),
+		UnmappedBrokerAccounts: make([]string, 0, len(b.Unmapped)),
 	}
+	for _, a := range b.Accounts {
+		out.AccountIds = append(out.AccountIds, string(a))
+	}
+	for _, u := range b.Unmapped {
+		out.UnmappedBrokerAccounts = append(out.UnmappedBrokerAccounts, string(u))
+	}
+	return out
 }
 
 // problemKindTo is a problem kind's message enum; an invalid kind is

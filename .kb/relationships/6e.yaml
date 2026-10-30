@@ -482,3 +482,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-020de3ecc427
+  - type: executable_for
+    from: SYM-core-test-pc-price-check-api
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:00:23.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebe1d82af321
+  - type: executable_for
+    from: SYM-core-test-pc-listed-check
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:01:11.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a625f785fde8
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-proto-reflect
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:19:26.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fede9088a7bf
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-response-proto-reflect
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:19:26.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-150e16c90d7f
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-x
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:20:41.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08da4ef283fa
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-x
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:20:42.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23d7bd2172fa
+  - type: executable_for
+    from: SYM-ui-uc-test-pc-test-price-check-forms
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:20:37.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-590f94b11f72

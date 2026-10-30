@@ -1,4 +1,4 @@
-// OpenFief's statement upload contract (docs/DESIGN.md D-7, D-49).
+// OpenFief's statement upload contract (docs/DESIGN.md D-7, D-49, D-109).
 //
 // The owner uploads a statement file for an account in the built-in UI,
 // which streams it to the core (D-49). The core hands it to the connector
@@ -6,7 +6,12 @@
 // ImportFile (proto/openfief/connector/v1/connector.proto), and imports what
 // that connector delivers as one import batch, like any other: data enters
 // the ledger only through a connector's ingest path (D-7). The connector
-// decides which files it takes. The core serves StatementService to VIEW
+// decides which files it takes, and declares in its manifest that it takes
+// any (statementFiles, D-109). A statement that covers several accounts,
+// such as an IBKR Flex statement of linked accounts, books every mapped
+// account bound to that instance and reports the broker accounts that
+// aren't mapped (D-72). The core chooses the mode, opening for an account
+// not yet seeded and transactions after that; the owner may override it. The core serves StatementService to VIEW
 // plugins only, next to the AuthService. It is not part of the public read
 // API (D-6), which stays read-only.
 //
@@ -20,8 +25,8 @@
 //   unknown, expired or revoked session fails with UNAUTHENTICATED; a
 //   read-scoped session, or an origin off the core's allow-list, fails with
 //   PERMISSION_DENIED. The core checks them before it reads the file.
-// - A stream without a header first, a second header, no mode, an empty
-//   file, or a file the connector refuses (it can't read it, or it isn't a
+// - A stream without a header first, a second header, an empty file, or a
+//   file the connector refuses (it can't read it, or it isn't a
 //   statement it takes) fails with INVALID_ARGUMENT and the reason, and
 //   nothing is imported. A file larger than the core's limit (64 MiB) fails
 //   with RESOURCE_EXHAUSTED.
@@ -69,6 +74,9 @@ const (
 	// StatementServiceUploadStatementProcedure is the fully-qualified name of the StatementService's
 	// UploadStatement RPC.
 	StatementServiceUploadStatementProcedure = "/openfief.ingest.v1.StatementService/UploadStatement"
+	// StatementServiceListStatementAccountsProcedure is the fully-qualified name of the
+	// StatementService's ListStatementAccounts RPC.
+	StatementServiceListStatementAccountsProcedure = "/openfief.ingest.v1.StatementService/ListStatementAccounts"
 )
 
 // StatementServiceClient is a client for the openfief.ingest.v1.StatementService service.
@@ -78,6 +86,12 @@ type StatementServiceClient interface {
 	// hands the file to the connector bound to the account and answers with
 	// the import batch it became.
 	UploadStatement(context.Context) *connect.ClientStreamForClient[v1.UploadStatementRequest, v1.UploadStatementResponse]
+	// ListStatementAccounts returns the accounts the owner can upload
+	// statements for: those whose one bound connector instance runs and
+	// declares in its manifest that it takes statement files (D-109), each
+	// with the mode the core chooses for its next upload. The built-in UI
+	// shows the upload form only on them.
+	ListStatementAccounts(context.Context, *connect.Request[v1.ListStatementAccountsRequest]) (*connect.Response[v1.ListStatementAccountsResponse], error)
 }
 
 // NewStatementServiceClient constructs a client for the openfief.ingest.v1.StatementService
@@ -97,17 +111,30 @@ func NewStatementServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			connect.WithSchema(statementServiceMethods.ByName("UploadStatement")),
 			connect.WithClientOptions(opts...),
 		),
+		listStatementAccounts: connect.NewClient[v1.ListStatementAccountsRequest, v1.ListStatementAccountsResponse](
+			httpClient,
+			baseURL+StatementServiceListStatementAccountsProcedure,
+			connect.WithSchema(statementServiceMethods.ByName("ListStatementAccounts")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // statementServiceClient implements StatementServiceClient.
 type statementServiceClient struct {
-	uploadStatement *connect.Client[v1.UploadStatementRequest, v1.UploadStatementResponse]
+	uploadStatement       *connect.Client[v1.UploadStatementRequest, v1.UploadStatementResponse]
+	listStatementAccounts *connect.Client[v1.ListStatementAccountsRequest, v1.ListStatementAccountsResponse]
 }
 
 // UploadStatement calls openfief.ingest.v1.StatementService.UploadStatement.
 func (c *statementServiceClient) UploadStatement(ctx context.Context) *connect.ClientStreamForClient[v1.UploadStatementRequest, v1.UploadStatementResponse] {
 	return c.uploadStatement.CallClientStream(ctx)
+}
+
+// ListStatementAccounts calls openfief.ingest.v1.StatementService.ListStatementAccounts.
+func (c *statementServiceClient) ListStatementAccounts(ctx context.Context, req *connect.Request[v1.ListStatementAccountsRequest]) (*connect.Response[v1.ListStatementAccountsResponse], error) {
+	return c.listStatementAccounts.CallUnary(ctx, req)
 }
 
 // StatementServiceHandler is an implementation of the openfief.ingest.v1.StatementService service.
@@ -117,6 +144,12 @@ type StatementServiceHandler interface {
 	// hands the file to the connector bound to the account and answers with
 	// the import batch it became.
 	UploadStatement(context.Context, *connect.ClientStream[v1.UploadStatementRequest]) (*connect.Response[v1.UploadStatementResponse], error)
+	// ListStatementAccounts returns the accounts the owner can upload
+	// statements for: those whose one bound connector instance runs and
+	// declares in its manifest that it takes statement files (D-109), each
+	// with the mode the core chooses for its next upload. The built-in UI
+	// shows the upload form only on them.
+	ListStatementAccounts(context.Context, *connect.Request[v1.ListStatementAccountsRequest]) (*connect.Response[v1.ListStatementAccountsResponse], error)
 }
 
 // NewStatementServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -132,10 +165,19 @@ func NewStatementServiceHandler(svc StatementServiceHandler, opts ...connect.Han
 		connect.WithSchema(statementServiceMethods.ByName("UploadStatement")),
 		connect.WithHandlerOptions(opts...),
 	)
+	statementServiceListStatementAccountsHandler := connect.NewUnaryHandler(
+		StatementServiceListStatementAccountsProcedure,
+		svc.ListStatementAccounts,
+		connect.WithSchema(statementServiceMethods.ByName("ListStatementAccounts")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.ingest.v1.StatementService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case StatementServiceUploadStatementProcedure:
 			statementServiceUploadStatementHandler.ServeHTTP(w, r)
+		case StatementServiceListStatementAccountsProcedure:
+			statementServiceListStatementAccountsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -147,4 +189,8 @@ type UnimplementedStatementServiceHandler struct{}
 
 func (UnimplementedStatementServiceHandler) UploadStatement(context.Context, *connect.ClientStream[v1.UploadStatementRequest]) (*connect.Response[v1.UploadStatementResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.ingest.v1.StatementService.UploadStatement is not implemented"))
+}
+
+func (UnimplementedStatementServiceHandler) ListStatementAccounts(context.Context, *connect.Request[v1.ListStatementAccountsRequest]) (*connect.Response[v1.ListStatementAccountsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.ingest.v1.StatementService.ListStatementAccounts is not implemented"))
 }

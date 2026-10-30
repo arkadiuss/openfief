@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11dfaece90ce
+  - type: implements
+    from: SYM-ingest-gen-st-pb-statement-account-reset
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:35:06.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fcc55427715
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-statement-account-reset
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:35:06.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-284f31b059a3

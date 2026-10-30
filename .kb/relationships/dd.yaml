@@ -454,3 +454,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d0f5ff98bd5
+  - type: executable_for
+    from: SYM-valuation-app-test-cc-checked-store
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T03:04:29.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abf6d1407faf
+  - type: implements
+    from: SYM-valuation-connectapi-pc-price-checks-fail
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:06:47.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09e219046be7
+  - type: covered_by
+    from: SYM-valuation-connectapi-pc-price-checks-fail
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:06:48.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27a701f48eb7
