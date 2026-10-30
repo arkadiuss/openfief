@@ -622,3 +622,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9be4f936863
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-append-transfer-link
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:35:39.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c40b76d43d

@@ -4612,9 +4612,9 @@ func (x *PerformanceDay) GetFlowReporting() *Money {
 	return nil
 }
 
-// Transfer is a withdrawal from one of the owner's accounts matched with a
+// Transfer is a withdrawal from one of the owner's accounts paired with a
 // deposit of the same amount and currency into another, at most five days
-// apart: not a cash flow.
+// apart (D-105): suggested, or confirmed or rejected by the owner.
 type Transfer struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	WithdrawalAccountId string                 `protobuf:"bytes,1,opt,name=withdrawal_account_id,json=withdrawalAccountId,proto3" json:"withdrawal_account_id,omitempty"`
@@ -4622,10 +4622,15 @@ type Transfer struct {
 	WithdrawalDate   string `protobuf:"bytes,2,opt,name=withdrawal_date,json=withdrawalDate,proto3" json:"withdrawal_date,omitempty"`
 	DepositAccountId string `protobuf:"bytes,3,opt,name=deposit_account_id,json=depositAccountId,proto3" json:"deposit_account_id,omitempty"`
 	// YYYY-MM-DD.
-	DepositDate   string `protobuf:"bytes,4,opt,name=deposit_date,json=depositDate,proto3" json:"deposit_date,omitempty"`
-	Amount        *Money `protobuf:"bytes,5,opt,name=amount,proto3" json:"amount,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	DepositDate string `protobuf:"bytes,4,opt,name=deposit_date,json=depositDate,proto3" json:"deposit_date,omitempty"`
+	Amount      *Money `protobuf:"bytes,5,opt,name=amount,proto3" json:"amount,omitempty"`
+	// The legs' transaction keys, as ListTransactions gives them.
+	WithdrawalSource     string `protobuf:"bytes,6,opt,name=withdrawal_source,json=withdrawalSource,proto3" json:"withdrawal_source,omitempty"`
+	WithdrawalExternalId string `protobuf:"bytes,7,opt,name=withdrawal_external_id,json=withdrawalExternalId,proto3" json:"withdrawal_external_id,omitempty"`
+	DepositSource        string `protobuf:"bytes,8,opt,name=deposit_source,json=depositSource,proto3" json:"deposit_source,omitempty"`
+	DepositExternalId    string `protobuf:"bytes,9,opt,name=deposit_external_id,json=depositExternalId,proto3" json:"deposit_external_id,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *Transfer) Reset() {
@@ -4693,6 +4698,133 @@ func (x *Transfer) GetAmount() *Money {
 	return nil
 }
 
+func (x *Transfer) GetWithdrawalSource() string {
+	if x != nil {
+		return x.WithdrawalSource
+	}
+	return ""
+}
+
+func (x *Transfer) GetWithdrawalExternalId() string {
+	if x != nil {
+		return x.WithdrawalExternalId
+	}
+	return ""
+}
+
+func (x *Transfer) GetDepositSource() string {
+	if x != nil {
+		return x.DepositSource
+	}
+	return ""
+}
+
+func (x *Transfer) GetDepositExternalId() string {
+	if x != nil {
+		return x.DepositExternalId
+	}
+	return ""
+}
+
+type ListTransfersRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransfersRequest) Reset() {
+	*x = ListTransfersRequest{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[62]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransfersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransfersRequest) ProtoMessage() {}
+
+func (x *ListTransfersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[62]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransfersRequest.ProtoReflect.Descriptor instead.
+func (*ListTransfersRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{62}
+}
+
+type ListTransfersResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Suggested pairs, in the withdrawals' date order.
+	Suggested []*Transfer `protobuf:"bytes,1,rep,name=suggested,proto3" json:"suggested,omitempty"`
+	// Pairs the owner confirmed: neither leg is a cash flow.
+	Confirmed []*Transfer `protobuf:"bytes,2,rep,name=confirmed,proto3" json:"confirmed,omitempty"`
+	// Pairs the owner rejected: both legs stay cash flows.
+	Rejected      []*Transfer `protobuf:"bytes,3,rep,name=rejected,proto3" json:"rejected,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransfersResponse) Reset() {
+	*x = ListTransfersResponse{}
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[63]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransfersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransfersResponse) ProtoMessage() {}
+
+func (x *ListTransfersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[63]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransfersResponse.ProtoReflect.Descriptor instead.
+func (*ListTransfersResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{63}
+}
+
+func (x *ListTransfersResponse) GetSuggested() []*Transfer {
+	if x != nil {
+		return x.Suggested
+	}
+	return nil
+}
+
+func (x *ListTransfersResponse) GetConfirmed() []*Transfer {
+	if x != nil {
+		return x.Confirmed
+	}
+	return nil
+}
+
+func (x *ListTransfersResponse) GetRejected() []*Transfer {
+	if x != nil {
+		return x.Rejected
+	}
+	return nil
+}
+
 type GetPerformanceRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The first date, YYYY-MM-DD; empty, or a date before go-live, means
@@ -4707,7 +4839,7 @@ type GetPerformanceRequest struct {
 
 func (x *GetPerformanceRequest) Reset() {
 	*x = GetPerformanceRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[62]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4719,7 +4851,7 @@ func (x *GetPerformanceRequest) String() string {
 func (*GetPerformanceRequest) ProtoMessage() {}
 
 func (x *GetPerformanceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[62]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4732,7 +4864,7 @@ func (x *GetPerformanceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPerformanceRequest.ProtoReflect.Descriptor instead.
 func (*GetPerformanceRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{62}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *GetPerformanceRequest) GetFrom() string {
@@ -4762,7 +4894,7 @@ type GetPerformanceResponse struct {
 	// A revaluation of some account is pending or running, so the series
 	// may change.
 	RevaluationPending bool `protobuf:"varint,5,opt,name=revaluation_pending,json=revaluationPending,proto3" json:"revaluation_pending,omitempty"`
-	// The transfers between the owner's accounts with a leg in the range.
+	// The confirmed transfers between the owner's accounts with a leg in the range.
 	Transfers []*Transfer `protobuf:"bytes,6,rep,name=transfers,proto3" json:"transfers,omitempty"`
 	// The currency of every *_reporting value.
 	ReportingCurrency string `protobuf:"bytes,7,opt,name=reporting_currency,json=reportingCurrency,proto3" json:"reporting_currency,omitempty"`
@@ -4772,7 +4904,7 @@ type GetPerformanceResponse struct {
 
 func (x *GetPerformanceResponse) Reset() {
 	*x = GetPerformanceResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[63]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4784,7 +4916,7 @@ func (x *GetPerformanceResponse) String() string {
 func (*GetPerformanceResponse) ProtoMessage() {}
 
 func (x *GetPerformanceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[63]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4797,7 +4929,7 @@ func (x *GetPerformanceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPerformanceResponse.ProtoReflect.Descriptor instead.
 func (*GetPerformanceResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{63}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *GetPerformanceResponse) GetFrom() string {
@@ -4871,7 +5003,7 @@ type ModelTarget struct {
 
 func (x *ModelTarget) Reset() {
 	*x = ModelTarget{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[64]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4883,7 +5015,7 @@ func (x *ModelTarget) String() string {
 func (*ModelTarget) ProtoMessage() {}
 
 func (x *ModelTarget) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[64]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4896,7 +5028,7 @@ func (x *ModelTarget) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ModelTarget.ProtoReflect.Descriptor instead.
 func (*ModelTarget) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{64}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *ModelTarget) GetKind() ModelTargetKind {
@@ -4952,7 +5084,7 @@ type Drawdown struct {
 
 func (x *Drawdown) Reset() {
 	*x = Drawdown{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[65]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4964,7 +5096,7 @@ func (x *Drawdown) String() string {
 func (*Drawdown) ProtoMessage() {}
 
 func (x *Drawdown) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[65]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4977,7 +5109,7 @@ func (x *Drawdown) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Drawdown.ProtoReflect.Descriptor instead.
 func (*Drawdown) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{65}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *Drawdown) GetPeakDate() string {
@@ -5033,7 +5165,7 @@ type ModelTargetHistory struct {
 
 func (x *ModelTargetHistory) Reset() {
 	*x = ModelTargetHistory{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[66]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5045,7 +5177,7 @@ func (x *ModelTargetHistory) String() string {
 func (*ModelTargetHistory) ProtoMessage() {}
 
 func (x *ModelTargetHistory) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[66]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5058,7 +5190,7 @@ func (x *ModelTargetHistory) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ModelTargetHistory.ProtoReflect.Descriptor instead.
 func (*ModelTargetHistory) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{66}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *ModelTargetHistory) GetTarget() *ModelTarget {
@@ -5110,7 +5242,7 @@ type BacktestDay struct {
 
 func (x *BacktestDay) Reset() {
 	*x = BacktestDay{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[67]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5122,7 +5254,7 @@ func (x *BacktestDay) String() string {
 func (*BacktestDay) ProtoMessage() {}
 
 func (x *BacktestDay) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[67]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5135,7 +5267,7 @@ func (x *BacktestDay) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BacktestDay.ProtoReflect.Descriptor instead.
 func (*BacktestDay) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{67}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *BacktestDay) GetDate() string {
@@ -5167,7 +5299,7 @@ type GetModelPortfolioRequest struct {
 
 func (x *GetModelPortfolioRequest) Reset() {
 	*x = GetModelPortfolioRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[68]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5179,7 +5311,7 @@ func (x *GetModelPortfolioRequest) String() string {
 func (*GetModelPortfolioRequest) ProtoMessage() {}
 
 func (x *GetModelPortfolioRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[68]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5192,7 +5324,7 @@ func (x *GetModelPortfolioRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetModelPortfolioRequest.ProtoReflect.Descriptor instead.
 func (*GetModelPortfolioRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{68}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *GetModelPortfolioRequest) GetFrom() string {
@@ -5237,7 +5369,7 @@ type GetModelPortfolioResponse struct {
 
 func (x *GetModelPortfolioResponse) Reset() {
 	*x = GetModelPortfolioResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[69]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5249,7 +5381,7 @@ func (x *GetModelPortfolioResponse) String() string {
 func (*GetModelPortfolioResponse) ProtoMessage() {}
 
 func (x *GetModelPortfolioResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[69]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5262,7 +5394,7 @@ func (x *GetModelPortfolioResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetModelPortfolioResponse.ProtoReflect.Descriptor instead.
 func (*GetModelPortfolioResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{69}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *GetModelPortfolioResponse) GetFrom() string {
@@ -5337,7 +5469,7 @@ type ListPluginsRequest struct {
 
 func (x *ListPluginsRequest) Reset() {
 	*x = ListPluginsRequest{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[70]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5349,7 +5481,7 @@ func (x *ListPluginsRequest) String() string {
 func (*ListPluginsRequest) ProtoMessage() {}
 
 func (x *ListPluginsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[70]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5362,7 +5494,7 @@ func (x *ListPluginsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPluginsRequest.ProtoReflect.Descriptor instead.
 func (*ListPluginsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{70}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{72}
 }
 
 // ListPluginsResponse lists the installed plugin instances.
@@ -5375,7 +5507,7 @@ type ListPluginsResponse struct {
 
 func (x *ListPluginsResponse) Reset() {
 	*x = ListPluginsResponse{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[71]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5387,7 +5519,7 @@ func (x *ListPluginsResponse) String() string {
 func (*ListPluginsResponse) ProtoMessage() {}
 
 func (x *ListPluginsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[71]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5400,7 +5532,7 @@ func (x *ListPluginsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPluginsResponse.ProtoReflect.Descriptor instead.
 func (*ListPluginsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{71}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *ListPluginsResponse) GetPlugins() []*Plugin {
@@ -5440,7 +5572,7 @@ type Plugin struct {
 
 func (x *Plugin) Reset() {
 	*x = Plugin{}
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[72]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5452,7 +5584,7 @@ func (x *Plugin) String() string {
 func (*Plugin) ProtoMessage() {}
 
 func (x *Plugin) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_views_v1_read_service_proto_msgTypes[72]
+	mi := &file_openfief_views_v1_read_service_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5465,7 +5597,7 @@ func (x *Plugin) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Plugin.ProtoReflect.Descriptor instead.
 func (*Plugin) Descriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{72}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *Plugin) GetInstance() string {
@@ -5836,13 +5968,22 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x12holdings_reporting\x18\x04 \x01(\v2\x18.openfief.views.v1.MoneyR\x11holdingsReporting\x12?\n" +
 	"\x0ecash_reporting\x18\x05 \x01(\v2\x18.openfief.views.v1.MoneyR\rcashReporting\x12J\n" +
 	"\x14in_transit_reporting\x18\x06 \x01(\v2\x18.openfief.views.v1.MoneyR\x12inTransitReporting\x12?\n" +
-	"\x0eflow_reporting\x18\a \x01(\v2\x18.openfief.views.v1.MoneyR\rflowReporting\"\xea\x01\n" +
+	"\x0eflow_reporting\x18\a \x01(\v2\x18.openfief.views.v1.MoneyR\rflowReporting\"\xa4\x03\n" +
 	"\bTransfer\x122\n" +
 	"\x15withdrawal_account_id\x18\x01 \x01(\tR\x13withdrawalAccountId\x12'\n" +
 	"\x0fwithdrawal_date\x18\x02 \x01(\tR\x0ewithdrawalDate\x12,\n" +
 	"\x12deposit_account_id\x18\x03 \x01(\tR\x10depositAccountId\x12!\n" +
 	"\fdeposit_date\x18\x04 \x01(\tR\vdepositDate\x120\n" +
-	"\x06amount\x18\x05 \x01(\v2\x18.openfief.views.v1.MoneyR\x06amount\";\n" +
+	"\x06amount\x18\x05 \x01(\v2\x18.openfief.views.v1.MoneyR\x06amount\x12+\n" +
+	"\x11withdrawal_source\x18\x06 \x01(\tR\x10withdrawalSource\x124\n" +
+	"\x16withdrawal_external_id\x18\a \x01(\tR\x14withdrawalExternalId\x12%\n" +
+	"\x0edeposit_source\x18\b \x01(\tR\rdepositSource\x12.\n" +
+	"\x13deposit_external_id\x18\t \x01(\tR\x11depositExternalId\"\x16\n" +
+	"\x14ListTransfersRequest\"\xc6\x01\n" +
+	"\x15ListTransfersResponse\x129\n" +
+	"\tsuggested\x18\x01 \x03(\v2\x1b.openfief.views.v1.TransferR\tsuggested\x129\n" +
+	"\tconfirmed\x18\x02 \x03(\v2\x1b.openfief.views.v1.TransferR\tconfirmed\x127\n" +
+	"\brejected\x18\x03 \x03(\v2\x1b.openfief.views.v1.TransferR\brejected\";\n" +
 	"\x15GetPerformanceRequest\x12\x12\n" +
 	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
 	"\x02to\x18\x02 \x01(\tR\x02to\"\xc3\x02\n" +
@@ -5976,7 +6117,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x15SIGNATURE_TRUST_OWNER\x10\x04\x12\"\n" +
 	"\x1eSIGNATURE_TRUST_TRUSTED_SIGNER\x10\x05\x12\x1b\n" +
 	"\x17SIGNATURE_TRUST_REFUSED\x10\x06\x12\x1f\n" +
-	"\x1bSIGNATURE_TRUST_NOT_CHECKED\x10\a2\xb6\x18\n" +
+	"\x1bSIGNATURE_TRUST_NOT_CHECKED\x10\a2\xb4\x19\n" +
 	"\vReadService\x12t\n" +
 	"\vListSleeves\x12%.openfief.views.v1.ListSleevesRequest\x1a&.openfief.views.v1.ListSleevesResponse\"\x16\x82\xd3\xe4\x93\x02\r\x12\v/v1/sleeves\x90\x02\x01\x12\x85\x01\n" +
 	"\x0fListSleeveKinds\x12).openfief.views.v1.ListSleeveKindsRequest\x1a*.openfief.views.v1.ListSleeveKindsResponse\"\x1b\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/sleeve-kinds\x90\x02\x01\x12u\n" +
@@ -5998,7 +6139,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x15ListValuationStatuses\x12/.openfief.views.v1.ListValuationStatusesRequest\x1a0.openfief.views.v1.ListValuationStatusesResponse\"\x1f\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/valuation-status\x90\x02\x01\x12\x85\x01\n" +
 	"\x0fListPriceChecks\x12).openfief.views.v1.ListPriceChecksRequest\x1a*.openfief.views.v1.ListPriceChecksResponse\"\x1b\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/price-checks\x90\x02\x01\x12}\n" +
 	"\rGetAllocation\x12'.openfief.views.v1.GetAllocationRequest\x1a(.openfief.views.v1.GetAllocationResponse\"\x19\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/allocation\x90\x02\x01\x12\x81\x01\n" +
-	"\x0eGetPerformance\x12(.openfief.views.v1.GetPerformanceRequest\x1a).openfief.views.v1.GetPerformanceResponse\"\x1a\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/performance\x90\x02\x01\x12\x8e\x01\n" +
+	"\x0eGetPerformance\x12(.openfief.views.v1.GetPerformanceRequest\x1a).openfief.views.v1.GetPerformanceResponse\"\x1a\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/performance\x90\x02\x01\x12|\n" +
+	"\rListTransfers\x12'.openfief.views.v1.ListTransfersRequest\x1a(.openfief.views.v1.ListTransfersResponse\"\x18\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/transfers\x90\x02\x01\x12\x8e\x01\n" +
 	"\x11GetModelPortfolio\x12+.openfief.views.v1.GetModelPortfolioRequest\x1a,.openfief.views.v1.GetModelPortfolioResponse\"\x1e\x82\xd3\xe4\x93\x02\x15\x12\x13/v1/model-portfolio\x90\x02\x01\x12t\n" +
 	"\vListPlugins\x12%.openfief.views.v1.ListPluginsRequest\x1a&.openfief.views.v1.ListPluginsResponse\"\x16\x82\xd3\xe4\x93\x02\r\x12\v/v1/plugins\x90\x02\x01B\xd3\x01\n" +
 	"\x15com.openfief.views.v1B\x10ReadServiceProtoP\x01ZBgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1;viewsv1\xa2\x02\x03OVX\xaa\x02\x11Openfief.Views.V1\xca\x02\x11Openfief\\Views\\V1\xe2\x02\x1dOpenfief\\Views\\V1\\GPBMetadata\xea\x02\x13Openfief::Views::V1b\x06proto3"
@@ -6016,7 +6158,7 @@ func file_openfief_views_v1_read_service_proto_rawDescGZIP() []byte {
 }
 
 var file_openfief_views_v1_read_service_proto_enumTypes = make([]protoimpl.EnumInfo, 12)
-var file_openfief_views_v1_read_service_proto_msgTypes = make([]protoimpl.MessageInfo, 73)
+var file_openfief_views_v1_read_service_proto_msgTypes = make([]protoimpl.MessageInfo, 75)
 var file_openfief_views_v1_read_service_proto_goTypes = []any{
 	(SleeveRole)(0),                       // 0: openfief.views.v1.SleeveRole
 	(ValueKind)(0),                        // 1: openfief.views.v1.ValueKind
@@ -6092,17 +6234,19 @@ var file_openfief_views_v1_read_service_proto_goTypes = []any{
 	(*GetAllocationResponse)(nil),         // 71: openfief.views.v1.GetAllocationResponse
 	(*PerformanceDay)(nil),                // 72: openfief.views.v1.PerformanceDay
 	(*Transfer)(nil),                      // 73: openfief.views.v1.Transfer
-	(*GetPerformanceRequest)(nil),         // 74: openfief.views.v1.GetPerformanceRequest
-	(*GetPerformanceResponse)(nil),        // 75: openfief.views.v1.GetPerformanceResponse
-	(*ModelTarget)(nil),                   // 76: openfief.views.v1.ModelTarget
-	(*Drawdown)(nil),                      // 77: openfief.views.v1.Drawdown
-	(*ModelTargetHistory)(nil),            // 78: openfief.views.v1.ModelTargetHistory
-	(*BacktestDay)(nil),                   // 79: openfief.views.v1.BacktestDay
-	(*GetModelPortfolioRequest)(nil),      // 80: openfief.views.v1.GetModelPortfolioRequest
-	(*GetModelPortfolioResponse)(nil),     // 81: openfief.views.v1.GetModelPortfolioResponse
-	(*ListPluginsRequest)(nil),            // 82: openfief.views.v1.ListPluginsRequest
-	(*ListPluginsResponse)(nil),           // 83: openfief.views.v1.ListPluginsResponse
-	(*Plugin)(nil),                        // 84: openfief.views.v1.Plugin
+	(*ListTransfersRequest)(nil),          // 74: openfief.views.v1.ListTransfersRequest
+	(*ListTransfersResponse)(nil),         // 75: openfief.views.v1.ListTransfersResponse
+	(*GetPerformanceRequest)(nil),         // 76: openfief.views.v1.GetPerformanceRequest
+	(*GetPerformanceResponse)(nil),        // 77: openfief.views.v1.GetPerformanceResponse
+	(*ModelTarget)(nil),                   // 78: openfief.views.v1.ModelTarget
+	(*Drawdown)(nil),                      // 79: openfief.views.v1.Drawdown
+	(*ModelTargetHistory)(nil),            // 80: openfief.views.v1.ModelTargetHistory
+	(*BacktestDay)(nil),                   // 81: openfief.views.v1.BacktestDay
+	(*GetModelPortfolioRequest)(nil),      // 82: openfief.views.v1.GetModelPortfolioRequest
+	(*GetModelPortfolioResponse)(nil),     // 83: openfief.views.v1.GetModelPortfolioResponse
+	(*ListPluginsRequest)(nil),            // 84: openfief.views.v1.ListPluginsRequest
+	(*ListPluginsResponse)(nil),           // 85: openfief.views.v1.ListPluginsResponse
+	(*Plugin)(nil),                        // 86: openfief.views.v1.Plugin
 }
 var file_openfief_views_v1_read_service_proto_depIdxs = []int32{
 	0,   // 0: openfief.views.v1.Sleeve.role:type_name -> openfief.views.v1.SleeveRole
@@ -6176,69 +6320,74 @@ var file_openfief_views_v1_read_service_proto_depIdxs = []int32{
 	12,  // 68: openfief.views.v1.PerformanceDay.in_transit_reporting:type_name -> openfief.views.v1.Money
 	12,  // 69: openfief.views.v1.PerformanceDay.flow_reporting:type_name -> openfief.views.v1.Money
 	12,  // 70: openfief.views.v1.Transfer.amount:type_name -> openfief.views.v1.Money
-	72,  // 71: openfief.views.v1.GetPerformanceResponse.days:type_name -> openfief.views.v1.PerformanceDay
-	8,   // 72: openfief.views.v1.GetPerformanceResponse.gap:type_name -> openfief.views.v1.PerformanceGap
-	73,  // 73: openfief.views.v1.GetPerformanceResponse.transfers:type_name -> openfief.views.v1.Transfer
-	9,   // 74: openfief.views.v1.ModelTarget.kind:type_name -> openfief.views.v1.ModelTargetKind
-	13,  // 75: openfief.views.v1.ModelTarget.instrument:type_name -> openfief.views.v1.Instrument
-	76,  // 76: openfief.views.v1.ModelTargetHistory.target:type_name -> openfief.views.v1.ModelTarget
-	10,  // 77: openfief.views.v1.ModelTargetHistory.gap:type_name -> openfief.views.v1.ModelHistoryGap
-	77,  // 78: openfief.views.v1.ModelTargetHistory.drawdown:type_name -> openfief.views.v1.Drawdown
-	76,  // 79: openfief.views.v1.GetModelPortfolioResponse.targets:type_name -> openfief.views.v1.ModelTarget
-	79,  // 80: openfief.views.v1.GetModelPortfolioResponse.days:type_name -> openfief.views.v1.BacktestDay
-	77,  // 81: openfief.views.v1.GetModelPortfolioResponse.drawdown:type_name -> openfief.views.v1.Drawdown
-	78,  // 82: openfief.views.v1.GetModelPortfolioResponse.target_histories:type_name -> openfief.views.v1.ModelTargetHistory
-	84,  // 83: openfief.views.v1.ListPluginsResponse.plugins:type_name -> openfief.views.v1.Plugin
-	11,  // 84: openfief.views.v1.Plugin.trust:type_name -> openfief.views.v1.SignatureTrust
-	34,  // 85: openfief.views.v1.ReadService.ListSleeves:input_type -> openfief.views.v1.ListSleevesRequest
-	36,  // 86: openfief.views.v1.ReadService.ListSleeveKinds:input_type -> openfief.views.v1.ListSleeveKindsRequest
-	42,  // 87: openfief.views.v1.ReadService.GetSettings:input_type -> openfief.views.v1.GetSettingsRequest
-	44,  // 88: openfief.views.v1.ReadService.ListYearlyTaxes:input_type -> openfief.views.v1.ListYearlyTaxesRequest
-	46,  // 89: openfief.views.v1.ReadService.ListAccounts:input_type -> openfief.views.v1.ListAccountsRequest
-	38,  // 90: openfief.views.v1.ReadService.ListConnectorBindings:input_type -> openfief.views.v1.ListConnectorBindingsRequest
-	40,  // 91: openfief.views.v1.ReadService.ListBrokerAccounts:input_type -> openfief.views.v1.ListBrokerAccountsRequest
-	48,  // 92: openfief.views.v1.ReadService.GetAccount:input_type -> openfief.views.v1.GetAccountRequest
-	50,  // 93: openfief.views.v1.ReadService.ListTransactions:input_type -> openfief.views.v1.ListTransactionsRequest
-	52,  // 94: openfief.views.v1.ReadService.ListHoldings:input_type -> openfief.views.v1.ListHoldingsRequest
-	54,  // 95: openfief.views.v1.ReadService.ListLots:input_type -> openfief.views.v1.ListLotsRequest
-	56,  // 96: openfief.views.v1.ReadService.ListCash:input_type -> openfief.views.v1.ListCashRequest
-	58,  // 97: openfief.views.v1.ReadService.ListAssertionChecks:input_type -> openfief.views.v1.ListAssertionChecksRequest
-	60,  // 98: openfief.views.v1.ReadService.ListAccountValuations:input_type -> openfief.views.v1.ListAccountValuationsRequest
-	62,  // 99: openfief.views.v1.ReadService.GetValuationStatus:input_type -> openfief.views.v1.GetValuationStatusRequest
-	64,  // 100: openfief.views.v1.ReadService.ListValuationTotals:input_type -> openfief.views.v1.ListValuationTotalsRequest
-	66,  // 101: openfief.views.v1.ReadService.ListValuationStatuses:input_type -> openfief.views.v1.ListValuationStatusesRequest
-	68,  // 102: openfief.views.v1.ReadService.ListPriceChecks:input_type -> openfief.views.v1.ListPriceChecksRequest
-	70,  // 103: openfief.views.v1.ReadService.GetAllocation:input_type -> openfief.views.v1.GetAllocationRequest
-	74,  // 104: openfief.views.v1.ReadService.GetPerformance:input_type -> openfief.views.v1.GetPerformanceRequest
-	80,  // 105: openfief.views.v1.ReadService.GetModelPortfolio:input_type -> openfief.views.v1.GetModelPortfolioRequest
-	82,  // 106: openfief.views.v1.ReadService.ListPlugins:input_type -> openfief.views.v1.ListPluginsRequest
-	35,  // 107: openfief.views.v1.ReadService.ListSleeves:output_type -> openfief.views.v1.ListSleevesResponse
-	37,  // 108: openfief.views.v1.ReadService.ListSleeveKinds:output_type -> openfief.views.v1.ListSleeveKindsResponse
-	43,  // 109: openfief.views.v1.ReadService.GetSettings:output_type -> openfief.views.v1.GetSettingsResponse
-	45,  // 110: openfief.views.v1.ReadService.ListYearlyTaxes:output_type -> openfief.views.v1.ListYearlyTaxesResponse
-	47,  // 111: openfief.views.v1.ReadService.ListAccounts:output_type -> openfief.views.v1.ListAccountsResponse
-	39,  // 112: openfief.views.v1.ReadService.ListConnectorBindings:output_type -> openfief.views.v1.ListConnectorBindingsResponse
-	41,  // 113: openfief.views.v1.ReadService.ListBrokerAccounts:output_type -> openfief.views.v1.ListBrokerAccountsResponse
-	49,  // 114: openfief.views.v1.ReadService.GetAccount:output_type -> openfief.views.v1.GetAccountResponse
-	51,  // 115: openfief.views.v1.ReadService.ListTransactions:output_type -> openfief.views.v1.ListTransactionsResponse
-	53,  // 116: openfief.views.v1.ReadService.ListHoldings:output_type -> openfief.views.v1.ListHoldingsResponse
-	55,  // 117: openfief.views.v1.ReadService.ListLots:output_type -> openfief.views.v1.ListLotsResponse
-	57,  // 118: openfief.views.v1.ReadService.ListCash:output_type -> openfief.views.v1.ListCashResponse
-	59,  // 119: openfief.views.v1.ReadService.ListAssertionChecks:output_type -> openfief.views.v1.ListAssertionChecksResponse
-	61,  // 120: openfief.views.v1.ReadService.ListAccountValuations:output_type -> openfief.views.v1.ListAccountValuationsResponse
-	63,  // 121: openfief.views.v1.ReadService.GetValuationStatus:output_type -> openfief.views.v1.GetValuationStatusResponse
-	65,  // 122: openfief.views.v1.ReadService.ListValuationTotals:output_type -> openfief.views.v1.ListValuationTotalsResponse
-	67,  // 123: openfief.views.v1.ReadService.ListValuationStatuses:output_type -> openfief.views.v1.ListValuationStatusesResponse
-	69,  // 124: openfief.views.v1.ReadService.ListPriceChecks:output_type -> openfief.views.v1.ListPriceChecksResponse
-	71,  // 125: openfief.views.v1.ReadService.GetAllocation:output_type -> openfief.views.v1.GetAllocationResponse
-	75,  // 126: openfief.views.v1.ReadService.GetPerformance:output_type -> openfief.views.v1.GetPerformanceResponse
-	81,  // 127: openfief.views.v1.ReadService.GetModelPortfolio:output_type -> openfief.views.v1.GetModelPortfolioResponse
-	83,  // 128: openfief.views.v1.ReadService.ListPlugins:output_type -> openfief.views.v1.ListPluginsResponse
-	107, // [107:129] is the sub-list for method output_type
-	85,  // [85:107] is the sub-list for method input_type
-	85,  // [85:85] is the sub-list for extension type_name
-	85,  // [85:85] is the sub-list for extension extendee
-	0,   // [0:85] is the sub-list for field type_name
+	73,  // 71: openfief.views.v1.ListTransfersResponse.suggested:type_name -> openfief.views.v1.Transfer
+	73,  // 72: openfief.views.v1.ListTransfersResponse.confirmed:type_name -> openfief.views.v1.Transfer
+	73,  // 73: openfief.views.v1.ListTransfersResponse.rejected:type_name -> openfief.views.v1.Transfer
+	72,  // 74: openfief.views.v1.GetPerformanceResponse.days:type_name -> openfief.views.v1.PerformanceDay
+	8,   // 75: openfief.views.v1.GetPerformanceResponse.gap:type_name -> openfief.views.v1.PerformanceGap
+	73,  // 76: openfief.views.v1.GetPerformanceResponse.transfers:type_name -> openfief.views.v1.Transfer
+	9,   // 77: openfief.views.v1.ModelTarget.kind:type_name -> openfief.views.v1.ModelTargetKind
+	13,  // 78: openfief.views.v1.ModelTarget.instrument:type_name -> openfief.views.v1.Instrument
+	78,  // 79: openfief.views.v1.ModelTargetHistory.target:type_name -> openfief.views.v1.ModelTarget
+	10,  // 80: openfief.views.v1.ModelTargetHistory.gap:type_name -> openfief.views.v1.ModelHistoryGap
+	79,  // 81: openfief.views.v1.ModelTargetHistory.drawdown:type_name -> openfief.views.v1.Drawdown
+	78,  // 82: openfief.views.v1.GetModelPortfolioResponse.targets:type_name -> openfief.views.v1.ModelTarget
+	81,  // 83: openfief.views.v1.GetModelPortfolioResponse.days:type_name -> openfief.views.v1.BacktestDay
+	79,  // 84: openfief.views.v1.GetModelPortfolioResponse.drawdown:type_name -> openfief.views.v1.Drawdown
+	80,  // 85: openfief.views.v1.GetModelPortfolioResponse.target_histories:type_name -> openfief.views.v1.ModelTargetHistory
+	86,  // 86: openfief.views.v1.ListPluginsResponse.plugins:type_name -> openfief.views.v1.Plugin
+	11,  // 87: openfief.views.v1.Plugin.trust:type_name -> openfief.views.v1.SignatureTrust
+	34,  // 88: openfief.views.v1.ReadService.ListSleeves:input_type -> openfief.views.v1.ListSleevesRequest
+	36,  // 89: openfief.views.v1.ReadService.ListSleeveKinds:input_type -> openfief.views.v1.ListSleeveKindsRequest
+	42,  // 90: openfief.views.v1.ReadService.GetSettings:input_type -> openfief.views.v1.GetSettingsRequest
+	44,  // 91: openfief.views.v1.ReadService.ListYearlyTaxes:input_type -> openfief.views.v1.ListYearlyTaxesRequest
+	46,  // 92: openfief.views.v1.ReadService.ListAccounts:input_type -> openfief.views.v1.ListAccountsRequest
+	38,  // 93: openfief.views.v1.ReadService.ListConnectorBindings:input_type -> openfief.views.v1.ListConnectorBindingsRequest
+	40,  // 94: openfief.views.v1.ReadService.ListBrokerAccounts:input_type -> openfief.views.v1.ListBrokerAccountsRequest
+	48,  // 95: openfief.views.v1.ReadService.GetAccount:input_type -> openfief.views.v1.GetAccountRequest
+	50,  // 96: openfief.views.v1.ReadService.ListTransactions:input_type -> openfief.views.v1.ListTransactionsRequest
+	52,  // 97: openfief.views.v1.ReadService.ListHoldings:input_type -> openfief.views.v1.ListHoldingsRequest
+	54,  // 98: openfief.views.v1.ReadService.ListLots:input_type -> openfief.views.v1.ListLotsRequest
+	56,  // 99: openfief.views.v1.ReadService.ListCash:input_type -> openfief.views.v1.ListCashRequest
+	58,  // 100: openfief.views.v1.ReadService.ListAssertionChecks:input_type -> openfief.views.v1.ListAssertionChecksRequest
+	60,  // 101: openfief.views.v1.ReadService.ListAccountValuations:input_type -> openfief.views.v1.ListAccountValuationsRequest
+	62,  // 102: openfief.views.v1.ReadService.GetValuationStatus:input_type -> openfief.views.v1.GetValuationStatusRequest
+	64,  // 103: openfief.views.v1.ReadService.ListValuationTotals:input_type -> openfief.views.v1.ListValuationTotalsRequest
+	66,  // 104: openfief.views.v1.ReadService.ListValuationStatuses:input_type -> openfief.views.v1.ListValuationStatusesRequest
+	68,  // 105: openfief.views.v1.ReadService.ListPriceChecks:input_type -> openfief.views.v1.ListPriceChecksRequest
+	70,  // 106: openfief.views.v1.ReadService.GetAllocation:input_type -> openfief.views.v1.GetAllocationRequest
+	76,  // 107: openfief.views.v1.ReadService.GetPerformance:input_type -> openfief.views.v1.GetPerformanceRequest
+	74,  // 108: openfief.views.v1.ReadService.ListTransfers:input_type -> openfief.views.v1.ListTransfersRequest
+	82,  // 109: openfief.views.v1.ReadService.GetModelPortfolio:input_type -> openfief.views.v1.GetModelPortfolioRequest
+	84,  // 110: openfief.views.v1.ReadService.ListPlugins:input_type -> openfief.views.v1.ListPluginsRequest
+	35,  // 111: openfief.views.v1.ReadService.ListSleeves:output_type -> openfief.views.v1.ListSleevesResponse
+	37,  // 112: openfief.views.v1.ReadService.ListSleeveKinds:output_type -> openfief.views.v1.ListSleeveKindsResponse
+	43,  // 113: openfief.views.v1.ReadService.GetSettings:output_type -> openfief.views.v1.GetSettingsResponse
+	45,  // 114: openfief.views.v1.ReadService.ListYearlyTaxes:output_type -> openfief.views.v1.ListYearlyTaxesResponse
+	47,  // 115: openfief.views.v1.ReadService.ListAccounts:output_type -> openfief.views.v1.ListAccountsResponse
+	39,  // 116: openfief.views.v1.ReadService.ListConnectorBindings:output_type -> openfief.views.v1.ListConnectorBindingsResponse
+	41,  // 117: openfief.views.v1.ReadService.ListBrokerAccounts:output_type -> openfief.views.v1.ListBrokerAccountsResponse
+	49,  // 118: openfief.views.v1.ReadService.GetAccount:output_type -> openfief.views.v1.GetAccountResponse
+	51,  // 119: openfief.views.v1.ReadService.ListTransactions:output_type -> openfief.views.v1.ListTransactionsResponse
+	53,  // 120: openfief.views.v1.ReadService.ListHoldings:output_type -> openfief.views.v1.ListHoldingsResponse
+	55,  // 121: openfief.views.v1.ReadService.ListLots:output_type -> openfief.views.v1.ListLotsResponse
+	57,  // 122: openfief.views.v1.ReadService.ListCash:output_type -> openfief.views.v1.ListCashResponse
+	59,  // 123: openfief.views.v1.ReadService.ListAssertionChecks:output_type -> openfief.views.v1.ListAssertionChecksResponse
+	61,  // 124: openfief.views.v1.ReadService.ListAccountValuations:output_type -> openfief.views.v1.ListAccountValuationsResponse
+	63,  // 125: openfief.views.v1.ReadService.GetValuationStatus:output_type -> openfief.views.v1.GetValuationStatusResponse
+	65,  // 126: openfief.views.v1.ReadService.ListValuationTotals:output_type -> openfief.views.v1.ListValuationTotalsResponse
+	67,  // 127: openfief.views.v1.ReadService.ListValuationStatuses:output_type -> openfief.views.v1.ListValuationStatusesResponse
+	69,  // 128: openfief.views.v1.ReadService.ListPriceChecks:output_type -> openfief.views.v1.ListPriceChecksResponse
+	71,  // 129: openfief.views.v1.ReadService.GetAllocation:output_type -> openfief.views.v1.GetAllocationResponse
+	77,  // 130: openfief.views.v1.ReadService.GetPerformance:output_type -> openfief.views.v1.GetPerformanceResponse
+	75,  // 131: openfief.views.v1.ReadService.ListTransfers:output_type -> openfief.views.v1.ListTransfersResponse
+	83,  // 132: openfief.views.v1.ReadService.GetModelPortfolio:output_type -> openfief.views.v1.GetModelPortfolioResponse
+	85,  // 133: openfief.views.v1.ReadService.ListPlugins:output_type -> openfief.views.v1.ListPluginsResponse
+	111, // [111:134] is the sub-list for method output_type
+	88,  // [88:111] is the sub-list for method input_type
+	88,  // [88:88] is the sub-list for extension type_name
+	88,  // [88:88] is the sub-list for extension extendee
+	0,   // [0:88] is the sub-list for field type_name
 }
 
 func init() { file_openfief_views_v1_read_service_proto_init() }
@@ -6252,7 +6401,7 @@ func file_openfief_views_v1_read_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_views_v1_read_service_proto_rawDesc), len(file_openfief_views_v1_read_service_proto_rawDesc)),
 			NumEnums:      12,
-			NumMessages:   73,
+			NumMessages:   75,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -384,20 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8506d4701ef
-  - type: implements
-    from: SYM-ingest-gen-st-pb-statement-account
-    to: REQ-ui-statement-upload-file-connectors-only
-    created_at: 2026-10-30T04:34:54.657Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-80d6b666f85e
-  - type: covered_by
-    from: SYM-ingest-gen-st-pb-statement-account
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-10-30T04:34:54.702Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-940bf71a8a93
   - type: constrains
     from: REQ-jurisdiction-fee-rule-sale-cost
     to: FACT-SUBJECT-005E002D2AEB1A5D
@@ -468,3 +454,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f85c2a9f3b7
+  - type: implements
+    from: SYM-ledger-app-transfers-decide
+    to: REQ-ui-transfer-confirmation
+    created_at: 2026-10-30T06:36:57.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c43b92735522
+  - type: implements
+    from: SYM-ledger-app-transfers-decide
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-10-30T06:36:57.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f306a36e9332
+  - type: covered_by
+    from: SYM-ledger-app-transfers-decide
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:36:57.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51e3cdd2f1f9
+  - type: implements
+    from: SYM-ingest-gen-st-pb-statement-account
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:34:54.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80d6b666f85e
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-statement-account
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:34:54.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-940bf71a8a93

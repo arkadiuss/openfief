@@ -279,6 +279,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76d3e3654aa5
+  - type: constrains
+    from: REQ-core-config
+    to: FACT-SUBJECT-D6A091F8C6B86AD8
+    created_at: 2026-10-29T20:58:47.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36de92724e5e
+  - type: requires_property
+    from: REQ-core-config
+    to: FACT-PROP-2883F03840CE90F8
+    created_at: 2026-10-29T20:58:47.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c675d037a56
   - type: specified_by
     from: REQ-core-config
     to: SCEN-core-config
@@ -489,34 +503,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d914aceb990
-  - type: constrains
-    from: REQ-core-config
-    to: FACT-SUBJECT-D6A091F8C6B86AD8
-    created_at: 2026-10-29T20:58:47.658Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-36de92724e5e
-  - type: requires_property
-    from: REQ-core-config
-    to: FACT-PROP-2883F03840CE90F8
-    created_at: 2026-10-29T20:58:47.715Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5c675d037a56
-  - type: executable_for
-    from: SYM-core-test-pc-price-check-client
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:00:35.130Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a7aa6464f22f
-  - type: executable_for
-    from: SYM-valuation-app-test-cc-fake-cross-checks-price-check-acknowledgements
-    to: TEST-valuation-app-crosscheck
-    created_at: 2026-10-30T03:03:27.288Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6429fcfbdc34
   - type: validates
     from: TEST-valuation-postgres-store
     to: REQ-decision-d36-9-three-values-stored
@@ -545,3 +531,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-358eb6807858
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-request-proto-reflect
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:58:25.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c319f77911c1
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-request-proto-reflect
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:58:25.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff28313fbc46
+  - type: executable_for
+    from: SYM-core-test-pc-price-check-client
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:00:35.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7aa6464f22f
+  - type: executable_for
+    from: SYM-valuation-app-test-cc-fake-cross-checks-price-check-acknowledgements
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T03:03:27.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6429fcfbdc34

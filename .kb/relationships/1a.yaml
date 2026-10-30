@@ -440,3 +440,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b6ae8d75538
+  - type: implements
+    from: SYM-ui-server-performance
+    to: REQ-ui-performance-chart
+    created_at: 2026-10-30T06:33:31.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61d65b732afe
+  - type: implements
+    from: SYM-ui-server-performance
+    to: REQ-ui-transfers-page
+    created_at: 2026-10-30T06:33:31.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8f97ffffc84
+  - type: covered_by
+    from: SYM-ui-server-performance
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T06:33:32.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc52ccc5e1e7

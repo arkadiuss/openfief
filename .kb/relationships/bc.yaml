@@ -566,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43685a025eec
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-ui-performance-chart
+    created_at: 2026-10-30T06:33:03.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fba5a80d3fd7
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-ui-performance-chart-twr-index
+    created_at: 2026-10-30T06:33:03.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5296114fe59
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-views-model-line-on-performance-chart
+    created_at: 2026-10-30T06:33:03.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb07056311b0

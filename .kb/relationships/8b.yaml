@@ -539,13 +539,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0bfb85eb8e34
   - type: implements
-    from: SYM-ingest-app-uploads-prepare
-    to: REQ-ingest-statement-upload-checks
-    created_at: 2026-10-30T04:12:59.825Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-559696970aa5
-  - type: implements
     from: SYM-core-split-command
     to: REQ-core-serve-flags
     created_at: 2026-10-29T21:54:42.601Z
@@ -608,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd14d8065708
+  - type: executable_for
+    from: SYM-ledger-test-decide-transfer-link
+    to: TEST-ledger-transfers
+    created_at: 2026-10-30T06:44:42.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57dbe07b7a8e
+  - type: implements
+    from: SYM-ingest-app-uploads-prepare
+    to: REQ-ingest-statement-upload-checks
+    created_at: 2026-10-30T04:12:59.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-559696970aa5

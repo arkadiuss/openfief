@@ -462,20 +462,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-24f46990b240
   - type: implements
-    from: SYM-valuation-check-threshold
-    to: REQ-valuation-price-check-instrument-threshold
-    created_at: 2026-10-30T03:27:14.943Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-11241e5f989f
-  - type: executable_for
-    from: SYM-ingest-app-test-fa-per-instance-bindings-bound-accounts
-    to: TEST-ingest-app-file-accounts
-    created_at: 2026-10-30T04:27:35.345Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ddbd324e1490
-  - type: implements
     from: SYM-pl-tax-wrapper
     to: REQ-pl-values-per-wrapper
     created_at: 2026-10-29T21:55:26.310Z
@@ -559,3 +545,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03acd996fa2c
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-response-string
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:59:29.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4df4c836e8a9
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-response-string
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:59:29.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7bb00dccfac
+  - type: implements
+    from: SYM-valuation-check-threshold
+    to: REQ-valuation-price-check-instrument-threshold
+    created_at: 2026-10-30T03:27:14.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11241e5f989f
+  - type: executable_for
+    from: SYM-ingest-app-test-fa-per-instance-bindings-bound-accounts
+    to: TEST-ingest-app-file-accounts
+    created_at: 2026-10-30T04:27:35.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddbd324e1490

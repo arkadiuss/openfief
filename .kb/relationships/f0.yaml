@@ -440,27 +440,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d46c88a1b67
-  - type: validates
-    from: TEST-plugins-cli-browser-view
-    to: REQ-plugins-cli-refuses-second-browser-view
-    created_at: 2026-10-29T21:58:46.006Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-84230cf4d015
-  - type: implements
-    from: SYM-valuation-connectapi-pc-price-checks
-    to: REQ-valuation-price-check-service
-    created_at: 2026-10-30T03:05:42.819Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2deca7136ca0
-  - type: covered_by
-    from: SYM-valuation-connectapi-pc-price-checks
-    to: TEST-core-price-checks
-    created_at: 2026-10-30T03:05:42.861Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a286a322e356
   - type: implements
     from: SYM-valuation-postgres-store-save-number-format
     to: REQ-valuation-account-terms-inputs
@@ -496,6 +475,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23b84d4a27e4
+  - type: validates
+    from: TEST-plugins-cli-browser-view
+    to: REQ-plugins-cli-refuses-second-browser-view
+    created_at: 2026-10-29T21:58:46.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84230cf4d015
   - type: executable_for
     from: SYM-affected-test-fake-repo
     to: TEST-tooling-affected-inputs
@@ -503,3 +489,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab27db794f3a
+  - type: executable_for
+    from: SYM-core-test-transfer-service
+    to: TEST-core-transfers
+    created_at: 2026-10-30T07:26:40.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ac4c7d6519f
+  - type: implements
+    from: SYM-valuation-connectapi-pc-price-checks
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:05:42.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2deca7136ca0
+  - type: covered_by
+    from: SYM-valuation-connectapi-pc-price-checks
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:05:42.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a286a322e356

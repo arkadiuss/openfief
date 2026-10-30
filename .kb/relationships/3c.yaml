@@ -440,13 +440,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24e40f92d1d7
-  - type: executable_for
-    from: SYM-ingest-kube-test-check-declarations
-    to: TEST-ingest-kube
-    created_at: 2026-10-30T04:50:05.552Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d054f429fc57
   - type: implements
     from: SYM-jurisdiction-default-wrapper
     to: REQ-pl-tax-wrappers
@@ -496,3 +489,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed3f49ba99a5
+  - type: validates
+    from: TEST-core-transfers
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-10-30T06:32:31.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee0f448bfbed
+  - type: validates
+    from: TEST-core-transfers
+    to: REQ-core-owner-entry-services
+    created_at: 2026-10-30T06:32:31.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddaea3d6b5da
+  - type: implements
+    from: SYM-ledgerv1connect-unimplemented-transfer-service-handler-reject-transfer
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:52:06.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d8c15daa789
+  - type: covered_by
+    from: SYM-ledgerv1connect-unimplemented-transfer-service-handler-reject-transfer
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:52:06.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b937160fb12
+  - type: executable_for
+    from: SYM-ingest-kube-test-check-declarations
+    to: TEST-ingest-kube
+    created_at: 2026-10-30T04:50:05.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d054f429fc57

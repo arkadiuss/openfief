@@ -482,20 +482,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2fdb8768d152
-  - type: executable_for
-    from: SYM-valuation-app-test-cc-fake-cross-checks-save-price-check-threshold
-    to: TEST-valuation-app-crosscheck
-    created_at: 2026-10-30T03:03:10.753Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-07bf0c1a26ba
-  - type: executable_for
-    from: SYM-ingest-app-test-fa-per-account-bindings
-    to: TEST-ingest-app-file-accounts
-    created_at: 2026-10-30T04:26:59.646Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-60524665f225
   - type: validates
     from: TEST-valuation-app-settings
     to: REQ-ui-number-format-setting
@@ -517,3 +503,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ccc007d37d0
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-ledger-transfer-links
+    to: TEST-views-app-transfers
+    created_at: 2026-10-30T06:45:00.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa8fc9540390
+  - type: executable_for
+    from: SYM-valuation-app-test-cc-fake-cross-checks-save-price-check-threshold
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T03:03:10.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07bf0c1a26ba
+  - type: executable_for
+    from: SYM-ingest-app-test-fa-per-account-bindings
+    to: TEST-ingest-app-file-accounts
+    created_at: 2026-10-30T04:26:59.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60524665f225

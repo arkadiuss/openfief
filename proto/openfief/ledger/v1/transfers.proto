@@ -1,0 +1,86 @@
+// OpenFief's transfer confirmation contract (docs/DESIGN.md D-105, D-79).
+//
+// Money the owner moves between two of their own accounts arrives as a
+// withdrawal in one and a deposit in the other. The read API suggests such
+// pairs (ListTransfers); the owner confirms or rejects each one in the
+// built-in UI, which hands the decision to the core through TransferService:
+// one owner-only service for this kind of entry (D-79). The ledger stores
+// each decision append-only; a later decision on the same pair supersedes
+// it (D-18). Only confirmed transfers are left out of the time-weighted
+// return's cash flows.
+//
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto), as in model.proto:
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - A pair whose legs are not a withdrawal and a deposit of exactly the same
+//   amount and currency in different accounts, at most five calendar days
+//   apart, neither opening cash, fails with INVALID_ARGUMENT; a key with no
+//   stored transaction fails with NOT_FOUND; confirming a leg of another
+//   confirmed transfer fails with FAILED_PRECONDITION. Nothing is stored then.
+syntax = "proto3";
+
+package openfief.ledger.v1;
+
+// TransferService records the owner's decisions on suggested transfers.
+service TransferService {
+  // ConfirmTransfer records that the withdrawal and the deposit are one
+  // transfer between the owner's own accounts. Confirming a confirmed pair
+  // again stores nothing.
+  rpc ConfirmTransfer(ConfirmTransferRequest) returns (ConfirmTransferResponse);
+
+  // RejectTransfer records that they are not: both stay cash flows and the
+  // pair is not suggested again. Rejecting a confirmed pair corrects it.
+  rpc RejectTransfer(RejectTransferRequest) returns (RejectTransferResponse);
+}
+
+// TransactionKey names a transaction across its versions: its source and the
+// institution's own ID for it (D-18), as the read API lists them.
+message TransactionKey {
+  string source = 1;
+  string external_id = 2;
+}
+
+// TransferDecision is the owner's answer to a suggested transfer.
+enum TransferDecision {
+  TRANSFER_DECISION_UNSPECIFIED = 0;
+  TRANSFER_DECISION_CONFIRMED = 1;
+  TRANSFER_DECISION_REJECTED = 2;
+}
+
+// TransferLink is the current version of the owner's decision on a pair.
+message TransferLink {
+  TransactionKey withdrawal = 1;
+  TransactionKey deposit = 2;
+  TransferDecision decision = 3;
+  // Versions of a pair are numbered from 1; a later one supersedes.
+  int64 version = 4;
+}
+
+message ConfirmTransferRequest {
+  string origin = 1;
+  string session_token = 2;
+  TransactionKey withdrawal = 3;
+  TransactionKey deposit = 4;
+}
+
+message ConfirmTransferResponse {
+  TransferLink link = 1;
+}
+
+message RejectTransferRequest {
+  string origin = 1;
+  string session_token = 2;
+  TransactionKey withdrawal = 3;
+  TransactionKey deposit = 4;
+}
+
+message RejectTransferResponse {
+  TransferLink link = 1;
+}

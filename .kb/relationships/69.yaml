@@ -321,3 +321,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc403ac4231c
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-request-string
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:58:09.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f1c3c743114
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-request-string
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:58:09.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4c7dab9970b

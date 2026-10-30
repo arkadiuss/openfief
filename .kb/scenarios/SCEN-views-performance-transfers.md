@@ -1,5 +1,5 @@
 ---
-title: A matched withdrawal and deposit between own accounts is a transfer, not a cash flow
+title: Only a transfer the owner confirmed is left out of the cash flows
 status: active
 origin:
   kind: agent
@@ -7,4 +7,4 @@ origin:
 id: SCEN-views-performance-transfers
 type: scenario
 ---
-Given a withdrawal from one account and a deposit of the same amount and currency into another at most five days apart, in either order, when the series is computed, then they are one transfer, the money counts as in transit at each day's rate until both legs are booked, and neither is a cash flow; further apart, in the same account, of another amount or currency, or with opening cash, they stay cash flows.
+Given 100 USD withdrawn from acc-1 on day 1 and deposited into acc-2 on day 2, when the owner confirmed the pair the money is in transit on day 1 at the day's rate and the index moves only with the rate; when the pair is only suggested or was rejected, the withdrawal and the deposit are cash flows of the time-weighted return. A link whose legs no longer match counts for nothing.

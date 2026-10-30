@@ -314,13 +314,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12b67975474e
-  - type: implements
-    from: SYM-views-compare-flows
-    to: REQ-views-performance-transfers
-    created_at: 2026-10-28T21:02:28.544Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5d2663e565ac
   - type: covered_by
     from: SYM-views-compare-flows
     to: TEST-views-performance
@@ -476,20 +469,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b1e080fd8cb5
   - type: implements
-    from: SYM-ingest-gen-st-pb-upload-statement-response-get-mode
-    to: REQ-ingest-statement-mode-chosen-by-core
-    created_at: 2026-10-30T04:32:18.402Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5ae33200895e
-  - type: covered_by
-    from: SYM-ingest-gen-st-pb-upload-statement-response-get-mode
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-10-30T04:32:18.446Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8bf8614862f4
-  - type: implements
     from: SYM-valuation-postgres-optional-value
     to: REQ-decision-d36-9-three-values-stored
     created_at: 2026-10-29T22:13:41.349Z
@@ -531,3 +510,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddbca228dd1f
+  - type: implements
+    from: SYM-views-compare-flows
+    to: REQ-views-performance-confirmed-transfers
+    created_at: 2026-10-30T06:21:18.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-484abb4e3f7b
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-owners-check-owner
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:40:06.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b5f64f9ed53
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-request-descriptor
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:58:32.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f4bbf42d216
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-request-descriptor
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:58:32.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30545060ea44
+  - type: implements
+    from: SYM-ingest-gen-st-pb-upload-statement-response-get-mode
+    to: REQ-ingest-statement-mode-chosen-by-core
+    created_at: 2026-10-30T04:32:18.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ae33200895e
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-upload-statement-response-get-mode
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:32:18.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bf8614862f4

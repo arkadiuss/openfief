@@ -127,6 +127,7 @@ func TestREST(t *testing.T) {
 		{"/v1/allocation?date=2026-03-02&by=ALLOCATION_DIMENSION_SLEEVE", http.StatusOK},
 		{"/v1/performance", http.StatusOK},
 		{"/v1/performance?from=2026-03-01&to=2026-03-04", http.StatusOK},
+		{"/v1/transfers", http.StatusOK},
 		{"/v1/settings", http.StatusOK},
 		{"/v1/yearly-taxes?year=2026", http.StatusOK},
 		{"/v1/allocation?date=2026-03-02&by=ALLOCATION_DIMENSION_ASSET_CLASS&value=VALUE_KIND_NET", http.StatusOK},

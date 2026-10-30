@@ -567,48 +567,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-44a93d4cf1b3
   - type: implements
-    from: SYM-ingest-app-uploads-file-accounts-of
-    to: REQ-ui-statement-upload-file-connectors-only
-    created_at: 2026-10-30T04:28:35.576Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1f3c90c28457
-  - type: implements
-    from: SYM-ingest-app-uploads-file-accounts-of
-    to: REQ-ingest-statement-mode-chosen-by-core
-    created_at: 2026-10-30T04:28:35.637Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-872dd303fa56
-  - type: covered_by
-    from: SYM-ingest-app-uploads-file-accounts-of
-    to: TEST-ingest-app-file-accounts
-    created_at: 2026-10-30T04:28:35.686Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8a6c51d7a0da
-  - type: implements
-    from: SYM-ingest-declarations
-    to: REQ-ingest-cross-check-prices-declared-only
-    created_at: 2026-10-30T04:30:13.739Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7e277d0a76bf
-  - type: implements
-    from: SYM-ingest-declarations
-    to: REQ-ui-statement-upload-file-connectors-only
-    created_at: 2026-10-30T04:30:13.826Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b7d04710639a
-  - type: covered_by
-    from: SYM-ingest-declarations
-    to: TEST-ingest-declarations
-    created_at: 2026-10-30T04:30:13.898Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1c2b7ecb9866
-  - type: implements
     from: SYM-valuation-basis-string
     to: REQ-valuation-bond-holding-values
     created_at: 2026-10-29T21:55:57.507Z
@@ -713,3 +671,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3830f791d7b1
+  - type: implements
+    from: SYM-views-pb-list-transfers-request-reset
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:01:40.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-150b06c85b8f
+  - type: covered_by
+    from: SYM-views-pb-list-transfers-request-reset
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:01:40.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e884f3d01e8
+  - type: implements
+    from: SYM-ingest-app-uploads-file-accounts-of
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:28:35.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3c90c28457
+  - type: implements
+    from: SYM-ingest-app-uploads-file-accounts-of
+    to: REQ-ingest-statement-mode-chosen-by-core
+    created_at: 2026-10-30T04:28:35.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-872dd303fa56
+  - type: covered_by
+    from: SYM-ingest-app-uploads-file-accounts-of
+    to: TEST-ingest-app-file-accounts
+    created_at: 2026-10-30T04:28:35.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a6c51d7a0da
+  - type: implements
+    from: SYM-ingest-declarations
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:30:13.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e277d0a76bf
+  - type: implements
+    from: SYM-ingest-declarations
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:30:13.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d04710639a
+  - type: covered_by
+    from: SYM-ingest-declarations
+    to: TEST-ingest-declarations
+    created_at: 2026-10-30T04:30:13.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c2b7ecb9866

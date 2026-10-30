@@ -350,13 +350,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-8aa70e0402a0
   - type: executable_for
-    from: SYM-views-test-helper-matched
-    to: TEST-views-performance
-    created_at: 2026-10-28T21:06:51.186Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-79e3efe7b448
-  - type: executable_for
     from: SYM-valuation-eodhd-test-closes-unknown-ticker
     to: TEST-valuation-eodhd-client
     created_at: 2026-10-28T21:40:59.851Z
@@ -608,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c53971b0fdd
+  - type: validates
+    from: TEST-ledger-transfers
+    to: REQ-ledger-transfer-suggestion
+    created_at: 2026-10-30T06:05:27.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-696df2dbeb42
+  - type: validates
+    from: TEST-ledger-transfers
+    to: REQ-ledger-transfer-link-append-only
+    created_at: 2026-10-30T06:05:28.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-061dbd2f24ec

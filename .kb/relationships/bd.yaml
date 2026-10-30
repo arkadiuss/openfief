@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50be9054bc3f
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-tx-lock-transfer-links
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:35:31.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1da7c002056f
+  - type: executable_for
+    from: SYM-views-app-test-transfers-fail-with-the-ledger
+    to: TEST-views-app-transfers
+    created_at: 2026-10-30T06:45:58.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38b80b0b9c50

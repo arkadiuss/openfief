@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee48753873f4
+  - type: verified_by
+    from: SCEN-ledger-transfer-service
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:20:14.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee90337b4ae
+  - type: verified_by
+    from: SCEN-ledger-transfer-service
+    to: TEST-core-transfers
+    created_at: 2026-10-30T06:32:36.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f30b3fa3dade

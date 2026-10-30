@@ -363,27 +363,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-900e8b0aa41e
-  - type: constrains
-    from: REQ-valuation-price-check-acknowledgement-lapses
-    to: FACT-SUBJECT-3998867A180E842F
-    created_at: 2026-10-30T02:58:49.725Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f5f9a40ad4be
-  - type: requires_property
-    from: REQ-valuation-price-check-acknowledgement-lapses
-    to: FACT-PROP-60A54C4F4B9BC5FC
-    created_at: 2026-10-30T02:58:49.783Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e181fd297994
-  - type: specified_by
-    from: REQ-valuation-price-check-acknowledgement-lapses
-    to: SCEN-valuation-price-check-acknowledgement-lapses
-    created_at: 2026-10-30T02:58:49.826Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-270b376d0fb4
   - type: implements
     from: SYM-valuation-app-settings
     to: REQ-valuation-owner-settings
@@ -482,3 +461,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e759f3270db
+  - type: implements
+    from: SYM-ledgerv1-confirm-transfer-request
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:55:40.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f032d3226bc
+  - type: covered_by
+    from: SYM-ledgerv1-confirm-transfer-request
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:55:40.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deaf70acfb9b
+  - type: executable_for
+    from: SYM-ui-test-transfers-page
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:28:56.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95860af81e26
+  - type: constrains
+    from: REQ-valuation-price-check-acknowledgement-lapses
+    to: FACT-SUBJECT-3998867A180E842F
+    created_at: 2026-10-30T02:58:49.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5f9a40ad4be
+  - type: requires_property
+    from: REQ-valuation-price-check-acknowledgement-lapses
+    to: FACT-PROP-60A54C4F4B9BC5FC
+    created_at: 2026-10-30T02:58:49.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e181fd297994
+  - type: specified_by
+    from: REQ-valuation-price-check-acknowledgement-lapses
+    to: SCEN-valuation-price-check-acknowledgement-lapses
+    created_at: 2026-10-30T02:58:49.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-270b376d0fb4

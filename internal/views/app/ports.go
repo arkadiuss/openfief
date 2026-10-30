@@ -37,6 +37,9 @@ type Ledger interface {
 	// AssertionChecks returns account's balance assertions with the result
 	// of their latest check, in date then ledger account order.
 	AssertionChecks(ctx context.Context, account ledger.AccountID) ([]ledgerapp.AssertionCheck, error)
+	// TransferLinks returns the current link of each pair of a withdrawal
+	// and a deposit the owner confirmed or rejected as a transfer (D-105).
+	TransferLinks(ctx context.Context) ([]ledger.TransferLink, error)
 }
 
 // Valuations reads the stored holding valuations (D-36).

@@ -587,3 +587,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9a3688bd932
+  - type: implements
+    from: SYM-ledger-app-current-by-key
+    to: REQ-ledger-transfer-legs
+    created_at: 2026-10-30T06:37:33.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d68c02213971
+  - type: covered_by
+    from: SYM-ledger-app-current-by-key
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:37:33.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de3e26f754d5
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-transfer-service-errors
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:41:09.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aede5f8cb906
+  - type: implements
+    from: SYM-ledgerv1-confirm-transfer-request-descriptor
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:56:19.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48a6cc523476
+  - type: covered_by
+    from: SYM-ledgerv1-confirm-transfer-request-descriptor
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:56:19.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5b9cea55887
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-response-proto-reflect
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:59:44.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e774c1eb6607
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-response-proto-reflect
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:59:45.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea44b564a191

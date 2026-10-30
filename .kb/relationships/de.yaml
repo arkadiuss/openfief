@@ -329,41 +329,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-95bdd3b3b0d4
   - type: implements
-    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-get-origin
-    to: REQ-ui-statement-upload-file-connectors-only
-    created_at: 2026-10-30T04:34:32.558Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-319c66f3f159
-  - type: covered_by
-    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-get-origin
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-10-30T04:34:32.591Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c342a17e053c
-  - type: executable_for
-    from: SYM-core-test-up-opening-statement
-    to: TEST-core-statements
-    created_at: 2026-10-30T04:49:45.318Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-35865c6c03aa
-  - type: implements
-    from: SYM-ui-uc-server-set-price-check-threshold
-    to: REQ-ui-price-checks-page
-    created_at: 2026-10-30T06:19:01.460Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f4b8b1435812
-  - type: covered_by
-    from: SYM-ui-uc-server-set-price-check-threshold
-    to: TEST-ui-pricechecks
-    created_at: 2026-10-30T06:19:01.527Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-85c45f22716b
-  - type: implements
     from: SYM-pl-new-pack
     to: REQ-pl-values-per-wrapper
     created_at: 2026-10-29T22:05:19.198Z
@@ -461,3 +426,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-449c9b2e9c91
+  - type: implements
+    from: SYM-ledgerv1-transfer-link
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:54:19.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf81d5395fe7
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-link
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:54:19.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dad9e226ab4
+  - type: implements
+    from: SYM-ui-server-decide-transfer
+    to: REQ-ui-transfers-page
+    created_at: 2026-10-30T07:27:42.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9cb0ea90c99
+  - type: covered_by
+    from: SYM-ui-server-decide-transfer
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:27:42.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c2e0a9c816a
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-get-origin
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:34:32.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-319c66f3f159
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-request-get-origin
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:34:32.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c342a17e053c
+  - type: executable_for
+    from: SYM-core-test-up-opening-statement
+    to: TEST-core-statements
+    created_at: 2026-10-30T04:49:45.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35865c6c03aa
+  - type: implements
+    from: SYM-ui-uc-server-set-price-check-threshold
+    to: REQ-ui-price-checks-page
+    created_at: 2026-10-30T06:19:01.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4b8b1435812
+  - type: covered_by
+    from: SYM-ui-uc-server-set-price-check-threshold
+    to: TEST-ui-pricechecks
+    created_at: 2026-10-30T06:19:01.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85c45f22716b

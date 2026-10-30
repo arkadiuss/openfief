@@ -60,8 +60,9 @@
   {{with .History}}
   {{if .Points}}
   <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Time-weighted return{{if .Model}} and the model portfolio's backtest{{end}} from {{.From}} to {{.To}}, 100 on {{.From}}"></canvas></div>
-  <p class="muted">From go-live ({{.From}}) to {{.To}}: the portfolio's time-weighted return as an index, 100 on {{.From}}, so deposits, withdrawals and transfers between your accounts don't count as performance.{{with .Value}} Its value with cash on {{$.Data.History.To}} is <span class="mono">{{money .}}</span>.{{end}} In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
+  <p class="muted">From go-live ({{.From}}) to {{.To}}: the portfolio's time-weighted return as an index, 100 on {{.From}}, so deposits, withdrawals and the transfers between your accounts you confirmed don't count as performance.{{with .Value}} Its value with cash on {{$.Data.History.To}} is <span class="mono">{{money .}}</span>.{{end}} In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
   {{if .Pending}}<p><span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation pending</span> <span class="muted">The line may still change.</span></p>{{end}}
+  {{if .Suggested}}<p class="alert alert-warn"><a href="/transfers">{{.Suggested}} suggested transfer(s)</a> between your accounts wait for you: until you confirm one, its withdrawal and deposit count as money in and out.</p>{{end}}
   {{else}}
   <p class="muted">No valued days yet.</p>
   {{end}}
