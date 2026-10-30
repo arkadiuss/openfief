@@ -89192,3 +89192,1485 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-kube-core-access
+  - id: SYM-tooling-ci-images-select-usage
+    title: usage
+    sourceFile: scripts/ci-images-select.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:47:42.001Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-ci-images-select
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-tooling-ci-images-select-record-build
+    title: record_build
+    sourceFile: scripts/ci-images-select.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:47:49.772Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-ci-images-select
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-tooling-image-carry-carry
+    title: carry
+    sourceFile: scripts/image-carry.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:47:57.192Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-image-carry
+      - type: implements
+        target: REQ-tooling-ci-carry-signed-digest
+  - id: SYM-tooling-check-commit-test-hook
+    title: hook
+    sourceFile: scripts/tests/check-commit.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:48:04.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-check-commit
+  - id: SYM-tooling-check-commit-test-check
+    title: check
+    sourceFile: scripts/tests/check-commit.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:48:11.523Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-check-commit
+  - id: SYM-tooling-check-commit-test-same
+    title: same
+    sourceFile: scripts/tests/check-commit.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:48:18.988Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-check-commit
+  - id: SYM-tooling-ci-images-select-test-commit
+    title: commit
+    sourceFile: scripts/tests/ci-images-select.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:48:25.799Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-images-select
+  - id: SYM-tooling-ci-images-select-test-select-images
+    title: select_images
+    sourceFile: scripts/tests/ci-images-select.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:48:32.800Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-images-select
+  - id: SYM-tooling-ci-images-select-test-check
+    title: check
+    sourceFile: scripts/tests/ci-images-select.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:48:39.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-images-select
+  - id: SYM-tooling-ci-images-select-test-same
+    title: same
+    sourceFile: scripts/tests/ci-images-select.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:48:45.911Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-ci-images-select
+  - id: SYM-tooling-image-carry-test-carry
+    title: carry
+    sourceFile: scripts/tests/image-carry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:48:53.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-image-carry
+  - id: SYM-tooling-image-carry-test-check
+    title: check
+    sourceFile: scripts/tests/image-carry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:49:00.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-image-carry
+  - id: SYM-tooling-image-carry-test-yes-if
+    title: yes_if
+    sourceFile: scripts/tests/image-carry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:49:07.725Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-image-carry
+  - id: SYM-tooling-image-carry-test-tagged
+    title: tagged
+    sourceFile: scripts/tests/image-carry.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:49:18.051Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-image-carry
+  - id: SYM-tooling-verified-digest-verified-digest
+    title: verified_digest
+    sourceFile: scripts/verified-digest.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:49:29.596Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-image-carry
+      - type: implements
+        target: REQ-tooling-ci-carry-signed-digest
+  - id: SYM-affected-area
+    title: area
+    sourceFile: tools/affected/classify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:49:41.324Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-full-fallback
+  - id: SYM-affected-rule
+    title: rule
+    sourceFile: tools/affected/classify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:49:54.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-full-fallback
+  - id: SYM-affected-rules
+    title: rules
+    sourceFile: tools/affected/classify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:50:06.065Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-full-fallback
+  - id: SYM-affected-classify
+    title: classify
+    sourceFile: tools/affected/classify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:50:16.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-docs-only
+      - type: implements
+        target: REQ-tooling-hook-full-fallback
+  - id: SYM-affected-docs-only
+    title: docsOnly
+    sourceFile: tools/affected/classify.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:50:27.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-ci-docs-only-pr
+  - id: SYM-affected-run-hook
+    title: runHook
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:50:41.226Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-plan-staged
+    title: planStaged
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:50:55.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-write-plan
+    title: writePlan
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:51:12.136Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-write-lines
+    title: writeLines
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:51:27.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-run-ci
+    title: runCI
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:51:39.549Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-ci-docs-only-pr
+  - id: SYM-affected-ci-decision
+    title: ciDecision
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:51:51.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-ci-docs-only-pr
+  - id: SYM-affected-needs-code
+    title: needsCode
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:52:01.559Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-ci-docs-only-pr
+  - id: SYM-affected-run-images
+    title: runImages
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:52:11.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-affected-write-images
+    title: writeImages
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:52:23.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+      - type: implements
+        target: REQ-tooling-ci-carry-signed-digest
+  - id: SYM-affected-listed-package
+    title: listedPackage
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:52:31.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-listed-package-fields
+    title: listedPackage.fields
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:52:40.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-pkg
+    title: pkg
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:52:52.304Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-graph
+    title: graph
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:53:00.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-decode-listed
+    title: decodeListed
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:53:12.271Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-rel-dir
+    title: relDir
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:53:23.716Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-new-pkg
+    title: newPkg
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:53:33.721Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-new-graph
+    title: newGraph
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:53:47.914Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-graph-owning-package
+    title: graph.owningPackage
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:54:03.101Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-graph-readers
+    title: graph.readers
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:54:17.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-within
+    title: within
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:54:32.793Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-graph-dependencies
+    title: graph.dependencies
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:54:47.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-affected-relative-reads
+    title: relativeReads
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:54:59.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-literal-paths
+    title: literalPaths
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:55:10.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-joined-path
+    title: joinedPath
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:55:25.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-string-lit
+    title: stringLit
+    sourceFile: tools/affected/graph.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:55:40.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-image
+    title: image
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:55:56.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-images
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-affected-carried
+    title: carried
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:56:14.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-images
+      - type: implements
+        target: REQ-tooling-ci-carry-signed-digest
+  - id: SYM-affected-signed-build
+    title: signedBuild
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:56:27.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-images
+      - type: implements
+        target: REQ-tooling-ci-carry-signed-digest
+  - id: SYM-affected-image-choice
+    title: imageChoice
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:56:37.752Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-images
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-affected-image-inputs
+    title: imageInputs
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:56:48.517Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-images
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-affected-image-changed
+    title: imageChanged
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:56:58.427Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-images
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-affected-image-hit
+    title: imageHit
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:57:09.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-images
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-affected-is-go-source
+    title: isGoSource
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:57:20.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-images
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-affected-choose-images
+    title: chooseImages
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:57:31.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-images
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+      - type: implements
+        target: REQ-tooling-ci-carry-signed-digest
+  - id: SYM-affected-short
+    title: short
+    sourceFile: tools/affected/images.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:57:43.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-ci-carry-signed-digest
+  - id: SYM-affected-test-test-choose-images
+    title: TestChooseImages
+    sourceFile: tools/affected/images_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:57:55.151Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-images
+  - id: SYM-affected-test-render
+    title: render
+    sourceFile: tools/affected/images_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:58:06.681Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-images
+  - id: SYM-affected-test-test-choose-images-builds-when-it-cannot-diff
+    title: TestChooseImagesBuildsWhenItCannotDiff
+    sourceFile: tools/affected/images_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:58:17.536Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-images
+  - id: SYM-affected-test-test-image-without-package-builds
+    title: TestImageWithoutPackageBuilds
+    sourceFile: tools/affected/images_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:58:27.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-images
+  - id: SYM-affected-load-graph
+    title: loadGraph
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:58:39.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-read-listing
+    title: readListing
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:58:53.759Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-sources-of
+    title: sourcesOf
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:59:11.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-load-script-tests
+    title: loadScriptTests
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:59:26.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-script-reads
+    title: scriptReads
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:59:41.641Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-parse-name-status
+    title: parseNameStatus
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T03:59:54.249Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-read-changes
+    title: readChanges
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:00:11.158Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-read-builds
+    title: readBuilds
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:00:29.311Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-ci-carry-signed-digest
+  - id: SYM-affected-read-matrix
+    title: readMatrix
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:00:44.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-ci-affected-images
+  - id: SYM-affected-plan-line
+    title: planLine
+    sourceFile: tools/affected/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:01:02.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-test-test-parse-name-status
+    title: TestParseNameStatus
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:01:21.418Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-script-reads
+    title: TestScriptReads
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:01:34.435Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-read-builds
+    title: TestReadBuilds
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:01:45.496Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-plan-line
+    title: TestPlanLine
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:01:55.916Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-relative-reads
+    title: TestRelativeReads
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:02:07.758Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-graph-helpers
+    title: TestGraphHelpers
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:02:18.723Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-new-pkg
+    title: TestNewPkg
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:02:31.132Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-fake-repo
+    title: fakeRepo
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:02:45.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-fake-fs
+    title: fakeFS
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:02:57.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-output
+    title: output
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:03:10.914Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-run-fake
+    title: runFake
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:03:22.654Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-run-hook
+    title: TestRunHook
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:03:37.859Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-run-ci
+    title: TestRunCI
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:03:56.023Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-run-images
+    title: TestRunImages
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:04:14.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-test-test-run-usage
+    title: TestRunUsage
+    sourceFile: tools/affected/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:04:30.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-inputs
+  - id: SYM-affected-main
+    title: main
+    sourceFile: tools/affected/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:04:46.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-env
+    title: env
+    sourceFile: tools/affected/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:05:00.253Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-run
+    title: run
+    sourceFile: tools/affected/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:05:10.491Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-inputs
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-change
+    title: change
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:05:24.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-step
+    title: step
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:05:36.440Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-plan
+    title: plan
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:05:44.876Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-selection
+    title: selection
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:05:51.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-script-test
+    title: scriptTest
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:06:00.647Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-operator-dirs
+    title: operatorDirs
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:06:09.002Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-label-input
+    title: labelInput
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:06:17.780Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-select-changes
+    title: selectChanges
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:06:27.765Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+      - type: implements
+        target: REQ-tooling-hook-full-fallback
+  - id: SYM-affected-selection-select-code
+    title: selection.selectCode
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:06:36.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+      - type: implements
+        target: REQ-tooling-hook-full-fallback
+  - id: SYM-affected-selection-select-readers
+    title: selection.selectReaders
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:06:46.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-affected-sets
+    title: affectedSets
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:06:54.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-reach
+    title: reach
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:07:03.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-importers-of
+    title: importersOf
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:07:13.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-hook-plan
+    title: hookPlan
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:07:22.026Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+      - type: implements
+        target: REQ-tooling-hook-docs-only
+  - id: SYM-affected-plan-builder
+    title: planBuilder
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:07:28.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-plan-builder-add
+    title: planBuilder.add
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:07:35.827Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-plan-builder-skip
+    title: planBuilder.skip
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:07:42.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-plan-builder-go-steps
+    title: planBuilder.goSteps
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:07:50.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-plan-builder-script-steps
+    title: planBuilder.scriptSteps
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:07:58.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-touches
+    title: touches
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:08:05.596Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-any-under
+    title: anyUnder
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:08:13.184Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-by-module
+    title: byModule
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:08:20.482Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-go-step
+    title: goStep
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:08:27.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-in-module
+    title: inModule
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:08:35.074Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-short-path
+    title: shortPath
+    sourceFile: tools/affected/plan.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:08:42.158Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-hook-affected-packages
+  - id: SYM-affected-test-test-graph
+    title: testGraph
+    sourceFile: tools/affected/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:08:49.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-plan
+  - id: SYM-affected-test-test-scripts
+    title: testScripts
+    sourceFile: tools/affected/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:08:56.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-plan
+  - id: SYM-affected-test-steps
+    title: steps
+    sourceFile: tools/affected/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:09:03.869Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-plan
+  - id: SYM-affected-test-test-hook-plan
+    title: TestHookPlan
+    sourceFile: tools/affected/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:09:11.134Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-plan
+  - id: SYM-affected-test-test-hook-plan-says-why
+    title: TestHookPlanSaysWhy
+    sourceFile: tools/affected/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:09:18.498Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-plan
+  - id: SYM-affected-test-test-classify
+    title: TestClassify
+    sourceFile: tools/affected/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:09:25.492Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-plan
+  - id: SYM-affected-test-test-needs-code
+    title: TestNeedsCode
+    sourceFile: tools/affected/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:09:32.324Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-plan
+  - id: SYM-tooling-kibi-check-test-gate
+    title: gate
+    sourceFile: scripts/tests/kibi-check.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:09:56.240Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-check
+  - id: SYM-tooling-kibi-check-test-check
+    title: check
+    sourceFile: scripts/tests/kibi-check.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:10:01.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-check
+  - id: SYM-tooling-kibi-check-test-calls
+    title: calls
+    sourceFile: scripts/tests/kibi-check.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-30T04:10:07.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-check

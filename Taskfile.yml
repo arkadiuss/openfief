@@ -38,6 +38,9 @@ vars:
   KUSTOMIZE_VERSION: v5.8.3
   # renovate: datasource=go depName=github.com/itchyny/gojq
   GOJQ_VERSION: v0.12.19
+  # crane tags an unchanged image's signed digest for a new commit in CI (task image:carry).
+  # renovate: datasource=go depName=github.com/google/go-containerregistry
+  CRANE_VERSION: v0.22.1
   # What a demo machine's cloud-init (deploy/demo/cloud-init.yaml) installs. A version bump needs the new
   # checksums too, or the machine stops at the first mismatch: docs/dev/demo.md#update-the-pinned-versions.
   # renovate: datasource=github-releases depName=k3s-io/k3s
@@ -67,6 +70,9 @@ vars:
   PROTOC_GEN_CONNECT_OPENAPI_VERSION: v0.28.0
   # Every Go module in the repository (go.work lists the same): the core, then the Apache-2.0 Go SDK (D-5).
   GO_MODULES: . sdk/go
+  # The tests of the pipeline's scripts (task test runs them all, the hook those that read a changed path).
+  SCRIPT_TESTS:
+    sh: ls scripts/tests/*.test.sh 2>/dev/null || true
   GO_GUARD: 'if [ ! -f go.mod ]; then echo "no Go module yet, skipping"; exit 0; fi;'
   PROTO_GUARD: 'if [ -z "$(find proto -name "*.proto" 2>/dev/null)" ]; then echo "no contracts yet, skipping"; exit 0; fi;'
   # Tools are called by explicit path: Task lets the OS environment override a Taskfile PATH.
@@ -140,6 +146,13 @@ tasks:
         install -m 0755 "$work/flux" '{{.BIN}}/flux'
     status:
       - '{{.BIN}}/flux version --client 2>&1 | grep -q "{{trimPrefix "v" .FLUX_VERSION}}"'
+
+  tool:crane:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/google/go-containerregistry/cmd/crane@{{.CRANE_VERSION}}
+    status:
+      - '{{.BIN}}/crane version 2>&1 | grep -qx "{{.CRANE_VERSION}}"'
 
   tool:gojq:
     internal: true
@@ -275,7 +288,17 @@ tasks:
       - task: kibi:check
 
   check:commit:
-    desc: Pre-commit pipeline (like check, with kibi on staged changes)
+    desc: 'Pre-commit pipeline: only the checks the staged change can affect (tools/affected prints what and why); FULL=1 runs check:commit:full'
+    cmds:
+      - bash scripts/check-commit.sh '{{.TASK_EXE}}' '{{.GO_MODULES}}' '{{.FULL}}'
+
+  check:plan:
+    desc: What the pre-commit hook would run for the staged change, and why, without running it
+    cmds:
+      - DRY_RUN=1 bash scripts/check-commit.sh '{{.TASK_EXE}}' '{{.GO_MODULES}}' '{{.FULL}}'
+
+  check:commit:full:
+    desc: The full pre-commit pipeline (like check, with kibi on staged changes); check:commit falls back to it when in doubt
     cmds:
       - task: gen:check
       - task: plugins:labels:check
@@ -328,12 +351,32 @@ tasks:
       - for: {var: GO_MODULES}
         cmd: '{{.GO_GUARD}} cd {{.ITEM}} && {{.BIN}}/golangci-lint fmt --diff'
 
+  fmt:check:files:
+    desc: 'Fail if the given Go files of one module are not formatted (the hook passes the staged ones), e.g. task fmt:check:files MODULE=. FILES=internal/kernel/money.go'
+    requires:
+      vars: [MODULE, FILES]
+    cmds:
+      - cd '{{.MODULE}}' && '{{.BIN}}/golangci-lint' fmt --diff {{.FILES}}
+
   lint:
     desc: Strict lint (.golangci.yml) of every Go module
     cmds:
-      - '{{.BIN}}/golangci-lint config verify'
+      - task: lint:config
       - for: {var: GO_MODULES}
-        cmd: '{{.GO_GUARD}} cd {{.ITEM}} && {{.BIN}}/golangci-lint run'
+        task: lint:go
+        vars: {MODULE: '{{.ITEM}}'}
+
+  lint:config:
+    desc: Validate .golangci.yml against golangci-lint's schema
+    cmds:
+      - '{{.BIN}}/golangci-lint config verify'
+
+  lint:go:
+    desc: 'Strict lint of one Go module, or of some of its packages (the hook passes the affected ones), e.g. task lint:go MODULE=. PKGS="./internal/kernel ./internal/ledger"'
+    requires:
+      vars: [MODULE]
+    cmds:
+      - '{{.GO_GUARD}} cd {{.MODULE}} && {{.BIN}}/golangci-lint run {{.PKGS | default "./..."}}'
 
   proto:
     desc: Contract checks (buf lint and format, breaking changes, generated code up to date)
@@ -379,26 +422,38 @@ tasks:
     cmds:
       - PATH='{{.BIN}}':"$PATH" bash scripts/vulncheck.sh {{.GO_MODULES}}
 
+  vuln:go:
+    desc: 'govulncheck on some packages of one Go module (the hook passes the affected ones); fails on a finding or an unreachable database, e.g. task vuln:go MODULE=. PKGS=./cmd/core'
+    requires:
+      vars: [MODULE, PKGS]
+    cmds:
+      - cd '{{.MODULE}}' && '{{.BIN}}/govulncheck' {{.PKGS}}
+
   test:
     desc: Unit, replay-integration, envtest and tooling tests (offline once `task tools` has run)
-    deps: [tool:envtest, tool:kustomize, tool:gojq]
     cmds:
       - for: {var: GO_MODULES}
-        cmd: '{{.GO_GUARD}} cd {{.ITEM}} && KUBEBUILDER_ASSETS="{{.BIN}}/envtest/{{.ENVTEST_K8S_VERSION}}" go test ./...'
-      - bash scripts/tests/check-docs.test.sh
-      - bash scripts/tests/vulncheck.test.sh
-      - bash scripts/tests/ci-images.test.sh
-      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/plugin-labels.test.sh
-      - bash scripts/tests/dco-check.test.sh
-      - bash scripts/tests/release-version.test.sh
-      - bash scripts/tests/release-notes.test.sh
-      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/release-catalog.test.sh
-      - bash scripts/tests/release-cli.test.sh
-      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/proto-breaking.test.sh
-      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo.test.sh
-      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo-pin-images.test.sh
-      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/demo-validate.test.sh
-      - PATH='{{.BIN}}':"$PATH" bash scripts/tests/gateway.test.sh
+        task: test:go
+        vars: {MODULE: '{{.ITEM}}'}
+      - for: {var: SCRIPT_TESTS}
+        task: test:script
+        vars: {SCRIPT: '{{.ITEM}}'}
+
+  test:go:
+    desc: 'Go tests of one module, or of some of its packages (the hook passes the affected ones), e.g. task test:go MODULE=. PKGS=./internal/kernel'
+    deps: [tool:envtest]
+    requires:
+      vars: [MODULE]
+    cmds:
+      - '{{.GO_GUARD}} cd {{.MODULE}} && KUBEBUILDER_ASSETS="{{.BIN}}/envtest/{{.ENVTEST_K8S_VERSION}}" go test {{.PKGS | default "./..."}}'
+
+  test:script:
+    desc: 'One test of the pipeline''s scripts (scripts/tests), with the pinned tools first on PATH, e.g. task test:script SCRIPT=scripts/tests/dco-check.test.sh'
+    deps: [tool:kustomize, tool:gojq, tool:buf]
+    requires:
+      vars: [SCRIPT]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash '{{.SCRIPT}}'
 
   test:pg:
     desc: 'PostgreSQL integration tests on a disposable server (OPENFIEF_PG_DSN, or local PostgreSQL binaries), e.g. task test:pg -- -run TestAppend'
@@ -465,6 +520,33 @@ tasks:
     silent: true
     cmds:
       - bash scripts/ci-images.sh '{{.PREFIX}}' '{{.KIND | default "all"}}'
+
+  ci:images:select:
+    desc: 'The images a CI run builds and the unchanged ones it carries forward, as GitHub outputs images= and carry= (scripts/ci-images-select.sh; why goes to stderr). MODE=reuse ARG=<owner/repo> on a push to main, MODE=base ARG=<revision> on a pull request, MODE=all ARG=- for every image, e.g. task ci:images:select PREFIX=ghcr.io/owner/openfief MODE=base ARG=origin/main'
+    silent: true
+    deps: [tool:gojq]
+    requires:
+      vars: [PREFIX, MODE, ARG]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/ci-images-select.sh '{{.PREFIX}}' '{{.MODE}}' '{{.ARG}}' '{{.GO_MODULES}}'
+
+  ci:plan:
+    desc: 'Whether a CI run needs the end-to-end and PostgreSQL jobs, as the GitHub output code=true|false: always outside a pull request, and for a pull request that changes more than docs and requirements, e.g. task ci:plan EVENT=pull_request BASE=origin/main'
+    silent: true
+    requires:
+      vars: [EVENT]
+    cmds:
+      - |
+        set -eo pipefail
+        if [ '{{.EVENT}}' = pull_request ]; then git diff --name-status --no-renames -z '{{.BASE}}' HEAD; fi | go run ./tools/affected ci -event '{{.EVENT}}'
+
+  image:carry:
+    desc: 'Tag an unchanged image''s signed digest for this commit (sha-<commit> and main) and check that the tag verifies as images.yml on main signed it (CI only; needs a GHCR login), e.g. task image:carry IMAGE=ghcr.io/owner/openfief/core DIGEST=sha256:... COMMIT=<sha> REPO=owner/openfief'
+    deps: [tool:crane, tool:gojq]
+    requires:
+      vars: [IMAGE, DIGEST, COMMIT, REPO]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/image-carry.sh '{{.IMAGE}}' '{{.DIGEST}}' '{{.COMMIT}}' '{{.REPO}}'
 
   image:sign:
     desc: 'Keyless cosign signature of a pushed image (CI only, D-17), e.g. task image:sign IMAGE=ghcr.io/owner/openfief/x@sha256:...'
@@ -771,9 +853,9 @@ tasks:
       - '{{.KIBI}} status'
 
   kibi:check:
-    desc: Validate the whole requirements knowledge base
+    desc: Validate the whole requirements knowledge base; a failure that names a kibi compile defect recompiles the store once and checks again (scripts/kibi-check.sh)
     cmds:
-      - '{{.KIBI}} check'
+      - bash scripts/kibi-check.sh '{{.KIBI}}'
 
   kibi:staged:
     desc: kibi checks on staged changes (what the pre-commit hook runs)

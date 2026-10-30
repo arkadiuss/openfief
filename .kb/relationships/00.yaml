@@ -328,3 +328,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8a7e241119c1
+  - type: implements
+    from: SYM-affected-listed-package
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:52:33.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3548b69968e9
+  - type: covered_by
+    from: SYM-affected-listed-package
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:52:33.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19323a2072ad
+  - type: implements
+    from: SYM-affected-relative-reads
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:55:02.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e649d839244
+  - type: covered_by
+    from: SYM-affected-relative-reads
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:55:02.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db2d460db83f
+  - type: executable_for
+    from: SYM-affected-test-test-graph
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:08:51.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a31d22ce9374

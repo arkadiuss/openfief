@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c053da54130
+  - type: implements
+    from: SYM-affected-sources-of
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:59:15.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec2d57dea7c3
+  - type: covered_by
+    from: SYM-affected-sources-of
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:59:15.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0960f4d30d36

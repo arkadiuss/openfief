@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-373c7d718ab6
+  - type: executable_for
+    from: SYM-affected-test-run-fake
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:03:26.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d84f86a8f1a8

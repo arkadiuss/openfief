@@ -531,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-804bacc1a979
+  - type: executable_for
+    from: SYM-tooling-ci-images-select-test-select-images
+    to: TEST-tooling-ci-images-select
+    created_at: 2026-10-30T03:48:34.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc281b57ea73

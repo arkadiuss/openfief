@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6500a9d22bf8
+  - type: implements
+    from: SYM-affected-selection-select-readers
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:49.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8b7af8812c2
+  - type: covered_by
+    from: SYM-affected-selection-select-readers
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:49.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09703dd60db4

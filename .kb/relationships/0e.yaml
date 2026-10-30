@@ -363,3 +363,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e85026d08802
+  - type: executable_for
+    from: SYM-tooling-check-commit-test-same
+    to: TEST-tooling-check-commit
+    created_at: 2026-10-30T03:48:21.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e0a7da77481
+  - type: implements
+    from: SYM-affected-read-builds
+    to: REQ-tooling-ci-carry-signed-digest
+    created_at: 2026-10-30T04:00:33.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bc040830bc6
+  - type: covered_by
+    from: SYM-affected-read-builds
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:00:33.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d72731ce77f6
+  - type: executable_for
+    from: SYM-affected-test-test-graph-helpers
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T04:02:22.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e759f3270db

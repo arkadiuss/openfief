@@ -531,3 +531,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83bfe35cf0fb
+  - type: implements
+    from: SYM-affected-load-script-tests
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T03:59:30.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-588df96bbcec
+  - type: covered_by
+    from: SYM-affected-load-script-tests
+    to: TEST-tooling-affected-inputs
+    created_at: 2026-10-30T03:59:30.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4616e6316d2
+  - type: implements
+    from: SYM-affected-affected-sets
+    to: REQ-tooling-hook-affected-packages
+    created_at: 2026-10-30T04:06:57.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11eb5e320c9f
+  - type: covered_by
+    from: SYM-affected-affected-sets
+    to: TEST-tooling-affected-plan
+    created_at: 2026-10-30T04:06:57.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-360a9334483c
