@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc2f9138de5d
+  - type: implements
+    from: SYM-portfoliov1connect-sleeve-service-client-delete-sleeve
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T14:59:52.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4956bd52ad6
+  - type: covered_by
+    from: SYM-portfoliov1connect-sleeve-service-client-delete-sleeve
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:59:52.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a17e58354f23

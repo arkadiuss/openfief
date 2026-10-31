@@ -9,8 +9,12 @@
 // (D-76) and the fee rule its broker charges a sale (D-78). The UI hands
 // them to the core
 // through AccountService, one owner-only service for this kind of entry
-// (D-79). The read API (D-6) stays read-only: it lists accounts, connector
-// bindings and broker accounts.
+// (D-79). The read API (D-6) stays read-only: it lists accounts and
+// connector bindings. Broker account numbers are listed only here, for
+// setting up accounts, so read sessions, script tokens and plugins never
+// see one (D-121). The owner can delete an account with no transactions,
+// and remap a broker account whose account has no transactions from it
+// (D-120); nothing the ledger holds is ever deleted (D-18).
 //
 // Calling conventions are the AuthService's
 // (proto/openfief/identity/v1/auth.proto), as in bond_lots.proto:
@@ -31,6 +35,9 @@
 //   whose ID is taken with ALREADY_EXISTS; an unknown account with
 //   NOT_FOUND; a broker account the instance never reported, or one mapped
 //   to another account, with FAILED_PRECONDITION. Nothing is stored then.
+// - Deleting an account that holds transactions, or remapping a broker
+//   account whose account holds transactions from it, fails with
+//   FAILED_PRECONDITION and changes nothing.
 syntax = "proto3";
 
 package openfief.ingest.v1;
@@ -51,6 +58,23 @@ service AccountService {
   // `core connector bind` does, and maps the broker account to it when one
   // is given. Binding again changes nothing.
   rpc BindAccount(BindAccountRequest) returns (BindAccountResponse);
+
+  // ListBrokerAccounts returns the broker accounts connector instances
+  // reported (D-72), in instance then ID order, each with the account it
+  // is mapped to, for setting up accounts. Only the owner sees them
+  // (D-121).
+  rpc ListBrokerAccounts(ListBrokerAccountsRequest) returns (ListBrokerAccountsResponse);
+
+  // DeleteAccount deletes an account that holds no transactions, with its
+  // connector bindings, its broker account mappings and its tax wrapper
+  // and fee rule (D-120). An account with transactions stays.
+  rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse);
+
+  // RemapBrokerAccount maps a broker account to another account, or
+  // leaves it unmapped, while the account it is mapped to holds no
+  // transactions from its connector instance (D-120). The instance is
+  // bound to the new account.
+  rpc RemapBrokerAccount(RemapBrokerAccountRequest) returns (RemapBrokerAccountResponse);
 }
 
 // Account is one account at an institution, in one sleeve.
@@ -132,3 +156,51 @@ message BindAccountRequest {
 }
 
 message BindAccountResponse {}
+
+// BrokerAccount is one of the owner's accounts as the institution names it,
+// as a connector instance reported it (D-72).
+message BrokerAccount {
+  string connector_instance = 1;
+  // The institution's own ID of the account, such as an IBKR Flex account
+  // ID.
+  string id = 2;
+  string institution = 3;
+  // The OpenFief account it is mapped to; empty while it is unmapped.
+  string account_id = 4;
+  // The day a delivery last reported it, YYYY-MM-DD.
+  string last_seen = 5;
+  // Whether the instance's last delivery that reported broker accounts
+  // reported it.
+  bool in_last_delivery = 6;
+}
+
+message ListBrokerAccountsRequest {
+  string origin = 1;
+  string session_token = 2;
+  // Only the broker accounts not mapped to an OpenFief account.
+  bool unmapped = 3;
+}
+
+message ListBrokerAccountsResponse {
+  repeated BrokerAccount broker_accounts = 1;
+}
+
+message DeleteAccountRequest {
+  string origin = 1;
+  string session_token = 2;
+  string account_id = 3;
+}
+
+message DeleteAccountResponse {}
+
+message RemapBrokerAccountRequest {
+  string origin = 1;
+  string session_token = 2;
+  string connector_instance = 3;
+  // The broker account, one connector_instance reported.
+  string broker_account = 4;
+  // The stored account to map it to; empty leaves it unmapped.
+  string account_id = 5;
+}
+
+message RemapBrokerAccountResponse {}

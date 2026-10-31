@@ -190,8 +190,8 @@ components:
       title: BrokerAccount
       additionalProperties: false
       description: |-
-        BrokerAccount is one of the owner's accounts as the institution names it,
-         as a connector instance reported it (D-72).
+        BrokerAccount is deprecated with ListBrokerAccounts, which never returns
+         one (D-121): the owner's AccountService lists broker accounts.
     openfief.views.v1.ConnectorBinding:
       type: object
       properties:
@@ -1999,9 +1999,11 @@ paths:
         - ReadService
       summary: ListBrokerAccounts
       description: |-
-        ListBrokerAccounts returns the broker accounts connector instances
-         reported (D-72), in instance then ID order, each with the account it is
-         mapped to. Nothing of an unmapped broker account is booked.
+        ListBrokerAccounts is deprecated and always fails with UNIMPLEMENTED:
+         broker account numbers are listed only through the owner's
+         AccountService.ListBrokerAccounts (proto/openfief/ingest/v1/accounts.proto),
+         so read sessions, script tokens and plugins never see one (D-121). It
+         stays in the contract so that the read API changes only by addition.
       operationId: openfief.views.v1.ReadService.ListBrokerAccounts
       parameters:
         - name: unmapped
@@ -2017,6 +2019,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListBrokerAccountsResponse'
+      deprecated: true
   /v1/connector-bindings:
     get:
       tags:

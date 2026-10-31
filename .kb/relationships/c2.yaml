@@ -468,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c0efe619a528
+  - type: implements
+    from: SYM-ingest-app-accounts-check-remappable
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:49:53.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e60606a58ae
+  - type: covered_by
+    from: SYM-ingest-app-accounts-check-remappable
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:49:53.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-738bda141ae1
+  - type: executable_for
+    from: SYM-portfolio-app-test-sleeves-delete
+    to: TEST-portfolio-app-deletions
+    created_at: 2026-10-31T14:53:01.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7f0dfd1d152

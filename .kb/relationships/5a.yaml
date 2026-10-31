@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c83e150167a
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-removals-all-broker-accounts
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:50:13.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b775c0a5bd8
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-request-proto-message
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:58:13.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bc018178283
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-request-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:58:13.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-757928a05fc9

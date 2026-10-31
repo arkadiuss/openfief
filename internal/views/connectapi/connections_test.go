@@ -26,13 +26,6 @@ func (fakeConnections) Bindings(context.Context) ([]ingest.Binding, error) {
 	return []ingest.Binding{{Instance: "ibkr-main", Account: "acc-1"}}, nil
 }
 
-func (f fakeConnections) AllBrokerAccounts(context.Context) ([]ingest.BrokerAccount, error) {
-	return []ingest.BrokerAccount{
-		{Instance: "ibkr-main", ID: "U0000001", Institution: "ibkr", Account: "acc-1", LastSeen: f.seen, InLastDelivery: true},
-		{Instance: "ibkr-main", ID: "U0000002", Institution: "ibkr", LastSeen: f.seen},
-	}, nil
-}
-
 // connectionsAPI is the read API over the synthetic ledger and connections.
 func connectionsAPI(t *testing.T) http.Handler {
 	t.Helper()
@@ -66,22 +59,6 @@ func checkConnectionLists(t *testing.T, c viewsv1connect.ReadServiceClient) {
 	if b := bindings.Msg.GetBindings(); err != nil || len(b) != 1 || b[0].GetConnectorInstance() != "ibkr-main" || b[0].GetAccountId() != "acc-1" {
 		t.Errorf("ListConnectorBindings = %v, %v", bindings, err)
 	}
-	checkBrokerAccountList(t, c)
-}
-
-// checkBrokerAccountList checks that c lists only the unmapped broker
-// account on request, and nothing without a token.
-func checkBrokerAccountList(t *testing.T, c viewsv1connect.ReadServiceClient) {
-	t.Helper()
-	ctx := context.Background()
-	unmapped, err := c.ListBrokerAccounts(ctx, authed(goodToken, &viewsv1.ListBrokerAccountsRequest{Unmapped: true}))
-	if b := unmapped.Msg.GetBrokerAccounts(); err != nil || len(b) != 1 || b[0].GetId() != "U0000002" || b[0].GetAccountId() != "" ||
-		b[0].GetLastSeen() != "2026-03-02" || b[0].GetInLastDelivery() {
-		t.Errorf("ListBrokerAccounts(unmapped) = %v, %v; want only U0000002, unmapped", unmapped, err)
-	}
-	if _, err := c.ListBrokerAccounts(ctx, authed("", &viewsv1.ListBrokerAccountsRequest{})); err == nil {
-		t.Error("ListBrokerAccounts without a token answered")
-	}
 }
 
 func TestRESTConnections(t *testing.T) {
@@ -89,11 +66,9 @@ func TestRESTConnections(t *testing.T) {
 	c := loadContract(t)
 	a := api{handler: connectionsAPI(t)}
 	for path, want := range map[string]string{
-		"/v1/sleeve-kinds":                  `"defaultRole":"SLEEVE_ROLE_OFFENSIVE"`,
-		"/v1/connector-bindings":            `"connectorInstance":"ibkr-main"`,
-		"/v1/broker-accounts":               `"accountId":"acc-1"`,
-		"/v1/broker-accounts?unmapped=true": `"id":"U0000002"`,
-		"/v1/sleeves":                       `"kind"`,
+		"/v1/sleeve-kinds":       `"defaultRole":"SLEEVE_ROLE_OFFENSIVE"`,
+		"/v1/connector-bindings": `"connectorInstance":"ibkr-main"`,
+		"/v1/sleeves":            `"kind"`,
 	} {
 		req, rec := a.serve(t, http.MethodGet, path, goodToken)
 		if rec.Code != http.StatusOK {
@@ -103,5 +78,23 @@ func TestRESTConnections(t *testing.T) {
 		if !bytes.Contains(rec.Body.Bytes(), []byte(want)) {
 			t.Errorf("GET %s = %s, want %s", path, rec.Body, want)
 		}
+	}
+}
+
+// TestReadAPIServesNoBrokerAccounts checks D-121: the deprecated
+// ListBrokerAccounts answers UNIMPLEMENTED, over REST and Connect alike:
+// the read API has no way to the broker accounts at all.
+func TestReadAPIServesNoBrokerAccounts(t *testing.T) {
+	t.Parallel()
+	a := api{handler: connectionsAPI(t)}
+	for _, path := range []string{"/v1/broker-accounts", "/v1/broker-accounts?unmapped=true"} {
+		_, rec := a.serve(t, http.MethodGet, path, goodToken)
+		if rec.Code != http.StatusNotImplemented || bytes.Contains(rec.Body.Bytes(), []byte("U000000")) {
+			t.Errorf("GET %s = %d %s, want 501 naming no broker account", path, rec.Code, rec.Body)
+		}
+	}
+	_, rec := a.serve(t, http.MethodPost, "/openfief.views.v1.ReadService/ListBrokerAccounts", goodToken)
+	if rec.Code == http.StatusOK || bytes.Contains(rec.Body.Bytes(), []byte("U000000")) {
+		t.Errorf("Connect ListBrokerAccounts = %d %s, want a refusal naming no broker account", rec.Code, rec.Body)
 	}
 }

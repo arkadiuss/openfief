@@ -538,3 +538,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b25a9df2f572
+  - type: implements
+    from: SYM-ledger-app-ledger-has-transactions-from
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:51:34.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd12f4a9aaec
+  - type: covered_by
+    from: SYM-ledger-app-ledger-has-transactions-from
+    to: TEST-ledger-app-deletions
+    created_at: 2026-10-31T14:51:34.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b96454e4e071
+  - type: implements
+    from: SYM-ui-server-delete-kind
+    to: REQ-ui-delete-and-remap
+    created_at: 2026-10-31T14:54:12.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec47422fdbc7
+  - type: covered_by
+    from: SYM-ui-server-delete-kind
+    to: TEST-ui-onboarding
+    created_at: 2026-10-31T14:54:12.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4ddaf951eed
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-response-string
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:56:19.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6877222e7a7c
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-response-string
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:19.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6568ba39a8f

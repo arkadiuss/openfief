@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-caa194e23069
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-fake-deletions-delete-kind
+    to: TEST-portfolio-app-deletions
+    created_at: 2026-10-31T14:52:57.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ebcae4769c3
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-request-reset
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:01:32.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d0c5d04c293
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-request-reset
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:01:32.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8e1c790424a

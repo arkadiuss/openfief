@@ -489,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3e6b4bc8a73
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-response-proto-message
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:56:24.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29bfc13ff833
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-response-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:24.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3980cfbc960

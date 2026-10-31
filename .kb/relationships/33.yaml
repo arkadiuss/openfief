@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a7ab944c038
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-request-get-session-token
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:02:04.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e21a690b1c4
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-request-get-session-token
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:02:04.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-780a3b7cbfc8

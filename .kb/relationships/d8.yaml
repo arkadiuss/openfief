@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb9b8bd4ec33
+  - type: implements
+    from: SYM-ingestv1-broker-account-proto-reflect
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:54:41.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63bf59177779
+  - type: covered_by
+    from: SYM-ingestv1-broker-account-proto-reflect
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:54:41.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-718bf36b59ab

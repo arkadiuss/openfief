@@ -412,3 +412,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7caec7fdcdc0
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-request
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:00:11.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10cdd5287571
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-request
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:00:11.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e5faa501f17
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-response-string
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:02:25.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0495e96f261d
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-response-string
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:02:25.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e9ffc7403b6

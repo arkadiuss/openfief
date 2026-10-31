@@ -93,6 +93,7 @@ type Store interface {
 	KindStore
 	AssertionStore
 	TransferLinkStore
+	DeletionStore
 	// InTx runs fn with a Store whose every call belongs to one database
 	// transaction, committed when fn returns nil and rolled back otherwise.
 	// On a Store that InTx passed in, it runs fn in that same transaction.

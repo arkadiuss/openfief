@@ -454,3 +454,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3706a61c613
+  - type: implements
+    from: SYM-ingest-app-accounts-delete
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:49:43.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d17b5998a8fa
+  - type: covered_by
+    from: SYM-ingest-app-accounts-delete
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:49:43.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21fbb77c3c3a

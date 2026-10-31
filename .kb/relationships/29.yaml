@@ -594,3 +594,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33cdd5e15348
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-response
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:58:53.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6e59449a73b
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-response
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:58:53.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9473cb200b84

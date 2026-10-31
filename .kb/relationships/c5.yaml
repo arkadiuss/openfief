@@ -461,3 +461,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f30c6df8b577
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-request-get-origin
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:52.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3de78fe14bd1
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-request-get-origin
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:52.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebb4e1ba4e19
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-request-get-origin
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:01:59.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4e0c5ec6a79
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-request-get-origin
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:01:59.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2cc14560715

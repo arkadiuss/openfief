@@ -455,20 +455,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-da3c3895fa1d
   - type: implements
-    from: SYM-views-app-views-broker-accounts
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:08:59.699Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5ca41f313323
-  - type: covered_by
-    from: SYM-views-app-views-broker-accounts
-    to: TEST-views-app-connections
-    created_at: 2026-10-29T13:08:59.742Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-42645b008fb0
-  - type: implements
     from: SYM-ingestv1-bind-account-response-proto-reflect
     to: REQ-ingest-account-service
     created_at: 2026-10-29T13:26:53.843Z
@@ -573,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f86129b9547
+  - type: executable_for
+    from: SYM-views-connectapi-test-read-api-serves-no-broker-accounts
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-31T14:53:21.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d393eb50b562

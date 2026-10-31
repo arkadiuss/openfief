@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-270b376d0fb4
+  - type: verified_by
+    from: SCEN-ui-delete-and-remap
+    to: TEST-ui-onboarding
+    created_at: 2026-10-31T14:35:16.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-926c4d3bd0d9

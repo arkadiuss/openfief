@@ -80600,19 +80600,6 @@ symbols:
         target: TEST-views-app-connections
       - type: implements
         target: REQ-views-onboarding-lists
-  - id: SYM-views-app-views-broker-accounts
-    title: Views.BrokerAccounts
-    sourceFile: internal/views/app/connections.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:08:57.648Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-app-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
   - id: SYM-views-app-test-helper-fake-connections
     title: fakeConnections
     sourceFile: internal/views/app/connections_test.go
@@ -80631,16 +80618,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T13:09:09.820Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-app-connections
-  - id: SYM-views-app-test-helper-fake-connections-all-broker-accounts
-    title: fakeConnections.AllBrokerAccounts
-    sourceFile: internal/views/app/connections_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:09:16.315Z
     relationships:
       - type: executable_for
         target: TEST-views-app-connections
@@ -80710,19 +80687,6 @@ symbols:
         target: TEST-views-connectapi-connections
       - type: implements
         target: REQ-views-onboarding-lists
-  - id: SYM-views-connectapi-read-service-list-broker-accounts
-    title: readService.ListBrokerAccounts
-    sourceFile: internal/views/connectapi/connections.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:09:57.724Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
   - id: SYM-views-connectapi-pb-sleeve-kind
     title: pbSleeveKind
     sourceFile: internal/views/connectapi/connections.go
@@ -80731,19 +80695,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T13:10:03.528Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-views-connectapi-pb-broker-account
-    title: pbBrokerAccount
-    sourceFile: internal/views/connectapi/connections.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:10:09.145Z
     relationships:
       - type: covered_by
         target: TEST-views-connectapi-connections
@@ -80767,16 +80718,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T13:10:20.819Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-connectapi-connections
-  - id: SYM-views-connectapi-test-helper-fake-connections-all-broker-accounts
-    title: fakeConnections.AllBrokerAccounts
-    sourceFile: internal/views/connectapi/connections_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:10:27.861Z
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-connections
@@ -80807,16 +80748,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T13:10:46.373Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-connectapi-connections
-  - id: SYM-views-connectapi-test-helper-check-broker-account-list
-    title: checkBrokerAccountList
-    sourceFile: internal/views/connectapi/connections_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:10:52.976Z
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-connections
@@ -81199,16 +81130,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T13:14:41.475Z
-    relationships:
-      - type: executable_for
-        target: TEST-ui-onboarding
-  - id: SYM-ui-test-helper-fake-read-list-broker-accounts
-    title: fakeRead.ListBrokerAccounts
-    sourceFile: internal/views/ui/onboarding_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:14:50.601Z
     relationships:
       - type: executable_for
         target: TEST-ui-onboarding
@@ -105737,3 +105658,2042 @@ symbols:
         target: TEST-ingest-connectrpc-bonds
       - type: implements
         target: REQ-plugins-treasury-bonds-serves-every-account
+  - id: SYM-core-test-helper-list-broker-accounts
+    title: listBrokerAccounts
+    sourceFile: cmd/core/removals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:12.825Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-removals
+  - id: SYM-core-test-helper-check-removals
+    title: checkRemovals
+    sourceFile: cmd/core/removals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:16.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-removals
+  - id: SYM-ingest-app-account-deletions
+    title: AccountDeletions
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:21.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-changes
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingest-app-account-connections
+    title: AccountConnections
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:26.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-changes
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingest-app-terms-forgetter
+    title: TermsForgetter
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:31.360Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-changes
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingest-app-accounts-broker-accounts
+    title: Accounts.BrokerAccounts
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:36.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-changes
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingest-app-accounts-delete
+    title: Accounts.Delete
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:41.327Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-changes
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingest-app-accounts-remap
+    title: Accounts.Remap
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:46.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-changes
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingest-app-accounts-check-remappable
+    title: Accounts.checkRemappable
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:51.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-changes
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingest-app-test-helper-fake-removals
+    title: fakeRemovals
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:49:55.940Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-app-test-helper-fake-removals-delete-account
+    title: fakeRemovals.DeleteAccount
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:01.077Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-app-test-helper-fake-removals-has-transactions-from
+    title: fakeRemovals.HasTransactionsFrom
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:06.360Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-app-test-helper-fake-removals-all-broker-accounts
+    title: fakeRemovals.AllBrokerAccounts
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:11.657Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-app-test-helper-fake-removals-forget-account
+    title: fakeRemovals.ForgetAccount
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:16.606Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-app-test-helper-fake-removals-remap-broker-account
+    title: fakeRemovals.RemapBrokerAccount
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:21.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-app-test-helper-with-removals
+    title: withRemovals
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:26.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-app-test-accounts-delete
+    title: TestAccountsDelete
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:31.838Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-app-test-accounts-remap
+    title: TestAccountsRemap
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:36.799Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-app-test-accounts-broker-accounts
+    title: TestAccountsBrokerAccounts
+    sourceFile: internal/ingest/app/accountchanges_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:41.812Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-changes
+  - id: SYM-ingest-connectapi-account-service-list-broker-accounts
+    title: accountService.ListBrokerAccounts
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:46.880Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingest-connectapi-account-service-delete-account
+    title: accountService.DeleteAccount
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:52.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingest-connectapi-account-service-remap-broker-account
+    title: accountService.RemapBrokerAccount
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:50:58.019Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingest-pg-store-forget-account
+    title: Store.ForgetAccount
+    sourceFile: internal/ingest/postgres/forget.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:02.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingest-pg-store-remap-broker-account
+    title: Store.RemapBrokerAccount
+    sourceFile: internal/ingest/postgres/forget.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:06.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ledger-app-deletion-store
+    title: DeletionStore
+    sourceFile: internal/ledger/app/deletions.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:11.836Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-deletions
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ledger-app-ledger-delete-account
+    title: Ledger.DeleteAccount
+    sourceFile: internal/ledger/app/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:17.185Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-deletions
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ledger-app-ledger-delete-sleeve
+    title: Ledger.DeleteSleeve
+    sourceFile: internal/ledger/app/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:22.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-ledger-app-ledger-delete-kind
+    title: Ledger.DeleteKind
+    sourceFile: internal/ledger/app/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:27.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-ledger-app-ledger-has-transactions-from
+    title: Ledger.HasTransactionsFrom
+    sourceFile: internal/ledger/app/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:32.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-deletions
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ledger-app-test-helper-mem-store-delete-account
+    title: memStore.DeleteAccount
+    sourceFile: internal/ledger/app/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:36.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-deletions
+  - id: SYM-ledger-app-test-helper-mem-store-delete-sleeve
+    title: memStore.DeleteSleeve
+    sourceFile: internal/ledger/app/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:41.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-deletions
+  - id: SYM-ledger-app-test-helper-mem-store-delete-kind
+    title: memStore.DeleteKind
+    sourceFile: internal/ledger/app/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:45.734Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-deletions
+  - id: SYM-ledger-app-test-helper-mem-store-has-transactions-from
+    title: memStore.HasTransactionsFrom
+    sourceFile: internal/ledger/app/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:50.120Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-deletions
+  - id: SYM-ledger-app-test-helper-mem-store-holds-locked
+    title: memStore.holdsLocked
+    sourceFile: internal/ledger/app/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:54.467Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-deletions
+  - id: SYM-ledger-app-test-delete-registered
+    title: TestDeleteRegistered
+    sourceFile: internal/ledger/app/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:51:58.996Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-deletions
+  - id: SYM-ledger-pg-store-delete-account
+    title: Store.DeleteAccount
+    sourceFile: internal/ledger/postgres/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:03.160Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-deletions
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ledger-pg-store-delete-sleeve
+    title: Store.DeleteSleeve
+    sourceFile: internal/ledger/postgres/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:07.392Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-ledger-pg-store-delete-kind
+    title: Store.DeleteKind
+    sourceFile: internal/ledger/postgres/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:11.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-ledger-pg-store-has-transactions-from
+    title: Store.HasTransactionsFrom
+    sourceFile: internal/ledger/postgres/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:16.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-deletions
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ledger-pg-test-delete-registered
+    title: TestDeleteRegistered
+    sourceFile: internal/ledger/postgres/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:20.926Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-deletions
+  - id: SYM-ledger-pg-test-delete-sleeve-then-kind
+    title: TestDeleteSleeveThenKind
+    sourceFile: internal/ledger/postgres/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:25.543Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-deletions
+  - id: SYM-portfolio-app-sleeve-deletions
+    title: SleeveDeletions
+    sourceFile: internal/portfolio/app/deletions.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:30.674Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfolio-app-sleeves-delete-sleeve
+    title: Sleeves.DeleteSleeve
+    sourceFile: internal/portfolio/app/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:35.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfolio-app-sleeves-delete-kind
+    title: Sleeves.DeleteKind
+    sourceFile: internal/portfolio/app/deletions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:40.663Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfolio-app-test-helper-fake-deletions
+    title: fakeDeletions
+    sourceFile: internal/portfolio/app/deletions_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:44.820Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-deletions
+  - id: SYM-portfolio-app-test-helper-fake-deletions-delete-sleeve
+    title: fakeDeletions.DeleteSleeve
+    sourceFile: internal/portfolio/app/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:49.945Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-deletions
+  - id: SYM-portfolio-app-test-helper-fake-deletions-delete-kind
+    title: fakeDeletions.DeleteKind
+    sourceFile: internal/portfolio/app/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:52:55.164Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-deletions
+  - id: SYM-portfolio-app-test-sleeves-delete
+    title: TestSleevesDelete
+    sourceFile: internal/portfolio/app/deletions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:00.247Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-deletions
+  - id: SYM-portfolio-connectapi-sleeve-service-delete-sleeve
+    title: sleeveService.DeleteSleeve
+    sourceFile: internal/portfolio/connectapi/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:04.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfolio-connectapi-sleeve-service-delete-sleeve-kind
+    title: sleeveService.DeleteSleeveKind
+    sourceFile: internal/portfolio/connectapi/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:09.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-valuation-pg-store-forget-account
+    title: Store.ForgetAccount
+    sourceFile: internal/valuation/postgres/forget.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:14.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-views-connectapi-test-read-api-serves-no-broker-accounts
+    title: TestReadAPIServesNoBrokerAccounts
+    sourceFile: internal/views/connectapi/connections_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:19.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connections
+  - id: SYM-ui-server-broker-accounts
+    title: server.brokerAccounts
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:24.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-ui-broker-accounts-owner-only
+  - id: SYM-ui-server-delete-account
+    title: server.deleteAccount
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:29.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-ui-delete-and-remap
+  - id: SYM-ui-server-remap-broker-account
+    title: server.remapBrokerAccount
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:34.959Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-ui-delete-and-remap
+  - id: SYM-ui-test-delete-and-remap-forms
+    title: TestDeleteAndRemapForms
+    sourceFile: internal/views/ui/onboarding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:40.532Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-onboarding
+  - id: SYM-ui-test-helper-fake-accounts-list-broker-accounts
+    title: fakeAccounts.ListBrokerAccounts
+    sourceFile: internal/views/ui/removals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:45.486Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-onboarding
+  - id: SYM-ui-test-helper-fake-accounts-delete-account
+    title: fakeAccounts.DeleteAccount
+    sourceFile: internal/views/ui/removals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:50.379Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-onboarding
+  - id: SYM-ui-test-helper-fake-accounts-remap-broker-account
+    title: fakeAccounts.RemapBrokerAccount
+    sourceFile: internal/views/ui/removals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:53:55.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-onboarding
+  - id: SYM-ui-test-helper-fake-sleeves-delete-sleeve
+    title: fakeSleeves.DeleteSleeve
+    sourceFile: internal/views/ui/removals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:00.536Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-onboarding
+  - id: SYM-ui-test-helper-fake-sleeves-delete-sleeve-kind
+    title: fakeSleeves.DeleteSleeveKind
+    sourceFile: internal/views/ui/removals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:05.482Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-onboarding
+  - id: SYM-ui-server-delete-kind
+    title: server.deleteKind
+    sourceFile: internal/views/ui/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:10.675Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-ui-delete-and-remap
+  - id: SYM-ui-server-delete-sleeve
+    title: server.deleteSleeve
+    sourceFile: internal/views/ui/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:15.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-ui-delete-and-remap
+  - id: SYM-ingestv1-broker-account
+    title: BrokerAccount
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:19.768Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-reset
+    title: BrokerAccount.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:24.786Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-string
+    title: BrokerAccount.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:29.735Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-proto-message
+    title: BrokerAccount.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:34.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-proto-reflect
+    title: BrokerAccount.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:39.581Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-descriptor
+    title: BrokerAccount.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:44.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-get-connector-instance
+    title: BrokerAccount.GetConnectorInstance
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:50.181Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-get-id
+    title: BrokerAccount.GetId
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:54:55.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-get-institution
+    title: BrokerAccount.GetInstitution
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:00.248Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-get-account-id
+    title: BrokerAccount.GetAccountId
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:05.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-get-last-seen
+    title: BrokerAccount.GetLastSeen
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:10.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-broker-account-get-in-last-delivery
+    title: BrokerAccount.GetInLastDelivery
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:15.236Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-request
+    title: ListBrokerAccountsRequest
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:19.447Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-request-reset
+    title: ListBrokerAccountsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:24.661Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-request-string
+    title: ListBrokerAccountsRequest.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:30.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-request-proto-message
+    title: ListBrokerAccountsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:35.373Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-request-proto-reflect
+    title: ListBrokerAccountsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:40.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-request-descriptor
+    title: ListBrokerAccountsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:45.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-request-get-origin
+    title: ListBrokerAccountsRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:50.744Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-request-get-session-token
+    title: ListBrokerAccountsRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:55:56.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-request-get-unmapped
+    title: ListBrokerAccountsRequest.GetUnmapped
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:02.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-response
+    title: ListBrokerAccountsResponse
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:06.690Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-response-reset
+    title: ListBrokerAccountsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:12.006Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-response-string
+    title: ListBrokerAccountsResponse.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:17.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-response-proto-message
+    title: ListBrokerAccountsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:22.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-response-proto-reflect
+    title: ListBrokerAccountsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:27.777Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-response-descriptor
+    title: ListBrokerAccountsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:32.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-list-broker-accounts-response-get-broker-accounts
+    title: ListBrokerAccountsResponse.GetBrokerAccounts
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:37.835Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1-delete-account-request
+    title: DeleteAccountRequest
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:41.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-request-reset
+    title: DeleteAccountRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:46.679Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-request-string
+    title: DeleteAccountRequest.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:51.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-request-proto-message
+    title: DeleteAccountRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:56:56.667Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-request-proto-reflect
+    title: DeleteAccountRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:01.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-request-descriptor
+    title: DeleteAccountRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:07.075Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-request-get-origin
+    title: DeleteAccountRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:12.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-request-get-session-token
+    title: DeleteAccountRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:17.714Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-request-get-account-id
+    title: DeleteAccountRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:22.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-response
+    title: DeleteAccountResponse
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:27.092Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-response-reset
+    title: DeleteAccountResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:32.167Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-response-string
+    title: DeleteAccountResponse.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:37.414Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-response-proto-message
+    title: DeleteAccountResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:42.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-response-proto-reflect
+    title: DeleteAccountResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:47.106Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-delete-account-response-descriptor
+    title: DeleteAccountResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:52.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1-remap-broker-account-request
+    title: RemapBrokerAccountRequest
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:57:56.449Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-reset
+    title: RemapBrokerAccountRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:01.768Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-string
+    title: RemapBrokerAccountRequest.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:06.756Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-proto-message
+    title: RemapBrokerAccountRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:11.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-proto-reflect
+    title: RemapBrokerAccountRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:16.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-descriptor
+    title: RemapBrokerAccountRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:21.909Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-get-origin
+    title: RemapBrokerAccountRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:27.198Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-get-session-token
+    title: RemapBrokerAccountRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:32.248Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-get-connector-instance
+    title: RemapBrokerAccountRequest.GetConnectorInstance
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:37.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-get-broker-account
+    title: RemapBrokerAccountRequest.GetBrokerAccount
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:42.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-request-get-account-id
+    title: RemapBrokerAccountRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:47.833Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-response
+    title: RemapBrokerAccountResponse
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:52.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-response-reset
+    title: RemapBrokerAccountResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:58:57.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-response-string
+    title: RemapBrokerAccountResponse.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:02.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-response-proto-message
+    title: RemapBrokerAccountResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:07.291Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-response-proto-reflect
+    title: RemapBrokerAccountResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:12.329Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1-remap-broker-account-response-descriptor
+    title: RemapBrokerAccountResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:17.119Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1connect-account-service-client-list-broker-accounts
+    title: accountServiceClient.ListBrokerAccounts
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/accounts.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:22.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1connect-account-service-client-delete-account
+    title: accountServiceClient.DeleteAccount
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/accounts.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:27.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1connect-account-service-client-remap-broker-account
+    title: accountServiceClient.RemapBrokerAccount
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/accounts.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:32.069Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-ingestv1connect-unimplemented-account-service-handler-list-broker-accounts
+    title: UnimplementedAccountServiceHandler.ListBrokerAccounts
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/accounts.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:36.791Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-accounts-owner-only
+  - id: SYM-ingestv1connect-unimplemented-account-service-handler-delete-account
+    title: UnimplementedAccountServiceHandler.DeleteAccount
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/accounts.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:41.662Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-delete-unused-account
+  - id: SYM-ingestv1connect-unimplemented-account-service-handler-remap-broker-account
+    title: UnimplementedAccountServiceHandler.RemapBrokerAccount
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/accounts.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:46.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-remap-unused-broker-account
+  - id: SYM-portfoliov1connect-sleeve-service-client-delete-sleeve
+    title: sleeveServiceClient.DeleteSleeve
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/sleeves.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:51.269Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1connect-sleeve-service-client-delete-sleeve-kind
+    title: sleeveServiceClient.DeleteSleeveKind
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/sleeves.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:59:55.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1connect-unimplemented-sleeve-service-handler-delete-sleeve
+    title: UnimplementedSleeveServiceHandler.DeleteSleeve
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/sleeves.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:01.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1connect-unimplemented-sleeve-service-handler-delete-sleeve-kind
+    title: UnimplementedSleeveServiceHandler.DeleteSleeveKind
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/portfoliov1connect/sleeves.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:05.811Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-request
+    title: DeleteSleeveRequest
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:09.759Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-request-reset
+    title: DeleteSleeveRequest.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:14.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-request-string
+    title: DeleteSleeveRequest.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:19.622Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-request-proto-message
+    title: DeleteSleeveRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:24.780Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-request-proto-reflect
+    title: DeleteSleeveRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:29.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-request-descriptor
+    title: DeleteSleeveRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:35.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-request-get-origin
+    title: DeleteSleeveRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:40.339Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-request-get-session-token
+    title: DeleteSleeveRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:45.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-request-get-id
+    title: DeleteSleeveRequest.GetId
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:50.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-response
+    title: DeleteSleeveResponse
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:00:55.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-response-reset
+    title: DeleteSleeveResponse.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:00.573Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-response-string
+    title: DeleteSleeveResponse.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:05.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-response-proto-message
+    title: DeleteSleeveResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:10.630Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-response-proto-reflect
+    title: DeleteSleeveResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:15.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-response-descriptor
+    title: DeleteSleeveResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:20.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-request
+    title: DeleteSleeveKindRequest
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:25.247Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-request-reset
+    title: DeleteSleeveKindRequest.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:30.541Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-request-string
+    title: DeleteSleeveKindRequest.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:35.844Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-request-proto-message
+    title: DeleteSleeveKindRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:41.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-request-proto-reflect
+    title: DeleteSleeveKindRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:47.237Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-request-descriptor
+    title: DeleteSleeveKindRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:52.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-request-get-origin
+    title: DeleteSleeveKindRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:01:58.038Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-request-get-session-token
+    title: DeleteSleeveKindRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:02:02.899Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-request-get-key
+    title: DeleteSleeveKindRequest.GetKey
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:02:08.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-response
+    title: DeleteSleeveKindResponse
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:02:12.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-response-reset
+    title: DeleteSleeveKindResponse.Reset
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:02:18.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-response-string
+    title: DeleteSleeveKindResponse.String
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:02:23.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-response-proto-message
+    title: DeleteSleeveKindResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:02:29.128Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-response-proto-reflect
+    title: DeleteSleeveKindResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:02:34.801Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfoliov1-delete-sleeve-kind-response-descriptor
+    title: DeleteSleeveKindResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/portfolio/v1/sleeves.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T15:02:43.719Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds

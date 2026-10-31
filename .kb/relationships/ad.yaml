@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8bb9d38b3f24
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-request-get-session-token
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:58:33.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a11da90f936
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-request-get-session-token
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:58:33.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28701746198e

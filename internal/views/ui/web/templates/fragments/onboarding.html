@@ -44,6 +44,10 @@
           <div class="actions"><button type="submit">Save sleeve</button></div>
         </form>
         </details>
+        <form method="post" action="/sleeves/{{.GetId}}/delete" class="inline">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <button type="submit" class="danger" aria-label="Delete {{.GetName}}">Delete</button>
+        </form>
       </td>{{end}}
     </tr>
     {{else}}
@@ -87,6 +91,10 @@
           <div class="actions"><button type="submit">Rename kind</button></div>
         </form>
         </details>
+        <form method="post" action="/sleeve-kinds/{{.GetKey}}/delete" class="inline">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <button type="submit" class="danger" aria-label="Delete {{.GetName}}">Delete</button>
+        </form>
       </td>{{end}}
     </tr>
     {{end}}
@@ -188,6 +196,10 @@
         </form>
         </details>
         {{end}}
+        <form method="post" action="/accounts/{{.Account.GetId}}/delete" class="inline">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <button type="submit" class="danger" aria-label="Delete {{.Account.GetName}}">Delete</button>
+        </form>
       </td>{{end}}
     </tr>
     {{end}}
@@ -226,15 +238,26 @@
 {{with $d.Brokers}}
 <section class="card" aria-labelledby="brokers-title">
   <h2 id="brokers-title">Broker accounts</h2>
-  <p class="muted">The accounts at your institutions that connectors reported, and the account each one is booked in.</p>
+  <p class="muted">The accounts at your institutions that connectors reported, and the account each one is booked in. You can move one to another account while nothing was booked from it.</p>
   <div class="table"><table>
-    <thead><tr><th scope="col">Connector</th><th scope="col">Broker account</th><th scope="col">Institution</th><th scope="col">Booked in</th><th scope="col">Last seen</th></tr></thead>
+    <thead><tr><th scope="col">Connector</th><th scope="col">Broker account</th><th scope="col">Institution</th><th scope="col">Booked in</th><th scope="col">Last seen</th><th scope="col"><span class="sr-only">Remap</span></th></tr></thead>
     <tbody>
     {{range .}}
     <tr>
       <td class="mono">{{.GetConnectorInstance}}</td><td class="mono">{{.GetId}}</td><td>{{.GetInstitution}}</td>
       <td>{{with .GetAccountId}}<a href="/accounts/{{.}}">{{.}}</a>{{else}}<span class="pill pill-warn">Unmapped</span>{{end}}</td>
       <td><span class="mono">{{.GetLastSeen}}</span>{{if not .GetInLastDelivery}} <span class="pill pill-neutral">not in the last sync</span>{{end}}</td>
+      <td>{{if .GetAccountId}}
+        <details class="change"><summary>Remap</summary>
+        <form method="post" action="/broker-accounts/remap">
+          <input type="hidden" name="next" value="{{$d.Next}}">
+          <input type="hidden" name="broker" value="{{.GetConnectorInstance}}/{{.GetId}}">
+          <div class="field"><label for="remap-{{.GetConnectorInstance}}-{{.GetId}}">Book it in</label>
+            <select id="remap-{{.GetConnectorInstance}}-{{.GetId}}" name="account">{{$cur := .GetAccountId}}<option value="">No account (unmapped)</option>{{range $d.Accounts}}<option value="{{.Account.GetId}}"{{if eq .Account.GetId $cur}} selected{{end}}>{{.Account.GetName}}</option>{{end}}</select></div>
+          <div class="actions"><button type="submit">Remap broker account</button></div>
+        </form>
+        </details>
+      {{end}}</td>
     </tr>
     {{end}}
     </tbody>

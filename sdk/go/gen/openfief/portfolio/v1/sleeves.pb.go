@@ -733,6 +733,198 @@ func (x *UpdateSleeveResponse) GetSleeve() *Sleeve {
 	return nil
 }
 
+type DeleteSleeveRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken  string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	Id            string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteSleeveRequest) Reset() {
+	*x = DeleteSleeveRequest{}
+	mi := &file_openfief_portfolio_v1_sleeves_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteSleeveRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSleeveRequest) ProtoMessage() {}
+
+func (x *DeleteSleeveRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_portfolio_v1_sleeves_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSleeveRequest.ProtoReflect.Descriptor instead.
+func (*DeleteSleeveRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_portfolio_v1_sleeves_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *DeleteSleeveRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *DeleteSleeveRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *DeleteSleeveRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteSleeveResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteSleeveResponse) Reset() {
+	*x = DeleteSleeveResponse{}
+	mi := &file_openfief_portfolio_v1_sleeves_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteSleeveResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSleeveResponse) ProtoMessage() {}
+
+func (x *DeleteSleeveResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_portfolio_v1_sleeves_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSleeveResponse.ProtoReflect.Descriptor instead.
+func (*DeleteSleeveResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_portfolio_v1_sleeves_proto_rawDescGZIP(), []int{11}
+}
+
+type DeleteSleeveKindRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken  string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	Key           string                 `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteSleeveKindRequest) Reset() {
+	*x = DeleteSleeveKindRequest{}
+	mi := &file_openfief_portfolio_v1_sleeves_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteSleeveKindRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSleeveKindRequest) ProtoMessage() {}
+
+func (x *DeleteSleeveKindRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_portfolio_v1_sleeves_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSleeveKindRequest.ProtoReflect.Descriptor instead.
+func (*DeleteSleeveKindRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_portfolio_v1_sleeves_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *DeleteSleeveKindRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *DeleteSleeveKindRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *DeleteSleeveKindRequest) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+type DeleteSleeveKindResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteSleeveKindResponse) Reset() {
+	*x = DeleteSleeveKindResponse{}
+	mi := &file_openfief_portfolio_v1_sleeves_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteSleeveKindResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSleeveKindResponse) ProtoMessage() {}
+
+func (x *DeleteSleeveKindResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_portfolio_v1_sleeves_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSleeveKindResponse.ProtoReflect.Descriptor instead.
+func (*DeleteSleeveKindResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_portfolio_v1_sleeves_proto_rawDescGZIP(), []int{13}
+}
+
 var File_openfief_portfolio_v1_sleeves_proto protoreflect.FileDescriptor
 
 const file_openfief_portfolio_v1_sleeves_proto_rawDesc = "" +
@@ -781,17 +973,29 @@ const file_openfief_portfolio_v1_sleeves_proto_rawDesc = "" +
 	"\x04role\x18\x06 \x01(\x0e2!.openfief.portfolio.v1.SleeveRoleR\x04role\x12#\n" +
 	"\rrole_override\x18\a \x01(\bR\froleOverride\"M\n" +
 	"\x14UpdateSleeveResponse\x125\n" +
-	"\x06sleeve\x18\x01 \x01(\v2\x1d.openfief.portfolio.v1.SleeveR\x06sleeve*_\n" +
+	"\x06sleeve\x18\x01 \x01(\v2\x1d.openfief.portfolio.v1.SleeveR\x06sleeve\"b\n" +
+	"\x13DeleteSleeveRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x0e\n" +
+	"\x02id\x18\x03 \x01(\tR\x02id\"\x16\n" +
+	"\x14DeleteSleeveResponse\"h\n" +
+	"\x17DeleteSleeveKindRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x10\n" +
+	"\x03key\x18\x03 \x01(\tR\x03key\"\x1a\n" +
+	"\x18DeleteSleeveKindResponse*_\n" +
 	"\n" +
 	"SleeveRole\x12\x1b\n" +
 	"\x17SLEEVE_ROLE_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15SLEEVE_ROLE_DEFENSIVE\x10\x01\x12\x19\n" +
-	"\x15SLEEVE_ROLE_OFFENSIVE\x10\x022\xb9\x03\n" +
+	"\x15SLEEVE_ROLE_OFFENSIVE\x10\x022\x97\x05\n" +
 	"\rSleeveService\x12j\n" +
 	"\rAddSleeveKind\x12+.openfief.portfolio.v1.AddSleeveKindRequest\x1a,.openfief.portfolio.v1.AddSleeveKindResponse\x12s\n" +
 	"\x10RenameSleeveKind\x12..openfief.portfolio.v1.RenameSleeveKindRequest\x1a/.openfief.portfolio.v1.RenameSleeveKindResponse\x12^\n" +
 	"\tAddSleeve\x12'.openfief.portfolio.v1.AddSleeveRequest\x1a(.openfief.portfolio.v1.AddSleeveResponse\x12g\n" +
-	"\fUpdateSleeve\x12*.openfief.portfolio.v1.UpdateSleeveRequest\x1a+.openfief.portfolio.v1.UpdateSleeveResponseB\xeb\x01\n" +
+	"\fUpdateSleeve\x12*.openfief.portfolio.v1.UpdateSleeveRequest\x1a+.openfief.portfolio.v1.UpdateSleeveResponse\x12g\n" +
+	"\fDeleteSleeve\x12*.openfief.portfolio.v1.DeleteSleeveRequest\x1a+.openfief.portfolio.v1.DeleteSleeveResponse\x12s\n" +
+	"\x10DeleteSleeveKind\x12..openfief.portfolio.v1.DeleteSleeveKindRequest\x1a/.openfief.portfolio.v1.DeleteSleeveKindResponseB\xeb\x01\n" +
 	"\x19com.openfief.portfolio.v1B\fSleevesProtoP\x01ZJgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1;portfoliov1\xa2\x02\x03OPX\xaa\x02\x15Openfief.Portfolio.V1\xca\x02\x15Openfief\\Portfolio\\V1\xe2\x02!Openfief\\Portfolio\\V1\\GPBMetadata\xea\x02\x17Openfief::Portfolio::V1b\x06proto3"
 
 var (
@@ -807,7 +1011,7 @@ func file_openfief_portfolio_v1_sleeves_proto_rawDescGZIP() []byte {
 }
 
 var file_openfief_portfolio_v1_sleeves_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_openfief_portfolio_v1_sleeves_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_openfief_portfolio_v1_sleeves_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_openfief_portfolio_v1_sleeves_proto_goTypes = []any{
 	(SleeveRole)(0),                  // 0: openfief.portfolio.v1.SleeveRole
 	(*SleeveKind)(nil),               // 1: openfief.portfolio.v1.SleeveKind
@@ -820,6 +1024,10 @@ var file_openfief_portfolio_v1_sleeves_proto_goTypes = []any{
 	(*AddSleeveResponse)(nil),        // 8: openfief.portfolio.v1.AddSleeveResponse
 	(*UpdateSleeveRequest)(nil),      // 9: openfief.portfolio.v1.UpdateSleeveRequest
 	(*UpdateSleeveResponse)(nil),     // 10: openfief.portfolio.v1.UpdateSleeveResponse
+	(*DeleteSleeveRequest)(nil),      // 11: openfief.portfolio.v1.DeleteSleeveRequest
+	(*DeleteSleeveResponse)(nil),     // 12: openfief.portfolio.v1.DeleteSleeveResponse
+	(*DeleteSleeveKindRequest)(nil),  // 13: openfief.portfolio.v1.DeleteSleeveKindRequest
+	(*DeleteSleeveKindResponse)(nil), // 14: openfief.portfolio.v1.DeleteSleeveKindResponse
 }
 var file_openfief_portfolio_v1_sleeves_proto_depIdxs = []int32{
 	0,  // 0: openfief.portfolio.v1.SleeveKind.default_role:type_name -> openfief.portfolio.v1.SleeveRole
@@ -835,12 +1043,16 @@ var file_openfief_portfolio_v1_sleeves_proto_depIdxs = []int32{
 	5,  // 10: openfief.portfolio.v1.SleeveService.RenameSleeveKind:input_type -> openfief.portfolio.v1.RenameSleeveKindRequest
 	7,  // 11: openfief.portfolio.v1.SleeveService.AddSleeve:input_type -> openfief.portfolio.v1.AddSleeveRequest
 	9,  // 12: openfief.portfolio.v1.SleeveService.UpdateSleeve:input_type -> openfief.portfolio.v1.UpdateSleeveRequest
-	4,  // 13: openfief.portfolio.v1.SleeveService.AddSleeveKind:output_type -> openfief.portfolio.v1.AddSleeveKindResponse
-	6,  // 14: openfief.portfolio.v1.SleeveService.RenameSleeveKind:output_type -> openfief.portfolio.v1.RenameSleeveKindResponse
-	8,  // 15: openfief.portfolio.v1.SleeveService.AddSleeve:output_type -> openfief.portfolio.v1.AddSleeveResponse
-	10, // 16: openfief.portfolio.v1.SleeveService.UpdateSleeve:output_type -> openfief.portfolio.v1.UpdateSleeveResponse
-	13, // [13:17] is the sub-list for method output_type
-	9,  // [9:13] is the sub-list for method input_type
+	11, // 13: openfief.portfolio.v1.SleeveService.DeleteSleeve:input_type -> openfief.portfolio.v1.DeleteSleeveRequest
+	13, // 14: openfief.portfolio.v1.SleeveService.DeleteSleeveKind:input_type -> openfief.portfolio.v1.DeleteSleeveKindRequest
+	4,  // 15: openfief.portfolio.v1.SleeveService.AddSleeveKind:output_type -> openfief.portfolio.v1.AddSleeveKindResponse
+	6,  // 16: openfief.portfolio.v1.SleeveService.RenameSleeveKind:output_type -> openfief.portfolio.v1.RenameSleeveKindResponse
+	8,  // 17: openfief.portfolio.v1.SleeveService.AddSleeve:output_type -> openfief.portfolio.v1.AddSleeveResponse
+	10, // 18: openfief.portfolio.v1.SleeveService.UpdateSleeve:output_type -> openfief.portfolio.v1.UpdateSleeveResponse
+	12, // 19: openfief.portfolio.v1.SleeveService.DeleteSleeve:output_type -> openfief.portfolio.v1.DeleteSleeveResponse
+	14, // 20: openfief.portfolio.v1.SleeveService.DeleteSleeveKind:output_type -> openfief.portfolio.v1.DeleteSleeveKindResponse
+	15, // [15:21] is the sub-list for method output_type
+	9,  // [9:15] is the sub-list for method input_type
 	9,  // [9:9] is the sub-list for extension type_name
 	9,  // [9:9] is the sub-list for extension extendee
 	0,  // [0:9] is the sub-list for field type_name
@@ -857,7 +1069,7 @@ func file_openfief_portfolio_v1_sleeves_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_portfolio_v1_sleeves_proto_rawDesc), len(file_openfief_portfolio_v1_sleeves_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   10,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

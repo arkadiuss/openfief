@@ -629,3 +629,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92a6ecfca644
+  - type: implements
+    from: SYM-ingestv1-broker-account-get-last-seen
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:11.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a37d995ee8b7
+  - type: covered_by
+    from: SYM-ingestv1-broker-account-get-last-seen
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:12.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eae6afbf2d93
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-response-proto-message
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:59:09.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f476c4f6d26
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-response-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:59:09.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92f5e89d7d4d

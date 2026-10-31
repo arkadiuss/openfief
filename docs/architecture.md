@@ -137,7 +137,7 @@ flowchart LR
   ui -- "your session" --> api
 ```
 
-Your browser only ever talks to the core, on its browser port. The core serves its own paths there, the read API under `/v1` and its Connect service, and passes every other path on to the one view plugin with an approved browser path (D-81, D-114). Only that view ever sees your session cookie. The UI signs you in with a passkey through the core's sign-in service, which sits on the core's plugin port, where no route reaches (D-26, D-115), then renders each page from the read API, with your session, exactly as your scripts would with a script token. [Built-in UI](concepts/ui.md) and [Identity](concepts/identity.md) explain the sign-in and the sessions.
+Your browser only ever talks to the core, on its browser port. The core serves its own paths there, the read API under `/v1` and its Connect service, and passes every other path on to the one view plugin with an approved browser path (D-81, D-114). Only that view ever sees your session cookie. The UI signs you in with a passkey through the core's sign-in service, which sits on the core's plugin port, where no route reaches (D-26, D-115), then renders each page from the read API, with your session, exactly as your scripts would with a script token. What you enter or change by hand, such as an account, a deletion of an empty sleeve or account, or a remap of a broker account (D-120), goes to the core's owner services on that same plugin port (D-79), and your broker account numbers come only from there, never from the read API (D-121). [Built-in UI](concepts/ui.md) and [Identity](concepts/identity.md) explain the sign-in and the sessions.
 
 ## Security boundaries
 

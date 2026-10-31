@@ -171,6 +171,24 @@ func (s *server) renameKind(w http.ResponseWriter, r *http.Request, sess session
 	s.sleeveEntryDone(w, r, sess, "RenameSleeveKind", err)
 }
 
+// deleteKind asks the core to delete a sleeve kind (DeleteSleeveKind); it
+// refuses one a sleeve uses (D-120), and the page shows why.
+func (s *server) deleteKind(w http.ResponseWriter, r *http.Request, sess session) {
+	_, err := s.sleeves.DeleteSleeveKind(r.Context(), connect.NewRequest(&portfoliov1.DeleteSleeveKindRequest{
+		Origin: sess.Origin, SessionToken: sess.Token, Key: r.PathValue("key"),
+	}))
+	s.sleeveEntryDone(w, r, sess, "DeleteSleeveKind", err)
+}
+
+// deleteSleeve asks the core to delete a sleeve (DeleteSleeve); it refuses
+// one with accounts (D-120), and the page shows why.
+func (s *server) deleteSleeve(w http.ResponseWriter, r *http.Request, sess session) {
+	_, err := s.sleeves.DeleteSleeve(r.Context(), connect.NewRequest(&portfoliov1.DeleteSleeveRequest{
+		Origin: sess.Origin, SessionToken: sess.Token, Id: r.PathValue("id"),
+	}))
+	s.sleeveEntryDone(w, r, sess, "DeleteSleeve", err)
+}
+
 // addSleeve hands a new sleeve to the core (AddSleeve). A role other than
 // the kind's default needs the override box ticked: the owner's explicit
 // choice (D-71).

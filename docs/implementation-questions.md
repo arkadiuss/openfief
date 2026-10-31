@@ -84,6 +84,18 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the last period's interest is not booked as a coupon, so a matured lot is valued with it and nothing is counted twice; the redemption itself is not booked.
    - *Options:* keep until redemptions are decided; or book the redemption at maturity, the nominal and the last period's interest, as a sell of the lot.
 
+## Accounts
+
+31. **What "no transactions from it" means for a broker account's remap.**
+   - *Problem:* D-120 lets the owner remap a broker account whose OpenFief account has no transactions from it. The ledger records which account and source each transaction has, not which broker account it came from.
+   - *Today:* every transaction a broker account brings is scoped to its connector instance's key source (D-48), so a remap is refused while the mapped account holds any version of a transaction whose source starts with `plugin:<instance>:`; balance assertions don't count. The instance stays bound to the old account and is bound to the new one; the broker account is no longer seeded, so the next opening batch seeds the new account.
+   - *Options:* keep; or record the broker account on each transaction and check exactly; or refuse while the account holds any transaction at all.
+
+32. **How the read API drops broker account numbers.**
+   - *Problem:* D-121 has the read API never serve broker account numbers. `ListBrokerAccounts` was part of the read API, and `buf breaking` runs on every change (docs/dev/pipeline.md), so removing the method or its fields fails the check; no rule says how a read API method is retired.
+   - *Today:* the method and its messages stay in the contract, marked deprecated, and the core answers it with `UNIMPLEMENTED` (HTTP 501 on `GET /v1/broker-accounts`); the owner's `AccountService.ListBrokerAccounts` lists them, and the built-in UI uses it.
+   - *Options:* keep until a versioned break of the read API (`/v2`); or remove them now with an exception to the breaking-change check.
+
 ## Performance
 
 17. **What happens to a transfer decision when a leg is corrected.**

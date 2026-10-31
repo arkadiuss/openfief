@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-583ce76c9b25
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-removals
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:49:57.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76396e18b314

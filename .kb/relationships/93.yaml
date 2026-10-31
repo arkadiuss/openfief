@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df359d51ba82
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-response-reset
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:02:20.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-834d03bb925f
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-response-reset
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:02:20.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed2081a7e3cd

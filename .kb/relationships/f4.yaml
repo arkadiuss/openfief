@@ -426,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6af084f18f1e
+  - type: executable_for
+    from: SYM-ledger-pg-test-delete-sleeve-then-kind
+    to: TEST-ledger-pg-deletions
+    created_at: 2026-10-31T14:52:27.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85843989f015

@@ -41,6 +41,12 @@ service SleeveService {
   // UpdateSleeve renames a sleeve, or changes its kind or role; its ID
   // stays.
   rpc UpdateSleeve(UpdateSleeveRequest) returns (UpdateSleeveResponse);
+  // DeleteSleeve deletes a sleeve that has no accounts (D-120); one with
+  // accounts fails with FAILED_PRECONDITION.
+  rpc DeleteSleeve(DeleteSleeveRequest) returns (DeleteSleeveResponse);
+  // DeleteSleeveKind deletes a kind no sleeve uses, built-in ones too
+  // (D-120); one in use fails with FAILED_PRECONDITION.
+  rpc DeleteSleeveKind(DeleteSleeveKindRequest) returns (DeleteSleeveKindResponse);
 }
 
 // SleeveRole is what a sleeve is for.
@@ -125,3 +131,19 @@ message UpdateSleeveRequest {
 message UpdateSleeveResponse {
   Sleeve sleeve = 1;
 }
+
+message DeleteSleeveRequest {
+  string origin = 1;
+  string session_token = 2;
+  string id = 3;
+}
+
+message DeleteSleeveResponse {}
+
+message DeleteSleeveKindRequest {
+  string origin = 1;
+  string session_token = 2;
+  string key = 3;
+}
+
+message DeleteSleeveKindResponse {}

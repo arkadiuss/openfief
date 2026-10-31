@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f82a3499743
+  - type: constrains
+    from: REQ-ui-broker-accounts-owner-only
+    to: FACT-SUBJECT-EE919270A75F28E3
+    created_at: 2026-10-31T14:35:50.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-181a22c7151d
+  - type: requires_property
+    from: REQ-ui-broker-accounts-owner-only
+    to: FACT-PROP-80B0D2EC2C68C657
+    created_at: 2026-10-31T14:35:50.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95d918078cbe
+  - type: specified_by
+    from: REQ-ui-broker-accounts-owner-only
+    to: SCEN-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:35:50.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d000d9d0af69

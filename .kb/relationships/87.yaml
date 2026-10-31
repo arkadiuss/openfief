@@ -510,3 +510,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d524d386e7d2
+  - type: constrains
+    from: REQ-portfolio-delete-unused-sleeves-and-kinds
+    to: FACT-SUBJECT-7D628E9AE5C6B625
+    created_at: 2026-10-31T14:35:29.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbe3a787c29a
+  - type: requires_property
+    from: REQ-portfolio-delete-unused-sleeves-and-kinds
+    to: FACT-PROP-DF959408EE89AF50
+    created_at: 2026-10-31T14:35:30.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-583355560897
+  - type: specified_by
+    from: REQ-portfolio-delete-unused-sleeves-and-kinds
+    to: SCEN-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T14:35:30.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5269d555edcc
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-removals-remap-broker-account
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:50:23.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ec43693bd66

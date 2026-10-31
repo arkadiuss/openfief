@@ -510,3 +510,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-272d75afabb9
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-accounts-list-broker-accounts
+    to: TEST-ui-onboarding
+    created_at: 2026-10-31T14:53:47.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df332e4bb330
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-response-proto-reflect
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:56:29.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adb1591c7916
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-response-proto-reflect
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:29.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70598340e0b3

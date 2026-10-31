@@ -324,6 +324,7 @@ sequenceDiagram
 - **D-70**: the jurisdiction pack contract in `internal/jurisdiction`, the Polish pack behind it; valuation reaches taxes and fees only through it. Bond accrual stays `pl.ValueLot`, a Polish function, since only Polish bonds have series terms.
 - **D-77**: every stored valuation has gross, net and liquidation values, computed by the pack per product kind and wrapper. Narrow readings: a lot's cost converts at the tax rate of its open date; the fee rule's minimum at the day's rate; a value the inputs can't give is stored as missing with its reason, without failing the revaluation or moving the valued-through date.
 - **D-76**, **D-78**: the account's wrapper and fee rule are inputs recorded with the account; the owner's marginal rate is a setting through `Settings`, and until it is set an IKZE's liquidation value is stored as missing (`marginal_rate`).
+- **D-120**: a deleted account's wrapper, fee rule, stored valuations, status and pending revaluation go with it (`Store.ForgetAccount`, [forget.go](../../internal/valuation/postgres/forget.go)); it held no transactions, so they derive from nothing.
 - **D-113**: the number format is stored here, next to the reporting currency, with the pack's default.
 - **D-14**: PostgreSQL holds the `valuation` and `river` schemas.
 - **D-62** and **T-12**: conversion targets PLN only, and every stored row has a PLN value; D-62 allows assuming PLN only in the Polish pack's tax rules. T-12 (proposal P-49) is open.

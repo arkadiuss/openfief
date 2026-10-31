@@ -517,3 +517,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1445e10edf85
+  - type: implements
+    from: SYM-ingestv1-broker-account-reset
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:54:26.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b3d4915bf96
+  - type: covered_by
+    from: SYM-ingestv1-broker-account-reset
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:54:26.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a34b5922bab0
+  - type: implements
+    from: SYM-ingestv1-delete-account-request-proto-reflect
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:57:03.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a439a4ae088
+  - type: covered_by
+    from: SYM-ingestv1-delete-account-request-proto-reflect
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:57:03.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ef128a80cc0

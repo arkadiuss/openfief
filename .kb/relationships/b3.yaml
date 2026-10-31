@@ -420,20 +420,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-7a23e77749ce
   - type: implements
-    from: SYM-views-connectapi-pb-broker-account
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:10:10.983Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3f660f7cef71
-  - type: covered_by
-    from: SYM-views-connectapi-pb-broker-account
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:10:11.014Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e96de22f5e3b
-  - type: implements
     from: SYM-ui-form-role
     to: REQ-ui-sleeve-and-account-pages
     created_at: 2026-10-29T13:17:37.807Z

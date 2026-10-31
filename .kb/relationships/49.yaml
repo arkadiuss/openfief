@@ -419,3 +419,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad9c2f84dea0
+  - type: implements
+    from: SYM-ingestv1-delete-account-response-descriptor
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:57:53.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bba959410efa
+  - type: covered_by
+    from: SYM-ingestv1-delete-account-response-descriptor
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:57:53.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de8d0b9752cf
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-response-proto-message
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:01:12.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4d18574d287
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-response-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:01:12.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3e1cea77c42
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-request-proto-message
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:01:43.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb5630816f00
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-request-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:01:43.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a7d047a3d25

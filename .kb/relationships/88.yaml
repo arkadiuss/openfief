@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-786a6c894e08
+  - type: implements
+    from: SYM-ingestv1-broker-account-get-institution
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:02.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77df42ce9029
+  - type: covered_by
+    from: SYM-ingestv1-broker-account-get-institution
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:02.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83699fdcbd63

@@ -109,6 +109,24 @@ func pbSleeve(sl *portfolio.Sleeve) *portfoliov1.Sleeve {
 	}
 }
 
+// DeleteSleeve deletes a sleeve with no accounts (D-120).
+func (s *sleeveService) DeleteSleeve(ctx context.Context, req *connect.Request[portfoliov1.DeleteSleeveRequest]) (*connect.Response[portfoliov1.DeleteSleeveResponse], error) {
+	m := req.Msg
+	if err := s.sleeves.DeleteSleeve(ctx, m.GetOrigin(), m.GetSessionToken(), portfolio.SleeveID(m.GetId())); err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&portfoliov1.DeleteSleeveResponse{}), nil
+}
+
+// DeleteSleeveKind deletes a kind no sleeve uses (D-120).
+func (s *sleeveService) DeleteSleeveKind(ctx context.Context, req *connect.Request[portfoliov1.DeleteSleeveKindRequest]) (*connect.Response[portfoliov1.DeleteSleeveKindResponse], error) {
+	m := req.Msg
+	if err := s.sleeves.DeleteKind(ctx, m.GetOrigin(), m.GetSessionToken(), portfolio.KindKey(m.GetKey())); err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&portfoliov1.DeleteSleeveKindResponse{}), nil
+}
+
 // fail maps err to its Connect error. A broken rule carries its text,
 // which names the kind or sleeve and the rule, so the owner can fix it.
 func (s *sleeveService) fail(ctx context.Context, err error) *connect.Error {
@@ -125,6 +143,8 @@ func (s *sleeveService) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeAlreadyExists, err)
 	case errors.Is(err, app.ErrNotFound):
 		return connect.NewError(connect.CodeNotFound, err)
+	case errors.Is(err, portfolio.ErrSleeveHasAccounts), errors.Is(err, portfolio.ErrKindInUse):
+		return connect.NewError(connect.CodeFailedPrecondition, err)
 	}
 	s.log.LogAttrs(ctx, slog.LevelError, "sleeve call failed", slog.String("error", err.Error()))
 	return connect.NewError(connect.CodeInternal, errInternal)
