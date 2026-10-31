@@ -53,13 +53,14 @@ git -C "$repo" add . && git -C "$repo" commit -qm init
 echo '// changed' >>"$repo/internal/kernel/money.go"
 git -C "$repo" add internal/kernel/money.go
 
-# hook runs check-commit.sh in the repository; extra environment comes first in "$@".
+# hook runs check-commit.sh in the repository; extra environment comes first in "$@". Its standard input is
+# /dev/null: the fake task reads it to the end, which would never end on an inherited terminal or socket.
 hook() {
   : >"$work/log"
   : >"$work/tasks"
   rm -rf "$work/seen"
   (cd "$repo" && env PATH="$work/bin:$PATH" FAKE_LOG="$work/log" FAKE_TASKS="$work/tasks" FAKE_SEEN="$work/seen" "$@" \
-    bash "$root/scripts/check-commit.sh" task '. sdk/go' "${FULL:-}") >"$work/out" 2>&1
+    bash "$root/scripts/check-commit.sh" task '. sdk/go' "${FULL:-}") </dev/null >"$work/out" 2>&1
 }
 
 # check records a failed expectation with the case name and the run's output.
