@@ -68,6 +68,9 @@ const (
 	// SettingsServiceSetMarginalRateProcedure is the fully-qualified name of the SettingsService's
 	// SetMarginalRate RPC.
 	SettingsServiceSetMarginalRateProcedure = "/openfief.valuation.v1.SettingsService/SetMarginalRate"
+	// SettingsServiceSetExemptionClassProcedure is the fully-qualified name of the SettingsService's
+	// SetExemptionClass RPC.
+	SettingsServiceSetExemptionClassProcedure = "/openfief.valuation.v1.SettingsService/SetExemptionClass"
 )
 
 // SettingsServiceClient is a client for the openfief.valuation.v1.SettingsService service.
@@ -81,6 +84,11 @@ type SettingsServiceClient interface {
 	// account is revalued (D-36), since an IKZE's liquidation value depends
 	// on it.
 	SetMarginalRate(context.Context, *connect.Request[v1.SetMarginalRateRequest]) (*connect.Response[v1.SetMarginalRateResponse], error)
+	// SetExemptionClass classifies an instrument for a yearly tax's exemptions
+	// when the jurisdiction pack can't (D-132), such as a fund whose policy
+	// it can't read. The choice stays with the instrument; setting it again
+	// replaces it. It revalues nothing: the yearly tax is computed when read.
+	SetExemptionClass(context.Context, *connect.Request[v1.SetExemptionClassRequest]) (*connect.Response[v1.SetExemptionClassResponse], error)
 }
 
 // NewSettingsServiceClient constructs a client for the openfief.valuation.v1.SettingsService
@@ -113,14 +121,21 @@ func NewSettingsServiceClient(httpClient connect.HTTPClient, baseURL string, opt
 			connect.WithSchema(settingsServiceMethods.ByName("SetMarginalRate")),
 			connect.WithClientOptions(opts...),
 		),
+		setExemptionClass: connect.NewClient[v1.SetExemptionClassRequest, v1.SetExemptionClassResponse](
+			httpClient,
+			baseURL+SettingsServiceSetExemptionClassProcedure,
+			connect.WithSchema(settingsServiceMethods.ByName("SetExemptionClass")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // settingsServiceClient implements SettingsServiceClient.
 type settingsServiceClient struct {
-	getOwnerSettings *connect.Client[v1.GetOwnerSettingsRequest, v1.GetOwnerSettingsResponse]
-	setNumberFormat  *connect.Client[v1.SetNumberFormatRequest, v1.SetNumberFormatResponse]
-	setMarginalRate  *connect.Client[v1.SetMarginalRateRequest, v1.SetMarginalRateResponse]
+	getOwnerSettings  *connect.Client[v1.GetOwnerSettingsRequest, v1.GetOwnerSettingsResponse]
+	setNumberFormat   *connect.Client[v1.SetNumberFormatRequest, v1.SetNumberFormatResponse]
+	setMarginalRate   *connect.Client[v1.SetMarginalRateRequest, v1.SetMarginalRateResponse]
+	setExemptionClass *connect.Client[v1.SetExemptionClassRequest, v1.SetExemptionClassResponse]
 }
 
 // GetOwnerSettings calls openfief.valuation.v1.SettingsService.GetOwnerSettings.
@@ -138,6 +153,11 @@ func (c *settingsServiceClient) SetMarginalRate(ctx context.Context, req *connec
 	return c.setMarginalRate.CallUnary(ctx, req)
 }
 
+// SetExemptionClass calls openfief.valuation.v1.SettingsService.SetExemptionClass.
+func (c *settingsServiceClient) SetExemptionClass(ctx context.Context, req *connect.Request[v1.SetExemptionClassRequest]) (*connect.Response[v1.SetExemptionClassResponse], error) {
+	return c.setExemptionClass.CallUnary(ctx, req)
+}
+
 // SettingsServiceHandler is an implementation of the openfief.valuation.v1.SettingsService service.
 type SettingsServiceHandler interface {
 	// GetOwnerSettings returns every setting to the owner.
@@ -149,6 +169,11 @@ type SettingsServiceHandler interface {
 	// account is revalued (D-36), since an IKZE's liquidation value depends
 	// on it.
 	SetMarginalRate(context.Context, *connect.Request[v1.SetMarginalRateRequest]) (*connect.Response[v1.SetMarginalRateResponse], error)
+	// SetExemptionClass classifies an instrument for a yearly tax's exemptions
+	// when the jurisdiction pack can't (D-132), such as a fund whose policy
+	// it can't read. The choice stays with the instrument; setting it again
+	// replaces it. It revalues nothing: the yearly tax is computed when read.
+	SetExemptionClass(context.Context, *connect.Request[v1.SetExemptionClassRequest]) (*connect.Response[v1.SetExemptionClassResponse], error)
 }
 
 // NewSettingsServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -177,6 +202,12 @@ func NewSettingsServiceHandler(svc SettingsServiceHandler, opts ...connect.Handl
 		connect.WithSchema(settingsServiceMethods.ByName("SetMarginalRate")),
 		connect.WithHandlerOptions(opts...),
 	)
+	settingsServiceSetExemptionClassHandler := connect.NewUnaryHandler(
+		SettingsServiceSetExemptionClassProcedure,
+		svc.SetExemptionClass,
+		connect.WithSchema(settingsServiceMethods.ByName("SetExemptionClass")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.valuation.v1.SettingsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case SettingsServiceGetOwnerSettingsProcedure:
@@ -185,6 +216,8 @@ func NewSettingsServiceHandler(svc SettingsServiceHandler, opts ...connect.Handl
 			settingsServiceSetNumberFormatHandler.ServeHTTP(w, r)
 		case SettingsServiceSetMarginalRateProcedure:
 			settingsServiceSetMarginalRateHandler.ServeHTTP(w, r)
+		case SettingsServiceSetExemptionClassProcedure:
+			settingsServiceSetExemptionClassHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -204,4 +237,8 @@ func (UnimplementedSettingsServiceHandler) SetNumberFormat(context.Context, *con
 
 func (UnimplementedSettingsServiceHandler) SetMarginalRate(context.Context, *connect.Request[v1.SetMarginalRateRequest]) (*connect.Response[v1.SetMarginalRateResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.valuation.v1.SettingsService.SetMarginalRate is not implemented"))
+}
+
+func (UnimplementedSettingsServiceHandler) SetExemptionClass(context.Context, *connect.Request[v1.SetExemptionClassRequest]) (*connect.Response[v1.SetExemptionClassResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.valuation.v1.SettingsService.SetExemptionClass is not implemented"))
 }

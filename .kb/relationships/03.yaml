@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31c928d67967
+  - type: validates
+    from: TEST-jurisdiction-fee
+    to: REQ-valuation-sale-fee-minimum-before-conversion
+    created_at: 2026-10-31T18:35:13.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c062b3c76fcb

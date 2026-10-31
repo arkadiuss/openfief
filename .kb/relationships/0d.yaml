@@ -531,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f85d04410b9c
+  - type: executable_for
+    from: SYM-views-test-tax-totals
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:12:21.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d9f9e4e970f

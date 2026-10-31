@@ -377,3 +377,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b31f7105d4a
+  - type: verified_by
+    from: SCEN-pl-oki-exemption-class
+    to: TEST-pl-oki
+    created_at: 2026-10-31T18:33:19.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce38a69aeafd
+  - type: constrains
+    from: REQ-views-oki-tax-days
+    to: FACT-SUBJECT-10428880C95D3F5B
+    created_at: 2026-10-31T18:34:56.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72deb78d5ccc
+  - type: requires_property
+    from: REQ-views-oki-tax-days
+    to: FACT-PROP-3DDF24324C10EC04
+    created_at: 2026-10-31T18:34:56.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce5571dcdc78
+  - type: specified_by
+    from: REQ-views-oki-tax-days
+    to: SCEN-views-oki-tax-days
+    created_at: 2026-10-31T18:34:56.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bd76a95dcaf
+  - type: supersedes
+    from: REQ-views-oki-tax-days
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-31T18:34:56.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-696399b93add
+  - type: executable_for
+    from: SYM-views-connectapi-test-yearly-tax-under-the-act-over-rest
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:10:45.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93bfa38039ff
+  - type: implements
+    from: SYM-views-taxed-account
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:10:52.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cb0134586aa
+  - type: covered_by
+    from: SYM-views-taxed-account
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:10:52.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74f1f0421057

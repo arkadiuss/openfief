@@ -23,6 +23,11 @@ type fakeTerms struct {
 	fees     map[ledger.AccountID]jurisdiction.FeeRule
 	settings jurisdiction.Settings
 	format   *jurisdiction.NumberFormat
+	classes  map[string]jurisdiction.ExemptionClass
+}
+
+func (f *fakeTerms) ExemptionClasses(context.Context) (map[string]jurisdiction.ExemptionClass, error) {
+	return f.classes, nil
 }
 
 func (f *fakeTerms) TaxWrapper(_ context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error) {
@@ -125,6 +130,7 @@ func TestTotalsWithIKZECash(t *testing.T) {
 	want := []views.DateTotal{{
 		Date: date(t, "2026-03-01"), Reporting: money(t, "430.00", "PLN"), ByCurrency: []kernel.Money{money(t, "100", "EUR")},
 		Net: money(t, "387.00", "PLN"), Liquidation: money(t, "0", "PLN"), LiquidationMissing: true, Cash: money(t, "430.00", "PLN"),
+		NetOffset: money(t, "0", "PLN"), LiquidationOffset: money(t, "0", "PLN"),
 	}}
 	if diff := cmp.Diff(want, got.Totals); diff != "" {
 		t.Errorf("totals (-want +got):\n%s", diff)
@@ -160,9 +166,13 @@ func TestAllocationOfAKind(t *testing.T) {
 	}
 }
 
-// TestYearlyTaxes checks OKI's yearly tax: none in force under the real
-// act; under a synthetic act from 2026, acc-2 in OKI holds 430 PLN on each
-// valued day, under the limit, so no tax.
+// TestYearlyTaxes checks OKI's yearly tax (D-127): none in force in 2026
+// under the real act; under the act moved to 2026 at 1%, acc-2 in OKI,
+// opened on 2026-03-01 with 100 EUR and valued through 2026-03-02, holds
+// foreign cash, which no exemption covers, worth 430.00 PLN at the rate of
+// the day before each of its two days: 430.00 averaged and taxed, 4.30.
+// acc-1, in OKI too and holding a USD fund, has no USD rate before
+// 2026-03-02, so its tax can't be converted.
 func TestYearlyTaxes(t *testing.T) {
 	t.Parallel()
 	ctx := context.Background()
@@ -171,14 +181,41 @@ func TestYearlyTaxes(t *testing.T) {
 		t.Errorf("YearlyTaxes without an act = %+v, %v", notInForce, err)
 	}
 	terms := &fakeTerms{wrappers: map[ledger.AccountID]jurisdiction.Wrapper{"acc-2": "oki"}}
-	act := pl.OKIAct{InForceFrom: date(t, "2026-01-01"), Limit: money(t, "100", "PLN"), Rate: dec(t, "0.01")}
+	act := pl.CurrentOKIAct()
+	act.InForceFrom, act.Rates = date(t, "2026-01-01"), map[int]kernel.Decimal{2026: dec(t, "0.01")}
 	got, err := valuesViews(t, terms, &pl.Pack{OKI: act}).YearlyTaxes(ctx, 2026)
 	if err != nil || len(got) != 1 {
 		t.Fatalf("YearlyTaxes = %+v, %v", got, err)
 	}
-	// Valued through 2026-03-02: 2026-03-01 and 2026-03-02 at 430.00.
-	if got[0].Days != 2 || !got[0].Average.Equal(money(t, "430.00", "PLN")) || !got[0].Tax.Equal(money(t, "3.30", "PLN")) {
-		t.Errorf("YearlyTaxes under the act = %+v", got[0])
+	g := got[0]
+	summary := []any{g.Days, g.Through.String(), g.Average.String(), g.Taxed.String(), g.Tax.String(), len(g.Unclassified)}
+	if diff := cmp.Diff([]any{2, "2026-03-02", "430 PLN", "430 PLN", "4.3 PLN", 0}, summary); diff != "" {
+		t.Errorf("YearlyTaxes under the act (-want +got):\n%s", diff)
+	}
+}
+
+// TestYearlyTaxesWithoutARate checks acc-1 in OKI, holding a USD fund
+// with no USD rate before 2026-03-02: its yearly tax can't be converted.
+func TestYearlyTaxesWithoutARate(t *testing.T) {
+	t.Parallel()
+	ctx := context.Background()
+	act := pl.CurrentOKIAct()
+	act.InForceFrom, act.Rates = date(t, "2026-01-01"), map[int]kernel.Decimal{2026: dec(t, "0.01")}
+	f := newFixture(t)
+	deposit, err := ledger.NewDeposit(ledger.TransactionHeader{
+		Key: ledger.TransactionKey{Source: "test", ExternalID: "d0"}, Account: "acc-1", Date: date(t, "2026-03-01"),
+	}, money(t, "10", "PLN"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.ledger.txs = map[ledger.AccountID][]ledger.Transaction{"acc-1": {deposit}}
+	oki := &fakeTerms{wrappers: map[ledger.AccountID]jurisdiction.Wrapper{"acc-1": "oki"}}
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), app.WithJurisdiction(&pl.Pack{OKI: act}, oki))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := v.YearlyTaxes(ctx, 2026); !errors.Is(err, views.ErrTaxConversion) {
+		t.Errorf("YearlyTaxes without a USD rate: %v, want ErrTaxConversion", err)
 	}
 }
 

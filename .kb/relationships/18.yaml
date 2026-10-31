@@ -545,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67df3de15b56
+  - type: implements
+    from: SYM-pl-pit38-account-total
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:04:57.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c876ef6e4786
+  - type: covered_by
+    from: SYM-pl-pit38-account-total
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:04:57.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07ccbe341569

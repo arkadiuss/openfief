@@ -87,6 +87,43 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the method and its messages stay in the contract, marked deprecated, and the core answers it with `UNIMPLEMENTED` (HTTP 501 on `GET /v1/broker-accounts`); the owner's `AccountService.ListBrokerAccounts` lists them, and the built-in UI uses it.
    - *Options:* keep until a versioned break of the read API (`/v2`); or remove them now with an exception to the breaking-change check.
 
+## Taxes
+
+40. **How OKI's averages and tax are rounded.**
+   - *Problem:* D-127 and the act on OKI (R-18) don't say how an account's average value, the base or the tax on asset value is rounded. Art. 63 § 1 of the tax ordinance rounds bases and taxes to whole złoty, but the act has its own base (a sum of averages) and its own return.
+   - *Today:* each account's average per exemption class is rounded half up to grosze, and so is the tax; the exemptions and the taxed part are exact sums of those averages ([Valuation](concepts/valuation.md#okis-yearly-tax)).
+   - *Options:* keep; or round the base and the tax to whole złoty as art. 63 § 1 does; or keep the averages exact and round only the tax.
+
+41. **Where OKI's later rates and exempt amounts come from.**
+   - *Problem:* from 2028 the rate is 19% of the NBP reference rate in force on 31 October of the year before, and from 2030 the exempt amounts rise by the CPI of the first three quarters of the year before over the same quarters a year earlier (art. 25, 26 ust. 5). The core stores reference rate readings keyed by the bond periods they set and GUS's monthly CPI, neither of which is that figure; the minister also announces both by 30 November. Nor does the act say what an index below 100 does to amounts it "raises".
+   - *Today:* `OKIAct` holds 2027's rate and the 2027 to 2029 exempt amounts; `OKIRate` and `IndexOKIExemption` compute later years from a reference rate change list and CPI factors the act data carries, both empty in `CurrentOKIAct`, so 2028's tax reports its averages and taxed part with no rate or tax, and from 2030 no exemptions either. A factor below 1 would lower the amounts.
+   - *Options:* add the announced rate and amounts to the act data with each release; or store the NBP reference rate history and GUS's quarterly index as inputs and compute them; and decide whether the amounts may fall.
+
+42. **When an OKI account counts as held, and a year in progress.**
+   - *Problem:* the average divides by the days of the year the account was held (art. 23 ust. 2). OpenFief knows an account from its first transaction, which for an account seeded at go-live (D-23) is later than its opening; and a year in progress has no year-end.
+   - *Today:* an account is held from its first transaction through the year's end, counted through the earliest date the OKI accounts are valued through: the current year's tax is an estimate over the days so far. Opening cash (the seeding deposit) is no payment in.
+   - *Options:* keep; or let the owner enter an OKI account's opening date; or project the current year to its end.
+
+43. **Whether PLN cash in OKI is a savings or an investment asset.**
+   - *Problem:* PLN cash is a savings asset on a bank account or on the cash account of a treasury bond account, and an investment asset on any other cash account (art. 26 ust. 1 pkt 1 lit. a and e, pkt 2 lit. h). OpenFief doesn't know an account's form.
+   - *Today:* PLN cash is a savings asset on an OKI account that held a treasury savings bond on any counted day of the year, and an investment asset otherwise; cash in another currency gets no exemption.
+   - *Options:* keep; or let the owner set an OKI account's form (bank, bond account, brokerage, fund register) with the account.
+
+44. **What an IKE's early return is taxed above.**
+   - *Problem:* D-128 taxes an IKE's early return on what is withdrawn above what was paid in. For an account seeded at go-live the payments before it aren't in the record, and a partial return isn't modelled.
+   - *Today:* the liquidation total of an IKE is a return of the whole account: its proceeds after sale costs less what was paid in, its deposits (opening cash included) less its withdrawals plus the cost of the lots it was seeded with, each at the NBP rate of the day before, taxed at 19% half up to grosze when positive.
+   - *Options:* keep; or let the owner enter an IKE's total payments in at go-live.
+
+45. **What the totals' realized gains count.**
+   - *Problem:* D-128 offsets the tax year's realized gains and losses with the unrealized ones. The ledger keeps buy fees out of lot cost (D-34), but PIT-38 deducts them; foreign dividends and their withholding are PIT-38 income too.
+   - *Today:* realized gains are the sells of the year through the day: the proceeds less the sell's fees, at the NBP rate of the day before the sale, less the consumed lots' cost at the rate of the day before each was opened, without buy fees, as each row's own tax counts them. Dividends and bond coupons stay out of the netting; a bond keeps its own row's tax, which the issuer withholds.
+   - *Options:* keep; or add buy fees to the cost basis for tax; or bring foreign dividends into the netting.
+
+46. **Raising the attention item for an unclassified instrument.**
+   - *Problem:* D-132 asks the owner to classify an instrument once through an attention item (D-130), whose store isn't built yet.
+   - *Today:* a revaluation of an OKI account finds each holding the pack can't classify and the owner hasn't, and raises it through `app.AttentionRaiser` when one is wired (`Revaluer.WithAttention`); `cmd/core` wires none, so nothing is raised yet, and the settings page lists the instruments to classify instead.
+   - *Options:* wire the attention store's port once D-130 lands.
+
 ## Kibi evidence
 
 28. **Keeping the kibi sync patch, which makes the store defect rarer but doesn't fix it.**

@@ -832,3 +832,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1886337b2710
+  - type: implements
+    from: SYM-pl-min-decimal
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:03:00.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4d04ebff948
+  - type: covered_by
+    from: SYM-pl-min-decimal
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:00.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c0a773e6d64
+  - type: implements
+    from: SYM-valuation-app-settings-set-exemption-class
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:08:12.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37db728721c2
+  - type: covered_by
+    from: SYM-valuation-app-settings-set-exemption-class
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T19:08:12.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fd098d133ac

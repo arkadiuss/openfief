@@ -594,13 +594,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02d7b6b3b8da
-  - type: implements
-    from: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
-    to: REQ-views-yearly-taxes
-    created_at: 2026-10-30T01:38:00.388Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9fec7ce478d0
   - type: covered_by
     from: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
     to: TEST-views-connectapi-values
@@ -657,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92f5e89d7d4d
+  - type: implements
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T18:38:29.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf5c3777d314
+  - type: executable_for
+    from: SYM-views-test-helper-tax-year-account
+    to: TEST-views-yearly-tax
+    created_at: 2026-10-31T19:14:35.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-235b1a79baeb

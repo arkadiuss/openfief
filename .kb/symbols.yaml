@@ -92067,22 +92067,9 @@ symbols:
         target: REQ-jurisdiction-in-process
       - type: implements
         target: REQ-valuation-three-values
-  - id: SYM-jurisdiction-day-balance
-    title: DayBalance
-    sourceFile: internal/jurisdiction/pack.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:04:07.840Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-pack
-      - type: implements
-        target: REQ-pl-oki-yearly-tax
   - id: SYM-jurisdiction-yearly-tax
     title: YearlyTax
-    sourceFile: internal/jurisdiction/pack.go
+    sourceFile: internal/jurisdiction/yearlytax.go
     status: active
     symbol_role: type-shape
     origin:
@@ -92090,9 +92077,9 @@ symbols:
       recorded_at: 2026-10-29T22:04:14.322Z
     relationships:
       - type: covered_by
-        target: TEST-pl-pack
+        target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-yearly-tax
+        target: REQ-pl-oki-tax-computation
   - id: SYM-jurisdiction-pack
     title: Pack
     sourceFile: internal/jurisdiction/pack.go
@@ -92415,7 +92402,7 @@ symbols:
         target: REQ-valuation-three-values
   - id: SYM-pl-oki-act
     title: OKIAct
-    sourceFile: internal/jurisdiction/pl/pack.go
+    sourceFile: internal/jurisdiction/pl/oki.go
     status: active
     symbol_role: type-shape
     granularity_reason: module-level-behavior
@@ -92424,14 +92411,14 @@ symbols:
       recorded_at: 2026-10-29T22:06:56.725Z
     relationships:
       - type: covered_by
-        target: TEST-pl-pack
+        target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-act-as-data
+        target: REQ-pl-oki-act-in-force-2027
       - type: implements
-        target: REQ-pl-oki-yearly-tax
+        target: REQ-pl-oki-tax-computation
   - id: SYM-pl-current-oki-act
     title: CurrentOKIAct
-    sourceFile: internal/jurisdiction/pl/pack.go
+    sourceFile: internal/jurisdiction/pl/oki.go
     status: active
     symbol_role: behavioral
     origin:
@@ -92439,14 +92426,14 @@ symbols:
       recorded_at: 2026-10-29T22:07:03.553Z
     relationships:
       - type: covered_by
-        target: TEST-pl-pack
+        target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-act-as-data
+        target: REQ-pl-oki-act-in-force-2027
       - type: implements
-        target: REQ-pl-oki-yearly-tax
+        target: REQ-pl-oki-tax-computation
   - id: SYM-pl-pack-yearly-tax
     title: Pack.YearlyTax
-    sourceFile: internal/jurisdiction/pl/pack.go
+    sourceFile: internal/jurisdiction/pl/oki.go
     status: active
     symbol_role: behavioral
     origin:
@@ -92454,26 +92441,11 @@ symbols:
       recorded_at: 2026-10-29T22:07:16.371Z
     relationships:
       - type: covered_by
-        target: TEST-pl-pack
+        target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-act-as-data
+        target: REQ-pl-oki-tax-base-average-value
       - type: implements
-        target: REQ-pl-oki-yearly-tax
-  - id: SYM-pl-oki-act-in-force-in
-    title: OKIAct.inForceIn
-    sourceFile: internal/jurisdiction/pl/pack.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:07:22.531Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-pack
-      - type: implements
-        target: REQ-pl-oki-act-as-data
-      - type: implements
-        target: REQ-pl-oki-yearly-tax
+        target: REQ-pl-oki-tax-computation
   - id: SYM-pl-test-pack-defaults
     title: TestPackDefaults
     sourceFile: internal/jurisdiction/pl/pack_test.go
@@ -92571,16 +92543,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T22:08:28.884Z
-    relationships:
-      - type: executable_for
-        target: TEST-pl-pack
-  - id: SYM-pl-test-yearly-tax
-    title: TestYearlyTax
-    sourceFile: internal/jurisdiction/pl/pack_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:08:35.069Z
     relationships:
       - type: executable_for
         target: TEST-pl-pack
@@ -93501,21 +93463,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-pl-value
-  - id: SYM-pl-average-balance
-    title: averageBalance
-    sourceFile: internal/jurisdiction/pl/pack.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:32:39.461Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-pack
-      - type: implements
-        target: REQ-pl-oki-act-as-data
-      - type: implements
-        target: REQ-pl-oki-yearly-tax
   - id: SYM-core-account-terms
     title: accountTerms
     sourceFile: cmd/core/settings.go
@@ -95390,7 +95337,7 @@ symbols:
         target: REQ-views-three-values
   - id: SYM-views-app-views-yearly-taxes
     title: Views.YearlyTaxes
-    sourceFile: internal/views/app/values.go
+    sourceFile: internal/views/app/taxes.go
     status: active
     symbol_role: behavioral
     origin:
@@ -95400,27 +95347,10 @@ symbols:
       - type: covered_by
         target: TEST-views-app-values
       - type: implements
-        target: REQ-pl-oki-yearly-tax
-      - type: implements
-        target: REQ-views-yearly-taxes
-  - id: SYM-views-app-views-wrapper-balances
-    title: Views.wrapperBalances
-    sourceFile: internal/views/app/values.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-30T01:18:36.329Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-app-values
-      - type: implements
-        target: REQ-pl-oki-yearly-tax
-      - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-oki-tax-days
   - id: SYM-views-app-views-accounts-in
     title: Views.accountsIn
-    sourceFile: internal/views/app/values.go
+    sourceFile: internal/views/app/taxes.go
     status: active
     symbol_role: behavioral
     origin:
@@ -95430,10 +95360,10 @@ symbols:
       - type: covered_by
         target: TEST-views-app-values
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-oki-tax-days
   - id: SYM-views-app-views-totals
     title: Views.totals
-    sourceFile: internal/views/app/values.go
+    sourceFile: internal/views/app/taxes.go
     status: active
     symbol_role: behavioral
     origin:
@@ -95445,7 +95375,7 @@ symbols:
       - type: implements
         target: REQ-valuation-totals-include-cash
       - type: implements
-        target: REQ-views-totals-with-cash
+        target: REQ-views-totals-losses-offset
   - id: SYM-views-app-marked-holdings
     title: MarkedHoldings
     sourceFile: internal/views/app/values.go
@@ -95740,9 +95670,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-views-connectapi-read-service-list-yearly-taxes
     title: readService.ListYearlyTaxes
     sourceFile: internal/views/connectapi/values.go
@@ -95755,9 +95685,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-views-connectapi-pb-number-format
     title: pbNumberFormat
     sourceFile: internal/views/connectapi/values.go
@@ -95770,9 +95700,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-views-connectapi-pb-yearly-tax
     title: pbYearlyTax
     sourceFile: internal/views/connectapi/values.go
@@ -95785,9 +95715,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-views-connectapi-clamp-int32
     title: clampInt32
     sourceFile: internal/views/connectapi/values.go
@@ -95800,9 +95730,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-views-connectapi-value-kind
     title: valueKind
     sourceFile: internal/views/connectapi/values.go
@@ -95815,9 +95745,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-views-connectapi-test-helper-get-json
     title: getJSON
     sourceFile: internal/views/connectapi/values_test.go
@@ -97459,9 +97389,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-viewsv1connect-read-service-client-list-yearly-taxes
     title: readServiceClient.ListYearlyTaxes
     sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
@@ -97474,9 +97404,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-viewsv1connect-unimplemented-read-service-handler-get-settings
     title: UnimplementedReadServiceHandler.GetSettings
     sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
@@ -97489,9 +97419,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-viewsv1connect-unimplemented-read-service-handler-list-yearly-taxes
     title: UnimplementedReadServiceHandler.ListYearlyTaxes
     sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
@@ -97504,9 +97434,9 @@ symbols:
       - type: covered_by
         target: TEST-views-connectapi-values
       - type: implements
-        target: REQ-views-settings
+        target: REQ-views-oki-tax-days
       - type: implements
-        target: REQ-views-yearly-taxes
+        target: REQ-views-settings
   - id: SYM-ui-from-percent
     title: fromPercent
     sourceFile: internal/views/ui/accounts.go
@@ -112324,3 +112254,2234 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+  - id: SYM-core-test-helper-check-exemption-class
+    title: checkExemptionClass
+    sourceFile: cmd/core/settings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:36.226Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-settings
+  - id: SYM-jurisdiction-tax-rules
+    title: TaxRules
+    sourceFile: internal/jurisdiction/pack.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:43.405Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-oki-classes
+    title: OKIClasses
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:51.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-exemption-class
+  - id: SYM-pl-oki-exemptions
+    title: OKIExemptions
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:57.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-oki-rate
+    title: OKIRate
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:04.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+      - type: implements
+        target: REQ-pl-oki-tax-rate
+  - id: SYM-pl-index-oki-exemption
+    title: IndexOKIExemption
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:10.805Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-oki-act-rate
+    title: OKIAct.rate
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:17.276Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+      - type: implements
+        target: REQ-pl-oki-tax-rate
+  - id: SYM-pl-oki-act-exemptions
+    title: OKIAct.exemptions
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:23.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-pack-exemption-classes
+    title: Pack.ExemptionClasses
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:30.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-exemption-class
+  - id: SYM-pl-pack-exemption-class
+    title: Pack.ExemptionClass
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:36.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-exemption-class
+  - id: SYM-pl-oki-act-tax
+    title: OKIAct.tax
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:43.764Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+      - type: implements
+        target: REQ-pl-oki-tax-rate
+  - id: SYM-pl-pack-exempt
+    title: Pack.exempt
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:50.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-sum-averages
+    title: sumAverages
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:56.319Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-account-averages
+    title: accountAverages
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:03.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-day-added
+    title: dayAdded
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:09.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-add-day
+    title: addDay
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:16.816Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-averages
+    title: averages
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:23.663Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-counted-payments
+    title: countedPayments
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:30.591Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-class-sums
+    title: classSums
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:37.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-class-value
+    title: classValue
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:43.966Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-clamp
+    title: clamp
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:50.746Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-min-decimal
+    title: minDecimal
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:57.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-pl-test-helper-span
+    title: span
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:04.524Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-helper-flow
+    title: flow
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:11.025Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-helper-oki-account
+    title: okiAccount
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:17.553Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-helper-oki-day
+    title: okiDay
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:23.893Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-helper-classes
+    title: classes
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:30.022Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-helper-oki-want
+    title: okiWant
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:34.754Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-helper-oki-want-build
+    title: okiWant.build
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:41.328Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-helper-later-act
+    title: laterAct
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:48.403Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-oki-yearly-tax
+    title: TestOKIYearlyTax
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:56.469Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-oki-yearly-tax-not-due
+    title: TestOKIYearlyTaxNotDue
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:03.037Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-oki-rate
+    title: TestOKIRate
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:09.974Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-index-oki-exemption
+    title: TestIndexOKIExemption
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:16.615Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-current-oki-act
+    title: TestCurrentOKIAct
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:23.627Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-test-oki-exemption-class
+    title: TestOKIExemptionClass
+    sourceFile: internal/jurisdiction/pl/oki_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:30.885Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-oki
+  - id: SYM-pl-pack-totals
+    title: Pack.Totals
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:37.693Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-pit38-tax
+    title: PIT38Tax
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:44.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-pit38
+    title: pit38
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:48.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-pit38-account-total
+    title: pit38.accountTotal
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:55.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-pit38-add
+    title: pit38.add
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:01.328Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-pit38-taxes
+    title: pit38.taxes
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:07.735Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-ike-total
+    title: ikeTotal
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:13.786Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-ikze-total
+    title: ikzeTotal
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:19.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-sum-values
+    title: sumValues
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:25.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-pl-test-helper-rows-of
+    title: rowsOf
+    sourceFile: internal/jurisdiction/pl/totals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:31.319Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-totals
+  - id: SYM-pl-test-helper-t1
+    title: t1
+    sourceFile: internal/jurisdiction/pl/totals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:36.742Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-totals
+  - id: SYM-pl-test-totals
+    title: TestTotals
+    sourceFile: internal/jurisdiction/pl/totals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:42.401Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-totals
+  - id: SYM-pl-test-totals-errors
+    title: TestTotalsErrors
+    sourceFile: internal/jurisdiction/pl/totals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:47.796Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-totals
+  - id: SYM-pl-test-pit38-tax
+    title: TestPIT38Tax
+    sourceFile: internal/jurisdiction/pl/totals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:53.178Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-totals
+  - id: SYM-pl-test-totals-properties
+    title: TestTotalsProperties
+    sourceFile: internal/jurisdiction/pl/totals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:59.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-totals
+  - id: SYM-jurisdiction-exemption-class
+    title: ExemptionClass
+    sourceFile: internal/jurisdiction/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:05.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-exemption-class
+  - id: SYM-jurisdiction-asset-kind
+    title: AssetKind
+    sourceFile: internal/jurisdiction/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:11.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-exemption-class
+  - id: SYM-jurisdiction-asset
+    title: Asset
+    sourceFile: internal/jurisdiction/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:17.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-exemption-class
+  - id: SYM-jurisdiction-class-value
+    title: ClassValue
+    sourceFile: internal/jurisdiction/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:24.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-jurisdiction-tax-day
+    title: TaxDay
+    sourceFile: internal/jurisdiction/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:30.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-jurisdiction-tax-account
+    title: TaxAccount
+    sourceFile: internal/jurisdiction/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:37.113Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-tax-computation
+  - id: SYM-jurisdiction-account-rows
+    title: AccountRows
+    sourceFile: internal/jurisdiction/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:43.636Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-totals
+      - type: implements
+        target: REQ-pl-totals-per-wrapper
+  - id: SYM-ledger-sale
+    title: Sale
+    sourceFile: internal/ledger/sale.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:50.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-sale
+      - type: implements
+        target: REQ-ledger-sales
+  - id: SYM-ledger-sales
+    title: Sales
+    sourceFile: internal/ledger/sale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:55.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-sale
+      - type: implements
+        target: REQ-ledger-sales
+  - id: SYM-ledger-sold-instruments
+    title: soldInstruments
+    sourceFile: internal/ledger/sale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:00.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-sale
+      - type: implements
+        target: REQ-ledger-sales
+  - id: SYM-ledger-sales-of
+    title: salesOf
+    sourceFile: internal/ledger/sale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:06.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-sale
+      - type: implements
+        target: REQ-ledger-sales
+  - id: SYM-ledger-dispose-of
+    title: disposeOf
+    sourceFile: internal/ledger/sale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:12.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-sale
+      - type: implements
+        target: REQ-ledger-sales
+  - id: SYM-ledger-fees
+    title: fees
+    sourceFile: internal/ledger/sale.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:17.706Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-sale
+      - type: implements
+        target: REQ-ledger-sales
+  - id: SYM-ledger-test-sales
+    title: TestSales
+    sourceFile: internal/ledger/sale_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:22.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-sale
+  - id: SYM-ledger-test-sales-oversell
+    title: TestSalesOversell
+    sourceFile: internal/ledger/sale_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:27.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-sale
+  - id: SYM-valuation-app-attention-raiser
+    title: AttentionRaiser
+    sourceFile: internal/valuation/app/exemptionclass.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:33.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-valuation-app-revaluer-with-attention
+    title: Revaluer.WithAttention
+    sourceFile: internal/valuation/app/exemptionclass.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:39.629Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-valuation-app-revaluer-raise-unclassified
+    title: Revaluer.raiseUnclassified
+    sourceFile: internal/valuation/app/exemptionclass.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:45.654Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-valuation-app-unclassified
+    title: Unclassified
+    sourceFile: internal/valuation/app/exemptionclass.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:51.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-valuation-app-input-recorder-record-exemption-class
+    title: InputRecorder.RecordExemptionClass
+    sourceFile: internal/valuation/app/exemptionclass.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:07:57.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuation-app-offered-classes
+    title: OfferedClasses
+    sourceFile: internal/valuation/app/exemptionclass.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:03.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuation-app-settings-set-exemption-class
+    title: Settings.SetExemptionClass
+    sourceFile: internal/valuation/app/exemptionclass.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:09.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuation-app-test-helper-fake-attention
+    title: fakeAttention
+    sourceFile: internal/valuation/app/exemptionclass_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:14.690Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-exemption-class
+  - id: SYM-valuation-app-test-helper-fake-attention-raise-unclassified-instrument
+    title: fakeAttention.RaiseUnclassifiedInstrument
+    sourceFile: internal/valuation/app/exemptionclass_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:20.259Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-exemption-class
+  - id: SYM-valuation-app-test-revalue-raises-unclassified
+    title: TestRevalueRaisesUnclassified
+    sourceFile: internal/valuation/app/exemptionclass_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:26.165Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-exemption-class
+  - id: SYM-valuation-app-test-set-exemption-class
+    title: TestSetExemptionClass
+    sourceFile: internal/valuation/app/exemptionclass_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:31.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-exemption-class
+  - id: SYM-valuation-app-test-offered-classes
+    title: TestOfferedClasses
+    sourceFile: internal/valuation/app/exemptionclass_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:37.638Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-exemption-class
+  - id: SYM-valuation-app-test-helper-fake-store-exemption-classes
+    title: fakeStore.ExemptionClasses
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:43.429Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-exemption-class
+    title: fakeRecorder.SaveExemptionClass
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:49.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-settings
+  - id: SYM-valuation-connectapi-settings-service-set-exemption-class
+    title: settingsService.SetExemptionClass
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:08:55.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuation-postgres-store-exemption-classes
+    title: Store.ExemptionClasses
+    sourceFile: internal/valuation/postgres/exemptionclass.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:01.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuation-postgres-store-save-exemption-class
+    title: Store.SaveExemptionClass
+    sourceFile: internal/valuation/postgres/exemptionclass.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:06.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuation-postgres-test-exemption-classes
+    title: TestExemptionClasses
+    sourceFile: internal/valuation/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:13.271Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+  - id: SYM-valuation-realized-gain
+    title: RealizedGain
+    sourceFile: internal/valuation/realized.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:19.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-realized
+      - type: implements
+        target: REQ-valuation-realized-gains
+  - id: SYM-valuation-account-terms-realized-gains
+    title: AccountTerms.RealizedGains
+    sourceFile: internal/valuation/realized.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:25.386Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-realized
+      - type: implements
+        target: REQ-valuation-realized-gains
+  - id: SYM-valuation-account-terms-sale-gain
+    title: AccountTerms.saleGain
+    sourceFile: internal/valuation/realized.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:31.304Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-realized
+      - type: implements
+        target: REQ-valuation-realized-gains
+  - id: SYM-valuation-realized-in-year
+    title: RealizedInYear
+    sourceFile: internal/valuation/realized.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:37.128Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-realized
+      - type: implements
+        target: REQ-valuation-realized-gains
+  - id: SYM-valuation-test-realized-gains
+    title: TestRealizedGains
+    sourceFile: internal/valuation/realized_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:43.131Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-realized
+  - id: SYM-views-app-yearly-tax
+    title: YearlyTax
+    sourceFile: internal/views/app/taxes.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:48.878Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-app-views-yearly-tax
+    title: Views.yearlyTax
+    sourceFile: internal/views/app/taxes.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:09:54.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-app-views-tax-account
+    title: Views.taxAccount
+    sourceFile: internal/views/app/taxes.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:00.748Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-app-views-tax-rates
+    title: Views.taxRates
+    sourceFile: internal/views/app/taxes.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:06.511Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-app-views-taxed-account
+    title: Views.taxedAccount
+    sourceFile: internal/views/app/taxes.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:12.698Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-values
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-app-test-helper-fake-terms-exemption-classes
+    title: fakeTerms.ExemptionClasses
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:19.090Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-yearly-taxes-without-a-rate
+    title: TestYearlyTaxesWithoutARate
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:25.430Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-connectapi-test-helper-fake-terms-exemption-classes
+    title: fakeTerms.ExemptionClasses
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:31.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-pb-class-amounts
+    title: pbClassAmounts
+    sourceFile: internal/views/connectapi/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:37.022Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-connectapi-test-yearly-tax-under-the-act-over-rest
+    title: TestYearlyTaxUnderTheActOverREST
+    sourceFile: internal/views/connectapi/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:43.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-taxed-account
+    title: TaxedAccount
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:49.503Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-payment
+    title: payment
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:10:55.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-paid-in
+    title: PaidIn
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:11:02.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-payments
+    title: payments
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:11:14.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-tax-totals
+    title: TaxTotals
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:11:21.290Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-date-total-tax
+    title: DateTotal.tax
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:11:27.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-row-sum
+    title: rowSum
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:11:33.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-account-rows
+    title: accountRows
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:11:39.141Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-rows-of
+    title: rowsOf
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:11:45.115Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-add-holding
+    title: addHolding
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:11:51.164Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-add-tax-values
+    title: addTaxValues
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:11:57.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-plus
+    title: plus
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:02.980Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-minus
+    title: minus
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:08.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-test-helper-listed-row
+    title: listedRow
+    sourceFile: internal/views/taxtotals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:13.944Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-taxes
+  - id: SYM-views-test-tax-totals
+    title: TestTaxTotals
+    sourceFile: internal/views/taxtotals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:19.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-taxes
+  - id: SYM-views-test-helper-taxed-total
+    title: taxedTotal
+    sourceFile: internal/views/taxtotals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:24.724Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-taxes
+  - id: SYM-views-test-paid-in
+    title: TestPaidIn
+    sourceFile: internal/views/taxtotals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:29.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-taxes
+  - id: SYM-ui-server-settings-routes
+    title: server.settingsRoutes
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:35.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-taxes
+      - type: implements
+        target: REQ-ui-yearly-taxes
+  - id: SYM-ui-instrument-class
+    title: instrumentClass
+    sourceFile: internal/views/ui/taxes.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:42.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-taxes
+      - type: implements
+        target: REQ-ui-yearly-taxes
+  - id: SYM-ui-taxes-settings
+    title: taxesSettings
+    sourceFile: internal/views/ui/taxes.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:48.650Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-taxes
+      - type: implements
+        target: REQ-ui-yearly-taxes
+  - id: SYM-ui-server-load-taxes
+    title: server.loadTaxes
+    sourceFile: internal/views/ui/taxes.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:12:54.465Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-taxes
+      - type: implements
+        target: REQ-ui-yearly-taxes
+  - id: SYM-ui-class-label
+    title: classLabel
+    sourceFile: internal/views/ui/taxes.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:00.383Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-taxes
+      - type: implements
+        target: REQ-ui-yearly-taxes
+  - id: SYM-ui-clamp-year
+    title: clampYear
+    sourceFile: internal/views/ui/taxes.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:06.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-taxes
+      - type: implements
+        target: REQ-ui-yearly-taxes
+  - id: SYM-ui-server-set-exemption-class
+    title: server.setExemptionClass
+    sourceFile: internal/views/ui/taxes.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:12.885Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-taxes
+      - type: implements
+        target: REQ-ui-yearly-taxes
+  - id: SYM-ui-test-helper-fake-read-list-yearly-taxes
+    title: fakeRead.ListYearlyTaxes
+    sourceFile: internal/views/ui/taxes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:18.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-taxes
+  - id: SYM-ui-test-helper-fake-settings-set-exemption-class
+    title: fakeSettings.SetExemptionClass
+    sourceFile: internal/views/ui/taxes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:24.373Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-taxes
+  - id: SYM-ui-test-yearly-tax-settings
+    title: TestYearlyTaxSettings
+    sourceFile: internal/views/ui/taxes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:29.257Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-taxes
+  - id: SYM-ui-test-losses-offset-line
+    title: TestLossesOffsetLine
+    sourceFile: internal/views/ui/taxes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:34.164Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-taxes
+  - id: SYM-views-tax-year-account
+    title: TaxYearAccount
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:38.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-tax-days
+    title: TaxDays
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:44.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-tax-year-account-tax-day
+    title: TaxYearAccount.taxDay
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:51.022Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-held-asset
+    title: heldAsset
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:13:58.637Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-tax-year-account-assets-on
+    title: TaxYearAccount.assetsOn
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:14:06.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-tax-year-account-class-of
+    title: TaxYearAccount.classOf
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:14:12.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-tax-year-account-payments
+    title: TaxYearAccount.payments
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:14:20.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-tax-year-account-to-pln
+    title: TaxYearAccount.toPLN
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:14:27.828Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-views-test-helper-tax-year-account
+    title: taxYearAccount
+    sourceFile: internal/views/yearlytax_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:14:33.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-yearly-tax
+  - id: SYM-views-test-tax-days
+    title: TestTaxDays
+    sourceFile: internal/views/yearlytax_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:14:38.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-yearly-tax
+  - id: SYM-valuationv1-get-owner-settings-response-get-exemption-classes
+    title: GetOwnerSettingsResponse.GetExemptionClasses
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:14:45.247Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-get-owner-settings-response-get-instrument-classes
+    title: GetOwnerSettingsResponse.GetInstrumentClasses
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:14:51.482Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-instrument-class
+    title: InstrumentClass
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:14:57.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-instrument-class-reset
+    title: InstrumentClass.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:03.332Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-instrument-class-string
+    title: InstrumentClass.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:09.182Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-instrument-class-proto-message
+    title: InstrumentClass.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:15.574Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-instrument-class-proto-reflect
+    title: InstrumentClass.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:21.742Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-instrument-class-descriptor
+    title: InstrumentClass.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:27.673Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-instrument-class-get-isin
+    title: InstrumentClass.GetIsin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:34.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-instrument-class-get-exemption-class
+    title: InstrumentClass.GetExemptionClass
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:41.121Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request
+    title: SetExemptionClassRequest
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:46.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request-reset
+    title: SetExemptionClassRequest.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:52.289Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request-string
+    title: SetExemptionClassRequest.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:15:58.344Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request-proto-message
+    title: SetExemptionClassRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:04.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request-proto-reflect
+    title: SetExemptionClassRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:10.534Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request-descriptor
+    title: SetExemptionClassRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:16.822Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request-get-origin
+    title: SetExemptionClassRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:23.134Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request-get-session-token
+    title: SetExemptionClassRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:29.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request-get-isin
+    title: SetExemptionClassRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:35.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-request-get-exemption-class
+    title: SetExemptionClassRequest.GetExemptionClass
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:41.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-response
+    title: SetExemptionClassResponse
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:46.550Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-response-reset
+    title: SetExemptionClassResponse.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:53.316Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-response-string
+    title: SetExemptionClassResponse.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:16:59.698Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-response-proto-message
+    title: SetExemptionClassResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:17:06.048Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-response-proto-reflect
+    title: SetExemptionClassResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:17:12.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1-set-exemption-class-response-descriptor
+    title: SetExemptionClassResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:17:18.586Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1connect-settings-service-client-set-exemption-class
+    title: settingsServiceClient.SetExemptionClass
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:17:24.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-valuationv1connect-unimplemented-settings-service-handler-set-exemption-class
+    title: UnimplementedSettingsServiceHandler.SetExemptionClass
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:17:31.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-exemption-class
+  - id: SYM-viewsv1-yearly-tax-get-through
+    title: YearlyTax.GetThrough
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:17:37.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-yearly-tax-get-averages
+    title: YearlyTax.GetAverages
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:17:44.087Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-yearly-tax-get-exempt
+    title: YearlyTax.GetExempt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:17:50.780Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-yearly-tax-get-taxed
+    title: YearlyTax.GetTaxed
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:17:58.236Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-yearly-tax-get-unclassified-instruments
+    title: YearlyTax.GetUnclassifiedInstruments
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:18:05.249Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-class-amount
+    title: ClassAmount
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:18:10.971Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-class-amount-reset
+    title: ClassAmount.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:18:17.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-class-amount-string
+    title: ClassAmount.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:18:25.500Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-class-amount-proto-message
+    title: ClassAmount.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:18:32.874Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-class-amount-proto-reflect
+    title: ClassAmount.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:18:39.092Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-class-amount-descriptor
+    title: ClassAmount.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:18:45.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-class-amount-get-exemption-class
+    title: ClassAmount.GetExemptionClass
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:18:52.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-class-amount-get-amount
+    title: ClassAmount.GetAmount
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:18:59.015Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-viewsv1-date-total-get-net-offset-reporting
+    title: DateTotal.GetNetOffsetReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:19:05.492Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-viewsv1-date-total-get-liquidation-offset-reporting
+    title: DateTotal.GetLiquidationOffsetReporting
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:19:11.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-totals-losses-offset
+  - id: SYM-views-payment-type
+    title: Payment
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:37:07.650Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-views-totals-losses-offset

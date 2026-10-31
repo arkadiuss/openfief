@@ -503,3 +503,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c82f0a50a43
+  - type: executable_for
+    from: SYM-core-test-helper-check-exemption-class
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:00:38.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd809493ca49
+  - type: implements
+    from: SYM-pl-pit38-taxes
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:05:09.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0ed5be764c4
+  - type: covered_by
+    from: SYM-pl-pit38-taxes
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:05:09.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3363fbe23e6a
+  - type: implements
+    from: SYM-views-payment-type
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:37:09.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf38b1001ae4
+  - type: covered_by
+    from: SYM-views-payment-type
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:37:09.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-519ffd8b2607

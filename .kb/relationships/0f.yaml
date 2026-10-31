@@ -643,3 +643,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-090810fee468
+  - type: implements
+    from: SYM-valuation-app-revaluer-raise-unclassified
+    to: REQ-valuation-unclassified-attention
+    created_at: 2026-10-31T19:07:47.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31f932bb3686
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-raise-unclassified
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T19:07:47.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c1936b219f7
+  - type: implements
+    from: SYM-valuation-realized-gain
+    to: REQ-valuation-realized-gains
+    created_at: 2026-10-31T19:09:21.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10a4581f901d
+  - type: covered_by
+    from: SYM-valuation-realized-gain
+    to: TEST-valuation-realized
+    created_at: 2026-10-31T19:09:21.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88e66b43e4ef
+  - type: implements
+    from: SYM-viewsv1-class-amount-get-amount
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:19:01.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ff8b2b79f61
+  - type: covered_by
+    from: SYM-viewsv1-class-amount-get-amount
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:19:01.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e29c49f12afe

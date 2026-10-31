@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8609110296c
+  - type: implements
+    from: SYM-views-row-sum
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:11:35.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41e8f78a12c2
+  - type: covered_by
+    from: SYM-views-row-sum
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:11:35.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c219db1c3c40

@@ -692,3 +692,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5644fd6161c7
+  - type: constrains
+    from: REQ-ledger-sales
+    to: FACT-SUBJECT-989CC799492C7714
+    created_at: 2026-10-31T18:34:09.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a10abea8bb3
+  - type: requires_property
+    from: REQ-ledger-sales
+    to: FACT-PROP-830831BA5B374C92
+    created_at: 2026-10-31T18:34:09.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-994b9f6d9d9f
+  - type: specified_by
+    from: REQ-ledger-sales
+    to: SCEN-ledger-sales
+    created_at: 2026-10-31T18:34:09.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f9f0f97a18e
+  - type: executable_for
+    from: SYM-pl-test-helper-rows-of
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:05:33.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f829fe04867
+  - type: executable_for
+    from: SYM-valuation-app-test-set-exemption-class
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T19:08:33.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5dfee869ce6

@@ -42,6 +42,12 @@ service SettingsService {
   // account is revalued (D-36), since an IKZE's liquidation value depends
   // on it.
   rpc SetMarginalRate(SetMarginalRateRequest) returns (SetMarginalRateResponse);
+
+  // SetExemptionClass classifies an instrument for a yearly tax's exemptions
+  // when the jurisdiction pack can't (D-132), such as a fund whose policy
+  // it can't read. The choice stays with the instrument; setting it again
+  // replaces it. It revalues nothing: the yearly tax is computed when read.
+  rpc SetExemptionClass(SetExemptionClassRequest) returns (SetExemptionClassResponse);
 }
 
 // NumberFormat is how amounts are written (D-113): only the separators.
@@ -74,7 +80,31 @@ message GetOwnerSettingsResponse {
   // The owner's marginal income tax rate as a decimal fraction, such as
   // "0.32"; empty until the owner sets it.
   string marginal_rate = 6;
+  // The exemption classes the owner can classify an instrument in for OKI's
+  // yearly tax (D-127), such as "savings"; empty when no wrapper has one.
+  repeated string exemption_classes = 7;
+  // The owner's classifications, in ISIN order.
+  repeated InstrumentClass instrument_classes = 8;
 }
+
+// InstrumentClass is the owner's class of one instrument (D-132).
+message InstrumentClass {
+  // The instrument's ISIN.
+  string isin = 1;
+  // One of GetOwnerSettingsResponse.exemption_classes.
+  string exemption_class = 2;
+}
+
+message SetExemptionClassRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The instrument's ISIN.
+  string isin = 3;
+  // One of GetOwnerSettingsResponse.exemption_classes.
+  string exemption_class = 4;
+}
+
+message SetExemptionClassResponse {}
 
 message SetNumberFormatRequest {
   string origin = 1;

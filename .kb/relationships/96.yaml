@@ -426,3 +426,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17bcdd428242
+  - type: constrains
+    from: REQ-pl-totals-per-wrapper
+    to: FACT-SUBJECT-6DB3F76DD96706DC
+    created_at: 2026-10-31T18:34:01.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0949457dfb42
+  - type: requires_property
+    from: REQ-pl-totals-per-wrapper
+    to: FACT-PROP-B474AE1A8ABA8D74
+    created_at: 2026-10-31T18:34:01.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d408eb439be9
+  - type: specified_by
+    from: REQ-pl-totals-per-wrapper
+    to: SCEN-pl-totals-per-wrapper
+    created_at: 2026-10-31T18:34:02.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ae77147aba6

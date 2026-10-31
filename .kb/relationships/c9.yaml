@@ -622,3 +622,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b80e3a2ee0e
+  - type: executable_for
+    from: SYM-pl-test-index-oki-exemption
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:04:18.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b481358a85a4

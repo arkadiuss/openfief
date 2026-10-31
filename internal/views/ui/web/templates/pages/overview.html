@@ -41,8 +41,15 @@
     </tr>
     {{end}}
     </tbody>
+    {{with $.Data.Total}}
+    <tfoot>
+    <tr><th scope="row" colspan="3">Losses offset</th>{{template "losses-offset" .}}<td colspan="2"></td></tr>
+    <tr><th scope="row" colspan="3">Portfolio total</th>{{template "three-values" .}}<td colspan="2"></td></tr>
+    </tfoot>
+    {{end}}
   </table></div>
   <p class="muted">Each account's holdings with its cash, in the reporting currency.</p>
+  {{if .Total}}{{template "losses-offset-help"}}{{end}}
   {{else}}
   <div class="state">{{template "kasztan" "asleep"}}<div>
     <p class="state-title">No accounts yet.</p>

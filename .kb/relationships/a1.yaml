@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25244414e873
+  - type: verified_by
+    from: SCEN-valuation-unclassified-attention
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T18:33:29.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5936e90da600

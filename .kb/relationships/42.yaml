@@ -559,3 +559,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-344dd4305d73
+  - type: implements
+    from: SYM-views-date-total-tax
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:11:29.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69d254eda111
+  - type: covered_by
+    from: SYM-views-date-total-tax
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:11:29.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cba166143e4

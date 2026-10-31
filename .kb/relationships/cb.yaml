@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-277fdd1444ed
+  - type: implements
+    from: SYM-valuationv1-set-exemption-class-request-proto-message
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:16:06.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04c90ac767d4
+  - type: covered_by
+    from: SYM-valuationv1-set-exemption-class-request-proto-message
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:16:06.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aba5e5d6d5cc

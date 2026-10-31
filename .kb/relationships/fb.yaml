@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a6d9a9f2f7e
+  - type: implements
+    from: SYM-views-add-holding
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:11:53.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5fa976026c9
+  - type: covered_by
+    from: SYM-views-add-holding
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:11:53.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a24f268dfa99

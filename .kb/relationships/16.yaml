@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32f76ae36185
+  - type: executable_for
+    from: SYM-pl-test-helper-later-act
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:50.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7432b66ff635

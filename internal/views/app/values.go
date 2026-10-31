@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"maps"
-	"time"
 
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -28,6 +27,9 @@ type Terms interface {
 	// NumberFormat returns the owner's number format, and false when the
 	// owner has not chosen one.
 	NumberFormat(ctx context.Context) (jurisdiction.NumberFormat, bool, error)
+	// ExemptionClasses returns the owner's class of each instrument they
+	// classified for a yearly tax (D-132), by ISIN.
+	ExemptionClasses(ctx context.Context) (map[string]jurisdiction.ExemptionClass, error)
 }
 
 // WithJurisdiction values cash and computes yearly taxes with pack (D-70),
@@ -161,119 +163,6 @@ func (v *Views) valueSettings(ctx context.Context) (jurisdiction.Settings, error
 		return jurisdiction.Settings{}, fmt.Errorf("loading the owner's settings: %w", err)
 	}
 	return s, nil
-}
-
-// YearlyTaxes returns, for year, the yearly tax of every tax wrapper the
-// pack taxes on its balance (D-76), such as OKI's: under a law in force
-// that year, from the daily gross totals, cash included, of every account
-// in the wrapper, summed per day from the first day of the year through
-// the last day every account is valued for and the year's last day; a law
-// not in force gives the tax with InForce false. None without a
-// jurisdiction.
-func (v *Views) YearlyTaxes(ctx context.Context, year int) ([]jurisdiction.YearlyTax, error) {
-	if v.pack == nil {
-		return nil, nil
-	}
-	var out []jurisdiction.YearlyTax
-	for _, w := range v.pack.Wrappers() {
-		t, err := v.pack.YearlyTax(w, year, nil)
-		if errors.Is(err, jurisdiction.ErrNoYearlyTax) {
-			continue
-		}
-		if err != nil {
-			return nil, fmt.Errorf("yearly tax of %s: %w", w, err)
-		}
-		if t.InForce {
-			days, dayErr := v.wrapperBalances(ctx, w, year)
-			if dayErr != nil {
-				return nil, dayErr
-			}
-			if t, err = v.pack.YearlyTax(w, year, days); err != nil {
-				return nil, fmt.Errorf("yearly tax of %s: %w", w, err)
-			}
-		}
-		out = append(out, t)
-	}
-	return out, nil
-}
-
-// wrapperBalances returns the gross totals, cash included, of every account
-// in wrapper w, summed per day of year up to the earliest date any account
-// is valued through.
-func (v *Views) wrapperBalances(ctx context.Context, w jurisdiction.Wrapper, year int) ([]jurisdiction.DayBalance, error) {
-	from, err1 := kernel.NewDate(year, time.January, 1)
-	next, err2 := kernel.NewDate(year+1, time.January, 1)
-	if err := errors.Join(err1, err2); err != nil {
-		return nil, fmt.Errorf("year %d: %w", year, err)
-	}
-	to := next.AddDays(-1)
-	in, err := v.accountsIn(ctx, w)
-	if err != nil {
-		return nil, err
-	}
-	rec, err := v.recorded(ctx, in)
-	if err != nil {
-		return nil, err
-	}
-	if len(rec.txs) == 0 || rec.through.Before(from) {
-		return nil, nil
-	}
-	totals, err := v.totals(ctx, in, from, earlier(to, rec.through))
-	if err != nil {
-		return nil, err
-	}
-	out := make([]jurisdiction.DayBalance, 0, len(totals))
-	for i := range totals {
-		out = append(out, jurisdiction.DayBalance{Date: totals[i].Date, Balance: totals[i].Reporting})
-	}
-	return out, nil
-}
-
-// accountsIn returns the accounts in wrapper w.
-func (v *Views) accountsIn(ctx context.Context, w jurisdiction.Wrapper) ([]ledger.Account, error) {
-	accounts, err := v.Accounts(ctx)
-	if err != nil {
-		return nil, err
-	}
-	var in []ledger.Account
-	for i := range accounts {
-		terms, termsErr := v.AccountTerms(ctx, accounts[i].ID)
-		if termsErr != nil {
-			return nil, termsErr
-		}
-		if terms.Wrapper == w {
-			in = append(in, accounts[i])
-		}
-	}
-	return in, nil
-}
-
-// totals returns the totals per date of the range from..to of accounts'
-// stored valuations and cash.
-func (v *Views) totals(ctx context.Context, accounts []ledger.Account, from, to kernel.Date) ([]views.DateTotal, error) {
-	settings, err := v.valueSettings(ctx)
-	if err != nil {
-		return nil, err
-	}
-	var vals []valuation.HoldingValuation
-	var cash []views.DayCash
-	for i := range accounts {
-		stored, loadErr := v.valuations.Valuations(ctx, accounts[i].ID, from, to)
-		if loadErr != nil {
-			return nil, fmt.Errorf("loading valuations: %w", loadErr)
-		}
-		vals = append(vals, stored...)
-		days, cashErr := v.cashDays(ctx, accounts[i].ID, from, to, &settings)
-		if cashErr != nil {
-			return nil, cashErr
-		}
-		cash = append(cash, days...)
-	}
-	totals, err := views.TotalsByDate(vals, cash, v.reporting)
-	if err != nil {
-		return nil, fmt.Errorf("totalling valuations: %w", err)
-	}
-	return totals, nil
 }
 
 // MarkedHoldings are an account's holdings on a date with the removed

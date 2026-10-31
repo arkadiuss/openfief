@@ -9,6 +9,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/views"
+	"github.com/arkadiuss/openfief/internal/views/app"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
@@ -58,14 +59,35 @@ func pbNumberFormat(f jurisdiction.NumberFormat) *viewsv1.NumberFormat {
 }
 
 // pbYearlyTax converts a yearly tax; one whose law isn't in force carries
-// only its wrapper and year.
-func pbYearlyTax(t *jurisdiction.YearlyTax) *viewsv1.YearlyTax {
+// only its wrapper and year. The deprecated limit and excess stay unset.
+func pbYearlyTax(t *app.YearlyTax) *viewsv1.YearlyTax {
 	out := &viewsv1.YearlyTax{TaxWrapper: string(t.Wrapper), Year: clampInt32(t.Year), InForce: t.InForce}
 	if !t.InForce {
 		return out
 	}
-	out.Days, out.Average, out.Limit = clampInt32(t.Days), pbMoney(t.Average), pbMoney(t.Limit)
-	out.Rate, out.Excess, out.Tax = t.Rate.String(), pbMoney(t.Excess), pbMoney(t.Tax)
+	out.Days, out.Average, out.Averages = clampInt32(t.Days), pbMoney(t.Average), pbClassAmounts(t.Averages)
+	out.UnclassifiedInstruments = t.Unclassified
+	if !t.Through.IsZero() {
+		out.Through = pbDate(t.Through)
+	}
+	if t.ExemptionsKnown {
+		out.Exempt, out.Taxed = pbClassAmounts(t.Exempt), pbMoney(t.Taxed)
+	}
+	if t.RateKnown {
+		out.Rate = t.Rate.String()
+		if t.ExemptionsKnown {
+			out.Tax = pbMoney(t.Tax)
+		}
+	}
+	return out
+}
+
+// pbClassAmounts converts amounts per exemption class.
+func pbClassAmounts(cs []jurisdiction.ClassValue) []*viewsv1.ClassAmount {
+	out := make([]*viewsv1.ClassAmount, 0, len(cs))
+	for _, c := range cs {
+		out = append(out, &viewsv1.ClassAmount{ExemptionClass: string(c.Class), Amount: pbMoney(c.Value)})
+	}
 	return out
 }
 

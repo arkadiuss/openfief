@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-527b6fe22bd4
+  - type: implements
+    from: SYM-ledger-sold-instruments
+    to: REQ-ledger-sales
+    created_at: 2026-10-31T19:07:03.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-196e58705657
+  - type: covered_by
+    from: SYM-ledger-sold-instruments
+    to: TEST-ledger-sale
+    created_at: 2026-10-31T19:07:03.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4560d27328f

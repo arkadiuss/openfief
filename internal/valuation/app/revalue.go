@@ -15,10 +15,11 @@ import (
 // Revaluer runs revaluations (D-36): it derives an account's holdings and
 // lots for each day from the log and stores their valuations.
 type Revaluer struct {
-	log   TransactionLog
-	store Store
-	pack  jurisdiction.Pack
-	today func() kernel.Date
+	log       TransactionLog
+	store     Store
+	pack      jurisdiction.Pack
+	today     func() kernel.Date
+	attention AttentionRaiser
 }
 
 // NewRevaluer returns a Revaluer that reads the log from log, inputs and
@@ -71,6 +72,9 @@ func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from k
 	through := valuation.ValuedThrough(prior, hasPrior, start, today, rows)
 	if err := r.store.ReplaceValuations(ctx, account, from, rows, through); err != nil {
 		return RevalueResult{}, fmt.Errorf("revaluing %s: storing: %w", account, err)
+	}
+	if err := r.raiseUnclassified(ctx, account, rows); err != nil {
+		return RevalueResult{}, fmt.Errorf("revaluing %s: %w", account, err)
 	}
 	res := RevalueResult{Start: start, ValuedThrough: through, Rows: len(rows)}
 	for i := range rows {

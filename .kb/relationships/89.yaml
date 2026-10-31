@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bad8e2123c77
+  - type: executable_for
+    from: SYM-pl-test-helper-oki-day
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:26.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2f5e0bdccd8

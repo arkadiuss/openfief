@@ -566,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-004e7d84d493
+  - type: constrains
+    from: REQ-views-totals-losses-offset
+    to: FACT-SUBJECT-CD65E2B80F60E34C
+    created_at: 2026-10-31T18:34:48.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b96e98681f0c
+  - type: requires_property
+    from: REQ-views-totals-losses-offset
+    to: FACT-PROP-1C32EBD3A12F7EFE
+    created_at: 2026-10-31T18:34:48.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63714372cecf
+  - type: specified_by
+    from: REQ-views-totals-losses-offset
+    to: SCEN-views-totals-losses-offset
+    created_at: 2026-10-31T18:34:48.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-722c4821ba21

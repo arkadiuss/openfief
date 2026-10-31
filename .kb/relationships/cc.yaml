@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4c498febfcb
+  - type: implements
+    from: SYM-pl-pit38
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:04:50.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04b80712f0ae
+  - type: covered_by
+    from: SYM-pl-pit38
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:04:51.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d01dcd40e79e

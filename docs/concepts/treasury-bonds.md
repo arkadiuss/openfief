@@ -86,7 +86,7 @@ The issuer's worked examples count interest to the fifth business day after the 
 
 ### OKI's yearly tax
 
-Inside OKI no Belka tax is due; instead, a yearly tax falls on the part of the average balance above a statutory limit, summed across all of the owner's OKI accounts (D-76). The limit, the rate and the day the act is in force from are the act's: `OKIAct` holds them as data. The code knows no act in force yet, so `CurrentOKIAct` has no date and no tax is ever computed ([Implementation questions](../implementation-questions.md)).
+Inside OKI no Belka tax is due; instead, the act on OKI, in force from 2027-01-01, levies a yearly tax on asset value, summed across all of the owner's OKI accounts (D-76, D-127). `OKIAct` holds the act as data: its in-force date, its rates and exempt amounts. A treasury savings bond is a savings asset for its exemptions, as is PLN cash on an account that held such bonds in the year. [Valuation](valuation.md#okis-yearly-tax) describes the tax ([oki.go](../../internal/jurisdiction/pl/oki.go)) and how totals count each wrapper's tax on the whole ([totals.go](../../internal/jurisdiction/pl/totals.go), D-128).
 
 ## How it works
 
@@ -99,7 +99,8 @@ Inside OKI no Belka tax is due; instead, a yearly tax falls on the part of the a
 | [value.go](../../internal/jurisdiction/pl/value.go) | `Purchase`, `LotValue`, `ValueLot` |
 | [coupon.go](../../internal/jurisdiction/pl/coupon.go) | `CouponDates`, `Terms.Coupon`, `CouponPayment` |
 | [tax.go](../../internal/jurisdiction/pl/tax.go) | `TaxWrapper`, `TaxWrappers`, `ParseTaxWrapper`, `BelkaRate`, `BelkaTax`, `TaxRateCutoff` |
-| [pack.go](../../internal/jurisdiction/pl/pack.go) | `Pack` (the `jurisdiction.Pack`), `NewPack`, `RulesVersion`, `IKZEExitRate`, `OKIAct`, `CurrentOKIAct` |
+| [pack.go](../../internal/jurisdiction/pl/pack.go) | `Pack` (the `jurisdiction.Pack`), `NewPack`, `RulesVersion`, `IKZEExitRate` |
+| [oki.go](../../internal/jurisdiction/pl/oki.go), [totals.go](../../internal/jurisdiction/pl/totals.go) | `OKIAct`, `CurrentOKIAct`, `OKIRate`, `IndexOKIExemption`, the exemption classes and `YearlyTax` (D-127, D-132); `Totals` and `PIT38Tax` (D-128) |
 
 The package imports nothing from OpenFief but `kernel` and the pack contract in `internal/jurisdiction` ([Valuation](valuation.md#the-jurisdiction-pack)), does no I/O and reads no clock; lint enforces that for domain packages. [doc.go](../../internal/jurisdiction/pl/doc.go) lists the issue letters, interest tables and statute articles the doc comments cite.
 
@@ -182,7 +183,7 @@ flowchart TD
 | `ValueListed` (priced at market) | market value | value - tax cost basis (the lots' cost at the NBP rate before purchase) | value - sale cost (the fee rule, [Valuation](valuation.md#the-jurisdiction-pack)) |
 | `ValueCash` | the amount | nothing | the amount |
 
-So cash is taxed only in IKZE, where any withdrawal is. A gain is taxed per holding: losses in one holding don't offset gains in another, and IKE's return is taxed on each holding's gain over its cost rather than on the account's withdrawals over its contributions ([Implementation questions](../implementation-questions.md)). `YearlyTax(oki, year, days)` averages the summed daily balances of the year's days on or after the act's in-force date, half up to grosze, and taxes the part above the limit at the rate; without an act in force for the year it returns `InForce` false and computes nothing. Any other wrapper is `jurisdiction.ErrNoYearlyTax`.
+So cash is taxed only in IKZE, where any withdrawal is. Each holding's values carry its own tax as if it alone were sold; a total counts the tax on the whole instead (`Totals`, D-128): losses offset gains across taxable accounts as PIT-38 counts them, and IKE's return is taxed on the account's proceeds above what was paid in ([Valuation](valuation.md#taxes-on-totals)). `YearlyTax(oki, year, accounts)` computes OKI's tax on asset value (D-127, [Valuation](valuation.md#okis-yearly-tax)); any other wrapper is `jurisdiction.ErrNoYearlyTax`.
 
 Worked example, from the synthetic cases in [value_test.go](../../internal/jurisdiction/pl/value_test.go) and [pack_test.go](../../internal/jurisdiction/pl/pack_test.go): 10 bonds of EDO0334, first-period rate 6%, margin 2%, fee 2.00 PLN, valued on 2024-09-15.
 
@@ -199,8 +200,8 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 - **D-9**: manual bond lots, valuation computed. `ValueLot` needs more than D-9's series, quantity and purchase date. In a revaluation the purchase date is the lot's open date and the price per bond its cost over its quantity; the series terms (per ISIN), the index readings and the account's tax wrapper are recorded separately. The owner enters a lot with its series' terms in the built-in UI, and the treasury-bonds connector delivers both ([Ingest](ingest.md#treasury-bond-lots)); the lot's rules reuse `ValueLot`: a lot is accepted only if it can be valued on its purchase date.
 - **D-20**: Polish tax uses NBP rates, from the day before (`TaxRateCutoff`, the pack's `TaxRateDate`); the cost basis of a listed holding converts at it.
 - **D-70**: `Pack` is the Polish jurisdiction pack, pure functions behind `jurisdiction.Pack`. Bond accrual (`ValueLot`) stays a Polish function that valuation calls directly, since only Polish bonds have series terms; the pack turns its parts into values.
-- **D-76**: the four wrappers, no Belka tax inside OKI, and OKI's yearly tax computed only under an act in force. The act's date, limit and rate are unknown to the code, so nothing is computed yet; how the tax applies to days before an act takes effect mid-year, and averaging over the days given, are this package's narrow readings ([Implementation questions](../implementation-questions.md)).
-- **D-77**: gross, net and liquidation per product kind and wrapper, as tabled above. The tax rules per wrapper are the narrowest reading of Polish tax law: IKE's exit untaxed and its return taxed on the gain, IKZE's 10% exit tax, per-holding gains without loss offsetting, rounding half up.
+- **D-76**, **D-127**: the four wrappers, no Belka tax inside OKI, and OKI's yearly tax per the act in force from 2027-01-01 ([Valuation](valuation.md#okis-yearly-tax)).
+- **D-77**, **D-128**: gross, net and liquidation per product kind and wrapper, as tabled above: each holding with its own tax as if it alone were sold, IKE's exit untaxed and its return taxed on the gain, IKZE's 10% exit tax, rounding half up; totals count the tax on the whole.
 - **D-78**: an IKZE's liquidation value is `LiquidationUnknown` until the owner's marginal rate is set; a sale's cost comes from the account's fee rule, which valuation applies.
 - **D-101**, **D-117**: coupons of COI, ROR and DOR lots are booked as interest from `CouponDates` and `Terms.Coupon`; the last period's interest comes with the redemption, which isn't booked yet ([Implementation questions](../implementation-questions.md)).
 - **D-100**: an entered lot is bought for cash at `Nominal` or by exchange at `ExchangePrice`; its 0.10 PLN discount per bond is the `LotValue.Discount` the pack taxes with the interest at the planned exit and on redemption today. OTS keeps its letter's 100.00 PLN exchange price, so an OTS exchange has no discount.
@@ -220,7 +221,7 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 | Index plus margin, negative readings floored, missing readings fail | `TestPeriodRate`, `TestPeriodRateNeedsTheIndexReading` in [terms_test.go](../../internal/jurisdiction/pl/terms_test.go) | REQ-pl-cpi-indexation, SCEN-pl-cpi-indexation, TEST-pl-terms |
 | Lot values: accrual, fee cap per wrapper, discount, maturity; a taxable lot's liquidation value | `TestValueLot`, `TestValueLotRejectsBadInput` | REQ-pl-bond-accrual, REQ-pl-early-redemption-fee-by-wrapper, SCEN-pl-early-redemption-fee-by-wrapper, TEST-pl-value |
 | Gross, net and liquidation of a listed holding, a bond lot and cash in each wrapper; IKZE without the owner's rate; values never above gross (seeded property test); the pack's defaults | `TestPackDefaults`, `TestValueListed`, `TestValueAccrued`, `TestValueCash`, `TestValuesProperties` in [pack_test.go](../../internal/jurisdiction/pl/pack_test.go) | REQ-pl-values-per-wrapper, SCEN-pl-values-per-wrapper, REQ-pl-tax-wrappers, REQ-pl-oki-no-belka-tax, REQ-pl-ikze-early-withdrawal-tax, REQ-pl-ikze-liquidation-missing, REQ-jurisdiction-pl-number-format, TEST-pl-pack |
-| OKI's yearly tax: none without an act in force; under a synthetic act, the average above the limit | `TestYearlyTax` | REQ-pl-oki-act-as-data, SCEN-pl-oki-act-as-data, REQ-pl-oki-yearly-tax, TEST-pl-pack |
+| OKI's yearly tax and the totals' taxes ([Valuation](valuation.md#verification)) | `TestOKIYearlyTax` in [oki_test.go](../../internal/jurisdiction/pl/oki_test.go), `TestTotals` in [totals_test.go](../../internal/jurisdiction/pl/totals_test.go) | REQ-pl-oki-tax-base-average-value, REQ-pl-totals-tax-pit38, TEST-pl-oki, TEST-pl-totals |
 | Matches the issuer's daily interest tables | `TestValueLotMatchesInterestTables` in [official_test.go](../../internal/jurisdiction/pl/official_test.go) | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-2-tos-base-unrounded, TEST-pl-official |
 | Coupon dates per type, none for the last period, capitalized types or OTS; one bond's coupon at the period rate, half up; a missing reading | `TestCouponDates`, `TestCoupon`, `TestCouponWithoutItsReading` in [coupon_test.go](../../internal/jurisdiction/pl/coupon_test.go) | REQ-pl-coupon-payments, SCEN-pl-coupon-payments, TEST-pl-coupons |
 | Matches the issuer's worked early-redemption examples | `TestValueLotMatchesWorkedExamples` | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-3-belka-half-up, TEST-pl-official |
@@ -234,4 +235,4 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 ## Not built yet
 
 - **D-9**, **D-97**: anything that fetches series terms (the owner types each series' terms with its lots; D-97 waits on OQ-30); and an import of the bond service's export, if one exists (OQ-22).
-- **D-76**: OKI's yearly tax in practice: the act's in-force date, limit and rate.
+- **D-127**: the rates of 2028 on and the exempt amounts of 2030 on need the NBP reference rate and the CPI index the core doesn't store yet ([Implementation questions](../implementation-questions.md)).

@@ -475,3 +475,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0db3897f7e46
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-averages
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:17:46.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d50cec91e4ad
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-averages
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:17:46.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1af174affeb

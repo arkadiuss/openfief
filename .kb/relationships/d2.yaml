@@ -643,3 +643,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-055c40b7a537
+  - type: implements
+    from: SYM-pl-oki-rate
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:01:06.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-657426c8af96
+  - type: implements
+    from: SYM-pl-oki-rate
+    to: REQ-pl-oki-tax-rate
+    created_at: 2026-10-31T19:01:06.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f1588bf2cb0
+  - type: covered_by
+    from: SYM-pl-oki-rate
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:06.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76ecff9e6d5a

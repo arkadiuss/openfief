@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31f3569ef9cc
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-exemption-classes
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:10:33.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-279a26f3f90f

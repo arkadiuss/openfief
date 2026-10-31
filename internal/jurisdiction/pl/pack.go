@@ -3,7 +3,6 @@ package pl
 import (
 	"errors"
 	"fmt"
-	"time"
 
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -28,7 +27,7 @@ func NewPack() *Pack { return &Pack{OKI: CurrentOKIAct()} }
 
 // RulesVersion is the version of the pack's rules: raise it whenever a
 // change to them changes a stored value, so every account is revalued.
-const RulesVersion = "1"
+const RulesVersion = "2"
 
 // Version returns "pl/" and RulesVersion.
 func (*Pack) Version() string { return "pl/" + RulesVersion }
@@ -229,98 +228,4 @@ func allPLN(ms ...kernel.Money) error {
 		return fmt.Errorf("%w: %s", ErrNotPLN, m)
 	}
 	return nil
-}
-
-// OKIAct is what the act on OKI fixes for its yearly tax (D-76): the day it
-// is in force from, the balance up to which nothing is taxed, and the rate
-// on the part of the average balance above it. Rates are fractions. The
-// zero act is not in force: no tax is computed under it.
-type OKIAct struct {
-	InForceFrom kernel.Date
-	Limit       kernel.Money
-	Rate        kernel.Decimal
-}
-
-// CurrentOKIAct returns the OKI act as this code knows it: not in force,
-// with no date, limit or rate, because no act in force fixing them is known
-// to it yet (docs/implementation-questions.md). Setting them here, from the
-// act's text, is what turns the yearly tax on.
-func CurrentOKIAct() OKIAct { return OKIAct{} }
-
-// YearlyTax returns OKI's tax for year (D-76) under p.OKI, from the daily
-// balances of every OKI account summed: the average of the balances dated
-// in the year on or after the act's in-force date, rounded half up to
-// grosze; the part of it above the limit; and the rate of that part,
-// rounded half up to grosze. A year the act isn't in force in gets no tax
-// and InForce false. Any wrapper but OKI is an error wrapping
-// jurisdiction.ErrNoYearlyTax.
-func (p *Pack) YearlyTax(w jurisdiction.Wrapper, year int, days []jurisdiction.DayBalance) (jurisdiction.YearlyTax, error) {
-	if w != jurisdiction.Wrapper(OKI.String()) {
-		return jurisdiction.YearlyTax{}, fmt.Errorf("%w: %q", jurisdiction.ErrNoYearlyTax, w)
-	}
-	out := jurisdiction.YearlyTax{Wrapper: w, Year: year}
-	from, ok, err := p.OKI.inForceIn(year)
-	if err != nil || !ok {
-		return out, err
-	}
-	out.InForce, out.Limit, out.Rate = true, p.OKI.Limit, p.OKI.Rate
-	zero := kernel.NewMoney(kernel.Decimal{}, pln())
-	out.Average, out.Excess, out.Tax = zero, zero, zero
-	avg, n, err := averageBalance(year, from, days)
-	if err != nil || n == 0 {
-		return out, err
-	}
-	out.Days, out.Average = n, kernel.NewMoney(avg, pln())
-	if excess := avg.Sub(p.OKI.Limit.Amount()); excess.Sign() > 0 {
-		out.Excess = kernel.NewMoney(excess, pln())
-		tax, err := taxAt(excess, p.OKI.Rate)
-		if err != nil {
-			return jurisdiction.YearlyTax{}, err
-		}
-		out.Tax = kernel.NewMoney(tax, pln())
-	}
-	return out, nil
-}
-
-// averageBalance returns the average of the balances dated in year on or
-// after from, rounded half up to grosze, and how many there were.
-func averageBalance(year int, from kernel.Date, days []jurisdiction.DayBalance) (kernel.Decimal, int, error) {
-	sum, n := kernel.Decimal{}, 0
-	for _, d := range days {
-		if d.Date.Year() != year || d.Date.Before(from) {
-			continue
-		}
-		if err := allPLN(d.Balance); err != nil {
-			return kernel.Decimal{}, 0, err
-		}
-		sum, n = sum.Add(d.Balance.Amount()), n+1
-	}
-	if n == 0 {
-		return kernel.Decimal{}, 0, nil
-	}
-	avg, err := sum.Quo(kernel.NewDecimal(int64(n), 0), grosze, kernel.RoundHalfUp)
-	if err != nil {
-		return kernel.Decimal{}, 0, fmt.Errorf("OKI average balance: %w", err)
-	}
-	return avg, n, nil
-}
-
-// inForceIn returns the first day of year the act is in force on, and
-// false when it is not in force in year at all: it has no date, or it
-// starts after the year.
-func (a *OKIAct) inForceIn(year int) (kernel.Date, bool, error) {
-	if a.InForceFrom.IsZero() || a.InForceFrom.Year() > year {
-		return kernel.Date{}, false, nil
-	}
-	if err := allPLN(a.Limit); err != nil {
-		return kernel.Date{}, false, fmt.Errorf("OKI act: %w", err)
-	}
-	if a.InForceFrom.Year() == year {
-		return a.InForceFrom, true, nil
-	}
-	first, err := kernel.NewDate(year, time.January, 1)
-	if err != nil {
-		return kernel.Date{}, false, fmt.Errorf("OKI year %d: %w", year, err)
-	}
-	return first, true, nil
 }

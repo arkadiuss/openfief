@@ -95,35 +95,6 @@ type Cash struct {
 	Amount  kernel.Money
 }
 
-// DayBalance is the value of the accounts in one wrapper at the end of a
-// day, summed, for a yearly tax on the balance.
-type DayBalance struct {
-	Date    kernel.Date
-	Balance kernel.Money
-}
-
-// YearlyTax is a wrapper's tax for one year on its balance, such as OKI's
-// on the part of the average balance above a limit (D-76).
-type YearlyTax struct {
-	Wrapper Wrapper
-	Year    int
-	// InForce reports that the law that levies it was in force in the year.
-	// When it is false, nothing else but Wrapper and Year is set: no tax is
-	// computed for a year the law didn't cover.
-	InForce bool
-	// Days counts the days the average was taken over.
-	Days int
-	// Average is the average balance over those days.
-	Average kernel.Money
-	// Limit and Rate are the law's: the balance up to Limit is not taxed,
-	// the part above it at Rate.
-	Limit kernel.Money
-	Rate  kernel.Decimal
-	// Excess is the part of Average above Limit, and Tax the tax on it.
-	Excess kernel.Money
-	Tax    kernel.Money
-}
-
 // Pack is a jurisdiction pack (D-70): the pure rules of one country.
 type Pack interface {
 	// Version names the pack and the version of its rules, such as "pl/1".
@@ -145,10 +116,27 @@ type Pack interface {
 	ValueAccrued(in *Accrued, s *Settings) (Values, error)
 	// ValueCash returns the three values of cash.
 	ValueCash(in *Cash, s *Settings) (Values, error)
-	// YearlyTax returns w's tax for year on the daily balances summed over
-	// every account in w, or an error wrapping ErrNoYearlyTax for a wrapper
-	// without one.
-	YearlyTax(w Wrapper, year int, days []DayBalance) (YearlyTax, error)
+	TaxRules
+}
+
+// TaxRules are a pack's rules for tax counted on more than one holding: a
+// total's (D-128) and a wrapper's yearly tax (D-127, D-132).
+type TaxRules interface {
+	// Totals returns the three values of a total of accounts' rows, an
+	// account's or the portfolio's, with each wrapper's tax counted on the
+	// total as its own rules count it (D-128).
+	Totals(accounts []AccountRows, s *Settings) (Values, error)
+	// ExemptionClasses returns the classes w's yearly tax tells assets apart
+	// by, which the owner chooses from for an asset the pack can't
+	// classify (D-132); none for a wrapper without a yearly tax.
+	ExemptionClasses(w Wrapper) []ExemptionClass
+	// ExemptionClass returns the class of a in w's yearly tax, and false when
+	// the pack can't tell (D-132): the class it then returns is the one a
+	// counts in until the owner classifies it.
+	ExemptionClass(w Wrapper, a *Asset) (ExemptionClass, bool)
+	// YearlyTax returns w's tax for year on the days its accounts were
+	// held, or an error wrapping ErrNoYearlyTax for a wrapper without one.
+	YearlyTax(w Wrapper, year int, accounts []TaxAccount) (YearlyTax, error)
 }
 
 // HasWrapper reports whether p has the tax wrapper w.

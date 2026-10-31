@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ac85315a0e4
+  - type: implements
+    from: SYM-pl-account-averages
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:02:05.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-172e98e468c7
+  - type: covered_by
+    from: SYM-pl-account-averages
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:02:05.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16cc042d2228

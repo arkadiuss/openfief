@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0736c8e85630
+  - type: executable_for
+    from: SYM-ui-test-yearly-tax-settings
+    to: TEST-ui-taxes
+    created_at: 2026-10-31T19:13:31.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2a511ecdaf5

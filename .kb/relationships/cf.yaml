@@ -468,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94b1a6c0f608
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-exemption-class
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:08:00.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b1d76633cda
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder-record-exemption-class
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T19:08:00.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e48c1c325d3e

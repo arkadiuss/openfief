@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2c15c83de40
+  - type: executable_for
+    from: SYM-pl-test-oki-yearly-tax-not-due
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:04:05.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86b5dd9168d2
+  - type: implements
+    from: SYM-views-account-rows
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:11:41.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a57f53a20579
+  - type: covered_by
+    from: SYM-views-account-rows
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:11:41.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f7b109d339c

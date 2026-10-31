@@ -110,6 +110,13 @@ type HoldingValuation struct {
 	Liquidation        kernel.Money
 	NetMissing         MissingReason
 	LiquidationMissing MissingReason
+	// TaxCost and SaleCost are, for a holding priced at market whose net
+	// value is set, its cost basis for tax (AccountTerms.TaxCost) and what
+	// selling it today would cost (FeeRule.SaleCost), in PLN: what a total
+	// counts its gain from (D-128). SaleCost is zero while the fee rule's
+	// minimum lacks an FX rate.
+	TaxCost  kernel.Money
+	SaleCost kernel.Money
 }
 
 // Valued reports whether no input was missing: the gross value is set.
