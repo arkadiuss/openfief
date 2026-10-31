@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8e1c790424a
+  - type: implements
+    from: SYM-ingest-app-holdings-scope
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:06:23.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-799a25cdfa0a

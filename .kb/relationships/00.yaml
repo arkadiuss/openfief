@@ -419,3 +419,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e58cb1774608
+  - type: implements
+    from: SYM-ui-tickers-view
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:05:00.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c9caf27e417
+  - type: implements
+    from: SYM-ingest-app-connectors-go-live-dates
+    to: REQ-ingest-bond-account-live-on-first-lot
+    created_at: 2026-10-31T18:10:57.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fae3dd17b3c6

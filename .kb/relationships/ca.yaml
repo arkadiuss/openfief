@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0cab4a779c5
+  - type: implements
+    from: SYM-core-new-tickers
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:04.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f069b4b51cc
+  - type: implements
+    from: SYM-treasurybonds-coupon-sync
+    to: REQ-treasurybonds-delivers-coupons
+    created_at: 2026-10-31T18:07:56.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4385dce9703

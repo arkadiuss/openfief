@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1886337b2710
+  - type: implements
+    from: SYM-valuation-eodhd-find-by-code
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:47.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd163d86ada3
+  - type: validates
+    from: TEST-plugins-browser-view
+    to: REQ-operator-older-plugin-keeps-browser-path
+    created_at: 2026-10-31T18:19:28.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d18ca8071f23

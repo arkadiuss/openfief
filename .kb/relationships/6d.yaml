@@ -706,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c155d511ece
+  - type: validates
+    from: TEST-ledger-pg-deletions
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:15:15.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0942e45c7fee

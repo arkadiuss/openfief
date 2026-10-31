@@ -589,15 +589,36 @@ relationships:
     id: rel-424e4e420561
   - type: validates
     from: TEST-ui-bond-lots
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T07:37:13.290Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bf8b158735a8
-  - type: validates
-    from: TEST-ui-bond-lots
     to: REQ-ingest-bond-lot-delete-supersedes
     created_at: 2026-10-30T07:37:13.395Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51ccd94dc2a9
+  - type: validates
+    from: TEST-ui-onboarding
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:15:31.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6399187de33d
+  - type: validates
+    from: TEST-ui-onboarding
+    to: REQ-ingest-broker-account-remap
+    created_at: 2026-10-31T18:16:31.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21445e2a6d71
+  - type: validates
+    from: TEST-ui-onboarding
+    to: REQ-ingest-broker-account-numbers-owner-only
+    created_at: 2026-10-31T18:17:12.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1880305afc92
+  - type: validates
+    from: TEST-ui-bond-lots
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:24:45.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7a371cd9a2b

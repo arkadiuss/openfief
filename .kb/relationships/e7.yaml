@@ -622,20 +622,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8c40b76d43d
-  - type: implements
-    from: SYM-pl-exchange-price
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T06:39:24.018Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2d288bb062c0
-  - type: implements
-    from: SYM-pl-exchange-price
-    to: REQ-pl-exchange-discount-taxed
-    created_at: 2026-10-30T06:39:24.071Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-904eed0af011
   - type: covered_by
     from: SYM-pl-exchange-price
     to: TEST-pl-terms
@@ -713,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d00b9b32bdaf
+  - type: implements
+    from: SYM-pl-exchange-price
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:23:54.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe38e02ac23
+  - type: implements
+    from: SYM-pl-exchange-price
+    to: REQ-pl-exchange-discount-taxed-at-99-90
+    created_at: 2026-10-31T18:24:54.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbea0345b563

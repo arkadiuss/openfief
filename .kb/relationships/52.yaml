@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f09e196bd8a
+  - type: implements
+    from: SYM-treasurybonds-mapper-map
+    to: REQ-treasurybonds-one-instance-all-accounts
+    created_at: 2026-10-31T18:10:00.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057e2774c2f7

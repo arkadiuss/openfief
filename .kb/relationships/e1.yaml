@@ -426,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-93421057d3f1
+  - type: implements
+    from: SYM-ingest-app-ticker-store
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:16.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae60ee0132b

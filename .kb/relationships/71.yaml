@@ -461,13 +461,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e877a583f97
-  - type: implements
-    from: SYM-ingest-bond-purchase
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T06:35:07.805Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c4e8f584640c
   - type: covered_by
     from: SYM-ingest-bond-purchase
     to: TEST-ingest-bondlot
@@ -531,3 +524,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c92e96924842
+  - type: implements
+    from: SYM-ingest-pg-store-confirmed-tickers
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:04:26.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6f3ceafced2
+  - type: implements
+    from: SYM-ingest-delivery-held-account
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:06:52.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7980355f26f0
+  - type: implements
+    from: SYM-ingest-bond-purchase
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:23:36.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efa4d46b2d3f

@@ -531,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f85d04410b9c
+  - type: implements
+    from: SYM-exp-plugins-held-by
+    to: REQ-operator-older-plugin-keeps-browser-path
+    created_at: 2026-10-31T18:19:22.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02b7679348d2

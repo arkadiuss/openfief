@@ -440,13 +440,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-351158b3a380
-  - type: validates
-    from: TEST-pl-terms
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T06:32:57.195Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4f47e00eb2f5
   - type: implements
     from: SYM-ingest-xtb-mapping-ticker
     to: REQ-ingest-xtb-export-mapping
@@ -517,3 +510,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d8a9197e9f9
+  - type: implements
+    from: SYM-valuation-eodhd-country-exchange
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:40.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-625ea18e8930
+  - type: validates
+    from: TEST-views-ghostfolio-plan
+    to: REQ-views-ghostfolio-import-first-blocking-delete
+    created_at: 2026-10-31T18:20:50.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a2e81d4cc4e
+  - type: validates
+    from: TEST-views-ghostfolio-plan
+    to: REQ-views-ghostfolio-earlier-bond-assets-removed
+    created_at: 2026-10-31T18:21:07.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e6336139bd3
+  - type: validates
+    from: TEST-pl-terms
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:24:40.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c49a8131ece

@@ -356,13 +356,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-20d4efddbc6e
-  - type: validates
-    from: TEST-views-ghostfolio-plan-properties
-    to: REQ-views-ghostfolio-bond-asset-symbol
-    created_at: 2026-10-30T01:21:37.725Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-423b1f79513a
   - type: implements
     from: SYM-valuation-app-input-cache-account-terms
     to: REQ-valuation-holding-three-values
@@ -517,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-08af021f6c68
+  - type: validates
+    from: TEST-views-ghostfolio-plan-properties
+    to: REQ-views-ghostfolio-earlier-bond-assets-removed
+    created_at: 2026-10-31T18:21:11.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ddc7d1da0cc
+  - type: validates
+    from: TEST-views-ghostfolio-plan-properties
+    to: REQ-views-ghostfolio-bond-asset-fresh-name
+    created_at: 2026-10-31T18:21:59.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65062ab1362c

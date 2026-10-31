@@ -1,6 +1,6 @@
 ---
 title: The core must hand each bond lot to the treasury-bonds connector with the account the owner entered it on, the connector must book it there, and the plugin's config must name no account.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-118
 tags:
   - strict-modeling

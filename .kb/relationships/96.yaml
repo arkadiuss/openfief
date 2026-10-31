@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17bcdd428242
+  - type: implements
+    from: SYM-ledger-pg-store-delete-kind
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:12:20.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-359c03a89025
+  - type: implements
+    from: SYM-ui-server-delete-account
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:14:30.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4035c07f2334

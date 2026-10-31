@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1d93d89fe79
+  - type: implements
+    from: SYM-treasury-bonds-config
+    to: REQ-treasurybonds-config-names-no-account
+    created_at: 2026-10-31T18:10:28.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e215a9c76232

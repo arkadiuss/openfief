@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48fd39255477
+  - type: implements
+    from: SYM-treasurybonds-mapper-lot-transactions
+    to: REQ-treasurybonds-lot-on-go-live-day-opening
+    created_at: 2026-10-31T18:11:19.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6abbd47f43d7

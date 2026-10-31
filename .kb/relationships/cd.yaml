@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7aefab7d12da
+  - type: validates
+    from: TEST-plugins-eodhd-lookup
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:57.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23323aa0f049
