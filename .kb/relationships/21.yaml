@@ -503,3 +503,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-928ec77a217a
+  - type: implements
+    from: SYM-ingest-xtb-x-workbook
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:34:14.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc7e84c07b5a
+  - type: covered_by
+    from: SYM-ingest-xtb-x-workbook
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:34:14.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a5e7f69afc6
+  - type: implements
+    from: SYM-ingest-xtbtest-str-table
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:38:31.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36a6d49158f4
+  - type: covered_by
+    from: SYM-ingest-xtbtest-str-table
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:38:31.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88f263c75c5e

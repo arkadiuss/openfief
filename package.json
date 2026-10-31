@@ -6,12 +6,16 @@
   "engines": {
     "node": ">=22"
   },
+  "scripts": {
+    "postinstall": "patch-package --error-on-fail --error-on-warn"
+  },
   "devDependencies": {
     "kibi-cli": "2.36.0",
     "kibi-core": "0.26.1",
     "kibi-mcp": "3.21.0",
     "kibi-plugin-treesitter": "2.0.2",
     "mermaid": "12.2.0",
+    "patch-package": "8.0.1",
     "playwright-core": "1.63.0"
   },
   "kibi": {

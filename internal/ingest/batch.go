@@ -158,7 +158,10 @@ func MappedAccounts(m *Mapping) []ledger.AccountID {
 // sees. A broker connector that doesn't know the OpenFief accounts names
 // its entries by broker account instead, in ByBrokerAccount, and reports
 // the broker accounts it saw in BrokerAccounts (D-72); the core resolves
-// them with ResolveBrokerAccounts before anything is imported.
+// them with ResolveBrokerAccounts before anything is imported. An
+// institution that names instruments by ticker only lists them in Tickers
+// and their buys, sells and dividends in TickerEntries, which the core books
+// once the owner confirms each ticker's ISIN (D-116, BookTickerEntries).
 type Mapping struct {
 	Transactions     []ledger.Transaction
 	Assertions       []ledger.BalanceAssertion
@@ -166,4 +169,6 @@ type Mapping struct {
 	CrossCheckPrices []CrossCheckPrice
 	BrokerAccounts   []BrokerAccountID
 	ByBrokerAccount  []BrokerEntries
+	Tickers          []Ticker
+	TickerEntries    []TickerEntry
 }

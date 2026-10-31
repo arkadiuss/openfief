@@ -559,3 +559,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-758579967f11
+  - type: implements
+    from: SYM-core-new-tickers
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:18:54.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec49fb5ef78d
+  - type: covered_by
+    from: SYM-core-new-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:18:54.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0cab4a779c5

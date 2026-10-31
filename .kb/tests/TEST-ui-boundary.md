@@ -7,5 +7,6 @@ origin:
   recorded_at: '2026-10-28T19:48:36.152Z'
 id: TEST-ui-boundary
 type: test
+verification_scope: unit
 ---
 Parses every non-test Go file of internal/views/ui and fails on any OpenFief import other than the kernel and the SDK's generated clients and helpers, so the UI can only read the record through the public read API. Checks that New refuses a config without both clients, and that the vendored htmx and Chart.js files hash to the SHA-256 of their npm releases.

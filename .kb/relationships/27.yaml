@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11868673b1c8
+  - type: verified_by
+    from: SCEN-e2e-first-passkey-localhost
+    to: TEST-e2e-first-passkey
+    created_at: 2026-10-31T12:35:12.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e90d54a315da

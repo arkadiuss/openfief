@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6738d24beec4
+  - type: implements
+    from: SYM-ingest-connectapi-new-tickers
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:21:49.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2447328551ed
+  - type: covered_by
+    from: SYM-ingest-connectapi-new-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:49.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5be7b013ff5e
+  - type: executable_for
+    from: SYM-plugins-xtb-test-import-file-refused
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:43:16.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33e5e8063010

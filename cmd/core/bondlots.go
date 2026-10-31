@@ -98,6 +98,20 @@ func (e *entryCaller) ImportBondLots(ctx context.Context, instance string, id in
 	return d, nil
 }
 
+// LookupInstruments asks instance, a market-data connector, for the ISINs
+// of tickers through the client (D-116).
+func (e *entryCaller) LookupInstruments(ctx context.Context, instance string, tickers []ingest.Ticker) ([]ingest.ISINProposal, error) {
+	c, err := e.get()
+	if err != nil {
+		return nil, err
+	}
+	got, err := c.LookupInstruments(ctx, instance, tickers)
+	if err != nil {
+		return nil, fmt.Errorf("look up instruments: %w", err)
+	}
+	return got, nil
+}
+
 // setDiscovery makes d the source of every later Declarations and
 // ConnectorInstances.
 func (e *entryCaller) setDiscovery(d connectorDiscovery) { e.discovery.Store(&d) }
@@ -131,7 +145,8 @@ func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots 
 
 // entryConnectors returns the connector use case the owner's entries and
 // uploads go through: d.entries as the client, store's connector bindings
-// and broker accounts (D-72),
+// and broker accounts (D-72), its tickers without an ISIN, looked up by
+// the market-data connectors through d.entries (D-116),
 // and the delivery imported into the ledger and valuation like a sync's,
 // cross-check prices included (D-22).
 func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connectors {
@@ -141,6 +156,7 @@ func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connect
 		Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
 		CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
 		Sources: sourceInputs{rankings: d.rankings}, Declarations: d.entries,
+		Tickers: store, Lookup: d.entries, Instances: d.entries,
 	}
 }
 

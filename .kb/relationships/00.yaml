@@ -398,3 +398,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32812b8cf991
+  - type: executable_for
+    from: SYM-core-test-helper-xtb-connector-import-file
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:19:19.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98703d5a26bd
+  - type: implements
+    from: SYM-ui-tickers-view
+    to: REQ-ui-tickers-to-confirm
+    created_at: 2026-10-31T13:40:13.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d32a21a79e3
+  - type: covered_by
+    from: SYM-ui-tickers-view
+    to: TEST-ui-tickers
+    created_at: 2026-10-31T13:40:14.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e58cb1774608

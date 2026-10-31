@@ -16,6 +16,7 @@
   {{if .UnmappedBrokerAccounts}}
   <p class="alert alert-warn">The statement also names {{len .UnmappedBrokerAccounts}} broker {{if eq (len .UnmappedBrokerAccounts) 1}}account{{else}}accounts{{end}} that no account is mapped to, so nothing of {{if eq (len .UnmappedBrokerAccounts) 1}}it{{else}}them{{end}} was booked: <span class="mono">{{range $i, $b := .UnmappedBrokerAccounts}}{{if $i}}, {{end}}{{$b}}{{end}}</span>. Map {{if eq (len .UnmappedBrokerAccounts) 1}}it{{else}}them{{end}} on the <a href="/accounts">accounts page</a>, then upload the statement again.</p>
   {{end}}
+  {{with waitingRows .Problems}}<p class="alert alert-warn">{{.}} of the rows wait for their ticker's ISIN: <a href="/tickers">confirm the tickers</a>, and they are booked then.</p>{{end}}
   {{if .ProblemsTotal}}
   <p class="alert alert-warn">{{.ProblemsTotal}} rows were left out of the ledger{{if lt (len .Problems) .ProblemsTotal}}; the first {{len .Problems}} are listed{{end}}:</p>
   <div class="table"><table>

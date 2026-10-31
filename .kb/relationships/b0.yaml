@@ -489,3 +489,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a61a8e8874d5
+  - type: implements
+    from: SYM-ingest-xtbtest-workbook
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:38:44.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a8c992e711a
+  - type: covered_by
+    from: SYM-ingest-xtbtest-workbook
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:38:44.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-286043e4d469
+  - type: executable_for
+    from: SYM-ui-test-helper-xtb-upload-response
+    to: TEST-ui-tickers
+    created_at: 2026-10-31T13:40:56.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c83c928a9ee

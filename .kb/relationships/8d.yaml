@@ -566,3 +566,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ca555a19bbb
+  - type: specified_by
+    from: REQ-identity-first-passkey-own-host-or-localhost
+    to: SCEN-e2e-first-passkey-localhost
+    created_at: 2026-10-31T12:35:25.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cafafdd87281
+  - type: implements
+    from: SYM-ingest-xtb-x-text-string
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:34:36.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26411bc41377
+  - type: covered_by
+    from: SYM-ingest-xtb-x-text-string
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:34:36.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f306b7aee2e
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-must-isin
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-31T13:41:29.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28867c300131

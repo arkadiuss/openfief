@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6568ba39a8f
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-tickers-refused
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:23:09.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b99236bb400

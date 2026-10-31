@@ -615,3 +615,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8315ca7a97d0
+  - type: implements
+    from: SYM-plugins-xtb-main
+    to: REQ-plugins-xtb-connector
+    created_at: 2026-10-31T13:43:34.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b927cff1c46
+  - type: covered_by
+    from: SYM-plugins-xtb-main
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:43:34.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b97a043a868
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-response-string
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:07:04.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51431fe12065
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-response-string
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:07:04.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03c90a0456e9

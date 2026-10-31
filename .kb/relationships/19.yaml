@@ -573,3 +573,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2ea04ae5a74
+  - type: implements
+    from: SYM-ingest-xtb-mapper-map
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:28:16.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c7e1fe9d189
+  - type: implements
+    from: SYM-ingest-xtb-mapper-map
+    to: REQ-ingest-xtb-opening-refused
+    created_at: 2026-10-31T13:28:16.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18dd5d09a4e2
+  - type: covered_by
+    from: SYM-ingest-xtb-mapper-map
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:28:16.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5967dcda7cd
+  - type: implements
+    from: SYM-ingest-xtbtest-texts
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:37:39.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9a9df4003d1
+  - type: covered_by
+    from: SYM-ingest-xtbtest-texts
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:37:39.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b42efc1ad84

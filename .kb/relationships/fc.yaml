@@ -475,3 +475,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63e586142613
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-check-golden
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:30:09.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb2440f09ed8
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-fake-eodhd-search
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-31T13:41:22.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66708cba4c34

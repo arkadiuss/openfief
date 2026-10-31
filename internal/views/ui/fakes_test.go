@@ -580,6 +580,7 @@ type harness struct {
 	checks     *fakePriceChecks
 	settings   *fakeSettings
 	transfers  *fakeTransfers
+	tickers    *fakeTickers
 	read       *fakeRead
 	handler    http.Handler
 	tokenFile  string
@@ -595,6 +596,7 @@ func newHarness(t *testing.T) *harness {
 	}
 	h.settings = &fakeSettings{read: h.read}
 	h.transfers = &fakeTransfers{}
+	h.tickers = &fakeTickers{}
 	h.read.transfers = h.transfers
 	mux := http.NewServeMux()
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
@@ -607,6 +609,7 @@ func newHarness(t *testing.T) *harness {
 	mux.Handle(valuationv1connect.NewPriceCheckServiceHandler(h.checks))
 	mux.Handle(valuationv1connect.NewSettingsServiceHandler(h.settings))
 	mux.Handle(ledgerv1connect.NewTransferServiceHandler(h.transfers))
+	mux.Handle(ingestv1connect.NewTickerServiceHandler(h.tickers))
 	mux.Handle(viewsv1connect.NewReadServiceHandler(h.read))
 	core := httptest.NewServer(mux)
 	t.Cleanup(core.Close)
@@ -625,6 +628,7 @@ func newHarness(t *testing.T) *harness {
 		Today:       func() kernel.Date { return mustDate(t, "2026-04-01") },
 		Settings:    valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Transfers:   ledgerv1connect.NewTransferServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Tickers:     ingestv1connect.NewTickerServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 	})
 	if err != nil {
 		t.Fatalf("New: %v", err)

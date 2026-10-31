@@ -615,3 +615,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff83a595553f
+  - type: implements
+    from: SYM-connectorv1-instrument-proposal-string
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:47:53.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ed83a67dda1
+  - type: covered_by
+    from: SYM-connectorv1-instrument-proposal-string
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:47:54.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e191eae6bbb9
+  - type: implements
+    from: SYM-ingestv1-list-pending-tickers-response-proto-message
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:05:19.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c1fdfaa346f
+  - type: covered_by
+    from: SYM-ingestv1-list-pending-tickers-response-proto-message
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:05:19.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42ee200d1722

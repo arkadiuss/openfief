@@ -524,3 +524,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d054f429fc57
+  - type: specified_by
+    from: REQ-identity-enroll-localhost-forward
+    to: SCEN-e2e-first-passkey-localhost
+    created_at: 2026-10-31T12:35:17.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90a2b3613584
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-request-reset
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:05:50.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de00f06dfbb2
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-request-reset
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:05:50.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42957844bbf5

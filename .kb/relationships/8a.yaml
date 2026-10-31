@@ -454,3 +454,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-393bc8a2e864
+  - type: implements
+    from: SYM-ingest-xtb-record-date
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:32:41.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e3dcf637481
+  - type: covered_by
+    from: SYM-ingest-xtb-record-date
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:32:41.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41c70a1950e0
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-get-amount
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:46:34.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-111c9ff1fc10
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-get-amount
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:46:34.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b18c0300e6b
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-response
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T14:00:19.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a735960df2f2
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-response
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T14:00:19.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4397c5189a8e

@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc2c0e7f42d0
+  - type: verified_by
+    from: SCEN-ingest-ticker-contract
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T12:55:13.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92eb20f38b97
+  - type: verified_by
+    from: SCEN-ingest-ticker-contract
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T12:55:13.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-253ae2576542

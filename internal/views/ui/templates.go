@@ -56,6 +56,7 @@ func templateFuncs(f numberFormat) template.FuncMap {
 		"sleeveSelect": sleeveSelect,
 		"terms":        termsFields,
 		"themeColor":   themeColor,
+		"waitingRows":  waitingRows,
 	}
 }
 

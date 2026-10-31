@@ -40,7 +40,7 @@ func (e *UnboundAccountsError) Error() string {
 // Unwrap returns ErrAccountNotBound.
 func (e *UnboundAccountsError) Unwrap() error { return ErrAccountNotBound }
 
-// CheckBound reports whether every transaction and balance assertion of m
+// CheckBound reports whether every transaction, balance assertion and ticker entry of m
 // is in an account of bound, the accounts the connector instance has a
 // connector binding to. Otherwise it returns an *UnboundAccountsError
 // listing each other account once, in ID order.
@@ -56,6 +56,9 @@ func CheckBound(instance string, bound []ledger.AccountID, m *Mapping) error {
 	}
 	for i := range m.Assertions {
 		check(m.Assertions[i].Account)
+	}
+	for i := range m.TickerEntries {
+		check(m.TickerEntries[i].Header.Account)
 	}
 	if len(unbound) == 0 {
 		return nil

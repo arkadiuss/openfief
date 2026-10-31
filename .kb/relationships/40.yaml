@@ -496,3 +496,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a17e58354f23
+  - type: implements
+    from: SYM-ingest-ticker-entry
+    to: REQ-ingest-ticker-entries-wait
+    created_at: 2026-10-31T13:24:36.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0447f902d76
+  - type: covered_by
+    from: SYM-ingest-ticker-entry
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:24:36.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb15c00db556

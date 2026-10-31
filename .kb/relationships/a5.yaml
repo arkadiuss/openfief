@@ -468,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5832773bc92a
+  - type: implements
+    from: SYM-ingest-pg-store-hold-tickers
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:23:31.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ecd0cb2084c
+  - type: covered_by
+    from: SYM-ingest-pg-store-hold-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:23:31.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee4d049cb4bf

@@ -573,3 +573,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a781a8ca544
+  - type: validates
+    from: TEST-ingest-xtb-mapper
+    to: REQ-AUTO-2C10EB8F716422D6
+    created_at: 2026-10-31T12:54:18.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e674ccd1ed6a
+  - type: validates
+    from: TEST-ingest-xtb-mapper
+    to: REQ-AUTO-39B3A0CB06192CFE
+    created_at: 2026-10-31T12:54:18.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93b35cf23275
+  - type: validates
+    from: TEST-ingest-xtb-mapper
+    to: REQ-AUTO-A5EE8BC2AE68372A
+    created_at: 2026-10-31T12:54:18.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c720bec5eca5
+  - type: implements
+    from: SYM-plugins-xtb-map-code
+    to: REQ-plugins-xtb-connector
+    created_at: 2026-10-31T13:42:17.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-625bb2502859
+  - type: covered_by
+    from: SYM-plugins-xtb-map-code
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:42:17.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d90f1ee04eb1
+  - type: implements
+    from: SYM-connectorv1-ticker
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:44:02.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-238e02109f82
+  - type: covered_by
+    from: SYM-connectorv1-ticker
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:44:02.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc8cf0a4f87e

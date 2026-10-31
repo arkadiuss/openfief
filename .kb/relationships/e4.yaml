@@ -496,3 +496,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6afbb0bda93
+  - type: implements
+    from: SYM-ingest-xtbtest-cell
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:36:32.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c034831186e
+  - type: covered_by
+    from: SYM-ingest-xtbtest-cell
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:36:32.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8404c4e6794d

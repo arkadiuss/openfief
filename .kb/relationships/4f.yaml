@@ -615,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e687e7dac679
+  - type: constrains
+    from: REQ-plugins-xtb-connector
+    to: FACT-SUBJECT-DA54090DA34FBA96
+    created_at: 2026-10-31T12:56:13.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4827ca396bdd
+  - type: requires_property
+    from: REQ-plugins-xtb-connector
+    to: FACT-PROP-3E9AC567DBEED4F0
+    created_at: 2026-10-31T12:56:13.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a36d69be0fa0
+  - type: specified_by
+    from: REQ-plugins-xtb-connector
+    to: SCEN-plugins-xtb-connector
+    created_at: 2026-10-31T12:56:13.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9932bdf3579

@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15dddae31768
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-lookup-instruments-refuses
+    to: TEST-plugins-eodhd-lookup
+    created_at: 2026-10-31T13:41:52.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a82d7bca826a
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-request-get-origin
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:06:21.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98745842f6cf
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-request-get-origin
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:06:21.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e58ce2bd4b5f

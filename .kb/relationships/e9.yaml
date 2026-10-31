@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88667a5d278d
+  - type: executable_for
+    from: SYM-plugins-xtb-test-helper-fake-verifier
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:42:36.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-848d66353084

@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd62583c9be3
+  - type: executable_for
+    from: SYM-core-test-helper-xtb-connector-lookup-instruments
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:19:29.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caeb63aea831
+  - type: executable_for
+    from: SYM-ingest-test-helper-outcome-of
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:25:41.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7810e666975

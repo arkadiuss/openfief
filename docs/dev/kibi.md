@@ -25,7 +25,8 @@ kibi counts a requirement as *tested* only when an end-to-end test of one of its
 
 ## Setup notes
 
-- kibi and its Go symbol plugin are pinned npm dev dependencies, installed by `task setup`.
+- kibi and its Go symbol plugin are pinned npm dev dependencies, installed by `task setup`. `npm ci` then applies [patches/kibi-cli+2.36.0.patch](../../patches/kibi-cli+2.36.0.patch) with patch-package, and fails if the patch doesn't apply to the installed version, so a kibi upgrade has to carry the patch forward or drop it.
+- `.kb/proof/integrations.json` holds two command integrations, both written by applying `kibi proof inspect` plans: `unit` (`go test ./...`, kibi's default proposal, which no test names yet) and `e2e` (`task e2e`). `task e2e:prove` runs `kibi prove --integration e2e`; CI's e2e jobs run it on k3d and kind, and the docs build ingests both runs' artifacts before rendering the report ([pipeline.md](pipeline.md#ci-on-pull-requests-and-main)). Which of P-10's criteria the suite verifies, and which it doesn't yet, is in [pipeline.md](pipeline.md#not-built-yet).
 - `.mcp.json` registers kibi's MCP server for Claude Code; other agents start the same server.
 - kibi's own git hooks stay uninstalled: lefthook runs the same checks through task targets.
 - kibi's sync sometimes publishes a broken compiled store, about one run in ten under load: a relationship missing or an entity twice, although the same files compile correctly next time. Until kibi fixes it upstream, the repository carries a local patch that lets the compiling process finish before the store is published, `task kibi:check` recompiles once on exactly that defect and treats the second check as final, and the bug is reported to kibi's maintainers, with the author reviewing the report before it is filed. Any other failure is final at once.

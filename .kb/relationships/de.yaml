@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11d5ee47cff7
+  - type: executable_for
+    from: SYM-core-test-helper-confirm
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:20:35.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6064c1096013

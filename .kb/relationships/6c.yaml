@@ -608,3 +608,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7973f03b84a8
+  - type: implements
+    from: SYM-ingest-pg-hold-entry
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:23:37.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1217cdb6b94f
+  - type: covered_by
+    from: SYM-ingest-pg-hold-entry
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:23:37.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30563bd8c526
+  - type: implements
+    from: SYM-ingest-ticker-entry-transaction
+    to: REQ-ingest-ticker-entries-wait
+    created_at: 2026-10-31T13:24:40.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d5f4661ee39
+  - type: covered_by
+    from: SYM-ingest-ticker-entry-transaction
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:24:41.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84d0cab82b14

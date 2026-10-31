@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc1f973d2f61
+  - type: executable_for
+    from: SYM-plugins-xtb-test-sync
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:43:22.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa909673799d
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_tickers_proto_init
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:07:58.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21ca63670e9f
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_tickers_proto_init
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:07:58.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7b6d780f152

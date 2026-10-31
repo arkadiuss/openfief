@@ -713,3 +713,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efc3170b27b7
+  - type: executable_for
+    from: SYM-tooling-kibi-ingest-proofs-test-snapshots
+    to: TEST-tooling-kibi-ingest-proofs
+    created_at: 2026-10-31T12:46:23.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f717dfc4146
+  - type: executable_for
+    from: SYM-core-test-helper-xtb-discovery-declarations
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:19:53.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ceb326eba71
+  - type: implements
+    from: SYM-ingest-connectrpc-client-lookup-instruments
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:22:54.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd116299c4d0
+  - type: covered_by
+    from: SYM-ingest-connectrpc-client-lookup-instruments
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:22:54.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f648bce816eb
+  - type: implements
+    from: SYM-ingest-xtb-record
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:31:38.947Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd1dd396e81f
+  - type: covered_by
+    from: SYM-ingest-xtb-record
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:31:39.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-903ff45286d7
+  - type: implements
+    from: SYM-ingest-xtb-read-workbook
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:35:11.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0ec0ba4ecd7
+  - type: covered_by
+    from: SYM-ingest-xtb-read-workbook
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:35:11.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb8bbc38e6b7

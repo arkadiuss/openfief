@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d6cca83c61e
+  - type: verified_by
+    from: SCEN-tooling-kibi-ingest-oldest-first
+    to: TEST-tooling-kibi-ingest-proofs
+    created_at: 2026-10-31T12:45:35.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31c928d67967

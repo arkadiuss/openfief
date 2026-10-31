@@ -419,6 +419,9 @@ func mappingFrom(d *connectorv1.Delivery) (ingest.Mapping, error) {
 	if err := splitByBrokerAccount(d, &m); err != nil {
 		return ingest.Mapping{}, err
 	}
+	if err := tickersFrom(d, &m); err != nil {
+		return ingest.Mapping{}, err
+	}
 	return m, nil
 }
 

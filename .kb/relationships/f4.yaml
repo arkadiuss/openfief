@@ -433,3 +433,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85843989f015
+  - type: executable_for
+    from: SYM-core-test-xtb-upload
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:20:05.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db3ad5098672
+  - type: implements
+    from: SYM-ingest-ticker-confirmation
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:24:50.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74e92a8d8091
+  - type: covered_by
+    from: SYM-ingest-ticker-confirmation
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:24:50.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d66b500be1e
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-response-string
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T14:00:32.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db602a07486d
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-response-string
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T14:00:32.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5767bed9255

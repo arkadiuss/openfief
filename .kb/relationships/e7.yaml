@@ -643,3 +643,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe819e8428b2
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:45:05.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1413c1a5b431
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:45:05.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d607c41ca08
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-descriptor
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:45:37.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-775f29785e71
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-descriptor
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:45:38.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fe4dabdbaf6

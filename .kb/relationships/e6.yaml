@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-284f31b059a3
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-country-exchange
+    to: TEST-valuation-eodhd-lookup
+    created_at: 2026-10-31T13:39:42.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2b1d7428910
+  - type: executable_for
+    from: SYM-plugins-xtb-test-helper-fake-core
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:42:50.210Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2c15c83de40

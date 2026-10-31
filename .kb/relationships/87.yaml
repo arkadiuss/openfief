@@ -538,3 +538,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ec43693bd66
+  - type: implements
+    from: SYM-ingest-xtb-summary-currencies
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:33:04.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a475f9f76c8
+  - type: covered_by
+    from: SYM-ingest-xtb-summary-currencies
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:33:04.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2e4d0c2b531
+  - type: implements
+    from: SYM-connectorv1connect-unimplemented-connector-service-handler-lookup-instruments
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T14:01:13.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01efdefbba0a
+  - type: covered_by
+    from: SYM-connectorv1connect-unimplemented-connector-service-handler-lookup-instruments
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T14:01:13.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-143b1033e0ef

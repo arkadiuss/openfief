@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d41badd1cf94
+  - type: constrains
+    from: REQ-ingest-xtb-no-transfer-comments
+    to: FACT-SUBJECT-7B552889D0C16865
+    created_at: 2026-10-31T12:55:50.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2c32210b938
+  - type: requires_property
+    from: REQ-ingest-xtb-no-transfer-comments
+    to: FACT-PROP-9DED5A8DCC8766AA
+    created_at: 2026-10-31T12:55:51.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e773c59ff3cd
+  - type: specified_by
+    from: REQ-ingest-xtb-no-transfer-comments
+    to: SCEN-ingest-xtb-no-transfer-comments
+    created_at: 2026-10-31T12:55:51.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc79ce3935ff
