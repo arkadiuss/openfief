@@ -1,0 +1,30 @@
+{
+  "version": "kibi.proof-integration.v1",
+  "integrations": [
+    {
+      "id": "unit",
+      "producer": "command",
+      "command": [
+        "go",
+        "test",
+        "./..."
+      ],
+      "targets": [
+        "default"
+      ],
+      "description": "Command proof: runs go test ./... once per kibi prove and judges every selected test by its exit code."
+    },
+    {
+      "id": "e2e",
+      "producer": "command",
+      "command": [
+        "task",
+        "e2e"
+      ],
+      "targets": [
+        "default"
+      ],
+      "description": "Command proof: runs task e2e once per kibi prove and judges every selected test by its exit code."
+    }
+  ]
+}
