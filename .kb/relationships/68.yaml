@@ -461,3 +461,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d3398891e86
+  - type: implements
+    from: SYM-core-auth-cmd-core-config-parse-auth
+    to: REQ-identity-origins-one-setting
+    created_at: 2026-10-31T20:01:40.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55c6e7123924

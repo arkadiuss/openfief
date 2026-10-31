@@ -25,6 +25,13 @@ const inClusterEnv = "KUBERNETES_SERVICE_HOST"
 // string. In the cluster it comes from CloudNativePG's app secret (D-29).
 const dsnEnv = "OPENFIEF_DSN"
 
+// authOriginsEnv names the environment variable with the origins the
+// owner's browser may use (D-60), separated by commas: the core's one
+// setting of them, which serve and enroll-link both read (D-126), so the
+// core itself refuses an enrollment link for an origin it doesn't accept.
+// Unset, it is defaultAuthOrigin alone.
+const authOriginsEnv = "OPENFIEF_AUTH_ORIGINS"
+
 // The commands.
 const (
 	cmdServe       = "serve"
@@ -89,10 +96,12 @@ type command struct {
 }
 
 // enrollArgs are enroll-link's flags: the origin the passkey is for, and
-// how long the link lasts.
+// how long the link lasts; and the origins the core accepts, from
+// authOriginsEnv.
 type enrollArgs struct {
-	Origin identity.Origin
-	TTL    time.Duration
+	Origin  identity.Origin
+	TTL     time.Duration
+	Origins identity.Origins
 }
 
 // connectorArgs are the connector commands' flags.
@@ -156,7 +165,7 @@ func parseArgs(args []string, getenv func(string) string) (command, error) {
 	case cmdBind, cmdSync:
 		cmd.Connector, err = parseConnector(name, rest)
 	case cmdEnrollLink:
-		cmd.Enroll, err = parseEnrollLink(rest)
+		cmd.Enroll, err = parseEnrollLink(rest, getenv)
 	default:
 		err = fmt.Errorf("%w: unknown command %q", errUsage, name)
 	}
@@ -215,11 +224,11 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	fs.DurationVar(&c.Sync.Policy.RetryMax, "sync-retry-max", defaultRetryMax, "the longest retry delay")
 	fs.DurationVar(&c.Sync.Timeout, "sync-timeout", defaultSyncTimeout, "how long one sync, call and import, may take")
 	fs.StringVar(&c.Sync.ServiceAccount, "service-account", defaultServiceAccount, "the core's own ServiceAccount, whose tokens it presents to plugins (D-59)")
-	origins := authFlags(fs, &c.Auth)
+	authFlags(fs, &c.Auth)
 	if err := fs.Parse(args); err != nil {
 		return serveConfig{}, fmt.Errorf("serve: %w", err)
 	}
-	if err := parseAuth(&c.Auth, *origins); err != nil {
+	if err := parseAuth(&c.Auth, getenv); err != nil {
 		return serveConfig{}, err
 	}
 	if fs.NArg() > 0 {
@@ -242,35 +251,39 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	return c, nil
 }
 
-// authFlags defines serve's authentication flags on fs, into a, and returns
-// the allowed origins' flag.
-func authFlags(fs *flag.FlagSet, a *authConfig) *stringsFlag {
-	var origins stringsFlag
-	fs.Var(&origins, "auth-origin", "an origin the owner's browser may use, such as https://dev.example.com; repeat for more (default "+defaultAuthOrigin+")")
+// authFlags defines serve's authentication flags on fs, into a. The
+// origins the owner's browser may use are not a flag: they are
+// authOriginsEnv, which enroll-link reads too (D-126).
+func authFlags(fs *flag.FlagSet, a *authConfig) {
 	fs.DurationVar(&a.Sessions.Idle, "session-idle", identity.DefaultSessionIdle, "how long a session lasts unused")
 	fs.DurationVar(&a.Sessions.Max, "session-max", identity.DefaultSessionMax, "how long a session lasts at most")
 	fs.BoolVar(&a.DemoSessions, "demo-sessions", false, "issue read-only sessions without credentials on a database with the demo marker")
-	return &origins
 }
 
-// parseAuth checks the session lifetimes and parses the allowed origins
-// into a, defaulting to defaultAuthOrigin.
-func parseAuth(a *authConfig, origins []string) error {
+// parseAuth checks the session lifetimes and reads the allowed origins
+// into a from getenv.
+func parseAuth(a *authConfig, getenv func(string) string) error {
 	if err := a.Sessions.Validate(); err != nil {
 		return fmt.Errorf("--session-idle, --session-max: %w", err)
 	}
-	if len(origins) == 0 {
-		origins = []string{defaultAuthOrigin}
-	}
 	var err error
-	if a.Origins, err = identity.NewOrigins(origins); err != nil {
-		return fmt.Errorf("--auth-origin: %w", err)
-	}
-	return nil
+	a.Origins, err = authOrigins(getenv)
+	return err
 }
 
-// parseEnrollLink parses enroll-link's flags.
-func parseEnrollLink(args []string) (enrollArgs, error) {
+// authOrigins reads the origins the core accepts from authOriginsEnv
+// through getenv, defaulting to defaultAuthOrigin (D-126).
+func authOrigins(getenv func(string) string) (identity.Origins, error) {
+	o, err := identity.ParseOriginList(getenv(authOriginsEnv), defaultAuthOrigin)
+	if err != nil {
+		return identity.Origins{}, fmt.Errorf("%s: %w", authOriginsEnv, err)
+	}
+	return o, nil
+}
+
+// parseEnrollLink parses enroll-link's flags, and reads the origins the
+// core accepts through getenv.
+func parseEnrollLink(args []string, getenv func(string) string) (enrollArgs, error) {
 	fs := newFlags(cmdEnrollLink)
 	host := fs.String("host", defaultEnrollHost, "the host[:port] (or origin) the owner opens the link on: http for localhost, https otherwise")
 	var e enrollArgs
@@ -282,8 +295,13 @@ func parseEnrollLink(args []string) (enrollArgs, error) {
 		return enrollArgs{}, fmt.Errorf("%w: unexpected %q", errUsage, fs.Arg(0))
 	}
 	var err error
-	e.Origin, err = originForHost(*host)
-	return e, err
+	if e.Origin, err = originForHost(*host); err != nil {
+		return enrollArgs{}, err
+	}
+	if e.Origins, err = authOrigins(getenv); err != nil {
+		return enrollArgs{}, err
+	}
+	return e, nil
 }
 
 // parseEndOfDay parses HH:MM in loc.

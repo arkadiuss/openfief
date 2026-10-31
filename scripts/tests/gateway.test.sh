@@ -46,7 +46,9 @@ check "port 8080 is the Service's http port" \
 check "the Gateway's proxies admitted to the browser port alone" \
   '[.[] | select(.kind == "NetworkPolicy" and .metadata.name == "openfief-core-from-gateway") | .spec.ingress[] | .ports] == [[{protocol: "TCP", port: 8080}]]' "$work/fief.yaml"
 check "the core allows the route's origin, and localhost still" \
-  '[.[] | select(.kind == "Deployment" and .metadata.name == "openfief-core") | .spec.template.spec.containers[0].args[] | select(startswith("--auth-origin"))] == ["--auth-origin=http://localhost:8080", "--auth-origin=https://fief.example.org"]' "$work/fief.yaml"
+  '[.[] | select(.kind == "Deployment" and .metadata.name == "openfief-core") | .spec.template.spec.containers[0].env[] | select(.name == "OPENFIEF_AUTH_ORIGINS") | .value] == ["http://localhost:8080,https://fief.example.org"]' "$work/fief.yaml"
+check "the core base accepts localhost alone, in its one origins setting" \
+  '[.[] | select(.kind == "Deployment" and .metadata.name == "openfief-core") | .spec.template.spec.containers[0] | (.env[] | select(.name == "OPENFIEF_AUTH_ORIGINS") | .value), ([.args[] | select(startswith("--auth-origin"))] | length)] == ["http://localhost:8080", 0]' "$work/core.yaml"
 check "the core base alone has no route and admits no proxy" \
   '[.[] | select(.kind == "HTTPRoute" or .kind == "Ingress" or .metadata.name == "openfief-core-from-gateway")] == []' "$work/core.yaml"
 check "plugin pods reach only the plugin port" \

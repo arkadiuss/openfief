@@ -99,6 +99,37 @@ func TestOrigins(t *testing.T) {
 	}
 }
 
+// TestParseOriginList checks the core's one origins setting (D-126):
+// origins separated by commas or spaces, duplicates dropped, the default
+// when the setting names none, and a bad origin refused.
+func TestParseOriginList(t *testing.T) {
+	t.Parallel()
+	const def = "http://localhost:8080"
+	tests := []struct {
+		name, text string
+		want       string
+		wantErr    error
+	}{
+		{name: "unset", text: "", want: def},
+		{name: "only separators", text: " , ,", want: def},
+		{name: "one", text: "https://fief.example.org", want: "https://fief.example.org"},
+		{name: "commas and spaces", text: "http://localhost:8080, https://fief.example.org\nhttps://fief.example.org:443", want: "http://localhost:8080,https://fief.example.org"},
+		{name: "a bad origin", text: "http://localhost:8080,http://fief.example.org", wantErr: identity.ErrInvalidOrigin},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := identity.ParseOriginList(tt.text, def)
+			if !errors.Is(err, tt.wantErr) {
+				t.Fatalf("ParseOriginList(%q) = %v, want %v", tt.text, err, tt.wantErr)
+			}
+			if err == nil && got.String() != tt.want {
+				t.Errorf("ParseOriginList(%q) = %s, want %s", tt.text, got, tt.want)
+			}
+		})
+	}
+}
+
 // sessionAt is when the test sessions are issued.
 func sessionAt() time.Time { return time.Date(2026, 10, 28, 8, 0, 0, 0, time.UTC) }
 

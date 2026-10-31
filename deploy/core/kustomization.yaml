@@ -18,7 +18,7 @@
 # selector in networkpolicy.yaml.
 #
 # The first passkey (D-60, D-80): `openfief enroll` prints a one-time link and port-forwards localhost:8080 to the
-# core; `openfief enroll --origin https://fief.example.org` prints one for an origin in --auth-origin, through the
+# core; `openfief enroll --origin https://fief.example.org` prints one for an origin in OPENFIEF_AUTH_ORIGINS, through the
 # owner's own route. By hand, the same link comes from:
 #   kubectl -n openfief exec deploy/openfief-core -- /core enroll-link --host localhost:8080
 #

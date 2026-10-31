@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b9df2825ea69
+  - type: validates
+    from: TEST-views-ghostfolio-sync
+    to: REQ-views-ghostfolio-cash-balance
+    created_at: 2026-10-31T20:02:52.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a7a648300dc

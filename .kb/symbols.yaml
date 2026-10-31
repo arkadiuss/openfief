@@ -47979,46 +47979,6 @@ symbols:
         target: REQ-identity-origins-per-host
       - type: implements
         target: REQ-identity-session-opaque
-  - id: SYM-core-auth-cmd-core-auth-strings-flag
-    title: stringsFlag
-    sourceFile: cmd/core/auth.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:28:05.510Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-auth
-      - type: implements
-        target: REQ-identity-origins-per-host
-  - id: SYM-core-auth-cmd-core-auth-strings-flag-string
-    title: stringsFlag.String
-    sourceFile: cmd/core/auth.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:28:10.694Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-auth
-      - type: implements
-        target: REQ-identity-origins-per-host
-  - id: SYM-core-auth-cmd-core-auth-strings-flag-set
-    title: stringsFlag.Set
-    sourceFile: cmd/core/auth.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:28:16.418Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-auth
-      - type: implements
-        target: REQ-identity-origins-per-host
   - id: SYM-core-auth-cmd-core-auth-new-auth
     title: newAuth
     sourceFile: cmd/core/auth.go
@@ -48347,6 +48307,8 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
+        target: REQ-identity-origins-one-setting
+      - type: implements
         target: REQ-identity-origins-per-host
       - type: implements
         target: REQ-identity-session-opaque
@@ -48365,6 +48327,8 @@ symbols:
         target: REQ-identity-enrollment-code
       - type: implements
         target: REQ-identity-first-passkey-own-host-or-localhost
+      - type: implements
+        target: REQ-identity-origins-one-setting
   - id: SYM-core-auth-cmd-core-core-test-start-core-with
     title: startCoreWith
     sourceFile: cmd/core/core_test.go
@@ -49340,6 +49304,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-core-refuses-enroll-origin
       - type: implements
         target: REQ-identity-enrollment-code
   - id: SYM-identity-app-passkeys-started
@@ -64104,7 +64070,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-activity
     title: Activity
     sourceFile: internal/views/ghostfolio/model.go
@@ -64187,7 +64153,7 @@ symbols:
       - type: implements
         target: REQ-views-ghostfolio-derived-account-uuids
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-account-uuid
     title: AccountUUID
     sourceFile: internal/views/ghostfolio/model.go
@@ -64202,7 +64168,7 @@ symbols:
       - type: implements
         target: REQ-views-ghostfolio-derived-account-uuids
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-bond-symbol
     title: BondSymbol
     sourceFile: internal/views/ghostfolio/model.go
@@ -64245,7 +64211,7 @@ symbols:
       - type: implements
         target: REQ-views-ghostfolio-derived-account-uuids
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-to-wire
     title: toWire
     sourceFile: internal/views/ghostfolio/model.go
@@ -65338,7 +65304,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-syncer-apply
     title: Syncer.apply
     sourceFile: internal/views/ghostfolio/sync.go
@@ -88772,6 +88738,8 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
+        target: REQ-identity-core-refuses-enroll-origin
+      - type: implements
         target: REQ-identity-enroll-origin
       - type: implements
         target: REQ-identity-first-run-wizard-follows
@@ -88788,32 +88756,6 @@ symbols:
         target: TEST-identity-kube-core-access
       - type: implements
         target: REQ-identity-first-passkey-command
-  - id: SYM-exp-identity-kube-core-access-allowed-origins
-    title: CoreAccess.AllowedOrigins
-    sourceFile: internal/identity/kube/origins.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:36:33.221Z
-    relationships:
-      - type: covered_by
-        target: TEST-identity-kube-core-access
-      - type: implements
-        target: REQ-identity-enroll-origin
-  - id: SYM-exp-identity-kube-auth-origins
-    title: AuthOrigins
-    sourceFile: internal/identity/kube/origins.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:36:44.900Z
-    relationships:
-      - type: covered_by
-        target: TEST-identity-kube-core-access
-      - type: implements
-        target: REQ-identity-enroll-origin
   - id: SYM-exp-identity-cli-test-enroll-origin
     title: TestEnrollOrigin
     sourceFile: internal/identity/cli/enroll_origin_test.go
@@ -88844,26 +88786,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-cli
-  - id: SYM-exp-identity-kube-test-auth-origins
-    title: TestAuthOrigins
-    sourceFile: internal/identity/kube/origins_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:37:29.234Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-kube-core-access
-  - id: SYM-exp-identity-kube-test-allowed-origins
-    title: TestAllowedOrigins
-    sourceFile: internal/identity/kube/origins_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:37:38.202Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-kube-core-access
   - id: SYM-views-ghostfolio-balance
     title: Balance
     sourceFile: internal/views/ghostfolio/model.go
@@ -88876,8 +88798,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
-      - type: implements
-        target: REQ-views-ghostfolio-cash-balances
   - id: SYM-views-ghostfolio-balance-same-as
     title: Balance.sameAs
     sourceFile: internal/views/ghostfolio/model.go
@@ -88902,8 +88822,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-project
-      - type: implements
-        target: REQ-views-ghostfolio-cash-balances
   - id: SYM-views-ghostfolio-cash-moves
     title: cashMoves
     sourceFile: internal/views/ghostfolio/project.go
@@ -88916,7 +88834,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
+        target: REQ-views-ghostfolio-cash-balances-per-currency
   - id: SYM-views-ghostfolio-cash-changes
     title: cashChanges
     sourceFile: internal/views/ghostfolio/project.go
@@ -88928,8 +88846,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-project
-      - type: implements
-        target: REQ-views-ghostfolio-cash-balances
   - id: SYM-views-ghostfolio-plan-balances
     title: Plan.balances
     sourceFile: internal/views/ghostfolio/plan.go
@@ -88970,7 +88886,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-contract
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
+        target: REQ-views-ghostfolio-cash-balances-per-currency
       - type: implements
         target: REQ-views-ghostfolio-client
   - id: SYM-views-ghostfolio-client-set-balance
@@ -88985,8 +88901,6 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-contract
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
-      - type: implements
         target: REQ-views-ghostfolio-client
   - id: SYM-views-ghostfolio-client-delete-balance
     title: Client.DeleteBalance
@@ -89000,7 +88914,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-contract
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
+        target: REQ-views-ghostfolio-cash-balances-per-currency
       - type: implements
         target: REQ-views-ghostfolio-client
   - id: SYM-views-ghostfolio-wire-date-of
@@ -89028,7 +88942,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
+        target: REQ-views-ghostfolio-cash-balances-per-currency
   - id: SYM-views-ghostfolio-syncer-apply-balances
     title: Syncer.applyBalances
     sourceFile: internal/views/ghostfolio/sync.go
@@ -112546,3 +112460,88 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+  - id: SYM-identity-origin-origins-string
+    title: Origins.String
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:00:57.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-one-setting
+  - id: SYM-identity-origin-parse-origin-list
+    title: ParseOriginList
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:01:03.702Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-one-setting
+  - id: SYM-core-auth-cmd-core-config-auth-origins
+    title: authOrigins
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:01:09.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-identity-origins-one-setting
+  - id: SYM-identity-auth-test-test-parse-origin-list
+    title: TestParseOriginList
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:01:15.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-app-auth-test-test-issue-enrollment-link-refuses-origin
+    title: TestIssueEnrollmentLinkRefusesOrigin
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:01:20.710Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-views-ghostfolio-cash-account-uuid
+    title: CashAccountUUID
+    sourceFile: internal/views/ghostfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:04:20.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
+  - id: SYM-views-ghostfolio-cash-account-name
+    title: CashAccountName
+    sourceFile: internal/views/ghostfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:04:26.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-owned-and-cash-accounts

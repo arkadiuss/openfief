@@ -23,7 +23,8 @@ type BrowserView struct {
 }
 
 // senior reports whether v came before w: created earlier, or at the same
-// time with a name that sorts first.
+// time with a name that sorts first. Of two plugins that claim a browser
+// path at once, the senior keeps it (D-125).
 func (v BrowserView) senior(w BrowserView) bool {
 	if !v.Created.Equal(w.Created) {
 		return v.Created.Before(w.Created)
@@ -48,12 +49,14 @@ func RefuseSecondBrowserView(instance, path string, held []BrowserView) error {
 	return heldBy(others)
 }
 
-// MayHoldBrowserPath decides, as the operator does (D-114), whether self, a
-// plugin whose running version would hold a browser path, may: when
-// holding, self already holds it. held are the other instances that hold
-// one. A plugin that doesn't hold one yet yields to any holder; of two that
-// both hold one, the senior keeps it. A refusal wraps ErrBrowserPathHeld
-// and names the holder.
+// MayHoldBrowserPath decides, as the operator does (D-114, D-125), whether
+// self, a plugin whose running version would hold a browser path, may:
+// when holding, self already holds it. held are the other instances that
+// hold one. A plugin that doesn't hold one yet yields to any holder; of two
+// that both hold one, such as two that claimed it at once, the senior, the
+// older Plugin by creation time and then by name, keeps it and the other
+// stops. A refusal wraps ErrBrowserPathHeld and names the holder, which the
+// operator puts in the stopped plugin's status.
 func MayHoldBrowserPath(self BrowserView, holding bool, held []BrowserView) error {
 	others := slices.DeleteFunc(slices.Clone(held), func(v BrowserView) bool { return v.Instance == self.Instance })
 	if len(others) == 0 {
