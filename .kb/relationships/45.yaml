@@ -566,3 +566,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea868d31079c
+  - type: implements
+    from: SYM-ui-pwa-cached-type
+    to: REQ-ui-service-worker-static-only
+    created_at: 2026-10-30T08:33:28.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b3c3827aa04
+  - type: covered_by
+    from: SYM-ui-pwa-cached-type
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:33:28.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a5219d0635f
+  - type: executable_for
+    from: SYM-ui-pwa-test-test-service-worker
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:36:42.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f65effdc380
+  - type: implements
+    from: SYM-ledger-pg-store-transfer-links
+    to: REQ-ledger-transfer-link-append-only
+    created_at: 2026-10-30T06:41:26.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7519e42efe7c
+  - type: covered_by
+    from: SYM-ledger-pg-store-transfer-links
+    to: TEST-ledger-pg-transfers
+    created_at: 2026-10-30T06:41:27.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57223c3c415d
+  - type: implements
+    from: SYM-connectorv1-import-bond-lots-request-get-deleted
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:05:55.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2011ca011588
+  - type: covered_by
+    from: SYM-connectorv1-import-bond-lots-request-get-deleted
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:05:55.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8315ca7a97d0

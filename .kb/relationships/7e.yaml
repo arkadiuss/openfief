@@ -426,3 +426,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf5895ce1f3f
+  - type: implements
+    from: SYM-views-linked-transfers
+    to: REQ-views-performance-confirmed-transfers
+    created_at: 2026-10-30T06:49:34.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-886387cc368f
+  - type: implements
+    from: SYM-views-linked-transfers
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T06:49:34.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef3a3ad0bd39
+  - type: covered_by
+    from: SYM-views-linked-transfers
+    to: TEST-views-performance
+    created_at: 2026-10-30T06:49:34.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb16a71201b3
+  - type: implements
+    from: SYM-ledgerv1connect-unimplemented-transfer-service-handler-confirm-transfer
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:51:57.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd1237973168
+  - type: covered_by
+    from: SYM-ledgerv1connect-unimplemented-transfer-service-handler-confirm-transfer
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:51:57.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a73112db735
+  - type: implements
+    from: SYM-ledgerv1-transfer-link-get-withdrawal
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:55:07.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f9a689538a4
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-link-get-withdrawal
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:55:07.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e170252361c
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-session-token
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:17:00.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8799f4830ad
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-acknowledge-price-check-request-get-session-token
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:17:00.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a9b84c23eaa

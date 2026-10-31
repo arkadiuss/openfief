@@ -419,3 +419,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b3f1b7f66b5
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-fake-owners-check-owner
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:37:51.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9faeae190765
+  - type: implements
+    from: SYM-ledger-opening-lots-date
+    to: REQ-ledger-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:14:58.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-575cc06b1c99
+  - type: covered_by
+    from: SYM-ledger-opening-lots-date
+    to: TEST-ledger-seed
+    created_at: 2026-10-30T05:14:58.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74cb76d7ddbe

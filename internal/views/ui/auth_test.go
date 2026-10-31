@@ -284,7 +284,7 @@ func TestSecurityHeaders(t *testing.T) {
 		rec := h.serve(t, request(http.MethodGet, path, ""))
 		wantStatus(t, rec, http.StatusOK)
 		csp := rec.Header().Get("Content-Security-Policy")
-		for _, d := range []string{"default-src 'none'", "script-src 'self'", "style-src 'self'", "font-src 'self'", "img-src 'self'", "frame-ancestors 'none'"} {
+		for _, d := range []string{"default-src 'none'", "script-src 'self'", "manifest-src 'self'", "style-src 'self'", "font-src 'self'", "img-src 'self'", "frame-ancestors 'none'"} {
 			if !strings.Contains(csp, d) {
 				t.Errorf("%s: CSP %q lacks %q", path, csp, d)
 			}
@@ -327,7 +327,7 @@ func TestNoInlineScriptsOrStyles(t *testing.T) {
 		}
 	}
 	slices.Sort(names)
-	want := []string{"account", "accounts", "assertions", "enroll", "error", "login", "overview", "plugins", "price-checks", "settings", "setup", "sleeves"}
+	want := []string{"account", "accounts", "assertions", "enroll", "error", "login", "offline", "overview", "plugins", "price-checks", "settings", "setup", "sleeves", "transfers"}
 	if diff := cmp.Diff(want, names); diff != "" {
 		t.Errorf("pages (-want +got):\n%s", diff)
 	}

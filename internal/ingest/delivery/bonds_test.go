@@ -1,6 +1,7 @@
 package delivery_test
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -94,4 +95,50 @@ func TestBondTerms(t *testing.T) {
 	if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
 		t.Errorf("BondTerms (-want +got):\n%s", diff)
 	}
+}
+
+func TestBondLotEntries(t *testing.T) {
+	t.Parallel()
+	exchanged := lotMessage()
+	exchanged.Purchase = connectorv1.BondPurchase_BOND_PURCHASE_EXCHANGE
+	got, err := delivery.BondLotEntries(&connectorv1.ImportBondLotsRequest{
+		GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{exchanged},
+		Deleted: []*connectorv1.BondLotKey{{Series: "EDO0536", PurchaseDate: "2026-05-10"}},
+	})
+	if err != nil {
+		t.Fatalf("BondLotEntries: %v", err)
+	}
+	day := func(s string) kernel.Date {
+		d, err := kernel.ParseDate(s)
+		if err != nil {
+			t.Fatalf("ParseDate: %v", err)
+		}
+		return d
+	}
+	terms := edoTerms(t)
+	want := ingest.BondLotEntries{
+		GoLive:  day("2026-06-01"),
+		Lots:    []ingest.BondLot{{Terms: terms, Quantity: kernel.NewQuantity(dec(t, "40")), Purchased: day("2026-05-04"), Purchase: ingest.PurchaseExchange}},
+		Deleted: []ingest.BondLotKey{{Series: terms.Series, Purchased: day("2026-05-10")}},
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("BondLotEntries (-want +got):\n%s", diff)
+	}
+	for name, req := range map[string]*connectorv1.ImportBondLotsRequest{
+		"no go-live":          {Lots: []*connectorv1.BondLot{lotMessage()}},
+		"a deleted series":    {GoLive: "2026-06-01", Deleted: []*connectorv1.BondLotKey{{Series: "EDO536", PurchaseDate: "2026-05-10"}}},
+		"a deleted date":      {GoLive: "2026-06-01", Deleted: []*connectorv1.BondLotKey{{Series: "EDO0536", PurchaseDate: "10.5.2026"}}},
+		"an unknown purchase": {GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{withPurchase(9)}},
+	} {
+		if _, err := delivery.BondLotEntries(req); !errors.Is(err, delivery.ErrMalformedLot) {
+			t.Errorf("%s: %v, want ErrMalformedLot", name, err)
+		}
+	}
+}
+
+// withPurchase returns the synthetic lot message bought by purchase p.
+func withPurchase(p connectorv1.BondPurchase) *connectorv1.BondLot {
+	l := lotMessage()
+	l.Purchase = p
+	return l
 }

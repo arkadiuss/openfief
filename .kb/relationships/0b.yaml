@@ -405,3 +405,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d1024fbae05
+  - type: executable_for
+    from: SYM-ui-test-overview-links-suggested-transfers
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:29:12.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c63de4548ed6
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-proto-reflect
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:14:48.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1c63fa2a81
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-proto-reflect
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:14:48.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e95ac80cdbc
+  - type: implements
+    from: SYM-ingest-bond-purchase-string
+    to: REQ-ingest-bond-lot-rules
+    created_at: 2026-10-30T06:35:15.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-350420be0497
+  - type: implements
+    from: SYM-ingest-bond-purchase-string
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T06:35:15.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89fa8f42cdf6
+  - type: covered_by
+    from: SYM-ingest-bond-purchase-string
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-30T06:35:15.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2edff3596519

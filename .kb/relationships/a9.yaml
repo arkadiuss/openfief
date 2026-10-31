@@ -426,3 +426,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87efc3fdf502
+  - type: implements
+    from: SYM-ui-performance-view
+    to: REQ-ui-performance-chart
+    created_at: 2026-10-30T06:33:21.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f1abeba91d6
+  - type: implements
+    from: SYM-ui-performance-view
+    to: REQ-ui-transfers-page
+    created_at: 2026-10-30T06:33:21.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35eee6378725
+  - type: covered_by
+    from: SYM-ui-performance-view
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T06:33:22.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e13e3c4ece73
+  - type: implements
+    from: SYM-ledger-pg-store-append-transfer-link
+    to: REQ-ledger-transfer-link-append-only
+    created_at: 2026-10-30T06:41:17.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf414cbda96b
+  - type: covered_by
+    from: SYM-ledger-pg-store-append-transfer-link
+    to: TEST-ledger-pg-transfers
+    created_at: 2026-10-30T06:41:17.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d82e01e53f3
+  - type: executable_for
+    from: SYM-ingest-app-test-fa-test-uploads-choose-the-mode
+    to: TEST-ingest-app-file-accounts
+    created_at: 2026-10-30T04:27:46.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1bec508cf17
+  - type: implements
+    from: SYM-connectorv1-bond-lot-key-proto-reflect
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:05:10.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb3df18bec7f
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-key-proto-reflect
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:05:10.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-639089013f90
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-go-live
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-30T06:33:08.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33081978c8ca
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-go-live
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T06:33:08.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc114868ca8e

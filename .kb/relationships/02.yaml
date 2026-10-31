@@ -496,3 +496,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f27d319f9b32
+  - type: executable_for
+    from: SYM-ledger-app-test-transfers-need-the-owner
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:38:44.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56faf8e63b5e
+  - type: implements
+    from: SYM-valuation-app-cross-checks-check-owner
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T03:02:36.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf7ead547de4
+  - type: implements
+    from: SYM-valuation-app-cross-checks-check-owner
+    to: REQ-valuation-price-check-instrument-threshold
+    created_at: 2026-10-30T03:02:36.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c4d1af2d869
+  - type: covered_by
+    from: SYM-valuation-app-cross-checks-check-owner
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T03:02:36.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b6c22c752f3

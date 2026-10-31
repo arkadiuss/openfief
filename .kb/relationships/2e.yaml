@@ -412,13 +412,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-002c418af531
-  - type: implements
-    from: SYM-core-entry-connectors
-    to: REQ-ingest-statement-upload-handoff
-    created_at: 2026-10-29T05:08:14.045Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ff402d1aafe7
   - type: covered_by
     from: SYM-core-entry-connectors
     to: TEST-core-statements
@@ -454,13 +447,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f490a76789e9
-  - type: implements
-    from: SYM-valuation-check-price
-    to: REQ-valuation-price-check
-    created_at: 2026-10-29T05:38:14.470Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4987e8114632
   - type: implements
     from: SYM-valuation-check-price
     to: REQ-AUTO-7374F67D85269872
@@ -566,3 +552,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9f67a7affaf
+  - type: validates
+    from: TEST-views-connectapi-transfers
+    to: REQ-ledger-transfer-suggestion
+    created_at: 2026-10-30T06:20:04.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bd5252e932f
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-link-pair
+    to: TEST-ledger-pg-transfers
+    created_at: 2026-10-30T06:42:03.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21d0f72f5992
+  - type: implements
+    from: SYM-valuation-gen-pc-connect-price-check-service-client-set-price-check-threshold
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:22:23.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee8aa8f14869
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-price-check-service-client-set-price-check-threshold
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:22:23.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1328e5a54704
+  - type: implements
+    from: SYM-valuation-check-price
+    to: REQ-valuation-price-check-one-percent
+    created_at: 2026-10-30T03:25:15.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bdbae5326e1
+  - type: implements
+    from: SYM-valuation-check-price
+    to: REQ-valuation-price-check-rounding
+    created_at: 2026-10-30T03:25:15.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-473fdbb776e7
+  - type: implements
+    from: SYM-valuation-check-price
+    to: REQ-valuation-price-check-currency-mismatch
+    created_at: 2026-10-30T03:25:15.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c78451a03b60
+  - type: implements
+    from: SYM-core-entry-connectors
+    to: REQ-ingest-statement-upload-bound-instance
+    created_at: 2026-10-30T04:11:40.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-311c537acf33
+  - type: implements
+    from: SYM-ui-bond-lot-form-exchange
+    to: REQ-ui-bond-lot-entry
+    created_at: 2026-10-30T07:37:36.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-040ad54e60c7
+  - type: implements
+    from: SYM-ui-bond-lot-form-exchange
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T07:37:36.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1f87d7bed35
+  - type: covered_by
+    from: SYM-ui-bond-lot-form-exchange
+    to: TEST-ui-bond-lots
+    created_at: 2026-10-30T07:37:36.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eda057fb9f93

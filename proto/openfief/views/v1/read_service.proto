@@ -149,11 +149,12 @@ service ReadService {
     option (google.api.http) = {get: "/v1/valuation-status"};
   }
 
-  // ListPriceChecks returns every price compared with an institution's own
-  // price of the same instrument, date and currency, such as IBKR's mark
-  // price (D-22), in date, instrument and cross-check source order, with
-  // the threshold beyond which a check is flagged. A flagged check is for
-  // the owner to look at; it changes no price or valuation.
+  // ListPriceChecks returns every institution's own price, such as IBKR's
+  // mark price, compared with the latest stored price of its instrument on
+  // or before its date (D-22, D-111), in date, instrument and cross-check
+  // source order, each with the threshold it was flagged at (D-110) and
+  // whether the owner acknowledged it (D-112). A flagged check is for the
+  // owner to look at; it changes no price or valuation.
   rpc ListPriceChecks(ListPriceChecksRequest) returns (ListPriceChecksResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/price-checks"};
@@ -173,12 +174,25 @@ service ReadService {
   // GetPerformance returns the portfolio's time-weighted return per day
   // (D-61) as an index that starts at 100, with the portfolio's value
   // including cash, in the reporting currency. Deposits and withdrawals are
-  // not performance; transfers between the owner's own accounts are not cash
-  // flows. The series stops at the last day every account is valued for,
-  // and says why.
+  // not performance; transfers between the owner's own accounts that the
+  // owner confirmed (D-105) are not cash flows. The series stops at the last
+  // day every account is valued for, and says why.
   rpc GetPerformance(GetPerformanceRequest) returns (GetPerformanceResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/performance"};
+  }
+
+  // ListTransfers returns the transfers between the owner's own accounts
+  // (D-105): those suggested for the owner to confirm or reject, and the
+  // pairs the owner confirmed or rejected. A withdrawal is suggested with
+  // the nearest deposit in date into another account of exactly the same
+  // amount and currency, at most five calendar days apart, that is not
+  // already taken or rejected with it. Only confirmed transfers are left out
+  // of the performance's cash flows. Decisions are made through the owner's
+  // TransferService, not here.
+  rpc ListTransfers(ListTransfersRequest) returns (ListTransfersResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/transfers"};
   }
 
   // GetModelPortfolio returns the model portfolio (D-52) with its backtest
@@ -376,6 +390,8 @@ enum TransactionKind {
   TRANSACTION_KIND_DEPOSIT = 6;
   TRANSACTION_KIND_WITHDRAWAL = 7;
   TRANSACTION_KIND_OPENING_LOT = 8;
+  // Interest paid on a holding, such as a treasury bond's coupon (D-101).
+  TRANSACTION_KIND_INTEREST = 9;
 }
 
 // Transaction is the current version of one economic event, keyed by its
@@ -530,13 +546,17 @@ enum PriceCheckStatus {
   PRICE_CHECK_STATUS_MATCHED = 1;
   // Beyond the threshold, in either direction.
   PRICE_CHECK_STATUS_FLAGGED = 2;
+  // The two prices are in different currencies, so the market-data
+  // connector may price another listing than the one held (D-111); no
+  // difference is computed.
+  PRICE_CHECK_STATUS_CURRENCY_MISMATCH = 3;
 }
 
-// PriceCheck is a stored end-of-day price compared with an institution's
-// own price of the same instrument on the same date, in the same currency
-// (D-22).
+// PriceCheck is an institution's own price of an instrument compared with
+// the latest stored end-of-day price of the instrument on or before its
+// date (D-22, D-111).
 message PriceCheck {
-  // YYYY-MM-DD.
+  // The cross-check price's date, YYYY-MM-DD.
   string date = 1;
   Instrument instrument = 2;
   // The price holdings are valued at, from the market-data connector.
@@ -548,9 +568,20 @@ message PriceCheck {
   // The connector instance the cross-check price came from.
   string cross_check_source = 6;
   // (cross_check - price) / price as a decimal string, rounded half-even
-  // to six places: "0.0123" is 1.23% above the price.
+  // to six places: "0.0123" is 1.23% above the price. Empty for a currency
+  // mismatch.
   string relative_difference = 7;
   PriceCheckStatus status = 8;
+  // The price's date, YYYY-MM-DD: the cross-check price's date or the
+  // latest one before it with a price (D-111).
+  string price_date = 9;
+  // The relative difference beyond which this check is flagged, as a
+  // decimal fraction: "0.01", or the owner's threshold for the instrument
+  // (D-110).
+  string threshold = 10;
+  // Whether the owner acknowledged this flagged check with these two
+  // prices (D-112).
+  bool acknowledged = 11;
 }
 
 // AllocationDimension is what an allocation groups by.
@@ -765,8 +796,9 @@ message ListPriceChecksRequest {
 }
 
 message ListPriceChecksResponse {
-  // The relative difference beyond which a check is flagged, as a decimal
-  // fraction such as "0.01"; empty when this core compares no prices.
+  // The relative difference beyond which a check is flagged unless the
+  // owner set another for its instrument, as a decimal fraction: "0.01"
+  // (D-110); empty when this core compares no prices.
   string threshold = 1;
   repeated PriceCheck checks = 2;
 }
@@ -826,9 +858,9 @@ message PerformanceDay {
   Money flow_reporting = 7;
 }
 
-// Transfer is a withdrawal from one of the owner's accounts matched with a
+// Transfer is a withdrawal from one of the owner's accounts paired with a
 // deposit of the same amount and currency into another, at most five days
-// apart: not a cash flow.
+// apart (D-105): suggested, or confirmed or rejected by the owner.
 message Transfer {
   string withdrawal_account_id = 1;
   // YYYY-MM-DD.
@@ -837,6 +869,22 @@ message Transfer {
   // YYYY-MM-DD.
   string deposit_date = 4;
   Money amount = 5;
+  // The legs' transaction keys, as ListTransactions gives them.
+  string withdrawal_source = 6;
+  string withdrawal_external_id = 7;
+  string deposit_source = 8;
+  string deposit_external_id = 9;
+}
+
+message ListTransfersRequest {}
+
+message ListTransfersResponse {
+  // Suggested pairs, in the withdrawals' date order.
+  repeated Transfer suggested = 1;
+  // Pairs the owner confirmed: neither leg is a cash flow.
+  repeated Transfer confirmed = 2;
+  // Pairs the owner rejected: both legs stay cash flows.
+  repeated Transfer rejected = 3;
 }
 
 message GetPerformanceRequest {
@@ -860,7 +908,7 @@ message GetPerformanceResponse {
   // A revaluation of some account is pending or running, so the series
   // may change.
   bool revaluation_pending = 5;
-  // The transfers between the owner's accounts with a leg in the range.
+  // The confirmed transfers between the owner's accounts with a leg in the range.
   repeated Transfer transfers = 6;
   // The currency of every *_reporting value.
   string reporting_currency = 7;

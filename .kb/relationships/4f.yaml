@@ -559,3 +559,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7841e8434c62
+  - type: implements
+    from: SYM-ledgerv1-transfer-link-reset
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:54:28.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c71bd6a760
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-link-reset
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:54:28.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a53bfa6dc6e
+  - type: implements
+    from: SYM-ledgerv1-confirm-transfer-request-reset
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:55:48.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb68d4d92547
+  - type: covered_by
+    from: SYM-ledgerv1-confirm-transfer-request-reset
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:55:48.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f58b00e0117
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-descriptor
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:12:33.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33b23cfcd87c
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-descriptor
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:12:33.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6efa021f4fe6
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-st-flex-instance
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:29:22.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4f971ea157e
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-st-flex-instance-connector-instances
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:29:34.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e687e7dac679

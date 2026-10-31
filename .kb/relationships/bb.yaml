@@ -279,13 +279,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50c4626fe113
-  - type: implements
-    from: SYM-views-day-builder-in-transit
-    to: REQ-views-performance-transfers
-    created_at: 2026-10-28T21:04:01.004Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-aa01a8580e4f
   - type: covered_by
     from: SYM-views-day-builder-in-transit
     to: TEST-views-performance
@@ -496,3 +489,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d1c3017a7ef
+  - type: implements
+    from: SYM-ui-pwa-build-manifest
+    to: REQ-ui-installable-app
+    created_at: 2026-10-30T08:34:41.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dec9a0a114ee
+  - type: covered_by
+    from: SYM-ui-pwa-build-manifest
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:34:42.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deab4fa3bf70
+  - type: implements
+    from: SYM-views-day-builder-in-transit
+    to: REQ-views-performance-confirmed-transfers
+    created_at: 2026-10-30T06:21:32.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c169c449d384

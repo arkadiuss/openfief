@@ -419,3 +419,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-062c758de043
+  - type: executable_for
+    from: SYM-ui-pwa-test-test-manifest
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:36:32.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-797005cb7ff3
+  - type: executable_for
+    from: SYM-ui-pwa-test-helper-want-static-asset
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:37:01.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0d66108c832
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-new-client
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:40:53.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10f72a43fc24

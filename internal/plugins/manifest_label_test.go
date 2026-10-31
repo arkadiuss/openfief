@@ -55,6 +55,13 @@ func TestParseManifestLabel(t *testing.T) {
 				ClusterService:   &plugins.ClusterServiceRequest{Description: "the owner's Ghostfolio"},
 			},
 		},
+		{
+			name: "a connector declaring cross-check prices and statement files (D-112, D-109)",
+			in:   `{"capabilities":["connector"],"crossCheckPrices":true,"statementFiles":true}`,
+			want: plugins.Manifest{
+				Capabilities: []plugins.Capability{plugins.CapabilityConnector}, CrossCheckPrices: true, StatementFiles: true,
+			},
+		},
 		{name: "bad config field", in: `{"capabilities":["view"],"egressFromConfig":["a.b"]}`, wantErr: plugins.ErrInvalidName},
 		{name: "no capability", in: `{}`, wantErr: plugins.ErrNoCapability},
 		{name: "unknown capability", in: `{"capabilities":["trader"]}`, wantErr: plugins.ErrUnknownCapability},
@@ -110,6 +117,8 @@ func TestManifestEqual(t *testing.T) {
 		{name: "invalid schema", change: func(m *plugins.Manifest) { m.ConfigSchema = []byte(`{`) }},
 		{name: "extra config host field", change: func(m *plugins.Manifest) { m.EgressFromConfig = []string{"url"} }},
 		{name: "extra in-cluster service", change: func(m *plugins.Manifest) { m.ClusterService = &plugins.ClusterServiceRequest{} }},
+		{name: "declares cross-check prices", change: func(m *plugins.Manifest) { m.CrossCheckPrices = true }},
+		{name: "declares statement files", change: func(m *plugins.Manifest) { m.StatementFiles = true }},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -358,13 +358,6 @@ relationships:
     id: rel-a11e26612cba
   - type: implements
     from: SYM-ingest-app-uploads-upload
-    to: REQ-ingest-statement-upload-handoff
-    created_at: 2026-10-29T05:10:04.387Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3bc2b7562bfc
-  - type: implements
-    from: SYM-ingest-app-uploads-upload
     to: REQ-ingest-uploads-through-core
     created_at: 2026-10-29T05:10:04.427Z
     created_by: kibi/upsert
@@ -503,3 +496,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-870d7d74eee6
+  - type: executable_for
+    from: SYM-ledger-test-helper-key
+    to: TEST-ledger-transfers
+    created_at: 2026-10-30T06:44:05.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ace92ed7c63
+  - type: implements
+    from: SYM-ledgerv1connect-transfer-service-client-interface
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:50:51.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-299fc5fd9cc1
+  - type: covered_by
+    from: SYM-ledgerv1connect-transfer-service-client-interface
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:50:51.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be1c53f637d6
+  - type: executable_for
+    from: SYM-core-test-helper-cc-mem-cross-checks-append-price-check-acknowledgement
+    to: TEST-core-cross-check
+    created_at: 2026-10-30T03:00:02.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1dd9a5ec310
+  - type: implements
+    from: SYM-ingest-app-uploads-upload
+    to: REQ-ingest-statement-mode-chosen-by-core
+    created_at: 2026-10-30T04:12:17.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1194c935cb01
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-ledger-coupons-as-interest
+    created_at: 2026-10-30T05:01:35.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e220ef131c4

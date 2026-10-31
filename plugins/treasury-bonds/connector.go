@@ -53,11 +53,11 @@ func status(code connect.Code, err error) *connect.Error { return connect.NewErr
 // account, plus each series' terms. A lot that doesn't parse or breaks a
 // rule is InvalidArgument, naming the rule, and nothing is delivered.
 func (c *connector) ImportBondLots(_ context.Context, req *connect.Request[connectorv1.ImportBondLotsRequest]) (*connect.Response[connectorv1.ImportBondLotsResponse], error) {
-	lots, err := delivery.BondLots(req.Msg.GetLots())
+	entries, err := delivery.BondLotEntries(req.Msg)
 	if err != nil {
 		return nil, status(connect.CodeInvalidArgument, err)
 	}
-	m, terms, err := c.mapper.Map(lots, c.today())
+	m, terms, err := c.mapper.Map(&entries, c.today())
 	if err != nil {
 		return nil, status(connect.CodeInvalidArgument, err)
 	}

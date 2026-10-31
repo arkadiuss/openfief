@@ -69,12 +69,30 @@ type AssertionStore interface {
 	AssertionChecks(ctx context.Context, account ledger.AccountID) ([]AssertionCheck, error)
 }
 
+// TransferLinkStore stores the owner's transfer links (D-105). It only ever
+// appends: no stored version is changed or removed (D-18).
+type TransferLinkStore interface {
+	// AppendTransferLink stores l as version l.Version of its pair. It
+	// fails with an error wrapping ErrVersionConflict when the pair already
+	// has that version.
+	AppendTransferLink(ctx context.Context, l *ledger.TransferLink) error
+	// TransferLinks returns every stored version of every pair's link, in
+	// pair then version order.
+	TransferLinks(ctx context.Context) ([]ledger.TransferLink, error)
+	// LockTransferLinks keeps every other LockTransferLinks waiting until
+	// the database transaction of a Store that InTx passed in ends, so that
+	// one decision at a time checks which legs are taken. On a Store that
+	// InTx did not pass in it fails.
+	LockTransferLinks(ctx context.Context) error
+}
+
 // Store is everything the ledger's use cases persist.
 type Store interface {
 	TransactionLog
 	Registry
 	KindStore
 	AssertionStore
+	TransferLinkStore
 	// InTx runs fn with a Store whose every call belongs to one database
 	// transaction, committed when fn returns nil and rolled back otherwise.
 	// On a Store that InTx passed in, it runs fn in that same transaction.

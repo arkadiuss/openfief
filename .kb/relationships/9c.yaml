@@ -580,3 +580,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d07afd94987e
+  - type: implements
+    from: SYM-ledgerv1connect-new-transfer-service-client
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:50:59.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b9643c6c391
+  - type: covered_by
+    from: SYM-ledgerv1connect-new-transfer-service-client
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:50:59.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2af53c0ddef5
+  - type: executable_for
+    from: SYM-ingest-app-test-conn-cross-check-delivery
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-30T04:26:36.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3101ece8a38b

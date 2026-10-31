@@ -25,6 +25,8 @@
 //   doesn't match the series or lies in the future, a quantity that is not
 //   a positive whole number, malformed terms) fails with INVALID_ARGUMENT
 //   naming the rule, and nothing is imported.
+// - Deleting a lot that was never entered fails with INVALID_ARGUMENT, and
+//   nothing is imported.
 // - An account with no connector instance bound to it, or with more than
 //   one, fails with FAILED_PRECONDITION; so does a bound connector that
 //   takes no bond lots. A connector that can't be reached fails with
@@ -68,6 +70,9 @@ const (
 	// BondLotServiceAddBondLotProcedure is the fully-qualified name of the BondLotService's AddBondLot
 	// RPC.
 	BondLotServiceAddBondLotProcedure = "/openfief.ingest.v1.BondLotService/AddBondLot"
+	// BondLotServiceDeleteBondLotProcedure is the fully-qualified name of the BondLotService's
+	// DeleteBondLot RPC.
+	BondLotServiceDeleteBondLotProcedure = "/openfief.ingest.v1.BondLotService/DeleteBondLot"
 )
 
 // BondLotServiceClient is a client for the openfief.ingest.v1.BondLotService service.
@@ -77,6 +82,12 @@ type BondLotServiceClient interface {
 	// the same day again replaces it: its quantity and the series' terms are
 	// the ones last entered (D-18).
 	AddBondLot(context.Context, *connect.Request[v1.AddBondLotRequest]) (*connect.Response[v1.AddBondLotResponse], error)
+	// DeleteBondLot deletes the lot of a series bought on a day as a
+	// correction (D-100): through the same connector, a new version of each
+	// of its transactions deletes it and supersedes the old, which stays in
+	// the ledger (D-18). Deleting it again changes nothing; entering it again
+	// brings it back.
+	DeleteBondLot(context.Context, *connect.Request[v1.DeleteBondLotRequest]) (*connect.Response[v1.DeleteBondLotResponse], error)
 }
 
 // NewBondLotServiceClient constructs a client for the openfief.ingest.v1.BondLotService service. By
@@ -96,17 +107,29 @@ func NewBondLotServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			connect.WithSchema(bondLotServiceMethods.ByName("AddBondLot")),
 			connect.WithClientOptions(opts...),
 		),
+		deleteBondLot: connect.NewClient[v1.DeleteBondLotRequest, v1.DeleteBondLotResponse](
+			httpClient,
+			baseURL+BondLotServiceDeleteBondLotProcedure,
+			connect.WithSchema(bondLotServiceMethods.ByName("DeleteBondLot")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // bondLotServiceClient implements BondLotServiceClient.
 type bondLotServiceClient struct {
-	addBondLot *connect.Client[v1.AddBondLotRequest, v1.AddBondLotResponse]
+	addBondLot    *connect.Client[v1.AddBondLotRequest, v1.AddBondLotResponse]
+	deleteBondLot *connect.Client[v1.DeleteBondLotRequest, v1.DeleteBondLotResponse]
 }
 
 // AddBondLot calls openfief.ingest.v1.BondLotService.AddBondLot.
 func (c *bondLotServiceClient) AddBondLot(ctx context.Context, req *connect.Request[v1.AddBondLotRequest]) (*connect.Response[v1.AddBondLotResponse], error) {
 	return c.addBondLot.CallUnary(ctx, req)
+}
+
+// DeleteBondLot calls openfief.ingest.v1.BondLotService.DeleteBondLot.
+func (c *bondLotServiceClient) DeleteBondLot(ctx context.Context, req *connect.Request[v1.DeleteBondLotRequest]) (*connect.Response[v1.DeleteBondLotResponse], error) {
+	return c.deleteBondLot.CallUnary(ctx, req)
 }
 
 // BondLotServiceHandler is an implementation of the openfief.ingest.v1.BondLotService service.
@@ -116,6 +139,12 @@ type BondLotServiceHandler interface {
 	// the same day again replaces it: its quantity and the series' terms are
 	// the ones last entered (D-18).
 	AddBondLot(context.Context, *connect.Request[v1.AddBondLotRequest]) (*connect.Response[v1.AddBondLotResponse], error)
+	// DeleteBondLot deletes the lot of a series bought on a day as a
+	// correction (D-100): through the same connector, a new version of each
+	// of its transactions deletes it and supersedes the old, which stays in
+	// the ledger (D-18). Deleting it again changes nothing; entering it again
+	// brings it back.
+	DeleteBondLot(context.Context, *connect.Request[v1.DeleteBondLotRequest]) (*connect.Response[v1.DeleteBondLotResponse], error)
 }
 
 // NewBondLotServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -131,10 +160,18 @@ func NewBondLotServiceHandler(svc BondLotServiceHandler, opts ...connect.Handler
 		connect.WithSchema(bondLotServiceMethods.ByName("AddBondLot")),
 		connect.WithHandlerOptions(opts...),
 	)
+	bondLotServiceDeleteBondLotHandler := connect.NewUnaryHandler(
+		BondLotServiceDeleteBondLotProcedure,
+		svc.DeleteBondLot,
+		connect.WithSchema(bondLotServiceMethods.ByName("DeleteBondLot")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.ingest.v1.BondLotService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case BondLotServiceAddBondLotProcedure:
 			bondLotServiceAddBondLotHandler.ServeHTTP(w, r)
+		case BondLotServiceDeleteBondLotProcedure:
+			bondLotServiceDeleteBondLotHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -146,4 +183,8 @@ type UnimplementedBondLotServiceHandler struct{}
 
 func (UnimplementedBondLotServiceHandler) AddBondLot(context.Context, *connect.Request[v1.AddBondLotRequest]) (*connect.Response[v1.AddBondLotResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.ingest.v1.BondLotService.AddBondLot is not implemented"))
+}
+
+func (UnimplementedBondLotServiceHandler) DeleteBondLot(context.Context, *connect.Request[v1.DeleteBondLotRequest]) (*connect.Response[v1.DeleteBondLotResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.ingest.v1.BondLotService.DeleteBondLot is not implemented"))
 }

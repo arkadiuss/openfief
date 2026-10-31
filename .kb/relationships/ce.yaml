@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f459f5bc097e
+  - type: implements
+    from: SYM-ingest-conn-rpc-bond-lot-keys-to
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T06:37:30.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d3a189cf520
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-bond-lot-keys-to
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T06:37:30.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92a6ecfca644

@@ -412,3 +412,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-368264882100
+  - type: implements
+    from: SYM-ledgerv1connect-transfer-service-handler
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:51:32.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-259c5fc8f178
+  - type: covered_by
+    from: SYM-ledgerv1connect-transfer-service-handler
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:51:32.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0a06ffef73f
+  - type: constrains
+    from: REQ-valuation-price-check-service
+    to: FACT-SUBJECT-4C2D1819A04B4934
+    created_at: 2026-10-30T02:59:00.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dce6add85ef
+  - type: requires_property
+    from: REQ-valuation-price-check-service
+    to: FACT-PROP-28A24BA337B4C118
+    created_at: 2026-10-30T02:59:00.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c1c4c03ed9c
+  - type: specified_by
+    from: REQ-valuation-price-check-service
+    to: SCEN-valuation-price-check-service
+    created_at: 2026-10-30T02:59:00.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05afa9452f0c
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-proto-message
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:37:50.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1278ab30350
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-proto-message
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:37:50.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-875b572528b4

@@ -17,6 +17,7 @@ import (
 	dynamicfake "k8s.io/client-go/dynamic/fake"
 	"k8s.io/client-go/kubernetes/fake"
 
+	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/kube"
 	"github.com/arkadiuss/openfief/internal/plugins/operator"
 )
@@ -58,9 +59,10 @@ func TestDiscovery(t *testing.T) {
 	t.Parallel()
 	deleting := plugin("old", true, "connector")
 	deleting.SetDeletionTimestamp(&metav1.Time{Time: time.Date(2026, time.March, 2, 6, 0, 0, 0, time.UTC)})
+	ibkr := deployed(t, plugin("ibkr-main", true, "connector"), map[string]any{"crossCheckPrices": true})
 	dyn := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(runtime.NewScheme(),
 		map[schema.GroupVersionResource]string{kube.PluginResource(): "PluginList"},
-		plugin("ibkr-main", true, "connector"),
+		ibkr,
 		plugin("ui", true, "view"),
 		plugin("xtb", false, "connector"),
 		plugin("nbp", true, "connector", "view"),
@@ -90,6 +92,57 @@ func TestDiscovery(t *testing.T) {
 		t.Errorf("BaseURL of an instance without a Service = %v, want ErrNoAddress", urlErr)
 	}
 	checkWatch(t, d, client)
+	checkDeclarations(t, d)
+}
+
+// deployed returns u with manifest as its running version's manifest.
+func deployed(t *testing.T, u *unstructured.Unstructured, manifest map[string]any) *unstructured.Unstructured {
+	t.Helper()
+	if err := unstructured.SetNestedField(u.Object, manifest, "status", "deployed", "manifest"); err != nil {
+		t.Fatalf("SetNestedField: %v", err)
+	}
+	return u
+}
+
+// checkDeclarations checks that ibkr-main declares cross-check prices
+// only, and that an instance with no Plugin declares nothing (D-112).
+func checkDeclarations(t *testing.T, d *kube.Discovery) {
+	t.Helper()
+	if decl, err := d.Declarations(t.Context(), "ibkr-main"); err != nil || !decl.CrossCheckPrices || decl.StatementFiles {
+		t.Errorf("Declarations(ibkr-main) = %+v, %v; want cross-check prices only", decl, err)
+	}
+	if decl, err := d.Declarations(t.Context(), "absent"); err != nil || decl != (ingest.Declarations{}) {
+		t.Errorf("Declarations of no Plugin = %+v, %v; want none", decl, err)
+	}
+}
+
+// TestDeployedDeclarations checks that the declarations come from the
+// running version's manifest, status.deployed.manifest, and that anything
+// else declares nothing (D-112, D-109).
+func TestDeployedDeclarations(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name     string
+		manifest map[string]any
+		want     ingest.Declarations
+	}{
+		{name: "both declared", manifest: map[string]any{"crossCheckPrices": true, "statementFiles": true}, want: ingest.Declarations{CrossCheckPrices: true, StatementFiles: true}},
+		{name: "statement files only", manifest: map[string]any{"statementFiles": true}, want: ingest.Declarations{StatementFiles: true}},
+		{name: "not a boolean", manifest: map[string]any{"crossCheckPrices": "yes"}},
+		{name: "nothing running"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			u := plugin("ibkr-main", true, "connector")
+			if tt.manifest != nil {
+				u = deployed(t, u, tt.manifest)
+			}
+			if got := kube.DeployedDeclarations(u); got != tt.want {
+				t.Errorf("DeployedDeclarations() = %+v, want %+v", got, tt.want)
+			}
+		})
+	}
 }
 
 // checkWatch creates nbp's Service, as the operator would, and checks that

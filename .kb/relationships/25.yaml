@@ -398,13 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d471d6ad5876
-  - type: implements
-    from: SYM-valuation-check-threshold
-    to: REQ-valuation-price-check-threshold
-    created_at: 2026-10-29T05:37:55.086Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fa28ed2cae0e
   - type: covered_by
     from: SYM-valuation-check-threshold
     to: TEST-valuation-crosscheck
@@ -468,6 +461,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24f46990b240
+  - type: implements
+    from: SYM-valuation-check-threshold
+    to: REQ-valuation-price-check-instrument-threshold
+    created_at: 2026-10-30T03:27:14.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11241e5f989f
+  - type: executable_for
+    from: SYM-ingest-app-test-fa-per-instance-bindings-bound-accounts
+    to: TEST-ingest-app-file-accounts
+    created_at: 2026-10-30T04:27:35.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddbd324e1490
   - type: implements
     from: SYM-pl-tax-wrapper
     to: REQ-pl-values-per-wrapper
@@ -552,3 +559,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03acd996fa2c
+  - type: executable_for
+    from: SYM-ui-pwa-test-helper-manifest-members
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:36:23.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f724bdd58a4c
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-response-string
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:59:29.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4df4c836e8a9
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-response-string
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:59:29.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7bb00dccfac
+  - type: implements
+    from: SYM-demo-seed-importer-add-opening-lots
+    to: REQ-ingest-bond-lot-go-live
+    created_at: 2026-10-30T06:34:12.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1598fe1423ce
+  - type: covered_by
+    from: SYM-demo-seed-importer-add-opening-lots
+    to: TEST-demo-seed-load
+    created_at: 2026-10-30T06:34:12.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa733861c567
+  - type: executable_for
+    from: SYM-delivery-test-helper-with-purchase
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-10-30T06:38:06.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b06ecabc32e3

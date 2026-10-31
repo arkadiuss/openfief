@@ -363,13 +363,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc8c4e3ad596
-  - type: covered_by
-    from: SYM-core-parse-valuation-flags
-    to: TEST-core-unit
-    created_at: 2026-10-29T06:26:39.358Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-486125f55377
   - type: validates
     from: TEST-ingest-ibkrflex-brokers
     to: REQ-ingest-unmapped-broker-account
@@ -440,13 +433,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05784b05a2e8
-  - type: implements
-    from: SYM-core-parse-valuation-flags
-    to: REQ-core-serve-flags
-    created_at: 2026-10-29T21:54:28.459Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c03f3e1270c0
   - type: implements
     from: SYM-jurisdiction-fee-rule
     to: REQ-jurisdiction-fee-rule-sale-cost
@@ -545,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e38eef84294
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-decider-decide-transfer
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:40:21.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a27a0f689eb3

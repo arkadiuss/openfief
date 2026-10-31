@@ -384,20 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efb2c3a1b1d3
-  - type: implements
-    from: SYM-views-ghostfolio-projector-dividend
-    to: REQ-views-ghostfolio-projection
-    created_at: 2026-10-29T00:57:34.612Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-50440bf98d3f
-  - type: covered_by
-    from: SYM-views-ghostfolio-projector-dividend
-    to: TEST-views-ghostfolio-project
-    created_at: 2026-10-29T00:57:34.645Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a1330d47c7a4
   - type: executable_for
     from: SYM-views-ghostfolio-test-derived-uuids
     to: TEST-views-ghostfolio-project
@@ -518,6 +504,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d76a86ad885f
   - type: implements
+    from: SYM-valuation-gen-pc-connect-unimplemented-price-check-service-handler-set-price-check-threshold
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:23:41.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d53f3a9ef8a
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-unimplemented-price-check-service-handler-set-price-check-threshold
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:23:42.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b28b3a7aae6a
+  - type: implements
     from: SYM-ui-book-label
     to: REQ-ui-formatting-number-format
     created_at: 2026-10-30T02:39:07.667Z
@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0960f4d30d36
+  - type: implements
+    from: SYM-ui-pwa-serve-bytes
+    to: REQ-ui-service-worker-static-only
+    created_at: 2026-10-30T08:35:33.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-533f274ada20
+  - type: covered_by
+    from: SYM-ui-pwa-serve-bytes
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:35:33.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f664fd8f97a8

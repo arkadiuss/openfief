@@ -454,3 +454,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-265af82ecc64
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-step
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:38:27.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28434ea545f8
+  - type: implements
+    from: SYM-valuation-connectapi-pc-price-checks-set-price-check-threshold
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:05:59.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52b5478038b9
+  - type: covered_by
+    from: SYM-valuation-connectapi-pc-price-checks-set-price-check-threshold
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:06:00.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a7d7d43d900
+  - type: implements
+    from: SYM-ingest-bond-lot-key
+    to: REQ-ingest-bond-lot-rules
+    created_at: 2026-10-30T06:35:21.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-466d852e7a76
+  - type: implements
+    from: SYM-ingest-bond-lot-key
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T06:35:21.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95e9826e89cd
+  - type: covered_by
+    from: SYM-ingest-bond-lot-key
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-30T06:35:21.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc2d74b05923

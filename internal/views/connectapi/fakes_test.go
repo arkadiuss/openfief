@@ -53,7 +53,12 @@ type fakeLedger struct {
 	lots     []ledger.Lot
 	cash     []kernel.Money
 	checks   []ledgerapp.AssertionCheck
+	links    []ledger.TransferLink
 	fail     error
+}
+
+func (f *fakeLedger) TransferLinks(context.Context) ([]ledger.TransferLink, error) {
+	return f.links, f.fail
 }
 
 func (f *fakeLedger) Kinds(context.Context) ([]portfolio.Kind, error) {

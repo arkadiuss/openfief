@@ -32,7 +32,7 @@ func TestRankedPrices(t *testing.T) {
 	got, err := store.Prices(ctx, etf, date(t, "2026-03-31"))
 	check(t, "prices by default: EODHD's wins, IBKR's fills its gap", []valuation.Price{eodhd2, ibkr3}, got, err)
 	winners, checks, err := store.CrossCheckedPrices(ctx)
-	check(t, "cross-checked prices", []valuation.Price{eodhd2}, winners, err)
+	check(t, "cross-checked prices: every date of the instrument", []valuation.Price{eodhd2, ibkr3}, winners, err)
 	check(t, "lower-ranked prices as cross-checks", valuation.LowerRankedChecks([]valuation.Price{ibkr2}), checks, err)
 
 	changed, err := store.SaveSourceRanking(ctx, valuation.KindPrices, []string{"ibkr-main", "prices-eu"}, []valuation.Revaluation{reval(t, "acc-1", "2026-03-02")})

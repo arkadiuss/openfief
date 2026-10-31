@@ -720,3 +720,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c382a8f60dc0
+  - type: implements
+    from: SYM-ledger-connectapi-pb-link
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:39:52.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-141caee1a734
+  - type: covered_by
+    from: SYM-ledger-connectapi-pb-link
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:39:52.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-610ab0c285ff
+  - type: implements
+    from: SYM-core-ledger-owners
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-10-30T07:25:52.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5db5ffed16fd
+  - type: covered_by
+    from: SYM-core-ledger-owners
+    to: TEST-core-transfers
+    created_at: 2026-10-30T07:25:52.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9a8d3e607e5
+  - type: implements
+    from: SYM-ui-transfer-form
+    to: REQ-ui-transfers-page
+    created_at: 2026-10-30T07:27:50.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa486dd0e20e
+  - type: covered_by
+    from: SYM-ui-transfer-form
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:27:50.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad2636ab19de
+  - type: implements
+    from: SYM-valuation-app-cross-checks-set-threshold
+    to: REQ-valuation-price-check-instrument-threshold
+    created_at: 2026-10-30T03:02:05.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19420d15e84e
+  - type: covered_by
+    from: SYM-valuation-app-cross-checks-set-threshold
+    to: TEST-valuation-app-crosscheck
+    created_at: 2026-10-30T03:02:05.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67cafd50668c
+  - type: implements
+    from: SYM-ingest-gen-st-pb-statement-account-proto-message
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:35:28.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ac44ce5db1a
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-statement-account-proto-message
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:35:28.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6e60fdb7ac9
+  - type: executable_for
+    from: SYM-ingest-test-bond-lot-key-validate
+    to: TEST-ingest-bondlot
+    created_at: 2026-10-30T06:36:01.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a48698b9e80

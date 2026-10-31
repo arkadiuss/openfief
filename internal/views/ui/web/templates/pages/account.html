@@ -9,9 +9,13 @@
 <section class="card notice" aria-labelledby="upload-result-title">
   <div class="state">{{template "kasztan" "seal"}}<div>
   <h2 id="upload-result-title">Statement imported</h2>
-  <p role="status">Import batch {{.BatchId}} from {{.Institution}}: {{.Transactions}} transactions ({{.New}} new, {{.NewVersions}} new versions, {{.Unchanged}} unchanged) and {{.Assertions}} balance assertions{{if .FailedAssertions}}, {{.FailedAssertions}} of them flagged{{end}}.</p>
+  <p role="status">Import batch {{.BatchId}} from {{.Institution}}, in {{enum .Mode.String "MODE_"}} mode: {{.Transactions}} transactions ({{.New}} new, {{.NewVersions}} new versions, {{.Unchanged}} unchanged) and {{.Assertions}} balance assertions{{if .FailedAssertions}}, {{.FailedAssertions}} of them flagged{{end}}.</p>
+  {{if gt (len .AccountIds) 1}}<p>The statement covers several accounts and was booked into each: {{range $i, $a := .AccountIds}}{{if $i}}, {{end}}<a href="/accounts/{{$a}}">{{$a}}</a>{{end}}.</p>{{end}}
   {{if not .ProblemsTotal}}<p>Every row was imported.</p>{{end}}
   </div></div>
+  {{if .UnmappedBrokerAccounts}}
+  <p class="alert alert-warn">The statement also names {{len .UnmappedBrokerAccounts}} broker {{if eq (len .UnmappedBrokerAccounts) 1}}account{{else}}accounts{{end}} that no account is mapped to, so nothing of {{if eq (len .UnmappedBrokerAccounts) 1}}it{{else}}them{{end}} was booked: <span class="mono">{{range $i, $b := .UnmappedBrokerAccounts}}{{if $i}}, {{end}}{{$b}}{{end}}</span>. Map {{if eq (len .UnmappedBrokerAccounts) 1}}it{{else}}them{{end}} on the <a href="/accounts">accounts page</a>, then upload the statement again.</p>
+  {{end}}
   {{if .ProblemsTotal}}
   <p class="alert alert-warn">{{.ProblemsTotal}} rows were left out of the ledger{{if lt (len .Problems) .ProblemsTotal}}; the first {{len .Problems}} are listed{{end}}:</p>
   <div class="table"><table>
@@ -74,32 +78,37 @@
 
 <section class="card" aria-labelledby="lots-title">
   <h2 id="lots-title">Open lots</h2>
+  {{if .BondLot}}<p class="muted">Delete a lot entered by mistake. The ledger keeps it as a superseded version, and entering it again brings it back.</p>{{end}}
   <div class="table"><table>
-    <thead><tr><th scope="col">Instrument</th><th scope="col">Opened</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Cost</th><th scope="col">Origin</th></tr></thead>
+    <thead><tr><th scope="col">Instrument</th><th scope="col">Opened</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Cost</th><th scope="col">Origin</th>{{if $.Data.BondLot}}<th scope="col">Correction</th>{{end}}</tr></thead>
     <tbody>
     {{range .Lots}}
     <tr><td>{{instrument .Instrument}}{{template "no-longer-updated" .}}</td><td class="mono">{{.Opened}}</td><td class="num">{{amount .Quantity}}</td><td class="num">{{money .Cost}}</td>
-      <td>{{if .Opening}}opening lot{{else}}{{.OriginSource}} <span class="mono">{{.OriginExternalId}}</span>{{end}}</td></tr>
+      <td>{{if .Opening}}opening lot{{else}}{{.OriginSource}} <span class="mono">{{.OriginExternalId}}</span>{{end}}</td>
+      {{if $.Data.BondLot}}<td><form method="post" action="/accounts/{{$.Data.Account.Id}}/bond-lots/delete" class="inline">
+        <input type="hidden" name="series" value="{{.Instrument.Symbol}}"><input type="hidden" name="purchase_date" value="{{.Opened}}">
+        <button type="submit" class="danger" aria-label="Delete the {{.Instrument.Symbol}} lot bought on {{.Opened}}">Delete</button></form></td>{{end}}</tr>
     {{else}}
-    <tr><td colspan="5" class="empty">No open lots.</td></tr>
+    <tr><td colspan="{{if $.Data.BondLot}}6{{else}}5{{end}}" class="empty">No open lots.</td></tr>
     {{end}}
     </tbody>
   </table></div>
 </section>
 
-{{if .UploadForm}}
+{{with .UploadForm}}
 <section class="card" aria-labelledby="upload-title">
   <h2 id="upload-title">Upload statement</h2>
-  <p class="muted">A statement file this account's institution exported, up to 64 MiB, such as an IBKR Flex Query statement. The core hands it to the connector bound to this account, which decides whether it can read it; importing the same statement again changes nothing.</p>
+  <p class="muted">A statement file this account's institution exported, up to 64 MiB, such as an IBKR Flex Query statement. The core hands it to {{.Instance}}, the connector bound to this account, which decides whether it can read it; a statement of several linked accounts is booked into each one mapped to it. Importing the same statement again changes nothing.</p>
   <form method="post" action="/accounts/{{$.Data.Account.Id}}/statements" enctype="multipart/form-data">
     <div class="fields">
       <div class="field">
         <label for="upload-mode">Statement</label>
         <select id="upload-mode" name="mode" aria-describedby="upload-mode-help">
-          <option value="transactions" selected>transactions</option>
+          <option value="auto" selected>{{if eq .Mode "opening"}}opening: the account isn't seeded yet{{else}}transactions: the account is seeded{{end}}</option>
           <option value="opening">opening (seeds the account)</option>
+          <option value="transactions">transactions</option>
         </select>
-        <p class="help" id="upload-mode-help">Choose opening only for the statement that seeds the account at go-live.</p>
+        <p class="help" id="upload-mode-help">The core chooses: opening seeds the account at go-live, and scheduled syncs then continue it; transactions after that. Override it only to seed again or to send transactions first.</p>
       </div>
       <div class="field">
         <label for="upload-file">File</label>
@@ -114,7 +123,7 @@
 {{with .BondLot}}
 <section class="card" aria-labelledby="bond-lot-title">
   <h2 id="bond-lot-title">Add bond lot</h2>
-  <p class="muted">A lot of treasury bonds you bought for cash at 100 PLN each (D-9), with the series' terms from its issue letter. The core hands it to this account's connector; the lot then appears under open lots, valued by the bond rules. Entering the same series and day again replaces that lot.</p>
+  <p class="muted">A lot of treasury bonds you bought for cash at 100 PLN each or by exchanging maturing bonds at 99.90 PLN each, with the series' terms from its issue letter. A lot bought by this account's go-live date is an opening lot; a later one is a deposit and a buy. The core hands it to this account's connector; the lot then appears under open lots, valued by the bond rules. Entering the same series and day again replaces that lot.</p>
   <form method="post" action="/accounts/{{$.Data.Account.Id}}/bond-lots">
     <div class="fields">
       <div class="field">
@@ -129,6 +138,14 @@
       <div class="field">
         <label for="lot-date">Bought on</label>
         <input id="lot-date" name="purchase_date" value="{{.PurchaseDate}}" required type="date">
+      </div>
+      <div class="field">
+        <label for="lot-purchase">Bought</label>
+        <select id="lot-purchase" name="purchase" aria-describedby="lot-purchase-help">
+          <option value="cash"{{if not .Exchange}} selected{{end}}>for cash, 100 PLN a bond</option>
+          <option value="exchange"{{if .Exchange}} selected{{end}}>by exchange, 99.90 PLN a bond</option>
+        </select>
+        <p class="help" id="lot-purchase-help">An exchange (zamiana) of maturing bonds; the 0.10 PLN discount is taxed with the interest.</p>
       </div>
       <div class="field">
         <label for="lot-first">First-year rate</label>

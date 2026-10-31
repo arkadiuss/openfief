@@ -391,13 +391,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1815abdad0a4
-  - type: implements
-    from: SYM-valuation-price-check-status-string
-    to: REQ-valuation-price-check
-    created_at: 2026-10-29T05:38:04.149Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-541f31b40ce3
   - type: covered_by
     from: SYM-valuation-price-check-status-string
     to: TEST-valuation-crosscheck
@@ -490,9 +483,58 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d2888054730f
   - type: implements
+    from: SYM-valuation-price-check-status-string
+    to: REQ-valuation-price-check-currency-mismatch
+    created_at: 2026-10-30T03:26:22.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e835d889e7a8
+  - type: implements
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-descriptor
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:38:23.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6817ae7ebef
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-list-statement-accounts-response-descriptor
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:38:23.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7014f1b93df
+  - type: implements
     from: SYM-valuation-postgres-today-in
     to: REQ-valuation-revaluation-config
     created_at: 2026-10-29T21:57:18.539Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc804eb3e553
+  - type: implements
+    from: SYM-ui-pwa-asset-list
+    to: REQ-ui-service-worker-static-only
+    created_at: 2026-10-30T08:35:08.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d5b76dce8e7
+  - type: covered_by
+    from: SYM-ui-pwa-asset-list
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:35:08.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-831b91ef6d9c
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-request-reset
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:58:01.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77fa13d9e76b
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-request-reset
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:58:01.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96e0d2db2391

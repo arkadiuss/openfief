@@ -6,28 +6,35 @@ import (
 	"io/fs"
 	"log/slog"
 	"net/http"
+	"slices"
 	"strings"
 
 	"github.com/arkadiuss/openfief/design"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
 
-// contentSecurityPolicy lets the page load scripts, styles, fonts, images
-// and fetches from the UI itself only, nothing inline and nothing from
+// contentSecurityPolicy lets the page load scripts, styles, fonts, images,
+// fetches and the web app manifest from the UI itself only (the service
+// worker is a script, so script-src covers it), nothing inline and nothing from
 // another host; no page may frame it, and forms post only to it.
 const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; " +
-	"connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+	"connect-src 'self'; manifest-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+
+// staticCacheControl lets browsers keep the static files for an hour: they
+// change only with the image.
+const staticCacheControl = "public, max-age=3600"
 
 // hstsValue is the Strict-Transport-Security header on HTTPS origins.
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, SettingsService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -53,9 +60,15 @@ type Config struct {
 	// MarketData calls the core's MarketDataService (D-94, D-79) like
 	// Auth: the owner's ranking of market-data sources.
 	MarketData valuationv1connect.MarketDataServiceClient
+	// PriceChecks calls the core's PriceCheckService (D-110, D-112, D-79)
+	// like Auth: the owner's thresholds and acknowledgements.
+	PriceChecks valuationv1connect.PriceCheckServiceClient
 	// Settings calls the core's SettingsService (D-78, D-113, D-79) like
 	// Auth: the owner's number format and marginal PIT rate.
 	Settings valuationv1connect.SettingsServiceClient
+	// Transfers calls the core's TransferService (D-105, D-79) like Auth:
+	// the owner's decisions on suggested transfers.
+	Transfers ledgerv1connect.TransferServiceClient
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -69,8 +82,11 @@ type Config struct {
 // missingClient reports whether cfg lacks any of the clients the UI calls
 // the core with.
 func (cfg *Config) missingClient() bool {
-	return cfg.Auth == nil || cfg.Model == nil || cfg.BondLots == nil || cfg.Statements == nil || cfg.Read == nil ||
-		cfg.Sleeves == nil || cfg.Accounts == nil || cfg.MarketData == nil || cfg.Settings == nil
+	clients := []any{
+		cfg.Auth, cfg.Model, cfg.BondLots, cfg.Statements, cfg.Read, cfg.Sleeves, cfg.Accounts, cfg.MarketData,
+		cfg.PriceChecks, cfg.Settings, cfg.Transfers,
+	}
+	return slices.Contains(clients, nil)
 }
 
 // server holds the UI's handlers.
@@ -82,11 +98,16 @@ type server struct {
 	sleeves    portfoliov1connect.SleeveServiceClient
 	accounts   ingestv1connect.AccountServiceClient
 	marketData valuationv1connect.MarketDataServiceClient
-	settings   valuationv1connect.SettingsServiceClient
-	read       viewsv1connect.ReadServiceClient
-	pages      *pages
-	today      func() kernel.Date
-	log        *slog.Logger
+	// priceChecks takes the owner's price check thresholds and
+	// acknowledgements.
+	priceChecks valuationv1connect.PriceCheckServiceClient
+	read        viewsv1connect.ReadServiceClient
+	pages       *pages
+	pwa         *pwa
+	today       func() kernel.Date
+	log         *slog.Logger
+	settings    valuationv1connect.SettingsServiceClient
+	transfers   ledgerv1connect.TransferServiceClient
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
@@ -100,20 +121,25 @@ func New(cfg *Config) (http.Handler, error) {
 	if err != nil {
 		return nil, err
 	}
+	static, err := fs.Sub(webFS, "web/static")
+	if err != nil {
+		return nil, fmt.Errorf("ui: static files: %w", err)
+	}
+	app, err := buildPWA(p, static)
+	if err != nil {
+		return nil, err
+	}
 	s := &server{
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
-		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, settings: cfg.Settings,
-		pages: p, today: cfg.Today, log: cfg.Log,
+		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
+		settings: cfg.Settings, transfers: cfg.Transfers,
+		pages: p, pwa: app, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
 		s.today = utcToday
 	}
 	if s.log == nil {
 		s.log = slog.New(slog.DiscardHandler)
-	}
-	static, err := fs.Sub(webFS, "web/static")
-	if err != nil {
-		return nil, fmt.Errorf("ui: static files: %w", err)
 	}
 	return securityHeaders(sameOrigin(s.routes(static))), nil
 }
@@ -124,6 +150,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.Handle("GET /static/", staticFiles("/static/", static))
 	mux.Handle("GET /static/design/", staticFiles("/static/design/", design.Files))
 	mux.HandleFunc("GET /healthz", healthz)
+	s.pwa.routes(mux)
 	mux.HandleFunc("GET /login", s.loginPage)
 	mux.HandleFunc("POST /login/passkey/begin", s.loginBegin)
 	mux.HandleFunc("POST /login/passkey/finish", s.loginFinish)
@@ -138,9 +165,15 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /accounts/{id}", s.withSession(s.accountPage))
 	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
+	mux.HandleFunc("POST /accounts/{id}/bond-lots/delete", s.withOwner(s.deleteBondLot))
 	mux.HandleFunc("POST /accounts/{id}/statements", s.withOwner(s.uploadStatement))
 	mux.HandleFunc("GET /assertions", s.withSession(s.assertionsPage))
 	mux.HandleFunc("GET /price-checks", s.withSession(s.priceChecksPage))
+	mux.HandleFunc("POST /price-checks/acknowledge", s.withOwner(s.acknowledgePriceCheck))
+	mux.HandleFunc("POST /price-checks/threshold", s.withOwner(s.setPriceCheckThreshold))
+	mux.HandleFunc("GET /transfers", s.withSession(s.transfersPage))
+	mux.HandleFunc("POST /transfers/confirm", s.withOwner(s.confirmTransfer))
+	mux.HandleFunc("POST /transfers/reject", s.withOwner(s.rejectTransfer))
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	mux.HandleFunc("GET /settings", s.withOwner(s.settingsPage))
 	mux.HandleFunc("POST /settings/passkeys/{id}/remove", s.withOwner(s.removePasskey))
@@ -161,7 +194,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 func staticFiles(prefix string, static fs.FS) http.Handler {
 	files := http.StripPrefix(prefix, http.FileServerFS(static))
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", "public, max-age=3600")
+		w.Header().Set("Cache-Control", staticCacheControl)
 		files.ServeHTTP(w, r)
 	})
 }

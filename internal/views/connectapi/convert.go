@@ -149,15 +149,21 @@ func pbCheck(c *ledgerapp.AssertionCheck) *viewsv1.AssertionCheck {
 }
 
 // pbPriceCheck converts a price check. Its instrument is written ISIN/symbol
-// in the valuation context, and an ISIN never holds a slash.
+// in the valuation context, and an ISIN never holds a slash. A currency
+// mismatch has no relative difference (D-111).
 func pbPriceCheck(c *valuation.PriceCheck) *viewsv1.PriceCheck {
 	isin, symbol, _ := strings.Cut(c.CrossCheck.Instrument, "/")
-	return &viewsv1.PriceCheck{
+	out := &viewsv1.PriceCheck{
 		Date: pbDate(c.CrossCheck.Date), Instrument: &viewsv1.Instrument{Isin: isin, Symbol: symbol},
-		Price: pbMoney(c.Price.Close), PriceSource: c.Price.Source,
+		Price: pbMoney(c.Price.Close), PriceSource: c.Price.Source, PriceDate: pbDate(c.Price.Date),
 		CrossCheck: pbMoney(c.CrossCheck.Close), CrossCheckSource: c.CrossCheck.Source,
-		RelativeDifference: c.Difference.String(), Status: viewsv1.PriceCheckStatus(enumNumber(int(c.Status))),
+		Status: viewsv1.PriceCheckStatus(enumNumber(int(c.Status))), Threshold: c.Threshold.String(),
+		Acknowledged: c.Acknowledged,
 	}
+	if c.Status != valuation.PriceCurrencyMismatch {
+		out.RelativeDifference = c.Difference.String()
+	}
+	return out
 }
 
 // pbValuation converts a stored valuation of a holding with its three
@@ -245,7 +251,7 @@ func pbPerformance(p *app.Performance, reporting kernel.Currency) *viewsv1.GetPe
 		From: pbDate(p.From), To: pbDate(p.To), Gap: viewsv1.PerformanceGap(enumNumber(int(p.Series.Gap))),
 		RevaluationPending: p.Pending, ReportingCurrency: reporting.String(),
 		Days:      make([]*viewsv1.PerformanceDay, 0, len(p.Series.Days)),
-		Transfers: make([]*viewsv1.Transfer, 0, len(p.Series.Transfers)),
+		Transfers: pbTransfers(p.Series.Transfers),
 	}
 	for i := range p.Series.Days {
 		d := &p.Series.Days[i]
@@ -254,11 +260,19 @@ func pbPerformance(p *app.Performance, reporting kernel.Currency) *viewsv1.GetPe
 			CashReporting: pbMoney(d.Cash), InTransitReporting: pbMoney(d.InTransit), FlowReporting: pbMoney(d.Flow),
 		})
 	}
-	for i := range p.Series.Transfers {
-		t := &p.Series.Transfers[i]
-		out.Transfers = append(out.Transfers, &viewsv1.Transfer{
-			WithdrawalAccountId: string(t.Withdrawal.Account), WithdrawalDate: pbDate(t.Withdrawal.Date),
-			DepositAccountId: string(t.Deposit.Account), DepositDate: pbDate(t.Deposit.Date), Amount: pbMoney(t.Deposit.Amount),
+	return out
+}
+
+// pbTransfers converts transfers between the owner's accounts (D-105).
+func pbTransfers(ts []views.Transfer) []*viewsv1.Transfer {
+	out := make([]*viewsv1.Transfer, 0, len(ts))
+	for i := range ts {
+		w, d := &ts[i].Withdrawal, &ts[i].Deposit
+		out = append(out, &viewsv1.Transfer{
+			WithdrawalAccountId: string(w.Account), WithdrawalDate: pbDate(w.Date),
+			DepositAccountId: string(d.Account), DepositDate: pbDate(d.Date), Amount: pbMoney(d.Amount),
+			WithdrawalSource: w.Key.Source, WithdrawalExternalId: w.Key.ExternalID,
+			DepositSource: d.Key.Source, DepositExternalId: d.Key.ExternalID,
 		})
 	}
 	return out

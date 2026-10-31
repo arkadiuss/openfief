@@ -510,3 +510,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40a6ff3d8fa4
+  - type: implements
+    from: SYM-ui-pwa-pwa-routes
+    to: REQ-ui-service-worker-static-only
+    created_at: 2026-10-30T08:35:42.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72b2bcbb9ebf
+  - type: implements
+    from: SYM-ui-pwa-pwa-routes
+    to: REQ-ui-installable-app
+    created_at: 2026-10-30T08:35:42.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98f834d949e7
+  - type: covered_by
+    from: SYM-ui-pwa-pwa-routes
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:35:42.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d93477972d35
+  - type: validates
+    from: TEST-ledger-connectapi-transfers
+    to: REQ-ui-transfer-confirmation
+    created_at: 2026-10-30T06:20:06.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d0a4f6d8ac1
+  - type: validates
+    from: TEST-ledger-connectapi-transfers
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-10-30T06:20:07.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdbdd0f3cdd0

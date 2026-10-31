@@ -38,9 +38,13 @@ code { font-family: var(--font-mono); font-size: 0.88em; background: var(--sunke
 /* Top bar: the Gate and the wordmark, the navigation, the session's scope and sign-out */
 .top {
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5);
-  padding: var(--space-2) var(--space-4);
+  padding: calc(var(--space-2) + env(safe-area-inset-top, 0px)) calc(var(--space-4) + env(safe-area-inset-right, 0px))
+    var(--space-2) calc(var(--space-4) + env(safe-area-inset-left, 0px));
   background: var(--surface); border-bottom: 1px solid var(--border);
 }
+/* The navigation and the session: in the bar on a wide screen, behind the menu button on a phone (layout.js) */
+.menu { display: flex; flex: 1 1 auto; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); min-width: 0; }
+.menu-toggle { display: none; }
 .brand {
   display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px;
   font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em;
@@ -57,7 +61,11 @@ code { font-family: var(--font-mono); font-size: 0.88em; background: var(--sunke
 .top nav a[aria-current="page"] { background: var(--accent-soft); color: var(--link); box-shadow: inset 0 -3px 0 var(--highlight); }
 .session { margin-left: auto; display: flex; align-items: center; gap: var(--space-3); }
 
-main { max-width: 72rem; margin: 0 auto; padding: var(--space-5) var(--space-4) var(--space-7); }
+main {
+  max-width: 72rem; margin: 0 auto; overflow-wrap: break-word;
+  padding: var(--space-5) calc(var(--space-4) + env(safe-area-inset-right, 0px))
+    calc(var(--space-7) + env(safe-area-inset-bottom, 0px)) calc(var(--space-4) + env(safe-area-inset-left, 0px));
+}
 h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; letter-spacing: -0.02em; }
 h1 { font-size: 2rem; font-weight: 800; margin: 0 0 var(--space-4); }
 h2 { font-size: 1.3rem; font-weight: 700; margin: 0 0 var(--space-3); }
@@ -202,6 +210,7 @@ details.change[open] { padding: var(--space-3); background: var(--sunken); borde
 .signin { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: var(--space-5); align-items: center; }
 .signin .kasztan { width: 100%; }
 
+/* Phones, mobile first from here: no page scrolls sideways at 360 px. */
 @media (max-width: 640px) {
   h1 { font-size: 1.6rem; }
   .card { padding: var(--space-4); }
@@ -209,6 +218,42 @@ details.change[open] { padding: var(--space-3); background: var(--sunken); borde
   .signin { grid-template-columns: minmax(0, 1fr); }
   .signin .kasztan { width: 8rem; grid-row: 1; }
   .kasztan { width: 6rem; }
+  code { overflow-wrap: anywhere; }
+  .chart { height: 15rem; }
+  .actions > button, .actions > .button { flex: 1 1 auto; }
+  .actions > button.quiet { flex: none; }
+
+  /* The menu: a button in the bar opens the navigation as a full-width list under it */
+  .js .menu-toggle { display: inline-flex; margin-left: auto; }
+  .js .menu { display: none; flex-basis: 100%; flex-direction: column; align-items: stretch; gap: var(--space-2); padding-bottom: var(--space-2); }
+  .js .menu.open { display: flex; }
+  .js .top nav { flex-direction: column; }
+  .js .session { justify-content: space-between; border-top: 1px solid var(--border); padding-top: var(--space-2); }
+
+  /* Tables become a card per row: each cell is a line with its column's header (layout.js labels them) on the
+     left and the value on the right; figures stay monospaced, right-aligned, with their currency. */
+  .js .table.stack { overflow-x: visible; }
+  .js .table.stack table, .js .table.stack tbody, .js .table.stack tfoot, .js .table.stack tr { display: block; width: 100%; }
+  .js .table.stack thead {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  .js .table.stack tr {
+    margin: 0 0 var(--space-3); padding: var(--space-1) var(--space-3);
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  }
+  .js .table.stack td, .js .table.stack tbody th, .js .table.stack tfoot th {
+    display: flow-root; padding: var(--space-2) 0; text-align: right; white-space: normal;
+  }
+  .js .table.stack tr > :last-child { border-bottom: 0; }
+  .js .table.stack tbody th, .js .table.stack tfoot th { text-align: left; }
+  .js .table.stack td:empty { display: none; }
+  .js .table.stack td.empty { text-align: left; }
+  .js .table.stack td[data-label]::before {
+    content: attr(data-label); float: left; max-width: 50%; margin-right: var(--space-3); text-align: left;
+    color: var(--muted); font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600;
+  }
+  .js .table.stack .targets input, .js .table.stack .targets select, .js .table.stack td > input, .js .table.stack td > select { width: 100%; }
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -378,6 +378,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b278d065dae2
   - type: implements
+    from: SYM-connectorv1-bond-purchase-string
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:06:20.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28a12303a6b5
+  - type: covered_by
+    from: SYM-connectorv1-bond-purchase-string
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:06:20.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff1660518715
+  - type: implements
     from: SYM-affected-plan-staged
     to: REQ-tooling-hook-affected-packages
     created_at: 2026-10-30T03:50:59.946Z
@@ -391,3 +405,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8eb0910370a7
+  - type: validates
+    from: TEST-ingest-connectapi
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-30T06:33:05.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d38ea800e32d
+  - type: validates
+    from: TEST-ingest-connectapi
+    to: REQ-ingest-bond-lot-delete-supersedes
+    created_at: 2026-10-30T06:33:05.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b05ddccf4dc
+  - type: constrains
+    from: REQ-ingest-bond-lot-go-live
+    to: FACT-SUBJECT-BDB16DBA9CB82400
+    created_at: 2026-10-30T06:33:36.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68df40e4fa02
+  - type: requires_property
+    from: REQ-ingest-bond-lot-go-live
+    to: FACT-PROP-877437A1823FEF1F
+    created_at: 2026-10-30T06:33:36.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71762a15969d
+  - type: specified_by
+    from: REQ-ingest-bond-lot-go-live
+    to: SCEN-ingest-bond-lot-go-live
+    created_at: 2026-10-30T06:33:36.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc21cf7fbd65
+  - type: implements
+    from: SYM-valuation-gen-pc-connect-new-price-check-service-client
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:21:15.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0ca2285a491
+  - type: covered_by
+    from: SYM-valuation-gen-pc-connect-new-price-check-service-client
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:21:15.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3706a61c613

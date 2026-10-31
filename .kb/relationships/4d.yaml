@@ -594,3 +594,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ef54057841d
+  - type: constrains
+    from: REQ-ui-transfers-page
+    to: FACT-SUBJECT-6042CD2B595C0654
+    created_at: 2026-10-30T06:32:47.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a13596f48fe3
+  - type: requires_property
+    from: REQ-ui-transfers-page
+    to: FACT-PROP-B2AE5EC3FF59DDAB
+    created_at: 2026-10-30T06:32:47.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cce76218ba9
+  - type: specified_by
+    from: REQ-ui-transfers-page
+    to: SCEN-ui-transfers-page
+    created_at: 2026-10-30T06:32:47.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-124b923e3f18
+  - type: executable_for
+    from: SYM-views-app-test-transfers
+    to: TEST-views-app-transfers
+    created_at: 2026-10-30T06:45:48.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-205f24d1b952
+  - type: implements
+    from: SYM-ledgerv1-x
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T07:00:33.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18d7ea0150e6
+  - type: covered_by
+    from: SYM-ledgerv1-x
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T07:00:33.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bbcf8b9f9f8
+  - type: executable_for
+    from: SYM-ui-test-helper-transfer-post
+    to: TEST-ui-transfers
+    created_at: 2026-10-30T07:28:48.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe0b2e80e3dc
+  - type: implements
+    from: SYM-ingest-gen-st-pb-statement-account-descriptor
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:36:02.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a04fdb84221
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-statement-account-descriptor
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:36:02.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b89e659d5369

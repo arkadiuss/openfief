@@ -461,3 +461,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0393ded29523
+  - type: implements
+    from: SYM-ingestv1-bond-lot-get-purchase
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:40:05.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c16544e07eaf
+  - type: covered_by
+    from: SYM-ingestv1-bond-lot-get-purchase
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:40:05.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89d114c16c6a
+  - type: executable_for
+    from: SYM-core-test-helper-cc-mem-cross-checks-price-check-thresholds
+    to: TEST-core-cross-check
+    created_at: 2026-10-30T02:59:23.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be86a9988e67
+  - type: implements
+    from: SYM-ingest-undeclared-cross-check-prices
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:30:28.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf32d88c91e0
+  - type: covered_by
+    from: SYM-ingest-undeclared-cross-check-prices
+    to: TEST-ingest-declarations
+    created_at: 2026-10-30T04:30:28.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28ca4ad18bc0
+  - type: implements
+    from: SYM-ingest-gen-st-pb-statement-account-proto-reflect
+    to: REQ-ui-statement-upload-file-connectors-only
+    created_at: 2026-10-30T04:35:43.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-214f65a1e075
+  - type: covered_by
+    from: SYM-ingest-gen-st-pb-statement-account-proto-reflect
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-10-30T04:35:43.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bad8e2123c77

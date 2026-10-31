@@ -357,6 +357,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b1d3802c2418
   - type: implements
+    from: SYM-demo-cross-check-prices
+    to: REQ-demo-dataset-flagged-price-check
+    created_at: 2026-10-30T06:16:42.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70eef74dd064
+  - type: covered_by
+    from: SYM-demo-cross-check-prices
+    to: TEST-demo-cross-checks
+    created_at: 2026-10-30T06:16:42.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7054ae648302
+  - type: implements
     from: SYM-valuationv1-set-marginal-rate-request-string
     to: REQ-valuation-settings-service
     created_at: 2026-10-29T23:19:34.762Z
@@ -384,3 +398,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c17d7c63f82
+  - type: implements
+    from: SYM-ui-pwa-sign-in-paths
+    to: REQ-ui-service-worker-static-only
+    created_at: 2026-10-30T08:33:20.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a853a07e1191
+  - type: covered_by
+    from: SYM-ui-pwa-sign-in-paths
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:33:20.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d06e94063da3
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-delete-bond-lot-refusals
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:37:03.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e30c347c586

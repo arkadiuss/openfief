@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:ledger.transaction:events_booked_in_or
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-70A7256A397DB822
-claim_text: Buys, sells, dividends with withholding tax, fees, FX conversions, deposits, withdrawals and opening lots must each be booked as balanced postings in their original currencies, with no conversion to PLN.
+claim_key: CLAIM-B17A46D82DE7520B
+claim_text: Buys, sells, dividends and interest with withholding tax, fees, FX conversions, deposits, withdrawals and opening lots must each be booked as balanced postings in their original currencies, with no conversion to PLN.
 origin:
   kind: agent
   recorded_at: '2026-10-28T05:24:49.349Z'

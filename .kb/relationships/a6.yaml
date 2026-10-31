@@ -447,3 +447,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cae8756e1a07
+  - type: implements
+    from: SYM-ledger-app-ledger-decide-transfer
+    to: REQ-ledger-transfer-link-append-only
+    created_at: 2026-10-30T06:36:31.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aa06f1364ec
+  - type: implements
+    from: SYM-ledger-app-ledger-decide-transfer
+    to: REQ-ledger-transfer-leg-once
+    created_at: 2026-10-30T06:36:31.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2f4e04d2bbd
+  - type: covered_by
+    from: SYM-ledger-app-ledger-decide-transfer
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:36:31.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc7f5eb36b57
+  - type: implements
+    from: SYM-ledger-pg-parse-decision
+    to: REQ-ledger-transfer-link-append-only
+    created_at: 2026-10-30T06:41:56.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aacde735b66c
+  - type: covered_by
+    from: SYM-ledger-pg-parse-decision
+    to: TEST-ledger-pg-transfers
+    created_at: 2026-10-30T06:41:56.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f321b15ccec7
+  - type: implements
+    from: SYM-ledger-transfer-amount
+    to: REQ-ledger-transfer-legs
+    created_at: 2026-10-30T06:43:12.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceed055e2d4e
+  - type: covered_by
+    from: SYM-ledger-transfer-amount
+    to: TEST-ledger-transfers
+    created_at: 2026-10-30T06:43:12.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aae69284e165
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-session-token
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:13:06.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b23d4907e546
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request-get-session-token
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:13:06.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-272d75afabb9

@@ -2,15 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="{{themeColor "light"}}" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="{{themeColor "dark"}}" media="(prefers-color-scheme: dark)">
 <meta name="referrer" content="no-referrer">
 <meta name="htmx-config" content='{"includeIndicatorStyles":false,"allowEval":false,"allowScriptTags":false,"selfRequestsOnly":true}'>
 <title>{{.Title}} · OpenFief</title>
 <link rel="icon" href="/static/design/marks/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/design/marks/app-icon-180.png">
+<link rel="manifest" href="/manifest.webmanifest">
 <link rel="stylesheet" href="/static/design/fonts/fonts.css">
 <link rel="stylesheet" href="/static/design/tokens.css">
 <link rel="stylesheet" href="/static/style.css">
+<script src="/static/layout.js"></script>
 <script src="/static/vendor/htmx-2.0.11.min.js" defer></script>
 {{block "scripts" .}}{{end}}
 </head>
@@ -18,10 +23,13 @@
 <header class="top">
   <a class="brand" href="/">{{template "mark"}}openfief</a>
   {{with .Session}}
+  <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
+  <div class="menu" id="menu">
   <nav aria-label="Main">
     <a href="/"{{if eq $.Title "Overview"}} aria-current="page"{{end}}>Overview</a>
     <a href="/assertions"{{if eq $.Title "Flagged balance assertions"}} aria-current="page"{{end}}>Balance assertions</a>
-    <a href="/price-checks"{{if eq $.Title "Flagged price checks"}} aria-current="page"{{end}}>Price checks</a>
+    <a href="/price-checks"{{if eq $.Title "Price checks"}} aria-current="page"{{end}}>Price checks</a>
+    <a href="/transfers"{{if eq $.Title "Transfers"}} aria-current="page"{{end}}>Transfers</a>
     <a href="/accounts"{{if eq $.Title "Accounts"}} aria-current="page"{{end}}>Accounts</a>
     <a href="/sleeves"{{if eq $.Title "Sleeves"}} aria-current="page"{{end}}>Sleeves</a>
     <a href="/plugins"{{if eq $.Title "Plugins"}} aria-current="page"{{end}}>Plugins</a>
@@ -32,6 +40,7 @@
     <form method="post" action="/logout" class="inline">
       <button type="submit" class="quiet">Sign out</button>
     </form>
+  </div>
   </div>
   {{end}}
 </header>

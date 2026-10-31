@@ -200,6 +200,7 @@ func (l *loader) inputs(ctx context.Context, rates []valuation.FXRate) error {
 		l.recorder.RecordIndexReadings(ctx, l.ds.CPI),
 		l.recorder.RecordPrices(ctx, l.ds.Prices),
 		l.recorder.RecordFXRates(ctx, rates),
+		valuationapp.NewCrossChecks(l.vstore, nil).RecordCrossCheckPrices(ctx, l.ds.CrossCheckPrices),
 	)
 	if err != nil {
 		return fmt.Errorf("demo inputs: %w", err)
@@ -208,7 +209,7 @@ func (l *loader) inputs(ctx context.Context, rates []valuation.FXRate) error {
 		return fmt.Errorf("demo inputs: %w", err)
 	}
 	l.log.Info("valuation inputs recorded", "prices", len(l.ds.Prices), "fx_rates", len(rates),
-		"cpi_readings", len(l.ds.CPI), "bond_series", len(l.ds.Bonds))
+		"cpi_readings", len(l.ds.CPI), "bond_series", len(l.ds.Bonds), "cross_check_prices", len(l.ds.CrossCheckPrices))
 	return nil
 }
 
@@ -221,6 +222,15 @@ type importer struct {
 // Import imports through the ledger.
 func (i importer) Import(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
 	sum, err := i.ledger.Import(ctx, txs, assertions)
+	if err != nil {
+		return ingest.ImportSummary{}, fmt.Errorf("ledger: %w", err)
+	}
+	return summary(&sum), nil
+}
+
+// AddOpeningLots adds opening lots one at a time through the ledger.
+func (i importer) AddOpeningLots(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
+	sum, err := i.ledger.AddOpeningLots(ctx, txs, assertions)
 	if err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("ledger: %w", err)
 	}

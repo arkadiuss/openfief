@@ -566,3 +566,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43685a025eec
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-ui-performance-chart
+    created_at: 2026-10-30T06:33:03.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fba5a80d3fd7
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-ui-performance-chart-twr-index
+    created_at: 2026-10-30T06:33:03.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5296114fe59
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-views-model-line-on-performance-chart
+    created_at: 2026-10-30T06:33:03.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb07056311b0
+  - type: implements
+    from: SYM-connectorv1-bond-purchase-enum-descriptor
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:06:56.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bec16e182140
+  - type: covered_by
+    from: SYM-connectorv1-bond-purchase-enum-descriptor
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:06:56.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47057997ab92

@@ -59,10 +59,55 @@ func bondLot(l *connectorv1.BondLot) (ingest.BondLot, error) {
 	if err != nil {
 		return ingest.BondLot{}, err
 	}
+	purchase, err := purchaseFrom(l.GetPurchase())
+	if err != nil {
+		return ingest.BondLot{}, err
+	}
 	return ingest.BondLot{
 		Terms:    pl.Terms{Series: series, FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: fee},
-		Quantity: q, Purchased: purchased,
+		Quantity: q, Purchased: purchased, Purchase: purchase,
 	}, nil
+}
+
+// errBadPurchase reports a purchase the contract doesn't define.
+var errBadPurchase = errors.New("purchase is not a known bond purchase")
+
+// purchaseFrom reads a lot's purchase; unspecified is a cash purchase.
+func purchaseFrom(p connectorv1.BondPurchase) (ingest.BondPurchase, error) {
+	switch p {
+	case connectorv1.BondPurchase_BOND_PURCHASE_UNSPECIFIED, connectorv1.BondPurchase_BOND_PURCHASE_CASH:
+		return ingest.PurchaseCash, nil
+	case connectorv1.BondPurchase_BOND_PURCHASE_EXCHANGE:
+		return ingest.PurchaseExchange, nil
+	}
+	return 0, fmt.Errorf("%w: %d", errBadPurchase, p)
+}
+
+// BondLotEntries reads an ImportBondLots request: its go-live date, its lots
+// in order (BondLots) and the lots it deletes. Anything malformed fails
+// with an error wrapping ErrMalformedLot naming the field.
+func BondLotEntries(req *connectorv1.ImportBondLotsRequest) (ingest.BondLotEntries, error) {
+	goLive, err := kernel.ParseDate(req.GetGoLive())
+	if err != nil {
+		return ingest.BondLotEntries{}, fmt.Errorf("%w: go_live: %w", ErrMalformedLot, err)
+	}
+	lots, err := BondLots(req.GetLots())
+	if err != nil {
+		return ingest.BondLotEntries{}, err
+	}
+	out := ingest.BondLotEntries{GoLive: goLive, Lots: lots}
+	for i, k := range req.GetDeleted() {
+		series, err := pl.ParseSeries(k.GetSeries())
+		if err != nil {
+			return ingest.BondLotEntries{}, fmt.Errorf("%w: deleted[%d].series: %w", ErrMalformedLot, i, err)
+		}
+		purchased, err := kernel.ParseDate(k.GetPurchaseDate())
+		if err != nil {
+			return ingest.BondLotEntries{}, fmt.Errorf("%w: deleted[%d].purchase_date: %w", ErrMalformedLot, i, err)
+		}
+		out.Deleted = append(out.Deleted, ingest.BondLotKey{Series: series, Purchased: purchased})
+	}
+	return out, nil
 }
 
 // feeFrom reads an early-redemption fee; a missing one is an error.

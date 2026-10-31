@@ -447,3 +447,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9cc12ddcb9c3
+  - type: implements
+    from: SYM-views-pb-list-transfers-response
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:02:31.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dac1e03be643
+  - type: covered_by
+    from: SYM-views-pb-list-transfers-response
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:02:31.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94c4d8c705e5
+  - type: implements
+    from: SYM-core-new-transfers
+    to: REQ-core-owner-entry-services
+    created_at: 2026-10-30T07:26:01.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3e650fa266c
+  - type: covered_by
+    from: SYM-core-new-transfers
+    to: TEST-core-transfers
+    created_at: 2026-10-30T07:26:01.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce460eb43e98
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-descriptor
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:14:59.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-206ce0572497
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-response-descriptor
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:15:00.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2713692a6764
+  - type: implements
+    from: SYM-ingest-app-connectors-declared-cross-checks
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-10-30T04:25:59.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1375383dfea2
+  - type: covered_by
+    from: SYM-ingest-app-connectors-declared-cross-checks
+    to: TEST-ingest-app-connectors
+    created_at: 2026-10-30T04:25:59.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-928ec77a217a

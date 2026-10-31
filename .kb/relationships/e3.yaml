@@ -475,3 +475,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7c93840e800
+  - type: verified_by
+    from: SCEN-ui-phone-width
+    to: TEST-ui-browser-checks
+    created_at: 2026-10-30T08:07:50.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d86281f62d
+  - type: verified_by
+    from: SCEN-ui-phone-width
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:07:50.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36b5503c8818
+  - type: implements
+    from: SYM-views-pb-list-transfers-response-proto-message
+    to: REQ-views-transfer-suggestions
+    created_at: 2026-10-30T07:03:04.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f352602945
+  - type: covered_by
+    from: SYM-views-pb-list-transfers-response-proto-message
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T07:03:04.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26e89ee5c04d

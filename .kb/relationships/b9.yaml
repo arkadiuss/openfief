@@ -790,3 +790,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d84f86a8f1a8
+  - type: implements
+    from: SYM-ledger-app-decide-in
+    to: REQ-ledger-transfer-leg-once
+    created_at: 2026-10-30T06:37:06.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e51991495f0
+  - type: implements
+    from: SYM-ledger-app-decide-in
+    to: REQ-ledger-transfer-correction
+    created_at: 2026-10-30T06:37:06.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-665c9389196c
+  - type: covered_by
+    from: SYM-ledger-app-decide-in
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:37:06.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dcde92d4411
+  - type: executable_for
+    from: SYM-ingest-test-decl-test-undeclared-cross-check-prices
+    to: TEST-ingest-declarations
+    created_at: 2026-10-30T04:31:03.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4916581fd90

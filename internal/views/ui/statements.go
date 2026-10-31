@@ -36,10 +36,50 @@ var (
 	errUploadBroke = errors.New("the upload broke off")
 )
 
-// uploadMode is the contract's mode for the form's value, and false for
-// any other value.
+// uploadForm is the "Upload statement" form of an account whose bound
+// connector takes statement files (D-109): Mode is the mode the core
+// chooses for its next upload, which the owner may override.
+type uploadForm struct {
+	Instance string
+	Mode     string
+}
+
+// uploadForm returns the account's upload form, and false when its bound
+// connector takes no statement files, as the core's StatementService says.
+func (s *server) uploadForm(r *http.Request, sess session, account string) (*uploadForm, bool, error) {
+	resp, err := s.statements.ListStatementAccounts(r.Context(), connect.NewRequest(&ingestv1.ListStatementAccountsRequest{
+		Origin: sess.Origin, SessionToken: sess.Token,
+	}))
+	if err != nil {
+		return nil, false, fmt.Errorf("ListStatementAccounts: %w", err)
+	}
+	for _, a := range resp.Msg.GetAccounts() {
+		if a.GetAccountId() == account {
+			return &uploadForm{Instance: a.GetInstance(), Mode: modeName(a.GetMode())}, true, nil
+		}
+	}
+	return nil, false, nil
+}
+
+// modeName is the form's value of a mode: opening or transactions, empty
+// for none.
+func modeName(m ingestv1.Mode) string {
+	switch m {
+	case ingestv1.Mode_MODE_OPENING:
+		return "opening"
+	case ingestv1.Mode_MODE_TRANSACTIONS:
+		return "transactions"
+	case ingestv1.Mode_MODE_UNSPECIFIED:
+	}
+	return ""
+}
+
+// uploadMode is the contract's mode for the form's value: auto lets the
+// core choose (unspecified, D-109); false for any other value.
 func uploadMode(value string) (ingestv1.Mode, bool) {
 	switch value {
+	case "auto":
+		return ingestv1.Mode_MODE_UNSPECIFIED, true
 	case "opening":
 		return ingestv1.Mode_MODE_OPENING, true
 	case "transactions":

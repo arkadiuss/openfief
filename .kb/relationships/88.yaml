@@ -300,27 +300,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1416ded62ca
-  - type: implements
-    from: SYM-views-match-transfers
-    to: REQ-views-performance-transfers
-    created_at: 2026-10-28T21:02:33.509Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7773364c262e
-  - type: implements
-    from: SYM-views-match-transfers
-    to: REQ-portfolio-twr-comparison
-    created_at: 2026-10-28T21:02:33.541Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e46d516706f5
-  - type: covered_by
-    from: SYM-views-match-transfers
-    to: TEST-views-performance
-    created_at: 2026-10-28T21:02:33.565Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-80ba1d6c9cb2
   - type: executable_for
     from: SYM-portfolio-test-helper-backtest-case
     to: TEST-portfolio-backtest
@@ -475,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-171399dc2f5d
+  - type: executable_for
+    from: SYM-ui-pwa-test-helper-under-page
+    to: TEST-ui-pwa
+    created_at: 2026-10-30T08:37:12.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-786a6c894e08

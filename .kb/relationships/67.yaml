@@ -664,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3950880f2b95
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-transfer-ledger
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:38:00.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-696c28ee2333
+  - type: implements
+    from: SYM-ingestv1-delete-bond-lot-response-proto-reflect
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:42:22.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7b8843dd477
+  - type: covered_by
+    from: SYM-ingestv1-delete-bond-lot-response-proto-reflect
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:42:22.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcee8bded48c

@@ -20,6 +20,7 @@ const (
 	TypeBuy      ActivityType = "BUY"
 	TypeSell     ActivityType = "SELL"
 	TypeDividend ActivityType = "DIVIDEND"
+	TypeInterest ActivityType = "INTEREST"
 	TypeFee      ActivityType = "FEE"
 )
 

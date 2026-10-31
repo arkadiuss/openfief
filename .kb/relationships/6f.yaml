@@ -295,13 +295,6 @@ relationships:
     id: rel-3ad81be1945b
   - type: implements
     from: SYM-ingest-app-uploads
-    to: REQ-ingest-statement-upload-handoff
-    created_at: 2026-10-29T05:09:58.592Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-daf7daa2357d
-  - type: implements
-    from: SYM-ingest-app-uploads
     to: REQ-ingest-uploads-through-core
     created_at: 2026-10-29T05:09:58.624Z
     created_by: kibi/upsert
@@ -510,3 +503,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3275a1e49ea7
+  - type: implements
+    from: SYM-connectorv1-bond-lot-get-purchase
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:04:30.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a9b0f9a9d08
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-get-purchase
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:04:31.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df51337e1530
+  - type: implements
+    from: SYM-ingest-app-uploads
+    to: REQ-ingest-statement-upload-bound-instance
+    created_at: 2026-10-30T04:12:06.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c58533de13d8

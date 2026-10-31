@@ -109,6 +109,9 @@ type perfCase struct {
 	rows          []row
 	rates         []rate
 	last, through int
+	// confirmed are the transfers the owner confirmed, as the indexes in
+	// events of the withdrawal and the deposit.
+	confirmed [][2]int
 }
 
 func (c *perfCase) input(t *testing.T) *views.PerformanceInput {
@@ -123,6 +126,7 @@ func (c *perfCase) input(t *testing.T) *views.PerformanceInput {
 	for _, r := range c.rates {
 		in.Rates = append(in.Rates, valuation.FXRate{Currency: money(t, "0", r.cur).Currency(), Date: perfDay(t, r.day), Rate: dec(t, r.rate), Source: "test"})
 	}
+	in.Links = links(in.Transactions, c.confirmed, ledger.TransferConfirmed)
 	return in
 }
 
@@ -222,9 +226,22 @@ func TestPerformance(t *testing.T) {
 					{kind: "withdrawal", acc: "acc-1", day: 1, amount: "100", cur: "USD"},
 					{kind: "deposit", acc: "acc-2", day: 2, amount: "100", cur: "USD"},
 				},
-				rates: usd, last: 2, through: 2,
+				rates: usd, last: 2, through: 2, confirmed: [][2]int{{1, 2}},
 			},
 			want: []pt{{0, "400", "0", "400", "100"}, {1, "410", "410", "0", "102.5"}, {2, "420", "0", "0", "105"}},
+		},
+		{
+			name: "a suggested transfer the owner has not confirmed is two cash flows",
+			c: perfCase{
+				events: []event{
+					{kind: "deposit", acc: "acc-1", day: 0, amount: "100", cur: "USD"},
+					{kind: "withdrawal", acc: "acc-1", day: 1, amount: "100", cur: "USD"},
+					{kind: "deposit", acc: "acc-2", day: 2, amount: "100", cur: "USD"},
+				},
+				rates: usd, last: 2, through: 2,
+			},
+			// Day 1 ends with nothing, so day 2 has no return.
+			want: []pt{{0, "400", "0", "400", "100"}, {1, "0", "0", "-410", "102.5"}, {2, "420", "0", "420", "102.5"}},
 		},
 		{
 			name: "a transfer whose deposit is booked first is counted once",
@@ -234,7 +251,7 @@ func TestPerformance(t *testing.T) {
 					{kind: "deposit", acc: "acc-2", day: 1, amount: "100", cur: "USD"},
 					{kind: "withdrawal", acc: "acc-1", day: 2, amount: "100", cur: "USD"},
 				},
-				rates: usd, last: 2, through: 2,
+				rates: usd, last: 2, through: 2, confirmed: [][2]int{{2, 1}},
 			},
 			want: []pt{{0, "400", "0", "400", "100"}, {1, "410", "-410", "0", "102.5"}, {2, "420", "0", "0", "105"}},
 		},
@@ -244,7 +261,7 @@ func TestPerformance(t *testing.T) {
 				events: []event{
 					{kind: "deposit", acc: "acc-1", day: 0, amount: "100", cur: "USD"},
 					{kind: "withdrawal", acc: "acc-1", day: 1, amount: "100", cur: "USD"},
-					{kind: "deposit", acc: "acc-2", day: 1 + views.TransferWindowDays + 1, amount: "100", cur: "USD"},
+					{kind: "deposit", acc: "acc-2", day: 1 + ledger.TransferWindowDays + 1, amount: "100", cur: "USD"},
 				},
 				rates: usd, last: 7, through: 7,
 			},
@@ -414,68 +431,57 @@ func flowsOf(t *testing.T, events []event) []views.CashFlow {
 	return out
 }
 
-// matched returns the transfers between the flows at the index pairs of
-// transfers, and the flows at the indexes of external.
-func matched(flows []views.CashFlow, transfers [][2]int, external []int) ([]views.Transfer, []views.CashFlow) {
-	ts := make([]views.Transfer, 0, len(transfers))
-	for _, p := range transfers {
+// pairsOf returns the transfers between the flows at the index pairs of
+// pairs.
+func pairsOf(flows []views.CashFlow, pairs [][2]int) []views.Transfer {
+	ts := make([]views.Transfer, 0, len(pairs))
+	for _, p := range pairs {
 		ts = append(ts, views.Transfer{Withdrawal: flows[p[0]], Deposit: flows[p[1]]})
 	}
-	ext := make([]views.CashFlow, 0, len(external))
-	for _, i := range external {
-		ext = append(ext, flows[i])
-	}
-	return ts, ext
+	return ts
 }
 
-func TestMatchTransfers(t *testing.T) {
+// links returns version 1 links of decision between the transactions at the
+// index pairs of pairs (withdrawal, deposit).
+func links(txs []ledger.Transaction, pairs [][2]int, decision ledger.TransferDecision) []ledger.TransferLink {
+	out := make([]ledger.TransferLink, 0, len(pairs))
+	for _, p := range pairs {
+		out = append(out, ledger.TransferLink{
+			Pair: ledger.TransferPair{Withdrawal: txs[p[0]].Key, Deposit: txs[p[1]].Key}, Decision: decision, Version: 1,
+		})
+	}
+	return out
+}
+
+func TestSuggestTransfers(t *testing.T) {
 	t.Parallel()
+	w0 := event{kind: "withdrawal", acc: "acc-1", day: 0, amount: "500", cur: "PLN"}
 	tests := []struct {
-		name      string
-		events    []event
-		transfers [][2]int // indexes of the withdrawal and the deposit in events
-		external  []int
+		name                string
+		events              []event
+		confirmed, rejected [][2]int // indexes of the withdrawal and the deposit in events
+		want                [][2]int
 	}{
 		{
-			name:      "same day, same amount, another account",
-			events:    []event{{kind: "withdrawal", acc: "acc-1", day: 0, amount: "500", cur: "PLN"}, {kind: "deposit", acc: "acc-2", day: 0, amount: "500.00", cur: "PLN"}},
-			transfers: [][2]int{{0, 1}},
+			name:   "same day, same amount, another account",
+			events: []event{w0, {kind: "deposit", acc: "acc-2", day: 0, amount: "500.00", cur: "PLN"}},
+			want:   [][2]int{{0, 1}},
 		},
 		{
-			name:      "the deposit up to the window after",
-			events:    []event{{kind: "withdrawal", acc: "acc-1", day: 0, amount: "500", cur: "PLN"}, {kind: "deposit", acc: "acc-2", day: views.TransferWindowDays, amount: "500", cur: "PLN"}},
-			transfers: [][2]int{{0, 1}},
+			name:   "the deposit up to the window after",
+			events: []event{w0, {kind: "deposit", acc: "acc-2", day: ledger.TransferWindowDays, amount: "500", cur: "PLN"}},
+			want:   [][2]int{{0, 1}},
 		},
 		{
-			name:      "the deposit up to the window before",
-			events:    []event{{kind: "deposit", acc: "acc-2", day: 0, amount: "500", cur: "PLN"}, {kind: "withdrawal", acc: "acc-1", day: views.TransferWindowDays, amount: "500", cur: "PLN"}},
-			transfers: [][2]int{{1, 0}},
+			name:   "the deposit up to the window before",
+			events: []event{{kind: "deposit", acc: "acc-2", day: 0, amount: "500", cur: "PLN"}, {kind: "withdrawal", acc: "acc-1", day: ledger.TransferWindowDays, amount: "500", cur: "PLN"}},
+			want:   [][2]int{{1, 0}},
 		},
-		{
-			name:     "beyond the window",
-			events:   []event{{kind: "withdrawal", acc: "acc-1", day: 0, amount: "500", cur: "PLN"}, {kind: "deposit", acc: "acc-2", day: views.TransferWindowDays + 1, amount: "500", cur: "PLN"}},
-			external: []int{0, 1},
-		},
-		{
-			name:     "the same account",
-			events:   []event{{kind: "withdrawal", acc: "acc-1", day: 0, amount: "500", cur: "PLN"}, {kind: "deposit", acc: "acc-1", day: 1, amount: "500", cur: "PLN"}},
-			external: []int{0, 1},
-		},
-		{
-			name:     "another amount",
-			events:   []event{{kind: "withdrawal", acc: "acc-1", day: 0, amount: "500", cur: "PLN"}, {kind: "deposit", acc: "acc-2", day: 1, amount: "499.99", cur: "PLN"}},
-			external: []int{0, 1},
-		},
-		{
-			name:     "another currency",
-			events:   []event{{kind: "withdrawal", acc: "acc-1", day: 0, amount: "500", cur: "PLN"}, {kind: "deposit", acc: "acc-2", day: 1, amount: "500", cur: "EUR"}},
-			external: []int{0, 1},
-		},
-		{
-			name:     "opening cash is never a leg",
-			events:   []event{{kind: "withdrawal", acc: "acc-1", day: 0, amount: "500", cur: "PLN"}, {kind: "opening-cash", acc: "acc-2", day: 0, amount: "500", cur: "PLN"}},
-			external: []int{0, 1},
-		},
+		{"beyond the window", []event{w0, {kind: "deposit", acc: "acc-2", day: ledger.TransferWindowDays + 1, amount: "500", cur: "PLN"}}, nil, nil, nil},
+		{"the same account", []event{w0, {kind: "deposit", acc: "acc-1", day: 1, amount: "500", cur: "PLN"}}, nil, nil, nil},
+		{"another amount", []event{w0, {kind: "deposit", acc: "acc-2", day: 1, amount: "499.99", cur: "PLN"}}, nil, nil, nil},
+		{"another currency", []event{w0, {kind: "deposit", acc: "acc-2", day: 1, amount: "500", cur: "EUR"}}, nil, nil, nil},
+		{"opening cash is never a leg", []event{w0, {kind: "opening-cash", acc: "acc-2", day: 0, amount: "500", cur: "PLN"}}, nil, nil, nil},
 		{
 			name: "the nearest deposit, each used once",
 			events: []event{
@@ -484,20 +490,79 @@ func TestMatchTransfers(t *testing.T) {
 				{kind: "deposit", acc: "acc-3", day: 3, amount: "500", cur: "PLN"},
 				{kind: "withdrawal", acc: "acc-1", day: 4, amount: "500", cur: "PLN"},
 			},
-			transfers: [][2]int{{0, 2}, {3, 1}},
+			want: [][2]int{{0, 2}, {3, 1}},
+		},
+		{
+			name: "a confirmed transfer is not suggested and its legs are taken",
+			events: []event{
+				w0,
+				{kind: "deposit", acc: "acc-2", day: 1, amount: "500", cur: "PLN"},
+				{kind: "withdrawal", acc: "acc-1", day: 1, amount: "500", cur: "PLN"},
+				{kind: "deposit", acc: "acc-3", day: 4, amount: "500", cur: "PLN"},
+			},
+			confirmed: [][2]int{{0, 1}},
+			want:      [][2]int{{2, 3}},
+		},
+		{
+			name:     "a rejected pair is not suggested again: the next nearest deposit is",
+			events:   []event{w0, {kind: "deposit", acc: "acc-2", day: 1, amount: "500", cur: "PLN"}, {kind: "deposit", acc: "acc-3", day: 3, amount: "500", cur: "PLN"}},
+			rejected: [][2]int{{0, 1}},
+			want:     [][2]int{{0, 2}},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			flows := flowsOf(t, tt.events)
-			wantTransfers, wantExternal := matched(flows, tt.transfers, tt.external)
-			gotTransfers, gotExternal := views.MatchTransfers(views.ExternalFlows(eventTxs(t, tt.events)), views.TransferWindowDays)
-			if diff := cmp.Diff(wantTransfers, gotTransfers, cmpopts.EquateEmpty()); diff != "" {
-				t.Errorf("MatchTransfers() transfers mismatch (-want +got):\n%s", diff)
+			txs := eventTxs(t, tt.events)
+			ls := append(links(txs, tt.confirmed, ledger.TransferConfirmed), links(txs, tt.rejected, ledger.TransferRejected)...)
+			got := views.SuggestTransfers(views.ExternalFlows(txs), ls)
+			if diff := cmp.Diff(pairsOf(flowsOf(t, tt.events), tt.want), got, cmpopts.EquateEmpty()); diff != "" {
+				t.Errorf("SuggestTransfers() mismatch (-want +got):\n%s", diff)
 			}
-			if diff := cmp.Diff(wantExternal, gotExternal); diff != "" {
-				t.Errorf("MatchTransfers() external mismatch (-want +got):\n%s", diff)
+		})
+	}
+}
+
+func TestConfirmedTransfers(t *testing.T) {
+	t.Parallel()
+	events := []event{
+		{kind: "withdrawal", acc: "acc-1", day: 0, amount: "500", cur: "PLN"},
+		{kind: "deposit", acc: "acc-2", day: 1, amount: "500", cur: "PLN"},
+		{kind: "withdrawal", acc: "acc-1", day: 2, amount: "300", cur: "PLN"},
+		{kind: "deposit", acc: "acc-2", day: 2, amount: "300", cur: "PLN"},
+		{kind: "deposit", acc: "acc-2", day: 3, amount: "200", cur: "PLN"},
+	}
+	tests := []struct {
+		name                string
+		confirmed, rejected [][2]int
+		want                [][2]int
+		external            []int
+	}{
+		{name: "nothing confirmed: every flow is external", external: []int{0, 1, 2, 3, 4}},
+		{name: "a confirmed pair leaves both legs out", confirmed: [][2]int{{0, 1}}, want: [][2]int{{0, 1}}, external: []int{2, 3, 4}},
+		{name: "a rejected pair stays two cash flows", rejected: [][2]int{{2, 3}}, external: []int{0, 1, 2, 3, 4}},
+		{name: "a link whose legs no longer match counts for nothing", confirmed: [][2]int{{2, 4}}, external: []int{0, 1, 2, 3, 4}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			txs := eventTxs(t, events)
+			flows := flowsOf(t, events)
+			ls := append(links(txs, tt.confirmed, ledger.TransferConfirmed), links(txs, tt.rejected, ledger.TransferRejected)...)
+			got, external := views.ConfirmedTransfers(views.ExternalFlows(txs), ls)
+			if diff := cmp.Diff(pairsOf(flows, tt.want), got, cmpopts.EquateEmpty()); diff != "" {
+				t.Errorf("ConfirmedTransfers() transfers mismatch (-want +got):\n%s", diff)
+			}
+			wantExternal := make([]views.CashFlow, 0, len(tt.external))
+			for _, i := range tt.external {
+				wantExternal = append(wantExternal, flows[i])
+			}
+			if diff := cmp.Diff(wantExternal, external); diff != "" {
+				t.Errorf("ConfirmedTransfers() external mismatch (-want +got):\n%s", diff)
+			}
+			rejected := views.LinkedTransfers(views.ExternalFlows(txs), ls, ledger.TransferRejected)
+			if diff := cmp.Diff(pairsOf(flows, tt.rejected), rejected, cmpopts.EquateEmpty()); diff != "" {
+				t.Errorf("LinkedTransfers(rejected) mismatch (-want +got):\n%s", diff)
 			}
 		})
 	}

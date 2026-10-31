@@ -504,6 +504,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-bcc156e0fae8
   - type: implements
+    from: SYM-ledger-check-opening-lots
+    to: REQ-ledger-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:04:07.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c629e544688
+  - type: implements
+    from: SYM-ledger-check-opening-lots
+    to: REQ-ledger-manual-opening-lots-one-at-a-time
+    created_at: 2026-10-30T05:04:07.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82b5f930c8ed
+  - type: covered_by
+    from: SYM-ledger-check-opening-lots
+    to: TEST-ledger-seed
+    created_at: 2026-10-30T05:04:07.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e3480ff4604
+  - type: implements
     from: SYM-affected-by-module
     to: REQ-tooling-hook-affected-packages
     created_at: 2026-10-30T04:08:22.745Z
@@ -517,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f64d91d7150
+  - type: implements
+    from: SYM-valuation-acknowledge
+    to: REQ-valuation-price-check-acknowledge
+    created_at: 2026-10-30T03:07:59.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc5571c07599
+  - type: implements
+    from: SYM-valuation-acknowledge
+    to: REQ-valuation-price-check-acknowledgement-lapses
+    created_at: 2026-10-30T03:07:59.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c0a9782d2d3
+  - type: covered_by
+    from: SYM-valuation-acknowledge
+    to: TEST-valuation-crosscheck
+    created_at: 2026-10-30T03:07:59.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b5a333048b9

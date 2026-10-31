@@ -377,3 +377,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3dc8a736c009
+  - type: implements
+    from: SYM-ledger-app-ledger-transfer-links
+    to: REQ-ledger-transfer-correction
+    created_at: 2026-10-30T06:36:22.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cbb360e592d
+  - type: covered_by
+    from: SYM-ledger-app-ledger-transfer-links
+    to: TEST-ledger-app-transfers
+    created_at: 2026-10-30T06:36:22.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b4aeab6a607
+  - type: implements
+    from: SYM-ledgerv1-transfer-link-string
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:54:35.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79467297d2cd
+  - type: covered_by
+    from: SYM-ledgerv1-transfer-link-string
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:54:35.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a87d4923f136

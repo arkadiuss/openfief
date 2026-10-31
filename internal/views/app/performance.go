@@ -51,6 +51,9 @@ func (v *Views) Performance(ctx context.Context, from, to kernel.Date) (Performa
 		return Performance{}, fmt.Errorf("performance: %w", rangeErr)
 	}
 	in := &views.PerformanceInput{From: from, To: to, ValuedThrough: rec.through, Transactions: rec.txs, Reporting: v.reporting}
+	if in.Links, err = v.ledger.TransferLinks(ctx); err != nil {
+		return Performance{}, fmt.Errorf("loading transfer links: %w", err)
+	}
 	if in.Valuations, err = v.valuationsFor(ctx, accounts, from, to); err != nil {
 		return Performance{}, err
 	}

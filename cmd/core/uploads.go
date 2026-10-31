@@ -10,16 +10,21 @@ import (
 	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
 )
 
-// newUploads returns the statement upload use case (D-7, D-49) over d: the
-// owner's sessions checked by owners, the account's bound instance from the
-// ingest schema, the file streamed to it through d.entries with its media
-// type sniffed from its first bytes, its delivery imported into the ledger
-// and valuation like a sync's, and the batch recorded in the ingest schema.
-// A file may be up to ingestapp.DefaultMaxUploadBytes.
+// newUploads returns the statement upload use case (D-7, D-49, D-109) over
+// d: the owner's sessions checked by owners, the account's bound instance
+// from the ingest schema, its seeding from the ledger for the mode, the
+// file streamed to it through d.entries with its media type sniffed from
+// its first bytes, its delivery imported into the ledger and valuation
+// like a sync's, and the batch recorded in the ingest schema. The accounts
+// that take files come from the running instances whose manifests declare
+// statement files, through d.entries once discovery runs. A file may be up
+// to ingestapp.DefaultMaxUploadBytes.
 func newUploads(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Uploads {
 	store := ingestpg.New(d.pool)
+	connectors := entryConnectors(d, store)
+	connectors.Seeding = d.ledger
 	return &ingestapp.Uploads{
-		Owners: owners, Bindings: store, Batches: store, Connectors: entryConnectors(d, store),
+		Owners: owners, Bindings: store, Batches: store, Connectors: connectors, Instances: d.entries,
 		NewBatchID: newBatchID,
 		Sniff:      http.DetectContentType,
 	}

@@ -192,6 +192,7 @@ The dataset also carries synthetic cross-check prices, one of them beyond the th
 - two [sleeves](../glossary.md#m0), `demo-offensive` and `demo-defensive`, and three accounts: `demo-ibkr` and `demo-xtb` in the offensive sleeve, and `demo-bonds-ike`, treasury bonds in an [IKE](../glossary.md#other-terms-and-abbreviations), in the defensive one;
 - six market-priced instruments and three treasury bond series, all with synthetic ISINs: the check digit is valid, and `TESTD` follows the country code, so no one can take them for real securities;
 - seeded random-walk prices on business days, from a week before go-live (365 days before today) up to today;
+- IBKR's synthetic mark prices as [cross-check prices](../glossary.md#m0) from the `ibkr` source: each instrument held at the end of each monthly statement, at the latest demo close on or before that day, and the latest statement's first instrument 3% above it, so the price checks page shows one flagged check (D-110, D-111). `demo-seed` records them through valuation's `CrossChecks`;
 - the IBKR history as synthetic [Flex Query](../glossary.md#other-terms-and-abbreviations) statements for the placeholder account `U0000000`: an opening statement, then one per month. XTB and the bond registry have no connector yet, so their history is ledger transactions.
 
 The only real figures are public ones: the published terms of the EDO1133, COI0128 and TOS0128 series, GUS consumer price index readings from January 2023 to September 2026, and NBP table A exchange rates. Every balance assertion in the history matches the balance its transactions give.
@@ -245,7 +246,7 @@ k -n flux-system patch kustomization demo-openfief --type=merge -p '{"spec":{"su
 
 Flux re-applies the layer within its interval, which re-creates the Job and scales the core back to one replica. Or replace the machine: `task demo:recreate ENV=demo CONFIRM=demo` gives a fresh machine whose empty database the Job loads for the new day.
 
-**How it's tested.** `task test` runs the dataset's tests (TEST-demo-dataset): it's deterministic, every ISIN is synthetic, the IBKR statements map with only the intended skipped summary rows, the other accounts' balance assertions match, and bond coupons follow the published rates. It also runs the loader's flag and rate tests (TEST-demo-seed-unit). `task test:pg` loads the dataset end to end into a throwaway PostgreSQL (TEST-demo-seed-load). That test checks that every account has holdings valued through today with no flagged balance assertion, that a second load of the same day changes nothing, and that a database that isn't a demo is refused.
+**How it's tested.** `task test` runs the dataset's tests (TEST-demo-dataset): it's deterministic, every ISIN is synthetic, the IBKR statements map with only the intended skipped summary rows, the other accounts' balance assertions match, and bond coupons, booked as interest (D-101), follow the published rates. It also runs the loader's flag and rate tests (TEST-demo-seed-unit). `task test:pg` loads the dataset end to end into a throwaway PostgreSQL (TEST-demo-seed-load). That test checks that every account has holdings valued through today with no flagged balance assertion, that a second load of the same day changes nothing, and that a database that isn't a demo is refused.
 
 ## From the pipeline
 

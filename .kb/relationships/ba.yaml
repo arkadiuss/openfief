@@ -545,3 +545,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4496d5d78cbf
+  - type: implements
+    from: SYM-ledgerv1-reject-transfer-request
+    to: REQ-ledger-transfer-service
+    created_at: 2026-10-30T06:57:53.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-495a952087df
+  - type: covered_by
+    from: SYM-ledgerv1-reject-transfer-request
+    to: TEST-ledger-connectapi-transfers
+    created_at: 2026-10-30T06:57:53.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75a7d18a7520
+  - type: implements
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request
+    to: REQ-valuation-price-check-service
+    created_at: 2026-10-30T03:11:02.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b15990cb9ec
+  - type: covered_by
+    from: SYM-valuation-gen-pc-pb-set-price-check-threshold-request
+    to: TEST-core-price-checks
+    created_at: 2026-10-30T03:11:02.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed8ebfda91ea

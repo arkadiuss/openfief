@@ -134,7 +134,7 @@ func TestBondLotsAdd(t *testing.T) {
 	}
 	want := ingest.Batch{
 		ID: "b-1", Institution: "treasury-bonds", Source: app.SourceEntry, Mode: ingest.ModeTransactions, Started: march2(t),
-		Transactions: 2, Imported: ingest.ImportSummary{New: 2},
+		Transactions: 2, Imported: ingest.ImportSummary{New: 2}, Accounts: []ledger.AccountID{bondsAccount},
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty()); diff != "" {
 		t.Errorf("Add batch (-want +got):\n%s", diff)
@@ -156,6 +156,10 @@ func checkHandedOver(t *testing.T, caller *fakeCaller, l *fakeLedger, stores *fa
 	if caller.instance != "bonds-main" || caller.id != "b-1" || len(caller.lots) != 1 || caller.lots[0].Series().String() != "EDO0536" {
 		t.Errorf("handed %v as %s to %s; want the lot as b-1 to the bound instance bonds-main", caller.lots, caller.id, caller.instance)
 	}
+	// The account is not seeded, so it goes live today with this lot (D-98).
+	if !caller.entries.GoLive.Equal(march2(t)) {
+		t.Errorf("go-live sent = %s, want today %s for an account not seeded", caller.entries.GoLive, march2(t))
+	}
 	checkImported(t, l, stores)
 }
 
@@ -164,8 +168,8 @@ func checkHandedOver(t *testing.T, caller *fakeCaller, l *fakeLedger, stores *fa
 // stored.
 func checkImported(t *testing.T, l *fakeLedger, stores *fakeStores) {
 	t.Helper()
-	if l.seeds != 0 || l.calls != 1 {
-		t.Errorf("ledger seeds = %d, calls = %d; want one import and no seeding", l.seeds, l.calls)
+	if l.seeds != 0 || l.calls != 1 || l.openingLots != 1 {
+		t.Errorf("ledger seeds = %d, calls = %d, opening-lot imports = %d; want one import that takes opening lots one at a time and no seeding", l.seeds, l.calls, l.openingLots)
 	}
 	for i := range l.txs {
 		if l.txs[i].Key.Source != "plugin:bonds-main:bonds" {
@@ -248,4 +252,33 @@ func TestBondLotsAddRefuses(t *testing.T) {
 func with(r *refusal, change func(r *refusal)) *refusal {
 	change(r)
 	return r
+}
+
+func TestBondLotsDelete(t *testing.T) {
+	t.Parallel()
+	caller := &fakeCaller{delivery: bondDelivery(t, bondsAccount)}
+	l := &fakeLedger{summary: ingest.ImportSummary{NewVersions: 2}}
+	b := bondLots(t, caller, l, &fakeStores{}, []string{"bonds-main"})
+	lot := edoLot(t)
+	got, err := b.Delete(t.Context(), "https://ui.example.com", "owner", bondsAccount, lot.Key())
+	if err != nil {
+		t.Fatalf("Delete: %v", err)
+	}
+	if got.ID != "b-1" || got.Source != app.SourceEntry || got.Imported.NewVersions != 2 {
+		t.Errorf("Delete batch = %+v, want b-1 from the owner's entry with the new versions", got)
+	}
+	want := ingest.BondLotEntries{GoLive: march2(t), Deleted: []ingest.BondLotKey{lot.Key()}}
+	if diff := cmp.Diff(want, caller.entries, cmpopts.EquateEmpty()); diff != "" || caller.instance != "bonds-main" {
+		t.Errorf("handed to %s (-want +got):\n%s", caller.instance, diff)
+	}
+	if l.openingLots != 1 {
+		t.Errorf("opening-lot imports = %d, want the deletion imported once", l.openingLots)
+	}
+
+	if _, err := b.Delete(t.Context(), "https://ui.example.com", "nobody", bondsAccount, lot.Key()); !errors.Is(err, app.ErrNoSession) {
+		t.Errorf("Delete without a session: %v, want ErrNoSession", err)
+	}
+	if _, err := b.Delete(t.Context(), "https://ui.example.com", "owner", bondsAccount, ingest.BondLotKey{Series: lot.Series()}); !errors.Is(err, ingest.ErrInvalidBondLot) {
+		t.Errorf("Delete without a date: %v, want ErrInvalidBondLot", err)
+	}
 }

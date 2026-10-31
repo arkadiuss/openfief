@@ -85,7 +85,7 @@ func TestUploadsUpload(t *testing.T) {
 			}
 			want := ingest.Batch{
 				ID: "b-1", Institution: "ibkr", Source: app.SourceUpload, Mode: tt.mode, Started: march2(t),
-				Transactions: 1, Assertions: 1, Imported: ingest.ImportSummary{New: 1},
+				Transactions: 1, Assertions: 1, Imported: ingest.ImportSummary{New: 1}, Accounts: []ledger.AccountID{"acc-1"},
 				Problems: []ingest.Problem{ingest.Unsupported("row 2", "broker interest")},
 			}
 			if diff := cmp.Diff(want, got, cmpopts.EquateEmpty()); diff != "" {
@@ -165,7 +165,6 @@ func TestUploadsUploadRefuses(t *testing.T) {
 	tests := []*uploadRefusal{
 		but(fine("no session"), func(r *uploadRefusal) { r.session, r.owners, r.wantErr = "nope", app.ErrNoSession, app.ErrNoSession }),
 		but(fine("a read-scoped session"), func(r *uploadRefusal) { r.session, r.owners, r.wantErr = "reader", app.ErrNotOwner, app.ErrNotOwner }),
-		but(fine("no mode"), func(r *uploadRefusal) { r.mode, r.wantErr = 0, app.ErrInvalidUpload }),
 		but(fine("an empty file"), func(r *uploadRefusal) { r.contents, r.wantErr = strings.NewReader(""), app.ErrInvalidUpload }),
 		but(fine("a file one byte over the limit"), func(r *uploadRefusal) {
 			r.contents, r.wantErr = strings.NewReader(strings.Repeat("x", 1001)), app.ErrFileTooLarge

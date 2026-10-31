@@ -559,3 +559,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc281b57ea73
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-transfers-body
+    to: TEST-views-connectapi-transfers
+    created_at: 2026-10-30T06:48:32.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85a58ec2cac7
+  - type: implements
+    from: SYM-connectorv1-bond-lot-key-get-purchase-date
+    to: REQ-ingest-bond-lot-messages
+    created_at: 2026-10-30T05:05:36.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9934b71a4ce
+  - type: covered_by
+    from: SYM-connectorv1-bond-lot-key-get-purchase-date
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-30T05:05:36.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a9903b7a6e5
+  - type: implements
+    from: SYM-ingestv1-bond-purchase-number
+    to: REQ-ingest-bond-lot-service
+    created_at: 2026-10-30T06:39:49.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58c5860cf92b
+  - type: covered_by
+    from: SYM-ingestv1-bond-purchase-number
+    to: TEST-ingest-connectapi
+    created_at: 2026-10-30T06:39:49.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c902a90c9ed

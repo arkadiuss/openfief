@@ -1,12 +1,12 @@
 ---
 title: Deposit And Buy Per Lot = true
 status: active
-text_ref: docs/DESIGN.md#D-9
+text_ref: docs/DESIGN.md#D-98
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:docs-design-md-d-9
+  - provenance:docs-design-md-d-98
   - lane:strict
   - fact:property_value
 fact_kind: property_value
@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:treasurybonds.lot_mapping:deposit_and_
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-076844F381AA59B7
-claim_text: The treasury bond connector must map each valid lot to a deposit of its cost and a buy of its bonds on its purchase date in its configured account, keyed by series and purchase date, and deliver each series' terms once under an instrument whose symbol is the series code.
+claim_key: CLAIM-7A5D33813CE84588
+claim_text: The treasury bond connector must map each valid lot bought on or before the account's go-live to an opening lot on go-live and each later lot to a deposit and a buy on its purchase date, keyed by series and purchase date, map each deleted lot to deletions of those keys, and deliver each series' terms once.
 origin:
   kind: agent
   recorded_at: '2026-10-29T01:14:17.883Z'

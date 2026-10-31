@@ -242,3 +242,49 @@ func checkAlreadySeeded(t *testing.T, err error) {
 		t.Errorf("Error() = %q, want %q", err.Error(), want)
 	}
 }
+
+func TestCheckOpeningLots(t *testing.T) {
+	t.Parallel()
+	f := newSeedFixture(t)
+	in := instrument(t, isinA, "TSTA")
+	lotOn := func(id, day, opened string) ledger.Transaction {
+		return must(t)(ledger.NewOpeningLot(header(t, id, day), in, qty(t, "20"), money(t, "2000", "PLN"), date(t, opened)))
+	}
+	second := lotOn("lot:EDO0535:2025-05-10", "2026-03-31", "2025-05-10")
+	secondLater := lotOn("lot:EDO0535:2025-05-10", "2026-04-15", "2025-05-10")
+	otherDay := lotOn("lot:EDO0535:2025-05-11", "2026-04-01", "2025-05-11")
+	deleted := must(t)(ledger.NewDeletion(header(t, f.lot.Key.ExternalID, "2026-03-31")))
+	tests := []struct {
+		name     string
+		log      []ledger.VersionedTransaction
+		incoming []ledger.Transaction
+		wantErr  error
+	}{
+		{name: "first opening lot of an account not seeded", incoming: []ledger.Transaction{f.lot}},
+		{name: "another lot on the go-live date of a seeded account", log: v1(f.lot), incoming: []ledger.Transaction{second}},
+		{name: "the same lot again", log: v1(f.lot, second), incoming: []ledger.Transaction{second}},
+		{name: "two lots on one date into an account not seeded", incoming: []ledger.Transaction{f.lot, second}},
+		{name: "a lot after go-live and a buy after it", log: v1(f.lot), incoming: []ledger.Transaction{f.buy}},
+		{name: "another account's lots are not checked", log: v1(f.lot), incoming: []ledger.Transaction{f.otherLot}},
+		{name: "a lot on another date than go-live", log: v1(f.lot), incoming: []ledger.Transaction{secondLater}, wantErr: ledger.ErrGoLiveMismatch},
+		{name: "lots on two dates at once", incoming: []ledger.Transaction{f.lot, otherDay}, wantErr: ledger.ErrGoLiveMismatch},
+		{name: "opening cash", incoming: []ledger.Transaction{f.cash}, wantErr: ledger.ErrNotOpeningLot},
+		{name: "an account not seeded with a deposit before go-live", log: v1(f.deposit), incoming: []ledger.Transaction{secondLater}, wantErr: ledger.ErrBookedBeforeGoLive},
+		{name: "an account not seeded with a deposit after go-live", log: v1(f.deposit), incoming: []ledger.Transaction{f.lot}},
+		{
+			name:     "its only lot deleted, the account takes a new go-live",
+			log:      []ledger.VersionedTransaction{{Transaction: f.lot, Version: 1}, {Transaction: deleted, Version: 2}},
+			incoming: []ledger.Transaction{secondLater},
+		},
+		{name: "invalid log", log: []ledger.VersionedTransaction{{Transaction: f.lot, Version: 2}}, incoming: []ledger.Transaction{second}, wantErr: ledger.ErrInvalidLog},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			err := ledger.CheckOpeningLots(tt.log, testAccount, tt.incoming)
+			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
+				t.Errorf("CheckOpeningLots error (-want +got):\n%s", diff)
+			}
+		})
+	}
+}

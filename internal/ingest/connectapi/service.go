@@ -69,6 +69,35 @@ func (s *service) AddBondLot(ctx context.Context, req *connect.Request[ingestv1.
 
 // count returns a batch's count as the message's int32; a count beyond
 // int32 is capped, which one lot's batch never reaches.
+// DeleteBondLot reads the lot's series and purchase date and has app.BondLots
+// delete it (D-100).
+func (s *service) DeleteBondLot(ctx context.Context, req *connect.Request[ingestv1.DeleteBondLotRequest]) (*connect.Response[ingestv1.DeleteBondLotResponse], error) {
+	key, err := keyFrom(req.Msg.GetSeries(), req.Msg.GetPurchaseDate())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	b, err := s.lots.Delete(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), ledger.AccountID(req.Msg.GetAccountId()), key)
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&ingestv1.DeleteBondLotResponse{
+		BatchId: string(b.ID), NewVersions: count(b.Imported.NewVersions), Unchanged: count(b.Imported.Unchanged),
+	}), nil
+}
+
+// keyFrom reads a deleted lot's series code and purchase date.
+func keyFrom(series, purchaseDate string) (ingest.BondLotKey, error) {
+	s, err := pl.ParseSeries(series)
+	if err != nil {
+		return ingest.BondLotKey{}, fmt.Errorf("%w: series: %w", ingest.ErrInvalidBondLot, err)
+	}
+	d, err := kernel.ParseDate(purchaseDate)
+	if err != nil {
+		return ingest.BondLotKey{}, fmt.Errorf("%w: purchase date: %w", ingest.ErrInvalidBondLot, err)
+	}
+	return ingest.BondLotKey{Series: s, Purchased: d}, nil
+}
+
 func count(n int) int32 {
 	if n > math.MaxInt32 {
 		return math.MaxInt32
@@ -88,8 +117,10 @@ func (s *service) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeUnauthenticated, app.ErrNoSession)
 	case errors.Is(err, app.ErrNotOwner):
 		return connect.NewError(connect.CodePermissionDenied, app.ErrNotOwner)
-	case errors.Is(err, ingest.ErrInvalidBondLot), errors.Is(err, app.ErrEntryRefused):
+	case errors.Is(err, ingest.ErrInvalidBondLot), errors.Is(err, app.ErrEntryRefused), errors.Is(err, ledger.ErrNothingToDelete):
 		return connect.NewError(connect.CodeInvalidArgument, err)
+	case errors.Is(err, ledger.ErrBookedBeforeGoLive), errors.Is(err, ledger.ErrGoLiveMismatch):
+		return connect.NewError(connect.CodeFailedPrecondition, err)
 	case errors.Is(err, app.ErrNoConnector), errors.Is(err, app.ErrNoEntries), errors.Is(err, ingest.ErrAccountNotBound):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	case errors.Is(err, app.ErrConnectorUnavailable):
@@ -127,10 +158,25 @@ func lotFrom(pb *ingestv1.BondLot) (ingest.BondLot, error) {
 	if err != nil {
 		return ingest.BondLot{}, fmt.Errorf("%w: early-redemption fee: %w", ingest.ErrInvalidBondLot, err)
 	}
+	purchase, err := purchaseFrom(pb.GetPurchase())
+	if err != nil {
+		return ingest.BondLot{}, err
+	}
 	return ingest.BondLot{
 		Terms: pl.Terms{
 			Series: series, FirstPeriodRate: first.Mul(percent()), Margin: margin.Mul(percent()), EarlyRedemptionFee: fee,
 		},
-		Quantity: q, Purchased: purchased,
+		Quantity: q, Purchased: purchased, Purchase: purchase,
 	}, nil
+}
+
+// purchaseFrom reads how a lot was bought; unspecified is a cash purchase.
+func purchaseFrom(p ingestv1.BondPurchase) (ingest.BondPurchase, error) {
+	switch p {
+	case ingestv1.BondPurchase_BOND_PURCHASE_UNSPECIFIED, ingestv1.BondPurchase_BOND_PURCHASE_CASH:
+		return ingest.PurchaseCash, nil
+	case ingestv1.BondPurchase_BOND_PURCHASE_EXCHANGE:
+		return ingest.PurchaseExchange, nil
+	}
+	return 0, fmt.Errorf("%w: purchase %d", ingest.ErrInvalidBondLot, p)
 }

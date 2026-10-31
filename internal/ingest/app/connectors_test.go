@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"io"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -35,6 +36,7 @@ type fakeCaller struct {
 	file      string
 	media     string
 	lots      []ingest.BondLot
+	entries   ingest.BondLotEntries
 }
 
 func (f *fakeCaller) Sync(_ context.Context, instance string, call *app.SyncCall) (app.Delivery, error) {
@@ -52,8 +54,8 @@ func (f *fakeCaller) ImportFile(_ context.Context, instance string, id ingest.Ba
 	return f.delivery, f.err
 }
 
-func (f *fakeCaller) ImportBondLots(_ context.Context, instance string, id ingest.BatchID, lots []ingest.BondLot) (app.Delivery, error) {
-	f.instance, f.id, f.lots = instance, id, lots
+func (f *fakeCaller) ImportBondLots(_ context.Context, instance string, id ingest.BatchID, e *ingest.BondLotEntries) (app.Delivery, error) {
+	f.instance, f.id, f.lots, f.entries = instance, id, e.Lots, *e
 	return f.delivery, f.err
 }
 
@@ -168,7 +170,7 @@ func TestConnectorsSync(t *testing.T) {
 	}
 	want := app.SyncResult{Watermark: "w-2", Batch: ingest.Batch{
 		ID: "b-1", Institution: "xtb", Source: app.SourceSync, Mode: ingest.ModeTransactions, Started: march2(t),
-		Transactions: 1, Assertions: 1, Imported: ingest.ImportSummary{New: 1},
+		Transactions: 1, Assertions: 1, Imported: ingest.ImportSummary{New: 1}, Accounts: []ledger.AccountID{"acc-1"},
 		Problems: []ingest.Problem{ingest.Unsupported("row 2", "broker interest")},
 	}}
 	if diff := cmp.Diff(want, got); diff != "" {
@@ -197,19 +199,42 @@ func TestConnectorsSync(t *testing.T) {
 	}
 }
 
-// TestConnectorsCrossCheckPrices checks that a delivery's cross-check
-// prices are stored apart from its prices, with the instance as their
-// source, and that a delivery with some fails without a store for them.
-func TestConnectorsCrossCheckPrices(t *testing.T) {
-	t.Parallel()
+// fakeDeclarations answers each instance's manifest declarations, or fails
+// with err.
+type fakeDeclarations struct {
+	byInstance map[string]ingest.Declarations
+	err        error
+}
+
+func (f fakeDeclarations) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
+	return f.byInstance[instance], f.err
+}
+
+// crossCheckDelivery is a delivery of one cross-check price, a spoofed
+// source on it, and nothing else of market data.
+func crossCheckDelivery(t *testing.T) (app.Delivery, valuation.CrossCheckPrice) {
+	t.Helper()
 	d := delivery(t)
 	d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels = nil, nil, nil, nil
 	mark := valuation.CrossCheckPrice{
 		Instrument: "PLTEST000010/TST", Date: march2(t), Close: kernel.NewMoney(kernel.NewDecimal(1235, -2), mustCurrency(t, "EUR")), Source: "spoofed",
 	}
 	d.CrossCheckPrices = []valuation.CrossCheckPrice{mark}
+	return d, mark
+}
+
+// TestConnectorsCrossCheckPrices checks that the cross-check prices of an
+// instance whose manifest declares them are stored apart from its prices,
+// with the instance as their source, and that a delivery with some fails
+// without a store for them.
+func TestConnectorsCrossCheckPrices(t *testing.T) {
+	t.Parallel()
+	d, mark := crossCheckDelivery(t)
+	declared := fakeDeclarations{byInstance: map[string]ingest.Declarations{"ibkr-main": {CrossCheckPrices: true}}}
 	stores := &fakeStores{}
-	if _, err := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, stores).Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions}); err != nil {
+	c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, stores)
+	c.Declarations = declared
+	if _, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions}); err != nil {
 		t.Fatalf("Sync: %v", err)
 	}
 	mark.Source = "ibkr-main"
@@ -220,11 +245,37 @@ func TestConnectorsCrossCheckPrices(t *testing.T) {
 		t.Errorf("stores got prices %v in %d calls; want only the cross-check prices", stores.prices, stores.calls)
 	}
 
-	c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, &fakeStores{})
-	c.CrossChecks = nil
+	c = connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, &fakeStores{})
+	c.CrossChecks, c.Declarations = nil, declared
 	_, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-2", Mode: ingest.ModeTransactions})
 	if diff := cmp.Diff(app.ErrNoCrossCheckStore, err, cmpopts.EquateErrors()); diff != "" {
 		t.Errorf("Sync without a cross-check store error (-want +got):\n%s", diff)
+	}
+}
+
+// TestConnectorsUndeclaredCrossCheckPrices checks that the cross-check
+// prices of an instance whose manifest doesn't declare them are not stored
+// and become one ingest problem while the rest is imported (D-112), and
+// that a failure to read the declarations fails the batch.
+func TestConnectorsUndeclaredCrossCheckPrices(t *testing.T) {
+	t.Parallel()
+	d, _ := crossCheckDelivery(t)
+	for _, decl := range []app.ConnectorDeclarations{nil, fakeDeclarations{byInstance: map[string]ingest.Declarations{"ibkr-main": {StatementFiles: true}}}} {
+		stores := &fakeStores{}
+		c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, stores)
+		c.Declarations = decl
+		got, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions})
+		if err != nil {
+			t.Fatalf("Sync: %v", err)
+		}
+		if len(stores.checks) != 0 || !slices.Contains(got.Batch.Problems, ingest.UndeclaredCrossCheckPrices(1)) || got.Batch.Transactions != len(d.Mapping.Transactions) {
+			t.Errorf("an undeclared delivery stored %v with problems %v; want none stored, one problem, the transactions imported", stores.checks, got.Batch.Problems)
+		}
+	}
+	c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, &fakeStores{})
+	c.Declarations = fakeDeclarations{err: errStore}
+	if _, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-2", Mode: ingest.ModeTransactions}); !errors.Is(err, errStore) {
+		t.Errorf("Sync with the declarations failing = %v, want %v", err, errStore)
 	}
 }
 
@@ -259,7 +310,7 @@ func TestConnectorsSyncKeepsFromGoLive(t *testing.T) {
 	if diff := cmp.Diff(wantProblems, got.Batch.Problems); diff != "" || len(l.txs) != 0 || got.Batch.Transactions != 0 {
 		t.Errorf("Sync booked %d transactions with problems (-want +got):\n%s", len(l.txs), diff)
 	}
-	if _, err := c.ImportFile(t.Context(), "xtb-main", "b-2", "acc-1", ingest.ModeTransactions, app.NamedFile{Contents: strings.NewReader("x")}); err != nil {
+	if _, err := c.ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeTransactions, app.NamedFile{Contents: strings.NewReader("x")}); err != nil {
 		t.Fatalf("ImportFile: %v", err)
 	}
 	if len(l.txs) != 1 {
@@ -279,7 +330,7 @@ func TestConnectorsImportFile(t *testing.T) {
 	stores := &fakeStores{}
 	file := app.NamedFile{Name: "statement.csv", Contents: strings.NewReader("synthetic")}
 	l := &fakeLedger{}
-	got, err := connectors(t, caller, l, stores).ImportFile(t.Context(), "xtb-main", "b-2", "acc-1", ingest.ModeOpening, file)
+	got, err := connectors(t, caller, l, stores).ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeOpening, file)
 	if err != nil {
 		t.Fatalf("ImportFile: %v", err)
 	}
@@ -335,7 +386,7 @@ func TestConnectorsFailures(t *testing.T) {
 			if got := l.calls == 1; got != tt.wantImport {
 				t.Errorf("ledger imported = %v, want %v", got, tt.wantImport)
 			}
-			_, err = c.ImportFile(t.Context(), "xtb-main", "b-1", "acc-1", tt.mode, app.NamedFile{Contents: strings.NewReader("")})
+			_, err = c.ImportFile(t.Context(), "xtb-main", "b-1", tt.mode, app.NamedFile{Contents: strings.NewReader("")})
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("ImportFile error (-want +got):\n%s", diff)
 			}
