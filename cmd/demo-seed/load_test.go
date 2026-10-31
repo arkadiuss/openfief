@@ -20,6 +20,8 @@ import (
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
 	"github.com/arkadiuss/openfief/internal/portfolio"
+	"github.com/arkadiuss/openfief/internal/valuation"
+	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
 )
 
@@ -118,6 +120,9 @@ func TestLoadEndToEnd(t *testing.T) {
 	if err := load(t.Context(), pool, next, quiet()); !errors.Is(err, errAlreadyLoaded) {
 		t.Errorf("loading another day without --reset-demo: err = %v, want errAlreadyLoaded", err)
 	}
+	if again := count(t, pool, "SELECT count(*) FROM ledger.transaction_versions"); again != versions {
+		t.Errorf("loading another day without --reset-demo: %d transaction versions, want %d unchanged", again, versions)
+	}
 	next.Reset = true
 	if err := load(t.Context(), pool, next, quiet()); err != nil {
 		t.Fatalf("loading another day with --reset-demo: %v", err)
@@ -147,10 +152,38 @@ func checkLoaded(t *testing.T, pool *pgxpool.Pool, today kernel.Date) {
 	if flagged := count(t, pool, "SELECT count(*) FROM ledger.assertion_checks WHERE status <> 'matched'"); flagged != 0 {
 		t.Errorf("%d flagged balance assertions, want none", flagged)
 	}
+	checkOneFlaggedPriceCheck(t, vstore, today)
+}
+
+// checkOneFlaggedPriceCheck checks that the price checks, as the core's
+// read API serves them, compare IBKR's cross-check prices with the stored
+// ones and flag exactly one: the latest statement's first instrument
+// (D-110, docs/dev/demo.md).
+func checkOneFlaggedPriceCheck(t *testing.T, vstore *valuationpg.Store, today kernel.Date) {
+	t.Helper()
+	checks, err := valuationapp.NewCrossChecks(vstore, nil).PriceChecks(t.Context())
+	if err != nil {
+		t.Fatalf("PriceChecks: %v", err)
+	}
+	var flagged []valuation.PriceCheck
+	for i := range checks {
+		if checks[i].CrossCheck.Source != demo.IBKRInstitution {
+			t.Errorf("price check of %s from %q, want only IBKR's", checks[i].CrossCheck.Instrument, checks[i].CrossCheck.Source)
+		}
+		if checks[i].Status == valuation.PriceFlagged {
+			flagged = append(flagged, checks[i])
+		}
+	}
+	if len(flagged) != 1 || !flagged[0].CrossCheck.Date.Equal(today) {
+		t.Errorf("%d price checks, %d flagged (%v); want exactly one flagged, on %s", len(checks), len(flagged), flagged, today)
+	}
 }
 
 // checkValued checks that account has one valuation per holding on today,
-// each with every input present, and is valued through today, idle.
+// each with every input present and all three values (D-77), and is
+// valued through today, idle. A foreign lot opened before the FX rates
+// start leaves its net and liquidation values missing, so this catches
+// rates that don't reach back to every lot's tax rate date.
 func checkValued(t *testing.T, vstore *valuationpg.Store, account ledger.AccountID, today kernel.Date, holdings int) {
 	t.Helper()
 	rows, err := vstore.Valuations(t.Context(), account, today, today)
@@ -158,13 +191,76 @@ func checkValued(t *testing.T, vstore *valuationpg.Store, account ledger.Account
 		t.Errorf("%s: %d valuations on %s, err %v; want one per holding (%d)", account, len(rows), today, err, holdings)
 	}
 	for i := range rows {
-		if !rows[i].Valued() || rows[i].PLN.Sign() <= 0 {
-			t.Errorf("%s: %s on %s: missing %s (%s), PLN %s", account, rows[i].Instrument, today, rows[i].Missing, rows[i].Detail, rows[i].PLN)
-		}
+		checkThreeValues(t, &rows[i])
 	}
 	st, err := vstore.Status(t.Context(), account)
 	if err != nil || st.Pending || st.Running || !st.ValuedThrough.Equal(today) {
 		t.Errorf("%s: status %+v, err %v; want valued through %s, idle", account, st, err, today)
+	}
+}
+
+// TestLoadTopsUpADemoLoadedEarlier checks that a load of another day
+// without --reset-demo, refused as before, first records again the inputs
+// of the dataset the database holds: a demo an older loader filled, here
+// one without cross-check prices and with FX rates only from go-live, gets
+// them, and its revaluations are enqueued for the core.
+func TestLoadTopsUpADemoLoadedEarlier(t *testing.T) {
+	t.Parallel()
+	pool := emptyPool(t)
+	cfg := testConfig(t, "2026-10-28", false)
+	if err := load(t.Context(), pool, cfg, quiet()); err != nil {
+		t.Fatalf("load into an empty database: %v", err)
+	}
+	goLive := demo.GoLive(cfg.Today).String()
+	forgetNewerInputs(t, pool, goLive)
+	versions := count(t, pool, "SELECT count(*) FROM ledger.transaction_versions")
+
+	err := load(t.Context(), pool, testConfig(t, "2026-10-31", false), quiet())
+	if !errors.Is(err, errAlreadyLoaded) {
+		t.Fatalf("loading another day without --reset-demo: err = %v, want errAlreadyLoaded", err)
+	}
+	if again := count(t, pool, "SELECT count(*) FROM ledger.transaction_versions"); again != versions {
+		t.Errorf("%d transaction versions, want %d unchanged", again, versions)
+	}
+	if n := count(t, pool, "SELECT count(*) FROM valuation.fx_rates WHERE date < '"+goLive+"'"); n == 0 {
+		t.Errorf("no FX rate before go-live after the top-up, want those of the lots' tax dates")
+	}
+	if n := count(t, pool, "SELECT count(*) FROM demo.marker WHERE loaded_on = '"+cfg.Today.String()+"'"); n != 1 {
+		t.Errorf("the marker no longer names %s", cfg.Today)
+	}
+	vstore, err := valuationpg.NewStore(pool)
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	checkOneFlaggedPriceCheck(t, vstore, cfg.Today)
+	if st, err := vstore.Status(t.Context(), demo.IBKRAccount); err != nil || !st.Pending {
+		t.Errorf("IBKR status %+v, err %v; want a revaluation pending for the core", st, err)
+	}
+}
+
+// checkThreeValues checks that row has every input and a positive gross
+// value, and its net and liquidation values.
+func checkThreeValues(t *testing.T, row *valuation.HoldingValuation) {
+	t.Helper()
+	if !row.Valued() || row.PLN.Sign() <= 0 {
+		t.Errorf("%s: %s on %s: missing %s (%s), PLN %s", row.Account, row.Instrument, row.Date, row.Missing, row.Detail, row.PLN)
+	}
+	if row.NetMissing != 0 || row.LiquidationMissing != 0 {
+		t.Errorf("%s: %s on %s: net missing %s, liquidation missing %s; want both values", row.Account, row.Instrument, row.Date, row.NetMissing, row.LiquidationMissing)
+	}
+}
+
+// forgetNewerInputs deletes what an older loader didn't record: every
+// cross-check price and every FX rate before goLive.
+func forgetNewerInputs(t *testing.T, pool *pgxpool.Pool, goLive string) {
+	t.Helper()
+	for _, sql := range []string{
+		"DELETE FROM valuation.cross_check_prices",
+		"DELETE FROM valuation.fx_rates WHERE date < '" + goLive + "'",
+	} {
+		if _, err := pool.Exec(t.Context(), sql); err != nil {
+			t.Fatalf("%s: %v", sql, err)
+		}
 	}
 }
 

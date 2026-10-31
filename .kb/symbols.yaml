@@ -104336,3 +104336,118 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-bond-lots
+  - id: SYM-demo-earliest-opened
+    title: earliestOpened
+    sourceFile: internal/demo/dataset.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:17:42.480Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset-fx-from
+      - type: implements
+        target: REQ-demo-fx-rates-cover-lot-tax-dates
+  - id: SYM-demo-seed-top-up
+    title: topUp
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:17:59.910Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-top-up
+      - type: implements
+        target: REQ-demo-top-up-loaded-inputs
+  - id: SYM-demo-seed-loaded-dataset
+    title: loadedDataset
+    sourceFile: cmd/demo-seed/guard.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:18:15.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-top-up
+      - type: implements
+        target: REQ-demo-top-up-loaded-inputs
+  - id: SYM-demo-test-fx-from-covers-every-foreign-lot
+    title: TestFXFromCoversEveryForeignLot
+    sourceFile: internal/demo/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:18:27.793Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-dataset-fx-from
+  - id: SYM-demo-seed-test-load-tops-up-ademo-loaded-earlier
+    title: TestLoadTopsUpADemoLoadedEarlier
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:18:41.052Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-top-up
+  - id: SYM-demo-seed-test-helper-check-one-flagged-price-check
+    title: checkOneFlaggedPriceCheck
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:18:57.088Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-top-up
+  - id: SYM-demo-seed-migrate
+    title: migrate
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:31:37.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-load
+      - type: implements
+        target: REQ-demo-real-pipelines
+  - id: SYM-demo-seed-top-up-another-dataset
+    title: topUpAnotherDataset
+    sourceFile: cmd/demo-seed/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:31:47.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-top-up
+      - type: implements
+        target: REQ-demo-top-up-loaded-inputs
+  - id: SYM-demo-seed-test-helper-check-three-values
+    title: checkThreeValues
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:31:56.882Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-load
+  - id: SYM-demo-seed-test-helper-forget-newer-inputs
+    title: forgetNewerInputs
+    sourceFile: cmd/demo-seed/load_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:32:08.236Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-top-up

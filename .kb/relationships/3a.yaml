@@ -419,3 +419,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e30c347c586
+  - type: implements
+    from: SYM-demo-seed-top-up
+    to: REQ-demo-top-up-loaded-inputs
+    created_at: 2026-10-31T12:18:03.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0229fee5b278
+  - type: covered_by
+    from: SYM-demo-seed-top-up
+    to: TEST-demo-seed-top-up
+    created_at: 2026-10-31T12:18:03.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70c4ee26ccb5

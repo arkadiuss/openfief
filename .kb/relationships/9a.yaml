@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ba5210034cd
+  - type: constrains
+    from: REQ-demo-fx-rates-cover-lot-tax-dates
+    to: FACT-SUBJECT-8445428BF4E0E148
+    created_at: 2026-10-31T12:17:20.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91cc5096d18f
+  - type: requires_property
+    from: REQ-demo-fx-rates-cover-lot-tax-dates
+    to: FACT-PROP-F955AEBA4D601505
+    created_at: 2026-10-31T12:17:20.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1043126a5ae1
+  - type: specified_by
+    from: REQ-demo-fx-rates-cover-lot-tax-dates
+    to: SCEN-demo-fx-rates-cover-lots
+    created_at: 2026-10-31T12:17:20.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10806bf110ec

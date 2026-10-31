@@ -12,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/arkadiuss/openfief/internal/demo"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	"github.com/arkadiuss/openfief/internal/valuation/app"
@@ -27,8 +28,9 @@ var committedRates []byte
 // errBadRates reports a malformed line of the committed rates.
 var errBadRates = errors.New("malformed committed NBP rates")
 
-// rateLookback is how far before go-live the rates start, so that the first
-// day valued has a rate even after a long weekend.
+// rateLookback is how far before the first day that needs a rate the rates
+// start, so that day has one even after a long weekend or, for a lot's tax
+// cost, on the business day before it (pl.TaxRateCutoff).
 const rateLookback = 14
 
 // nbpTimeout bounds each request to NBP.
@@ -39,21 +41,22 @@ const nbpTimeout = 30 * time.Second
 func demoCurrencies() []string { return []string{"EUR", "USD"} }
 
 // fxRates returns the NBP table A rates of the demo's currencies from
-// before goLive to today: fetched from NBP through its adapter (D-20),
-// or, offline or when NBP fails, the committed ones. Either way they are
-// NBP's own published rates.
-func fxRates(ctx context.Context, cfg *config, goLive kernel.Date, log *slog.Logger) ([]valuation.FXRate, error) {
-	from := goLive.AddDays(-rateLookback)
+// before ds.FXFrom, the earliest day the dataset needs one for, to its
+// today: fetched from NBP through its adapter (D-20), or, offline or when
+// NBP fails, the committed ones. Either way they are NBP's own published
+// rates.
+func fxRates(ctx context.Context, cfg *config, ds *demo.Dataset, log *slog.Logger) ([]valuation.FXRate, error) {
+	from := ds.FXFrom.AddDays(-rateLookback)
 	if !cfg.Offline {
 		client := nbp.New(&http.Client{Timeout: nbpTimeout}, cfg.NBPURL)
-		rates, err := app.FetchRates(ctx, client, from, cfg.Today, nbp.MaxRangeDays)
+		rates, err := app.FetchRates(ctx, client, from, ds.Today, nbp.MaxRangeDays)
 		if err == nil {
 			log.Info("fetched FX rates from NBP", "rates", len(rates))
 			return onlyDemoCurrencies(rates), nil
 		}
 		log.Warn("NBP unreachable: using the committed NBP rates", "error", err)
 	}
-	rates, err := parseRates(committedRates, from, cfg.Today)
+	rates, err := parseRates(committedRates, from, ds.Today)
 	if err != nil {
 		return nil, err
 	}
