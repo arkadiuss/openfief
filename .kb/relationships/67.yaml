@@ -685,6 +685,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcee8bded48c
+  - type: executable_for
+    from: SYM-tooling-kibi-ingest-proofs-test-snapshots
+    to: TEST-tooling-kibi-ingest-proofs
+    created_at: 2026-10-31T12:46:23.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f717dfc4146
   - type: verified_by
     from: SCEN-demo-top-up-loaded-inputs
     to: TEST-demo-seed-top-up

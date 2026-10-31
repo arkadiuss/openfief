@@ -1,0 +1,39 @@
+diff --git a/node_modules/kibi-cli/dist/commands/sync.js b/node_modules/kibi-cli/dist/commands/sync.js
+index d86a055..550c405 100644
+--- a/node_modules/kibi-cli/dist/commands/sync.js
++++ b/node_modules/kibi-cli/dist/commands/sync.js
+@@ -41,6 +41,9 @@ import { adoptUpsertOnlySymbolManifest, findUntrackedDocumentMatches, } from "./
+ // Manual deletion of a written-but-unstaged source leaves a recovery receipt
+ // behind; sync refuses to guess, so the error must name the way out.
+ const PENDING_SOURCE_RECOVERY_HINT = " If the file was deleted on purpose, run 'kibi branch recover --apply' to rebuild the branch KB from the sources that remain.";
++// Local patch (OpenFief): how long a sync waits for its compiling SWI process
++// to halt on its own after kb_detach. The wait ends as soon as it exits.
++const SYNC_COMPILER_EXIT_GRACE_MS = 60000;
+ export class SyncError extends Error {
+     constructor(message) {
+         super(message);
+@@ -1232,8 +1235,22 @@ export async function syncCommand(options = {}, runtime = {}) {
+             if (!saveResult.success) {
+                 throw new SyncError(`Failed to save staging KB: ${saveResult.error || "Unknown error"}`);
+             }
+-            await prolog.query("kb_detach");
+-            await prolog.terminate();
++            // Local patch (OpenFief, patches/kibi-cli+2.36.0.patch): let the
++            // compiling SWI process finish before the staging store is
++            // published. It halts on stdin EOF, running its at_halt hooks and
++            // closing its journal streams; publishing only after that exit
++            // means the store on disk is everything the compile wrote. A
++            // process that has to be signalled, or a failed detach, refuses
++            // publication instead of publishing a store that may be partial.
++            const compiler = prolog.process;
++            const detachResult = await prolog.query("kb_detach");
++            await prolog.terminate({ graceMs: SYNC_COMPILER_EXIT_GRACE_MS });
++            if (!detachResult.success) {
++                throw new SyncError(`Failed to detach the staging KB: ${detachResult.error || "Unknown error"}; the staging store was not published`);
++            }
++            if (compiler && compiler.exitCode !== 0) {
++                throw new SyncError(`The staging compiler did not exit cleanly within ${SYNC_COMPILER_EXIT_GRACE_MS} ms (exit code ${compiler.exitCode}, signal ${compiler.signalCode}); the staging store was not published`);
++            }
+             const journaledLive = existsSync(path.join(livePath, "storage.json"));
+             if (recoveryBackupPath !== undefined) {
+                 if (!existsSync(livePath)) {

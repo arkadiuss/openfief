@@ -104336,6 +104336,46 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-bond-lots
+  - id: SYM-tooling-kibi-ingest-proofs-test-artifact
+    title: artifact
+    sourceFile: scripts/tests/kibi-ingest-proofs.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:45:52.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-ingest-proofs
+  - id: SYM-tooling-kibi-ingest-proofs-test-ingest
+    title: ingest
+    sourceFile: scripts/tests/kibi-ingest-proofs.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:46:01.698Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-ingest-proofs
+  - id: SYM-tooling-kibi-ingest-proofs-test-check
+    title: check
+    sourceFile: scripts/tests/kibi-ingest-proofs.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:46:10.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-ingest-proofs
+  - id: SYM-tooling-kibi-ingest-proofs-test-snapshots
+    title: snapshots
+    sourceFile: scripts/tests/kibi-ingest-proofs.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T12:46:19.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-ingest-proofs
   - id: SYM-demo-earliest-opened
     title: earliestOpened
     sourceFile: internal/demo/dataset.go

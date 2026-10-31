@@ -48,3 +48,13 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 ## Traceability
 
 Tests that verify a kibi scenario are linked to it ([kibi.md](kibi.md)). Coverage percentage is not a target; requirement coverage is.
+
+Each kibi test record declares its level as `verification_scope`, decided by what its test files run, never by what it would be convenient to count:
+
+| `verification_scope` | The test runs |
+|---|---|
+| `unit` | in-process only: pure functions, in-memory fakes, client-go fakes, `httptest.ResponseRecorder`, golden files |
+| `integration` | something real outside its own memory: PostgreSQL (`task test:pg`), an HTTP server or listener it starts (`httptest.NewServer`, a Connect server, a test registry), hypert recordings, envtest's API server, or a script test in `scripts/tests` |
+| `end_to_end` | `test/e2e` on a real local cluster, and nothing else |
+
+A record whose test touches both levels takes the higher one. Only end-to-end records carry a proof contract, and `task e2e:prove` runs them through `kibi prove`.

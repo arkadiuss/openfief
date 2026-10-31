@@ -7,5 +7,6 @@ origin:
   recorded_at: '2026-10-29T17:03:52.248Z'
 id: TEST-plugins-kube-upgrade
 type: test
+verification_scope: unit
 ---
 Over the controller-runtime fake client: Get reads back what Resources wrote, including an in-cluster service, and is ErrNotInstalled without the Plugin or the grant; Update sets the new image and permissions, takes back the operator's read access to an in-cluster service the new version no longer names, and refuses a missing instance.

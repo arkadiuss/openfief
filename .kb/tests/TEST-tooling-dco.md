@@ -7,5 +7,6 @@ origin:
   recorded_at: '2026-10-28T04:51:20.011Z'
 id: TEST-tooling-dco
 type: test
+verification_scope: integration
 ---
 Builds a throwaway repository and runs scripts/dco-check.sh on it: a commit signed off by its author passes; a commit signed off by someone else and a commit with no sign-off each fail with the commit named in the output.

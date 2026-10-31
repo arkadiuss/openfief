@@ -7,5 +7,6 @@ origin:
   recorded_at: '2026-10-28T07:55:50.422Z'
 id: TEST-valuation-postgres-queue
 type: test
+verification_scope: integration
 ---
 PostgreSQL tests (task test:pg): inputs and imports enqueue in their own transaction, enqueues coalesce from the earliest date, a rules version enqueues only when it changed, and statuses report pending and running.

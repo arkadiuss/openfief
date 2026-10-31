@@ -66,19 +66,44 @@ jobs:
         run: task check
         env:
           DOCS_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+
+  docs-build:
+    # Builds the docs site that the docs job publishes, once both end-to-end runs passed, so kibi's requirements
+    # report on the site shows their receipts (docs/dev/kibi.md). Each e2e job uploads the kibi.proof-run.v1
+    # artifact `task e2e:prove` wrote; task kibi:ingest has kibi ingest them into this checkout of the same
+    # commit, which kibi accepts only when the workspace snapshot matches the one the runs were made from.
+    name: build docs
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: [check, e2e]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: e2e-proof-*
+          # Under .kb/proof/runs, which is ignored and which kibi leaves out of the workspace snapshot.
+          path: .kb/proof/runs/ci
+      - name: task kibi:ingest
+        run: task kibi:ingest DIR=.kb/proof/runs/ci
+      - name: task docs:build
+        run: task docs:build
       - name: Upload the docs site
-        # task check built it (docs:build); the docs job publishes it on pushes to main (docs/dev/docs.md).
-        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site/public
 
   docs:
-    # Publishes the docs site to GitHub Pages from the same run that deploys the demo.
+    # Publishes the site docs-build built to GitHub Pages from the same run that deploys the demo.
     # The owner sets Settings > Pages > Source to "GitHub Actions" and the custom domain openfief.dev once.
     name: publish docs
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: check
+    needs: docs-build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -189,8 +214,17 @@ jobs:
         run: task e2e:images CLUSTER="$CLUSTER"
         env:
           CLUSTER: ${{ matrix.cluster }}
-      - name: task e2e
-        run: task e2e
+      # kibi prove runs task e2e and records a receipt on each end-to-end test (docs/dev/kibi.md); the run's
+      # kibi.proof-run.v1 artifact goes to the docs-build job, which ingests it for the published report.
+      - name: task e2e:prove
+        run: task e2e:prove
+      - name: Upload the proof run
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: e2e-proof-${{ matrix.cluster }}
+          path: .kb/proof/runs/e2e.json
+          if-no-files-found: error
+          retention-days: 7
 
   images:
     # Multi-arch images with an SBOM, pushed and cosign-signed on main (D-17). Only the images a change can

@@ -538,3 +538,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e133e632fc7f
+  - type: specified_by
+    from: REQ-identity-first-passkey-own-host-or-localhost
+    to: SCEN-e2e-first-passkey-localhost
+    created_at: 2026-10-31T12:35:25.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cafafdd87281
