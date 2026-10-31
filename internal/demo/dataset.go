@@ -31,6 +31,10 @@ type Dataset struct {
 	Seed   uint64
 	Today  kernel.Date
 	GoLive kernel.Date
+	// FXFrom is the earliest day the dataset needs an FX rate for: the
+	// open date of its earliest lot in a foreign currency, whose cost
+	// converts at the tax rate of that date (D-20), or go-live.
+	FXFrom kernel.Date
 
 	Sleeves     []portfolio.Sleeve
 	Accounts    []ledger.Account
@@ -72,6 +76,7 @@ func Generate(seed uint64, today kernel.Date) (Dataset, error) {
 		return Dataset{}, err
 	}
 	h := simulateIBKR(m, newRNG(seed^streamIBKR), goLive, today)
+	ds.FXFrom = earliestOpened(goLive, h.lots)
 	ds.CrossCheckPrices = crossCheckPrices(m, &h)
 	ds.IBKROpening = openingFlex(&h)
 	for i := range h.statements {
@@ -88,6 +93,17 @@ func Generate(seed uint64, today kernel.Date) (Dataset, error) {
 	ds.XTBOpening, ds.XTBActivity = xtb.opening, xtb.activity
 	ds.BondsOpening, ds.BondsActivity = bonds.opening, bonds.activity
 	return ds, nil
+}
+
+// earliestOpened returns the open date of the earliest of lots, or from
+// when none is earlier.
+func earliestOpened(from kernel.Date, lots []lot) kernel.Date {
+	for i := range lots {
+		if lots[i].opened.Before(from) {
+			from = lots[i].opened
+		}
+	}
+	return from
 }
 
 // newMarket returns the demo's instruments with their price paths from

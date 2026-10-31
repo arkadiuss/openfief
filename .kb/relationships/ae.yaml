@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1433dccaa5b5
+  - type: implements
+    from: SYM-demo-seed-migrate
+    to: REQ-demo-real-pipelines
+    created_at: 2026-10-31T12:31:39.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f91b6e4ed1a
+  - type: covered_by
+    from: SYM-demo-seed-migrate
+    to: TEST-demo-seed-load
+    created_at: 2026-10-31T12:31:39.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aef7d4004e9

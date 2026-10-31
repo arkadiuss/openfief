@@ -412,3 +412,38 @@ func isWeekend(d kernel.Date) bool {
 	wd := time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, time.UTC).Weekday()
 	return wd == time.Saturday || wd == time.Sunday
 }
+
+// TestFXFromCoversEveryForeignLot checks that the dataset asks for FX rates
+// from the open date of its earliest foreign-currency lot: a lot's cost
+// converts at the tax rate of that date (D-20), so a rate source starting
+// later leaves every net and liquidation value of the account missing.
+func TestFXFromCoversEveryForeignLot(t *testing.T) {
+	t.Parallel()
+	ds := generate(t, testSeed, testToday)
+	opening, err := mapper().Map(bytes.NewReader(ds.IBKROpening), ingest.ModeOpening)
+	if err != nil {
+		t.Fatalf("opening statement: %v", err)
+	}
+	if ds.FXFrom.After(ds.GoLive) {
+		t.Errorf("FXFrom %s is after go-live %s", ds.FXFrom, ds.GoLive)
+	}
+	earliest := ds.GoLive
+	for i := range opening.Transactions {
+		tx := &opening.Transactions[i]
+		if tx.Kind != ledger.KindOpeningLot {
+			continue
+		}
+		if tx.LotOpened.Before(ds.FXFrom) {
+			t.Errorf("%s: lot opened on %s, before FXFrom %s", tx.Key, tx.LotOpened, ds.FXFrom)
+		}
+		if tx.LotOpened.Before(earliest) {
+			earliest = tx.LotOpened
+		}
+	}
+	if !earliest.Equal(ds.FXFrom) {
+		t.Errorf("FXFrom = %s, want the earliest lot's open date %s", ds.FXFrom, earliest)
+	}
+	if !earliest.Before(ds.GoLive) {
+		t.Errorf("no IBKR lot opened before go-live: the test no longer covers the gap")
+	}
+}
