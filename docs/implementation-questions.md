@@ -87,6 +87,33 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the method and its messages stay in the contract, marked deprecated, and the core answers it with `UNIMPLEMENTED` (HTTP 501 on `GET /v1/broker-accounts`); the owner's `AccountService.ListBrokerAccounts` lists them, and the built-in UI uses it.
    - *Options:* keep until a versioned break of the read API (`/v2`); or remove them now with an exception to the breaking-change check.
 
+## Attention items
+
+40. **A new bounded context for attention items.**
+   - *Problem:* D-130 puts every check that needs the owner in one store, which no existing context owns, and [code-organization.md](dev/code-organization.md) says a new context needs the author's OK.
+   - *Today:* `internal/attention` is a context of its own, with its own `attention` schema, read by the views like the other contexts; its checks read the ledger, valuation and ingest through ports declared in `attention/app`. The context table in code-organization.md doesn't list it yet ([Attention items](concepts/attention.md)).
+   - *Options:* keep and add it to the table; or fold it into another context, such as views.
+
+41. **Which items the owner resolves by hand.**
+   - *Problem:* D-130 names the states but not who moves an item to resolved.
+   - *Today:* every kind resolves when its check clears; the owner may also resolve by hand only a flagged balance assertion and an import's left-out rows, whose condition never clears on its own. Any open item can be acknowledged; an acknowledged or owner-resolved item opens again when the check's detail changes, as a price check's acknowledgement covers only the same prices (D-112). A condition that comes back reopens the same item rather than raising a new one.
+   - *Options:* keep; or let the owner resolve any kind, which hides a condition that still stands; or raise a new item each time a condition comes back.
+
+42. **What an import problem item covers.**
+   - *Problem:* D-130 lists import problems without saying which.
+   - *Today:* one item per completed batch with rows OpenFief can't book yet (`ProblemUnsupported`); rows left out on purpose don't count. Only the count is stored per batch, not the rows, and batches completed before this change have none. The rows of an unconfirmed ticker are counted too, though they also have their own item and are booked once the ticker is confirmed.
+   - *Options:* keep; or store each problem row and raise an item per row or per kind of row; or leave the waiting rows out.
+
+43. **When the checks run.**
+   - *Problem:* D-130 doesn't say whether an item is raised in the check's own transaction or later.
+   - *Today:* the core runs every check at start and then every minute, each kind in one transaction of the attention schema, and publishes the outbox after each run. A finding reaches the store up to a minute after the check found it; the change and its outbox event are always in one transaction. The publisher only logs.
+   - *Options:* keep; or raise each item in the transaction that changes the check's data, which needs every context to write the attention schema; or a River job per change.
+
+44. **What "confirm the corrected pair" means for a broken transfer.**
+   - *Problem:* D-131 has the owner confirm the corrected pair or reject it, but a broken pair's legs no longer match, so it can't be confirmed as a transfer, and a confirmed link keeps its legs from being confirmed with another leg.
+   - *Today:* the owner rejects the broken pair on the transfers page, which the core allows without checking the legs; the corrected legs then return to the suggestions, where the owner confirms the corrected pair. A correction that makes the legs match again heals the link and resolves the item.
+   - *Options:* keep; or let confirming a corrected pair that shares a leg supersede the broken link in one step; or let the owner keep a link whose amounts differ, with the difference as a cash flow.
+
 ## Kibi evidence
 
 28. **Keeping the kibi sync patch, which makes the store defect rarer but doesn't fix it.**

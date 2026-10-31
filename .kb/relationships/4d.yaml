@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-776263d35138
+  - type: implements
+    from: SYM-viewsv1-list-attention-items-response-proto-message
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:06:05.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58de91d92293
+  - type: covered_by
+    from: SYM-viewsv1-list-attention-items-response-proto-message
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:06:05.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf9c1f9924e8

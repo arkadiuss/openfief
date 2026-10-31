@@ -552,3 +552,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af6bcbaf9e71
+  - type: executable_for
+    from: SYM-attention-connectapi-test-helper-act
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:43:03.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf4a8d0bca47
+  - type: implements
+    from: SYM-attention-pg-store-append
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:45:38.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb54aba60b88
+  - type: covered_by
+    from: SYM-attention-pg-store-append
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:45:38.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0bb5d3d1182

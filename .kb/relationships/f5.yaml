@@ -692,3 +692,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5644fd6161c7
+  - type: implements
+    from: SYM-attention-pg-store-items
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:45:26.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec1e61930d58
+  - type: covered_by
+    from: SYM-attention-pg-store-items
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:45:26.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab48da571b9b
+  - type: implements
+    from: SYM-viewsv1-list-attention-items-response-get-open
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:06:34.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b2bdb912e69
+  - type: covered_by
+    from: SYM-viewsv1-list-attention-items-response-get-open
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:06:34.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e99b36277fee

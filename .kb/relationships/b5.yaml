@@ -678,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9744b0ad84ea
+  - type: executable_for
+    from: SYM-attention-app-test-helper-mem-store-in-tx
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:37:53.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06ebd4d5eb66
+  - type: executable_for
+    from: SYM-attention-app-test-helper-mem-store-in-tx
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:37:53.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78cc83d67b6f
+  - type: implements
+    from: SYM-attentionv1connect-unimplemented-attention-service-handler-resolve-attention-item
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T19:00:08.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3247305ed9ef
+  - type: covered_by
+    from: SYM-attentionv1connect-unimplemented-attention-service-handler-resolve-attention-item
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T19:00:08.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96ec6b1533a5

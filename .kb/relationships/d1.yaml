@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-29a6c493ed1e
+  - type: implements
+    from: SYM-attention-pg-store-append-exported
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T19:20:52.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d20398c871a
+  - type: covered_by
+    from: SYM-attention-pg-store-append-exported
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T19:20:52.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56a5edfddfbf

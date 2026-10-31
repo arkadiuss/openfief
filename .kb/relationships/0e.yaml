@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58f1f74c285b
+  - type: executable_for
+    from: SYM-attention-app-test-failed-append-stores-nothing
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:34.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc119668c6d2

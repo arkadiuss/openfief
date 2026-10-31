@@ -426,3 +426,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99034350a3dd
+  - type: implements
+    from: SYM-attention-app-latest-checks
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:35:11.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d210b36ff92b
+  - type: covered_by
+    from: SYM-attention-app-latest-checks
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:35:11.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c6ee7c44430
+  - type: implements
+    from: SYM-attention-resolve
+    to: REQ-attention-owner-actions
+    created_at: 2026-10-31T18:48:07.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66ef5ccecb1d
+  - type: covered_by
+    from: SYM-attention-resolve
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:48:07.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10d6b692a990
+  - type: executable_for
+    from: SYM-ui-test-attention-refusals
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:53:55.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3c42ab0b877

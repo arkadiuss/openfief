@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-848d66353084
+  - type: implements
+    from: SYM-attention-app-values
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:34:41.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ace88909d309
+  - type: covered_by
+    from: SYM-attention-app-values
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:34:41.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-409c72a94c82
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-imports-all-broker-accounts
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:36:24.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8be50bc5b33

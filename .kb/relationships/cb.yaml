@@ -573,3 +573,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-277fdd1444ed
+  - type: implements
+    from: SYM-attention-app-book-name
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:34:54.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-912fc1e6e626
+  - type: covered_by
+    from: SYM-attention-app-book-name
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:34:54.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf9978810036
+  - type: implements
+    from: SYM-viewsv1-attention-item-get-detail
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:04:42.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99d273907bc3
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-get-detail
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:04:43.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5ef57628212

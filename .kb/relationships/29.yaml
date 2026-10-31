@@ -608,3 +608,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9473cb200b84
+  - type: verified_by
+    from: SCEN-attention-relay
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:31:15.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d7357396d59
+  - type: verified_by
+    from: SCEN-attention-relay
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:31:15.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ea3cb8c2c66
+  - type: implements
+    from: SYM-viewsv1-attention-item-reason-enum-descriptor
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:01:49.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eee5e786fbed
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-reason-enum-descriptor
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:01:49.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7aa426d1bd9

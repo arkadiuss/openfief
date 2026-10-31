@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3570bd90d223
+  - type: verified_by
+    from: SCEN-attention-outbox-same-transaction
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:31:13.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16fd6efb35b1
+  - type: verified_by
+    from: SCEN-attention-outbox-same-transaction
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:31:13.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f3be0debb3d

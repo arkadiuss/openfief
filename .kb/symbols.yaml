@@ -112324,3 +112324,4158 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+  - id: SYM-core-attention
+    title: attention
+    sourceFile: cmd/core/attention.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:33:05.448Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-attention
+      - type: implements
+        target: REQ-attention-checks
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-core-attention-owners
+    title: attentionOwners
+    sourceFile: cmd/core/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:33:12.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-attention
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-core-new-attention
+    title: newAttention
+    sourceFile: cmd/core/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:33:18.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-attention
+      - type: implements
+        target: REQ-attention-checks
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-core-attention-tick
+    title: attention.tick
+    sourceFile: cmd/core/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:33:25.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-attention
+      - type: implements
+        target: REQ-attention-checks
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-core-attention-run
+    title: attention.run
+    sourceFile: cmd/core/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:33:31.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-attention
+      - type: implements
+        target: REQ-attention-checks
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-core-with-attention-service
+    title: withAttentionService
+    sourceFile: cmd/core/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:33:37.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-attention
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-core-test-helper-attention-api
+    title: attentionAPI
+    sourceFile: cmd/core/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:33:43.723Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-attention
+  - id: SYM-core-test-helper-attention-client
+    title: attentionClient
+    sourceFile: cmd/core/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:33:49.702Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-attention
+  - id: SYM-core-test-attention-service
+    title: TestAttentionService
+    sourceFile: cmd/core/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:33:55.779Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-attention
+  - id: SYM-core-test-helper-check-unmapped-item
+    title: checkUnmappedItem
+    sourceFile: cmd/core/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:01.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-attention
+  - id: SYM-core-test-attention-checks-raise-items
+    title: TestAttentionChecksRaiseItems
+    sourceFile: cmd/core/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:07.908Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-attention
+  - id: SYM-core-ensure-defaults
+    title: ensureDefaults
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:14.065Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-api
+      - type: implements
+        target: REQ-core-serves-read-api
+  - id: SYM-attention-app-ledger
+    title: Ledger
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:20.185Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-price-checks
+    title: PriceChecks
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:26.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-imports
+    title: Imports
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:32.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-values
+    title: Values
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:39.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-flagged-assertions
+    title: FlaggedAssertions
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:45.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-book-name
+    title: bookName
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:52.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-broken-transfers
+    title: BrokenTransfers
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:34:58.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+      - type: implements
+        target: REQ-ledger-transfer-broken-attention-item
+  - id: SYM-attention-app-flagged-price-checks
+    title: FlaggedPriceChecks
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:04.212Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-latest-checks
+    title: latestChecks
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:09.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-unmapped-broker-accounts
+    title: UnmappedBrokerAccounts
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:15.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-unconfirmed-tickers
+    title: UnconfirmedTickers
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:21.582Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-import-problems
+    title: ImportProblems
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:27.319Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-missing-settings
+    title: MissingSettings
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:34.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-liquidation-unknown
+    title: liquidationUnknown
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:40.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-checks
+  - id: SYM-attention-app-test-helper-fake-ledger
+    title: fakeLedger
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:45.985Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-ledger-accounts
+    title: fakeLedger.Accounts
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:51.758Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-ledger-assertion-checks
+    title: fakeLedger.AssertionChecks
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:35:57.524Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-ledger-current-transactions
+    title: fakeLedger.CurrentTransactions
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:04.036Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-ledger-transfer-links
+    title: fakeLedger.TransferLinks
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:10.819Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-imports
+    title: fakeImports
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:16.346Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-imports-all-broker-accounts
+    title: fakeImports.AllBrokerAccounts
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:22.714Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-imports-pending-tickers
+    title: fakeImports.PendingTickers
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:28.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-imports-unsupported-batches
+    title: fakeImports.UnsupportedBatches
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:34.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-price-checks
+    title: fakePriceChecks
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:40.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-price-checks-price-checks
+    title: fakePriceChecks.PriceChecks
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:45.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-values
+    title: fakeValues
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:51.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-values-tax-wrapper
+    title: fakeValues.TaxWrapper
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:36:57.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-values-value-settings
+    title: fakeValues.ValueSettings
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:03.271Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-day
+    title: day
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:09.452Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-pln
+    title: pln
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:15.513Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-key
+    title: key
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:22.350Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-cash
+    title: cash
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:28.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-checks
+    title: TestChecks
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:34.463Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-mem-store
+    title: memStore
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:39.343Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-new-mem-store
+    title: newMemStore
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:45.115Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-mem-store-in-tx
+    title: memStore.InTx
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:51.765Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-mem-store-lock
+    title: memStore.Lock
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:37:57.501Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-mem-store-items
+    title: memStore.Items
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:03.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-mem-store-item
+    title: memStore.Item
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:09.703Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-mem-store-append
+    title: memStore.Append
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:15.583Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-mem-store-unpublished
+    title: memStore.Unpublished
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:21.925Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-mem-store-mark-published
+    title: memStore.MarkPublished
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:28.019Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-clone-items
+    title: cloneItems
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:33.347Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-fake-owners
+    title: fakeOwners
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:38.398Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-fake-owners-check-owner
+    title: fakeOwners.CheckOwner
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:44.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-recorder
+    title: recorder
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:48.607Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-recorder-publish
+    title: recorder.Publish
+    sourceFile: internal/attention/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:53.852Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-items
+    title: Items
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:38:58.339Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-attention-app-new
+    title: New
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:03.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-attention-app-items-list
+    title: Items.List
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:08.437Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-attention-app-items-sweep
+    title: Items.Sweep
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:13.440Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-attention-app-items-raise
+    title: Items.Raise
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:18.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-attention-app-items-clear
+    title: Items.Clear
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:23.932Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-attention-app-items-acknowledge
+    title: Items.Acknowledge
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:29.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-owner-actions
+  - id: SYM-attention-app-items-resolve
+    title: Items.Resolve
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:34.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-owner-actions
+  - id: SYM-attention-app-items-owner-action
+    title: Items.ownerAction
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:39.273Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-owner-actions
+  - id: SYM-attention-app-items-reconcile
+    title: Items.reconcile
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:44.501Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-attention-app-items-observe
+    title: Items.observe
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:49.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-attention-app-append-all
+    title: appendAll
+    sourceFile: internal/attention/app/items.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:54.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-app-test-helper-clock
+    title: clock
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:39:59.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-found
+    title: found
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:04.328Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-states
+    title: states
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:09.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-sweep-raises-deduplicates-and-clears
+    title: TestSweepRaisesDeduplicatesAndClears
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:14.172Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-raise-and-clear
+    title: TestRaiseAndClear
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:18.613Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-owner-actions
+    title: TestOwnerActions
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:23.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-helper-check-owner-action
+    title: checkOwnerAction
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:27.640Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-failed-append-stores-nothing
+    title: TestFailedAppendStoresNothing
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:32.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-relay-publishes-in-order-and-resumes
+    title: TestRelayPublishesInOrderAndResumes
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:36.929Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-test-log-publisher-logs-no-subject
+    title: TestLogPublisherLogsNoSubject
+    sourceFile: internal/attention/app/items_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:41.534Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-items
+  - id: SYM-attention-app-store
+    title: Store
+    sourceFile: internal/attention/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:46.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-app-event
+    title: Event
+    sourceFile: internal/attention/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:51.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-app-outbox
+    title: Outbox
+    sourceFile: internal/attention/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:40:57.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-app-publisher
+    title: Publisher
+    sourceFile: internal/attention/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:02.749Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-app-owners
+    title: Owners
+    sourceFile: internal/attention/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:07.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-owner-actions
+  - id: SYM-attention-app-check
+    title: Check
+    sourceFile: internal/attention/app/ports.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:13.465Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-sweep
+  - id: SYM-attention-app-relay
+    title: Relay
+    sourceFile: internal/attention/app/relay.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:18.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-app-relay-publish
+    title: Relay.Publish
+    sourceFile: internal/attention/app/relay.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:23.356Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-app-log-publisher
+    title: LogPublisher
+    sourceFile: internal/attention/app/relay.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:28.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-app-log-publisher-publish
+    title: LogPublisher.Publish
+    sourceFile: internal/attention/app/relay.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:33.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-items
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-connectapi-new-attention
+    title: NewAttention
+    sourceFile: internal/attention/connectapi/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:38.362Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attention-connectapi-attention-service
+    title: attentionService
+    sourceFile: internal/attention/connectapi/attention.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:43.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attention-connectapi-attention-service-acknowledge-attention-item
+    title: attentionService.AcknowledgeAttentionItem
+    sourceFile: internal/attention/connectapi/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:48.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attention-connectapi-attention-service-resolve-attention-item
+    title: attentionService.ResolveAttentionItem
+    sourceFile: internal/attention/connectapi/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:53.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attention-connectapi-attention-service-fail
+    title: attentionService.fail
+    sourceFile: internal/attention/connectapi/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:41:58.780Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attention-connectapi-test-helper-owners
+    title: owners
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:03.444Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-owners-check-owner
+    title: owners.CheckOwner
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:08.448Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-store
+    title: store
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:12.929Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-new-store
+    title: newStore
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:18.262Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-store-in-tx
+    title: store.InTx
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:23.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-store-lock
+    title: store.Lock
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:28.840Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-store-items
+    title: store.Items
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:34.022Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-store-item
+    title: store.Item
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:39.500Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-store-append
+    title: store.Append
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:45.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-view-only
+    title: viewOnly
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:50.780Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-bearer
+    title: bearer
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:42:56.317Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-helper-act
+    title: act
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:01.841Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-connectapi-test-attention-service
+    title: TestAttentionService
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:07.081Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi
+  - id: SYM-attention-kind
+    title: Kind
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:11.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-owner-resolves
+    title: OwnerResolves
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:16.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-owner-actions
+  - id: SYM-attention-kind-validate
+    title: Kind.Validate
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:21.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-condition
+    title: Condition
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:26.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-condition-validate
+    title: Condition.Validate
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:31.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-state
+    title: State
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:36.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-state-string
+    title: State.String
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:42.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-reason
+    title: Reason
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:46.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-reason-string
+    title: Reason.String
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:52.169Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-reason-by-owner
+    title: Reason.ByOwner
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:43:57.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-change
+    title: Change
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:02.922Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-item
+    title: Item
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:07.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-item-current
+    title: Item.Current
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:13.051Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-item-state
+    title: Item.State
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:18.548Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-item-next
+    title: Item.next
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:24.103Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-pg-migration
+    title: migration
+    sourceFile: internal/attention/postgres/migrate.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:29.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-migrate
+    title: Migrate
+    sourceFile: internal/attention/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:34.974Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-migrate-tx
+    title: migrateTx
+    sourceFile: internal/attention/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:40.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-applied-versions
+    title: appliedVersions
+    sourceFile: internal/attention/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:46.068Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-migrations
+    title: migrations
+    sourceFile: internal/attention/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:51.542Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-store
+    title: Store
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:44:56.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-db
+    title: db
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:01.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-new
+    title: New
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:07.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-store-in-tx
+    title: Store.InTx
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:13.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-store-lock
+    title: Store.Lock
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:18.875Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-store-items
+    title: Store.items
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:24.532Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-store-item
+    title: Store.Item
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:30.145Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-store-append
+    title: Store.append
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:35.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-payload
+    title: payload
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:41.749Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-event-payload
+    title: eventPayload
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:47.566Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-store-unpublished
+    title: Store.Unpublished
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:53.115Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-pg-scan-event
+    title: scanEvent
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:45:58.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-pg-store-mark-published
+    title: Store.MarkPublished
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:46:04.792Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+      - type: implements
+        target: REQ-attention-relay
+  - id: SYM-attention-pg-parse-state
+    title: parseState
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:46:22.452Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-parse-reason
+    title: parseReason
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:46:28.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-test-helper-at
+    title: at
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:46:33.970Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-pg-test-helper-new-pool
+    title: newPool
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:46:39.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-pg-test-helper-admin-exec
+    title: adminExec
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:46:45.088Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-pg-test-helper-count
+    title: count
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:46:50.479Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-pg-test-helper-raise
+    title: raise
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:46:56.406Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-pg-test-append-keeps-history-and-writes-its-event
+    title: TestAppendKeepsHistoryAndWritesItsEvent
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:01.788Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-pg-test-helper-check-outbox
+    title: checkOutbox
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:07.601Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-pg-test-change-and-event-commit-together
+    title: TestChangeAndEventCommitTogether
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:13.448Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-pg-test-store-is-append-only
+    title: TestStoreIsAppendOnly
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:19.129Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-pg-test-sweep-over-postgres
+    title: TestSweepOverPostgres
+    sourceFile: internal/attention/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:25.121Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-attention-step
+    title: Step
+    sourceFile: internal/attention/rules.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:30.935Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-observe
+    title: Observe
+    sourceFile: internal/attention/rules.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:37.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-reconcile
+    title: Reconcile
+    sourceFile: internal/attention/rules.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:43.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-by-subject
+    title: bySubject
+    sourceFile: internal/attention/rules.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:49.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-reconcile
+      - type: implements
+        target: REQ-core-attention-item-store
+  - id: SYM-attention-acknowledge
+    title: Acknowledge
+    sourceFile: internal/attention/rules.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:47:56.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-owner-actions
+  - id: SYM-attention-resolve
+    title: Resolve
+    sourceFile: internal/attention/rules.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:48:04.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-rules
+      - type: implements
+        target: REQ-attention-owner-actions
+  - id: SYM-attention-test-helper-t0
+    title: t0
+    sourceFile: internal/attention/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:48:11.608Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-rules
+  - id: SYM-attention-test-helper-t1
+    title: t1
+    sourceFile: internal/attention/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:48:19.117Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-rules
+  - id: SYM-attention-test-helper-item-in
+    title: itemIn
+    sourceFile: internal/attention/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:48:26.720Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-rules
+  - id: SYM-attention-test-observe
+    title: TestObserve
+    sourceFile: internal/attention/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:48:34.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-rules
+  - id: SYM-attention-test-reconcile
+    title: TestReconcile
+    sourceFile: internal/attention/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:48:42.711Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-rules
+  - id: SYM-attention-test-owner-actions
+    title: TestOwnerActions
+    sourceFile: internal/attention/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:48:49.450Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-rules
+  - id: SYM-attention-test-condition-validate
+    title: TestConditionValidate
+    sourceFile: internal/attention/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:48:56.440Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-rules
+  - id: SYM-attention-test-names
+    title: TestNames
+    sourceFile: internal/attention/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:49:02.858Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-rules
+  - id: SYM-ingest-pg-store-unsupported-batches
+    title: Store.UnsupportedBatches
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:49:10.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-unsupported
+      - type: implements
+        target: REQ-ingest-unsupported-rows-counted
+  - id: SYM-ingest-pg-test-unsupported-batches
+    title: TestUnsupportedBatches
+    sourceFile: internal/ingest/postgres/unsupported_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:49:16.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-unsupported
+  - id: SYM-ingest-count-unsupported
+    title: CountUnsupported
+    sourceFile: internal/ingest/problem.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:49:24.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-problem
+      - type: implements
+        target: REQ-ingest-unsupported-rows-counted
+  - id: SYM-ingest-batch-problems
+    title: BatchProblems
+    sourceFile: internal/ingest/problem.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:49:32.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-problem
+      - type: implements
+        target: REQ-ingest-unsupported-rows-counted
+  - id: SYM-ingest-test-count-unsupported
+    title: TestCountUnsupported
+    sourceFile: internal/ingest/problem_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:49:39.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-problem
+  - id: SYM-ledger-app-test-rejecting-a-broken-transfer
+    title: TestRejectingABrokenTransfer
+    sourceFile: internal/ledger/app/transferbroken_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:49:45.485Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-transfer-broken
+  - id: SYM-ledger-app-confirmed-now
+    title: confirmedNow
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:49:52.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-transfer-broken
+      - type: implements
+        target: REQ-ledger-transfer-broken-reject
+  - id: SYM-ledger-broken-transfer-links
+    title: BrokenTransferLinks
+    sourceFile: internal/ledger/transfer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:49:59.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-transfer-broken
+      - type: implements
+        target: REQ-ledger-transfer-broken-stops-counting
+  - id: SYM-ledger-test-broken-transfer-links
+    title: TestBrokenTransferLinks
+    sourceFile: internal/ledger/transferbroken_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:50:05.238Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-transfer-broken
+  - id: SYM-views-app-attention-items
+    title: AttentionItems
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:50:12.035Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-views-app-with-attention
+    title: WithAttention
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:50:19.680Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-views-app-views-attention
+    title: Views.Attention
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:50:26.635Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-views-app-broken-transfers
+    title: brokenTransfers
+    sourceFile: internal/views/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:50:33.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-ledger-transfer-broken-stops-counting
+  - id: SYM-views-connectapi-read-service-list-attention-items
+    title: readService.ListAttentionItems
+    sourceFile: internal/views/connectapi/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:50:39.538Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-views-connectapi-pb-attention-item
+    title: pbAttentionItem
+    sourceFile: internal/views/connectapi/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:50:45.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-views-connectapi-pb-attention-state
+    title: pbAttentionState
+    sourceFile: internal/views/connectapi/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:50:50.723Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-views-connectapi-pb-attention-reason
+    title: pbAttentionReason
+    sourceFile: internal/views/connectapi/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:50:57.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-views-connectapi-test-helper-fake-items
+    title: fakeItems
+    sourceFile: internal/views/connectapi/attention_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:51:03.544Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-attention
+  - id: SYM-views-connectapi-test-helper-fake-items-list
+    title: fakeItems.List
+    sourceFile: internal/views/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:51:10.356Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-attention
+  - id: SYM-views-connectapi-test-helper-attention-body
+    title: attentionBody
+    sourceFile: internal/views/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:51:16.874Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-attention
+  - id: SYM-views-connectapi-test-rest-attention-items
+    title: TestRESTAttentionItems
+    sourceFile: internal/views/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:51:23.340Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-attention
+  - id: SYM-views-connectapi-test-helper-check-attention-body
+    title: checkAttentionBody
+    sourceFile: internal/views/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:51:29.839Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-attention
+  - id: SYM-views-connectapi-test-rest-broken-transfers
+    title: TestRESTBrokenTransfers
+    sourceFile: internal/views/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:51:36.147Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-attention
+  - id: SYM-views-connectapi-pb-broken-transfers
+    title: pbBrokenTransfers
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:51:42.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-ledger-transfer-broken-stops-counting
+  - id: SYM-views-in-window
+    title: inWindow
+    sourceFile: internal/views/flows.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:51:48.648Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-views-performance-confirmed-transfers
+  - id: SYM-ui-attention-kind
+    title: attentionKind
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:51:55.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-attention-kind-of
+    title: attentionKindOf
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:02.102Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-attention-row
+    title: attentionRow
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:08.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-attention-view
+    title: attentionView
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:14.316Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-server-attention-page
+    title: server.attentionPage
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:20.914Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-server-render-attention
+    title: server.renderAttention
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:27.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-server-acknowledge-attention-item
+    title: server.acknowledgeAttentionItem
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:33.797Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-server-resolve-attention-item
+    title: server.resolveAttentionItem
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:40.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-posted-item
+    title: postedItem
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:46.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-server-after-attention-form
+    title: server.afterAttentionForm
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:52.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-server-open-attention
+    title: server.openAttention
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:52:58.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ui-test-helper-fake-attention
+    title: fakeAttention
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:04.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-helper-new-fake-attention
+    title: newFakeAttention
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:10.736Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-helper-fake-attention-acknowledge-attention-item
+    title: fakeAttention.AcknowledgeAttentionItem
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:17.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-helper-fake-attention-resolve-attention-item
+    title: fakeAttention.ResolveAttentionItem
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:23.260Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-helper-fake-attention-act
+    title: fakeAttention.act
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:29.119Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-helper-fake-read-list-attention-items
+    title: fakeRead.ListAttentionItems
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:35.426Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-helper-item-post
+    title: itemPost
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:41.318Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-attention-page
+    title: TestAttentionPage
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:47.171Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-attention-refusals
+    title: TestAttentionRefusals
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:52.870Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-broken-transfer
+    title: TestBrokenTransfer
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:53:59.017Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-server-check-routes
+    title: server.checkRoutes
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:05.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-items-one-place
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-attentionv1-acknowledge-attention-item-request
+    title: AcknowledgeAttentionItemRequest
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:10.284Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-request-reset
+    title: AcknowledgeAttentionItemRequest.Reset
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:16.235Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-request-string
+    title: AcknowledgeAttentionItemRequest.String
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:22.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-request-proto-message
+    title: AcknowledgeAttentionItemRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:28.275Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-request-proto-reflect
+    title: AcknowledgeAttentionItemRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:33.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-request-descriptor
+    title: AcknowledgeAttentionItemRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:39.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-request-get-origin
+    title: AcknowledgeAttentionItemRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:45.490Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-request-get-session-token
+    title: AcknowledgeAttentionItemRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:51.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-request-get-item-id
+    title: AcknowledgeAttentionItemRequest.GetItemId
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:54:56.908Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-response
+    title: AcknowledgeAttentionItemResponse
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:01.927Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-response-reset
+    title: AcknowledgeAttentionItemResponse.Reset
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:08.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-response-string
+    title: AcknowledgeAttentionItemResponse.String
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:13.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-response-proto-message
+    title: AcknowledgeAttentionItemResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:19.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-response-proto-reflect
+    title: AcknowledgeAttentionItemResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:25.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-acknowledge-attention-item-response-descriptor
+    title: AcknowledgeAttentionItemResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:31.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-request
+    title: ResolveAttentionItemRequest
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:36.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-request-reset
+    title: ResolveAttentionItemRequest.Reset
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:42.392Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-request-string
+    title: ResolveAttentionItemRequest.String
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:49.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-request-proto-message
+    title: ResolveAttentionItemRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:55:55.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-request-proto-reflect
+    title: ResolveAttentionItemRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:01.727Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-request-descriptor
+    title: ResolveAttentionItemRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:08.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-request-get-origin
+    title: ResolveAttentionItemRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:14.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-request-get-session-token
+    title: ResolveAttentionItemRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:21.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-request-get-item-id
+    title: ResolveAttentionItemRequest.GetItemId
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:27.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-response
+    title: ResolveAttentionItemResponse
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:33.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-response-reset
+    title: ResolveAttentionItemResponse.Reset
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:39.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-response-string
+    title: ResolveAttentionItemResponse.String
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:45.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-response-proto-message
+    title: ResolveAttentionItemResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:52.422Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-response-proto-reflect
+    title: ResolveAttentionItemResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:56:58.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-resolve-attention-item-response-descriptor
+    title: ResolveAttentionItemResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:05.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed
+    title: AttentionItemChanged
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:10.074Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-reset
+    title: AttentionItemChanged.Reset
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:15.665Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-string
+    title: AttentionItemChanged.String
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:21.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-proto-message
+    title: AttentionItemChanged.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:26.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-proto-reflect
+    title: AttentionItemChanged.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:32.341Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-descriptor
+    title: AttentionItemChanged.Descriptor
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:38.419Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-get-event-id
+    title: AttentionItemChanged.GetEventId
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:44.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-get-item-id
+    title: AttentionItemChanged.GetItemId
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:50.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-get-kind
+    title: AttentionItemChanged.GetKind
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:57:56.559Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-get-subject
+    title: AttentionItemChanged.GetSubject
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:58:02.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-get-seq
+    title: AttentionItemChanged.GetSeq
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:58:09.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-get-state
+    title: AttentionItemChanged.GetState
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:58:15.333Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-get-reason
+    title: AttentionItemChanged.GetReason
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:58:21.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-get-detail
+    title: AttentionItemChanged.GetDetail
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:58:28.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-attention-item-changed-get-at
+    title: AttentionItemChanged.GetAt
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:58:34.802Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-file_openfief_attention_v1_attention_proto_raw-desc-gzip
+    title: file_openfief_attention_v1_attention_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:58:41.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:58:47.899Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-file_openfief_attention_v1_attention_proto_init
+    title: file_openfief_attention_v1_attention_proto_init
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:58:54.927Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:59:01.768Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1connect-attention-service-client
+    title: attentionServiceClient
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:59:08.740Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1connect-new-attention-service-client
+    title: NewAttentionServiceClient
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:59:15.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1connect-attention-service-client-acknowledge-attention-item
+    title: attentionServiceClient.AcknowledgeAttentionItem
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:59:27.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1connect-attention-service-client-resolve-attention-item
+    title: attentionServiceClient.ResolveAttentionItem
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:59:34.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1connect-attention-service-handler
+    title: AttentionServiceHandler
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:59:40.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1connect-new-attention-service-handler
+    title: NewAttentionServiceHandler
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:59:47.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1connect-unimplemented-attention-service-handler
+    title: UnimplementedAttentionServiceHandler
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:59:52.667Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1connect-unimplemented-attention-service-handler-acknowledge-attention-item
+    title: UnimplementedAttentionServiceHandler.AcknowledgeAttentionItem
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T18:59:59.525Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attentionv1connect-unimplemented-attention-service-handler-resolve-attention-item
+    title: UnimplementedAttentionServiceHandler.ResolveAttentionItem
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:05.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-viewsv1-attention-item-state
+    title: AttentionItemState
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:11.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-state-enum
+    title: AttentionItemState.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:18.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-state-string
+    title: AttentionItemState.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:25.478Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-state-descriptor
+    title: AttentionItemState.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:32.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-state-type
+    title: AttentionItemState.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:40.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-state-number
+    title: AttentionItemState.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:49.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-state-enum-descriptor
+    title: AttentionItemState.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:00:57.086Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-reason
+    title: AttentionItemReason
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:03.141Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-reason-enum
+    title: AttentionItemReason.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:10.143Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-reason-string
+    title: AttentionItemReason.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:17.558Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-reason-descriptor
+    title: AttentionItemReason.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:25.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-reason-type
+    title: AttentionItemReason.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:32.649Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-reason-number
+    title: AttentionItemReason.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:40.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-reason-enum-descriptor
+    title: AttentionItemReason.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:47.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-transfers-response-get-broken
+    title: ListTransfersResponse.GetBroken
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:01:54.663Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change
+    title: AttentionItemChange
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:01.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-reset
+    title: AttentionItemChange.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:08.587Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-string
+    title: AttentionItemChange.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:16.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-proto-message
+    title: AttentionItemChange.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:24.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-proto-reflect
+    title: AttentionItemChange.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:32.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-descriptor
+    title: AttentionItemChange.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:39.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-get-seq
+    title: AttentionItemChange.GetSeq
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:47.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-get-state
+    title: AttentionItemChange.GetState
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:02:55.419Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-get-reason
+    title: AttentionItemChange.GetReason
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:02.868Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-get-detail
+    title: AttentionItemChange.GetDetail
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:10.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-change-get-at
+    title: AttentionItemChange.GetAt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:17.564Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item
+    title: AttentionItem
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:23.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-reset
+    title: AttentionItem.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:30.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-string
+    title: AttentionItem.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:37.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-proto-message
+    title: AttentionItem.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:44.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-proto-reflect
+    title: AttentionItem.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:03:53.677Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-descriptor
+    title: AttentionItem.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:02.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-get-id
+    title: AttentionItem.GetId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:10.236Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-get-kind
+    title: AttentionItem.GetKind
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:17.992Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-get-subject
+    title: AttentionItem.GetSubject
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:25.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-get-state
+    title: AttentionItem.GetState
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:33.539Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-get-detail
+    title: AttentionItem.GetDetail
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:40.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-get-owner-resolves
+    title: AttentionItem.GetOwnerResolves
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:47.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-attention-item-get-history
+    title: AttentionItem.GetHistory
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:04:54.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-request
+    title: ListAttentionItemsRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:00.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-request-reset
+    title: ListAttentionItemsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:07.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-request-string
+    title: ListAttentionItemsRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:14.614Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-request-proto-message
+    title: ListAttentionItemsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:21.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-request-proto-reflect
+    title: ListAttentionItemsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:28.780Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-request-descriptor
+    title: ListAttentionItemsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:35.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-response
+    title: ListAttentionItemsResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:41.708Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-response-reset
+    title: ListAttentionItemsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:48.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-response-string
+    title: ListAttentionItemsResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:05:55.543Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-response-proto-message
+    title: ListAttentionItemsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:02.909Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-response-proto-reflect
+    title: ListAttentionItemsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:09.852Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-response-descriptor
+    title: ListAttentionItemsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:17.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-response-get-items
+    title: ListAttentionItemsResponse.GetItems
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:24.500Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1-list-attention-items-response-get-open
+    title: ListAttentionItemsResponse.GetOpen
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:31.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1connect-read-service-client-list-attention-items
+    title: readServiceClient.ListAttentionItems
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:39.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-viewsv1connect-unimplemented-read-service-handler-list-attention-items
+    title: UnimplementedReadServiceHandler.ListAttentionItems
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:06:46.176Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-attention
+      - type: implements
+        target: REQ-views-attention-items
+  - id: SYM-attention-pg-store-items-exported
+    title: Store.Items
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:20:42.363Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attention-pg-store-append-exported
+    title: Store.Append
+    sourceFile: internal/attention/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:20:50.143Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-same-transaction
+  - id: SYM-attentionv1connect-attention-service-client-interface
+    title: AttentionServiceClient
+    sourceFile: sdk/go/gen/openfief/attention/v1/attentionv1connect/attention.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:20:58.419Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-connectapi
+      - type: implements
+        target: REQ-attention-owner-service
+  - id: SYM-attention-connectapi-test-helper-outcome
+    title: outcome
+    sourceFile: internal/attention/connectapi/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T19:22:40.064Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi

@@ -307,3 +307,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b4c81afbe21
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-ledger-transfer-links
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:36:13.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60eec2113be3
+  - type: executable_for
+    from: SYM-ui-test-broken-transfer
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:54:01.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb30b812acc4
+  - type: implements
+    from: SYM-attentionv1-attention-item-changed-get-kind
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:57:58.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-157e7488fc12
+  - type: covered_by
+    from: SYM-attentionv1-attention-item-changed-get-kind
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:57:58.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18789e4a89d4
+  - type: implements
+    from: SYM-viewsv1-attention-item-change-get-seq
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:02:50.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91b1d477e908
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-change-get-seq
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:02:50.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0abd15251d00
+  - type: implements
+    from: SYM-viewsv1-attention-item-reset
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:03:32.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6296f9bb9f7f
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-reset
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:03:32.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddf4cb37e052

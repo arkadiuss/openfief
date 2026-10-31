@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32f76ae36185
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-price-checks
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:36:42.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51c7daae9f58

@@ -587,3 +587,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b99236bb400
+  - type: implements
+    from: SYM-ui-attention-kind-of
+    to: REQ-ui-attention-page
+    created_at: 2026-10-31T18:52:04.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85250ec17350
+  - type: implements
+    from: SYM-ui-attention-kind-of
+    to: REQ-ui-attention-items-one-place
+    created_at: 2026-10-31T18:52:04.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d80c4f8fd08
+  - type: covered_by
+    from: SYM-ui-attention-kind-of
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:52:04.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d1992f2a522

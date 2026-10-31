@@ -489,3 +489,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-199120aeb895
+  - type: validates
+    from: TEST-attention-connectapi
+    to: REQ-core-owner-entry-services
+    created_at: 2026-10-31T18:30:42.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db3deba16a79
+  - type: implements
+    from: SYM-ui-attention-row
+    to: REQ-ui-attention-page
+    created_at: 2026-10-31T18:52:10.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c2584e04422
+  - type: implements
+    from: SYM-ui-attention-row
+    to: REQ-ui-attention-items-one-place
+    created_at: 2026-10-31T18:52:10.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-347bb3558bd0
+  - type: covered_by
+    from: SYM-ui-attention-row
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:52:10.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-633be4511bef
+  - type: implements
+    from: SYM-attentionv1-init
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:58:50.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ef84d76eb20
+  - type: covered_by
+    from: SYM-attentionv1-init
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:58:50.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-308259e440c7

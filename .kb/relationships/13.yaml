@@ -580,3 +580,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e9e1a14b9343
+  - type: implements
+    from: SYM-attention-pg-db
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:45:03.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbeac9c28365
+  - type: covered_by
+    from: SYM-attention-pg-db
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:45:03.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-470c5ddc5921
+  - type: implements
+    from: SYM-attention-pg-parse-reason
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:46:30.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54ece567135e
+  - type: covered_by
+    from: SYM-attention-pg-parse-reason
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:46:30.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a86523191f3e

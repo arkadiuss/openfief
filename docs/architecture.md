@@ -69,7 +69,7 @@ flowchart LR
 | `openfief` CLI | Installs, upgrades (D-90), lists and removes plugins, with each instance's own Secrets (D-89), hosts from its config (D-75) and an in-cluster service it asks for (D-74), and prints the link for your first passkey, on your own route's origin or on `localhost` through a port-forward (D-80), with your own kubeconfig | [`cmd/openfief`](../cmd/openfief/) | [Plugins](concepts/plugins.md#installing-with-the-cli), [Identity](concepts/identity.md#the-first-passkey) |
 | Go SDK | What plugins are built on: the connector contract, the core's tokens and the proxy | [`sdk/go`](../sdk/go/) | [Build a plugin](guides/build-a-plugin.md) |
 
-The money side lives inside the core, as bounded contexts: [kernel](concepts/kernel.md) types for exact decimals and money, the [ledger](concepts/ledger.md), [valuation](concepts/valuation.md), the Polish [treasury bond](concepts/treasury-bonds.md) rules and the [portfolio](concepts/portfolio.md)'s sleeves and model.
+The money side lives inside the core, as bounded contexts: [kernel](concepts/kernel.md) types for exact decimals and money, the [ledger](concepts/ledger.md), [valuation](concepts/valuation.md), the Polish [treasury bond](concepts/treasury-bonds.md) rules and the [portfolio](concepts/portfolio.md)'s sleeves and model. The [attention items](concepts/attention.md) gather every check that needs the owner in one place, and the core publishes each change from its outbox (D-130).
 
 ## Installing a plugin
 

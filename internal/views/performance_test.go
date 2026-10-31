@@ -531,6 +531,7 @@ func TestConfirmedTransfers(t *testing.T) {
 		{kind: "withdrawal", acc: "acc-1", day: 2, amount: "300", cur: "PLN"},
 		{kind: "deposit", acc: "acc-2", day: 2, amount: "300", cur: "PLN"},
 		{kind: "deposit", acc: "acc-2", day: 3, amount: "200", cur: "PLN"},
+		{kind: "deposit", acc: "acc-3", day: 9, amount: "500", cur: "PLN"},
 	}
 	tests := []struct {
 		name                string
@@ -538,10 +539,11 @@ func TestConfirmedTransfers(t *testing.T) {
 		want                [][2]int
 		external            []int
 	}{
-		{name: "nothing confirmed: every flow is external", external: []int{0, 1, 2, 3, 4}},
-		{name: "a confirmed pair leaves both legs out", confirmed: [][2]int{{0, 1}}, want: [][2]int{{0, 1}}, external: []int{2, 3, 4}},
-		{name: "a rejected pair stays two cash flows", rejected: [][2]int{{2, 3}}, external: []int{0, 1, 2, 3, 4}},
-		{name: "a link whose legs no longer match counts for nothing", confirmed: [][2]int{{2, 4}}, external: []int{0, 1, 2, 3, 4}},
+		{name: "nothing confirmed: every flow is external", external: []int{0, 1, 2, 3, 4, 5}},
+		{name: "a confirmed pair leaves both legs out", confirmed: [][2]int{{0, 1}}, want: [][2]int{{0, 1}}, external: []int{2, 3, 4, 5}},
+		{name: "a rejected pair stays two cash flows", rejected: [][2]int{{2, 3}}, external: []int{0, 1, 2, 3, 4, 5}},
+		{name: "a link whose legs no longer match counts for nothing", confirmed: [][2]int{{2, 4}}, external: []int{0, 1, 2, 3, 4, 5}},
+		{name: "a link whose legs a correction moved apart counts for nothing", confirmed: [][2]int{{0, 5}}, external: []int{0, 1, 2, 3, 4, 5}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

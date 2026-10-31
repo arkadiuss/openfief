@@ -12,6 +12,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 
+	attentionpg "github.com/arkadiuss/openfief/internal/attention/postgres"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
@@ -43,7 +44,7 @@ func withPool(ctx context.Context, dsn string, fn func(d *deps) error) error {
 }
 
 // migrate applies every context's migrations: the ledger's, valuation's with
-// River's, identity's, ingest's and portfolio's. Each takes its own advisory lock, so replicas
+// River's, identity's, ingest's, portfolio's and attention's. Each takes its own advisory lock, so replicas
 // starting at once apply each migration once.
 func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	if err := ledgerpg.Migrate(ctx, pool); err != nil {
@@ -59,6 +60,9 @@ func migrate(ctx context.Context, pool *pgxpool.Pool) error {
 		return fmt.Errorf("migrating: %w", err)
 	}
 	if err := portfoliopg.Migrate(ctx, pool); err != nil {
+		return fmt.Errorf("migrating: %w", err)
+	}
+	if err := attentionpg.Migrate(ctx, pool); err != nil {
 		return fmt.Errorf("migrating: %w", err)
 	}
 	return nil
@@ -90,6 +94,9 @@ type core struct {
 	// browser reads the view plugins that serve browsers through the
 	// core's front door (D-81); nil outside a cluster.
 	browser *viewskube.Browser
+	// attention runs the checks that raise attention items and publishes
+	// the outbox's events (D-130).
+	attention *attention
 }
 
 // ingestDeps returns the ledger, with valuation's import hook (D-36), and
@@ -125,8 +132,8 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 // serves it with the AuthService, the ModelPortfolioService (D-52), the
 // BondLotService (D-9, D-49), the StatementService (D-7, D-49), the
 // MarketDataService (D-94), the PriceCheckService (D-110, D-112), the
-// onboarding services, the SettingsService (D-78, D-113) and the
-// TransferService (D-105), to the view
+// onboarding services, the SettingsService (D-78, D-113), the
+// TransferService (D-105) and the AttentionService (D-130), to the view
 // plugins callers accepts (D-69, D-79, D-115). The read API
 // lists the installed plugins from installed, and without it, outside a
 // cluster, answers that they are unknown. Start the River client to run
@@ -139,10 +146,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, fmt.Errorf("valuation store: %w", err)
 	}
 	l, recorder := ingestDeps(pool, vstore)
-	if cfg.EnsureDefaults {
-		if defErr := l.EnsureDefaults(ctx); defErr != nil {
-			return nil, fmt.Errorf("storing the default sleeves: %w", defErr)
-		}
+	if defErr := ensureDefaults(ctx, l, cfg); defErr != nil {
+		return nil, defErr
 	}
 	auth, err := newAuth(pool, &cfg.Auth, now)
 	if err != nil {
@@ -166,8 +171,9 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
+	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, cfg.Auth.Origins), now, log)
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)),
-		viewsapp.WithJurisdiction(jurisdictionPack(), vstore))
+		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
@@ -190,8 +196,20 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins),
 		newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins), accountTerms{recorder, vstore}), callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
-	plugin = withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins)), callers, log)
-	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed}, nil
+	plugin = withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins)), callers, log), attn.items, callers, log)
+	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil
+}
+
+// ensureDefaults stores the built-in sleeve kinds and sleeves when cfg
+// asks.
+func ensureDefaults(ctx context.Context, l *ledgerapp.Ledger, cfg *serveConfig) error {
+	if !cfg.EnsureDefaults {
+		return nil
+	}
+	if err := l.EnsureDefaults(ctx); err != nil {
+		return fmt.Errorf("storing the default sleeves: %w", err)
+	}
+	return nil
 }
 
 // viewOptions configures the views with the model portfolio's reports, the

@@ -636,3 +636,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7aefab7d12da
+  - type: implements
+    from: SYM-attention-app-price-checks
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:34:28.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5489f802160
+  - type: covered_by
+    from: SYM-attention-app-price-checks
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:34:29.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-365e7f8ac184
+  - type: implements
+    from: SYM-attentionv1-attention-item-changed-proto-reflect
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:57:34.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61f83130f187
+  - type: covered_by
+    from: SYM-attentionv1-attention-item-changed-proto-reflect
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:57:34.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-496c925f1988
+  - type: implements
+    from: SYM-viewsv1-attention-item-change-get-reason
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:03:05.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49ff892b1e4d
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-change-get-reason
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:03:05.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cc41f6808ae

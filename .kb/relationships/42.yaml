@@ -559,3 +559,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-344dd4305d73
+  - type: constrains
+    from: REQ-ui-attention-page
+    to: FACT-SUBJECT-DAAE933FA45200DA
+    created_at: 2026-10-31T18:32:38.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7a59755e84a
+  - type: requires_property
+    from: REQ-ui-attention-page
+    to: FACT-PROP-245B9C983E97FDF9
+    created_at: 2026-10-31T18:32:38.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-867e2c01a55e
+  - type: specified_by
+    from: REQ-ui-attention-page
+    to: SCEN-ui-attention-page
+    created_at: 2026-10-31T18:32:38.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c460a080d0b4
+  - type: executable_for
+    from: SYM-attention-pg-test-append-keeps-history-and-writes-its-event
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:47:03.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b8182ad7aab
+  - type: implements
+    from: SYM-viewsv1-attention-item-change
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:02:03.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d70df6b073a
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-change
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:02:03.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faca033d5b8e

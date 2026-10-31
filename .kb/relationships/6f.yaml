@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d34cd9aeb18
+  - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-response-reset
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:55:10.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90081a1f4edd
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-response-reset
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:55:10.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ee08183c1a6

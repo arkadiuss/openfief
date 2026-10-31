@@ -566,3 +566,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-143b1033e0ef
+  - type: executable_for
+    from: SYM-attention-app-test-sweep-raises-deduplicates-and-clears
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:15.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3f326f2a596
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-attention-items
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:53:37.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3765b64abe12

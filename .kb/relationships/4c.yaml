@@ -573,3 +573,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02f4b70e1334
+  - type: implements
+    from: SYM-attention-reason-by-owner
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:43:59.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6269371be5d5
+  - type: implements
+    from: SYM-attention-reason-by-owner
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:43:59.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cba1d705bfb
+  - type: covered_by
+    from: SYM-attention-reason-by-owner
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:43:59.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-041a612b0e2b
+  - type: implements
+    from: SYM-ingest-count-unsupported
+    to: REQ-ingest-unsupported-rows-counted
+    created_at: 2026-10-31T18:49:27.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aa6ecd56043
+  - type: covered_by
+    from: SYM-ingest-count-unsupported
+    to: TEST-ingest-problem
+    created_at: 2026-10-31T18:49:27.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89d0a6f2756d
+  - type: implements
+    from: SYM-ui-server-check-routes
+    to: REQ-ui-attention-page
+    created_at: 2026-10-31T18:54:07.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fc5d37a930b
+  - type: implements
+    from: SYM-ui-server-check-routes
+    to: REQ-ui-attention-items-one-place
+    created_at: 2026-10-31T18:54:07.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4adc92c9b73
+  - type: covered_by
+    from: SYM-ui-server-check-routes
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:54:07.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f31fae482999

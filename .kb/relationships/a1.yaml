@@ -503,3 +503,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25244414e873
+  - type: implements
+    from: SYM-attention-app-unconfirmed-tickers
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:35:23.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f62e4ed5adf
+  - type: covered_by
+    from: SYM-attention-app-unconfirmed-tickers
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:35:23.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d0ed60715bd
+  - type: implements
+    from: SYM-ui-server-resolve-attention-item
+    to: REQ-ui-attention-page
+    created_at: 2026-10-31T18:52:42.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcfbba47cb22
+  - type: implements
+    from: SYM-ui-server-resolve-attention-item
+    to: REQ-ui-attention-items-one-place
+    created_at: 2026-10-31T18:52:42.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14bf482a073d
+  - type: covered_by
+    from: SYM-ui-server-resolve-attention-item
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:52:42.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07190bea0a9f

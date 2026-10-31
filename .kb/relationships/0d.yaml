@@ -531,3 +531,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f85d04410b9c
+  - type: constrains
+    from: REQ-attention-sweep
+    to: FACT-SUBJECT-EC94F23537692AE0
+    created_at: 2026-10-31T18:31:54.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2d61cced83f
+  - type: requires_property
+    from: REQ-attention-sweep
+    to: FACT-PROP-6BB26893784400E6
+    created_at: 2026-10-31T18:31:54.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6895a4a2ba98
+  - type: specified_by
+    from: REQ-attention-sweep
+    to: SCEN-attention-sweep
+    created_at: 2026-10-31T18:31:54.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71e28839f96a
+  - type: implements
+    from: SYM-attention-condition
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:43:28.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96eba554a679
+  - type: implements
+    from: SYM-attention-condition
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:43:28.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94216d520ec6
+  - type: covered_by
+    from: SYM-attention-condition
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:43:28.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a9261e46b7b

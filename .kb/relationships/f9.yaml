@@ -566,3 +566,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-004e7d84d493
+  - type: implements
+    from: SYM-attention-app-items-raise
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:39:20.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db6e57aa829c
+  - type: covered_by
+    from: SYM-attention-app-items-raise
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:20.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2666755eb983
+  - type: implements
+    from: SYM-attention-app-store
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:40:48.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e75050f17177
+  - type: covered_by
+    from: SYM-attention-app-store
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:48.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fc6bcb83cdc
+  - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-request
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:54:12.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c8440d1ad5
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-request
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:54:12.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3469ddd033c1

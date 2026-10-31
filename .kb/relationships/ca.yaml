@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0cab4a779c5
+  - type: implements
+    from: SYM-viewsv1-attention-item-reason
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:01:05.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47cd0b40e58d
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-reason
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:01:05.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225b98939163

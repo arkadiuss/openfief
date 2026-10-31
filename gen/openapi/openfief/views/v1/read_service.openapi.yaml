@@ -109,6 +109,98 @@ components:
         - ASSERTION_STATUS_MATCHED
         - ASSERTION_STATUS_FLAGGED
       description: AssertionStatus is the result of checking a balance assertion.
+    openfief.views.v1.AttentionItem:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+          format: int64
+        kind:
+          type: string
+          title: kind
+          description: |-
+            The check that raised it, such as "price-check-flagged",
+             "balance-assertion-flagged", "import-problems",
+             "broker-account-unmapped", "ticker-unconfirmed", "setting-missing" or
+             "transfer-broken"; later checks add kinds.
+        subject:
+          type: string
+          title: subject
+          description: |-
+            What it is about, unique within its kind: an instrument, an
+             assertion, a batch, a broker account, a ticker, a setting or a pair.
+        state:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.AttentionItemState'
+          title: state
+          description: Its latest change's state and detail.
+        detail:
+          type: string
+          title: detail
+        ownerResolves:
+          type: boolean
+          title: owner_resolves
+          description: |-
+            Whether the owner may resolve it by hand (AttentionService); other
+             kinds resolve when their check clears.
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.AttentionItemChange'
+          title: history
+          description: Its history, oldest first.
+      title: AttentionItem
+      additionalProperties: false
+      description: AttentionItem is something a check found that needs the owner (D-130).
+    openfief.views.v1.AttentionItemChange:
+      type: object
+      properties:
+        seq:
+          type: integer
+          title: seq
+          format: int32
+          description: From 1, in the order the changes were made.
+        state:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.AttentionItemState'
+          title: state
+        reason:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.AttentionItemReason'
+          title: reason
+        detail:
+          type: string
+          title: detail
+          description: The condition's detail then, such as the difference found.
+        at:
+          type: string
+          title: at
+          description: RFC 3339, UTC.
+      title: AttentionItemChange
+      additionalProperties: false
+      description: AttentionItemChange is one entry of an attention item's history.
+    openfief.views.v1.AttentionItemReason:
+      type: string
+      title: AttentionItemReason
+      enum:
+        - ATTENTION_ITEM_REASON_UNSPECIFIED
+        - ATTENTION_ITEM_REASON_RAISED
+        - ATTENTION_ITEM_REASON_CHANGED
+        - ATTENTION_ITEM_REASON_REOPENED
+        - ATTENTION_ITEM_REASON_CLEARED
+        - ATTENTION_ITEM_REASON_ACKNOWLEDGED
+        - ATTENTION_ITEM_REASON_RESOLVED
+      description: AttentionItemReason says why an attention item changed.
+    openfief.views.v1.AttentionItemState:
+      type: string
+      title: AttentionItemState
+      enum:
+        - ATTENTION_ITEM_STATE_UNSPECIFIED
+        - ATTENTION_ITEM_STATE_OPEN
+        - ATTENTION_ITEM_STATE_ACKNOWLEDGED
+        - ATTENTION_ITEM_STATE_RESOLVED
+      description: AttentionItemState is where an attention item stands (D-130).
     openfief.views.v1.BacktestDay:
       type: object
       properties:
@@ -664,6 +756,25 @@ components:
           title: checks
       title: ListAssertionChecksResponse
       additionalProperties: false
+    openfief.views.v1.ListAttentionItemsRequest:
+      type: object
+      title: ListAttentionItemsRequest
+      additionalProperties: false
+    openfief.views.v1.ListAttentionItemsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.AttentionItem'
+          title: items
+        open:
+          type: integer
+          title: open
+          format: int32
+          description: How many items are open.
+      title: ListAttentionItemsResponse
+      additionalProperties: false
     openfief.views.v1.ListBrokerAccountsRequest:
       type: object
       properties:
@@ -908,6 +1019,15 @@ components:
             $ref: '#/components/schemas/openfief.views.v1.Transfer'
           title: rejected
           description: 'Pairs the owner rejected: both legs stay cash flows.'
+        broken:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Transfer'
+          title: broken
+          description: |-
+            Pairs the owner confirmed whose legs no longer match after a
+             correction (D-131): both legs are cash flows again until the owner
+             rejects the pair or a correction makes them match.
       title: ListTransfersResponse
       additionalProperties: false
     openfief.views.v1.ListValuationStatusesRequest:
@@ -1993,6 +2113,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.GetAllocationResponse'
+  /v1/attention-items:
+    get:
+      tags:
+        - ReadService
+      summary: ListAttentionItems
+      description: |-
+        ListAttentionItems returns the attention items (D-130), in ID order,
+         each with its history: every check that needs the owner, such as a
+         flagged balance assertion or price check, an import batch's left-out
+         rows, an unmapped broker account, an unconfirmed ticker, a missing
+         setting or a broken transfer (D-131), in one place. The owner
+         acknowledges or resolves them through the AttentionService, or on the
+         page of the check that raised them, not here.
+      operationId: openfief.views.v1.ReadService.ListAttentionItems
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListAttentionItemsResponse'
   /v1/broker-accounts:
     get:
       tags:

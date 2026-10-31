@@ -629,3 +629,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f1fc7b6c367
+  - type: implements
+    from: SYM-attention-pg-store-unpublished
+    to: REQ-attention-relay
+    created_at: 2026-10-31T18:45:55.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0268747c5fad
+  - type: implements
+    from: SYM-attention-pg-store-unpublished
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:45:55.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-925b61708119
+  - type: covered_by
+    from: SYM-attention-pg-store-unpublished
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:45:55.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ff3333b5653
+  - type: executable_for
+    from: SYM-ledger-test-broken-transfer-links
+    to: TEST-ledger-transfer-broken
+    created_at: 2026-10-31T18:50:07.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47128ccd2b63
+  - type: implements
+    from: SYM-ui-server-render-attention
+    to: REQ-ui-attention-page
+    created_at: 2026-10-31T18:52:29.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c9d1eb304c8
+  - type: implements
+    from: SYM-ui-server-render-attention
+    to: REQ-ui-attention-items-one-place
+    created_at: 2026-10-31T18:52:29.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e1b67e6d584
+  - type: covered_by
+    from: SYM-ui-server-render-attention
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:52:29.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2858280b1b33

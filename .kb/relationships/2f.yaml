@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-541a30fb0b7f
+  - type: implements
+    from: SYM-attentionv1-attention-item-changed-get-reason
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:58:24.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ce7f8c524d
+  - type: covered_by
+    from: SYM-attentionv1-attention-item-changed-get-reason
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:58:24.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-320ccb99e0a1

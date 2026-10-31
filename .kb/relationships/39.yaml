@@ -412,3 +412,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e58ce2bd4b5f
+  - type: implements
+    from: SYM-attention-observe
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:47:39.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e703afea476
+  - type: implements
+    from: SYM-attention-observe
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:47:39.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b2666e075c0
+  - type: covered_by
+    from: SYM-attention-observe
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:47:39.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d353781f65cc

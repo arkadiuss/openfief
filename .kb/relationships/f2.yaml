@@ -517,3 +517,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cb2161a12b9
+  - type: executable_for
+    from: SYM-attention-app-test-helper-mem-store
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:37:41.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51fac2be54fb
+  - type: executable_for
+    from: SYM-attention-app-test-helper-mem-store
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:37:41.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cb8723f4460
+  - type: executable_for
+    from: SYM-attention-connectapi-test-helper-outcome
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T19:22:42.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cb127ff9ebf

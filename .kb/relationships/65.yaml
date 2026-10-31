@@ -524,3 +524,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70f81a25f43b
+  - type: implements
+    from: SYM-attention-app-items-sweep
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:39:15.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f2571da94e8
+  - type: covered_by
+    from: SYM-attention-app-items-sweep
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:15.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66bc60dc0962
+  - type: implements
+    from: SYM-attention-app-items-clear
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:39:25.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92d231ec0c51
+  - type: covered_by
+    from: SYM-attention-app-items-clear
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:25.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c81a45b516aa
+  - type: executable_for
+    from: SYM-attention-app-test-helper-found
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:06.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fc360f37deb
+  - type: executable_for
+    from: SYM-attention-app-test-owner-actions
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:24.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-778fe21a8c80

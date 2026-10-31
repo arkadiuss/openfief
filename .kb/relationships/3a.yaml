@@ -454,3 +454,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff45bfc0df59
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-imports-unsupported-batches
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:36:37.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-647678fc574d
+  - type: implements
+    from: SYM-viewsv1-attention-item-state-enum
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:00:20.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-012b7181fa6d
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-state-enum
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:00:20.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa1296c125e4

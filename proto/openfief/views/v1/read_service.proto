@@ -217,6 +217,18 @@ service ReadService {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/plugins"};
   }
+
+  // ListAttentionItems returns the attention items (D-130), in ID order,
+  // each with its history: every check that needs the owner, such as a
+  // flagged balance assertion or price check, an import batch's left-out
+  // rows, an unmapped broker account, an unconfirmed ticker, a missing
+  // setting or a broken transfer (D-131), in one place. The owner
+  // acknowledges or resolves them through the AttentionService, or on the
+  // page of the check that raised them, not here.
+  rpc ListAttentionItems(ListAttentionItemsRequest) returns (ListAttentionItemsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/attention-items"};
+  }
 }
 
 // Money is an exact decimal amount in one currency.
@@ -891,6 +903,10 @@ message ListTransfersResponse {
   repeated Transfer confirmed = 2;
   // Pairs the owner rejected: both legs stay cash flows.
   repeated Transfer rejected = 3;
+  // Pairs the owner confirmed whose legs no longer match after a
+  // correction (D-131): both legs are cash flows again until the owner
+  // rejects the pair or a correction makes them match.
+  repeated Transfer broken = 4;
 }
 
 message GetPerformanceRequest {
@@ -1078,4 +1094,73 @@ message Plugin {
   string phase = 9;
   // Whether a version of it runs.
   bool ready = 10;
+}
+
+// AttentionItemState is where an attention item stands (D-130).
+enum AttentionItemState {
+  ATTENTION_ITEM_STATE_UNSPECIFIED = 0;
+  // It needs the owner.
+  ATTENTION_ITEM_STATE_OPEN = 1;
+  // The owner has seen it, and its condition still stands.
+  ATTENTION_ITEM_STATE_ACKNOWLEDGED = 2;
+  // Its condition cleared, or the owner resolved it.
+  ATTENTION_ITEM_STATE_RESOLVED = 3;
+}
+
+// AttentionItemReason says why an attention item changed.
+enum AttentionItemReason {
+  ATTENTION_ITEM_REASON_UNSPECIFIED = 0;
+  // A check found a new condition.
+  ATTENTION_ITEM_REASON_RAISED = 1;
+  // The condition stands with another detail.
+  ATTENTION_ITEM_REASON_CHANGED = 2;
+  // A cleared condition came back, or one the owner resolved changed.
+  ATTENTION_ITEM_REASON_REOPENED = 3;
+  // The check no longer finds the condition.
+  ATTENTION_ITEM_REASON_CLEARED = 4;
+  // The owner acknowledged it.
+  ATTENTION_ITEM_REASON_ACKNOWLEDGED = 5;
+  // The owner resolved it.
+  ATTENTION_ITEM_REASON_RESOLVED = 6;
+}
+
+// AttentionItemChange is one entry of an attention item's history.
+message AttentionItemChange {
+  // From 1, in the order the changes were made.
+  int32 seq = 1;
+  AttentionItemState state = 2;
+  AttentionItemReason reason = 3;
+  // The condition's detail then, such as the difference found.
+  string detail = 4;
+  // RFC 3339, UTC.
+  string at = 5;
+}
+
+// AttentionItem is something a check found that needs the owner (D-130).
+message AttentionItem {
+  int64 id = 1;
+  // The check that raised it, such as "price-check-flagged",
+  // "balance-assertion-flagged", "import-problems",
+  // "broker-account-unmapped", "ticker-unconfirmed", "setting-missing" or
+  // "transfer-broken"; later checks add kinds.
+  string kind = 2;
+  // What it is about, unique within its kind: an instrument, an
+  // assertion, a batch, a broker account, a ticker, a setting or a pair.
+  string subject = 3;
+  // Its latest change's state and detail.
+  AttentionItemState state = 4;
+  string detail = 5;
+  // Whether the owner may resolve it by hand (AttentionService); other
+  // kinds resolve when their check clears.
+  bool owner_resolves = 6;
+  // Its history, oldest first.
+  repeated AttentionItemChange history = 7;
+}
+
+message ListAttentionItemsRequest {}
+
+message ListAttentionItemsResponse {
+  repeated AttentionItem items = 1;
+  // How many items are open.
+  int32 open = 2;
 }
