@@ -636,3 +636,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1899bd7505a2
+  - type: constrains
+    from: REQ-plugins-in-cluster-service-read-role
+    to: FACT-SUBJECT-D637ED85034E36A7
+    created_at: 2026-10-31T12:08:57.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf338720e1ad
+  - type: requires_property
+    from: REQ-plugins-in-cluster-service-read-role
+    to: FACT-PROP-3F3360804548933E
+    created_at: 2026-10-31T12:08:57.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16f470eadfb4
+  - type: constrains
+    from: REQ-operator-namespace-scoped-except-service-read
+    to: FACT-SUBJECT-214A9B817AE7B025
+    created_at: 2026-10-31T12:09:40.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77fca7d6c2f3
+  - type: requires_property
+    from: REQ-operator-namespace-scoped-except-service-read
+    to: FACT-PROP-4CEDB7310DB200A1
+    created_at: 2026-10-31T12:09:40.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-374b9b1641ba
+  - type: supersedes
+    from: REQ-operator-namespace-scoped-except-service-read
+    to: REQ-AUTO-BBBDDCF207E884A1
+    created_at: 2026-10-31T12:09:40.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c8afbb20a20
+  - type: constrains
+    from: REQ-core-attention-item-checks
+    to: FACT-SUBJECT-A9563048F0AE7021
+    created_at: 2026-10-31T14:45:21.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d21a3fea70ef
+  - type: requires_property
+    from: REQ-core-attention-item-checks
+    to: FACT-PROP-4383440A302206BC
+    created_at: 2026-10-31T14:45:21.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd2dbf7263fd

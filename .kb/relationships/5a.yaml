@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af9926fa111f
+  - type: constrains
+    from: REQ-pl-ike-early-return-above-payments
+    to: FACT-SUBJECT-C19C79F7F2ECBE0A
+    created_at: 2026-10-31T14:43:03.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6e7e7a9d8b5
+  - type: requires_property
+    from: REQ-pl-ike-early-return-above-payments
+    to: FACT-PROP-36ED78C9A8941DFA
+    created_at: 2026-10-31T14:43:03.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcc6a913895a

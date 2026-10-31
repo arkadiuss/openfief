@@ -671,3 +671,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5fe4dabdbaf6
+  - type: constrains
+    from: REQ-treasurybonds-one-instance-all-accounts
+    to: FACT-SUBJECT-A97736B72BF54BF8
+    created_at: 2026-10-31T12:13:00.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f42d64d571e9
+  - type: requires_property
+    from: REQ-treasurybonds-one-instance-all-accounts
+    to: FACT-PROP-10AFF46570683CFE
+    created_at: 2026-10-31T12:13:00.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91b9bafb3143
+  - type: constrains
+    from: REQ-identity-origins-one-setting
+    to: FACT-SUBJECT-C60A9C11A734E9E6
+    created_at: 2026-10-31T14:37:23.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd6bf403ff9a
+  - type: requires_property
+    from: REQ-identity-origins-one-setting
+    to: FACT-PROP-F01ACB82970325C1
+    created_at: 2026-10-31T14:37:23.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e66e5e2285d
+  - type: constrains
+    from: REQ-pl-totals-earlier-losses-not-counted
+    to: FACT-SUBJECT-0AB97E1B615D4205
+    created_at: 2026-10-31T14:42:34.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50e58be382c6
+  - type: requires_property
+    from: REQ-pl-totals-earlier-losses-not-counted
+    to: FACT-PROP-FB55B003E50375C2
+    created_at: 2026-10-31T14:42:34.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d00b9b32bdaf

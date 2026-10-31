@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a11d6ae664f
+  - type: constrains
+    from: REQ-ledger-transfer-broken-stops-counting
+    to: FACT-SUBJECT-2ED66112542A7725
+    created_at: 2026-10-31T14:46:10.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65c309b551d7
+  - type: requires_property
+    from: REQ-ledger-transfer-broken-stops-counting
+    to: FACT-PROP-6380802E2CC94A22
+    created_at: 2026-10-31T14:46:10.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d34cd9aeb18

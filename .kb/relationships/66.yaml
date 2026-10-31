@@ -398,3 +398,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e00667c3afe4
+  - type: constrains
+    from: REQ-ingest-broker-account-numbers-owner-only
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-10-31T12:15:20.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79bf6e0b79a3
+  - type: requires_property
+    from: REQ-ingest-broker-account-numbers-owner-only
+    to: FACT-PROP-67C27EA3428BBA5A
+    created_at: 2026-10-31T12:15:20.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e42a6298bcf
+  - type: constrains
+    from: REQ-valuation-sale-fee-minimum-any-currency
+    to: FACT-SUBJECT-4424A5AD6FE3AB29
+    created_at: 2026-10-31T14:43:30.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-292410130902
+  - type: requires_property
+    from: REQ-valuation-sale-fee-minimum-any-currency
+    to: FACT-PROP-878B74EB4148A7D5
+    created_at: 2026-10-31T14:43:30.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99034350a3dd

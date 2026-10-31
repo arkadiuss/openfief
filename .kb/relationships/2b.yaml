@@ -608,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f97084dba55f
+  - type: constrains
+    from: REQ-identity-core-refuses-enroll-origin
+    to: FACT-SUBJECT-9565864B05E4ACEA
+    created_at: 2026-10-31T14:37:36.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37614d99f55e
+  - type: requires_property
+    from: REQ-identity-core-refuses-enroll-origin
+    to: FACT-PROP-CF79EA02F2BFE832
+    created_at: 2026-10-31T14:37:36.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce86625c096d

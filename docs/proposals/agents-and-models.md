@@ -51,6 +51,7 @@ Interface outlines, not code. Every plugin also follows the decided plugin rules
 
 ## Orchestration
 
+- **[P-57] Agents work the attention queue.** From M2, an agent may take an open attention item (D-130), such as a flagged balance assertion, an unconfirmed ticker or a broken transfer, investigate it within its own data access, and propose a resolution. The owner approves or rejects the proposal the way they approve a trade, and the item's history records who proposed and who approved. The agent never resolves an item on its own.
 - **[P-36] Event catalogue.** Wakes and control-plane events, delivered through the event store (P-23).
 
   | Event | Emitted by | Delivered to | Effect |

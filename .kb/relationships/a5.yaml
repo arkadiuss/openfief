@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee4d049cb4bf
+  - type: constrains
+    from: REQ-core-attention-item-store
+    to: FACT-SUBJECT-A9563048F0AE7021
+    created_at: 2026-10-31T14:44:56.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-799e51093679
+  - type: requires_property
+    from: REQ-core-attention-item-store
+    to: FACT-PROP-3126E40F7A919F1C
+    created_at: 2026-10-31T14:44:56.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdc2a74ef9ef

@@ -580,3 +580,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0827fa9a9cb5
+  - type: constrains
+    from: REQ-pl-oki-tax-base-average-value
+    to: FACT-SUBJECT-D256A25BDCDCE899
+    created_at: 2026-10-31T14:39:11.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75b7c94f2e93
+  - type: requires_property
+    from: REQ-pl-oki-tax-base-average-value
+    to: FACT-PROP-9C19828F3B328A32
+    created_at: 2026-10-31T14:39:11.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10f682f231cf
+  - type: supersedes
+    from: REQ-pl-oki-tax-base-average-value
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-31T14:39:11.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f989c42c238

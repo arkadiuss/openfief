@@ -489,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a64718cca846
+  - type: constrains
+    from: REQ-core-attention-item-outbox-events
+    to: FACT-SUBJECT-A9563048F0AE7021
+    created_at: 2026-10-31T14:45:51.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b202842004d
+  - type: requires_property
+    from: REQ-core-attention-item-outbox-events
+    to: FACT-PROP-68C84785FE7C9206
+    created_at: 2026-10-31T14:45:51.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c82f0a50a43

@@ -1,6 +1,6 @@
 ---
 title: A manual bond lot must be either a cash purchase at 100 PLN per bond or an exchange of maturing bonds at 99.90 PLN per bond.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90
