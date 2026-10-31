@@ -7,42 +7,12 @@ The implementation of M0 ran into these questions. No decision in [DESIGN.md](DE
 
 Items are grouped by area and numbered for discussion only; the numbers are not design IDs.
 
-## Blocking real use
-
-1. **XTB import needs the export's real layout.**
-   - *Problem:* D-9 says XTB data arrives as uploaded xStation export files, but the export's columns, and whether it separates CFDs from stocks, are unverified (OQ-22).
-   - *Today:* no XTB parser exists.
-   - *Needed:* a header row and two or three rows with made-up values, copied from a real export. The parser's fixtures will be synthetic.
-   - *Known so far:* the author holds stocks and ETFs only at XTB (so D-24's CFD handling stays as written) and will send the headers from a real export. The export's language is not known yet. Public parsers disagree on the sheet names (R-19).
-
 ## Plugins
-
-2. **How the operator reads an in-cluster service in another namespace.**
-   - *Problem:* D-74 has the operator add a NetworkPolicy rule to an in-cluster service's pods and hand the plugin its ClusterIP, which means reading that Service; D-15 confines the operator to a Role in `openfief`, and D-82 counts the cluster-wide permissions OpenFief holds.
-   - *Today:* the owner's install (with the owner's kubeconfig) creates, in the service's namespace, a Role and RoleBinding `openfief-plugin-<instance>` that let the operator's ServiceAccount `get` that one Service; the operator reads it uncached, retries every minute when it can't, and doesn't watch it, so a changed selector or ClusterIP takes effect at the next reconcile. Uninstall deletes them.
-   - *Options:* keep; have the install record the Service's ClusterIP, selector and target port in the grant so the operator reads nothing outside `openfief`; or a ClusterRole to read Services.
 
 3. **How a release's catalog reaches `main`, and where a beta's CLI goes.**
    - *Problem:* D-88 has the release workflow add each first-party plugin to the catalog, a file in this repository embedded in the operator and CLI, and docs/dev/sdlc.md has every release ship the signed CLI. The release starts from `main`, which is never committed to directly, and a beta so far had no GitHub release.
    - *Today:* the plugin images are built and signed first; the workflow commits the catalog to a new branch `release/<version>`, builds the other images and the CLI from that commit, tags it, and opens a pull request to `main`. A beta becomes a GitHub pre-release carrying only the signed CLI.
    - *Options:* keep; push the catalog commit to `main` from the workflow; or keep betas without a GitHub release and ship their CLI as a workflow artifact only.
-
-## Onboarding
-
-4. **The treasury-bonds connector still names its OpenFief account in its config.**
-   - *Problem:* D-72's broker accounts cover broker connectors. The treasury-bonds plugin books every lot into the account its config's `account` names, so the owner types an OpenFief account ID at install, before the wizard creates the account.
-   - *Today:* unchanged: the account must exist and carry that ID, and the wizard binds the instance to it.
-   - *Options:* the core sends the lot's account with `ImportBondLots`, as it knows it; or the plugin reports one broker account per registry account like a broker connector.
-
-5. **Removing or remapping sleeves, kinds, accounts and broker accounts.**
-   - *Problem:* D-71 and D-72 let the owner add and rename; they don't say whether the owner can delete a sleeve, kind or account, or map a broker account to another account once mapped.
-   - *Today:* nothing is deleted, and a mapped broker account stays mapped (`FAILED_PRECONDITION` when mapped again elsewhere). An unwanted default sleeve can only be renamed or left empty.
-   - *Options:* allow deleting an empty sleeve, an unused kind and an account without transactions, and remapping a broker account whose account has no transactions from it; or keep everything append-only.
-
-6. **Who may list broker account numbers.**
-   - *Problem:* D-72 has the UI show unmapped broker accounts, which the read API lists (`ListBrokerAccounts`). Every read caller reads it: owner and read sessions, script tokens and view plugins such as Ghostfolio's.
-   - *Today:* any read caller may list them, as it may read the rest of the record. The demo has none.
-   - *Options:* keep; or list them only through the owner's `AccountService`, so read sessions and plugins never see an account number.
 
 ## Market data
 
@@ -75,11 +45,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the balance history follows the account's cash in the owned account's currency, one balance at the end of each date it changes. Cash in any other currency is left out and counted among the sync's problems, so Ghostfolio's totals miss it.
    - *Options:* keep; or give each other currency an owned cash account of its own, its UUID derived from the instance, the account and the currency, holding only a balance; or convert the cash at OpenFief's exchange rates, which the read API would have to serve; or create each owned account in its account's cash currency when it has only one.
 
-12. **Assets left by an earlier version are deleted before the import.**
-   - *Problem:* D-64 (amended) keys a bond's `MANUAL` asset by the instance, so an install that synced before holds activities on assets keyed by the series code alone. D-64's import-first rule allows one exception, a stale activity Ghostfolio's duplicate check would match. But Ghostfolio's import reuses the user's `MANUAL` asset that has the same name as a new one, so while the old asset (named by the same code) exists, every import of the new one is stored on the old one, the dry run refuses it, and the sync never settles.
-   - *Today:* when a sync imports onto a `MANUAL` asset, the stale activities on `MANUAL` assets it doesn't want go before the import too, with the duplicates. Nothing it wants loses its price history; an old asset goes with its last activity. The same holds for the fee assets, which are keyed the same way now. An old asset the owner also used in an account of their own survives, and the dry run then stops the sync until the owner moves that activity.
-   - *Options:* keep as a second exception to import-first; or name the new assets differently from the old ones (the code plus a suffix), so no import reuses an old asset and import-first holds without exception.
-
 13. **What the bond and fee assets' symbols are derived from.**
    - *Problem:* D-64 (amended) derives a bond's symbol from the plugin instance and the series code, so two installs sharing one Ghostfolio never collide. Ghostfolio's symbols are unique across all its users, and two installs can name their instances alike (an install names an instance after the plugin's catalog name unless told otherwise); then they would collide. D-108's fee asset per currency has the same problem.
    - *Today:* both symbols are UUIDs derived from the instance's name, the Ghostfolio user's ID and the series code or currency. Two instances writing to the same Ghostfolio user still meet in Ghostfolio's name-based reuse of `MANUAL` assets, which the dry run catches.
@@ -108,33 +73,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Problem:* D-105 stores the owner's confirmed link append-only, keyed by the two transactions. A broker can later correct either leg (D-18), say its amount or date, so that the two are no longer one possible transfer.
    - *Today:* the link stays stored, but it counts only while the legs' current versions are still a withdrawal and a deposit of the opposite amount in different accounts; otherwise both legs are cash flows again and the pair is no longer listed as confirmed. The owner's rejections are stored the same way, so a rejected pair is never suggested again, and a leg can be in only one confirmed transfer.
    - *Options:* keep; flag a broken link for the owner to look at, like a flagged balance assertion; or ask the owner again by suggesting the corrected pair.
-
-## Treasury bonds
-
-18. **What go-live is for a manually entered bond account.**
-   - *Problem:* D-98 books a lot bought before go-live as an opening lot at go-live and a later one as a deposit and a buy, but a manually entered account has no broker statement whose date would be its go-live, and D-98 doesn't say how a lot bought on the go-live date itself is booked.
-   - *Today:* the core sends the date the account was seeded on, or today for an account not seeded yet, so the first lot the owner enters seeds the account and fixes its go-live; every later lot is an opening lot on that date when it was bought on or before it. A lot bought on the go-live date is an opening lot, as a sync's transactions on that date are held by the seeding. Deleting every opening lot unseeds the account, and the next entry takes a new go-live, unless a later lot is still there (the ledger refuses an opening lot that would count it twice). Lots entered before this change, as a deposit and a buy, keep those keys.
-   - *Options:* keep; or let the owner set a manual account's go-live when creating it; or use the portfolio's go-live (its earliest seeding) for every manual account.
-
-19. **Who books the coupons of entered bond lots.**
-   - *Problem:* D-101 books coupons, such as COI's yearly interest, as interest. The ledger has the kind, the demo dataset books its coupons with it, and the pack's coupon types count only the current period's interest in a lot's value, so a paid coupon must reach the account's cash or the account loses it.
-   - *Today:* nothing books the coupons of COI, ROR and DOR lots the owner entered; the treasury-bonds connector is stateless and doesn't know the lots, and the owner can't enter interest.
-   - *Options:* the core computes each due coupon from the stored lots, terms and readings and imports it through the connector; or the owner enters coupons by hand as a new kind of entry (D-79).
-
-20. **The exchange price of OTS.**
-   - *Problem:* D-100 says bonds bought by exchange cost 99.90 PLN; the OTS issue letter (ust. 8) sets its exchange price at 100.00 PLN.
-   - *Today:* `pl.ExchangePrice` follows the letters: 99.90 PLN for every type but OTS, which exchanges at the nominal with no discount.
-   - *Options:* keep; or 99.90 PLN for OTS too; or refuse an OTS lot bought by exchange.
-
-## Tooling
-
-21. **The kibi gate recompiles a broken store once.**
-    - *Today:* `kibi sync --rebuild` sometimes leaves a compiled store that misses an authored relationship or holds an entity twice (about 1 run in 10 under load). The same files compile correctly on the next run, so it is a defect in the compile, not in the knowledge base. `task kibi:check` (`scripts/kibi-check.sh`) recompiles once when a check fails with exactly that defect, and the second check is final; any other failure is final at once. A defect still gets through if two compiles in a row hit it.
-    - *Question:* acceptable, given docs/dev/testing.md forbids retry loops for tests? The reading here is that it recompiles a broken build artifact rather than retrying a verdict.
-
-22. **Fixing the kibi compile defect upstream.**
-    - *Today:* the likely cause is that `kibi sync` terminates its compiling Prolog process with no grace period right after saving, then publishes the staging directory. A bug report draft exists in the implementation session's scratchpad, not filed.
-    - *Options:* file the report with kibi's maintainers; carry a local patch that adds a grace period; or keep only the recompile.
 
 ## Statement uploads and price checks
 
