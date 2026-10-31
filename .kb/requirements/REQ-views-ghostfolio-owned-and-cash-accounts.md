@@ -34,7 +34,11 @@ The Ghostfolio view must own one Ghostfolio account per account of the record, i
 
 ## Context
 
-D-133 gives each currency of an account's cash other than its Ghostfolio account's an owned account of its own, with a UUID from the instance, the account and the currency; D-64 derives the account's own UUID from the instance and the account. Refines REQ-views-ghostfolio-derived-account-uuids (firm, D-64). Supersedes REQ-views-ghostfolio-owned-accounts, which owned exactly one account per account of the record. Modeled by Claude Code while building D-133; the author has not reviewed this wording.
+D-133 gives each currency of an account's cash other than its Ghostfolio account's an owned account of its own, with a UUID from the instance, the account and the currency; D-64 derives the account's own UUID from the instance and the account. Refines REQ-views-ghostfolio-derived-account-uuids (firm, D-64). Modeled by Claude Code while building D-133; the author has not reviewed this wording.
+
+## Why this changed
+
+REQ-views-ghostfolio-owned-accounts owned exactly one Ghostfolio account per account of the record, so cash in any other currency had nowhere to go; D-133 decided that each such currency gets an owned account of its own.
 
 ## Source
 

@@ -88776,16 +88776,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-cli
-  - id: SYM-exp-identity-cli-test-helper-fake-core-allowed-origins
-    title: fakeCore.AllowedOrigins
-    sourceFile: internal/identity/cli/enroll_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:37:20.029Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-cli
   - id: SYM-views-ghostfolio-balance
     title: Balance
     sourceFile: internal/views/ghostfolio/model.go

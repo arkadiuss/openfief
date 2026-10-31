@@ -1,6 +1,6 @@
 ---
 title: A Ghostfolio sync must delete an activity on a MANUAL asset an earlier version left after the import, like any stale activity, and delete before the import only the stale activities an import duplicates.
-status: closed
+status: open
 text_ref: docs/DESIGN.md#D-64
 tags:
   - strict-modeling

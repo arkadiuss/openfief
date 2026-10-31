@@ -34,7 +34,11 @@ The Ghostfolio view must give each owned account one cash balance at the end of 
 
 ## Context
 
-D-108 has each owned account's cash balance follow OpenFief's cash, so Ghostfolio's totals include it; D-133 puts each other currency of an account's cash in an owned account of its own, holding only that balance, instead of leaving it out. Refines REQ-views-ghostfolio-cash-balance (firm, D-108). Supersedes REQ-views-ghostfolio-cash-balances, which left cash in other currencies out as a problem. Modeled by Claude Code while building D-133; the author has not reviewed this wording.
+D-108 has each owned account's cash balance follow OpenFief's cash, so Ghostfolio's totals include it; D-133 puts each other currency of an account's cash in an owned account of its own, holding only that balance. Refines REQ-views-ghostfolio-cash-balance (firm, D-108). Modeled by Claude Code while building D-133; the author has not reviewed this wording.
+
+## Why this changed
+
+REQ-views-ghostfolio-cash-balances left an account's cash in any currency other than the Ghostfolio user's base currency out as a problem, so Ghostfolio's totals missed it; D-133 decided that it goes into an owned account per currency instead.
 
 ## Source
 
