@@ -776,3 +776,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc3147aca602
+  - type: implements
+    from: SYM-ingest-xtb-x-row
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:34:59.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aac7dcc9129
+  - type: covered_by
+    from: SYM-ingest-xtb-x-row
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:34:59.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71f731aef704
+  - type: implements
+    from: SYM-ingestv1-list-pending-tickers-response-reset
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:05:06.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69d8a587d7c1
+  - type: covered_by
+    from: SYM-ingestv1-list-pending-tickers-response-reset
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:05:06.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91c35aaf50b5

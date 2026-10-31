@@ -475,3 +475,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b750e85c6607
+  - type: executable_for
+    from: SYM-ingest-test-helper-pln
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:25:17.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f16c79ea5873

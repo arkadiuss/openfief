@@ -426,3 +426,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0fd8fa24f7c
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-response-get-proposals
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T14:01:00.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43f5f067d3d9
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-response-get-proposals
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T14:01:00.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53eb75a56b04

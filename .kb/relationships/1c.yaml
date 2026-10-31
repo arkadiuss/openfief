@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7db643a6d318
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-get-kind
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:46:11.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-500efff7dc2d
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-get-kind
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:46:11.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-511b5bd81486

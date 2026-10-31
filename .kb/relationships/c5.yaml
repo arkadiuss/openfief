@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-748193a90247
+  - type: verified_by
+    from: SCEN-ingest-ticker-entries-wait
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T12:55:09.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d72f6becd156
+  - type: verified_by
+    from: SCEN-ingest-ticker-entries-wait
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T12:55:09.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0db601285f08

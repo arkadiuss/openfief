@@ -531,3 +531,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a3a59f981d6
+  - type: executable_for
+    from: SYM-core-test-helper-check-xtb-booked
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:20:48.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f44b17f85cd
+  - type: implements
+    from: SYM-ingest-app-tickers-confirm
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:21:43.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86bb1a8c3bbc
+  - type: covered_by
+    from: SYM-ingest-app-tickers-confirm
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:43.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d53cd36b4db0
+  - type: implements
+    from: SYM-ingest-xtb-mapping-open-positions
+    to: REQ-ingest-xtb-cfd-flagged
+    created_at: 2026-10-31T13:30:55.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfb7759494dd
+  - type: implements
+    from: SYM-ingest-xtb-mapping-open-positions
+    to: REQ-AUTO-A5EE8BC2AE68372A
+    created_at: 2026-10-31T13:30:55.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d8591743d13
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-open-positions
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:30:55.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a17e1e3f963
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-request-proto-message
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:06:02.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-551beaf8fe4f
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-request-proto-message
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:06:02.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-544c0258aa6d

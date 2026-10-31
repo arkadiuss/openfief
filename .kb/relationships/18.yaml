@@ -475,3 +475,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59419ed85b40
+  - type: implements
+    from: SYM-ingest-xtb-labels
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:31:17.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35e2aeafaa8e
+  - type: covered_by
+    from: SYM-ingest-xtb-labels
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:31:17.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6f2f0042959
+  - type: implements
+    from: SYM-ingest-xtb-x-shared
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:34:47.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1cc4c31955b
+  - type: covered_by
+    from: SYM-ingest-xtb-x-shared
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:34:47.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3d0b5414108
+  - type: implements
+    from: SYM-ingestv1-pending-ticker-descriptor
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:03:42.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57c359660cf9
+  - type: covered_by
+    from: SYM-ingestv1-pending-ticker-descriptor
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:03:42.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67df3de15b56

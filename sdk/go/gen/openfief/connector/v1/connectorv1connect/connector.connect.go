@@ -61,6 +61,9 @@ const (
 	// ConnectorServiceImportBondLotsProcedure is the fully-qualified name of the ConnectorService's
 	// ImportBondLots RPC.
 	ConnectorServiceImportBondLotsProcedure = "/openfief.connector.v1.ConnectorService/ImportBondLots"
+	// ConnectorServiceLookupInstrumentsProcedure is the fully-qualified name of the ConnectorService's
+	// LookupInstruments RPC.
+	ConnectorServiceLookupInstrumentsProcedure = "/openfief.connector.v1.ConnectorService/LookupInstruments"
 )
 
 // ConnectorServiceClient is a client for the openfief.connector.v1.ConnectorService service.
@@ -78,6 +81,12 @@ type ConnectorServiceClient interface {
 	// answers UNIMPLEMENTED; a lot it refuses, such as one whose purchase date
 	// doesn't match its series, INVALID_ARGUMENT naming the rule it broke.
 	ImportBondLots(context.Context, *connect.Request[v1.ImportBondLotsRequest]) (*connect.Response[v1.ImportBondLotsResponse], error)
+	// LookupInstruments proposes the ISIN of each ticker an institution named
+	// without one (D-116), such as a ticker of an xStation export, so the
+	// owner confirms it once. The core asks the market-data connectors; one
+	// that can't look instruments up answers UNIMPLEMENTED. A ticker it finds
+	// no single ISIN for is left out of the response.
+	LookupInstruments(context.Context, *connect.Request[v1.LookupInstrumentsRequest]) (*connect.Response[v1.LookupInstrumentsResponse], error)
 }
 
 // NewConnectorServiceClient constructs a client for the openfief.connector.v1.ConnectorService
@@ -109,14 +118,21 @@ func NewConnectorServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			connect.WithSchema(connectorServiceMethods.ByName("ImportBondLots")),
 			connect.WithClientOptions(opts...),
 		),
+		lookupInstruments: connect.NewClient[v1.LookupInstrumentsRequest, v1.LookupInstrumentsResponse](
+			httpClient,
+			baseURL+ConnectorServiceLookupInstrumentsProcedure,
+			connect.WithSchema(connectorServiceMethods.ByName("LookupInstruments")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // connectorServiceClient implements ConnectorServiceClient.
 type connectorServiceClient struct {
-	sync           *connect.Client[v1.SyncRequest, v1.SyncResponse]
-	importFile     *connect.Client[v1.ImportFileRequest, v1.ImportFileResponse]
-	importBondLots *connect.Client[v1.ImportBondLotsRequest, v1.ImportBondLotsResponse]
+	sync              *connect.Client[v1.SyncRequest, v1.SyncResponse]
+	importFile        *connect.Client[v1.ImportFileRequest, v1.ImportFileResponse]
+	importBondLots    *connect.Client[v1.ImportBondLotsRequest, v1.ImportBondLotsResponse]
+	lookupInstruments *connect.Client[v1.LookupInstrumentsRequest, v1.LookupInstrumentsResponse]
 }
 
 // Sync calls openfief.connector.v1.ConnectorService.Sync.
@@ -132,6 +148,11 @@ func (c *connectorServiceClient) ImportFile(ctx context.Context) *connect.Client
 // ImportBondLots calls openfief.connector.v1.ConnectorService.ImportBondLots.
 func (c *connectorServiceClient) ImportBondLots(ctx context.Context, req *connect.Request[v1.ImportBondLotsRequest]) (*connect.Response[v1.ImportBondLotsResponse], error) {
 	return c.importBondLots.CallUnary(ctx, req)
+}
+
+// LookupInstruments calls openfief.connector.v1.ConnectorService.LookupInstruments.
+func (c *connectorServiceClient) LookupInstruments(ctx context.Context, req *connect.Request[v1.LookupInstrumentsRequest]) (*connect.Response[v1.LookupInstrumentsResponse], error) {
+	return c.lookupInstruments.CallUnary(ctx, req)
 }
 
 // ConnectorServiceHandler is an implementation of the openfief.connector.v1.ConnectorService
@@ -150,6 +171,12 @@ type ConnectorServiceHandler interface {
 	// answers UNIMPLEMENTED; a lot it refuses, such as one whose purchase date
 	// doesn't match its series, INVALID_ARGUMENT naming the rule it broke.
 	ImportBondLots(context.Context, *connect.Request[v1.ImportBondLotsRequest]) (*connect.Response[v1.ImportBondLotsResponse], error)
+	// LookupInstruments proposes the ISIN of each ticker an institution named
+	// without one (D-116), such as a ticker of an xStation export, so the
+	// owner confirms it once. The core asks the market-data connectors; one
+	// that can't look instruments up answers UNIMPLEMENTED. A ticker it finds
+	// no single ISIN for is left out of the response.
+	LookupInstruments(context.Context, *connect.Request[v1.LookupInstrumentsRequest]) (*connect.Response[v1.LookupInstrumentsResponse], error)
 }
 
 // NewConnectorServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -177,6 +204,12 @@ func NewConnectorServiceHandler(svc ConnectorServiceHandler, opts ...connect.Han
 		connect.WithSchema(connectorServiceMethods.ByName("ImportBondLots")),
 		connect.WithHandlerOptions(opts...),
 	)
+	connectorServiceLookupInstrumentsHandler := connect.NewUnaryHandler(
+		ConnectorServiceLookupInstrumentsProcedure,
+		svc.LookupInstruments,
+		connect.WithSchema(connectorServiceMethods.ByName("LookupInstruments")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.connector.v1.ConnectorService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ConnectorServiceSyncProcedure:
@@ -185,6 +218,8 @@ func NewConnectorServiceHandler(svc ConnectorServiceHandler, opts ...connect.Han
 			connectorServiceImportFileHandler.ServeHTTP(w, r)
 		case ConnectorServiceImportBondLotsProcedure:
 			connectorServiceImportBondLotsHandler.ServeHTTP(w, r)
+		case ConnectorServiceLookupInstrumentsProcedure:
+			connectorServiceLookupInstrumentsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -204,4 +239,8 @@ func (UnimplementedConnectorServiceHandler) ImportFile(context.Context, *connect
 
 func (UnimplementedConnectorServiceHandler) ImportBondLots(context.Context, *connect.Request[v1.ImportBondLotsRequest]) (*connect.Response[v1.ImportBondLotsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.connector.v1.ConnectorService.ImportBondLots is not implemented"))
+}
+
+func (UnimplementedConnectorServiceHandler) LookupInstruments(context.Context, *connect.Request[v1.LookupInstrumentsRequest]) (*connect.Response[v1.LookupInstrumentsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.connector.v1.ConnectorService.LookupInstruments is not implemented"))
 }

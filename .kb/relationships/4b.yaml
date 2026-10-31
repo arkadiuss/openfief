@@ -496,3 +496,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f53d8cddd5f
+  - type: executable_for
+    from: SYM-core-test-helper-check-no-transfer-comments
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:20:54.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d17d8979511
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-request-string
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:47:12.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e20fe49fac5
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-request-string
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:47:12.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ff70ba6c5db
+  - type: implements
+    from: SYM-ingestv1-pending-ticker-get-waiting
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:04:31.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a715838fed85
+  - type: covered_by
+    from: SYM-ingestv1-pending-ticker-get-waiting
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:04:31.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fd27dd1fa56

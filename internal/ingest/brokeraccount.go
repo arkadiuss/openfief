@@ -67,9 +67,10 @@ func (b *BrokerAccount) Mapped() bool { return b.Account != "" }
 // OpenFief account: their Account is empty, and their key's source names no
 // account (D-72).
 type BrokerEntries struct {
-	Account      BrokerAccountID
-	Transactions []ledger.Transaction
-	Assertions   []ledger.BalanceAssertion
+	Account       BrokerAccountID
+	Transactions  []ledger.Transaction
+	Assertions    []ledger.BalanceAssertion
+	TickerEntries []TickerEntry
 }
 
 // Resolution is a mapping with its broker accounts resolved: what to
@@ -90,7 +91,7 @@ type Resolution struct {
 // OpenFief accounts known maps them to (D-72): each transaction and balance
 // assertion gets the account, and each transaction's key source gets ":"
 // and the account ID, so that keys stay per account as connectors key them
-// (ledger.TransactionKey). Entries of a broker account that is not mapped
+// (ledger.TransactionKey); ticker entries likewise. Entries of a broker account that is not mapped
 // are left out and the account listed in Unmapped. In an opening batch the
 // seeding transactions of a broker account already seeded are left out too,
 // so seeding one newly mapped account never seeds another again; their
@@ -101,6 +102,8 @@ func ResolveBrokerAccounts(m *Mapping, known []BrokerAccount, mode Mode) Resolut
 		Assertions:       slices.Clone(m.Assertions),
 		Problems:         slices.Clone(m.Problems),
 		CrossCheckPrices: slices.Clone(m.CrossCheckPrices),
+		Tickers:          slices.Clone(m.Tickers),
+		TickerEntries:    slices.Clone(m.TickerEntries),
 	}}
 	byID := make(map[BrokerAccountID]BrokerAccount, len(known))
 	for i := range known {
@@ -141,6 +144,12 @@ func book(e *BrokerEntries, account ledger.AccountID, reseeding bool, out *Mappi
 	for _, a := range e.Assertions {
 		a.Account = account
 		out.Assertions = append(out.Assertions, a)
+	}
+	for j := range e.TickerEntries {
+		t := e.TickerEntries[j]
+		t.Header.Account = account
+		t.Header.Key.Source += ":" + string(account)
+		out.TickerEntries = append(out.TickerEntries, t)
 	}
 }
 

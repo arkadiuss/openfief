@@ -32,10 +32,11 @@ const (
 // errNoAPIKey reports an API key file that is missing or empty.
 var errNoAPIKey = errors.New("no EODHD API key")
 
-// marketData is what a sync needs from EODHD: an ISIN's listings and a
+// marketData is what the connector needs from EODHD: an ISIN's or a code's listings and a
 // ticker's closes.
 type marketData interface {
 	Listings(ctx context.Context, isin ledger.ISIN) ([]eodhd.Listing, error)
+	Search(ctx context.Context, code, exchange string) ([]eodhd.Listing, error)
 	Closes(ctx context.Context, ticker string, from, to kernel.Date) ([]eodhd.Close, error)
 }
 

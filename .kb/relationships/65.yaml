@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c0510675cc6e
+  - type: executable_for
+    from: SYM-ingest-test-helper-entry-outcome
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:25:35.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a7ade776d81

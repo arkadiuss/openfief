@@ -391,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7db44e1f4516
+  - type: implements
+    from: SYM-ingest-app-ticker-store
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:21:06.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de461b23ebe7
+  - type: covered_by
+    from: SYM-ingest-app-ticker-store
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:06.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93421057d3f1

@@ -503,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-782dca812357
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-request
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:46:59.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a935d64f65
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-request
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:46:59.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a8065808344

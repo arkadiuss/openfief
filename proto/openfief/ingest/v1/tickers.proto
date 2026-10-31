@@ -1,0 +1,84 @@
+// OpenFief's ticker confirmation contract (docs/DESIGN.md D-116, D-79).
+//
+// Some institutions, such as XTB's xStation export, name instruments by
+// ticker and market only, with no ISIN (D-35). For each new ticker, the
+// market-data connector looks the ISIN up by ticker and market and
+// proposes it; the owner confirms it once, or enters it when the lookup
+// found none. The rows of a ticker not confirmed yet wait as ingest
+// problems, and the core books them once it is. The built-in UI hands the
+// owner's confirmations to the core through TickerService, one owner-only
+// service for this kind of entry (D-79), on the core's plugin port (D-115).
+//
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto), as in accounts.proto:
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - An ISIN without a valid check digit fails with INVALID_ARGUMENT; a
+//   ticker no connector instance reported with NOT_FOUND; a ticker already
+//   confirmed with another ISIN with FAILED_PRECONDITION.
+syntax = "proto3";
+
+package openfief.ingest.v1;
+
+// TickerService lists the tickers waiting for the owner to confirm their
+// ISIN, and takes the owner's confirmations.
+service TickerService {
+  // ListPendingTickers returns every ticker no ISIN is confirmed for yet.
+  rpc ListPendingTickers(ListPendingTickersRequest) returns (ListPendingTickersResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ConfirmTicker records the ISIN of one ticker, proposed or typed, and
+  // books every row waiting for it. Confirming the same ISIN again books
+  // whatever still waits.
+  rpc ConfirmTicker(ConfirmTickerRequest) returns (ConfirmTickerResponse);
+}
+
+message ListPendingTickersRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+// PendingTicker is a ticker waiting for the owner's confirmation.
+message PendingTicker {
+  // The connector instance that reported it.
+  string instance = 1;
+  // The ticker as the institution names it, such as "TESTA.PL".
+  string symbol = 2;
+  // The ISO 3166-1 alpha-2 code of its market's country, or empty.
+  string country = 3;
+  // Its display name at the institution.
+  string name = 4;
+  // The ISIN the market-data connector proposed, or empty when it found
+  // none.
+  string proposed_isin = 5;
+  // The instrument's name at the market-data source, with the proposal.
+  string proposed_name = 6;
+  // How many statement rows wait for it.
+  int32 waiting = 7;
+}
+
+message ListPendingTickersResponse {
+  // In instance, then symbol order.
+  repeated PendingTicker tickers = 1;
+}
+
+message ConfirmTickerRequest {
+  string origin = 1;
+  string session_token = 2;
+  string instance = 3;
+  string symbol = 4;
+  // The ISIN, with a valid check digit.
+  string isin = 5;
+}
+
+message ConfirmTickerResponse {
+  // The rows booked now.
+  int32 booked = 1;
+}

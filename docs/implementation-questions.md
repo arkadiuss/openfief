@@ -14,6 +14,28 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the plugin images are built and signed first; the workflow commits the catalog to a new branch `release/<version>`, builds the other images and the CLI from that commit, tags it, and opens a pull request to `main`. A beta becomes a GitHub pre-release carrying only the signed CLI.
    - *Options:* keep; push the catalog commit to `main` from the workflow; or keep betas without a GitHub release and ship their CLI as a workflow artifact only.
 
+## XTB
+
+28. **How an xStation export seeds an account.**
+   - *Problem:* D-23 seeds an account from the broker's lot-level positions and its cash at go-live, and D-109 has the core choose opening mode for an account not yet seeded. R-24's export holds no cash balance, and `Open Positions` gives each position's open price in the instrument's currency with no conversion rate, so neither the opening cash nor a foreign position's cost in the account currency is in it; that sheet's value formats were not seen either.
+   - *Today:* the xtb connector refuses an opening batch (`ErrOpeningMode`), and the owner overrides the mode to transactions and uploads the account's whole history, from its first deposit.
+   - *Options:* keep; or seed opening lots from `Open Positions` for positions quoted in the account currency and take the opening cash from the owner; or take the cost of every position from the owner.
+
+29. **How closed CFD results and free-funds interest are booked.**
+   - *Problem:* D-24 imports closed CFD results as cash profit or loss, but the ledger has no kind for a trading result or for interest on cash (`NewInterest` needs a holding), and R-24's export had no CFD, so which `Cash Operations` type carries a CFD's result, and whether `Closed Positions`' `Profit/Loss` repeats it, wasn't seen. `Free funds interest` and its tax are in R-24.
+   - *Today:* each closed CFD position is an unsupported ingest problem naming its category, as is each free-funds interest row and its tax; cash is short by their sum.
+   - *Options:* a ledger kind for a cash result, posted against an income ledger account so performance doesn't count it as a deposit, for CFD results and interest on cash alike; or book losses as fees and profits as deposits, which misstates performance.
+
+30. **Holding assertions from `Open Positions`.**
+   - *Problem:* D-18 stores a broker's position snapshot as balance assertions. An XTB position names its ticker only, so an assertion needs its ticker's confirmed ISIN, and the sheet's `Volume` format wasn't seen.
+   - *Today:* none are made from `Open Positions`; only its CFD rows are read, to flag them.
+   - *Options:* assert the summed volume per ticker on the report's date once the ticker is confirmed, leaving out unconfirmed ones; or wait for an export with open positions.
+
+31. **What a ticker confirmation covers, and its US listings.**
+   - *Problem:* D-116 has the owner confirm a ticker's ISIN once. A confirmation could hold for one connector instance or for every instance of the institution, and a wrong confirmation can't be changed. EODHD's supported exchanges (D-51) leave out US markets, which XTB lists with `.US`.
+   - *Today:* a confirmation holds for the instance that reported the ticker, is set once, and a different ISIN later is refused; a ticker of a market with no supported exchange, `.US` among them, gets no proposal and the owner types its ISIN.
+   - *Options:* keep; or share confirmations across instances of one institution; or let the owner correct a confirmation, superseding the transactions it booked (D-18).
+
 ## Market data
 
 7. **Which connector instances are asked what to price.**

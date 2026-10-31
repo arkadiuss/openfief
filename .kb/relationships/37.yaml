@@ -608,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09f939ef6920
+  - type: implements
+    from: SYM-ingest-connectapi-tickers-list-pending-tickers
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:21:58.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b71d0fa0f243
+  - type: covered_by
+    from: SYM-ingest-connectapi-tickers-list-pending-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:58.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1899bd7505a2

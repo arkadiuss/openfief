@@ -517,3 +517,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3da10b2fd891
+  - type: verified_by
+    from: SCEN-ingest-ticker-isin-lookup
+    to: TEST-plugins-eodhd-lookup
+    created_at: 2026-10-31T12:55:16.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c460c7b66996
+  - type: verified_by
+    from: SCEN-ingest-ticker-isin-lookup
+    to: TEST-valuation-eodhd-lookup
+    created_at: 2026-10-31T12:55:16.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25027d51e479
+  - type: verified_by
+    from: SCEN-ingest-ticker-isin-lookup
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T12:55:16.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-863089c29018
+  - type: verified_by
+    from: SCEN-ingest-ticker-isin-lookup
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T12:55:16.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4c19501f0eb

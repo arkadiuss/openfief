@@ -78,7 +78,66 @@ func FromMapping(batch, institution string, m *ingest.Mapping) (*connectorv1.Del
 	if err := byBrokerAccount(d, m); err != nil {
 		return nil, err
 	}
+	if err := tickers(d, m); err != nil {
+		return nil, err
+	}
 	return d, nil
+}
+
+// tickers adds to d the tickers m names instruments by and their entries,
+// those named by broker account with broker_account set (D-116).
+func tickers(d *connectorv1.Delivery, m *ingest.Mapping) error {
+	for i := range m.Tickers {
+		t := &m.Tickers[i]
+		if err := t.Validate(); err != nil {
+			return fmt.Errorf("tickers[%d]: %w", i, err)
+		}
+		d.Tickers = append(d.Tickers, &connectorv1.Ticker{Symbol: t.Symbol, Code: t.Code, Country: t.Country, Name: t.Name})
+	}
+	for i := range m.TickerEntries {
+		t, err := tickerEntry(&m.TickerEntries[i])
+		if err != nil {
+			return fmt.Errorf("ticker_transactions[%d]: %w", i, err)
+		}
+		d.TickerTransactions = append(d.TickerTransactions, t)
+	}
+	for i := range m.ByBrokerAccount {
+		e := &m.ByBrokerAccount[i]
+		for j := range e.TickerEntries {
+			t, err := tickerEntry(&e.TickerEntries[j])
+			if err != nil {
+				return fmt.Errorf("broker account %d ticker_transactions[%d]: %w", i, j, err)
+			}
+			t.AccountId, t.BrokerAccount = "", string(e.Account)
+			d.TickerTransactions = append(d.TickerTransactions, t)
+		}
+	}
+	return nil
+}
+
+// tickerEntry writes one ticker entry, after checking that it books a
+// valid transaction.
+func tickerEntry(e *ingest.TickerEntry) (*connectorv1.TickerTransaction, error) {
+	if err := e.Validate(); err != nil {
+		return nil, fmt.Errorf("ticker entry: %w", err)
+	}
+	kind, err := transactionKind(e.Kind)
+	if err != nil {
+		return nil, err
+	}
+	out := &connectorv1.TickerTransaction{
+		Symbol:    e.Symbol,
+		Key:       &connectorv1.TransactionKey{Source: e.Header.Key.Source, ExternalId: e.Header.Key.ExternalID},
+		AccountId: string(e.Header.Account), Kind: kind, Date: e.Header.Date.String(),
+		Amount: money(e.Amount), Description: e.Description, Ref: e.Ref,
+	}
+	if !e.Quantity.IsZero() {
+		out.Quantity = e.Quantity.String()
+	}
+	if !e.Charge.IsZero() {
+		out.Charge = money(e.Charge)
+	}
+	return out, nil
 }
 
 // byBrokerAccount adds to d the entries m names by broker account, each

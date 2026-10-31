@@ -419,3 +419,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38b80b0b9c50
+  - type: constrains
+    from: REQ-ingest-ticker-contract
+    to: FACT-SUBJECT-8A8B03F40D5773D9
+    created_at: 2026-10-31T12:56:33.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-298673323a81
+  - type: requires_property
+    from: REQ-ingest-ticker-contract
+    to: FACT-PROP-BD561EDB13CFB47B
+    created_at: 2026-10-31T12:56:33.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cc34e0276ac
+  - type: specified_by
+    from: REQ-ingest-ticker-contract
+    to: SCEN-ingest-ticker-contract
+    created_at: 2026-10-31T12:56:33.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-915eca545972
+  - type: implements
+    from: SYM-ingestv1-list-pending-tickers-request-descriptor
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:02:49.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55e9bc853c8d
+  - type: covered_by
+    from: SYM-ingestv1-list-pending-tickers-request-descriptor
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:02:49.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e17e49aa1f0
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-request-descriptor
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:06:15.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce81d2c2f8cb
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-request-descriptor
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:06:15.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edaedb8b9e62
