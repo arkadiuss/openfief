@@ -14,8 +14,18 @@
 - **Learn the workflow on demand** from kibi's bundled skills (`kibi-usage`, `kibi-commit-review`). Don't preload them.
 - **Before handing work back,** run the full check, and show kibi's signoff summary when requirements changed.
 
+## Evidence, as kibi counts it
+
+kibi counts a requirement as *tested* only when an end-to-end test of one of its scenarios has a fresh, passing receipt from `kibi prove`, bound to the code it ran against and at most seven days old. That is the bar, and no shortcut lowers it:
+
+- Every test entity declares its `verification_scope` (`unit`, `integration` or `end_to_end`), matching what the test really runs. A unit or integration test is never relabelled to count as end to end.
+- Unit and integration tests prove the pieces and stay linked to the symbols they cover (`covered_by`); their receipts are recorded but don't make a requirement tested.
+- End-to-end tests in `test/e2e` carry a `kibi.proof-contract.v1` for the end-to-end integration, which `kibi proof inspect` proposes and `.kb/proof/integrations.json` holds; nobody hand-writes either. CI's end-to-end job runs `kibi prove`, and the requirements report the site publishes from `main` shows that run's receipts.
+- A behavior the owner relies on gets an end-to-end scenario. Each milestone's acceptance criteria (P-10 for M0) become scenarios verified end to end, so *tested* grows where it matters, not by count.
+
 ## Setup notes
 
 - kibi and its Go symbol plugin are pinned npm dev dependencies, installed by `task setup`.
 - `.mcp.json` registers kibi's MCP server for Claude Code; other agents start the same server.
 - kibi's own git hooks stay uninstalled: lefthook runs the same checks through task targets.
+- kibi's sync sometimes publishes a broken compiled store, about one run in ten under load: a relationship missing or an entity twice, although the same files compile correctly next time. Until kibi fixes it upstream, the repository carries a local patch that lets the compiling process finish before the store is published, `task kibi:check` recompiles once on exactly that defect and treats the second check as final, and the bug is reported to kibi's maintainers, with the author reviewing the report before it is filed. Any other failure is final at once.
