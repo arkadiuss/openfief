@@ -468,3 +468,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-edaedb8b9e62
+  - type: executable_for
+    from: SYM-pl-test-oki-rate
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:04:12.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54574ec23020

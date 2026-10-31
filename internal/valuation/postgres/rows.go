@@ -15,7 +15,7 @@ import (
 // in its own currency and in PLN, or the missing input; its net and
 // liquidation values in PLN, or what each lacks.
 func valuationArgs(r *valuation.HoldingValuation) []any {
-	var value, currency, pln, missing, net, liquidation, netMissing, liquidationMissing *string
+	var value, currency, pln, missing, net, liquidation, netMissing, liquidationMissing, taxCost, saleCost *string
 	text := func(s string) *string { return &s }
 	switch {
 	case !r.Valued():
@@ -24,6 +24,9 @@ func valuationArgs(r *valuation.HoldingValuation) []any {
 		value, currency, pln = text(r.Value.Amount().String()), text(r.Value.Currency().String()), text(r.PLN.Amount().String())
 		if r.NetValued() {
 			net = text(r.Net.Amount().String())
+			if r.Basis == valuation.Market {
+				taxCost, saleCost = text(r.TaxCost.Amount().String()), text(r.SaleCost.Amount().String())
+			}
 		} else {
 			netMissing = text(r.NetMissing.String())
 		}
@@ -36,7 +39,7 @@ func valuationArgs(r *valuation.HoldingValuation) []any {
 	return []any{
 		string(r.Account), r.Instrument.ISIN.String(), r.Instrument.Symbol, r.Date.String(), r.Basis.String(),
 		r.Quantity.String(), value, currency, pln, r.Source, optionalDate(r.PriceDate), optionalDate(r.RateDate),
-		missing, r.Detail, net, liquidation, netMissing, liquidationMissing,
+		missing, r.Detail, net, liquidation, netMissing, liquidationMissing, taxCost, saleCost,
 	}
 }
 
@@ -47,7 +50,8 @@ func (s *Store) Valuations(ctx context.Context, account ledger.AccountID, from, 
 		SELECT account_id, isin, symbol, date::text, basis, quantity::text, coalesce(value::text, ''),
 		       coalesce(value_currency, ''), coalesce(pln::text, ''), source, coalesce(price_date::text, ''),
 		       coalesce(rate_date::text, ''), coalesce(missing, ''), detail,
-		       coalesce(net::text, ''), coalesce(liquidation::text, ''), coalesce(net_missing, ''), coalesce(liquidation_missing, '')
+		       coalesce(net::text, ''), coalesce(liquidation::text, ''), coalesce(net_missing, ''), coalesce(liquidation_missing, ''),
+		       coalesce(tax_cost::text, ''), coalesce(sale_cost::text, '')
 		FROM valuation.holding_valuations
 		WHERE account_id = $1 AND date BETWEEN $2 AND $3
 		ORDER BY date, isin, symbol COLLATE "C", basis`, string(account), from.String(), to.String())
@@ -66,7 +70,8 @@ func scanValuation(row pgx.CollectableRow) (valuation.HoldingValuation, error) {
 	var account, source, detail string
 	var t valuationText
 	if err := row.Scan(&account, &t.isin, &t.symbol, &t.day, &t.basis, &t.quantity, &t.value, &t.currency, &t.pln,
-		&source, &t.priceDate, &t.rateDate, &t.missing, &detail, &t.net, &t.liquidation, &t.netMissing, &t.liquidationMissing); err != nil {
+		&source, &t.priceDate, &t.rateDate, &t.missing, &detail, &t.net, &t.liquidation, &t.netMissing, &t.liquidationMissing,
+		&t.taxCost, &t.saleCost); err != nil {
 		return valuation.HoldingValuation{}, fmt.Errorf("reading a valuation: %w", err)
 	}
 	v, err := decodeValuation(&t)

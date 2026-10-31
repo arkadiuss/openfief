@@ -131,6 +131,54 @@
   </form>
 </section>
 {{end}}
+{{with .Taxes}}{{if .Classes}}{{$year := .Year}}{{$classes := .Classes}}
+<section class="card" aria-labelledby="taxes-title">
+  <h2 id="taxes-title">Yearly taxes in {{.Year}}</h2>
+  {{range .Taxes}}
+  <h3>{{wrapper .TaxWrapper}}</h3>
+  {{if not .InForce}}
+  <p class="muted">No yearly tax on {{wrapper .TaxWrapper}} in {{.Year}}: the act on OKI is in force from 1 January 2027.</p>
+  {{else}}
+  <div class="table"><table>
+    <thead><tr><th scope="col">Assets</th><th scope="col" class="num">Average value</th><th scope="col" class="num">Exempt</th></tr></thead>
+    <tbody>
+    {{$exempt := .Exempt}}
+    {{range $i, $a := .Averages}}
+    <tr><th scope="row">{{className $a.ExemptionClass}}</th><td class="num">{{money $a.Amount}}</td>
+      <td class="num">{{if $exempt}}{{money (index $exempt $i).Amount}}{{else}}<span class="warn-text">not known yet</span>{{end}}</td></tr>
+    {{end}}
+    </tbody>
+    <tfoot>
+    <tr><th scope="row">Total</th><td class="num">{{money .Average}}</td><td class="num">{{with .Taxed}}taxed {{money .}}{{end}}</td></tr>
+    </tfoot>
+  </table></div>
+  <dl class="values">
+    <div><dt>Rate</dt><dd>{{if .Rate}}{{percent .Rate}}{{else}}<span class="warn-text">not known yet</span>{{end}}</dd></div>
+    <div><dt>Tax</dt><dd>{{with .Tax}}{{money .}}{{else}}<span class="warn-text">not known yet</span>{{end}}</dd></div>
+  </dl>
+  <p class="muted">The base is each OKI account's average value: its end-of-day values over the year, plus each day's payments in up to that day's withdrawals, divided by the days it was held, foreign amounts at the NBP rate of the business day before. Savings assets are exempt up to 25,000 PLN and investment assets up to 100,000 PLN, at most 100,000 PLN together, savings first; other assets aren't exempt.{{with .Through}} Counted through {{.}}, {{$year}} so far, so it is an estimate until the year ends.{{end}}</p>
+  {{end}}
+  {{end}}
+  {{if .Instruments}}
+  <h3 id="classify-title">Classify instruments</h3>
+  <p class="muted">The jurisdiction pack can't tell whether these holdings are savings assets, investment assets or neither, such as a fund whose investment policy it can't read. Until you classify one, it counts as neither, so the tax estimate errs high. Your choice stays with the instrument.</p>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Instrument</th><th scope="col">Class</th></tr></thead>
+    <tbody>
+    {{range .Instruments}}
+    <tr><td><span class="mono">{{.ISIN}}</span>{{if not .Classified}} <span class="pill pill-warn">not classified</span>{{end}}</td>
+      <td><form method="post" action="/settings/exemption-class" class="inline">
+        <input type="hidden" name="isin" value="{{.ISIN}}">
+        <label class="sr-only" for="class-{{.ISIN}}">Class of {{.ISIN}}</label>
+        <select id="class-{{.ISIN}}" name="exemption_class">{{$chosen := .Class}}{{if not $chosen}}<option value="" selected disabled>Choose</option>{{end}}{{range $classes}}<option value="{{.}}"{{if eq . $chosen}} selected{{end}}>{{className .}}</option>{{end}}</select>
+        <button type="submit" class="quiet">Save</button>
+      </form></td></tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  {{end}}
+</section>
+{{end}}{{end}}
 {{with .MarketData}}
 <section class="card" aria-labelledby="market-data-title">
   <h2 id="market-data-title">Market-data sources</h2>

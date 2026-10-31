@@ -587,3 +587,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-897b988cdfff
+  - type: implements
+    from: SYM-valuation-postgres-store-save-exemption-class
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:09:09.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04ad0a78d030
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-exemption-class
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-31T19:09:09.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-beffb39c09a2
+  - type: implements
+    from: SYM-views-add-tax-values
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:11:59.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07f548f251aa
+  - type: covered_by
+    from: SYM-views-add-tax-values
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:11:59.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5031f0c915c

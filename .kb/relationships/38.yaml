@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c826640b8698
+  - type: verified_by
+    from: SCEN-ledger-sales
+    to: TEST-ledger-sale
+    created_at: 2026-10-31T18:33:23.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5a646a21d6a

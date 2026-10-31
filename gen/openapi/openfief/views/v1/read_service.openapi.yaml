@@ -192,6 +192,21 @@ components:
       description: |-
         BrokerAccount is deprecated with ListBrokerAccounts, which never returns
          one (D-121): the owner's AccountService lists broker accounts.
+    openfief.views.v1.ClassAmount:
+      type: object
+      properties:
+        exemptionClass:
+          type: string
+          title: exemption_class
+        amount:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: amount
+      title: ClassAmount
+      additionalProperties: false
+      description: |-
+        ClassAmount is an amount of one exemption class of a yearly tax, such as
+         "savings" (D-127).
     openfief.views.v1.ConnectorBinding:
       type: object
       properties:
@@ -243,6 +258,20 @@ components:
           description: |-
             Some cash had no FX rate on or before the date and is in no total but
              by_currency.
+        netOffsetReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: net_offset_reporting
+          description: |-
+            The losses-offset line (D-128): what the net and liquidation totals,
+             their tax counted on the whole as each tax wrapper counts it (PIT-38
+             across taxable accounts), differ from the sum of the rows by; the rows
+             are an account's holdings and cash, or, for the portfolio, the
+             accounts' totals. Unset with the total.
+        liquidationOffsetReporting:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: liquidation_offset_reporting
       title: DateTotal
       additionalProperties: false
       description: |-
@@ -1662,34 +1691,77 @@ components:
           type: integer
           title: days
           format: int32
-          description: The days the average was taken over.
+          description: |-
+            The most days any account was held in the year, through the last day
+             counted.
         average:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
           title: average
+          description: |-
+            The base before exemptions: the sum over the accounts of each one's
+             average value.
         limit:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
           title: limit
-          description: |-
-            The balance up to which nothing is taxed, and the rate of the part
-             above it, as a decimal fraction.
+          description: The total exempt; unset when the exempt amounts are not known.
+          deprecated: true
         rate:
           type: string
           title: rate
+          description: The year's rate as a decimal fraction; empty when it is not known yet.
         excess:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
           title: excess
+          description: The part of average left to tax, as taxed; kept for older readers.
+          deprecated: true
         tax:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
           title: tax
+          description: The tax; unset when the rate or the exempt amounts are not known.
+        through:
+          type: string
+          title: through
+          description: |-
+            The last day counted, YYYY-MM-DD: the year's last day, or the earliest
+             date the accounts are valued through; empty when no day was counted.
+        averages:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.ClassAmount'
+          title: averages
+          description: The average split by exemption class, in the pack's class order.
+        exempt:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.ClassAmount'
+          title: exempt
+          description: |-
+            The exempt part of each class's average; empty when the exempt
+             amounts are not known.
+        taxed:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: taxed
+          description: |-
+            The part of average left to tax; unset when the exempt amounts are not
+             known.
+        unclassifiedInstruments:
+          type: array
+          items:
+            type: string
+          title: unclassified_instruments
+          description: |-
+            The ISINs counted in a class without being classified (D-132): the
+             owner classifies them once.
       title: YearlyTax
       additionalProperties: false
       description: |-
-        YearlyTax is a tax wrapper's tax for one year on the average balance of
-         its accounts (D-76).
+        YearlyTax is a tax wrapper's tax for one year on the value of its
+         accounts, such as OKI's tax on asset value (D-127).
 paths:
   /v1/accounts:
     get:

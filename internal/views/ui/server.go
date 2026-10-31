@@ -178,6 +178,15 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("POST /transfers/confirm", s.withOwner(s.confirmTransfer))
 	mux.HandleFunc("POST /transfers/reject", s.withOwner(s.rejectTransfer))
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
+	s.settingsRoutes(mux)
+	s.onboardingRoutes(mux)
+	s.statementRoutes(mux)
+	return mux
+}
+
+// settingsRoutes maps the settings page and its forms, every one the
+// owner's.
+func (s *server) settingsRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /settings", s.withOwner(s.settingsPage))
 	mux.HandleFunc("POST /settings/passkeys/{id}/remove", s.withOwner(s.removePasskey))
 	mux.HandleFunc("POST /settings/tokens", s.withOwner(s.createToken))
@@ -187,9 +196,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("POST /settings/market-data", s.withOwner(s.rankSources))
 	mux.HandleFunc("POST /settings/number-format", s.withOwner(s.setNumberFormat))
 	mux.HandleFunc("POST /settings/marginal-rate", s.withOwner(s.setMarginalRate))
-	s.onboardingRoutes(mux)
-	s.statementRoutes(mux)
-	return mux
+	mux.HandleFunc("POST /settings/exemption-class", s.withOwner(s.setExemptionClass))
 }
 
 // staticFiles serves embedded files under prefix: the UI's scripts and

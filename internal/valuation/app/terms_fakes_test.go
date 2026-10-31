@@ -16,6 +16,15 @@ type fakeTerms struct {
 	fees     map[ledger.AccountID]jurisdiction.FeeRule
 	settings jurisdiction.Settings
 	format   *jurisdiction.NumberFormat
+	classes  map[string]jurisdiction.ExemptionClass
+}
+
+func (f *fakeStore) ExemptionClasses(context.Context) (map[string]jurisdiction.ExemptionClass, error) {
+	return f.classes, f.err
+}
+
+func (f *fakeRecorder) SaveExemptionClass(_ context.Context, isin string, class jurisdiction.ExemptionClass) error {
+	return f.record("exemption class "+isin+" "+string(class), nil)
 }
 
 func (f *fakeStore) TaxWrapper(_ context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error) {

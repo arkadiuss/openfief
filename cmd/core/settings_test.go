@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net/http/httptest"
 	"slices"
 	"testing"
@@ -61,10 +62,31 @@ func TestSettingsService(t *testing.T) {
 	if _, err := c.SetMarginalRate(ctx, connect.NewRequest(&valuationv1.SetMarginalRateRequest{Origin: localUI, SessionToken: oc.session, Rate: "0.32"})); err != nil {
 		t.Fatalf("SetMarginalRate: %v", err)
 	}
-	if got := get(); got.GetNumberFormat().GetKey() != "comma-dot" || got.GetNumberFormatDefault() || got.GetMarginalRate() != "0.32" {
+	checkExemptionClass(t, c, oc.session)
+	got := get()
+	after := []any{got.GetNumberFormat().GetKey(), got.GetNumberFormatDefault(), got.GetMarginalRate(), len(got.GetExemptionClasses()), fmt.Sprint(got.GetInstrumentClasses())}
+	if !slices.Equal(after, []any{"comma-dot", false, "0.32", 3, fmt.Sprint([]*valuationv1.InstrumentClass{{Isin: "PLTEST000010", ExemptionClass: "investment"}})}) {
 		t.Errorf("the settings after the changes = %v", got)
 	}
 	checkSettingsRefusals(t, oc.srv, oc.session)
+}
+
+// checkExemptionClass has the owner classify a fund for OKI's exemptions
+// (D-132), and checks that the core refuses a class the pack lacks.
+func checkExemptionClass(t *testing.T, c valuationv1connect.SettingsServiceClient, session string) {
+	t.Helper()
+	ctx := t.Context()
+	if _, err := c.SetExemptionClass(ctx, connect.NewRequest(&valuationv1.SetExemptionClassRequest{
+		Origin: localUI, SessionToken: session, Isin: "PLTEST000010", ExemptionClass: "investment",
+	})); err != nil {
+		t.Fatalf("SetExemptionClass: %v", err)
+	}
+	_, err := c.SetExemptionClass(ctx, connect.NewRequest(&valuationv1.SetExemptionClassRequest{
+		Origin: localUI, SessionToken: session, Isin: "PLTEST000010", ExemptionClass: "bonds",
+	}))
+	if connect.CodeOf(err) != connect.CodeInvalidArgument {
+		t.Errorf("a class the pack lacks: %v, want invalid argument", err)
+	}
 }
 
 // checkSettingsRefusals checks that the core refuses an unoffered number

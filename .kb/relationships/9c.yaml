@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57dab4367138
+  - type: executable_for
+    from: SYM-pl-test-pit38-tax
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:05:55.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34df9dcd359b

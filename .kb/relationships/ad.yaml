@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d12138b3f16f
+  - type: implements
+    from: SYM-views-app-views-taxed-account
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:10:15.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c30629f36557
+  - type: covered_by
+    from: SYM-views-app-views-taxed-account
+    to: TEST-views-app-values
+    created_at: 2026-10-31T19:10:15.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a62015ea99e8

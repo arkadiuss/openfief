@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c83c928a9ee
+  - type: implements
+    from: SYM-views-connectapi-pb-class-amounts
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:10:39.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-810c32eb3900
+  - type: covered_by
+    from: SYM-views-connectapi-pb-class-amounts
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:10:39.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbc44add4dc8

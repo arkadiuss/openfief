@@ -126,6 +126,7 @@ func TestValueMarketHolding(t *testing.T) {
 				Value: money(t, "1267.125", "USD"), PLN: money(t, "5084.09", "PLN"), Source: "vendor",
 				PriceDate: date(t, "2026-03-06"), RateDate: date(t, "2026-03-06"),
 				Net: money(t, "5030.11", "PLN"), Liquidation: money(t, "5030.11", "PLN"),
+				TaxCost: money(t, "4800.00", "PLN"), SaleCost: money(t, "0", "PLN"),
 			},
 		},
 		{
@@ -135,6 +136,7 @@ func TestValueMarketHolding(t *testing.T) {
 			want: valuation.HoldingValuation{
 				Value: money(t, "10.005", "PLN"), PLN: money(t, "10.01", "PLN"), Source: "vendor", PriceDate: date(t, "2026-03-06"),
 				Net: money(t, "9.82", "PLN"), Liquidation: money(t, "9.82", "PLN"),
+				TaxCost: money(t, "9.00", "PLN"), SaleCost: money(t, "0", "PLN"),
 			},
 		},
 		{
@@ -205,6 +207,13 @@ func TestValueMarketHoldingValues(t *testing.T) {
 			// Proceeds 5064.03, Belka on 264.03 is 50.1657 -> 50.17: 5013.86.
 			name: "a minimum in USD converted on the day", wrapper: "taxable", lots: bought, net: "5030.11", liq: "5013.86",
 			fee: jurisdiction.FeeRule{Rate: dec(t, "0.001"), Minimum: money(t, "5", "USD")},
+		},
+		{
+			// D-129: a 14 PLN minimum lifts 0.1% (5.08) before the 0.5%
+			// conversion fee (25.42): 39.42, proceeds 5044.67, Belka on 244.67
+			// is 46.4873 -> 46.49: 4998.18.
+			name: "the minimum before the conversion fee", wrapper: "taxable", lots: bought, net: "5030.11", liq: "4998.18",
+			fee: jurisdiction.FeeRule{Rate: dec(t, "0.001"), Minimum: money(t, "14", "PLN"), ConversionRate: dec(t, "0.005")},
 		},
 		{
 			name: "a minimum in a currency with no rate leaves liquidation missing", wrapper: "taxable", lots: bought, net: "5030.11",

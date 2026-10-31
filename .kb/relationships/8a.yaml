@@ -496,3 +496,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4397c5189a8e
+  - type: constrains
+    from: REQ-valuation-stored-cost-basis
+    to: FACT-SUBJECT-213364B7B95B537F
+    created_at: 2026-10-31T18:34:25.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee10874b7da1
+  - type: requires_property
+    from: REQ-valuation-stored-cost-basis
+    to: FACT-PROP-A623761A0A2AC14B
+    created_at: 2026-10-31T18:34:25.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f282a0b64243
+  - type: specified_by
+    from: REQ-valuation-stored-cost-basis
+    to: SCEN-valuation-stored-cost-basis
+    created_at: 2026-10-31T18:34:25.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f9e7fa17829
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-attention-clear
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T20:08:48.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-415e402cca36

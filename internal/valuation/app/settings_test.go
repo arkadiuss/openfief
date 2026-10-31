@@ -49,6 +49,7 @@ func TestOwnerSettings(t *testing.T) {
 	t.Parallel()
 	store := newFakeStore()
 	store.settings = jurisdiction.Settings{MarginalRate: dec(t, "0.32"), HasMarginalRate: true}
+	store.classes = map[string]jurisdiction.ExemptionClass{"PLTEST000010": "investment"}
 	s := newSettings(t, store, &fakeRecorder{})
 	got, err := s.Owner(t.Context(), "https://fief.example.org", ownerToken)
 	if err != nil {
@@ -58,6 +59,9 @@ func TestOwnerSettings(t *testing.T) {
 		DisplaySettings: app.DisplaySettings{ReportingCurrency: valuation.PLN(), NumberFormat: pl.NewPack().NumberFormat(), NumberFormatDefault: true},
 		Wrappers:        []jurisdiction.Wrapper{"taxable", "ike", "ikze", "oki"},
 		Values:          store.settings,
+		// OKI's classes (D-127), and the owner's classification (D-132).
+		ExemptionClasses:  []jurisdiction.ExemptionClass{"savings", "investment", "other"},
+		InstrumentClasses: store.classes,
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("(-want +got):\n%s", diff)

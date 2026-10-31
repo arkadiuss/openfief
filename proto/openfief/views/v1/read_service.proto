@@ -334,23 +334,49 @@ enum ValueKind {
   VALUE_KIND_LIQUIDATION = 3;
 }
 
-// YearlyTax is a tax wrapper's tax for one year on the average balance of
-// its accounts (D-76).
+// YearlyTax is a tax wrapper's tax for one year on the value of its
+// accounts, such as OKI's tax on asset value (D-127).
 message YearlyTax {
   string tax_wrapper = 1;
   int32 year = 2;
   // Whether the law that levies it is in force in the year; when false,
   // nothing below is set.
   bool in_force = 3;
-  // The days the average was taken over.
+  // The most days any account was held in the year, through the last day
+  // counted.
   int32 days = 4;
+  // The base before exemptions: the sum over the accounts of each one's
+  // average value.
   Money average = 5;
-  // The balance up to which nothing is taxed, and the rate of the part
-  // above it, as a decimal fraction.
-  Money limit = 6;
+  // The total exempt; unset when the exempt amounts are not known.
+  Money limit = 6 [deprecated = true];
+  // The year's rate as a decimal fraction; empty when it is not known yet.
   string rate = 7;
-  Money excess = 8;
+  // The part of average left to tax, as taxed; kept for older readers.
+  Money excess = 8 [deprecated = true];
+  // The tax; unset when the rate or the exempt amounts are not known.
   Money tax = 9;
+  // The last day counted, YYYY-MM-DD: the year's last day, or the earliest
+  // date the accounts are valued through; empty when no day was counted.
+  string through = 10;
+  // The average split by exemption class, in the pack's class order.
+  repeated ClassAmount averages = 11;
+  // The exempt part of each class's average; empty when the exempt
+  // amounts are not known.
+  repeated ClassAmount exempt = 12;
+  // The part of average left to tax; unset when the exempt amounts are not
+  // known.
+  Money taxed = 13;
+  // The ISINs counted in a class without being classified (D-132): the
+  // owner classifies them once.
+  repeated string unclassified_instruments = 14;
+}
+
+// ClassAmount is an amount of one exemption class of a yearly tax, such as
+// "savings" (D-127).
+message ClassAmount {
+  string exemption_class = 1;
+  Money amount = 2;
 }
 
 // BookKind is the kind of a ledger account inside an account.
@@ -528,6 +554,13 @@ message DateTotal {
   // Some cash had no FX rate on or before the date and is in no total but
   // by_currency.
   bool cash_unconverted = 7;
+  // The losses-offset line (D-128): what the net and liquidation totals,
+  // their tax counted on the whole as each tax wrapper counts it (PIT-38
+  // across taxable accounts), differ from the sum of the rows by; the rows
+  // are an account's holdings and cash, or, for the portfolio, the
+  // accounts' totals. Unset with the total.
+  Money net_offset_reporting = 8;
+  Money liquidation_offset_reporting = 9;
 }
 
 // ValuationStatus says how current an account's stored valuations are.

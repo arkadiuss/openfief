@@ -454,3 +454,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ffd329be4f5
+  - type: implements
+    from: SYM-pl-day-added
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:02:12.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f36518e4848b
+  - type: covered_by
+    from: SYM-pl-day-added
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:02:12.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e3fe6d3ea2a
+  - type: implements
+    from: SYM-views-tax-year-account-class-of
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:14:15.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e2c6d221e0e
+  - type: covered_by
+    from: SYM-views-tax-year-account-class-of
+    to: TEST-views-yearly-tax
+    created_at: 2026-10-31T19:14:15.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcdacb03a1f8

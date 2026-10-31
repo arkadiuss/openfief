@@ -566,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1882ed85bed
+  - type: implements
+    from: SYM-pl-pack-exemption-class
+    to: REQ-pl-oki-exemption-class
+    created_at: 2026-10-31T19:01:39.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0876da8d512
+  - type: covered_by
+    from: SYM-pl-pack-exemption-class
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:39.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1b5b72641b6
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-attention
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T19:08:16.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d71396402c48

@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14fbc8dcfce4
+  - type: implements
+    from: SYM-pl-class-value
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:02:46.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a99a494c8787
+  - type: covered_by
+    from: SYM-pl-class-value
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:02:46.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daa679c729c0

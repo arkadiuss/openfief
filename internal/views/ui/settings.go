@@ -46,6 +46,9 @@ type settingsData struct {
 	// Values are the owner's number format and marginal PIT rate (D-78,
 	// D-113).
 	Values *valuesSettings
+	// Taxes are this year's yearly taxes and the classification form
+	// (D-127, D-132).
+	Taxes *taxesSettings
 }
 
 // settingsPage shows the owner's settings.
@@ -74,6 +77,10 @@ func (s *server) renderSettings(w http.ResponseWriter, r *http.Request, sess ses
 	data.Plugins = plugins
 	if data.Values, err = s.loadValuesSettings(r, sess); err != nil {
 		s.coreFailed(w, r, "GetOwnerSettings", err)
+		return
+	}
+	if data.Taxes, err = s.loadTaxes(r, sess); err != nil {
+		s.coreFailed(w, r, "ListYearlyTaxes", err)
 		return
 	}
 	if data.MarketData, err = s.loadRankings(r, sess); err != nil {

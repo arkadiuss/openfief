@@ -227,14 +227,14 @@ func (s *Store) ValuedThrough(ctx context.Context, account ledger.AccountID) (ke
 const insertValuation = `
 INSERT INTO valuation.holding_valuations
     (account_id, isin, symbol, date, basis, quantity, value, value_currency, pln, source, price_date, rate_date, missing, detail,
-     net, liquidation, net_missing, liquidation_missing)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+     net, liquidation, net_missing, liquidation_missing, tax_cost, sale_cost)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
 ON CONFLICT (account_id, isin, symbol, date, basis) DO UPDATE SET
     quantity = EXCLUDED.quantity, value = EXCLUDED.value, value_currency = EXCLUDED.value_currency,
     pln = EXCLUDED.pln, source = EXCLUDED.source, price_date = EXCLUDED.price_date,
     rate_date = EXCLUDED.rate_date, missing = EXCLUDED.missing, detail = EXCLUDED.detail,
     net = EXCLUDED.net, liquidation = EXCLUDED.liquidation, net_missing = EXCLUDED.net_missing,
-    liquidation_missing = EXCLUDED.liquidation_missing`
+    liquidation_missing = EXCLUDED.liquidation_missing, tax_cost = EXCLUDED.tax_cost, sale_cost = EXCLUDED.sale_cost`
 
 // ReplaceValuations removes account's valuations dated on or after from,
 // upserts rows, keyed by account, instrument, date and basis, and records

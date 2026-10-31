@@ -629,3 +629,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5fb966302140
+  - type: implements
+    from: SYM-valuationv1-instrument-class-string
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:15:11.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e699a10f2ed1
+  - type: covered_by
+    from: SYM-valuationv1-instrument-class-string
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:15:11.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ef319904f7b

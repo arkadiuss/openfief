@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd8acff19abb
+  - type: verified_by
+    from: SCEN-valuation-stored-cost-basis
+    to: TEST-valuation-revaluation
+    created_at: 2026-10-31T18:33:27.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2497160a142d
+  - type: verified_by
+    from: SCEN-valuation-stored-cost-basis
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-31T18:33:27.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de27e4d0c850
+  - type: executable_for
+    from: SYM-pl-test-current-oki-act
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:04:26.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a69e6c7f593e

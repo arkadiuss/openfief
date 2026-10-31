@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-268b93affe67
+  - type: executable_for
+    from: SYM-pl-test-totals-properties
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:06:01.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-282babf434fd
+  - type: executable_for
+    from: SYM-valuation-postgres-test-exemption-classes
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-31T19:09:15.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba459f5c2623

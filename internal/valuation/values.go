@@ -77,7 +77,7 @@ func (a *AccountTerms) listed(row *HoldingValuation, m *MarketHolding) error {
 	if err != nil {
 		return fmt.Errorf("values of %s: %w", row.Instrument, err)
 	}
-	row.Net, row.Liquidation = v.Net, v.Liquidation
+	row.Net, row.Liquidation, row.TaxCost, row.SaleCost = v.Net, v.Liquidation, cost, saleCost
 	switch {
 	case minimumMissing != 0:
 		row.Liquidation, row.LiquidationMissing = kernel.Money{}, minimumMissing
