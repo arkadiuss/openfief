@@ -102,3 +102,17 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Problem:* the author asked for a mobile PWA. D-69 makes the UI a backend-for-frontend whose pages hold the owner's record and are never cached; no decision says whether the app may keep any of the record on the device for offline reading.
    - *Today:* the service worker caches only static files (styles, scripts, fonts, icons, the manifest) and a static offline page with Kasztan asleep; every page comes from the network, the cache is emptied on sign-out, and nothing of the record is stored on the device ([Built-in UI](concepts/ui.md#on-a-phone-and-as-an-app)).
    - *Options:* keep; or keep the last overview (totals and accounts, no transactions) for offline reading, encrypted or not, cleared on sign-out, which puts portfolio data on the phone; or push notifications, which need a push service outside the owner's cluster.
+
+## Kibi evidence
+
+28. **Keeping the kibi sync patch, which makes the store defect rarer but doesn't fix it.**
+    - *Today:* `patches/kibi-cli+2.36.0.patch` lets `kibi sync`'s compiling process exit on its own before the store is published, and refuses to publish if it had to be killed. In stress runs (three clones looping rebuild and check) failing checks went from 9 of 36 unpatched to 2 of 36 and 3 of 24 patched, and in every patched failure the process had exited cleanly, so the kill is at most part of the cause. The one-recompile stopgap in `scripts/kibi-check.sh` stays. The upstream report draft includes the patch, the numbers and the recurring missing edges.
+    - *Options:* keep carrying the patch until upstream fixes the defect; or drop it and rely on the stopgap alone.
+
+29. **The docs site waits for both end-to-end runs on main.**
+    - *Today:* the docs-build job ingests the kibi proof receipts of the kind and k3d e2e runs and publishes only when both passed, so a failing e2e run on either cluster leaves the site at the last commit whose runs passed.
+    - *Options:* keep; or publish whenever `check` passes, with whatever receipts exist (a failed run then shows as a failed receipt).
+
+30. **A new scenario linked to a firm requirement.**
+    - *Today:* `SCEN-e2e-first-passkey-localhost` (P-10's passkey criterion) specifies D-60's firm requirement; only the relationship was added, the requirement's statement is unchanged.
+    - *Question:* is adding a scenario link to a firm requirement acceptable without the author, or should such links wait for the design session?
