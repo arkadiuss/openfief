@@ -22,6 +22,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest/connectrpc"
 	ingestkube "github.com/arkadiuss/openfief/internal/ingest/kube"
 	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
@@ -98,6 +99,8 @@ type connectorDeps struct {
 	// portfolio's targets, for what market-data connectors price (D-93).
 	bonds ingestapp.BondSeries
 	model ingestapp.ModelTargets
+	// wrappers reads accounts' tax wrappers, which a sync carries (D-117).
+	wrappers ingestapp.TaxWrappers
 	// rankings records the sources of market data (D-94).
 	rankings *valuationapp.Rankings
 	today    func() kernel.Date
@@ -129,7 +132,7 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 		}
 		return fn(&connectorDeps{
 			pool: p.pool, ledger: l, recorder: recorder, crossChecks: checks, now: time.Now, log: log,
-			today: valuationpg.TodayIn(time.UTC, time.Now), bonds: vstore, model: models,
+			today: valuationpg.TodayIn(time.UTC, time.Now), bonds: vstore, model: models, wrappers: vstore,
 			rankings: newRankings(p.pool, l, vstore, nil),
 		})
 	})
@@ -140,7 +143,8 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 // the TokenRequest API (D-59), the sync state, bindings and broker accounts
 // (D-72) from the ingest schema, each account's seeding from the ledger
 // (D-95), what market-data connectors price from the holdings, the bond
-// terms and the model portfolio (D-93), and which instances may send
+// terms and the model portfolio (D-93), what each instance's bound accounts
+// hold (D-117), and which instances may send
 // cross-check prices from their manifests (D-112).
 func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery, cfg *syncConfig) *ingestapp.Scheduler {
 	tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
@@ -155,9 +159,13 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 			Seeding: d.ledger, Sources: sourceInputs{rankings: d.rankings}, Declarations: discovery,
 			Tickers: store, Lookup: caller, Instances: discovery,
 		},
-		Instances:  discovery,
-		Store:      store,
-		Scope:      &ingestapp.PricingScope{Holdings: d.ledger, Bonds: d.bonds, Model: d.model, Today: d.today},
+		Instances: discovery,
+		Store:     store,
+		Scope:     &ingestapp.PricingScope{Holdings: d.ledger, Bonds: d.bonds, Model: d.model, Today: d.today},
+		Held: &ingestapp.HoldingsScope{
+			Ledger: d.ledger, Seeding: d.ledger, Bonds: d.bonds, Wrappers: d.wrappers,
+			Default: jurisdiction.DefaultWrapper(jurisdictionPack()), Today: d.today,
+		},
 		Policy:     cfg.Policy,
 		Timeout:    cfg.Timeout,
 		Now:        d.now,

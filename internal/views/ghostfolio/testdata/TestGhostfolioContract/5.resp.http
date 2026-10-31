@@ -3,9 +3,9 @@ Content-Length: 246
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Fri, 30 Oct 2026 00:00:54 GMT
-Etag: W/"f6-BJcTUlodTG0YvvJyLHBCinxiPA8"
+Date: Sat, 31 Oct 2026 14:41:28 GMT
+Etag: W/"f6-88XQAGDxEtL/cBbot4nJsQzfDt0"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"comment":null,"createdAt":"2026-10-30T00:00:54.571Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-30T00:00:54.571Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"}
+{"comment":null,"createdAt":"2026-10-31T14:41:28.151Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-31T14:41:28.151Z","userId":"d9327e24-69fc-461d-8677-10f4c4464db0"}

@@ -448,6 +448,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ddecc8c5a115
   - type: implements
+    from: SYM-ingestv1-remap-broker-account-response-descriptor
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:59:18.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc2e0fd3e6b8
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-response-descriptor
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:59:18.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e40756cb6932
+  - type: implements
     from: SYM-ingest-xtbtest-export-file-name
     to: REQ-ingest-xtb-export-mapping
     created_at: 2026-10-31T13:37:33.076Z

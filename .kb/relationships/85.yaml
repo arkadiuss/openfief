@@ -440,6 +440,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f4c69303f6d
+  - type: implements
+    from: SYM-ingestv1-broker-account-descriptor
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:54:46.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e6a6e5cea12
+  - type: covered_by
+    from: SYM-ingestv1-broker-account-descriptor
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:54:46.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c676fc41808
+  - type: implements
+    from: SYM-ingestv1-delete-account-request-reset
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:56:48.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2191a2c48bcc
+  - type: covered_by
+    from: SYM-ingestv1-delete-account-request-reset
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:48.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44f6be142a3d
   - type: executable_for
     from: SYM-tooling-kibi-ingest-proofs-test-check
     to: TEST-tooling-kibi-ingest-proofs

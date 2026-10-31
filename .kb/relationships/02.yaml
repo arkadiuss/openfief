@@ -524,6 +524,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b6c22c752f3
+  - type: implements
+    from: SYM-ledger-app-ledger-delete-account
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:51:18.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f7f88acf3ec
+  - type: covered_by
+    from: SYM-ledger-app-ledger-delete-account
+    to: TEST-ledger-app-deletions
+    created_at: 2026-10-31T14:51:18.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a85aacee45b3
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-mem-store-delete-kind
+    to: TEST-ledger-app-deletions
+    created_at: 2026-10-31T14:51:47.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-499c904bdceb
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-request-descriptor
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:47.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79476c17179e
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-request-descriptor
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:47.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1af554ac3fb
   - type: executable_for
     from: SYM-ingest-connectrpc-test-helper-ticker-mapping
     to: TEST-ingest-connectrpc-tickers

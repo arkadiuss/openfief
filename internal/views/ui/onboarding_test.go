@@ -5,6 +5,8 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"slices"
+	"strings"
 	"sync"
 	"testing"
 
@@ -198,18 +200,6 @@ func (f *fakeRead) ListConnectorBindings(_ context.Context, r *connect.Request[v
 	}}), nil
 }
 
-// ListBrokerAccounts lists the synthetic broker accounts ibkr-main
-// reported: U0000001 unmapped, U0000002 mapped to the synthetic account.
-func (f *fakeRead) ListBrokerAccounts(_ context.Context, r *connect.Request[viewsv1.ListBrokerAccountsRequest]) (*connect.Response[viewsv1.ListBrokerAccountsResponse], error) {
-	if err := f.check(r.Header()); err != nil {
-		return nil, err
-	}
-	return connect.NewResponse(&viewsv1.ListBrokerAccountsResponse{BrokerAccounts: []*viewsv1.BrokerAccount{
-		{ConnectorInstance: "ibkr-main", Id: "U0000001", Institution: "ibkr", LastSeen: "2026-03-31", InLastDelivery: true},
-		{ConnectorInstance: "ibkr-main", Id: "U0000002", Institution: "ibkr", AccountId: accountID, LastSeen: "2026-03-31"},
-	}}), nil
-}
-
 func TestSleevesPage(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
@@ -264,11 +254,52 @@ func TestAccountsPage(t *testing.T) {
 	rec := h.serve(t, withSession(request(http.MethodGet, "/accounts", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "Unmapped broker accounts", "U0000001", "not booked", "Synthetic brokerage", "ibkr-main",
-		`value="ibkr-main/U0000001"`, "Create its account", "Map to an account", "Add an account", "Booked in")
+		`value="ibkr-main/U0000001"`, "Create its account", "Map to an account", "Add an account", "Booked in",
+		`action="/broker-accounts/remap"`, "Remap broker account", `action="/accounts/`+accountID+`/delete"`)
+	// D-121: broker account numbers reach only the owner, through the AccountService.
 	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts", ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "U0000001", "Unmapped")
-	wantNoBody(t, rec, "Add an account", "Create its account", `<form method="post" action="/accounts`)
+	wantBody(t, rec, "Synthetic brokerage")
+	wantNoBody(t, rec, "U0000001", "U0000002", "Add an account", "Create its account", `<form method="post" action="/accounts`,
+		"/delete", "Remap")
+}
+
+func TestDeleteAndRemapForms(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	// D-120: the core decides what may go; the UI hands each request over and shows a refusal.
+	posts := []struct {
+		target, body, wantCall string
+		wantStatus             int
+	}{
+		{"/accounts/acc-empty/delete", "next=/accounts", "delete acc-empty", http.StatusSeeOther},
+		{"/accounts/" + accountID + "/delete", "next=/accounts", "delete " + accountID, http.StatusBadRequest},
+		{"/broker-accounts/remap", "broker=ibkr-main/U0000001&account=acc-2&next=/accounts", "remap ibkr-main|U0000001|acc-2", http.StatusSeeOther},
+		{"/broker-accounts/remap", "broker=ibkr-main/U0000002&account=&next=/accounts", "remap ibkr-main|U0000002|", http.StatusBadRequest},
+		{"/sleeves/play/delete", "next=/sleeves", "delete sleeve play", http.StatusSeeOther},
+		{"/sleeves/core/delete", "next=/sleeves", "delete sleeve core", http.StatusBadRequest},
+		{"/sleeve-kinds/gold/delete", "next=/sleeves", "delete kind gold", http.StatusSeeOther},
+		{"/sleeve-kinds/core/delete", "next=/sleeves", "delete kind core", http.StatusBadRequest},
+	}
+	for _, p := range posts {
+		rec := h.serve(t, withSession(form(p.target, p.body), ownerSession))
+		if rec.Code != p.wantStatus {
+			t.Errorf("POST %s = %d, want %d\n%s", p.target, rec.Code, p.wantStatus, rec.Body)
+		}
+		if p.wantStatus == http.StatusBadRequest {
+			wantBody(t, rec, map[bool]string{true: "in use", false: "holds transactions"}[strings.HasPrefix(p.target, "/sleeve")])
+		}
+	}
+	calls := append(seen(h.accounts, func() []string { return h.accounts.calls }), seen(h.sleeves, func() []string { return h.sleeves.calls })...)
+	for _, p := range posts {
+		if !slices.Contains(calls, p.wantCall) {
+			t.Errorf("calls %v lack %q", calls, p.wantCall)
+		}
+	}
+	rec := h.serve(t, withSession(form("/accounts/acc-empty/delete", "next=/accounts"), readSession))
+	if rec.Code == http.StatusSeeOther {
+		t.Error("a read session deleted an account")
+	}
 }
 
 func TestAccountForms(t *testing.T) {

@@ -11,13 +11,15 @@
 // internal/ingest/treasurybonds, the adapters internal/valuation/gus and
 // internal/valuation/nbp; this binary only wires them to the SDK.
 //
-// Config (OPENFIEF_CONFIG, checked against the manifest's schema) names the
-// OpenFief account its lots go into; the owner binds the instance to the
-// same account (core connector bind). One instance serves one account
-// (D-48). start, optional, is the first month the first sync delivers index
-// readings for; without it, January 13 years before today's year:
+// The core hands each lot with the account the owner entered it on, so one
+// instance serves every bond account bound to it and its config names none
+// (D-118). Each sync carries what those accounts hold, and the connector
+// books each coupon that fell due as interest (D-101, D-117). Config
+// (OPENFIEF_CONFIG, checked against the manifest's schema) holds only
+// start, optional: the first month the first sync delivers index readings
+// for; without it, January 13 years before today's year:
 //
-//	{"account": "acc-bonds", "start": "2014-01-01"}
+//	{"start": "2014-01-01"}
 package main
 
 import (
@@ -35,7 +37,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest/treasurybonds"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
-	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation/gus"
 	"github.com/arkadiuss/openfief/internal/valuation/nbp"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
@@ -53,8 +54,7 @@ var errStartTooEarly = errors.New("start is before the Polish holiday calendar")
 
 // config is the plugin's configuration.
 type config struct {
-	Account string `json:"account"`
-	Start   string `json:"start"`
+	Start string `json:"start"`
 }
 
 func main() {
@@ -94,23 +94,22 @@ func run(ctx context.Context, log *slog.Logger) error {
 		return fmt.Errorf("egress: %w", err)
 	}
 	hc.Timeout = requestTimeout
-	c := newConnector(hc, ledger.AccountID(cfg.Account), start, today)
-	log.Info("treasury-bonds serving", "account", cfg.Account, "first_sync_from", start.String())
+	c := newConnector(hc, start, today)
+	log.Info("treasury-bonds serving", "first_sync_from", start.String())
 	if err := openfief.ServeConnector(ctx, c); err != nil {
 		return fmt.Errorf("treasury-bonds: %w", err)
 	}
 	return nil
 }
 
-// newConnector is the connector for account, reading GUS and NBP with hc
+// newConnector is the connector, reading GUS and NBP with hc
 // from start on.
-func newConnector(hc *http.Client, account ledger.AccountID, start kernel.Date, today func() kernel.Date) *connector {
+func newConnector(hc *http.Client, start kernel.Date, today func() kernel.Date) *connector {
+	cpi, rates := gus.New(hc, gus.DefaultBaseURL), nbp.NewArchive(hc, nbp.DefaultArchiveURL)
 	return &connector{
-		mapper: treasurybonds.Mapper{Account: account},
-		indices: &treasurybonds.IndexSync{
-			CPI: gus.New(hc, gus.DefaultBaseURL), Rates: nbp.NewArchive(hc, nbp.DefaultArchiveURL), Start: start,
-		},
-		today: today,
+		indices: &treasurybonds.IndexSync{CPI: cpi, Rates: rates, Start: start},
+		coupons: &treasurybonds.CouponSync{CPI: cpi, Rates: rates},
+		today:   today,
 	}
 }
 

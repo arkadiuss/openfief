@@ -518,6 +518,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ed96a901fe6e
   - type: implements
+    from: SYM-connectorv1-account-holdings-proto-message
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:59:29.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-871eca69323f
+  - type: covered_by
+    from: SYM-connectorv1-account-holdings-proto-message
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:59:29.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01512b37896e
+  - type: implements
     from: SYM-plugins-eodhd-connector-lookup-instruments
     to: REQ-ingest-ticker-isin-lookup
     created_at: 2026-10-31T13:41:36.093Z

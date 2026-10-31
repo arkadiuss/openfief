@@ -475,6 +475,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-041c3e5e4596
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-row
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:41.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d527c58e95f0
+  - type: implements
+    from: SYM-ingest-connectrpc-instrument-to
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:50:14.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-919aaca2be08
+  - type: covered_by
+    from: SYM-ingest-connectrpc-instrument-to
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:50:14.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-583ce76c9b25
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-removals
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:49:57.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76396e18b314
   - type: implements
     from: SYM-ingest-pg-entry-row
     to: REQ-ingest-ticker-confirmation

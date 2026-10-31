@@ -560,6 +560,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d24e16ffdca6
   - type: implements
+    from: SYM-ledger-pg-store-has-transactions-from
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:52:17.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-373e0dead037
+  - type: covered_by
+    from: SYM-ledger-pg-store-has-transactions-from
+    to: TEST-ledger-pg-deletions
+    created_at: 2026-10-31T14:52:17.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86825b435ff4
+  - type: implements
     from: SYM-ingest-xtb-x-text
     to: REQ-ingest-xtb-export-mapping
     created_at: 2026-10-31T13:34:28.914Z

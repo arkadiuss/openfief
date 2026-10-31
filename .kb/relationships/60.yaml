@@ -461,3 +461,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78b8931d447f
+  - type: implements
+    from: SYM-connectorv1-open-lot-reset
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:01:12.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82cd877c5a29
+  - type: covered_by
+    from: SYM-connectorv1-open-lot-reset
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:01:12.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-111c01b867b6
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-request-proto-message
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:37.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a9d4ad5b95e
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-request-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:37.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b58a6f7c8938

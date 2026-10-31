@@ -455,6 +455,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0a6c7380d5b6
   - type: implements
+    from: SYM-treasurybonds-due-on-lot
+    to: REQ-treasurybonds-coupons-as-interest
+    created_at: 2026-10-31T13:56:23.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d396df55ee60
+  - type: covered_by
+    from: SYM-treasurybonds-due-on-lot
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:56:23.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfa88236ecf8
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-request-reset
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:00:16.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26db4025785d
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-request-reset
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:00:16.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06e3f870e624
+  - type: implements
     from: SYM-ingest-app-tickers
     to: REQ-ingest-ticker-confirmation
     created_at: 2026-10-31T13:21:33.306Z

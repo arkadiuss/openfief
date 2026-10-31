@@ -615,6 +615,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41be4a3b487c
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-31T13:25:22.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f66ad8fb616
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-31T13:25:23.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf21611bd615
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-31T13:25:23.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0268bdf592a
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-31T13:25:23.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d667856675d
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-core-bond-lots
+    created_at: 2026-10-31T13:25:23.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4c704770fbe
   - type: implements
     from: SYM-ingest-ticker-entry-validate
     to: REQ-ingest-ticker-entries-wait

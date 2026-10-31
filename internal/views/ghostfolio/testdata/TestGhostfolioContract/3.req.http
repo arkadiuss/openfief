@@ -6,4 +6,4 @@ Accept: application/json
 Authorization: SANITIZED
 Content-Type: application/json
 
-{"activities":[{"accountId":"adf13c77-ee3a-4f55-9920-0b5a50a4e181","comment":"a fee of my own","currency":"PLN","dataSource":"MANUAL","date":"2025-01-02T00:00:00.000Z","fee":3,"quantity":0,"symbol":"3f8e4c1a-6b2d-4e9f-8a7c-1d2e3f4a5b6c","type":"FEE","unitPrice":0}],"assetProfiles":[{"currency":"PLN","dataSource":"MANUAL","marketData":[],"name":"My own fees","symbol":"3f8e4c1a-6b2d-4e9f-8a7c-1d2e3f4a5b6c"}]}
+{"activities":[{"accountId":"a16f76cd-e1c1-472a-82ae-4b942012a6f5","comment":"a fee of my own","currency":"PLN","dataSource":"MANUAL","date":"2025-01-02T00:00:00.000Z","fee":3,"quantity":0,"symbol":"3f8e4c1a-6b2d-4e9f-8a7c-1d2e3f4a5b6c","type":"FEE","unitPrice":0}],"assetProfiles":[{"currency":"PLN","dataSource":"MANUAL","marketData":[],"name":"My own fees","symbol":"3f8e4c1a-6b2d-4e9f-8a7c-1d2e3f4a5b6c"}]}

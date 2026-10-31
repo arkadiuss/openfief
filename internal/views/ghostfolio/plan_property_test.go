@@ -4,6 +4,7 @@ import (
 	"cmp"
 	"fmt"
 	"slices"
+	"strings"
 	"testing"
 
 	gocmp "github.com/google/go-cmp/cmp"
@@ -235,7 +236,7 @@ func (g *generator) activity(c string, bonds bool) ghostfolio.Activity {
 		all := bondSeries()
 		series := all[r.intn(len(all))]
 		a.DataSource, a.Symbol, a.Currency = ghostfolio.DataSourceManual, bondSym(series), cur(g.t, "PLN")
-		g.names[a.Symbol] = series
+		g.names[a.Symbol] = ghostfolio.BondName(series)
 	}
 	return a
 }
@@ -260,11 +261,13 @@ func (g *generator) actualFor(a *ghostfolio.Activity) {
 		mv.AccountID = g.d.Accounts[g.r.intn(len(g.d.Accounts))].ID
 		g.m.add(&mv, name)
 	case 4:
-		old := *a
+		// An earlier version named a bond asset by its series code alone.
+		old, oldName := *a, name
 		if old.DataSource == ghostfolio.DataSourceManual {
-			old.Symbol = legacySymbol(name)
+			oldName = strings.Fields(name)[0]
+			old.Symbol = legacySymbol(oldName)
 		}
-		g.m.add(&old, name)
+		g.m.add(&old, oldName)
 	default:
 		g.m.add(a, name)
 	}

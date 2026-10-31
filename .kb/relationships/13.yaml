@@ -552,3 +552,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63683ec2438d
+  - type: implements
+    from: SYM-ingestv1-delete-account-request-proto-message
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:56:58.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1fc7262b479
+  - type: covered_by
+    from: SYM-ingestv1-delete-account-request-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:58.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fc7866edcf6
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-request-get-id
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:00:52.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3a39fb8ddf9
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-request-get-id
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:00:52.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9e1a14b9343

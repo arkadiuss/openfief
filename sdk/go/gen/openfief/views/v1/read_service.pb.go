@@ -1045,8 +1045,10 @@ func (x *ConnectorBinding) GetAccountId() string {
 	return ""
 }
 
-// BrokerAccount is one of the owner's accounts as the institution names it,
-// as a connector instance reported it (D-72).
+// BrokerAccount is deprecated with ListBrokerAccounts, which never returns
+// one (D-121): the owner's AccountService lists broker accounts.
+//
+// Deprecated: Marked as deprecated in openfief/views/v1/read_service.proto.
 type BrokerAccount struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	ConnectorInstance string                 `protobuf:"bytes,1,opt,name=connector_instance,json=connectorInstance,proto3" json:"connector_instance,omitempty"`
@@ -2808,6 +2810,7 @@ func (x *ListConnectorBindingsResponse) GetBindings() []*ConnectorBinding {
 	return nil
 }
 
+// Deprecated: Marked as deprecated in openfief/views/v1/read_service.proto.
 type ListBrokerAccountsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Only the broker accounts not mapped to an OpenFief account.
@@ -2853,6 +2856,7 @@ func (x *ListBrokerAccountsRequest) GetUnmapped() bool {
 	return false
 }
 
+// Deprecated: Marked as deprecated in openfief/views/v1/read_service.proto.
 type ListBrokerAccountsResponse struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	BrokerAccounts []*BrokerAccount       `protobuf:"bytes,1,rep,name=broker_accounts,json=brokerAccounts,proto3" json:"broker_accounts,omitempty"`
@@ -5700,7 +5704,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x10ConnectorBinding\x12-\n" +
 	"\x12connector_instance\x18\x01 \x01(\tR\x11connectorInstance\x12\x1d\n" +
 	"\n" +
-	"account_id\x18\x02 \x01(\tR\taccountId\"\xd6\x01\n" +
+	"account_id\x18\x02 \x01(\tR\taccountId\"\xda\x01\n" +
 	"\rBrokerAccount\x12-\n" +
 	"\x12connector_instance\x18\x01 \x01(\tR\x11connectorInstance\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12 \n" +
@@ -5708,7 +5712,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\n" +
 	"account_id\x18\x04 \x01(\tR\taccountId\x12\x1b\n" +
 	"\tlast_seen\x18\x05 \x01(\tR\blastSeen\x12(\n" +
-	"\x10in_last_delivery\x18\x06 \x01(\bR\x0einLastDelivery\"\xbf\x01\n" +
+	"\x10in_last_delivery\x18\x06 \x01(\bR\x0einLastDelivery:\x02\x18\x01\"\xbf\x01\n" +
 	"\aAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12\x12\n" +
@@ -5851,11 +5855,11 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x05kinds\x18\x01 \x03(\v2\x1d.openfief.views.v1.SleeveKindR\x05kinds\"\x1e\n" +
 	"\x1cListConnectorBindingsRequest\"`\n" +
 	"\x1dListConnectorBindingsResponse\x12?\n" +
-	"\bbindings\x18\x01 \x03(\v2#.openfief.views.v1.ConnectorBindingR\bbindings\"7\n" +
+	"\bbindings\x18\x01 \x03(\v2#.openfief.views.v1.ConnectorBindingR\bbindings\";\n" +
 	"\x19ListBrokerAccountsRequest\x12\x1a\n" +
-	"\bunmapped\x18\x01 \x01(\bR\bunmapped\"g\n" +
+	"\bunmapped\x18\x01 \x01(\bR\bunmapped:\x02\x18\x01\"k\n" +
 	"\x1aListBrokerAccountsResponse\x12I\n" +
-	"\x0fbroker_accounts\x18\x01 \x03(\v2 .openfief.views.v1.BrokerAccountR\x0ebrokerAccounts\"\x14\n" +
+	"\x0fbroker_accounts\x18\x01 \x03(\v2 .openfief.views.v1.BrokerAccountR\x0ebrokerAccounts:\x02\x18\x01\"\x14\n" +
 	"\x12GetSettingsRequest\"\xe1\x01\n" +
 	"\x13GetSettingsResponse\x12-\n" +
 	"\x12reporting_currency\x18\x01 \x01(\tR\x11reportingCurrency\x12D\n" +
@@ -6122,15 +6126,15 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x15SIGNATURE_TRUST_OWNER\x10\x04\x12\"\n" +
 	"\x1eSIGNATURE_TRUST_TRUSTED_SIGNER\x10\x05\x12\x1b\n" +
 	"\x17SIGNATURE_TRUST_REFUSED\x10\x06\x12\x1f\n" +
-	"\x1bSIGNATURE_TRUST_NOT_CHECKED\x10\a2\xb4\x19\n" +
+	"\x1bSIGNATURE_TRUST_NOT_CHECKED\x10\a2\xb7\x19\n" +
 	"\vReadService\x12t\n" +
 	"\vListSleeves\x12%.openfief.views.v1.ListSleevesRequest\x1a&.openfief.views.v1.ListSleevesResponse\"\x16\x82\xd3\xe4\x93\x02\r\x12\v/v1/sleeves\x90\x02\x01\x12\x85\x01\n" +
 	"\x0fListSleeveKinds\x12).openfief.views.v1.ListSleeveKindsRequest\x1a*.openfief.views.v1.ListSleeveKindsResponse\"\x1b\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/sleeve-kinds\x90\x02\x01\x12u\n" +
 	"\vGetSettings\x12%.openfief.views.v1.GetSettingsRequest\x1a&.openfief.views.v1.GetSettingsResponse\"\x17\x82\xd3\xe4\x93\x02\x0e\x12\f/v1/settings\x90\x02\x01\x12\x85\x01\n" +
 	"\x0fListYearlyTaxes\x12).openfief.views.v1.ListYearlyTaxesRequest\x1a*.openfief.views.v1.ListYearlyTaxesResponse\"\x1b\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/yearly-taxes\x90\x02\x01\x12x\n" +
 	"\fListAccounts\x12&.openfief.views.v1.ListAccountsRequest\x1a'.openfief.views.v1.ListAccountsResponse\"\x17\x82\xd3\xe4\x93\x02\x0e\x12\f/v1/accounts\x90\x02\x01\x12\x9d\x01\n" +
-	"\x15ListConnectorBindings\x12/.openfief.views.v1.ListConnectorBindingsRequest\x1a0.openfief.views.v1.ListConnectorBindingsResponse\"!\x82\xd3\xe4\x93\x02\x18\x12\x16/v1/connector-bindings\x90\x02\x01\x12\x91\x01\n" +
-	"\x12ListBrokerAccounts\x12,.openfief.views.v1.ListBrokerAccountsRequest\x1a-.openfief.views.v1.ListBrokerAccountsResponse\"\x1e\x82\xd3\xe4\x93\x02\x15\x12\x13/v1/broker-accounts\x90\x02\x01\x12\x7f\n" +
+	"\x15ListConnectorBindings\x12/.openfief.views.v1.ListConnectorBindingsRequest\x1a0.openfief.views.v1.ListConnectorBindingsResponse\"!\x82\xd3\xe4\x93\x02\x18\x12\x16/v1/connector-bindings\x90\x02\x01\x12\x94\x01\n" +
+	"\x12ListBrokerAccounts\x12,.openfief.views.v1.ListBrokerAccountsRequest\x1a-.openfief.views.v1.ListBrokerAccountsResponse\"!\x82\xd3\xe4\x93\x02\x15\x12\x13/v1/broker-accounts\x88\x02\x01\x90\x02\x01\x12\x7f\n" +
 	"\n" +
 	"GetAccount\x12$.openfief.views.v1.GetAccountRequest\x1a%.openfief.views.v1.GetAccountResponse\"$\x82\xd3\xe4\x93\x02\x1b\x12\x19/v1/accounts/{account_id}\x90\x02\x01\x12\x9e\x01\n" +
 	"\x10ListTransactions\x12*.openfief.views.v1.ListTransactionsRequest\x1a+.openfief.views.v1.ListTransactionsResponse\"1\x82\xd3\xe4\x93\x02(\x12&/v1/accounts/{account_id}/transactions\x90\x02\x01\x12\x8e\x01\n" +

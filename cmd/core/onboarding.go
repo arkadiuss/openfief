@@ -19,17 +19,19 @@ import (
 // ledger, which keeps sleeves and kinds, with the owner's sessions checked
 // by auth on origins.
 func newSleeves(l *ledgerapp.Ledger, auth *identityapp.Auth, origins identity.Origins) *portfolioapp.Sleeves {
-	return &portfolioapp.Sleeves{Owners: portfolioOwners(auth, origins), Store: l}
+	return &portfolioapp.Sleeves{Owners: portfolioOwners(auth, origins), Store: l, Deletions: l}
 }
 
 // newAccounts returns the owner's account entries (D-72, D-79) over d: the
 // ledger's accounts, the ingest schema's connector bindings and broker
 // accounts, and terms, the accounts' tax wrappers and fee rules (D-76,
-// D-78) in the Polish pack.
-func newAccounts(d *connectorDeps, owners ingestapp.Owners, terms ingestapp.AccountTerms) *ingestapp.Accounts {
+// D-78) in the Polish pack, which it also forgets with a deleted account
+// (D-120).
+func newAccounts(d *connectorDeps, owners ingestapp.Owners, terms accountTerms) *ingestapp.Accounts {
 	store := ingestpg.New(d.pool)
 	return &ingestapp.Accounts{
 		Owners: owners, Ledger: d.ledger, Bindings: store, Brokers: store, Terms: terms, Pack: jurisdictionPack(), Now: d.now,
+		Deletions: d.ledger, Connections: store, Forget: terms,
 	}
 }
 

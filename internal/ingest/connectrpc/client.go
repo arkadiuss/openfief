@@ -48,7 +48,8 @@ func H2CClient() *http.Client {
 }
 
 // Sync asks instance for its data since the call's watermark as the call's
-// batch, with what a market-data connector is to price (D-93).
+// batch, with what a market-data connector is to price (D-93) and what the
+// instance's bound accounts hold (D-117).
 func (c *Client) Sync(ctx context.Context, instance string, sc *app.SyncCall) (app.Delivery, error) {
 	call, err := c.service(ctx, instance)
 	if err != nil {
@@ -61,6 +62,7 @@ func (c *Client) Sync(ctx context.Context, instance string, sc *app.SyncCall) (a
 	req := connect.NewRequest(&connectorv1.SyncRequest{
 		BatchId: string(sc.ID), Mode: m, Watermark: sc.Watermark,
 		Instruments: instrumentsTo(sc.Scope.Instruments), Indices: sc.Scope.Indices,
+		Accounts: heldTo(sc.Held), BondTerms: bondTermsTo(sc.BondTerms),
 	})
 	req.Header().Set("Authorization", call.auth)
 	resp, err := call.svc.Sync(ctx, req)
@@ -110,7 +112,7 @@ func (c *Client) ImportFile(ctx context.Context, instance string, id ingest.Batc
 	return deliveryFrom(resp.Msg.GetDelivery(), id, "")
 }
 
-// ImportBondLots hands e's lots, deleted lots and go-live date to instance
+// ImportBondLots hands e's account, lots, deleted lots and go-live date to instance
 // as batch id. An INVALID_ARGUMENT answer wraps app.ErrEntryRefused with
 // the connector's reason, an UNIMPLEMENTED one app.ErrNoEntries.
 func (c *Client) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, e *ingest.BondLotEntries) (app.Delivery, error) {
@@ -120,6 +122,7 @@ func (c *Client) ImportBondLots(ctx context.Context, instance string, id ingest.
 	}
 	req := connect.NewRequest(&connectorv1.ImportBondLotsRequest{
 		BatchId: string(id), Lots: bondLotsTo(e.Lots), GoLive: e.GoLive.String(), Deleted: bondLotKeysTo(e.Deleted),
+		AccountId: string(e.Account),
 	})
 	req.Header().Set("Authorization", call.auth)
 	resp, err := call.svc.ImportBondLots(ctx, req)

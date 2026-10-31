@@ -595,6 +595,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-3cecdb82046e
   - type: implements
+    from: SYM-connectorv1-account-holdings-reset
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:59:18.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ea5ca1475d0
+  - type: covered_by
+    from: SYM-connectorv1-account-holdings-reset
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:59:18.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-536887362795
+  - type: implements
     from: SYM-ingest-xtb-stock-category
     to: REQ-ingest-xtb-cfd-flagged
     created_at: 2026-10-31T13:29:34.704Z

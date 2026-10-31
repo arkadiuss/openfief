@@ -157,6 +157,7 @@ The [built-in UI](ui.md) draws it as the second line of the value-over-time char
 ## Decisions
 
 - **GR-6**, **D-71**: one fixed role per sleeve; any role other than the kind's needs the owner's explicit choice. The built-in kinds, their default roles and the three default sleeves are D-71's.
+- **D-120**: `SleeveService.DeleteSleeve` and `DeleteSleeveKind` (`Sleeves.DeleteSleeve`, `DeleteKind`, [deletions.go](../../internal/portfolio/app/deletions.go)) delete a sleeve with no accounts and a kind no sleeve has, built-in ones too, through the `SleeveDeletions` port the ledger implements; one in use is `FAILED_PRECONDITION` (`portfolio.ErrSleeveHasAccounts`, `ErrKindInUse`), an unknown one `NOT_FOUND`.
 - **D-30**: the read API's allocation and the built-in UI's chart group by sleeve, and `ListSleeves` gives each sleeve's kind ([Read API](read-api.md)). `KindBySleeve` would let the allocation group by kind, but nothing calls it.
 - **D-52, D-53, D-54**: the model's targets and weights, its backtest and max drawdowns are built as pure rules. When it rebalances (each December 31), the 0.01% weight step, the 50-target limit and the precision are this context's reading, not the author's.
 - **D-61, D-62**: the backtest is in the reporting currency and a foreign target starts with its first FX rate.

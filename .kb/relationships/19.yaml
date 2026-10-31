@@ -517,6 +517,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8a8f9681950
+  - type: verified_by
+    from: SCEN-ingest-broker-accounts-owner-only
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:35:14.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79e05c9cd1ce
+  - type: verified_by
+    from: SCEN-ingest-broker-accounts-owner-only
+    to: TEST-views-connectapi-connections
+    created_at: 2026-10-31T14:35:15.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c4302b2999d
+  - type: verified_by
+    from: SCEN-ingest-broker-accounts-owner-only
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:35:15.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c23c9c9669b4
+  - type: verified_by
+    from: SCEN-ingest-broker-accounts-owner-only
+    to: TEST-ui-onboarding
+    created_at: 2026-10-31T14:35:15.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0668a7acbd46
+  - type: implements
+    from: SYM-ingestv1-delete-account-response
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:57:28.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c184a7e728ee
+  - type: covered_by
+    from: SYM-ingestv1-delete-account-response
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:57:28.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5669bfd9f35f
+  - type: implements
+    from: SYM-portfoliov1connect-sleeve-service-client-delete-sleeve-kind
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T14:59:57.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-839d001040fa
+  - type: covered_by
+    from: SYM-portfoliov1connect-sleeve-service-client-delete-sleeve-kind
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:59:57.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2ea04ae5a74
   - type: implements
     from: SYM-ingest-xtb-mapper-map
     to: REQ-ingest-xtb-export-mapping

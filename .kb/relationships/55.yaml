@@ -448,6 +448,13 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-70f3a70ed1bc
   - type: executable_for
+    from: SYM-ingest-app-test-helper-held-ledger
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:00.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1152a227e9
+  - type: executable_for
     from: SYM-ui-test-helper-fake-tickers
     to: TEST-ui-tickers
     created_at: 2026-10-31T13:40:37.932Z

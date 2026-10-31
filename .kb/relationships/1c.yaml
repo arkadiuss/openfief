@@ -517,6 +517,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7db643a6d318
+  - type: executable_for
+    from: SYM-core-test-helper-list-broker-accounts
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:49:14.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4dde31cfccc
   - type: implements
     from: SYM-connectorv1-ticker-transaction-get-kind
     to: REQ-ingest-ticker-contract

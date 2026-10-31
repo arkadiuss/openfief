@@ -496,6 +496,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc114868ca8e
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-response-descriptor
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:56:34.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbef43b4bbb1
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-response-descriptor
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:34.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be36c83b68d8
   - type: executable_for
     from: SYM-ingest-xtb-test-helper-render
     to: TEST-ingest-xtb-mapper

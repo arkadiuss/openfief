@@ -405,6 +405,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a87d4923f136
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-response-string
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:59:03.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bb8d699bbcb
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-response-string
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:59:03.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ad61c09f857
   - type: executable_for
     from: SYM-valuation-eodhd-test-find-by-code
     to: TEST-valuation-eodhd-lookup

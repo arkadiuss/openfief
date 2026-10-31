@@ -39,6 +39,9 @@ type SleeveStore interface {
 type Sleeves struct {
 	Owners Owners
 	Store  SleeveStore
+	// Deletions deletes a sleeve with no accounts and a kind no sleeve
+	// uses (D-120).
+	Deletions SleeveDeletions
 }
 
 // AddKind adds a sleeve kind named name with default role role, which

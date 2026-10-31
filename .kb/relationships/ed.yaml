@@ -427,6 +427,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-28c46d8b1849
   - type: implements
+    from: SYM-connectorv1-open-lot-descriptor
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:01:39.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47813411b9d6
+  - type: covered_by
+    from: SYM-connectorv1-open-lot-descriptor
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:01:39.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aed4960f0eb
+  - type: implements
     from: SYM-ingest-xtb-mapping-need-stock
     to: REQ-ingest-xtb-cfd-flagged
     created_at: 2026-10-31T13:27:51.259Z

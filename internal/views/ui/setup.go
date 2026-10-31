@@ -82,10 +82,14 @@ func (s *server) onboardingRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /sleeves/{id}", s.withOwner(s.updateSleeve))
 	mux.HandleFunc("POST /sleeve-kinds", s.withOwner(s.addKind))
 	mux.HandleFunc("POST /sleeve-kinds/{key}", s.withOwner(s.renameKind))
+	mux.HandleFunc("POST /sleeve-kinds/{key}/delete", s.withOwner(s.deleteKind))
+	mux.HandleFunc("POST /sleeves/{id}/delete", s.withOwner(s.deleteSleeve))
 	mux.HandleFunc("GET /accounts", s.withSession(s.accountsPage))
 	mux.HandleFunc("POST /accounts", s.withOwner(s.createAccount))
 	mux.HandleFunc("POST /accounts/bind", s.withOwner(s.bindAccount))
 	mux.HandleFunc("POST /accounts/{id}/edit", s.withOwner(s.updateAccount))
+	mux.HandleFunc("POST /accounts/{id}/delete", s.withOwner(s.deleteAccount))
+	mux.HandleFunc("POST /broker-accounts/remap", s.withOwner(s.remapBrokerAccount))
 }
 
 // firstRun reports whether an owner session sees an install that has no

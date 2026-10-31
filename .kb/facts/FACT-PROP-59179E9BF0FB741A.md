@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:views.ghostfolio_plugin:keys_manual_as
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-D44C838B03B0EBDD
-claim_text: 'The Ghostfolio view must make each treasury bond a MANUAL asset whose symbol is a UUID derived from the view instance''s name, the Ghostfolio user''s ID and the series code and whose name is the code, must key each currency''s fee asset the same way from the currency, and must send each bond''s full price history on every sync: each stored valuation divided by the quantity held at the end of that day.'
+claim_key: CLAIM-ACA3C85A7BE8C73E
+claim_text: 'The Ghostfolio view must make each treasury bond a MANUAL asset whose symbol is a UUID derived from the view instance''s name, the Ghostfolio user''s ID and the series code and whose name is the code plus a suffix no earlier version used, must key each currency''s fee asset the same way from the currency, and must send each bond''s full price history on every sync: each stored valuation divided by the quantity held at the end of that day.'
 origin:
   kind: agent
   recorded_at: '2026-10-30T01:21:11.301Z'

@@ -539,6 +539,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-6e220ef131c4
   - type: implements
+    from: SYM-portfoliov1-delete-sleeve-request-string
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:00:21.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c55a889e406a
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-request-string
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:00:21.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba504ae596f2
+  - type: implements
     from: SYM-ingest-xtb-find-table
     to: REQ-ingest-xtb-export-mapping
     created_at: 2026-10-31T13:31:11.839Z

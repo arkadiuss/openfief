@@ -89,6 +89,35 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the minimum is an amount in any currency, converted at the FX rate of the valuation's day (a missing rate leaves the liquidation value missing); the commission applies to holdings priced at market only, not to bonds or cash; and foreign means priced in another currency than the pack's, PLN for Poland. The minimum applies to the commission alone, before the conversion percentage is added.
    - *Options:* keep; or tie the minimum to the instrument's currency; or charge the conversion percentage on foreign cash too.
 
+## Treasury bonds
+
+35. **What a sync request carries besides the holdings and open lots.**
+   - *Problem:* D-117 has every sync request carry the holdings and open lots of the bound accounts, so the treasury-bonds connector can book each coupon with the Polish pack's rules. A coupon's rate needs the series' terms, which the owner enters with a lot and only the core stores (D-97), its tax needs the account's tax wrapper (D-76), and what fell due before go-live is history the opening lots hold (D-98); a plugin stores nothing.
+   - *Today:* each account in the request also carries its go-live date and tax wrapper, and the request carries the stored terms of the bonds among the lots (`SyncRequest.accounts`, `bond_terms`, [Ingest](concepts/ingest.md#what-a-sync-tells-a-bound-connector)). The connector books every coupon due after go-live on every sync, keyed per lot and coupon date, which covers those due since its last sync and stays idempotent; it asks GUS and NBP for the readings the coupons need.
+   - *Options:* keep; or keep the request to holdings and lots and have the connector deliver the coupons gross, leaving the tax to the core; or book only coupons dated after the last sync's watermark, which misses those of a lot entered later with an earlier purchase date.
+
+36. **A coupon booked on a lot the owner later deletes.**
+   - *Problem:* D-100 lets the owner delete a lot as a correction, which supersedes its transactions. Coupons the connector booked on it before are separate transactions, keyed by the lot and coupon date, and the connector can't tell which were booked: deleting a key never booked is refused (D-18).
+   - *Today:* a deleted lot is no longer open, so it gets no further coupons, but those booked earlier stay.
+   - *Options:* keep; or deliver, with a lot's deletion, a deletion of each coupon the core says was booked on it; or let a deletion of a key never booked be a no-op for coupons only.
+
+37. **The last period's interest and the redemption at maturity.**
+   - *Problem:* a coupon series (ROR, DOR, COI) pays its last period's interest with the nominal at maturity, and OpenFief books no redemption yet; the valuation keeps a matured lot at its redemption value.
+   - *Today:* the last period's interest is not booked as a coupon, so a matured lot is valued with it and nothing is counted twice; the redemption itself is not booked.
+   - *Options:* keep until redemptions are decided; or book the redemption at maturity, the nominal and the last period's interest, as a sell of the lot.
+
+## Accounts
+
+38. **What "no transactions from it" means for a broker account's remap.**
+   - *Problem:* D-120 lets the owner remap a broker account whose OpenFief account has no transactions from it. The ledger records which account and source each transaction has, not which broker account it came from.
+   - *Today:* every transaction a broker account brings is scoped to its connector instance's key source (D-48), so a remap is refused while the mapped account holds any version of a transaction whose source starts with `plugin:<instance>:`; balance assertions don't count. The instance stays bound to the old account and is bound to the new one; the broker account is no longer seeded, so the next opening batch seeds the new account.
+   - *Options:* keep; or record the broker account on each transaction and check exactly; or refuse while the account holds any transaction at all.
+
+39. **How the read API drops broker account numbers.**
+   - *Problem:* D-121 has the read API never serve broker account numbers. `ListBrokerAccounts` was part of the read API, and `buf breaking` runs on every change (docs/dev/pipeline.md), so removing the method or its fields fails the check; no rule says how a read API method is retired.
+   - *Today:* the method and its messages stay in the contract, marked deprecated, and the core answers it with `UNIMPLEMENTED` (HTTP 501 on `GET /v1/broker-accounts`); the owner's `AccountService.ListBrokerAccounts` lists them, and the built-in UI uses it.
+   - *Options:* keep until a versioned break of the read API (`/v2`); or remove them now with an exception to the breaking-change check.
+
 ## Performance
 
 17. **What happens to a transfer decision when a leg is corrected.**

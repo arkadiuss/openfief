@@ -103,6 +103,18 @@ func AccountUUID(instance string, account ledger.AccountID) string {
 	return uuidV5("account\x00" + instance + "\x00" + string(account))
 }
 
+// bondNameSuffix follows the series code in a bond asset's name. No earlier
+// version of the view named a bond so: they named it by the code alone.
+const bondNameSuffix = " (OpenFief bond)"
+
+// BondName returns the name of the MANUAL asset for the bond series with
+// the given code: the code plus a suffix no earlier version used, such as
+// "EDO0536 (OpenFief bond)" (D-64). Ghostfolio's import reuses an existing
+// MANUAL asset of the same name, so an import never lands on an asset an
+// earlier version left, and the sync can import first and delete the
+// leftovers after, like any stale activity.
+func BondName(series string) string { return series + bondNameSuffix }
+
 // BondSymbol returns the symbol of the MANUAL asset for the bond series
 // with the given code, such as "EDO0536", that the view instance named
 // instance writes for the Ghostfolio user with ID user: a UUID derived from

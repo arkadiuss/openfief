@@ -511,6 +511,48 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-879cc4d2bbde
   - type: implements
+    from: SYM-ingest-delivery-instrument-from
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:51:04.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12ac78c3432d
+  - type: covered_by
+    from: SYM-ingest-delivery-instrument-from
+    to: TEST-ingest-delivery-held
+    created_at: 2026-10-31T13:51:04.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-937193bceb48
+  - type: implements
+    from: SYM-portfolio-app-sleeves-delete-sleeve
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T14:52:37.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d96429472336
+  - type: covered_by
+    from: SYM-portfolio-app-sleeves-delete-sleeve
+    to: TEST-portfolio-app-deletions
+    created_at: 2026-10-31T14:52:37.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-705bdd7e35da
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-request-get-origin
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:58:28.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3fe22592875
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-request-get-origin
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:58:29.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53ee49f5cb57
+  - type: implements
     from: SYM-ingest-xtb-problem-of
     to: REQ-ingest-xtb-export-mapping
     created_at: 2026-10-31T13:26:34.161Z

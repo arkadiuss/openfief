@@ -4,10 +4,8 @@
   "configSchema": {
     "type": "object",
     "properties": {
-      "account": {"type": "string", "minLength": 1},
       "start": {"type": "string", "minLength": 10, "maxLength": 10, "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}"}
     },
-    "required": ["account"],
     "additionalProperties": false
   }
 }

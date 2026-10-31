@@ -378,6 +378,54 @@ message SyncRequest {
   // on, each once, by the name the owner gave it, such as "WIG20" (D-96):
   // the connector delivers their levels under that name.
   repeated string indices = 5;
+  // What each account bound to the instance holds today (D-117), in
+  // account ID order, as D-93's instruments tell a market-data connector
+  // what to price: a connector that books what the institution pays on a
+  // holding, such as the treasury-bonds connector booking each coupon that
+  // fell due as interest (D-101), takes the holdings from here. Empty for
+  // an instance bound to no account.
+  repeated AccountHoldings accounts = 6;
+  // The stored series terms of every treasury bond held in those accounts
+  // (D-9, D-97), so a connector with no storage of its own can compute
+  // what a series pays.
+  repeated BondTerms bond_terms = 7;
+}
+
+// AccountHoldings is what one account holds on the day of a sync request
+// (D-117): its non-zero holdings and the open lots behind them.
+message AccountHoldings {
+  string account_id = 1;
+  // The account's go-live date, "YYYY-MM-DD", or empty while it is not
+  // seeded (D-23, D-98): what fell due on or before it is history the
+  // opening lots already hold, so a connector books nothing dated then.
+  string go_live = 2;
+  // The account's tax wrapper, a key of the jurisdiction pack such as
+  // "taxable" or "ike" (D-76), which decides the tax withheld from what
+  // the account is paid.
+  string tax_wrapper = 3;
+  repeated Holding holdings = 4;
+  // The open lots, oldest first, each with what is left of it.
+  repeated OpenLot lots = 5;
+}
+
+// Holding is a non-zero quantity of one instrument held in an account.
+message Holding {
+  Instrument instrument = 1;
+  string quantity = 2;
+}
+
+// OpenLot is what is left of one acquisition of an instrument (D-23).
+message OpenLot {
+  Instrument instrument = 1;
+  // The units left, such as "40".
+  string quantity = 2;
+  // The day the lot was bought, "YYYY-MM-DD": an opening lot's own
+  // purchase date, not its go-live date.
+  string opened = 3;
+  // The cost of the units left.
+  Money cost = 4;
+  // Whether the lot was seeded as an opening lot.
+  bool opening = 5;
 }
 
 message SyncResponse {
@@ -466,6 +514,10 @@ message ImportBondLotsRequest {
   // Lots the owner deletes as a correction (D-100): the connector delivers
   // a deletion of each of their transactions.
   repeated BondLotKey deleted = 4;
+  // The OpenFief account the owner entered the lots on (D-118): the
+  // connector books them there, so one instance serves every bond account
+  // bound to it and its config names none.
+  string account_id = 5;
 }
 
 message ImportBondLotsResponse {

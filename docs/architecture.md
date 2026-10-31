@@ -115,7 +115,7 @@ sequenceDiagram
   V->>V: a worker stores the new valuations
 ```
 
-The core picks the batch's mode from the ledger: an account already seeded from its opening lots syncs in transactions mode on its own, and a newly mapped account is seeded first (D-95). A market-data connector, one that feeds no account, is told in each sync what to price: every instrument you hold and the model portfolio's targets, so a new purchase is priced without configuring anything (D-93).
+The core picks the batch's mode from the ledger: an account already seeded from its opening lots syncs in transactions mode on its own, and a newly mapped account is seeded first (D-95). A market-data connector, one that feeds no account, is told in each sync what to price: every instrument you hold and the model portfolio's targets, so a new purchase is priced without configuring anything (D-93). A connector that feeds accounts is told in each sync what those accounts hold, their holdings and open lots, so the treasury-bonds connector books each coupon that fell due as interest with the Polish pack's rules while the core holds no bond logic (D-117).
 
 When two connectors deliver the same kind of market data, every value is kept and the one from the source you rank higher wins; the others cross-check it. You rank them on the settings page, and a new order revalues everything (D-94). A broker's own prices, such as IBKR's mark prices, only cross-check: a connector whose manifest declares it sends them, and each is compared with the latest price on or before its day. One more than 1% off, or beyond the threshold you set for that instrument, is flagged on the price checks page, where you acknowledge it (D-110, D-111, D-112).
 
@@ -137,7 +137,7 @@ flowchart LR
   ui -- "your session" --> api
 ```
 
-Your browser only ever talks to the core, on its browser port. The core serves its own paths there, the read API under `/v1` and its Connect service, and passes every other path on to the one view plugin with an approved browser path (D-81, D-114). Only that view ever sees your session cookie. The UI signs you in with a passkey through the core's sign-in service, which sits on the core's plugin port, where no route reaches (D-26, D-115), then renders each page from the read API, with your session, exactly as your scripts would with a script token. [Built-in UI](concepts/ui.md) and [Identity](concepts/identity.md) explain the sign-in and the sessions.
+Your browser only ever talks to the core, on its browser port. The core serves its own paths there, the read API under `/v1` and its Connect service, and passes every other path on to the one view plugin with an approved browser path (D-81, D-114). Only that view ever sees your session cookie. The UI signs you in with a passkey through the core's sign-in service, which sits on the core's plugin port, where no route reaches (D-26, D-115), then renders each page from the read API, with your session, exactly as your scripts would with a script token. What you enter or change by hand, such as an account, a deletion of an empty sleeve or account, or a remap of a broker account (D-120), goes to the core's owner services on that same plugin port (D-79), and your broker account numbers come only from there, never from the read API (D-121). [Built-in UI](concepts/ui.md) and [Identity](concepts/identity.md) explain the sign-in and the sessions.
 
 ## Security boundaries
 

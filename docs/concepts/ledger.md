@@ -243,6 +243,7 @@ Transfer links live in `ledger.transfer_links` ([0005_transfer_links.sql](../../
 - **D-2**: the core is the system of record for transactions and lots.
 - **D-14, D-55**: the ledger lives in PostgreSQL, in its own schema.
 - **D-18**: append-only versioned log, idempotent re-imports, flagged balance assertions.
+- **D-120**: `Ledger.DeleteAccount`, `DeleteSleeve` and `DeleteKind` ([deletions.go](../../internal/ledger/app/deletions.go)) delete an account no transaction version or balance assertion is in, a sleeve with no accounts and a kind no sleeve has, each checked and deleted in one statement in the Postgres store ([deletions.go](../../internal/ledger/postgres/deletions.go)); anything else fails with `ledger.ErrAccountHasTransactions`, `portfolio.ErrSleeveHasAccounts` or `portfolio.ErrKindInUse`, and the log's triggers and foreign keys keep every transaction (D-18). `HasTransactionsFrom` tells whether an account holds a transaction from a key source prefix, which a broker account's remap checks.
 - **D-19**: double-entry postings across cash, holding, fee, withholding-tax and FX.
 - **D-20**: amounts keep their original currency; conversion is in [valuation](valuation.md).
 - **D-23**: opening lots and cash at go-live; an account is seeded once.

@@ -434,6 +434,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-306ffa976ecc
   - type: implements
+    from: SYM-connectorv1-holding-string
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:00:25.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56dbff9678f5
+  - type: covered_by
+    from: SYM-connectorv1-holding-string
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:00:26.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67fea0950167
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-sleeves-delete-sleeve-kind
+    to: TEST-ui-onboarding
+    created_at: 2026-10-31T14:54:07.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-393bc8a2e864
+  - type: implements
     from: SYM-ingest-xtb-record-date
     to: REQ-ingest-xtb-export-mapping
     created_at: 2026-10-31T13:32:41.521Z

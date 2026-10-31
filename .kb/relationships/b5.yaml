@@ -629,6 +629,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be95d61456f5
+  - type: executable_for
+    from: SYM-pl-test-coupon-without-its-reading
+    to: TEST-pl-coupons
+    created_at: 2026-10-31T13:58:32.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31598c6f59d6
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-request-get-unmapped
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:56:04.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff5c2d5fef30
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-request-get-unmapped
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:04.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df481b68ccef
+  - type: implements
+    from: SYM-ghostfolio-bond-name
+    to: REQ-views-ghostfolio-asset-keys
+    created_at: 2026-10-31T16:22:31.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3611ee14e7
+  - type: covered_by
+    from: SYM-ghostfolio-bond-name
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-31T16:22:31.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a041ef418d4f
   - type: implements
     from: SYM-ingestv1-confirm-ticker-request-get-instance
     to: REQ-ingest-ticker-confirmation

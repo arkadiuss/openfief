@@ -433,6 +433,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70c4ee26ccb5
+  - type: implements
+    from: SYM-ingest-app-holdings-scope-held-accounts
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:48:45.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c05ca21d427
+  - type: covered_by
+    from: SYM-ingest-app-holdings-scope-held-accounts
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:48:45.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b51783ecc845
   - type: executable_for
     from: SYM-plugins-xtb-test-import-file
     to: TEST-plugins-xtb

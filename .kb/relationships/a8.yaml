@@ -749,6 +749,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-21836045807f
   - type: implements
+    from: SYM-treasurybonds-coupon-ref
+    to: REQ-treasurybonds-coupons-as-interest
+    created_at: 2026-10-31T13:56:52.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-febaea4e9f97
+  - type: covered_by
+    from: SYM-treasurybonds-coupon-ref
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:56:52.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cebbe6a1918
+  - type: implements
+    from: SYM-connectorv1-holding-get-instrument
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:00:53.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62db77f28bee
+  - type: covered_by
+    from: SYM-connectorv1-holding-get-instrument
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:00:53.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f11968c8bca6
+  - type: implements
     from: SYM-ingest-xtb-mapping-read-cash
     to: REQ-ingest-xtb-export-mapping
     created_at: 2026-10-31T13:26:54.163Z

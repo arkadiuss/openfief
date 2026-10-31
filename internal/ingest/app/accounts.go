@@ -109,6 +109,11 @@ type Accounts struct {
 	Terms    AccountTerms
 	Pack     jurisdiction.Pack
 	Now      func() time.Time
+	// Deletions, Connections and Forget delete an account and remap a broker
+	// account (D-120) and list the broker accounts for the owner (D-121).
+	Deletions   AccountDeletions
+	Connections AccountConnections
+	Forget      TermsForgetter
 }
 
 // Create creates the account n names, records its tax wrapper, the pack's
