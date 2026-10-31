@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da55fa48d699
+  - type: executable_for
+    from: SYM-demo-seed-test-helper-forget-newer-inputs
+    to: TEST-demo-seed-top-up
+    created_at: 2026-10-31T12:32:10.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ed6243e8172

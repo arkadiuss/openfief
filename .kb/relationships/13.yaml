@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd2357fd5818
+  - type: constrains
+    from: REQ-demo-top-up-loaded-inputs
+    to: FACT-SUBJECT-8445428BF4E0E148
+    created_at: 2026-10-31T12:17:29.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2eb29b2cfb17
+  - type: requires_property
+    from: REQ-demo-top-up-loaded-inputs
+    to: FACT-PROP-8152CB736B37668A
+    created_at: 2026-10-31T12:17:29.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa3e9de4514d
+  - type: specified_by
+    from: REQ-demo-top-up-loaded-inputs
+    to: SCEN-demo-top-up-loaded-inputs
+    created_at: 2026-10-31T12:17:29.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63683ec2438d
