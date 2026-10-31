@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 
@@ -11,6 +12,9 @@ import (
 	"github.com/arkadiuss/openfief/internal/demo"
 	"github.com/arkadiuss/openfief/internal/kernel"
 )
+
+// errBadMarker reports a demo marker whose seed or day doesn't parse.
+var errBadMarker = errors.New("malformed demo marker")
 
 // guardLock is the advisory lock key that serializes demo loaders on one
 // database: "demo" in ASCII.
@@ -129,4 +133,19 @@ func mark(ctx context.Context, tx pgx.Tx, action demo.LoadAction, seed uint64, t
 		return fmt.Errorf("writing the demo marker: %w", err)
 	}
 	return nil
+}
+
+// loadedDataset returns the seed and day of the dataset a marked database
+// holds, as its marker records them.
+func loadedDataset(ctx context.Context, pool *pgxpool.Pool) (uint64, kernel.Date, error) {
+	var seed, day string
+	if err := pool.QueryRow(ctx, "SELECT seed, loaded_on::text FROM demo.marker WHERE demo").Scan(&seed, &day); err != nil {
+		return 0, kernel.Date{}, fmt.Errorf("reading the demo marker: %w", err)
+	}
+	s, err1 := strconv.ParseUint(seed, 10, 64)
+	d, err2 := kernel.ParseDate(day)
+	if err := errors.Join(err1, err2); err != nil {
+		return 0, kernel.Date{}, fmt.Errorf("%w: %w", errBadMarker, err)
+	}
+	return s, d, nil
 }

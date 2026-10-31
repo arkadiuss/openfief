@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47057997ab92
+  - type: implements
+    from: SYM-demo-seed-loaded-dataset
+    to: REQ-demo-top-up-loaded-inputs
+    created_at: 2026-10-31T12:18:17.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf15aff4fc66
+  - type: covered_by
+    from: SYM-demo-seed-loaded-dataset
+    to: TEST-demo-seed-top-up
+    created_at: 2026-10-31T12:18:17.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d939351d8a57

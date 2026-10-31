@@ -63,19 +63,17 @@ func load(ctx context.Context, pool *pgxpool.Pool, cfg *config, log *slog.Logger
 		return err
 	}
 	log.Info("demo database checked", "action", action.String(), "today", ds.Today.String(), "go_live", ds.GoLive.String())
-	if action == demo.ResetAndLoad {
-		// Statements the pool's connections prepared on the dropped tables
-		// would fail on the new ones.
-		pool.Reset()
+	if migrateErr := migrate(ctx, pool, action); migrateErr != nil {
+		return migrateErr
 	}
-	if migrateErr := errors.Join(ledgerpg.Migrate(ctx, pool), valuationpg.Migrate(ctx, pool)); migrateErr != nil {
-		return fmt.Errorf("migrating: %w", migrateErr)
+	if done, topUpErr := topUpAnotherDataset(ctx, pool, cfg, action, log); done {
+		return topUpErr
 	}
 	l, err := newLoader(pool, &ds, log)
 	if err != nil {
 		return err
 	}
-	rates, err := fxRates(ctx, cfg, ds.GoLive, log)
+	rates, err := fxRates(ctx, cfg, &ds, log)
 	if err != nil {
 		return err
 	}
@@ -89,6 +87,64 @@ func load(ctx context.Context, pool *pgxpool.Pool, cfg *config, log *slog.Logger
 		}
 	}
 	return revalue(ctx, pool, l, cfg)
+}
+
+// migrate migrates the ledger and valuation schemas, after a reset with
+// fresh connections: statements the pool's connections prepared on the
+// dropped tables would fail on the new ones.
+func migrate(ctx context.Context, pool *pgxpool.Pool, action demo.LoadAction) error {
+	if action == demo.ResetAndLoad {
+		pool.Reset()
+	}
+	if err := errors.Join(ledgerpg.Migrate(ctx, pool), valuationpg.Migrate(ctx, pool)); err != nil {
+		return fmt.Errorf("migrating: %w", err)
+	}
+	return nil
+}
+
+// topUpAnotherDataset tops up (topUp) a database marked as holding another
+// seed's or day's dataset than cfg's, and reports whether it did, with
+// topUp's error; a load of cfg's own dataset goes on.
+func topUpAnotherDataset(ctx context.Context, pool *pgxpool.Pool, cfg *config, action demo.LoadAction, log *slog.Logger) (bool, error) {
+	if action != demo.LoadAgain {
+		return false, nil
+	}
+	seed, day, err := loadedDataset(ctx, pool)
+	if err != nil {
+		return true, err
+	}
+	if seed == cfg.Seed && day.Equal(cfg.Today) {
+		return false, nil
+	}
+	return true, topUp(ctx, pool, cfg, seed, day, log)
+}
+
+// topUp records again the valuation inputs of the dataset the database
+// holds, that of seed and day, and then refuses to load cfg's with
+// errAlreadyLoaded. Every input is an upsert by its key, so this changes
+// nothing a load of that day wrote, and adds what a newer loader brings,
+// such as the cross-check prices or the FX rates of older lots' tax dates,
+// to a demo loaded by an older one. The ledger is left alone, and the
+// revaluations the inputs enqueue are the running core's to work, through
+// its own today.
+func topUp(ctx context.Context, pool *pgxpool.Pool, cfg *config, seed uint64, day kernel.Date, log *slog.Logger) error {
+	ds, err := demo.Generate(seed, day)
+	if err != nil {
+		return fmt.Errorf("generating the loaded demo dataset: %w", err)
+	}
+	l, err := newLoader(pool, &ds, log)
+	if err != nil {
+		return err
+	}
+	rates, err := fxRates(ctx, cfg, &ds, log)
+	if err != nil {
+		return err
+	}
+	if err := l.inputs(ctx, rates); err != nil {
+		return err
+	}
+	log.Info("recorded the loaded dataset's valuation inputs again", "loaded_on", day.String(), "today", cfg.Today.String())
+	return fmt.Errorf("%w: it holds the dataset of %s", errAlreadyLoaded, day)
 }
 
 // newLoader wires the ledger, with the valuation store's import hook that
