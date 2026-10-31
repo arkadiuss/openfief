@@ -49,6 +49,9 @@ type Config struct {
 	Today func() kernel.Date
 	// Logger receives River's logs; nil is slog's default.
 	Logger *slog.Logger
+	// Attention raises and clears the attention items revaluations find,
+	// such as an instrument to classify (D-132); nil raises none.
+	Attention app.AttentionRaiser
 }
 
 // DailyAt is a River schedule that fires once a day at Hour:Minute in
@@ -112,6 +115,9 @@ func NewClient(pool *pgxpool.Pool, store *Store, l Ledger, cfg *Config) (*river.
 		return nil, err
 	}
 	revaluer := app.NewRevaluer(l, store, cfg.Pack, cfg.Today)
+	if cfg.Attention != nil {
+		revaluer.WithAttention(cfg.Attention)
+	}
 	workers := river.NewWorkers()
 	eod := &EndOfDayWorker{store: store, recorder: app.NewInputRecorder(app.NewPlanner(l, l), store, cfg.Pack)}
 	if err := errors.Join(

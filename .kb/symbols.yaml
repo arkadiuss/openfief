@@ -113155,16 +113155,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-app-exemption-class
-  - id: SYM-valuation-app-test-helper-fake-attention-raise-unclassified-instrument
-    title: fakeAttention.RaiseUnclassifiedInstrument
-    sourceFile: internal/valuation/app/exemptionclass_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:08:20.259Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-exemption-class
   - id: SYM-valuation-app-test-revalue-raises-unclassified
     title: TestRevalueRaisesUnclassified
     sourceFile: internal/valuation/app/exemptionclass_test.go
@@ -114485,3 +114475,99 @@ symbols:
         target: TEST-views-taxes
       - type: implements
         target: REQ-views-totals-losses-offset
+  - id: SYM-core-revaluation-client
+    title: revaluationClient
+    sourceFile: cmd/core/unclassified.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:08:08.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unclassified
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-core-logged-attention
+    title: loggedAttention
+    sourceFile: cmd/core/unclassified.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:08:13.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unclassified
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-core-logged-attention-raise
+    title: loggedAttention.Raise
+    sourceFile: cmd/core/unclassified.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:08:19.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unclassified
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-core-logged-attention-clear
+    title: loggedAttention.Clear
+    sourceFile: cmd/core/unclassified.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:08:24.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unclassified
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-core-test-logged-attention
+    title: TestLoggedAttention
+    sourceFile: cmd/core/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:08:29.947Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unclassified
+  - id: SYM-valuation-app-revaluer-sync-unclassified
+    title: Revaluer.syncUnclassified
+    sourceFile: internal/valuation/app/exemptionclass.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:08:35.526Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-valuation-app-test-helper-fake-attention-raise
+    title: fakeAttention.Raise
+    sourceFile: internal/valuation/app/exemptionclass_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:08:41.171Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-exemption-class
+  - id: SYM-valuation-app-test-helper-fake-attention-clear
+    title: fakeAttention.Clear
+    sourceFile: internal/valuation/app/exemptionclass_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:08:46.788Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-exemption-class

@@ -643,13 +643,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03c90a0456e9
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-attention-raise-unclassified-instrument
-    to: TEST-valuation-app-exemption-class
-    created_at: 2026-10-31T19:08:22.422Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c5528acae6f8
   - type: implements
     from: SYM-valuationv1-set-exemption-class-response-string
     to: REQ-valuation-owner-exemption-class

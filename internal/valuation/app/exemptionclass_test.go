@@ -13,18 +13,24 @@ import (
 	"github.com/arkadiuss/openfief/internal/valuation/app"
 )
 
-// fakeAttention records the instruments it was asked about.
-type fakeAttention struct{ raised []string }
+// fakeAttention records the items it was asked to raise and clear.
+type fakeAttention struct{ raised, cleared []string }
 
-func (f *fakeAttention) RaiseUnclassifiedInstrument(_ context.Context, isin string) error {
-	f.raised = append(f.raised, isin)
+func (f *fakeAttention) Raise(_ context.Context, kind, subject, _ string) error {
+	f.raised = append(f.raised, kind+" "+subject)
+	return nil
+}
+
+func (f *fakeAttention) Clear(_ context.Context, kind, subject string) error {
+	f.cleared = append(f.cleared, kind+" "+subject)
 	return nil
 }
 
 // TestRevalueRaisesUnclassified checks D-132: revaluing an OKI account that
 // holds a fund the pack can't classify raises one attention item per
 // instrument, none once the owner classified it, and none in a taxable
-// account, whose wrapper has no yearly tax.
+// account, whose wrapper has no yearly tax; the owner's classification
+// clears the item.
 func TestRevalueRaisesUnclassified(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
@@ -32,9 +38,13 @@ func TestRevalueRaisesUnclassified(t *testing.T) {
 		wrapper jurisdiction.Wrapper
 		classes map[string]jurisdiction.ExemptionClass
 		want    []string
+		cleared []string
 	}{
-		{name: "OKI, unclassified", wrapper: "oki", want: []string{etfISIN}},
-		{name: "OKI, classified by the owner", wrapper: "oki", classes: map[string]jurisdiction.ExemptionClass{etfISIN: pl.Investment}},
+		{name: "OKI, unclassified", wrapper: "oki", want: []string{app.UnclassifiedKind + " " + etfISIN}},
+		{
+			name: "OKI, classified by the owner", wrapper: "oki", classes: map[string]jurisdiction.ExemptionClass{etfISIN: pl.Investment},
+			cleared: []string{app.UnclassifiedKind + " " + etfISIN},
+		},
 		{name: "taxable", wrapper: "taxable"},
 	}
 	for _, tt := range tests {
@@ -49,8 +59,8 @@ func TestRevalueRaisesUnclassified(t *testing.T) {
 			if _, err := r.Revalue(t.Context(), acc1, date(t, "2026-03-02")); err != nil {
 				t.Fatalf("Revalue: %v", err)
 			}
-			if diff := cmp.Diff(tt.want, attention.raised); diff != "" {
-				t.Errorf("raised (-want +got):\n%s", diff)
+			if diff := cmp.Diff([][]string{tt.want, tt.cleared}, [][]string{attention.raised, attention.cleared}); diff != "" {
+				t.Errorf("raised, cleared (-want +got):\n%s", diff)
 			}
 		})
 	}
