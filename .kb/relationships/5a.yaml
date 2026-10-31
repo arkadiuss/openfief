@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6429fcfbdc34
+  - type: executable_for
+    from: SYM-tooling-kibi-ingest-proofs-test-ingest
+    to: TEST-tooling-kibi-ingest-proofs
+    created_at: 2026-10-31T12:46:04.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-064efe5e7235
