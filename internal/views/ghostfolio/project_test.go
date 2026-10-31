@@ -142,7 +142,7 @@ func TestProject(t *testing.T) {
 				activity(t, "a1", "e2", ghostfolio.TypeBuy, "2025-01-04", "PLN", ghostfolio.DataSourceManual, edo, "10", "100", "0"),
 			},
 			wantAssets: []ghostfolio.AssetProfile{{
-				Symbol: edo, Name: "EDO0136", ISIN: isinPL, Currency: cur(t, "PLN"), AssetClass: "FIXED_INCOME", AssetSubClass: "BOND",
+				Symbol: edo, Name: "EDO0136 (OpenFief bond)", ISIN: isinPL, Currency: cur(t, "PLN"), AssetClass: "FIXED_INCOME", AssetSubClass: "BOND",
 				MarketData: []ghostfolio.Price{
 					{Date: date(t, "2025-01-02"), Price: dec(t, "100")},
 					{Date: date(t, "2025-01-03"), Price: dec(t, "100.027")},

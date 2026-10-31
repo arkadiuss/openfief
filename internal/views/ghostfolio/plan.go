@@ -31,18 +31,14 @@ type Actual struct {
 // ones that shouldn't be there.
 type Plan struct {
 	CreateAccounts []Account
-	// PreDelete are the stale activities an import would trip over:
-	//
-	//   - one that a missing activity duplicates in every field Ghostfolio's
-	//     import compares, such as one moved to another owned account.
-	//     Ghostfolio would skip that import; the import then brings back any
-	//     asset the delete removed, with its prices;
-	//   - when the sync imports onto a MANUAL asset, one on a MANUAL asset
-	//     that is not desired, such as the bond asset an earlier version
-	//     keyed by the series code alone. Ghostfolio's import reuses the
-	//     user's MANUAL asset that has the name of a new one, so a leftover
-	//     asset named like a desired one must go first; nothing desired
-	//     needs its price history.
+	// PreDelete are the stale activities an import would trip over, the one
+	// exception to importing first (D-64): one that a missing activity
+	// duplicates in every field Ghostfolio's import compares, such as one
+	// moved to another owned account. Ghostfolio would skip that import;
+	// the import then brings back any asset the delete removed, with its
+	// prices. An activity on a MANUAL asset an earlier version left is
+	// deleted after the import like any stale one: bond assets have names
+	// no earlier version used (BondName), so the import never reuses it.
 	PreDelete []Activity
 	Import    []Activity
 	// Assets are always sent, so every sync sends the full price history.
@@ -100,7 +96,7 @@ func MakePlan(desired *Desired, actual *Actual) Plan {
 			p.Import = append(p.Import, *d)
 		}
 	}
-	p.splitStale(acts, kept, wanted, desired.Assets)
+	p.splitStale(acts, kept, wanted)
 	p.balances(desired.Balances, actual.Balances, owned)
 	return p
 }
@@ -140,28 +136,16 @@ func keep(acts []Activity, kept []bool, d *Activity) bool {
 	return false
 }
 
-// blocksImport returns the test for a stale activity that must go before
-// p's imports (Plan.PreDelete): one an import duplicates, or, when p
-// imports onto a MANUAL asset, one on a MANUAL asset not among assets.
-func (p *Plan) blocksImport(assets []AssetProfile) func(s *Activity) bool {
-	desiredAsset := map[string]bool{}
-	for _, a := range assets {
-		desiredAsset[a.Symbol] = true
-	}
-	importsManual := slices.ContainsFunc(p.Import, func(a Activity) bool { return a.DataSource == DataSourceManual })
-	return func(s *Activity) bool {
-		if importsManual && s.DataSource == DataSourceManual && !desiredAsset[s.Symbol] {
-			return true
-		}
-		return slices.ContainsFunc(p.Import, func(d Activity) bool { return d.duplicateOf(s) })
-	}
+// blocksImport reports whether the stale activity s must go before p's
+// imports (Plan.PreDelete): an import duplicates it.
+func (p *Plan) blocksImport(s *Activity) bool {
+	return slices.ContainsFunc(p.Import, func(d Activity) bool { return d.duplicateOf(s) })
 }
 
 // splitStale sorts the stale activities, those in acts not kept, into
 // PreDelete, Clear and Delete. wanted holds the owned accounts with a
-// desired activity, and assets the desired MANUAL assets.
-func (p *Plan) splitStale(acts []Activity, kept []bool, wanted map[string]bool, assets []AssetProfile) {
-	blocksImport := p.blocksImport(assets)
+// desired activity.
+func (p *Plan) splitStale(acts []Activity, kept []bool, wanted map[string]bool) {
 	blocked := map[string]bool{}
 	var stale []Activity
 	for i := range acts {
@@ -169,7 +153,7 @@ func (p *Plan) splitStale(acts []Activity, kept []bool, wanted map[string]bool, 
 			continue
 		}
 		s := acts[i]
-		if blocksImport(&s) {
+		if p.blocksImport(&s) {
 			p.PreDelete = append(p.PreDelete, s)
 			blocked[s.AccountID] = true
 			continue

@@ -1,4 +1,4 @@
-GET http://127.0.0.1:3333/api/v1/account/adf13c77-ee3a-4f55-9920-0b5a50a4e181/balances HTTP/1.1
+GET http://127.0.0.1:3333/api/v1/account/a16f76cd-e1c1-472a-82ae-4b942012a6f5/balances HTTP/1.1
 Host: 127.0.0.1:3333
 User-Agent: Go-http-client/1.1
 Accept: application/json

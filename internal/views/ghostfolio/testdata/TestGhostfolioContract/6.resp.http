@@ -3,9 +3,9 @@ Content-Length: 726
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Fri, 30 Oct 2026 00:00:54 GMT
-Etag: W/"2d6-yhnPVE56xdQ/XPH3pJoR6disgWk"
+Date: Sat, 31 Oct 2026 14:41:28 GMT
+Etag: W/"2d6-4TpiyanNGtptB9xILYxONWN1CiY"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"activities":[{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"0f51f620-82d8-4744-885e-457d56daad1d","comment":"openfief:test/bonds/open-1","createdAt":"2026-10-30T00:00:54.828Z","currency":"PLN","date":"2024-11-04T00:00:00.000Z","fee":0,"id":"4fcbf47e-6108-4004-9cfb-1f5693b50789","quantity":10,"symbolProfileId":"3b598400-7440-48f0-bad7-5793922cecad","type":"BUY","unitPrice":100,"updatedAt":"2026-10-30T00:00:54.828Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","assetProfile":{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","isin":"PLTEST000010","name":"EDO0136","dataSource":"MANUAL","symbol":"4512a0f0-0f02-594a-8add-87da055fe65d"},"value":1000,"valueInBaseCurrency":1000}]}
+{"activities":[{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"d9327e24-69fc-461d-8677-10f4c4464db0","comment":"openfief:test/bonds/open-1","createdAt":"2026-10-31T14:41:28.199Z","currency":"PLN","date":"2024-11-04T00:00:00.000Z","fee":0,"id":"72a54afc-de20-49f0-aced-663fd5e77836","quantity":10,"symbolProfileId":"45c6816b-b0b5-47b3-9047-63aa598c19a5","type":"BUY","unitPrice":100,"updatedAt":"2026-10-31T14:41:28.199Z","userId":"d9327e24-69fc-461d-8677-10f4c4464db0","assetProfile":{"assetClass":"FIXED_INCOME","assetSubClass":"BOND","currency":"PLN","isin":"PLTEST000010","name":"EDO0136","dataSource":"MANUAL","symbol":"4512a0f0-0f02-594a-8add-87da055fe65d"},"value":1000,"valueInBaseCurrency":1000}]}

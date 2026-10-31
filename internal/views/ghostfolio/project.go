@@ -154,7 +154,7 @@ var (
 //     fees or tax in another currency than their activity's become FEEs of
 //     their own;
 //   - FX conversions, deposits and withdrawals have no activity;
-//   - a bond is a MANUAL asset (BondSymbol) named by its series code, whose
+//   - a bond is a MANUAL asset (BondSymbol) named by BondName, whose
 //     price history is its stored valuations divided by the quantity held;
 //   - a listed instrument takes its data source and symbol from Listings.
 //
@@ -345,7 +345,7 @@ func (p *projector) symbol(a *Activity, h *ledger.Posting) error {
 		sym := BondSymbol(p.src.Instance, p.src.User, in.Symbol)
 		if _, ok := p.bonds[sym]; !ok {
 			p.bonds[sym] = &AssetProfile{
-				Symbol: sym, Name: in.Symbol, ISIN: in.ISIN.String(), Currency: h.Amount.Currency(),
+				Symbol: sym, Name: BondName(in.Symbol), ISIN: in.ISIN.String(), Currency: h.Amount.Currency(),
 				AssetClass: assetClassFixedIncome, AssetSubClass: assetSubClassBond,
 			}
 		}

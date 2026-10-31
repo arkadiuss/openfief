@@ -37,7 +37,7 @@ func TestMakePlan(t *testing.T) {
 	foreign := withID(&buy, "g-foreign")
 	sellInA2 := inA2(&sell)
 	foreign.AccountID = "a7c2a4c8-0000-4000-8000-000000000001"
-	assets := []ghostfolio.AssetProfile{{Symbol: bondSym("EDO0136"), Name: "EDO0136", Currency: cur(t, "PLN")}}
+	assets := []ghostfolio.AssetProfile{{Symbol: bondSym("EDO0136"), Name: ghostfolio.BondName("EDO0136"), Currency: cur(t, "PLN")}}
 	bond := activity(t, "a1", "e1", ghostfolio.TypeBuy, "2025-01-02", "PLN", ghostfolio.DataSourceManual, bondSym("EDO0136"), "10", "100", "0")
 	editedBond := withID(&bond, "g-bond")
 	editedBond.Quantity = dec(t, "11")
@@ -104,11 +104,11 @@ func TestMakePlan(t *testing.T) {
 			want:     ghostfolio.Plan{PreDelete: []ghostfolio.Activity{withID(&buy, "g1")}, Import: []ghostfolio.Activity{inA2(&buy)}},
 		},
 		{
-			name:     "an activity on a leftover MANUAL asset is deleted before the import, which would reuse that asset by name",
+			name:     "an activity on a MANUAL asset an earlier version left is deleted after the import, which can't reuse it by name (D-64)",
 			existing: []string{a1, a2},
 			desired:  []ghostfolio.Activity{bond},
 			actual:   []ghostfolio.Activity{legacyBond},
-			want:     ghostfolio.Plan{PreDelete: []ghostfolio.Activity{legacyBond}, Import: []ghostfolio.Activity{bond}},
+			want:     ghostfolio.Plan{Import: []ghostfolio.Activity{bond}, Delete: []ghostfolio.Activity{legacyBond}},
 		},
 		{
 			name:     "an edited activity on a desired MANUAL asset is deleted after the import, keeping the asset's prices",

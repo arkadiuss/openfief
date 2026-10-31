@@ -3,9 +3,9 @@ Content-Length: 269
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Fri, 30 Oct 2026 00:00:56 GMT
-Etag: W/"10d-BAUkkrCGHgI41DicC+TMHYH0/6E"
+Date: Sat, 31 Oct 2026 14:41:28 GMT
+Etag: W/"10d-1opvAw4YVIKg828EU04yfNs66W4"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","createdAt":"2026-10-30T00:00:55.492Z","date":"2025-01-03T00:00:00.000Z","id":"d5737127-b5bf-44f4-a100-8d700173cdf9","updatedAt":"2026-10-30T00:00:56.402Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d","value":-500}
+{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","createdAt":"2026-10-31T14:41:28.429Z","date":"2025-01-03T00:00:00.000Z","id":"b492ac1a-bcb0-4913-8f29-edebc0f77062","updatedAt":"2026-10-31T14:41:28.938Z","userId":"d9327e24-69fc-461d-8677-10f4c4464db0","value":-500}

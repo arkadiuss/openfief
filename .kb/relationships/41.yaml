@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96a9df0df3f4
+  - type: verified_by
+    from: SCEN-views-ghostfolio-leftover-assets-after-import
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-31T15:07:53.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b026cc1c97f1
+  - type: verified_by
+    from: SCEN-views-ghostfolio-leftover-assets-after-import
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-31T15:07:53.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f1dfecf9605
+  - type: verified_by
+    from: SCEN-views-ghostfolio-leftover-assets-after-import
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-31T15:07:53.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b094f69f5ed3

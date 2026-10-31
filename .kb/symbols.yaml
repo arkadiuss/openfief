@@ -107697,3 +107697,16 @@ symbols:
         target: TEST-core-removals
       - type: implements
         target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-ghostfolio-bond-name
+    title: BondName
+    sourceFile: internal/views/ghostfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T16:22:29.199Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-asset-keys

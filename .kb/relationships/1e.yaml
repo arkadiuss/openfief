@@ -559,3 +559,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e63f0c41050
+  - type: constrains
+    from: REQ-views-ghostfolio-leftover-assets-after-import
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-31T15:07:58.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f43e9b4bc02b
+  - type: requires_property
+    from: REQ-views-ghostfolio-leftover-assets-after-import
+    to: FACT-PROP-F38264BBE7387E71
+    created_at: 2026-10-31T15:07:58.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ee9d676f0dd
+  - type: specified_by
+    from: REQ-views-ghostfolio-leftover-assets-after-import
+    to: SCEN-views-ghostfolio-leftover-assets-after-import
+    created_at: 2026-10-31T15:07:58.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9fe2eff90f9
