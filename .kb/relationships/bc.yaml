@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47057997ab92
+  - type: constrains
+    from: REQ-treasurybonds-lot-on-go-live-day-opening
+    to: FACT-SUBJECT-8422AA93FAB9FA88
+    created_at: 2026-10-31T12:14:08.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12c0ddad7d83
+  - type: requires_property
+    from: REQ-treasurybonds-lot-on-go-live-day-opening
+    to: FACT-PROP-47B4BB7BC41ECCD3
+    created_at: 2026-10-31T12:14:08.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5006e5f02861

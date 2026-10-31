@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4477519270a2
+  - type: constrains
+    from: REQ-plugins-in-cluster-service-role-removed
+    to: FACT-SUBJECT-D637ED85034E36A7
+    created_at: 2026-10-31T12:09:16.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2be20bbcb76c
+  - type: requires_property
+    from: REQ-plugins-in-cluster-service-role-removed
+    to: FACT-PROP-31A6FB7B7922F202
+    created_at: 2026-10-31T12:09:16.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25244414e873

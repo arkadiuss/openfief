@@ -1,6 +1,6 @@
 ---
 title: The Ghostfolio plugin must make each bond a MANUAL asset whose symbol is a UUID derived from the plugin instance and its series code, with the series code as its name.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

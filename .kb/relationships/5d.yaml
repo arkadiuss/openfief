@@ -412,3 +412,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-358decfd874e
+  - type: constrains
+    from: REQ-ingest-sync-carries-bound-holdings-lots
+    to: FACT-SUBJECT-8EC6E0F87B5129F6
+    created_at: 2026-10-31T12:12:00.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfc10a7b47ff
+  - type: requires_property
+    from: REQ-ingest-sync-carries-bound-holdings-lots
+    to: FACT-PROP-8C4914A30488FF50
+    created_at: 2026-10-31T12:12:00.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-614288d505c2

@@ -356,3 +356,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9ec5fdd12b5
+  - type: constrains
+    from: REQ-ingest-broker-account-numbers-owner-only
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-10-31T12:15:20.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79bf6e0b79a3
+  - type: requires_property
+    from: REQ-ingest-broker-account-numbers-owner-only
+    to: FACT-PROP-67C27EA3428BBA5A
+    created_at: 2026-10-31T12:15:20.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e42a6298bcf

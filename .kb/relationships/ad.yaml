@@ -748,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c8f3df0a753
+  - type: constrains
+    from: REQ-views-ghostfolio-bond-asset-fresh-name
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-31T12:07:13.877Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16c3f8e07bc5
+  - type: requires_property
+    from: REQ-views-ghostfolio-bond-asset-fresh-name
+    to: FACT-PROP-153FF5441828774F
+    created_at: 2026-10-31T12:07:13.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c089f6de5334
+  - type: supersedes
+    from: REQ-views-ghostfolio-bond-asset-fresh-name
+    to: REQ-views-ghostfolio-bond-asset-symbol
+    created_at: 2026-10-31T12:07:14.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d12138b3f16f

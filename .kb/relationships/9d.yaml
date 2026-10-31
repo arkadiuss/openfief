@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-537cc4e10f70
+  - type: constrains
+    from: REQ-ingest-xtb-unconfirmed-ticker-waits
+    to: FACT-SUBJECT-3478B243AF63E8B4
+    created_at: 2026-10-31T12:11:36.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-394c94e8e482
+  - type: requires_property
+    from: REQ-ingest-xtb-unconfirmed-ticker-waits
+    to: FACT-PROP-FB8DDB3CA7C8CFC5
+    created_at: 2026-10-31T12:11:36.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd54de59bcc5

@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddecc8c5a115
+  - type: constrains
+    from: REQ-treasurybonds-config-names-no-account
+    to: FACT-SUBJECT-A97736B72BF54BF8
+    created_at: 2026-10-31T12:13:17.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-160109d2c151
+  - type: requires_property
+    from: REQ-treasurybonds-config-names-no-account
+    to: FACT-PROP-63B3E4ABFD1A3285
+    created_at: 2026-10-31T12:13:17.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d5a1377941f

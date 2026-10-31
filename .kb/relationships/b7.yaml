@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-60f45bff5afb
+  - type: constrains
+    from: REQ-portfolio-delete-unused
+    to: FACT-SUBJECT-5DC2172602284182
+    created_at: 2026-10-31T12:14:41.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1f875edec24
+  - type: requires_property
+    from: REQ-portfolio-delete-unused
+    to: FACT-PROP-6BF9593491632F25
+    created_at: 2026-10-31T12:14:41.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-239249277c5e

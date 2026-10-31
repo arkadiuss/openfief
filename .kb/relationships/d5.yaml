@@ -405,3 +405,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a87d4923f136
+  - type: constrains
+    from: REQ-ingest-bond-lot-exchange-price-by-letter
+    to: FACT-SUBJECT-DC4F7EC29743B12A
+    created_at: 2026-10-31T12:08:05.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-036cc035e545
+  - type: requires_property
+    from: REQ-ingest-bond-lot-exchange-price-by-letter
+    to: FACT-PROP-E8960523CEC5FEF9
+    created_at: 2026-10-31T12:08:05.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fc77055cc53
+  - type: supersedes
+    from: REQ-ingest-bond-lot-exchange-price-by-letter
+    to: REQ-ingest-bond-lot-purchase-kinds
+    created_at: 2026-10-31T12:08:05.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-285f8c8e829d

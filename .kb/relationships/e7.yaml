@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe819e8428b2
+  - type: constrains
+    from: REQ-treasurybonds-one-instance-all-accounts
+    to: FACT-SUBJECT-A97736B72BF54BF8
+    created_at: 2026-10-31T12:13:00.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f42d64d571e9
+  - type: requires_property
+    from: REQ-treasurybonds-one-instance-all-accounts
+    to: FACT-PROP-10AFF46570683CFE
+    created_at: 2026-10-31T12:13:00.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91b9bafb3143

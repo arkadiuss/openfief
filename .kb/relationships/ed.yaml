@@ -426,3 +426,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28c46d8b1849
+  - type: constrains
+    from: REQ-pl-exchange-discount-taxed-at-99-90
+    to: FACT-SUBJECT-F735E9B48801B8D5
+    created_at: 2026-10-31T12:08:31.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5912b3e863f5
+  - type: requires_property
+    from: REQ-pl-exchange-discount-taxed-at-99-90
+    to: FACT-PROP-1F49E23D6238430D
+    created_at: 2026-10-31T12:08:31.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c95b254fd3c2
+  - type: supersedes
+    from: REQ-pl-exchange-discount-taxed-at-99-90
+    to: REQ-pl-exchange-discount-taxed
+    created_at: 2026-10-31T12:08:31.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf3d25966967

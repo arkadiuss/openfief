@@ -1,6 +1,6 @@
 ---
 title: The 0.10 PLN discount of a bond bought by exchange must be taxed with the interest on redemption.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

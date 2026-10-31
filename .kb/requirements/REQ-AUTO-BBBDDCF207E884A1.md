@@ -1,6 +1,6 @@
 ---
 title: The operator must hold permissions only within the openfief namespace.
-status: open
+status: closed
 text_ref: design-decisions:D-15#1
 tags:
   - strict-modeling
