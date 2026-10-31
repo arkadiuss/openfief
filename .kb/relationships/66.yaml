@@ -370,3 +370,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e42a6298bcf
+  - type: constrains
+    from: REQ-valuation-sale-fee-minimum-any-currency
+    to: FACT-SUBJECT-4424A5AD6FE3AB29
+    created_at: 2026-10-31T14:43:30.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-292410130902
+  - type: requires_property
+    from: REQ-valuation-sale-fee-minimum-any-currency
+    to: FACT-PROP-878B74EB4148A7D5
+    created_at: 2026-10-31T14:43:30.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99034350a3dd

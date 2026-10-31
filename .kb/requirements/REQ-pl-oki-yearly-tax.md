@@ -1,6 +1,6 @@
 ---
 title: OKI's yearly tax on the part of the average balance above the statutory limit, summed across all of the owner's OKI accounts, must be computed from stored daily valuations only once the act is in force, with the limit and rate taken from the act.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

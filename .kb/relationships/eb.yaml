@@ -391,3 +391,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18bb6872c9ec
+  - type: constrains
+    from: REQ-pl-oki-act-in-force-2027
+    to: FACT-SUBJECT-D256A25BDCDCE899
+    created_at: 2026-10-31T14:38:45.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1869c03fb686
+  - type: requires_property
+    from: REQ-pl-oki-act-in-force-2027
+    to: FACT-PROP-7DF1837CBDC094AB
+    created_at: 2026-10-31T14:38:45.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-040a5537191c
+  - type: supersedes
+    from: REQ-pl-oki-act-in-force-2027
+    to: REQ-pl-oki-yearly-tax
+    created_at: 2026-10-31T14:38:45.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c248dd7bc0b

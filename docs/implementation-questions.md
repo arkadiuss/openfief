@@ -7,25 +7,6 @@ The implementation of M0 ran into these questions. No decision in [DESIGN.md](DE
 
 Items are grouped by area and numbered for discussion only; the numbers are not design IDs.
 
-## Plugins
-
-3. **How a release's catalog reaches `main`, and where a beta's CLI goes.**
-   - *Problem:* D-88 has the release workflow add each first-party plugin to the catalog, a file in this repository embedded in the operator and CLI, and docs/dev/sdlc.md has every release ship the signed CLI. The release starts from `main`, which is never committed to directly, and a beta so far had no GitHub release.
-   - *Today:* the plugin images are built and signed first; the workflow commits the catalog to a new branch `release/<version>`, builds the other images and the CLI from that commit, tags it, and opens a pull request to `main`. A beta becomes a GitHub pre-release carrying only the signed CLI.
-   - *Options:* keep; push the catalog commit to `main` from the workflow; or keep betas without a GitHub release and ship their CLI as a workflow artifact only.
-
-## Ghostfolio view
-
-11. **Cash in a currency other than the owned account's.**
-   - *Problem:* D-108 has each owned account's cash balance follow OpenFief's cash, so Ghostfolio's totals include it. A Ghostfolio account has one balance in one currency, and the view creates its accounts in the Ghostfolio user's base currency; an account such as IBKR's holds cash in several.
-   - *Today:* the balance history follows the account's cash in the owned account's currency, one balance at the end of each date it changes. Cash in any other currency is left out and counted among the sync's problems, so Ghostfolio's totals miss it.
-   - *Options:* keep; or give each other currency an owned cash account of its own, its UUID derived from the instance, the account and the currency, holding only a balance; or convert the cash at OpenFief's exchange rates, which the read API would have to serve; or create each owned account in its account's cash currency when it has only one.
-
-13. **What the bond and fee assets' symbols are derived from.**
-   - *Problem:* D-64 (amended) derives a bond's symbol from the plugin instance and the series code, so two installs sharing one Ghostfolio never collide. Ghostfolio's symbols are unique across all its users, and two installs can name their instances alike (an install names an instance after the plugin's catalog name unless told otherwise); then they would collide. D-108's fee asset per currency has the same problem.
-   - *Today:* both symbols are UUIDs derived from the instance's name, the Ghostfolio user's ID and the series code or currency. Two instances writing to the same Ghostfolio user still meet in Ghostfolio's name-based reuse of `MANUAL` assets, which the dry run catches.
-   - *Options:* keep; or the instance's name alone, as D-64 says; or a per-install ID, which a plugin can't read today.
-
 ## Statement uploads and price checks
 
 23. **How the core learns which connectors take statement files.**

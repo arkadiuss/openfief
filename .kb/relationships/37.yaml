@@ -643,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c8afbb20a20
+  - type: constrains
+    from: REQ-core-attention-item-checks
+    to: FACT-SUBJECT-A9563048F0AE7021
+    created_at: 2026-10-31T14:45:21.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d21a3fea70ef
+  - type: requires_property
+    from: REQ-core-attention-item-checks
+    to: FACT-PROP-4383440A302206BC
+    created_at: 2026-10-31T14:45:21.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd2dbf7263fd

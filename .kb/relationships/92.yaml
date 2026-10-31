@@ -559,3 +559,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19c6361324ab
+  - type: constrains
+    from: REQ-pl-totals-tax-pit38
+    to: FACT-SUBJECT-0AB97E1B615D4205
+    created_at: 2026-10-31T14:42:03.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fff97d4383a
+  - type: requires_property
+    from: REQ-pl-totals-tax-pit38
+    to: FACT-PROP-A3451F61E3D19BBB
+    created_at: 2026-10-31T14:42:03.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-897b988cdfff

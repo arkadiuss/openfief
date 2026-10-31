@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d5a1377941f
+  - type: constrains
+    from: REQ-valuation-market-data-rank-by-institution
+    to: FACT-SUBJECT-C9C67D3EB8F4BC3F
+    created_at: 2026-10-31T14:35:49.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-051e787faca9
+  - type: requires_property
+    from: REQ-valuation-market-data-rank-by-institution
+    to: FACT-PROP-3D3FE4F315439879
+    created_at: 2026-10-31T14:35:49.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b524bf0f7f6e

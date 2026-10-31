@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41b6893c70cb
+  - type: constrains
+    from: REQ-operator-contested-browser-path-stops
+    to: FACT-SUBJECT-1E06339900ED6C5A
+    created_at: 2026-10-31T14:37:09.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-439cb359c1a4
+  - type: requires_property
+    from: REQ-operator-contested-browser-path-stops
+    to: FACT-PROP-461040E0589F03FD
+    created_at: 2026-10-31T14:37:09.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-541a30fb0b7f

@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37a8018a10fa
+  - type: constrains
+    from: REQ-pl-oki-income-outside-pit
+    to: FACT-SUBJECT-D76C92870F5380B6
+    created_at: 2026-10-31T14:41:03.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08bdb0df18c1
+  - type: requires_property
+    from: REQ-pl-oki-income-outside-pit
+    to: FACT-PROP-FDB1FF19BF4183F5
+    created_at: 2026-10-31T14:41:03.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a6d9a9f2f7e
