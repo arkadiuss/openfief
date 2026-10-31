@@ -65,9 +65,13 @@ type BondLotKey struct {
 }
 
 // BondLotEntries is what the owner hands a treasury bond connector in one
-// batch: the lots to add and the lots to delete (D-100), with the account's
-// go-live date, which decides how each lot is booked (D-98).
+// batch: the lots to add and the lots to delete (D-100), with the account
+// the owner entered them on (D-118) and its go-live date, which decides how
+// each lot is booked (D-98).
 type BondLotEntries struct {
+	// Account is the account the lots are entered on; the connector books
+	// them there, so one instance serves every bond account.
+	Account ledger.AccountID
 	// GoLive is the account's go-live date: the date it was seeded on, or
 	// today for an account not seeded yet.
 	GoLive  kernel.Date

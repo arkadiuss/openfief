@@ -307,3 +307,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6a390c6f97b
+  - type: implements
+    from: SYM-connectorv1-sync-request-get-bond-terms
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:59:08.651Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd70a2d5bd9c
+  - type: covered_by
+    from: SYM-connectorv1-sync-request-get-bond-terms
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:59:08.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bcb706e8bd1

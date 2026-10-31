@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94834cc2c530
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-ledger-holdings-on
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:06.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae3201b15ac9

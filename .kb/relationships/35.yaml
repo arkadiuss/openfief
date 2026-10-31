@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-055e044805f2
+  - type: executable_for
+    from: SYM-core-test-helper-seed-bond-lot
+    to: TEST-core-bond-coupons
+    created_at: 2026-10-31T13:47:57.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fa970519a02

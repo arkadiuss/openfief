@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78b8931d447f
+  - type: implements
+    from: SYM-connectorv1-open-lot-reset
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:01:12.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82cd877c5a29
+  - type: covered_by
+    from: SYM-connectorv1-open-lot-reset
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:01:12.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-111c01b867b6

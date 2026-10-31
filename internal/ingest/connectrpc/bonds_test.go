@@ -76,7 +76,7 @@ func lotOf(t *testing.T, quantity int64) ingest.BondLot {
 func TestClientImportBondLots(t *testing.T) {
 	t.Parallel()
 	conn := &bondConnector{}
-	d, err := newClient(t, conn).ImportBondLots(t.Context(), "bonds-main", "b-1", &ingest.BondLotEntries{GoLive: goLive(t), Lots: []ingest.BondLot{lotOf(t, 40)}})
+	d, err := newClient(t, conn).ImportBondLots(t.Context(), "bonds-main", "b-1", &ingest.BondLotEntries{Account: "acc-bonds", GoLive: goLive(t), Lots: []ingest.BondLot{lotOf(t, 40)}})
 	if err != nil {
 		t.Fatalf("ImportBondLots: %v", err)
 	}
@@ -86,6 +86,9 @@ func TestClientImportBondLots(t *testing.T) {
 	}}
 	if diff := cmp.Diff(want, conn.lots, protocmp.Transform()); diff != "" {
 		t.Errorf("lots sent (-want +got):\n%s", diff)
+	}
+	if conn.req.GetAccountId() != "acc-bonds" {
+		t.Errorf("account_id sent = %q, want the account the lots were entered on (D-118)", conn.req.GetAccountId())
 	}
 	if conn.req.GetGoLive() != "2026-05-15" {
 		t.Errorf("go_live sent = %q, want the account's go-live 2026-05-15", conn.req.GetGoLive())
@@ -104,7 +107,7 @@ func TestClientImportBondLotsRefusals(t *testing.T) {
 	if !errors.Is(err, app.ErrEntryRefused) || !strings.Contains(err.Error(), errRefusedLot.Error()) {
 		t.Errorf("a refused lot: %v; want ErrEntryRefused with the connector's reason", err)
 	}
-	_, err = newClient(t, &failingConnector{}).ImportBondLots(t.Context(), "bonds-main", "b-1", &ingest.BondLotEntries{GoLive: goLive(t), Lots: []ingest.BondLot{lotOf(t, 40)}})
+	_, err = newClient(t, &failingConnector{}).ImportBondLots(t.Context(), "bonds-main", "b-1", &ingest.BondLotEntries{Account: "acc-bonds", GoLive: goLive(t), Lots: []ingest.BondLot{lotOf(t, 40)}})
 	if !errors.Is(err, app.ErrNoEntries) {
 		t.Errorf("a connector without bond lots: %v; want ErrNoEntries", err)
 	}

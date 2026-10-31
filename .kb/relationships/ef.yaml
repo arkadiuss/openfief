@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a27a0f689eb3
+  - type: implements
+    from: SYM-ingest-delivery-money-from
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:51:11.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a64896c4951
+  - type: covered_by
+    from: SYM-ingest-delivery-money-from
+    to: TEST-ingest-delivery-held
+    created_at: 2026-10-31T13:51:11.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0da11c32fe1

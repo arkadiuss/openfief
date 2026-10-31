@@ -156,10 +156,10 @@ func TestMap(t *testing.T) {
 	}
 	lots[0].Purchase = ingest.PurchaseExchange // bought by exchange of maturing bonds (D-100)
 	e := ingest.BondLotEntries{
-		GoLive: mustDate(t, "2026-05-15"), Lots: lots,
+		Account: account, GoLive: mustDate(t, "2026-05-15"), Lots: lots,
 		Deleted: []ingest.BondLotKey{key(t, "EDO0536", "2026-05-10"), key(t, "EDO0536", "2026-05-20")},
 	}
-	m, terms, err := treasurybonds.Mapper{Account: account}.Map(&e, today)
+	m, terms, err := treasurybonds.Mapper{}.Map(&e, today)
 	if err != nil {
 		t.Fatalf("Map: %v", err)
 	}
@@ -215,13 +215,13 @@ func qty(q kernel.Quantity) string {
 func TestMapKeepsKeysAcrossReEntry(t *testing.T) {
 	t.Parallel()
 	today := mustDate(t, "2026-10-29")
-	mapper := treasurybonds.Mapper{Account: account}
+	mapper := treasurybonds.Mapper{}
 	for _, goLive := range []string{"2026-05-04", "2026-05-03"} {
-		first, _, err := mapper.Map(&ingest.BondLotEntries{GoLive: mustDate(t, goLive), Lots: []ingest.BondLot{lot(t, "EDO0536", "40", "2026-05-04", "0.06")}}, today)
+		first, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: mustDate(t, goLive), Lots: []ingest.BondLot{lot(t, "EDO0536", "40", "2026-05-04", "0.06")}}, today)
 		if err != nil {
 			t.Fatalf("Map: %v", err)
 		}
-		fixed, _, err := mapper.Map(&ingest.BondLotEntries{GoLive: mustDate(t, goLive), Lots: []ingest.BondLot{lot(t, "EDO0536", "45", "2026-05-04", "0.06")}}, today)
+		fixed, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: mustDate(t, goLive), Lots: []ingest.BondLot{lot(t, "EDO0536", "45", "2026-05-04", "0.06")}}, today)
 		if err != nil {
 			t.Fatalf("Map: %v", err)
 		}
@@ -263,7 +263,9 @@ func TestMapRefuses(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			m, terms, err := treasurybonds.Mapper{Account: tt.account}.Map(&tt.entries, today)
+			e := tt.entries
+			e.Account = tt.account
+			m, terms, err := treasurybonds.Mapper{}.Map(&e, today)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("Map error (-want +got):\n%s", diff)
 			}

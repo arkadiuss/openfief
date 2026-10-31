@@ -734,3 +734,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc1cd3ae5de7
+  - type: implements
+    from: SYM-ingest-app-holdings-scope-held
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:48:51.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0488c2a6259b
+  - type: covered_by
+    from: SYM-ingest-app-holdings-scope-held
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:48:51.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27a8f632e40a

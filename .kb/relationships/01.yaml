@@ -552,3 +552,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbb188c139b2
+  - type: constrains
+    from: REQ-treasurybonds-coupons-as-interest
+    to: FACT-SUBJECT-7F62B31170D482ED
+    created_at: 2026-10-31T13:25:37.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3996f82645ac
+  - type: requires_property
+    from: REQ-treasurybonds-coupons-as-interest
+    to: FACT-PROP-06C7DA96C5A364FD
+    created_at: 2026-10-31T13:25:37.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f97afa417e17
+  - type: specified_by
+    from: REQ-treasurybonds-coupons-as-interest
+    to: SCEN-treasurybonds-coupons-booked
+    created_at: 2026-10-31T13:25:37.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15a178475f1b
+  - type: implements
+    from: SYM-treasurybonds-terms-of
+    to: REQ-treasurybonds-coupons-as-interest
+    created_at: 2026-10-31T13:56:28.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef69969840fb
+  - type: covered_by
+    from: SYM-treasurybonds-terms-of
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:56:28.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce505bd2c0cf
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-coupon-line
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-31T13:58:53.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-390646967c81

@@ -454,3 +454,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d925e9fe99c
+  - type: implements
+    from: SYM-connectorv1-holding-get-quantity
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:01:00.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e311686777eb
+  - type: covered_by
+    from: SYM-connectorv1-holding-get-quantity
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:01:00.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea1e2025ce32

@@ -468,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41efcc35bd8c
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-held-connector-sync
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:50:29.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d8be8a662ff
+  - type: implements
+    from: SYM-pl-coupon-payment
+    to: REQ-pl-coupon-payments
+    created_at: 2026-10-31T13:58:09.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a81b925149e9
+  - type: covered_by
+    from: SYM-pl-coupon-payment
+    to: TEST-pl-coupons
+    created_at: 2026-10-31T13:58:09.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a61a8e8874d5

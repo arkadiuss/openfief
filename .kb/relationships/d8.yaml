@@ -517,3 +517,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e68a9e57fce0
+  - type: verified_by
+    from: SCEN-treasurybonds-coupons-booked
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:25:19.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f78c71d9515
+  - type: verified_by
+    from: SCEN-treasurybonds-coupons-booked
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-31T13:25:19.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c84a51fc9813
+  - type: verified_by
+    from: SCEN-treasurybonds-coupons-booked
+    to: TEST-core-bond-coupons
+    created_at: 2026-10-31T13:25:19.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb9b8bd4ec33

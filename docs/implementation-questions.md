@@ -67,6 +67,23 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
    - *Today:* the minimum is an amount in any currency, converted at the FX rate of the valuation's day (a missing rate leaves the liquidation value missing); the commission applies to holdings priced at market only, not to bonds or cash; and foreign means priced in another currency than the pack's, PLN for Poland. The minimum applies to the commission alone, before the conversion percentage is added.
    - *Options:* keep; or tie the minimum to the instrument's currency; or charge the conversion percentage on foreign cash too.
 
+## Treasury bonds
+
+28. **What a sync request carries besides the holdings and open lots.**
+   - *Problem:* D-117 has every sync request carry the holdings and open lots of the bound accounts, so the treasury-bonds connector can book each coupon with the Polish pack's rules. A coupon's rate needs the series' terms, which the owner enters with a lot and only the core stores (D-97), its tax needs the account's tax wrapper (D-76), and what fell due before go-live is history the opening lots hold (D-98); a plugin stores nothing.
+   - *Today:* each account in the request also carries its go-live date and tax wrapper, and the request carries the stored terms of the bonds among the lots (`SyncRequest.accounts`, `bond_terms`, [Ingest](concepts/ingest.md#what-a-sync-tells-a-bound-connector)). The connector books every coupon due after go-live on every sync, keyed per lot and coupon date, which covers those due since its last sync and stays idempotent; it asks GUS and NBP for the readings the coupons need.
+   - *Options:* keep; or keep the request to holdings and lots and have the connector deliver the coupons gross, leaving the tax to the core; or book only coupons dated after the last sync's watermark, which misses those of a lot entered later with an earlier purchase date.
+
+29. **A coupon booked on a lot the owner later deletes.**
+   - *Problem:* D-100 lets the owner delete a lot as a correction, which supersedes its transactions. Coupons the connector booked on it before are separate transactions, keyed by the lot and coupon date, and the connector can't tell which were booked: deleting a key never booked is refused (D-18).
+   - *Today:* a deleted lot is no longer open, so it gets no further coupons, but those booked earlier stay.
+   - *Options:* keep; or deliver, with a lot's deletion, a deletion of each coupon the core says was booked on it; or let a deletion of a key never booked be a no-op for coupons only.
+
+30. **The last period's interest and the redemption at maturity.**
+   - *Problem:* a coupon series (ROR, DOR, COI) pays its last period's interest with the nominal at maturity, and OpenFief books no redemption yet; the valuation keeps a matured lot at its redemption value.
+   - *Today:* the last period's interest is not booked as a coupon, so a matured lot is valued with it and nothing is counted twice; the redemption itself is not booked.
+   - *Options:* keep until redemptions are decided; or book the redemption at maturity, the nominal and the last period's interest, as a sell of the lot.
+
 ## Performance
 
 17. **What happens to a transfer decision when a leg is corrected.**

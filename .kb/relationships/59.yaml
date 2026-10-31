@@ -426,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3912a7a3452
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-sends-what-bound-accounts-hold
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:58.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b43d8b13fcf

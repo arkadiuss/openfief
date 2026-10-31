@@ -517,3 +517,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4408b0bd4942
+  - type: implements
+    from: SYM-ingest-app-tax-wrappers
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:48:35.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36deff7ca421
+  - type: covered_by
+    from: SYM-ingest-app-tax-wrappers
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:48:35.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91454112ddcb
+  - type: implements
+    from: SYM-connectorv1-holding-reset
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:00:19.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f166bc9f1d3
+  - type: covered_by
+    from: SYM-connectorv1-holding-reset
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:00:19.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bac6b91d1ea2

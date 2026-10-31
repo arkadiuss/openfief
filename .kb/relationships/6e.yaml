@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-590f94b11f72
+  - type: constrains
+    from: REQ-pl-coupon-payments
+    to: FACT-SUBJECT-D734DABDB121A70A
+    created_at: 2026-10-31T13:25:30.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ef3493d4933
+  - type: requires_property
+    from: REQ-pl-coupon-payments
+    to: FACT-PROP-5432FF2DDC953ED3
+    created_at: 2026-10-31T13:25:30.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0158ed97dbe1
+  - type: specified_by
+    from: REQ-pl-coupon-payments
+    to: SCEN-pl-coupon-payments
+    created_at: 2026-10-31T13:25:30.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf0296a735b8

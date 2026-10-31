@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-559696970aa5
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-problem-refs
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:57:42.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4ffa3f2a91f

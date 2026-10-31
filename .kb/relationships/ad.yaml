@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c8f3df0a753
+  - type: executable_for
+    from: SYM-core-test-helper-coi-terms
+    to: TEST-core-bond-coupons
+    created_at: 2026-10-31T13:48:10.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bb9d38b3f24

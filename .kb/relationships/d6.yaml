@@ -762,3 +762,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11e91af89a12
+  - type: executable_for
+    from: SYM-treasurybonds-test-coupon-sync-coupons
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:57:53.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a61cd0f35184
+  - type: implements
+    from: SYM-connectorv1-account-holdings-string
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:59:23.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3abca48a308
+  - type: covered_by
+    from: SYM-connectorv1-account-holdings-string
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:59:23.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e88a0df3ef6
+  - type: implements
+    from: SYM-connectorv1-account-holdings-get-tax-wrapper
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:59:57.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a850fd08f105
+  - type: covered_by
+    from: SYM-connectorv1-account-holdings-get-tax-wrapper
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:59:57.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed79b67da743

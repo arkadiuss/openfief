@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eda057fb9f93
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fixed-held
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:46.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0dc88542fad
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-held-lot
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:57:24.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0571236f150c
+  - type: executable_for
+    from: SYM-treasurybonds-test-due-coupons
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:57:47.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08f33610a5f1

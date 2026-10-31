@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fd898b06789
+  - type: constrains
+    from: REQ-plugins-treasury-bonds-serves-every-account
+    to: FACT-SUBJECT-A97736B72BF54BF8
+    created_at: 2026-10-31T13:25:50.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f35e9424335
+  - type: requires_property
+    from: REQ-plugins-treasury-bonds-serves-every-account
+    to: FACT-PROP-F8008A68C7C2D7B8
+    created_at: 2026-10-31T13:25:50.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-607a70fbb969
+  - type: specified_by
+    from: REQ-plugins-treasury-bonds-serves-every-account
+    to: SCEN-plugins-treasury-bonds-serves-every-account
+    created_at: 2026-10-31T13:25:50.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad549caea917

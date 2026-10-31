@@ -156,6 +156,10 @@ func checkHandedOver(t *testing.T, caller *fakeCaller, l *fakeLedger, stores *fa
 	if caller.instance != "bonds-main" || caller.id != "b-1" || len(caller.lots) != 1 || caller.lots[0].Series().String() != "EDO0536" {
 		t.Errorf("handed %v as %s to %s; want the lot as b-1 to the bound instance bonds-main", caller.lots, caller.id, caller.instance)
 	}
+	// D-118: the lot goes with the account it was entered on.
+	if caller.entries.Account != bondsAccount {
+		t.Errorf("account sent = %q, want %q", caller.entries.Account, bondsAccount)
+	}
 	// The account is not seeded, so it goes live today with this lot (D-98).
 	if !caller.entries.GoLive.Equal(march2(t)) {
 		t.Errorf("go-live sent = %s, want today %s for an account not seeded", caller.entries.GoLive, march2(t))
@@ -267,7 +271,7 @@ func TestBondLotsDelete(t *testing.T) {
 	if got.ID != "b-1" || got.Source != app.SourceEntry || got.Imported.NewVersions != 2 {
 		t.Errorf("Delete batch = %+v, want b-1 from the owner's entry with the new versions", got)
 	}
-	want := ingest.BondLotEntries{GoLive: march2(t), Deleted: []ingest.BondLotKey{lot.Key()}}
+	want := ingest.BondLotEntries{Account: bondsAccount, GoLive: march2(t), Deleted: []ingest.BondLotKey{lot.Key()}}
 	if diff := cmp.Diff(want, caller.entries, cmpopts.EquateEmpty()); diff != "" || caller.instance != "bonds-main" {
 		t.Errorf("handed to %s (-want +got):\n%s", caller.instance, diff)
 	}

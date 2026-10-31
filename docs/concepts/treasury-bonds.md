@@ -97,6 +97,7 @@ Inside OKI no Belka tax is due; instead, a yearly tax falls on the part of the a
 | [calendar.go](../../internal/jurisdiction/pl/calendar.go) | `Maturity`, `PeriodStart`, `CPIMonth` |
 | [businessday.go](../../internal/jurisdiction/pl/businessday.go) | `IsBusinessDay`, `ReferenceRateDay`, `RateChange`, `RateInForce`, `FirstCalendarYear`, `ErrOutsideCalendar` |
 | [value.go](../../internal/jurisdiction/pl/value.go) | `Purchase`, `LotValue`, `ValueLot` |
+| [coupon.go](../../internal/jurisdiction/pl/coupon.go) | `CouponDates`, `Terms.Coupon`, `CouponPayment` |
 | [tax.go](../../internal/jurisdiction/pl/tax.go) | `TaxWrapper`, `TaxWrappers`, `ParseTaxWrapper`, `BelkaRate`, `BelkaTax`, `TaxRateCutoff` |
 | [pack.go](../../internal/jurisdiction/pl/pack.go) | `Pack` (the `jurisdiction.Pack`), `NewPack`, `RulesVersion`, `IKZEExitRate`, `OKIAct`, `CurrentOKIAct` |
 
@@ -159,6 +160,10 @@ flowchart LR
   on(["valued 2024-09-15:<br/>a = 184 of ACT = 365"]) -.-> p1
 ```
 
+### Coupons
+
+D-117 has the treasury-bonds connector book each coupon of an entered lot with the pack's rules, so the core holds no bond logic. `CouponDates(series, purchased)` returns the day each coupon falls due: the first day of every interest period after the first, so one per period but the last, whose interest is paid with the redemption at maturity. Capitalized types and OTS have none. `Terms.Coupon(idx, purchased, n)` returns what one bond is paid for period n: the nominal times the period's rate (`Terms.PeriodRate`, the index reading floored at zero plus the margin after the first period) times its months over twelve, rounded half up to grosze once per bond, as `ValueLot` counts a whole period: 100 × r for COI, 100 × r / 12 for ROR and DOR. A later period without its reading fails with `MissingIndexError`. The connector multiplies by the lot's bonds and withholds `BelkaTax` for the account's wrapper ([Ingest](ingest.md#what-a-sync-tells-a-bound-connector)).
+
 ### The pack's values
 
 `Pack` implements `jurisdiction.Pack` for Poland: `ReportingCurrency` PLN (D-62), `NumberFormat` space-comma, `5 000,00 PLN` (D-113), `Wrappers` the four keys with `taxable` first, `TaxRateDate` is `TaxRateCutoff` (D-20), and `Version` is `pl/` with `RulesVersion`, which valuation records to revalue everything when the rules change. Three functions compute the values, every amount in PLN, every tax rounded half up to whole grosze and zero on a base that is not positive (`taxAt`, D-37's rounding):
@@ -197,6 +202,7 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 - **D-76**: the four wrappers, no Belka tax inside OKI, and OKI's yearly tax computed only under an act in force. The act's date, limit and rate are unknown to the code, so nothing is computed yet; how the tax applies to days before an act takes effect mid-year, and averaging over the days given, are this package's narrow readings ([Implementation questions](../implementation-questions.md)).
 - **D-77**: gross, net and liquidation per product kind and wrapper, as tabled above. The tax rules per wrapper are the narrowest reading of Polish tax law: IKE's exit untaxed and its return taxed on the gain, IKZE's 10% exit tax, per-holding gains without loss offsetting, rounding half up.
 - **D-78**: an IKZE's liquidation value is `LiquidationUnknown` until the owner's marginal rate is set; a sale's cost comes from the account's fee rule, which valuation applies.
+- **D-101**, **D-117**: coupons of COI, ROR and DOR lots are booked as interest from `CouponDates` and `Terms.Coupon`; the last period's interest comes with the redemption, which isn't booked yet ([Implementation questions](../implementation-questions.md)).
 - **D-100**: an entered lot is bought for cash at `Nominal` or by exchange at `ExchangePrice`; its 0.10 PLN discount per bond is the `LotValue.Discount` the pack taxes with the interest at the planned exit and on redemption today. OTS keeps its letter's 100.00 PLN exchange price, so an OTS exchange has no discount.
 - **D-37**: issuer tables and examples over the letter. Implemented as decided: the TOS base isn't rounded between years, and Belka tax rounds half up.
 - **D-62**, **D-113**: the pack's defaults are PLN and the space-comma number format. The Polish pack may assume PLN for tax; `Nominal()`, all bond amounts and every value the pack computes are PLN, and it refuses another currency (`ErrNotPLN`).
@@ -216,6 +222,7 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 | Gross, net and liquidation of a listed holding, a bond lot and cash in each wrapper; IKZE without the owner's rate; values never above gross (seeded property test); the pack's defaults | `TestPackDefaults`, `TestValueListed`, `TestValueAccrued`, `TestValueCash`, `TestValuesProperties` in [pack_test.go](../../internal/jurisdiction/pl/pack_test.go) | REQ-pl-values-per-wrapper, SCEN-pl-values-per-wrapper, REQ-pl-tax-wrappers, REQ-pl-oki-no-belka-tax, REQ-pl-ikze-early-withdrawal-tax, REQ-pl-ikze-liquidation-missing, REQ-jurisdiction-pl-number-format, TEST-pl-pack |
 | OKI's yearly tax: none without an act in force; under a synthetic act, the average above the limit | `TestYearlyTax` | REQ-pl-oki-act-as-data, SCEN-pl-oki-act-as-data, REQ-pl-oki-yearly-tax, TEST-pl-pack |
 | Matches the issuer's daily interest tables | `TestValueLotMatchesInterestTables` in [official_test.go](../../internal/jurisdiction/pl/official_test.go) | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-2-tos-base-unrounded, TEST-pl-official |
+| Coupon dates per type, none for the last period, capitalized types or OTS; one bond's coupon at the period rate, half up; a missing reading | `TestCouponDates`, `TestCoupon`, `TestCouponWithoutItsReading` in [coupon_test.go](../../internal/jurisdiction/pl/coupon_test.go) | REQ-pl-coupon-payments, SCEN-pl-coupon-payments, TEST-pl-coupons |
 | Matches the issuer's worked early-redemption examples | `TestValueLotMatchesWorkedExamples` | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-3-belka-half-up, TEST-pl-official |
 | Belka tax 19%, half up, none in IKE, IKZE or OKI; the wrappers' keys | `TestBelkaTax`, `TestBelkaRate`, `TestTaxWrapperNames` in [tax_test.go](../../internal/jurisdiction/pl/tax_test.go) | REQ-pl-values-per-wrapper, REQ-decision-d37-3-belka-half-up, REQ-pl-tax-wrappers, TEST-pl-tax |
 | Tax takes the rate from before the event | `TestTaxRateCutoff`; `TestTaxRateUsesTheTableBeforeTheEvent` in valuation | REQ-pl-tax-fx-rate-date, SCEN-pl-tax-fx-rate-date, TEST-pl-tax |
@@ -227,5 +234,4 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 ## Not built yet
 
 - **D-9**, **D-97**: anything that fetches series terms (the owner types each series' terms with its lots; D-97 waits on OQ-30); and an import of the bond service's export, if one exists (OQ-22).
-- **D-101**: booking the coupons of entered COI, ROR and DOR lots. The ledger has the interest kind and the demo dataset books its coupons with it, but nothing generates coupons for lots the owner entered ([Implementation questions](../implementation-questions.md)).
 - **D-76**: OKI's yearly tax in practice: the act's in-force date, limit and rate.

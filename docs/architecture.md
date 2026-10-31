@@ -115,7 +115,7 @@ sequenceDiagram
   V->>V: a worker stores the new valuations
 ```
 
-The core picks the batch's mode from the ledger: an account already seeded from its opening lots syncs in transactions mode on its own, and a newly mapped account is seeded first (D-95). A market-data connector, one that feeds no account, is told in each sync what to price: every instrument you hold and the model portfolio's targets, so a new purchase is priced without configuring anything (D-93).
+The core picks the batch's mode from the ledger: an account already seeded from its opening lots syncs in transactions mode on its own, and a newly mapped account is seeded first (D-95). A market-data connector, one that feeds no account, is told in each sync what to price: every instrument you hold and the model portfolio's targets, so a new purchase is priced without configuring anything (D-93). A connector that feeds accounts is told in each sync what those accounts hold, their holdings and open lots, so the treasury-bonds connector books each coupon that fell due as interest with the Polish pack's rules while the core holds no bond logic (D-117).
 
 When two connectors deliver the same kind of market data, every value is kept and the one from the source you rank higher wins; the others cross-check it. You rank them on the settings page, and a new order revalues everything (D-94). A broker's own prices, such as IBKR's mark prices, only cross-check: a connector whose manifest declares it sends them, and each is compared with the latest price on or before its day. One more than 1% off, or beyond the threshold you set for that instrument, is flagged on the price checks page, where you acknowledge it (D-110, D-111, D-112).
 

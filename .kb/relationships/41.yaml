@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-979b7b3aa912
+  - type: executable_for
+    from: SYM-ingest-delivery-test-held
+    to: TEST-ingest-delivery-held
+    created_at: 2026-10-31T13:51:21.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96a9df0df3f4

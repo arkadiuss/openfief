@@ -104451,3 +104451,1289 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-demo-seed-top-up
+  - id: SYM-core-test-helper-coupon-connector
+    title: couponConnector
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:36.066Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-helper-coupon-connector-sync
+    title: couponConnector.Sync
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:42.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-sync-books-bond-coupons
+    title: TestSyncBooksBondCoupons
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:48.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-helper-seed-bond-lot
+    title: seedBondLot
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:55.159Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-helper-check-coupons
+    title: checkCoupons
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:02.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-helper-coi-terms
+    title: coiTerms
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:08.362Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-helper-cash-of
+    title: cashOf
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:14.645Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-ingest-app-held-source
+    title: HeldSource
+    sourceFile: internal/ingest/app/held.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:20.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-app-account-holdings
+    title: AccountHoldings
+    sourceFile: internal/ingest/app/held.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:27.187Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-app-tax-wrappers
+    title: TaxWrappers
+    sourceFile: internal/ingest/app/held.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:33.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-app-holdings-scope
+    title: HoldingsScope
+    sourceFile: internal/ingest/app/held.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:38.302Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-app-holdings-scope-held-accounts
+    title: HoldingsScope.HeldAccounts
+    sourceFile: internal/ingest/app/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:43.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-app-holdings-scope-held
+    title: HoldingsScope.held
+    sourceFile: internal/ingest/app/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:49.281Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-app-holdings-scope-add-terms
+    title: HoldingsScope.addTerms
+    sourceFile: internal/ingest/app/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:54.655Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-app-test-helper-held-ledger
+    title: heldLedger
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:59.221Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-held-ledger-holdings-on
+    title: heldLedger.HoldingsOn
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:04.219Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-held-ledger-lots-on
+    title: heldLedger.LotsOn
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:09.690Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-live-since
+    title: liveSince
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:14.423Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-live-since-go-live
+    title: liveSince.GoLive
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:19.981Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-wrappers
+    title: wrappers
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:24.513Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-wrappers-tax-wrapper
+    title: wrappers.TaxWrapper
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:29.491Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-holdings-scope
+    title: TestHoldingsScope
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:34.865Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-row
+    title: row
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:40.053Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-fixed-held
+    title: fixedHeld
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:44.700Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-fixed-held-held-accounts
+    title: fixedHeld.HeldAccounts
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:50.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-scheduler-sends-what-bound-accounts-hold
+    title: TestSchedulerSendsWhatBoundAccountsHold
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:49:56.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-connectrpc-held-to
+    title: heldTo
+    sourceFile: internal/ingest/connectrpc/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:01.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-connectrpc-bond-terms-to
+    title: bondTermsTo
+    sourceFile: internal/ingest/connectrpc/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:06.818Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-connectrpc-instrument-to
+    title: instrumentTo
+    sourceFile: internal/ingest/connectrpc/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:12.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-connectrpc-money-to
+    title: moneyTo
+    sourceFile: internal/ingest/connectrpc/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:17.532Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-connectrpc-test-helper-held-connector
+    title: heldConnector
+    sourceFile: internal/ingest/connectrpc/held_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:22.098Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-held
+  - id: SYM-ingest-connectrpc-test-helper-held-connector-sync
+    title: heldConnector.Sync
+    sourceFile: internal/ingest/connectrpc/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:27.600Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-held
+  - id: SYM-ingest-connectrpc-test-client-sync-sends-holdings
+    title: TestClientSyncSendsHoldings
+    sourceFile: internal/ingest/connectrpc/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:32.969Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-held
+  - id: SYM-ingest-delivery-held
+    title: Held
+    sourceFile: internal/ingest/delivery/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:38.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-delivery-held-account
+    title: heldAccount
+    sourceFile: internal/ingest/delivery/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:43.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-delivery-open-lot-from
+    title: openLotFrom
+    sourceFile: internal/ingest/delivery/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:49.885Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-delivery-bond-terms-from
+    title: bondTermsFrom
+    sourceFile: internal/ingest/delivery/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:50:55.911Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-delivery-instrument-from
+    title: instrumentFrom
+    sourceFile: internal/ingest/delivery/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:51:02.181Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-delivery-money-from
+    title: moneyFrom
+    sourceFile: internal/ingest/delivery/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:51:08.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-delivery-test-helper-held-sync
+    title: heldSync
+    sourceFile: internal/ingest/delivery/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:51:15.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery-held
+  - id: SYM-ingest-delivery-test-held
+    title: TestHeld
+    sourceFile: internal/ingest/delivery/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:51:19.638Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery-held
+  - id: SYM-ingest-delivery-test-held-refuses
+    title: TestHeldRefuses
+    sourceFile: internal/ingest/delivery/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:51:24.701Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery-held
+  - id: SYM-ingest-held-account
+    title: HeldAccount
+    sourceFile: internal/ingest/held.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:51:31.239Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-treasurybonds-due-coupon
+    title: DueCoupon
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:51:37.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-due-coupons
+    title: DueCoupons
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:56:14.357Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-due-on-lot
+    title: dueOnLot
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:56:21.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-terms-of
+    title: termsOf
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:56:26.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-lot-ref
+    title: lotRef
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:56:32.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-cpi-years
+    title: CPIYears
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:56:38.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-book-coupons
+    title: BookCoupons
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:56:44.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-ledger-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-coupon-ref
+    title: couponRef
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:56:50.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-book-coupon
+    title: bookCoupon
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:56:57.384Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-ledger-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-coupon-sync
+    title: CouponSync
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:02.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-coupon-sync-coupons
+    title: CouponSync.Coupons
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:09.319Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-earliest-purchase
+    title: earliestPurchase
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:15.836Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasurybonds-test-helper-held-lot
+    title: heldLot
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:22.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-test-helper-terms-of
+    title: termsOf
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:29.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-test-helper-coupons
+    title: coupons
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:35.518Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-test-helper-problem-refs
+    title: problemRefs
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:40.777Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-test-due-coupons
+    title: TestDueCoupons
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:45.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-test-coupon-sync-coupons
+    title: TestCouponSyncCoupons
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:51.233Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-test-helper-row
+    title: row
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:57:56.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-test-coupon-sync-waits-and-fails
+    title: TestCouponSyncWaitsAndFails
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:02.419Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-pl-coupon-payment
+    title: CouponPayment
+    sourceFile: internal/jurisdiction/pl/coupon.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:07.505Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-coupons
+      - type: implements
+        target: REQ-pl-coupon-payments
+  - id: SYM-pl-coupon-dates
+    title: CouponDates
+    sourceFile: internal/jurisdiction/pl/coupon.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:12.468Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-coupons
+      - type: implements
+        target: REQ-pl-coupon-payments
+  - id: SYM-pl-terms-coupon
+    title: Terms.Coupon
+    sourceFile: internal/jurisdiction/pl/coupon.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:17.650Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-coupons
+      - type: implements
+        target: REQ-pl-coupon-payments
+  - id: SYM-pl-test-coupon-dates
+    title: TestCouponDates
+    sourceFile: internal/jurisdiction/pl/coupon_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:22.224Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-coupons
+  - id: SYM-pl-test-coupon
+    title: TestCoupon
+    sourceFile: internal/jurisdiction/pl/coupon_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:26.528Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-coupons
+  - id: SYM-pl-test-coupon-without-its-reading
+    title: TestCouponWithoutItsReading
+    sourceFile: internal/jurisdiction/pl/coupon_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:31.064Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-coupons
+  - id: SYM-treasury-bonds-with-coupons
+    title: withCoupons
+    sourceFile: plugins/treasury-bonds/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:36.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-treasurybonds-coupons-as-interest
+  - id: SYM-treasury-bonds-test-helper-held-request
+    title: heldRequest
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:41.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-bond-instrument
+    title: bondInstrument
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:46.108Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-coupon-line
+    title: couponLine
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:51.367Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-sync-books-coupons
+    title: TestSyncBooksCoupons
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:58:56.601Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-connectorv1-sync-request-get-accounts
+    title: SyncRequest.GetAccounts
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:01.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-sync-request-get-bond-terms
+    title: SyncRequest.GetBondTerms
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:06.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings
+    title: AccountHoldings
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:11.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-reset
+    title: AccountHoldings.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:16.383Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-string
+    title: AccountHoldings.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:21.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-proto-message
+    title: AccountHoldings.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:27.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-proto-reflect
+    title: AccountHoldings.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:32.491Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-descriptor
+    title: AccountHoldings.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:38.275Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-get-account-id
+    title: AccountHoldings.GetAccountId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:43.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-get-go-live
+    title: AccountHoldings.GetGoLive
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:50.123Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-get-tax-wrapper
+    title: AccountHoldings.GetTaxWrapper
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:59:55.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-get-holdings
+    title: AccountHoldings.GetHoldings
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:01.568Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-account-holdings-get-lots
+    title: AccountHoldings.GetLots
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:07.203Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-holding
+    title: Holding
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:11.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-holding-reset
+    title: Holding.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:17.605Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-holding-string
+    title: Holding.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:23.674Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-holding-proto-message
+    title: Holding.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:30.298Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-holding-proto-reflect
+    title: Holding.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:37.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-holding-descriptor
+    title: Holding.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:44.333Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-holding-get-instrument
+    title: Holding.GetInstrument
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:51.460Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-holding-get-quantity
+    title: Holding.GetQuantity
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:58.124Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot
+    title: OpenLot
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:03.728Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-reset
+    title: OpenLot.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:10.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-string
+    title: OpenLot.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:16.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-proto-message
+    title: OpenLot.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:23.755Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-proto-reflect
+    title: OpenLot.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:30.683Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-descriptor
+    title: OpenLot.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:37.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-get-instrument
+    title: OpenLot.GetInstrument
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:44.324Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-get-quantity
+    title: OpenLot.GetQuantity
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:51.851Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-get-opened
+    title: OpenLot.GetOpened
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:58.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-get-cost
+    title: OpenLot.GetCost
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:05.302Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-open-lot-get-opening
+    title: OpenLot.GetOpening
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:11.156Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-connectorv1-import-bond-lots-request-get-account-id
+    title: ImportBondLotsRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:17.780Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-plugins-treasury-bonds-serves-every-account

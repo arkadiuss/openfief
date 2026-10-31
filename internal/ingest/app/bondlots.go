@@ -88,7 +88,7 @@ func (b *BondLots) Add(ctx context.Context, origin, sessionToken string, account
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
 	}
-	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, ingest.BondLotEntries{Lots: []ingest.BondLot{*lot}})
+	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, &ingest.BondLotEntries{Lots: []ingest.BondLot{*lot}})
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
 	}
@@ -117,7 +117,7 @@ func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, acco
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}
-	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, ingest.BondLotEntries{Deleted: []ingest.BondLotKey{key}})
+	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, &ingest.BondLotEntries{Deleted: []ingest.BondLotKey{key}})
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}

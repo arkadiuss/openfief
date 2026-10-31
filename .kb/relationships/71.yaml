@@ -489,3 +489,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd79af490e3b
+  - type: implements
+    from: SYM-ingest-app-holdings-scope-add-terms
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:48:56.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66d847e1adac
+  - type: covered_by
+    from: SYM-ingest-app-holdings-scope-add-terms
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:48:56.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2f190311b28
+  - type: implements
+    from: SYM-ingest-delivery-held-account
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:50:45.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f684a825b889
+  - type: covered_by
+    from: SYM-ingest-delivery-held-account
+    to: TEST-ingest-delivery-held
+    created_at: 2026-10-31T13:50:45.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-376d3b5d83ae

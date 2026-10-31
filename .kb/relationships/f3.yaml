@@ -377,3 +377,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5ca606240c8
+  - type: executable_for
+    from: SYM-core-test-helper-check-coupons
+    to: TEST-core-bond-coupons
+    created_at: 2026-10-31T13:48:04.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-432197e9a4e0
+  - type: implements
+    from: SYM-connectorv1-open-lot-get-instrument
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:01:46.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aa9af8d1856
+  - type: covered_by
+    from: SYM-connectorv1-open-lot-get-instrument
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:01:47.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b811e097612d

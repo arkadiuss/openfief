@@ -81,14 +81,14 @@ func mustDate(s string) kernel.Date {
 	return d
 }
 
-// served serves a connector for account acc-bonds, whose today is
+// served serves a connector whose today is
 // 2026-10-29 and whose index readings start in September 2026, with the SDK
 // as the plugin does, and returns a client that calls it as the core.
 func served(t *testing.T, cpi treasurybonds.CPISource, rates treasurybonds.ReferenceRateSource) coreClient {
 	t.Helper()
 	today := mustDate("2026-10-29")
 	c := &connector{
-		mapper:  treasurybonds.Mapper{Account: "acc-bonds"},
+		coupons: &treasurybonds.CouponSync{CPI: cpi, Rates: rates},
 		indices: &treasurybonds.IndexSync{CPI: cpi, Rates: rates, Start: mustDate("2026-09-01")},
 		today:   func() kernel.Date { return today },
 	}
@@ -121,7 +121,7 @@ func TestImportBondLots(t *testing.T) {
 	t.Parallel()
 	client := served(t, fakeCPI{}, fakeRates{})
 	// Bought after go-live: a deposit and a buy on the purchase date (D-98).
-	resp, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{BatchId: "b-1", GoLive: "2026-05-01", Lots: []*connectorv1.BondLot{edoLot()}}))
+	resp, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{BatchId: "b-1", AccountId: "acc-bonds", GoLive: "2026-05-01", Lots: []*connectorv1.BondLot{edoLot()}}))
 	if err != nil {
 		t.Fatalf("ImportBondLots: %v", err)
 	}
@@ -183,7 +183,7 @@ func TestImportBondLotsRefuses(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{BatchId: "b-1", GoLive: tt.goLive, Lots: tt.lots}))
+			_, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{BatchId: "b-1", AccountId: "acc-bonds", GoLive: tt.goLive, Lots: tt.lots}))
 			if connect.CodeOf(err) != connect.CodeInvalidArgument {
 				t.Errorf("ImportBondLots = %v, want InvalidArgument", err)
 			}
@@ -191,6 +191,132 @@ func TestImportBondLotsRefuses(t *testing.T) {
 	}
 	if _, err := client.ImportBondLots(t.Context(), connect.NewRequest(&connectorv1.ImportBondLotsRequest{BatchId: "b-2"})); connect.CodeOf(err) != connect.CodeUnauthenticated {
 		t.Errorf("ImportBondLots without the core's token: %v, want Unauthenticated", err)
+	}
+	// D-118: the core names the account with the lots; the config names none.
+	noAccount := &connectorv1.ImportBondLotsRequest{BatchId: "b-3", GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{edoLot()}}
+	if _, err := client.ImportBondLots(t.Context(), asCore(noAccount)); connect.CodeOf(err) != connect.CodeInvalidArgument {
+		t.Errorf("ImportBondLots without an account: %v, want InvalidArgument", err)
+	}
+}
+
+// heldRequest is a sync of two bound accounts (D-117): a taxable one live
+// since 2025-06-01 with 10 COI1028 bonds bought on 2024-10-10 (first year
+// 6.55%, margin 1.50%) and 5 EDO0536 bonds, which pay no coupons; an IKE
+// one live since 2026-08-20 with 100 ROR0827 bonds bought that day (first
+// month 4.25%, no margin); and one not seeded yet.
+func heldRequest(mode connectorv1.Mode) *connectorv1.SyncRequest {
+	pln := func(amount string) *connectorv1.Money { return &connectorv1.Money{Amount: amount, Currency: "PLN"} }
+	coi := bondInstrument("COI1028")
+	edo := &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"}
+	ror := bondInstrument("ROR0827")
+	return &connectorv1.SyncRequest{
+		BatchId: "b-1", Mode: mode,
+		Accounts: []*connectorv1.AccountHoldings{
+			{
+				AccountId: "acc-bonds", GoLive: "2025-06-01", TaxWrapper: "taxable",
+				Holdings: []*connectorv1.Holding{{Instrument: coi, Quantity: "10"}, {Instrument: edo, Quantity: "5"}},
+				Lots: []*connectorv1.OpenLot{
+					{Instrument: coi, Quantity: "10", Opened: "2024-10-10", Cost: pln("1000"), Opening: true},
+					{Instrument: edo, Quantity: "5", Opened: "2026-05-04", Cost: pln("500")},
+				},
+			},
+			{
+				AccountId: "acc-bonds-ike", GoLive: "2026-08-20", TaxWrapper: "ike",
+				Lots: []*connectorv1.OpenLot{{Instrument: ror, Quantity: "100", Opened: "2026-08-20", Cost: pln("10000"), Opening: true}},
+			},
+			{AccountId: "acc-new", TaxWrapper: "taxable"},
+		},
+		BondTerms: []*connectorv1.BondTerms{
+			{Instrument: coi, FirstPeriodRate: "0.0655", Margin: "0.015", EarlyRedemptionFee: pln("2.00")},
+			{Instrument: edo, FirstPeriodRate: "0.06", Margin: "0.02", EarlyRedemptionFee: pln("2.00")},
+			{Instrument: ror, FirstPeriodRate: "0.0425", Margin: "0", EarlyRedemptionFee: pln("0.50")},
+		},
+	}
+}
+
+// bondInstrument is the instrument of series code, as the connector derives
+// it (D-99); the zero instrument for a code that is no series.
+func bondInstrument(code string) *connectorv1.Instrument {
+	s, err := pl.ParseSeries(code)
+	if err != nil {
+		return &connectorv1.Instrument{}
+	}
+	in, err := treasurybonds.Instrument(s)
+	if err != nil {
+		return &connectorv1.Instrument{}
+	}
+	return &connectorv1.Instrument{Isin: in.ISIN.String(), Symbol: in.Symbol}
+}
+
+// couponLine is what TestSyncBooksCoupons compares of a delivered
+// transaction: its account, key, date and postings by book kind.
+type couponLine struct {
+	Account, ID, Date string
+	Postings          map[string]string
+}
+
+func TestSyncBooksCoupons(t *testing.T) {
+	t.Parallel()
+	client := served(t, fakeCPI{}, fakeRates{})
+	resp, err := client.Sync(t.Context(), asCore(heldRequest(connectorv1.Mode_MODE_TRANSACTIONS)))
+	if err != nil {
+		t.Fatalf("Sync: %v", err)
+	}
+	got := make([]couponLine, 0, len(resp.Msg.GetDelivery().GetTransactions()))
+	for _, tx := range resp.Msg.GetDelivery().GetTransactions() {
+		if tx.GetKind() != connectorv1.TransactionKind_TRANSACTION_KIND_INTEREST {
+			t.Errorf("transaction %s is %v, want interest (D-101)", tx.GetKey().GetExternalId(), tx.GetKind())
+		}
+		line := couponLine{Account: tx.GetAccountId(), ID: tx.GetKey().GetSource() + " " + tx.GetKey().GetExternalId(), Date: tx.GetDate(), Postings: map[string]string{}}
+		for _, p := range tx.GetPostings() {
+			line.Postings[p.GetBook().GetKind().String()] = p.GetAmount().GetAmount()
+		}
+		got = append(got, line)
+	}
+	holding, cash, tax := "BOOK_KIND_HOLDING", "BOOK_KIND_CASH", "BOOK_KIND_WITHHOLDING_TAX"
+	want := []couponLine{
+		// Year 1 at 6.55%: 10 × 6.55 = 65.50, Belka 19% = 12.445 -> 12.45 withheld.
+		{
+			Account: "acc-bonds", ID: "treasury-bonds:acc-bonds lot:COI1028:2024-10-10:coupon:2025-10-10", Date: "2025-10-10",
+			Postings: map[string]string{holding: "-65.5", tax: "12.45", cash: "53.05"},
+		},
+		// Year 2 at August 2025's CPI 2.9% + 1.50% = 4.40%: 44.00, tax 8.36.
+		{
+			Account: "acc-bonds", ID: "treasury-bonds:acc-bonds lot:COI1028:2024-10-10:coupon:2026-10-10", Date: "2026-10-10",
+			Postings: map[string]string{holding: "-44", tax: "8.36", cash: "35.64"},
+		},
+		// Month 1 at 4.25%: 100 × 0.354 -> 0.35 a bond, no tax in IKE.
+		{
+			Account: "acc-bonds-ike", ID: "treasury-bonds:acc-bonds-ike lot:ROR0827:2026-08-20:coupon:2026-09-20", Date: "2026-09-20",
+			Postings: map[string]string{holding: "-35", cash: "35"},
+		},
+		// Month 2 at the reference rate in force in mid-August 2026, 3.75%: 0.3125 -> 0.31 a bond.
+		{
+			Account: "acc-bonds-ike", ID: "treasury-bonds:acc-bonds-ike lot:ROR0827:2026-08-20:coupon:2026-10-20", Date: "2026-10-20",
+			Postings: map[string]string{holding: "-31", cash: "31"},
+		},
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("coupons (-want +got):\n%s", diff)
+	}
+	if len(resp.Msg.GetDelivery().GetIndexReadings()) == 0 {
+		t.Error("the sync with coupons delivered no index readings")
+	}
+
+	// An opening batch seeds; it books no coupons.
+	opening, err := client.Sync(t.Context(), asCore(heldRequest(connectorv1.Mode_MODE_OPENING)))
+	if err != nil {
+		t.Fatalf("opening Sync: %v", err)
+	}
+	if n := len(opening.Msg.GetDelivery().GetTransactions()); n != 0 {
+		t.Errorf("an opening sync delivered %d transactions, want none", n)
+	}
+
+	// Holdings that don't parse refuse the sync.
+	bad := heldRequest(connectorv1.Mode_MODE_TRANSACTIONS)
+	bad.Accounts[0].Lots[0].Opened = "10.10.2024"
+	if _, err := client.Sync(t.Context(), asCore(bad)); connect.CodeOf(err) != connect.CodeInvalidArgument {
+		t.Errorf("Sync with a malformed lot = %v, want InvalidArgument", err)
 	}
 }
 
@@ -270,7 +396,7 @@ func TestImportBondLotsBeforeGoLiveAndDeleted(t *testing.T) {
 	lot := edoLot()
 	lot.Purchase = connectorv1.BondPurchase_BOND_PURCHASE_EXCHANGE
 	resp, err := client.ImportBondLots(t.Context(), asCore(&connectorv1.ImportBondLotsRequest{
-		BatchId: "b-1", GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{lot},
+		BatchId: "b-1", AccountId: "acc-bonds", GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{lot},
 		Deleted: []*connectorv1.BondLotKey{{Series: "EDO0536", PurchaseDate: "2026-05-10"}},
 	}))
 	if err != nil {
