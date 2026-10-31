@@ -748,3 +748,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c8f3df0a753
+  - type: executable_for
+    from: SYM-core-test-helper-column
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:01.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97302ae28c21
+  - type: implements
+    from: SYM-ingest-xtb-mapping-cash-ref
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:26:49.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ee88f38611c
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-cash-ref
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:26:49.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ace74114edcd
+  - type: implements
+    from: SYM-ingest-xtbtest-cash-header
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:37:10.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-757eb460a193
+  - type: covered_by
+    from: SYM-ingest-xtbtest-cash-header
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:37:10.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb747bc9ca8f
+  - type: executable_for
+    from: SYM-plugins-xtb-test-manifest
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:43:29.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bc02039328e

@@ -538,3 +538,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffe340a9a304
+  - type: verified_by
+    from: SCEN-ingest-ticker-confirmation
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T12:55:19.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6276316cac6
+  - type: implements
+    from: SYM-ingest-ticker-validate
+    to: REQ-ingest-ticker-entries-wait
+    created_at: 2026-10-31T13:24:26.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c1fa5e0a419
+  - type: covered_by
+    from: SYM-ingest-ticker-validate
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:24:27.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1e5b252f77f
+  - type: implements
+    from: SYM-ingest-xtb-export-tables
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:28:27.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63392a6d58ba
+  - type: covered_by
+    from: SYM-ingest-xtb-export-tables
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:28:27.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d89ee4704c2

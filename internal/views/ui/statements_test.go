@@ -89,14 +89,23 @@ func (f *fakeStatements) UploadStatement(_ context.Context, stream *connect.Clie
 	case h.GetFileName() == "down.xml":
 		return nil, codeErr(connect.CodeUnavailable, errFlexDown)
 	}
-	return connect.NewResponse(&ingestv1.UploadStatementResponse{
+	return connect.NewResponse(uploadAnswer(h)), nil
+}
+
+// uploadAnswer is the fake core's answer to an upload: an XTB export's for
+// xtb.xlsx, else a Flex statement's.
+func uploadAnswer(h *ingestv1.StatementHeader) *ingestv1.UploadStatementResponse {
+	if h.GetFileName() == "xtb.xlsx" {
+		return xtbUploadResponse()
+	}
+	return &ingestv1.UploadStatementResponse{
 		Mode: chosenMode(h), AccountIds: []string{accountID, "acc-linked"}, UnmappedBrokerAccounts: []string{"U0000009"},
 		BatchId: "b-7", Institution: "ibkr", Transactions: 10, Assertions: 4, New: 9, Unchanged: 1, FailedAssertions: 1,
 		ProblemsTotal: 3, Problems: []*ingestv1.Problem{
 			{Kind: ingestv1.ProblemKind_PROBLEM_KIND_UNSUPPORTED, Ref: "FlexStatement#1/Trades#8[tradeID=9000106]", Reason: `asset category "OPT" is not supported`},
 			{Kind: ingestv1.ProblemKind_PROBLEM_KIND_SKIPPED, Ref: "FlexStatement#2", Reason: "statement of an IBKR account that feeds no ledger account"},
 		},
-	}), nil
+	}
 }
 
 // chosenMode is the mode the fake core imports in: the header's, or

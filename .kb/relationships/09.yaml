@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f82a3499743
+  - type: verified_by
+    from: SCEN-ingest-xtb-opening-refused
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T12:55:01.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b04ffc19a165
+  - type: verified_by
+    from: SCEN-ingest-xtb-opening-refused
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T12:55:01.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b78b336c7b98

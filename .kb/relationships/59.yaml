@@ -426,3 +426,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3912a7a3452
+  - type: implements
+    from: SYM-ingest-xtb-table
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:31:06.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c097c38423d1
+  - type: covered_by
+    from: SYM-ingest-xtb-table
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:31:06.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2fd34ee0fd9
+  - type: implements
+    from: SYM-connectorv1-instrument-proposal
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:47:40.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7712f8d8d91
+  - type: covered_by
+    from: SYM-connectorv1-instrument-proposal
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:47:40.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d55856a4fe96
+  - type: implements
+    from: SYM-ingestv1-list-pending-tickers-request-reset
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:02:28.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-166ee699b107
+  - type: covered_by
+    from: SYM-ingestv1-list-pending-tickers-request-reset
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:02:28.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-173e0d9f4776

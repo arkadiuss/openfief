@@ -104491,3 +104491,4577 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-demo-seed-top-up
+  - id: SYM-core-entry-caller-lookup-instruments
+    title: entryCaller.LookupInstruments
+    sourceFile: cmd/core/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:18:44.319Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-core-new-tickers
+    title: newTickers
+    sourceFile: cmd/core/uploads.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:18:51.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-core-test-helper-xtb-export
+    title: xtbExport
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:19:00.248Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-xtb-connector
+    title: xtbConnector
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:19:07.391Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-xtb-connector-import-file
+    title: xtbConnector.ImportFile
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:19:17.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-xtb-connector-lookup-instruments
+    title: xtbConnector.LookupInstruments
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:19:26.258Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-xtb-discovery
+    title: xtbDiscovery
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:19:33.595Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-xtb-discovery-connector-instances
+    title: xtbDiscovery.ConnectorInstances
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:19:43.173Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-xtb-discovery-declarations
+    title: xtbDiscovery.Declarations
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:19:50.641Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-ticker-api
+    title: tickerAPI
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:19:57.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-xtb-upload
+    title: TestXTBUpload
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:20:03.422Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-check-first-xtb-uploads
+    title: checkFirstXTBUploads
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:20:10.453Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-slices-equal
+    title: slicesEqual
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:20:18.608Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-check-pending-tickers
+    title: checkPendingTickers
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:20:26.206Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-confirm
+    title: confirm
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:20:33.879Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-check-confirm-tickers
+    title: checkConfirmTickers
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:20:39.617Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-check-xtb-booked
+    title: checkXTBBooked
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:20:46.611Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-check-no-transfer-comments
+    title: checkNoTransferComments
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:20:52.729Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-core-test-helper-column
+    title: column
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:20:59.204Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-ingest-app-ticker-store
+    title: TickerStore
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:04.657Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-app-instrument-lookup
+    title: InstrumentLookup
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:10.544Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-ingest-app-connectors-book-tickers
+    title: Connectors.bookTickers
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:16.306Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-entries-wait
+  - id: SYM-ingest-app-connectors-propose-isi-ns
+    title: Connectors.proposeISINs
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:21.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-ingest-app-connectors-market-data-instances
+    title: Connectors.marketDataInstances
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:27.272Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-ingest-app-tickers
+    title: Tickers
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:31.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-app-tickers-pending
+    title: Tickers.Pending
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:36.724Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-app-tickers-confirm
+    title: Tickers.Confirm
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:42.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-connectapi-new-tickers
+    title: NewTickers
+    sourceFile: internal/ingest/connectapi/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:47.329Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-connectapi-tickers
+    title: tickers
+    sourceFile: internal/ingest/connectapi/tickers.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:51.668Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-connectapi-tickers-list-pending-tickers
+    title: tickers.ListPendingTickers
+    sourceFile: internal/ingest/connectapi/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:21:56.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-connectapi-tickers-confirm-ticker
+    title: tickers.ConfirmTicker
+    sourceFile: internal/ingest/connectapi/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:01.735Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-connectapi-tickers-fail
+    title: tickers.fail
+    sourceFile: internal/ingest/connectapi/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:07.258Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-connectrpc-test-helper-lookup-connector
+    title: lookupConnector
+    sourceFile: internal/ingest/connectrpc/lookup_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:11.891Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-lookup
+  - id: SYM-ingest-connectrpc-test-helper-lookup-connector-lookup-instruments
+    title: lookupConnector.LookupInstruments
+    sourceFile: internal/ingest/connectrpc/lookup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:17.135Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-lookup
+  - id: SYM-ingest-connectrpc-test-client-lookup-instruments
+    title: TestClientLookupInstruments
+    sourceFile: internal/ingest/connectrpc/lookup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:22.086Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-lookup
+  - id: SYM-ingest-connectrpc-tickers-from
+    title: tickersFrom
+    sourceFile: internal/ingest/connectrpc/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:27.100Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-ingest-connectrpc-broker-entries-of
+    title: brokerEntriesOf
+    sourceFile: internal/ingest/connectrpc/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:32.296Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-ingest-connectrpc-ticker-entry-from
+    title: tickerEntryFrom
+    sourceFile: internal/ingest/connectrpc/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:37.156Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-ingest-connectrpc-tickers-to
+    title: tickersTo
+    sourceFile: internal/ingest/connectrpc/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:42.149Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-ingest-connectrpc-proposals-from
+    title: proposalsFrom
+    sourceFile: internal/ingest/connectrpc/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:47.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-ingest-connectrpc-client-lookup-instruments
+    title: Client.LookupInstruments
+    sourceFile: internal/ingest/connectrpc/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:52.926Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-ingest-connectrpc-test-helper-ticker-mapping
+    title: tickerMapping
+    sourceFile: internal/ingest/connectrpc/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:22:57.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-tickers
+  - id: SYM-ingest-connectrpc-test-tickers-round-trip
+    title: TestTickersRoundTrip
+    sourceFile: internal/ingest/connectrpc/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:02.526Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-tickers
+  - id: SYM-ingest-connectrpc-test-tickers-refused
+    title: TestTickersRefused
+    sourceFile: internal/ingest/connectrpc/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:07.194Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-tickers
+  - id: SYM-ingest-delivery-tickers
+    title: tickers
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:12.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-ingest-delivery-ticker-entry
+    title: tickerEntry
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:18.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-ingest-pg-store-confirmed-tickers
+    title: Store.ConfirmedTickers
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:23.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-pg-store-hold-tickers
+    title: Store.HoldTickers
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:29.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-pg-hold-entry
+    title: holdEntry
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:35.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-pg-store-save-proposals
+    title: Store.SaveProposals
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:40.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-ingest-pg-store-pending-tickers
+    title: Store.PendingTickers
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:46.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-pg-scan-pending
+    title: scanPending
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:51.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-pg-store-confirm-ticker
+    title: Store.ConfirmTicker
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:23:56.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-pg-waiting-entries
+    title: waitingEntries
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:01.583Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-pg-entry-row
+    title: entryRow
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:06.119Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-pg-entry-row-entry
+    title: entryRow.entry
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:11.353Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-pg-store-booked-ticker-entries
+    title: Store.BookedTickerEntries
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:16.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-ticker
+    title: Ticker
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:20.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-entries-wait
+  - id: SYM-ingest-ticker-validate
+    title: Ticker.Validate
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:25.304Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-entries-wait
+  - id: SYM-ingest-valid-ticker-symbol
+    title: validTickerSymbol
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:30.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-entries-wait
+  - id: SYM-ingest-ticker-entry
+    title: TickerEntry
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:34.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-entries-wait
+  - id: SYM-ingest-ticker-entry-transaction
+    title: TickerEntry.Transaction
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:39.213Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-entries-wait
+  - id: SYM-ingest-ticker-entry-validate
+    title: TickerEntry.Validate
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:44.165Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-entries-wait
+  - id: SYM-ingest-ticker-confirmation
+    title: TickerConfirmation
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:49.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-isin-proposal
+    title: ISINProposal
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:54.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-ingest-pending-ticker
+    title: PendingTicker
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:24:59.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingest-book-ticker-entries
+    title: BookTickerEntries
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:03.931Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-entries-wait
+  - id: SYM-ingest-waiting-for-isin
+    title: WaitingForISIN
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:09.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-entries-wait
+  - id: SYM-ingest-test-helper-pln
+    title: pln
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:15.654Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-helper-isin
+    title: isin
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:21.744Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-helper-entry
+    title: entry
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:27.448Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-helper-entry-outcome
+    title: entryOutcome
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:33.593Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-helper-outcome-of
+    title: outcomeOf
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:39.916Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-helper-want-outcome
+    title: wantOutcome
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:45.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-ticker-entry-transaction
+    title: TestTickerEntryTransaction
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:51.250Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-book-ticker-entries
+    title: TestBookTickerEntries
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:25:56.305Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-ticker-validate
+    title: TestTickerValidate
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:01.286Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-resolve-broker-accounts-ticker-entries
+    title: TestResolveBrokerAccountsTickerEntries
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:06.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-xtb-problem-error
+    title: problemError
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:11.198Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-problem-error-error
+    title: problemError.Error
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:16.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-unsupported
+    title: unsupported
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:21.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-skipped
+    title: skipped
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:27.176Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-problem-of
+    title: problemOf
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:32.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-cash-row
+    title: cashRow
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:36.720Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-cash-operations
+    title: mapping.cashOperations
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:41.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-cash-ref
+    title: mapping.cashRef
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:47.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-read-cash
+    title: mapping.readCash
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:52.371Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-money
+    title: mapping.money
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:26:57.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-artifact
+    title: artifact
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:02.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-cash-row-header
+    title: cashRow.header
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:08.158Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-cash-operation
+    title: mapping.cashOperation
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:13.417Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-transfer
+    title: mapping.transfer
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:18.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-no-transfer-comments
+  - id: SYM-ingest-xtb-mapping-trade
+    title: mapping.trade
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:24.249Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-trade-volume
+    title: tradeVolume
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:29.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-dividend
+    title: mapping.dividend
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:35.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-ticker-entry
+    title: mapping.tickerEntry
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:42.607Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-need-stock
+    title: mapping.needStock
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:49.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-AUTO-A5EE8BC2AE68372A
+      - type: implements
+        target: REQ-ingest-xtb-cfd-flagged
+  - id: SYM-ingest-xtb-mapping-pair-withholding
+    title: mapping.pairWithholding
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:27:54.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-minor-unit
+    title: minorUnit
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:00.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapper
+    title: Mapper
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:04.952Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-export
+    title: export
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:09.207Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapper-map
+    title: Mapper.Map
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:14.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+      - type: implements
+        target: REQ-ingest-xtb-opening-refused
+  - id: SYM-ingest-xtb-read-export
+    title: readExport
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:19.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-export-tables
+    title: export.tables
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:25.333Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-export-account
+    title: exportAccount
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:30.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-xstation-name
+    title: xstationName
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:36.075Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-name-parts
+    title: nameParts
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:42.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-export-currency
+    title: exportCurrency
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:47.701Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping
+    title: mapping
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:52.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-result
+    title: mapping.result
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:28:57.844Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-problem
+    title: mapping.problem
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:03.511Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-mapping-ticker
+    title: mapping.ticker
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:09.101Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-shown-name
+    title: shownName
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:14.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-market-country
+    title: marketCountry
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:20.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-split-symbol
+    title: splitSymbol
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:26.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-stock-category
+    title: stockCategory
+    sourceFile: internal/ingest/xtb/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:32.477Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-AUTO-A5EE8BC2AE68372A
+      - type: implements
+        target: REQ-ingest-xtb-cfd-flagged
+  - id: SYM-ingest-xtb-test-main
+    title: TestMain
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:38.568Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-helper-at
+    title: at
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:45.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-helper-fixture
+    title: fixture
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:50.874Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-helper-map-export
+    title: mapExport
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:29:56.290Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-map-golden
+    title: TestMapGolden
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:01.726Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-helper-check-golden
+    title: checkGolden
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:07.280Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-helper-render
+    title: render
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:13.033Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-map-never-keeps-transfer-comments
+    title: TestMapNeverKeepsTransferComments
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:18.210Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-map-refuses
+    title: TestMapRefuses
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:23.921Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-helper-no-summary
+    title: noSummary
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:30.296Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-map-currency-from-summary
+    title: TestMapCurrencyFromSummary
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:36.089Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-test-map-amounts
+    title: TestMapAmounts
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:42.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ingest-xtb-mapping-closed-positions
+    title: mapping.closedPositions
+    sourceFile: internal/ingest/xtb/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:48.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-AUTO-A5EE8BC2AE68372A
+      - type: implements
+        target: REQ-ingest-xtb-cfd-flagged
+  - id: SYM-ingest-xtb-mapping-open-positions
+    title: mapping.openPositions
+    sourceFile: internal/ingest/xtb/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:53.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-AUTO-A5EE8BC2AE68372A
+      - type: implements
+        target: REQ-ingest-xtb-cfd-flagged
+  - id: SYM-ingest-xtb-mapping-position-ref
+    title: mapping.positionRef
+    sourceFile: internal/ingest/xtb/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:30:59.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-AUTO-A5EE8BC2AE68372A
+      - type: implements
+        target: REQ-ingest-xtb-cfd-flagged
+  - id: SYM-ingest-xtb-table
+    title: table
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:04.228Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-find-table
+    title: findTable
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:09.880Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-labels
+    title: labels
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:15.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-has-all
+    title: hasAll
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:21.013Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-first-text
+    title: firstText
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:26.689Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-empty
+    title: empty
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:32.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-record
+    title: record
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:36.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-table-records
+    title: table.records
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:42.648Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-table-has
+    title: table.has
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:49.754Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-record-cell
+    title: record.cell
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:31:55.871Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-record-text
+    title: record.text
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:02.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-record-errorf
+    title: record.errorf
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:08.932Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-record-decimal
+    title: record.decimal
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:15.759Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-record-id
+    title: record.id
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:21.894Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-epoch
+    title: epoch
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:28.167Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-text-layouts
+    title: textLayouts
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:34.083Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-record-date
+    title: record.date
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:39.464Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-serial-time
+    title: serialTime
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:45.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-parse-written
+    title: parseWritten
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:51.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-account-number
+    title: accountNumber
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:32:56.968Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-summary-currencies
+    title: summaryCurrencies
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:02.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-cell-at
+    title: cellAt
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:08.167Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-shown
+    title: shown
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:13.665Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-cell-kind
+    title: cellKind
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:19.680Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-cell
+    title: cell
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:26.348Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-sheet
+    title: sheet
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:31.693Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-sheet-row
+    title: sheet.row
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:38.487Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-workbook
+    title: workbook
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:45.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-zip-parts
+    title: zipParts
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:51.413Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-open-zip
+    title: openZip
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:33:58.250Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-zip-parts-part
+    title: zipParts.part
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:34:05.705Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-x-workbook
+    title: xWorkbook
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:34:11.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-x-rels
+    title: xRels
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:34:20.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-x-text
+    title: xText
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:34:26.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-x-text-string
+    title: xText.String
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:34:33.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-x-shared
+    title: xShared
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:34:44.852Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-x-cell
+    title: xCell
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:34:51.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-x-row
+    title: xRow
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:34:57.001Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-x-sheet
+    title: xSheet
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:35:02.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-read-workbook
+    title: readWorkbook
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:35:09.298Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-zip-parts-targets
+    title: zipParts.targets
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:35:16.212Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-zip-parts-shared-strings
+    title: zipParts.sharedStrings
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:35:23.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-part-name
+    title: partName
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:35:32.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-zip-parts-decode
+    title: zipParts.decode
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:35:41.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-zip-parts-sheet
+    title: zipParts.sheet
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:35:50.623Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-row-cells
+    title: rowCells
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:35:58.063Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-cell-value
+    title: cellValue
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:36:04.786Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-number
+    title: number
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:36:10.953Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-shared-string
+    title: sharedString
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:36:17.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtb-column-of
+    title: columnOf
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:36:23.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-cell
+    title: Cell
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:36:30.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-text
+    title: Text
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:36:36.455Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-num
+    title: Num
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:36:45.524Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-time
+    title: Time
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:36:55.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-sheet
+    title: Sheet
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:03.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-cash-header
+    title: CashHeader
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:08.673Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-closed-header
+    title: ClosedHeader
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:14.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-open-header
+    title: OpenHeader
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:19.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-export
+    title: Export
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:24.927Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-export-file-name
+    title: Export.FileName
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:30.805Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-texts
+    title: texts
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:37.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-top
+    title: top
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:44.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-total
+    title: total
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:51.007Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-export-bytes
+    title: Export.Bytes
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:37:57.880Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-cash-row
+    title: CashRow
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:38:04.991Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-position
+    title: Position
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:38:11.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-closed-row
+    title: ClosedRow
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:38:17.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-open-row
+    title: OpenRow
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:38:24.117Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-str-table
+    title: strTable
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:38:29.362Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-str-table-at
+    title: strTable.at
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:38:35.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-workbook
+    title: Workbook
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:38:42.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-worksheet
+    title: worksheet
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:38:48.396Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-zip-of
+    title: zipOf
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:38:54.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-column
+    title: column
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:39:01.188Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-ingest-xtbtest-escape
+    title: escape
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:39:08.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-mapper
+      - type: implements
+        target: REQ-ingest-xtb-export-mapping
+  - id: SYM-valuation-eodhd-client-search
+    title: Client.Search
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:39:14.089Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+      - type: implements
+        target: REQ-valuation-eodhd-request
+  - id: SYM-valuation-eodhd-country-exchange
+    title: CountryExchange
+    sourceFile: internal/valuation/eodhd/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:39:27.822Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-valuation-eodhd-find-by-code
+    title: FindByCode
+    sourceFile: internal/valuation/eodhd/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:39:34.200Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-valuation-eodhd-test-country-exchange
+    title: TestCountryExchange
+    sourceFile: internal/valuation/eodhd/lookup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:39:40.051Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-lookup
+  - id: SYM-valuation-eodhd-test-find-by-code
+    title: TestFindByCode
+    sourceFile: internal/valuation/eodhd/lookup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:39:45.411Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-eodhd-lookup
+  - id: SYM-ui-test-helper-upload-answer
+    title: uploadAnswer
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:39:51.333Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-ui-waiting-rows
+    title: waitingRows
+    sourceFile: internal/views/ui/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:39:57.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-tickers-to-confirm
+  - id: SYM-ui-server-statement-routes
+    title: server.statementRoutes
+    sourceFile: internal/views/ui/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:40:04.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-tickers-to-confirm
+  - id: SYM-ui-tickers-view
+    title: tickersView
+    sourceFile: internal/views/ui/tickers.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:40:11.649Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-tickers-to-confirm
+  - id: SYM-ui-server-tickers-page
+    title: server.tickersPage
+    sourceFile: internal/views/ui/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:40:18.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-tickers-to-confirm
+  - id: SYM-ui-server-render-tickers
+    title: server.renderTickers
+    sourceFile: internal/views/ui/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:40:25.194Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-tickers-to-confirm
+  - id: SYM-ui-server-confirm-ticker
+    title: server.confirmTicker
+    sourceFile: internal/views/ui/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:40:30.840Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-tickers-to-confirm
+  - id: SYM-ui-test-helper-fake-tickers
+    title: fakeTickers
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:40:35.915Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-ui-test-helper-fake-tickers-list-pending-tickers
+    title: fakeTickers.ListPendingTickers
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:40:41.706Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-ui-test-helper-fake-tickers-confirm-ticker
+    title: fakeTickers.ConfirmTicker
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:40:47.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-ui-test-helper-xtb-upload-response
+    title: xtbUploadResponse
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:40:53.925Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-ui-test-tickers-page
+    title: TestTickersPage
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:00.380Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-ui-test-confirm-ticker
+    title: TestConfirmTicker
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:07.472Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-ui-test-upload-waiting-for-tickers
+    title: TestUploadWaitingForTickers
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:14.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-plugins-eodhd-test-helper-fake-eodhd-search
+    title: fakeEODHD.Search
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:20.577Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-test-helper-must-isin
+    title: mustISIN
+    sourceFile: plugins/eodhd/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:26.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-connector
+  - id: SYM-plugins-eodhd-connector-lookup-instruments
+    title: connector.LookupInstruments
+    sourceFile: plugins/eodhd/lookup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:33.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-eodhd-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-plugins-eodhd-test-helper-lookup-with
+    title: lookupWith
+    sourceFile: plugins/eodhd/lookup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:39.586Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-lookup
+  - id: SYM-plugins-eodhd-test-lookup-instruments
+    title: TestLookupInstruments
+    sourceFile: plugins/eodhd/lookup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:44.931Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-lookup
+  - id: SYM-plugins-eodhd-test-lookup-instruments-refuses
+    title: TestLookupInstrumentsRefuses
+    sourceFile: plugins/eodhd/lookup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:50.282Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-lookup
+  - id: SYM-plugins-xtb-connector
+    title: connector
+    sourceFile: plugins/xtb/connector.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:41:55.408Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-plugins-xtb-connector
+  - id: SYM-plugins-xtb-connector-sync
+    title: connector.Sync
+    sourceFile: plugins/xtb/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:42:01.909Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-plugins-xtb-connector
+  - id: SYM-plugins-xtb-connector-import-file
+    title: connector.ImportFile
+    sourceFile: plugins/xtb/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:42:08.510Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-plugins-xtb-connector
+  - id: SYM-plugins-xtb-map-code
+    title: mapCode
+    sourceFile: plugins/xtb/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:42:14.799Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-plugins-xtb-connector
+  - id: SYM-plugins-xtb-status
+    title: status
+    sourceFile: plugins/xtb/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:42:21.311Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-plugins-xtb-connector
+  - id: SYM-plugins-xtb-test-helper-export
+    title: export
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:42:28.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-helper-fake-verifier
+    title: fakeVerifier
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:42:34.396Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-helper-fake-verifier-verify-core
+    title: fakeVerifier.VerifyCore
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:42:41.933Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-helper-fake-core
+    title: fakeCore
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:42:47.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-helper-client
+    title: client
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:42:54.286Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-helper-import-file
+    title: importFile
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:00.769Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-import-file
+    title: TestImportFile
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:07.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-import-file-refused
+    title: TestImportFileRefused
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:13.969Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-sync
+    title: TestSync
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:20.299Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-manifest
+    title: TestManifest
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:26.782Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-main
+    title: main
+    sourceFile: plugins/xtb/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:32.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-plugins-xtb-connector
+  - id: SYM-plugins-xtb-serve
+    title: serve
+    sourceFile: plugins/xtb/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:37.750Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-plugins-xtb-connector
+  - id: SYM-plugins-xtb-run
+    title: run
+    sourceFile: plugins/xtb/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:42.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-plugins-xtb-connector
+  - id: SYM-connectorv1-delivery-get-tickers
+    title: Delivery.GetTickers
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:48.811Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-delivery-get-ticker-transactions
+    title: Delivery.GetTickerTransactions
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:43:55.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker
+    title: Ticker
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:00.350Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-reset
+    title: Ticker.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:06.639Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-string
+    title: Ticker.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:13.288Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-proto-message
+    title: Ticker.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:19.822Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-proto-reflect
+    title: Ticker.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:26.517Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-descriptor
+    title: Ticker.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:32.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-get-symbol
+    title: Ticker.GetSymbol
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:38.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-get-code
+    title: Ticker.GetCode
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:45.171Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-get-country
+    title: Ticker.GetCountry
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:51.298Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-get-name
+    title: Ticker.GetName
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:44:58.445Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction
+    title: TickerTransaction
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:45:03.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-reset
+    title: TickerTransaction.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:45:09.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-string
+    title: TickerTransaction.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:45:16.295Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-proto-message
+    title: TickerTransaction.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:45:22.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-proto-reflect
+    title: TickerTransaction.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:45:28.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-descriptor
+    title: TickerTransaction.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:45:35.766Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-symbol
+    title: TickerTransaction.GetSymbol
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:45:42.162Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-key
+    title: TickerTransaction.GetKey
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:45:48.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-account-id
+    title: TickerTransaction.GetAccountId
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:45:54.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-broker-account
+    title: TickerTransaction.GetBrokerAccount
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:46:01.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-kind
+    title: TickerTransaction.GetKind
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:46:08.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-date
+    title: TickerTransaction.GetDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:46:17.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-quantity
+    title: TickerTransaction.GetQuantity
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:46:25.194Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-amount
+    title: TickerTransaction.GetAmount
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:46:32.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-charge
+    title: TickerTransaction.GetCharge
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:46:38.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-description
+    title: TickerTransaction.GetDescription
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:46:45.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-ticker-transaction-get-ref
+    title: TickerTransaction.GetRef
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:46:52.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-contract
+  - id: SYM-connectorv1-lookup-instruments-request
+    title: LookupInstrumentsRequest
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:46:57.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-request-reset
+    title: LookupInstrumentsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:04.558Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-request-string
+    title: LookupInstrumentsRequest.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:10.354Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-request-proto-message
+    title: LookupInstrumentsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:16.008Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-request-proto-reflect
+    title: LookupInstrumentsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:21.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-request-descriptor
+    title: LookupInstrumentsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:27.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-request-get-tickers
+    title: LookupInstrumentsRequest.GetTickers
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:33.069Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-instrument-proposal
+    title: InstrumentProposal
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:38.133Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-instrument-proposal-reset
+    title: InstrumentProposal.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:45.010Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-instrument-proposal-string
+    title: InstrumentProposal.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:51.763Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-instrument-proposal-proto-message
+    title: InstrumentProposal.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:47:58.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-instrument-proposal-proto-reflect
+    title: InstrumentProposal.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:05.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-instrument-proposal-descriptor
+    title: InstrumentProposal.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:11.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-instrument-proposal-get-symbol
+    title: InstrumentProposal.GetSymbol
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:18.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-instrument-proposal-get-isin
+    title: InstrumentProposal.GetIsin
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:24.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-instrument-proposal-get-name
+    title: InstrumentProposal.GetName
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T13:48:31.391Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-response
+    title: LookupInstrumentsResponse
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:17.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-response-reset
+    title: LookupInstrumentsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:23.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-response-string
+    title: LookupInstrumentsResponse.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:30.348Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-response-proto-message
+    title: LookupInstrumentsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:37.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-response-proto-reflect
+    title: LookupInstrumentsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:44.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-response-descriptor
+    title: LookupInstrumentsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:51.527Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1-lookup-instruments-response-get-proposals
+    title: LookupInstrumentsResponse.GetProposals
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:00:58.468Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1connect-connector-service-client-lookup-instruments
+    title: connectorServiceClient.LookupInstruments
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:05.423Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-connectorv1connect-unimplemented-connector-service-handler-lookup-instruments
+    title: UnimplementedConnectorServiceHandler.LookupInstruments
+    sourceFile: sdk/go/gen/openfief/connector/v1/connectorv1connect/connector.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:11.871Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-lookup
+      - type: implements
+        target: REQ-ingest-ticker-isin-lookup
+  - id: SYM-ingestv1connect-ticker-service-client
+    title: TickerServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:18.015Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1connect-new-ticker-service-client
+    title: NewTickerServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:24.690Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1connect-ticker-service-client-list-pending-tickers
+    title: tickerServiceClient.ListPendingTickers
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:37.182Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1connect-ticker-service-client-confirm-ticker
+    title: tickerServiceClient.ConfirmTicker
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:44.056Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1connect-ticker-service-handler
+    title: TickerServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:51.500Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1connect-new-ticker-service-handler
+    title: NewTickerServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:01:58.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1connect-unimplemented-ticker-service-handler
+    title: UnimplementedTickerServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:03.698Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1connect-unimplemented-ticker-service-handler-list-pending-tickers
+    title: UnimplementedTickerServiceHandler.ListPendingTickers
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:09.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1connect-unimplemented-ticker-service-handler-confirm-ticker
+    title: UnimplementedTickerServiceHandler.ConfirmTicker
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:15.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-request
+    title: ListPendingTickersRequest
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:21.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-request-reset
+    title: ListPendingTickersRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:26.764Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-request-string
+    title: ListPendingTickersRequest.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:32.190Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-request-proto-message
+    title: ListPendingTickersRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:37.433Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-request-proto-reflect
+    title: ListPendingTickersRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:42.871Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-request-descriptor
+    title: ListPendingTickersRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:47.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-request-get-origin
+    title: ListPendingTickersRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:52.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-request-get-session-token
+    title: ListPendingTickersRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:02:58.636Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker
+    title: PendingTicker
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:03:03.375Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-reset
+    title: PendingTicker.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:03:09.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-string
+    title: PendingTicker.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:03:15.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-proto-message
+    title: PendingTicker.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:03:23.693Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-proto-reflect
+    title: PendingTicker.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:03:31.901Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-descriptor
+    title: PendingTicker.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:03:39.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-get-instance
+    title: PendingTicker.GetInstance
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:03:47.580Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-get-symbol
+    title: PendingTicker.GetSymbol
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:03:54.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-get-country
+    title: PendingTicker.GetCountry
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:04:01.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-get-name
+    title: PendingTicker.GetName
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:04:09.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-get-proposed-isin
+    title: PendingTicker.GetProposedIsin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:04:16.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-get-proposed-name
+    title: PendingTicker.GetProposedName
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:04:23.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-pending-ticker-get-waiting
+    title: PendingTicker.GetWaiting
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:04:29.092Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-response
+    title: ListPendingTickersResponse
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:04:56.330Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-response-reset
+    title: ListPendingTickersResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:05:04.538Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-response-string
+    title: ListPendingTickersResponse.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:05:11.269Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-response-proto-message
+    title: ListPendingTickersResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:05:17.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-response-proto-reflect
+    title: ListPendingTickersResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:05:23.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-response-descriptor
+    title: ListPendingTickersResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:05:29.109Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-list-pending-tickers-response-get-tickers
+    title: ListPendingTickersResponse.GetTickers
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:05:35.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request
+    title: ConfirmTickerRequest
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:05:41.250Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-reset
+    title: ConfirmTickerRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:05:47.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-string
+    title: ConfirmTickerRequest.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:05:54.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-proto-message
+    title: ConfirmTickerRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:00.536Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-proto-reflect
+    title: ConfirmTickerRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:07.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-descriptor
+    title: ConfirmTickerRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:13.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-get-origin
+    title: ConfirmTickerRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:19.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-get-session-token
+    title: ConfirmTickerRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:24.785Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-get-instance
+    title: ConfirmTickerRequest.GetInstance
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:30.879Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-get-symbol
+    title: ConfirmTickerRequest.GetSymbol
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:37.210Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-request-get-isin
+    title: ConfirmTickerRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:44.177Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-response
+    title: ConfirmTickerResponse
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:49.350Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-response-reset
+    title: ConfirmTickerResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:06:55.383Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-response-string
+    title: ConfirmTickerResponse.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:07:01.990Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-response-proto-message
+    title: ConfirmTickerResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:07:08.403Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-response-proto-reflect
+    title: ConfirmTickerResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:07:15.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-response-descriptor
+    title: ConfirmTickerResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:07:23.840Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-confirm-ticker-response-get-booked
+    title: ConfirmTickerResponse.GetBooked
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:07:31.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-file_openfief_ingest_v1_tickers_proto_raw-desc-gzip
+    title: file_openfief_ingest_v1_tickers_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:07:39.639Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-init-tickers
+    title: init
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:07:47.887Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-file_openfief_ingest_v1_tickers_proto_init
+    title: file_openfief_ingest_v1_tickers_proto_init
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:07:55.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-ingestv1-x-tickers
+    title: x
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:08:03.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation
+  - id: SYM-valuation-eodhd-client-search-query
+    title: Client.search
+    sourceFile: internal/valuation/eodhd/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:47:17.285Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-eodhd-client
+      - type: implements
+        target: REQ-valuation-eodhd-listing
+      - type: implements
+        target: REQ-valuation-eodhd-request
+  - id: SYM-ingestv1connect-ticker-service-client-impl
+    title: tickerServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/tickers.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T14:47:21.850Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-confirmation

@@ -545,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e01e3a48035
+  - type: implements
+    from: SYM-ingest-xtb-zip-parts-part
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:34:07.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c15c3962fb9
+  - type: covered_by
+    from: SYM-ingest-xtb-zip-parts-part
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:34:07.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af34d262d05f

@@ -377,3 +377,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a8e716ac580
+  - type: implements
+    from: SYM-ingestv1-pending-ticker-get-name
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:04:12.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f44e932d5de
+  - type: covered_by
+    from: SYM-ingestv1-pending-ticker-get-name
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:04:12.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-746dfe142fa6

@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d3c181b035f
+  - type: validates
+    from: TEST-core-xtb-upload
+    to: REQ-core-owner-entry-services
+    created_at: 2026-10-31T12:54:39.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-397c1b9e4692
+  - type: implements
+    from: SYM-ingest-app-connectors-market-data-instances
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:21:29.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3774ed7a9732
+  - type: covered_by
+    from: SYM-ingest-app-connectors-market-data-instances
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:29.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d74f004ce381

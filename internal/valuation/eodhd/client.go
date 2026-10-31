@@ -70,19 +70,14 @@ func New(hc *http.Client, baseURL, token string) *Client {
 // Listings returns the listings EODHD's search finds for isin, on any
 // exchange; Pick chooses one. A search that finds nothing is empty.
 func (c *Client) Listings(ctx context.Context, isin ledger.ISIN) ([]Listing, error) {
-	q := url.Values{"limit": {strconv.Itoa(searchLimit)}}
-	body, err := c.get(ctx, "/api/search/"+url.PathEscape(isin.String()), q)
-	if errors.Is(err, ErrNotFound) {
-		return []Listing{}, nil
-	}
-	if err != nil {
-		return nil, fmt.Errorf("EODHD search for %s: %w", isin, err)
-	}
-	listings, err := parseListings(body)
-	if err != nil {
-		return nil, fmt.Errorf("EODHD search for %s: %w", isin, err)
-	}
-	return listings, nil
+	return c.search(ctx, isin.String(), url.Values{})
+}
+
+// Search returns the listings EODHD's search finds for a ticker's code on
+// exchange, such as "SYNT" on "XETRA", for proposing its ISIN (D-116);
+// FindByCode chooses among them. A search that finds nothing is empty.
+func (c *Client) Search(ctx context.Context, code, exchange string) ([]Listing, error) {
+	return c.search(ctx, code, url.Values{"exchange": {exchange}})
 }
 
 // Closes returns ticker's daily closes between the dates from and to, both
@@ -102,6 +97,23 @@ func (c *Client) Closes(ctx context.Context, ticker string, from, to kernel.Date
 		return nil, fmt.Errorf("EODHD closes of %s: %w", ticker, err)
 	}
 	return closes, nil
+}
+
+// search sends EODHD's search for query with the extra parameters q.
+func (c *Client) search(ctx context.Context, query string, q url.Values) ([]Listing, error) {
+	q.Set("limit", strconv.Itoa(searchLimit))
+	body, err := c.get(ctx, "/api/search/"+url.PathEscape(query), q)
+	if errors.Is(err, ErrNotFound) {
+		return []Listing{}, nil
+	}
+	if err != nil {
+		return nil, fmt.Errorf("EODHD search for %s: %w", query, err)
+	}
+	listings, err := parseListings(body)
+	if err != nil {
+		return nil, fmt.Errorf("EODHD search for %s: %w", query, err)
+	}
+	return listings, nil
 }
 
 // get sends a GET for path with query plus the API key and JSON format, and
@@ -159,7 +171,7 @@ func parseListings(body []byte) ([]Listing, error) {
 		if err != nil {
 			continue
 		}
-		out = append(out, Listing{ISIN: isin, Code: text(r["Code"]), Exchange: text(r["Exchange"]), Currency: text(r["Currency"])})
+		out = append(out, Listing{ISIN: isin, Code: text(r["Code"]), Exchange: text(r["Exchange"]), Currency: text(r["Currency"]), Name: text(r["Name"])})
 	}
 	return out, nil
 }

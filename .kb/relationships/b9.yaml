@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4916581fd90
+  - type: implements
+    from: SYM-valuation-eodhd-find-by-code
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:39:36.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07f5577a6815
+  - type: covered_by
+    from: SYM-valuation-eodhd-find-by-code
+    to: TEST-valuation-eodhd-lookup
+    created_at: 2026-10-31T13:39:36.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1886337b2710

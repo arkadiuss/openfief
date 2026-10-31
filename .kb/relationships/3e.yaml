@@ -461,3 +461,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01dde8d3c669
+  - type: implements
+    from: SYM-ingest-book-ticker-entries
+    to: REQ-ingest-ticker-entries-wait
+    created_at: 2026-10-31T13:25:06.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b8e3e9f7a81
+  - type: covered_by
+    from: SYM-ingest-book-ticker-entries
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:25:06.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d4d364b0f56
+  - type: implements
+    from: SYM-ingest-xtbtest-str-table-at
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:38:37.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39abdd1b32ad
+  - type: covered_by
+    from: SYM-ingest-xtbtest-str-table-at
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:38:37.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27d8174afd83

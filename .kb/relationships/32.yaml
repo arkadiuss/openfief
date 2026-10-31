@@ -489,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3e6b4bc8a73
+  - type: implements
+    from: SYM-ingestv1-list-pending-tickers-response-descriptor
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:05:31.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ecf14221814
+  - type: covered_by
+    from: SYM-ingestv1-list-pending-tickers-response-descriptor
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:05:31.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08af021f6c68

@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90d2dd965cc2
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-request-string
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:05:56.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-577d06360bd5
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-request-string
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:05:56.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39bd2a1f2ca6

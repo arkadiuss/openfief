@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e2655b21473
+  - type: executable_for
+    from: SYM-core-test-helper-check-pending-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:20:28.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-878db898d7f0
+  - type: implements
+    from: SYM-ingest-xtb-mapper
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:28:06.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fac8d1e7f325
+  - type: covered_by
+    from: SYM-ingest-xtb-mapper
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:28:06.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0844a5efaea4

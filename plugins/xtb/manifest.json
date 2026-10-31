@@ -1,0 +1,8 @@
+{
+  "capabilities": ["connector"],
+  "statementFiles": true,
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false
+  }
+}

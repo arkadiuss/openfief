@@ -30,18 +30,25 @@ func newUploads(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Uploads {
 	}
 }
 
-// withStatementService returns h with the StatementService mounted next to
-// it (D-49): its calls go to the uploads' handler, admitted like the
-// AuthService's, view plugins only, every other path to h. Nothing may
-// store its responses.
-func withStatementService(h http.Handler, uploads *ingestapp.Uploads, callers identityconnect.Callers, log *slog.Logger) http.Handler {
-	path, handler := ingestconnect.NewStatements(uploads, identityconnect.NewCallerInterceptor(callers, log), log)
+// newTickers returns the owner's ticker confirmations (D-116) over d: the
+// owner's sessions checked by owners, the tickers, proposals and waiting
+// entries in the ingest schema, and a confirmed ticker's entries booked
+// into the ledger.
+func newTickers(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Tickers {
+	return &ingestapp.Tickers{Owners: owners, Store: ingestpg.New(d.pool), Ledger: ledgerImporter{ledger: d.ledger}}
+}
+
+// withStatementService returns h with the StatementService and the
+// TickerService mounted next to it (D-49, D-79, D-116): their calls go to
+// the uploads' and the tickers' handlers, admitted like the AuthService's,
+// view plugins only, every other path to h. Nothing may store their
+// responses.
+func withStatementService(h http.Handler, uploads *ingestapp.Uploads, t *ingestapp.Tickers, callers identityconnect.Callers, log *slog.Logger) http.Handler {
+	statementPath, statementHandler := ingestconnect.NewStatements(uploads, identityconnect.NewCallerInterceptor(callers, log), log)
+	tickerPath, tickerHandler := ingestconnect.NewTickers(t, identityconnect.NewCallerInterceptor(callers, log), log)
 	mux := http.NewServeMux()
-	mux.Handle(path, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", "no-store")
-		w.Header().Set("X-Content-Type-Options", "nosniff")
-		handler.ServeHTTP(w, r)
-	}))
+	mux.Handle(statementPath, noStore(statementHandler))
+	mux.Handle(tickerPath, noStore(tickerHandler))
 	mux.Handle("/", h)
 	return mux
 }

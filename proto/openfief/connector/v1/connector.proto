@@ -37,6 +37,12 @@ service ConnectorService {
   // answers UNIMPLEMENTED; a lot it refuses, such as one whose purchase date
   // doesn't match its series, INVALID_ARGUMENT naming the rule it broke.
   rpc ImportBondLots(ImportBondLotsRequest) returns (ImportBondLotsResponse);
+  // LookupInstruments proposes the ISIN of each ticker an institution named
+  // without one (D-116), such as a ticker of an xStation export, so the
+  // owner confirms it once. The core asks the market-data connectors; one
+  // that can't look instruments up answers UNIMPLEMENTED. A ticker it finds
+  // no single ISIN for is left out of the response.
+  rpc LookupInstruments(LookupInstrumentsRequest) returns (LookupInstrumentsResponse);
 }
 
 // Money is an exact amount in one currency.
@@ -285,6 +291,71 @@ message Delivery {
   // without any transaction too (D-72). A broker account a transaction or
   // balance assertion names counts as reported even when it is not listed.
   repeated BrokerAccount broker_accounts = 12;
+  // The instruments the institution named by ticker only, with no ISIN
+  // (D-116), each once.
+  repeated Ticker tickers = 13;
+  // The transactions of instruments named in tickers. The core books each
+  // with the ISIN the owner confirmed for its ticker, and holds it as an
+  // ingest problem until the owner does.
+  repeated TickerTransaction ticker_transactions = 14;
+}
+
+// Ticker is an instrument as an institution that reports no ISIN names it
+// (D-116).
+message Ticker {
+  // The instrument's symbol at the institution, such as "TESTA.PL"; the
+  // ledger keeps it as the instrument's venue symbol.
+  string symbol = 1;
+  // The instrument's code on its market, such as "TESTA".
+  string code = 2;
+  // The ISO 3166-1 alpha-2 code of the market's country, such as "PL", or
+  // empty when the institution's symbol doesn't say.
+  string country = 3;
+  // The instrument's display name at the institution, for the owner.
+  string name = 4;
+}
+
+// TickerTransaction is a buy, sell or dividend of an instrument named by
+// ticker only (D-116): what the core needs to book it once the ISIN is
+// confirmed. Its fields mean what Transaction's do.
+message TickerTransaction {
+  // The symbol of one of the delivery's tickers.
+  string symbol = 1;
+  TransactionKey key = 2;
+  string account_id = 3;
+  string broker_account = 4;
+  // TRANSACTION_KIND_BUY, TRANSACTION_KIND_SELL or TRANSACTION_KIND_DIVIDEND.
+  TransactionKind kind = 5;
+  string date = 6;
+  // The units bought or sold, positive; empty for a dividend.
+  string quantity = 7;
+  // A buy's cost, a sale's proceeds or a dividend's gross amount, positive.
+  Money amount = 8;
+  // A buy's or sale's fee, or the tax withheld from a dividend; unset for
+  // none.
+  Money charge = 9;
+  string description = 10;
+  // Where the row is in the statement, as in Problem: the ingest problem
+  // that holds it while it waits names it so.
+  string ref = 11;
+}
+
+message LookupInstrumentsRequest {
+  repeated Ticker tickers = 1;
+}
+
+// InstrumentProposal is the ISIN a market-data connector found for a ticker.
+message InstrumentProposal {
+  // The ticker's symbol, as the request named it.
+  string symbol = 1;
+  // The ISIN found, with a valid check digit.
+  string isin = 2;
+  // The instrument's name at the market-data source, for the owner.
+  string name = 3;
+}
+
+message LookupInstrumentsResponse {
+  repeated InstrumentProposal proposals = 1;
 }
 
 message SyncRequest {

@@ -1,0 +1,19 @@
+broker accounts [0000000]
+ticker TESTA.PL code=TESTA country=PL name="Test Alpha SA"
+ticker TESTB.UK code=TESTB country=GB name="Test Beta PLC"
+0000000 tx xtb/9000000001 deposit 2025-11-03 account="" "deposit"
+  cash:PLN 10000 PLN
+  equity:PLN -10000 PLN
+0000000 tx xtb/9000000009 withdrawal 2026-05-01 account="" "withdrawal"
+  cash:PLN -1000 PLN
+  equity:PLN 1000 PLN
+0000000 ticker-entry xtb/9000000002 buy 2025-11-04 TESTA.PL units=10 amount=1234.5 PLN charge=0  "buy TESTA.PL" ref=Cash Operations#15[ID=9000000002]
+0000000 ticker-entry xtb/9000000003 buy 2025-11-05 TESTB.UK units=5 amount=500 PLN charge=0  "buy TESTB.UK" ref=Cash Operations#14[ID=9000000003]
+0000000 ticker-entry xtb/9000000004 dividend 2026-03-02 TESTB.UK units=0 amount=12.5 PLN charge=1.88 PLN "dividend TESTB.UK" ref=Cash Operations#11[ID=9000000004]
+0000000 ticker-entry xtb/9000000006 sell 2026-04-01 TESTA.PL units=3 amount=399.99 PLN charge=0  "sell TESTA.PL" ref=Cash Operations#9[ID=9000000006]
+problem unsupported Cash Operations#13[ID=9000000007]: free-funds interest is not supported yet
+problem unsupported Cash Operations#12[ID=9000000008]: free-funds interest is not supported yet
+problem unsupported Cash Operations#7[ID=9000000010]: cash operation type "Sec fee" is not supported
+problem unsupported Cash Operations#6[ID=9000000011]: category "CFD" is not a stock or ETF (D-24)
+problem unsupported Closed Positions#7[Position ID=9000000102]: closed CFD position (category "IND"): its result is not booked yet (D-24)
+problem unsupported Open Positions#11: open CFD position (category "CMD") is not supported (D-24)

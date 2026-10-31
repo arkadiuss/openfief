@@ -412,3 +412,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bfa4093e791f
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-client-lookup-instruments
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:22:23.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-775f045ad373

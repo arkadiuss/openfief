@@ -391,3 +391,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e60a1e692d79
+  - type: implements
+    from: SYM-ingest-xtb-zip-parts-shared-strings
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:35:26.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1039dd6ad740
+  - type: covered_by
+    from: SYM-ingest-xtb-zip-parts-shared-strings
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:35:26.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e53b3e996de
+  - type: implements
+    from: SYM-ingestv1connect-unimplemented-ticker-service-handler
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:02:06.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0686fb4e2ff2
+  - type: covered_by
+    from: SYM-ingestv1connect-unimplemented-ticker-service-handler
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:02:06.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-740e03f51e65
+  - type: implements
+    from: SYM-ingestv1connect-ticker-service-client-impl
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:47:23.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16d12050ad9f
+  - type: covered_by
+    from: SYM-ingestv1connect-ticker-service-client-impl
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:47:23.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e64dde37f66a

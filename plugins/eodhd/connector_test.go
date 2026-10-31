@@ -86,6 +86,40 @@ func (f *fakeEODHD) Listings(_ context.Context, isin ledger.ISIN) ([]eodhd.Listi
 	return nil, nil
 }
 
+// Search finds FAKEW on Warsaw, SYNT on Xetra and the LSE, and SYN on the
+// LSE twice under two ISINs.
+func (f *fakeEODHD) Search(_ context.Context, code, exchange string) ([]eodhd.Listing, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.asked = append(f.asked, "search "+code+" on "+exchange)
+	if f.err != nil {
+		return nil, f.err
+	}
+	synt, fakew := mustISIN(syntISIN), mustISIN(fakewISIN)
+	all := []eodhd.Listing{
+		{ISIN: fakew, Code: "FAKEW", Exchange: "WAR", Currency: "PLN", Name: "Fake Warsaw SA"},
+		{ISIN: synt, Code: "SYNT", Exchange: "XETRA", Currency: "EUR", Name: "Synthetic Test ETF"},
+		{ISIN: synt, Code: "SYN", Exchange: "LSE", Currency: "GBX"},
+		{ISIN: fakew, Code: "SYN", Exchange: "LSE", Currency: "GBX"},
+	}
+	var out []eodhd.Listing
+	for _, l := range all {
+		if l.Exchange == exchange {
+			out = append(out, l)
+		}
+	}
+	return out, nil
+}
+
+// mustISIN parses a synthetic ISIN constant, valid by construction.
+func mustISIN(s string) ledger.ISIN {
+	i, err := ledger.ParseISIN(s)
+	if err != nil {
+		return ledger.ISIN{}
+	}
+	return i
+}
+
 func (f *fakeEODHD) Closes(_ context.Context, ticker string, from, to kernel.Date) ([]eodhd.Close, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()

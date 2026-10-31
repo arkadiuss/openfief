@@ -538,3 +538,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e220ef131c4
+  - type: implements
+    from: SYM-ingest-xtb-find-table
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:31:11.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a63d433f22b8
+  - type: covered_by
+    from: SYM-ingest-xtb-find-table
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:31:11.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7d1ea7b2185
+  - type: executable_for
+    from: SYM-ui-test-upload-waiting-for-tickers
+    to: TEST-ui-tickers
+    created_at: 2026-10-31T13:41:16.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11053839c74e
+  - type: implements
+    from: SYM-ingestv1-list-pending-tickers-request-get-session-token
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:03:00.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47dcf8697b9c
+  - type: covered_by
+    from: SYM-ingestv1-list-pending-tickers-request-get-session-token
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:03:00.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b6282cc4fd2

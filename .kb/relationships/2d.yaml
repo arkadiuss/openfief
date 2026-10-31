@@ -447,3 +447,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddecc8c5a115
+  - type: implements
+    from: SYM-ingest-xtbtest-export-file-name
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:37:33.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a161db3ac877
+  - type: covered_by
+    from: SYM-ingest-xtbtest-export-file-name
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:37:33.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c77d34eed129
+  - type: implements
+    from: SYM-connectorv1-ticker-descriptor
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:44:34.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dbade4e747b
+  - type: covered_by
+    from: SYM-connectorv1-ticker-descriptor
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:44:34.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee9fde5ed2b0

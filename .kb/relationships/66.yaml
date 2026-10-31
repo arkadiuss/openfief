@@ -356,3 +356,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9ec5fdd12b5
+  - type: implements
+    from: SYM-ingest-xtb-unsupported
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:26:23.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ed2ab5a43df
+  - type: covered_by
+    from: SYM-ingest-xtb-unsupported
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:26:23.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c2d57ed712c
+  - type: implements
+    from: SYM-ingest-xtb-record-decimal
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:32:17.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8567f8976029
+  - type: covered_by
+    from: SYM-ingest-xtb-record-decimal
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:32:18.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fe350b0e107
+  - type: implements
+    from: SYM-connectorv1-ticker-get-symbol
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:44:40.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df6c0bf3392f
+  - type: covered_by
+    from: SYM-connectorv1-ticker-get-symbol
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:44:41.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e00667c3afe4
