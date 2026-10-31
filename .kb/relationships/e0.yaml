@@ -657,13 +657,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f591beaa4b14
-  - type: implements
-    from: SYM-ui-posted-once
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T07:37:48.823Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0f231429a697
   - type: covered_by
     from: SYM-ui-posted-once
     to: TEST-ui-bond-lots
@@ -776,3 +769,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a69e6c7f593e
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-one-instance-all-accounts
+    created_at: 2026-10-31T18:10:16.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1eedab119070
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-lot-on-go-live-day-opening
+    created_at: 2026-10-31T18:11:41.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d1ffe5cd922
+  - type: implements
+    from: SYM-ui-posted-once
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:24:25.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ab24c163457

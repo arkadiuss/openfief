@@ -12,11 +12,11 @@ import (
 // routeOrigin is the owner's own route in these tests.
 const routeOrigin = "https://fief.example.org"
 
-// TestEnrollOrigin checks D-80's --origin: for an origin the core allows,
-// the command prints the link for that origin and forwards no port.
+// TestEnrollOrigin checks D-80's --origin: the command prints the link the
+// core issues for that origin and forwards no port.
 func TestEnrollOrigin(t *testing.T) {
 	t.Parallel()
-	core := &fakeCore{linked: make(chan struct{}), allowed: []string{"http://localhost:8080", routeOrigin}}
+	core := &fakeCore{linked: make(chan struct{})}
 	var out syncBuffer
 	err := cli.Run(t.Context(), []string{"--origin", routeOrigin, "--ttl", "1h"},
 		&cli.Env{Out: &out, Connect: func(string, string) (cli.Core, error) { return core, nil }})
@@ -39,19 +39,24 @@ func TestEnrollOrigin(t *testing.T) {
 	}
 }
 
+// TestEnrollOriginRefused checks that bad arguments ask nothing of the
+// core, and that the core's refusal of an origin it doesn't accept (D-126)
+// is passed on with no link printed and no port forwarded.
 func TestEnrollOriginRefused(t *testing.T) {
 	t.Parallel()
-	local := []string{"http://localhost:8080"}
 	tests := []struct {
-		name    string
-		args    []string
-		core    *fakeCore
-		wantErr error
+		name     string
+		args     []string
+		core     *fakeCore
+		wantErr  error
+		wantHost string
 	}{
-		{name: "an origin the core doesn't allow", args: []string{"--origin", routeOrigin}, core: &fakeCore{allowed: local}, wantErr: cli.ErrOriginNotAllowed},
-		{name: "--origin with --port", args: []string{"--origin", routeOrigin, "--port", "9090"}, core: &fakeCore{allowed: local}, wantErr: cli.ErrUsage},
-		{name: "a host, not an origin", args: []string{"--origin", "fief.example.org"}, core: &fakeCore{allowed: local}, wantErr: cli.ErrUsage},
-		{name: "the core's origins can't be read", args: []string{"--origin", routeOrigin}, core: &fakeCore{allowedErr: errSynthetic}, wantErr: errSynthetic},
+		{
+			name: "an origin the core doesn't accept", args: []string{"--origin", routeOrigin},
+			core: &fakeCore{linked: make(chan struct{}), linkErr: errSynthetic}, wantErr: errSynthetic, wantHost: routeOrigin,
+		},
+		{name: "--origin with --port", args: []string{"--origin", routeOrigin, "--port", "9090"}, core: &fakeCore{}, wantErr: cli.ErrUsage},
+		{name: "a host, not an origin", args: []string{"--origin", "fief.example.org"}, core: &fakeCore{}, wantErr: cli.ErrUsage},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -63,8 +68,8 @@ func TestEnrollOriginRefused(t *testing.T) {
 			}
 			tt.core.mu.Lock()
 			defer tt.core.mu.Unlock()
-			if tt.core.host != "" || tt.core.port != 0 || strings.Contains(out.String(), syntheticLink) {
-				t.Errorf("issued a link for %q or forwarded port %d after a refusal:\n%s", tt.core.host, tt.core.port, out.String())
+			if tt.core.host != tt.wantHost || tt.core.port != 0 || strings.Contains(out.String(), syntheticLink) {
+				t.Errorf("asked for a link for %q (want %q), forwarded port %d or printed a link:\n%s", tt.core.host, tt.wantHost, tt.core.port, out.String())
 			}
 		})
 	}

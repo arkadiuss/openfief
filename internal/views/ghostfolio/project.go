@@ -59,8 +59,9 @@ type Listing struct {
 
 // Desired is what the owned accounts should hold after a sync.
 type Desired struct {
-	// Accounts are the owned accounts, one per account of the record, in
-	// ID order.
+	// Accounts are the owned accounts: per account of the record, in ID
+	// order, its own, then one per other currency of its cash, in code
+	// order.
 	Accounts []Account
 	// Activities are in account, then comment order.
 	Activities []Activity
@@ -87,10 +88,6 @@ const (
 	// ProblemMalformed is a transaction whose postings don't have the
 	// shape its kind has.
 	ProblemMalformed
-	// ProblemCashCurrency is an account's cash in a currency other than
-	// its owned account's: a Ghostfolio account has one balance, in its
-	// own currency.
-	ProblemCashCurrency
 )
 
 // String names the reason.
@@ -104,15 +101,13 @@ func (r ProblemReason) String() string {
 		return "transaction key too long"
 	case ProblemMalformed:
 		return "malformed transaction"
-	case ProblemCashCurrency:
-		return "cash in another currency than the owned account's"
 	}
 	return fmt.Sprintf("ProblemReason(%d)", int(r))
 }
 
 // Problem is something the view leaves out of Ghostfolio, and why: a
-// transaction, named by its key, or an account's cash balance, named by the
-// account and, for cash in another currency, that currency.
+// transaction, named by its key, or an account's cash balances in one
+// currency, named by the account and the currency.
 type Problem struct {
 	Transaction ledger.TransactionKey
 	Account     ledger.AccountID
@@ -143,7 +138,9 @@ var (
 //   - each account of the record gets an owned account (AccountUUID), in
 //     the Ghostfolio user's base currency, whose cash balance follows the
 //     account's cash in that currency: one balance at the end of each date
-//     it changes. Cash in another currency is left out as a problem;
+//     it changes. Each other currency the account's cash is in gets an
+//     owned account of its own (CashAccountUUID), in that currency, which
+//     holds only that cash's balance (D-133);
 //   - a buy, a sell and an opening lot become a BUY or SELL at the unit price
 //     the holding's posting implies, with the fees in its currency, and an
 //     opening lot is dated when it was first acquired;
@@ -169,7 +166,17 @@ func Project(src *Source) (Desired, []Problem) {
 		a := &accounts[i]
 		id := AccountUUID(src.Instance, a.ID)
 		d.Accounts = append(d.Accounts, Account{ID: id, Name: a.Name, Currency: src.Currency})
-		d.Balances = append(d.Balances, p.balances(id, a)...)
+		moves := cashChanges(a.Transactions, src.Currency)
+		d.Balances = append(d.Balances, p.balances(id, a.ID, src.Currency, moves[src.Currency.String()])...)
+		for _, code := range slices.Sorted(maps.Keys(moves)) {
+			c := moves[code].currency
+			if c.Equal(src.Currency) {
+				continue
+			}
+			cash := Account{ID: CashAccountUUID(src.Instance, a.ID, c), Name: CashAccountName(a.Name, c), Currency: c}
+			d.Accounts = append(d.Accounts, cash)
+			d.Balances = append(d.Balances, p.balances(cash.ID, a.ID, c, moves[code])...)
+		}
 		for j := range a.Transactions {
 			acts, problem := p.transaction(id, &a.Transactions[j])
 			if problem != nil {
@@ -400,28 +407,23 @@ func (p *projector) assets() []AssetProfile {
 	return out
 }
 
-// balances returns the cash balances of the owned account id for a (D-108):
-// a's cash in the source's currency at the end of each date on which it
-// changes, from zero before a's first transaction. Cash in other
-// currencies is left out with one problem per currency, and a balance too
-// large for Ghostfolio leaves out all of a's balances with one problem.
-func (p *projector) balances(id string, a *SourceAccount) []Balance {
-	moves := cashChanges(a.Transactions, p.src.Currency)
-	byDate := moves.byDate
-	for _, code := range slices.Sorted(maps.Keys(moves.others)) {
-		p.problems = append(p.problems, Problem{Account: a.ID, Currency: moves.others[code], Reason: ProblemCashCurrency})
-	}
+// balances returns the cash balances of the owned account id that holds
+// account's cash in currency c (D-108, D-133), from how it moves: the cash
+// at the end of each date on which it changes, from zero before the
+// account's first transaction. A balance too large for Ghostfolio leaves
+// out all of them with one problem.
+func (p *projector) balances(id string, account ledger.AccountID, c kernel.Currency, moves cashMoves) []Balance {
 	var out []Balance
 	var running kernel.Decimal
-	for _, d := range slices.SortedFunc(maps.Keys(byDate), kernel.Date.Compare) {
-		next := running.Add(byDate[d])
+	for _, d := range slices.SortedFunc(maps.Keys(moves.byDate), kernel.Date.Compare) {
+		next := running.Add(moves.byDate[d])
 		if next.Equal(running) {
 			continue
 		}
 		running = next
 		v, err := toWire(running)
 		if err != nil {
-			p.problems = append(p.problems, Problem{Account: a.ID, Reason: ProblemTooLarge})
+			p.problems = append(p.problems, Problem{Account: account, Currency: c, Reason: ProblemTooLarge})
 			return nil
 		}
 		out = append(out, Balance{AccountID: id, Date: d, Value: v})
@@ -429,30 +431,33 @@ func (p *projector) balances(id string, a *SourceAccount) []Balance {
 	return out
 }
 
-// cashMoves is how transactions move an account's cash: in one currency
-// by date, and the other currencies they move, by code.
+// cashMoves is how transactions move an account's cash in one currency, by
+// date.
 type cashMoves struct {
-	byDate map[kernel.Date]kernel.Decimal
-	others map[string]kernel.Currency
+	currency kernel.Currency
+	byDate   map[kernel.Date]kernel.Decimal
 }
 
-// cashChanges returns how ts move the cash in currency c and which other
-// currencies their cash postings are in.
-func cashChanges(ts []ledger.Transaction, c kernel.Currency) cashMoves {
-	m := cashMoves{byDate: map[kernel.Date]kernel.Decimal{}, others: map[string]kernel.Currency{}}
+// cashChanges returns how ts move the account's cash, by currency code:
+// always base, and every other currency a cash posting is in.
+func cashChanges(ts []ledger.Transaction, base kernel.Currency) map[string]cashMoves {
+	out := map[string]cashMoves{base.String(): {currency: base, byDate: map[kernel.Date]kernel.Decimal{}}}
 	for i := range ts {
 		t := &ts[i]
 		for _, po := range t.Postings {
-			switch {
-			case po.Book.Kind != ledger.BookCash || po.Amount.IsZero():
-			case po.Amount.Currency().Equal(c):
-				m.byDate[t.Date] = m.byDate[t.Date].Add(po.Amount.Amount())
-			default:
-				m.others[po.Amount.Currency().String()] = po.Amount.Currency()
+			if po.Book.Kind != ledger.BookCash || po.Amount.IsZero() {
+				continue
 			}
+			c := po.Amount.Currency()
+			m, ok := out[c.String()]
+			if !ok {
+				m = cashMoves{currency: c, byDate: map[kernel.Date]kernel.Decimal{}}
+				out[c.String()] = m
+			}
+			m.byDate[t.Date] = m.byDate[t.Date].Add(po.Amount.Amount())
 		}
 	}
-	return m
+	return out
 }
 
 // heldOn returns the quantity of in that ts hold at the end of date.

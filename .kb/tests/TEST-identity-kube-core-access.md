@@ -1,5 +1,5 @@
 ---
-title: CoreAccess finds the running, ready core pod and reads the origins it allows
+title: CoreAccess finds the running, ready core pod
 status: active
 sourceFile: internal/identity/kube/firstpasskey_test.go
 origin:

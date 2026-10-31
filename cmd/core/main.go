@@ -23,8 +23,9 @@
 //
 // Next to the read API, serve offers view plugins the AuthService
 // (proto/openfief/identity/v1): passkey login and registration, sessions,
-// script tokens and enrollment links. --auth-origin lists the origins the
-// owner's browser may use; --session-idle and --session-max bound sessions;
+// script tokens and enrollment links. OPENFIEF_AUTH_ORIGINS lists the
+// origins the owner's browser may use, separated by commas, and enroll-link
+// refuses a link for any other (D-126); --session-idle and --session-max bound sessions;
 // --demo-sessions issues read-only sessions without credentials on a demo
 // database. The service logs internal IDs and counts only: never an amount, a
 // holding, a token or its hash.
@@ -93,7 +94,7 @@ func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) err
 			if err := migrate(ctx, d.pool); err != nil {
 				return err
 			}
-			return enrollLink(ctx, d.pool, cmd.Enroll.Origin, cmd.Enroll.TTL, out, time.Now())
+			return enrollLink(ctx, d.pool, &cmd.Enroll, out, time.Now())
 		})
 	case cmdBind, cmdSync:
 		cl := clusterOrNil(log)

@@ -69,13 +69,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8505f99a521
-  - type: implements
-    from: SYM-operator-cmd-run
-    to: REQ-AUTO-BBBDDCF207E884A1
-    created_at: 2026-10-28T07:13:42.893Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4475e7ddaec8
   - type: covered_by
     from: SYM-operator-cmd-run
     to: TEST-operator-cmd
@@ -391,13 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec3d18296917
-  - type: implements
-    from: SYM-views-ghostfolio-namespace
-    to: REQ-views-ghostfolio-owned-accounts
-    created_at: 2026-10-29T00:55:59.345Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ec1f98cbd8e3
   - type: covered_by
     from: SYM-views-ghostfolio-namespace
     to: TEST-views-ghostfolio-project
@@ -769,3 +755,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb8bbc38e6b7
+  - type: implements
+    from: SYM-ingest-connectrpc-client-lookup-instruments
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:03.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9821e8596f77
+  - type: implements
+    from: SYM-operator-cmd-run
+    to: REQ-operator-namespace-scoped-except-service-read
+    created_at: 2026-10-31T18:18:38.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8b9141aaf77
+  - type: implements
+    from: SYM-views-ghostfolio-namespace
+    to: REQ-views-ghostfolio-derived-account-uuids
+    created_at: 2026-10-31T18:22:25.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f4063c18bbe
+  - type: implements
+    from: SYM-views-ghostfolio-namespace
+    to: REQ-views-ghostfolio-owned-and-cash-accounts
+    created_at: 2026-10-31T20:03:09.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df83d2814622

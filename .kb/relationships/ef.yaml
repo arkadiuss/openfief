@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c42341024345
+  - type: implements
+    from: SYM-ingest-connectrpc-tickers-to
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:17.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5eb92903d1c

@@ -461,3 +461,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d01dcd40e79e
+  - type: implements
+    from: SYM-views-ghostfolio-project
+    to: REQ-views-ghostfolio-cash-balances-per-currency
+    created_at: 2026-10-31T19:03:16.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d2f504a823a

@@ -421,13 +421,6 @@ relationships:
     id: rel-d012c3d4598d
   - type: implements
     from: SYM-views-ghostfolio-client-set-balance
-    to: REQ-views-ghostfolio-cash-balances
-    created_at: 2026-10-30T01:26:35.859Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b3d0abfcf5af
-  - type: implements
-    from: SYM-views-ghostfolio-client-set-balance
     to: REQ-views-ghostfolio-client
     created_at: 2026-10-30T01:26:35.887Z
     created_by: kibi/upsert
@@ -517,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2f5e0bdccd8
+  - type: implements
+    from: SYM-views-ghostfolio-client-set-balance
+    to: REQ-views-ghostfolio-cash-balances-per-currency
+    created_at: 2026-10-31T19:02:02.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d53279a3c78

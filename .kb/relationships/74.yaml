@@ -386,13 +386,6 @@ relationships:
     id: rel-e11b68ddf94b
   - type: validates
     from: TEST-views-ghostfolio-sync
-    to: REQ-views-ghostfolio-import-before-delete
-    created_at: 2026-10-29T00:54:16.283Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-590182165606
-  - type: validates
-    from: TEST-views-ghostfolio-sync
     to: REQ-views-ghostfolio-restricted-view
     created_at: 2026-10-29T00:54:16.343Z
     created_by: kibi/upsert
@@ -692,13 +685,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fff39d14682f
-  - type: implements
-    from: SYM-ingest-bond-lot-price
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T06:35:44.944Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ec0ba77535b5
   - type: covered_by
     from: SYM-ingest-bond-lot-price
     to: TEST-ingest-bondlot
@@ -734,3 +720,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1458e4b515c
+  - type: implements
+    from: SYM-ingest-app-bond-lots-add
+    to: REQ-ingest-bond-lot-handed-with-account
+    created_at: 2026-10-31T18:09:10.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fdefefc682a
+  - type: validates
+    from: TEST-views-ghostfolio-sync
+    to: REQ-views-ghostfolio-import-first-blocking-delete
+    created_at: 2026-10-31T18:20:46.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b26a157e877
+  - type: validates
+    from: TEST-views-ghostfolio-sync
+    to: REQ-views-ghostfolio-derived-account-uuids
+    created_at: 2026-10-31T18:22:34.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9364a8ade537
+  - type: implements
+    from: SYM-ingest-bond-lot-price
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:23:28.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9df2825ea69
+  - type: validates
+    from: TEST-views-ghostfolio-sync
+    to: REQ-views-ghostfolio-cash-balance
+    created_at: 2026-10-31T20:02:52.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a7a648300dc

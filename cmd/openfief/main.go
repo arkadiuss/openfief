@@ -23,8 +23,8 @@
 // instance's PluginGrant, Plugin and its Secrets (D-58, D-89).
 // enroll has the core issue D-60's one-time link for the first passkey by
 // running core enroll-link in its pod (D-80): with --origin, for that
-// origin, which must be one of the core's --auth-origin, and with no
-// port-forward; without it, it forwards localhost:8080 to the core, the only
+// origin, which the core refuses unless it is in its OPENFIEF_AUTH_ORIGINS
+// (D-126), and with no port-forward; without it, it forwards localhost:8080 to the core, the only
 // entry point for browsers (D-81), prints the link for it and keeps
 // forwarding until Ctrl-C. Every command takes --kubeconfig and --context.
 package main

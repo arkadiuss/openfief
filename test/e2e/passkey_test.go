@@ -30,7 +30,7 @@ const (
 	passkeyScript = "passkey.mjs"
 	linkEnv       = "OPENFIEF_E2E_ENROLL_LINK"
 	// localCore is where `openfief enroll` forwards the core by default: the
-	// origin the core allows by default (deploy/core's --auth-origin).
+	// origin the core allows by default (deploy/core's OPENFIEF_AUTH_ORIGINS).
 	localCore = "http://localhost:8080"
 )
 

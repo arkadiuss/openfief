@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05b97b9f44d5
+  - type: implements
+    from: SYM-views-ghostfolio-projector-symbol
+    to: REQ-views-ghostfolio-bond-asset-fresh-name
+    created_at: 2026-10-31T18:21:44.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-886cfc114e06

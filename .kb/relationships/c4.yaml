@@ -83,13 +83,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5d6d4692f55
-  - type: implements
-    from: SYM-operator-cmd-options
-    to: REQ-AUTO-BBBDDCF207E884A1
-    created_at: 2026-10-28T07:13:30.865Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ab4126265848
   - type: covered_by
     from: SYM-operator-cmd-options
     to: TEST-operator-cmd
@@ -622,3 +615,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-931baba5df6d
+  - type: implements
+    from: SYM-ingest-app-connectors-market-data-instances
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:01:44.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ce30e75fdcf
+  - type: validates
+    from: TEST-core-xtb-upload
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:52.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4726ee5cd7b4
+  - type: validates
+    from: TEST-core-xtb-upload
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:05:04.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c69d58f027b
+  - type: validates
+    from: TEST-core-xtb-upload
+    to: REQ-ingest-xtb-unconfirmed-ticker-waits
+    created_at: 2026-10-31T18:06:02.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e67f5480f84
+  - type: implements
+    from: SYM-operator-cmd-options
+    to: REQ-operator-namespace-scoped-except-service-read
+    created_at: 2026-10-31T18:18:17.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0721612b216a

@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a7ed1ff6c3e
+  - type: implements
+    from: SYM-ingest-connectapi-account-service-remap-broker-account
+    to: REQ-ingest-broker-account-remap
+    created_at: 2026-10-31T18:15:56.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ae70db85fb6

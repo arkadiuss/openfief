@@ -839,3 +839,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-979cf14377c9
+  - type: implements
+    from: SYM-exp-operator-held-browser-view
+    to: REQ-operator-contested-browser-path-stops
+    created_at: 2026-10-31T18:19:51.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c28ec511bab

@@ -496,3 +496,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bdc2a74ef9ef
+  - type: implements
+    from: SYM-ingest-pg-store-hold-tickers
+    to: REQ-ingest-xtb-unconfirmed-ticker-waits
+    created_at: 2026-10-31T18:05:41.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24aa7c3d1874
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-treasurybonds-delivers-coupons
+    created_at: 2026-10-31T18:08:49.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e02a9e156c5
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-treasurybonds-one-instance-all-accounts
+    created_at: 2026-10-31T18:10:10.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c090435d995
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-treasurybonds-config-names-no-account
+    created_at: 2026-10-31T18:10:36.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61db289db6f2
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-treasurybonds-lot-on-go-live-day-opening
+    created_at: 2026-10-31T18:11:48.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54b1516ce5ff
+  - type: implements
+    from: SYM-ingest-connectapi-account-service-list-broker-accounts
+    to: REQ-ingest-broker-account-numbers-owner-only
+    created_at: 2026-10-31T18:16:46.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c39c64df48e

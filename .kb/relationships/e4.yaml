@@ -370,13 +370,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5102807f7875
-  - type: implements
-    from: SYM-views-ghostfolio-cash-changes
-    to: REQ-views-ghostfolio-cash-balances
-    created_at: 2026-10-30T01:26:10.402Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3cde7fa6350c
   - type: covered_by
     from: SYM-views-ghostfolio-cash-changes
     to: TEST-views-ghostfolio-project
@@ -510,3 +503,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8404c4e6794d
+  - type: implements
+    from: SYM-views-ghostfolio-cash-changes
+    to: REQ-views-ghostfolio-cash-balances-per-currency
+    created_at: 2026-10-31T19:01:32.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8412675f45e
+  - type: implements
+    from: SYM-views-ghostfolio-cash-changes
+    to: REQ-views-ghostfolio-cash-balance
+    created_at: 2026-10-31T19:02:55.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09e0f97f68a5

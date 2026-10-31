@@ -10,9 +10,9 @@
 #   networkpolicy.yaml  admits the Gateway's data plane to the core's browser port 8080 alone; the core's own policy
 #                       admits only plugin pods, on the plugin port. Placeholder: every pod in namespace
 #                       gateway-system; narrow it to your implementation's proxy pods.
-#   the patch below     adds https://openfief.invalid to the origins the core accepts the owner's browser from (D-60).
-#                       It must be the route's hostname: the guide's overlay copies the hostname into it with a
-#                       replacement.
+#   the patch below     adds https://openfief.invalid to the origins the core accepts the owner's browser from (D-60),
+#                       its OPENFIEF_AUTH_ORIGINS, next to http://localhost:8080 (D-126). It must be the route's
+#                       hostname: the guide's overlay copies the hostname into it with a replacement.
 # The .invalid name can never resolve, so a placeholder left in place exposes nothing. Passkeys need HTTPS outside
 # localhost, so the Gateway's listener terminates TLS for the hostname.
 apiVersion: kustomize.config.k8s.io/v1alpha1
@@ -25,6 +25,9 @@ patches:
       kind: Deployment
       name: openfief-core
     patch: |-
-      - op: add
-        path: /spec/template/spec/containers/0/args/-
-        value: --auth-origin=https://openfief.invalid
+      - op: test
+        path: /spec/template/spec/containers/0/env/1/name
+        value: OPENFIEF_AUTH_ORIGINS
+      - op: replace
+        path: /spec/template/spec/containers/0/env/1/value
+        value: http://localhost:8080,https://openfief.invalid

@@ -13488,7 +13488,7 @@ symbols:
       - type: covered_by
         target: TEST-operator-cmd
       - type: implements
-        target: REQ-AUTO-BBBDDCF207E884A1
+        target: REQ-operator-namespace-scoped-except-service-read
   - id: SYM-operator-cmd-main
     title: main
     sourceFile: cmd/operator/main.go
@@ -13503,7 +13503,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-0F49083BE9F08807
       - type: implements
-        target: REQ-AUTO-BBBDDCF207E884A1
+        target: REQ-operator-namespace-scoped-except-service-read
   - id: SYM-operator-cmd-parse-flags
     title: parseFlags
     sourceFile: cmd/operator/main.go
@@ -13518,7 +13518,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-0F49083BE9F08807
       - type: implements
-        target: REQ-AUTO-BBBDDCF207E884A1
+        target: REQ-operator-namespace-scoped-except-service-read
   - id: SYM-operator-cmd-run
     title: run
     sourceFile: cmd/operator/main.go
@@ -13533,7 +13533,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-0F49083BE9F08807
       - type: implements
-        target: REQ-AUTO-BBBDDCF207E884A1
+        target: REQ-operator-namespace-scoped-except-service-read
   - id: SYM-operator-cmd-test-parse-flags
     title: TestParseFlags
     sourceFile: cmd/operator/main_test.go
@@ -47979,46 +47979,6 @@ symbols:
         target: REQ-identity-origins-per-host
       - type: implements
         target: REQ-identity-session-opaque
-  - id: SYM-core-auth-cmd-core-auth-strings-flag
-    title: stringsFlag
-    sourceFile: cmd/core/auth.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:28:05.510Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-auth
-      - type: implements
-        target: REQ-identity-origins-per-host
-  - id: SYM-core-auth-cmd-core-auth-strings-flag-string
-    title: stringsFlag.String
-    sourceFile: cmd/core/auth.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:28:10.694Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-auth
-      - type: implements
-        target: REQ-identity-origins-per-host
-  - id: SYM-core-auth-cmd-core-auth-strings-flag-set
-    title: stringsFlag.Set
-    sourceFile: cmd/core/auth.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:28:16.418Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-auth
-      - type: implements
-        target: REQ-identity-origins-per-host
   - id: SYM-core-auth-cmd-core-auth-new-auth
     title: newAuth
     sourceFile: cmd/core/auth.go
@@ -48347,6 +48307,8 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
+        target: REQ-identity-origins-one-setting
+      - type: implements
         target: REQ-identity-origins-per-host
       - type: implements
         target: REQ-identity-session-opaque
@@ -48365,6 +48327,8 @@ symbols:
         target: REQ-identity-enrollment-code
       - type: implements
         target: REQ-identity-first-passkey-own-host-or-localhost
+      - type: implements
+        target: REQ-identity-origins-one-setting
   - id: SYM-core-auth-cmd-core-core-test-start-core-with
     title: startCoreWith
     sourceFile: cmd/core/core_test.go
@@ -49340,6 +49304,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-core-refuses-enroll-origin
       - type: implements
         target: REQ-identity-enrollment-code
   - id: SYM-identity-app-passkeys-started
@@ -64104,7 +64070,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-activity
     title: Activity
     sourceFile: internal/views/ghostfolio/model.go
@@ -64185,7 +64151,9 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-derived-account-uuids
+      - type: implements
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-account-uuid
     title: AccountUUID
     sourceFile: internal/views/ghostfolio/model.go
@@ -64198,7 +64166,9 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-derived-account-uuids
+      - type: implements
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-bond-symbol
     title: BondSymbol
     sourceFile: internal/views/ghostfolio/model.go
@@ -64212,6 +64182,8 @@ symbols:
         target: TEST-views-ghostfolio-project
       - type: implements
         target: REQ-views-ghostfolio-asset-keys
+      - type: implements
+        target: REQ-views-ghostfolio-bond-asset-fresh-name
   - id: SYM-views-ghostfolio-fee-symbol
     title: FeeSymbol
     sourceFile: internal/views/ghostfolio/model.go
@@ -64237,7 +64209,9 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-derived-account-uuids
+      - type: implements
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-to-wire
     title: toWire
     sourceFile: internal/views/ghostfolio/model.go
@@ -64479,6 +64453,8 @@ symbols:
       - type: implements
         target: REQ-views-ghostfolio-asset-keys
       - type: implements
+        target: REQ-views-ghostfolio-bond-asset-fresh-name
+      - type: implements
         target: REQ-views-ghostfolio-projection
   - id: SYM-views-ghostfolio-projector-prices
     title: projector.prices
@@ -64638,6 +64614,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-54773934AD125DF8
       - type: implements
+        target: REQ-views-ghostfolio-earlier-bond-assets-removed
+      - type: implements
         target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-keep
     title: keep
@@ -64663,6 +64641,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
+      - type: implements
+        target: REQ-views-ghostfolio-import-first-blocking-delete
       - type: implements
         target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-imported-activity
@@ -65324,7 +65304,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-owned-accounts
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-syncer-apply
     title: Syncer.apply
     sourceFile: internal/views/ghostfolio/sync.go
@@ -65337,7 +65317,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-import-before-delete
+        target: REQ-views-ghostfolio-import-first-blocking-delete
       - type: implements
         target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-syncer-delete
@@ -66328,6 +66308,8 @@ symbols:
         target: REQ-AUTO-4EF5BF0C2D799087
       - type: implements
         target: REQ-plugins-ghostfolio-plugin
+      - type: implements
+        target: REQ-views-ghostfolio-own-sync-timer
   - id: SYM-plugins-ghostfolio-read-secret-file
     title: readSecretFile
     sourceFile: plugins/ghostfolio/main.go
@@ -66601,6 +66583,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-bondlots
       - type: implements
+        target: REQ-ingest-bond-lot-handed-with-account
+      - type: implements
         target: REQ-ingest-bond-lot-handoff
       - type: implements
         target: REQ-ingest-uploads-through-core
@@ -66770,6 +66754,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-account-live-on-first-lot
+      - type: implements
+        target: REQ-ingest-bond-lot-handed-with-account
       - type: implements
         target: REQ-ingest-bond-lot-handoff
   - id: SYM-ingest-app-connectors-store-terms
@@ -67567,6 +67555,8 @@ symbols:
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
         target: REQ-treasurybonds-lot-mapping
+      - type: implements
+        target: REQ-treasurybonds-one-instance-all-accounts
   - id: SYM-treasurybonds-add-terms
     title: addTerms
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -67612,6 +67602,8 @@ symbols:
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
         target: REQ-treasurybonds-lot-mapping
+      - type: implements
+        target: REQ-treasurybonds-lot-on-go-live-day-opening
   - id: SYM-treasurybonds-test-helper-must-date
     title: mustDate
     sourceFile: internal/ingest/treasurybonds/mapper_test.go
@@ -67765,6 +67757,8 @@ symbols:
         target: REQ-AUTO-FD618A602F7F9106
       - type: implements
         target: REQ-plugins-treasury-bonds-connector
+      - type: implements
+        target: REQ-treasurybonds-one-instance-all-accounts
   - id: SYM-treasury-bonds-test-helper-fake-verifier
     title: fakeVerifier
     sourceFile: plugins/treasury-bonds/connector_test.go
@@ -67860,6 +67854,8 @@ symbols:
         target: TEST-plugins-treasury-bonds
       - type: implements
         target: REQ-plugins-treasury-bonds-connector
+      - type: implements
+        target: REQ-treasurybonds-config-names-no-account
   - id: SYM-treasury-bonds-main
     title: main
     sourceFile: plugins/treasury-bonds/main.go
@@ -78121,6 +78117,8 @@ symbols:
         target: TEST-plugins-kube-cluster-service
       - type: implements
         target: REQ-plugins-cli-in-cluster-service-access
+      - type: implements
+        target: REQ-plugins-in-cluster-service-read-role
   - id: SYM-pl-service-access
     title: ServiceAccess
     sourceFile: internal/plugins/kube/clusterservice.go
@@ -78134,6 +78132,8 @@ symbols:
         target: TEST-plugins-kube-cluster-service
       - type: implements
         target: REQ-plugins-cli-in-cluster-service-access
+      - type: implements
+        target: REQ-plugins-in-cluster-service-read-role
   - id: SYM-pl-instances-cluster-service
     title: Instances.ClusterService
     sourceFile: internal/plugins/kube/clusterservice.go
@@ -78188,6 +78188,8 @@ symbols:
         target: TEST-plugins-kube-cluster-service
       - type: implements
         target: REQ-plugins-cli-in-cluster-service-access
+      - type: implements
+        target: REQ-plugins-in-cluster-service-read-role
   - id: SYM-pl-instances-cluster-service-of-plugin
     title: Instances.clusterServiceOfPlugin
     sourceFile: internal/plugins/kube/clusterservice.go
@@ -78227,6 +78229,8 @@ symbols:
         target: TEST-plugins-kube-cluster-service
       - type: implements
         target: REQ-plugins-cli-in-cluster-service-access
+      - type: implements
+        target: REQ-plugins-in-cluster-service-role-removed
   - id: SYM-pl-test-helper-gf-service
     title: gfService
     sourceFile: internal/plugins/kube/clusterservice_test.go
@@ -85668,6 +85672,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
+        target: REQ-ingest-bond-account-live-on-first-lot
+      - type: implements
         target: REQ-ingest-sync-keeps-from-go-live
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
@@ -88539,6 +88545,8 @@ symbols:
       - type: covered_by
         target: TEST-plugins-browser-view
       - type: implements
+        target: REQ-operator-older-plugin-keeps-browser-path
+      - type: implements
         target: REQ-operator-refuses-second-browser-view
   - id: SYM-exp-plugins-refuse-second-browser-view
     title: RefuseSecondBrowserView
@@ -88567,6 +88575,8 @@ symbols:
       - type: covered_by
         target: TEST-plugins-browser-view
       - type: implements
+        target: REQ-operator-older-plugin-keeps-browser-path
+      - type: implements
         target: REQ-operator-refuses-second-browser-view
       - type: implements
         target: REQ-plugins-one-browser-view
@@ -88581,6 +88591,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-browser-view
+      - type: implements
+        target: REQ-operator-older-plugin-keeps-browser-path
       - type: implements
         target: REQ-plugins-one-browser-view
   - id: SYM-exp-plugins-app-check-browser-view
@@ -88621,6 +88633,8 @@ symbols:
       - type: covered_by
         target: TEST-operator-browser-view
       - type: implements
+        target: REQ-operator-contested-browser-path-stops
+      - type: implements
         target: REQ-operator-refuses-second-browser-view
   - id: SYM-exp-operator-held-browser-view
     title: heldBrowserView
@@ -88634,6 +88648,8 @@ symbols:
       - type: covered_by
         target: TEST-operator-browser-view
       - type: implements
+        target: REQ-operator-contested-browser-path-stops
+      - type: implements
         target: REQ-operator-refuses-second-browser-view
   - id: SYM-exp-operator-other-browser-views
     title: PluginReconciler.otherBrowserViews
@@ -88646,6 +88662,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-operator-browser-view
+      - type: implements
+        target: REQ-operator-contested-browser-path-stops
       - type: implements
         target: REQ-operator-refuses-second-browser-view
   - id: SYM-exp-plugins-test-refuse-second-browser-view
@@ -88720,6 +88738,8 @@ symbols:
       - type: covered_by
         target: TEST-identity-cli
       - type: implements
+        target: REQ-identity-core-refuses-enroll-origin
+      - type: implements
         target: REQ-identity-enroll-origin
       - type: implements
         target: REQ-identity-first-run-wizard-follows
@@ -88736,32 +88756,6 @@ symbols:
         target: TEST-identity-kube-core-access
       - type: implements
         target: REQ-identity-first-passkey-command
-  - id: SYM-exp-identity-kube-core-access-allowed-origins
-    title: CoreAccess.AllowedOrigins
-    sourceFile: internal/identity/kube/origins.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:36:33.221Z
-    relationships:
-      - type: covered_by
-        target: TEST-identity-kube-core-access
-      - type: implements
-        target: REQ-identity-enroll-origin
-  - id: SYM-exp-identity-kube-auth-origins
-    title: AuthOrigins
-    sourceFile: internal/identity/kube/origins.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:36:44.900Z
-    relationships:
-      - type: covered_by
-        target: TEST-identity-kube-core-access
-      - type: implements
-        target: REQ-identity-enroll-origin
   - id: SYM-exp-identity-cli-test-enroll-origin
     title: TestEnrollOrigin
     sourceFile: internal/identity/cli/enroll_origin_test.go
@@ -88782,36 +88776,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-cli
-  - id: SYM-exp-identity-cli-test-helper-fake-core-allowed-origins
-    title: fakeCore.AllowedOrigins
-    sourceFile: internal/identity/cli/enroll_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:37:20.029Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-cli
-  - id: SYM-exp-identity-kube-test-auth-origins
-    title: TestAuthOrigins
-    sourceFile: internal/identity/kube/origins_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:37:29.234Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-kube-core-access
-  - id: SYM-exp-identity-kube-test-allowed-origins
-    title: TestAllowedOrigins
-    sourceFile: internal/identity/kube/origins_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T22:37:38.202Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-kube-core-access
   - id: SYM-views-ghostfolio-balance
     title: Balance
     sourceFile: internal/views/ghostfolio/model.go
@@ -88824,8 +88788,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
-      - type: implements
-        target: REQ-views-ghostfolio-cash-balances
   - id: SYM-views-ghostfolio-balance-same-as
     title: Balance.sameAs
     sourceFile: internal/views/ghostfolio/model.go
@@ -88850,8 +88812,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-project
-      - type: implements
-        target: REQ-views-ghostfolio-cash-balances
   - id: SYM-views-ghostfolio-cash-moves
     title: cashMoves
     sourceFile: internal/views/ghostfolio/project.go
@@ -88864,7 +88824,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
+        target: REQ-views-ghostfolio-cash-balances-per-currency
   - id: SYM-views-ghostfolio-cash-changes
     title: cashChanges
     sourceFile: internal/views/ghostfolio/project.go
@@ -88876,8 +88836,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-project
-      - type: implements
-        target: REQ-views-ghostfolio-cash-balances
   - id: SYM-views-ghostfolio-plan-balances
     title: Plan.balances
     sourceFile: internal/views/ghostfolio/plan.go
@@ -88903,6 +88861,8 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-plan
       - type: implements
+        target: REQ-views-ghostfolio-import-first-blocking-delete
+      - type: implements
         target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-client-balances
     title: Client.Balances
@@ -88916,7 +88876,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-contract
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
+        target: REQ-views-ghostfolio-cash-balances-per-currency
       - type: implements
         target: REQ-views-ghostfolio-client
   - id: SYM-views-ghostfolio-client-set-balance
@@ -88931,8 +88891,6 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-contract
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
-      - type: implements
         target: REQ-views-ghostfolio-client
   - id: SYM-views-ghostfolio-client-delete-balance
     title: Client.DeleteBalance
@@ -88946,7 +88904,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-contract
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
+        target: REQ-views-ghostfolio-cash-balances-per-currency
       - type: implements
         target: REQ-views-ghostfolio-client
   - id: SYM-views-ghostfolio-wire-date-of
@@ -88974,7 +88932,7 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
-        target: REQ-views-ghostfolio-cash-balances
+        target: REQ-views-ghostfolio-cash-balances-per-currency
   - id: SYM-views-ghostfolio-syncer-apply-balances
     title: Syncer.applyBalances
     sourceFile: internal/views/ghostfolio/sync.go
@@ -103255,7 +103213,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-bondlot
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ingest-bond-lot-rules
   - id: SYM-ingest-bond-purchase
@@ -103271,7 +103229,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-bondlot
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ingest-bond-lot-rules
   - id: SYM-ingest-bond-purchase-string
@@ -103286,7 +103244,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-bondlot
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ingest-bond-lot-rules
   - id: SYM-ingest-bond-lot-key
@@ -103302,7 +103260,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-bondlot
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ingest-bond-lot-rules
   - id: SYM-ingest-bond-lot-entries
@@ -103317,7 +103275,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-bondlot
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ingest-bond-lot-rules
   - id: SYM-ingest-bond-lot-key-of-lot
@@ -103332,7 +103290,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-bondlot
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ingest-bond-lot-rules
   - id: SYM-ingest-bond-lot-price
@@ -103347,7 +103305,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-bondlot
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ingest-bond-lot-rules
   - id: SYM-ingest-test-bond-lot-cost-by-purchase
@@ -103608,6 +103566,8 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-lot-mapping
       - type: implements
+        target: REQ-treasurybonds-lot-on-go-live-day-opening
+      - type: implements
         target: REQ-treasurybonds-pre-go-live-opening-lot
   - id: SYM-treasurybonds-test-helper-key
     title: key
@@ -103651,9 +103611,9 @@ symbols:
       - type: covered_by
         target: TEST-pl-terms
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
-        target: REQ-pl-exchange-discount-taxed
+        target: REQ-pl-exchange-discount-taxed-at-99-90
   - id: SYM-pl-test-exchange-price
     title: TestExchangePrice
     sourceFile: internal/jurisdiction/pl/terms_test.go
@@ -104089,7 +104049,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-bond-lots
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ui-bond-lot-entry
   - id: SYM-ui-posted-once
@@ -104104,7 +104064,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-bond-lots
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ui-bond-lot-entry
   - id: SYM-ui-bond-lot-form-purchase
@@ -104119,7 +104079,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-bond-lots
       - type: implements
-        target: REQ-ingest-bond-lot-purchase-kinds
+        target: REQ-ingest-bond-lot-exchange-price-by-letter
       - type: implements
         target: REQ-ui-bond-lot-entry
   - id: SYM-ui-server-delete-bond-lot
@@ -104385,6 +104345,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-held
       - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
+      - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-app-account-holdings
     title: AccountHoldings
@@ -104397,6 +104359,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
       - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-app-tax-wrappers
@@ -104425,6 +104389,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-held
       - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
+      - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-app-holdings-scope-held-accounts
     title: HoldingsScope.HeldAccounts
@@ -104438,6 +104404,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-held
       - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
+      - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-app-holdings-scope-held
     title: HoldingsScope.held
@@ -104450,6 +104418,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
       - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-app-holdings-scope-add-terms
@@ -104601,6 +104571,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
+      - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-connectrpc-bond-terms-to
     title: bondTermsTo
@@ -104684,6 +104656,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-delivery-held
       - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
+      - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-delivery-held-account
     title: heldAccount
@@ -104697,6 +104671,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-delivery-held
       - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
+      - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-delivery-open-lot-from
     title: openLotFrom
@@ -104709,6 +104685,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
       - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-delivery-bond-terms-from
@@ -104792,6 +104770,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-held
       - type: implements
+        target: REQ-ingest-sync-carries-bound-holdings-lots
+      - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-treasurybonds-due-coupon
     title: DueCoupon
@@ -104806,6 +104786,8 @@ symbols:
         target: TEST-treasurybonds-coupons
       - type: implements
         target: REQ-treasurybonds-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-due-coupons
     title: DueCoupons
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104819,6 +104801,8 @@ symbols:
         target: TEST-treasurybonds-coupons
       - type: implements
         target: REQ-treasurybonds-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-due-on-lot
     title: dueOnLot
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104832,6 +104816,8 @@ symbols:
         target: TEST-treasurybonds-coupons
       - type: implements
         target: REQ-treasurybonds-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-terms-of
     title: termsOf
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104845,6 +104831,8 @@ symbols:
         target: TEST-treasurybonds-coupons
       - type: implements
         target: REQ-treasurybonds-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-lot-ref
     title: lotRef
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104886,6 +104874,8 @@ symbols:
         target: REQ-ledger-coupons-as-interest
       - type: implements
         target: REQ-treasurybonds-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-ref
     title: couponRef
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104914,6 +104904,8 @@ symbols:
         target: REQ-ledger-coupons-as-interest
       - type: implements
         target: REQ-treasurybonds-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-sync
     title: CouponSync
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104928,6 +104920,8 @@ symbols:
         target: TEST-treasurybonds-coupons
       - type: implements
         target: REQ-treasurybonds-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-sync-coupons
     title: CouponSync.Coupons
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104941,6 +104935,8 @@ symbols:
         target: TEST-treasurybonds-coupons
       - type: implements
         target: REQ-treasurybonds-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-earliest-purchase
     title: earliestPurchase
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -105116,6 +105112,8 @@ symbols:
         target: TEST-plugins-treasury-bonds
       - type: implements
         target: REQ-treasurybonds-coupons-as-interest
+      - type: implements
+        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasury-bonds-test-helper-held-request
     title: heldRequest
     sourceFile: plugins/treasury-bonds/connector_test.go
@@ -105659,6 +105657,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-account-changes
       - type: implements
+        target: REQ-ingest-broker-account-numbers-owner-only
+      - type: implements
         target: REQ-ingest-broker-accounts-owner-only
   - id: SYM-ingest-app-accounts-delete
     title: Accounts.Delete
@@ -105673,6 +105673,8 @@ symbols:
         target: TEST-ingest-app-account-changes
       - type: implements
         target: REQ-ingest-delete-unused-account
+      - type: implements
+        target: REQ-portfolio-delete-unused
   - id: SYM-ingest-app-accounts-remap
     title: Accounts.Remap
     sourceFile: internal/ingest/app/accountchanges.go
@@ -105684,6 +105686,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-account-changes
+      - type: implements
+        target: REQ-ingest-broker-account-remap
       - type: implements
         target: REQ-ingest-remap-unused-broker-account
   - id: SYM-ingest-app-accounts-check-remappable
@@ -105697,6 +105701,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-account-changes
+      - type: implements
+        target: REQ-ingest-broker-account-remap
       - type: implements
         target: REQ-ingest-remap-unused-broker-account
   - id: SYM-ingest-app-test-helper-fake-removals
@@ -105812,6 +105818,8 @@ symbols:
       - type: covered_by
         target: TEST-core-removals
       - type: implements
+        target: REQ-ingest-broker-account-numbers-owner-only
+      - type: implements
         target: REQ-ingest-broker-accounts-owner-only
   - id: SYM-ingest-connectapi-account-service-delete-account
     title: accountService.DeleteAccount
@@ -105826,6 +105834,8 @@ symbols:
         target: TEST-core-removals
       - type: implements
         target: REQ-ingest-delete-unused-account
+      - type: implements
+        target: REQ-portfolio-delete-unused
   - id: SYM-ingest-connectapi-account-service-remap-broker-account
     title: accountService.RemapBrokerAccount
     sourceFile: internal/ingest/connectapi/accounts.go
@@ -105837,6 +105847,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-account-remap
       - type: implements
         target: REQ-ingest-remap-unused-broker-account
   - id: SYM-ingest-pg-store-forget-account
@@ -105863,6 +105875,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-removals
+      - type: implements
+        target: REQ-ingest-broker-account-remap
       - type: implements
         target: REQ-ingest-remap-unused-broker-account
   - id: SYM-ledger-app-deletion-store
@@ -105891,6 +105905,8 @@ symbols:
         target: TEST-ledger-app-deletions
       - type: implements
         target: REQ-ingest-delete-unused-account
+      - type: implements
+        target: REQ-portfolio-delete-unused
   - id: SYM-ledger-app-ledger-delete-sleeve
     title: Ledger.DeleteSleeve
     sourceFile: internal/ledger/app/deletions.go
@@ -105902,6 +105918,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-app-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused
       - type: implements
         target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-ledger-app-ledger-delete-kind
@@ -105915,6 +105933,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-app-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused
       - type: implements
         target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-ledger-app-ledger-has-transactions-from
@@ -106003,6 +106023,8 @@ symbols:
         target: TEST-ledger-pg-deletions
       - type: implements
         target: REQ-ingest-delete-unused-account
+      - type: implements
+        target: REQ-portfolio-delete-unused
   - id: SYM-ledger-pg-store-delete-sleeve
     title: Store.DeleteSleeve
     sourceFile: internal/ledger/postgres/deletions.go
@@ -106014,6 +106036,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-pg-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused
       - type: implements
         target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-ledger-pg-store-delete-kind
@@ -106027,6 +106051,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-pg-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused
       - type: implements
         target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-ledger-pg-store-has-transactions-from
@@ -106087,6 +106113,8 @@ symbols:
       - type: covered_by
         target: TEST-portfolio-app-deletions
       - type: implements
+        target: REQ-portfolio-delete-unused
+      - type: implements
         target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-portfolio-app-sleeves-delete-kind
     title: Sleeves.DeleteKind
@@ -106099,6 +106127,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-portfolio-app-deletions
+      - type: implements
+        target: REQ-portfolio-delete-unused
       - type: implements
         target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-portfolio-app-test-helper-fake-deletions
@@ -106154,6 +106184,8 @@ symbols:
       - type: covered_by
         target: TEST-core-removals
       - type: implements
+        target: REQ-portfolio-delete-unused
+      - type: implements
         target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-portfolio-connectapi-sleeve-service-delete-sleeve-kind
     title: sleeveService.DeleteSleeveKind
@@ -106166,6 +106198,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-removals
+      - type: implements
+        target: REQ-portfolio-delete-unused
       - type: implements
         target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-valuation-pg-store-forget-account
@@ -106203,6 +106237,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
+        target: REQ-ingest-broker-account-numbers-owner-only
+      - type: implements
         target: REQ-ui-broker-accounts-owner-only
   - id: SYM-ui-server-delete-account
     title: server.deleteAccount
@@ -106216,6 +106252,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
+        target: REQ-portfolio-delete-unused
+      - type: implements
         target: REQ-ui-delete-and-remap
   - id: SYM-ui-server-remap-broker-account
     title: server.remapBrokerAccount
@@ -106228,6 +106266,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-ingest-broker-account-remap
       - type: implements
         target: REQ-ui-delete-and-remap
   - id: SYM-ui-test-delete-and-remap-forms
@@ -106302,6 +106342,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
+        target: REQ-portfolio-delete-unused
+      - type: implements
         target: REQ-ui-delete-and-remap
   - id: SYM-ui-server-delete-sleeve
     title: server.deleteSleeve
@@ -106314,6 +106356,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-portfolio-delete-unused
       - type: implements
         target: REQ-ui-delete-and-remap
   - id: SYM-ingestv1-broker-account
@@ -107640,6 +107684,8 @@ symbols:
         target: TEST-views-ghostfolio-project
       - type: implements
         target: REQ-views-ghostfolio-asset-keys
+      - type: implements
+        target: REQ-views-ghostfolio-bond-asset-fresh-name
   - id: SYM-tooling-kibi-ingest-proofs-test-artifact
     title: artifact
     sourceFile: scripts/tests/kibi-ingest-proofs.test.sh
@@ -107693,6 +107739,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-core-new-tickers
     title: newTickers
     sourceFile: cmd/core/uploads.go
@@ -107706,6 +107754,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-core-test-helper-xtb-export
     title: xtbExport
     sourceFile: cmd/core/xtb_test.go
@@ -107891,6 +107941,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-app-instrument-lookup
     title: InstrumentLookup
     sourceFile: internal/ingest/app/tickers.go
@@ -107904,6 +107956,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-ingest-app-connectors-book-tickers
     title: Connectors.bookTickers
     sourceFile: internal/ingest/app/tickers.go
@@ -107917,6 +107971,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-entries-wait
+      - type: implements
+        target: REQ-ingest-xtb-unconfirmed-ticker-waits
   - id: SYM-ingest-app-connectors-propose-isi-ns
     title: Connectors.proposeISINs
     sourceFile: internal/ingest/app/tickers.go
@@ -107930,6 +107986,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-ingest-app-connectors-market-data-instances
     title: Connectors.marketDataInstances
     sourceFile: internal/ingest/app/tickers.go
@@ -107943,6 +108001,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-ingest-app-tickers
     title: Tickers
     sourceFile: internal/ingest/app/tickers.go
@@ -107957,6 +108017,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-app-tickers-pending
     title: Tickers.Pending
     sourceFile: internal/ingest/app/tickers.go
@@ -107970,6 +108032,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-app-tickers-confirm
     title: Tickers.Confirm
     sourceFile: internal/ingest/app/tickers.go
@@ -107983,6 +108047,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-connectapi-new-tickers
     title: NewTickers
     sourceFile: internal/ingest/connectapi/tickers.go
@@ -107996,6 +108062,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-connectapi-tickers
     title: tickers
     sourceFile: internal/ingest/connectapi/tickers.go
@@ -108010,6 +108078,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-connectapi-tickers-list-pending-tickers
     title: tickers.ListPendingTickers
     sourceFile: internal/ingest/connectapi/tickers.go
@@ -108023,6 +108093,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-connectapi-tickers-confirm-ticker
     title: tickers.ConfirmTicker
     sourceFile: internal/ingest/connectapi/tickers.go
@@ -108036,6 +108108,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-connectapi-tickers-fail
     title: tickers.fail
     sourceFile: internal/ingest/connectapi/tickers.go
@@ -108049,6 +108123,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-connectrpc-test-helper-lookup-connector
     title: lookupConnector
     sourceFile: internal/ingest/connectrpc/lookup_test.go
@@ -108132,6 +108208,8 @@ symbols:
         target: TEST-ingest-connectrpc-lookup
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-ingest-connectrpc-proposals-from
     title: proposalsFrom
     sourceFile: internal/ingest/connectrpc/tickers.go
@@ -108145,6 +108223,8 @@ symbols:
         target: TEST-ingest-connectrpc-lookup
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-ingest-connectrpc-client-lookup-instruments
     title: Client.LookupInstruments
     sourceFile: internal/ingest/connectrpc/tickers.go
@@ -108158,6 +108238,8 @@ symbols:
         target: TEST-ingest-connectrpc-lookup
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-ingest-connectrpc-test-helper-ticker-mapping
     title: tickerMapping
     sourceFile: internal/ingest/connectrpc/tickers_test.go
@@ -108227,6 +108309,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-pg-store-hold-tickers
     title: Store.HoldTickers
     sourceFile: internal/ingest/postgres/tickers.go
@@ -108240,6 +108324,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-unconfirmed-ticker-waits
   - id: SYM-ingest-pg-hold-entry
     title: holdEntry
     sourceFile: internal/ingest/postgres/tickers.go
@@ -108253,6 +108339,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-unconfirmed-ticker-waits
   - id: SYM-ingest-pg-store-save-proposals
     title: Store.SaveProposals
     sourceFile: internal/ingest/postgres/tickers.go
@@ -108266,6 +108354,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-ingest-pg-store-pending-tickers
     title: Store.PendingTickers
     sourceFile: internal/ingest/postgres/tickers.go
@@ -108279,6 +108369,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-pg-scan-pending
     title: scanPending
     sourceFile: internal/ingest/postgres/tickers.go
@@ -108305,6 +108397,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-pg-waiting-entries
     title: waitingEntries
     sourceFile: internal/ingest/postgres/tickers.go
@@ -108318,6 +108412,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-unconfirmed-ticker-waits
   - id: SYM-ingest-pg-entry-row
     title: entryRow
     sourceFile: internal/ingest/postgres/tickers.go
@@ -108358,6 +108454,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-unconfirmed-ticker-waits
   - id: SYM-ingest-ticker
     title: Ticker
     sourceFile: internal/ingest/ticker.go
@@ -108412,6 +108510,8 @@ symbols:
         target: TEST-ingest-ticker
       - type: implements
         target: REQ-ingest-ticker-entries-wait
+      - type: implements
+        target: REQ-ingest-xtb-unconfirmed-ticker-waits
   - id: SYM-ingest-ticker-entry-transaction
     title: TickerEntry.Transaction
     sourceFile: internal/ingest/ticker.go
@@ -108451,6 +108551,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-isin-proposal
     title: ISINProposal
     sourceFile: internal/ingest/ticker.go
@@ -108464,6 +108566,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-ingest-pending-ticker
     title: PendingTicker
     sourceFile: internal/ingest/ticker.go
@@ -108477,6 +108581,8 @@ symbols:
         target: TEST-core-xtb-upload
       - type: implements
         target: REQ-ingest-ticker-confirmation
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-book-ticker-entries
     title: BookTickerEntries
     sourceFile: internal/ingest/ticker.go
@@ -108490,6 +108596,8 @@ symbols:
         target: TEST-ingest-ticker
       - type: implements
         target: REQ-ingest-ticker-entries-wait
+      - type: implements
+        target: REQ-ingest-xtb-unconfirmed-ticker-waits
   - id: SYM-ingest-waiting-for-isin
     title: WaitingForISIN
     sourceFile: internal/ingest/ticker.go
@@ -108503,6 +108611,8 @@ symbols:
         target: TEST-ingest-ticker
       - type: implements
         target: REQ-ingest-ticker-entries-wait
+      - type: implements
+        target: REQ-ingest-xtb-unconfirmed-ticker-waits
   - id: SYM-ingest-test-helper-pln
     title: pln
     sourceFile: internal/ingest/ticker_test.go
@@ -110283,6 +110393,8 @@ symbols:
         target: TEST-valuation-eodhd-lookup
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-valuation-eodhd-find-by-code
     title: FindByCode
     sourceFile: internal/valuation/eodhd/listing.go
@@ -110296,6 +110408,8 @@ symbols:
         target: TEST-valuation-eodhd-lookup
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-valuation-eodhd-test-country-exchange
     title: TestCountryExchange
     sourceFile: internal/valuation/eodhd/lookup_test.go
@@ -110338,6 +110452,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-tickers
       - type: implements
+        target: REQ-ingest-xtb-unconfirmed-ticker-waits
+      - type: implements
         target: REQ-ui-tickers-to-confirm
   - id: SYM-ui-server-statement-routes
     title: server.statementRoutes
@@ -110364,6 +110480,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-tickers
       - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
+      - type: implements
         target: REQ-ui-tickers-to-confirm
   - id: SYM-ui-server-tickers-page
     title: server.tickersPage
@@ -110376,6 +110494,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
       - type: implements
         target: REQ-ui-tickers-to-confirm
   - id: SYM-ui-server-render-tickers
@@ -110390,6 +110510,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-tickers
       - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
+      - type: implements
         target: REQ-ui-tickers-to-confirm
   - id: SYM-ui-server-confirm-ticker
     title: server.confirmTicker
@@ -110402,6 +110524,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ingest-xtb-isin-owner-confirms
       - type: implements
         target: REQ-ui-tickers-to-confirm
   - id: SYM-ui-test-helper-fake-tickers
@@ -110508,6 +110632,8 @@ symbols:
         target: TEST-plugins-eodhd-lookup
       - type: implements
         target: REQ-ingest-ticker-isin-lookup
+      - type: implements
+        target: REQ-ingest-xtb-isin-proposed
   - id: SYM-plugins-eodhd-test-helper-lookup-with
     title: lookupWith
     sourceFile: plugins/eodhd/lookup_test.go
@@ -114571,3 +114697,88 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-app-exemption-class
+  - id: SYM-identity-origin-origins-string
+    title: Origins.String
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:00:57.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-one-setting
+  - id: SYM-identity-origin-parse-origin-list
+    title: ParseOriginList
+    sourceFile: internal/identity/origin.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:01:03.702Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-domain
+      - type: implements
+        target: REQ-identity-origins-one-setting
+  - id: SYM-core-auth-cmd-core-config-auth-origins
+    title: authOrigins
+    sourceFile: cmd/core/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:01:09.731Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unit
+      - type: implements
+        target: REQ-identity-origins-one-setting
+  - id: SYM-identity-auth-test-test-parse-origin-list
+    title: TestParseOriginList
+    sourceFile: internal/identity/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:01:15.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-domain
+  - id: SYM-identity-app-auth-test-test-issue-enrollment-link-refuses-origin
+    title: TestIssueEnrollmentLinkRefusesOrigin
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:01:20.710Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-views-ghostfolio-cash-account-uuid
+    title: CashAccountUUID
+    sourceFile: internal/views/ghostfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:04:20.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-owned-and-cash-accounts
+  - id: SYM-views-ghostfolio-cash-account-name
+    title: CashAccountName
+    sourceFile: internal/views/ghostfolio/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-10-31T20:04:26.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-owned-and-cash-accounts

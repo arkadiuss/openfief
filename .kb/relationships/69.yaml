@@ -391,3 +391,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91bceb653685
+  - type: constrains
+    from: REQ-views-ghostfolio-cash-balances-per-currency
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-31T19:00:29.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90296cee6f2e
+  - type: requires_property
+    from: REQ-views-ghostfolio-cash-balances-per-currency
+    to: FACT-PROP-D308055D705EE97D
+    created_at: 2026-10-31T19:00:29.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc47cea92eaf
+  - type: specified_by
+    from: REQ-views-ghostfolio-cash-balances-per-currency
+    to: SCEN-views-ghostfolio-cash-account-per-currency
+    created_at: 2026-10-31T19:00:29.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e58afd6a6552
+  - type: supersedes
+    from: REQ-views-ghostfolio-cash-balances-per-currency
+    to: REQ-views-ghostfolio-cash-balances
+    created_at: 2026-10-31T19:00:29.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e700f2cdcf1

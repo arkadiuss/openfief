@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07ccbe341569
+  - type: implements
+    from: SYM-ui-server-broker-accounts
+    to: REQ-ingest-broker-account-numbers-owner-only
+    created_at: 2026-10-31T18:16:56.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa0550cdb051

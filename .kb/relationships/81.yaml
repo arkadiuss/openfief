@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e643877b567
+  - type: implements
+    from: SYM-ingest-pg-store-save-proposals
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:29.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3150bf34b455

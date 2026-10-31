@@ -643,3 +643,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b161fb6fe0eb
+  - type: validates
+    from: TEST-ingest-connectrpc-lookup
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:55.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a53156186e53
+  - type: implements
+    from: SYM-ingest-app-connectors-import-bond-lots
+    to: REQ-ingest-bond-lot-handed-with-account
+    created_at: 2026-10-31T18:09:00.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b8857395915
+  - type: implements
+    from: SYM-ingest-app-connectors-import-bond-lots
+    to: REQ-ingest-bond-account-live-on-first-lot
+    created_at: 2026-10-31T18:10:46.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdacfc936082
