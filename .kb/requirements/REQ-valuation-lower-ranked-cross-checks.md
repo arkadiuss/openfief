@@ -1,6 +1,6 @@
 ---
 title: A lower-ranked source's price must be compared with the winning price of its instrument and date like a cross-check price, and a cross-check price must never be ranked or win.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-94
 tags:
   - strict-modeling
@@ -34,10 +34,12 @@ A lower-ranked source's price must be compared with the winning price of its ins
 
 ## Context
 
-D-94 makes the lower-ranked values the D-22 cross-checks. Cross-check prices stay apart because D-112 lets only a declared connector send them. Modeled by Claude Code for the market-data work package (D-94, impl/market-data); the author has not reviewed it yet.
+An earlier refinement of D-94 by Claude Code (default firmness).
+
+## Why this changed
+
+D-94 was rewritten: each series has one source, so there is no winner per date; every other source's price checks the series source's latest price on or before its date. Superseded by REQ-valuation-other-source-price-checks.
 
 ## Source
-
-> **[D-94]** The owner ranks the sources of each kind of market data (prices, exchange rates and index readings) in priority order, and for each date the highest-ranked source with a value wins. Every source's values are stored, so the lower-ranked ones serve as cross-checks (D-22). By default the first-party connector for each kind ranks first: NBP for exchange rates, EODHD for prices, and the treasury bond connector for CPI and the NBP reference rate.
 
 docs/DESIGN.md#D-94

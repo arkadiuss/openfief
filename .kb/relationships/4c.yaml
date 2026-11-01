@@ -643,3 +643,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7cc5eb2a45c
+  - type: implements
+    from: SYM-valuation-fx-rates-by-source
+    to: REQ-valuation-market-data-never-other-source
+    created_at: 2026-11-01T09:03:34.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1676eee7b92
+  - type: implements
+    from: SYM-valuation-fx-rates-by-source
+    to: REQ-valuation-market-data-other-sources-cross-checks
+    created_at: 2026-11-01T09:03:34.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d80f06453fc9
+  - type: covered_by
+    from: SYM-valuation-fx-rates-by-source
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:03:34.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b15e2f49bb0

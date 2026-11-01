@@ -48,7 +48,7 @@ func IsSeeding(t *Transaction) bool {
 		return true
 	case KindDeposit, KindWithdrawal:
 		return strings.HasPrefix(t.Key.ExternalID, OpeningCashPrefix)
-	case KindBuy, KindSell, KindDividend, KindFee, KindFXConversion, KindInterest, KindDeletion:
+	case KindBuy, KindSell, KindDividend, KindFee, KindFXConversion, KindInterest, KindDeletion, KindRedemption:
 		return false
 	}
 	return false

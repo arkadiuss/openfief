@@ -11,40 +11,78 @@ import (
 	"github.com/arkadiuss/openfief/internal/valuation/postgres"
 )
 
-// TestRankedPrices checks that every source's prices are stored, that
-// reads return the highest-ranked source's price of each date, by default
-// the first-party connector's, that the owner's ranking replaces it and
-// revalues only when it changes, and that lower-ranked prices come back as
-// cross-checks (D-94, D-22).
-func TestRankedPrices(t *testing.T) {
+// TestOneSourcePerSeries checks D-94 in the store: every source's prices
+// are stored, an instrument's prices come from one source only, chosen from
+// the ranking when they are first needed (by default the first-party
+// connector's) and recorded, so a day it lacks is never filled from
+// another source; the other sources' prices come back as cross-checks; a
+// new ranking changes no recorded source and revalues nothing, but chooses
+// for an instrument first needed after it; and the owner's switch of one
+// instrument's source revalues only when it changes.
+func TestOneSourcePerSeries(t *testing.T) {
 	t.Parallel()
 	store, pool := newStore(t)
 	ctx := t.Context()
-	const etf = etfISIN + "/TSTB"
-	price := func(on, closing, source string) valuation.Price {
-		return valuation.Price{Instrument: etf, Date: date(t, on), Close: money(t, closing, "USD"), Source: source}
+	const etf, other = etfISIN + "/TSTB", "XX00000SYNT3/SYNT"
+	price := func(instrument, on, closing, source string) valuation.Price {
+		return valuation.Price{Instrument: instrument, Date: date(t, on), Close: money(t, closing, "USD"), Source: source}
 	}
-	eodhd2, ibkr2, ibkr3 := price("2026-03-02", "100", "prices-eu"), price("2026-03-02", "101", "ibkr-main"), price("2026-03-03", "102", "ibkr-main")
+	eodhd2, ibkr2, ibkr3 := price(etf, "2026-03-02", "100", "prices-eu"), price(etf, "2026-03-02", "101", "ibkr-main"), price(etf, "2026-03-03", "102", "ibkr-main")
 	if err := store.SavePrices(ctx, []valuation.Price{eodhd2, ibkr2, ibkr3}, nil); err != nil {
 		t.Fatalf("SavePrices: %v", err)
 	}
 	saveSources(t, store)
 	got, err := store.Prices(ctx, etf, date(t, "2026-03-31"))
-	check(t, "prices by default: EODHD's wins, IBKR's fills its gap", []valuation.Price{eodhd2, ibkr3}, got, err)
-	winners, checks, err := store.CrossCheckedPrices(ctx)
-	check(t, "cross-checked prices: every date of the instrument", []valuation.Price{eodhd2, ibkr3}, winners, err)
-	check(t, "lower-ranked prices as cross-checks", valuation.LowerRankedChecks([]valuation.Price{ibkr2}), checks, err)
+	check(t, "prices: EODHD's only, IBKR's never fills its gap", []valuation.Price{eodhd2}, got, err)
+	own, checks, err := store.CrossCheckedPrices(ctx)
+	check(t, "cross-checked prices: the source's own", []valuation.Price{eodhd2}, own, err)
+	check(t, "the other source's prices as cross-checks", valuation.OtherSourceChecks([]valuation.Price{ibkr2, ibkr3}), checks, err)
 
-	changed, err := store.SaveSourceRanking(ctx, valuation.KindPrices, []string{"ibkr-main", "prices-eu"}, []valuation.Revaluation{reval(t, "acc-1", "2026-03-02")})
+	changed, err := store.SaveSourceRanking(ctx, valuation.KindPrices, []string{"ibkr-main", "prices-eu"}, nil)
 	if err != nil || !changed {
 		t.Fatalf("SaveSourceRanking = %v, %v; want a change", changed, err)
 	}
-	checkPending(t, pool, []string{"acc-1 2026-03-02 -"}, []string{"acc-1 available"})
 	got, err = store.Prices(ctx, etf, date(t, "2026-03-31"))
-	check(t, "prices with IBKR ranked first", []valuation.Price{ibkr2, ibkr3}, got, err)
-	ranking, err := store.SourceRanking(ctx, valuation.KindPrices)
-	check(t, "the ranking", []string{"ibkr-main", "prices-eu"}, ranking.Names(), err)
+	check(t, "a new ranking keeps the recorded source", []valuation.Price{eodhd2}, got, err)
+	checkPending(t, pool, nil, nil)
+	if saveErr := store.SavePrices(ctx, []valuation.Price{price(other, "2026-03-02", "5", "prices-eu"), price(other, "2026-03-02", "6", "ibkr-main")}, nil); saveErr != nil {
+		t.Fatalf("SavePrices: %v", saveErr)
+	}
+	got, err = store.Prices(ctx, other, date(t, "2026-03-31"))
+	check(t, "an instrument first needed after the new ranking", []valuation.Price{price(other, "2026-03-02", "6", "ibkr-main")}, got, err)
+
+	checkOwnerSwitch(t, store, pool, etf, []valuation.Price{ibkr2, ibkr3})
 	checkRankingKept(t, store, pool)
+}
+
+// checkOwnerSwitch switches instrument's source to ibkr-main as the owner
+// and checks that it revalues once, that the prices then come from it
+// alone, and that the series lists it as the owner's choice.
+func checkOwnerSwitch(t *testing.T, store *postgres.Store, pool *pgxpool.Pool, instrument string, want []valuation.Price) {
+	t.Helper()
+	ctx := t.Context()
+	series := valuation.PriceSeries(instrument)
+	ss := valuation.SeriesSource{Series: series, Source: "ibkr-main"}
+	changed, err := store.SaveSeriesSource(ctx, &ss, []valuation.Revaluation{reval(t, "acc-1", "2026-03-02")})
+	if err != nil || !changed {
+		t.Fatalf("SaveSeriesSource = %v, %v; want a change", changed, err)
+	}
+	checkPending(t, pool, []string{"acc-1 2026-03-02 -"}, []string{"acc-1 available"})
+	got, err := store.Prices(ctx, instrument, date(t, "2026-03-31"))
+	check(t, "prices after the owner's switch", want, got, err)
+	if changed, err = store.SaveSeriesSource(ctx, &ss, []valuation.Revaluation{reval(t, "acc-2", "2026-03-02")}); err != nil || changed {
+		t.Errorf("the same source again = %v, %v; want no change", changed, err)
+	}
+	all, err := store.SeriesSources(ctx)
+	if err != nil {
+		t.Fatalf("SeriesSources: %v", err)
+	}
+	i := slices.IndexFunc(all, func(s valuation.SeriesSource) bool { return s.Series == series })
+	wantSS := valuation.SeriesSource{Series: series, Source: "ibkr-main", ByOwner: true, Available: []string{"ibkr-main", "prices-eu"}}
+	if i < 0 {
+		t.Fatalf("SeriesSources = %v, want %v among them", all, wantSS)
+	}
+	check(t, "the owner's choice", wantSS, all[i], nil)
 }
 
 // saveSources records two price sources and NBP's FX source.
@@ -76,36 +114,60 @@ func checkRankingKept(t *testing.T, store *postgres.Store, pool *pgxpool.Pool) {
 	}
 }
 
-// TestRankedRatesAndReadings checks that FX rates and index readings of
-// every source are stored and that reads return the highest-ranked one:
-// NBP's rate by default, and the owner's first source's reading (D-94).
-func TestRankedRatesAndReadings(t *testing.T) {
+// TestRatesAndReadingsOneSource checks that FX rates and index readings of
+// every source are stored and that reads return those of each series' one
+// source: NBP's rate by default, and for each index kind its own source,
+// the owner's first-ranked one when it has readings (D-94).
+func TestRatesAndReadingsOneSource(t *testing.T) {
 	t.Parallel()
 	store, pool := newStore(t)
 	ctx := t.Context()
 	saveSources(t, store)
 	usd := money(t, "1", "USD").Currency()
-	rate := func(source, value string) valuation.FXRate {
-		return valuation.FXRate{Currency: usd, Date: date(t, "2026-03-02"), Rate: dec(t, value), Source: source}
+	rate := func(source, on, value string) valuation.FXRate {
+		return valuation.FXRate{Currency: usd, Date: date(t, on), Rate: dec(t, value), Source: source}
 	}
-	if err := store.SaveFXRates(ctx, []valuation.FXRate{rate("ecb-fx", "4.0100"), rate("nbp-fx", "4.0000")}, nil); err != nil {
+	ecbOnly := rate("ecb-fx", "2026-03-03", "4.0200")
+	if err := store.SaveFXRates(ctx, []valuation.FXRate{rate("ecb-fx", "2026-03-02", "4.0100"), rate("nbp-fx", "2026-03-02", "4.0000"), ecbOnly}, nil); err != nil {
 		t.Fatalf("SaveFXRates: %v", err)
 	}
 	rates, err := store.FXRates(ctx, usd, date(t, "2026-03-31"))
-	check(t, "FX rates: NBP's wins by default", []valuation.FXRate{rate("nbp-fx", "4.0000")}, rates, err)
+	check(t, "FX rates: NBP's only, by default", []valuation.FXRate{rate("nbp-fx", "2026-03-02", "4.0000")}, rates, err)
 
-	reading := func(source, value string) valuation.IndexReading {
-		return valuation.IndexReading{Kind: valuation.CPI, Year: 2026, Month: time.January, Value: dec(t, value), Source: source}
+	reading := func(kind valuation.IndexKind, source, value string) valuation.IndexReading {
+		return valuation.IndexReading{Kind: kind, Year: 2026, Month: time.January, Value: dec(t, value), Source: source}
 	}
-	if saveErr := store.SaveIndexReadings(ctx, []valuation.IndexReading{reading("gus-copy", "0.05"), reading("bonds", "0.049")}, nil); saveErr != nil {
+	cpiGUS, cpiBonds, refBonds := reading(valuation.CPI, "gus-copy", "0.05"), reading(valuation.CPI, "bonds", "0.049"), reading(valuation.ReferenceRate, "bonds", "0.0575")
+	if saveErr := store.SaveIndexReadings(ctx, []valuation.IndexReading{cpiGUS, cpiBonds, refBonds}, nil); saveErr != nil {
 		t.Fatalf("SaveIndexReadings: %v", saveErr)
 	}
 	if _, rankErr := store.SaveSourceRanking(ctx, valuation.KindIndexReadings, []string{"gus-copy"}, nil); rankErr != nil {
 		t.Fatalf("SaveSourceRanking: %v", rankErr)
 	}
 	readings, err := store.IndexReadings(ctx)
-	check(t, "index readings: the owner's first source wins", []valuation.IndexReading{reading("gus-copy", "0.05")}, readings, err)
-	if n := countRows(t, pool, "SELECT count(*) FROM valuation.index_readings"); n != 2 {
-		t.Errorf("stored %d readings, want both sources' kept", n)
+	check(t, "index readings: each kind from its own source", []valuation.IndexReading{cpiGUS, refBonds}, readings, err)
+	if n := countRows(t, pool, "SELECT count(*) FROM valuation.index_readings"); n != 3 {
+		t.Errorf("stored %d readings, want every source's kept", n)
 	}
+	checkGapThresholds(t, store)
+}
+
+// checkGapThresholds checks that a kind without the owner's gap threshold
+// has none stored, that the owner's is stored and replaced, and that the
+// table refuses one out of range.
+func checkGapThresholds(t *testing.T, store *postgres.Store) {
+	t.Helper()
+	ctx := t.Context()
+	got, err := store.GapThresholds(ctx)
+	check(t, "no gap threshold set", map[valuation.MarketDataKind]int{}, got.Days, err)
+	for _, days := range []int{10, 14} {
+		if saveErr := store.SaveGapThreshold(ctx, valuation.KindPrices, days); saveErr != nil {
+			t.Fatalf("SaveGapThreshold(%d): %v", days, saveErr)
+		}
+	}
+	if saveErr := store.SaveGapThreshold(ctx, valuation.KindFXRates, 0); saveErr == nil {
+		t.Error("a gap threshold of 0 days was stored; the table must refuse it")
+	}
+	got, err = store.GapThresholds(ctx)
+	check(t, "the owner's gap threshold", map[valuation.MarketDataKind]int{valuation.KindPrices: 14}, got.Days, err)
 }

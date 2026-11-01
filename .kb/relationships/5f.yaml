@@ -622,6 +622,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc79ce3935ff
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-request-get-days
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:19:42.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faa9002312f8
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-request-get-days
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:19:42.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25d00cd9e0da
   - type: executable_for
     from: SYM-ingest-app-test-helper-fake-history
     to: TEST-ingest-app-start

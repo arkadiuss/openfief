@@ -545,3 +545,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4835d355927
+  - type: executable_for
+    from: SYM-ledger-pg-test-embedded-migrations-load
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-01T11:53:40.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad23d05e58b7
+  - type: implements
+    from: SYM-demo-seed-from-source
+    to: REQ-demo-fx-rates-one-source
+    created_at: 2026-11-01T09:12:53.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-207ebe801f97
+  - type: covered_by
+    from: SYM-demo-seed-from-source
+    to: TEST-demo-seed-unit
+    created_at: 2026-11-01T09:12:53.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a822300e593

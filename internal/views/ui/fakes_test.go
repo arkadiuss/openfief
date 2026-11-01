@@ -365,13 +365,13 @@ func (f *fakeRead) ListAccounts(_ context.Context, r *connect.Request[viewsv1.Li
 		return nil, err
 	}
 	f.mu.Lock()
-	none := f.noAccounts
+	none, institution := f.noAccounts, f.institution
 	f.mu.Unlock()
 	if none {
 		return connect.NewResponse(&viewsv1.ListAccountsResponse{}), nil
 	}
 	return connect.NewResponse(&viewsv1.ListAccountsResponse{Accounts: []*viewsv1.Account{
-		{Id: accountID, Institution: "synthetic-broker", Name: "Synthetic brokerage", Sleeve: "core"},
+		{Id: accountID, Institution: cmp.Or(institution, "synthetic-broker"), Name: "Synthetic brokerage", Sleeve: "core"},
 	}}), nil
 }
 

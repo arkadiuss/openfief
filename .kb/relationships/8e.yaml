@@ -706,3 +706,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8054feeca580
+  - type: implements
+    from: SYM-ui-server-set-series-source
+    to: REQ-ui-market-data-series-sources
+    created_at: 2026-11-01T09:11:57.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af21b5a5b85d
+  - type: covered_by
+    from: SYM-ui-server-set-series-source
+    to: TEST-ui-market-data
+    created_at: 2026-11-01T09:11:57.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9047deaf518a
+  - type: implements
+    from: SYM-valuation-gen-pb-list-series-sources-request-proto-reflect
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:15:01.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f5b62586c8d
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-series-sources-request-proto-reflect
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:15:01.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3c11acf9bcb

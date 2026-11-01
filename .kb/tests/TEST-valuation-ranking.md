@@ -9,4 +9,4 @@ id: TEST-valuation-ranking
 type: test
 verification_scope: unit
 ---
-Table tests of the valuation ranking rules: kind names round-trip; RankSources puts EODHD, NBP and the treasury bond connector first by default and the owner's placed sources before the rest; ValidateRanking refuses a source twice, an empty or overlong name and an unknown kind; RankedPrices keeps the highest-ranked source's price of each date, lets a lower source fill a day, follows a new ranking and returns the losers as lower-ranked; FX rates and readings keep their winners too.
+Table tests of internal/valuation/ranking.go: every kind of market data round-trips through its name and an unknown one is refused; RankSources puts the owner's placed sources first in the owner's order and every other known source after them, the first-party institution of the kind first (EODHD for prices, NBP for FX rates, the treasury bond connector for index readings), then by name; ValidateRanking refuses a source named twice, an empty or overlong name and an unknown kind. The ranking only chooses a series' source on first need (D-94), which TEST-valuation-series covers.

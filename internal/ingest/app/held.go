@@ -18,9 +18,10 @@ type HeldSource interface {
 	HeldAccounts(ctx context.Context, accounts []ledger.AccountID) ([]ingest.HeldAccount, []ingest.BondTerms, error)
 }
 
-// AccountHoldings reads an account's holdings and open lots on a day;
-// ledger/app.Ledger implements it.
+// AccountHoldings reads an account, with its payout setting, and its
+// holdings and open lots on a day; ledger/app.Ledger implements it.
 type AccountHoldings interface {
+	Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error)
 	HoldingsOn(ctx context.Context, account ledger.AccountID, on kernel.Date) ([]ledger.Holding, error)
 	LotsOn(ctx context.Context, account ledger.AccountID, on kernel.Date) ([]ledger.Lot, error)
 }
@@ -33,7 +34,7 @@ type TaxWrappers interface {
 
 // HoldingsScope works out what a sync tells a connector bound to accounts
 // (D-117): for each account, in ID order and each once, its go-live date,
-// tax wrapper, holdings and open lots today, and the stored series terms
+// tax wrapper, payout setting (D-135), holdings and open lots today, and the stored series terms
 // of every treasury bond among them. It reads data only; what a connector
 // makes of it, such as the coupons a bond paid, is the connector's (the
 // core holds no bond logic).
@@ -96,6 +97,11 @@ func (h *HoldingsScope) held(ctx context.Context, id ledger.AccountID, today ker
 	if recorded {
 		a.Wrapper = string(w)
 	}
+	acc, err := h.Ledger.Account(ctx, id)
+	if err != nil {
+		return ingest.HeldAccount{}, fmt.Errorf("account %s: %w", id, err)
+	}
+	a.Payout = acc.PayoutSetting()
 	if a.Holdings, err = h.Ledger.HoldingsOn(ctx, id, today); err != nil {
 		return ingest.HeldAccount{}, fmt.Errorf("holdings of %s: %w", id, err)
 	}

@@ -391,20 +391,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee7c398f1899
-  - type: implements
-    from: SYM-valuation-lower-ranked-checks
-    to: REQ-valuation-lower-ranked-cross-checks
-    created_at: 2026-10-29T18:18:47.956Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b938de4b21c1
-  - type: covered_by
-    from: SYM-valuation-lower-ranked-checks
-    to: TEST-valuation-ranking
-    created_at: 2026-10-29T18:18:47.995Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-019d6ab410cf
   - type: executable_for
     from: SYM-jurisdiction-test-helper-rng-next
     to: TEST-jurisdiction-fee
@@ -503,20 +489,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7f3434d80f4
-  - type: implements
-    from: SYM-treasurybonds-mapper-header
-    to: REQ-treasurybonds-lot-mapping
-    created_at: 2026-10-30T06:38:40.919Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d8e7b79ac698
-  - type: implements
-    from: SYM-treasurybonds-mapper-header
-    to: REQ-treasurybonds-pre-go-live-opening-lot
-    created_at: 2026-10-30T06:38:40.978Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-06fcdf3dde7b
   - type: covered_by
     from: SYM-treasurybonds-mapper-header
     to: TEST-treasurybonds-mapper
@@ -566,6 +538,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d35a049164ef
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-exemption-class
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-31T19:08:51.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7291c9ebdb07
+  - type: implements
+    from: SYM-viewsv1-bond-payout-string
+    to: REQ-ui-bond-payout-setting
+    created_at: 2026-11-01T07:55:19.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-222b6952edda
+  - type: covered_by
+    from: SYM-viewsv1-bond-payout-string
+    to: TEST-ui-values
+    created_at: 2026-11-01T07:55:20.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b35bcaae497b
+  - type: implements
+    from: SYM-treasurybonds-mapper-header
+    to: REQ-treasurybonds-lot-on-purchase-date
+    created_at: 2026-11-01T07:58:51.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a21ffd5622e3
+  - type: implements
+    from: SYM-treasurybonds-mapper-header
+    to: REQ-treasurybonds-lot-idempotent-series-date
+    created_at: 2026-11-01T08:44:12.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c79e3020db8a
   - type: implements
     from: SYM-attention-state
     to: REQ-attention-reconcile
@@ -587,10 +594,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5af5d65b045f
-  - type: executable_for
-    from: SYM-valuation-app-test-helper-fake-recorder-save-exemption-class
-    to: TEST-valuation-app-settings
-    created_at: 2026-10-31T19:08:51.481Z
+  - type: implements
+    from: SYM-valuation-gen-pb-list-series-sources-response-get-series
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:16:14.049Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-7291c9ebdb07
+    id: rel-5f57ee0b9a7f
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-series-sources-response-get-series
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:16:14.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b831984f1c9

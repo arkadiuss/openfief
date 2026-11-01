@@ -650,6 +650,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ccd299af1a6
+  - type: executable_for
+    from: SYM-attention-app-test-helper-clone-items
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:38:35.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcd1b8788cdc
+  - type: executable_for
+    from: SYM-attention-app-test-helper-clone-items
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:38:35.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ac0e3066d27
+  - type: implements
+    from: SYM-attention-connectapi-attention-service-resolve-attention-item
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:41:55.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6353ff05c93
+  - type: covered_by
+    from: SYM-attention-connectapi-attention-service-resolve-attention-item
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:41:55.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-664d667e6629
   - type: implements
     from: SYM-views-ghostfolio-balance
     to: REQ-views-ghostfolio-cash-balances-per-currency
@@ -657,6 +685,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78bfb2512fda
+  - type: implements
+    from: SYM-ui-server-set-gap-threshold
+    to: REQ-ui-market-data-series-sources
+    created_at: 2026-11-01T09:12:04.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57c8b5d68bb2
+  - type: covered_by
+    from: SYM-ui-server-set-gap-threshold
+    to: TEST-ui-market-data
+    created_at: 2026-11-01T09:12:04.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8c1a20fec98
+  - type: implements
+    from: SYM-valuation-gen-pb-series-source-get-available
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:14:23.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df18bb76bfc7
+  - type: covered_by
+    from: SYM-valuation-gen-pb-series-source-get-available
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:14:23.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af65c8e5bdea
+  - type: implements
+    from: SYM-valuation-gen-pb-set-series-source-request-descriptor
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:16:57.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc58b6bc707b
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-series-source-request-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:16:57.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c377dbfc8dc
   - type: constrains
     from: REQ-ingest-keeps-from-go-live-uploads
     to: FACT-SUBJECT-C256554D473F5098
@@ -692,31 +762,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5016859de009
-  - type: executable_for
-    from: SYM-attention-app-test-helper-clone-items
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:38:35.566Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bcd1b8788cdc
-  - type: executable_for
-    from: SYM-attention-app-test-helper-clone-items
-    to: TEST-attention-app-checks
-    created_at: 2026-10-31T18:38:35.630Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4ac0e3066d27
-  - type: implements
-    from: SYM-attention-connectapi-attention-service-resolve-attention-item
-    to: REQ-attention-owner-service
-    created_at: 2026-10-31T18:41:55.200Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c6353ff05c93
-  - type: covered_by
-    from: SYM-attention-connectapi-attention-service-resolve-attention-item
-    to: TEST-attention-connectapi
-    created_at: 2026-10-31T18:41:55.236Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-664d667e6629

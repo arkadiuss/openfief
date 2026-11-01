@@ -125,7 +125,7 @@ func TestBondLotEntries(t *testing.T) {
 		t.Errorf("BondLotEntries (-want +got):\n%s", diff)
 	}
 	for name, req := range map[string]*connectorv1.ImportBondLotsRequest{
-		"no go-live":          {Lots: []*connectorv1.BondLot{lotMessage()}},
+		"a malformed go-live": {GoLive: "1.6.2026", Lots: []*connectorv1.BondLot{lotMessage()}},
 		"a deleted series":    {GoLive: "2026-06-01", Deleted: []*connectorv1.BondLotKey{{Series: "EDO536", PurchaseDate: "2026-05-10"}}},
 		"a deleted date":      {GoLive: "2026-06-01", Deleted: []*connectorv1.BondLotKey{{Series: "EDO0536", PurchaseDate: "10.5.2026"}}},
 		"an unknown purchase": {GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{withPurchase(9)}},

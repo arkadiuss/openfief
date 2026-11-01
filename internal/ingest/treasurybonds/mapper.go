@@ -12,7 +12,7 @@ import (
 )
 
 // Institution names the treasury bond registry on every delivery.
-const Institution ingest.InstitutionID = "treasury-bonds"
+const Institution = ingest.TreasuryBonds
 
 // SourcePrefix starts the source of every transaction key this connector
 // writes; the ledger account ID follows it.
@@ -41,9 +41,6 @@ var (
 	// ErrConflictingTerms reports two lots of one series in one batch with
 	// different series terms.
 	ErrConflictingTerms = errors.New("one series with two different terms")
-	// ErrNoGoLive reports a batch without the account's go-live date, which
-	// decides how each lot is booked (D-98).
-	ErrNoGoLive = errors.New("no go-live date for the bond lots")
 )
 
 // Instrument returns the instrument of bond series s: its venue symbol is
@@ -71,31 +68,31 @@ type Mapper struct {
 	account ledger.AccountID
 }
 
-// Map validates each lot of e, entered on e.Account, as of today (ingest.BondLot.Validate) and maps
-// it by e's go-live date (D-98): a lot bought on or before go-live is an
-// opening lot on the go-live date, keeping its own purchase date and cost; a
-// later one is two transactions on its purchase date, a deposit of its cost
-// against equity and the buy of its bonds for that cost, so the account's
-// cash stays at zero and the money counts as having entered the portfolio
-// then (D-61). Each deleted lot of e (D-100) becomes a deletion of each of
-// its transactions, keyed and dated as adding it was. Map also returns each
-// series' terms once, in the order the series first appear. A missing
-// go-live, any invalid lot, one series bought on one day twice in the batch,
-// or one series with two different terms refuses the whole batch.
+// Map validates each lot of e, entered on e.Account, as of today
+// (ingest.BondLot.Validate) and books it on its real purchase date (D-98):
+// two transactions, a deposit of its cost against equity and the buy of
+// its bonds for that cost, so the account's cash stays at zero, its
+// history starts at its first purchase, and the money counts as having
+// entered the portfolio then (D-61). Only an account seeded with opening
+// lots before that rule has a go-live date in e: a lot bought on or before
+// it is booked as the opening lot it was, on the go-live date and keeping
+// its own purchase date and cost, so it keeps its key. Each deleted lot of
+// e (D-100) becomes a deletion of each of its transactions, keyed and
+// dated as adding it was. Map also returns each series' terms once, in the
+// order the series first appear. Any invalid lot, one series bought on one
+// day twice in the batch, or one series with two different terms refuses
+// the whole batch.
 //
-// The keys are "lot:<series>:<purchase date>" for an opening lot and the
-// same with ":deposit" and ":buy" for a later lot, under the source
+// The keys are "lot:<series>:<purchase date>" with ":deposit" and ":buy",
+// or without them for an opening lot, under the source
 // SourcePrefix plus the account ID, so each lot is idempotent per series and
 // purchase date: entering it again unchanged changes nothing, and with
 // another quantity, price or terms makes a new version that supersedes the
 // old (D-18).
 func (m Mapper) Map(e *ingest.BondLotEntries, today kernel.Date) (ingest.Mapping, []ingest.BondTerms, error) {
 	m.account = e.Account
-	switch {
-	case m.account == "":
+	if m.account == "" {
 		return ingest.Mapping{}, nil, ErrNoAccount
-	case e.GoLive.IsZero():
-		return ingest.Mapping{}, nil, ErrNoGoLive
 	}
 	var (
 		out   ingest.Mapping
@@ -192,12 +189,19 @@ func (m Mapper) header(id string, day kernel.Date) ledger.TransactionHeader {
 	}
 }
 
-// lotTransactions returns the transactions of lot l: an opening lot on
-// goLive when it was bought on or before goLive, else a deposit and a buy
-// on its purchase date.
+// opening reports whether a lot bought on purchased is an opening lot: only
+// in an account seeded with opening lots, when bought on or before its
+// go-live date goLive (D-98).
+func opening(purchased, goLive kernel.Date) bool {
+	return !goLive.IsZero() && !purchased.After(goLive)
+}
+
+// lotTransactions returns the transactions of lot l: a deposit and a buy
+// on its purchase date, or the opening lot on goLive it was booked as
+// (opening).
 func (m Mapper) lotTransactions(in ledger.Instrument, l *ingest.BondLot, goLive kernel.Date) ([]ledger.Transaction, error) {
 	id, cost := lotID(l.Key()), l.Cost()
-	if !l.Purchased.After(goLive) {
+	if opening(l.Purchased, goLive) {
 		lot, err := ledger.NewOpeningLot(m.header(id, goLive), in, l.Quantity, cost, l.Purchased)
 		if err != nil {
 			return nil, fmt.Errorf("opening lot of %s: %w", in.Symbol, err)
@@ -222,9 +226,9 @@ func (m Mapper) lotTransactions(in ledger.Instrument, l *ingest.BondLot, goLive 
 // keyed and dated as lotTransactions books it.
 func (m Mapper) deletions(in ledger.Instrument, k ingest.BondLotKey, goLive kernel.Date) ([]ledger.Transaction, error) {
 	id := lotID(k)
-	headers := []ledger.TransactionHeader{m.header(id, goLive)}
-	if k.Purchased.After(goLive) {
-		headers = []ledger.TransactionHeader{m.header(id+":deposit", k.Purchased), m.header(id+":buy", k.Purchased)}
+	headers := []ledger.TransactionHeader{m.header(id+":deposit", k.Purchased), m.header(id+":buy", k.Purchased)}
+	if opening(k.Purchased, goLive) {
+		headers = []ledger.TransactionHeader{m.header(id, goLive)}
 	}
 	out := make([]ledger.Transaction, 0, len(headers))
 	for _, h := range headers {

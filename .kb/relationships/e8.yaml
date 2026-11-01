@@ -370,13 +370,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57ba05fd5560
-  - type: implements
-    from: SYM-valuation-market-data-kind-string
-    to: REQ-valuation-market-data-highest-rank-wins
-    created_at: 2026-10-29T18:16:51.234Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9e63b43126fa
   - type: covered_by
     from: SYM-valuation-market-data-kind-string
     to: TEST-valuation-ranking
@@ -461,3 +454,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97e640a1de36
+  - type: implements
+    from: SYM-ingestv1-account-get-bond-payout
+    to: REQ-ingest-bond-payout-setting
+    created_at: 2026-11-01T07:54:41.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cd9726151fa
+  - type: covered_by
+    from: SYM-ingestv1-account-get-bond-payout
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T07:54:41.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11922b864435

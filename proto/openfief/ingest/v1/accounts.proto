@@ -30,8 +30,9 @@
 //   words. A name it can make no ID from, an empty institution, an unknown
 //   sleeve, a tax wrapper the jurisdiction pack doesn't have, a fee rule
 //   whose rates aren't decimal fractions from 0 up to 1 or whose minimum
-//   is negative or has no currency, or a malformed instance name fails
-//   with INVALID_ARGUMENT; a name
+//   is negative or has no currency, a paid-out payout setting on an
+//   account that is not at the "treasury-bonds" institution (D-135), or a
+//   malformed instance name fails with INVALID_ARGUMENT; a name
 //   whose ID is taken with ALREADY_EXISTS; an unknown account with
 //   NOT_FOUND; a broker account the instance never reported, or one mapped
 //   to another account, with FAILED_PRECONDITION. Nothing is stored then.
@@ -50,8 +51,9 @@ service AccountService {
   rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
 
   // UpdateAccount renames an account, moves it to another sleeve, or
-  // changes its tax wrapper or fee rule, which revalues it (D-36); its ID
-  // and institution stay.
+  // changes its tax wrapper or fee rule, which revalues it (D-36), or the
+  // payout setting of a hand-entered bond account (D-135); its ID and
+  // institution stay.
   rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse);
 
   // BindAccount binds a connector instance to a stored account, as
@@ -89,6 +91,30 @@ message Account {
   string tax_wrapper = 5;
   // The fee rule its broker charges a sale (D-78); all zero until set.
   FeeRule fee_rule = 6;
+  // What happens to the coupons and maturities of a hand-entered bond
+  // account (D-135); BOND_PAYOUT_CASH for every other account.
+  BondPayout bond_payout = 7;
+  // The day bond_payout took effect, YYYY-MM-DD; empty when it never
+  // changed.
+  string bond_payout_since = 8;
+}
+
+// BondPayout is the payout setting of a hand-entered bond account
+// (D-135), matching the option the bond registry offers. Only an account
+// at the "treasury-bonds" institution may be paid out; asking for it on
+// another fails with INVALID_ARGUMENT. A change takes effect on the day
+// it is made: a coupon or maturity follows the setting in force on the
+// day it falls due.
+enum BondPayout {
+  // In a request, keeps the account's setting; a new account's is
+  // BOND_PAYOUT_CASH.
+  BOND_PAYOUT_UNSPECIFIED = 0;
+  // Coupons and maturities stay as the account's cash.
+  BOND_PAYOUT_CASH = 1;
+  // Each coupon and maturity is booked, then withdrawn: a withdrawal of
+  // the same amount on the same day, so the account's cash matches the
+  // registry and the payout still counts as return.
+  BOND_PAYOUT_PAID_OUT = 2;
 }
 
 // FeeRule is how an account's broker charges a sale (D-78): rate of the
@@ -124,6 +150,8 @@ message CreateAccountRequest {
   string tax_wrapper = 8;
   // The fee rule (D-78); unset for the zero rule.
   FeeRule fee_rule = 9;
+  // The payout setting (D-135); unspecified for BOND_PAYOUT_CASH.
+  BondPayout bond_payout = 10;
 }
 
 message CreateAccountResponse {
@@ -140,6 +168,8 @@ message UpdateAccountRequest {
   string tax_wrapper = 6;
   // The new fee rule; unset keeps the account's.
   FeeRule fee_rule = 7;
+  // The new payout setting (D-135); unspecified keeps the account's.
+  BondPayout bond_payout = 8;
 }
 
 message UpdateAccountResponse {

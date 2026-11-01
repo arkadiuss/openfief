@@ -895,3 +895,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-789c4e774b58
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-rankings-gap-thresholds
+    to: TEST-valuation-app-ranking
+    created_at: 2026-11-01T09:09:24.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f37685b4a03a
+  - type: implements
+    from: SYM-valuation-gen-pb-set-series-source-response-descriptor
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:18:20.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caacaea30032
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-series-source-response-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:18:20.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-781391c416c1

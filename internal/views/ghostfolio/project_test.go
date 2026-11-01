@@ -105,6 +105,11 @@ func TestProject(t *testing.T) {
 			want: []ghostfolio.Activity{activity(t, "a1", "d1", ghostfolio.TypeDividend, "2025-03-03", "USD", yahoo, "ETF1.L", "1", "12.5", "1.88")},
 		},
 		{
+			name: "a redemption (D-135) is a SELL at its redemption value, the tax withheld as its fee",
+			txs:  []ledger.Transaction{must(ledger.NewRedemption(header(t, "a1", "m1", "2025-03-05"), etf, qty(t, "2"), money(t, "210", "USD"), money(t, "1.9", "USD")))},
+			want: []ghostfolio.Activity{activity(t, "a1", "m1", ghostfolio.TypeSell, "2025-03-05", "USD", yahoo, "ETF1.L", "2", "105", "1.9")},
+		},
+		{
 			name:       "a fee on its own, against the fee asset of its currency",
 			txs:        []ledger.Transaction{must(ledger.NewFee(header(t, "a1", "f1", "2025-03-04"), money(t, "5", "PLN")))},
 			want:       []ghostfolio.Activity{activity(t, "a1", "f1", ghostfolio.TypeFee, "2025-03-04", "PLN", ghostfolio.DataSourceManual, feePLN, "0", "0", "5")},

@@ -1,6 +1,6 @@
 ---
 title: The core must send the account's go-live date with the owner's bond lots, the date it was seeded on or today when it is not seeded, and import the delivery as opening lots added one at a time.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-98
 tags:
   - strict-modeling

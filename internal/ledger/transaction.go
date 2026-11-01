@@ -52,10 +52,15 @@ const (
 	// correction (D-100): it supersedes the current version, which stays in
 	// the log, and records nothing, so the key has no current transaction.
 	KindDeletion
+	// KindRedemption records a holding redeemed by its issuer, such as a
+	// treasury bond at maturity (D-135): the units leave at their
+	// redemption value, which the account receives as cash less the tax
+	// withheld at source. It is no sale: the issuer withholds its tax.
+	KindRedemption
 )
 
 // lastKind is the highest valid transaction kind.
-const lastKind = KindDeletion
+const lastKind = KindRedemption
 
 // String returns the kind's name, such as "buy", or a placeholder for an
 // invalid kind.
@@ -64,6 +69,7 @@ func (k TransactionKind) String() string {
 		KindBuy: "buy", KindSell: "sell", KindDividend: "dividend", KindFee: "fee",
 		KindFXConversion: "fx-conversion", KindDeposit: "deposit", KindWithdrawal: "withdrawal",
 		KindOpeningLot: "opening-lot", KindInterest: "interest", KindDeletion: "deletion",
+		KindRedemption: "redemption",
 	}
 	if k >= KindBuy && k <= lastKind {
 		return names[k]

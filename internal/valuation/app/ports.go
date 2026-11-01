@@ -27,12 +27,20 @@ type AccountLister interface {
 // Inputs reads the stored inputs of a revaluation besides the log.
 type Inputs interface {
 	// Prices returns every price of instrument (ledger.Instrument.String())
-	// dated on or before through.
+	// dated on or before through from its one source (D-94).
 	Prices(ctx context.Context, instrument string, through kernel.Date) ([]valuation.Price, error)
-	// FXRates returns every rate of currency dated on or before through.
+	// FXRates returns every rate of currency dated on or before through
+	// from its one source (D-94).
 	FXRates(ctx context.Context, currency kernel.Currency, through kernel.Date) ([]valuation.FXRate, error)
 	// IndexReadings returns every period index reading.
 	IndexReadings(ctx context.Context) ([]valuation.IndexReading, error)
+	// SourceOf returns the one source series takes its values from
+	// (D-94), choosing it from its kind's ranking when it has none yet,
+	// and false when no source has a value of it.
+	SourceOf(ctx context.Context, series valuation.Series) (valuation.SeriesSource, bool, error)
+	// GapThresholds returns the owner's gap threshold of each kind that
+	// has one (D-94).
+	GapThresholds(ctx context.Context) (valuation.GapThresholds, error)
 	// BondTerms returns the series terms of the retail treasury bond with
 	// isin, and false when isin is not a bond with stored terms.
 	BondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms, bool, error)

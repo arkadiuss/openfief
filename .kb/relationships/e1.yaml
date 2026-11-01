@@ -419,6 +419,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-93421057d3f1
+  - type: implements
+    from: SYM-ingest-app-ticker-store
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:16.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae60ee0132b
+  - type: implements
+    from: SYM-views-ghostfolio-syncer-actual
+    to: REQ-views-ghostfolio-owned-and-cash-accounts
+    created_at: 2026-10-31T20:03:15.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7368a02b844e
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-ledger-account
+    to: TEST-ingest-app-held
+    created_at: 2026-11-01T07:47:31.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3f2ba3ea48c
   - type: executable_for
     from: SYM-attention-app-test-helper-recorder-publish
     to: TEST-attention-app-items
@@ -441,16 +462,37 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-f09a19f3ca73
   - type: implements
-    from: SYM-ingest-app-ticker-store
-    to: REQ-ingest-xtb-isin-owner-confirms
-    created_at: 2026-10-31T18:03:16.778Z
+    from: SYM-valuation-index-readings-by-source
+    to: REQ-valuation-market-data-never-other-source
+    created_at: 2026-11-01T09:03:42.388Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-7ae60ee0132b
+    id: rel-046f7c520278
   - type: implements
-    from: SYM-views-ghostfolio-syncer-actual
-    to: REQ-views-ghostfolio-owned-and-cash-accounts
-    created_at: 2026-10-31T20:03:15.865Z
+    from: SYM-valuation-index-readings-by-source
+    to: REQ-valuation-market-data-other-sources-cross-checks
+    created_at: 2026-11-01T09:03:42.416Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-7368a02b844e
+    id: rel-b61f5f792abb
+  - type: covered_by
+    from: SYM-valuation-index-readings-by-source
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:03:42.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d158e37ffa2
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-request-get-kind
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:19:31.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d89ce97837c
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-request-get-kind
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:19:31.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdaf3d267d15

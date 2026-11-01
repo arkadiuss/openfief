@@ -636,6 +636,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-799a25cdfa0a
+  - type: verified_by
+    from: SCEN-treasurybonds-lot-on-purchase-date
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-11-01T07:44:34.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df14c87b709a
+  - type: verified_by
+    from: SCEN-treasurybonds-lot-on-purchase-date
+    to: TEST-core-bond-lots
+    created_at: 2026-11-01T07:44:34.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b4c94550913
+  - type: verified_by
+    from: SCEN-treasurybonds-lot-on-purchase-date
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-11-01T07:44:34.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22c6c03975ee
   - type: executable_for
     from: SYM-core-test-xtb-start-from-open-positions
     to: TEST-core-xtb-start

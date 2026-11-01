@@ -99,6 +99,7 @@ type fakeStore struct {
 	terms    map[ledger.ISIN]pl.Terms
 	rows     map[ledger.AccountID][]valuation.HoldingValuation
 	through  map[ledger.AccountID]kernel.Date
+	gaps     valuation.GapThresholds
 	err      error
 }
 
@@ -131,6 +132,35 @@ func (f *fakeStore) FXRates(_ context.Context, c kernel.Currency, through kernel
 
 func (f *fakeStore) IndexReadings(context.Context) ([]valuation.IndexReading, error) {
 	return f.readings, f.err
+}
+
+// SourceOf returns the source of series' first value, as a store that
+// chose it on first need would.
+func (f *fakeStore) SourceOf(_ context.Context, series valuation.Series) (valuation.SeriesSource, bool, error) {
+	var sources []string
+	for _, p := range f.prices {
+		if series == valuation.PriceSeries(p.Instrument) {
+			sources = append(sources, p.Source)
+		}
+	}
+	for _, r := range f.rates {
+		if series == valuation.FXSeries(r.Currency) {
+			sources = append(sources, r.Source)
+		}
+	}
+	for _, r := range f.readings {
+		if series == valuation.IndexSeries(r.Kind) {
+			sources = append(sources, r.Source)
+		}
+	}
+	if len(sources) == 0 {
+		return valuation.SeriesSource{}, false, f.err
+	}
+	return valuation.SeriesSource{Series: series, Source: sources[0]}, true, f.err
+}
+
+func (f *fakeStore) GapThresholds(context.Context) (valuation.GapThresholds, error) {
+	return f.gaps, f.err
 }
 
 func (f *fakeStore) BondTerms(_ context.Context, isin ledger.ISIN) (pl.Terms, bool, error) {

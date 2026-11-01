@@ -582,13 +582,6 @@ relationships:
     id: rel-80fecaa1276e
   - type: validates
     from: TEST-ledger-pg-seed
-    to: REQ-ledger-manual-opening-lots-one-at-a-time
-    created_at: 2026-10-30T05:01:30.976Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cbe0a4d4c727
-  - type: validates
-    from: TEST-ledger-pg-seed
     to: REQ-ingest-bond-lot-delete-supersedes
     created_at: 2026-10-30T05:01:31.046Z
     created_by: kibi/upsert
@@ -713,3 +706,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44b27d31e1e3
+  - type: executable_for
+    from: SYM-attention-pg-test-embedded-migrations-load
+    to: TEST-attention-pg-store
+    created_at: 2026-11-01T11:53:25.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-907e1876a354
+  - type: implements
+    from: SYM-valuation-app-revaluer-gaps
+    to: REQ-valuation-gap-item-per-account
+    created_at: 2026-11-01T09:06:58.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72a0a82b9579
+  - type: implements
+    from: SYM-valuation-app-revaluer-gaps
+    to: REQ-valuation-market-data-gap-attention-item
+    created_at: 2026-11-01T09:06:58.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35d41986e519
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-gaps
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:06:58.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e09d7eeedd21

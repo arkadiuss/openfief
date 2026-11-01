@@ -538,3 +538,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f5de77fa59f
+  - type: executable_for
+    from: SYM-identity-pg-test-embedded-migrations-load
+    to: TEST-identity-postgres
+    created_at: 2026-11-01T11:53:30.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fba68664625

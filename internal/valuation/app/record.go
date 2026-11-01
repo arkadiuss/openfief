@@ -212,8 +212,12 @@ func (r *InputRecorder) RecordNumberFormat(ctx context.Context, format jurisdict
 }
 
 // RulesVersion returns the version of the rules the values are computed
-// under: the pack's, such as "pl/1".
-func (r *InputRecorder) RulesVersion() string { return r.pack.Version() }
+// under: the pack's and the version of the rules by which a series takes
+// its values from its sources (valuation.SourceRulesVersion), such as
+// "pl/2 sources/2". Raising either revalues every account at start-up.
+func (r *InputRecorder) RulesVersion() string {
+	return r.pack.Version() + " sources/" + valuation.SourceRulesVersion
+}
 
 // ApplyRules records the version of the jurisdiction pack's rules
 // (RulesVersion) and, when it differs from the recorded one, revalues every

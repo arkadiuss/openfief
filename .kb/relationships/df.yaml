@@ -545,13 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-770a5300d6d1
-  - type: implements
-    from: SYM-core-ledger-importer-add-opening-lots
-    to: REQ-ingest-bond-lot-go-live
-    created_at: 2026-10-30T06:34:00.982Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c317cd5bcd8c
   - type: covered_by
     from: SYM-core-ledger-importer-add-opening-lots
     to: TEST-core-bond-lots
@@ -595,9 +588,37 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e32f1a61b837
   - type: implements
+    from: SYM-core-ledger-importer-add-opening-lots
+    to: REQ-ingest-bond-lot-no-go-live
+    created_at: 2026-11-01T08:00:24.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94f18dad686c
+  - type: implements
     from: SYM-ingest-app-connectors-keep-from-go-live
     to: REQ-ingest-keeps-from-go-live-uploads
     created_at: 2026-11-01T08:09:12.941Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f580492c70a
+  - type: constrains
+    from: REQ-valuation-market-data-series-service
+    to: FACT-SUBJECT-39E6C7397E8CD407
+    created_at: 2026-11-01T08:56:16.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93ad034338da
+  - type: requires_property
+    from: REQ-valuation-market-data-series-service
+    to: FACT-PROP-79EA62F65E8FBF30
+    created_at: 2026-11-01T08:56:16.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03df1ef23bb4
+  - type: specified_by
+    from: REQ-valuation-market-data-series-service
+    to: SCEN-valuation-market-data-series-service
+    created_at: 2026-11-01T08:56:16.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-486b0242f26e

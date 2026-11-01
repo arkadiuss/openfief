@@ -608,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b25fca5d44f
+  - type: executable_for
+    from: SYM-ingest-pg-test-embedded-migrations-load
+    to: TEST-ingest-postgres
+    created_at: 2026-11-01T11:53:34.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-459f3821063e
+  - type: executable_for
+    from: SYM-valuation-test-series
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:04:54.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a07d18cdee1

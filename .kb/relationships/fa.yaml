@@ -504,6 +504,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-7753e070585a
   - type: implements
+    from: SYM-ingest-app-account-holdings
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:06:10.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb01c84a95c3
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-check-digit
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:50:17.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bbdb6ec37ad
+  - type: implements
     from: SYM-attentionv1-acknowledge-attention-item-request-string
     to: REQ-attention-owner-service
     created_at: 2026-10-31T18:54:24.486Z
@@ -532,13 +546,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-567e4df92f4f
   - type: implements
-    from: SYM-ingest-app-account-holdings
-    to: REQ-ingest-sync-carries-bound-holdings-lots
-    created_at: 2026-10-31T18:06:10.038Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eb01c84a95c3
-  - type: implements
     from: SYM-core-valuation-attention-raise
     to: REQ-valuation-unclassified-attention
     created_at: 2026-11-01T06:41:09.142Z
@@ -552,3 +559,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f710033adc6
+  - type: executable_for
+    from: SYM-valuation-test-prices-by-source
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:05:07.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc72aa845975
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-market-data-set-series-source
+    to: TEST-ui-market-data
+    created_at: 2026-11-01T09:12:25.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8a9b003dd73
+  - type: implements
+    from: SYM-valuation-gen-pb-list-series-sources-request-string
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:14:46.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd72876646bb
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-series-sources-request-string
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:14:46.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5090169b7e56

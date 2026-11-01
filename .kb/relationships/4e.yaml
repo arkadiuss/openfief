@@ -552,3 +552,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9b214c3c570
+  - type: validates
+    from: TEST-valuation-postgres-index-levels
+    to: REQ-valuation-index-levels-not-ranked
+    created_at: 2026-11-01T09:01:24.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b14ae60d27d
+  - type: validates
+    from: TEST-valuation-postgres-index-levels
+    to: REQ-valuation-index-level-last-delivered
+    created_at: 2026-11-01T09:01:24.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ce6a1fe6d8b
+  - type: implements
+    from: SYM-valuation-price-series
+    to: REQ-valuation-market-data-one-source
+    created_at: 2026-11-01T09:02:32.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-150044477a17
+  - type: covered_by
+    from: SYM-valuation-price-series
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:02:32.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea87e2453c44
+  - type: implements
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-list-series-sources
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:21:25.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00a0cf145a2e
+  - type: covered_by
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-list-series-sources
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:21:25.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0057ac574765

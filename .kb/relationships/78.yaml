@@ -421,13 +421,6 @@ relationships:
     id: rel-149ab2eae455
   - type: implements
     from: SYM-treasurybonds-add-terms
-    to: REQ-treasurybonds-lot-mapping
-    created_at: 2026-10-29T01:22:28.549Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b1558dec701c
-  - type: implements
-    from: SYM-treasurybonds-add-terms
     to: REQ-AUTO-FD50BCD71546E83F
     created_at: 2026-10-29T01:22:28.588Z
     created_by: kibi/upsert
@@ -552,13 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00d11f973cba
-  - type: implements
-    from: SYM-valuation-app-rankings-source-rankings
-    to: REQ-valuation-ranking-revalues
-    created_at: 2026-10-29T18:12:52.314Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fbe68765af79
   - type: covered_by
     from: SYM-valuation-app-rankings-source-rankings
     to: TEST-valuation-app-ranking
@@ -790,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33e09da079cf
+  - type: implements
+    from: SYM-treasurybonds-add-terms
+    to: REQ-treasurybonds-lot-on-purchase-date
+    created_at: 2026-11-01T07:58:00.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa7e4cc97b0e

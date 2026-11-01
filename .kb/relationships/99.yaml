@@ -595,6 +595,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-94486ece4554
   - type: implements
+    from: SYM-treasurybonds-book-maturity
+    to: REQ-treasurybonds-maturity-redemption
+    created_at: 2026-11-01T07:49:43.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a9e4a4afb3c
+  - type: covered_by
+    from: SYM-treasurybonds-book-maturity
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:49:43.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-367c16300386
+  - type: implements
+    from: SYM-treasurybonds-book-maturity
+    to: REQ-treasurybonds-books-maturities
+    created_at: 2026-11-01T08:43:16.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d364042cdc6
+  - type: implements
     from: SYM-ingest-connectrpc-optional-from
     to: REQ-ingest-ticker-opening-lots
     created_at: 2026-11-01T08:03:07.391Z
@@ -622,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6d2ac549638
+  - type: implements
+    from: SYM-valuation-app-input-cache-read
+    to: REQ-valuation-gap-item-per-account
+    created_at: 2026-11-01T09:06:20.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6630cf82ffc
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-read
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:06:20.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9704d750857

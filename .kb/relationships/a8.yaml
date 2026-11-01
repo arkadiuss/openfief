@@ -727,20 +727,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4f7b9d203e4
-  - type: implements
-    from: SYM-treasurybonds-mapper-map-deleted
-    to: REQ-treasurybonds-lot-mapping
-    created_at: 2026-10-30T06:38:15.088Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8dcd61c27880
-  - type: implements
-    from: SYM-treasurybonds-mapper-map-deleted
-    to: REQ-treasurybonds-pre-go-live-opening-lot
-    created_at: 2026-10-30T06:38:15.135Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2c07340766ca
   - type: covered_by
     from: SYM-treasurybonds-mapper-map-deleted
     to: TEST-treasurybonds-mapper
@@ -819,6 +805,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-daa679c729c0
   - type: implements
+    from: SYM-ingestv1-bond-payout-string
+    to: REQ-ingest-bond-payout-setting
+    created_at: 2026-11-01T07:54:07.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3613c174539
+  - type: covered_by
+    from: SYM-ingestv1-bond-payout-string
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T07:54:07.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1e06942cf0a
+  - type: implements
+    from: SYM-treasurybonds-mapper-map-deleted
+    to: REQ-treasurybonds-lot-on-purchase-date
+    created_at: 2026-11-01T07:59:24.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a693447d672b
+  - type: implements
+    from: SYM-treasurybonds-mapper-map-deleted
+    to: REQ-treasurybonds-lot-idempotent-series-date
+    created_at: 2026-11-01T08:44:38.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f357902ecd46
+  - type: implements
     from: SYM-core-attention-items
     to: REQ-valuation-unclassified-attention
     created_at: 2026-11-01T06:40:51.898Z
@@ -832,3 +846,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bdd7ced41cb
+  - type: implements
+    from: SYM-valuation-choose-source
+    to: REQ-valuation-market-data-source-chosen-on-first-need
+    created_at: 2026-11-01T09:03:02.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17428e54c170
+  - type: covered_by
+    from: SYM-valuation-choose-source
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:03:02.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31d2cd128972
