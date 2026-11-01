@@ -93,11 +93,15 @@ type SyncCall struct {
 }
 
 // NamedFile is a statement file to import: its contents, the name the owner
-// gave it (a hint, never a path) and its media type when known.
+// gave it (a hint, never a path) and its media type when known, with the
+// cash balance the owner entered once with an opening upload of a
+// statement that holds none, such as an xStation export's open positions
+// (D-136): nil when none was entered.
 type NamedFile struct {
-	Name      string
-	MediaType string
-	Contents  io.Reader
+	Name        string
+	MediaType   string
+	Contents    io.Reader
+	OpeningCash *kernel.Money
 }
 
 // CoreTokens issues the token the core presents to a connector instance: a
@@ -326,9 +330,10 @@ func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ing
 }
 
 // deliver imports a delivery as one import batch: entries named by broker
-// account resolved into the accounts they are mapped to (D-72), ticker
-// entries booked with their confirmed ISIN or held for the owner (D-116),
-// in a sync what accounts' seeding already holds left out (D-95), the transactions
+// account resolved into the accounts they are mapped to (D-72), in a sync,
+// or an upload in transactions mode, what accounts' seeding already holds
+// left out (D-95, D-136), ticker entries booked with their confirmed ISIN
+// or held for the owner (D-116), the transactions
 // scoped to the instance into the ledger, seeded in an
 // opening batch (D-23), then prices, FX rates, index readings, index
 // levels and cross-check prices with the instance as their source, the
@@ -345,18 +350,13 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
-	r, err := c.admit(ctx, instance, mode, d, only)
+	r, err := c.admit(ctx, instance, source, mode, d, only)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	m := r.Mapping
 	if d, err = c.declaredCrossChecks(ctx, instance, d, &m); err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
-	}
-	if source == SourceSync {
-		if m, err = c.keepFromGoLive(ctx, mode, &m); err != nil {
-			return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
-		}
 	}
 	m.Transactions = ingest.ScopeToConnector(instance, m.Transactions)
 	imported, err := importMapping(ctx, c.Ledger, mode, source, &m)
@@ -398,11 +398,20 @@ func (c *Connectors) declaredCrossChecks(ctx context.Context, instance string, d
 }
 
 // keepFromGoLive returns m without what its accounts' seeding already holds
-// (ingest.KeepFromGoLive).
-func (c *Connectors) keepFromGoLive(ctx context.Context, mode ingest.Mode, m *ingest.Mapping) (ingest.Mapping, error) {
-	accounts := make([]ledger.AccountID, 0, len(m.Transactions))
+// (ingest.KeepFromGoLive), when it comes from source in mode: a sync, or a
+// statement uploaded in transactions mode, which may reach back before the
+// account's go-live (D-136). An opening upload is kept whole: the ledger
+// decides whether it seeds the account again (D-23).
+func (c *Connectors) keepFromGoLive(ctx context.Context, source string, mode ingest.Mode, m *ingest.Mapping) (ingest.Mapping, error) {
+	if source != SourceSync && (source != SourceUpload || mode != ingest.ModeTransactions) {
+		return *m, nil
+	}
+	accounts := make([]ledger.AccountID, 0, len(m.Transactions)+len(m.TickerEntries))
 	for i := range m.Transactions {
 		accounts = append(accounts, m.Transactions[i].Account)
+	}
+	for i := range m.TickerEntries {
+		accounts = append(accounts, m.TickerEntries[i].Header.Account)
 	}
 	goLive, err := c.GoLiveDates(ctx, accounts)
 	if err != nil {
@@ -411,12 +420,13 @@ func (c *Connectors) keepFromGoLive(ctx context.Context, mode ingest.Mode, m *in
 	return ingest.KeepFromGoLive(m, mode, goLive), nil
 }
 
-// admit returns the mapping of d to import, with its broker accounts
-// resolved, the broker accounts left unmapped and those an opening batch
-// of it seeds, its ticker entries booked or held (bookTickers), after
-// checking that every account it names is in only, when
-// only is set, and bound to instance.
-func (c *Connectors) admit(ctx context.Context, instance string, mode ingest.Mode, d *Delivery, only []ledger.AccountID) (ingest.Resolution, error) {
+// admit returns the mapping of d, from source, to import, with its broker
+// accounts resolved, the broker accounts left unmapped and those an
+// opening batch of it seeds, what its accounts' go-live keeps out left out
+// (keepFromGoLive), and its ticker entries booked or held (bookTickers),
+// after checking that every account it names is in only, when only is
+// set, and bound to instance.
+func (c *Connectors) admit(ctx context.Context, instance, source string, mode ingest.Mode, d *Delivery, only []ledger.AccountID) (ingest.Resolution, error) {
 	r, err := c.resolveBrokerAccounts(ctx, instance, mode, d)
 	if err != nil {
 		return ingest.Resolution{}, err
@@ -429,7 +439,11 @@ func (c *Connectors) admit(ctx context.Context, instance string, mode ingest.Mod
 	if boundErr := c.checkBound(ctx, instance, &r.Mapping); boundErr != nil {
 		return ingest.Resolution{}, boundErr
 	}
-	booked, err := c.bookTickers(ctx, instance, &r.Mapping)
+	kept, err := c.keepFromGoLive(ctx, source, mode, &r.Mapping)
+	if err != nil {
+		return ingest.Resolution{}, err
+	}
+	booked, err := c.bookTickers(ctx, instance, &kept)
 	if err != nil {
 		return ingest.Resolution{}, err
 	}

@@ -93,9 +93,10 @@ type Resolution struct {
 // and the account ID, so that keys stay per account as connectors key them
 // (ledger.TransactionKey); ticker entries likewise. Entries of a broker account that is not mapped
 // are left out and the account listed in Unmapped. In an opening batch the
-// seeding transactions of a broker account already seeded are left out too,
-// so seeding one newly mapped account never seeds another again; their
-// balance assertions are kept. The rest of m is kept as it is.
+// seeding transactions and opening-lot ticker entries of a broker account
+// already seeded are left out too, so seeding one newly mapped account
+// never seeds another again; their balance assertions are kept. The rest
+// of m is kept as it is.
 func ResolveBrokerAccounts(m *Mapping, known []BrokerAccount, mode Mode) Resolution {
 	out := Resolution{Mapping: Mapping{
 		Transactions:     slices.Clone(m.Transactions),
@@ -130,7 +131,7 @@ func ResolveBrokerAccounts(m *Mapping, known []BrokerAccount, mode Mode) Resolut
 
 // book adds e's entries to out in account, each transaction's key source
 // with ":" and the account appended, and with reseeding without its
-// seeding transactions.
+// seeding transactions and opening-lot ticker entries.
 func book(e *BrokerEntries, account ledger.AccountID, reseeding bool, out *Mapping) {
 	for j := range e.Transactions {
 		if reseeding && ledger.IsSeeding(&e.Transactions[j]) {
@@ -146,6 +147,9 @@ func book(e *BrokerEntries, account ledger.AccountID, reseeding bool, out *Mappi
 		out.Assertions = append(out.Assertions, a)
 	}
 	for j := range e.TickerEntries {
+		if reseeding && e.TickerEntries[j].Kind == ledger.KindOpeningLot {
+			continue
+		}
 		t := e.TickerEntries[j]
 		t.Header.Account = account
 		t.Header.Key.Source += ":" + string(account)

@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c062b3c76fcb
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-ticker-store-confirm-ticker
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T08:01:44.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab86308cb160

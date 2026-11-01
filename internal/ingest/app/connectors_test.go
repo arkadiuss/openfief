@@ -37,6 +37,7 @@ type fakeCaller struct {
 	terms     []ingest.BondTerms
 	file      string
 	media     string
+	cash      *kernel.Money
 	lots      []ingest.BondLot
 	entries   ingest.BondLotEntries
 }
@@ -53,7 +54,7 @@ func (f *fakeCaller) ImportFile(_ context.Context, instance string, id ingest.Ba
 	if err != nil {
 		return app.Delivery{}, errors.Join(errCaller, err)
 	}
-	f.file, f.media = file.Name+":"+string(b), file.MediaType
+	f.file, f.media, f.cash = file.Name+":"+string(b), file.MediaType, file.OpeningCash
 	return f.delivery, f.err
 }
 
@@ -294,7 +295,7 @@ func (f fixedSeeding) GoLive(_ context.Context, account ledger.AccountID) (kerne
 
 // TestConnectorsSyncKeepsFromGoLive checks that a sync's transactions batch
 // leaves out a seeded account's transactions up to its go-live, as skipped
-// problems (D-95, D-23), while an upload the owner sends is booked whole.
+// problems (D-95, D-23).
 func TestConnectorsSyncKeepsFromGoLive(t *testing.T) {
 	t.Parallel()
 	d := delivery(t)
@@ -313,15 +314,39 @@ func TestConnectorsSyncKeepsFromGoLive(t *testing.T) {
 	if diff := cmp.Diff(wantProblems, got.Batch.Problems); diff != "" || len(l.txs) != 0 || got.Batch.Transactions != 0 {
 		t.Errorf("Sync booked %d transactions with problems (-want +got):\n%s", len(l.txs), diff)
 	}
-	if _, err := c.ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeTransactions, app.NamedFile{Contents: strings.NewReader("x")}); err != nil {
-		t.Fatalf("ImportFile: %v", err)
-	}
-	if len(l.txs) != 1 {
-		t.Errorf("an upload booked %d transactions, want 1", len(l.txs))
-	}
 	c.Seeding = fixedSeeding{err: errStore}
 	if _, err := c.Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-3", Mode: ingest.ModeTransactions}); !errors.Is(err, errStore) {
 		t.Errorf("Sync with a failing ledger = %v, want its error", err)
+	}
+}
+
+// TestConnectorsUploadKeepsFromGoLive checks that an upload in transactions
+// mode leaves out a seeded account's transactions up to its go-live, as a
+// sync does, so a statement continues an account from its start (D-136),
+// while an opening upload is booked whole, for the ledger to decide.
+func TestConnectorsUploadKeepsFromGoLive(t *testing.T) {
+	t.Parallel()
+	d := delivery(t)
+	d.Prices, d.FXRates, d.IndexReadings, d.IndexLevels = nil, nil, nil, nil
+	l := &fakeLedger{}
+	c := connectors(t, &fakeCaller{delivery: d}, l, &fakeStores{})
+	c.Seeding = fixedSeeding{goLive: march2(t)}
+	upload, err := c.ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeTransactions, app.NamedFile{Contents: strings.NewReader("x")})
+	if err != nil {
+		t.Fatalf("ImportFile: %v", err)
+	}
+	wantProblems := []ingest.Problem{
+		ingest.Unsupported("row 2", "broker interest"),
+		ingest.Skipped("test/1", "a transaction before go-live 2026-03-02"),
+	}
+	if diff := cmp.Diff(wantProblems, upload.Problems); diff != "" || len(l.txs) != 0 {
+		t.Errorf("a transactions upload booked %d transactions with problems (-want +got):\n%s", len(l.txs), diff)
+	}
+	if _, err := c.ImportFile(t.Context(), "xtb-main", "b-4", ingest.ModeOpening, app.NamedFile{Contents: strings.NewReader("x")}); err != nil {
+		t.Fatalf("ImportFile: %v", err)
+	}
+	if len(l.txs) != 1 || l.seeds != 1 {
+		t.Errorf("an opening upload booked %d transactions in %d seedings, want 1 in 1", len(l.txs), l.seeds)
 	}
 }
 

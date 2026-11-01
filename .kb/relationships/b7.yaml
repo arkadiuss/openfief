@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2363db79ca61
+  - type: validates
+    from: TEST-ui-statements
+    to: REQ-ingest-xtb-open-positions-owner-cash
+    created_at: 2026-11-01T08:22:57.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d217f450b13f

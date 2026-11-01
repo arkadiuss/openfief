@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cbea0345b563
+  - type: implements
+    from: SYM-ingestv1-statement-header-get-opening-cash
+    to: REQ-ingest-opening-cash-entered-once
+    created_at: 2026-11-01T08:08:22.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-441c9c718999
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-get-opening-cash
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-01T08:08:22.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c253d3f227b1

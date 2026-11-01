@@ -538,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-519ffd8b2607
+  - type: implements
+    from: SYM-ingest-xtb-opening-date
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:04:47.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fecfdfafb91
+  - type: covered_by
+    from: SYM-ingest-xtb-opening-date
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:04:47.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dfdee3e12ad
+  - type: implements
+    from: SYM-ingest-xtb-opening-date
+    to: REQ-ingest-xtb-start-from-open-positions
+    created_at: 2026-11-01T08:23:59.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b02a1990e268

@@ -14,10 +14,15 @@ import (
 var (
 	// ErrUnknownMode reports an ingest mode the mapper doesn't know.
 	ErrUnknownMode = errors.New("unknown ingest mode")
-	// ErrOpeningMode reports an opening batch: the export holds neither the
-	// account's cash balance nor what its positions cost in the account's
-	// currency, so it can't seed an account (D-23).
-	ErrOpeningMode = errors.New("an xStation export can't seed an account: upload it in transactions mode with the account's whole history")
+	// ErrOpeningMode reports an opening batch of an export that can't seed
+	// an account (D-136): one without an Open Positions sheet laid out as
+	// R-24 describes, with the date of its report.
+	ErrOpeningMode = errors.New("an xStation export seeds an account only from its Open Positions sheet, with its report date")
+	// ErrOpeningCash reports a cash balance the owner entered that the
+	// export's account can't take as its opening cash (D-136): one in
+	// another currency than the account's, with more decimals than its
+	// minor unit, or sent with a transactions batch.
+	ErrOpeningCash = errors.New("the opening cash can't be booked")
 	// ErrCurrency reports an account currency the file doesn't name, or
 	// names in two ways, or that the mapper doesn't know.
 	ErrCurrency = errors.New("no account currency")
@@ -44,10 +49,16 @@ func minorUnit(code string) (int32, bool) {
 const centPlaces = 2
 
 // Mapper maps an xStation "Historia operacji" export (R-24), one account per
-// file, into the connector contract's mapping: deposits and withdrawals,
-// and the buys, sells and dividends of stocks and ETFs as ticker entries,
-// which the core books once the owner confirms each ticker's ISIN, since the
-// export names no ISIN (D-116). Everything is named by the XTB account in
+// file, into the connector contract's mapping. An account starts from an
+// export of its whole history, mapped in transactions mode, or from the
+// open positions of a current export, mapped in opening mode (D-136). In
+// transactions mode it maps deposits and withdrawals, and the buys, sells
+// and dividends of stocks and ETFs as ticker entries, which the core books
+// once the owner confirms each ticker's ISIN, since the export names no
+// ISIN (D-116). In opening mode it maps each open stock or ETF position to
+// an opening lot, as a ticker entry too, and the cash balance the owner
+// entered to the account's opening cash, both on the report's date, the
+// account's go-live. Everything is named by the XTB account in
 // ByBrokerAccount, which the core maps to the OpenFief account the owner
 // chose (D-72). Only stocks and ETFs are booked; CFD positions are ingest
 // problems (D-24). The comments of deposits and withdrawals, which name the
@@ -60,19 +71,27 @@ type export struct {
 	currency kernel.Currency
 	places   int32
 	date1904 bool
-	cash     *table
-	closed   *table
-	open     *table
+	// goLive is the date of Open Positions' report, the account's go-live
+	// date in opening mode (D-136); zero in transactions mode.
+	goLive kernel.Date
+	cash   *table
+	closed *table
+	open   *table
 }
 
-// Map maps the export data, uploaded under fileName, in mode. It fails when
-// the file is not a readable export or mode is opening; rows it can't book
-// become ingest problems.
-func (Mapper) Map(data []byte, fileName string, mode ingest.Mode) (ingest.Mapping, error) {
+// Map maps the export data, uploaded under fileName, in mode, with
+// openingCash, the cash balance the owner entered for an opening batch, or
+// the zero Money for none. It fails when the file is not a readable export,
+// when an opening batch's export has no open positions as of a report date,
+// or when the opening cash can't be booked; rows it can't book become
+// ingest problems.
+func (Mapper) Map(data []byte, fileName string, mode ingest.Mode, openingCash kernel.Money) (ingest.Mapping, error) {
 	switch mode {
 	case ingest.ModeTransactions:
+		if !openingCash.Currency().IsZero() {
+			return ingest.Mapping{}, fmt.Errorf("%w: it goes only with an opening batch", ErrOpeningCash)
+		}
 	case ingest.ModeOpening:
-		return ingest.Mapping{}, ErrOpeningMode
 	default:
 		return ingest.Mapping{}, fmt.Errorf("%w: %s", ErrUnknownMode, mode)
 	}
@@ -80,37 +99,47 @@ func (Mapper) Map(data []byte, fileName string, mode ingest.Mode) (ingest.Mappin
 	if err != nil {
 		return ingest.Mapping{}, err
 	}
-	x, err := readExport(wb, fileName)
+	x, err := readExport(wb, fileName, mode)
 	if err != nil {
 		return ingest.Mapping{}, err
 	}
 	run := mapping{x: x}
+	if mode == ingest.ModeOpening {
+		if err := run.opening(openingCash); err != nil {
+			return ingest.Mapping{}, err
+		}
+		return run.result(), nil
+	}
 	run.cashOperations()
 	run.closedPositions()
 	run.openPositions()
 	return run.result(), nil
 }
 
-// readExport reads the export's account, currency and tables. Cash
-// Operations is required; Closed Positions and Open Positions are read
-// when present.
-func readExport(wb *workbook, fileName string) (*export, error) {
+// readExport reads the export's account, currency and tables, and in
+// opening mode its go-live date. Cash Operations is required in
+// transactions mode and Open Positions, with its report date, in opening
+// mode; the other sheets are read when present.
+func readExport(wb *workbook, fileName string, mode ingest.Mode) (*export, error) {
 	x := &export{date1904: wb.date1904}
-	cash, ok := wb.sheets[sheetCash]
-	if !ok {
+	if _, ok := wb.sheets[sheetCash]; !ok && mode == ingest.ModeTransactions {
 		return nil, fmt.Errorf("%w: no sheet %q", ErrLayout, sheetCash)
 	}
 	var err error
-	if x.cash, err = findTable(cash, "Type", "Ticker", "Time", "Amount", "ID"); err != nil {
-		return nil, err
-	}
-	if s, ok := wb.sheets[sheetClosed]; ok {
-		if x.closed, err = findTable(s, "Ticker", "Category", "Position ID"); err != nil {
-			return nil, err
+	for _, t := range []struct {
+		dst    **table
+		name   string
+		labels []string
+	}{
+		{&x.cash, sheetCash, []string{colType, colTicker, colTime, colAmount, colID}},
+		{&x.closed, sheetClosed, []string{colTicker, colCategory, colPositionID}},
+		{&x.open, sheetOpen, []string{colTicker, colCategory}},
+	} {
+		s, ok := wb.sheets[t.name]
+		if !ok {
+			continue
 		}
-	}
-	if s, ok := wb.sheets[sheetOpen]; ok {
-		if x.open, err = findTable(s, "Ticker", "Category"); err != nil {
+		if *t.dst, err = findTable(s, t.labels...); err != nil {
 			return nil, err
 		}
 	}
@@ -119,6 +148,11 @@ func readExport(wb *workbook, fileName string) (*export, error) {
 	}
 	if x.currency, x.places, err = exportCurrency(x, fileName); err != nil {
 		return nil, err
+	}
+	if mode == ingest.ModeOpening {
+		if x.goLive, err = openingDate(x); err != nil {
+			return nil, err
+		}
 	}
 	return x, nil
 }

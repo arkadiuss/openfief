@@ -412,3 +412,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba459f5c2623
+  - type: constrains
+    from: REQ-ui-statement-upload-start
+    to: FACT-SUBJECT-BC0039283445C1DB
+    created_at: 2026-11-01T07:36:15.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37c5da72399e
+  - type: requires_property
+    from: REQ-ui-statement-upload-start
+    to: FACT-PROP-09E9428F84A41062
+    created_at: 2026-11-01T07:36:15.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6198f59ad6be
+  - type: specified_by
+    from: REQ-ui-statement-upload-start
+    to: SCEN-ui-statement-upload-start
+    created_at: 2026-11-01T07:36:15.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dca8f3ed2add
+  - type: relates_to
+    from: REQ-ui-statement-upload-start
+    to: REQ-ingest-xtb-open-positions-owner-cash
+    created_at: 2026-11-01T08:24:18.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65618322446e

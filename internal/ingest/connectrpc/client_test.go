@@ -13,10 +13,13 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
+	"github.com/google/go-cmp/cmp"
+	"google.golang.org/protobuf/testing/protocmp"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
 	"github.com/arkadiuss/openfief/internal/ingest/connectrpc"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1/connectorv1connect"
@@ -186,6 +189,43 @@ func TestClientImportFile(t *testing.T) {
 	}
 	if conn.auths[0] != "Bearer synthetic-core-xtb-main" {
 		t.Errorf("connector got auth %q", conn.auths[0])
+	}
+}
+
+// TestClientImportFileOpeningCash checks that the cash balance the owner
+// entered with an opening upload reaches the connector in the header
+// (D-136), and that none entered sends none.
+func TestClientImportFileOpeningCash(t *testing.T) {
+	t.Parallel()
+	pln, err := kernel.ParseCurrency("PLN")
+	if err != nil {
+		t.Fatal(err)
+	}
+	tests := []struct {
+		name string
+		cash kernel.Money
+		want *connectorv1.Money
+	}{
+		{name: "entered", cash: kernel.NewMoney(kernel.NewDecimal(250050, -2), pln), want: &connectorv1.Money{Amount: "2500.5", Currency: "PLN"}},
+		{name: "entered as zero", cash: kernel.NewMoney(kernel.NewDecimal(0, 0), pln), want: &connectorv1.Money{Amount: "0", Currency: "PLN"}},
+		{name: "none entered"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			conn := &fakeConnector{}
+			c := newClient(t, conn)
+			file := app.NamedFile{Name: "PLN_0000000_2025-11-01_2026-06-30.xlsx", Contents: bytes.NewReader([]byte("synthetic"))}
+			if tt.want != nil {
+				file.OpeningCash = &tt.cash
+			}
+			if _, err := c.ImportFile(t.Context(), "xtb-main", "b-3", ingest.ModeOpening, file); err != nil {
+				t.Fatalf("ImportFile: %v", err)
+			}
+			if diff := cmp.Diff(tt.want, conn.header.GetOpeningCash(), protocmp.Transform()); diff != "" {
+				t.Errorf("opening_cash (-want +got):\n%s", diff)
+			}
+		})
 	}
 }
 

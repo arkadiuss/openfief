@@ -32,9 +32,11 @@ func (c *connector) Sync(_ context.Context, req *connect.Request[connectorv1.Syn
 	return connect.NewResponse(&connectorv1.SyncResponse{Delivery: d, Watermark: req.Msg.GetWatermark()}), nil
 }
 
-// ImportFile maps an uploaded export in the header's mode. A file that
-// isn't a readable export, or an opening batch, is InvalidArgument with the
-// reason, which never quotes the file.
+// ImportFile maps an uploaded export in the header's mode, with the
+// opening cash the owner entered for an opening batch (D-136). A file that
+// isn't a readable export, an opening batch of an export without open
+// positions as of a report date, or opening cash the account can't take is
+// InvalidArgument with the reason, which never quotes the file.
 func (c *connector) ImportFile(_ context.Context, stream *connect.ClientStream[connectorv1.ImportFileRequest]) (*connect.Response[connectorv1.ImportFileResponse], error) {
 	header, data, err := openfief.ReceiveFile(stream, xtb.MaxFileBytes)
 	if err != nil {
@@ -44,7 +46,11 @@ func (c *connector) ImportFile(_ context.Context, stream *connect.ClientStream[c
 	if err != nil {
 		return nil, status(connect.CodeInvalidArgument, err)
 	}
-	m, err := c.mapper.Map(data, header.GetFileName(), mode)
+	cash, err := delivery.OpeningCash(header)
+	if err != nil {
+		return nil, status(connect.CodeInvalidArgument, err)
+	}
+	m, err := c.mapper.Map(data, header.GetFileName(), mode, cash)
 	if err != nil {
 		return nil, status(mapCode(err), fmt.Errorf("xtb: %w", err))
 	}
@@ -58,7 +64,7 @@ func (c *connector) ImportFile(_ context.Context, stream *connect.ClientStream[c
 // mapCode is the Connect code of a file the mapper refused: the owner's
 // file or mode is wrong, so InvalidArgument; anything else is Internal.
 func mapCode(err error) connect.Code {
-	for _, e := range []error{xtb.ErrNotWorkbook, xtb.ErrTooLarge, xtb.ErrLayout, xtb.ErrCurrency, xtb.ErrOpeningMode, xtb.ErrUnknownMode} {
+	for _, e := range []error{xtb.ErrNotWorkbook, xtb.ErrTooLarge, xtb.ErrLayout, xtb.ErrCurrency, xtb.ErrOpeningMode, xtb.ErrOpeningCash, xtb.ErrUnknownMode} {
 		if errors.Is(err, e) {
 			return connect.CodeInvalidArgument
 		}

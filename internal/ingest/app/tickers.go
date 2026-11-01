@@ -173,7 +173,8 @@ func (t *Tickers) Pending(ctx context.Context, origin, sessionToken string) ([]i
 // Confirm records, for the owner, isin as the ISIN of instance's ticker
 // symbol, then books every entry waiting for it into the ledger, its keys
 // scoped to instance as a delivery's are, and returns what was imported.
-// Confirming again books whatever still waits.
+// Waiting opening lots join their account's seeding (book). Confirming
+// again books whatever still waits.
 func (t *Tickers) Confirm(ctx context.Context, origin, sessionToken string, c ingest.TickerConfirmation) (ingest.ImportSummary, error) {
 	if err := t.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("confirming a ticker: %w", err)
@@ -195,12 +196,32 @@ func (t *Tickers) Confirm(ctx context.Context, origin, sessionToken string, c in
 		txs = append(txs, tx)
 		keys = append(keys, waiting[i].Header.Key)
 	}
-	sum, err := t.Ledger.Import(ctx, ingest.ScopeToConnector(c.Instance, txs), nil)
+	sum, err := t.book(ctx, ingest.ScopeToConnector(c.Instance, txs))
 	if err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("booking %s of %s: %w", c.Symbol, c.Instance, err)
 	}
 	if err := t.Store.BookedTickerEntries(ctx, c.Instance, keys); err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("booking %s of %s: %w", c.Symbol, c.Instance, err)
+	}
+	return sum, nil
+}
+
+// book imports a confirmed ticker's transactions: those that hold an
+// opening lot, which an account seeded from an xStation export's open
+// positions waits for (D-136), are added to its seeding one at a time, on
+// its go-live date (LedgerImporter.AddOpeningLots, the path hand-entered
+// bond lots take today); any other are imported as they are.
+func (t *Tickers) book(ctx context.Context, txs []ledger.Transaction) (ingest.ImportSummary, error) {
+	if slices.ContainsFunc(txs, func(tx ledger.Transaction) bool { return tx.Kind == ledger.KindOpeningLot }) {
+		sum, err := t.Ledger.AddOpeningLots(ctx, txs, nil)
+		if err != nil {
+			return ingest.ImportSummary{}, fmt.Errorf("adding opening lots: %w", err)
+		}
+		return sum, nil
+	}
+	sum, err := t.Ledger.Import(ctx, txs, nil)
+	if err != nil {
+		return ingest.ImportSummary{}, fmt.Errorf("importing: %w", err)
 	}
 	return sum, nil
 }

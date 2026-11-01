@@ -398,3 +398,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e09920676993
+  - type: executable_for
+    from: SYM-ingest-test-helper-entry-case
+    to: TEST-ingest-ticker
+    created_at: 2026-11-01T08:04:17.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d32b434c4ba6

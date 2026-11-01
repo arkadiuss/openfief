@@ -615,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0844a5efaea4
+  - type: implements
+    from: SYM-ingest-xtb-mapping-opening-cash
+    to: REQ-ingest-opening-cash-entered-once
+    created_at: 2026-11-01T08:05:02.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f29d314a22da
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-opening-cash
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:05:02.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eff8262a3e07
+  - type: implements
+    from: SYM-ingest-xtb-mapping-opening-cash
+    to: REQ-ingest-xtb-open-positions-owner-cash
+    created_at: 2026-11-01T08:23:36.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67e1be8b7e6e

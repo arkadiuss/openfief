@@ -538,3 +538,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ecc6e0f69994
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-ticker-store
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T08:01:37.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0ce3b72ec9f

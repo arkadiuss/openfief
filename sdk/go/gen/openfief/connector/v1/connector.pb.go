@@ -1574,9 +1574,9 @@ func (x *Ticker) GetName() string {
 	return ""
 }
 
-// TickerTransaction is a buy, sell or dividend of an instrument named by
-// ticker only (D-116): what the core needs to book it once the ISIN is
-// confirmed. Its fields mean what Transaction's do.
+// TickerTransaction is a buy, sell, dividend or opening lot of an
+// instrument named by ticker only (D-116, D-136): what the core needs to
+// book it once the ISIN is confirmed. Its fields mean what Transaction's do.
 type TickerTransaction struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The symbol of one of the delivery's tickers.
@@ -1584,12 +1584,17 @@ type TickerTransaction struct {
 	Key           *TransactionKey `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
 	AccountId     string          `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
 	BrokerAccount string          `protobuf:"bytes,4,opt,name=broker_account,json=brokerAccount,proto3" json:"broker_account,omitempty"`
-	// TRANSACTION_KIND_BUY, TRANSACTION_KIND_SELL or TRANSACTION_KIND_DIVIDEND.
+	// TRANSACTION_KIND_BUY, TRANSACTION_KIND_SELL, TRANSACTION_KIND_DIVIDEND
+	// or TRANSACTION_KIND_OPENING_LOT.
 	Kind TransactionKind `protobuf:"varint,5,opt,name=kind,proto3,enum=openfief.connector.v1.TransactionKind" json:"kind,omitempty"`
-	Date string          `protobuf:"bytes,6,opt,name=date,proto3" json:"date,omitempty"`
-	// The units bought or sold, positive; empty for a dividend.
+	// The transaction's date; an opening lot's is the account's go-live date.
+	Date string `protobuf:"bytes,6,opt,name=date,proto3" json:"date,omitempty"`
+	// The units bought, sold or held in an opening lot, positive; empty for a
+	// dividend.
 	Quantity string `protobuf:"bytes,7,opt,name=quantity,proto3" json:"quantity,omitempty"`
-	// A buy's cost, a sale's proceeds or a dividend's gross amount, positive.
+	// A buy's cost, a sale's proceeds, a dividend's gross amount, or an
+	// opening lot's cost; positive, or zero for an opening lot that cost
+	// nothing.
 	Amount *Money `protobuf:"bytes,8,opt,name=amount,proto3" json:"amount,omitempty"`
 	// A buy's or sale's fee, or the tax withheld from a dividend; unset for
 	// none.
@@ -1597,7 +1602,10 @@ type TickerTransaction struct {
 	Description string `protobuf:"bytes,10,opt,name=description,proto3" json:"description,omitempty"`
 	// Where the row is in the statement, as in Problem: the ingest problem
 	// that holds it while it waits names it so.
-	Ref           string `protobuf:"bytes,11,opt,name=ref,proto3" json:"ref,omitempty"`
+	Ref string `protobuf:"bytes,11,opt,name=ref,proto3" json:"ref,omitempty"`
+	// The date an opening lot's units were first acquired, on or before its
+	// date; empty for any other kind.
+	LotOpened     string `protobuf:"bytes,12,opt,name=lot_opened,json=lotOpened,proto3" json:"lot_opened,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1705,6 +1713,13 @@ func (x *TickerTransaction) GetDescription() string {
 func (x *TickerTransaction) GetRef() string {
 	if x != nil {
 		return x.Ref
+	}
+	return ""
+}
+
+func (x *TickerTransaction) GetLotOpened() string {
+	if x != nil {
+		return x.LotOpened
 	}
 	return ""
 }
@@ -2260,7 +2275,13 @@ type FileHeader struct {
 	// hint, never a path.
 	FileName string `protobuf:"bytes,3,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
 	// The file's media type, such as "text/csv", when known.
-	MediaType     string `protobuf:"bytes,4,opt,name=media_type,json=mediaType,proto3" json:"media_type,omitempty"`
+	MediaType string `protobuf:"bytes,4,opt,name=media_type,json=mediaType,proto3" json:"media_type,omitempty"`
+	// The cash balance the owner entered once, with an opening batch of a
+	// statement that holds none, such as an xStation export's open positions
+	// (D-136); unset for none. The connector books it as the account's
+	// opening cash on its go-live date. A connector whose statement holds the
+	// account's cash, or that can't book it, answers INVALID_ARGUMENT.
+	OpeningCash   *Money `protobuf:"bytes,5,opt,name=opening_cash,json=openingCash,proto3" json:"opening_cash,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2321,6 +2342,13 @@ func (x *FileHeader) GetMediaType() string {
 		return x.MediaType
 	}
 	return ""
+}
+
+func (x *FileHeader) GetOpeningCash() *Money {
+	if x != nil {
+		return x.OpeningCash
+	}
+	return nil
 }
 
 type ImportFileRequest struct {
@@ -2838,7 +2866,7 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\x06symbol\x18\x01 \x01(\tR\x06symbol\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x18\n" +
 	"\acountry\x18\x03 \x01(\tR\acountry\x12\x12\n" +
-	"\x04name\x18\x04 \x01(\tR\x04name\"\xb6\x03\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\"\xd5\x03\n" +
 	"\x11TickerTransaction\x12\x16\n" +
 	"\x06symbol\x18\x01 \x01(\tR\x06symbol\x127\n" +
 	"\x03key\x18\x02 \x01(\v2%.openfief.connector.v1.TransactionKeyR\x03key\x12\x1d\n" +
@@ -2852,7 +2880,9 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\x06charge\x18\t \x01(\v2\x1c.openfief.connector.v1.MoneyR\x06charge\x12 \n" +
 	"\vdescription\x18\n" +
 	" \x01(\tR\vdescription\x12\x10\n" +
-	"\x03ref\x18\v \x01(\tR\x03ref\"S\n" +
+	"\x03ref\x18\v \x01(\tR\x03ref\x12\x1d\n" +
+	"\n" +
+	"lot_opened\x18\f \x01(\tR\tlotOpened\"S\n" +
 	"\x18LookupInstrumentsRequest\x127\n" +
 	"\atickers\x18\x01 \x03(\v2\x1d.openfief.connector.v1.TickerR\atickers\"T\n" +
 	"\x12InstrumentProposal\x12\x16\n" +
@@ -2893,14 +2923,15 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\aopening\x18\x05 \x01(\bR\aopening\"i\n" +
 	"\fSyncResponse\x12;\n" +
 	"\bdelivery\x18\x01 \x01(\v2\x1f.openfief.connector.v1.DeliveryR\bdelivery\x12\x1c\n" +
-	"\twatermark\x18\x02 \x01(\tR\twatermark\"\x94\x01\n" +
+	"\twatermark\x18\x02 \x01(\tR\twatermark\"\xd5\x01\n" +
 	"\n" +
 	"FileHeader\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12/\n" +
 	"\x04mode\x18\x02 \x01(\x0e2\x1b.openfief.connector.v1.ModeR\x04mode\x12\x1b\n" +
 	"\tfile_name\x18\x03 \x01(\tR\bfileName\x12\x1d\n" +
 	"\n" +
-	"media_type\x18\x04 \x01(\tR\tmediaType\"p\n" +
+	"media_type\x18\x04 \x01(\tR\tmediaType\x12?\n" +
+	"\fopening_cash\x18\x05 \x01(\v2\x1c.openfief.connector.v1.MoneyR\vopeningCash\"p\n" +
 	"\x11ImportFileRequest\x12;\n" +
 	"\x06header\x18\x01 \x01(\v2!.openfief.connector.v1.FileHeaderH\x00R\x06header\x12\x16\n" +
 	"\x05chunk\x18\x02 \x01(\fH\x00R\x05chunkB\x06\n" +
@@ -3071,26 +3102,27 @@ var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	6,  // 40: openfief.connector.v1.OpenLot.cost:type_name -> openfief.connector.v1.Money
 	20, // 41: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
 	3,  // 42: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
-	31, // 43: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
-	20, // 44: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	6,  // 45: openfief.connector.v1.BondLot.early_redemption_fee:type_name -> openfief.connector.v1.Money
-	5,  // 46: openfief.connector.v1.BondLot.purchase:type_name -> openfief.connector.v1.BondPurchase
-	34, // 47: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
-	35, // 48: openfief.connector.v1.ImportBondLotsRequest.deleted:type_name -> openfief.connector.v1.BondLotKey
-	20, // 49: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	26, // 50: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
-	32, // 51: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
-	36, // 52: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
-	23, // 53: openfief.connector.v1.ConnectorService.LookupInstruments:input_type -> openfief.connector.v1.LookupInstrumentsRequest
-	30, // 54: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
-	33, // 55: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
-	37, // 56: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
-	25, // 57: openfief.connector.v1.ConnectorService.LookupInstruments:output_type -> openfief.connector.v1.LookupInstrumentsResponse
-	54, // [54:58] is the sub-list for method output_type
-	50, // [50:54] is the sub-list for method input_type
-	50, // [50:50] is the sub-list for extension type_name
-	50, // [50:50] is the sub-list for extension extendee
-	0,  // [0:50] is the sub-list for field type_name
+	6,  // 43: openfief.connector.v1.FileHeader.opening_cash:type_name -> openfief.connector.v1.Money
+	31, // 44: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
+	20, // 45: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	6,  // 46: openfief.connector.v1.BondLot.early_redemption_fee:type_name -> openfief.connector.v1.Money
+	5,  // 47: openfief.connector.v1.BondLot.purchase:type_name -> openfief.connector.v1.BondPurchase
+	34, // 48: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
+	35, // 49: openfief.connector.v1.ImportBondLotsRequest.deleted:type_name -> openfief.connector.v1.BondLotKey
+	20, // 50: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	26, // 51: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
+	32, // 52: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
+	36, // 53: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
+	23, // 54: openfief.connector.v1.ConnectorService.LookupInstruments:input_type -> openfief.connector.v1.LookupInstrumentsRequest
+	30, // 55: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
+	33, // 56: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
+	37, // 57: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
+	25, // 58: openfief.connector.v1.ConnectorService.LookupInstruments:output_type -> openfief.connector.v1.LookupInstrumentsResponse
+	55, // [55:59] is the sub-list for method output_type
+	51, // [51:55] is the sub-list for method input_type
+	51, // [51:51] is the sub-list for extension type_name
+	51, // [51:51] is the sub-list for extension extendee
+	0,  // [0:51] is the sub-list for field type_name
 }
 
 func init() { file_openfief_connector_v1_connector_proto_init() }

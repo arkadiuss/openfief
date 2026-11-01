@@ -38,11 +38,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## XTB
 
-31. **How an xStation export seeds an account.**
-   - *Problem:* D-23 seeds an account from the broker's lot-level positions and its cash at go-live, and D-109 has the core choose opening mode for an account not yet seeded. R-24's export holds no cash balance, and `Open Positions` gives each position's open price in the instrument's currency with no conversion rate, so neither the opening cash nor a foreign position's cost in the account currency is in it; that sheet's value formats were not seen either.
-   - *Today:* the xtb connector refuses an opening batch (`ErrOpeningMode`), and the owner overrides the mode to transactions and uploads the account's whole history, from its first deposit.
-   - *Options:* keep; or seed opening lots from `Open Positions` for positions quoted in the account currency and take the opening cash from the owner; or take the cost of every position from the owner.
-
 32. **How closed CFD results and free-funds interest are booked.**
    - *Problem:* D-24 imports closed CFD results as cash profit or loss, but the ledger has no kind for a trading result or for interest on cash (`NewInterest` needs a holding), and R-24's export had no CFD, so which `Cash Operations` type carries a CFD's result, and whether `Closed Positions`' `Profit/Loss` repeats it, wasn't seen. `Free funds interest` and its tax are in R-24.
    - *Today:* each closed CFD position is an unsupported ingest problem naming its category, as is each free-funds interest row and its tax; cash is short by their sum.
@@ -50,13 +45,23 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 33. **Holding assertions from `Open Positions`.**
    - *Problem:* D-18 stores a broker's position snapshot as balance assertions. An XTB position names its ticker only, so an assertion needs its ticker's confirmed ISIN, and the sheet's `Volume` format wasn't seen.
-   - *Today:* none are made from `Open Positions`; only its CFD rows are read, to flag them.
+   - *Today:* none are made from `Open Positions`. In transactions mode only its CFD rows are read, to flag them; in opening mode its stock and ETF rows seed opening lots (D-136), and no assertion is made either.
    - *Options:* assert the summed volume per ticker on the report's date once the ticker is confirmed, leaving out unconfirmed ones; or wait for an export with open positions.
 
 34. **What a ticker confirmation covers, and its US listings.**
    - *Problem:* D-116 has the owner confirm a ticker's ISIN once. A confirmation could hold for one connector instance or for every instance of the institution, and a wrong confirmation can't be changed. EODHD's supported exchanges (D-51) leave out US markets, which XTB lists with `.US`.
    - *Today:* a confirmation holds for the instance that reported the ticker, is set once, and a different ISIN later is refused; a ticker of a market with no supported exchange, `.US` among them, gets no proposal and the owner types its ISIN.
    - *Options:* keep; or share confirmations across instances of one institution; or let the owner correct a confirmation, superseding the transactions it booked (D-18).
+
+52. **The cost of an open position quoted in another currency.**
+   - *Problem:* D-136 seeds one opening lot per open position at its open time and price, but `Open Positions` gives the open price in the instrument's currency, names no currency, and gives no conversion rate (R-24), so a position such as a London ETF in a PLN account has a price whose currency the export doesn't say.
+   - *Today:* only a position quoted in the account's currency is seeded: one whose `Value`, in the account's currency, is its volume times its current price to within a minor unit, at a cost of volume times open price in the account's currency. Any other is an unsupported ingest problem, so the account is seeded without it and a later sale of it can't be booked ([Ingest](concepts/ingest.md#mapping-an-xstation-export)).
+   - *Options:* keep; or take the instrument's currency from the confirmed ticker's listing and book the lot's cost in that currency; or derive the currency from the market suffix (a London listing can be quoted in USD); or have the owner enter each such position's currency, or its cost in the account's currency, with the upload.
+
+53. **An opening upload that books nothing yet.**
+   - *Problem:* an account seeded from open positions goes live with its first seeding transaction (D-23). When the owner enters no cash and every position waits for its ticker's ISIN (D-116), the opening upload books nothing, so the account isn't live yet, and an upload before the owner confirms a ticker is chosen as opening again, or, overridden to transactions, books history that the opening lots then hold too.
+   - *Today:* the waiting opening lots are held with their go-live date and join the seeding when their ticker is confirmed; until one is, the account is not seeded, and a confirmation after transactions dated on or before the go-live were booked is refused (`ErrBookedBeforeGoLive`). The UI asks for the cash at the start; entering it, even as 0.00, books nothing for zero.
+   - *Options:* keep; or record the go-live of a pending opening in the ingest schema so the account counts as started at once; or seed a waiting position as soon as the opening upload, with a placeholder instrument replaced when the ticker is confirmed.
 
 ## Treasury bonds
 
