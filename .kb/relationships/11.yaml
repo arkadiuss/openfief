@@ -615,3 +615,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-696636505695
+  - type: executable_for
+    from: SYM-attention-connectapi-test-helper-store-lock
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:42:30.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77a0247df04a
+  - type: implements
+    from: SYM-attentionv1connect-attention-service-client-resolve-attention-item
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:59:36.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54c8ef9cdb29
+  - type: covered_by
+    from: SYM-attentionv1connect-attention-service-client-resolve-attention-item
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:59:36.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63868569f828
+  - type: implements
+    from: SYM-viewsv1-list-attention-items-response-string
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:05:58.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fef0287411d6
+  - type: covered_by
+    from: SYM-viewsv1-list-attention-items-response-string
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:05:58.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87f3839e8264
+  - type: implements
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-list-attention-items
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:06:48.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c965085f52b2
+  - type: covered_by
+    from: SYM-viewsv1connect-unimplemented-read-service-handler-list-attention-items
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:06:48.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da2f992d134a

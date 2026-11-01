@@ -482,13 +482,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1af174affeb
-  - type: executable_for
-    from: SYM-core-test-logged-attention
-    to: TEST-core-unclassified
-    created_at: 2026-10-31T20:08:31.847Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f2728f173acb
   - type: validates
     from: TEST-operator-cmd
     to: REQ-operator-namespace-scoped-except-service-read
@@ -552,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7347c0cb68d
+  - type: implements
+    from: SYM-attentionv1connect-unimplemented-attention-service-handler
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:59:55.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7778f72539dc
+  - type: covered_by
+    from: SYM-attentionv1connect-unimplemented-attention-service-handler
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:59:55.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a4993853f03

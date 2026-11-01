@@ -692,3 +692,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5016859de009
+  - type: executable_for
+    from: SYM-attention-app-test-helper-clone-items
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:38:35.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcd1b8788cdc
+  - type: executable_for
+    from: SYM-attention-app-test-helper-clone-items
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:38:35.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ac0e3066d27
+  - type: implements
+    from: SYM-attention-connectapi-attention-service-resolve-attention-item
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:41:55.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6353ff05c93
+  - type: covered_by
+    from: SYM-attention-connectapi-attention-service-resolve-attention-item
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:41:55.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-664d667e6629

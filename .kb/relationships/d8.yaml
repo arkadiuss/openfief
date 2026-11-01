@@ -552,6 +552,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-718bf36b59ab
+  - type: implements
+    from: SYM-ledger-app-confirmed-now
+    to: REQ-ledger-transfer-broken-reject
+    created_at: 2026-10-31T18:49:55.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bad0b633d954
+  - type: covered_by
+    from: SYM-ledger-app-confirmed-now
+    to: TEST-ledger-app-transfer-broken
+    created_at: 2026-10-31T18:49:55.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe477af5e277
   - type: executable_for
     from: SYM-pl-test-totals
     to: TEST-pl-totals

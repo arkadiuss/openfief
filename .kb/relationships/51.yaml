@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4356191ae78d
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-imports
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:36:18.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbeb3dc18603

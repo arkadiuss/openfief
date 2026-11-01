@@ -538,6 +538,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f297d25f1797
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-values-value-settings
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:37:05.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34d591f086a6
+  - type: executable_for
+    from: SYM-attention-pg-test-change-and-event-commit-together
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:47:15.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-689a5f5f3462
+  - type: implements
+    from: SYM-viewsv1-attention-item-change-string
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:02:18.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-312099b45f87
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-change-string
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:02:18.815Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccfc2fa5c6ee
   - type: implements
     from: SYM-views-paid-in
     to: REQ-views-totals-losses-offset

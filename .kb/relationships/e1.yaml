@@ -419,6 +419,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-93421057d3f1
+  - type: executable_for
+    from: SYM-attention-app-test-helper-recorder-publish
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:38:55.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efdfd04b4bf6
+  - type: executable_for
+    from: SYM-attention-app-test-helper-recorder-publish
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:38:55.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4262eabf6ec
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-items
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T18:51:06.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f09a19f3ca73
   - type: implements
     from: SYM-ingest-app-ticker-store
     to: REQ-ingest-xtb-isin-owner-confirms

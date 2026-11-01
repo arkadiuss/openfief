@@ -720,6 +720,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-475245115472
+  - type: executable_for
+    from: SYM-attention-app-test-raise-and-clear
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:20.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92ef0b50570f
   - type: validates
     from: TEST-ingest-app-scheduler
     to: REQ-ingest-bond-account-live-on-first-lot

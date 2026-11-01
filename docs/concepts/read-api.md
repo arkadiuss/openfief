@@ -37,6 +37,7 @@ The [read API](../glossary.md) is how anything outside the core reads the record
 | `GetPerformance` | `GET /v1/performance` | `from`, `to`, both optional |
 | `GetModelPortfolio` | `GET /v1/model-portfolio` | `from`, `to`, both optional; `404` while the model portfolio is off |
 | `ListPlugins` | `GET /v1/plugins` | `503` while the core can't read the cluster |
+| `ListAttentionItems` | `GET /v1/attention-items` | |
 
 **Money, quantities and dates on the wire.** [Money](../glossary.md) is a `Money` message: `amount` as a decimal string such as `"-1234.56"`, never a JSON number, and `currency` as an ISO 4217 code. A JSON number is a binary float in most clients, which can't hold every decimal amount exactly. Quantities are decimal strings too. Dates are `YYYY-MM-DD` strings with no time of day.
 
@@ -236,12 +237,17 @@ The series stops before the first day that lacks an input and says why in `gap`:
 
 ### Transfers
 
-`ListTransfers` (`GET /v1/transfers`) is where the owner's confirmations start. `Views.Transfers` ([transfers.go](../../internal/views/app/transfers.go)) reads every account's current deposits and withdrawals and the ledger's current transfer links, and answers three lists:
+`ListTransfers` (`GET /v1/transfers`) is where the owner's confirmations start. `Views.Transfers` ([transfers.go](../../internal/views/app/transfers.go)) reads every account's current deposits and withdrawals and the ledger's current transfer links, and answers four lists:
 
 - **Suggested** (`SuggestTransfers`): each withdrawal that is not a leg of a confirmed transfer, in date order, paired with the deposit into another account of exactly the same amount and currency, dated at most `ledger.TransferWindowDays` (five) calendar days before or after it, that is nearest in date, the earliest of equally near ones. The deposit must not be a leg of a confirmed transfer or of an earlier suggestion, and the pair must not be rejected; a rejected pair's withdrawal gets its next nearest deposit. Opening cash is never a leg.
-- **Confirmed** and **rejected** (`LinkedTransfers`): the pairs whose current link has that decision, with their legs.
+- **Confirmed** and **rejected** (`LinkedTransfers`): the pairs whose current link has that decision and whose legs still match: a withdrawal and a deposit of the opposite amount in different accounts, neither opening cash, at most five days apart.
+- **Broken** (`ledger.BrokenTransferLinks`, D-131): the confirmed pairs a correction broke, whose current legs no longer pass `ledger.CheckTransfer` or no longer exist. They count as cash flows again, like the suggested ones, until the owner rejects the pair or a correction makes the legs match, and the [attention items](attention.md) list each one. A leg that is no longer a deposit or withdrawal carries only its account, date and key, and the amount is the deposit's, minus the withdrawal's when only that leg is one, or unset.
 
 Each `Transfer` names its legs' accounts, dates and transaction keys, so the UI can hand a pair back to the ledger's owner-only `TransferService` ([Ledger](ledger.md#concepts)), which records the decision. The read API itself never records anything (D-7).
+
+### Attention items
+
+`ListAttentionItems` (`GET /v1/attention-items`) lists every [attention item](attention.md) in ID order, open or not, each with its kind, subject, current state and detail, whether the owner may resolve it by hand (`owner_resolves`), and its history of changes with their reasons and RFC 3339 times; `open` counts the open ones. `Views.Attention` ([attention.go](../../internal/views/app/attention.go)) reads them through the `AttentionItems` port, which `cmd/core` fills with the attention context's `Items` through `WithAttention`; without it the list is empty. Any read caller sees them, script tokens and read sessions included, as they see the checks they come from; the owner acts on them through the `AttentionService`, never here.
 
 ### The model portfolio
 
@@ -255,7 +261,8 @@ Each `Transfer` names its legs' accounts, dates and transaction keys, so the UI 
 - **D-30**: the allocation by asset class, currency, broker or sleeve, and value over time. The code groups by institution where D-30 says broker, since the treasury bond registry is an institution and not a broker (see the glossary). The built-in UI draws value over time from `GetPerformance`, as the time-weighted return index, rather than from `ListValuationTotals`; the charts themselves are the UI's.
 - **D-36**: the read API reports, per account, the valued-through date and whether a revaluation is pending or running. Built as `GetValuationStatus` and `ListValuationStatuses`, which the built-in UI shows per account.
 - **D-61**: the portfolio's line is its time-weighted return, chained across deposits and withdrawals, with transfers between the owner's accounts not counted as cash flows. Built as `GetPerformance`.
-- **D-105**: transfers are suggested and confirmed; only confirmed ones are not cash flows. Built as `ListTransfers` and `ConfirmedTransfers`. That a link whose legs no longer match after a correction counts for nothing is this context's reading.
+- **D-105**: transfers are suggested and confirmed; only confirmed ones are not cash flows. Built as `ListTransfers` and `ConfirmedTransfers`. **D-131**: a link whose legs no longer match after a correction counts for nothing and is listed as broken.
+- **D-130**: the attention items, served as `ListAttentionItems`, additions only to the contract.
 - **D-52**: while the model portfolio is off, `GetModelPortfolio` answers `NOT_FOUND` and nothing else mentions it. The method itself is in the contract and the OpenAPI document either way; that it answers 404 rather than an empty response is this context's reading.
 - **D-53**: the model's backtest as a second line, both starting at 100 on `from`. Built as `GetModelPortfolio`'s `days`.
 - **D-62** and **T-12**: totals, the allocation and the performance series are in the reporting currency, next to each original currency. `app.New` refuses any reporting currency but PLN with an `*UnsupportedReportingCurrencyError`, because stored valuations and FX rates are against PLN only (D-20) and T-12 (proposal P-49) is open.
@@ -294,6 +301,7 @@ Each `Transfer` names its legs' accounts, dates and transaction keys, so the UI 
 | The plugin list in name order; unknown without the port or before the watch synced, and transactions still listed then; removed marks over the ports | `TestPlugins`, `TestPluginsUnknown`, `TestTransactionsMarkRemovedInstances` in [app/plugins_test.go](../../internal/views/app/plugins_test.go) | REQ-views-installed-plugins, REQ-views-removed-instance-mark, TEST-views-app-plugins |
 | Plugins read from the operator's own `v1alpha1.Plugin`, deleting ones included, other namespaces not, later ones once watched | `TestRecordOf`, `TestPlugins`, `TestStartGivesUp` in [kube/plugins_test.go](../../internal/views/kube/plugins_test.go) | REQ-views-installed-plugins, TEST-views-kube |
 | Price checks filtered by status, with the threshold; none without the port; a failure passed on | `TestPriceChecks` in [app/pricechecks_test.go](../../internal/views/app/pricechecks_test.go) | REQ-views-price-checks, TEST-views-app-pricechecks |
+| `ListAttentionItems` over REST against the OpenAPI document, with and without the attention port; broken transfers listed apart | `TestRESTAttentionItems`, `TestRESTBrokenTransfers` in [attention_test.go](../../internal/views/connectapi/attention_test.go); `TestConfirmedTransfers` in [performance_test.go](../../internal/views/performance_test.go) | REQ-views-attention-items, REQ-ledger-transfer-broken-stops-counting |
 | `ListPriceChecks` over Connect and REST, against the OpenAPI document; an unknown status refused; no token refused; enum numbers | `TestConnectListPriceChecks`, `TestRESTPriceChecks`, `TestPriceCheckEnumsMatch` in [pricechecks_test.go](../../internal/views/connectapi/pricechecks_test.go) | REQ-views-price-checks, SCEN-views-price-checks, TEST-views-connectapi-pricechecks |
 | `ListPlugins` and the transaction origins over Connect and REST, against the OpenAPI document; 503 without the list; enum numbers | `TestConnectListPlugins`, `TestConnectTransactionOrigins`, `TestRESTPlugins`, `TestRESTTransactionOrigins`, `TestRESTPluginsUnavailable`, `TestPluginEnumsMatch` in [connectapi/plugins_test.go](../../internal/views/connectapi/plugins_test.go) | REQ-views-installed-plugins, REQ-views-removed-instance-mark, TEST-views-connectapi-plugins |
 | Sleeve kinds and bindings over the ports, Connect and REST against the OpenAPI document; no broker account over either (D-121) | `TestConnections`, `TestConnectionsWithoutThePortOrFailing` in [app/connections_test.go](../../internal/views/app/connections_test.go); `TestConnectListConnections`, `TestRESTConnections`, `TestReadAPIServesNoBrokerAccounts` in [connectapi/connections_test.go](../../internal/views/connectapi/connections_test.go) | REQ-views-onboarding-lists, REQ-views-read-api-serves-no-broker-accounts, TEST-views-app-connections, TEST-views-connectapi-connections |

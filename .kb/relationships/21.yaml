@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88f263c75c5e
+  - type: implements
+    from: SYM-attention-acknowledge
+    to: REQ-attention-owner-actions
+    created_at: 2026-10-31T18:47:58.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f474ff21fc
+  - type: covered_by
+    from: SYM-attention-acknowledge
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:47:58.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f67a4f36361

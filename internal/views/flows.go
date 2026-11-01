@@ -81,8 +81,9 @@ func compareFlows(a, b *CashFlow) int {
 // decision (D-105), with their legs found among flows, in the order of
 // links. A link counts only while both legs are among flows as a
 // withdrawal and a deposit of the opposite amount in different accounts,
-// neither opening cash: a correction of a leg that breaks this leaves the
-// link out.
+// neither opening cash, dated at most ledger.TransferWindowDays apart: a
+// correction of a leg that breaks this leaves the link out, as
+// ledger.BrokenTransferLinks reports it (D-131).
 func LinkedTransfers(flows []CashFlow, links []ledger.TransferLink, decision ledger.TransferDecision) []Transfer {
 	byKey := make(map[ledger.TransactionKey]int, len(flows))
 	for i := range flows {
@@ -95,7 +96,7 @@ func LinkedTransfers(flows []CashFlow, links []ledger.TransferLink, decision led
 		}
 		wi, okW := byKey[l.Pair.Withdrawal]
 		di, okD := byKey[l.Pair.Deposit]
-		if okW && okD && legsMatch(&flows[wi], &flows[di]) {
+		if okW && okD && legsMatch(&flows[wi], &flows[di]) && inWindow(&flows[wi], &flows[di]) {
 			out = append(out, Transfer{Withdrawal: flows[wi], Deposit: flows[di]})
 		}
 	}
@@ -174,6 +175,12 @@ func nearestDeposit(flows []CashFlow, w *CashFlow, skip func(d *CashFlow) bool) 
 // exactly what d puts in, in the same currency.
 func legsMatch(w, d *CashFlow) bool {
 	return !w.Seeding && !d.Seeding && w.Account != d.Account && w.Amount.Sign() < 0 && d.Amount.Equal(w.Amount.Neg())
+}
+
+// inWindow reports whether w and d are dated at most
+// ledger.TransferWindowDays apart, in either order.
+func inWindow(w, d *CashFlow) bool {
+	return max(w.Date.DaysUntil(d.Date), d.Date.DaysUntil(w.Date)) <= ledger.TransferWindowDays
 }
 
 // legKeys returns the keys of the legs of transfers.

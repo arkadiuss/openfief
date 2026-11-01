@@ -503,6 +503,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c607d0b205d
+  - type: executable_for
+    from: SYM-attention-pg-test-helper-count
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:46:52.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed8b9ec290a9
   - type: implements
     from: SYM-valuationv1-set-exemption-class-request-descriptor
     to: REQ-valuation-owner-exemption-class

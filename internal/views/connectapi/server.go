@@ -338,6 +338,7 @@ func (s *readService) ListTransfers(ctx context.Context, _ *connect.Request[view
 	}
 	return connect.NewResponse(&viewsv1.ListTransfersResponse{
 		Suggested: pbTransfers(ts.Suggested), Confirmed: pbTransfers(ts.Confirmed), Rejected: pbTransfers(ts.Rejected),
+		Broken: pbBrokenTransfers(ts.Broken),
 	}), nil
 }
 

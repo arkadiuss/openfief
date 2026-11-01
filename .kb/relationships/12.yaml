@@ -671,6 +671,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-27c82d58c32f
+  - type: verified_by
+    from: SCEN-ledger-transfer-broken-reject
+    to: TEST-ledger-app-transfer-broken
+    created_at: 2026-10-31T18:31:26.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b0e3b8b52b0
+  - type: executable_for
+    from: SYM-core-test-attention-service
+    to: TEST-core-attention
+    created_at: 2026-10-31T18:33:57.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0ab007ca265
+  - type: executable_for
+    from: SYM-attention-connectapi-test-attention-service
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:43:09.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85d5bf85c4e5
+  - type: implements
+    from: SYM-attention-pg-parse-state
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:46:24.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-146adbd42402
+  - type: covered_by
+    from: SYM-attention-pg-parse-state
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:46:24.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88cb3f1457ee
+  - type: executable_for
+    from: SYM-attention-pg-test-sweep-over-postgres
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:47:27.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b46d2efd5d21
+  - type: executable_for
+    from: SYM-attention-test-condition-validate
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:48:58.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06a0aac39b59
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-check-attention-body
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T18:51:32.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62436a049f16
   - type: constrains
     from: REQ-ui-portfolio-chart-start-ignores-full-history
     to: FACT-SUBJECT-9106B40681FB54C7

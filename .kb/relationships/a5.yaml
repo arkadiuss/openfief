@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-538c5328cc37
+  - type: executable_for
+    from: SYM-ingest-test-count-unsupported
+    to: TEST-ingest-problem
+    created_at: 2026-10-31T18:49:41.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd1f61806c20

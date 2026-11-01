@@ -489,6 +489,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9875024b1130
+  - type: executable_for
+    from: SYM-ingest-pg-test-unsupported-batches
+    to: TEST-ingest-pg-unsupported
+    created_at: 2026-10-31T18:49:19.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24d1484be2dc
   - type: implements
     from: SYM-views-app-views-yearly-tax
     to: REQ-views-oki-tax-days

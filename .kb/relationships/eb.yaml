@@ -447,6 +447,83 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c248dd7bc0b
+  - type: verified_by
+    from: SCEN-ingest-unsupported-rows-counted
+    to: TEST-ingest-problem
+    created_at: 2026-10-31T18:31:29.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ce18fb92cc1
+  - type: verified_by
+    from: SCEN-ingest-unsupported-rows-counted
+    to: TEST-ingest-pg-unsupported
+    created_at: 2026-10-31T18:31:29.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbc3110deb5d
+  - type: implements
+    from: SYM-attention-app-append-all
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:39:56.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ba73d227d7c
+  - type: covered_by
+    from: SYM-attention-app-append-all
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:56.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85aa294a4025
+  - type: implements
+    from: SYM-attention-connectapi-new-attention
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:41:40.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f8448396720
+  - type: covered_by
+    from: SYM-attention-connectapi-new-attention
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:41:40.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-252c0dd9e67a
+  - type: implements
+    from: SYM-attention-state-string
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:43:44.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3db4dc75ec67
+  - type: implements
+    from: SYM-attention-state-string
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:43:44.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd4e277a46f7
+  - type: covered_by
+    from: SYM-attention-state-string
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:43:44.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225bdfbfda7c
+  - type: implements
+    from: SYM-views-app-views-attention
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T18:50:29.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4577ae1cc24
+  - type: covered_by
+    from: SYM-views-app-views-attention
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T18:50:29.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffef09f294a8
   - type: implements
     from: SYM-valuation-postgres-store-rank-of
     to: REQ-valuation-market-data-source-ranking

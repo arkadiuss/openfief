@@ -713,3 +713,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00c7c6ab3e8a
+  - type: implements
+    from: SYM-core-with-attention-service
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:33:40.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-524bc3dc7636
+  - type: covered_by
+    from: SYM-core-with-attention-service
+    to: TEST-core-attention
+    created_at: 2026-10-31T18:33:40.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e461f91268f8
+  - type: implements
+    from: SYM-viewsv1-list-attention-items-request-string
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:05:16.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0827dd8675c7
+  - type: covered_by
+    from: SYM-viewsv1-list-attention-items-request-string
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:05:16.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d5cf9718a5d

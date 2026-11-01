@@ -559,3 +559,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b02a1990e268
+  - type: implements
+    from: SYM-attentionv1-attention-item-changed-descriptor
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:57:40.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eeaa6ac1133f
+  - type: covered_by
+    from: SYM-attentionv1-attention-item-changed-descriptor
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:57:40.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-171223a96bf1
