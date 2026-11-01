@@ -594,3 +594,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7bcaf4648541
+  - type: constrains
+    from: REQ-ui-value-chart-from-charts-start
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-11-01T07:38:15.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c43349af681
+  - type: requires_property
+    from: REQ-ui-value-chart-from-charts-start
+    to: FACT-PROP-83A748309D85D1A6
+    created_at: 2026-11-01T07:38:15.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75b4a8e0900f
+  - type: supersedes
+    from: REQ-ui-value-chart-from-charts-start
+    to: REQ-AUTO-718AA30AAFD0E6E8
+    created_at: 2026-11-01T07:38:15.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f56f8803d80
+  - type: constrains
+    from: REQ-treasurybonds-books-maturities
+    to: FACT-SUBJECT-7002ADA5EC4F5A7E
+    created_at: 2026-11-01T07:39:35.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3431f1f9eb1
+  - type: requires_property
+    from: REQ-treasurybonds-books-maturities
+    to: FACT-PROP-A73B44F0428139F4
+    created_at: 2026-11-01T07:39:35.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33b1ba94e2a3

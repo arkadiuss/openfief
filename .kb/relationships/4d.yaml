@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5484ee56b62d
+  - type: constrains
+    from: REQ-ui-time-chart-marks-tracking-start
+    to: FACT-SUBJECT-9106B40681FB54C7
+    created_at: 2026-11-01T07:41:05.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-763f7ec831fc
+  - type: requires_property
+    from: REQ-ui-time-chart-marks-tracking-start
+    to: FACT-PROP-BB8C597F7A9E3BB3
+    created_at: 2026-11-01T07:41:05.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeb88dc41fa5

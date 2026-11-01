@@ -419,3 +419,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e700f2cdcf1
+  - type: constrains
+    from: REQ-treasurybonds-account-history-from-first-purchase
+    to: FACT-SUBJECT-34E32129990BBCFB
+    created_at: 2026-11-01T07:38:02.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13fc87200dcb
+  - type: requires_property
+    from: REQ-treasurybonds-account-history-from-first-purchase
+    to: FACT-PROP-5D27627D40C67E3D
+    created_at: 2026-11-01T07:38:02.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f879236537d
+  - type: supersedes
+    from: REQ-treasurybonds-account-history-from-first-purchase
+    to: REQ-ingest-bond-account-live-on-first-lot
+    created_at: 2026-11-01T07:38:03.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-075b70559134

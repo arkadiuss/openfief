@@ -496,3 +496,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c6cdbd75de0
+  - type: constrains
+    from: REQ-ui-portfolio-chart-default-start
+    to: FACT-SUBJECT-9106B40681FB54C7
+    created_at: 2026-11-01T07:40:52.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6287dea12ac
+  - type: requires_property
+    from: REQ-ui-portfolio-chart-default-start
+    to: FACT-PROP-C9870FFA9C67733E
+    created_at: 2026-11-01T07:40:52.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aef2a43811c

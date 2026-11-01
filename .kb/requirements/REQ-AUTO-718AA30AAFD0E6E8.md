@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must show a value-over-time chart that starts at go-live.
-status: open
+status: closed
 text_ref: design-decisions:D-30#2
 tags:
   - strict-modeling

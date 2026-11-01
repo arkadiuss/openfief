@@ -1,6 +1,6 @@
 ---
 title: A treasury bond lot bought before go-live must be an opening lot at go-live, keeping its own purchase date and cost.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

@@ -86817,7 +86817,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-store-source-ranking
@@ -86832,7 +86832,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-querier
@@ -86847,7 +86847,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-ranking-in
@@ -86862,7 +86862,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-placed-in
@@ -86877,7 +86877,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-store-rank-of
@@ -86892,7 +86892,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-store-save-source-ranking
@@ -86907,7 +86907,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-test-ranked-prices

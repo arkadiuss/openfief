@@ -1,6 +1,6 @@
 ---
 title: By default, D-94's ranking must order connector instances by the institution each reports, with the first-party connector of each kind first.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

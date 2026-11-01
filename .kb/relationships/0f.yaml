@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e29c49f12afe
+  - type: constrains
+    from: REQ-identity-read-access-holders
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-01T07:40:30.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1470dd23655
+  - type: requires_property
+    from: REQ-identity-read-access-holders
+    to: FACT-PROP-9F225E8061CB5CF2
+    created_at: 2026-11-01T07:40:30.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fc535d3a9e2

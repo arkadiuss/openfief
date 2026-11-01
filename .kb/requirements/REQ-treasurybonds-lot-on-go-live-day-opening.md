@@ -1,6 +1,6 @@
 ---
 title: A lot bought on or before a hand-entered bond account's go-live day must be an opening lot.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

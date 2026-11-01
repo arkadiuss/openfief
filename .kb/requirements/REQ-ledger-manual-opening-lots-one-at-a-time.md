@@ -1,6 +1,6 @@
 ---
 title: A manually entered account must be able to receive its opening lots one at a time, each idempotent per series and purchase date.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90
