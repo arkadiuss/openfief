@@ -1,6 +1,6 @@
 ---
 title: The release workflow must refuse a version that does not match its channel's format, YYYY.M.N for stable and YYYY.M.N-beta.K for beta with no v prefix, or whose tag already exists.
-status: open
+status: closed
 text_ref: docs/dev/sdlc.md#releases
 tags:
   - strict-modeling

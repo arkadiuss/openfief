@@ -582,8 +582,29 @@ relationships:
     id: rel-5a7ed1ff6c3e
   - type: implements
     from: SYM-ingest-connectapi-account-service-remap-broker-account
-    to: REQ-ingest-broker-account-remap
-    created_at: 2026-10-31T18:15:56.572Z
+    to: REQ-ingest-broker-account-remap-per-instance
+    created_at: 2026-11-01T12:34:14.500Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-4ae70db85fb6
+    id: rel-f54b889097f7
+  - type: implements
+    from: SYM-views-pb-get-performance-response-get-default-from
+    to: REQ-views-api-contract
+    created_at: 2026-11-01T13:12:06.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d616aec42834
+  - type: covered_by
+    from: SYM-views-pb-get-performance-response-get-default-from
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-01T13:12:06.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33d2340dfbff
+  - type: implements
+    from: SYM-views-kube-record-of
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:12:43.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a78ec836d51a

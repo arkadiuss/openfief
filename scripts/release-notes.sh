@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Release notes in Markdown from the Conventional Commits since the previous release (docs/dev/sdlc.md).
-# A stable release starts after the previous stable one; a beta after the previous release of either channel.
+# A stable release starts after the previous stable one; a pre-release (alpha or beta) after the previous release of
+# any channel.
 # Usage: release-notes.sh <version> [ref, default HEAD]
 set -euo pipefail
 
@@ -14,7 +15,7 @@ ref="${2:-HEAD}"
 # previous_release prints the newest release tag reachable from the ref that the notes start after.
 previous_release() {
   local exclude=(--exclude "$version")
-  [[ "$version" == *-beta.* ]] || exclude+=(--exclude '*-beta.*')
+  [[ "$version" == *-alpha.* || "$version" == *-beta.* ]] || exclude+=(--exclude '*-alpha.*' --exclude '*-beta.*')
   git describe --tags --abbrev=0 --match '[0-9][0-9][0-9][0-9].*' "${exclude[@]}" "$ref" 2>/dev/null || true
 }
 

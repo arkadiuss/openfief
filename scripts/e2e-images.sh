@@ -5,13 +5,16 @@
 #     names, openfief.test/<name>:e2e (.test never resolves, so nothing pulls them);
 #   - the plugin images the operator deploys, nbp-fx and the built-in UI, go to the suite's registry, because the
 #     operator deploys a plugin only after it has read the image's signature from its registry (D-56, D-57). The suite
-#     signs them there with a key it makes at run time (test/e2e/registry_test.go).
+#     signs them there with a key it makes at run time (test/e2e/registry_test.go);
+#   - core, operator and egress-proxy go to that registry too, for the suite's install from the release bundle, which
+#     names every image by digest (scripts/release-bundle.sh, test/e2e/bundle_test.go).
 # The registry is a container, openfief-e2e-registry, on the cluster's Docker network, published on 127.0.0.1:5000 for
 # the suite. The operator reaches it at its address on that network, a private IPv4 address, which the operator's
 # registry client reads over plain HTTP. The nodes reach it there too, but containerd pulls only localhost over plain
 # HTTP unless configured, so each plugin image is pulled into every node here with ctr, under the name the operator
 # deploys; the operator asks for IfNotPresent, so the kubelet never pulls it itself.
-# It writes the two registry addresses to <env file>, which task e2e passes to the suite.
+# It writes the two registry addresses, and the bundle's images as the cluster names them, to <env file>, which task
+# e2e passes to the suite.
 # Usage: e2e-images.sh <k3d|kind> <cluster name> <env file>
 set -euo pipefail
 shopt -s inherit_errexit
@@ -36,7 +39,9 @@ registry_local=localhost:5000
 manifest_types='application/vnd.oci.image.index.v1+json, application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.list.v2+json, application/vnd.docker.distribution.manifest.v2+json'
 
 images=()
-plugins=()
+pushed=()
+# The images the bootstrap install runs (deploy/operator, deploy/egress-proxy, deploy/core), which the bundle pins.
+bundle=(core operator egress-proxy)
 for dockerfile in cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/Dockerfile cmd/demo-seed/Dockerfile \
   plugins/nbp-fx/Dockerfile plugins/ui/Dockerfile; do
   name="$(basename "$(dirname "$dockerfile")")"
@@ -44,9 +49,12 @@ for dockerfile in cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/D
   echo "e2e-images: building $image from $dockerfile"
   docker build --file "$dockerfile" --tag "$image" .
   case "$dockerfile" in
-    plugins/*) plugins+=("$name") ;;
+    plugins/*) pushed+=("$name") ;;
     *) images+=("$image") ;;
   esac
+  if [[ " ${bundle[*]} " == *" $name "* ]]; then
+    pushed+=("$name")
+  fi
 done
 
 nodes=()
@@ -127,7 +135,8 @@ manifest_digest() {
 network="$(cluster_network)"
 echo "e2e-images: starting the registry on Docker network $network"
 cluster_registry="$(start_registry "$network")"
-for name in "${plugins[@]}"; do
+bundle_images=()
+for name in "${pushed[@]}"; do
   docker tag "openfief.test/$name:e2e" "$registry_local/$name:e2e"
   docker push --quiet "$registry_local/$name:e2e"
   digest="$(manifest_digest "$name")"
@@ -146,8 +155,12 @@ for name in "${plugins[@]}"; do
     echo "$gaps" >&2
     exit 1
   fi
+  if [[ " ${bundle[*]} " == *" $name "* ]]; then
+    bundle_images+=("$ref")
+  fi
 done
 
 mkdir -p "$(dirname "$env_file")"
-printf 'export OPENFIEF_E2E_REGISTRY=%s\nexport OPENFIEF_E2E_CLUSTER_REGISTRY=%s\n' "$registry_local" "$cluster_registry" >"$env_file"
+printf 'export OPENFIEF_E2E_REGISTRY=%s\nexport OPENFIEF_E2E_CLUSTER_REGISTRY=%s\nexport OPENFIEF_E2E_BUNDLE_IMAGES=\047%s\047\n' \
+  "$registry_local" "$cluster_registry" "${bundle_images[*]}" >"$env_file"
 echo "e2e-images: the suite's registry is $registry_local, $cluster_registry in the cluster ($env_file)"

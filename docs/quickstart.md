@@ -5,7 +5,7 @@ description: A ten-minute tour of a running OpenFief on the public demo, with sy
 
 The quickest way to see OpenFief is the public demo at [demo.openfief.dev](https://demo.openfief.dev). It runs a recent build of `main` on one small k3s machine, with a generated portfolio that belongs to no one: about a year of history across two brokers and treasury bonds in an [IKE](glossary.md#other-terms-and-abbreviations). The demo keeps it valued through today, and nothing you do there changes it.
 
-An install of your own comes with the first release. Until then, this tour shows what it will run, and [Expose OpenFief](guides/expose.md) and [Build a plugin](guides/build-a-plugin.md) show the parts you would set up.
+This tour shows what an install runs. [Install a release](guides/install.md) sets up your own from a release's signed bundle, and [Expose OpenFief](guides/expose.md) and [Build a plugin](guides/build-a-plugin.md) show the parts you would add.
 
 ## What you are looking at
 
@@ -85,6 +85,7 @@ curl -fsS -H "Authorization: Bearer $OPENFIEF_TOKEN" "https://fief.example.org/v
 ## Where next
 
 - [How it works](architecture.md): the parts you just saw and how they fit together.
+- [Install a release](guides/install.md): your own OpenFief, from a release's verified bundle.
 - [Expose OpenFief](guides/expose.md): how browsers and scripts reach your install.
 - [Build a plugin](guides/build-a-plugin.md): write a connector or a view of your own.
 - [Concepts](concepts/): each part in depth.

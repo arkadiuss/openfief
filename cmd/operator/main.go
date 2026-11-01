@@ -124,6 +124,7 @@ func run(args []string) error {
 		Client: mgr.GetClient(), Scheme: scheme, Settings: o.settings, Verifier: verifier,
 		// An in-cluster service lives outside the namespaced cache (D-74).
 		ServiceReader: mgr.GetAPIReader(),
+		Recorder:      mgr.GetEventRecorder("openfief-operator"),
 	}
 	dc, err := discovery.NewDiscoveryClientForConfig(mgr.GetConfig())
 	if err != nil {

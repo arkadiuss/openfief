@@ -734,3 +734,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3c11acf9bcb
+  - type: constrains
+    from: REQ-e2e-installs-release-bundle
+    to: FACT-SUBJECT-D03E993F94590A63
+    created_at: 2026-11-01T13:51:20.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16d198276458
+  - type: requires_property
+    from: REQ-e2e-installs-release-bundle
+    to: FACT-PROP-E774C2F7305F3AA7
+    created_at: 2026-11-01T13:51:20.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-406e631edc12
+  - type: specified_by
+    from: REQ-e2e-installs-release-bundle
+    to: SCEN-e2e-bundle-ready
+    created_at: 2026-11-01T13:51:20.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cacdb27acee
+  - type: specified_by
+    from: REQ-e2e-installs-release-bundle
+    to: SCEN-e2e-bundle-read-api
+    created_at: 2026-11-01T13:51:20.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e6ed0a7341a
+  - type: executable_for
+    from: SYM-views-connectapi-test-ra-walk-message
+    to: TEST-views-connectapi-read-access
+    created_at: 2026-11-01T10:17:56.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c74947c3239

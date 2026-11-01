@@ -80,7 +80,47 @@ Changes since 2026.11.0-beta.1.
 
 - Update README"
 
-git tag -d 2026.10.0 2026.11.0-beta.1 >/dev/null
+# An alpha is a pre-release like a beta: its notes start after the newest release of any channel, and a stable
+# release skips it too.
+git tag 2026.11.0-alpha.1 HEAD~2
+expect_notes "alpha notes start after the previous release of any channel" 2026.11.0-alpha.2 "## 2026.11.0-alpha.2
+
+Changes since 2026.11.0-alpha.1.
+
+### Performance
+
+- perf(valuation): cache FX rates
+
+### Other changes
+
+- Update README"
+
+expect_notes "stable notes skip alpha releases" 2026.11.0 "## 2026.11.0
+
+Changes since 2026.10.0.
+
+### Breaking changes
+
+- refactor: tidy
+- feat(ingest)!: rename the import batch API
+
+### Features
+
+- feat(ledger): add lots
+
+### Fixes
+
+- fix: round half to even
+
+### Performance
+
+- perf(valuation): cache FX rates
+
+### Other changes
+
+- Update README"
+
+git tag -d 2026.10.0 2026.11.0-beta.1 2026.11.0-alpha.1 >/dev/null
 expect_notes "the first release covers the whole history" 2026.11.0 "## 2026.11.0
 
 First release.
@@ -110,4 +150,4 @@ First release.
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "release-notes: 3 cases passed"
+echo "release-notes: 5 cases passed"

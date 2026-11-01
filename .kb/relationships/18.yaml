@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa0550cdb051
+  - type: executable_for
+    from: SYM-e2e-test-operator-refuses-untrusted-images
+    to: TEST-e2e-plugin-refusals
+    created_at: 2026-11-01T13:53:11.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fbf679fb62b

@@ -62,7 +62,9 @@ type Condition struct {
 // capabilities it requests and those it may use now, its Ready and
 // SignatureVerified conditions, and the trusted signature on its image
 // (status.signature: trust, signer kind and signer), empty while there is
-// none.
+// none, and whether it is a market-data connector: its manifest declares it
+// (spec.manifest.marketData) and the grant approves it
+// (status.effective.marketData) (D-123).
 type PluginRecord struct {
 	Instance   string
 	Image      string
@@ -74,13 +76,19 @@ type PluginRecord struct {
 	Trust      string
 	SignerKind string
 	Signer     string
+	// RequestsMarketData: the manifest declares a market-data connector.
+	RequestsMarketData bool
+	// MarketData: the running version is one the grant approves.
+	MarketData bool
 }
 
 // Plugin is an installed plugin instance as the read API shows it (D-46,
 // D-48, D-56): its name, image and image digest, the capabilities it may
 // use now and those it requests, how far its image is trusted and by which
 // signer, why (the SignatureVerified reason), and its phase, the Ready
-// condition's reason, with whether it runs.
+// condition's reason, with whether it runs. MarketData says that each sync
+// tells it every instrument the owner holds and the model's targets, and
+// RequestsMarketData that its manifest asks for that (D-93, D-123).
 type Plugin struct {
 	Instance     string
 	Image        string
@@ -92,6 +100,10 @@ type Plugin struct {
 	TrustReason  string
 	Phase        string
 	Ready        bool
+	// RequestsMarketData: its manifest declares a market-data connector.
+	RequestsMarketData bool
+	// MarketData: it is one, as the grant approves (D-123).
+	MarketData bool
 }
 
 // PluginOf returns the Plugin r describes. The signer is named only when a
@@ -109,6 +121,9 @@ func PluginOf(r *PluginRecord) Plugin {
 		TrustReason:  r.Signature.Reason,
 		Phase:        r.Ready.Reason,
 		Ready:        r.Ready.Status == conditionTrue,
+
+		RequestsMarketData: r.RequestsMarketData,
+		MarketData:         r.MarketData,
 	}
 	if p.Trust.Signed() {
 		p.Signer = r.Signer

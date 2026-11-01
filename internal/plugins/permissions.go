@@ -9,8 +9,8 @@ import (
 )
 
 // Permissions is a set of plugin permissions: capabilities, egress hosts,
-// Secret names, data tiers, browser paths (D-81) and in-cluster services
-// (D-74). It is what a plugin requests (Plugin.Requested), what a Grant
+// Secret names, data tiers, browser paths (D-81), in-cluster services
+// (D-74) and whether a connector is told what the owner holds (D-123). It is what a plugin requests (Plugin.Requested), what a Grant
 // approves, and what NeedsApproval reports as still unapproved.
 type Permissions struct {
 	Capabilities    []Capability
@@ -19,12 +19,16 @@ type Permissions struct {
 	DataTiers       []DataTier
 	BrowserPaths    []string
 	ClusterServices []ClusterService
+	// MarketData is a market-data connector's permission to receive, on
+	// each sync, the instruments the owner holds and the model portfolio's
+	// targets (D-93, D-123).
+	MarketData bool
 }
 
 // IsEmpty reports whether p holds no permission at all.
 func (p *Permissions) IsEmpty() bool {
 	return len(p.Capabilities) == 0 && len(p.Egress) == 0 && len(p.Secrets) == 0 && len(p.DataTiers) == 0 &&
-		len(p.BrowserPaths) == 0 && len(p.ClusterServices) == 0
+		len(p.BrowserPaths) == 0 && len(p.ClusterServices) == 0 && !p.MarketData
 }
 
 func (p *Permissions) validate() error {
@@ -50,6 +54,7 @@ func (p *Permissions) sorted() Permissions {
 		ClusterServices: sortedCopy(p.ClusterServices, func(a, b ClusterService) int {
 			return cmp.Compare(a.String(), b.String())
 		}),
+		MarketData: p.MarketData,
 	}
 }
 
@@ -69,7 +74,8 @@ type Plugin struct {
 // Requested returns the permissions p asks for, sorted: its manifest's
 // capabilities, egress hosts, data tiers and browser path, the Secret each
 // of its manifest's roles names for this instance (D-89), the host of each
-// config field its manifest names (D-75) and its in-cluster service (D-74).
+// config field its manifest names (D-75), its in-cluster service (D-74) and
+// whether it is a market-data connector (D-123).
 // A config host that can't be read is left out; Validate reports it.
 func (p *Plugin) Requested() Permissions {
 	m := &p.Manifest
@@ -82,6 +88,7 @@ func (p *Plugin) Requested() Permissions {
 		Egress:       slices.Clone(m.Egress),
 		Secrets:      names,
 		DataTiers:    m.DataTiers,
+		MarketData:   m.MarketData,
 	}
 	if hosts, err := ConfigHosts(m, p.Config); err == nil {
 		for _, h := range hosts {
@@ -208,6 +215,7 @@ func NeedsApproval(g *Grant, p *Plugin) (Permissions, error) {
 		DataTiers:       missing(req.DataTiers, granted.DataTiers),
 		BrowserPaths:    missing(req.BrowserPaths, granted.BrowserPaths),
 		ClusterServices: missing(req.ClusterServices, granted.ClusterServices),
+		MarketData:      req.MarketData && !granted.MarketData,
 	}, nil
 }
 

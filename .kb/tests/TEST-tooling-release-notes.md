@@ -9,4 +9,4 @@ id: TEST-tooling-release-notes
 type: test
 verification_scope: integration
 ---
-Builds a throwaway repository with release tags and Conventional Commits and compares the notes for a stable release, a beta and a first release with the expected Markdown.
+Builds a throwaway repository with release tags and Conventional Commits and compares the notes for a stable release, a beta, an alpha, a stable release after an alpha (which skips it like a beta) and a first release with the expected Markdown.

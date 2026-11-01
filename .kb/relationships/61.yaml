@@ -279,13 +279,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-203235d1a78d
-  - type: implements
-    from: SYM-views-app-later
-    to: REQ-views-performance-query
-    created_at: 2026-10-28T21:00:19.621Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e6cc4d959682
   - type: covered_by
     from: SYM-views-app-later
     to: TEST-views-app-performance
@@ -587,3 +580,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03bba54549b1
+  - type: verified_by
+    from: SCEN-e2e-bundle-read-api
+    to: TEST-e2e-bundle-install
+    created_at: 2026-11-01T13:50:41.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a32670568211
+  - type: constrains
+    from: REQ-valuation-price-check-threshold-clear-restores-default
+    to: FACT-SUBJECT-ECF86A4CFE17F2A3
+    created_at: 2026-11-01T12:25:13.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0accb557840d
+  - type: requires_property
+    from: REQ-valuation-price-check-threshold-clear-restores-default
+    to: FACT-PROP-DD30C0C0B16348C7
+    created_at: 2026-11-01T12:25:13.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a03826c200b
+  - type: implements
+    from: SYM-views-app-later
+    to: REQ-views-performance-query-charts-start
+    created_at: 2026-11-01T13:07:58.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebf943b6e33c

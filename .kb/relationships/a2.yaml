@@ -685,3 +685,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46efc8f3a2fe
+  - type: constrains
+    from: REQ-plugins-statement-files-declared-in-manifest
+    to: FACT-SUBJECT-9245D1B907023D02
+    created_at: 2026-11-01T12:23:25.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76ef0ec621a9
+  - type: requires_property
+    from: REQ-plugins-statement-files-declared-in-manifest
+    to: FACT-PROP-408A31D61F618E7C
+    created_at: 2026-11-01T12:23:25.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5222ac745c75
+  - type: constrains
+    from: REQ-ledger-owner-cash-difference-booked
+    to: FACT-SUBJECT-A6E408782DCB5399
+    created_at: 2026-11-01T12:31:43.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c72acd27efe5
+  - type: requires_property
+    from: REQ-ledger-owner-cash-difference-booked
+    to: FACT-PROP-673E67E92C4F4E1E
+    created_at: 2026-11-01T12:31:43.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51dcea362816

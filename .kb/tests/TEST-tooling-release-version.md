@@ -1,5 +1,5 @@
 ---
-title: release-version.sh accepts calendar versions per channel and refuses the rest
+title: release-version.sh accepts calendar versions per channel, alpha included, and refuses the rest
 status: active
 sourceFile: scripts/tests/release-version.test.sh
 origin:
@@ -9,4 +9,4 @@ id: TEST-tooling-release-version
 type: test
 verification_scope: integration
 ---
-Runs scripts/release-version.sh in a throwaway repository over a table of channel and version pairs: valid stable and beta versions pass; a v prefix, leading zeros, a month out of range, the wrong channel suffix, an unknown channel and an existing tag fail.
+Runs scripts/release-version.sh in a throwaway repository over a table of 27 channel and version pairs: valid stable, beta and alpha versions pass; a v prefix, leading zeros, a month out of range, beta.0 and alpha.0, an alpha without K or in upper case, the wrong channel suffix, an unknown channel and an existing stable or alpha tag fail.

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strings"
 	"time"
 )
 
@@ -69,6 +70,19 @@ const (
 // batch's left-out rows. Every other kind resolves when its check clears,
 // such as when the owner maps the broker account or sets the setting.
 func OwnerResolves(k Kind) bool { return k == KindAssertionFlagged || k == KindImportProblems }
+
+// ReadSubject returns the subject of an item of kind k as read access may
+// see it (D-137): an unmapped broker account's item names only the
+// connector instance, since read access never includes a broker account
+// number (D-121); every other subject is returned as it is. The owner
+// sees the broker account through the account service.
+func ReadSubject(k Kind, subject string) string {
+	if k == KindBrokerAccountUnmapped {
+		instance, _, _ := strings.Cut(subject, "/")
+		return instance
+	}
+	return subject
+}
 
 // Validate reports whether k is a kind: lower-case words joined by hyphens.
 func (k Kind) Validate() error {

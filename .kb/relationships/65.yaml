@@ -517,6 +517,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70f81a25f43b
+  - type: implements
+    from: SYM-attention-app-items-sweep
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:39:15.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f2571da94e8
+  - type: covered_by
+    from: SYM-attention-app-items-sweep
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:15.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66bc60dc0962
+  - type: implements
+    from: SYM-attention-app-items-clear
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:39:25.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92d231ec0c51
+  - type: covered_by
+    from: SYM-attention-app-items-clear
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:25.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c81a45b516aa
+  - type: executable_for
+    from: SYM-attention-app-test-helper-found
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:06.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fc360f37deb
+  - type: executable_for
+    from: SYM-attention-app-test-owner-actions
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:24.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-778fe21a8c80
   - type: constrains
     from: REQ-pl-oki-tax-computation
     to: FACT-SUBJECT-A0C1D8F44C929AB5
@@ -566,6 +608,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-886cfc114e06
+  - type: implements
+    from: SYM-views-ghostfolio-projector-symbol
+    to: REQ-views-ghostfolio-asset-uuid-takes-user
+    created_at: 2026-11-01T10:14:54.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52a436a61aa2
   - type: constrains
     from: REQ-views-ghostfolio-redemption-sell
     to: FACT-SUBJECT-85358A991DE9337D
@@ -622,45 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b0dfdc944a1
-  - type: implements
-    from: SYM-attention-app-items-sweep
-    to: REQ-attention-sweep
-    created_at: 2026-10-31T18:39:15.390Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6f2571da94e8
-  - type: covered_by
-    from: SYM-attention-app-items-sweep
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:39:15.426Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-66bc60dc0962
-  - type: implements
-    from: SYM-attention-app-items-clear
-    to: REQ-attention-sweep
-    created_at: 2026-10-31T18:39:25.657Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-92d231ec0c51
-  - type: covered_by
-    from: SYM-attention-app-items-clear
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:39:25.687Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c81a45b516aa
   - type: executable_for
-    from: SYM-attention-app-test-helper-found
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:40:06.355Z
+    from: SYM-e2e-test-helper-wait-signature-decided
+    to: TEST-e2e-plugin-refusals
+    created_at: 2026-11-01T13:55:47.872Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-1fc360f37deb
-  - type: executable_for
-    from: SYM-attention-app-test-owner-actions
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:40:24.884Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-778fe21a8c80
+    id: rel-b3cb4a62fab1

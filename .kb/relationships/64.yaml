@@ -734,3 +734,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcb85aee0183
+  - type: constrains
+    from: REQ-ingest-xtb-open-positions-assert-holdings
+    to: FACT-SUBJECT-2FF097DE6AEBE5F4
+    created_at: 2026-11-01T12:30:07.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74939765103f
+  - type: requires_property
+    from: REQ-ingest-xtb-open-positions-assert-holdings
+    to: FACT-PROP-58EFD03803F04C17
+    created_at: 2026-11-01T12:30:07.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e21c333d0bf
+  - type: implements
+    from: SYM-views-plugin-of
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:12:51.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f11bfc702d3a
+  - type: covered_by
+    from: SYM-views-plugin-of
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-11-01T10:12:51.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b1cec7c1391

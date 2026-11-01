@@ -59,14 +59,15 @@ func TestAttentionService(t *testing.T) {
 }
 
 // checkUnmappedItem fails t unless got lists one open item, the unmapped
-// broker account, raised once.
+// broker account, raised once, named by its instance alone: the read API
+// never serves a broker account number (D-121, D-137).
 func checkUnmappedItem(t *testing.T, got *viewsv1.ListAttentionItemsResponse) {
 	t.Helper()
 	if len(got.GetItems()) != 1 || got.GetOpen() != 1 {
 		t.Fatalf("GET /v1/attention-items = %v, want one open item", got)
 	}
 	it := got.GetItems()[0]
-	if it.GetKind() != "broker-account-unmapped" || it.GetSubject() != "flex-main/U0000001" || len(it.GetHistory()) != 1 {
+	if it.GetKind() != "broker-account-unmapped" || it.GetSubject() != "flex-main" || len(it.GetHistory()) != 1 {
 		t.Errorf("item = %v, want the unmapped broker account, raised once", it)
 	}
 }

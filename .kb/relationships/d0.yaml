@@ -594,13 +594,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b427959ad9a2
-  - type: implements
-    from: SYM-ui-server-remap-broker-account
-    to: REQ-ingest-broker-account-remap
-    created_at: 2026-10-31T18:16:18.064Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7bcaf4648541
   - type: constrains
     from: REQ-ui-value-chart-from-charts-start
     to: FACT-SUBJECT-90104E84491E6BE9
@@ -650,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-affbe9ca8565
+  - type: executable_for
+    from: SYM-e2e-bundle-forward-core
+    to: TEST-e2e-bundle-install
+    created_at: 2026-11-01T13:55:56.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b47f4cb4e934
+  - type: implements
+    from: SYM-ui-server-remap-broker-account
+    to: REQ-ingest-broker-account-remap-per-instance
+    created_at: 2026-11-01T12:34:57.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b568421e26eb

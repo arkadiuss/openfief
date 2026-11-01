@@ -336,6 +336,10 @@ type fakeRead struct {
 	format *viewsv1.NumberFormat
 	// values are the value kinds GetAllocation was asked for.
 	values []viewsv1.ValueKind
+	// performance are the GetPerformance requests, model the
+	// GetModelPortfolio ones.
+	performance []*viewsv1.GetPerformanceRequest
+	model       []*viewsv1.GetModelPortfolioRequest
 }
 
 func (f *fakeRead) GetSettings(_ context.Context, r *connect.Request[viewsv1.GetSettingsRequest]) (*connect.Response[viewsv1.GetSettingsResponse], error) {
@@ -516,9 +520,10 @@ func (f *fakeRead) ListTransactions(_ context.Context, r *connect.Request[viewsv
 // cluster.
 var errPluginsUnavailable = errors.New("the installed plugins can't be read now")
 
-// ListPlugins lists two synthetic plugins: ibkr-main, signed by OpenFief's
-// CI and running, and ui-local, signed by the owner's own signer; or it
-// answers UNAVAILABLE when pluginsUnavailable is set.
+// ListPlugins lists three synthetic plugins: ibkr-main, signed by
+// OpenFief's CI and running, ui-local, signed by the owner's own signer,
+// and prices-main, a market-data connector (D-123); or it answers
+// UNAVAILABLE when pluginsUnavailable is set.
 func (f *fakeRead) ListPlugins(_ context.Context, r *connect.Request[viewsv1.ListPluginsRequest]) (*connect.Response[viewsv1.ListPluginsResponse], error) {
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
@@ -541,6 +546,12 @@ func (f *fakeRead) ListPlugins(_ context.Context, r *connect.Request[viewsv1.Lis
 			RequestedCapabilities: []string{"view"},
 			Trust:                 viewsv1.SignatureTrust_SIGNATURE_TRUST_REFUSED, TrustReason: "UntrustedSigner",
 			Phase: "SignatureNotVerified",
+		},
+		{
+			Instance: "prices-main", Image: "registry.example.com/openfief/eodhd@sha256:c3c3", ImageDigest: "sha256:c3c3",
+			Capabilities: []string{"connector"}, RequestedCapabilities: []string{"connector"},
+			Trust: viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI, Signer: "openfief-ci", TrustReason: "SignedByTrustedSigner",
+			Phase: "Running", Ready: true, MarketData: true, RequestedMarketData: true,
 		},
 	}}), nil
 }

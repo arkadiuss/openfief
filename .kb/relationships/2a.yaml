@@ -678,3 +678,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dabb6cbe9bc3
+  - type: implements
+    from: SYM-release-verify-verify-images
+    to: REQ-tooling-release-verify-signatures
+    created_at: 2026-11-01T14:59:56.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1470f1e938c0
+  - type: covered_by
+    from: SYM-release-verify-verify-images
+    to: TEST-tooling-release-verify
+    created_at: 2026-11-01T14:59:56.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa9a912d063e
+  - type: executable_for
+    from: SYM-release-verify-test-run
+    to: TEST-tooling-release-verify
+    created_at: 2026-11-01T15:00:03.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb46a015cfc1

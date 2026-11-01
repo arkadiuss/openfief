@@ -657,27 +657,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44a79ed82a5b
-  - type: validates
-    from: TEST-pl-pack
-    to: REQ-pl-exchange-discount-taxed-at-99-90
-    created_at: 2026-10-31T18:25:01.578Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8460ba5bec08
-  - type: implements
-    from: SYM-ingest-delivery-payout-from
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:48:09.598Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2daf8709e0cc
-  - type: covered_by
-    from: SYM-ingest-delivery-payout-from
-    to: TEST-ingest-delivery-held
-    created_at: 2026-11-01T07:48:09.644Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-92821b5c3fd1
   - type: implements
     from: SYM-viewsv1-attention-item-get-history
     to: REQ-views-attention-items
@@ -692,3 +671,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-819fbc36a63a
+  - type: validates
+    from: TEST-pl-pack
+    to: REQ-pl-exchange-discount-taxed-at-99-90
+    created_at: 2026-10-31T18:25:01.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8460ba5bec08
+  - type: implements
+    from: SYM-viewsv1-plugin-get-market-data
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T11:48:17.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a10d05846f2
+  - type: covered_by
+    from: SYM-viewsv1-plugin-get-market-data
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-11-01T11:48:17.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78a39953780f
+  - type: implements
+    from: SYM-ingest-delivery-payout-from
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:48:09.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2daf8709e0cc
+  - type: covered_by
+    from: SYM-ingest-delivery-payout-from
+    to: TEST-ingest-delivery-held
+    created_at: 2026-11-01T07:48:09.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92821b5c3fd1

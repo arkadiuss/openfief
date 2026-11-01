@@ -90,7 +90,8 @@ func (p *Plugins) InstalledPlugins(context.Context) ([]views.PluginRecord, error
 
 // RecordOf reads what the views show of a Plugin resource: its name,
 // spec.image, spec.manifest.capabilities, status.effective.capabilities,
-// its Ready and SignatureVerified conditions and status.signature. A field
+// spec.manifest.marketData and status.effective.marketData (D-123), its
+// Ready and SignatureVerified conditions and status.signature. A field
 // that is missing or of another type reads as empty.
 func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 	r := views.PluginRecord{
@@ -102,6 +103,9 @@ func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 		Trust:      nestedString(u, "status", "signature", "trust"),
 		SignerKind: nestedString(u, "status", "signature", "signerKind"),
 		Signer:     nestedString(u, "status", "signature", "signer"),
+
+		RequestsMarketData: nestedBool(u, "spec", "manifest", "marketData"),
+		MarketData:         nestedBool(u, "status", "effective", "marketData"),
 	}
 	conds, found, err := unstructured.NestedSlice(u.Object, "status", "conditions")
 	if err != nil || !found {
@@ -131,6 +135,13 @@ func nestedString(u *unstructured.Unstructured, fields ...string) string {
 		return ""
 	}
 	return s
+}
+
+// nestedBool returns the boolean at fields of u, or false when there is
+// none or it isn't a boolean.
+func nestedBool(u *unstructured.Unstructured, fields ...string) bool {
+	b, found, err := unstructured.NestedBool(u.Object, fields...)
+	return err == nil && found && b
 }
 
 // nestedStrings returns the strings at fields of u, or nil when there are

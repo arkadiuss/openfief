@@ -11,6 +11,7 @@ cd "$work"
 git init -q
 git -c user.name=test -c user.email=test@example.invalid commit -q --allow-empty -m "chore: base"
 git tag 2026.10.0
+git tag 2026.10.0-alpha.1
 failures=0
 
 expect() {
@@ -31,6 +32,9 @@ pass stable 2026.11.0
 pass stable 2026.1.12
 pass beta 2026.11.0-beta.1
 pass beta 2026.12.3-beta.10
+pass alpha 2026.11.0-alpha.1
+pass alpha 2026.12.3-alpha.10
+pass alpha 2026.10.0-alpha.2
 fail stable v2026.11.0
 fail stable 2026.11.0-beta.1
 fail beta 2026.11.0
@@ -41,6 +45,16 @@ fail stable 2026.11.01
 fail stable 2026.11
 fail nightly 2026.11.0
 fail stable 2026.10.0
+fail alpha 2026.11.0
+fail alpha 2026.11.0-alpha.0
+fail alpha 2026.11.0-alpha.01
+fail alpha v2026.11.0-alpha.1
+fail alpha 2026.11.0-alpha
+fail alpha 2026.11.0-ALPHA.1
+fail alpha 2026.11.0-beta.1
+fail beta 2026.11.0-alpha.1
+fail stable 2026.11.0-alpha.1
+fail alpha 2026.10.0-alpha.1
 EOF
 
 if [ "$failures" -ne 0 ]; then

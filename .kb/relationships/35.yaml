@@ -664,3 +664,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a71f49a188c
+  - type: implements
+    from: SYM-release-bundle-fail
+    to: REQ-tooling-release-bundle-pinned
+    created_at: 2026-11-01T13:51:39.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-830f81ccfa36
+  - type: covered_by
+    from: SYM-release-bundle-fail
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-01T13:51:39.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8589aea3fce9
+  - type: implements
+    from: SYM-ui-server-account-charts
+    to: REQ-ui-account-chart-default-start
+    created_at: 2026-11-01T13:11:30.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc0c43e52e7c
+  - type: implements
+    from: SYM-ui-server-account-charts
+    to: REQ-ui-performance-chart-from-charts-start
+    created_at: 2026-11-01T13:11:30.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76d9037488b4
+  - type: covered_by
+    from: SYM-ui-server-account-charts
+    to: TEST-ui-chart-start
+    created_at: 2026-11-01T13:11:30.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-350bbbce9dec

@@ -65,6 +65,9 @@ vars:
   E2E_CLUSTER_NAME: openfief-e2e
   # Where task e2e:images writes the addresses of the suite's registry, which task e2e passes to the suite.
   E2E_REGISTRY_ENV: '{{.ROOT_DIR}}/.bin/e2e/registry.env'
+  # Where task e2e renders the release bundle (task release:bundle) of the images task e2e:images pushed to the
+  # suite's registry, which the suite's bundle run installs.
+  E2E_BUNDLE_DIR: '{{.ROOT_DIR}}/.bin/e2e/bundle'
   # Generates the read API's OpenAPI document from its protobuf definitions (D-50).
   # renovate: datasource=go depName=github.com/sudorandom/protoc-gen-connect-openapi
   PROTOC_GEN_CONNECT_OPENAPI_VERSION: v0.28.0
@@ -461,15 +464,19 @@ tasks:
       - '{{.GO_GUARD}} bash scripts/test-pg.sh {{.CLI_ARGS}}'
 
   e2e:
-    desc: 'End-to-end tests (test/e2e) on a local kind or k3d cluster, after task e2e:images; refuses non-local clusters'
+    desc: 'End-to-end tests (test/e2e) on a local kind or k3d cluster, after task e2e:images: first an install from the release bundle of this checkout''s images, then the demo''s stack; refuses non-local clusters'
     # kibi:install brings playwright-core, with which the passkey test drives Chromium (test/e2e/passkey.mjs).
-    deps: [tool:kustomize, kibi:install]
+    deps: [tool:kustomize, tool:gojq, kibi:install]
     cmds:
       - bash scripts/assert-local-cluster.sh
       - task: e2e:cnpg
       # -v streams each step and wait as it happens, so a CI log shows where a run stopped.
       # The suite runs kustomize by name, so the pinned one goes first on PATH.
-      # The registry addresses task e2e:images wrote (OPENFIEF_E2E_REGISTRY, OPENFIEF_E2E_CLUSTER_REGISTRY).
+      # The registry addresses and images task e2e:images wrote (OPENFIEF_E2E_REGISTRY, OPENFIEF_E2E_CLUSTER_REGISTRY,
+      # OPENFIEF_E2E_BUNDLE_IMAGES).
+      # Two runs of one suite, each with its own TestMain install: the bundle run (OPENFIEF_E2E_BUNDLE, the TestBundle
+      # tests) installs the release bundle task release:bundle renders from the images in the suite's registry, pinned
+      # by digest, and removes it again; the demo run installs the demo's stack.
       - |
         set -e
         if [ ! -f '{{.E2E_REGISTRY_ENV}}' ]; then
@@ -477,7 +484,21 @@ tasks:
           exit 1
         fi
         . '{{.E2E_REGISTRY_ENV}}'
-        PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}' go test -tags e2e -count=1 -v -timeout 20m ./test/e2e/...
+        if [ -z "${OPENFIEF_E2E_BUNDLE_IMAGES:-}" ]; then
+          echo 'e2e: {{.E2E_REGISTRY_ENV}} names no bundle images; run task e2e:images CLUSTER=<k3d|kind> again' >&2
+          exit 1
+        fi
+        rm -rf '{{.E2E_BUNDLE_DIR}}'
+        PATH='{{.BIN}}':"$PATH" bash scripts/release-bundle.sh e2e '{{.E2E_BUNDLE_DIR}}' $OPENFIEF_E2E_BUNDLE_IMAGES
+        export PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}'
+        # A failed bundle run still lets the demo run report; the task fails if either failed.
+        bundle=0
+        OPENFIEF_E2E_BUNDLE='{{.E2E_BUNDLE_DIR}}' go test -tags e2e -count=1 -v -timeout 15m -run '^TestBundle' ./test/e2e/... || bundle=$?
+        go test -tags e2e -count=1 -v -timeout 20m -skip '^TestBundle' ./test/e2e/...
+        if [ "$bundle" -ne 0 ]; then
+          echo 'e2e: the bundle run failed (see the TestBundle output above)' >&2
+          exit "$bundle"
+        fi
 
   e2e:prove:
     desc: 'Run the end-to-end suite through kibi prove, which runs task e2e and records a receipt on each end-to-end test (what CI''s e2e job runs; docs/dev/kibi.md)'
@@ -487,7 +508,7 @@ tasks:
       - '{{.KIBI}} prove --integration e2e'
 
   e2e:images:
-    desc: 'Build the core, operator, egress-proxy, demo-seed, nbp-fx and ui images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx and ui, to the suite''s registry instead, e.g. task e2e:images CLUSTER=k3d'
+    desc: 'Build the core, operator, egress-proxy, demo-seed, nbp-fx and ui images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx and ui, to the suite''s registry instead, and the bundle''s core, operator and egress-proxy there too, e.g. task e2e:images CLUSTER=k3d'
     requires:
       vars: [CLUSTER]
     cmds:
@@ -699,7 +720,7 @@ tasks:
       - PATH='{{.BIN}}':"$PATH" bash scripts/demo/validate.sh
 
   release:check:
-    desc: 'Validate a release version for its channel, e.g. task release:check CHANNEL=beta VERSION=2026.11.0-beta.1'
+    desc: 'Validate a release version for its channel (alpha, beta or stable), e.g. task release:check CHANNEL=alpha VERSION=2026.11.0-alpha.1'
     requires:
       vars: [CHANNEL, VERSION]
     cmds:
@@ -732,10 +753,8 @@ tasks:
   release:cli:sign:
     desc: Keyless cosign signatures of every file in dist/cli, each as a Sigstore bundle next to it (CI only)
     cmds:
-      # The certificate subject is release.yml at the ref the release ran from, refs/heads/main for a publish; verify
-      # with cosign verify-blob --bundle <file>.sigstore.json --certificate-identity
-      # https://github.com/arkadiuss/openfief/.github/workflows/release.yml@refs/heads/main
-      # --certificate-oidc-issuer https://token.actions.githubusercontent.com <file>.
+      # The certificate subject is release.yml at the ref the release ran from, refs/heads/main for a publish
+      # (task release:cli:verify; the owner's command is in docs/guides/install.md). A dry run signs too.
       - |
         set -e
         for f in dist/cli/openfief-*; do
@@ -743,34 +762,64 @@ tasks:
           cosign sign-blob --yes --bundle "$f.sigstore.json" "$f"
         done
 
+  release:cli:verify:
+    desc: 'Verify dist/cli as the install guide does: SHA256SUMS, then each file''s keyless signature by release.yml of REPO at REF (default refs/heads/main), e.g. task release:cli:verify REPO=arkadiuss/openfief'
+    requires:
+      vars: [REPO]
+    cmds:
+      - bash scripts/release-verify.sh cli '{{.DIR | default "dist/cli"}}' '{{.REPO}}' '{{.REF | default "refs/heads/main"}}'
+
+  release:images:verify:
+    desc: 'Verify each image a bundle''s install file runs as images.yml on main of REPO signed it, as the install guide does; TAG verifies <repository>:TAG instead (a dry run''s placeholder bundle), e.g. task release:images:verify FILE=dist/bundle/openfief-install-2026.11.0-alpha.1.yaml REPO=arkadiuss/openfief'
+    deps: [tool:gojq]
+    requires:
+      vars: [FILE, REPO]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/release-verify.sh images '{{.FILE}}' '{{.REPO}}' {{if .TAG}}'{{.TAG}}'{{end}}
+
+  release:bundle:
+    desc: 'Render the release bundle into OUT (default dist/bundle): openfief-crds-VERSION.yaml and openfief-install-VERSION.yaml, every image pinned to a given digest. IMAGES lists repository@sha256:digest refs; in CI, DIGESTS=<dir> PREFIX=<registry prefix> reads images.yml''s digest files instead, and VERIFY=1 REPO=<owner/repo> checks each signature with cosign; a dry run passes PLACEHOLDER=1 PREFIX=... for all-zeros digests, e.g. task release:bundle VERSION=2026.11.0-alpha.1 IMAGES="ghcr.io/owner/openfief/core@sha256:..."'
+    deps: [tool:kustomize, tool:gojq]
+    requires:
+      vars: [VERSION]
+    cmds:
+      - rm -rf '{{.OUT | default "dist/bundle"}}'
+      - >-
+        PATH='{{.BIN}}':"$PATH" DIGESTS='{{.DIGESTS}}' PREFIX='{{.PREFIX}}' VERIFY='{{.VERIFY | default "0"}}' REPO='{{.REPO}}'
+        PLACEHOLDER='{{.PLACEHOLDER | default "0"}}'
+        bash scripts/release-bundle.sh '{{.VERSION}}' '{{.OUT | default "dist/bundle"}}' {{.IMAGES}}
+
   release:assets:
-    desc: Package the CRDs and bootstrap install from deploy/, and the docs site as of this version, into dist/
+    desc: Package the docs site as of this version into dist/ (the CRDs and bootstrap install come from task release:bundle)
     requires:
       vars: [VERSION]
     cmds:
       - mkdir -p dist
-      - 'if [ ! -d deploy ]; then echo "no deploy/ yet, no install assets"; exit 0; fi; tar -czf "dist/openfief-deploy-{{.VERSION}}.tar.gz" deploy'
       - task: docs:build
       - tar -czf "dist/openfief-docs-{{.VERSION}}.tar.gz" -C site/public .
 
   release:publish:
-    desc: 'Tag the release commit, publish the GitHub release (a pre-release with only the signed CLI for a beta) and open the pull request that brings the catalog to main (CI only, after the dry run)'
+    desc: 'Tag the release commit, publish the GitHub release (a pre-release for an alpha or beta) with the bundle, the docs and the signed CLI, and open the pull request that brings the catalog to main (CI only, after the dry run; needs dist/bundle and dist/cli)'
     requires:
       vars: [CHANNEL, VERSION]
     cmds:
       - task: release:check
+      - |
+        set -e
+        for f in 'dist/bundle/openfief-crds-{{.VERSION}}.yaml' 'dist/bundle/openfief-install-{{.VERSION}}.yaml'; do
+          [ -f "$f" ] || { echo "release:publish: $f is missing (task release:bundle)" >&2; exit 1; }
+        done
       - task: release:assets
       - bash scripts/release-notes.sh '{{.VERSION}}' >dist/release-notes.md
       # HEAD is the release commit: main plus the catalog of this release's signed plugin digests (D-88).
       - gh api 'repos/{owner}/{repo}/git/refs' -f ref='refs/tags/{{.VERSION}}' -f sha="$(git rev-parse HEAD)" >/dev/null
+      # Every channel ships the same assets; alpha and beta are pre-releases.
       - |
         set -e
-        cli="$(find dist/cli -type f | sort)"
-        if [ '{{.CHANNEL}}' = stable ]; then
-          gh release create '{{.VERSION}}' --verify-tag --title '{{.VERSION}}' --notes-file dist/release-notes.md $(find dist -maxdepth 1 -name '*.tar.gz') $cli
-        else
-          gh release create '{{.VERSION}}' --verify-tag --prerelease --title '{{.VERSION}}' --notes-file dist/release-notes.md $cli
-        fi
+        prerelease=--prerelease
+        [ '{{.CHANNEL}}' != stable ] || prerelease=
+        gh release create '{{.VERSION}}' --verify-tag $prerelease --title '{{.VERSION}}' --notes-file dist/release-notes.md \
+          dist/bundle/openfief-*-'{{.VERSION}}'.yaml 'dist/openfief-docs-{{.VERSION}}.tar.gz' $(find dist/cli -type f | sort)
       - >-
         gh pr create --base main --head 'release/{{.VERSION}}' --title 'chore(release): catalog the first-party plugins of {{.VERSION}}'
         --body 'Adds the plugin digests release {{.VERSION}} signed to the catalog (D-88), as tagged in {{.VERSION}}.'

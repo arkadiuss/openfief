@@ -162,13 +162,6 @@ relationships:
     id: rel-426590d53d15
   - type: implements
     from: SYM-views-app-views-cash-rates
-    to: REQ-views-performance-query
-    created_at: 2026-10-28T21:00:34.418Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-298d195e5d17
-  - type: implements
-    from: SYM-views-app-views-cash-rates
     to: REQ-views-performance-value
     created_at: 2026-10-28T21:00:34.436Z
     created_by: kibi/upsert
@@ -517,3 +510,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4834c5d2130d
+  - type: constrains
+    from: REQ-ingest-statement-multi-account-reports-unmapped
+    to: FACT-SUBJECT-B4872D883DCCB3F1
+    created_at: 2026-11-01T12:24:18.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4612d389fc9
+  - type: requires_property
+    from: REQ-ingest-statement-multi-account-reports-unmapped
+    to: FACT-PROP-E5670BCC28702DB7
+    created_at: 2026-11-01T12:24:18.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3961e03665ab
+  - type: supersedes
+    from: REQ-ingest-statement-multi-account-reports-unmapped
+    to: REQ-ingest-statement-multi-account
+    created_at: 2026-11-01T12:24:18.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2046283cee2b
+  - type: implements
+    from: SYM-views-app-views-cash-rates
+    to: REQ-views-performance-query-charts-start
+    created_at: 2026-11-01T13:08:43.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d426ef26af4

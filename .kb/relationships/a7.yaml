@@ -295,13 +295,6 @@ relationships:
     id: rel-965f5e526a08
   - type: implements
     from: SYM-ingest-new-market-data-scope
-    to: REQ-ingest-market-data-scope
-    created_at: 2026-10-29T17:17:23.778Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eb0db9ce1761
-  - type: implements
-    from: SYM-ingest-new-market-data-scope
     to: REQ-ingest-market-data-sync-instruments
     created_at: 2026-10-29T17:17:23.801Z
     created_by: kibi/upsert
@@ -573,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0acbe82fda0d
+  - type: constrains
+    from: REQ-ingest-undeclared-cross-check-prices-attention-item
+    to: FACT-SUBJECT-4022BDCF8FBBCB20
+    created_at: 2026-11-01T12:24:38.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4dac894f8c5
+  - type: requires_property
+    from: REQ-ingest-undeclared-cross-check-prices-attention-item
+    to: FACT-PROP-C85FA4BD3755483C
+    created_at: 2026-11-01T12:24:38.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a67ac769213
+  - type: implements
+    from: SYM-ingest-new-market-data-scope
+    to: REQ-ingest-market-data-scope-declared
+    created_at: 2026-11-01T10:08:45.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac5e4184f900

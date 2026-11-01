@@ -31,15 +31,18 @@ func parseChartKind(key string) valueKind {
 }
 
 // valueChartView is the value-over-time chart (D-30, D-106): the
-// portfolio's money, cash included, per day from go-live, as one of the
-// three values, gross unless the switch picks another, or all three lines
-// (D-77).
+// portfolio's or an account's money, cash included, per day from the
+// charts' start (D-138), as one of the three values, gross unless the
+// switch picks another, or all three lines (D-77).
 type valueChartView struct {
 	From, To string
-	Kind     valueKind
-	Kinds    []valueKind
-	Currency string
-	Points   int
+	// Start is the start the owner chose, "" for the default; Mark is
+	// where tracking began, which the chart marks (D-138).
+	Start, Mark string
+	Kind        valueKind
+	Kinds       []valueKind
+	Currency    string
+	Points      int
 	// Gaps counts the days the total has no value of Kind, which the line
 	// skips, such as liquidation before the marginal rate is set; with all
 	// three lines, the days without a liquidation value.
@@ -51,7 +54,11 @@ type valueChartView struct {
 
 // Link is the overview drawing value k, for browsers without htmx.
 func (v *valueChartView) Link(k valueKind) string {
-	return "/?" + url.Values{chartParam: {k.Key}, dateParam: {v.To}}.Encode()
+	q := url.Values{chartParam: {k.Key}, dateParam: {v.To}}
+	if v.Start != "" {
+		q.Set(startParam, v.Start)
+	}
+	return "/?" + q.Encode()
 }
 
 // FragmentLink is the URL htmx swaps the chart of value k in from.
@@ -59,26 +66,39 @@ func (v *valueChartView) FragmentLink(k valueKind) string { return "/value-chart
 
 // query is the overview's query that draws value k over the same days.
 func (v *valueChartView) query(k valueKind) string {
-	return url.Values{chartParam: {k.Key}, "from": {v.From}, dateParam: {v.To}}.Encode()
+	q := url.Values{chartParam: {k.Key}, "from": {v.From}, dateParam: {v.To}}
+	if v.Start != "" {
+		q.Set(startParam, v.Start)
+	}
+	if v.Mark != "" {
+		q.Set(markParam, v.Mark)
+	}
+	return q.Encode()
 }
 
-// buildValueChart turns ListValuationTotals' answer into the chart of value
-// k, its numbers written in f; to is the last day asked for.
-func buildValueChart(resp *viewsv1.ListValuationTotalsResponse, k valueKind, f numberFormat, from, to string) *valueChartView {
-	v := &valueChartView{From: from, To: to, Kind: k, Kinds: chartKinds(), Currency: resp.GetReportingCurrency()}
+// markParam is the value chart fragment's query parameter that carries
+// where tracking began, the day the chart marks (D-138).
+const markParam = "mark"
+
+// buildValueChart turns the totals ListValuationTotals or
+// ListAccountValuations answer, in currency, into the chart of value k,
+// its numbers written in f, marking the day mark; to is the last day asked
+// for.
+func buildValueChart(totals []*viewsv1.DateTotal, currency string, k valueKind, f numberFormat, from, to, mark string) *valueChartView {
+	v := &valueChartView{From: from, To: to, Mark: mark, Kind: k, Kinds: chartKinds(), Currency: currency}
 	kinds := []valueKind{k}
 	if k == allValues() {
 		kinds = valueKinds()
 	}
 	chart := chartData{
-		Kind: "line", Label: kinds[0].Label + " value with cash", Currency: resp.GetReportingCurrency(),
-		Group: f.Group, Decimal: f.Decimal,
+		Kind: "line", Label: kinds[0].Label + " value with cash", Currency: currency,
+		Group: f.Group, Decimal: f.Decimal, Mark: mark,
 	}
 	for _, more := range kinds[1:] {
 		chart.Series = append(chart.Series, chartSeries{Label: more.Label + " value with cash"})
 	}
 	last := kinds[len(kinds)-1]
-	for _, t := range resp.GetTotals() {
+	for _, t := range totals {
 		chart.Labels = append(chart.Labels, t.GetDate())
 		if totalOf(t, last) == nil {
 			v.Gaps++
@@ -97,8 +117,9 @@ func buildValueChart(resp *viewsv1.ListValuationTotalsResponse, k valueKind, f n
 }
 
 // valueChart reads the portfolio's totals between the dates given, at most
-// maxChartDays back, and draws value k.
-func (s *server) valueChart(r *http.Request, sess session, from, date kernel.Date, k valueKind) (*valueChartView, error) {
+// maxChartDays back, and draws value k, marking the day mark; start is the
+// start the owner chose, "" for the default.
+func (s *server) valueChart(r *http.Request, sess session, from, date kernel.Date, k valueKind, start, mark string) (*valueChartView, error) {
 	if earliest := date.AddDays(-maxChartDays); from.Before(earliest) {
 		from = earliest
 	}
@@ -111,7 +132,9 @@ func (s *server) valueChart(r *http.Request, sess session, from, date kernel.Dat
 	if err != nil {
 		return nil, fmt.Errorf("ListValuationTotals: %w", err)
 	}
-	return buildValueChart(resp.Msg, k, requestFormat(r), from.String(), date.String()), nil
+	v := buildValueChart(resp.Msg.GetTotals(), resp.Msg.GetReportingCurrency(), k, requestFormat(r), from.String(), date.String(), mark)
+	v.Start = start
+	return v, nil
 }
 
 // valueChartFragment answers the value-over-time chart's switch: htmx
@@ -120,7 +143,11 @@ func (s *server) valueChart(r *http.Request, sess session, from, date kernel.Dat
 func (s *server) valueChartFragment(w http.ResponseWriter, r *http.Request, sess session) {
 	q := r.URL.Query()
 	if !isHTMX(r) {
-		http.Redirect(w, r, "/?"+url.Values{chartParam: {q.Get(chartParam)}, dateParam: {q.Get(dateParam)}}.Encode(), http.StatusSeeOther)
+		back := url.Values{chartParam: {q.Get(chartParam)}, dateParam: {q.Get(dateParam)}}
+		if start := q.Get(startParam); start != "" {
+			back.Set(startParam, start)
+		}
+		http.Redirect(w, r, "/?"+back.Encode(), http.StatusSeeOther)
 		return
 	}
 	date, err := asOfDate(q.Get(dateParam), nil, s.today())
@@ -133,7 +160,12 @@ func (s *server) valueChartFragment(w http.ResponseWriter, r *http.Request, sess
 		s.errorPage(w, r, http.StatusBadRequest, err.Error())
 		return
 	}
-	view, err := s.valueChart(r, sess, from, date, parseChartKind(q.Get(chartParam)))
+	mark, err := parseStart(q.Get(markParam))
+	if err != nil {
+		s.errorPage(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+	view, err := s.valueChart(r, sess, from, date, parseChartKind(q.Get(chartParam)), q.Get(startParam), optionalString(mark))
 	if err != nil {
 		s.coreFailed(w, r, "ListValuationTotals", err)
 		return

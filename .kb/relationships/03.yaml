@@ -790,3 +790,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-669d9074bc84
+  - type: implements
+    from: SYM-release-bundle-install-images
+    to: REQ-tooling-release-bundle-pinned
+    created_at: 2026-11-01T13:51:53.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b97721a20e0a
+  - type: covered_by
+    from: SYM-release-bundle-install-images
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-01T13:51:53.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75eab7df2fc2
+  - type: verified_by
+    from: SCEN-operator-signature-refusal-event
+    to: TEST-operator-reconcile
+    created_at: 2026-11-01T13:51:04.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0550b45052a1
+  - type: constrains
+    from: REQ-operator-signature-refusal-event
+    to: FACT-SUBJECT-AEEB2502BB90108C
+    created_at: 2026-11-01T13:51:18.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aef4a5dade5f
+  - type: requires_property
+    from: REQ-operator-signature-refusal-event
+    to: FACT-PROP-C80957C1C0CD3589
+    created_at: 2026-11-01T13:51:18.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73db78aecb1d
+  - type: specified_by
+    from: REQ-operator-signature-refusal-event
+    to: SCEN-operator-signature-refusal-event
+    created_at: 2026-11-01T13:51:18.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d12225f87668
+  - type: specified_by
+    from: REQ-operator-signature-refusal-event
+    to: SCEN-e2e-plugin-unsigned-refused
+    created_at: 2026-11-01T13:51:18.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa15e2b94c1e

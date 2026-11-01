@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-314633eb6e9f
+  - type: constrains
+    from: REQ-pl-oki-rate-from-announcements
+    to: FACT-SUBJECT-172EB8B023F2FDDB
+    created_at: 2026-11-01T12:26:16.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2399ef6c9446
+  - type: requires_property
+    from: REQ-pl-oki-rate-from-announcements
+    to: FACT-PROP-1B66DDF02459A059
+    created_at: 2026-11-01T12:26:16.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0f97e576320
+  - type: validates
+    from: TEST-valuation-postgres-store
+    to: REQ-valuation-owner-classification-stays
+    created_at: 2026-11-01T10:06:43.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3310dbd07bdb

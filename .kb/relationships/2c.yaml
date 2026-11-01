@@ -335,13 +335,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebcd5654021f
-  - type: validates
-    from: TEST-views-app-performance
-    to: REQ-AUTO-718AA30AAFD0E6E8
-    created_at: 2026-10-28T20:54:32.038Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-83ebf9b8996a
   - type: implements
     from: SYM-cmd-openfief-run
     to: REQ-plugins-cli-install
@@ -818,3 +811,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02b4e846f444
+  - type: constrains
+    from: REQ-pl-oki-average-value-exact
+    to: FACT-SUBJECT-D256A25BDCDCE899
+    created_at: 2026-11-01T12:26:04.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b767fd2d05f4
+  - type: requires_property
+    from: REQ-pl-oki-average-value-exact
+    to: FACT-PROP-BCEF12C21790C690
+    created_at: 2026-11-01T12:26:04.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49a9cec20659
+  - type: constrains
+    from: REQ-ledger-cash-income-kind
+    to: FACT-SUBJECT-7522D6C27E74C2F2
+    created_at: 2026-11-01T12:29:07.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d015ac17a3e
+  - type: requires_property
+    from: REQ-ledger-cash-income-kind
+    to: FACT-PROP-5D7B15065A7D4B54
+    created_at: 2026-11-01T12:29:07.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f04b0554c19
+  - type: constrains
+    from: REQ-ingest-remap-check-ignores-assertions
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-11-01T12:30:33.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e81814dbbe9
+  - type: requires_property
+    from: REQ-ingest-remap-check-ignores-assertions
+    to: FACT-PROP-13700D16764C000F
+    created_at: 2026-11-01T12:30:33.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-973b4b5145d3
+  - type: validates
+    from: TEST-views-app-performance
+    to: REQ-ui-performance-chart-twr-index-from-charts-start
+    created_at: 2026-11-01T13:03:53.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48a9956fee96
+  - type: validates
+    from: TEST-views-app-performance
+    to: REQ-ui-portfolio-chart-default-start
+    created_at: 2026-11-01T13:03:53.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a968506414b3
+  - type: validates
+    from: TEST-views-app-performance
+    to: REQ-ui-performance-index-100-on-start
+    created_at: 2026-11-01T13:03:53.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a33a52d2bfc6
+  - type: validates
+    from: TEST-views-app-performance
+    to: REQ-ui-account-chart-default-start
+    created_at: 2026-11-01T13:03:53.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e044457ba62
+  - type: validates
+    from: TEST-views-app-performance
+    to: REQ-ui-portfolio-chart-start-ignores-full-history
+    created_at: 2026-11-01T13:03:53.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4f21eb23769
+  - type: implements
+    from: SYM-views-ghostfolio-cash-account-uuid
+    to: REQ-views-ghostfolio-cash-account-uuid
+    created_at: 2026-11-01T10:14:15.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-582d0d9e1a19
+  - type: implements
+    from: SYM-core-revaluation-client
+    to: REQ-valuation-unclassifiable-instrument-attention-item
+    created_at: 2026-11-01T10:16:11.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aa86cd7c22f

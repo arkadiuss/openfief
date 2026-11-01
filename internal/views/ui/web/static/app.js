@@ -2,7 +2,9 @@
 // carries its data in data-chart: exact decimal strings from the read API,
 // turned into numbers here only to place marks. Tooltips show the exact
 // strings. Axes and tooltips write numbers in the owner's number format
-// (D-113), whose separators each chart's data carries. Colors and fonts come from the design system's tokens, read from
+// (D-113), whose separators each chart's data carries. A time chart marks
+// the day tracking began (D-138) with a dashed line when it falls inside
+// it. Colors and fonts come from the design system's tokens, read from
 // the page's CSS custom properties, so the charts follow light and dark like
 // the rest of the page and redraw when the scheme changes. Runs on page load
 // and on every htmx swap; nothing inline (CSP).
@@ -27,6 +29,36 @@
     const whole = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, data.group || '');
     return sign + whole + (parts.length > 1 ? (data.decimal || '.') + parts[1] : '');
   }
+
+  // Draws a dashed line, labelled, at the day options.day, when it is a
+  // label after the chart's first.
+  const trackingMark = {
+    id: 'trackingMark',
+    afterDatasetsDraw: function (chart, _args, options) {
+      const i = options.day ? chart.data.labels.indexOf(options.day) : -1;
+      if (i <= 0) {
+        return;
+      }
+      const area = chart.chartArea;
+      const x = chart.scales.x.getPixelForValue(i);
+      const ctx = chart.ctx;
+      const right = x > (area.left + area.right) / 2;
+      ctx.save();
+      ctx.strokeStyle = options.color;
+      ctx.fillStyle = options.color;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(x, area.top);
+      ctx.lineTo(x, area.bottom);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font = '12px ' + options.font;
+      ctx.textAlign = right ? 'right' : 'left';
+      ctx.fillText('Tracking began', right ? x - 4 : x + 4, area.top + 12);
+      ctx.restore();
+    },
+  };
 
   function config(data) {
     const ink = token('--chart-ink');
@@ -70,6 +102,7 @@
     };
     return {
       type: line ? 'line' : 'bar',
+      plugins: line ? [trackingMark] : [],
       data: {
         labels: data.labels,
         datasets: datasets,
@@ -82,6 +115,7 @@
         plugins: {
           legend: { display: lines.length > 1, labels: { color: ink, font: font, boxWidth: 14, boxHeight: 2 } },
           tooltip: { callbacks: { label: exact }, titleFont: font, bodyFont: { family: token('--font-mono') } },
+          trackingMark: { day: data.mark || '', color: ink, font: font.family },
         },
         scales: {
           x: { ticks: ticks('x'), grid: { color: grid }, border: { color: grid } },

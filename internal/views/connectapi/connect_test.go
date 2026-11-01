@@ -84,6 +84,28 @@ func TestConnectPerformance(t *testing.T) {
 	if len(days) != 1 || days[0].GetDate() != "2026-03-02" || days[0].GetIndex() != "100" || got.Msg.GetGap() != viewsv1.PerformanceGap_PERFORMANCE_GAP_UNSPECIFIED {
 		t.Errorf("GetPerformance() = %v, want one day, 2026-03-02 at 100, no gap", got.Msg)
 	}
+	if got.Msg.GetDefaultFrom() != "2026-03-02" {
+		t.Errorf("GetPerformance().DefaultFrom = %q, want 2026-03-02, the day acc-1 was seeded", got.Msg.GetDefaultFrom())
+	}
+}
+
+// TestConnectAccountPerformance checks one account's time-weighted return
+// (D-138): its own first day as the default start, 100 on it, and not
+// found for an unknown account.
+func TestConnectAccountPerformance(t *testing.T) {
+	t.Parallel()
+	c := newClient(t, newLedger(t))
+	account, err := c.GetPerformance(context.Background(), authed(goodToken, &viewsv1.GetPerformanceRequest{AccountId: "acc-1"}))
+	if err != nil {
+		t.Fatalf("GetPerformance(acc-1) error = %v", err)
+	}
+	if account.Msg.GetDefaultFrom() != "2026-03-02" || len(account.Msg.GetDays()) != 1 || account.Msg.GetDays()[0].GetIndex() != "100" {
+		t.Errorf("GetPerformance(acc-1) = %v, want its first day as default start, 100 on it", account.Msg)
+	}
+	_, missing := c.GetPerformance(context.Background(), authed(goodToken, &viewsv1.GetPerformanceRequest{AccountId: "acc-missing"}))
+	if connect.CodeOf(missing) != connect.CodeNotFound {
+		t.Errorf("GetPerformance(unknown account) error = %v, want not found", missing)
+	}
 }
 
 func TestConnectPages(t *testing.T) {

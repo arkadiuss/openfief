@@ -1,6 +1,6 @@
 ---
 title: The performance query must start at go-live when no start date or an earlier one is given, end by default at the latest valued-through date of any account, count an account with transactions that was never valued as valued through the day before its first transaction, and report whether any revaluation is pending or running.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-30
 tags:
   - strict-modeling

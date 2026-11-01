@@ -309,13 +309,6 @@ relationships:
     id: rel-965ad0f423a4
   - type: validates
     from: TEST-views-app-model
-    to: REQ-views-model-line-from-go-live
-    created_at: 2026-10-28T23:32:23.883Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dbf7e416cc0a
-  - type: validates
-    from: TEST-views-app-model
     to: REQ-portfolio-model-optional
     created_at: 2026-10-28T23:32:23.923Z
     created_by: kibi/upsert
@@ -594,3 +587,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96a639d9c1d6
+  - type: constrains
+    from: REQ-ingest-multi-account-upload-mode-of-uploaded-account
+    to: FACT-SUBJECT-B4872D883DCCB3F1
+    created_at: 2026-11-01T12:23:47.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da3b4eb4ee3e
+  - type: requires_property
+    from: REQ-ingest-multi-account-upload-mode-of-uploaded-account
+    to: FACT-PROP-0367C2CF60FEBC23
+    created_at: 2026-11-01T12:23:47.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-809c2f094fcf
+  - type: validates
+    from: TEST-views-app-model
+    to: REQ-views-model-line-from-charts-start
+    created_at: 2026-11-01T13:03:36.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acd2aa964a0c

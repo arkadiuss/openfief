@@ -356,13 +356,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-614f411253cb
-  - type: implements
-    from: SYM-views-app-performance-type
-    to: REQ-views-performance-query
-    created_at: 2026-10-28T20:59:54.329Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a51946ef1d1c
   - type: covered_by
     from: SYM-views-app-performance-type
     to: TEST-views-app-performance
@@ -818,3 +811,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c253d3f227b1
+  - type: constrains
+    from: REQ-attention-unclassified-instrument-resolves-itself
+    to: FACT-SUBJECT-A9563048F0AE7021
+    created_at: 2026-11-01T12:27:44.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf129c23acdc
+  - type: requires_property
+    from: REQ-attention-unclassified-instrument-resolves-itself
+    to: FACT-PROP-99A4D0EB1E968DE7
+    created_at: 2026-11-01T12:27:44.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b64a60b1bd86
+  - type: constrains
+    from: REQ-tooling-release-channel-version
+    to: FACT-SUBJECT-0A0B3C08E47FD8CE
+    created_at: 2026-11-01T14:58:36.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb0d9e2d1a7f
+  - type: requires_property
+    from: REQ-tooling-release-channel-version
+    to: FACT-PROP-3231FAEBB5DFEC86
+    created_at: 2026-11-01T14:58:36.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db1ae458c376
+  - type: specified_by
+    from: REQ-tooling-release-channel-version
+    to: SCEN-tooling-release-version-invalid
+    created_at: 2026-11-01T14:58:36.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e5f3661c8dc
+  - type: specified_by
+    from: REQ-tooling-release-channel-version
+    to: SCEN-tooling-release-version-alpha
+    created_at: 2026-11-01T14:58:36.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-218e0876280a
+  - type: supersedes
+    from: REQ-tooling-release-channel-version
+    to: REQ-tooling-release-version
+    created_at: 2026-11-01T14:58:36.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8b76afc4475
+  - type: implements
+    from: SYM-views-app-performance-type
+    to: REQ-views-performance-query-charts-start
+    created_at: 2026-11-01T13:08:14.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d3c8f06fcf1

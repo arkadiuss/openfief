@@ -6,11 +6,17 @@ import (
 
 // Declarations are what a connector's manifest declares about what it
 // sends and takes, beyond its capabilities: whether it may send cross-check
-// prices (D-112) and whether it takes statement files the owner uploads
-// (D-109). The manifest is signed with the plugin's image (D-42).
+// prices (D-112), whether it takes statement files the owner uploads
+// (D-109), and whether it is a market-data connector that its grant
+// approves as one (D-123). The manifest is signed with the plugin's image
+// (D-42).
 type Declarations struct {
 	CrossCheckPrices bool
 	StatementFiles   bool
+	// MarketData: the manifest declares a market-data connector and the
+	// grant approves it, so each sync tells it the instruments the owner
+	// holds and the model portfolio's targets (D-93, D-123).
+	MarketData bool
 }
 
 // UndeclaredCrossCheckPrices is the ingest problem a delivery's n

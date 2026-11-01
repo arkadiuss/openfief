@@ -1,6 +1,6 @@
 ---
 title: The owner must be able to remap a broker account whose OpenFief account has no transactions from it.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

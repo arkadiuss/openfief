@@ -1,0 +1,14 @@
+{{define "chart-start"}}
+{{if .Default}}
+<form class="chart-start" method="get" action="{{.Action}}">
+  <input type="hidden" name="date" value="{{.Date}}">
+  <div class="field">
+    <label for="chart-start">Charts start on</label>
+    <input id="chart-start" name="start" type="date" value="{{.From}}" max="{{.Date}}" required aria-describedby="chart-start-help">
+  </div>
+  <button type="submit">Show</button>
+  {{if .Chosen}}<a href="{{.DefaultLink}}">Back to the default, <span class="mono">{{.Default}}</span></a>{{end}}
+</form>
+<p class="help" id="chart-start-help">{{if .Account}}By default the charts start on the account's first day, <span class="mono">{{.Default}}</span>.{{else}}By default the charts start on <span class="mono">{{.Default}}</span>, where tracking began: from that day every account's history is known, since none was seeded from a starting balance later.{{end}} Choose any other day: the performance index is 100 on it, and a dashed line marks where tracking began.</p>
+{{end}}
+{{end}}

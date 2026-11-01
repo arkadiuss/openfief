@@ -19,6 +19,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
+	"k8s.io/client-go/tools/events"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -320,6 +321,10 @@ func TestReconcile(t *testing.T) {
 			t.Errorf("state mismatch (-want +got):\n%s", diff)
 		}
 	})
+	t.Run("a refused signature is recorded once as a warning event", func(t *testing.T) {
+		t.Parallel()
+		testRefusalEvents(t, tc)
+	})
 	t.Run("signature checks run through the trust policy", func(t *testing.T) {
 		t.Parallel()
 		testPolicyVerifier(t, tc)
@@ -406,6 +411,56 @@ func testUpgrade(t *testing.T, tc *testCluster, r *operator.PluginReconciler) {
 	approved.EffectiveEgress = []string{"api.example.com:443", "new.example.net:8443"}
 	if diff := cmp.Diff(approved, tc.state(ctx, t, "upgrade"), cmpopts.EquateEmpty()); diff != "" {
 		t.Errorf("after approval (-want +got):\n%s", diff)
+	}
+}
+
+// testRefusalEvents checks that a refused signature becomes one Warning
+// event naming the refusal, however often the Plugin is reconciled, that a
+// verified image records none, and that a later refusal records another.
+func testRefusalEvents(t *testing.T, tc *testCluster) {
+	t.Helper()
+	ctx := t.Context()
+	rec := events.NewFakeRecorder(8)
+	r := tc.reconciler(signedImages{imageB})
+	r.Recorder = rec
+	create(ctx, t, tc.client, samplePlugin("refused", imageA))
+	create(ctx, t, tc.client, sampleGrant("refused"))
+	setImage := func(image string) {
+		t.Helper()
+		var p v1alpha1.Plugin
+		if err := tc.client.Get(ctx, types.NamespacedName{Namespace: "openfief", Name: "refused"}, &p); err != nil {
+			t.Fatalf("get plugin: %v", err)
+		}
+		p.Spec.Image = image
+		if err := tc.client.Update(ctx, &p); err != nil {
+			t.Fatalf("update plugin: %v", err)
+		}
+	}
+	steps := []struct {
+		name string
+		// image, when set, becomes spec.image before the reconciles.
+		image      string
+		reconciles int
+		want       []string
+	}{
+		{name: "unsigned image, reconciled twice", reconciles: 2, want: []string{"Warning Unsigned no test signature"}},
+		{name: "signed image", image: imageB, reconciles: 1},
+		{name: "unsigned image again", image: imageA, reconciles: 2, want: []string{"Warning Unsigned no test signature"}},
+	}
+	for _, step := range steps {
+		if step.image != "" {
+			setImage(step.image)
+		}
+		for range step.reconciles {
+			tc.reconcile(ctx, t, r, "refused")
+		}
+		var got []string
+		for len(rec.Events) > 0 {
+			got = append(got, <-rec.Events)
+		}
+		if diff := cmp.Diff(step.want, got, cmpopts.EquateEmpty()); diff != "" {
+			t.Errorf("%s: events (-want +got):\n%s", step.name, diff)
+		}
 	}
 }
 

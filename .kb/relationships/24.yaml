@@ -512,13 +512,6 @@ relationships:
     id: rel-c2ef92f9b309
   - type: implements
     from: SYM-ingest-app-scope-source
-    to: REQ-ingest-market-data-scope
-    created_at: 2026-10-29T17:14:59.802Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9daafb75662e
-  - type: implements
-    from: SYM-ingest-app-scope-source
     to: REQ-ingest-market-data-sync-instruments
     created_at: 2026-10-29T17:14:59.847Z
     created_by: kibi/upsert
@@ -587,20 +580,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aac2d43fee85
-  - type: implements
-    from: SYM-connectorv1-bond-payout
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:52:50.065Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7daec308c1bd
-  - type: covered_by
-    from: SYM-connectorv1-bond-payout
-    to: TEST-ingest-connectrpc-held
-    created_at: 2026-11-01T07:52:50.111Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-17b1c16f8bed
   - type: constrains
     from: REQ-identity-read-access-scope
     to: FACT-SUBJECT-2D17F0782309FD5E
@@ -615,6 +594,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3c0a2208027
+  - type: implements
+    from: SYM-ingest-app-scope-source
+    to: REQ-ingest-market-data-scope-declared
+    created_at: 2026-11-01T10:10:35.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e907bb8d055
+  - type: implements
+    from: SYM-connectorv1-bond-payout
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:52:50.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7daec308c1bd
+  - type: covered_by
+    from: SYM-connectorv1-bond-payout
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T07:52:50.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17b1c16f8bed
   - type: validates
     from: TEST-ledger-payout
     to: REQ-treasurybonds-account-payout-setting
