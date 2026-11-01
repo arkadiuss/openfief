@@ -475,34 +475,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbbd984ab505
-  - type: validates
-    from: TEST-views-taxes
-    to: REQ-pl-totals-losses-offset-line
-    created_at: 2026-10-31T18:33:05.973Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9fb88b909f1d
-  - type: validates
-    from: TEST-views-taxes
-    to: REQ-valuation-holding-tax-as-if-sold-alone
-    created_at: 2026-10-31T18:33:06.029Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6d7a46d849e0
-  - type: executable_for
-    from: SYM-ui-test-bond-payout-form
-    to: TEST-ui-values
-    created_at: 2026-11-01T07:52:30.450Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a3b36cfe2950
-  - type: executable_for
-    from: SYM-plugins-xtb-test-helper-import-with
-    to: TEST-plugins-xtb
-    created_at: 2026-11-01T08:07:54.770Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-705c80f901ed
   - type: implements
     from: SYM-attentionv1-resolve-attention-item-response-proto-message
     to: REQ-attention-owner-service
@@ -531,6 +503,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-065738668610
+  - type: validates
+    from: TEST-views-taxes
+    to: REQ-pl-totals-losses-offset-line
+    created_at: 2026-10-31T18:33:05.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fb88b909f1d
+  - type: validates
+    from: TEST-views-taxes
+    to: REQ-valuation-holding-tax-as-if-sold-alone
+    created_at: 2026-10-31T18:33:06.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d7a46d849e0
+  - type: implements
+    from: SYM-attention-read-subject
+    to: REQ-identity-read-access-no-broker-account-numbers
+    created_at: 2026-11-01T10:13:07.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf5effd78b5c
+  - type: covered_by
+    from: SYM-attention-read-subject
+    to: TEST-attention-read-subject
+    created_at: 2026-11-01T10:13:07.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-106574a80f25
+  - type: executable_for
+    from: SYM-plugins-xtb-test-helper-import-with
+    to: TEST-plugins-xtb
+    created_at: 2026-11-01T08:07:54.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-705c80f901ed
+  - type: executable_for
+    from: SYM-ui-test-bond-payout-form
+    to: TEST-ui-values
+    created_at: 2026-11-01T07:52:30.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3b36cfe2950
   - type: implements
     from: SYM-valuation-connectapi-days32
     to: REQ-valuation-market-data-series-service

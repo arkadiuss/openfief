@@ -77,6 +77,33 @@ func TestRecordOf(t *testing.T) {
 			t.Helper()
 			return operatorPlugin(t, "ibkr-main")
 		}, signedRecord("ibkr-main")},
+		{"a market-data connector the grant approves (D-123)", func(t *testing.T) *unstructured.Unstructured {
+			t.Helper()
+			u := operatorPlugin(t, "prices")
+			if err := unstructured.SetNestedField(u.Object, true, "spec", "manifest", "marketData"); err != nil {
+				t.Fatal(err)
+			}
+			if err := unstructured.SetNestedField(u.Object, true, "status", "effective", "marketData"); err != nil {
+				t.Fatal(err)
+			}
+			return u
+		}, func() views.PluginRecord {
+			r := signedRecord("prices")
+			r.RequestsMarketData, r.MarketData = true, true
+			return r
+		}()},
+		{"a market-data connector waiting for approval", func(t *testing.T) *unstructured.Unstructured {
+			t.Helper()
+			u := operatorPlugin(t, "prices")
+			if err := unstructured.SetNestedField(u.Object, true, "spec", "manifest", "marketData"); err != nil {
+				t.Fatal(err)
+			}
+			return u
+		}, func() views.PluginRecord {
+			r := signedRecord("prices")
+			r.RequestsMarketData = true
+			return r
+		}()},
 		{"not reconciled yet", func(t *testing.T) *unstructured.Unstructured {
 			t.Helper()
 			u := operatorPlugin(t, "fresh")

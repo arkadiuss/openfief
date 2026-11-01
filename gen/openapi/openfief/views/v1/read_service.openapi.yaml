@@ -142,7 +142,10 @@ components:
           title: subject
           description: |-
             What it is about, unique within its kind: an instrument, an
-             assertion, a batch, a broker account, a ticker, a setting or a pair.
+             assertion, a batch, a ticker, a setting or a pair. An unmapped broker
+             account's item names only its connector instance: the read API never
+             serves a broker account number (D-121, D-137), so two such items of one
+             instance share a subject and differ by id.
         state:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.AttentionItemState'
@@ -1442,6 +1445,20 @@ components:
           type: boolean
           title: ready
           description: Whether a version of it runs.
+        marketData:
+          type: boolean
+          title: market_data
+          description: |-
+            Whether it is a market-data connector: its manifest declares it and
+             its PluginGrant approves it, so each sync tells it every instrument the
+             owner holds and the model portfolio's targets, and it learns what the
+             owner holds (D-93, D-123).
+        requestedMarketData:
+          type: boolean
+          title: requested_market_data
+          description: |-
+            Whether its signed manifest declares it a market-data connector,
+             approved or not.
       title: Plugin
       additionalProperties: false
       description: Plugin is one installed plugin instance.

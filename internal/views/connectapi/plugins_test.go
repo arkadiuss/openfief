@@ -29,9 +29,10 @@ type fakePlugins []views.PluginRecord
 
 func (f fakePlugins) InstalledPlugins(context.Context) ([]views.PluginRecord, error) { return f, nil }
 
-// installed are two plugins: ibkr-main, signed by OpenFief's CI and
-// running, and ui, refused. ibkr-old, which brought transactions in, is no
-// longer installed.
+// installed are three plugins: ibkr-main, signed by OpenFief's CI and
+// running, prices, a market-data connector its grant approves (D-123), and
+// ui, refused. ibkr-old, which brought transactions in, is no longer
+// installed.
 func installed() fakePlugins {
 	return fakePlugins{
 		{
@@ -44,6 +45,13 @@ func installed() fakePlugins {
 			Ready:     views.Condition{Status: "True", Reason: "Running"},
 			Signature: views.Condition{Status: "True", Reason: "SignedByTrustedSigner"},
 			Trust:     "Unverified", SignerKind: "OpenFiefCI", Signer: "openfief-ci",
+		},
+		{
+			Instance: "prices", Image: pluginImage, Requested: []string{"connector"}, Effective: []string{"connector"},
+			Ready:     views.Condition{Status: "True", Reason: "Running"},
+			Signature: views.Condition{Status: "True", Reason: "SignedByTrustedSigner"},
+			Trust:     "Unverified", SignerKind: "OpenFiefCI", Signer: "openfief-ci",
+			RequestsMarketData: true, MarketData: true,
 		},
 	}
 }
@@ -94,6 +102,13 @@ func TestConnectListPlugins(t *testing.T) {
 			Capabilities: []string{"connector"}, RequestedCapabilities: []string{"connector"},
 			Trust: viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI, Signer: "openfief-ci",
 			TrustReason: "SignedByTrustedSigner", Phase: "Running", Ready: true,
+		},
+		{
+			Instance: "prices", Image: pluginImage, ImageDigest: views.ImageDigest(pluginImage),
+			Capabilities: []string{"connector"}, RequestedCapabilities: []string{"connector"},
+			Trust: viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI, Signer: "openfief-ci",
+			TrustReason: "SignedByTrustedSigner", Phase: "Running", Ready: true,
+			MarketData: true, RequestedMarketData: true,
 		},
 		{
 			Instance: "ui", Image: pluginImage, ImageDigest: views.ImageDigest(pluginImage),
@@ -156,14 +171,16 @@ func TestRESTPlugins(t *testing.T) {
 			Trust       string `json:"trust"`
 			Signer      string `json:"signer"`
 			ImageDigest string `json:"imageDigest"`
+			MarketData  bool   `json:"marketData"`
 		} `json:"plugins"`
 	}
 	if err := json.Unmarshal(rec.Body.Bytes(), &body); err != nil {
 		t.Fatalf("decoding %s: %v", rec.Body, err)
 	}
-	if len(body.Plugins) != 2 || body.Plugins[0].Trust != "SIGNATURE_TRUST_OPENFIEF_CI" || body.Plugins[0].Signer != "openfief-ci" ||
-		body.Plugins[0].ImageDigest == "" || body.Plugins[1].Trust != "SIGNATURE_TRUST_REFUSED" {
-		t.Errorf("GET /v1/plugins = %s, want ibkr-main signed by OpenFief's CI, then ui refused", rec.Body)
+	if len(body.Plugins) != 3 || body.Plugins[0].Trust != "SIGNATURE_TRUST_OPENFIEF_CI" || body.Plugins[0].Signer != "openfief-ci" ||
+		body.Plugins[0].ImageDigest == "" || body.Plugins[0].MarketData || !body.Plugins[1].MarketData ||
+		body.Plugins[2].Trust != "SIGNATURE_TRUST_REFUSED" {
+		t.Errorf("GET /v1/plugins = %s, want ibkr-main signed by OpenFief's CI, prices a market-data connector, then ui refused", rec.Body)
 	}
 }
 

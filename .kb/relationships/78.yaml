@@ -783,3 +783,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56a620281dd7
+  - type: constrains
+    from: REQ-ingest-market-data-scope-declared
+    to: FACT-SUBJECT-758D1DD392ED74C1
+    created_at: 2026-11-01T10:07:06.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-094f0c69fcfe
+  - type: requires_property
+    from: REQ-ingest-market-data-scope-declared
+    to: FACT-PROP-96F9DEBD2EBF32DF
+    created_at: 2026-11-01T10:07:06.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20a491c1b480
+  - type: specified_by
+    from: REQ-ingest-market-data-scope-declared
+    to: SCEN-ingest-market-data-scope-declared
+    created_at: 2026-11-01T10:07:06.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3f4fec06360
+  - type: supersedes
+    from: REQ-ingest-market-data-scope-declared
+    to: REQ-ingest-market-data-scope
+    created_at: 2026-11-01T10:07:06.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c010bd030eb

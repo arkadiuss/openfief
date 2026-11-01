@@ -27,6 +27,7 @@ func pluginFromSpec(name string, spec *v1alpha1.PluginSpec) (*plugins.Plugin, er
 			EgressFromConfig: spec.Manifest.EgressFromConfig,
 			CrossCheckPrices: spec.Manifest.CrossCheckPrices,
 			StatementFiles:   spec.Manifest.StatementFiles,
+			MarketData:       spec.Manifest.MarketData,
 		},
 		Config: rawJSON(spec.Config),
 	}
@@ -65,6 +66,7 @@ func grantFromResource(g *v1alpha1.PluginGrant) (*plugins.Grant, error) {
 			Secrets:      g.Spec.Secrets,
 			DataTiers:    dataTiers(g.Spec.DataTiers),
 			BrowserPaths: g.Spec.BrowserPaths,
+			MarketData:   g.Spec.MarketData,
 		},
 	}
 	for i := range g.Spec.ClusterServices {
@@ -90,7 +92,7 @@ func permissionsToAPI(p *plugins.Permissions) *v1alpha1.Permissions {
 	if p.IsEmpty() {
 		return nil
 	}
-	out := &v1alpha1.Permissions{Secrets: p.Secrets, BrowserPaths: p.BrowserPaths}
+	out := &v1alpha1.Permissions{Secrets: p.Secrets, BrowserPaths: p.BrowserPaths, MarketData: p.MarketData}
 	for _, c := range p.Capabilities {
 		out.Capabilities = append(out.Capabilities, string(c))
 	}
@@ -131,6 +133,7 @@ func effectiveToAPI(e *plugins.EffectivePermissions) *v1alpha1.Permissions {
 		Capabilities: e.Capabilities(),
 		Egress:       e.Egress(),
 		DataTiers:    e.DataTiers(),
+		MarketData:   e.MarketData(),
 	}
 	if bp := e.BrowserPath(); bp != "" {
 		p.BrowserPaths = []string{bp}

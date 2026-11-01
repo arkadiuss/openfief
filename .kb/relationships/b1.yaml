@@ -328,13 +328,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14808029484e
-  - type: implements
-    from: SYM-connector-gen-pb-sync-request-get-indices
-    to: REQ-ingest-market-data-scope
-    created_at: 2026-10-29T17:18:51.975Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-26820301dfb0
   - type: covered_by
     from: SYM-connector-gen-pb-sync-request-get-indices
     to: TEST-ingest-connectrpc-client
@@ -455,6 +448,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-605e59699028
   - type: implements
+    from: SYM-attention-app-relay
+    to: REQ-attention-relay
+    created_at: 2026-10-31T18:41:20.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-126f314bd900
+  - type: covered_by
+    from: SYM-attention-app-relay
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:41:20.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8afab6e8f1f
+  - type: executable_for
+    from: SYM-ledger-app-test-rejecting-a-broken-transfer
+    to: TEST-ledger-app-transfer-broken
+    created_at: 2026-10-31T18:49:48.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06ded008a74c
+  - type: implements
     from: SYM-views-ghostfolio-syncer-apply
     to: REQ-views-ghostfolio-import-first-blocking-delete
     created_at: 2026-10-31T18:20:17.925Z
@@ -468,6 +482,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df291b778d71
+  - type: implements
+    from: SYM-connector-gen-pb-sync-request-get-indices
+    to: REQ-ingest-market-data-scope-declared
+    created_at: 2026-11-01T10:07:59.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225c21ec4884
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-upload-statement-opening-cash
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-01T08:02:52.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcf0de07580d
   - type: constrains
     from: REQ-treasurybonds-maturity-redemption
     to: FACT-SUBJECT-558DD26E88908F51
@@ -489,34 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1b9b221da3e
-  - type: executable_for
-    from: SYM-ingest-connectapi-test-upload-statement-opening-cash
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-11-01T08:02:52.470Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dcf0de07580d
-  - type: implements
-    from: SYM-attention-app-relay
-    to: REQ-attention-relay
-    created_at: 2026-10-31T18:41:20.077Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-126f314bd900
-  - type: covered_by
-    from: SYM-attention-app-relay
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:41:20.104Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a8afab6e8f1f
-  - type: executable_for
-    from: SYM-ledger-app-test-rejecting-a-broken-transfer
-    to: TEST-ledger-app-transfer-broken
-    created_at: 2026-10-31T18:49:48.121Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-06ded008a74c
   - type: executable_for
     from: SYM-valuation-app-test-helper-fake-rankings-series-sources
     to: TEST-valuation-app-ranking

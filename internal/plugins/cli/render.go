@@ -17,6 +17,10 @@ const (
 	noneText = "none"
 	// tablePadding is the space between the columns of a table.
 	tablePadding = 2
+	// marketDataText tells the owner at install that a market-data
+	// connector learns what they hold (D-123, D-93).
+	marketDataText = "  Market data:  it is a market-data connector: each sync tells it every instrument you hold\n" +
+		"                and the model portfolio's targets, so it learns what you hold (D-123)\n"
 )
 
 // RenderProposal describes an install for the owner's confirmation (D-46):
@@ -240,9 +244,14 @@ func yesNo(b bool) string {
 	return "no"
 }
 
-// writeDeclarations writes what a connector's manifest declares it sends
-// and takes (D-112, D-109); nothing when it declares neither.
+// writeDeclarations writes what a connector's manifest declares: that it
+// is a market-data connector, which learns what the owner holds (D-123),
+// and what it sends and takes (D-112, D-109); nothing when it declares
+// none of them.
 func writeDeclarations(b *strings.Builder, m *plugins.Manifest) {
+	if m.MarketData {
+		b.WriteString(marketDataText)
+	}
 	if m.CrossCheckPrices {
 		b.WriteString("  Declares:     it sends cross-check prices, which the core stores (D-112)\n")
 	}

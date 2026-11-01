@@ -25,6 +25,9 @@ var (
 	ErrInvalidTopology       = errors.New("invalid cluster topology")
 	ErrInvalidBrowserPath    = errors.New("invalid browser path: not / or a clean lower-case path the core does not serve itself")
 	ErrBrowserPathNeedsView  = errors.New("only a view plugin may serve browsers")
+	// ErrMarketDataNeedsConnector: only a connector can be a market-data
+	// connector (D-123).
+	ErrMarketDataNeedsConnector = errors.New("only a connector may declare itself a market-data connector")
 )
 
 // Errors that are not about a single field.

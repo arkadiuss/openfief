@@ -203,6 +203,7 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 				EgressFromConfig: slices.Clone(m.EgressFromConfig),
 				CrossCheckPrices: m.CrossCheckPrices,
 				StatementFiles:   m.StatementFiles,
+				MarketData:       m.MarketData,
 			},
 			Config: raw(p.Config),
 		},
@@ -226,6 +227,7 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 			Secrets:      slices.Clone(g.Permissions.Secrets),
 			DataTiers:    strs(g.Permissions.DataTiers),
 			BrowserPaths: slices.Clone(g.Permissions.BrowserPaths),
+			MarketData:   g.Permissions.MarketData,
 		},
 	}
 	for _, cs := range g.Permissions.ClusterServices {

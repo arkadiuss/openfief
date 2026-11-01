@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4f21eb23769
+  - type: implements
+    from: SYM-views-ghostfolio-cash-account-uuid
+    to: REQ-views-ghostfolio-cash-account-uuid
+    created_at: 2026-11-01T10:14:15.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-582d0d9e1a19
+  - type: implements
+    from: SYM-core-revaluation-client
+    to: REQ-valuation-unclassifiable-instrument-attention-item
+    created_at: 2026-11-01T10:16:11.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9aa86cd7c22f

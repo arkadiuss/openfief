@@ -24,11 +24,12 @@ func (s *readService) ListAttentionItems(ctx context.Context, _ *connect.Request
 	return connect.NewResponse(out), nil
 }
 
-// pbAttentionItem converts an attention item with its history.
+// pbAttentionItem converts an attention item with its history, its subject
+// as read access may see it (attention.ReadSubject, D-121, D-137).
 func pbAttentionItem(it *attention.Item) *viewsv1.AttentionItem {
 	cur := it.Current()
 	out := &viewsv1.AttentionItem{
-		Id: it.ID, Kind: string(it.Kind), Subject: it.Subject, State: pbAttentionState(cur.State), Detail: cur.Detail,
+		Id: it.ID, Kind: string(it.Kind), Subject: attention.ReadSubject(it.Kind, it.Subject), State: pbAttentionState(cur.State), Detail: cur.Detail,
 		OwnerResolves: attention.OwnerResolves(it.Kind), History: make([]*viewsv1.AttentionItemChange, 0, len(it.Changes)),
 	}
 	for _, c := range it.Changes {

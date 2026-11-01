@@ -664,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd021c62de5f
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-cash-account-per-currency
+    created_at: 2026-11-01T10:06:28.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96484f06a148
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-cash-account-uuid
+    created_at: 2026-11-01T10:06:28.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d5de7c07438
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-views-ghostfolio-asset-uuid-takes-user
+    created_at: 2026-11-01T10:06:28.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-902924a0316e

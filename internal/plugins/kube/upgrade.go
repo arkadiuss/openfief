@@ -92,6 +92,7 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 			ConfigSchema:     rawOf(m.ConfigSchema),
 			CrossCheckPrices: m.CrossCheckPrices,
 			StatementFiles:   m.StatementFiles,
+			MarketData:       m.MarketData,
 		},
 		Config: rawOf(r.Spec.Config),
 	}
@@ -129,7 +130,7 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 // don't parse are left out, which approves less.
 func grantOf(r *v1alpha1.PluginGrant) plugins.Grant {
 	g := plugins.Grant{Plugin: r.Name, Permissions: plugins.Permissions{
-		Secrets: r.Spec.Secrets, BrowserPaths: r.Spec.BrowserPaths,
+		Secrets: r.Spec.Secrets, BrowserPaths: r.Spec.BrowserPaths, MarketData: r.Spec.MarketData,
 	}}
 	for _, c := range r.Spec.Capabilities {
 		g.Permissions.Capabilities = append(g.Permissions.Capabilities, plugins.Capability(c))

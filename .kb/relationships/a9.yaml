@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-999b8a23e670
+  - type: implements
+    from: SYM-valuation-app-revaluer-sync-unclassified
+    to: REQ-valuation-unclassifiable-instrument-attention-item
+    created_at: 2026-11-01T10:15:43.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32317ceec1d5

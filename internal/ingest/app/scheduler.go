@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
+	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
 // ErrSyncRunning reports a sync of an instance that is already syncing, in
@@ -89,15 +90,17 @@ type ScopeSource interface {
 // accounts are all seeded syncs in transactions mode on its own, one with
 // none seeded in opening mode, and one with both, such as a broker account
 // mapped after the others were seeded, runs an opening batch and then a
-// transactions batch (ingest.PlanSync). An instance bound to no account is
-// a market-data connector: it syncs in transactions mode and is asked to
-// price what Scope says (D-93).
+// transactions batch (ingest.PlanSync); one bound to no account syncs in
+// transactions mode. Only a market-data connector, an instance whose
+// manifest declares it and whose grant approves that (Connectors'
+// Declarations), is asked to price what Scope says (D-93, D-123).
 type Scheduler struct {
 	Connectors *Connectors
 	Instances  InstanceLister
 	Store      SyncStore
 	// Scope says what to ask market-data connectors to price; nil asks for
-	// nothing.
+	// nothing. Without the Connectors' Declarations no instance is a
+	// market-data connector, so none is asked.
 	Scope ScopeSource
 	// Held says what the accounts bound to an instance hold, which every
 	// sync of it carries (D-117); nil sends nothing.
@@ -248,23 +251,16 @@ type syncPlan struct {
 
 // plan returns the plan of a sync of instance: mode when the caller asks
 // for one, otherwise what its bound accounts' seeding calls for
-// (ingest.PlanSync); the market-data scope for an instance bound to no
-// account, and what its bound accounts hold for one bound to some.
+// (ingest.PlanSync); the market-data scope for a market-data connector
+// (D-123), and what its bound accounts hold for one bound to some.
 func (s *Scheduler) plan(ctx context.Context, instance string, mode ingest.Mode) (syncPlan, error) {
 	bound, err := s.Connectors.Bindings.BoundAccounts(ctx, instance)
 	if err != nil {
 		return syncPlan{}, fmt.Errorf("connector bindings: %w", err)
 	}
-	var p syncPlan
-	if len(bound) == 0 && s.Scope != nil {
-		if p.scope, err = s.Scope.MarketDataScope(ctx); err != nil {
-			return syncPlan{}, fmt.Errorf("market-data scope: %w", err)
-		}
-	}
-	if len(bound) > 0 && s.Held != nil {
-		if p.held, p.terms, err = s.Held.HeldAccounts(ctx, bound); err != nil {
-			return syncPlan{}, fmt.Errorf("holdings of the bound accounts: %w", err)
-		}
+	p, err := s.told(ctx, instance, bound)
+	if err != nil {
+		return syncPlan{}, err
 	}
 	if mode != 0 {
 		p.modes = []ingest.Mode{mode}
@@ -275,6 +271,29 @@ func (s *Scheduler) plan(ctx context.Context, instance string, mode ingest.Mode)
 		return syncPlan{}, err
 	}
 	p.modes = ingest.PlanSync(bound, goLive)
+	return p, nil
+}
+
+// told returns what a sync of instance tells it: the market-data scope when
+// it is a market-data connector, one whose manifest declares it and whose
+// grant approves that (D-93, D-123), and what bound, its bound accounts,
+// hold (D-117).
+func (s *Scheduler) told(ctx context.Context, instance string, bound []ledger.AccountID) (syncPlan, error) {
+	var p syncPlan
+	marketData, err := s.Connectors.marketData(ctx, instance)
+	if err != nil {
+		return syncPlan{}, err
+	}
+	if marketData && s.Scope != nil {
+		if p.scope, err = s.Scope.MarketDataScope(ctx); err != nil {
+			return syncPlan{}, fmt.Errorf("market-data scope: %w", err)
+		}
+	}
+	if len(bound) > 0 && s.Held != nil {
+		if p.held, p.terms, err = s.Held.HeldAccounts(ctx, bound); err != nil {
+			return syncPlan{}, fmt.Errorf("holdings of the bound accounts: %w", err)
+		}
+	}
 	return p, nil
 }
 

@@ -55,7 +55,7 @@ flowchart LR
 | `balance-assertion-flagged` | a balance assertion's latest check is flagged (D-18) | account/date/ledger account | a correction makes it match, or the owner resolves it |
 | `price-check-flagged` | an instrument's latest price check, by date then source, is flagged and not acknowledged (D-110..D-112) | the instrument | the owner acknowledges the check, or a later check matches |
 | `import-problems` | a completed import batch left rows out because OpenFief can't book them yet (`ingest.ProblemUnsupported`) | the batch | the owner resolves it |
-| `broker-account-unmapped` | a connector reported a broker account no OpenFief account is mapped to (D-72) | instance/broker account | the owner maps it |
+| `broker-account-unmapped` | a connector reported a broker account no OpenFief account is mapped to (D-72) | instance/broker account; the read API serves only the instance (`attention.ReadSubject`), since read access never includes a broker account number (D-121, D-137) | the owner maps it |
 | `ticker-unconfirmed` | a ticker's ISIN isn't confirmed, so its rows wait (D-116) | instance/ticker | the owner confirms it |
 | `setting-missing` | some account's tax wrapper can't have a liquidation value without the owner's marginal income tax rate (D-78) | `marginal-rate` | the owner sets it |
 | `transfer-broken` | a confirmed transfer's legs no longer match after a correction (D-131) | the pair | a correction makes them match, or the owner rejects the pair |
@@ -106,6 +106,7 @@ The rest is this context's reading of D-130, listed in [implementation questions
 | Behavior | Tests | kibi |
 |---|---|---|
 | The state rules: raise, change, reopen, clear, acknowledge, resolve, one item per subject | `TestObserve`, `TestReconcile`, `TestOwnerActions`, `TestConditionValidate` ([rules_test.go](../../internal/attention/rules_test.go)) | REQ-attention-reconcile, REQ-attention-owner-actions |
+| An unmapped broker account's subject without its number for read access | `TestReadSubject` ([readsubject_test.go](../../internal/attention/readsubject_test.go)) | REQ-identity-read-access-no-broker-account-numbers |
 | Sweeps deduplicate and clear; pushes; the owner's actions need the owner; a failed append keeps nothing; the relay publishes in order and resumes; the log names no subject | [app/items_test.go](../../internal/attention/app/items_test.go) | REQ-attention-sweep, REQ-attention-relay |
 | Each check finds its conditions | `TestChecks` ([app/checks_test.go](../../internal/attention/app/checks_test.go)) | REQ-attention-checks |
 | The store keeps history, writes each event in the change's transaction, and is append-only | [postgres/store_test.go](../../internal/attention/postgres/store_test.go) (`task test:pg`) | REQ-attention-outbox-same-transaction |

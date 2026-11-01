@@ -370,6 +370,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47399e31dc6c
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-owners
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:38:40.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8046ac53de7
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-owners
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:38:40.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f330ed2e8d3
+  - type: implements
+    from: SYM-attentionv1-resolve-attention-item-response-descriptor
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:57:07.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48c931d970aa
+  - type: covered_by
+    from: SYM-attentionv1-resolve-attention-item-response-descriptor
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:57:07.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84fea2147951
   - type: verified_by
     from: SCEN-views-totals-losses-offset
     to: TEST-views-taxes
@@ -419,6 +447,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e700f2cdcf1
+  - type: constrains
+    from: REQ-treasurybonds-account-history-from-first-purchase
+    to: FACT-SUBJECT-34E32129990BBCFB
+    created_at: 2026-11-01T07:38:02.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13fc87200dcb
+  - type: requires_property
+    from: REQ-treasurybonds-account-history-from-first-purchase
+    to: FACT-PROP-5D27627D40C67E3D
+    created_at: 2026-11-01T07:38:02.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f879236537d
+  - type: supersedes
+    from: REQ-treasurybonds-account-history-from-first-purchase
+    to: REQ-ingest-bond-account-live-on-first-lot
+    created_at: 2026-11-01T07:38:03.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-075b70559134
+  - type: executable_for
+    from: SYM-views-connectapi-test-ra-read-access
+    to: TEST-views-connectapi-read-access
+    created_at: 2026-11-01T10:17:18.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-523d404b5373
+  - type: validates
+    from: TEST-plugins-xtb
+    to: REQ-ingest-xtb-start-from-open-positions
+    created_at: 2026-11-01T08:22:52.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebfa2a50c181
   - type: verified_by
     from: SCEN-ingest-bond-payout-setting
     to: TEST-ingest-connectapi-accounts
@@ -454,62 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d298489e262
-  - type: constrains
-    from: REQ-treasurybonds-account-history-from-first-purchase
-    to: FACT-SUBJECT-34E32129990BBCFB
-    created_at: 2026-11-01T07:38:02.943Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-13fc87200dcb
-  - type: requires_property
-    from: REQ-treasurybonds-account-history-from-first-purchase
-    to: FACT-PROP-5D27627D40C67E3D
-    created_at: 2026-11-01T07:38:02.980Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6f879236537d
-  - type: supersedes
-    from: REQ-treasurybonds-account-history-from-first-purchase
-    to: REQ-ingest-bond-account-live-on-first-lot
-    created_at: 2026-11-01T07:38:03.010Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-075b70559134
-  - type: validates
-    from: TEST-plugins-xtb
-    to: REQ-ingest-xtb-start-from-open-positions
-    created_at: 2026-11-01T08:22:52.655Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ebfa2a50c181
-  - type: executable_for
-    from: SYM-attention-app-test-helper-fake-owners
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:38:40.543Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b8046ac53de7
-  - type: executable_for
-    from: SYM-attention-app-test-helper-fake-owners
-    to: TEST-attention-app-checks
-    created_at: 2026-10-31T18:38:40.571Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5f330ed2e8d3
-  - type: implements
-    from: SYM-attentionv1-resolve-attention-item-response-descriptor
-    to: REQ-attention-owner-service
-    created_at: 2026-10-31T18:57:07.258Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-48c931d970aa
-  - type: covered_by
-    from: SYM-attentionv1-resolve-attention-item-response-descriptor
-    to: TEST-attention-connectapi
-    created_at: 2026-10-31T18:57:07.295Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-84fea2147951
   - type: implements
     from: SYM-valuation-gap-of
     to: REQ-valuation-market-data-gap-attention-item
