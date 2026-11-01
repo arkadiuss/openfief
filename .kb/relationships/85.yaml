@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b02285bb36d6
+  - type: constrains
+    from: REQ-pl-oki-exempt-amounts-never-fall
+    to: FACT-SUBJECT-172EB8B023F2FDDB
+    created_at: 2026-11-01T12:26:40.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42b8ca7d5808
+  - type: requires_property
+    from: REQ-pl-oki-exempt-amounts-never-fall
+    to: FACT-PROP-0DAFD98D23554EA7
+    created_at: 2026-11-01T12:26:40.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fdf31673044

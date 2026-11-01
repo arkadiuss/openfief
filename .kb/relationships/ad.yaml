@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a167df48477d
+  - type: constrains
+    from: REQ-ingest-undeclared-cross-check-prices-dropped
+    to: FACT-SUBJECT-4022BDCF8FBBCB20
+    created_at: 2026-11-01T12:24:28.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07741d3ccfed
+  - type: requires_property
+    from: REQ-ingest-undeclared-cross-check-prices-dropped
+    to: FACT-PROP-D6F06357D762DA10
+    created_at: 2026-11-01T12:24:28.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6af0965685b4

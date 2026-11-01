@@ -491,13 +491,6 @@ relationships:
     id: rel-7c666f5ce08b
   - type: validates
     from: TEST-core-removals
-    to: REQ-ingest-broker-account-remap
-    created_at: 2026-10-31T18:16:23.758Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bf1791271e15
-  - type: validates
-    from: TEST-core-removals
     to: REQ-ingest-broker-account-numbers-owner-only
     created_at: 2026-10-31T18:17:02.465Z
     created_by: kibi/upsert
@@ -559,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe1b9d7a4459
+  - type: validates
+    from: TEST-core-removals
+    to: REQ-ingest-broker-account-remap-per-instance
+    created_at: 2026-11-01T12:35:09.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e01a82c9d29

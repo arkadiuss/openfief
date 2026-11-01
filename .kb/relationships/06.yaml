@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-804b159d4705
+  - type: constrains
+    from: REQ-pl-oki-current-year-estimate
+    to: FACT-SUBJECT-D256A25BDCDCE899
+    created_at: 2026-11-01T12:26:58.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465bd526dd19
+  - type: requires_property
+    from: REQ-pl-oki-current-year-estimate
+    to: FACT-PROP-6F5DF66756D0C57C
+    created_at: 2026-11-01T12:26:59.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a39792d2aa99

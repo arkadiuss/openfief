@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c70d006d362
+  - type: constrains
+    from: REQ-ledger-owner-cash-mismatch-attention-item
+    to: FACT-SUBJECT-A6E408782DCB5399
+    created_at: 2026-11-01T12:31:34.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94f8f1560945
+  - type: requires_property
+    from: REQ-ledger-owner-cash-mismatch-attention-item
+    to: FACT-PROP-194DD51BC9557ED8
+    created_at: 2026-11-01T12:31:34.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-836833a8645f

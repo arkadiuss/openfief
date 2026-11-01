@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8683ca368499
+  - type: constrains
+    from: REQ-ingest-broker-account-remap-per-instance
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-11-01T12:30:25.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de8219b3748c
+  - type: requires_property
+    from: REQ-ingest-broker-account-remap-per-instance
+    to: FACT-PROP-5C56B3525A3B8000
+    created_at: 2026-11-01T12:30:25.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e58e50596ef
+  - type: supersedes
+    from: REQ-ingest-broker-account-remap-per-instance
+    to: REQ-ingest-broker-account-remap
+    created_at: 2026-11-01T12:30:25.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3dfaa9b329c1

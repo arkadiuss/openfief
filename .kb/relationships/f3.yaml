@@ -454,3 +454,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50565de4dce7
+  - type: constrains
+    from: REQ-ingest-multi-account-opening-seeds-unseeded-only
+    to: FACT-SUBJECT-B4872D883DCCB3F1
+    created_at: 2026-11-01T12:23:57.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-203450e69084
+  - type: requires_property
+    from: REQ-ingest-multi-account-opening-seeds-unseeded-only
+    to: FACT-PROP-63235CAACB783C16
+    created_at: 2026-11-01T12:23:57.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e46f126a16
+  - type: supersedes
+    from: REQ-ingest-multi-account-opening-seeds-unseeded-only
+    to: REQ-ingest-statement-multi-account
+    created_at: 2026-11-01T12:23:57.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ed1dc58d559
