@@ -9,10 +9,12 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/equality"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/client-go/tools/events"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
@@ -47,6 +49,7 @@ type Settings struct {
 // +kubebuilder:rbac:groups=apps,namespace=openfief,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=networking.k8s.io,namespace=openfief,resources=networkpolicies,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups="",namespace=openfief,resources=events,verbs=create;patch
+// +kubebuilder:rbac:groups=events.k8s.io,namespace=openfief,resources=events,verbs=create;patch
 // +kubebuilder:rbac:groups=coordination.k8s.io,namespace=openfief,resources=leases,verbs=get;list;watch;create;update;patch;delete
 
 // PluginReconciler reconciles one Plugin: it decides which version runs
@@ -62,6 +65,9 @@ type PluginReconciler struct {
 	// read access the owner's install granted for that one Service; nil
 	// reads through Client.
 	ServiceReader client.Reader
+	// Recorder records a refused image signature as a Warning event on the
+	// Plugin; nil records none.
+	Recorder events.EventRecorder
 }
 
 // Reconcile brings one Plugin's objects, the allow-list and its status in
@@ -397,15 +403,35 @@ func (r *PluginReconciler) publishAllowList(ctx context.Context, self string, li
 // allowListFieldOwner is the field manager of one plugin's allow-list entry.
 func allowListFieldOwner(plugin string) string { return FieldOwner + "/allowlist/" + plugin }
 
-// writeStatus records the observation, if it changed anything.
+// writeStatus records the observation, if it changed anything, and a
+// signature it newly refuses as a Warning event.
 func (r *PluginReconciler) writeStatus(ctx context.Context, p *v1alpha1.Plugin, o *observation) error {
 	st := pluginStatus(o, p.Status.Conditions)
 	if equality.Semantic.DeepEqual(st, p.Status) {
 		return nil
 	}
+	refused := newlyRefused(meta.FindStatusCondition(p.Status.Conditions, v1alpha1.ConditionSignatureVerified), o)
 	p.Status = st
 	if err := r.Client.Status().Update(ctx, p); err != nil {
 		return fmt.Errorf("update status of plugin %s: %w", p.Name, err)
 	}
+	if refused && r.Recorder != nil {
+		r.Recorder.Eventf(p, nil, corev1.EventTypeWarning, o.signature.Reason, eventActionVerify, "%s", truncate(o.signature.Message))
+	}
 	return nil
+}
+
+// eventActionVerify is the action of a refused signature's event.
+const eventActionVerify = "VerifySignature"
+
+// newlyRefused reports whether the observation refuses the image's signature
+// where the Plugin's recorded SignatureVerified condition, old, did not: it
+// was missing, not False, False for another reason, or for an earlier
+// generation. A refusal is recorded once, not on every reconcile.
+func newlyRefused(old *metav1.Condition, o *observation) bool {
+	if o.signature.Status != metav1.ConditionFalse {
+		return false
+	}
+	return old == nil || old.Status != metav1.ConditionFalse || old.Reason != o.signature.Reason ||
+		old.ObservedGeneration != o.generation
 }

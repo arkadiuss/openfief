@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3dfaa9b329c1
+  - type: executable_for
+    from: SYM-e2e-test-helper-check-refused
+    to: TEST-e2e-plugin-refusals
+    created_at: 2026-11-01T13:55:32.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f316dfb88ad

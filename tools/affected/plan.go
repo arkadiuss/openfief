@@ -171,7 +171,11 @@ func reach(s *selection, g *graph) affectedSets {
 			tested[ip] = why
 		}
 	}
-	maps.DeleteFunc(tested, func(ip, _ string) bool { p, ok := g.pkgs[ip]; return !ok || !p.testable })
+	untagged := func(ip, _ string) bool { p, ok := g.pkgs[ip]; return !ok || !p.testable }
+	maps.DeleteFunc(tested, untagged)
+	// govulncheck builds without build tags, so a package with files only under one, such as test/e2e, is
+	// linted (lint runs with the e2e tag) but never handed to it.
+	maps.DeleteFunc(compiled, untagged)
 	return affectedSets{compiled: compiled, tested: tested, linted: linted}
 }
 
