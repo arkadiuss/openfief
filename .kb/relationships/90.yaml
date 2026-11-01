@@ -461,3 +461,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d5d6c1aa9e6c
+  - type: implements
+    from: SYM-ingest-xtb-table-records
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:31:45.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bb5b2cb4cfd
+  - type: covered_by
+    from: SYM-ingest-xtb-table-records
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:31:45.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38f70e691204
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-proto-message
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:45:24.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-472e084ffa16
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-proto-message
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:45:24.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-252769374464
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-get-key
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:45:50.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5788dbb3daf6
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-get-key
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:45:50.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb509ab05194
+  - type: implements
+    from: SYM-pl-counted-payments
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:02:32.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddb383fc5fb0
+  - type: covered_by
+    from: SYM-pl-counted-payments
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:02:32.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6709428a511

@@ -20,13 +20,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a676a9b943b9
-  - type: implements
-    from: SYM-operator-cmd-parse-flags
-    to: REQ-AUTO-BBBDDCF207E884A1
-    created_at: 2026-10-28T07:13:38.564Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0ab26584d0e2
   - type: covered_by
     from: SYM-operator-cmd-parse-flags
     to: TEST-operator-cmd
@@ -559,3 +552,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b5a333048b9
+  - type: implements
+    from: SYM-connectorv1-open-lot-get-quantity
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:01:54.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c6f4e7a9bbc
+  - type: covered_by
+    from: SYM-connectorv1-open-lot-get-quantity
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:01:54.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-706a7cc2cbaa
+  - type: implements
+    from: SYM-ingestv1-broker-account-string
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:54:31.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ad1da6c58d7
+  - type: covered_by
+    from: SYM-ingestv1-broker-account-string
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:54:31.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-323cf7a9de2b
+  - type: implements
+    from: SYM-ingest-xtb-mapping-cash-operation
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:27:15.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf3b7fea18b1
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-cash-operation
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:27:15.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ac6df0954ab
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_tickers_proto_raw-desc-gzip
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:07:42.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63b136a22b6a
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_tickers_proto_raw-desc-gzip
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:07:42.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4705ba18acba
+  - type: implements
+    from: SYM-views-app-views-tax-rates
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:10:08.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eab29e264d7f
+  - type: covered_by
+    from: SYM-views-app-views-tax-rates
+    to: TEST-views-app-values
+    created_at: 2026-10-31T19:10:08.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25403c8fdc2c
+  - type: implements
+    from: SYM-operator-cmd-parse-flags
+    to: REQ-operator-namespace-scoped-except-service-read
+    created_at: 2026-10-31T18:18:27.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38c18af1f78a

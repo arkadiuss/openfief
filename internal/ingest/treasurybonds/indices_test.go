@@ -148,7 +148,7 @@ func (f *fakeCPI) CPI(_ context.Context, year int) ([]valuation.IndexReading, er
 	}
 	out := make([]valuation.IndexReading, 0, months)
 	for m := time.January; int(m) <= months; m++ {
-		out = append(out, valuation.IndexReading{Kind: valuation.CPI, Year: year, Month: m, Value: kernel.NewDecimal(3, 2), Source: "gus-cpi"})
+		out = append(out, valuation.IndexReading{Kind: valuation.CPI, Year: year, Month: m, Value: kernel.NewDecimal(3, -2), Source: "gus-cpi"})
 	}
 	return out, nil
 }

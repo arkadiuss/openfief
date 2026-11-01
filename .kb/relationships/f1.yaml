@@ -524,3 +524,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e49cdcc92748
+  - type: implements
+    from: SYM-ingest-connectrpc-money-to
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:50:19.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25aeec4a4b5c
+  - type: covered_by
+    from: SYM-ingest-connectrpc-money-to
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:50:19.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01bc641f7695
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-response-descriptor
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:02:46.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64ebf121f529
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-response-descriptor
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:02:46.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-350603d62962
+  - type: implements
+    from: SYM-ingest-xtbtest-cash-row
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:38:07.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-750393e45122
+  - type: covered_by
+    from: SYM-ingest-xtbtest-cash-row
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:38:07.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d35a049164ef
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-exemption-class
+    to: TEST-valuation-app-settings
+    created_at: 2026-10-31T19:08:51.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7291c9ebdb07

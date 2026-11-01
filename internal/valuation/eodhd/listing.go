@@ -50,10 +50,39 @@ type Listing struct {
 	// Currency is the currency EODHD quotes the listing in, such as "EUR",
 	// or "GBX" for pence sterling.
 	Currency string
+	// Name is the instrument's name at EODHD.
+	Name string
+}
+
+// CountryExchange returns the EODHD code of the supported exchange of a
+// market in country, an ISO 3166-1 alpha-2 code, such as "WAR" for "PL",
+// or "" for a country with none: where a broker that names instruments by
+// ticker and market, such as XTB, lists them (D-116).
+func CountryExchange(country string) string {
+	return map[string]string{
+		"PL": "WAR", "GB": "LSE", "DE": "XETRA", "FR": "PA", "NL": "AS", "BE": "BR", "PT": "LS", "IE": "IR", "IT": "MI", "NO": "OL",
+	}[country]
+}
+
+// FindByCode returns the one ISIN listed as code on exchange among
+// listings, ignoring case, with the listing, or false when none or several
+// ISINs are.
+func FindByCode(listings []Listing, code, exchange string) (Listing, bool) {
+	var found []Listing
+	for _, l := range listings {
+		if l.Exchange == exchange && strings.EqualFold(l.Code, code) &&
+			!slices.ContainsFunc(found, func(f Listing) bool { return f.ISIN == l.ISIN }) {
+			found = append(found, l)
+		}
+	}
+	if len(found) != 1 {
+		return Listing{}, false
+	}
+	return found[0], true
 }
 
 // Ticker is the listing's EODHD ticker, such as "SYNTH.XETRA".
-func (l Listing) Ticker() string { return l.Code + "." + l.Exchange }
+func (l *Listing) Ticker() string { return l.Code + "." + l.Exchange }
 
 // Pick returns the one listing of isin on a supported exchange, on exchange
 // when that is not empty. Listings of other ISINs, which EODHD's fuzzy
@@ -95,7 +124,7 @@ func candidates(listings []Listing, isin ledger.ISIN, exchange string) []Listing
 
 // Quote returns a close of the listing as money in its currency. A close in
 // pence sterling becomes pounds, divided by 100 exactly.
-func (l Listing) Quote(closing kernel.Decimal) (kernel.Money, error) {
+func (l *Listing) Quote(closing kernel.Decimal) (kernel.Money, error) {
 	code, amount := l.Currency, closing
 	if code == penceCode {
 		code, amount = "GBP", closing.Mul(kernel.NewDecimal(1, -2))

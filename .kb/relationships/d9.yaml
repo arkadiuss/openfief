@@ -517,3 +517,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47189f4baaed
+  - type: executable_for
+    from: SYM-core-test-helper-coupon-connector-sync
+    to: TEST-core-bond-coupons
+    created_at: 2026-10-31T13:47:44.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2b2e0a8b4f8
+  - type: implements
+    from: SYM-ingest-xtb-cell-value
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:36:06.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7055b5de7496
+  - type: covered_by
+    from: SYM-ingest-xtb-cell-value
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:36:06.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f297d25f1797
+  - type: implements
+    from: SYM-views-paid-in
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:11:04.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8985eed9b72
+  - type: covered_by
+    from: SYM-views-paid-in
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:11:04.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79610e474234
+  - type: implements
+    from: SYM-valuationv1-instrument-class-reset
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:15:05.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20ce983b9ba5
+  - type: covered_by
+    from: SYM-valuationv1-instrument-class-reset
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:15:05.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f0fa84b16e1
+  - type: implements
+    from: SYM-viewsv1-yearly-tax-get-unclassified-instruments
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:18:07.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05783d185c26
+  - type: covered_by
+    from: SYM-viewsv1-yearly-tax-get-unclassified-instruments
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:18:07.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b25fca5d44f

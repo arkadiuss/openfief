@@ -573,6 +573,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a781a8ca544
+  - type: validates
+    from: TEST-ingest-xtb-mapper
+    to: REQ-AUTO-2C10EB8F716422D6
+    created_at: 2026-10-31T12:54:18.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e674ccd1ed6a
+  - type: validates
+    from: TEST-ingest-xtb-mapper
+    to: REQ-AUTO-39B3A0CB06192CFE
+    created_at: 2026-10-31T12:54:18.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93b35cf23275
+  - type: validates
+    from: TEST-ingest-xtb-mapper
+    to: REQ-AUTO-A5EE8BC2AE68372A
+    created_at: 2026-10-31T12:54:18.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c720bec5eca5
+  - type: implements
+    from: SYM-plugins-xtb-map-code
+    to: REQ-plugins-xtb-connector
+    created_at: 2026-10-31T13:42:17.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-625bb2502859
+  - type: covered_by
+    from: SYM-plugins-xtb-map-code
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:42:17.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d90f1ee04eb1
+  - type: implements
+    from: SYM-connectorv1-ticker
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:44:02.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-238e02109f82
+  - type: covered_by
+    from: SYM-connectorv1-ticker
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:44:02.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc8cf0a4f87e
   - type: constrains
     from: REQ-ingest-bond-account-live-on-first-lot
     to: FACT-SUBJECT-BDB16DBA9CB82400
@@ -587,3 +636,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8a171727deb
+  - type: implements
+    from: SYM-views-tax-days
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:13:46.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1f5d65eaf2d
+  - type: covered_by
+    from: SYM-views-tax-days
+    to: TEST-views-yearly-tax
+    created_at: 2026-10-31T19:13:46.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6734b2b9e235
+  - type: implements
+    from: SYM-valuationv1-set-exemption-class-request-get-exemption-class
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:16:43.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-272f1f965573
+  - type: covered_by
+    from: SYM-valuationv1-set-exemption-class-request-get-exemption-class
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:16:43.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37af1a252744

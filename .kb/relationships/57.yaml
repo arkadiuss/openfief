@@ -363,38 +363,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a02ceba6393c
+  - type: constrains
+    from: REQ-pl-oki-exemption-class
+    to: FACT-SUBJECT-6F67BD2729C3241E
+    created_at: 2026-10-31T18:33:54.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-714bcb12bd0a
+  - type: requires_property
+    from: REQ-pl-oki-exemption-class
+    to: FACT-PROP-3FA32AE3CCF7495B
+    created_at: 2026-10-31T18:33:54.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79c7f4af6726
+  - type: specified_by
+    from: REQ-pl-oki-exemption-class
+    to: SCEN-pl-oki-exemption-class
+    created_at: 2026-10-31T18:33:54.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e79a1a90718c
   - type: implements
     from: SYM-jurisdiction-yearly-tax
-    to: REQ-pl-oki-yearly-tax
-    created_at: 2026-10-29T22:04:16.294Z
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T18:36:32.863Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-7cef49a57cfe
+    id: rel-1d3054bd11d0
   - type: covered_by
     from: SYM-jurisdiction-yearly-tax
-    to: TEST-pl-pack
-    created_at: 2026-10-29T22:04:16.346Z
+    to: TEST-pl-oki
+    created_at: 2026-10-31T18:36:32.893Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-e9b4ccce90ce
-  - type: implements
-    from: SYM-views-app-views-wrapper-balances
-    to: REQ-views-yearly-taxes
-    created_at: 2026-10-30T01:18:38.639Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-39dbeeccea8e
-  - type: implements
-    from: SYM-views-app-views-wrapper-balances
-    to: REQ-pl-oki-yearly-tax
-    created_at: 2026-10-30T01:18:38.683Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-764edd6187c9
-  - type: covered_by
-    from: SYM-views-app-views-wrapper-balances
-    to: TEST-views-app-values
-    created_at: 2026-10-30T01:18:38.716Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a37ee686bb67
+    id: rel-e09920676993

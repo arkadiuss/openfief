@@ -405,6 +405,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a87d4923f136
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-response-string
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:59:03.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bb8d699bbcb
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-response-string
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:59:03.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ad61c09f857
+  - type: executable_for
+    from: SYM-valuation-eodhd-test-find-by-code
+    to: TEST-valuation-eodhd-lookup
+    created_at: 2026-10-31T13:39:47.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c655fb08c9b4
   - type: constrains
     from: REQ-ingest-bond-lot-exchange-price-by-letter
     to: FACT-SUBJECT-DC4F7EC29743B12A
@@ -426,3 +447,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-285f8c8e829d
+  - type: validates
+    from: TEST-valuation-revaluation
+    to: REQ-valuation-sale-fee-minimum-any-currency
+    created_at: 2026-10-31T18:35:15.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6a7860f25ee
+  - type: validates
+    from: TEST-valuation-revaluation
+    to: REQ-valuation-sale-fee-foreign-currency
+    created_at: 2026-10-31T18:35:15.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da642f481704
+  - type: validates
+    from: TEST-valuation-revaluation
+    to: REQ-valuation-sale-fee-market-priced-only
+    created_at: 2026-10-31T18:35:15.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64a473411a0f
+  - type: validates
+    from: TEST-valuation-revaluation
+    to: REQ-valuation-holding-tax-as-if-sold-alone
+    created_at: 2026-10-31T18:35:15.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f65c5b7c1da
+  - type: implements
+    from: SYM-jurisdiction-tax-rules
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:00:46.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d04f8354ef
+  - type: implements
+    from: SYM-jurisdiction-tax-rules
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:00:46.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d5f4819b77a
+  - type: covered_by
+    from: SYM-jurisdiction-tax-rules
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:00:46.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c6cdbd75de0

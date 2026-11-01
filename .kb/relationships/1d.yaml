@@ -581,27 +581,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-495297c965a7
   - type: implements
-    from: SYM-pl-pack-yearly-tax
-    to: REQ-pl-oki-act-as-data
-    created_at: 2026-10-29T22:07:18.231Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2942904d4052
-  - type: implements
-    from: SYM-pl-pack-yearly-tax
-    to: REQ-pl-oki-yearly-tax
-    created_at: 2026-10-29T22:07:18.270Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-568afc1db078
-  - type: covered_by
-    from: SYM-pl-pack-yearly-tax
-    to: TEST-pl-pack
-    created_at: 2026-10-29T22:07:18.308Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8bd5da0ae321
-  - type: implements
     from: SYM-views-removed-behind-lots
     to: REQ-views-holdings-lots-mark
     created_at: 2026-10-30T01:23:29.359Z
@@ -741,3 +720,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77b9ab7e1c99
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-response-proto-message
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T14:00:39.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41ab01f7a3c2
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-response-proto-message
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T14:00:39.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54a721427099
+  - type: implements
+    from: SYM-pl-pack-yearly-tax
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T18:36:20.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bf2dc191618
+  - type: implements
+    from: SYM-pl-pack-yearly-tax
+    to: REQ-pl-oki-tax-base-average-value
+    created_at: 2026-10-31T18:36:20.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80b56b490f6a
+  - type: covered_by
+    from: SYM-pl-pack-yearly-tax
+    to: TEST-pl-oki
+    created_at: 2026-10-31T18:36:20.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f17dcc8e6ef3
+  - type: implements
+    from: SYM-valuation-postgres-store-exemption-classes
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:09:03.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b3f34c6be63
+  - type: covered_by
+    from: SYM-valuation-postgres-store-exemption-classes
+    to: TEST-valuation-postgres-store
+    created_at: 2026-10-31T19:09:03.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6957d455e06f

@@ -7,5 +7,6 @@ origin:
   recorded_at: '2026-10-28T19:48:38.330Z'
 id: TEST-ui-plugin
 type: test
+verification_scope: integration
 ---
 Parses plugins/ui/manifest.json with the operator's own label parser and compares it with a manifest that has only the view capability, no egress host and no Secret, and checks that a config schema exists. Checks that the read API's HTTP client never uses a proxy and has a timeout, since plugins reach the core directly.

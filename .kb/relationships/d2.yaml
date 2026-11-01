@@ -566,3 +566,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a6d9c97219e
+  - type: executable_for
+    from: SYM-ingest-app-test-holdings-scope
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:36.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-182d3bb676d1
+  - type: implements
+    from: SYM-ingest-held-account
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:51:32.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-983f0088d9af
+  - type: covered_by
+    from: SYM-ingest-held-account
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:51:33.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81c30a365d10
+  - type: implements
+    from: SYM-ingest-xtb-text-layouts
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:32:35.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-525e2dd55716
+  - type: covered_by
+    from: SYM-ingest-xtb-text-layouts
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:32:35.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e63bd0739a55
+  - type: implements
+    from: SYM-ingestv1connect-ticker-service-client
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:01:20.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dc0bf7d9625
+  - type: covered_by
+    from: SYM-ingestv1connect-ticker-service-client
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:01:20.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23ad26414582
+  - type: implements
+    from: SYM-ingestv1-list-pending-tickers-request-string
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:02:34.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0be83dac52ec
+  - type: covered_by
+    from: SYM-ingestv1-list-pending-tickers-request-string
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:02:34.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-614202e98cfd
+  - type: implements
+    from: SYM-ingestv1-pending-ticker-get-country
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:04:04.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b28f81ab7816
+  - type: covered_by
+    from: SYM-ingestv1-pending-ticker-get-country
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:04:04.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-055c40b7a537
+  - type: implements
+    from: SYM-pl-oki-rate
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:01:06.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-657426c8af96
+  - type: implements
+    from: SYM-pl-oki-rate
+    to: REQ-pl-oki-tax-rate
+    created_at: 2026-10-31T19:01:06.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f1588bf2cb0
+  - type: covered_by
+    from: SYM-pl-oki-rate
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:06.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76ecff9e6d5a
+  - type: implements
+    from: SYM-ingest-held-account
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:07:05.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68e49c643c56

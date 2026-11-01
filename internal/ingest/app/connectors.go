@@ -81,12 +81,15 @@ type ConnectorCaller interface {
 
 // SyncCall is one Sync call to a connector instance: the import batch, its
 // mode, the watermark of the previous sync, and, for a market-data
-// connector, what to price (D-93).
+// connector, what to price (D-93), and for one bound to accounts, what each
+// of them holds with the bond terms of their treasury bonds (D-117).
 type SyncCall struct {
 	ID        ingest.BatchID
 	Mode      ingest.Mode
 	Watermark string
 	Scope     ingest.MarketDataScope
+	Held      []ingest.HeldAccount
+	BondTerms []ingest.BondTerms
 }
 
 // NamedFile is a statement file to import: its contents, the name the owner
@@ -220,6 +223,15 @@ type Connectors struct {
 	// account's go-live (ingest.KeepFromGoLive). Without it, no account
 	// counts as seeded.
 	Seeding AccountSeeding
+	// Tickers keeps the tickers instances name instruments by without an
+	// ISIN and their entries until the owner confirms each ticker's ISIN
+	// (D-116); a delivery with ticker entries fails without it.
+	Tickers TickerStore
+	// Lookup asks the market-data connectors, the running Instances bound
+	// to no account, to propose the ISIN of a ticker first reported; nil,
+	// or nil Instances, proposes none.
+	Lookup    InstrumentLookup
+	Instances InstanceLister
 	// Today returns the date a batch starts on.
 	Today func() kernel.Date
 }
@@ -284,13 +296,16 @@ func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.
 // ImportBondLots hands treasury bond lots the owner entered for account, and
 // those the owner deletes, to instance as transactions batch id, and
 // imports what it maps (D-9, D-49: manual bond-lot entries go through the
-// core to the right connector). It sends the account's go-live date, as
-// Seeding answers, or today for an account not seeded yet, which then goes
-// live with its first lots (D-98). The opening lots delivered are added to
-// the account one at a time (LedgerImporter.AddOpeningLots). Every
-// transaction and balance assertion delivered must be in account, or
-// nothing is imported.
-func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, account ledger.AccountID, e ingest.BondLotEntries) (ingest.Batch, error) {
+// core to the right connector). It sends the account with the lots (D-118),
+// so one instance serves every bond account, and the account's go-live
+// date, as Seeding answers, or today for an account not seeded yet, which
+// then goes live with its first lots (D-98, D-119). The opening lots
+// delivered are added to the account one at a time
+// (LedgerImporter.AddOpeningLots). Every transaction and balance assertion
+// delivered must be in account, or nothing is imported.
+func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, account ledger.AccountID, entries *ingest.BondLotEntries) (ingest.Batch, error) {
+	e := *entries
+	e.Account = account
 	goLive, err := c.GoLiveDates(ctx, []ledger.AccountID{account})
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("import bond lots into %s batch %s: %w", instance, id, err)
@@ -311,8 +326,9 @@ func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ing
 }
 
 // deliver imports a delivery as one import batch: entries named by broker
-// account resolved into the accounts they are mapped to (D-72), in a sync
-// what accounts' seeding already holds left out (D-95), the transactions
+// account resolved into the accounts they are mapped to (D-72), ticker
+// entries booked with their confirmed ISIN or held for the owner (D-116),
+// in a sync what accounts' seeding already holds left out (D-95), the transactions
 // scoped to the instance into the ledger, seeded in an
 // opening batch (D-23), then prices, FX rates, index readings, index
 // levels and cross-check prices with the instance as their source, the
@@ -397,7 +413,8 @@ func (c *Connectors) keepFromGoLive(ctx context.Context, mode ingest.Mode, m *in
 
 // admit returns the mapping of d to import, with its broker accounts
 // resolved, the broker accounts left unmapped and those an opening batch
-// of it seeds, after checking that every account it names is in only, when
+// of it seeds, its ticker entries booked or held (bookTickers), after
+// checking that every account it names is in only, when
 // only is set, and bound to instance.
 func (c *Connectors) admit(ctx context.Context, instance string, mode ingest.Mode, d *Delivery, only []ledger.AccountID) (ingest.Resolution, error) {
 	r, err := c.resolveBrokerAccounts(ctx, instance, mode, d)
@@ -405,19 +422,24 @@ func (c *Connectors) admit(ctx context.Context, instance string, mode ingest.Mod
 		return ingest.Resolution{}, err
 	}
 	if only != nil {
-		if err := ingest.CheckBound(instance, only, &r.Mapping); err != nil {
-			return ingest.Resolution{}, fmt.Errorf("refused: %w", err)
+		if boundErr := ingest.CheckBound(instance, only, &r.Mapping); boundErr != nil {
+			return ingest.Resolution{}, fmt.Errorf("refused: %w", boundErr)
 		}
 	}
-	if err := c.checkBound(ctx, instance, &r.Mapping); err != nil {
+	if boundErr := c.checkBound(ctx, instance, &r.Mapping); boundErr != nil {
+		return ingest.Resolution{}, boundErr
+	}
+	booked, err := c.bookTickers(ctx, instance, &r.Mapping)
+	if err != nil {
 		return ingest.Resolution{}, err
 	}
+	r.Mapping = booked
 	return r, nil
 }
 
 // checkBound refuses m unless every account it names is bound to instance.
 func (c *Connectors) checkBound(ctx context.Context, instance string, m *ingest.Mapping) error {
-	if len(m.Transactions) == 0 && len(m.Assertions) == 0 {
+	if len(m.Transactions) == 0 && len(m.Assertions) == 0 && len(m.TickerEntries) == 0 {
 		return nil
 	}
 	bound, err := c.Bindings.BoundAccounts(ctx, instance)

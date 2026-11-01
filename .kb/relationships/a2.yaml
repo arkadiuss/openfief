@@ -489,13 +489,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a421c240240
-  - type: implements
-    from: SYM-viewsv1connect-read-service-client-list-yearly-taxes
-    to: REQ-views-yearly-taxes
-    created_at: 2026-10-30T01:37:53.128Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fa5032db7883
   - type: covered_by
     from: SYM-viewsv1connect-read-service-client-list-yearly-taxes
     to: TEST-views-connectapi-values
@@ -580,3 +573,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2587f1889da1
+  - type: implements
+    from: SYM-ingest-app-holdings-scope
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:48:40.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6db2967deb6d
+  - type: covered_by
+    from: SYM-ingest-app-holdings-scope
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:48:40.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caa194e23069
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-fake-deletions-delete-kind
+    to: TEST-portfolio-app-deletions
+    created_at: 2026-10-31T14:52:57.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ebcae4769c3
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-request-reset
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:01:32.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d0c5d04c293
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-request-reset
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:01:32.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8e1c790424a
+  - type: implements
+    from: SYM-viewsv1connect-read-service-client-list-yearly-taxes
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T18:38:20.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06eae3db703e
+  - type: implements
+    from: SYM-ui-server-set-exemption-class
+    to: REQ-ui-yearly-taxes
+    created_at: 2026-10-31T19:13:15.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-128bf03bd902
+  - type: covered_by
+    from: SYM-ui-server-set-exemption-class
+    to: TEST-ui-taxes
+    created_at: 2026-10-31T19:13:15.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e90270eaa5c7
+  - type: implements
+    from: SYM-ingest-app-holdings-scope
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:06:23.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-799a25cdfa0a

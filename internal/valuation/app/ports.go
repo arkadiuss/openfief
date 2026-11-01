@@ -59,6 +59,9 @@ type SettingsReader interface {
 	// NumberFormat returns the owner's number format (D-113), and false
 	// when the owner has not chosen one: the pack's default applies then.
 	NumberFormat(ctx context.Context) (jurisdiction.NumberFormat, bool, error)
+	// ExemptionClasses returns the owner's class of each instrument they
+	// classified for a yearly tax (D-132), by ISIN.
+	ExemptionClasses(ctx context.Context) (map[string]jurisdiction.ExemptionClass, error)
 }
 
 // ValuationStore stores valuations and each account's valued-through date.
@@ -111,6 +114,10 @@ type TermsRecorder interface {
 	// SaveNumberFormat records the owner's number format. No value depends
 	// on it, so it causes no revaluation.
 	SaveNumberFormat(ctx context.Context, format jurisdiction.NumberFormat) error
+	// SaveExemptionClass records the owner's class of the instrument with isin
+	// (D-132), replacing any earlier one. No stored value depends on it,
+	// so it causes no revaluation.
+	SaveExemptionClass(ctx context.Context, isin string, class jurisdiction.ExemptionClass) error
 	// SaveRulesVersion records the version of the jurisdiction pack's rules
 	// the stored values were computed under and, only when it differs from
 	// the one recorded before, enqueues revals. It reports whether it

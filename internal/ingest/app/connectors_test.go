@@ -33,6 +33,8 @@ type fakeCaller struct {
 	mode      ingest.Mode
 	watermark string
 	scope     ingest.MarketDataScope
+	held      []ingest.HeldAccount
+	terms     []ingest.BondTerms
 	file      string
 	media     string
 	lots      []ingest.BondLot
@@ -41,6 +43,7 @@ type fakeCaller struct {
 
 func (f *fakeCaller) Sync(_ context.Context, instance string, call *app.SyncCall) (app.Delivery, error) {
 	f.instance, f.id, f.mode, f.watermark, f.scope = instance, call.ID, call.Mode, call.Watermark, call.Scope
+	f.held, f.terms = call.Held, call.BondTerms
 	return f.delivery, f.err
 }
 

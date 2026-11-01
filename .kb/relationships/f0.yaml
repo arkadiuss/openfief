@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb6fb568c4d4
-  - type: implements
-    from: SYM-ingest-bond-lot-entries
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T06:35:28.435Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b09e3cc1db40
   - type: covered_by
     from: SYM-ingest-bond-lot-entries
     to: TEST-ingest-bondlot
@@ -538,6 +531,97 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f1d89b1a135
+  - type: implements
+    from: SYM-portfolio-app-sleeves-delete-kind
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T14:52:42.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51db3d173395
+  - type: covered_by
+    from: SYM-portfolio-app-sleeves-delete-kind
+    to: TEST-portfolio-app-deletions
+    created_at: 2026-10-31T14:52:42.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e689a88661b
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-request-reset
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:58:03.457Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9ebb7d685aa
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-request-reset
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:58:03.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecfbe42de53b
+  - type: constrains
+    from: REQ-ingest-ticker-entries-wait
+    to: FACT-SUBJECT-8A8B03F40D5773D9
+    created_at: 2026-10-31T12:56:24.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-091b1f7b0f12
+  - type: requires_property
+    from: REQ-ingest-ticker-entries-wait
+    to: FACT-PROP-EB6755D28B8A41D9
+    created_at: 2026-10-31T12:56:24.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fffd70e24971
+  - type: specified_by
+    from: REQ-ingest-ticker-entries-wait
+    to: SCEN-ingest-ticker-entries-wait
+    created_at: 2026-10-31T12:56:24.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad6b581071aa
+  - type: implements
+    from: SYM-ingest-connectapi-tickers
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:21:53.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e20448afd4d
+  - type: covered_by
+    from: SYM-ingest-connectapi-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:53.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec253854b7df
+  - type: implements
+    from: SYM-ingest-xtb-mapping-dividend
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:27:37.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35bd5c3791b0
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-dividend
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:27:37.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ffcc112dc24
+  - type: implements
+    from: SYM-connectorv1-instrument-proposal-proto-reflect
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:48:07.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ee7a2200a2c
+  - type: covered_by
+    from: SYM-connectorv1-instrument-proposal-proto-reflect
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:48:07.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56bd12cbdb9d
   - type: constrains
     from: REQ-views-read-api-no-broker-account-numbers
     to: FACT-SUBJECT-5D5273B6E7DF2D96
@@ -552,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2dcdafebe463
+  - type: implements
+    from: SYM-ingest-connectapi-tickers
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:48.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ead53bf43143
+  - type: implements
+    from: SYM-portfolio-app-sleeves-delete-kind
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:12:45.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20d6c79d34b0
+  - type: implements
+    from: SYM-ingest-bond-lot-entries
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:22:53.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c021d0e062b5

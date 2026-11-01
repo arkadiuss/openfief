@@ -414,13 +414,6 @@ relationships:
     id: rel-c476de9e482c
   - type: implements
     from: SYM-views-app-views-totals
-    to: REQ-views-totals-with-cash
-    created_at: 2026-10-30T01:18:53.414Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-229f7573fe51
-  - type: implements
-    from: SYM-views-app-views-totals
     to: REQ-valuation-totals-include-cash
     created_at: 2026-10-30T01:18:53.459Z
     created_by: kibi/upsert
@@ -447,6 +440,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70f3a70ed1bc
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-ledger
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:00.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1152a227e9
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-tickers
+    to: TEST-ui-tickers
+    created_at: 2026-10-31T13:40:37.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59d3aef6f8b7
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-reset
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:45:12.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bca910228698
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-reset
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:45:12.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b92a14af273e
   - type: constrains
     from: REQ-valuation-holding-tax-as-if-sold-alone
     to: FACT-SUBJECT-6A2F87E606504707
@@ -461,3 +482,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd43926d9af0
+  - type: implements
+    from: SYM-views-app-views-totals
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T18:36:51.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cdb2bcf85d8

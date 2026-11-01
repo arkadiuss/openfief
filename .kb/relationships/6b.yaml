@@ -545,3 +545,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7aa944cb85a4
+  - type: executable_for
+    from: SYM-ui-test-tickers-page
+    to: TEST-ui-tickers
+    created_at: 2026-10-31T13:41:02.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f09387e90aa
+  - type: executable_for
+    from: SYM-pl-test-oki-yearly-tax
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:58.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aa2ed800001
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms-exemption-classes
+    to: TEST-views-app-values
+    created_at: 2026-10-31T19:10:21.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e3af290744f
+  - type: implements
+    from: SYM-ui-class-label
+    to: REQ-ui-yearly-taxes
+    created_at: 2026-10-31T19:13:02.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0291a5a8bef0
+  - type: covered_by
+    from: SYM-ui-class-label
+    to: TEST-ui-taxes
+    created_at: 2026-10-31T19:13:02.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22803262a8dc
+  - type: implements
+    from: SYM-views-tax-year-account-tax-day
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:13:53.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0153d34c6e
+  - type: covered_by
+    from: SYM-views-tax-year-account-tax-day
+    to: TEST-views-yearly-tax
+    created_at: 2026-10-31T19:13:53.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-888aa791bbc3
+  - type: implements
+    from: SYM-valuationv1-set-exemption-class-response
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:16:48.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24e065596b25
+  - type: covered_by
+    from: SYM-valuationv1-set-exemption-class-response
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:16:48.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77221cffac7a

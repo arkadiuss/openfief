@@ -496,3 +496,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc114868ca8e
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-response-descriptor
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:56:34.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbef43b4bbb1
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-response-descriptor
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:34.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be36c83b68d8
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-render
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:30:14.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c71b5763e62b
+  - type: implements
+    from: SYM-ingest-xtb-sheet
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:33:33.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b95650984b09
+  - type: covered_by
+    from: SYM-ingest-xtb-sheet
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:33:33.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35842b0241cd
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-response-proto-reflect
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T14:00:46.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc445305716e
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-response-proto-reflect
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T14:00:46.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eafbbb67b093
+  - type: implements
+    from: SYM-ledger-sales
+    to: REQ-ledger-sales
+    created_at: 2026-10-31T19:06:57.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9663107a77c
+  - type: covered_by
+    from: SYM-ledger-sales
+    to: TEST-ledger-sale
+    created_at: 2026-10-31T19:06:57.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f7abd9484f6
+  - type: implements
+    from: SYM-valuation-app-revaluer-sync-unclassified
+    to: REQ-valuation-unclassified-attention
+    created_at: 2026-10-31T20:08:37.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b0d9317a2dd
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-sync-unclassified
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T20:08:37.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b90375c08b08

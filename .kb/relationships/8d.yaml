@@ -538,3 +538,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e133e632fc7f
+  - type: implements
+    from: SYM-ingest-app-account-deletions
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:49:23.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56bb598efc96
+  - type: covered_by
+    from: SYM-ingest-app-account-deletions
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:49:23.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30f6fd831427
+  - type: implements
+    from: SYM-ingestv1-broker-account-get-in-last-delivery
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:17.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a054126723f4
+  - type: covered_by
+    from: SYM-ingestv1-broker-account-get-in-last-delivery
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:17.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ca555a19bbb
+  - type: specified_by
+    from: REQ-identity-first-passkey-own-host-or-localhost
+    to: SCEN-e2e-first-passkey-localhost
+    created_at: 2026-10-31T12:35:25.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cafafdd87281
+  - type: implements
+    from: SYM-ingest-xtb-x-text-string
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:34:36.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26411bc41377
+  - type: covered_by
+    from: SYM-ingest-xtb-x-text-string
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:34:36.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f306b7aee2e
+  - type: executable_for
+    from: SYM-plugins-eodhd-test-helper-must-isin
+    to: TEST-plugins-eodhd-connector
+    created_at: 2026-10-31T13:41:29.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28867c300131
+  - type: validates
+    from: TEST-valuation-eodhd-lookup
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:59.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6520a10996ad
+  - type: validates
+    from: TEST-views-connectapi-connections
+    to: REQ-views-read-api-no-broker-account-numbers
+    created_at: 2026-10-31T18:17:16.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b21b9505ee6

@@ -1,10 +1,12 @@
 // Package cli is the identity context's part of the owner's openfief
 // command line: `openfief enroll`, the first passkey (D-80). Given an
-// origin the core allows, such as the owner's own route (D-28), it has the
-// core issue D-60's one-time link for that origin and prints it. Without
-// one, it forwards a local port to the core, the only entry point for
-// browsers (D-81), has the core issue the link for that localhost origin,
-// prints it, and keeps the port-forward open until the owner stops it.
+// origin, such as the owner's own route (D-28), it has the core issue
+// D-60's one-time link for that origin and prints it. Without one, it
+// forwards a local port to the core, the only entry point for browsers
+// (D-81), has the core issue the link for that localhost origin, prints
+// it, and keeps the port-forward open until the owner stops it. The core
+// itself refuses a link for an origin it doesn't accept (D-126), so the
+// command checks no origin of its own and passes the core's refusal on.
 // cmd/openfief wires the Kubernetes adapter, internal/identity/kube's
 // CoreAccess.
 package cli
@@ -37,9 +39,6 @@ const (
 var (
 	// ErrUsage reports arguments the command does not accept.
 	ErrUsage = errors.New("bad arguments")
-	// ErrOriginNotAllowed reports an --origin the core does not accept the
-	// owner's browser from: a passkey made there could never sign in.
-	ErrOriginNotAllowed = errors.New("the core does not allow this origin")
 	// errForwardEnded reports a port-forward that stopped on its own.
 	errForwardEnded = errors.New("the port-forward to the core stopped")
 )
@@ -50,11 +49,9 @@ type Core interface {
 	// closing ready once it listens.
 	Forward(ctx context.Context, localPort int, ready chan struct{}) error
 	// EnrollLink runs the core's enroll-link command for host, a host:port
-	// or an origin, and returns the one-time link it prints.
+	// or an origin, and returns the one-time link it prints, or the core's
+	// refusal of an origin it doesn't accept.
 	EnrollLink(ctx context.Context, host string, ttl time.Duration) (string, error)
-	// AllowedOrigins returns the origins the running core accepts the
-	// owner's browser from, its --auth-origin flags.
-	AllowedOrigins(ctx context.Context) ([]string, error)
 }
 
 // Env is what the command needs from outside it.
@@ -110,8 +107,8 @@ func parse(args []string) (options, error) {
 }
 
 // Run runs `openfief enroll` with args, the arguments after "enroll". With
-// --origin it checks that the core allows the origin and prints the
-// one-time link for it, with no port-forward. Without one it starts the
+// --origin it prints the one-time link the core issues for it, with no
+// port-forward. Without one it starts the
 // port-forward to the core, prints the one-time link for
 // http://localhost:<port> once the forward listens, and keeps forwarding
 // until ctx ends, which is a normal stop.
@@ -144,27 +141,15 @@ func Run(ctx context.Context, args []string, env *Env) error {
 	if err != nil {
 		return fmt.Errorf("issuing the link: %w", err)
 	}
-	if err := printLink(env.Out, link, host, &o); err != nil {
+	if err := printLink(env.Out, link, host, o.ttl); err != nil {
 		return err
 	}
 	return untilStopped(ctx, forwarded)
 }
 
-// enrollOrigin issues and prints the link for o.origin (D-80), after
-// checking that the core allows it.
+// enrollOrigin has the core issue the link for o.origin (D-80) and prints
+// it. The core refuses an origin it doesn't accept (D-126).
 func enrollOrigin(ctx context.Context, core Core, out io.Writer, o *options) error {
-	texts, err := core.AllowedOrigins(ctx)
-	if err != nil {
-		return fmt.Errorf("reading the core's allowed origins: %w", err)
-	}
-	allowed, err := identity.NewOrigins(texts)
-	if err != nil {
-		return fmt.Errorf("the core's allowed origins: %w", err)
-	}
-	if _, err = allowed.Allowed(o.origin.String()); err != nil {
-		return fmt.Errorf("%w: %s; it allows %v: add --auth-origin=%s to the core (docs/guides/expose.md)",
-			ErrOriginNotAllowed, o.origin, texts, o.origin)
-	}
 	link, err := core.EnrollLink(ctx, o.origin.String(), o.ttl)
 	if err != nil {
 		return fmt.Errorf("issuing the link: %w", err)
@@ -206,21 +191,17 @@ func forwardEnded(err error) error {
 }
 
 // printLink tells the owner what to open and what follows.
-func printLink(out io.Writer, link, host string, o *options) error {
-	var warn string
-	if o.port != DefaultPort {
-		warn = fmt.Sprintf("\nThe core accepts http://%s only if it runs with --auth-origin=http://%s.\n", host, host)
-	}
+func printLink(out io.Writer, link, host string, ttl time.Duration) error {
 	_, err := fmt.Fprintf(out, `Forwarding http://%[1]s to the OpenFief core (kubectl port-forward).
 Open this link in your browser within %[2]s to create your first passkey on %[1]s; it works once:
 
   %[3]s
-%[4]s
+
 After you create the passkey, the built-in UI's first-run wizard walks you through creating accounts and
 sleeves and binding the connector instances you installed.
 
 Keep this command running while you use OpenFief on http://%[1]s; press Ctrl-C to stop forwarding.
-`, host, o.ttl, link, warn)
+`, host, ttl, link)
 	if err != nil {
 		return fmt.Errorf("writing: %w", err)
 	}

@@ -103,7 +103,8 @@ func authClient(srvURL string, client *http.Client, token string) authAPI {
 // enrollCmd runs core enroll-link as the CLI does and returns its output.
 func enrollCmd(t *testing.T, dsn string) string {
 	t.Helper()
-	cmd, err := parseArgs([]string{"enroll-link"}, func(string) string { return dsn })
+	// Only the DSN: the core accepts its default origin, localhost:8080.
+	cmd, err := parseArgs([]string{"enroll-link"}, func(k string) string { return map[string]string{dsnEnv: dsn}[k] })
 	if err != nil {
 		t.Fatalf("parseArgs: %v", err)
 	}

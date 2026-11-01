@@ -482,3 +482,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc2f9138de5d
+  - type: implements
+    from: SYM-portfoliov1connect-sleeve-service-client-delete-sleeve
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T14:59:52.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4956bd52ad6
+  - type: covered_by
+    from: SYM-portfoliov1connect-sleeve-service-client-delete-sleeve
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:59:52.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a17e58354f23
+  - type: implements
+    from: SYM-ingest-ticker-entry
+    to: REQ-ingest-ticker-entries-wait
+    created_at: 2026-10-31T13:24:36.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0447f902d76
+  - type: covered_by
+    from: SYM-ingest-ticker-entry
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:24:36.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb15c00db556
+  - type: implements
+    from: SYM-ingest-ticker-entry
+    to: REQ-ingest-xtb-unconfirmed-ticker-waits
+    created_at: 2026-10-31T18:05:21.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bec91476f46b

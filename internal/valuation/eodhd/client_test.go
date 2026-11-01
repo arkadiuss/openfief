@@ -66,9 +66,9 @@ func TestListings(t *testing.T) {
 	}
 	// The result without an ISIN, a fuzzy match on the name, is left out.
 	want := []eodhd.Listing{
-		{ISIN: synt, Code: "SYNT", Exchange: "XETRA", Currency: "EUR"},
-		{ISIN: synt, Code: "SYNT", Exchange: "LSE", Currency: "GBX"},
-		{ISIN: synt, Code: "SYN1", Exchange: "F", Currency: "EUR"},
+		{ISIN: synt, Code: "SYNT", Exchange: "XETRA", Currency: "EUR", Name: "Synthetic Test ETF"},
+		{ISIN: synt, Code: "SYNT", Exchange: "LSE", Currency: "GBX", Name: "Synthetic Test ETF"},
+		{ISIN: synt, Code: "SYN1", Exchange: "F", Currency: "EUR", Name: "Synthetic Test ETF"},
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("Listings (-want +got):\n%s", diff)

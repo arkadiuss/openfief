@@ -580,6 +580,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37a8018a10fa
+  - type: implements
+    from: SYM-ingest-xtb-record-errorf
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:32:11.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-731b860e853d
+  - type: covered_by
+    from: SYM-ingest-xtb-record-errorf
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:32:11.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-445130dfae95
+  - type: implements
+    from: SYM-ingest-xtb-part-name
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:35:35.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b58167abb9e
+  - type: covered_by
+    from: SYM-ingest-xtb-part-name
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:35:35.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e55992542b79
+  - type: implements
+    from: SYM-ingest-xtbtest-column
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:39:03.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73569f1ee394
+  - type: covered_by
+    from: SYM-ingest-xtbtest-column
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:39:03.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb6ae773df65
+  - type: implements
+    from: SYM-ingestv1-list-pending-tickers-response-proto-reflect
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:05:25.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0dd922bc0af
+  - type: covered_by
+    from: SYM-ingestv1-list-pending-tickers-response-proto-reflect
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:05:25.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-331f2f75f1e5
   - type: constrains
     from: REQ-pl-oki-income-outside-pit
     to: FACT-SUBJECT-D76C92870F5380B6
@@ -594,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a6d9a9f2f7e
+  - type: implements
+    from: SYM-views-add-holding
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:11:53.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5fa976026c9
+  - type: covered_by
+    from: SYM-views-add-holding
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:11:53.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a24f268dfa99

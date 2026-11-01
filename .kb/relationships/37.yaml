@@ -512,13 +512,6 @@ relationships:
     id: rel-e738684e0823
   - type: implements
     from: SYM-views-ghostfolio-client-delete-balance
-    to: REQ-views-ghostfolio-cash-balances
-    created_at: 2026-10-30T01:26:42.541Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-366063db8d4b
-  - type: implements
-    from: SYM-views-ghostfolio-client-delete-balance
     to: REQ-views-ghostfolio-client
     created_at: 2026-10-30T01:26:42.574Z
     created_by: kibi/upsert
@@ -608,6 +601,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09f939ef6920
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-response-reset
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:56:13.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef1ac85849f8
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-response-reset
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:13.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fe0bdc3a24d
+  - type: implements
+    from: SYM-ingest-connectapi-tickers-list-pending-tickers
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:21:58.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b71d0fa0f243
+  - type: covered_by
+    from: SYM-ingest-connectapi-tickers-list-pending-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:58.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1899bd7505a2
   - type: constrains
     from: REQ-plugins-in-cluster-service-read-role
     to: FACT-SUBJECT-D637ED85034E36A7
@@ -657,3 +678,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd2dbf7263fd
+  - type: implements
+    from: SYM-ingest-connectapi-tickers-list-pending-tickers
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:04:08.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f44f068e7aaa
+  - type: validates
+    from: TEST-ingest-app-bondlots
+    to: REQ-ingest-bond-lot-handed-with-account
+    created_at: 2026-10-31T18:09:18.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54c1578a7053
+  - type: validates
+    from: TEST-ingest-app-bondlots
+    to: REQ-ingest-bond-account-live-on-first-lot
+    created_at: 2026-10-31T18:11:04.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5d680271dfc
+  - type: validates
+    from: TEST-plugins-kube-cluster-service
+    to: REQ-plugins-in-cluster-service-read-role
+    created_at: 2026-10-31T18:17:51.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-608aee448de0
+  - type: validates
+    from: TEST-plugins-kube-cluster-service
+    to: REQ-plugins-in-cluster-service-role-removed
+    created_at: 2026-10-31T18:18:03.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27defeee0b12
+  - type: implements
+    from: SYM-views-ghostfolio-client-delete-balance
+    to: REQ-views-ghostfolio-cash-balances-per-currency
+    created_at: 2026-10-31T20:03:49.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0abc342f64a1

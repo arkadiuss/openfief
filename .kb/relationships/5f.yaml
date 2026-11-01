@@ -559,3 +559,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a1974ab30ec
+  - type: implements
+    from: SYM-ingestv1-broker-account-get-account-id
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:07.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-396ef9f4e9a4
+  - type: covered_by
+    from: SYM-ingestv1-broker-account-get-account-id
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:07.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4124088db05d
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-request-get-broker-account
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:58:44.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b50e59c4fe9
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-request-get-broker-account
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:58:44.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a559118bd807
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-response-string
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:01:07.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e3e2a63c849
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-response-string
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:01:07.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d41badd1cf94
+  - type: constrains
+    from: REQ-ingest-xtb-no-transfer-comments
+    to: FACT-SUBJECT-7B552889D0C16865
+    created_at: 2026-10-31T12:55:50.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2c32210b938
+  - type: requires_property
+    from: REQ-ingest-xtb-no-transfer-comments
+    to: FACT-PROP-9DED5A8DCC8766AA
+    created_at: 2026-10-31T12:55:51.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e773c59ff3cd
+  - type: specified_by
+    from: REQ-ingest-xtb-no-transfer-comments
+    to: SCEN-ingest-xtb-no-transfer-comments
+    created_at: 2026-10-31T12:55:51.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc79ce3935ff
+  - type: implements
+    from: SYM-core-logged-attention-raise
+    to: REQ-valuation-unclassified-attention
+    created_at: 2026-10-31T20:08:21.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6da2446007a4
+  - type: covered_by
+    from: SYM-core-logged-attention-raise
+    to: TEST-core-unclassified
+    created_at: 2026-10-31T20:08:21.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d64447f3905f

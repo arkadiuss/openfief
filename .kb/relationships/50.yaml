@@ -412,6 +412,83 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7caec7fdcdc0
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-request
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:00:11.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10cdd5287571
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-request
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:00:11.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e5faa501f17
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-response-string
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:02:25.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0495e96f261d
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-response-string
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:02:25.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e9ffc7403b6
+  - type: executable_for
+    from: SYM-core-test-helper-slices-equal
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:20:20.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04ff1e3a8808
+  - type: implements
+    from: SYM-ingest-xtb-export-account
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:28:32.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0d0507471a2
+  - type: covered_by
+    from: SYM-ingest-xtb-export-account
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:28:32.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be1ab17fbaea
+  - type: implements
+    from: SYM-ingest-xtb-zip-parts
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:33:53.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61c6e5af1b38
+  - type: covered_by
+    from: SYM-ingest-xtb-zip-parts
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:33:53.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1487467c393
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-request-reset
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:47:06.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b473f619873f
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-request-reset
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:47:06.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a64718cca846
   - type: constrains
     from: REQ-core-attention-item-outbox-events
     to: FACT-SUBJECT-A9563048F0AE7021
@@ -426,3 +503,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c82f0a50a43
+  - type: executable_for
+    from: SYM-core-test-helper-check-exemption-class
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:00:38.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd809493ca49
+  - type: implements
+    from: SYM-pl-pit38-taxes
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:05:09.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0ed5be764c4
+  - type: covered_by
+    from: SYM-pl-pit38-taxes
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:05:09.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3363fbe23e6a
+  - type: implements
+    from: SYM-views-payment-type
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:37:09.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf38b1001ae4
+  - type: covered_by
+    from: SYM-views-payment-type
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:37:09.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-519ffd8b2607

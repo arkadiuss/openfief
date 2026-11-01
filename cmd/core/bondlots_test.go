@@ -37,7 +37,7 @@ func (bondsConnector) ImportBondLots(_ context.Context, req *connect.Request[con
 	if err != nil {
 		return nil, refused(err)
 	}
-	m, terms, err := treasurybonds.Mapper{Account: demo.BondsAccount}.Map(&entries, today)
+	m, terms, err := treasurybonds.Mapper{}.Map(&entries, today)
 	if err != nil {
 		return nil, refused(err)
 	}

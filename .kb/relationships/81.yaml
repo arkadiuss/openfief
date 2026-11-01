@@ -391,3 +391,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51fc10290c49
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-row
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:57:59.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22db11120d50
+  - type: implements
+    from: SYM-connectorv1-open-lot-string
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:01:18.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67859f65c013
+  - type: covered_by
+    from: SYM-connectorv1-open-lot-string
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:01:19.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0050752b6d26
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-response-proto-message
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:02:31.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6830e4e69f93
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-response-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:02:31.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c28305f5383
+  - type: implements
+    from: SYM-ingest-pg-store-save-proposals
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:23:42.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-224476febaff
+  - type: covered_by
+    from: SYM-ingest-pg-store-save-proposals
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:23:42.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6338f60a7888
+  - type: implements
+    from: SYM-ingest-ticker
+    to: REQ-ingest-ticker-entries-wait
+    created_at: 2026-10-31T13:24:22.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95d18cf814b4
+  - type: covered_by
+    from: SYM-ingest-ticker
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:24:22.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1814ab68a2a
+  - type: implements
+    from: SYM-plugins-xtb-status
+    to: REQ-plugins-xtb-connector
+    created_at: 2026-10-31T13:42:23.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-204cc1157652
+  - type: covered_by
+    from: SYM-plugins-xtb-status
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:42:23.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08e3a62fe9db
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-get-description
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:46:47.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c869ec37fc62
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-get-description
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:46:47.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24b08aa5cc51
+  - type: implements
+    from: SYM-ui-taxes-settings
+    to: REQ-ui-yearly-taxes
+    created_at: 2026-10-31T19:12:50.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-762aabbdb287
+  - type: covered_by
+    from: SYM-ui-taxes-settings
+    to: TEST-ui-taxes
+    created_at: 2026-10-31T19:12:50.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e643877b567
+  - type: implements
+    from: SYM-ingest-pg-store-save-proposals
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:29.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3150bf34b455

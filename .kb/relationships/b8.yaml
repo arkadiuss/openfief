@@ -692,3 +692,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c30aefb5f05
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-request-reset
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:26.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92407ac3895a
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-request-reset
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:26.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8301dcc383bb
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-get-symbol
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:45:44.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1f4ed981981
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-get-symbol
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:45:44.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-475245115472
+  - type: validates
+    from: TEST-ingest-app-scheduler
+    to: REQ-ingest-bond-account-live-on-first-lot
+    created_at: 2026-10-31T18:11:09.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d6e8b6c17f4

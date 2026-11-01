@@ -433,3 +433,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70c4ee26ccb5
+  - type: implements
+    from: SYM-ingest-app-holdings-scope-held-accounts
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:48:45.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c05ca21d427
+  - type: covered_by
+    from: SYM-ingest-app-holdings-scope-held-accounts
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:48:45.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b51783ecc845
+  - type: executable_for
+    from: SYM-plugins-xtb-test-import-file
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:43:09.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff45bfc0df59
+  - type: implements
+    from: SYM-ingest-app-holdings-scope-held-accounts
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:06:35.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-262e86e587b7
+  - type: validates
+    from: TEST-ingest-app-account-changes
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:15:27.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6609c9e91098
+  - type: validates
+    from: TEST-ingest-app-account-changes
+    to: REQ-ingest-broker-account-remap
+    created_at: 2026-10-31T18:16:27.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4e862780717
+  - type: validates
+    from: TEST-ingest-app-account-changes
+    to: REQ-ingest-broker-account-numbers-owner-only
+    created_at: 2026-10-31T18:17:07.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10346a4ed99f

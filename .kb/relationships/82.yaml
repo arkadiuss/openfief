@@ -440,3 +440,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc490b700adc
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-request
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:21.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f23e118e5720
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-request
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:21.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93e00f62132e
+  - type: implements
+    from: SYM-ingest-xtb-parse-written
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:32:53.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce32f9358c83
+  - type: covered_by
+    from: SYM-ingest-xtb-parse-written
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:32:53.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7faaf64679c6
+  - type: implements
+    from: SYM-valuationv1connect-unimplemented-settings-service-handler-set-exemption-class
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:17:33.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae4874765028
+  - type: covered_by
+    from: SYM-valuationv1connect-unimplemented-settings-service-handler-set-exemption-class
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:17:33.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4835d355927

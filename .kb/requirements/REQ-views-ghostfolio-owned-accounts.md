@@ -1,6 +1,6 @@
 ---
 title: The Ghostfolio view must own exactly one Ghostfolio account per account of the record, identified by a UUID derived from the view instance's name and the account's ID, create it with that UUID when it is missing, and never change or delete an account or activity outside its owned accounts.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-64
 tags:
   - strict-modeling

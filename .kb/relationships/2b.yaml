@@ -559,6 +559,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7324c3955bda
+  - type: implements
+    from: SYM-portfoliov1connect-unimplemented-sleeve-service-handler-delete-sleeve
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:00:02.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af6b40bffed0
+  - type: covered_by
+    from: SYM-portfoliov1connect-unimplemented-sleeve-service-handler-delete-sleeve
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:00:02.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3336073fa11
+  - type: verified_by
+    from: SCEN-ui-tickers-to-confirm
+    to: TEST-ui-tickers
+    created_at: 2026-10-31T12:55:23.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e622e9982ad5
+  - type: implements
+    from: SYM-ingest-xtb-skipped
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:26:29.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40d21f083d6d
+  - type: covered_by
+    from: SYM-ingest-xtb-skipped
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:26:29.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ed2eadac992
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-response
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:06:51.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5a5c7895838
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-response
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:06:51.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f97084dba55f
   - type: constrains
     from: REQ-identity-core-refuses-enroll-origin
     to: FACT-SUBJECT-9565864B05E4ACEA
@@ -573,3 +622,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce86625c096d
+  - type: implements
+    from: SYM-views-ghostfolio-cash-account-name
+    to: REQ-views-ghostfolio-owned-and-cash-accounts
+    created_at: 2026-10-31T19:03:08.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b4eac042cfe
+  - type: covered_by
+    from: SYM-views-ghostfolio-cash-account-name
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-31T19:03:08.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e72dec53c12e

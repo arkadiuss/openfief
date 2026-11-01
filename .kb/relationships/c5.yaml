@@ -447,3 +447,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-748193a90247
+  - type: implements
+    from: SYM-connectorv1-holding-proto-message
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:00:32.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0728248a6920
+  - type: covered_by
+    from: SYM-connectorv1-holding-proto-message
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:00:32.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f30c6df8b577
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-request-get-origin
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:52.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3de78fe14bd1
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-request-get-origin
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:52.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebb4e1ba4e19
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-request-get-origin
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:01:59.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4e0c5ec6a79
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-request-get-origin
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:01:59.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2cc14560715
+  - type: verified_by
+    from: SCEN-ingest-ticker-entries-wait
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T12:55:09.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d72f6becd156
+  - type: verified_by
+    from: SCEN-ingest-ticker-entries-wait
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T12:55:09.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0db601285f08
+  - type: implements
+    from: SYM-ui-server-settings-routes
+    to: REQ-ui-yearly-taxes
+    created_at: 2026-10-31T19:12:37.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f32f517a1f8a
+  - type: covered_by
+    from: SYM-ui-server-settings-routes
+    to: TEST-ui-taxes
+    created_at: 2026-10-31T19:12:37.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c586211451b

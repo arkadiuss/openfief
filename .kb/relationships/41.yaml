@@ -524,6 +524,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-979b7b3aa912
+  - type: executable_for
+    from: SYM-ingest-delivery-test-held
+    to: TEST-ingest-delivery-held
+    created_at: 2026-10-31T13:51:21.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96a9df0df3f4
+  - type: verified_by
+    from: SCEN-views-ghostfolio-leftover-assets-after-import
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-31T15:07:53.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b026cc1c97f1
+  - type: verified_by
+    from: SCEN-views-ghostfolio-leftover-assets-after-import
+    to: TEST-views-ghostfolio-contract
+    created_at: 2026-10-31T15:07:53.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f1dfecf9605
+  - type: verified_by
+    from: SCEN-views-ghostfolio-leftover-assets-after-import
+    to: TEST-views-ghostfolio-plan-properties
+    created_at: 2026-10-31T15:07:53.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b094f69f5ed3
+  - type: implements
+    from: SYM-ingest-xtb-empty
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:31:34.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2470217ab8e3
+  - type: covered_by
+    from: SYM-ingest-xtb-empty
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:31:34.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf55ef5cbbe1
+  - type: implements
+    from: SYM-ingestv1connect-new-ticker-service-client
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:01:27.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa6baf1b19f9
+  - type: covered_by
+    from: SYM-ingestv1connect-new-ticker-service-client
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:01:27.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0827fa9a9cb5
   - type: constrains
     from: REQ-pl-oki-tax-base-average-value
     to: FACT-SUBJECT-D256A25BDCDCE899
@@ -545,3 +601,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f989c42c238
+  - type: implements
+    from: SYM-pl-clamp
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:02:53.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e46cd2ddac6
+  - type: covered_by
+    from: SYM-pl-clamp
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:02:53.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42fb49da8ede
+  - type: implements
+    from: SYM-valuationv1-set-exemption-class-request-string
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:16:00.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8e845d39b31
+  - type: covered_by
+    from: SYM-valuationv1-set-exemption-class-request-string
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:16:00.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c403c8f9e06

@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"slices"
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/identity"
@@ -82,7 +83,7 @@ func (a *Auth) CreateEnrollmentLink(ctx context.Context, origin, token, target s
 			return EnrollmentLink{}, err
 		}
 	}
-	return IssueEnrollmentLink(ctx, a.store, a.random, a.now(), t, ttl)
+	return IssueEnrollmentLink(ctx, a.store, a.random, a.now(), a.cfg.Origins, t, ttl)
 }
 
 // IssueEnrollmentLink stores a one-time enrollment code for creating a
@@ -90,9 +91,15 @@ func (a *Auth) CreateEnrollmentLink(ctx context.Context, origin, token, target s
 // (crypto/rand.Reader when nil), issued at now and lasting ttl, or
 // identity.DefaultEnrollmentTTL when ttl is zero. It checks no session:
 // besides CreateEnrollmentLink, core enroll-link calls it, the break-glass
-// way in that prints the first link. The link's origin need not be on the
-// serving core's allow-list yet; BeginRegistration checks both.
-func IssueEnrollmentLink(ctx context.Context, store AuthStore, random io.Reader, now time.Time, origin identity.Origin, ttl time.Duration) (EnrollmentLink, error) {
+// way in that prints the first link. allowed is the core's one setting of
+// the origins it accepts, which serving reads too (D-126): an origin not on
+// it is refused with an error wrapping ErrForbidden and
+// identity.ErrOriginNotAllowed, and nothing is stored, since a passkey made
+// there could never sign in.
+func IssueEnrollmentLink(ctx context.Context, store AuthStore, random io.Reader, now time.Time, allowed identity.Origins, origin identity.Origin, ttl time.Duration) (EnrollmentLink, error) {
+	if !slices.Contains(allowed.List(), origin) {
+		return EnrollmentLink{}, fmt.Errorf("%w: %w: %s; the core accepts %s", ErrForbidden, identity.ErrOriginNotAllowed, origin, allowed)
+	}
 	if random == nil {
 		random = rand.Reader
 	}

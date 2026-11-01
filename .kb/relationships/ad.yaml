@@ -734,13 +734,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4471a789c381
-  - type: implements
-    from: SYM-ingest-bond-lot-key-of-lot
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T06:35:36.228Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ed5076078bbd
   - type: covered_by
     from: SYM-ingest-bond-lot-key-of-lot
     to: TEST-ingest-bondlot
@@ -748,6 +741,69 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c8f3df0a753
+  - type: executable_for
+    from: SYM-core-test-helper-coi-terms
+    to: TEST-core-bond-coupons
+    created_at: 2026-10-31T13:48:10.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bb9d38b3f24
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-request-get-session-token
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:58:33.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a11da90f936
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-request-get-session-token
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:58:33.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28701746198e
+  - type: executable_for
+    from: SYM-core-test-helper-column
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:01.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97302ae28c21
+  - type: implements
+    from: SYM-ingest-xtb-mapping-cash-ref
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:26:49.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ee88f38611c
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-cash-ref
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:26:49.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ace74114edcd
+  - type: implements
+    from: SYM-ingest-xtbtest-cash-header
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:37:10.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-757eb460a193
+  - type: covered_by
+    from: SYM-ingest-xtbtest-cash-header
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:37:10.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb747bc9ca8f
+  - type: executable_for
+    from: SYM-plugins-xtb-test-manifest
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:43:29.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bc02039328e
   - type: constrains
     from: REQ-views-ghostfolio-bond-asset-fresh-name
     to: FACT-SUBJECT-2A49400A8B1F4128
@@ -769,3 +825,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d12138b3f16f
+  - type: implements
+    from: SYM-views-app-views-taxed-account
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:10:15.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c30629f36557
+  - type: covered_by
+    from: SYM-views-app-views-taxed-account
+    to: TEST-views-app-values
+    created_at: 2026-10-31T19:10:15.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a62015ea99e8
+  - type: implements
+    from: SYM-ingest-bond-lot-key-of-lot
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:23:10.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ae991802ee5

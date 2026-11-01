@@ -475,3 +475,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-041c3e5e4596
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-row
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:41.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d527c58e95f0
+  - type: implements
+    from: SYM-ingest-connectrpc-instrument-to
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:50:14.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-919aaca2be08
+  - type: covered_by
+    from: SYM-ingest-connectrpc-instrument-to
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:50:14.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-583ce76c9b25
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-removals
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:49:57.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76396e18b314
+  - type: implements
+    from: SYM-ingest-pg-entry-row
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:24:07.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f8d321fd910
+  - type: covered_by
+    from: SYM-ingest-pg-entry-row
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:24:07.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0da8b9c79ee2
+  - type: implements
+    from: SYM-ingest-xtbtest-export-bytes
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:38:00.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d27c2bd1980e
+  - type: covered_by
+    from: SYM-ingest-xtbtest-export-bytes
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:38:00.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f85d04410b9c
+  - type: executable_for
+    from: SYM-views-test-tax-totals
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:12:21.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d9f9e4e970f
+  - type: implements
+    from: SYM-exp-plugins-held-by
+    to: REQ-operator-older-plugin-keeps-browser-path
+    created_at: 2026-10-31T18:19:22.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02b7679348d2

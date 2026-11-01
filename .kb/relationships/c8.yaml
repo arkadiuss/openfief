@@ -384,13 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40de33baf718
-  - type: executable_for
-    from: SYM-pl-test-yearly-tax
-    to: TEST-pl-pack
-    created_at: 2026-10-29T22:08:37.108Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-36e8e558c374
   - type: implements
     from: SYM-ingest-app-account-change
     to: REQ-ingest-account-terms
@@ -426,3 +419,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0fd8fa24f7c
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-response-get-proposals
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T14:01:00.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43f5f067d3d9
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-response-get-proposals
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T14:01:00.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53eb75a56b04
+  - type: executable_for
+    from: SYM-pl-test-oki-exemption-class
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:04:33.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aee1d0d342b

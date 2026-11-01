@@ -30,6 +30,7 @@ var (
 	errFailed        = errors.New("the request failed; its request ID names it in the server log")
 	errTokenRequired = errors.New("a bearer token is required")
 	errTokenNotValid = errors.New("the bearer token is not valid")
+	errNoTaxRate     = errors.New("an FX rate the yearly tax needs is not stored yet")
 )
 
 // invalidMessage returns what a client sees of an error that means the
@@ -52,7 +53,8 @@ func invalidMessage(err error) error {
 
 // toConnectError returns the Connect error err stands for: not found for an
 // unknown account, invalid argument for an invalid request, unavailable
-// while the installed plugins can't be read, and internal,
+// while the installed plugins can't be read, failed precondition while a
+// yearly tax lacks an FX rate (D-127), and internal,
 // logged under the request ID only, for anything else. Vanguard maps these
 // codes to HTTP statuses for REST (404, 400, 500).
 func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.Error {
@@ -64,6 +66,9 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 	}
 	if errors.Is(err, app.ErrPluginsUnknown) {
 		return connect.NewError(connect.CodeUnavailable, errNoPlugins)
+	}
+	if errors.Is(err, views.ErrTaxConversion) {
+		return connect.NewError(connect.CodeFailedPrecondition, errNoTaxRate)
 	}
 	if msg := invalidMessage(err); msg != nil {
 		return connect.NewError(connect.CodeInvalidArgument, msg)

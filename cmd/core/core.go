@@ -152,15 +152,9 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	client, err := valuationpg.NewClient(pool, vstore, ledgerpg.New(pool), &valuationpg.Config{
-		Concurrency: cfg.Workers,
-		EndOfDay:    cfg.EndOfDay,
-		Pack:        jurisdictionPack(),
-		Today:       valuationpg.TodayIn(cfg.EndOfDay.Location, now),
-		Logger:      log,
-	})
+	client, err := revaluationClient(pool, vstore, cfg, now, log)
 	if err != nil {
-		return nil, fmt.Errorf("revaluation workers: %w", err)
+		return nil, err
 	}
 	models, err := newModels(pool, vstore, auth, cfg.Auth.Origins, cfg.Reporting)
 	if err != nil {
@@ -184,7 +178,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	}
 	plugin := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
 	plugin = withBondLotService(plugin, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
-	plugin = withStatementService(plugin, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	plugin = withStatementService(plugin, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), newTickers(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
 	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
 	plugin = withPriceCheckService(plugin, checks, callers, log)
 	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins),

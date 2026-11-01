@@ -468,3 +468,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41efcc35bd8c
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-held-connector-sync
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:50:29.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d8be8a662ff
+  - type: implements
+    from: SYM-pl-coupon-payment
+    to: REQ-pl-coupon-payments
+    created_at: 2026-10-31T13:58:09.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a81b925149e9
+  - type: covered_by
+    from: SYM-pl-coupon-payment
+    to: TEST-pl-coupons
+    created_at: 2026-10-31T13:58:09.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a61a8e8874d5
+  - type: implements
+    from: SYM-ingest-xtbtest-workbook
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:38:44.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a8c992e711a
+  - type: covered_by
+    from: SYM-ingest-xtbtest-workbook
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:38:44.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-286043e4d469
+  - type: executable_for
+    from: SYM-ui-test-helper-xtb-upload-response
+    to: TEST-ui-tickers
+    created_at: 2026-10-31T13:40:56.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c83c928a9ee
+  - type: implements
+    from: SYM-views-connectapi-pb-class-amounts
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:10:39.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-810c32eb3900
+  - type: covered_by
+    from: SYM-views-connectapi-pb-class-amounts
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:10:39.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbc44add4dc8

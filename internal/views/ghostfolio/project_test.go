@@ -26,6 +26,7 @@ func TestDerivedUUIDs(t *testing.T) {
 		name, got, want string
 	}{
 		{"owned account", ghostfolio.AccountUUID("ghostfolio", "acct-ibkr"), "a013b834-4bd6-5aaf-9784-769143502838"},
+		{"owned cash account", ghostfolio.CashAccountUUID("ghostfolio", "acct-ibkr", cur(t, "USD")), "9c7a8e2f-cfd8-50a4-8d26-4debba0f5cca"},
 		{"bond series", bondSym("EDO0536"), "28c758ef-4bec-5db3-9fc5-6fd61c14f623"},
 		{"fee asset", feeSym(t, "PLN"), "e48bff40-0f25-5948-b8a8-7a49ea3193ac"},
 	}
@@ -39,6 +40,9 @@ func TestDerivedUUIDs(t *testing.T) {
 	}
 	if ghostfolio.AccountUUID("other", "acct-ibkr") == ghostfolio.AccountUUID("ghostfolio", "acct-ibkr") {
 		t.Error("two instances share an owned account")
+	}
+	if ghostfolio.CashAccountUUID("ghostfolio", "acct-ibkr", cur(t, "EUR")) == ghostfolio.CashAccountUUID("ghostfolio", "acct-ibkr", cur(t, "USD")) {
+		t.Error("two currencies share an owned cash account")
 	}
 	const otherUser = "5a1e0f6c-0000-4000-8000-00000000beef"
 	for _, other := range []string{
@@ -142,7 +146,7 @@ func TestProject(t *testing.T) {
 				activity(t, "a1", "e2", ghostfolio.TypeBuy, "2025-01-04", "PLN", ghostfolio.DataSourceManual, edo, "10", "100", "0"),
 			},
 			wantAssets: []ghostfolio.AssetProfile{{
-				Symbol: edo, Name: "EDO0136", ISIN: isinPL, Currency: cur(t, "PLN"), AssetClass: "FIXED_INCOME", AssetSubClass: "BOND",
+				Symbol: edo, Name: "EDO0136 (OpenFief bond)", ISIN: isinPL, Currency: cur(t, "PLN"), AssetClass: "FIXED_INCOME", AssetSubClass: "BOND",
 				MarketData: []ghostfolio.Price{
 					{Date: date(t, "2025-01-02"), Price: dec(t, "100")},
 					{Date: date(t, "2025-01-03"), Price: dec(t, "100.027")},
@@ -165,11 +169,12 @@ func TestProject(t *testing.T) {
 				Activities: tt.want,
 				Assets:     tt.wantAssets,
 			}
-			// TestProjectBalances checks the cash balances.
+			// TestProjectBalances checks the cash balances and the accounts
+			// that hold cash in other currencies.
+			got.Accounts = got.Accounts[:1]
 			if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(ghostfolio.Desired{}, "Balances")); diff != "" {
 				t.Errorf("Project (-want +got):\n%s", diff)
 			}
-			problems = slices.DeleteFunc(problems, func(p ghostfolio.Problem) bool { return p.Reason == ghostfolio.ProblemCashCurrency })
 			if diff := cmp.Diff(tt.wantProblems, problems, cmpopts.EquateEmpty()); diff != "" {
 				t.Errorf("problems (-want +got):\n%s", diff)
 			}
@@ -213,25 +218,30 @@ func TestProjectAccounts(t *testing.T) {
 	}
 }
 
-// TestProjectBalances checks the owned accounts' cash balances (D-108): the
-// account's cash in the owned account's currency at the end of each date it
-// changes, cash in another currency left out as a problem, and a balance
-// too large for a double leaving out the account's balances.
+// TestProjectBalances checks the owned accounts' cash balances (D-108,
+// D-133): the account's cash in the owned account's currency at the end of
+// each date it changes, cash in each other currency in an owned account of
+// its own that holds only that balance, and a balance too large for a
+// double leaving out that account's balances.
 func TestProjectBalances(t *testing.T) {
 	t.Parallel()
 	must := mustTx(t)
 	etf, unlisted := instrument(t, isinIE, "ETF1"), instrument(t, isinXS, "ETF2")
 	a1 := ghostfolio.AccountUUID(instance, "a1")
-	bal := func(day, value string) ghostfolio.Balance {
-		return ghostfolio.Balance{AccountID: a1, Date: date(t, day), Value: dec(t, value)}
+	eur, usd := ghostfolio.CashAccountUUID(instance, "a1", cur(t, "EUR")), ghostfolio.CashAccountUUID(instance, "a1", cur(t, "USD"))
+	main := ghostfolio.Account{ID: a1, Name: "Synthetic broker", Currency: cur(t, "PLN")}
+	balIn := func(account, day, value string) ghostfolio.Balance {
+		return ghostfolio.Balance{AccountID: account, Date: date(t, day), Value: dec(t, value)}
 	}
+	bal := func(day, value string) ghostfolio.Balance { return balIn(a1, day, value) }
 	tests := []struct {
 		name         string
 		txs          []ledger.Transaction
 		want         []ghostfolio.Balance
+		wantAccounts []ghostfolio.Account
 		wantProblems []ghostfolio.Problem
 	}{
-		{name: "no cash, no balance"},
+		{name: "no cash, no balance", wantAccounts: []ghostfolio.Account{main}},
 		{
 			name: "one balance per date the cash changes, in date order",
 			txs: []ledger.Transaction{
@@ -239,7 +249,8 @@ func TestProjectBalances(t *testing.T) {
 				must(ledger.NewDeposit(header(t, "a1", "d1", "2025-01-02"), money(t, "1000", "PLN"))),
 				must(ledger.NewDividend(header(t, "a1", "v1", "2025-01-07"), etf, money(t, "10", "PLN"), money(t, "1.9", "PLN"))),
 			},
-			want: []ghostfolio.Balance{bal("2025-01-02", "1000"), bal("2025-01-03", "798.5"), bal("2025-01-07", "806.6")},
+			want:         []ghostfolio.Balance{bal("2025-01-02", "1000"), bal("2025-01-03", "798.5"), bal("2025-01-07", "806.6")},
+			wantAccounts: []ghostfolio.Account{main},
 		},
 		{
 			name: "two transactions on one date make one balance; a date that nets to nothing makes none",
@@ -250,19 +261,36 @@ func TestProjectBalances(t *testing.T) {
 				must(ledger.NewWithdrawal(header(t, "a1", "w1", "2025-01-03"), money(t, "20", "PLN"))),
 				must(ledger.NewWithdrawal(header(t, "a1", "w2", "2025-01-04"), money(t, "150", "PLN"))),
 			},
-			want: []ghostfolio.Balance{bal("2025-01-02", "150"), bal("2025-01-04", "0")},
+			want:         []ghostfolio.Balance{bal("2025-01-02", "150"), bal("2025-01-04", "0")},
+			wantAccounts: []ghostfolio.Account{main},
 		},
 		{
-			name: "cash in another currency is left out as a problem",
+			name: "cash in each other currency has an owned account of its own, in code order",
 			txs: []ledger.Transaction{
 				must(ledger.NewDeposit(header(t, "a1", "d1", "2025-01-02"), money(t, "100", "PLN"))),
 				must(ledger.NewFXConversion(header(t, "a1", "x1", "2025-01-03"), money(t, "40", "PLN"), money(t, "10", "USD"), money(t, "0", "PLN"))),
 				must(ledger.NewDeposit(header(t, "a1", "d2", "2025-01-04"), money(t, "5", "EUR"))),
+				must(ledger.NewWithdrawal(header(t, "a1", "w1", "2025-01-05"), money(t, "4", "USD"))),
 			},
-			want: []ghostfolio.Balance{bal("2025-01-02", "100"), bal("2025-01-03", "60")},
-			wantProblems: []ghostfolio.Problem{
-				{Account: "a1", Currency: cur(t, "EUR"), Reason: ghostfolio.ProblemCashCurrency},
-				{Account: "a1", Currency: cur(t, "USD"), Reason: ghostfolio.ProblemCashCurrency},
+			want: []ghostfolio.Balance{
+				bal("2025-01-02", "100"), bal("2025-01-03", "60"),
+				balIn(eur, "2025-01-04", "5"),
+				balIn(usd, "2025-01-03", "10"), balIn(usd, "2025-01-05", "6"),
+			},
+			wantAccounts: []ghostfolio.Account{
+				main,
+				{ID: eur, Name: "Synthetic broker (EUR)", Currency: cur(t, "EUR")},
+				{ID: usd, Name: "Synthetic broker (USD)", Currency: cur(t, "USD")},
+			},
+		},
+		{
+			name: "an account whose cash is all in another currency still has its own owned account",
+			txs: []ledger.Transaction{
+				must(ledger.NewDeposit(header(t, "a1", "d1", "2025-01-02"), money(t, "7", "USD"))),
+			},
+			want: []ghostfolio.Balance{balIn(usd, "2025-01-02", "7")},
+			wantAccounts: []ghostfolio.Account{
+				main, {ID: usd, Name: "Synthetic broker (USD)", Currency: cur(t, "USD")},
 			},
 		},
 		{
@@ -270,18 +298,24 @@ func TestProjectBalances(t *testing.T) {
 			txs: []ledger.Transaction{
 				must(ledger.NewBuy(header(t, "a1", "u1", "2025-01-03"), unlisted, qty(t, "1"), money(t, "10", "PLN"), money(t, "0", "PLN"))),
 			},
-			want: []ghostfolio.Balance{bal("2025-01-03", "-10")},
+			want:         []ghostfolio.Balance{bal("2025-01-03", "-10")},
+			wantAccounts: []ghostfolio.Account{main},
 			wantProblems: []ghostfolio.Problem{
 				{Transaction: ledger.TransactionKey{Source: "test/a1", ExternalID: "u1"}, Reason: ghostfolio.ProblemUnlisted},
 			},
 		},
 		{
-			name: "a balance too large for a double leaves out the account's balances",
+			name: "a balance too large for a double leaves out that account's balances only",
 			txs: []ledger.Transaction{
 				must(ledger.NewDeposit(header(t, "a1", "d1", "2025-01-02"), money(t, "1", "PLN"))),
 				must(ledger.NewDeposit(header(t, "a1", "d2", "2025-01-03"), money(t, "1234567890123456789", "PLN"))),
+				must(ledger.NewDeposit(header(t, "a1", "d3", "2025-01-03"), money(t, "2", "USD"))),
 			},
-			wantProblems: []ghostfolio.Problem{{Account: "a1", Reason: ghostfolio.ProblemTooLarge}},
+			want: []ghostfolio.Balance{balIn(usd, "2025-01-03", "2")},
+			wantAccounts: []ghostfolio.Account{
+				main, {ID: usd, Name: "Synthetic broker (USD)", Currency: cur(t, "USD")},
+			},
+			wantProblems: []ghostfolio.Problem{{Account: "a1", Currency: cur(t, "PLN"), Reason: ghostfolio.ProblemTooLarge}},
 		},
 	}
 	for _, tt := range tests {
@@ -289,12 +323,15 @@ func TestProjectBalances(t *testing.T) {
 			t.Parallel()
 			src := ghostfolio.Source{
 				Instance: instance, User: gfUser, Currency: cur(t, "PLN"),
-				Accounts: []ghostfolio.SourceAccount{{ID: "a1", Transactions: tt.txs}},
+				Accounts: []ghostfolio.SourceAccount{{ID: "a1", Name: "Synthetic broker", Transactions: tt.txs}},
 				Listings: map[ledger.ISIN]ghostfolio.Listing{etf.ISIN: {DataSource: yahoo, Symbol: "ETF1.L"}},
 			}
 			got, problems := ghostfolio.Project(&src)
 			if diff := cmp.Diff(tt.want, got.Balances, cmpopts.EquateEmpty()); diff != "" {
 				t.Errorf("balances (-want +got):\n%s", diff)
+			}
+			if diff := cmp.Diff(tt.wantAccounts, got.Accounts); diff != "" {
+				t.Errorf("accounts (-want +got):\n%s", diff)
 			}
 			if diff := cmp.Diff(tt.wantProblems, problems, cmpopts.EquateEmpty()); diff != "" {
 				t.Errorf("problems (-want +got):\n%s", diff)

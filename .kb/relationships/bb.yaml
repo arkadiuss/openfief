@@ -510,3 +510,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c169c449d384
+  - type: implements
+    from: SYM-ingest-xtb-problem-error-error
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:26:18.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb2a7a18e4f2
+  - type: covered_by
+    from: SYM-ingest-xtb-problem-error-error
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:26:18.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-274623831806
+  - type: executable_for
+    from: SYM-pl-test-helper-flow
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:13.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab509b8027f5

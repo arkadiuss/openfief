@@ -559,6 +559,62 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6429fcfbdc34
+  - type: implements
+    from: SYM-connectorv1-open-lot-proto-message
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:01:26.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9c915beaddd
+  - type: covered_by
+    from: SYM-connectorv1-open-lot-proto-message
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:01:26.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c83e150167a
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-removals-all-broker-accounts
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:50:13.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b775c0a5bd8
+  - type: implements
+    from: SYM-ingestv1-remap-broker-account-request-proto-message
+    to: REQ-ingest-remap-unused-broker-account
+    created_at: 2026-10-31T14:58:13.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bc018178283
+  - type: covered_by
+    from: SYM-ingestv1-remap-broker-account-request-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:58:13.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-757928a05fc9
+  - type: executable_for
+    from: SYM-tooling-kibi-ingest-proofs-test-ingest
+    to: TEST-tooling-kibi-ingest-proofs
+    created_at: 2026-10-31T12:46:04.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-064efe5e7235
+  - type: implements
+    from: SYM-connectorv1-instrument-proposal-descriptor
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:48:14.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7202c1a0f04
+  - type: covered_by
+    from: SYM-connectorv1-instrument-proposal-descriptor
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:48:14.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af9926fa111f
   - type: constrains
     from: REQ-pl-ike-early-return-above-payments
     to: FACT-SUBJECT-C19C79F7F2ECBE0A
@@ -573,3 +629,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcc6a913895a
+  - type: implements
+    from: SYM-valuationv1-set-exemption-class-request
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:15:48.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a1ebfb84f07
+  - type: covered_by
+    from: SYM-valuationv1-set-exemption-class-request
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:15:48.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-314633eb6e9f

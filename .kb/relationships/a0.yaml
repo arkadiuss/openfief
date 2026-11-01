@@ -489,6 +489,104 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c3449826d65
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-live-since
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:16.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff00e896450a
+  - type: implements
+    from: SYM-treasurybonds-due-coupon
+    to: REQ-treasurybonds-coupons-as-interest
+    created_at: 2026-10-31T13:51:39.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36e3146129fd
+  - type: covered_by
+    from: SYM-treasurybonds-due-coupon
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:51:39.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cd01faa4938
+  - type: constrains
+    from: REQ-ingest-ticker-isin-lookup
+    to: FACT-SUBJECT-8A8B03F40D5773D9
+    created_at: 2026-10-31T12:56:40.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6575ee3c4d12
+  - type: requires_property
+    from: REQ-ingest-ticker-isin-lookup
+    to: FACT-PROP-3EB285E360BD000A
+    created_at: 2026-10-31T12:56:40.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2694abb2223a
+  - type: specified_by
+    from: REQ-ingest-ticker-isin-lookup
+    to: SCEN-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T12:56:40.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81c7d8edcf98
+  - type: implements
+    from: SYM-ingest-delivery-ticker-entry
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:23:20.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88c30a9d2386
+  - type: covered_by
+    from: SYM-ingest-delivery-ticker-entry
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:23:20.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d41e83cb2be
+  - type: implements
+    from: SYM-ingest-xtb-shown
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:33:15.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7822a19650b4
+  - type: covered_by
+    from: SYM-ingest-xtb-shown
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:33:15.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13862a17baa4
+  - type: implements
+    from: SYM-ingest-xtb-x-cell
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:34:53.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-833f25ed30e0
+  - type: covered_by
+    from: SYM-ingest-xtb-x-cell
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:34:53.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0f45360747f
+  - type: implements
+    from: SYM-ingest-xtbtest-open-row
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:38:26.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9a3a4de3920
+  - type: covered_by
+    from: SYM-ingest-xtbtest-open-row
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:38:26.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc7c859bf27a
   - type: constrains
     from: REQ-ui-attention-items-one-place
     to: FACT-SUBJECT-90104E84491E6BE9
@@ -503,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8cdee9916d1f
+  - type: implements
+    from: SYM-valuationv1-set-exemption-class-response-reset
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:16:55.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c23889343e87
+  - type: covered_by
+    from: SYM-valuationv1-set-exemption-class-response-reset
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:16:55.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adbb3aee5dac
+  - type: implements
+    from: SYM-treasurybonds-due-coupon
+    to: REQ-treasurybonds-delivers-coupons
+    created_at: 2026-10-31T18:08:14.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b985e4b2fbf2

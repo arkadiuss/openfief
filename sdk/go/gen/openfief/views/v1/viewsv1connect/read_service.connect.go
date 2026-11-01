@@ -135,9 +135,13 @@ type ReadServiceClient interface {
 	// ListConnectorBindings returns every connector binding: which connector
 	// instance may write to which account, in instance then account order.
 	ListConnectorBindings(context.Context, *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error)
-	// ListBrokerAccounts returns the broker accounts connector instances
-	// reported (D-72), in instance then ID order, each with the account it is
-	// mapped to. Nothing of an unmapped broker account is booked.
+	// ListBrokerAccounts is deprecated and always fails with UNIMPLEMENTED:
+	// broker account numbers are listed only through the owner's
+	// AccountService.ListBrokerAccounts (proto/openfief/ingest/v1/accounts.proto),
+	// so read sessions, script tokens and plugins never see one (D-121). It
+	// stays in the contract so that the read API changes only by addition.
+	//
+	// Deprecated: do not use.
 	ListBrokerAccounts(context.Context, *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error)
 	// GetAccount returns one account.
 	GetAccount(context.Context, *connect.Request[v1.GetAccountRequest]) (*connect.Response[v1.GetAccountResponse], error)
@@ -451,6 +455,8 @@ func (c *readServiceClient) ListConnectorBindings(ctx context.Context, req *conn
 }
 
 // ListBrokerAccounts calls openfief.views.v1.ReadService.ListBrokerAccounts.
+//
+// Deprecated: do not use.
 func (c *readServiceClient) ListBrokerAccounts(ctx context.Context, req *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error) {
 	return c.listBrokerAccounts.CallUnary(ctx, req)
 }
@@ -555,9 +561,13 @@ type ReadServiceHandler interface {
 	// ListConnectorBindings returns every connector binding: which connector
 	// instance may write to which account, in instance then account order.
 	ListConnectorBindings(context.Context, *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error)
-	// ListBrokerAccounts returns the broker accounts connector instances
-	// reported (D-72), in instance then ID order, each with the account it is
-	// mapped to. Nothing of an unmapped broker account is booked.
+	// ListBrokerAccounts is deprecated and always fails with UNIMPLEMENTED:
+	// broker account numbers are listed only through the owner's
+	// AccountService.ListBrokerAccounts (proto/openfief/ingest/v1/accounts.proto),
+	// so read sessions, script tokens and plugins never see one (D-121). It
+	// stays in the contract so that the read API changes only by addition.
+	//
+	// Deprecated: do not use.
 	ListBrokerAccounts(context.Context, *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error)
 	// GetAccount returns one account.
 	GetAccount(context.Context, *connect.Request[v1.GetAccountRequest]) (*connect.Response[v1.GetAccountResponse], error)

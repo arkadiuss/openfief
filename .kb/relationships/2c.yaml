@@ -615,3 +615,108 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-256e0b46bd3d
+  - type: implements
+    from: SYM-ingest-app-tickers-pending
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:21:38.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2797459485b5
+  - type: covered_by
+    from: SYM-ingest-app-tickers-pending
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:38.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb435ffe0ac3
+  - type: executable_for
+    from: SYM-ingest-test-helper-want-outcome
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:25:47.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbd2443b31b7
+  - type: implements
+    from: SYM-ingest-xtb-workbook
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:33:48.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5493db5ea4ef
+  - type: covered_by
+    from: SYM-ingest-xtb-workbook
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:33:48.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d87829c0948
+  - type: implements
+    from: SYM-ui-server-confirm-ticker
+    to: REQ-ui-tickers-to-confirm
+    created_at: 2026-10-31T13:40:33.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e75d3a5e01ed
+  - type: covered_by
+    from: SYM-ui-server-confirm-ticker
+    to: TEST-ui-tickers
+    created_at: 2026-10-31T13:40:33.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdc7ded687e7
+  - type: implements
+    from: SYM-ingestv1connect-new-ticker-service-handler
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:02:00.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01035ae0524e
+  - type: covered_by
+    from: SYM-ingestv1connect-new-ticker-service-handler
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:02:00.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80dbc0f9259c
+  - type: implements
+    from: SYM-core-revaluation-client
+    to: REQ-valuation-unclassified-attention
+    created_at: 2026-10-31T20:08:10.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cfddd1b93d9
+  - type: covered_by
+    from: SYM-core-revaluation-client
+    to: TEST-core-unclassified
+    created_at: 2026-10-31T20:08:10.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4d7bec4fcd4
+  - type: implements
+    from: SYM-ingest-app-tickers-pending
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:38.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2e1b8b02b5a
+  - type: implements
+    from: SYM-ui-server-confirm-ticker
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:04:43.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c0a8f6f29ea
+  - type: implements
+    from: SYM-views-ghostfolio-cash-account-uuid
+    to: REQ-views-ghostfolio-owned-and-cash-accounts
+    created_at: 2026-10-31T20:04:22.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d8f0f6f2e4f
+  - type: covered_by
+    from: SYM-views-ghostfolio-cash-account-uuid
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-31T20:04:22.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae6452d147ca

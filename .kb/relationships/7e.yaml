@@ -489,6 +489,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a9b84c23eaa
+  - type: executable_for
+    from: SYM-ingest-test-resolve-broker-accounts-ticker-entries
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:26:08.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c77653d483
+  - type: implements
+    from: SYM-ingest-xtb-split-symbol
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:29:28.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe211de5769d
+  - type: covered_by
+    from: SYM-ingest-xtb-split-symbol
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:29:28.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-382a84ca7526
   - type: constrains
     from: REQ-valuation-sale-fee-minimum-before-conversion
     to: FACT-SUBJECT-4424A5AD6FE3AB29
@@ -503,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b327f944b46
+  - type: implements
+    from: SYM-exp-operator-one-browser-view
+    to: REQ-operator-contested-browser-path-stops
+    created_at: 2026-10-31T18:19:40.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8851d4e9edff

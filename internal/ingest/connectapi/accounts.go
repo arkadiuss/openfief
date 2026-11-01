@@ -79,6 +79,45 @@ func (s *accountService) BindAccount(ctx context.Context, req *connect.Request[i
 	return connect.NewResponse(&ingestv1.BindAccountResponse{}), nil
 }
 
+// ListBrokerAccounts lists the broker accounts for the owner (D-121).
+func (s *accountService) ListBrokerAccounts(ctx context.Context, req *connect.Request[ingestv1.ListBrokerAccountsRequest]) (*connect.Response[ingestv1.ListBrokerAccountsResponse], error) {
+	m := req.Msg
+	brokers, err := s.accounts.BrokerAccounts(ctx, m.GetOrigin(), m.GetSessionToken(), m.GetUnmapped())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &ingestv1.ListBrokerAccountsResponse{BrokerAccounts: make([]*ingestv1.BrokerAccount, 0, len(brokers))}
+	for i := range brokers {
+		b := &brokers[i]
+		out.BrokerAccounts = append(out.BrokerAccounts, &ingestv1.BrokerAccount{
+			ConnectorInstance: b.Instance, Id: string(b.ID), Institution: string(b.Institution), AccountId: string(b.Account),
+			LastSeen: b.LastSeen.String(), InLastDelivery: b.InLastDelivery,
+		})
+	}
+	return connect.NewResponse(out), nil
+}
+
+// DeleteAccount deletes an account that holds no transactions (D-120).
+func (s *accountService) DeleteAccount(ctx context.Context, req *connect.Request[ingestv1.DeleteAccountRequest]) (*connect.Response[ingestv1.DeleteAccountResponse], error) {
+	m := req.Msg
+	if err := s.accounts.Delete(ctx, m.GetOrigin(), m.GetSessionToken(), ledger.AccountID(m.GetAccountId())); err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&ingestv1.DeleteAccountResponse{}), nil
+}
+
+// RemapBrokerAccount maps a broker account to another account, or leaves
+// it unmapped (D-120).
+func (s *accountService) RemapBrokerAccount(ctx context.Context, req *connect.Request[ingestv1.RemapBrokerAccountRequest]) (*connect.Response[ingestv1.RemapBrokerAccountResponse], error) {
+	m := req.Msg
+	err := s.accounts.Remap(ctx, m.GetOrigin(), m.GetSessionToken(), m.GetConnectorInstance(),
+		ingest.BrokerAccountID(m.GetBrokerAccount()), ledger.AccountID(m.GetAccountId()))
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&ingestv1.RemapBrokerAccountResponse{}), nil
+}
+
 // pbAccount converts an account with its terms.
 func pbAccount(a *app.AccountEntry) *ingestv1.Account {
 	return &ingestv1.Account{
@@ -147,7 +186,8 @@ func (s *accountService) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeAlreadyExists, err)
 	case errors.Is(err, app.ErrNoAccount):
 		return connect.NewError(connect.CodeNotFound, err)
-	case errors.Is(err, app.ErrUnknownBrokerAccount), errors.Is(err, app.ErrBrokerAccountMapped):
+	case errors.Is(err, app.ErrUnknownBrokerAccount), errors.Is(err, app.ErrBrokerAccountMapped),
+		errors.Is(err, ledger.ErrAccountHasTransactions), errors.Is(err, app.ErrBrokerAccountHasTransactions):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	}
 	s.log.LogAttrs(ctx, slog.LevelError, "account call failed", slog.String("error", err.Error()))

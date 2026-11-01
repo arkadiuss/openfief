@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
@@ -36,6 +37,10 @@ func TestManifest(t *testing.T) {
 	if len(got.ConfigSchema) == 0 {
 		t.Error("the manifest has no config schema")
 	}
+	// D-118: one instance serves every bond account, so its config names none.
+	if strings.Contains(string(got.ConfigSchema), `"account"`) {
+		t.Errorf("the config schema names an account: %s", got.ConfigSchema)
+	}
 }
 
 func TestDateIn(t *testing.T) {
@@ -68,7 +73,7 @@ func TestStartDate(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := config{Account: "acc-bonds", Start: tt.start}.startDate(today)
+			got, err := config{Start: tt.start}.startDate(today)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("startDate = %v, want an error: %t", err, tt.wantErr)
 			}

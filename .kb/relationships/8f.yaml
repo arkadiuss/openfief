@@ -608,6 +608,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd595228efa0
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-held-request
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-31T13:58:42.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31cd863a83f8
+  - type: implements
+    from: SYM-ingest-xtb-trade-volume
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:27:31.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-578e5ea391fe
+  - type: covered_by
+    from: SYM-ingest-xtb-trade-volume
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:27:31.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c3f8d36b17e
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-request-proto-message
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:47:18.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-496046f00ad5
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-request-proto-message
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:47:18.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc9a5c365ce2
+  - type: implements
+    from: SYM-connectorv1-instrument-proposal-get-symbol
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:48:20.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c160a637232e
+  - type: covered_by
+    from: SYM-connectorv1-instrument-proposal-get-symbol
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:48:20.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a75d572b0af
   - type: constrains
     from: REQ-valuation-sale-fee-foreign-currency
     to: FACT-SUBJECT-4424A5AD6FE3AB29
@@ -622,3 +671,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df95bdbae123
+  - type: implements
+    from: SYM-pl-pit38-add
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:05:03.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b21d8ff8575
+  - type: covered_by
+    from: SYM-pl-pit38-add
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:05:03.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06b940bd1220
+  - type: implements
+    from: SYM-viewsv1-class-amount-string
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:18:28.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfff4edd3d03
+  - type: covered_by
+    from: SYM-viewsv1-class-amount-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:18:28.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4df69f58b027

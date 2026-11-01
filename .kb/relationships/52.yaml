@@ -533,13 +533,6 @@ relationships:
     id: rel-d25a0aa5681a
   - type: implements
     from: SYM-views-ghostfolio-client-balances
-    to: REQ-views-ghostfolio-cash-balances
-    created_at: 2026-10-30T01:26:29.243Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-907e40d940d0
-  - type: implements
-    from: SYM-views-ghostfolio-client-balances
     to: REQ-views-ghostfolio-client
     created_at: 2026-10-30T01:26:29.278Z
     created_by: kibi/upsert
@@ -650,3 +643,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea44b564a191
+  - type: executable_for
+    from: SYM-ingest-delivery-test-helper-held-sync
+    to: TEST-ingest-delivery-held
+    created_at: 2026-10-31T13:51:16.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f09e196bd8a
+  - type: verified_by
+    from: SCEN-ui-yearly-taxes
+    to: TEST-ui-taxes
+    created_at: 2026-10-31T18:33:37.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c0b0a7c9354
+  - type: implements
+    from: SYM-treasurybonds-mapper-map
+    to: REQ-treasurybonds-one-instance-all-accounts
+    created_at: 2026-10-31T18:10:00.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057e2774c2f7
+  - type: implements
+    from: SYM-views-ghostfolio-client-balances
+    to: REQ-views-ghostfolio-cash-balances-per-currency
+    created_at: 2026-10-31T20:03:43.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e29da865f3b

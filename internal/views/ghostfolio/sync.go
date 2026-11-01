@@ -75,8 +75,8 @@ type Report struct {
 //  3. read the owned accounts' activities and cash balances, and plan
 //     (MakePlan);
 //  4. create the missing owned accounts with their derived UUIDs;
-//  5. delete the stale activities an import would skip as duplicates or
-//     move to a leftover asset of the same name (Plan.PreDelete);
+//  5. delete the stale activities an import would skip as duplicates
+//     (Plan.PreDelete), the one exception to importing first (D-64);
 //  6. import the missing activities with every asset's price history, each
 //     batch checked first with a dry run (CheckPreview);
 //  7. delete the remaining stale activities, one by one or with a bulk

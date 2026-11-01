@@ -7,5 +7,6 @@ origin:
   recorded_at: '2026-10-28T08:00:19.182Z'
 id: TEST-sdk-go-core-client
 type: test
+verification_scope: integration
 ---
 An httptest server records each request's Authorization header. CoreHTTPClient with a synthetic token file sends two requests with the file rewritten in between and must send Bearer with the first token and then the rotated one. With no token file the request fails and the server sees nothing.

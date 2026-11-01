@@ -412,3 +412,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddd58e20e6f8
+  - type: implements
+    from: SYM-ingest-xtb-export-currency
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:28:49.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4725b8d7364
+  - type: covered_by
+    from: SYM-ingest-xtb-export-currency
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:28:49.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcecb3cc1dec
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-request-proto-reflect
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:06:09.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-809498faab39
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-request-proto-reflect
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:06:09.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b987d8c673a
+  - type: implements
+    from: SYM-views-tax-year-account-assets-on
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:14:08.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-192f88009159
+  - type: covered_by
+    from: SYM-views-tax-year-account-assets-on
+    to: TEST-views-yearly-tax
+    created_at: 2026-10-31T19:14:08.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36153c2421ea
+  - type: implements
+    from: SYM-valuationv1-instrument-class-descriptor
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:15:30.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abe6a0af6c17
+  - type: covered_by
+    from: SYM-valuationv1-instrument-class-descriptor
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:15:30.040Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a9aae5b0c81

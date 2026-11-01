@@ -51,9 +51,7 @@ spec:
             - --sync-jitter=30m
             - --sync-timeout=5m
             - --service-account=openfief-core
-            # The origins the owner's browser may use (D-60): port-forward to localhost:8080 by default. An
-            # installation with its own Ingress adds its https origin; repeat the flag. Sessions: 12h idle, 7d at most.
-            - --auth-origin=http://localhost:8080
+            # Sessions: 12h idle, 7d at most.
             - --session-idle=12h
             - --session-max=168h
           env:
@@ -62,6 +60,12 @@ spec:
                 secretKeyRef:
                   name: openfief-db-app
                   key: uri
+            # The origins the owner's browser may use (D-60), separated by commas: port-forward to localhost:8080 by
+            # default. An installation with its own route adds its https origin (docs/guides/expose.md). One setting
+            # that serving and `core enroll-link` both read, so the core refuses a link for any other origin (D-126).
+            # Overlays replace env/1, after testing its name.
+            - name: OPENFIEF_AUTH_ORIGINS
+              value: http://localhost:8080
           ports:
             - name: http
               containerPort: 8080

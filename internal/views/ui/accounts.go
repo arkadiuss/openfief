@@ -30,7 +30,7 @@ type accountsData struct {
 	// InstancesUnknown says the core can't read its cluster, so the
 	// instances offered are only those it has seen.
 	InstancesUnknown bool
-	Brokers          []*viewsv1.BrokerAccount
+	Brokers          []*ingestv1.BrokerAccount
 	// Wrappers are the tax wrappers an account can have, the pack's
 	// default first (D-76).
 	Wrappers []string
@@ -46,8 +46,8 @@ type accountEntry struct {
 
 // Unmapped returns the broker accounts no account is mapped to: their
 // transactions are not booked until the owner picks an account for them.
-func (d *accountsData) Unmapped() []*viewsv1.BrokerAccount {
-	var out []*viewsv1.BrokerAccount
+func (d *accountsData) Unmapped() []*ingestv1.BrokerAccount {
+	var out []*ingestv1.BrokerAccount
 	for _, b := range d.Brokers {
 		if b.GetAccountId() == "" {
 			out = append(out, b)
@@ -71,12 +71,12 @@ func (s *server) loadAccounts(r *http.Request, sess session, next string) (*acco
 	if err != nil {
 		return nil, fmt.Errorf("ListConnectorBindings: %w", err)
 	}
-	brokers, err := s.read.ListBrokerAccounts(ctx, bearer(&viewsv1.ListBrokerAccountsRequest{}, sess))
+	brokers, err := s.brokerAccounts(r, sess)
 	if err != nil {
-		return nil, fmt.Errorf("ListBrokerAccounts: %w", err)
+		return nil, err
 	}
 	data := &accountsData{
-		Owner: sess.Owner(), Sleeves: sleeves.Msg.GetSleeves(), Brokers: brokers.Msg.GetBrokerAccounts(), Next: next,
+		Owner: sess.Owner(), Sleeves: sleeves.Msg.GetSleeves(), Brokers: brokers, Next: next,
 		Wrappers: sess.Settings.GetTaxWrappers(),
 	}
 	for _, a := range accounts.Msg.GetAccounts() {
@@ -96,7 +96,7 @@ func (s *server) loadAccounts(r *http.Request, sess session, next string) (*acco
 // order, to bind accounts to. When the core can't read its cluster it
 // returns those the core has seen, bound or reporting broker accounts, and
 // true.
-func (s *server) connectorInstances(r *http.Request, sess session, bindings []*viewsv1.ConnectorBinding, brokers []*viewsv1.BrokerAccount) ([]string, bool) {
+func (s *server) connectorInstances(r *http.Request, sess session, bindings []*viewsv1.ConnectorBinding, brokers []*ingestv1.BrokerAccount) ([]string, bool) {
 	var out []string
 	plugins, err := s.read.ListPlugins(r.Context(), bearer(&viewsv1.ListPluginsRequest{}, sess))
 	if err == nil {
@@ -216,6 +216,43 @@ func (s *server) bindAccount(w http.ResponseWriter, r *http.Request, sess sessio
 		ConnectorInstance: instance, BrokerAccount: broker,
 	}))
 	s.accountEntryDone(w, r, sess, "BindAccount", err)
+}
+
+// brokerAccounts returns the broker accounts the connectors reported, from
+// the owner's AccountService (D-121): a session that isn't the owner's sees
+// none, as the read API serves none.
+func (s *server) brokerAccounts(r *http.Request, sess session) ([]*ingestv1.BrokerAccount, error) {
+	if !sess.Owner() {
+		return nil, nil
+	}
+	resp, err := s.accounts.ListBrokerAccounts(r.Context(), connect.NewRequest(&ingestv1.ListBrokerAccountsRequest{
+		Origin: sess.Origin, SessionToken: sess.Token,
+	}))
+	if err != nil {
+		return nil, fmt.Errorf("ListBrokerAccounts: %w", err)
+	}
+	return resp.Msg.GetBrokerAccounts(), nil
+}
+
+// deleteAccount asks the core to delete an account (DeleteAccount); it
+// refuses one that holds transactions (D-120), and the page shows why.
+func (s *server) deleteAccount(w http.ResponseWriter, r *http.Request, sess session) {
+	_, err := s.accounts.DeleteAccount(r.Context(), connect.NewRequest(&ingestv1.DeleteAccountRequest{
+		Origin: sess.Origin, SessionToken: sess.Token, AccountId: r.PathValue("id"),
+	}))
+	s.accountEntryDone(w, r, sess, "DeleteAccount", err)
+}
+
+// remapBrokerAccount maps a broker account to another account, or leaves it
+// unmapped when none is picked (RemapBrokerAccount); the core refuses while
+// its account holds transactions from it (D-120).
+func (s *server) remapBrokerAccount(w http.ResponseWriter, r *http.Request, sess session) {
+	pick := brokerChoice(r.PostFormValue("broker"))
+	_, err := s.accounts.RemapBrokerAccount(r.Context(), connect.NewRequest(&ingestv1.RemapBrokerAccountRequest{
+		Origin: sess.Origin, SessionToken: sess.Token, ConnectorInstance: pick.Instance, BrokerAccount: pick.ID,
+		AccountId: r.PostFormValue("account"),
+	}))
+	s.accountEntryDone(w, r, sess, "RemapBrokerAccount", err)
 }
 
 // sleeveChoice is what an account form's sleeve select shows: its ID, the

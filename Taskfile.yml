@@ -479,6 +479,13 @@ tasks:
         . '{{.E2E_REGISTRY_ENV}}'
         PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}' go test -tags e2e -count=1 -v -timeout 20m ./test/e2e/...
 
+  e2e:prove:
+    desc: 'Run the end-to-end suite through kibi prove, which runs task e2e and records a receipt on each end-to-end test (what CI''s e2e job runs; docs/dev/kibi.md)'
+    deps: [kibi:install]
+    cmds:
+      - task: kibi:sync
+      - '{{.KIBI}} prove --integration e2e'
+
   e2e:images:
     desc: 'Build the core, operator, egress-proxy, demo-seed, nbp-fx and ui images from this checkout (Docker), load them into the local e2e cluster, pushing the plugins, nbp-fx and ui, to the suite''s registry instead, e.g. task e2e:images CLUSTER=k3d'
     requires:
@@ -849,7 +856,7 @@ tasks:
 
   kibi:install:
     desc: Install the pinned npm packages, kibi and playwright-core (npm ci)
-    sources: [package.json, package-lock.json]
+    sources: [package.json, package-lock.json, patches/*.patch]
     generates: [node_modules/.package-lock.json]
     cmds:
       - npm ci
@@ -879,6 +886,14 @@ tasks:
     desc: Compile this branch's knowledge base (hooks run it after checkout, merge and rebase; CI sets KIBI_BRANCH)
     cmds:
       - '{{.KIBI}} sync'
+
+  kibi:ingest:
+    desc: 'Ingest the proof-run artifacts of CI''s end-to-end jobs under DIR into this checkout''s knowledge base, oldest first (scripts/kibi-ingest-proofs.sh), e.g. task kibi:ingest DIR=.kb/proof/runs/ci'
+    deps: [tool:gojq]
+    requires:
+      vars: [DIR]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/kibi-ingest-proofs.sh '{{.KIBI}}' '{{.DIR}}'
 
   kibi:search:
     desc: 'Search requirements, e.g. task kibi:search -- egress proxy'

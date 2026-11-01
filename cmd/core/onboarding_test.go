@@ -77,8 +77,7 @@ func TestOnboardingServices(t *testing.T) {
 	if err != nil || !strings.Contains(out, "0 transactions") {
 		t.Fatalf("sync before the owner mapped anything = %q, %v; want nothing booked", out, err)
 	}
-	var unmapped viewsv1.ListBrokerAccountsResponse
-	getJSON(t, srv, "/v1/broker-accounts?unmapped=true", session, &unmapped)
+	unmapped := listBrokerAccounts(t, srv, session)
 	if n := len(unmapped.GetBrokerAccounts()); n != 2 || unmapped.GetBrokerAccounts()[0].GetInstitution() != "ibkr" {
 		t.Fatalf("unmapped broker accounts = %v, want both reported by ibkr", unmapped.GetBrokerAccounts())
 	}
@@ -88,6 +87,7 @@ func TestOnboardingServices(t *testing.T) {
 		t.Fatalf("sync after mapping = %q, %v; want the deposit booked", out, err)
 	}
 	checkMappedAccount(t, srv, session)
+	checkRemovals(t, srv, session)
 }
 
 // createIBKRAccount creates the account IBKR main for the broker account
@@ -167,8 +167,7 @@ func checkMappedAccount(t *testing.T, srv *httptest.Server, session string) {
 	if b := bindings.GetBindings(); len(b) != 1 || b[0].GetConnectorInstance() != "ibkr-main" || b[0].GetAccountId() != "ibkr-main" {
 		t.Errorf("bindings = %v, want ibkr-main bound to ibkr-main", b)
 	}
-	var unmapped viewsv1.ListBrokerAccountsResponse
-	getJSON(t, srv, "/v1/broker-accounts?unmapped=true", session, &unmapped)
+	unmapped := listBrokerAccounts(t, srv, session)
 	if b := unmapped.GetBrokerAccounts(); len(b) != 1 || b[0].GetId() != "U0000002" {
 		t.Errorf("unmapped broker accounts = %v, want only U0000002", b)
 	}

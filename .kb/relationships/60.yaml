@@ -405,13 +405,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f5d29282846
-  - type: executable_for
-    from: SYM-exp-identity-kube-test-allowed-origins
-    to: TEST-identity-kube-core-access
-    created_at: 2026-10-29T22:37:40.177Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6c6993a8f524
   - type: implements
     from: SYM-views-ghostfolio-plan-blocks-import
     to: REQ-views-ghostfolio-reconcile-cash
@@ -461,3 +454,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78b8931d447f
+  - type: implements
+    from: SYM-connectorv1-open-lot-reset
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:01:12.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82cd877c5a29
+  - type: covered_by
+    from: SYM-connectorv1-open-lot-reset
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:01:12.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-111c01b867b6
+  - type: implements
+    from: SYM-ingestv1-list-broker-accounts-request-proto-message
+    to: REQ-ingest-broker-accounts-owner-only
+    created_at: 2026-10-31T14:55:37.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a9d4ad5b95e
+  - type: covered_by
+    from: SYM-ingestv1-list-broker-accounts-request-proto-message
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:55:37.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b58a6f7c8938
+  - type: validates
+    from: TEST-ingest-app-held
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:07:15.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b206edc11899
+  - type: implements
+    from: SYM-views-ghostfolio-plan-blocks-import
+    to: REQ-views-ghostfolio-import-first-blocking-delete
+    created_at: 2026-10-31T18:20:29.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba9c2f473450

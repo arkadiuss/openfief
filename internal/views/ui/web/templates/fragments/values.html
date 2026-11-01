@@ -8,5 +8,14 @@
 <td class="num">{{with .NetReporting}}{{money .}}{{else}}<span class="warn-text">missing: {{missing .NetMissing}}</span>{{end}}</td>
 <td class="num">{{with .LiquidationReporting}}{{money .}}{{else}}<span class="warn-text">missing: {{missing .LiquidationMissing}}</span>{{end}}</td>{{end}}
 
+{{/* D-128: the losses-offset line of a total, under its rows: gross has
+     none, net and liquidation say how much the tax counted on the whole
+     differs from the rows' own taxes. */}}
+{{define "losses-offset"}}<td class="num empty">–</td>
+<td class="num">{{with .NetOffsetReporting}}{{money .}}{{else}}–{{end}}</td>
+<td class="num">{{with .LiquidationOffsetReporting}}{{money .}}{{else}}–{{end}}</td>{{end}}
+
+{{define "losses-offset-help"}}<p class="muted">Each row carries its own tax as if it alone were sold. The total counts tax as PIT-38 does: the year's realized and unrealized gains and losses of every taxable account offset each other, rounded to whole złoty, and IKE and IKZE are taxed on the whole account. The losses-offset line is the difference. Losses from earlier years aren't counted.</p>{{end}}
+
 {{/* D-91: a holding or lot behind a removed connector instance. */}}
 {{define "no-longer-updated"}}{{if .NoLongerUpdated}} <span class="pill pill-warn" title="A transaction behind it came from a connector instance that is no longer installed">no longer updated</span> <span class="muted">from {{range $i, $n := .RemovedInstances}}{{if $i}}, {{end}}<span class="mono">{{$n}}</span>{{end}}</span>{{end}}{{end}}

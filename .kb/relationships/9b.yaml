@@ -580,3 +580,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-680010a1c6bb
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-terms-of
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:57:31.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-792fb601fc01
+  - type: implements
+    from: SYM-ingest-xtb-zip-parts-sheet
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:35:53.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71d1dad15477
+  - type: covered_by
+    from: SYM-ingest-xtb-zip-parts-sheet
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:35:53.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07bc818acbf3
+  - type: implements
+    from: SYM-valuationv1-set-exemption-class-response-proto-message
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:17:08.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7783aa115c0
+  - type: covered_by
+    from: SYM-valuationv1-set-exemption-class-response-proto-message
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:17:08.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5d09b89fb42

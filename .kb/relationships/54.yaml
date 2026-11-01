@@ -622,3 +622,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49019de42976
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-helper-held-connector
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:50:23.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a641039c7fb
+  - type: implements
+    from: SYM-connectorv1-account-holdings-get-holdings
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:00:03.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2753ef448a65
+  - type: covered_by
+    from: SYM-connectorv1-account-holdings-get-holdings
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:00:03.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fe3aac1b3e9
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-request-get-session-token
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:00:47.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16a9c5bc5f4f
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-request-get-session-token
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:00:47.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6738d24beec4
+  - type: implements
+    from: SYM-ingest-connectapi-new-tickers
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:21:49.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2447328551ed
+  - type: covered_by
+    from: SYM-ingest-connectapi-new-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:49.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5be7b013ff5e
+  - type: executable_for
+    from: SYM-plugins-xtb-test-import-file-refused
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:43:16.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33e5e8063010
+  - type: implements
+    from: SYM-ingest-connectapi-new-tickers
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:44.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce77f95a0522

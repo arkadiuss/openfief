@@ -594,3 +594,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c902a90c9ed
+  - type: verified_by
+    from: SCEN-plugins-xtb-connector
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T12:55:05.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d9642d67d3d
+  - type: implements
+    from: SYM-ingestv1connect-ticker-service-client-confirm-ticker
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:01:46.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17bc7b147a5c
+  - type: covered_by
+    from: SYM-ingestv1connect-ticker-service-client-confirm-ticker
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:01:46.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8f81d71ed70
+  - type: implements
+    from: SYM-pl-pack-exemption-classes
+    to: REQ-pl-oki-exemption-class
+    created_at: 2026-10-31T19:01:32.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b75a0481f3c
+  - type: covered_by
+    from: SYM-pl-pack-exemption-classes
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:32.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-118c903797c2

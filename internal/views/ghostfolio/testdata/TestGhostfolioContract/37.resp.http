@@ -3,9 +3,9 @@ Content-Length: 473
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Fri, 30 Oct 2026 00:00:56 GMT
-Etag: W/"1d9-TpF3dt5VWoc2D341Jvjhr7AGgpc"
+Date: Sat, 31 Oct 2026 14:41:28 GMT
+Etag: W/"1d9-7AcgvS67tQb1AhKOU+uu5LXvMNE"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"0f51f620-82d8-4744-885e-457d56daad1d","comment":"openfief:test/bonds/buy-1","createdAt":"2026-10-30T00:00:55.429Z","currency":"PLN","date":"2025-01-03T00:00:00.000Z","fee":0,"id":"b485f3c5-47eb-4272-9c3e-c8f93c9aaf7a","quantity":6,"symbolProfileId":"444e0dd9-346e-483d-9254-202720cc2f8b","type":"BUY","unitPrice":100,"updatedAt":"2026-10-30T00:00:55.867Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"}
+{"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","accountUserId":"d9327e24-69fc-461d-8677-10f4c4464db0","comment":"openfief:test/bonds/buy-1","createdAt":"2026-10-31T14:41:28.382Z","currency":"PLN","date":"2025-01-03T00:00:00.000Z","fee":0,"id":"edb4edc6-330e-4a8f-b24c-b3b24af363f6","quantity":6,"symbolProfileId":"cfe62476-f28a-40ca-a85f-35fbd832e5f1","type":"BUY","unitPrice":100,"updatedAt":"2026-10-31T14:41:28.614Z","userId":"d9327e24-69fc-461d-8677-10f4c4464db0"}

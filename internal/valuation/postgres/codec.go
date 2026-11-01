@@ -47,6 +47,7 @@ func parseOptionalDate(s string) (kernel.Date, error) {
 type valuationText struct {
 	isin, symbol, day, basis, quantity, value, currency, pln, priceDate, rateDate, missing string
 	net, liquidation, netMissing, liquidationMissing                                       string
+	taxCost, saleCost                                                                      string
 }
 
 // decodeValuation decodes the columns of a stored valuation, all but its
@@ -82,6 +83,14 @@ func decodeValuation(t *valuationText) (valuation.HoldingValuation, error) {
 	}
 	v.Value, v.PLN = value, pln
 	v.Net, v.NetMissing, v.Liquidation, v.LiquidationMissing = net, netMissing, liquidation, liquidationMissing
+	if t.taxCost != "" {
+		taxCost, err1 := parseMoney(t.taxCost, "PLN")
+		saleCost, err2 := parseMoney(t.saleCost, "PLN")
+		if err := errors.Join(err1, err2); err != nil {
+			return valuation.HoldingValuation{}, err
+		}
+		v.TaxCost, v.SaleCost = taxCost, saleCost
+	}
 	return v, nil
 }
 

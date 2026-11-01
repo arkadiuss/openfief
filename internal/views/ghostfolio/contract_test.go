@@ -150,8 +150,9 @@ func securityToken() (string, error) {
 // TestGhostfolioContract is the contract test of the supported Ghostfolio
 // versions (D-64, D-108): it replays the reconcile loop against recordings
 // of a real Ghostfolio 3.93.0. The owned bond account starts with an
-// activity on the bond asset an earlier version keyed by the series code
-// alone, which the first sync moves to the new asset of the same name while
+// activity on the bond asset an earlier version keyed and named by the
+// series code alone: the first sync imports onto the new asset, named so no
+// earlier version did (D-64), and only then deletes the old activity, while
 // it creates the other owned account, imports and sets the cash balances; a
 // second sync against what Ghostfolio stored changes nothing, which proves
 // every field survives Ghostfolio's round trip; a manual edit of an activity

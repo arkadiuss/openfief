@@ -615,3 +615,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6c3f166522d9
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-removals-delete-account
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:50:02.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52af3cdc6b11
+  - type: implements
+    from: SYM-ingest-xtb-epoch
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:32:30.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b435c5571ecf
+  - type: covered_by
+    from: SYM-ingest-xtb-epoch
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:32:30.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2919dcfad8b9
+  - type: implements
+    from: SYM-ingest-xtb-cell-kind
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:33:21.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-416a6e6a72fe
+  - type: covered_by
+    from: SYM-ingest-xtb-cell-kind
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:33:21.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddba327e5728
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-tickers-list-pending-tickers
+    to: TEST-ui-tickers
+    created_at: 2026-10-31T13:40:43.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7f40ae79837

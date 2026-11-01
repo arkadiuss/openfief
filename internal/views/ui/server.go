@@ -34,7 +34,7 @@ const staticCacheControl = "public, max-age=3600"
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService, TickerService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -52,6 +52,9 @@ type Config struct {
 	// the owner's session in each upload's header. Its HTTP client should
 	// give an upload of 64 MiB more time than other calls.
 	Statements ingestv1connect.StatementServiceClient
+	// Tickers calls the core's TickerService (D-116, D-79) like Auth: the
+	// owner's confirmations of the ISINs of tickers without one.
+	Tickers ingestv1connect.TickerServiceClient
 	// Sleeves calls the core's SleeveService (D-71, D-79) like Auth: with
 	// the plugin's own token, the owner's session in each request.
 	Sleeves portfoliov1connect.SleeveServiceClient
@@ -84,7 +87,7 @@ type Config struct {
 func (cfg *Config) missingClient() bool {
 	clients := []any{
 		cfg.Auth, cfg.Model, cfg.BondLots, cfg.Statements, cfg.Read, cfg.Sleeves, cfg.Accounts, cfg.MarketData,
-		cfg.PriceChecks, cfg.Settings, cfg.Transfers,
+		cfg.PriceChecks, cfg.Settings, cfg.Transfers, cfg.Tickers,
 	}
 	return slices.Contains(clients, nil)
 }
@@ -95,6 +98,7 @@ type server struct {
 	model      portfoliov1connect.ModelPortfolioServiceClient
 	bondLots   ingestv1connect.BondLotServiceClient
 	statements ingestv1connect.StatementServiceClient
+	tickers    ingestv1connect.TickerServiceClient
 	sleeves    portfoliov1connect.SleeveServiceClient
 	accounts   ingestv1connect.AccountServiceClient
 	marketData valuationv1connect.MarketDataServiceClient
@@ -132,7 +136,7 @@ func New(cfg *Config) (http.Handler, error) {
 	s := &server{
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
 		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
-		settings: cfg.Settings, transfers: cfg.Transfers,
+		settings: cfg.Settings, transfers: cfg.Transfers, tickers: cfg.Tickers,
 		pages: p, pwa: app, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
@@ -166,7 +170,6 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots/delete", s.withOwner(s.deleteBondLot))
-	mux.HandleFunc("POST /accounts/{id}/statements", s.withOwner(s.uploadStatement))
 	mux.HandleFunc("GET /assertions", s.withSession(s.assertionsPage))
 	mux.HandleFunc("GET /price-checks", s.withSession(s.priceChecksPage))
 	mux.HandleFunc("POST /price-checks/acknowledge", s.withOwner(s.acknowledgePriceCheck))
@@ -175,6 +178,15 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("POST /transfers/confirm", s.withOwner(s.confirmTransfer))
 	mux.HandleFunc("POST /transfers/reject", s.withOwner(s.rejectTransfer))
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
+	s.settingsRoutes(mux)
+	s.onboardingRoutes(mux)
+	s.statementRoutes(mux)
+	return mux
+}
+
+// settingsRoutes maps the settings page and its forms, every one the
+// owner's.
+func (s *server) settingsRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /settings", s.withOwner(s.settingsPage))
 	mux.HandleFunc("POST /settings/passkeys/{id}/remove", s.withOwner(s.removePasskey))
 	mux.HandleFunc("POST /settings/tokens", s.withOwner(s.createToken))
@@ -184,8 +196,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("POST /settings/market-data", s.withOwner(s.rankSources))
 	mux.HandleFunc("POST /settings/number-format", s.withOwner(s.setNumberFormat))
 	mux.HandleFunc("POST /settings/marginal-rate", s.withOwner(s.setMarginalRate))
-	s.onboardingRoutes(mux)
-	return mux
+	mux.HandleFunc("POST /settings/exemption-class", s.withOwner(s.setExemptionClass))
 }
 
 // staticFiles serves embedded files under prefix: the UI's scripts and

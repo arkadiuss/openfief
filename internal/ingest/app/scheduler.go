@@ -98,7 +98,10 @@ type Scheduler struct {
 	Store      SyncStore
 	// Scope says what to ask market-data connectors to price; nil asks for
 	// nothing.
-	Scope  ScopeSource
+	Scope ScopeSource
+	// Held says what the accounts bound to an instance hold, which every
+	// sync of it carries (D-117); nil sends nothing.
+	Held   HeldSource
 	Policy ingest.SyncPolicy
 	// Timeout bounds one attempt: the call and the import.
 	Timeout time.Duration
@@ -224,7 +227,7 @@ func (s *Scheduler) attempt(ctx context.Context, instance string, mode ingest.Mo
 				return res, fmt.Errorf("claiming %s: %w", instance, err)
 			}
 		}
-		call := SyncCall{ID: b.ID, Mode: b.Mode, Watermark: watermark, Scope: plan.scope}
+		call := SyncCall{ID: b.ID, Mode: b.Mode, Watermark: watermark, Scope: plan.scope, Held: plan.held, BondTerms: plan.terms}
 		keep := i < len(batches)-1
 		if res, err = s.run(ctx, instance, &claim, &call, keep); err != nil {
 			return res, err
@@ -234,16 +237,19 @@ func (s *Scheduler) attempt(ctx context.Context, instance string, mode ingest.Mo
 }
 
 // syncPlan is what an attempt asks for: the modes of its batches, and what
-// a market-data connector is to price.
+// a market-data connector is to price, or what the accounts bound to the
+// instance hold (D-117).
 type syncPlan struct {
 	modes []ingest.Mode
 	scope ingest.MarketDataScope
+	held  []ingest.HeldAccount
+	terms []ingest.BondTerms
 }
 
 // plan returns the plan of a sync of instance: mode when the caller asks
 // for one, otherwise what its bound accounts' seeding calls for
-// (ingest.PlanSync); and the market-data scope for an instance bound to no
-// account.
+// (ingest.PlanSync); the market-data scope for an instance bound to no
+// account, and what its bound accounts hold for one bound to some.
 func (s *Scheduler) plan(ctx context.Context, instance string, mode ingest.Mode) (syncPlan, error) {
 	bound, err := s.Connectors.Bindings.BoundAccounts(ctx, instance)
 	if err != nil {
@@ -253,6 +259,11 @@ func (s *Scheduler) plan(ctx context.Context, instance string, mode ingest.Mode)
 	if len(bound) == 0 && s.Scope != nil {
 		if p.scope, err = s.Scope.MarketDataScope(ctx); err != nil {
 			return syncPlan{}, fmt.Errorf("market-data scope: %w", err)
+		}
+	}
+	if len(bound) > 0 && s.Held != nil {
+		if p.held, p.terms, err = s.Held.HeldAccounts(ctx, bound); err != nil {
+			return syncPlan{}, fmt.Errorf("holdings of the bound accounts: %w", err)
 		}
 	}
 	if mode != 0 {

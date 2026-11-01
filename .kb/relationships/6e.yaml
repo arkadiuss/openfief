@@ -531,3 +531,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-590f94b11f72
+  - type: constrains
+    from: REQ-pl-coupon-payments
+    to: FACT-SUBJECT-D734DABDB121A70A
+    created_at: 2026-10-31T13:25:30.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ef3493d4933
+  - type: requires_property
+    from: REQ-pl-coupon-payments
+    to: FACT-PROP-5432FF2DDC953ED3
+    created_at: 2026-10-31T13:25:30.218Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0158ed97dbe1
+  - type: specified_by
+    from: REQ-pl-coupon-payments
+    to: SCEN-pl-coupon-payments
+    created_at: 2026-10-31T13:25:30.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf0296a735b8
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-response
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:00:57.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-473cb96ffa8b
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-response
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:00:57.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1882ed85bed
+  - type: implements
+    from: SYM-pl-pack-exemption-class
+    to: REQ-pl-oki-exemption-class
+    created_at: 2026-10-31T19:01:39.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0876da8d512
+  - type: covered_by
+    from: SYM-pl-pack-exemption-class
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:39.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1b5b72641b6
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-attention
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T19:08:16.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d71396402c48

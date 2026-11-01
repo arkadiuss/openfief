@@ -7,5 +7,6 @@ origin:
   recorded_at: '2026-10-28T08:54:20.427Z'
 id: TEST-ingest-index-reading
 type: test
+verification_scope: unit
 ---
 Table test of IndexReading.Validate with synthetic readings: CPI dated on the first of a month and a reference rate dated any day pass; CPI on the 15th, a zero or unknown index, a missing date and a missing source fail with ErrInvalidIndexReading. Index.String names cpi and reference-rate and a placeholder for invalid values.

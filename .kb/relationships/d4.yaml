@@ -545,3 +545,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7385bdde1a5a
+  - type: executable_for
+    from: SYM-core-test-helper-check-removals
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:49:18.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56fed6eb37a1
+  - type: implements
+    from: SYM-ingest-app-terms-forgetter
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:49:33.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b49be5c4fbe9
+  - type: covered_by
+    from: SYM-ingest-app-terms-forgetter
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:49:33.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f976b8a57518
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-removals-forget-account
+    to: TEST-ingest-app-account-changes
+    created_at: 2026-10-31T14:50:18.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9f54c59cfbb
+  - type: implements
+    from: SYM-jurisdiction-asset-kind
+    to: REQ-pl-oki-exemption-class
+    created_at: 2026-10-31T19:06:13.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22b74e64abc8
+  - type: covered_by
+    from: SYM-jurisdiction-asset-kind
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:06:13.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9368374a2b53

@@ -62,7 +62,7 @@ func TestPick(t *testing.T) {
 
 func TestTicker(t *testing.T) {
 	t.Parallel()
-	if got := (eodhd.Listing{Code: "FAKEW", Exchange: "WAR"}).Ticker(); got != "FAKEW.WAR" {
+	if got := (&eodhd.Listing{Code: "FAKEW", Exchange: "WAR"}).Ticker(); got != "FAKEW.WAR" {
 		t.Errorf("Ticker = %q, want FAKEW.WAR", got)
 	}
 }
@@ -90,7 +90,7 @@ func TestQuote(t *testing.T) {
 			if err != nil {
 				t.Fatalf("ParseDecimal: %v", err)
 			}
-			got, err := eodhd.Listing{Code: "SYNT", Exchange: "LSE", Currency: tt.currency}.Quote(closing)
+			got, err := (&eodhd.Listing{Code: "SYNT", Exchange: "LSE", Currency: tt.currency}).Quote(closing)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Fatalf("Quote error (-want +got):\n%s", diff)
 			}

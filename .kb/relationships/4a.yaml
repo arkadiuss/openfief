@@ -517,6 +517,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed96a901fe6e
+  - type: implements
+    from: SYM-connectorv1-account-holdings-proto-message
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:59:29.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-871eca69323f
+  - type: covered_by
+    from: SYM-connectorv1-account-holdings-proto-message
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:59:29.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01512b37896e
+  - type: implements
+    from: SYM-plugins-eodhd-connector-lookup-instruments
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:41:36.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cecf1098119
+  - type: covered_by
+    from: SYM-plugins-eodhd-connector-lookup-instruments
+    to: TEST-plugins-eodhd-lookup
+    created_at: 2026-10-31T13:41:36.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d55af18c630
+  - type: executable_for
+    from: SYM-plugins-xtb-test-helper-export
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:42:31.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-304dce0c2e6d
+  - type: implements
+    from: SYM-connectorv1-instrument-proposal-reset
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:47:47.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88744b6d4bad
+  - type: covered_by
+    from: SYM-connectorv1-instrument-proposal-reset
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:47:47.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bb1abe25464
   - type: constrains
     from: REQ-valuation-sale-fee-market-priced-only
     to: FACT-SUBJECT-4424A5AD6FE3AB29
@@ -531,3 +580,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3570bd90d223
+  - type: implements
+    from: SYM-viewsv1-class-amount
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:18:13.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cdead43ac50
+  - type: covered_by
+    from: SYM-viewsv1-class-amount
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:18:13.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b020e02ce03
+  - type: implements
+    from: SYM-plugins-eodhd-connector-lookup-instruments
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:34.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4190b3e2427

@@ -25,9 +25,10 @@ func authStart() time.Time { return time.Date(2026, 10, 28, 10, 0, 0, 0, time.UT
 // authFixture is the auth use cases over in-memory stores, the real
 // WebAuthn ceremonies and a settable clock.
 type authFixture struct {
-	auth  *app.Auth
-	store *memAuthStore
-	clock *clock
+	auth    *app.Auth
+	store   *memAuthStore
+	clock   *clock
+	origins identity.Origins
 }
 
 // demoConfig is whether the demo authenticator is on, and whether the
@@ -49,7 +50,7 @@ func newAuthFixture(t *testing.T, demo demoConfig) *authFixture {
 	if err != nil {
 		t.Fatalf("NewAuth: %v", err)
 	}
-	return &authFixture{auth: auth, store: store, clock: clk}
+	return &authFixture{auth: auth, store: store, clock: clk, origins: origins}
 }
 
 // origin parses text.
@@ -65,7 +66,7 @@ func origin(t *testing.T, text string) identity.Origin {
 // link issues an enrollment link for target and returns its code.
 func (f *authFixture) link(t *testing.T, target string, ttl time.Duration) string {
 	t.Helper()
-	l, err := app.IssueEnrollmentLink(t.Context(), f.store, nil, f.clock.now(), origin(t, target), ttl)
+	l, err := app.IssueEnrollmentLink(t.Context(), f.store, nil, f.clock.now(), f.origins, origin(t, target), ttl)
 	if err != nil {
 		t.Fatalf("IssueEnrollmentLink: %v", err)
 	}
@@ -75,6 +76,28 @@ func (f *authFixture) link(t *testing.T, target string, ttl time.Duration) strin
 		t.Fatalf("link %q does not start with %q", l.URL, prefix)
 	}
 	return code
+}
+
+// TestIssueEnrollmentLinkRefusesOrigin checks that the core refuses an
+// enrollment link for an origin it doesn't accept (D-126), storing no
+// code, and issues one for each origin it does.
+func TestIssueEnrollmentLinkRefusesOrigin(t *testing.T) {
+	t.Parallel()
+	f := newAuthFixture(t, demoConfig{})
+	for _, text := range []string{"http://localhost:9090", "https://fief.example.org"} {
+		_, err := app.IssueEnrollmentLink(t.Context(), f.store, nil, f.clock.now(), f.origins, origin(t, text), 0)
+		if !errors.Is(err, app.ErrForbidden) || !errors.Is(err, identity.ErrOriginNotAllowed) {
+			t.Errorf("IssueEnrollmentLink(%s) = %v, want %v and %v", text, err, app.ErrForbidden, identity.ErrOriginNotAllowed)
+		}
+	}
+	if n := len(f.store.codes); n != 0 {
+		t.Errorf("%d codes stored for refused links, want 0", n)
+	}
+	for _, text := range []string{local, devo} {
+		if code := f.link(t, text, 0); code == "" {
+			t.Errorf("no code for %s", text)
+		}
+	}
 }
 
 // register creates a passkey on originText as grant allows, with a new

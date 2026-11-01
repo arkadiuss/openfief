@@ -343,27 +343,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-3f04c1f438ca
   - type: implements
-    from: SYM-pl-average-balance
-    to: REQ-pl-oki-act-as-data
-    created_at: 2026-10-29T22:32:41.674Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-27fe57bf539f
-  - type: implements
-    from: SYM-pl-average-balance
-    to: REQ-pl-oki-yearly-tax
-    created_at: 2026-10-29T22:32:41.703Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fa32245d8746
-  - type: covered_by
-    from: SYM-pl-average-balance
-    to: TEST-pl-pack
-    created_at: 2026-10-29T22:32:41.728Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e0638b1ea250
-  - type: implements
     from: SYM-viewsv1-value-kind-enum-descriptor
     to: REQ-views-three-values
     created_at: 2026-10-30T01:27:11.842Z
@@ -496,3 +475,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d6a31544f39
+  - type: implements
+    from: SYM-ingest-connectrpc-proposals-from
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:22:48.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be4d7d00d237
+  - type: covered_by
+    from: SYM-ingest-connectrpc-proposals-from
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:22:48.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffb6e955433f
+  - type: implements
+    from: SYM-connectorv1-ticker-get-country
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:44:53.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2311adf7ef71
+  - type: covered_by
+    from: SYM-connectorv1-ticker-get-country
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:44:53.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0ce02a98adb
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-string
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:45:18.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6db009e4108
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-string
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:45:18.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0621a2fabdb7
+  - type: implements
+    from: SYM-pl-oki-exemptions
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:00:59.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d07288bcb633
+  - type: covered_by
+    from: SYM-pl-oki-exemptions
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:00:59.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76eaa6f5b994
+  - type: implements
+    from: SYM-ingest-connectrpc-proposals-from
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:11.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73681d35d6c3
+  - type: validates
+    from: TEST-identity-cli
+    to: REQ-identity-core-refuses-enroll-origin
+    created_at: 2026-10-31T20:00:55.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-948d0c3d439a

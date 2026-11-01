@@ -419,6 +419,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce2d889b5d14
+  - type: implements
+    from: SYM-ingestv1-delete-account-request
+    to: REQ-ingest-delete-unused-account
+    created_at: 2026-10-31T14:56:43.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31a89ef2f444
+  - type: covered_by
+    from: SYM-ingestv1-delete-account-request
+    to: TEST-core-removals
+    created_at: 2026-10-31T14:56:43.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f773f2842c2b
   - type: constrains
     from: REQ-pl-oki-exemptions-cpi-indexed
     to: FACT-SUBJECT-D256A25BDCDCE899
@@ -433,3 +447,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4c498febfcb
+  - type: implements
+    from: SYM-pl-pit38
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:04:50.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04b80712f0ae
+  - type: covered_by
+    from: SYM-pl-pit38
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:04:51.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d01dcd40e79e
+  - type: implements
+    from: SYM-views-ghostfolio-project
+    to: REQ-views-ghostfolio-cash-balances-per-currency
+    created_at: 2026-10-31T19:03:16.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d2f504a823a

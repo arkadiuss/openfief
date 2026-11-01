@@ -776,3 +776,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc3147aca602
+  - type: implements
+    from: SYM-ingest-xtb-x-row
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:34:59.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aac7dcc9129
+  - type: covered_by
+    from: SYM-ingest-xtb-x-row
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:34:59.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71f731aef704
+  - type: implements
+    from: SYM-ingestv1-list-pending-tickers-response-reset
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:05:06.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69d8a587d7c1
+  - type: covered_by
+    from: SYM-ingestv1-list-pending-tickers-response-reset
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:05:06.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91c35aaf50b5
+  - type: implements
+    from: SYM-pl-pack-exempt
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:01:52.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-756a4790520b
+  - type: covered_by
+    from: SYM-pl-pack-exempt
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:52.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7da1e087e10a
+  - type: implements
+    from: SYM-ledger-sales-of
+    to: REQ-ledger-sales
+    created_at: 2026-10-31T19:07:08.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b5bc10b26f6
+  - type: covered_by
+    from: SYM-ledger-sales-of
+    to: TEST-ledger-sale
+    created_at: 2026-10-31T19:07:08.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-811fe195a3d9
+  - type: validates
+    from: TEST-ingest-connectrpc-held
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:07:18.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a99be48fa83

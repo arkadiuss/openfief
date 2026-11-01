@@ -615,3 +615,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41be4a3b487c
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-10-31T13:25:22.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f66ad8fb616
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-10-31T13:25:23.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf21611bd615
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-10-31T13:25:23.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0268bdf592a
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-10-31T13:25:23.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d667856675d
+  - type: verified_by
+    from: SCEN-plugins-treasury-bonds-serves-every-account
+    to: TEST-core-bond-lots
+    created_at: 2026-10-31T13:25:23.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4c704770fbe
+  - type: implements
+    from: SYM-ingest-ticker-entry-validate
+    to: REQ-ingest-ticker-entries-wait
+    created_at: 2026-10-31T13:24:45.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd041f35995f
+  - type: covered_by
+    from: SYM-ingest-ticker-entry-validate
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:24:45.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7cdae46bf27
+  - type: executable_for
+    from: SYM-ingest-xtb-test-map-never-keeps-transfer-comments
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:30:20.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-154d6e8ec423
+  - type: implements
+    from: SYM-ingest-xtbtest-num
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:36:48.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-451d18014b75
+  - type: covered_by
+    from: SYM-ingest-xtbtest-num
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:36:48.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fe3e0c0ddfe
+  - type: implements
+    from: SYM-ingest-xtbtest-zip-of
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:38:56.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-715feff9c22c
+  - type: covered_by
+    from: SYM-ingest-xtbtest-zip-of
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:38:56.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edb3e0d2c454
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-response-proto-message
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:07:10.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3200f54b3e1
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-response-proto-message
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:07:10.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44b27d31e1e3

@@ -517,3 +517,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4408b0bd4942
+  - type: implements
+    from: SYM-ingest-app-tax-wrappers
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:48:35.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36deff7ca421
+  - type: covered_by
+    from: SYM-ingest-app-tax-wrappers
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:48:35.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91454112ddcb
+  - type: implements
+    from: SYM-connectorv1-holding-reset
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T14:00:19.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f166bc9f1d3
+  - type: covered_by
+    from: SYM-connectorv1-holding-reset
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T14:00:19.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bac6b91d1ea2
+  - type: implements
+    from: SYM-ingest-xtb-record-id
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:32:23.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b4065cc6034
+  - type: covered_by
+    from: SYM-ingest-xtb-record-id
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:32:23.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-344dd4305d73
+  - type: implements
+    from: SYM-views-date-total-tax
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:11:29.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69d254eda111
+  - type: covered_by
+    from: SYM-views-date-total-tax
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:11:29.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cba166143e4

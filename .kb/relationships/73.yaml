@@ -503,3 +503,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-782dca812357
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-request
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:46:59.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a935d64f65
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-request
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:46:59.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a8065808344
+  - type: implements
+    from: SYM-valuationv1-set-exemption-class-request-reset
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:15:54.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-827196c8f1b0
+  - type: covered_by
+    from: SYM-valuationv1-set-exemption-class-request-reset
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:15:54.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e05c655f81d

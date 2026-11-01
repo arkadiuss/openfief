@@ -545,3 +545,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94834cc2c530
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-ledger-holdings-on
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:06.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae3201b15ac9
+  - type: implements
+    from: SYM-ingest-xtb-shown-name
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:29:16.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10d5cf362fa7
+  - type: covered_by
+    from: SYM-ingest-xtb-shown-name
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:29:16.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-004e7d84d493
+  - type: constrains
+    from: REQ-views-totals-losses-offset
+    to: FACT-SUBJECT-CD65E2B80F60E34C
+    created_at: 2026-10-31T18:34:48.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b96e98681f0c
+  - type: requires_property
+    from: REQ-views-totals-losses-offset
+    to: FACT-PROP-1C32EBD3A12F7EFE
+    created_at: 2026-10-31T18:34:48.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63714372cecf
+  - type: specified_by
+    from: REQ-views-totals-losses-offset
+    to: SCEN-views-totals-losses-offset
+    created_at: 2026-10-31T18:34:48.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-722c4821ba21

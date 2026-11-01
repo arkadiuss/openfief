@@ -454,13 +454,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53cdd445ec82
-  - type: implements
-    from: SYM-views-connectapi-read-service-list-yearly-taxes
-    to: REQ-views-yearly-taxes
-    created_at: 2026-10-30T01:21:44.127Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-72bec181f604
   - type: covered_by
     from: SYM-views-connectapi-read-service-list-yearly-taxes
     to: TEST-views-connectapi-values
@@ -559,3 +552,115 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e63f0c41050
+  - type: constrains
+    from: REQ-views-ghostfolio-leftover-assets-after-import
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-31T15:07:58.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f43e9b4bc02b
+  - type: requires_property
+    from: REQ-views-ghostfolio-leftover-assets-after-import
+    to: FACT-PROP-F38264BBE7387E71
+    created_at: 2026-10-31T15:07:58.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ee9d676f0dd
+  - type: specified_by
+    from: REQ-views-ghostfolio-leftover-assets-after-import
+    to: SCEN-views-ghostfolio-leftover-assets-after-import
+    created_at: 2026-10-31T15:07:58.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9fe2eff90f9
+  - type: constrains
+    from: REQ-ingest-ticker-confirmation
+    to: FACT-SUBJECT-8A8B03F40D5773D9
+    created_at: 2026-10-31T12:56:47.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b53dd7100e72
+  - type: requires_property
+    from: REQ-ingest-ticker-confirmation
+    to: FACT-PROP-8C7B25EDF12A0EA9
+    created_at: 2026-10-31T12:56:47.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c7534c07cf7
+  - type: specified_by
+    from: REQ-ingest-ticker-confirmation
+    to: SCEN-ingest-ticker-confirmation
+    created_at: 2026-10-31T12:56:47.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c929c9ba8b9
+  - type: implements
+    from: SYM-connectorv1-lookup-instruments-request-proto-reflect
+    to: REQ-ingest-ticker-isin-lookup
+    created_at: 2026-10-31T13:47:23.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f06cfcf66f7b
+  - type: covered_by
+    from: SYM-connectorv1-lookup-instruments-request-proto-reflect
+    to: TEST-ingest-connectrpc-lookup
+    created_at: 2026-10-31T13:47:23.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb0fadacd509
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-request-get-isin
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:06:46.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c3685b4bf5f
+  - type: covered_by
+    from: SYM-ingestv1-confirm-ticker-request-get-isin
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:06:46.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76afd38a40c2
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-yearly-taxes
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T18:37:52.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ff13011b67f
+  - type: implements
+    from: SYM-pl-averages
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:02:26.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54dd9234f670
+  - type: covered_by
+    from: SYM-pl-averages
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:02:26.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b161fb6fe0eb
+  - type: validates
+    from: TEST-ingest-connectrpc-lookup
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:55.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a53156186e53
+  - type: implements
+    from: SYM-ingest-app-connectors-import-bond-lots
+    to: REQ-ingest-bond-lot-handed-with-account
+    created_at: 2026-10-31T18:09:00.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b8857395915
+  - type: implements
+    from: SYM-ingest-app-connectors-import-bond-lots
+    to: REQ-ingest-bond-account-live-on-first-lot
+    created_at: 2026-10-31T18:10:46.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdacfc936082

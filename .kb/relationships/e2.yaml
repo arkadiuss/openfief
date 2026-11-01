@@ -783,3 +783,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0aadbce7631b
+  - type: implements
+    from: SYM-ingest-connectrpc-bond-terms-to
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-10-31T13:50:08.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5c7095e7c46
+  - type: covered_by
+    from: SYM-ingest-connectrpc-bond-terms-to
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-10-31T13:50:08.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56046c223f61
+  - type: constrains
+    from: REQ-ui-delete-and-remap
+    to: FACT-SUBJECT-EE919270A75F28E3
+    created_at: 2026-10-31T14:35:45.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2a376f1fe36
+  - type: requires_property
+    from: REQ-ui-delete-and-remap
+    to: FACT-PROP-688B3FBB9C444A63
+    created_at: 2026-10-31T14:35:45.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad8635189c76
+  - type: specified_by
+    from: REQ-ui-delete-and-remap
+    to: SCEN-ui-delete-and-remap
+    created_at: 2026-10-31T14:35:46.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1738cf1f755d
+  - type: implements
+    from: SYM-plugins-xtb-run
+    to: REQ-plugins-xtb-connector
+    created_at: 2026-10-31T13:43:44.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-569adc7432da
+  - type: covered_by
+    from: SYM-plugins-xtb-run
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T13:43:44.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d4ce5a2d927
+  - type: executable_for
+    from: SYM-pl-test-helper-classes
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:32.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-979cf14377c9
+  - type: implements
+    from: SYM-exp-operator-held-browser-view
+    to: REQ-operator-contested-browser-path-stops
+    created_at: 2026-10-31T18:19:51.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c28ec511bab

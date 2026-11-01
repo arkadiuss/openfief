@@ -1,6 +1,6 @@
 ---
 title: The Ghostfolio view must give each owned account, in the Ghostfolio user's base currency, one cash balance at the end of every date on which the account's cash in that currency changes, counting the transactions it leaves out, must leave out cash in any other currency as a problem per account and currency, and must leave out an account's balances when one is too large for a double.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-108
 tags:
   - strict-modeling

@@ -503,13 +503,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69591cc58d2a
-  - type: validates
-    from: TEST-ingest-bondlot
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T06:32:54.677Z
+  - type: implements
+    from: SYM-ingest-xtb-cash-row
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:26:38.470Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-5bfe633ca12c
+    id: rel-e580f5323b79
+  - type: covered_by
+    from: SYM-ingest-xtb-cash-row
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:26:38.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ac8610fc5f7
+  - type: implements
+    from: SYM-ingestv1connect-unimplemented-ticker-service-handler-confirm-ticker
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:02:18.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76078434051a
+  - type: covered_by
+    from: SYM-ingestv1connect-unimplemented-ticker-service-handler-confirm-ticker
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:02:18.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1efe56c3a4a8
+  - type: implements
+    from: SYM-ingestv1-init-tickers
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:07:50.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-130589a5f675
+  - type: covered_by
+    from: SYM-ingestv1-init-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:07:50.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9c541951d08
   - type: constrains
     from: REQ-operator-older-plugin-keeps-browser-path
     to: FACT-SUBJECT-1E06339900ED6C5A
@@ -524,3 +559,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32f76ae36185
+  - type: executable_for
+    from: SYM-pl-test-helper-later-act
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:50.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7432b66ff635
+  - type: validates
+    from: TEST-ingest-bondlot
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:24:31.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-091803205145

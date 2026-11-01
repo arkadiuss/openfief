@@ -594,3 +594,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8c2c1f453d7
+  - type: verified_by
+    from: SCEN-ingest-xtb-no-transfer-comments
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T12:54:57.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd29ac5c3492
+  - type: verified_by
+    from: SCEN-ingest-xtb-no-transfer-comments
+    to: TEST-plugins-xtb
+    created_at: 2026-10-31T12:54:57.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d4157153e6a
+  - type: verified_by
+    from: SCEN-ingest-xtb-no-transfer-comments
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T12:54:57.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0948bc4eb91a
+  - type: executable_for
+    from: SYM-ingest-test-helper-isin
+    to: TEST-ingest-ticker
+    created_at: 2026-10-31T13:25:23.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cd4d31c5eef
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service-set-exemption-class
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:08:57.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7ccdf45b1e4
+  - type: covered_by
+    from: SYM-valuation-connectapi-settings-service-set-exemption-class
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:08:57.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-605c98186cb7

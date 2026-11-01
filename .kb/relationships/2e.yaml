@@ -615,13 +615,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-040ad54e60c7
-  - type: implements
-    from: SYM-ui-bond-lot-form-exchange
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T07:37:36.780Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f1f87d7bed35
   - type: covered_by
     from: SYM-ui-bond-lot-form-exchange
     to: TEST-ui-bond-lots
@@ -629,3 +622,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eda057fb9f93
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fixed-held
+    to: TEST-ingest-app-held
+    created_at: 2026-10-31T13:49:46.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0dc88542fad
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-held-lot
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:57:24.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0571236f150c
+  - type: executable_for
+    from: SYM-treasurybonds-test-due-coupons
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:57:47.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08f33610a5f1
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-response-proto-reflect
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:01:17.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db66a46f2e28
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-response-proto-reflect
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:01:17.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73d05273eefb
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-response-proto-reflect
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:02:37.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d78b3e86b5fc
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-response-proto-reflect
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:02:37.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7404f24c13a
+  - type: implements
+    from: SYM-ingestv1-pending-ticker-proto-message
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:03:26.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-441a8efdc431
+  - type: covered_by
+    from: SYM-ingestv1-pending-ticker-proto-message
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:03:26.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c27ad19e4db
+  - type: implements
+    from: SYM-pl-oki-act-exemptions
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:01:26.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64dd8c93b72b
+  - type: covered_by
+    from: SYM-pl-oki-act-exemptions
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:26.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1ea2b4be9cc
+  - type: implements
+    from: SYM-ui-bond-lot-form-exchange
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:24:03.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4ae74454aaf

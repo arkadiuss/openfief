@@ -16,6 +16,7 @@
   {{if .UnmappedBrokerAccounts}}
   <p class="alert alert-warn">The statement also names {{len .UnmappedBrokerAccounts}} broker {{if eq (len .UnmappedBrokerAccounts) 1}}account{{else}}accounts{{end}} that no account is mapped to, so nothing of {{if eq (len .UnmappedBrokerAccounts) 1}}it{{else}}them{{end}} was booked: <span class="mono">{{range $i, $b := .UnmappedBrokerAccounts}}{{if $i}}, {{end}}{{$b}}{{end}}</span>. Map {{if eq (len .UnmappedBrokerAccounts) 1}}it{{else}}them{{end}} on the <a href="/accounts">accounts page</a>, then upload the statement again.</p>
   {{end}}
+  {{with waitingRows .Problems}}<p class="alert alert-warn">{{.}} of the rows wait for their ticker's ISIN: <a href="/tickers">confirm the tickers</a>, and they are booked then.</p>{{end}}
   {{if .ProblemsTotal}}
   <p class="alert alert-warn">{{.ProblemsTotal}} rows were left out of the ledger{{if lt (len .Problems) .ProblemsTotal}}; the first {{len .Problems}} are listed{{end}}:</p>
   <div class="table"><table>
@@ -34,9 +35,13 @@
   <h2 id="account-value-title">Value on {{.Date}}</h2>
   {{with .Total}}
   <div class="table"><table>
-    <thead><tr><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col" class="num">Of which cash</th></tr></thead>
-    <tbody><tr>{{template "three-values" .}}<td class="num">{{money .CashReporting}}</td></tr></tbody>
+    <thead><tr><th scope="col"><span class="sr-only">Line</span></th><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col" class="num">Of which cash</th></tr></thead>
+    <tbody>
+    <tr><th scope="row">Total</th>{{template "three-values" .}}<td class="num">{{money .CashReporting}}</td></tr>
+    <tr><th scope="row">Of which losses offset</th>{{template "losses-offset" .}}<td class="num empty">–</td></tr>
+    </tbody>
   </table></div>
+  {{template "losses-offset-help"}}
   <p class="muted">Holdings and cash in the reporting currency. Gross is before any tax or fee; net is what you keep at the planned exit; liquidation is the cash in hand if everything were sold today, after every tax and fee.{{if .CashUnconverted}} Some cash has no FX rate yet and is left out.{{end}}</p>
   {{else}}
   <p class="muted">Nothing is valued on this date yet.</p>

@@ -69,6 +69,12 @@ const (
 	// SleeveServiceUpdateSleeveProcedure is the fully-qualified name of the SleeveService's
 	// UpdateSleeve RPC.
 	SleeveServiceUpdateSleeveProcedure = "/openfief.portfolio.v1.SleeveService/UpdateSleeve"
+	// SleeveServiceDeleteSleeveProcedure is the fully-qualified name of the SleeveService's
+	// DeleteSleeve RPC.
+	SleeveServiceDeleteSleeveProcedure = "/openfief.portfolio.v1.SleeveService/DeleteSleeve"
+	// SleeveServiceDeleteSleeveKindProcedure is the fully-qualified name of the SleeveService's
+	// DeleteSleeveKind RPC.
+	SleeveServiceDeleteSleeveKindProcedure = "/openfief.portfolio.v1.SleeveService/DeleteSleeveKind"
 )
 
 // SleeveServiceClient is a client for the openfief.portfolio.v1.SleeveService service.
@@ -83,6 +89,12 @@ type SleeveServiceClient interface {
 	// UpdateSleeve renames a sleeve, or changes its kind or role; its ID
 	// stays.
 	UpdateSleeve(context.Context, *connect.Request[v1.UpdateSleeveRequest]) (*connect.Response[v1.UpdateSleeveResponse], error)
+	// DeleteSleeve deletes a sleeve that has no accounts (D-120); one with
+	// accounts fails with FAILED_PRECONDITION.
+	DeleteSleeve(context.Context, *connect.Request[v1.DeleteSleeveRequest]) (*connect.Response[v1.DeleteSleeveResponse], error)
+	// DeleteSleeveKind deletes a kind no sleeve uses, built-in ones too
+	// (D-120); one in use fails with FAILED_PRECONDITION.
+	DeleteSleeveKind(context.Context, *connect.Request[v1.DeleteSleeveKindRequest]) (*connect.Response[v1.DeleteSleeveKindResponse], error)
 }
 
 // NewSleeveServiceClient constructs a client for the openfief.portfolio.v1.SleeveService service.
@@ -120,6 +132,18 @@ func NewSleeveServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(sleeveServiceMethods.ByName("UpdateSleeve")),
 			connect.WithClientOptions(opts...),
 		),
+		deleteSleeve: connect.NewClient[v1.DeleteSleeveRequest, v1.DeleteSleeveResponse](
+			httpClient,
+			baseURL+SleeveServiceDeleteSleeveProcedure,
+			connect.WithSchema(sleeveServiceMethods.ByName("DeleteSleeve")),
+			connect.WithClientOptions(opts...),
+		),
+		deleteSleeveKind: connect.NewClient[v1.DeleteSleeveKindRequest, v1.DeleteSleeveKindResponse](
+			httpClient,
+			baseURL+SleeveServiceDeleteSleeveKindProcedure,
+			connect.WithSchema(sleeveServiceMethods.ByName("DeleteSleeveKind")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -129,6 +153,8 @@ type sleeveServiceClient struct {
 	renameSleeveKind *connect.Client[v1.RenameSleeveKindRequest, v1.RenameSleeveKindResponse]
 	addSleeve        *connect.Client[v1.AddSleeveRequest, v1.AddSleeveResponse]
 	updateSleeve     *connect.Client[v1.UpdateSleeveRequest, v1.UpdateSleeveResponse]
+	deleteSleeve     *connect.Client[v1.DeleteSleeveRequest, v1.DeleteSleeveResponse]
+	deleteSleeveKind *connect.Client[v1.DeleteSleeveKindRequest, v1.DeleteSleeveKindResponse]
 }
 
 // AddSleeveKind calls openfief.portfolio.v1.SleeveService.AddSleeveKind.
@@ -151,6 +177,16 @@ func (c *sleeveServiceClient) UpdateSleeve(ctx context.Context, req *connect.Req
 	return c.updateSleeve.CallUnary(ctx, req)
 }
 
+// DeleteSleeve calls openfief.portfolio.v1.SleeveService.DeleteSleeve.
+func (c *sleeveServiceClient) DeleteSleeve(ctx context.Context, req *connect.Request[v1.DeleteSleeveRequest]) (*connect.Response[v1.DeleteSleeveResponse], error) {
+	return c.deleteSleeve.CallUnary(ctx, req)
+}
+
+// DeleteSleeveKind calls openfief.portfolio.v1.SleeveService.DeleteSleeveKind.
+func (c *sleeveServiceClient) DeleteSleeveKind(ctx context.Context, req *connect.Request[v1.DeleteSleeveKindRequest]) (*connect.Response[v1.DeleteSleeveKindResponse], error) {
+	return c.deleteSleeveKind.CallUnary(ctx, req)
+}
+
 // SleeveServiceHandler is an implementation of the openfief.portfolio.v1.SleeveService service.
 type SleeveServiceHandler interface {
 	// AddSleeveKind adds a kind with a default role, which never changes.
@@ -163,6 +199,12 @@ type SleeveServiceHandler interface {
 	// UpdateSleeve renames a sleeve, or changes its kind or role; its ID
 	// stays.
 	UpdateSleeve(context.Context, *connect.Request[v1.UpdateSleeveRequest]) (*connect.Response[v1.UpdateSleeveResponse], error)
+	// DeleteSleeve deletes a sleeve that has no accounts (D-120); one with
+	// accounts fails with FAILED_PRECONDITION.
+	DeleteSleeve(context.Context, *connect.Request[v1.DeleteSleeveRequest]) (*connect.Response[v1.DeleteSleeveResponse], error)
+	// DeleteSleeveKind deletes a kind no sleeve uses, built-in ones too
+	// (D-120); one in use fails with FAILED_PRECONDITION.
+	DeleteSleeveKind(context.Context, *connect.Request[v1.DeleteSleeveKindRequest]) (*connect.Response[v1.DeleteSleeveKindResponse], error)
 }
 
 // NewSleeveServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -196,6 +238,18 @@ func NewSleeveServiceHandler(svc SleeveServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(sleeveServiceMethods.ByName("UpdateSleeve")),
 		connect.WithHandlerOptions(opts...),
 	)
+	sleeveServiceDeleteSleeveHandler := connect.NewUnaryHandler(
+		SleeveServiceDeleteSleeveProcedure,
+		svc.DeleteSleeve,
+		connect.WithSchema(sleeveServiceMethods.ByName("DeleteSleeve")),
+		connect.WithHandlerOptions(opts...),
+	)
+	sleeveServiceDeleteSleeveKindHandler := connect.NewUnaryHandler(
+		SleeveServiceDeleteSleeveKindProcedure,
+		svc.DeleteSleeveKind,
+		connect.WithSchema(sleeveServiceMethods.ByName("DeleteSleeveKind")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.portfolio.v1.SleeveService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case SleeveServiceAddSleeveKindProcedure:
@@ -206,6 +260,10 @@ func NewSleeveServiceHandler(svc SleeveServiceHandler, opts ...connect.HandlerOp
 			sleeveServiceAddSleeveHandler.ServeHTTP(w, r)
 		case SleeveServiceUpdateSleeveProcedure:
 			sleeveServiceUpdateSleeveHandler.ServeHTTP(w, r)
+		case SleeveServiceDeleteSleeveProcedure:
+			sleeveServiceDeleteSleeveHandler.ServeHTTP(w, r)
+		case SleeveServiceDeleteSleeveKindProcedure:
+			sleeveServiceDeleteSleeveKindHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -229,4 +287,12 @@ func (UnimplementedSleeveServiceHandler) AddSleeve(context.Context, *connect.Req
 
 func (UnimplementedSleeveServiceHandler) UpdateSleeve(context.Context, *connect.Request[v1.UpdateSleeveRequest]) (*connect.Response[v1.UpdateSleeveResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.portfolio.v1.SleeveService.UpdateSleeve is not implemented"))
+}
+
+func (UnimplementedSleeveServiceHandler) DeleteSleeve(context.Context, *connect.Request[v1.DeleteSleeveRequest]) (*connect.Response[v1.DeleteSleeveResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.portfolio.v1.SleeveService.DeleteSleeve is not implemented"))
+}
+
+func (UnimplementedSleeveServiceHandler) DeleteSleeveKind(context.Context, *connect.Request[v1.DeleteSleeveKindRequest]) (*connect.Response[v1.DeleteSleeveKindResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.portfolio.v1.SleeveService.DeleteSleeveKind is not implemented"))
 }

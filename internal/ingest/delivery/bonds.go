@@ -7,6 +7,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/ledger"
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
 )
 
@@ -83,7 +84,7 @@ func purchaseFrom(p connectorv1.BondPurchase) (ingest.BondPurchase, error) {
 	return 0, fmt.Errorf("%w: %d", errBadPurchase, p)
 }
 
-// BondLotEntries reads an ImportBondLots request: its go-live date, its lots
+// BondLotEntries reads an ImportBondLots request: its account (D-118), its go-live date, its lots
 // in order (BondLots) and the lots it deletes. Anything malformed fails
 // with an error wrapping ErrMalformedLot naming the field.
 func BondLotEntries(req *connectorv1.ImportBondLotsRequest) (ingest.BondLotEntries, error) {
@@ -95,7 +96,7 @@ func BondLotEntries(req *connectorv1.ImportBondLotsRequest) (ingest.BondLotEntri
 	if err != nil {
 		return ingest.BondLotEntries{}, err
 	}
-	out := ingest.BondLotEntries{GoLive: goLive, Lots: lots}
+	out := ingest.BondLotEntries{Account: ledger.AccountID(req.GetAccountId()), GoLive: goLive, Lots: lots}
 	for i, k := range req.GetDeleted() {
 		series, err := pl.ParseSeries(k.GetSeries())
 		if err != nil {

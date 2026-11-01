@@ -31,8 +31,8 @@ const checkDigits = 10
 
 // Errors mapping lots.
 var (
-	// ErrNoAccount reports a mapper without the ledger account its lots go
-	// into.
+	// ErrNoAccount reports entries without the account they were entered
+	// on (D-118).
 	ErrNoAccount = errors.New("no ledger account for the bond lots")
 	// ErrDuplicateLot reports two lots of one series bought on one day in
 	// one batch, added or deleted: they would share a key, so the owner
@@ -63,12 +63,15 @@ func Instrument(s pl.Series) (ledger.Instrument, error) {
 	return ledger.Instrument{}, fmt.Errorf("%w: no check digit for %s", ledger.ErrInvalidISIN, body)
 }
 
-// Mapper maps bond lots the owner entered into the ledger account Account.
+// Mapper maps bond lots the owner entered into the ledger account the
+// entries name (D-118), so one connector instance serves every bond
+// account. The zero Mapper is ready to use.
 type Mapper struct {
-	Account ledger.AccountID
+	// account is the account of the entries being mapped.
+	account ledger.AccountID
 }
 
-// Map validates each lot of e as of today (ingest.BondLot.Validate) and maps
+// Map validates each lot of e, entered on e.Account, as of today (ingest.BondLot.Validate) and maps
 // it by e's go-live date (D-98): a lot bought on or before go-live is an
 // opening lot on the go-live date, keeping its own purchase date and cost; a
 // later one is two transactions on its purchase date, a deposit of its cost
@@ -87,8 +90,9 @@ type Mapper struct {
 // another quantity, price or terms makes a new version that supersedes the
 // old (D-18).
 func (m Mapper) Map(e *ingest.BondLotEntries, today kernel.Date) (ingest.Mapping, []ingest.BondTerms, error) {
+	m.account = e.Account
 	switch {
-	case m.Account == "":
+	case m.account == "":
 		return ingest.Mapping{}, nil, ErrNoAccount
 	case e.GoLive.IsZero():
 		return ingest.Mapping{}, nil, ErrNoGoLive
@@ -183,8 +187,8 @@ func lotID(k ingest.BondLotKey) string {
 // header returns the header of the transaction with external ID id on day.
 func (m Mapper) header(id string, day kernel.Date) ledger.TransactionHeader {
 	return ledger.TransactionHeader{
-		Key:     ledger.TransactionKey{Source: SourcePrefix + string(m.Account), ExternalID: id},
-		Account: m.Account, Date: day,
+		Key:     ledger.TransactionKey{Source: SourcePrefix + string(m.account), ExternalID: id},
+		Account: m.account, Date: day,
 	}
 }
 

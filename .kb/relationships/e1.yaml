@@ -272,13 +272,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-216a737ea4fa
-  - type: implements
-    from: SYM-views-ghostfolio-syncer-actual
-    to: REQ-views-ghostfolio-owned-accounts
-    created_at: 2026-10-29T01:02:58.754Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5a4fba356742
   - type: covered_by
     from: SYM-views-ghostfolio-syncer-actual
     to: TEST-views-ghostfolio-sync
@@ -391,3 +384,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7db44e1f4516
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-fake-deletions-delete-sleeve
+    to: TEST-portfolio-app-deletions
+    created_at: 2026-10-31T14:52:51.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dbef0ca2e7e
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-kind-request-string
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:01:37.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc1120625466
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-kind-request-string
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:01:37.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e274b0cce37c
+  - type: implements
+    from: SYM-ingest-app-ticker-store
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T13:21:06.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de461b23ebe7
+  - type: covered_by
+    from: SYM-ingest-app-ticker-store
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:21:06.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93421057d3f1
+  - type: implements
+    from: SYM-ingest-app-ticker-store
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:16.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae60ee0132b
+  - type: implements
+    from: SYM-views-ghostfolio-syncer-actual
+    to: REQ-views-ghostfolio-owned-and-cash-accounts
+    created_at: 2026-10-31T20:03:15.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7368a02b844e

@@ -7,5 +7,6 @@ origin:
   recorded_at: '2026-10-29T21:47:12.334Z'
 id: TEST-jurisdiction-pack
 type: test
+verification_scope: unit
 ---
 With the Polish pack: HasWrapper accepts taxable, ike, ikze and oki and nothing else, DefaultWrapper is taxable; ValidateMarginalRate accepts 0.12, 0.32 and 0.999 and refuses 0, a negative rate, 1 and 32.

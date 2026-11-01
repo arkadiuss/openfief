@@ -475,3 +475,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59419ed85b40
+  - type: implements
+    from: SYM-ui-server-broker-accounts
+    to: REQ-ui-broker-accounts-owner-only
+    created_at: 2026-10-31T14:53:26.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76b8cdb226cc
+  - type: covered_by
+    from: SYM-ui-server-broker-accounts
+    to: TEST-ui-onboarding
+    created_at: 2026-10-31T14:53:26.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ceba6d736e6
+  - type: implements
+    from: SYM-portfoliov1-delete-sleeve-request-proto-reflect
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-10-31T15:00:31.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6225bd8c0a48
+  - type: covered_by
+    from: SYM-portfoliov1-delete-sleeve-request-proto-reflect
+    to: TEST-core-removals
+    created_at: 2026-10-31T15:00:31.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c15999f16965
+  - type: implements
+    from: SYM-ingest-xtb-labels
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:31:17.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35e2aeafaa8e
+  - type: covered_by
+    from: SYM-ingest-xtb-labels
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:31:17.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6f2f0042959
+  - type: implements
+    from: SYM-ingest-xtb-x-shared
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:34:47.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1cc4c31955b
+  - type: covered_by
+    from: SYM-ingest-xtb-x-shared
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:34:47.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3d0b5414108
+  - type: implements
+    from: SYM-ingestv1-pending-ticker-descriptor
+    to: REQ-ingest-ticker-confirmation
+    created_at: 2026-10-31T14:03:42.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57c359660cf9
+  - type: covered_by
+    from: SYM-ingestv1-pending-ticker-descriptor
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T14:03:42.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67df3de15b56
+  - type: implements
+    from: SYM-pl-pit38-account-total
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:04:57.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c876ef6e4786
+  - type: covered_by
+    from: SYM-pl-pit38-account-total
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:04:57.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07ccbe341569
+  - type: implements
+    from: SYM-ui-server-broker-accounts
+    to: REQ-ingest-broker-account-numbers-owner-only
+    created_at: 2026-10-31T18:16:56.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa0550cdb051

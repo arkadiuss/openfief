@@ -3,9 +3,9 @@ Content-Length: 870
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Type: application/json; charset=utf-8
-Date: Fri, 30 Oct 2026 00:00:55 GMT
-Etag: W/"366-8dqu+2F9F4hGbCa/6Y5vyLW9QOU"
+Date: Sat, 31 Oct 2026 14:41:28 GMT
+Etag: W/"366-Xevt3L2U1xJUaDETQL/YqgmJzbg"
 Keep-Alive: timeout=5
 X-Powered-By: Express
 
-{"balances":[{"account":{"comment":null,"createdAt":"2026-10-30T00:00:54.571Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-30T00:00:54.571Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"},"date":"2025-01-03T00:00:00.000Z","id":"d5737127-b5bf-44f4-a100-8d700173cdf9","value":-500,"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","valueInBaseCurrency":-500},{"account":{"comment":null,"createdAt":"2026-10-30T00:00:54.571Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-30T00:00:54.571Z","userId":"0f51f620-82d8-4744-885e-457d56daad1d"},"date":"2025-01-06T00:00:00.000Z","id":"c93b51ee-3c0a-427a-a9bf-6622fd310146","value":-502,"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","valueInBaseCurrency":-502}]}
+{"balances":[{"account":{"comment":null,"createdAt":"2026-10-31T14:41:28.151Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-31T14:41:28.151Z","userId":"d9327e24-69fc-461d-8677-10f4c4464db0"},"date":"2025-01-03T00:00:00.000Z","id":"b492ac1a-bcb0-4913-8f29-edebc0f77062","value":-500,"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","valueInBaseCurrency":-500},{"account":{"comment":null,"createdAt":"2026-10-31T14:41:28.151Z","currency":"PLN","id":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","name":"Synthetic bonds","platformId":null,"updatedAt":"2026-10-31T14:41:28.151Z","userId":"d9327e24-69fc-461d-8677-10f4c4464db0"},"date":"2025-01-06T00:00:00.000Z","id":"a57f6a60-dcf7-4a0a-a578-40bdb4bd8285","value":-502,"accountId":"5b62b9d3-54df-543c-8c9b-934e60d1aa1e","valueInBaseCurrency":-502}]}

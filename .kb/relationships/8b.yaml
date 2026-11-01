@@ -615,3 +615,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-559696970aa5
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-problem-refs
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-10-31T13:57:42.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4ffa3f2a91f
+  - type: executable_for
+    from: SYM-core-test-helper-xtb-export
+    to: TEST-core-xtb-upload
+    created_at: 2026-10-31T13:19:02.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13cca699c297
+  - type: implements
+    from: SYM-ingest-connectrpc-broker-entries-of
+    to: REQ-ingest-ticker-contract
+    created_at: 2026-10-31T13:22:33.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad17e9ea60ec
+  - type: covered_by
+    from: SYM-ingest-connectrpc-broker-entries-of
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-10-31T13:22:34.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4cc52cdd452
+  - type: implements
+    from: SYM-ingest-xtbtest-closed-header
+    to: REQ-ingest-xtb-export-mapping
+    created_at: 2026-10-31T13:37:16.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0921029fa479
+  - type: covered_by
+    from: SYM-ingest-xtbtest-closed-header
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-10-31T13:37:16.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcfb8efcf6a7
+  - type: implements
+    from: SYM-pl-oki-act-rate
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:01:19.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a93e63b1635
+  - type: implements
+    from: SYM-pl-oki-act-rate
+    to: REQ-pl-oki-tax-rate
+    created_at: 2026-10-31T19:01:19.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e809f575a3e2
+  - type: covered_by
+    from: SYM-pl-oki-act-rate
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:19.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc30785870b8
+  - type: implements
+    from: SYM-ui-clamp-year
+    to: REQ-ui-yearly-taxes
+    created_at: 2026-10-31T19:13:08.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dffc1bf64e6
+  - type: covered_by
+    from: SYM-ui-clamp-year
+    to: TEST-ui-taxes
+    created_at: 2026-10-31T19:13:08.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4ce8057902
