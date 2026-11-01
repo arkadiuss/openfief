@@ -119903,3 +119903,69 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-attention
+  - id: SYM-attention-pg-test-embedded-migrations-load
+    title: TestEmbeddedMigrationsLoad
+    status: active
+    sourceFile: internal/attention/postgres/migrations_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T11:53:22.441Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-store
+  - id: SYM-identity-pg-test-embedded-migrations-load
+    title: TestEmbeddedMigrationsLoad
+    status: active
+    sourceFile: internal/identity/postgres/migrations_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T11:53:27.612Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-postgres
+  - id: SYM-ingest-pg-test-embedded-migrations-load
+    title: TestEmbeddedMigrationsLoad
+    status: active
+    sourceFile: internal/ingest/postgres/migrations_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T11:53:32.379Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-ledger-pg-test-embedded-migrations-load
+    title: TestEmbeddedMigrationsLoad
+    status: active
+    sourceFile: internal/ledger/postgres/migrations_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T11:53:37.316Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-portfolio-pg-test-embedded-migrations-load
+    title: TestEmbeddedMigrationsLoad
+    status: active
+    sourceFile: internal/portfolio/postgres/migrations_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T11:53:42.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-postgres
+  - id: SYM-valuation-pg-test-embedded-migrations-load
+    title: TestEmbeddedMigrationsLoad
+    status: active
+    sourceFile: internal/valuation/postgres/migrations_test.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T11:53:46.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
