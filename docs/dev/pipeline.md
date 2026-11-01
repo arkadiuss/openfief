@@ -88,6 +88,8 @@ Two targets drive a browser on demand and are in no check, since a check must no
 
 Two steps compare against a base revision: the ground-rule check reads `DOCS_BASE`, and `proto:breaking` reads `PROTO_BASE`, then `DOCS_BASE`. Both default to `HEAD`, which locally means "against the last commit". CI sets `DOCS_BASE` to the pull request's base.
 
+A breaking contract change goes in only when an author decision names it, as D-157 removes the read API's `ListBrokerAccounts`. `proto:breaking` excuses exactly what that decision names, in the change that makes it, and still fails on every other breaking change; once the change is on the base, later comparisons no longer see it. The commit marks it breaking (`!` or a `BREAKING CHANGE:` footer), so the release notes list it.
+
 ### Affected checks
 
 `task check:commit` runs [check-commit.sh](../../scripts/check-commit.sh). It writes the staged changes (`git diff --cached --name-status`) and both modules' package listings ([go-packages.sh](../../scripts/go-packages.sh): `go list -json`, once with the `e2e` tag and once without) to a temporary directory, and runs `tools/affected hook` on them. The tool prints the plan and the reason for every step it runs or skips, and lists the task targets on standard output; the script runs them in order and stops at the first failure. If the tool fails, the commit fails. `task check:plan` prints the plan without running it, and `FULL=1` (`FULL=1 git commit ...`, or `task check:commit FULL=1`) runs `check:commit:full`. The tool itself never runs git, go or task: the scripts collect their output, as docgen's Taskfile targets do.
