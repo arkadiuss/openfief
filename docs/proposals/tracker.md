@@ -32,6 +32,6 @@ This area covers what else the tracker could hold once M0's brokers and bonds wo
 
 ## Tensions and open questions
 
-- **[T-13] A trusted person against a single user.** A trusted person reaching OpenFief itself, such as an emergency login with a waiting period as password managers offer, would be a second user, which D-65 rules out. It would also be a standing way in for anyone holding that person's device. And a self-hosted cluster may stop running with its owner. The export (P-55) needs none of that; an online handover would need D-65 revisited.
+- **[T-13] A trusted person against read-only viewers.** A trusted person reaching OpenFief itself, such as an emergency login with a waiting period as password managers offer, would be a viewer (D-65) whose access starts only after the wait, which D-65's viewers don't have. It would also be a standing way in for anyone holding that person's device. And a self-hosted cluster may stop running with its owner. The export (P-55) needs none of that; an online handover would need a waiting period added to D-65's viewers.
 - **[OQ-31] The default RSU treatment.** Before the owner records a plan's treatment (P-53), which does the pack assume: tax only at the sale, or tax at vesting?
 - **[OQ-32] Where PPK data can come from.** Whether any PPK or PPE institution, or the central mojePPK service, offers an export a connector could read, beyond PDF statements.
