@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00c7c6ab3e8a
+  - type: implements
+    from: SYM-operator-newly-refused
+    to: REQ-operator-signature-refusal-event
+    created_at: 2026-11-01T13:52:07.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-635cb021a61f
+  - type: covered_by
+    from: SYM-operator-newly-refused
+    to: TEST-operator-reconcile
+    created_at: 2026-11-01T13:52:07.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5840ac906b4d

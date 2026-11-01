@@ -97,7 +97,7 @@ func TestOperatorDeploysSignedPlugin(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	installFX(t, k, img.cluster)
+	installFX(t, k, fxPlugin, img.cluster)
 	p := waitPluginReady(t, k, fxPlugin)
 	checkSignature(t, p)
 	checkWorkload(t, k, img.cluster)
@@ -108,9 +108,10 @@ func TestOperatorDeploysSignedPlugin(t *testing.T) {
 	uninstallFX(t, k)
 }
 
-// installFX applies the instance's PluginGrant and Plugin: the manifest is
-// the image's own, read from the checkout.
-func installFX(t *testing.T, k *kube, image plugins.ImageRef) {
+// installFX applies the PluginGrant and Plugin of an NBP FX connector
+// instance name with image: the manifest is the connector's own, read from
+// the checkout.
+func installFX(t *testing.T, k *kube, name string, image plugins.ImageRef) {
 	t.Helper()
 	data, err := os.ReadFile(fxManifest)
 	if err != nil {
@@ -122,7 +123,7 @@ func installFX(t *testing.T, k *kube, image plugins.ImageRef) {
 	}
 	grant := &unstructured.Unstructured{Object: map[string]any{
 		"apiVersion": "openfief.io/v1alpha1", "kind": "PluginGrant",
-		"metadata": map[string]any{"name": fxPlugin, "namespace": namespace},
+		"metadata": map[string]any{"name": name, "namespace": namespace},
 		"spec": map[string]any{
 			"capabilities": []any{"connector"},
 			"egress":       []any{fxEgress, fxGrantOnly},
@@ -130,7 +131,7 @@ func installFX(t *testing.T, k *kube, image plugins.ImageRef) {
 	}}
 	plugin := &unstructured.Unstructured{Object: map[string]any{
 		"apiVersion": "openfief.io/v1alpha1", "kind": "Plugin",
-		"metadata": map[string]any{"name": fxPlugin, "namespace": namespace},
+		"metadata": map[string]any{"name": name, "namespace": namespace},
 		"spec": map[string]any{
 			"image":    image.String(),
 			"manifest": manifest,

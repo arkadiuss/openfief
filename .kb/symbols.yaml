@@ -12923,6 +12923,8 @@ symbols:
       - type: covered_by
         target: TEST-operator-reconcile
       - type: implements
+        target: REQ-operator-signature-refusal-event
+      - type: implements
         target: REQ-operator-upgrade-status
   - id: SYM-operator-test-reconciler-signed-images
     title: signedImages
@@ -122688,3 +122690,136 @@ symbols:
         target: TEST-core-market-data
       - type: implements
         target: REQ-valuation-market-data-series-service
+  - id: SYM-operator-newly-refused
+    title: newlyRefused
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:03.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-signature-refusal-event
+  - id: SYM-operator-test-helper-test-refusal-events
+    title: testRefusalEvents
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:48.703Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-e2e-test-operator-refuses-untrusted-images
+    title: TestOperatorRefusesUntrustedImages
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:07.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-fx-manifest-label
+    title: fxManifestLabel
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:29.338Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-push-unsigned-image
+    title: pushUnsignedImage
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:52.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-sign-untrusted
+    title: signUntrusted
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:54:21.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-check-signed-by
+    title: checkSignedBy
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:54:43.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-refusal
+    title: refusal
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:09.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-check-refused
+    title: checkRefused
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:29.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-wait-signature-decided
+    title: waitSignatureDecided
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:44.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-refusal-of
+    title: refusalOf
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:56:00.758Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-wait-refusal-event
+    title: waitRefusalEvent
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:56:17.821Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-remove-instance
+    title: removeInstance
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T14:00:51.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals

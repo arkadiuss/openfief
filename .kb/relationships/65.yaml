@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-778fe21a8c80
+  - type: executable_for
+    from: SYM-e2e-test-helper-wait-signature-decided
+    to: TEST-e2e-plugin-refusals
+    created_at: 2026-11-01T13:55:47.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3cb4a62fab1
