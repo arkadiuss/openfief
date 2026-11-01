@@ -22,6 +22,7 @@ const (
 	sheetCash        = "Cash Operations"
 	sheetOpen        = "Open Positions"
 	labelAccount     = "Account number"
+	labelReport      = "Data as of report generated"
 	labelTotal       = "total"
 	summaryMetric    = "Metric"
 	summaryCurrency  = "Currency"
@@ -207,30 +208,79 @@ func textLayouts() []string {
 // date returns the UTC date of the date-time in column label: a date
 // serial, rounded to the second, or a written date-time.
 func (r record) date(label string, date1904 bool) (kernel.Date, error) {
-	c := r.cell(label)
-	var t time.Time
-	switch c.kind {
-	case cellNumber:
-		parsed, ok := serialTime(c.value, date1904)
-		if !ok {
-			return kernel.Date{}, r.errorf(label)
-		}
-		t = parsed
-	case cellText, cellISODate:
-		parsed, ok := parseWritten(strings.TrimSpace(c.value))
-		if !ok {
-			return kernel.Date{}, r.errorf(label)
-		}
-		t = parsed
-	case cellEmpty, cellBool, cellError:
-		return kernel.Date{}, r.errorf(label)
-	}
-	t = t.UTC()
-	d, err := kernel.NewDate(t.Year(), t.Month(), t.Day())
+	t, err := r.instant(label, date1904)
 	if err != nil {
+		return kernel.Date{}, err
+	}
+	d, ok := utcDate(t)
+	if !ok {
 		return kernel.Date{}, r.errorf(label)
 	}
 	return d, nil
+}
+
+// instant returns the UTC date-time in column label, to the second.
+func (r record) instant(label string, date1904 bool) (time.Time, error) {
+	t, ok := cellTime(r.cell(label), date1904)
+	if !ok {
+		return time.Time{}, r.errorf(label)
+	}
+	return t, nil
+}
+
+// cellTime returns the UTC date-time of c: a date serial, rounded to the
+// second, or a written date-time; false for any other cell.
+func cellTime(c cell, date1904 bool) (time.Time, bool) {
+	var (
+		t  time.Time
+		ok bool
+	)
+	switch c.kind {
+	case cellNumber:
+		t, ok = serialTime(c.value, date1904)
+	case cellText, cellISODate:
+		t, ok = parseWritten(strings.TrimSpace(c.value))
+	case cellEmpty, cellBool, cellError:
+	}
+	return t.UTC(), ok
+}
+
+// utcDate returns the date of t, which is in UTC.
+func utcDate(t time.Time) (kernel.Date, bool) {
+	d, err := kernel.NewDate(t.Year(), t.Month(), t.Day())
+	return d, err == nil
+}
+
+// reportDate returns the UTC date of the report an Open Positions sheet s
+// holds, the date-time after "Data as of report generated" in a row above
+// its header (R-24), and false when no such row has one.
+func reportDate(s *sheet, header int, date1904 bool) (kernel.Date, bool) {
+	for n := 1; n < header; n++ {
+		v, ok := labelled(s.row(n), labelReport)
+		if !ok {
+			continue
+		}
+		t, ok := cellTime(v, date1904)
+		if !ok {
+			return kernel.Date{}, false
+		}
+		return utcDate(t)
+	}
+	return kernel.Date{}, false
+}
+
+// labelled returns the first non-empty cell after the text cell label in
+// cells, and false when cells hold no such pair.
+func labelled(cells []cell, label string) (cell, bool) {
+	i := slices.IndexFunc(cells, func(c cell) bool { return c.kind == cellText && strings.TrimSpace(c.value) == label })
+	if i < 0 {
+		return cell{}, false
+	}
+	j := slices.IndexFunc(cells[i+1:], func(c cell) bool { return c.kind != cellEmpty })
+	if j < 0 {
+		return cell{}, false
+	}
+	return cells[i+1+j], true
 }
 
 // maxSerialDays bounds a date serial: day 2958465 is 9999-12-31.

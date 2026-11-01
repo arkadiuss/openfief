@@ -517,3 +517,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9bbdb6ec37ad
+  - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-request-string
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:54:24.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f145cfc6fbf
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-request-string
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:54:24.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83363d79e17a
+  - type: implements
+    from: SYM-attentionv1connect-new-attention-service-handler
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:59:49.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f38c4a3583b4
+  - type: covered_by
+    from: SYM-attentionv1connect-new-attention-service-handler
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:59:49.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-567e4df92f4f
+  - type: implements
+    from: SYM-core-valuation-attention-raise
+    to: REQ-valuation-unclassified-attention
+    created_at: 2026-11-01T06:41:09.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-730d536795d9
+  - type: covered_by
+    from: SYM-core-valuation-attention-raise
+    to: TEST-core-unclassified
+    created_at: 2026-11-01T06:41:09.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f710033adc6

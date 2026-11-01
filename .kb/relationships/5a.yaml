@@ -630,6 +630,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-bcc6a913895a
   - type: implements
+    from: SYM-viewsv1-list-attention-items-request-reset
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:05:09.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3a2edcd5570
+  - type: covered_by
+    from: SYM-viewsv1-list-attention-items-request-reset
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:05:09.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8d5d974c397
+  - type: implements
     from: SYM-valuationv1-set-exemption-class-request
     to: REQ-valuation-owner-exemption-class
     created_at: 2026-10-31T19:15:48.493Z

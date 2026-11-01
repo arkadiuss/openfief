@@ -1,6 +1,6 @@
 ---
 title: The XTB connector must refuse an opening batch, because an xStation export holds neither the account's cash balance nor its positions' cost in the account currency.
-status: open
+status: closed
 text_ref: docs/research.md#R-24
 tags:
   - strict-modeling

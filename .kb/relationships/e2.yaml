@@ -832,6 +832,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d4ce5a2d927
+  - type: constrains
+    from: REQ-views-attention-items
+    to: FACT-SUBJECT-5734FA8BFC8B1211
+    created_at: 2026-10-31T18:32:30.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30e8c111f940
+  - type: requires_property
+    from: REQ-views-attention-items
+    to: FACT-PROP-42342E95B5950D1A
+    created_at: 2026-10-31T18:32:30.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b92f67cb6a29
+  - type: specified_by
+    from: REQ-views-attention-items
+    to: SCEN-views-attention-items
+    created_at: 2026-10-31T18:32:30.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2442a216178
+  - type: implements
+    from: SYM-attentionv1-resolve-attention-item-response-string
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:56:48.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a84cc5b45bca
+  - type: covered_by
+    from: SYM-attentionv1-resolve-attention-item-response-string
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:56:48.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7f2b646a792
+  - type: implements
+    from: SYM-viewsv1-attention-item-reason-number
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:01:42.754Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-377be64184e1
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-reason-number
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:01:42.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-070e12b0f6ad
   - type: executable_for
     from: SYM-pl-test-helper-classes
     to: TEST-pl-oki

@@ -706,3 +706,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8c34e13701c
+  - type: verified_by
+    from: SCEN-ui-statement-upload-start
+    to: TEST-ui-statements
+    created_at: 2026-11-01T07:35:38.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e3931a8203f
+  - type: implements
+    from: SYM-core-ensure-defaults
+    to: REQ-core-serves-read-api
+    created_at: 2026-10-31T18:34:16.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f9db94e918e
+  - type: covered_by
+    from: SYM-core-ensure-defaults
+    to: TEST-core-read-api
+    created_at: 2026-10-31T18:34:16.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e6ffe9f7ced
+  - type: implements
+    from: SYM-views-app-broken-transfers
+    to: REQ-ledger-transfer-broken-stops-counting
+    created_at: 2026-10-31T18:50:35.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24d34ade36f4
+  - type: covered_by
+    from: SYM-views-app-broken-transfers
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T18:50:35.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bad38987237e

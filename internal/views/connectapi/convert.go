@@ -300,6 +300,24 @@ func pbTransfers(ts []views.Transfer) []*viewsv1.Transfer {
 	return out
 }
 
+// pbBrokenTransfers converts confirmed transfers a correction broke
+// (D-131): the amount is the deposit's, or minus the withdrawal's when the
+// deposit is no longer one, and unset when neither leg is a cash flow.
+func pbBrokenTransfers(ts []views.Transfer) []*viewsv1.Transfer {
+	out := pbTransfers(ts)
+	for i := range ts {
+		w, d := &ts[i].Withdrawal, &ts[i].Deposit
+		switch {
+		case !d.Amount.Currency().IsZero():
+		case !w.Amount.Currency().IsZero():
+			out[i].Amount = pbMoney(w.Amount.Neg())
+		default:
+			out[i].Amount = nil
+		}
+	}
+	return out
+}
+
 // pbModelPortfolio converts the model portfolio, its rebased backtest and
 // its drawdowns.
 func pbModelPortfolio(m *app.ModelPortfolio) *viewsv1.GetModelPortfolioResponse {

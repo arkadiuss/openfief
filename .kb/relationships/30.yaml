@@ -496,6 +496,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-064e7730414e
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-ledger-assertion-checks
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:35:59.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffb21d41c6df
+  - type: executable_for
+    from: SYM-attention-test-observe
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:48:37.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36cb3ff785d7
+  - type: executable_for
+    from: SYM-attention-test-owner-actions
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:48:52.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb104848e637
   - type: implements
     from: SYM-ingest-app-held-source
     to: REQ-ingest-sync-carries-bound-holdings-lots

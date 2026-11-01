@@ -804,3 +804,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f89672bf908
+  - type: executable_for
+    from: SYM-core-test-helper-start-xtb-core
+    to: TEST-core-xtb-start
+    created_at: 2026-11-01T07:59:54.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5540b54cd59
+  - type: implements
+    from: SYM-ingest-xtb-utc-date
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:06:49.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bc0f7f2f817
+  - type: covered_by
+    from: SYM-ingest-xtb-utc-date
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:49.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0e9724498ad
+  - type: implements
+    from: SYM-attention-item-state
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:44:20.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb6d5bf30b22
+  - type: implements
+    from: SYM-attention-item-state
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:44:20.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db65066b4a9a
+  - type: covered_by
+    from: SYM-attention-item-state
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:44:20.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3221c6b1d79d

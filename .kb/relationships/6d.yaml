@@ -769,3 +769,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a0bc8cf4439
+  - type: constrains
+    from: REQ-ingest-opening-cash-entered-once
+    to: FACT-SUBJECT-E1AA0AE4D11F3814
+    created_at: 2026-11-01T07:35:52.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c356464f30b
+  - type: requires_property
+    from: REQ-ingest-opening-cash-entered-once
+    to: FACT-PROP-B3E32BFCFF26DCA6
+    created_at: 2026-11-01T07:35:52.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9aeaba1be61
+  - type: specified_by
+    from: REQ-ingest-opening-cash-entered-once
+    to: SCEN-ingest-opening-cash-entered-once
+    created_at: 2026-11-01T07:35:52.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f4bc353f8ff
+  - type: relates_to
+    from: REQ-ingest-opening-cash-entered-once
+    to: REQ-ingest-xtb-open-positions-owner-cash
+    created_at: 2026-11-01T08:24:16.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5462b52532b0
+  - type: implements
+    from: SYM-attention-pg-store-mark-published
+    to: REQ-attention-relay
+    created_at: 2026-10-31T18:46:06.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87b21e5c8b2b
+  - type: implements
+    from: SYM-attention-pg-store-mark-published
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:46:06.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e02bdb84a53
+  - type: covered_by
+    from: SYM-attention-pg-store-mark-published
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:46:07.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70fb5fd188c1
+  - type: implements
+    from: SYM-viewsv1-attention-item-reason-string
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:01:19.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a78ef3202e0c
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-reason-string
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:01:19.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8aedf50d8d9

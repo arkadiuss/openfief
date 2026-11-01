@@ -678,3 +678,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-318d5e391c6b
+  - type: implements
+    from: SYM-core-attention-run
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:33:33.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2f6015bc81d
+  - type: implements
+    from: SYM-core-attention-run
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:33:33.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc9b8bb60c65
+  - type: covered_by
+    from: SYM-core-attention-run
+    to: TEST-core-attention
+    created_at: 2026-10-31T18:33:33.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1af0280c5765
+  - type: implements
+    from: SYM-attention-pg-migrations
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:44:53.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d90db8b59cbf
+  - type: covered_by
+    from: SYM-attention-pg-migrations
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:44:53.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dffad25d7b2
+  - type: implements
+    from: SYM-viewsv1-attention-item-proto-message
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:03:47.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32e609d6b57c
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-proto-message
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:03:47.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ac79b84a32a

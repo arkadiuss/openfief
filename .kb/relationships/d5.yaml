@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6aef2a43811c
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-values
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:36:53.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90340ba4fa37

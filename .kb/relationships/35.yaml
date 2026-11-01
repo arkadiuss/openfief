@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df52c6bf2282
+  - type: executable_for
+    from: SYM-core-test-helper-attention-client
+    to: TEST-core-attention
+    created_at: 2026-10-31T18:33:51.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9114c38c7431

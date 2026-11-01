@@ -44,7 +44,7 @@ timeout = '120s'
     pages = ['/docs/concepts/plugins.md', '/docs/concepts/operator.md', '/docs/concepts/egress.md', '/docs/concepts/identity.md', '/docs/concepts/read-api.md', '/docs/concepts/ui.md', '/docs/concepts/ghostfolio.md']
   [[params.nav.parts]]
     title = 'Money and records'
-    pages = ['/docs/concepts/kernel.md', '/docs/concepts/ledger.md', '/docs/concepts/ingest.md', '/docs/concepts/valuation.md', '/docs/concepts/treasury-bonds.md', '/docs/concepts/portfolio.md']
+    pages = ['/docs/concepts/kernel.md', '/docs/concepts/ledger.md', '/docs/concepts/ingest.md', '/docs/concepts/valuation.md', '/docs/concepts/treasury-bonds.md', '/docs/concepts/portfolio.md', '/docs/concepts/attention.md']
 [[params.nav]]
   title = 'Reference'
   blurb = 'Generated from the repository on every build: what is built and tested, the code map, resources and tasks.'

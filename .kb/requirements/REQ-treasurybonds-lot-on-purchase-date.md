@@ -34,7 +34,7 @@ The treasury-bonds connector must book each hand-entered lot on its purchase dat
 
 ## Context
 
-D-98 was rewritten and D-119 removed: no go-live on the first entry. Keeping old opening lots on their keys is this implementation's reading (implementation question 52). Supersedes the go-live mapping. Recorded by the implementation agent of impl/bond-payouts; default firmness, not reviewed by the author yet.
+D-98 was rewritten and D-119 removed: no go-live on the first entry. Keeping old opening lots on their keys is this implementation's reading (implementation question 54). Supersedes the go-live mapping. Recorded by the implementation agent of impl/bond-payouts; default firmness, not reviewed by the author yet.
 
 ## Source
 

@@ -650,3 +650,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a52b575c62f8
+  - type: verified_by
+    from: SCEN-ingest-start-from-whole-history
+    to: TEST-ingest-start
+    created_at: 2026-11-01T07:35:32.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-269bb2df66fe
+  - type: verified_by
+    from: SCEN-ingest-start-from-whole-history
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T07:35:32.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad6e70886647
+  - type: verified_by
+    from: SCEN-ingest-start-from-whole-history
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-01T07:35:32.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8eabc9c4b43f
+  - type: verified_by
+    from: SCEN-ingest-start-from-whole-history
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-01T07:35:32.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c03e7ea0050e
+  - type: executable_for
+    from: SYM-ingest-app-test-uploads-start
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T08:01:09.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49671effd05d
+  - type: verified_by
+    from: SCEN-attention-relay
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:31:15.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d7357396d59
+  - type: verified_by
+    from: SCEN-attention-relay
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:31:15.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ea3cb8c2c66
+  - type: implements
+    from: SYM-viewsv1-attention-item-reason-enum-descriptor
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:01:49.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eee5e786fbed
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-reason-enum-descriptor
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:01:49.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7aa426d1bd9

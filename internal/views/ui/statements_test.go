@@ -41,6 +41,9 @@ type fakeStatements struct {
 	head    []byte
 	// noFiles answers that no account takes statement files.
 	noFiles bool
+	// started answers that the account has started, so its next upload
+	// takes transactions.
+	started bool
 }
 
 // ListStatementAccounts answers that the test account takes files, its
@@ -51,8 +54,12 @@ func (f *fakeStatements) ListStatementAccounts(_ context.Context, req *connect.R
 	}
 	out := &ingestv1.ListStatementAccountsResponse{}
 	f.locked(func() {
+		mode := ingestv1.Mode_MODE_OPENING
+		if f.started {
+			mode = ingestv1.Mode_MODE_TRANSACTIONS
+		}
 		if !f.noFiles {
-			out.Accounts = []*ingestv1.StatementAccount{{AccountId: accountID, Instance: "flex-main", Mode: ingestv1.Mode_MODE_OPENING}}
+			out.Accounts = []*ingestv1.StatementAccount{{AccountId: accountID, Instance: "flex-main", Mode: mode}}
 		}
 	})
 	return connect.NewResponse(out), nil
@@ -184,8 +191,11 @@ func (zeros) Read(p []byte) (int, error) {
 
 // TestAccountUploadForm checks that only the owner sees the "Upload
 // statement" form, only on an account whose connector takes files, as the
-// core's StatementService says (D-109), with the core's choice of mode
-// preselected, as a multipart form that sends the mode before the file.
+// core's StatementService says (D-109); that an account not started yet
+// asks how it starts, from a current statement's holdings with the cash
+// entered once or from its whole history (D-136), and a started one has
+// the core's choice of mode preselected and no cash; as a multipart form
+// that sends the mode and the cash before the file.
 func TestAccountUploadForm(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
@@ -193,10 +203,20 @@ func TestAccountUploadForm(t *testing.T) {
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, `<h2 id="upload-title">Upload statement</h2>`, `action="/accounts/`+accountID+`/statements"`,
 		`enctype="multipart/form-data"`, `name="statement" type="file"`, "The core hands it to flex-main",
-		`<option value="auto" selected>opening: the account isn't seeded yet</option>`)
-	if body := rec.Body.String(); strings.Index(body, `name="mode"`) > strings.Index(body, `name="statement"`) {
-		t.Error("the form sends the file before the mode; the UI reads the mode first")
+		`<label for="upload-mode">How the account starts</label>`,
+		`<option value="opening" selected>From the holdings of a current statement (opening)</option>`,
+		`<option value="transactions">From a statement of its whole history (transactions)</option>`,
+		`name="opening_cash"`, `name="opening_cash_currency"`, "You enter it once, now.")
+	body := rec.Body.String()
+	if strings.Index(body, `name="mode"`) > strings.Index(body, `name="opening_cash"`) ||
+		strings.Index(body, `name="opening_cash_currency"`) > strings.Index(body, `name="statement"`) {
+		t.Error("the form sends the file before the mode or the cash; the UI reads the mode, then the cash, then the file")
 	}
+	h.statements.locked(func() { h.statements.started = true })
+	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), ownerSession))
+	wantStatus(t, rec, http.StatusOK)
+	wantBody(t, rec, `<option value="auto" selected>transactions: the account has started</option>`)
+	wantNoBody(t, rec, "opening_cash", "How the account starts")
 	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantNoBody(t, rec, "Upload statement")
@@ -288,6 +308,11 @@ func TestUploadStatementRefusals(t *testing.T) {
 			status: http.StatusBadRequest, body: "The upload form is malformed",
 		},
 		{
+			name: "an unknown field before the file", session: ownerSession,
+			parts:  []uploadPart{modePart("opening"), {name: "cash", body: strings.NewReader("1")}, filePart("flex.xml", flexLike(100))},
+			status: http.StatusBadRequest, body: "The upload form is malformed",
+		},
+		{
 			name: "no file", session: ownerSession,
 			parts:  []uploadPart{modePart("transactions")},
 			status: http.StatusBadRequest, body: "The upload form is malformed",
@@ -312,6 +337,37 @@ func TestUploadStatementRefusals(t *testing.T) {
 			h.statements.locked(func() { sizes = h.statements.sizes })
 			if tt.status == http.StatusRequestEntityTooLarge && len(sizes) != 0 {
 				t.Errorf("the core completed an upload of %v bytes; want the upload stopped", sizes)
+			}
+		})
+	}
+}
+
+// TestUploadStatementOpeningCash checks that the cash balance the owner
+// enters when the account starts reaches the core with the opening upload,
+// its currency in upper case, and that an empty one sends none (D-136).
+func TestUploadStatementOpeningCash(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name, cash, currency string
+		wantCash, wantCur    string
+	}{
+		{name: "entered", cash: " 1250.00 ", currency: "pln", wantCash: "1250.00", wantCur: "PLN"},
+		{name: "left empty", currency: "PLN"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			h := newHarness(t)
+			rec := h.serve(t, withSession(uploadRequest(modePart("opening"),
+				uploadPart{name: "opening_cash", body: strings.NewReader(tt.cash)},
+				uploadPart{name: "opening_cash_currency", body: strings.NewReader(tt.currency)},
+				filePart("xtb.xlsx", flexLike(100))), ownerSession))
+			wantStatus(t, rec, http.StatusOK)
+			var headers []*ingestv1.StatementHeader
+			h.statements.locked(func() { headers = h.statements.headers })
+			if len(headers) != 1 || headers[0].GetOpeningCash() != tt.wantCash || headers[0].GetOpeningCashCurrency() != tt.wantCur ||
+				headers[0].GetMode() != ingestv1.Mode_MODE_OPENING {
+				t.Errorf("headers handed to the core = %v, want one in opening mode with cash %q %q", headers, tt.wantCash, tt.wantCur)
 			}
 		})
 	}

@@ -587,3 +587,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70f7b3de8728
+  - type: implements
+    from: SYM-attention-item-next
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:44:26.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f21cdf8af8c7
+  - type: implements
+    from: SYM-attention-item-next
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:44:26.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1d7a1a54c8c
+  - type: covered_by
+    from: SYM-attention-item-next
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:44:26.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62dbb226acae

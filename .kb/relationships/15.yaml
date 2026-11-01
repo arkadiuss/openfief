@@ -706,3 +706,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af1776c41491
+  - type: implements
+    from: SYM-ingest-delivery-opening-cash
+    to: REQ-ingest-opening-cash-entered-once
+    created_at: 2026-11-01T08:03:14.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caa73f870456
+  - type: covered_by
+    from: SYM-ingest-delivery-opening-cash
+    to: TEST-plugins-xtb
+    created_at: 2026-11-01T08:03:14.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af4527578e63
+  - type: implements
+    from: SYM-ingestv1-statement-header-get-opening-cash-currency
+    to: REQ-ingest-opening-cash-entered-once
+    created_at: 2026-11-01T08:08:29.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9799314a9bc6
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-get-opening-cash-currency
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-01T08:08:29.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a419a9058f7

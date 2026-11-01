@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85c0c87a0cc9
+  - type: executable_for
+    from: SYM-plugins-xtb-test-import-file-opening
+    to: TEST-plugins-xtb
+    created_at: 2026-11-01T08:08:01.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6151f1a7f9f

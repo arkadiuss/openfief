@@ -489,3 +489,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd235f50989d
+  - type: constrains
+    from: REQ-attention-owner-actions
+    to: FACT-SUBJECT-EC94F23537692AE0
+    created_at: 2026-10-31T18:31:48.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e9b7ffcda59
+  - type: requires_property
+    from: REQ-attention-owner-actions
+    to: FACT-PROP-5C2A6C4FCC666533
+    created_at: 2026-10-31T18:31:48.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3910248ef3b
+  - type: specified_by
+    from: REQ-attention-owner-actions
+    to: SCEN-attention-owner-actions
+    created_at: 2026-10-31T18:31:48.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2be9d01194c
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-values-tax-wrapper
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:36:59.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cc3f3bd57e7
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-attention-body
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T18:51:19.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53378a2c0279
+  - type: implements
+    from: SYM-viewsv1-attention-item-state-enum-descriptor
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:00:59.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10a36552e49a
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-state-enum-descriptor
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:00:59.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40de80ecd1ec
+  - type: implements
+    from: SYM-viewsv1-attention-item-get-kind
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:04:20.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6652d6c2477e
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-get-kind
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:04:20.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07802a66740f

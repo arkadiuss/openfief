@@ -608,3 +608,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e52745fdf45
+  - type: executable_for
+    from: SYM-core-test-helper-upload-with-header
+    to: TEST-core-statements
+    created_at: 2026-11-01T07:59:24.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbc4cc27f9a4
+  - type: implements
+    from: SYM-ingest-xtb-mapping-add-entry
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:04:32.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e9d325e2e4f
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-add-entry
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:04:32.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c87ff2048825
+  - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-response-reset
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:55:10.242Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90081a1f4edd
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-response-reset
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:55:10.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ee08183c1a6

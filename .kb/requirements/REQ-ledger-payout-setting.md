@@ -34,7 +34,7 @@ Each account must keep a payout setting, cash by default or paid out, with the d
 
 ## Context
 
-D-135 gives hand-entered bond accounts a payout setting. That a change takes effect on its day, so what was booked is never rewritten, is this implementation's reading (implementation question 53). Recorded by the implementation agent of impl/bond-payouts; default firmness, not reviewed by the author yet.
+D-135 gives hand-entered bond accounts a payout setting. That a change takes effect on its day, so what was booked is never rewritten, is this implementation's reading (implementation question 55). Recorded by the implementation agent of impl/bond-payouts; default firmness, not reviewed by the author yet.
 
 ## Source
 

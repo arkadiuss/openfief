@@ -511,6 +511,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-8c83c928a9ee
   - type: implements
+    from: SYM-viewsv1-list-attention-items-response-get-items
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:06:27.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bd83620684a
+  - type: covered_by
+    from: SYM-viewsv1-list-attention-items-response-get-items
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:06:27.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99413f4e17dd
+  - type: implements
     from: SYM-views-connectapi-pb-class-amounts
     to: REQ-views-oki-tax-days
     created_at: 2026-10-31T19:10:39.151Z

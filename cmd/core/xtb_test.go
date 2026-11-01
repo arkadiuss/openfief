@@ -66,7 +66,11 @@ func (xtbConnector) ImportFile(_ context.Context, stream *connect.ClientStream[c
 	if err != nil {
 		return nil, refused(err)
 	}
-	m, err := xtb.Mapper{}.Map(data, header.GetFileName(), mode)
+	cash, err := delivery.OpeningCash(header)
+	if err != nil {
+		return nil, refused(err)
+	}
+	m, err := xtb.Mapper{}.Map(data, header.GetFileName(), mode, cash)
 	if err != nil {
 		return nil, refused(err)
 	}
@@ -138,6 +142,10 @@ func TestXTBUpload(t *testing.T) {
 	}
 	checkXTBBooked(t, srv, session)
 	checkNoTransferComments(t, pool)
+	if _, err := uploadStatementIn(t, api, session, string(demo.XTBAccount), ingestv1.Mode_MODE_OPENING, xtbExport()); connect.CodeOf(err) != connect.CodeFailedPrecondition ||
+		!strings.Contains(err.Error(), "whole history") {
+		t.Errorf("an opening upload of an account started from its whole history = %v, want FailedPrecondition", err)
+	}
 }
 
 // checkFirstXTBUploads uploads the export for the XTB account while its

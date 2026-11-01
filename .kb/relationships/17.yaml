@@ -342,6 +342,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c5ca0da4d69
+  - type: executable_for
+    from: SYM-attention-app-test-helper-cash
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:37:30.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb0f51a7ceb2
   - type: implements
     from: SYM-views-connectapi-pb-number-format
     to: REQ-views-oki-tax-days

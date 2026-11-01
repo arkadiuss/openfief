@@ -27,6 +27,7 @@
   <div class="menu" id="menu">
   <nav aria-label="Main">
     <a href="/"{{if eq $.Title "Overview"}} aria-current="page"{{end}}>Overview</a>
+    <a href="/attention"{{if eq $.Title "Attention"}} aria-current="page"{{end}}>Attention{{if .Attention}}&nbsp;<span class="pill pill-warn">{{.Attention}} open</span>{{end}}</a>
     <a href="/assertions"{{if eq $.Title "Flagged balance assertions"}} aria-current="page"{{end}}>Balance assertions</a>
     <a href="/price-checks"{{if eq $.Title "Price checks"}} aria-current="page"{{end}}>Price checks</a>
     <a href="/transfers"{{if eq $.Title "Transfers"}} aria-current="page"{{end}}>Transfers</a>

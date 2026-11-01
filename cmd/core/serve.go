@@ -196,7 +196,8 @@ func closeAll(servers []*http.Server) error {
 }
 
 // start migrates the database, retrying until it is reachable or ctx ends,
-// wires the core and starts its revaluation workers. In cluster cl it puts
+// wires the core and starts its revaluation workers and, in the
+// background, the attention checks and outbox relay (D-130). In cluster cl it puts
 // the front door before the browser port's read API, which proxies browsers
 // to the view plugin that serves them (D-81, D-114), and, as cfg asks, starts the connector
 // scheduler in the background, which can't fail the start, so the read API
@@ -235,6 +236,7 @@ func start(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func()
 	if err := c.river.Start(context.WithoutCancel(ctx)); err != nil {
 		return nil, fmt.Errorf("starting the revaluation workers: %w", err)
 	}
+	go c.attention.run(ctx, attentionEvery, log)
 	startCluster(ctx, c, cfg, cl, log)
 	return c, nil
 }

@@ -178,10 +178,23 @@ type StatementHeader struct {
 	// bytes.
 	FileName string `protobuf:"bytes,4,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
 	// The owner's override; unspecified lets the core choose: opening for an
-	// account not yet seeded, transactions after that (D-109).
-	Mode          Mode `protobuf:"varint,5,opt,name=mode,proto3,enum=openfief.ingest.v1.Mode" json:"mode,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// account not yet seeded, transactions after that (D-109). An account
+	// that holds transactions but isn't seeded started from a statement of
+	// its whole history (D-136): the core chooses transactions for it, and
+	// refuses an opening upload with FAILED_PRECONDITION.
+	Mode Mode `protobuf:"varint,5,opt,name=mode,proto3,enum=openfief.ingest.v1.Mode" json:"mode,omitempty"`
+	// The account's cash balance at go-live, which the owner enters once with
+	// the opening upload of a statement that holds none, such as an xStation
+	// export's open positions (D-136): an exact decimal string, such as
+	// "1250.00", negative for a debit balance; empty for none. It goes with
+	// opening_cash_currency, and only with an upload in opening mode, or the
+	// upload fails with INVALID_ARGUMENT. The connector books it as the
+	// account's opening cash, or refuses it when its statement holds the cash.
+	OpeningCash string `protobuf:"bytes,6,opt,name=opening_cash,json=openingCash,proto3" json:"opening_cash,omitempty"`
+	// The ISO 4217 currency of opening_cash, such as "PLN"; empty for none.
+	OpeningCashCurrency string `protobuf:"bytes,7,opt,name=opening_cash_currency,json=openingCashCurrency,proto3" json:"opening_cash_currency,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *StatementHeader) Reset() {
@@ -247,6 +260,20 @@ func (x *StatementHeader) GetMode() Mode {
 		return x.Mode
 	}
 	return Mode_MODE_UNSPECIFIED
+}
+
+func (x *StatementHeader) GetOpeningCash() string {
+	if x != nil {
+		return x.OpeningCash
+	}
+	return ""
+}
+
+func (x *StatementHeader) GetOpeningCashCurrency() string {
+	if x != nil {
+		return x.OpeningCashCurrency
+	}
+	return ""
 }
 
 type UploadStatementRequest struct {
@@ -717,14 +744,16 @@ var File_openfief_ingest_v1_statements_proto protoreflect.FileDescriptor
 
 const file_openfief_ingest_v1_statements_proto_rawDesc = "" +
 	"\n" +
-	"#openfief/ingest/v1/statements.proto\x12\x12openfief.ingest.v1\"\xb8\x01\n" +
+	"#openfief/ingest/v1/statements.proto\x12\x12openfief.ingest.v1\"\x8f\x02\n" +
 	"\x0fStatementHeader\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x03 \x01(\tR\taccountId\x12\x1b\n" +
 	"\tfile_name\x18\x04 \x01(\tR\bfileName\x12,\n" +
-	"\x04mode\x18\x05 \x01(\x0e2\x18.openfief.ingest.v1.ModeR\x04mode\"w\n" +
+	"\x04mode\x18\x05 \x01(\x0e2\x18.openfief.ingest.v1.ModeR\x04mode\x12!\n" +
+	"\fopening_cash\x18\x06 \x01(\tR\vopeningCash\x122\n" +
+	"\x15opening_cash_currency\x18\a \x01(\tR\x13openingCashCurrency\"w\n" +
 	"\x16UploadStatementRequest\x12=\n" +
 	"\x06header\x18\x01 \x01(\v2#.openfief.ingest.v1.StatementHeaderH\x00R\x06header\x12\x16\n" +
 	"\x05chunk\x18\x02 \x01(\fH\x00R\x05chunkB\x06\n" +

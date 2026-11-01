@@ -602,6 +602,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-07bc818acbf3
   - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-request-reset
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:54:18.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d43a72bb3d57
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-request-reset
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:54:18.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-722825c10cea
+  - type: implements
+    from: SYM-attentionv1-attention-item-changed
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:57:12.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34ced8e9369d
+  - type: covered_by
+    from: SYM-attentionv1-attention-item-changed
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:57:12.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f481b384c15b
+  - type: implements
     from: SYM-valuationv1-set-exemption-class-response-proto-message
     to: REQ-valuation-owner-exemption-class
     created_at: 2026-10-31T19:17:08.492Z

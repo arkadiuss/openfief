@@ -524,6 +524,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b327f944b46
+  - type: verified_by
+    from: SCEN-attention-owner-actions
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:31:09.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c92b3036d43d
+  - type: verified_by
+    from: SCEN-attention-owner-actions
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:31:09.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9449b675738b
+  - type: verified_by
+    from: SCEN-attention-owner-actions
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:31:09.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c18ea6d8949d
   - type: implements
     from: SYM-exp-operator-one-browser-view
     to: REQ-operator-contested-browser-path-stops

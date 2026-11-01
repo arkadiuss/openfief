@@ -106,15 +106,31 @@
   <p class="muted">A statement file this account's institution exported, up to 64 MiB, such as an IBKR Flex Query statement. The core hands it to {{.Instance}}, the connector bound to this account, which decides whether it can read it; a statement of several linked accounts is booked into each one mapped to it. Importing the same statement again changes nothing.</p>
   <form method="post" action="/accounts/{{$.Data.Account.Id}}/statements" enctype="multipart/form-data">
     <div class="fields">
+      {{if .Start}}
+      <div class="field">
+        <label for="upload-mode">How the account starts</label>
+        <select id="upload-mode" name="mode" aria-describedby="upload-mode-help">
+          <option value="opening" selected>From the holdings of a current statement (opening)</option>
+          <option value="transactions">From a statement of its whole history (transactions)</option>
+        </select>
+        <p class="help" id="upload-mode-help">Opening seeds the account at go-live, the statement's date: one opening lot per holding, at the date and price it was bought, plus the cash balance below, and later statements add only what came after go-live. A statement of the whole history, from the first deposit, books every transaction instead. Either way the account starts once.</p>
+      </div>
+      <div class="field">
+        <label for="upload-cash">Cash at the start</label>
+        <div class="unit"><input id="upload-cash" name="opening_cash" inputmode="decimal" size="12" autocomplete="off" aria-describedby="upload-cash-help"><input id="upload-cash-currency" name="opening_cash_currency" aria-label="Cash currency" maxlength="3" size="4" autocomplete="off" pattern="[A-Za-z]{3}" placeholder="PLN"></div>
+        <p class="help" id="upload-cash-help">For an opening statement that holds no cash balance, such as an XTB export's open positions: the account's cash on the statement's date, in the account's currency, as 1250.00. You enter it once, now. Leave it empty when the statement holds the cash, as an IBKR Flex statement does.</p>
+      </div>
+      {{else}}
       <div class="field">
         <label for="upload-mode">Statement</label>
         <select id="upload-mode" name="mode" aria-describedby="upload-mode-help">
-          <option value="auto" selected>{{if eq .Mode "opening"}}opening: the account isn't seeded yet{{else}}transactions: the account is seeded{{end}}</option>
+          <option value="auto" selected>transactions: the account has started</option>
           <option value="opening">opening (seeds the account)</option>
           <option value="transactions">transactions</option>
         </select>
-        <p class="help" id="upload-mode-help">The core chooses: opening seeds the account at go-live, and scheduled syncs then continue it; transactions after that. Override it only to seed again or to send transactions first.</p>
+        <p class="help" id="upload-mode-help">The core chooses transactions: only what came after the account's go-live is added, and scheduled syncs continue it too. Override it only to seed again.</p>
       </div>
+      {{end}}
       <div class="field">
         <label for="upload-file">File</label>
         <input id="upload-file" name="statement" type="file" required>

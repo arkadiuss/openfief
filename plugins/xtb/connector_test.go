@@ -76,11 +76,16 @@ func client(t *testing.T) fakeCore {
 // chunks of at most 1000 bytes.
 func importFile(t *testing.T, mode connectorv1.Mode, name string, file []byte) (*connectorv1.ImportFileResponse, error) {
 	t.Helper()
+	return importWith(t, &connectorv1.FileHeader{BatchId: "b-1", Mode: mode, FileName: name}, file)
+}
+
+// importWith streams file to the connector as the core with header h, in
+// chunks of at most 1000 bytes.
+func importWith(t *testing.T, h *connectorv1.FileHeader, file []byte) (*connectorv1.ImportFileResponse, error) {
+	t.Helper()
 	stream := client(t).ImportFile(t.Context())
 	stream.RequestHeader().Set("Authorization", "Bearer "+coreToken)
-	msgs := []*connectorv1.ImportFileRequest{{Part: &connectorv1.ImportFileRequest_Header{
-		Header: &connectorv1.FileHeader{BatchId: "b-1", Mode: mode, FileName: name},
-	}}}
+	msgs := []*connectorv1.ImportFileRequest{{Part: &connectorv1.ImportFileRequest_Header{Header: h}}}
 	for len(file) > 0 {
 		n := min(len(file), 1000)
 		msgs = append(msgs, &connectorv1.ImportFileRequest{Part: &connectorv1.ImportFileRequest_Chunk{Chunk: file[:n]}})
@@ -144,22 +149,62 @@ func TestImportFile(t *testing.T) {
 func TestImportFileRefused(t *testing.T) {
 	t.Parallel()
 	e := export()
+	undated := export()
+	undated.NoReportDate = true
 	tests := []struct {
 		name string
 		mode connectorv1.Mode
 		file []byte
+		cash *connectorv1.Money
 	}{
 		{name: "no mode", mode: connectorv1.Mode_MODE_UNSPECIFIED, file: e.Bytes()},
-		{name: "opening mode", mode: connectorv1.Mode_MODE_OPENING, file: e.Bytes()},
+		{name: "opening mode without the report's date", mode: connectorv1.Mode_MODE_OPENING, file: undated.Bytes()},
+		{name: "opening cash in another currency", mode: connectorv1.Mode_MODE_OPENING, file: e.Bytes(), cash: &connectorv1.Money{Amount: "100", Currency: "EUR"}},
+		{name: "opening cash that isn't an amount", mode: connectorv1.Mode_MODE_OPENING, file: e.Bytes(), cash: &connectorv1.Money{Amount: "1 000", Currency: "PLN"}},
+		{name: "opening cash with transactions", mode: connectorv1.Mode_MODE_TRANSACTIONS, file: e.Bytes(), cash: &connectorv1.Money{Amount: "100", Currency: "PLN"}},
 		{name: "not an export", mode: connectorv1.Mode_MODE_TRANSACTIONS, file: []byte("a,b\n1,2\n")},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if _, err := importFile(t, tt.mode, e.FileName(), tt.file); connect.CodeOf(err) != connect.CodeInvalidArgument {
+			h := &connectorv1.FileHeader{BatchId: "b-1", Mode: tt.mode, FileName: e.FileName(), OpeningCash: tt.cash}
+			if _, err := importWith(t, h, tt.file); connect.CodeOf(err) != connect.CodeInvalidArgument {
 				t.Errorf("ImportFile = %v, want InvalidArgument", err)
 			}
 		})
+	}
+}
+
+// TestImportFileOpening checks that a current export in opening mode seeds
+// the account from its open positions, each an opening lot by ticker, and
+// the cash balance the owner entered, on the report's date (D-136).
+func TestImportFileOpening(t *testing.T) {
+	t.Parallel()
+	e := export()
+	e.Open = [][]xtbtest.Cell{xtbtest.OpenRow(&xtbtest.Position{
+		Name: "Test Alpha SA", Ticker: "TESTA.PL", Category: "STOCK", Volume: "4", OpenPrice: "100",
+		Opened: time.Date(2026, 1, 5, 10, 0, 0, 0, time.UTC), Value: "400",
+	})}
+	h := &connectorv1.FileHeader{
+		BatchId: "b-1", Mode: connectorv1.Mode_MODE_OPENING, FileName: e.FileName(),
+		OpeningCash: &connectorv1.Money{Amount: "500.00", Currency: "PLN"},
+	}
+	got, err := importWith(t, h, e.Bytes())
+	if err != nil {
+		t.Fatalf("ImportFile: %v", err)
+	}
+	d := got.GetDelivery()
+	wantLot := []*connectorv1.TickerTransaction{{
+		Symbol: "TESTA.PL", Key: &connectorv1.TransactionKey{Source: "xtb", ExternalId: "open-position:TESTA.PL@20260105T100000Z#1"},
+		BrokerAccount: xtbtest.Account, Kind: connectorv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT, Date: "2026-01-31",
+		Quantity: "4", Amount: &connectorv1.Money{Amount: "400", Currency: "PLN"}, Description: "opening lot TESTA.PL",
+		Ref: "Open Positions#10", LotOpened: "2026-01-05",
+	}}
+	if diff := cmp.Diff(wantLot, d.GetTickerTransactions(), protocmp.Transform()); diff != "" {
+		t.Errorf("opening lots (-want +got):\n%s", diff)
+	}
+	if len(d.GetTransactions()) != 1 || d.GetTransactions()[0].GetKey().GetExternalId() != "opening-cash:PLN:2026-01-31" {
+		t.Errorf("transactions = %v, want only the opening cash on 2026-01-31", d.GetTransactions())
 	}
 }
 

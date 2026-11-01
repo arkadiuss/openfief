@@ -804,3 +804,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-915c4876a238
+  - type: implements
+    from: SYM-attention-app-items-observe
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:39:51.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b5bfc7ea4c2
+  - type: covered_by
+    from: SYM-attention-app-items-observe
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:51.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f34e5b91707d
+  - type: implements
+    from: SYM-attentionv1-x
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:59:04.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb7da13b166a
+  - type: covered_by
+    from: SYM-attentionv1-x
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:59:04.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6ba98f70a29

@@ -503,6 +503,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d8a9197e9f9
+  - type: validates
+    from: TEST-attention-pg-store
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:30:38.729Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a89a49d64e8
+  - type: validates
+    from: TEST-attention-pg-store
+    to: REQ-core-attention-item-outbox-events
+    created_at: 2026-10-31T18:30:38.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c07067ac95d4
+  - type: implements
+    from: SYM-attention-app-import-problems
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:35:29.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6729eeefe1ef
+  - type: covered_by
+    from: SYM-attention-app-import-problems
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:35:30.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34c55d259942
+  - type: implements
+    from: SYM-viewsv1-attention-item-get-owner-resolves
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:04:49.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-882926ef95a7
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-get-owner-resolves
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:04:49.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cf0ee55c2f1
   - type: implements
     from: SYM-valuation-eodhd-country-exchange
     to: REQ-ingest-xtb-isin-proposed

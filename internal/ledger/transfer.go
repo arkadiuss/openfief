@@ -172,3 +172,29 @@ func comparePairs(a, b TransferPair) int {
 func compareKeys(a, b TransactionKey) int {
 	return cmp.Or(cmp.Compare(a.Source, b.Source), cmp.Compare(a.ExternalID, b.ExternalID))
 }
+
+// BrokenTransferLinks returns the links among current, the current version
+// of each pair's link (CurrentTransferLinks), that the owner confirmed and
+// whose legs no longer match after a correction (D-131): a leg's key has
+// no current transaction among txs, the current transactions, or the two
+// current versions are not one possible transfer (CheckTransfer). A broken
+// link stops counting: both legs are cash flows again until the owner
+// rejects the pair or a correction makes the legs match. Links come in the
+// order of current.
+func BrokenTransferLinks(current []TransferLink, txs []Transaction) []TransferLink {
+	byKey := make(map[TransactionKey]*Transaction, len(txs))
+	for i := range txs {
+		byKey[txs[i].Key] = &txs[i]
+	}
+	var out []TransferLink
+	for _, l := range current {
+		if l.Decision != TransferConfirmed {
+			continue
+		}
+		w, d := byKey[l.Pair.Withdrawal], byKey[l.Pair.Deposit]
+		if w == nil || d == nil || CheckTransfer(w, d) != nil {
+			out = append(out, l)
+		}
+	}
+	return out
+}

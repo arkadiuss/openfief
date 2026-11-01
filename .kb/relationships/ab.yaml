@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11edbaf3c66d
+  - type: validates
+    from: TEST-ui-attention
+    to: REQ-ui-attention-items-one-place
+    created_at: 2026-10-31T18:30:51.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-880544750729

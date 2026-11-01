@@ -1,0 +1,94 @@
+// OpenFief's attention item contract (docs/DESIGN.md D-130, D-131, D-79).
+//
+// Every check that needs the owner raises an attention item in one
+// append-only store: its kind, its subject, its state (open, acknowledged
+// or resolved) and its history, each change appended and never changed in
+// place. At most one item stands for each kind and subject. The read API
+// lists the items (ListAttentionItems in
+// proto/openfief/views/v1/read_service.proto).
+//
+// The core serves AttentionService to VIEW plugins only, on its plugin
+// port (D-115), as the owner's entry service for this kind of entry
+// (D-79). Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto):
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - An item that doesn't exist fails with NOT_FOUND; acknowledging a
+//   resolved item fails with FAILED_PRECONDITION, and so does resolving an
+//   item of a kind that resolves only when its check clears. Nothing
+//   changes then.
+//
+// Each change is also published as an AttentionItemChanged event from the
+// core's outbox, written in the same database transaction as the change,
+// so notifications and, in later milestones, agents can act on it.
+syntax = "proto3";
+
+package openfief.attention.v1;
+
+// AttentionService records the owner's actions on attention items.
+service AttentionService {
+  // AcknowledgeAttentionItem records that the owner has seen an open item:
+  // it stays listed as acknowledged while its condition stands, and opens
+  // again when the condition changes. Acknowledging an acknowledged item
+  // records nothing.
+  rpc AcknowledgeAttentionItem(AcknowledgeAttentionItemRequest) returns (AcknowledgeAttentionItemResponse);
+
+  // ResolveAttentionItem records that the owner resolved an open or
+  // acknowledged item of a kind whose condition never clears on its own:
+  // a flagged balance assertion or an import batch's left-out rows. Every
+  // other kind resolves when its check clears, such as when the owner maps
+  // the broker account. Resolving a resolved item records nothing.
+  rpc ResolveAttentionItem(ResolveAttentionItemRequest) returns (ResolveAttentionItemResponse);
+}
+
+message AcknowledgeAttentionItemRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The item's ID, as the read API lists it.
+  int64 item_id = 3;
+}
+
+message AcknowledgeAttentionItemResponse {}
+
+message ResolveAttentionItemRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The item's ID, as the read API lists it.
+  int64 item_id = 3;
+}
+
+message ResolveAttentionItemResponse {}
+
+// AttentionItemChanged is the event the core's outbox publishes for each
+// change to an attention item, in the order the changes were made. Its
+// JSON form (protojson, field names in lowerCamelCase) is the outbox row's
+// payload. Consumers deduplicate on event_id: a publisher may deliver an
+// event again after a restart.
+message AttentionItemChanged {
+  // Numbers the outbox's events from 1, in the order they were written.
+  int64 event_id = 1;
+  int64 item_id = 2;
+  // The check that raised the item, such as "price-check-flagged".
+  string kind = 3;
+  // What the item is about, unique within its kind, such as an
+  // instrument. It may name a broker account or an amount: a consumer
+  // keeps it private like the record itself (GR-12).
+  string subject = 4;
+  // The change's number in the item's history, from 1.
+  int32 seq = 5;
+  // "open", "acknowledged" or "resolved".
+  string state = 6;
+  // Why it changed: "raised", "changed", "reopened" or "cleared" by a
+  // check, "acknowledged" or "resolved" by the owner.
+  string reason = 7;
+  // The condition's detail at the change, such as the difference found.
+  string detail = 8;
+  // When it changed, RFC 3339 in UTC.
+  string at = 9;
+}

@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-672d88bd5134
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-broken-transfers
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T18:51:38.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04418d47831d

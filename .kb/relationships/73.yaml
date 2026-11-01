@@ -517,6 +517,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a8065808344
+  - type: executable_for
+    from: SYM-attention-connectapi-test-helper-store-item
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:42:41.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4d4fed3f3f3
   - type: implements
     from: SYM-valuationv1-set-exemption-class-request-reset
     to: REQ-valuation-owner-exemption-class
