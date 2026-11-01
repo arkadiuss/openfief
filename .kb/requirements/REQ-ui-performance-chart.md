@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must show a performance chart that starts at go-live.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

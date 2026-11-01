@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b78dda9c0279
+  - type: constrains
+    from: REQ-identity-read-access-no-broker-account-numbers
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-01T07:40:18.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c004124d01e9
+  - type: requires_property
+    from: REQ-identity-read-access-no-broker-account-numbers
+    to: FACT-PROP-843453EC42A95A22
+    created_at: 2026-11-01T07:40:18.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a684364ec37b

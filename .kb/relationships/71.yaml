@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efa4d46b2d3f
+  - type: constrains
+    from: REQ-valuation-unclassifiable-instrument-attention-item
+    to: FACT-SUBJECT-1FE117B3D88DA76E
+    created_at: 2026-11-01T07:38:50.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a6353100819
+  - type: requires_property
+    from: REQ-valuation-unclassifiable-instrument-attention-item
+    to: FACT-PROP-FFD55E7879C24697
+    created_at: 2026-11-01T07:38:50.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b44ad5a90bf3

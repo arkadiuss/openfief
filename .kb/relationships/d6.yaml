@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2882203ab9d3
+  - type: constrains
+    from: REQ-valuation-market-data-gap-attention-item
+    to: FACT-SUBJECT-C9C67D3EB8F4BC3F
+    created_at: 2026-11-01T07:37:23.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e17c4718cbfc
+  - type: requires_property
+    from: REQ-valuation-market-data-gap-attention-item
+    to: FACT-PROP-B58D33215DF50AE4
+    created_at: 2026-11-01T07:37:23.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58fd3e07c473

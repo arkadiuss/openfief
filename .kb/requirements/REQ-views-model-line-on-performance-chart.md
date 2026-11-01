@@ -1,6 +1,6 @@
 ---
 title: The performance chart must show the model portfolio as a second line from go-live, with both lines starting at 100.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

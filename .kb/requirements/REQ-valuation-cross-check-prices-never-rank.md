@@ -1,6 +1,6 @@
 ---
 title: 'Cross-check prices must never rank in D-94''s ranking: they only check.'
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

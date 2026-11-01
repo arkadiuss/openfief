@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23323aa0f049
+  - type: constrains
+    from: REQ-valuation-market-data-never-other-source
+    to: FACT-SUBJECT-C9C67D3EB8F4BC3F
+    created_at: 2026-11-01T07:37:30.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d47936c31c4
+  - type: requires_property
+    from: REQ-valuation-market-data-never-other-source
+    to: FACT-PROP-283B1A4AE47545A8
+    created_at: 2026-11-01T07:37:30.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c8f121b6a54

@@ -1,6 +1,6 @@
 ---
 title: For each kind of market data and each date, the highest-ranked source with a value must win.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

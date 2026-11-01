@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14cbd8336b4d
+  - type: constrains
+    from: REQ-views-ghostfolio-cash-account-per-currency
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-11-01T07:39:02.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c682d2a9e76a
+  - type: requires_property
+    from: REQ-views-ghostfolio-cash-account-per-currency
+    to: FACT-PROP-088CE8BD931E0732
+    created_at: 2026-11-01T07:39:02.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7e536fc794a
