@@ -150,13 +150,13 @@ func TestBuildCharts(t *testing.T) {
 	if got := []string{alloc.Groups[0].Share, alloc.Groups[1].Share}; got[0] != "66.7%" || got[1] != "33.3%" {
 		t.Errorf("shares = %v", got)
 	}
-	perf := &viewsv1.GetPerformanceResponse{ReportingCurrency: "PLN", Gap: viewsv1.PerformanceGap_PERFORMANCE_GAP_UNVALUED, Days: []*viewsv1.PerformanceDay{
+	perf := &viewsv1.GetPerformanceResponse{ReportingCurrency: "PLN", DefaultFrom: "2026-01-02", Gap: viewsv1.PerformanceGap_PERFORMANCE_GAP_UNVALUED, Days: []*viewsv1.PerformanceDay{
 		{Date: "2026-01-02", Index: "100", ValueReporting: pln("10.00")}, {Date: "2026-01-03", Index: "110", ValueReporting: pln("11.00")},
 	}}
 	hist := buildPerformance(perf, nil, plainFormat())
 	wantHist := performanceView{
-		From: "2026-01-02", To: "2026-01-03", Currency: "PLN", Points: 2, Value: pln("11.00"), Gap: "the next day is not fully valued yet",
-		Chart: "{\"kind\":\"line\",\"group\":\"\u202f\",\"decimal\":\".\"," + `"label":"Portfolio (time-weighted return)","currency":"index","labels":["2026-01-02","2026-01-03"],"values":["100","110"]}`,
+		From: "2026-01-02", To: "2026-01-03", Default: "2026-01-02", Currency: "PLN", Points: 2, Value: pln("11.00"), Gap: "the next day is not fully valued yet",
+		Chart: "{\"kind\":\"line\",\"group\":\"\u202f\",\"decimal\":\".\"," + `"label":"Portfolio (time-weighted return)","currency":"index","labels":["2026-01-02","2026-01-03"],"values":["100","110"],"mark":"2026-01-02"}`,
 	}
 	if diff := cmp.Diff(wantHist, hist, protocmp.Transform()); diff != "" {
 		t.Errorf("performance (-want +got):\n%s", diff)

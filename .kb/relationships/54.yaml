@@ -706,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce77f95a0522
+  - type: validates
+    from: TEST-valuation-app-exemption-class
+    to: REQ-valuation-unclassifiable-instrument-attention-item
+    created_at: 2026-11-01T10:06:38.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27f1e606729a
+  - type: validates
+    from: TEST-valuation-app-exemption-class
+    to: REQ-valuation-owner-classification-stays
+    created_at: 2026-11-01T10:06:38.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e74604c0a2ed

@@ -623,6 +623,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-a5031f0c915c
   - type: implements
+    from: SYM-valuation-postgres-store-save-exemption-class
+    to: REQ-valuation-owner-classification-stays
+    created_at: 2026-11-01T10:16:21.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cea43aa27de
+  - type: implements
+    from: SYM-ingest-xtb-cell-time
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:06:41.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5627732b0ccf
+  - type: covered_by
+    from: SYM-ingest-xtb-cell-time
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:41.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8143333c53f3
+  - type: implements
     from: SYM-valuation-app-rankings-rank-sources
     to: REQ-valuation-series-source-recorded
     created_at: 2026-11-01T09:01:38.691Z
@@ -643,17 +664,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-670437a4b2fd
-  - type: implements
-    from: SYM-ingest-xtb-cell-time
-    to: REQ-ingest-xtb-start-open-positions
-    created_at: 2026-11-01T08:06:41.524Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5627732b0ccf
-  - type: covered_by
-    from: SYM-ingest-xtb-cell-time
-    to: TEST-ingest-xtb-opening
-    created_at: 2026-11-01T08:06:41.590Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8143333c53f3

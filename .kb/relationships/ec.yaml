@@ -608,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47df13fb88f0
+  - type: executable_for
+    from: SYM-plugins-test-test-market-data
+    to: TEST-plugins-market-data
+    created_at: 2026-11-01T10:16:41.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7db1eb1993eb
+  - type: executable_for
+    from: SYM-e2e-test-helper-refusal
+    to: TEST-e2e-plugin-refusals
+    created_at: 2026-11-01T13:55:13.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acdd5e770100

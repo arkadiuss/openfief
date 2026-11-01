@@ -92,6 +92,11 @@ type Manifest struct {
 	// owner uploads, so the UI offers the upload form on the accounts bound
 	// to it (D-109).
 	StatementFiles bool
+	// MarketData declares a market-data connector: one that is told, on
+	// each sync, the instruments the owner holds and the model portfolio's
+	// targets (D-93). It is a permission the grant approves, so the owner
+	// sees at install that the plugin will learn what they hold (D-123).
+	MarketData bool
 }
 
 // Validate returns every problem in m, each a *FieldError, joined; or nil.
@@ -107,6 +112,9 @@ func (m *Manifest) Validate() error {
 	errs = append(errs, validateManifestBrowserPath(m)...)
 	errs = append(errs, validateConfigFields(m.EgressFromConfig)...)
 	errs = append(errs, m.ClusterService.validate()...)
+	if m.MarketData && !slices.Contains(m.Capabilities, CapabilityConnector) {
+		errs = append(errs, &FieldError{Field: "marketData", Err: ErrMarketDataNeedsConnector})
+	}
 	if len(m.ConfigSchema) > 0 && !json.Valid(m.ConfigSchema) {
 		errs = append(errs, &FieldError{Field: "configSchema", Err: ErrInvalidJSON})
 	}

@@ -33,12 +33,14 @@ type manifestDoc struct {
 	} `json:"clusterService,omitempty"`
 	CrossCheckPrices bool `json:"crossCheckPrices,omitempty"`
 	StatementFiles   bool `json:"statementFiles,omitempty"`
+	MarketData       bool `json:"marketData,omitempty"`
 }
 
 // ParseManifestLabel reads a manifest from the value of an image's
 // ManifestLabel: a JSON object with the fields of spec.manifest
 // (capabilities, egress, secrets, dataTiers, configSchema, browserPath,
-// egressFromConfig, clusterService, crossCheckPrices, statementFiles).
+// egressFromConfig, clusterService, crossCheckPrices, statementFiles,
+// marketData).
 // Unknown fields are refused, so a
 // manifest is never half-read. The manifest is validated.
 func ParseManifestLabel(value string) (Manifest, error) {
@@ -49,6 +51,7 @@ func ParseManifestLabel(value string) (Manifest, error) {
 	m := Manifest{
 		Capabilities: doc.Capabilities, DataTiers: doc.DataTiers, BrowserPath: doc.BrowserPath,
 		EgressFromConfig: doc.EgressFromConfig, CrossCheckPrices: doc.CrossCheckPrices, StatementFiles: doc.StatementFiles,
+		MarketData: doc.MarketData,
 	}
 	if doc.ClusterService != nil {
 		m.ClusterService = &ClusterServiceRequest{Description: doc.ClusterService.Description}
@@ -90,8 +93,13 @@ func (m *Manifest) Equal(o *Manifest) bool {
 		m.BrowserPath == o.BrowserPath &&
 		slices.Equal(sortedCopy(m.EgressFromConfig, strings.Compare), sortedCopy(o.EgressFromConfig, strings.Compare)) &&
 		equalPtr(m.ClusterService, o.ClusterService) &&
-		m.CrossCheckPrices == o.CrossCheckPrices && m.StatementFiles == o.StatementFiles &&
-		sameJSON(m.ConfigSchema, o.ConfigSchema)
+		m.sameDeclarations(o) && sameJSON(m.ConfigSchema, o.ConfigSchema)
+}
+
+// sameDeclarations reports whether m and o make the same connector
+// declarations (D-112, D-109, D-123).
+func (m *Manifest) sameDeclarations(o *Manifest) bool {
+	return m.CrossCheckPrices == o.CrossCheckPrices && m.StatementFiles == o.StatementFiles && m.MarketData == o.MarketData
 }
 
 // sortedMounts returns the mounts sorted by role, then mount path.

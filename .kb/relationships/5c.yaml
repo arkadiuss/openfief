@@ -526,13 +526,6 @@ relationships:
     id: rel-2b6fe3e1b8c7
   - type: implements
     from: SYM-ingest-app-model-targets
-    to: REQ-ingest-market-data-scope
-    created_at: 2026-10-29T17:13:25.839Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3e40fdf80e0e
-  - type: implements
-    from: SYM-ingest-app-model-targets
     to: REQ-ingest-new-instrument-priced
     created_at: 2026-10-29T17:13:25.910Z
     created_by: kibi/upsert
@@ -650,3 +643,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32f4b698e7f6
+  - type: implements
+    from: SYM-views-history-of
+    to: REQ-ui-portfolio-chart-default-start
+    created_at: 2026-11-01T13:09:52.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b21c52f9dd09
+  - type: implements
+    from: SYM-views-history-of
+    to: REQ-ui-portfolio-chart-start-ignores-full-history
+    created_at: 2026-11-01T13:09:52.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fbef3d4018b
+  - type: covered_by
+    from: SYM-views-history-of
+    to: TEST-views-chart-start
+    created_at: 2026-11-01T13:09:52.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41ef8e747a1d
+  - type: implements
+    from: SYM-ingest-app-model-targets
+    to: REQ-ingest-market-data-scope-declared
+    created_at: 2026-11-01T10:10:13.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa5fb3619224

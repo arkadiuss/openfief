@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7b5b0007bfe
+  - type: implements
+    from: SYM-core-read-tokens
+    to: REQ-identity-read-access-holders
+    created_at: 2026-11-01T10:13:31.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b197298c893

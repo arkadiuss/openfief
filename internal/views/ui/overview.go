@@ -89,8 +89,9 @@ type overviewData struct {
 	// FlaggedPrices counts the flagged price checks (D-22).
 	FlaggedPrices int
 	Allocation    *allocationView
-	// Value is the value-over-time chart (D-106), History the performance
-	// chart.
+	// Start picks where the two time charts start (D-138); Value is the
+	// value-over-time chart (D-106), History the performance chart.
+	Start   chartStartView
 	Value   *valueChartView
 	History performanceView
 }
@@ -109,6 +110,9 @@ type chartData struct {
 	Values   []string `json:"values"`
 	// Series are more lines on a line chart, such as the model portfolio's.
 	Series []chartSeries `json:"series,omitempty"`
+	// Mark is the day a time chart marks where tracking began (D-138),
+	// one of Labels or "".
+	Mark string `json:"mark,omitempty"`
 }
 
 // encode returns the chart data as JSON for a data attribute.
@@ -191,8 +195,13 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 		s.errorPage(w, r, http.StatusBadRequest, err.Error())
 		return
 	}
+	start, err := parseStart(r.URL.Query().Get(startParam))
+	if err != nil {
+		s.errorPage(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
 	data := overviewData{Date: date.String()}
-	if method, chartErr := s.charts(r, sess, date, &data); chartErr != nil {
+	if method, chartErr := s.charts(r, sess, date, start, &data); chartErr != nil {
 		s.coreFailed(w, r, method, chartErr)
 		return
 	}
@@ -211,25 +220,28 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 }
 
 // charts reads the overview's charts on date into data: the allocation by
-// the dimension and of the value the query picks, the performance from
-// go-live, and the value over time over the same days with the portfolio's
-// total on date. It returns the method that failed with its error.
-func (s *server) charts(r *http.Request, sess session, date kernel.Date, data *overviewData) (string, error) {
+// the dimension and of the value the query picks, the performance from the
+// charts' start (D-138), the one the owner chose in start or else the
+// default, and the value over time over the same days with the
+// portfolio's total on date. It returns the method that failed with its
+// error.
+func (s *server) charts(r *http.Request, sess session, date, start kernel.Date, data *overviewData) (string, error) {
 	q := r.URL.Query()
 	var err error
 	if data.Allocation, err = s.allocation(r, sess, date, parseDimension(q.Get("by")), parseValueKind(q.Get(valueParam))); err != nil {
 		return "GetAllocation", err
 	}
-	if data.History, err = s.performance(r, sess, date); err != nil {
+	if data.History, err = s.performance(r, sess, start, date); err != nil {
 		return "GetPerformance", err
 	}
 	from := date
-	if start, startErr := kernel.ParseDate(data.History.From); startErr == nil {
-		from = start
+	if first, startErr := kernel.ParseDate(data.History.From); startErr == nil && !first.After(date) {
+		from = first
 	}
-	if data.Value, err = s.valueChart(r, sess, from, date, parseChartKind(q.Get(chartParam))); err != nil {
+	if data.Value, err = s.valueChart(r, sess, from, date, parseChartKind(q.Get(chartParam)), optionalString(start), data.History.Default); err != nil {
 		return "ListValuationTotals", err
 	}
+	data.Start = chartStartView{Action: "/", Date: date.String(), From: data.Value.From, Default: data.History.Default, Chosen: !start.IsZero()}
 	data.Total = data.Value.Last
 	return "", nil
 }

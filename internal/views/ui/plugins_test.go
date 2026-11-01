@@ -33,6 +33,25 @@ func TestPluginsPage(t *testing.T) {
 	}
 }
 
+// TestPluginsPageMarketData checks that the plugins page shows the owner
+// which plugin is a market-data connector and so learns every instrument
+// they hold (D-123), and only that one.
+func TestPluginsPageMarketData(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	rec := h.serve(t, withSession(request(http.MethodGet, "/plugins", ""), ownerSession))
+	wantStatus(t, rec, http.StatusOK)
+	body := rec.Body.String()
+	_, after, found := strings.Cut(body, "prices-main")
+	row, _, _ := strings.Cut(after, "</tr>")
+	if !found || !strings.Contains(row, "Market data") || !strings.Contains(row, "every instrument you hold") {
+		t.Errorf("prices-main's row doesn't say it learns what the owner holds:\n%s", row)
+	}
+	if n := strings.Count(body, ">Market data<"); n != 1 {
+		t.Errorf("%d plugins marked as market data, want 1", n)
+	}
+}
+
 // TestPluginsPageUnavailable checks that a core that can't read its
 // cluster leaves a sentence on the plugins and settings pages instead of
 // failing them.

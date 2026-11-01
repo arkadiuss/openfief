@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-696636505695
+  - type: specified_by
+    from: REQ-plugins-operator-verifies-signatures
+    to: SCEN-e2e-plugin-unsigned-refused
+    created_at: 2026-11-01T13:51:44.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a20c81022566
+  - type: specified_by
+    from: REQ-plugins-operator-verifies-signatures
+    to: SCEN-e2e-plugin-untrusted-signer-refused
+    created_at: 2026-11-01T13:51:44.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15be0e36a264

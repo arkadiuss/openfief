@@ -92,8 +92,8 @@ func (xtbConnector) LookupInstruments(_ context.Context, req *connect.Request[co
 }
 
 // xtbDiscovery is the cluster as discovery sees it: xtb-main takes
-// statement files, and eodhd-main, bound to no account, is a market-data
-// connector.
+// statement files, and eodhd-main is a market-data connector its grant
+// approves as one (D-123).
 type xtbDiscovery struct{}
 
 func (xtbDiscovery) ConnectorInstances(context.Context) ([]string, error) {
@@ -101,7 +101,7 @@ func (xtbDiscovery) ConnectorInstances(context.Context) ([]string, error) {
 }
 
 func (xtbDiscovery) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
-	return ingest.Declarations{StatementFiles: instance == "xtb-main"}, nil
+	return ingest.Declarations{StatementFiles: instance == "xtb-main", MarketData: instance == "eodhd-main"}, nil
 }
 
 // tickerAPI is a generated TickerService client.

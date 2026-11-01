@@ -200,7 +200,8 @@ type ReadServiceClient interface {
 	// including cash, in the reporting currency. Deposits and withdrawals are
 	// not performance; transfers between the owner's own accounts that the
 	// owner confirmed (D-105) are not cash flows. The series stops at the last
-	// day every account is valued for, and says why.
+	// day every account is valued for, and says why. With an account ID it is
+	// that account's instead. It names the charts' default start (D-138).
 	GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error)
 	// ListTransfers returns the transfers between the owner's own accounts
 	// (D-105): those suggested for the owner to confirm or reject, and the
@@ -212,8 +213,8 @@ type ReadServiceClient interface {
 	// TransferService, not here.
 	ListTransfers(context.Context, *connect.Request[v1.ListTransfersRequest]) (*connect.Response[v1.ListTransfersResponse], error)
 	// GetModelPortfolio returns the model portfolio (D-52) with its backtest
-	// (D-53) as an index that starts at 100 on go-live, like the
-	// performance series, and the max drawdown of the model and of each
+	// (D-53) as an index that starts at 100 on the charts' start (D-138),
+	// like the performance series, and the max drawdown of the model and of each
 	// target (D-54), in the reporting currency. While the model portfolio is
 	// off it fails with NOT_FOUND and says nothing about it.
 	GetModelPortfolio(context.Context, *connect.Request[v1.GetModelPortfolioRequest]) (*connect.Response[v1.GetModelPortfolioResponse], error)
@@ -647,7 +648,8 @@ type ReadServiceHandler interface {
 	// including cash, in the reporting currency. Deposits and withdrawals are
 	// not performance; transfers between the owner's own accounts that the
 	// owner confirmed (D-105) are not cash flows. The series stops at the last
-	// day every account is valued for, and says why.
+	// day every account is valued for, and says why. With an account ID it is
+	// that account's instead. It names the charts' default start (D-138).
 	GetPerformance(context.Context, *connect.Request[v1.GetPerformanceRequest]) (*connect.Response[v1.GetPerformanceResponse], error)
 	// ListTransfers returns the transfers between the owner's own accounts
 	// (D-105): those suggested for the owner to confirm or reject, and the
@@ -659,8 +661,8 @@ type ReadServiceHandler interface {
 	// TransferService, not here.
 	ListTransfers(context.Context, *connect.Request[v1.ListTransfersRequest]) (*connect.Response[v1.ListTransfersResponse], error)
 	// GetModelPortfolio returns the model portfolio (D-52) with its backtest
-	// (D-53) as an index that starts at 100 on go-live, like the
-	// performance series, and the max drawdown of the model and of each
+	// (D-53) as an index that starts at 100 on the charts' start (D-138),
+	// like the performance series, and the max drawdown of the model and of each
 	// target (D-54), in the reporting currency. While the model portfolio is
 	// off it fails with NOT_FOUND and says nothing about it.
 	GetModelPortfolio(context.Context, *connect.Request[v1.GetModelPortfolioRequest]) (*connect.Response[v1.GetModelPortfolioResponse], error)

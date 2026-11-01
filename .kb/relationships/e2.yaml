@@ -708,13 +708,6 @@ relationships:
     id: rel-f64c7ad9c165
   - type: implements
     from: SYM-ingest-app-sync-call
-    to: REQ-ingest-market-data-scope
-    created_at: 2026-10-29T17:12:21.139Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-365a92f36d97
-  - type: implements
-    from: SYM-ingest-app-sync-call
     to: REQ-ingest-sync-mode-from-ledger
     created_at: 2026-10-29T17:12:21.221Z
     created_by: kibi/upsert
@@ -895,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c28ec511bab
+  - type: implements
+    from: SYM-ingest-app-sync-call
+    to: REQ-ingest-market-data-scope-declared
+    created_at: 2026-11-01T10:09:39.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4043d232522

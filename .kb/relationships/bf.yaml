@@ -533,13 +533,6 @@ relationships:
     id: rel-c05549fe42a3
   - type: implements
     from: SYM-ingest-app-bond-series
-    to: REQ-ingest-market-data-scope
-    created_at: 2026-10-29T17:13:18.447Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-deed377b5d6c
-  - type: implements
-    from: SYM-ingest-app-bond-series
     to: REQ-ingest-new-instrument-priced
     created_at: 2026-10-29T17:13:18.502Z
     created_by: kibi/upsert
@@ -707,6 +700,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-1d07cc75b96d
   - type: implements
+    from: SYM-attention-item-state
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:44:20.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb6d5bf30b22
+  - type: implements
+    from: SYM-attention-item-state
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:44:20.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db65066b4a9a
+  - type: covered_by
+    from: SYM-attention-item-state
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:44:20.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3221c6b1d79d
+  - type: implements
     from: SYM-views-connectapi-value-kind
     to: REQ-views-oki-tax-days
     created_at: 2026-10-31T18:38:01.706Z
@@ -741,6 +755,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c183805f7895
+  - type: implements
+    from: SYM-ingest-app-bond-series
+    to: REQ-ingest-market-data-scope-declared
+    created_at: 2026-11-01T10:07:43.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fcdf7d6a885
+  - type: executable_for
+    from: SYM-core-test-helper-start-xtb-core
+    to: TEST-core-xtb-start
+    created_at: 2026-11-01T07:59:54.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5540b54cd59
+  - type: implements
+    from: SYM-ingest-xtb-utc-date
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:06:49.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bc0f7f2f817
+  - type: covered_by
+    from: SYM-ingest-xtb-utc-date
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:49.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0e9724498ad
   - type: constrains
     from: REQ-treasurybonds-payout-withdrawal
     to: FACT-SUBJECT-EFFC6623019BD505
@@ -804,48 +846,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f89672bf908
-  - type: executable_for
-    from: SYM-core-test-helper-start-xtb-core
-    to: TEST-core-xtb-start
-    created_at: 2026-11-01T07:59:54.711Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d5540b54cd59
-  - type: implements
-    from: SYM-ingest-xtb-utc-date
-    to: REQ-ingest-xtb-start-open-positions
-    created_at: 2026-11-01T08:06:49.366Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9bc0f7f2f817
-  - type: covered_by
-    from: SYM-ingest-xtb-utc-date
-    to: TEST-ingest-xtb-opening
-    created_at: 2026-11-01T08:06:49.445Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b0e9724498ad
-  - type: implements
-    from: SYM-attention-item-state
-    to: REQ-attention-reconcile
-    created_at: 2026-10-31T18:44:20.718Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fb6d5bf30b22
-  - type: implements
-    from: SYM-attention-item-state
-    to: REQ-core-attention-item-store
-    created_at: 2026-10-31T18:44:20.764Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-db65066b4a9a
-  - type: covered_by
-    from: SYM-attention-item-state
-    to: TEST-attention-rules
-    created_at: 2026-10-31T18:44:20.798Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3221c6b1d79d
   - type: implements
     from: SYM-valuation-other-source-checks
     to: REQ-valuation-other-source-price-checks

@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9051959a539
+  - type: validates
+    from: TEST-ui-plugins
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:06:17.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-422b67426e68

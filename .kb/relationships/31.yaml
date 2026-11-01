@@ -162,13 +162,6 @@ relationships:
     id: rel-426590d53d15
   - type: implements
     from: SYM-views-app-views-cash-rates
-    to: REQ-views-performance-query
-    created_at: 2026-10-28T21:00:34.418Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-298d195e5d17
-  - type: implements
-    from: SYM-views-app-views-cash-rates
     to: REQ-views-performance-value
     created_at: 2026-10-28T21:00:34.436Z
     created_by: kibi/upsert
@@ -538,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2046283cee2b
+  - type: implements
+    from: SYM-views-app-views-cash-rates
+    to: REQ-views-performance-query-charts-start
+    created_at: 2026-11-01T13:08:43.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d426ef26af4

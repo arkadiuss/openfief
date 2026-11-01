@@ -124,8 +124,9 @@ func (d *Discovery) ConnectorInstances(context.Context) ([]string, error) {
 }
 
 // Declarations returns what the running version of instance declares in
-// its manifest (D-112, D-109): its Plugin resource's
-// status.deployed.manifest, the version the operator verified and runs.
+// its manifest (D-112, D-109, D-123): its Plugin resource's
+// status.deployed.manifest, the version the operator verified and runs,
+// and status.effective for what the grant approves of it.
 // An instance with no such resource, or nothing running, declares nothing.
 func (d *Discovery) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
 	if !d.started {
@@ -146,14 +147,20 @@ func (d *Discovery) Declarations(_ context.Context, instance string) (ingest.Dec
 }
 
 // DeployedDeclarations reads the declarations of a Plugin resource's
-// running version from status.deployed.manifest; a field that is missing or
-// not a boolean declares nothing.
+// running version from status.deployed.manifest, and whether it is a
+// market-data connector from status.effective.marketData, which is true
+// only when the manifest declares it and the PluginGrant approves it
+// (D-123); a field that is missing or not a boolean declares nothing.
 func DeployedDeclarations(u *unstructured.Unstructured) ingest.Declarations {
-	flag := func(field string) bool {
-		v, found, err := unstructured.NestedBool(u.Object, "status", "deployed", "manifest", field)
+	flag := func(fields ...string) bool {
+		v, found, err := unstructured.NestedBool(u.Object, append([]string{"status"}, fields...)...)
 		return found && err == nil && v
 	}
-	return ingest.Declarations{CrossCheckPrices: flag("crossCheckPrices"), StatementFiles: flag("statementFiles")}
+	return ingest.Declarations{
+		CrossCheckPrices: flag("deployed", "manifest", "crossCheckPrices"),
+		StatementFiles:   flag("deployed", "manifest", "statementFiles"),
+		MarketData:       flag("effective", "marketData"),
+	}
 }
 
 // BaseURL returns the URL the core calls instance at: http:// and its

@@ -3209,7 +3209,11 @@ symbols:
       recorded_at: 2026-10-28T05:25:41.097Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-market-data
+      - type: covered_by
         target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-plugins-manifest-validation
   - id: SYM-plugins-permissions-is-empty
@@ -3358,9 +3362,13 @@ symbols:
       recorded_at: 2026-10-28T05:26:09.645Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-market-data
+      - type: covered_by
         target: TEST-plugins-plugin-grant
       - type: implements
         target: REQ-AUTO-8EA5542EFA92FFCD
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-plugins-upgrade-approval-diff
   - id: SYM-plugins-missing
@@ -3773,8 +3781,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-effective
+      - type: covered_by
+        target: TEST-plugins-market-data
       - type: implements
         target: REQ-AUTO-12177128A788CEDC
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-plugins-effective-intersection
   - id: SYM-plugins-both
@@ -12547,9 +12559,13 @@ symbols:
       recorded_at: 2026-10-28T07:01:08.197Z
     relationships:
       - type: covered_by
+        target: TEST-operator-market-data
+      - type: covered_by
         target: TEST-operator-reconcile
       - type: implements
         target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-operator-grant-validity
   - id: SYM-operator-permissions-to-api
@@ -12577,9 +12593,13 @@ symbols:
       recorded_at: 2026-10-28T07:01:13.084Z
     relationships:
       - type: covered_by
+        target: TEST-operator-market-data
+      - type: covered_by
         target: TEST-operator-reconcile
       - type: implements
         target: REQ-AUTO-4E891679754B3360
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-operator-runs-only-granted
   - id: SYM-operator-parse-egress
@@ -12922,6 +12942,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-signature-refusal-event
       - type: implements
         target: REQ-operator-upgrade-status
   - id: SYM-operator-test-reconciler-signed-images
@@ -29493,7 +29515,15 @@ symbols:
       recorded_at: 2026-10-28T08:56:44.168Z
     relationships:
       - type: covered_by
+        target: TEST-views-connectapi-read-access
+      - type: covered_by
         target: TEST-views-connectapi-rest
+      - type: implements
+        target: REQ-identity-read-access-no-secrets
+      - type: implements
+        target: REQ-identity-read-access-no-state-change
+      - type: implements
+        target: REQ-identity-read-access-scope
       - type: implements
         target: REQ-views-api-contract
       - type: implements
@@ -38214,6 +38244,8 @@ symbols:
       - type: implements
         target: REQ-core-serves-read-api
       - type: implements
+        target: REQ-identity-read-access-holders
+      - type: implements
         target: REQ-identity-read-api-plugins
   - id: SYM-core-read-tokens-verify-token
     title: readTokens.VerifyToken
@@ -38232,6 +38264,8 @@ symbols:
         target: REQ-AUTO-2D0C3CC0151C3C5C
       - type: implements
         target: REQ-core-serves-read-api
+      - type: implements
+        target: REQ-identity-read-access-holders
       - type: implements
         target: REQ-identity-read-api-plugins
   - id: SYM-core-main
@@ -54854,7 +54888,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-views-performance
     title: Views.Performance
     sourceFile: internal/views/app/performance.go
@@ -54867,9 +54901,9 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-AUTO-718AA30AAFD0E6E8
+        target: REQ-ui-portfolio-chart-default-start
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-record-type
     title: record
     sourceFile: internal/views/app/performance.go
@@ -54882,7 +54916,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-views-recorded
     title: Views.recorded
     sourceFile: internal/views/app/performance.go
@@ -54895,7 +54929,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-earlier
     title: earlier
     sourceFile: internal/views/app/performance.go
@@ -54908,7 +54942,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-later
     title: later
     sourceFile: internal/views/app/performance.go
@@ -54921,7 +54955,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-first-date-of-transactions
     title: firstDate
     sourceFile: internal/views/app/performance.go
@@ -54934,7 +54968,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-views-valuations-for
     title: Views.valuationsFor
     sourceFile: internal/views/app/performance.go
@@ -54947,7 +54981,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-views-cash-rates
     title: Views.cashRates
     sourceFile: internal/views/app/performance.go
@@ -54960,7 +54994,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
       - type: implements
         target: REQ-views-performance-value
   - id: SYM-views-app-test-helper-new-performance-fixture
@@ -58477,6 +58511,8 @@ symbols:
         target: REQ-plugins-cli-install
       - type: implements
         target: REQ-plugins-cli-permission-summary
+      - type: implements
+        target: REQ-plugins-install-shows-market-data-list
   - id: SYM-plugins-cli-trust-text
     title: trustText
     sourceFile: internal/plugins/cli/render.go
@@ -59791,7 +59827,7 @@ symbols:
       - type: implements
         target: REQ-portfolio-rebase
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
   - id: SYM-portfolio-test-max-drawdown
     title: TestMaxDrawdown
     sourceFile: internal/portfolio/drawdown_test.go
@@ -62277,7 +62313,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-option-type
@@ -62292,7 +62328,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-with-model
@@ -62307,7 +62343,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-model-portfolio-type
@@ -62322,7 +62358,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-end-of-history
@@ -62337,7 +62373,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-views-model-portfolio
@@ -62352,7 +62388,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-model-days
@@ -62367,7 +62403,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-views-model-range
@@ -62382,7 +62418,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-test-helper-fake-models
@@ -63899,7 +63935,7 @@ symbols:
       - type: implements
         target: REQ-ui-overview-values
       - type: implements
-        target: REQ-ui-performance-chart
+        target: REQ-ui-performance-chart-from-charts-start
       - type: implements
         target: REQ-ui-transfers-page
   - id: SYM-ui-model-view
@@ -64023,9 +64059,9 @@ symbols:
       - type: implements
         target: REQ-ui-overview-values
       - type: implements
-        target: REQ-ui-performance-chart-twr-index
+        target: REQ-ui-performance-chart-twr-index-from-charts-start
       - type: implements
-        target: REQ-views-model-line-on-performance-chart
+        target: REQ-views-model-line-from-charts-start
   - id: SYM-ui-server-performance
     title: server.performance
     sourceFile: internal/views/ui/performance.go
@@ -64044,7 +64080,7 @@ symbols:
       - type: implements
         target: REQ-ui-overview-values
       - type: implements
-        target: REQ-ui-performance-chart
+        target: REQ-ui-performance-chart-from-charts-start
       - type: implements
         target: REQ-ui-transfers-page
   - id: SYM-views-ghostfolio-activity-type
@@ -64185,6 +64221,8 @@ symbols:
       - type: implements
         target: REQ-views-ghostfolio-asset-keys
       - type: implements
+        target: REQ-views-ghostfolio-asset-uuid-takes-user
+      - type: implements
         target: REQ-views-ghostfolio-bond-asset-fresh-name
   - id: SYM-views-ghostfolio-fee-symbol
     title: FeeSymbol
@@ -64199,6 +64237,8 @@ symbols:
         target: TEST-views-ghostfolio-project
       - type: implements
         target: REQ-views-ghostfolio-asset-keys
+      - type: implements
+        target: REQ-views-ghostfolio-asset-uuid-takes-user
   - id: SYM-views-ghostfolio-uuid-v5
     title: uuidV5
     sourceFile: internal/views/ghostfolio/model.go
@@ -64210,6 +64250,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-cash-account-uuid
       - type: implements
         target: REQ-views-ghostfolio-derived-account-uuids
       - type: implements
@@ -64346,6 +64388,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-122F6AEE20C6FF6D
       - type: implements
+        target: REQ-views-ghostfolio-cash-account-per-currency
+      - type: implements
         target: REQ-views-ghostfolio-projection
   - id: SYM-views-ghostfolio-projector
     title: projector
@@ -64454,6 +64498,8 @@ symbols:
         target: TEST-views-ghostfolio-project
       - type: implements
         target: REQ-views-ghostfolio-asset-keys
+      - type: implements
+        target: REQ-views-ghostfolio-asset-uuid-takes-user
       - type: implements
         target: REQ-views-ghostfolio-bond-asset-fresh-name
       - type: implements
@@ -65305,6 +65351,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
+      - type: implements
+        target: REQ-views-ghostfolio-cash-account-per-currency
       - type: implements
         target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-syncer-apply
@@ -69914,6 +69962,8 @@ symbols:
       - type: covered_by
         target: TEST-views-kube
       - type: implements
+        target: REQ-plugins-install-shows-market-data-list
+      - type: implements
         target: REQ-plugins-verified-status
       - type: implements
         target: REQ-views-installed-plugins
@@ -70184,7 +70234,11 @@ symbols:
       recorded_at: 2026-10-29T03:39:37.730Z
     relationships:
       - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: covered_by
         target: TEST-views-plugins
+      - type: implements
+        target: REQ-plugins-install-shows-market-data-list
       - type: implements
         target: REQ-plugins-verified-status
       - type: implements
@@ -85652,7 +85706,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
   - id: SYM-ingest-app-account-seeding
@@ -85741,7 +85795,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-pricing
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-new-instrument-priced
   - id: SYM-ingest-app-bond-series
@@ -85756,7 +85810,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-pricing
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-new-instrument-priced
   - id: SYM-ingest-app-model-targets
@@ -85771,7 +85825,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-pricing
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-new-instrument-priced
   - id: SYM-ingest-app-pricing-scope
@@ -85787,7 +85841,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-pricing
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-new-instrument-priced
   - id: SYM-ingest-app-pricing-scope-market-data-scope
@@ -85802,7 +85856,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-pricing
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-new-instrument-priced
   - id: SYM-ingest-app-pricing-scope-held
@@ -85817,7 +85871,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-pricing
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-new-instrument-priced
   - id: SYM-ingest-app-pricing-scope-is-bond
@@ -85832,7 +85886,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-pricing
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-new-instrument-priced
   - id: SYM-ingest-app-test-helper-held-book
@@ -85940,7 +85994,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-market-data-sync-instruments
   - id: SYM-ingest-app-sync-plan
@@ -85955,7 +86009,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
   - id: SYM-ingest-app-scheduler-plan
@@ -86096,7 +86150,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-client
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
   - id: SYM-ingest-plan-sync
     title: PlanSync
     sourceFile: internal/ingest/golive.go
@@ -86177,7 +86231,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-marketdata
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-market-data-sync-instruments
   - id: SYM-ingest-new-market-data-scope
@@ -86192,7 +86246,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-marketdata
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
       - type: implements
         target: REQ-ingest-market-data-sync-instruments
   - id: SYM-ingest-test-helper-scope-instrument
@@ -86273,7 +86327,7 @@ symbols:
       - type: covered_by
         target: TEST-portfolio-app-models
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
   - id: SYM-portfolio-app-test-market-data-targets
     title: TestMarketDataTargets
     sourceFile: internal/portfolio/app/models_test.go
@@ -86326,7 +86380,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-client
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
   - id: SYM-connector-gen-pb-sync-request-get-indices
     title: SyncRequest.GetIndices
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -86339,7 +86393,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-client
       - type: implements
-        target: REQ-ingest-market-data-scope
+        target: REQ-ingest-market-data-scope-declared
   - id: SYM-core-valuation-owners
     title: valuationOwners
     sourceFile: cmd/core/marketdata.go
@@ -90595,9 +90649,13 @@ symbols:
       recorded_at: 2026-10-30T04:30:10.837Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: covered_by
         target: TEST-ingest-declarations
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-ui-statement-upload-file-connectors-only
   - id: SYM-ingest-undeclared-cross-check-prices
@@ -90674,6 +90732,8 @@ symbols:
         target: TEST-ingest-kube
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-plugins-manifest-declarations
   - id: SYM-ingest-kube-test-test-deployed-declarations
@@ -91107,6 +91167,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-plugins-install-shows-market-data-list
       - type: implements
         target: REQ-plugins-manifest-declarations
   - id: SYM-demo-cross-check-prices
@@ -112339,6 +112401,8 @@ symbols:
         target: TEST-pl-oki
       - type: implements
         target: REQ-pl-oki-exemption-class
+      - type: implements
+        target: REQ-valuation-unclassifiable-instrument-counts-as-neither
   - id: SYM-pl-oki-act-tax
     title: OKIAct.tax
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -113043,6 +113107,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-exemption-class
       - type: implements
+        target: REQ-valuation-unclassifiable-instrument-attention-item
+      - type: implements
         target: REQ-valuation-unclassified-attention
   - id: SYM-valuation-app-unclassified
     title: Unclassified
@@ -113056,6 +113122,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-exemption-class
       - type: implements
+        target: REQ-valuation-unclassifiable-instrument-attention-item
+      - type: implements
         target: REQ-valuation-unclassified-attention
   - id: SYM-valuation-app-input-recorder-record-exemption-class
     title: InputRecorder.RecordExemptionClass
@@ -113068,6 +113136,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-owner-classification-stays
       - type: implements
         target: REQ-valuation-owner-exemption-class
   - id: SYM-valuation-app-offered-classes
@@ -113194,6 +113264,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-owner-classification-stays
       - type: implements
         target: REQ-valuation-owner-exemption-class
   - id: SYM-valuation-postgres-test-exemption-classes
@@ -113803,6 +113875,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-valuation-owner-classification-stays
+      - type: implements
+        target: REQ-valuation-unclassifiable-instrument-counts-as-neither
       - type: implements
         target: REQ-views-oki-tax-days
   - id: SYM-views-tax-year-account-payments
@@ -114439,6 +114515,8 @@ symbols:
       - type: covered_by
         target: TEST-core-unclassified
       - type: implements
+        target: REQ-valuation-unclassifiable-instrument-attention-item
+      - type: implements
         target: REQ-valuation-unclassified-attention
   - id: SYM-valuation-app-revaluer-sync-unclassified
     title: Revaluer.syncUnclassified
@@ -114451,6 +114529,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-app-exemption-class
+      - type: implements
+        target: REQ-valuation-unclassifiable-instrument-attention-item
       - type: implements
         target: REQ-valuation-unclassified-attention
   - id: SYM-valuation-app-test-helper-fake-attention-raise
@@ -114544,6 +114624,8 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-project
       - type: implements
+        target: REQ-views-ghostfolio-cash-account-uuid
+      - type: implements
         target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-views-ghostfolio-cash-account-name
     title: CashAccountName
@@ -114556,6 +114638,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-project
+      - type: implements
+        target: REQ-views-ghostfolio-cash-account-per-currency
       - type: implements
         target: REQ-views-ghostfolio-owned-and-cash-accounts
   - id: SYM-core-test-helper-upload-with-header
@@ -117683,6 +117767,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-connectapi-attention
+      - type: covered_by
+        target: TEST-views-connectapi-read-access
+      - type: implements
+        target: REQ-identity-read-access-no-broker-account-numbers
       - type: implements
         target: REQ-views-attention-items
   - id: SYM-views-connectapi-pb-attention-state
@@ -119648,6 +119736,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-unclassified
+      - type: implements
+        target: REQ-valuation-unclassifiable-instrument-attention-item
       - type: implements
         target: REQ-valuation-unclassified-attention
   - id: SYM-core-valuation-attention-clear
@@ -123050,3 +123140,742 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-release-verify
+  - id: SYM-views-account-history
+    title: AccountHistory
+    sourceFile: internal/views/chartstart.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:09:39.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-chart-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-default-start
+  - id: SYM-views-history-of
+    title: HistoryOf
+    sourceFile: internal/views/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:09:49.060Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-chart-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-default-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-start-ignores-full-history
+  - id: SYM-views-chart-start
+    title: ChartStart
+    sourceFile: internal/views/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:09:58.129Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-chart-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-default-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-start-ignores-full-history
+  - id: SYM-views-chosen-start
+    title: ChosenStart
+    sourceFile: internal/views/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:09.184Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-chart-start
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-views-app-views-account-performance
+    title: Views.AccountPerformance
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:19.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-ui-account-chart-default-start
+      - type: implements
+        target: REQ-views-account-performance
+  - id: SYM-views-app-views-performance-of
+    title: Views.performance
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:28.820Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-ui-performance-index-100-on-start
+      - type: implements
+        target: REQ-views-performance-query-charts-start
+  - id: SYM-ui-chart-start-view
+    title: chartStartView
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:37.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-chart-start-view-parameter
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-ui-chart-start-view-default-link
+    title: chartStartView.DefaultLink
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:47.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-chart-start-view-parameter
+  - id: SYM-ui-parse-start
+    title: parseStart
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:56.643Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-ui-optional-string
+    title: optionalString
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:04.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-ui-account-charts-type
+    title: accountCharts
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:14.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-account-chart-default-start
+  - id: SYM-ui-server-account-charts
+    title: server.accountCharts
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:25.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-account-chart-default-start
+      - type: implements
+        target: REQ-ui-performance-chart-from-charts-start
+  - id: SYM-ui-build-line
+    title: buildLine
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:39.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-performance-chart-twr-index-from-charts-start
+      - type: implements
+        target: REQ-ui-time-chart-marks-tracking-start
+  - id: SYM-views-pb-get-performance-request-get-account-id
+    title: GetPerformanceRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:51.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-get-default-from
+    title: GetPerformanceResponse.GetDefaultFrom
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:02.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-test-history-of
+    title: TestHistoryOf
+    sourceFile: internal/views/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:13.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-chart-start
+  - id: SYM-views-test-helper-history
+    title: history
+    sourceFile: internal/views/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:23.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-chart-start
+  - id: SYM-views-test-chart-start
+    title: TestChartStart
+    sourceFile: internal/views/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:33.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-chart-start
+  - id: SYM-views-test-chosen-start
+    title: TestChosenStart
+    sourceFile: internal/views/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:43.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-chart-start
+  - id: SYM-views-app-test-account-performance
+    title: TestAccountPerformance
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:52.527Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-account-performance-edges
+    title: TestAccountPerformanceEdges
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:00.711Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-helper-opening-usd
+    title: openingUSD
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:08.915Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-connectapi-test-connect-account-performance
+    title: TestConnectAccountPerformance
+    sourceFile: internal/views/connectapi/connect_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:17.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect
+  - id: SYM-ui-test-overview-chart-start
+    title: TestOverviewChartStart
+    sourceFile: internal/views/ui/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:24.372Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-chart-start
+  - id: SYM-ui-test-account-charts
+    title: TestAccountCharts
+    sourceFile: internal/views/ui/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:31.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-chart-start
+  - id: SYM-plugins-effective-permissions-market-data
+    title: EffectivePermissions.MarketData
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:10:48.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-market-data
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
+  - id: SYM-plugins-effective-permissions-grant-singles
+    title: EffectivePermissions.grantSingles
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:10:55.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-effective
+      - type: covered_by
+        target: TEST-plugins-market-data
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
+      - type: implements
+        target: REQ-plugins-effective-intersection
+  - id: SYM-plugins-manifest-same-declarations
+    title: Manifest.sameDeclarations
+    sourceFile: internal/plugins/manifest_label.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:11:03.305Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-market-data
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
+  - id: SYM-operator-market-data-items
+    title: marketDataItems
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:11:10.630Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-market-data
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
+  - id: SYM-ingest-app-connectors-market-data
+    title: Connectors.marketData
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:11:18.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
+  - id: SYM-ingest-app-scheduler-told
+    title: Scheduler.told
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:11:26.034Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-market-data-list-declared-granted
+      - type: implements
+        target: REQ-ingest-market-data-scope-declared
+  - id: SYM-views-kube-nested-bool
+    title: nestedBool
+    sourceFile: internal/views/kube/plugins.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:12:56.369Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-kube
+      - type: implements
+        target: REQ-plugins-install-shows-market-data-list
+  - id: SYM-attention-read-subject
+    title: ReadSubject
+    sourceFile: internal/attention/item.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:13:04.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-read-subject
+      - type: implements
+        target: REQ-identity-read-access-no-broker-account-numbers
+  - id: SYM-plugins-test-market-data-outcome
+    title: marketDataOutcome
+    sourceFile: internal/plugins/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:16:27.364Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-market-data
+  - id: SYM-plugins-test-test-market-data
+    title: TestMarketData
+    sourceFile: internal/plugins/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:16:37.941Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-market-data
+  - id: SYM-plugins-test-test-market-data-label-and-diff
+    title: TestMarketDataLabelAndDiff
+    sourceFile: internal/plugins/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:16:47.432Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-market-data
+  - id: SYM-operator-test-test-reconcile-market-data
+    title: TestReconcileMarketData
+    sourceFile: internal/plugins/operator/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:16:53.609Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-market-data
+  - id: SYM-operator-test-market-data
+    title: marketData
+    sourceFile: internal/plugins/operator/marketdata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:17:03.262Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-market-data
+  - id: SYM-views-connectapi-test-ra-read-access
+    title: readAccess
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:17:16.054Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-views-connectapi-test-ra-test-read-access-methods
+    title: TestReadAccessMethods
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:17:23.527Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-views-connectapi-test-ra-check-served
+    title: checkServed
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:17:30.085Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-views-connectapi-test-ra-named-like-asecret
+    title: namedLikeASecret
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:17:36.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-views-connectapi-test-ra-test-read-access-returns-no-secrets
+    title: TestReadAccessReturnsNoSecrets
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:17:44.303Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-views-connectapi-test-ra-walk-message
+    title: walkMessage
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:17:53.855Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-views-connectapi-test-ra-test-read-access-attention-names-no-broker-account
+    title: TestReadAccessAttentionNamesNoBrokerAccount
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:18:02.496Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-attention-test-read-subject
+    title: TestReadSubject
+    sourceFile: internal/attention/readsubject_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:18:10.470Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-read-subject
+  - id: SYM-plugins-cli-test-render-proposal-market-data
+    title: TestRenderProposalMarketData
+    sourceFile: internal/plugins/cli/render_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:18:20.920Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-render
+  - id: SYM-ui-test-plugins-page-market-data
+    title: TestPluginsPageMarketData
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T10:18:29.801Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-views-connectapi-test-ra-retired
+    title: retired
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T11:31:28.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-viewsv1-plugin-get-market-data
+    title: Plugin.GetMarketData
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T11:48:14.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-plugins-install-shows-market-data-list
+  - id: SYM-viewsv1-plugin-get-requested-market-data
+    title: Plugin.GetRequestedMarketData
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T11:48:25.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-plugins-install-shows-market-data-list
+  - id: SYM-operator-newly-refused
+    title: newlyRefused
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:03.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-operator-signature-refusal-event
+  - id: SYM-operator-test-helper-test-refusal-events
+    title: testRefusalEvents
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:48.703Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-e2e-test-operator-refuses-untrusted-images
+    title: TestOperatorRefusesUntrustedImages
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:07.205Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-fx-manifest-label
+    title: fxManifestLabel
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:29.338Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-push-unsigned-image
+    title: pushUnsignedImage
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:52.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-sign-untrusted
+    title: signUntrusted
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:54:21.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-check-signed-by
+    title: checkSignedBy
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:54:43.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-refusal
+    title: refusal
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:09.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-check-refused
+    title: checkRefused
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:29.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-wait-signature-decided
+    title: waitSignatureDecided
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:44.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-refusal-of
+    title: refusalOf
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:56:00.758Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-wait-refusal-event
+    title: waitRefusalEvent
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:56:17.821Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-remove-instance
+    title: removeInstance
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T14:00:51.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals

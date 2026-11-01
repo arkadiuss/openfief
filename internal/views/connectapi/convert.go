@@ -143,7 +143,7 @@ func pbPlugin(p *views.Plugin) *viewsv1.Plugin {
 		Instance: p.Instance, Image: p.Image, ImageDigest: p.Digest,
 		Capabilities: p.Capabilities, RequestedCapabilities: p.Requested,
 		Trust: viewsv1.SignatureTrust(enumNumber(int(p.Trust))), Signer: p.Signer, TrustReason: p.TrustReason,
-		Phase: p.Phase, Ready: p.Ready,
+		Phase: p.Phase, Ready: p.Ready, MarketData: p.MarketData, RequestedMarketData: p.RequestsMarketData,
 	}
 }
 
@@ -271,7 +271,7 @@ func parseOptionalDate(s string) (kernel.Date, error) {
 func pbPerformance(p *app.Performance, reporting kernel.Currency) *viewsv1.GetPerformanceResponse {
 	out := &viewsv1.GetPerformanceResponse{
 		From: pbDate(p.From), To: pbDate(p.To), Gap: viewsv1.PerformanceGap(enumNumber(int(p.Series.Gap))),
-		RevaluationPending: p.Pending, ReportingCurrency: reporting.String(),
+		RevaluationPending: p.Pending, ReportingCurrency: reporting.String(), DefaultFrom: pbDate(p.Start),
 		Days:      make([]*viewsv1.PerformanceDay, 0, len(p.Series.Days)),
 		Transfers: pbTransfers(p.Series.Transfers),
 	}

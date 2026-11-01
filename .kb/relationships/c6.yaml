@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcfd35fb400f
+  - type: implements
+    from: SYM-views-chart-start
+    to: REQ-ui-portfolio-chart-default-start
+    created_at: 2026-11-01T13:10:01.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adc995da61e8
+  - type: implements
+    from: SYM-views-chart-start
+    to: REQ-ui-portfolio-chart-start-ignores-full-history
+    created_at: 2026-11-01T13:10:01.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-793e361afe3b
+  - type: covered_by
+    from: SYM-views-chart-start
+    to: TEST-views-chart-start
+    created_at: 2026-11-01T13:10:01.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d4a1375dd43

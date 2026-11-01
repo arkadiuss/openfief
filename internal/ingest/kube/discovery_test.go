@@ -117,15 +117,21 @@ func checkDeclarations(t *testing.T, d *kube.Discovery) {
 }
 
 // TestDeployedDeclarations checks that the declarations come from the
-// running version's manifest, status.deployed.manifest, and that anything
-// else declares nothing (D-112, D-109).
+// running version's manifest, status.deployed.manifest, that a market-data
+// connector is one only when status.effective says the grant approves it
+// (D-123), not on its manifest's word alone, and that anything else
+// declares nothing (D-112, D-109).
 func TestDeployedDeclarations(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
-		name     string
-		manifest map[string]any
-		want     ingest.Declarations
+		name      string
+		manifest  map[string]any
+		effective any
+		want      ingest.Declarations
 	}{
+		{name: "market data approved", manifest: map[string]any{"marketData": true}, effective: true, want: ingest.Declarations{MarketData: true}},
+		{name: "market data declared, not approved", manifest: map[string]any{"marketData": true}},
+		{name: "market data not a boolean", manifest: map[string]any{"marketData": true}, effective: "true"},
 		{name: "both declared", manifest: map[string]any{"crossCheckPrices": true, "statementFiles": true}, want: ingest.Declarations{CrossCheckPrices: true, StatementFiles: true}},
 		{name: "statement files only", manifest: map[string]any{"statementFiles": true}, want: ingest.Declarations{StatementFiles: true}},
 		{name: "not a boolean", manifest: map[string]any{"crossCheckPrices": "yes"}},
@@ -137,6 +143,11 @@ func TestDeployedDeclarations(t *testing.T) {
 			u := plugin("ibkr-main", true, "connector")
 			if tt.manifest != nil {
 				u = deployed(t, u, tt.manifest)
+			}
+			if tt.effective != nil {
+				if err := unstructured.SetNestedField(u.Object, tt.effective, "status", "effective", "marketData"); err != nil {
+					t.Fatalf("setting status.effective.marketData: %v", err)
+				}
 			}
 			if got := kube.DeployedDeclarations(u); got != tt.want {
 				t.Errorf("DeployedDeclarations() = %+v, want %+v", got, tt.want)

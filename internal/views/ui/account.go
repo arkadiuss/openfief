@@ -51,6 +51,9 @@ type accountData struct {
 	Cash         []*viewsv1.Money
 	Checks       []*viewsv1.AssertionCheck
 	Transactions transactionsView
+	// Charts are the account's value over time and performance from the
+	// charts' start (D-138).
+	Charts *accountCharts
 	// BondLot is the "Add bond lot" form, shown to the owner on a bond
 	// account's page only (D-9); nil elsewhere.
 	BondLot *bondLotForm
@@ -117,9 +120,18 @@ func (s *server) renderAccount(w http.ResponseWriter, r *http.Request, sess sess
 		s.errorPage(w, r, http.StatusBadRequest, err.Error())
 		return
 	}
+	start, err := parseStart(r.URL.Query().Get(startParam))
+	if err != nil {
+		s.errorPage(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
 	data := accountData{
 		Date: date.String(), Account: acc.Msg.GetAccount(), Status: status.Msg.GetStatus(), Error: form.Error,
 		Upload: form.Upload,
+	}
+	if data.Charts, err = s.accountCharts(r, sess, id, start, date); err != nil {
+		s.coreFailed(w, r, "account charts", err)
+		return
 	}
 	if formErr := s.ownerForms(r, sess, &data, form.Lot); formErr != nil {
 		s.coreFailed(w, r, "ListStatementAccounts", formErr)

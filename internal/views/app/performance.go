@@ -10,12 +10,15 @@ import (
 	"github.com/arkadiuss/openfief/internal/views"
 )
 
-// Performance is the portfolio's time-weighted return over the days it
-// covers, From to To, with whether a revaluation that could change it is
-// pending or running.
+// Performance is a time-weighted return over the days it covers, From to
+// To, the portfolio's or one account's, with whether a revaluation that
+// could change it is pending or running.
 type Performance struct {
 	From, To kernel.Date
-	Series   views.PerformanceSeries
+	// Start is the charts' default start (D-138), which is also where
+	// tracking began: zero when nothing is recorded.
+	Start  kernel.Date
+	Series views.PerformanceSeries
 	// Pending reports a revaluation of some account that is pending or
 	// running: its stored valuations may change.
 	Pending bool
@@ -23,13 +26,15 @@ type Performance struct {
 
 // Performance returns the portfolio's time-weighted return (D-61) per day,
 // with its value including cash, in the reporting currency, over the days
-// from through to, both inclusive. A zero from means go-live, the first
-// transaction's date, and a from before go-live starts there; the index is
-// 100 on the first day. A zero to means the latest valued-through date of
-// any account. The series stops at the last day all accounts are valued for
+// from through to, both inclusive. A zero from means the charts' default
+// start (D-138, views.ChartStart): the latest day an account was seeded
+// from a starting balance, or the first transaction's date when none was.
+// A from before the first transaction starts there; the index is 100 on
+// the first day. A zero to means the latest valued-through date of any
+// account. The series stops at the last day all accounts are valued for
 // and every rate it needs is stored, naming the gap, so an account valued
-// less far than the others shows as a gap; a portfolio with no transactions
-// has no days.
+// less far than the others shows as a gap; a portfolio with no
+// transactions has no days.
 func (v *Views) Performance(ctx context.Context, from, to kernel.Date) (Performance, error) {
 	accounts, err := v.Accounts(ctx)
 	if err != nil {
@@ -39,10 +44,40 @@ func (v *Views) Performance(ctx context.Context, from, to kernel.Date) (Performa
 	if err != nil {
 		return Performance{}, err
 	}
+	links, err := v.ledger.TransferLinks(ctx)
+	if err != nil {
+		return Performance{}, fmt.Errorf("loading transfer links: %w", err)
+	}
+	return v.performance(ctx, accounts, &rec, rec.start, from, to, links)
+}
+
+// AccountPerformance returns one account's time-weighted return as
+// Performance does the portfolio's, except that its default start is the
+// account's own first day (D-138) and every deposit and withdrawal is a
+// cash flow of the account, a transfer from or to another of the owner's
+// accounts included. An unknown account fails like Account.
+func (v *Views) AccountPerformance(ctx context.Context, id ledger.AccountID, from, to kernel.Date) (Performance, error) {
+	acc, err := v.Account(ctx, id)
+	if err != nil {
+		return Performance{}, err
+	}
+	accounts := []ledger.Account{acc}
+	rec, err := v.recorded(ctx, accounts)
+	if err != nil {
+		return Performance{}, err
+	}
+	return v.performance(ctx, accounts, &rec, rec.first, from, to, nil)
+}
+
+// performance computes the time-weighted return of accounts, whose record
+// is rec, from the start chosen as from over def (views.ChosenStart)
+// through to, leaving out the cash flows of the confirmed transfers in
+// links.
+func (v *Views) performance(ctx context.Context, accounts []ledger.Account, rec *record, def, from, to kernel.Date, links []ledger.TransferLink) (Performance, error) {
 	if len(rec.txs) == 0 {
 		return Performance{From: from, To: to}, nil
 	}
-	from = later(from, rec.goLive) // the zero date is before any
+	from = views.ChosenStart(from, rec.first, def)
 	if to.IsZero() {
 		// When nothing is valued that late, the series is the first day, unvalued.
 		to = later(rec.latest, from)
@@ -50,17 +85,15 @@ func (v *Views) Performance(ctx context.Context, from, to kernel.Date) (Performa
 	if rangeErr := views.ValidateRange(from, to); rangeErr != nil {
 		return Performance{}, fmt.Errorf("performance: %w", rangeErr)
 	}
-	in := &views.PerformanceInput{From: from, To: to, ValuedThrough: rec.through, Transactions: rec.txs, Reporting: v.reporting}
-	if in.Links, err = v.ledger.TransferLinks(ctx); err != nil {
-		return Performance{}, fmt.Errorf("loading transfer links: %w", err)
-	}
+	in := &views.PerformanceInput{From: from, To: to, ValuedThrough: rec.through, Transactions: rec.txs, Reporting: v.reporting, Links: links}
+	var err error
 	if in.Valuations, err = v.valuationsFor(ctx, accounts, from, to); err != nil {
 		return Performance{}, err
 	}
 	if in.Rates, err = v.cashRates(ctx, rec.txs, to); err != nil {
 		return Performance{}, err
 	}
-	out := Performance{From: from, To: to, Pending: rec.pending}
+	out := Performance{From: from, To: to, Start: def, Pending: rec.pending}
 	if out.Series, err = views.Performance(in); err != nil {
 		return Performance{}, fmt.Errorf("computing performance: %w", err)
 	}
@@ -69,18 +102,22 @@ func (v *Views) Performance(ctx context.Context, from, to kernel.Date) (Performa
 
 // record is what the portfolio has recorded, across the accounts that have
 // transactions: their current transactions, the first date of any, the
-// earliest and the latest date an account is valued through, and whether a
-// revaluation is pending or running.
+// charts' default start (views.ChartStart), the earliest and the latest
+// date an account is valued through, and whether a revaluation is pending
+// or running.
 type record struct {
-	txs                     []ledger.Transaction
-	goLive, through, latest kernel.Date
-	pending                 bool
+	txs                           []ledger.Transaction
+	first, start, through, latest kernel.Date
+	pending                       bool
 }
 
 // recorded loads the record of accounts. An account with transactions that
 // was never valued counts as valued through the day before its first one.
 func (v *Views) recorded(ctx context.Context, accounts []ledger.Account) (record, error) {
-	var rec record
+	var (
+		rec       record
+		histories []views.AccountHistory
+	)
 	for i := range accounts {
 		txs, err := v.ledger.CurrentTransactions(ctx, accounts[i].ID)
 		if err != nil {
@@ -93,18 +130,20 @@ func (v *Views) recorded(ctx context.Context, accounts []ledger.Account) (record
 		if err != nil {
 			return record{}, fmt.Errorf("loading valuation status: %w", err)
 		}
-		entry := firstDate(txs)
+		h := views.HistoryOf(txs)
+		histories = append(histories, h)
 		through := s.ValuedThrough
 		if through.IsZero() {
-			through = entry.AddDays(-1)
+			through = h.First.AddDays(-1)
 		}
 		if len(rec.txs) == 0 {
-			rec.goLive, rec.through, rec.latest = entry, through, through
+			rec.first, rec.through, rec.latest = h.First, through, through
 		}
-		rec.goLive, rec.through, rec.latest = earlier(rec.goLive, entry), earlier(rec.through, through), later(rec.latest, through)
+		rec.first, rec.through, rec.latest = earlier(rec.first, h.First), earlier(rec.through, through), later(rec.latest, through)
 		rec.pending = rec.pending || s.Pending || s.Running
 		rec.txs = append(rec.txs, txs...)
 	}
+	rec.start, _ = views.ChartStart(histories)
 	return rec, nil
 }
 

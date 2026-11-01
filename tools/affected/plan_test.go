@@ -93,6 +93,12 @@ func TestHookPlan(t *testing.T) {
 				"lint:go MODULE=sdk/go PKGS=./connector", "vuln:go MODULE=sdk/go PKGS=./connector", "test:go MODULE=sdk/go PKGS=./connector"),
 		},
 		{
+			name:    "an end-to-end test is linted but neither vulnerability-checked nor tested without its build tag",
+			changes: []change{{path: "test/e2e/refusal_test.go"}},
+			want: always("fmt:check:files MODULE=. FILES=test/e2e/refusal_test.go", "lint:config",
+				"lint:go MODULE=. PKGS=./test/e2e"),
+		},
+		{
 			name:    "an embedded file changes its package like Go source",
 			changes: []change{{path: "internal/views/ui/web/app.css"}},
 			want: always("lint:config", "lint:go MODULE=. PKGS=./internal/views/ui",

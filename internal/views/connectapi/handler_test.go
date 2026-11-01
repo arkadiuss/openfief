@@ -356,6 +356,7 @@ type performanceBody struct {
 	Gap                string           `json:"gap"`
 	RevaluationPending bool             `json:"revaluationPending"`
 	ReportingCurrency  string           `json:"reportingCurrency"`
+	DefaultFrom        string           `json:"defaultFrom"`
 	Days               []performanceDay `json:"days"`
 }
 
@@ -366,13 +367,15 @@ func TestRESTPerformance(t *testing.T) {
 	if err := json.Unmarshal(rec.Body.Bytes(), &body); err != nil {
 		t.Fatalf("decoding %s: %v", rec.Body, err)
 	}
-	// Go-live is 2026-03-02, valued through that day: 1043.21 + 126 PLN of
-	// holdings, -90 USD cash at 4.00, and the opening lot flowing in at its
-	// valuation; 03-03 is not valued.
+	// acc-1 is seeded on 2026-03-02, the charts' default start (D-138), and
+	// valued through that day: 1043.21 + 126 PLN of holdings, -90 USD cash
+	// at 4.00, and the opening lot flowing in at its valuation; 03-03 is not
+	// valued.
 	pln := func(a string) amount { return amount{Amount: a, Currency: "PLN"} }
 	want := performanceBody{
 		From: "2026-03-02", To: "2026-03-04", Gap: "PERFORMANCE_GAP_UNVALUED", RevaluationPending: true, ReportingCurrency: "PLN",
-		Days: []performanceDay{{"2026-03-02", "100", pln("809.21"), pln("1169.21"), pln("-360"), pln("1043.21")}},
+		DefaultFrom: "2026-03-02",
+		Days:        []performanceDay{{"2026-03-02", "100", pln("809.21"), pln("1169.21"), pln("-360"), pln("1043.21")}},
 	}
 	if diff := cmp.Diff(want, body); diff != "" {
 		t.Errorf("GET /v1/performance mismatch (-want +got):\n%s", diff)

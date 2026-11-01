@@ -22,6 +22,8 @@ type EffectivePermissions struct {
 	config       []byte
 	// clusterService is the granted in-cluster service (D-74); nil if none.
 	clusterService *ClusterService
+	// marketData: the plugin is a market-data connector (D-123).
+	marketData bool
 }
 
 // Effective returns the intersection of what p requests and what g approves.
@@ -52,13 +54,7 @@ func Effective(p *Plugin, g *Grant) (*EffectivePermissions, error) {
 	if len(e.capabilities) == 0 {
 		return nil, fmt.Errorf("%w: plugin %q", ErrNoCapabilityGranted, p.Name)
 	}
-	if bp := p.Manifest.BrowserPath; bp != "" && slices.Contains(g.Permissions.BrowserPaths, bp) &&
-		slices.Contains(e.capabilities, CapabilityView) {
-		e.browserPath = bp
-	}
-	if cs := both(req.ClusterServices, g.Permissions.ClusterServices); len(cs) == 1 {
-		e.clusterService = &cs[0]
-	}
+	e.grantSingles(p, g, &req)
 	return e, nil
 }
 
@@ -107,6 +103,12 @@ func (e *EffectivePermissions) DataTiers() []DataTier { return slices.Clone(e.da
 // and the plugin may act as a view; empty otherwise.
 func (e *EffectivePermissions) BrowserPath() string { return e.browserPath }
 
+// MarketData reports whether the plugin is a market-data connector: its
+// manifest declares it, the grant approves it and it may act as a
+// connector (D-123). Only such a plugin is told, on each sync, the
+// instruments the owner holds and the model portfolio's targets (D-93).
+func (e *EffectivePermissions) MarketData() bool { return e.marketData }
+
 // Config returns the plugin's config document.
 func (e *EffectivePermissions) Config() []byte { return bytes.Clone(e.config) }
 
@@ -133,7 +135,7 @@ func (e *EffectivePermissions) Equal(o *EffectivePermissions) bool {
 func (e *EffectivePermissions) samePermissions(o *EffectivePermissions) bool {
 	return slices.Equal(e.capabilities, o.capabilities) && slices.Equal(e.egress, o.egress) &&
 		slices.Equal(e.secrets, o.secrets) && slices.Equal(e.dataTiers, o.dataTiers) &&
-		e.browserPath == o.browserPath && equalPtr(e.clusterService, o.clusterService)
+		e.browserPath == o.browserPath && equalPtr(e.clusterService, o.clusterService) && e.marketData == o.marketData
 }
 
 // equalPtr reports whether a and b are both nil or point to equal values.
@@ -142,4 +144,20 @@ func equalPtr[T comparable](a, b *T) bool {
 		return a == b
 	}
 	return *a == *b
+}
+
+// grantSingles sets the permissions a plugin holds at most one of: the
+// browser path, when the grant approves it and the plugin may act as a
+// view (D-81); the in-cluster service (D-74); and market data, when the
+// manifest declares it, the grant approves it and the plugin may act as a
+// connector (D-123).
+func (e *EffectivePermissions) grantSingles(p *Plugin, g *Grant, req *Permissions) {
+	if bp := p.Manifest.BrowserPath; bp != "" && slices.Contains(g.Permissions.BrowserPaths, bp) &&
+		slices.Contains(e.capabilities, CapabilityView) {
+		e.browserPath = bp
+	}
+	if cs := both(req.ClusterServices, g.Permissions.ClusterServices); len(cs) == 1 {
+		e.clusterService = &cs[0]
+	}
+	e.marketData = req.MarketData && g.Permissions.MarketData && slices.Contains(e.capabilities, CapabilityConnector)
 }

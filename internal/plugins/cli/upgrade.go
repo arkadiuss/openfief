@@ -96,4 +96,7 @@ func writePermissions(b *strings.Builder, prefix string, p *plugins.Permissions)
 	for _, cs := range p.ClusterServices {
 		line("in-cluster", cs.String()+", outside the egress proxy")
 	}
+	if p.MarketData {
+		line("market data", "each sync tells it every instrument you hold and the model's targets (D-123)")
+	}
 }

@@ -812,33 +812,19 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0752444085cc
   - type: implements
-    from: SYM-valuation-gen-pb-list-series-sources-response-proto-message
-    to: REQ-valuation-market-data-series-service
-    created_at: 2026-11-01T09:15:51.854Z
+    from: SYM-views-connectapi-pb-attention-item
+    to: REQ-identity-read-access-no-broker-account-numbers
+    created_at: 2026-11-01T10:13:14.608Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-73e832bfca05
+    id: rel-622685df91ca
   - type: covered_by
-    from: SYM-valuation-gen-pb-list-series-sources-response-proto-message
-    to: TEST-core-market-data
-    created_at: 2026-11-01T09:15:51.919Z
+    from: SYM-views-connectapi-pb-attention-item
+    to: TEST-views-connectapi-read-access
+    created_at: 2026-11-01T10:13:14.667Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-3eede6404a02
-  - type: implements
-    from: SYM-valuation-gen-pb-set-series-source-request
-    to: REQ-valuation-market-data-series-service
-    created_at: 2026-11-01T09:16:20.513Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1a5929fea879
-  - type: covered_by
-    from: SYM-valuation-gen-pb-set-series-source-request
-    to: TEST-core-market-data
-    created_at: 2026-11-01T09:16:20.562Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-369a8008f6a3
+    id: rel-7ab43f86a93f
   - type: implements
     from: SYM-ingest-ticker-entry-misfit
     to: REQ-ingest-ticker-opening-lots
@@ -874,3 +860,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95a239ccbcfc
+  - type: implements
+    from: SYM-valuation-gen-pb-list-series-sources-response-proto-message
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:15:51.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e832bfca05
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-series-sources-response-proto-message
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:15:51.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3eede6404a02
+  - type: implements
+    from: SYM-valuation-gen-pb-set-series-source-request
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:16:20.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a5929fea879
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-series-source-request
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:16:20.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-369a8008f6a3
+  - type: verified_by
+    from: SCEN-e2e-plugin-untrusted-signer-refused
+    to: TEST-e2e-plugin-refusals
+    created_at: 2026-11-01T13:50:58.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fe3bcf032fd

@@ -629,13 +629,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e72dec53c12e
-  - type: validates
-    from: TEST-ui-market-data
-    to: REQ-valuation-market-data-source-owner-switch
-    created_at: 2026-11-01T09:01:25.726Z
+  - type: implements
+    from: SYM-views-ghostfolio-cash-account-name
+    to: REQ-views-ghostfolio-cash-account-per-currency
+    created_at: 2026-11-01T10:13:56.745Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-1574eac50a31
+    id: rel-6ce9e3157c2c
   - type: executable_for
     from: SYM-core-test-helper-current-xtb-export
     to: TEST-core-xtb-start
@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-824d3272904a
+  - type: validates
+    from: TEST-ui-market-data
+    to: REQ-valuation-market-data-source-owner-switch
+    created_at: 2026-11-01T09:01:25.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1574eac50a31

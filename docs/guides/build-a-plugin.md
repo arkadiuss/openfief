@@ -218,6 +218,7 @@ The label holds one JSON object. [ParseManifestLabel](../../internal/plugins/man
 | `browserPath` | For a view that serves browsers: the path prefix the core proxies to it (D-81). See [View plugins](#view-plugins). | `"/"` |
 | `crossCheckPrices` | A connector that sends [cross-check prices](../glossary.md) in its deliveries declares it; the core stores none from one that doesn't (D-112). | `true` (ibkr-flex) |
 | `statementFiles` | A connector that takes statement files the owner uploads declares it; the UI offers the upload form only on accounts bound to one (D-109). | `true` (ibkr-flex) |
+| `marketData` | A connector that prices instruments declares it: each sync then tells it every instrument the owner holds and the model portfolio's targets (D-93). It is a permission the grant approves, and the install shows the owner that the plugin will learn what they hold; a connector that doesn't declare it, or whose grant doesn't approve it, is told nothing (D-123). Only a connector may declare it. | `true` (eodhd) |
 
 Because the manifest names a role and each instance mounts `<instance>-<role>`, two instances of one image, such as one per IBKR account, never share a Secret: `ibkr-joint` mounts `ibkr-joint-flex-token`.
 

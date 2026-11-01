@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c191617ed89
+  - type: executable_for
+    from: SYM-views-app-test-account-performance
+    to: TEST-views-app-performance
+    created_at: 2026-11-01T13:12:55.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4d6ad02fd47
+  - type: validates
+    from: TEST-plugins-cli-render
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:06:14.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f057460a04b1
