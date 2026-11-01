@@ -41,3 +41,7 @@ D-98 was rewritten and D-119 removed: no go-live on the first entry. Keeping old
 > A hand-entered treasury bond lot is booked on its real purchase date, as a deposit of its cost and a buy, so the account's history starts at its first purchase and every day since is valued from the series' terms and the published readings. Each lot is idempotent per series and purchase date, so lots can be entered one at a time and in any order.
 
 docs/DESIGN.md#D-98
+
+## Why this changed
+
+The author rewrote D-98 and removed D-119: a hand-entered account no longer goes live on its first entry, so every lot is booked on its real purchase date as a deposit and a buy, and only accounts seeded earlier keep their opening lots.
