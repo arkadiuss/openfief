@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-605c98186cb7
+  - type: constrains
+    from: REQ-views-ghostfolio-cash-account-uuid
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-11-01T07:39:08.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c852a9075ca8
+  - type: requires_property
+    from: REQ-views-ghostfolio-cash-account-uuid
+    to: FACT-PROP-F5B25D54B772F4BB
+    created_at: 2026-11-01T07:39:08.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f82653b75c95

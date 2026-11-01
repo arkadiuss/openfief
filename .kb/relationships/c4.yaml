@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac49e8a57215
+  - type: implements
+    from: SYM-treasurybonds-opening
+    to: REQ-treasurybonds-lot-booked-on-purchase-date
+    created_at: 2026-11-01T08:43:48.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a1c0243c9b0

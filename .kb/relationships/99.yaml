@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-367c16300386
+  - type: implements
+    from: SYM-treasurybonds-book-maturity
+    to: REQ-treasurybonds-books-maturities
+    created_at: 2026-11-01T08:43:16.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d364042cdc6

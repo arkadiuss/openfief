@@ -1,6 +1,6 @@
 ---
 title: Every source's market-data values must be stored, so the lower-ranked ones serve as cross-checks.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

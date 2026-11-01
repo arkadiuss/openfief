@@ -594,13 +594,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4e5342ccdd02
-  - type: implements
-    from: SYM-treasurybonds-mapper-lot-transactions
-    to: REQ-treasurybonds-lot-on-go-live-day-opening
-    created_at: 2026-10-31T18:11:19.642Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6abbd47f43d7
   - type: constrains
     from: REQ-views-ghostfolio-owned-and-cash-accounts
     to: FACT-SUBJECT-2A49400A8B1F4128
@@ -636,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d789db75fe6
+  - type: implements
+    from: SYM-treasurybonds-mapper-lot-transactions
+    to: REQ-treasurybonds-lot-booked-on-purchase-date
+    created_at: 2026-11-01T08:43:40.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b2d21880f63
+  - type: implements
+    from: SYM-treasurybonds-mapper-lot-transactions
+    to: REQ-treasurybonds-valued-every-day-since-first-purchase
+    created_at: 2026-11-01T08:43:40.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5969725cc03
+  - type: covered_by
+    from: SYM-treasurybonds-mapper-lot-transactions
+    to: TEST-core-bond-lots
+    created_at: 2026-11-01T08:43:40.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df52c6bf2282

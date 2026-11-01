@@ -503,13 +503,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c629e544688
-  - type: implements
-    from: SYM-ledger-check-opening-lots
-    to: REQ-ledger-manual-opening-lots-one-at-a-time
-    created_at: 2026-10-30T05:04:07.671Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-82b5f930c8ed
   - type: covered_by
     from: SYM-ledger-check-opening-lots
     to: TEST-ledger-seed

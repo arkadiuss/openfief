@@ -496,3 +496,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5a8674b890a
+  - type: constrains
+    from: REQ-ingest-xtb-open-positions-owner-cash
+    to: FACT-SUBJECT-38B9F4914EAA710D
+    created_at: 2026-11-01T07:39:57.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb2aca919cc6
+  - type: requires_property
+    from: REQ-ingest-xtb-open-positions-owner-cash
+    to: FACT-PROP-04A88427E45CB02A
+    created_at: 2026-11-01T07:39:57.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8fb908cedcb

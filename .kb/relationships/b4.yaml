@@ -503,3 +503,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2863fb84fc20
+  - type: constrains
+    from: REQ-ui-performance-chart-twr-index-from-charts-start
+    to: FACT-SUBJECT-1284272125A65B4D
+    created_at: 2026-11-01T07:38:35.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd8480847424
+  - type: requires_property
+    from: REQ-ui-performance-chart-twr-index-from-charts-start
+    to: FACT-PROP-91B269565764D076
+    created_at: 2026-11-01T07:38:35.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-244eadfce736
+  - type: supersedes
+    from: REQ-ui-performance-chart-twr-index-from-charts-start
+    to: REQ-ui-performance-chart-twr-index
+    created_at: 2026-11-01T07:38:35.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da535d515907

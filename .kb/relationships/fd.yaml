@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00a936d3abc8
+  - type: implements
+    from: SYM-treasurybonds-book-maturities
+    to: REQ-treasurybonds-books-maturities
+    created_at: 2026-11-01T08:43:09.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dfc0f06b1ec

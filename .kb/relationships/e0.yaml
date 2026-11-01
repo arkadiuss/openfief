@@ -631,20 +631,6 @@ relationships:
     id: rel-0b4f426cc77c
   - type: validates
     from: TEST-treasurybonds-mapper
-    to: REQ-treasurybonds-pre-go-live-opening-lot
-    created_at: 2026-10-30T06:32:49.320Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ea4e5a442e0e
-  - type: validates
-    from: TEST-treasurybonds-mapper
-    to: REQ-treasurybonds-post-go-live-deposit-buy
-    created_at: 2026-10-30T06:32:49.422Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c15638d11125
-  - type: validates
-    from: TEST-treasurybonds-mapper
     to: REQ-ingest-bond-lot-delete-supersedes
     created_at: 2026-10-30T06:32:49.512Z
     created_by: kibi/upsert
@@ -776,13 +762,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1eedab119070
-  - type: validates
-    from: TEST-treasurybonds-mapper
-    to: REQ-treasurybonds-lot-on-go-live-day-opening
-    created_at: 2026-10-31T18:11:41.805Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0d1ffe5cd922
   - type: implements
     from: SYM-ui-posted-once
     to: REQ-ingest-bond-lot-exchange-price-by-letter
@@ -804,3 +783,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bef62694243c
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-lot-booked-on-purchase-date
+    created_at: 2026-11-01T08:41:25.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b09a21b6d2c3
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-lot-idempotent-series-date
+    created_at: 2026-11-01T08:41:25.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6b5cd0c94c7
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-lots-any-order
+    created_at: 2026-11-01T08:41:25.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-915c4876a238

@@ -643,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9d9b1299640
+  - type: validates
+    from: TEST-core-bond-lots
+    to: REQ-treasurybonds-lot-booked-on-purchase-date
+    created_at: 2026-11-01T08:41:59.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7428d20b9911
+  - type: validates
+    from: TEST-core-bond-lots
+    to: REQ-treasurybonds-valued-every-day-since-first-purchase
+    created_at: 2026-11-01T08:41:59.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aedd8262a80

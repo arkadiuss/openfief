@@ -426,3 +426,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f3f1d189e75
+  - type: implements
+    from: SYM-ingest-app-accounts-payout
+    to: REQ-treasurybonds-account-payout-setting
+    created_at: 2026-11-01T08:42:36.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4207251234d8

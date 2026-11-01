@@ -671,3 +671,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28c479b6a638
+  - type: implements
+    from: SYM-treasurybonds-mapper-map
+    to: REQ-treasurybonds-lot-booked-on-purchase-date
+    created_at: 2026-11-01T08:43:29.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f665b8a2dad4
+  - type: implements
+    from: SYM-treasurybonds-mapper-map
+    to: REQ-treasurybonds-lots-any-order
+    created_at: 2026-11-01T08:43:29.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe14c2684df4

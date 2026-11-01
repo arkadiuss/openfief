@@ -433,20 +433,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d044b19f8348
-  - type: validates
-    from: TEST-plugins-treasury-bonds
-    to: REQ-treasurybonds-pre-go-live-opening-lot
-    created_at: 2026-10-30T06:32:52.244Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ac863e1b7875
-  - type: validates
-    from: TEST-plugins-treasury-bonds
-    to: REQ-treasurybonds-post-go-live-deposit-buy
-    created_at: 2026-10-30T06:32:52.306Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2bc5b909859a
   - type: executable_for
     from: SYM-treasury-bonds-test-sync-books-coupons
     to: TEST-plugins-treasury-bonds
@@ -524,13 +510,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61db289db6f2
-  - type: validates
-    from: TEST-plugins-treasury-bonds
-    to: REQ-treasurybonds-lot-on-go-live-day-opening
-    created_at: 2026-10-31T18:11:48.489Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-54b1516ce5ff
   - type: implements
     from: SYM-ingest-connectapi-account-service-list-broker-accounts
     to: REQ-ingest-broker-account-numbers-owner-only
@@ -538,3 +517,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c39c64df48e
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-treasurybonds-lot-booked-on-purchase-date
+    created_at: 2026-11-01T08:41:31.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f2af2fd73f4
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-treasurybonds-account-history-from-first-purchase
+    created_at: 2026-11-01T08:41:31.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb897e19a843
+  - type: validates
+    from: TEST-plugins-treasury-bonds
+    to: REQ-treasurybonds-payout-booked-then-withdrawn
+    created_at: 2026-11-01T08:41:31.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6000f518966

@@ -274,13 +274,6 @@ relationships:
     id: rel-88b7686b4027
   - type: implements
     from: SYM-valuation-postgres-store-rank-of
-    to: REQ-valuation-market-data-all-sources-stored
-    created_at: 2026-10-29T18:16:00.430Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0b4d8f602ccf
-  - type: implements
-    from: SYM-valuation-postgres-store-rank-of
     to: REQ-valuation-ranking-revalues
     created_at: 2026-10-29T18:16:00.450Z
     created_by: kibi/upsert
@@ -468,3 +461,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9ec9d57bf05
+  - type: implements
+    from: SYM-valuation-postgres-store-rank-of
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-11-01T07:44:00.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5aab9338c7c

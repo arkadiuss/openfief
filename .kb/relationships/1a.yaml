@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38f7a153fd2e
+  - type: constrains
+    from: REQ-identity-read-access-no-secrets
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-01T07:40:11.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca96f8f6abdc
+  - type: requires_property
+    from: REQ-identity-read-access-no-secrets
+    to: FACT-PROP-F6766D56E8F4F5C8
+    created_at: 2026-11-01T07:40:11.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af15949e1ee5

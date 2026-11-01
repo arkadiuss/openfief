@@ -482,13 +482,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63016c653f71
-  - type: implements
-    from: SYM-treasurybonds-mapper-unique
-    to: REQ-treasurybonds-pre-go-live-opening-lot
-    created_at: 2026-10-30T06:38:24.385Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ecd6a4273813
   - type: covered_by
     from: SYM-treasurybonds-mapper-unique
     to: TEST-treasurybonds-mapper
@@ -552,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0af56625fe53
+  - type: implements
+    from: SYM-treasurybonds-mapper-unique
+    to: REQ-treasurybonds-lot-idempotent-series-date
+    created_at: 2026-11-01T08:44:48.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f029b0f3e74a

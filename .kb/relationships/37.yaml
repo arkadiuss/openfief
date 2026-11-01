@@ -566,13 +566,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-514595d85e70
-  - type: validates
-    from: TEST-ingest-app-bondlots
-    to: REQ-ledger-manual-opening-lots-one-at-a-time
-    created_at: 2026-10-30T06:33:03.067Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-29955d9fe03e
   - type: implements
     from: SYM-delivery-bond-lot-entries
     to: REQ-ingest-bond-lot-messages
@@ -693,13 +686,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-54c1578a7053
   - type: validates
-    from: TEST-ingest-app-bondlots
-    to: REQ-ingest-bond-account-live-on-first-lot
-    created_at: 2026-10-31T18:11:04.548Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d5d680271dfc
-  - type: validates
     from: TEST-plugins-kube-cluster-service
     to: REQ-plugins-in-cluster-service-read-role
     created_at: 2026-10-31T18:17:51.546Z
@@ -741,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-650dab52e66c
+  - type: validates
+    from: TEST-ingest-app-bondlots
+    to: REQ-treasurybonds-account-history-from-first-purchase
+    created_at: 2026-11-01T08:41:35.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f177724bde0

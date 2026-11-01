@@ -659,8 +659,8 @@ relationships:
     id: rel-3b8857395915
   - type: implements
     from: SYM-ingest-app-connectors-import-bond-lots
-    to: REQ-ingest-bond-account-live-on-first-lot
-    created_at: 2026-10-31T18:10:46.271Z
+    to: REQ-treasurybonds-account-history-from-first-purchase
+    created_at: 2026-11-01T08:45:05.924Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-cdacfc936082
+    id: rel-85c0c87a0cc9

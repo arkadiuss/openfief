@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a658646eaba
+  - type: constrains
+    from: REQ-ui-time-chart-start-owner-chosen
+    to: FACT-SUBJECT-9106B40681FB54C7
+    created_at: 2026-11-01T07:40:39.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14123a340af2
+  - type: requires_property
+    from: REQ-ui-time-chart-start-owner-chosen
+    to: FACT-PROP-BA0386228FAA9516
+    created_at: 2026-11-01T07:40:39.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7cc5eb2a45c

@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf333e7ac7a7
+  - type: implements
+    from: SYM-ledger-payout-setting
+    to: REQ-treasurybonds-account-payout-setting
+    created_at: 2026-11-01T08:42:09.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d13fe350296

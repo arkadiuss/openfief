@@ -1,6 +1,6 @@
 ---
 title: A hand-entered bond account must go live on the day its first lot is entered.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

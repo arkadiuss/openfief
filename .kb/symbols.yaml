@@ -66755,11 +66755,11 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-bondlots
       - type: implements
-        target: REQ-ingest-bond-account-live-on-first-lot
-      - type: implements
         target: REQ-ingest-bond-lot-handed-with-account
       - type: implements
         target: REQ-ingest-bond-lot-handoff
+      - type: implements
+        target: REQ-treasurybonds-account-history-from-first-purchase
   - id: SYM-ingest-app-connectors-store-terms
     title: Connectors.storeTerms
     sourceFile: internal/ingest/app/connectors.go
@@ -67554,7 +67554,11 @@ symbols:
       - type: implements
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
+        target: REQ-treasurybonds-lot-booked-on-purchase-date
+      - type: implements
         target: REQ-treasurybonds-lot-on-purchase-date
+      - type: implements
+        target: REQ-treasurybonds-lots-any-order
       - type: implements
         target: REQ-treasurybonds-one-instance-all-accounts
   - id: SYM-treasurybonds-add-terms
@@ -67597,13 +67601,17 @@ symbols:
       recorded_at: 2026-10-29T01:22:37.994Z
     relationships:
       - type: covered_by
+        target: TEST-core-bond-lots
+      - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
-        target: REQ-treasurybonds-lot-on-go-live-day-opening
+        target: REQ-treasurybonds-lot-booked-on-purchase-date
       - type: implements
         target: REQ-treasurybonds-lot-on-purchase-date
+      - type: implements
+        target: REQ-treasurybonds-valued-every-day-since-first-purchase
   - id: SYM-treasurybonds-test-helper-must-date
     title: mustDate
     sourceFile: internal/ingest/treasurybonds/mapper_test.go
@@ -85672,8 +85680,6 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-bond-account-live-on-first-lot
-      - type: implements
         target: REQ-ingest-sync-keeps-from-go-live
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
@@ -86817,7 +86823,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-store-source-ranking
@@ -86832,7 +86838,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-querier
@@ -86847,7 +86853,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-ranking-in
@@ -86862,7 +86868,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-placed-in
@@ -86877,7 +86883,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-store-rank-of
@@ -86892,7 +86898,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-store-save-source-ranking
@@ -86907,7 +86913,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-postgres-ranking
       - type: implements
-        target: REQ-valuation-market-data-all-sources-stored
+        target: REQ-valuation-market-data-source-ranking
       - type: implements
         target: REQ-valuation-ranking-revalues
   - id: SYM-valuation-postgres-test-ranked-prices
@@ -102678,8 +102684,6 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-seed
       - type: implements
-        target: REQ-ledger-manual-opening-lots-one-at-a-time
-      - type: implements
         target: REQ-ledger-opening-lots-one-at-a-time
   - id: SYM-ledger-app-guard-opening-lots
     title: guardOpeningLots
@@ -102802,8 +102806,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-seed
-      - type: implements
-        target: REQ-ledger-manual-opening-lots-one-at-a-time
       - type: implements
         target: REQ-ledger-opening-lots-one-at-a-time
   - id: SYM-ledger-test-check-opening-lots
@@ -103504,9 +103506,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-on-purchase-date
+        target: REQ-treasurybonds-lot-idempotent-series-date
       - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper-unique
     title: Mapper.unique
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -103519,9 +103521,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-on-purchase-date
+        target: REQ-treasurybonds-lot-idempotent-series-date
       - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-lot-id
     title: lotID
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -103534,9 +103536,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-on-purchase-date
+        target: REQ-treasurybonds-lot-idempotent-series-date
       - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper-header
     title: Mapper.header
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -103549,9 +103551,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-on-purchase-date
+        target: REQ-treasurybonds-lot-idempotent-series-date
       - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper-deletions
     title: Mapper.deletions
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -103564,11 +103566,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-on-go-live-day-opening
+        target: REQ-treasurybonds-lot-booked-on-purchase-date
       - type: implements
         target: REQ-treasurybonds-lot-on-purchase-date
-      - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
   - id: SYM-treasurybonds-test-helper-key
     title: key
     sourceFile: internal/ingest/treasurybonds/mapper_test.go
@@ -114795,6 +114795,8 @@ symbols:
         target: TEST-ingest-connectapi-accounts
       - type: implements
         target: REQ-ingest-bond-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ingest-app-test-helper-held-ledger-account
     title: heldLedger.Account
     sourceFile: internal/ingest/app/held_test.go
@@ -114880,6 +114882,8 @@ symbols:
         target: TEST-ingest-connectapi-accounts
       - type: implements
         target: REQ-ingest-bond-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
   - id: SYM-treasurybonds-payout
     title: payout
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -114905,6 +114909,8 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-maturities
       - type: implements
+        target: REQ-treasurybonds-payout-booked-then-withdrawn
+      - type: implements
         target: REQ-treasurybonds-payout-withdrawal
   - id: SYM-treasurybonds-accounts-booked-in
     title: AccountsBookedIn
@@ -114917,6 +114923,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-account-history-from-first-purchase
       - type: implements
         target: REQ-treasurybonds-payouts-from-purchase
   - id: SYM-treasurybonds-test-accounts-booked-in
@@ -114940,6 +114948,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-treasurybonds-lot-booked-on-purchase-date
       - type: implements
         target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-due-maturity
@@ -114967,6 +114977,8 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-maturities
       - type: implements
+        target: REQ-treasurybonds-books-maturities
+      - type: implements
         target: REQ-treasurybonds-maturity-redemption
   - id: SYM-treasurybonds-maturity-cpi-years
     title: MaturityCPIYears
@@ -114980,6 +114992,8 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-maturities
       - type: implements
+        target: REQ-treasurybonds-books-maturities
+      - type: implements
         target: REQ-treasurybonds-maturity-redemption
   - id: SYM-treasurybonds-book-maturities
     title: BookMaturities
@@ -114992,6 +115006,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-books-maturities
       - type: implements
         target: REQ-treasurybonds-maturity-redemption
   - id: SYM-treasurybonds-maturity-ref
@@ -115019,6 +115035,8 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-maturities
       - type: implements
+        target: REQ-treasurybonds-books-maturities
+      - type: implements
         target: REQ-treasurybonds-maturity-redemption
   - id: SYM-treasurybonds-payout-withdrawal
     title: PayoutWithdrawal
@@ -115031,6 +115049,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-payout-booked-then-withdrawn
       - type: implements
         target: REQ-treasurybonds-payout-withdrawal
   - id: SYM-treasurybonds-test-helper-maturities
@@ -115143,6 +115163,8 @@ symbols:
         target: TEST-ledger-payout
       - type: implements
         target: REQ-ledger-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-string
     title: Payout.String
     sourceFile: internal/ledger/payout.go
@@ -115183,6 +115205,8 @@ symbols:
         target: TEST-ledger-payout
       - type: implements
         target: REQ-ledger-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-setting-paid-out
     title: PayoutSetting.PaidOut
     sourceFile: internal/ledger/payout.go
@@ -115196,6 +115220,8 @@ symbols:
         target: TEST-ledger-payout
       - type: implements
         target: REQ-ledger-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-setting-changed
     title: PayoutSetting.Changed
     sourceFile: internal/ledger/payout.go
@@ -115209,6 +115235,8 @@ symbols:
         target: TEST-ledger-payout
       - type: implements
         target: REQ-ledger-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-setting-validate
     title: PayoutSetting.Validate
     sourceFile: internal/ledger/payout.go
@@ -115286,6 +115314,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-values
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
       - type: implements
         target: REQ-ui-bond-payout-setting
   - id: SYM-ui-test-bond-payout-form
