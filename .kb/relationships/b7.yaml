@@ -552,3 +552,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2363db79ca61
+  - type: validates
+    from: TEST-ui-statements
+    to: REQ-ingest-xtb-open-positions-owner-cash
+    created_at: 2026-11-01T08:22:57.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d217f450b13f
+  - type: implements
+    from: SYM-attention-app-flagged-price-checks
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:35:06.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3561e8507c12
+  - type: covered_by
+    from: SYM-attention-app-flagged-price-checks
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:35:06.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa5017d98b83
+  - type: implements
+    from: SYM-attention-reconcile
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:47:45.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4467147b0e93
+  - type: implements
+    from: SYM-attention-reconcile
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:47:45.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b317e6f4f526
+  - type: covered_by
+    from: SYM-attention-reconcile
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:47:45.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef1bc51b6489

@@ -678,6 +678,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33e5e8063010
+  - type: constrains
+    from: REQ-attention-relay
+    to: FACT-SUBJECT-8F14A580D2598A57
+    created_at: 2026-10-31T18:32:07.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b69462beb2de
+  - type: requires_property
+    from: REQ-attention-relay
+    to: FACT-PROP-3BF6358C8AEA8FE5
+    created_at: 2026-10-31T18:32:07.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7225df9a89b
+  - type: specified_by
+    from: REQ-attention-relay
+    to: SCEN-attention-relay
+    created_at: 2026-10-31T18:32:08.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9601ce1409d
   - type: implements
     from: SYM-ingest-connectapi-new-tickers
     to: REQ-ingest-xtb-isin-owner-confirms

@@ -454,6 +454,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1f95ef29787
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-owners-check-owner
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:38:46.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72073039c549
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-owners-check-owner
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:38:46.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8953e60f4e88
+  - type: implements
+    from: SYM-attention-pg-store
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:44:58.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7ae70b129a9
+  - type: covered_by
+    from: SYM-attention-pg-store
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:44:58.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52068ce8c456
+  - type: implements
+    from: SYM-viewsv1-list-attention-items-request-proto-message
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:05:23.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa8762f5b6e4
+  - type: covered_by
+    from: SYM-viewsv1-list-attention-items-request-proto-message
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:05:23.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-692d2659d28c
   - type: implements
     from: SYM-jurisdiction-tax-account
     to: REQ-pl-oki-tax-computation

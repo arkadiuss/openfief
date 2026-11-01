@@ -86,6 +86,8 @@ type Export struct {
 	NoTotals bool
 	// Inline writes text as inline strings.
 	Inline bool
+	// NoReportDate leaves the report's date out of Open Positions.
+	NoReportDate bool
 }
 
 // FileName returns xStation's name of the export,
@@ -129,7 +131,7 @@ func (e *Export) Bytes() []byte {
 	open := slices.Concat([][]Cell{
 		{Text("Account number"), Text(e.Account)},
 		{Text("Open Positions")},
-		{Text("Data as of report generated"), Time(e.To)},
+		report(e),
 		{Text("Product"), Text("Metric"), Text("Amount"), Text("Currency")},
 		{Text("My Trades"), Text("Open position value"), Num("0"), Text(e.Currency)},
 		{Text("My Trades"), Text("Open position profit"), Num("0"), Text(e.Currency)},
@@ -144,6 +146,15 @@ func (e *Export) Bytes() []byte {
 	)
 }
 
+// report returns Open Positions' row with the report's date, the export's
+// end, or an empty row with NoReportDate.
+func report(e *Export) []Cell {
+	if e.NoReportDate {
+		return []Cell{}
+	}
+	return []Cell{Text("Data as of report generated"), Time(e.To)}
+}
+
 // CashRow returns a Cash Operations row in CashHeader's order.
 func CashRow(kind, name, ticker, category string, at time.Time, amount, id, comment string) []Cell {
 	return []Cell{
@@ -152,7 +163,9 @@ func CashRow(kind, name, ticker, category string, at time.Time, amount, id, comm
 	}
 }
 
-// Position is a position row of Closed Positions or Open Positions.
+// Position is a position row of Closed Positions or Open Positions. An open
+// position's Value is in the account's currency, "0" when empty, and its
+// CurrentPrice is its OpenPrice when empty.
 type Position struct {
 	Name, Ticker, Category string
 	Volume, OpenPrice      string
@@ -160,6 +173,7 @@ type Position struct {
 	ClosePrice, Profit     string
 	Closed                 time.Time
 	PositionID             string
+	Value, CurrentPrice    string
 }
 
 // ClosedRow returns a Closed Positions row in ClosedHeader's order, with
@@ -176,9 +190,16 @@ func ClosedRow(p *Position) []Cell {
 // OpenRow returns an Open Positions row in OpenHeader's order.
 func OpenRow(p *Position) []Cell {
 	zero := Num("0")
+	value, current := p.Value, p.CurrentPrice
+	if value == "" {
+		value = "0"
+	}
+	if current == "" {
+		current = p.OpenPrice
+	}
 	return []Cell{
-		Text("My Trades"), Text(p.Name), Text(p.Ticker), Text(p.Category), Text("BUY"), Num(p.Volume), zero,
-		Num(p.OpenPrice), Num(p.OpenPrice), Time(p.Opened), zero, zero, zero, zero, zero, zero, zero, zero, zero,
+		Text("My Trades"), Text(p.Name), Text(p.Ticker), Text(p.Category), Text("BUY"), Num(p.Volume), Num(value),
+		Num(current), Num(p.OpenPrice), Time(p.Opened), zero, zero, zero, zero, zero, zero, zero, zero, zero,
 	}
 }
 

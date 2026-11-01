@@ -17,6 +17,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/xtb"
 	"github.com/arkadiuss/openfief/internal/ingest/xtb/xtbtest"
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 // updateFlag rewrites the golden files:
@@ -78,7 +79,7 @@ func fixture() *xtbtest.Export {
 // mapExport maps e in transactions mode under its xStation file name.
 func mapExport(t *testing.T, e *xtbtest.Export) ingest.Mapping {
 	t.Helper()
-	m, err := xtb.Mapper{}.Map(e.Bytes(), e.FileName(), ingest.ModeTransactions)
+	m, err := xtb.Mapper{}.Map(e.Bytes(), e.FileName(), ingest.ModeTransactions, kernel.Money{})
 	if err != nil {
 		t.Fatalf("Map: %v", err)
 	}
@@ -142,8 +143,12 @@ func render(m *ingest.Mapping) string {
 		}
 		for j := range e.TickerEntries {
 			te := &e.TickerEntries[j]
-			fmt.Fprintf(&b, "%s ticker-entry %s %s %s %s units=%s amount=%s charge=%s %q ref=%s\n",
-				e.Account, te.Header.Key, te.Kind, te.Header.Date, te.Symbol, te.Quantity, te.Amount, te.Charge, te.Description, te.Ref)
+			opened := ""
+			if !te.Opened.IsZero() {
+				opened = " opened=" + te.Opened.String()
+			}
+			fmt.Fprintf(&b, "%s ticker-entry %s %s %s %s units=%s amount=%s charge=%s%s %q ref=%s\n",
+				e.Account, te.Header.Key, te.Kind, te.Header.Date, te.Symbol, te.Quantity, te.Amount, te.Charge, opened, te.Description, te.Ref)
 		}
 	}
 	for _, p := range m.Problems {
@@ -179,14 +184,22 @@ func TestMapRefuses(t *testing.T) {
 	good := fixture()
 	other := fixture()
 	other.Account = "0000001"
+	undated := fixture()
+	undated.NoReportDate = true
 	tests := []struct {
 		name     string
 		data     []byte
 		fileName string
 		mode     ingest.Mode
+		cash     string
+		currency string
 		want     error
 	}{
-		{name: "opening mode", data: good.Bytes(), fileName: good.FileName(), mode: ingest.ModeOpening, want: xtb.ErrOpeningMode},
+		{name: "opening mode without open positions", data: noSummary(), fileName: good.FileName(), mode: ingest.ModeOpening, want: xtb.ErrOpeningMode},
+		{name: "opening mode without the report's date", data: undated.Bytes(), fileName: undated.FileName(), mode: ingest.ModeOpening, want: xtb.ErrOpeningMode},
+		{name: "opening cash in another currency", data: good.Bytes(), fileName: good.FileName(), mode: ingest.ModeOpening, cash: "100", currency: "EUR", want: xtb.ErrOpeningCash},
+		{name: "opening cash in fractions of a grosz", data: good.Bytes(), fileName: good.FileName(), mode: ingest.ModeOpening, cash: "100.005", currency: "PLN", want: xtb.ErrOpeningCash},
+		{name: "opening cash with a transactions batch", data: good.Bytes(), fileName: good.FileName(), mode: ingest.ModeTransactions, cash: "100", currency: "PLN", want: xtb.ErrOpeningCash},
 		{name: "unknown mode", data: good.Bytes(), fileName: good.FileName(), mode: ingest.Mode(0), want: xtb.ErrUnknownMode},
 		{name: "not a zip", data: []byte("Type,Amount\n"), fileName: "x.xlsx", mode: ingest.ModeTransactions, want: xtb.ErrNotWorkbook},
 		{name: "too large", data: make([]byte, xtb.MaxFileBytes+1), fileName: "x.xlsx", mode: ingest.ModeTransactions, want: xtb.ErrTooLarge},
@@ -207,7 +220,11 @@ func TestMapRefuses(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := xtb.Mapper{}.Map(tt.data, tt.fileName, tt.mode)
+			var cash kernel.Money
+			if tt.currency != "" {
+				cash = money(t, tt.cash, tt.currency)
+			}
+			_, err := xtb.Mapper{}.Map(tt.data, tt.fileName, tt.mode, cash)
 			if !errors.Is(err, tt.want) {
 				t.Errorf("Map() error = %v, want %v", err, tt.want)
 			}
@@ -234,7 +251,7 @@ func noSummary() []byte {
 func TestMapCurrencyFromSummary(t *testing.T) {
 	t.Parallel()
 	e := fixture()
-	m, err := xtb.Mapper{}.Map(e.Bytes(), "renamed.xlsx", ingest.ModeTransactions)
+	m, err := xtb.Mapper{}.Map(e.Bytes(), "renamed.xlsx", ingest.ModeTransactions, kernel.Money{})
 	if err != nil {
 		t.Fatalf("Map: %v", err)
 	}

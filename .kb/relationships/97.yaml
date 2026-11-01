@@ -609,6 +609,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-5c1622d37d6b
   - type: implements
+    from: SYM-ui-server-acknowledge-attention-item
+    to: REQ-ui-attention-page
+    created_at: 2026-10-31T18:52:36.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47f7453b975f
+  - type: implements
+    from: SYM-ui-server-acknowledge-attention-item
+    to: REQ-ui-attention-items-one-place
+    created_at: 2026-10-31T18:52:36.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6a2c03bd9f6
+  - type: covered_by
+    from: SYM-ui-server-acknowledge-attention-item
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:52:36.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85a1a3cc6d35
+  - type: implements
     from: SYM-views-minus
     to: REQ-views-totals-losses-offset
     created_at: 2026-10-31T19:12:10.914Z

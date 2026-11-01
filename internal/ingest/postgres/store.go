@@ -126,10 +126,11 @@ func (s *Store) CompleteSync(ctx context.Context, instance string, b *ingest.Bat
 		tag, err := tx.Exec(ctx, `
 			UPDATE ingest.import_batches SET state = 'completed', attempts = attempts + 1, last_attempt_at = $3,
 				finished_at = $3, institution = $4, transactions = $5, assertions = $6, new = $7, new_versions = $8,
-				unchanged = $9, failed_assertions = $10, problems = $11
+				unchanged = $9, failed_assertions = $10, problems = $11, unsupported = $12
 			WHERE id = $1 AND instance = $2 AND state = 'open'`,
 			string(b.ID), instance, at, string(b.Institution), b.Transactions, b.Assertions, b.Imported.New,
-			b.Imported.NewVersions, b.Imported.Unchanged, b.Imported.FailedAssertions, len(b.Problems))
+			b.Imported.NewVersions, b.Imported.Unchanged, b.Imported.FailedAssertions, len(b.Problems),
+			ingest.CountUnsupported(b.Problems))
 		if err != nil {
 			return fmt.Errorf("completing: %w", err)
 		}
@@ -188,13 +189,41 @@ func (s *Store) FailSync(ctx context.Context, instance string, id ingest.BatchID
 func (s *Store) RecordBatch(ctx context.Context, instance string, b *ingest.Batch) error {
 	if _, err := s.pool.Exec(ctx, `
 		INSERT INTO ingest.import_batches (id, instance, source, mode, started_at, state, attempts, last_attempt_at,
-			institution, transactions, assertions, new, new_versions, unchanged, failed_assertions, problems, finished_at)
-		VALUES ($1, $2, $3, $4, now(), 'completed', 1, now(), $5, $6, $7, $8, $9, $10, $11, $12, now())`,
+			institution, transactions, assertions, new, new_versions, unchanged, failed_assertions, problems, unsupported,
+			finished_at)
+		VALUES ($1, $2, $3, $4, now(), 'completed', 1, now(), $5, $6, $7, $8, $9, $10, $11, $12, $13, now())`,
 		string(b.ID), instance, b.Source, b.Mode.String(), string(b.Institution), b.Transactions, b.Assertions,
-		b.Imported.New, b.Imported.NewVersions, b.Imported.Unchanged, b.Imported.FailedAssertions, len(b.Problems)); err != nil {
+		b.Imported.New, b.Imported.NewVersions, b.Imported.Unchanged, b.Imported.FailedAssertions, len(b.Problems),
+		ingest.CountUnsupported(b.Problems)); err != nil {
 		return fmt.Errorf("recording batch %s of %s: %w", b.ID, instance, err)
 	}
 	return nil
+}
+
+// UnsupportedBatches returns each completed batch with rows OpenFief could
+// not book yet (ingest.CountUnsupported), in instance then batch order.
+func (s *Store) UnsupportedBatches(ctx context.Context) ([]ingest.BatchProblems, error) {
+	rows, err := s.pool.Query(ctx, `
+		SELECT id, instance, unsupported FROM ingest.import_batches
+		WHERE state = 'completed' AND unsupported > 0 ORDER BY instance, id`)
+	if err != nil {
+		return nil, fmt.Errorf("loading batches with unsupported rows: %w", err)
+	}
+	out, err := pgx.CollectRows(rows, func(row pgx.CollectableRow) (ingest.BatchProblems, error) {
+		var (
+			b  ingest.BatchProblems
+			id string
+		)
+		if scanErr := row.Scan(&id, &b.Instance, &b.Unsupported); scanErr != nil {
+			return ingest.BatchProblems{}, fmt.Errorf("scanning: %w", scanErr)
+		}
+		b.Batch = ingest.BatchID(id)
+		return b, nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("loading batches with unsupported rows: %w", err)
+	}
+	return out, nil
 }
 
 // SyncStates returns every instance's next sync, the zero time for one

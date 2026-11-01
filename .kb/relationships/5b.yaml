@@ -503,6 +503,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6f0dad6819b
+  - type: executable_for
+    from: SYM-attention-app-test-helper-recorder
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:38:50.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a24073ecacec
+  - type: executable_for
+    from: SYM-attention-app-test-helper-recorder
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:38:50.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e28403d3256f
+  - type: implements
+    from: SYM-attention-pg-scan-event
+    to: REQ-attention-relay
+    created_at: 2026-10-31T18:46:01.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04dff75fc275
+  - type: implements
+    from: SYM-attention-pg-scan-event
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:46:01.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37f3fa2d5d55
+  - type: covered_by
+    from: SYM-attention-pg-scan-event
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:46:01.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d55bac87687
   - type: implements
     from: SYM-views-ghostfolio-make-plan
     to: REQ-views-ghostfolio-earlier-bond-assets-removed

@@ -83,16 +83,45 @@ func wantOutcome(kind ledger.TransactionKind, key ledger.TransactionKey) entryOu
 	return entryOutcome{Kind: kind, Key: key, Account: "acc-1", Instrument: isinA + "/TESTA.PL"}
 }
 
+// entryCase returns a ticker entry of kind for TESTA.PL, with one unit when
+// quantity, a lot open date when opened isn't empty and a charge of 1 PLN
+// when charge.
+func entryCase(t *testing.T, kind ledger.TransactionKind, quantity bool, opened string, charge bool) ingest.TickerEntry {
+	t.Helper()
+	e := entry(t, "TESTA.PL", "9000000002", kind)
+	if quantity {
+		e.Quantity = kernel.NewQuantity(kernel.NewDecimal(1, 0))
+	}
+	if opened != "" {
+		day, err := kernel.ParseDate(opened)
+		if err != nil {
+			t.Fatal(err)
+		}
+		e.Opened = day
+	}
+	if charge {
+		e.Charge = pln(t, "1")
+	}
+	return e
+}
+
 func TestTickerEntryTransaction(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name     string
 		kind     ledger.TransactionKind
 		quantity bool
+		opened   string
+		charge   bool
 		wantKind ledger.TransactionKind
 		wantErr  error
 	}{
 		{name: "buy", kind: ledger.KindBuy, wantKind: ledger.KindBuy},
+		{name: "opening lot of a position held since its open date", kind: ledger.KindOpeningLot, opened: "2025-06-02", wantKind: ledger.KindOpeningLot},
+		{name: "opening lot without an open date", kind: ledger.KindOpeningLot, wantErr: ingest.ErrInvalidTickerEntry},
+		{name: "opening lot opened after its go-live", kind: ledger.KindOpeningLot, opened: "2026-01-06", wantErr: ingest.ErrInvalidTickerEntry},
+		{name: "opening lot with a charge", kind: ledger.KindOpeningLot, opened: "2025-06-02", charge: true, wantErr: ingest.ErrInvalidTickerEntry},
+		{name: "buy with a lot open date", kind: ledger.KindBuy, opened: "2025-06-02", wantErr: ingest.ErrInvalidTickerEntry},
 		{name: "sell", kind: ledger.KindSell, wantKind: ledger.KindSell},
 		{name: "dividend", kind: ledger.KindDividend, wantKind: ledger.KindDividend},
 		{name: "dividend with units", kind: ledger.KindDividend, quantity: true, wantErr: ingest.ErrInvalidTickerEntry},
@@ -102,10 +131,7 @@ func TestTickerEntryTransaction(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			e := entry(t, "TESTA.PL", "9000000002", tt.kind)
-			if tt.quantity {
-				e.Quantity = kernel.NewQuantity(kernel.NewDecimal(1, 0))
-			}
+			e := entryCase(t, tt.kind, tt.quantity, tt.opened, tt.charge)
 			got, err := e.Transaction(isin(t, isinA))
 			if !errors.Is(err, tt.wantErr) {
 				t.Fatalf("Transaction() error = %v, want %v", err, tt.wantErr)
@@ -181,5 +207,41 @@ func TestResolveBrokerAccountsTickerEntries(t *testing.T) {
 	}
 	if diff := cmp.Diff([]ingest.BrokerAccountID{"0000001"}, r.Unmapped); diff != "" {
 		t.Errorf("unmapped (-want +got):\n%s", diff)
+	}
+}
+
+// TestResolveBrokerAccountsReseedingTickerEntries checks that an opening
+// batch of a broker account already seeded leaves out its opening-lot
+// ticker entries, as it does its seeding transactions, and keeps the
+// others (D-136).
+func TestResolveBrokerAccountsReseedingTickerEntries(t *testing.T) {
+	t.Parallel()
+	buy := entry(t, "TESTA.PL", "9000000002", ledger.KindBuy)
+	lot := entry(t, "TESTA.PL", "open-position:1", ledger.KindOpeningLot)
+	for _, e := range []*ingest.TickerEntry{&buy, &lot} {
+		e.Header.Account, e.Header.Key.Source = "", "xtb"
+	}
+	m := ingest.Mapping{ByBrokerAccount: []ingest.BrokerEntries{{Account: "0000000", TickerEntries: []ingest.TickerEntry{buy, lot}}}}
+	tests := []struct {
+		name   string
+		seeded bool
+		want   []string
+	}{
+		{name: "not seeded yet", want: []string{"xtb:acc-1/9000000002", "xtb:acc-1/open-position:1"}},
+		{name: "already seeded", seeded: true, want: []string{"xtb:acc-1/9000000002"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			known := []ingest.BrokerAccount{{Instance: "xtb", ID: "0000000", Account: "acc-1", Seeded: tt.seeded}}
+			r := ingest.ResolveBrokerAccounts(&m, known, ingest.ModeOpening)
+			var got []string
+			for _, e := range r.Mapping.TickerEntries {
+				got = append(got, e.Header.Key.String())
+			}
+			if diff := cmp.Diff(tt.want, got); diff != "" {
+				t.Errorf("ticker entries (-want +got):\n%s", diff)
+			}
+		})
 	}
 }

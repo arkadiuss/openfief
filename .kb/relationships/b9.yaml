@@ -833,6 +833,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-1886337b2710
   - type: implements
+    from: SYM-viewsv1-attention-item-change-get-detail
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:03:12.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b31d36a43bdf
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-change-get-detail
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:03:12.418Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d117aa5dc79
+  - type: implements
     from: SYM-pl-min-decimal
     to: REQ-pl-oki-tax-computation
     created_at: 2026-10-31T19:03:00.211Z

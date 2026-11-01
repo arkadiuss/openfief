@@ -40,6 +40,9 @@ type session struct {
 	// Settings are the read API's settings: the number format amounts are
 	// written in (D-113) and the tax wrappers an account can have (D-76).
 	Settings *viewsv1.GetSettingsResponse
+	// Attention is how many attention items are open (D-130), for the
+	// navigation and the overview.
+	Attention int
 }
 
 // Owner reports whether the session may do what only the owner may: manage
@@ -148,6 +151,7 @@ func (s *server) withSession(h sessionHandler) http.HandlerFunc {
 			return
 		}
 		sess.Settings = settings.Msg
+		sess.Attention = s.openAttention(r, sess)
 		h(w, withFormat(r, formatOf(settings.Msg.GetNumberFormat())), sess)
 	}
 }

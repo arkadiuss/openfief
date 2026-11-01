@@ -468,3 +468,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55c6e7123924
+  - type: implements
+    from: SYM-ingest-before-go-live
+    to: REQ-ingest-keeps-from-go-live-uploads
+    created_at: 2026-11-01T08:03:21.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-718ceab77d4e
+  - type: covered_by
+    from: SYM-ingest-before-go-live
+    to: TEST-ingest-golive
+    created_at: 2026-11-01T08:03:21.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52ca29b8eaee
+  - type: implements
+    from: SYM-core-new-attention
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:33:21.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe5734ee406e
+  - type: implements
+    from: SYM-core-new-attention
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:33:21.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-664fd3acd39b
+  - type: covered_by
+    from: SYM-core-new-attention
+    to: TEST-core-attention
+    created_at: 2026-10-31T18:33:21.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74e822f8a163
+  - type: executable_for
+    from: SYM-attention-app-test-helper-day
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:37:11.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bb3b77b5c21
+  - type: implements
+    from: SYM-views-app-attention-items
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T18:50:14.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-837826c70f76
+  - type: covered_by
+    from: SYM-views-app-attention-items
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T18:50:14.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f29a815e50e9

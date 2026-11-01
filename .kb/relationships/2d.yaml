@@ -545,3 +545,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4442f71e3de0
+  - type: executable_for
+    from: SYM-attention-app-test-helper-mem-store-mark-published
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:38:30.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7e3037e7054
+  - type: executable_for
+    from: SYM-attention-app-test-helper-mem-store-mark-published
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:38:30.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28a58ee5dcd4
+  - type: implements
+    from: SYM-attention-app-items-owner-action
+    to: REQ-attention-owner-actions
+    created_at: 2026-10-31T18:39:41.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f92a92972415
+  - type: covered_by
+    from: SYM-attention-app-items-owner-action
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:41.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a73156da15e
+  - type: implements
+    from: SYM-attentionv1-file_openfief_attention_v1_attention_proto_init
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:58:57.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0db40339013
+  - type: covered_by
+    from: SYM-attentionv1-file_openfief_attention_v1_attention_proto_init
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:58:57.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfec97514d19
+  - type: implements
+    from: SYM-attentionv1connect-attention-service-client
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:59:11.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac831a086f39
+  - type: covered_by
+    from: SYM-attentionv1connect-attention-service-client
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:59:11.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4821ae08ee2

@@ -573,3 +573,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b90375c08b08
+  - type: executable_for
+    from: SYM-ingest-xtb-test-map-opening-skips-history
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:20.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fe3023f41eb
+  - type: executable_for
+    from: SYM-core-test-attention-checks-raise-items
+    to: TEST-core-attention
+    created_at: 2026-10-31T18:34:10.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8391a96f9c1b
+  - type: implements
+    from: SYM-attention-owner-resolves
+    to: REQ-attention-owner-actions
+    created_at: 2026-10-31T18:43:18.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd20879b4986
+  - type: covered_by
+    from: SYM-attention-owner-resolves
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:43:18.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d90a5970f957

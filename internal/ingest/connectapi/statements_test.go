@@ -38,16 +38,23 @@ func syntheticStatement() []byte {
 
 // fileCaller is a connector that reads each file whole and delivers one
 // deposit in its account and problems ingest problems, or fails with err.
+// It also tells the core whether the account holds transactions: booked.
 type fileCaller struct {
 	caller
 
 	account  ledger.AccountID
 	problems int
+	booked   bool
 	mu       sync.Mutex
 	name     string
 	media    string
 	file     []byte
 	mode     ingest.Mode
+	cash     *kernel.Money
+}
+
+func (f *fileCaller) HasTransactionsFrom(context.Context, ledger.AccountID, string) (bool, error) {
+	return f.booked, nil
 }
 
 func (f *fileCaller) ImportFile(_ context.Context, _ string, _ ingest.BatchID, mode ingest.Mode, file app.NamedFile) (app.Delivery, error) {
@@ -56,7 +63,7 @@ func (f *fileCaller) ImportFile(_ context.Context, _ string, _ ingest.BatchID, m
 		return app.Delivery{}, fmt.Errorf("fake connector: %w", err)
 	}
 	f.mu.Lock()
-	f.name, f.media, f.file, f.mode = file.Name, file.MediaType, b, mode
+	f.name, f.media, f.file, f.mode, f.cash = file.Name, file.MediaType, b, mode, file.OpeningCash
 	f.mu.Unlock()
 	if f.err != nil {
 		return app.Delivery{}, f.err
@@ -149,7 +156,7 @@ func newStatementsClient(t *testing.T, c *fileCaller, l importer) statementsClie
 		Connectors: &app.Connectors{
 			Caller: c, Bindings: fileBindings{}, Ledger: l, Today: func() kernel.Date { return day }, Declarations: flexInstance{},
 		},
-		NewBatchID: func() ingest.BatchID { return "b-1" }, Instances: flexInstance{},
+		NewBatchID: func() ingest.BatchID { return "b-1" }, Instances: flexInstance{}, History: c,
 	}
 	_, handler := connectapi.NewStatements(uploads, viewStreams{}, slog.New(slog.DiscardHandler))
 	srv := httptest.NewServer(handler)
@@ -268,6 +275,7 @@ func TestUploadStatementRefusals(t *testing.T) {
 		file     []byte
 		callErr  error
 		ledger   error
+		booked   bool
 		want     connect.Code
 		wantText string
 	}{
@@ -284,6 +292,16 @@ func TestUploadStatementRefusals(t *testing.T) {
 		{name: "the connector refuses the file", callErr: fmt.Errorf("%w: synthetic: not a Flex statement", app.ErrEntryRefused), want: connect.CodeInvalidArgument, wantText: "not a Flex statement"},
 		{name: "the connector takes no files", callErr: app.ErrNoEntries, want: connect.CodeFailedPrecondition},
 		{name: "the connector can't be reached", callErr: app.ErrConnectorUnavailable, want: connect.CodeUnavailable},
+		{name: "opening cash with a transactions upload", parts: edit(func(h *ingestv1.StatementHeader) { h.OpeningCash, h.OpeningCashCurrency = "100", "PLN" }), want: connect.CodeInvalidArgument, wantText: "opening upload"},
+		{name: "opening cash without its currency", parts: edit(func(h *ingestv1.StatementHeader) {
+			h.Mode, h.OpeningCash = ingestv1.Mode_MODE_OPENING, "100"
+		}), want: connect.CodeInvalidArgument, wantText: "exact amount"},
+		{name: "opening cash that isn't an amount", parts: edit(func(h *ingestv1.StatementHeader) {
+			h.Mode, h.OpeningCash, h.OpeningCashCurrency = ingestv1.Mode_MODE_OPENING, "1 000,00", "PLN"
+		}), want: connect.CodeInvalidArgument, wantText: "exact amount"},
+		{name: "an opening statement of an account started from its whole history", booked: true, parts: edit(func(h *ingestv1.StatementHeader) {
+			h.Mode = ingestv1.Mode_MODE_OPENING
+		}), want: connect.CodeFailedPrecondition, wantText: "whole history"},
 		{name: "an opening statement of a seeded account", ledger: &ledger.AlreadySeededError{Account: flexAccount}, want: connect.CodeFailedPrecondition, wantText: "already seeded"},
 		{name: "the ledger fails", ledger: errDown, want: connect.CodeInternal},
 	}
@@ -298,12 +316,36 @@ func TestUploadStatementRefusals(t *testing.T) {
 			if file == nil {
 				file = statement
 			}
-			c := &fileCaller{account: flexAccount}
+			c := &fileCaller{account: flexAccount, booked: tt.booked}
 			c.err = tt.callErr
 			_, err := upload(t, newStatementsClient(t, c, importer{err: tt.ledger}), or(tt.caller, viewCaller), parts, file)
 			if connect.CodeOf(err) != tt.want || !strings.Contains(fmt.Sprint(err), tt.wantText) || strings.Contains(fmt.Sprint(err), errDown.Error()) {
 				t.Errorf("UploadStatement = %v, want %s with %q and never an internal cause", err, tt.want, tt.wantText)
 			}
 		})
+	}
+}
+
+// TestUploadStatementOpeningCash checks that the cash balance the owner
+// enters once with an opening upload reaches the connector (D-136), and
+// that an account started from its whole history is offered transactions.
+func TestUploadStatementOpeningCash(t *testing.T) {
+	t.Parallel()
+	c := &fileCaller{account: flexAccount}
+	client := newStatementsClient(t, c, importer{})
+	h := header()
+	h.Mode, h.OpeningCash, h.OpeningCashCurrency = ingestv1.Mode_MODE_UNSPECIFIED, "-12.50", "PLN"
+	got, err := upload(t, client, viewCaller, []*ingestv1.UploadStatementRequest{headerPart(h)}, syntheticStatement())
+	if err != nil || got.GetMode() != ingestv1.Mode_MODE_OPENING {
+		t.Fatalf("UploadStatement = %v, %v; want an opening upload", got, err)
+	}
+	if c.cash == nil || c.cash.String() != "-12.5 PLN" {
+		t.Errorf("the connector got opening cash %q, want -12.5 PLN", c.cash)
+	}
+	history := &fileCaller{account: flexAccount, booked: true}
+	list, err := newStatementsClient(t, history, importer{}).ListStatementAccounts(t.Context(),
+		connect.NewRequest(&ingestv1.ListStatementAccountsRequest{Origin: local, SessionToken: ownerSession}))
+	if err != nil || len(list.Msg.GetAccounts()) != 1 || list.Msg.GetAccounts()[0].GetMode() != ingestv1.Mode_MODE_TRANSACTIONS {
+		t.Errorf("ListStatementAccounts of an account started from its whole history = %v, %v; want transactions", list, err)
 	}
 }

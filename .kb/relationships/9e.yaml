@@ -797,3 +797,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7810e666975
+  - type: constrains
+    from: REQ-ledger-transfer-broken-reject
+    to: FACT-SUBJECT-9F28CA3EF2781EC0
+    created_at: 2026-10-31T18:32:45.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94c1c60bb859
+  - type: requires_property
+    from: REQ-ledger-transfer-broken-reject
+    to: FACT-PROP-1F770B734837F35A
+    created_at: 2026-10-31T18:32:45.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89104c5e9493
+  - type: specified_by
+    from: REQ-ledger-transfer-broken-reject
+    to: SCEN-ledger-transfer-broken-reject
+    created_at: 2026-10-31T18:32:45.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04bbe13647c5

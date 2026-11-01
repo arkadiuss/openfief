@@ -123,3 +123,55 @@ func TestKeepFromGoLive(t *testing.T) {
 		})
 	}
 }
+
+func TestKeepFromGoLiveTickerEntries(t *testing.T) {
+	t.Parallel()
+	tickerEntry := func(account ledger.AccountID, kind ledger.TransactionKind, id, day string) ingest.TickerEntry {
+		return ingest.TickerEntry{
+			Symbol: "TESTA.PL", Kind: kind,
+			Header: ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "xtb", ExternalID: id}, Account: account, Date: goLiveDate(t, day)},
+		}
+	}
+	lot := tickerEntry("acc-1", ledger.KindOpeningLot, "open-position:1", "2026-03-31")
+	before := tickerEntry("acc-1", ledger.KindBuy, "9000000001", "2026-03-30")
+	onGoLive := tickerEntry("acc-1", ledger.KindBuy, "9000000002", "2026-03-31")
+	after := tickerEntry("acc-1", ledger.KindSell, "9000000003", "2026-04-01")
+	unseeded := tickerEntry("acc-2", ledger.KindBuy, "9000000004", "2026-01-01")
+	m := ingest.Mapping{TickerEntries: []ingest.TickerEntry{lot, before, onGoLive, after, unseeded}}
+	goLive := map[ledger.AccountID]kernel.Date{"acc-1": goLiveDate(t, "2026-03-31")}
+	const gone = "a transaction before go-live 2026-03-31"
+	tests := []struct {
+		name string
+		mode ingest.Mode
+		want ingest.Mapping
+	}{
+		{
+			name: "opening: a seeded account's opening lots are left out, its other entries kept",
+			mode: ingest.ModeOpening,
+			want: ingest.Mapping{
+				TickerEntries: []ingest.TickerEntry{before, onGoLive, after, unseeded},
+				Problems:      []ingest.Problem{ingest.Skipped("xtb/open-position:1", "the account is already seeded")},
+			},
+		},
+		{
+			name: "transactions: a seeded account's entries up to go-live are left out, so none waits for its ticker",
+			mode: ingest.ModeTransactions,
+			want: ingest.Mapping{
+				TickerEntries: []ingest.TickerEntry{after, unseeded},
+				Problems: []ingest.Problem{
+					ingest.Skipped("xtb/open-position:1", gone),
+					ingest.Skipped("xtb/9000000001", gone),
+					ingest.Skipped("xtb/9000000002", gone),
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if diff := cmp.Diff(tt.want, ingest.KeepFromGoLive(&m, tt.mode, goLive)); diff != "" {
+				t.Errorf("KeepFromGoLive (-want +got):\n%s", diff)
+			}
+		})
+	}
+}

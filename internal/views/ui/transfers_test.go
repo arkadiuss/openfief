@@ -30,6 +30,8 @@ type fakeTransfers struct {
 	decision ledgerv1.TransferDecision
 	// sessions are the session tokens of the decisions, in order.
 	sessions []string
+	// broken makes a confirmed pair one a correction broke (D-131).
+	broken bool
 }
 
 func (f *fakeTransfers) ConfirmTransfer(_ context.Context, r *connect.Request[ledgerv1.ConfirmTransferRequest]) (*connect.Response[ledgerv1.ConfirmTransferResponse], error) {
@@ -80,6 +82,10 @@ func (f *fakeRead) ListTransfers(_ context.Context, r *connect.Request[viewsv1.L
 	switch f.transfers.decision {
 	case ledgerv1.TransferDecision_TRANSFER_DECISION_CONFIRMED:
 		out.Confirmed = []*viewsv1.Transfer{pair}
+		if f.transfers.broken {
+			pair.Amount = &viewsv1.Money{Amount: "2499.50", Currency: "PLN"}
+			out.Confirmed, out.Broken = nil, []*viewsv1.Transfer{pair}
+		}
 	case ledgerv1.TransferDecision_TRANSFER_DECISION_REJECTED:
 		out.Rejected = []*viewsv1.Transfer{pair}
 	case ledgerv1.TransferDecision_TRANSFER_DECISION_UNSPECIFIED:

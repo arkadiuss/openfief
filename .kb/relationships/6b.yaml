@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e55f846ce05c
+  - type: implements
+    from: SYM-viewsv1-attention-item-get-state
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:04:35.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb43247866d6
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-get-state
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:04:35.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85cf8025155b

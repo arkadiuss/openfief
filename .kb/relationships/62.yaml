@@ -902,3 +902,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc003a0e80aa
+  - type: implements
+    from: SYM-attention-pg-store-lock
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:45:20.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccadb31e854c
+  - type: covered_by
+    from: SYM-attention-pg-store-lock
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:45:20.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d495736caff
+  - type: implements
+    from: SYM-attentionv1-resolve-attention-item-request-proto-reflect
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:56:04.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a7086799b7e
+  - type: covered_by
+    from: SYM-attentionv1-resolve-attention-item-request-proto-reflect
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:56:04.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a3a28ed4c85
+  - type: implements
+    from: SYM-viewsv1-attention-item-state-number
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:00:51.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b5cb33a4b3
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-state-number
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:00:51.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9566d330dba

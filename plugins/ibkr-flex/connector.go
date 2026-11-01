@@ -76,11 +76,20 @@ func (c *connector) Sync(ctx context.Context, req *connect.Request[connectorv1.S
 	return connect.NewResponse(&connectorv1.SyncResponse{Delivery: d, Watermark: req.Msg.GetWatermark()}), nil
 }
 
-// ImportFile maps an uploaded Flex statement in the header's mode.
+// errOwnCash reports opening cash the owner entered with a Flex statement,
+// which holds the account's cash itself.
+var errOwnCash = errors.New("ibkr-flex: a Flex statement holds the account's cash: leave the opening cash empty")
+
+// ImportFile maps an uploaded Flex statement in the header's mode. Opening
+// cash the owner entered is refused: the statement holds the cash (D-136
+// has the owner enter it only for a statement that holds none).
 func (c *connector) ImportFile(_ context.Context, stream *connect.ClientStream[connectorv1.ImportFileRequest]) (*connect.Response[connectorv1.ImportFileResponse], error) {
 	header, data, err := openfief.ReceiveFile(stream, maxFileBytes)
 	if err != nil {
 		return nil, status(connect.CodeInvalidArgument, err)
+	}
+	if header.GetOpeningCash() != nil {
+		return nil, status(connect.CodeInvalidArgument, errOwnCash)
 	}
 	mode, err := delivery.Mode(header.GetMode())
 	if err != nil {

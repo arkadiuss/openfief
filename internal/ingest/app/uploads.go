@@ -55,11 +55,25 @@ type Uploads struct {
 	// 512), which the connector gets as a hint in place of whatever the
 	// owner's browser declared. Nil sends none.
 	Sniff func(head []byte) string
+	// History tells which accounts hold transactions, so an account that
+	// started from a statement of its whole history, and isn't seeded, takes
+	// transactions (D-136). Nil counts none.
+	History AccountHistory
+}
+
+// AccountHistory tells whether an account holds any transaction;
+// ledger/app.Ledger implements it.
+type AccountHistory interface {
+	// HasTransactionsFrom reports whether account holds a transaction whose
+	// key source starts with prefix; an empty prefix asks for any.
+	HasTransactionsFrom(ctx context.Context, account ledger.AccountID, prefix string) (bool, error)
 }
 
 // FileAccount is an account the owner can upload statements for: its one
 // bound connector instance declares that it takes statement files (D-109),
-// and Mode is the mode the core chooses for its next upload.
+// and Mode is the mode the core chooses for its next upload: opening for an
+// account that hasn't started, which the owner may start from its whole
+// history instead (D-136), and transactions once it has.
 type FileAccount struct {
 	Account  ledger.AccountID
 	Instance string
@@ -100,8 +114,17 @@ func (u *Uploads) FileAccounts(ctx context.Context, origin, sessionToken string)
 // recording it in the import batch history. The core chooses the mode:
 // opening for an account not yet seeded, transactions after that, unless
 // mode, the owner's override, is one (D-109, ingest.UploadMode). An
-// opening upload seeds the account, so scheduled syncs continue it in
-// transactions mode (D-95). A statement of several accounts books every
+// account that isn't seeded but holds transactions started from a
+// statement of its whole history (D-136): it takes transactions, and an
+// opening override fails with ingest.ErrStartedFromHistory
+// (ingest.StartMode). An opening upload seeds the account, so scheduled
+// syncs continue it in transactions mode (D-95), and a transactions upload
+// of a seeded account books only what is dated after its go-live
+// (ingest.KeepFromGoLive). The file's OpeningCash, the cash balance the
+// owner entered once, goes to the connector only with the opening upload
+// of an account not yet seeded, and fails with
+// ingest.ErrOpeningCashOutsideOpening or ingest.ErrOpeningCashEntered
+// otherwise (ingest.CheckOpeningCash). A statement of several accounts books every
 // mapped account bound to the instance and lists the broker accounts that
 // aren't mapped (Batch.Unmapped). Only the last element of the file's
 // name, cleaned by ingest.FileNameHint, reaches the connector, and its
@@ -127,7 +150,16 @@ func (u *Uploads) Upload(ctx context.Context, origin, sessionToken string, accou
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
 	}
 	_, seeded := goLive[account]
-	mode = ingest.UploadMode(seeded, mode)
+	booked, err := u.booked(ctx, account, seeded)
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
+	}
+	if mode, err = ingest.StartMode(seeded, booked, mode); err != nil {
+		return ingest.Batch{}, fmt.Errorf("uploading a statement for %s: %w", account, err)
+	}
+	if cashErr := ingest.CheckOpeningCash(file.OpeningCash, mode, seeded); cashErr != nil {
+		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", cashErr)
+	}
 	out, err := u.prepare(file)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
@@ -170,14 +202,45 @@ func (u *Uploads) fileAccountsOf(ctx context.Context, instance string) ([]FileAc
 			return nil, err
 		}
 		_, seeded := goLive[a]
-		out = append(out, FileAccount{Account: a, Instance: instance, Mode: ingest.UploadMode(seeded, 0)})
+		mode, err := u.nextMode(ctx, a, seeded)
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, FileAccount{Account: a, Instance: instance, Mode: mode})
 	}
 	return out, nil
 }
 
+// nextMode returns the mode the core chooses for account's next upload,
+// seeded or not (ingest.StartMode).
+func (u *Uploads) nextMode(ctx context.Context, account ledger.AccountID, seeded bool) (ingest.Mode, error) {
+	booked, err := u.booked(ctx, account, seeded)
+	if err != nil {
+		return 0, err
+	}
+	mode, err := ingest.StartMode(seeded, booked, 0)
+	if err != nil {
+		return 0, fmt.Errorf("the mode of %s: %w", account, err)
+	}
+	return mode, nil
+}
+
+// booked reports whether account, seeded or not, holds any transaction, as
+// History answers; a seeded one does, and none does without History.
+func (u *Uploads) booked(ctx context.Context, account ledger.AccountID, seeded bool) (bool, error) {
+	if seeded || u.History == nil {
+		return seeded, nil
+	}
+	has, err := u.History.HasTransactionsFrom(ctx, account, "")
+	if err != nil {
+		return false, fmt.Errorf("transactions of %s: %w", account, err)
+	}
+	return has, nil
+}
+
 // prepare returns the file as the connector gets it: its name as a hint,
-// its media type sniffed from its first bytes, and its contents capped at
-// the limit. It reads those first bytes, and refuses an empty file.
+// its media type sniffed from its first bytes, its contents capped at the
+// limit, and the owner's opening cash. It reads those first bytes, and refuses an empty file.
 func (u *Uploads) prepare(file NamedFile) (NamedFile, error) {
 	contents := &cappedReader{r: file.Contents, left: u.maxBytes()}
 	head := make([]byte, sniffBytes)
@@ -189,7 +252,10 @@ func (u *Uploads) prepare(file NamedFile) (NamedFile, error) {
 		return NamedFile{}, fmt.Errorf("%w: the file is empty", ErrInvalidUpload)
 	}
 	head = head[:n]
-	out := NamedFile{Name: ingest.FileNameHint(file.Name), Contents: io.MultiReader(bytes.NewReader(head), contents)}
+	out := NamedFile{
+		Name: ingest.FileNameHint(file.Name), Contents: io.MultiReader(bytes.NewReader(head), contents),
+		OpeningCash: file.OpeningCash,
+	}
 	if u.Sniff != nil {
 		out.MediaType = u.Sniff(head)
 	}

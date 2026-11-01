@@ -461,13 +461,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9837f8b6bda6
-  - type: implements
-    from: SYM-ingest-keep-from-go-live
-    to: REQ-ingest-sync-keeps-from-go-live
-    created_at: 2026-10-29T17:16:46.429Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d2f7208fb1da
   - type: covered_by
     from: SYM-ingest-keep-from-go-live
     to: TEST-ingest-golive
@@ -636,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b78b336c7b98
+  - type: implements
+    from: SYM-ingest-keep-from-go-live
+    to: REQ-ingest-keeps-from-go-live-uploads
+    created_at: 2026-11-01T08:09:23.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb9ec09dfab0
+  - type: implements
+    from: SYM-core-valuation-attention
+    to: REQ-valuation-unclassified-attention
+    created_at: 2026-11-01T06:40:59.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-243aab04f013
+  - type: covered_by
+    from: SYM-core-valuation-attention
+    to: TEST-core-unclassified
+    created_at: 2026-11-01T06:40:59.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c02571198d2

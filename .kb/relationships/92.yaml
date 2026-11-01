@@ -615,3 +615,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5031f0c915c
+  - type: implements
+    from: SYM-ingest-xtb-cell-time
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:06:41.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5627732b0ccf
+  - type: covered_by
+    from: SYM-ingest-xtb-cell-time
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:41.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8143333c53f3
+  - type: executable_for
+    from: SYM-attention-app-test-checks
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:37:36.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b997604738b6
+  - type: executable_for
+    from: SYM-attention-connectapi-test-helper-owners
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:42:05.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e4620b4f4ac

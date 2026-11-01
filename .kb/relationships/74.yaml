@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e31f355d4bfc
+  - type: implements
+    from: SYM-attentionv1-resolve-attention-item-response-reset
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:56:41.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fe18709e497
+  - type: covered_by
+    from: SYM-attentionv1-resolve-attention-item-response-reset
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:56:41.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ee03d428187

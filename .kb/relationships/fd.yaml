@@ -517,3 +517,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2dfc0f06b1ec
+  - type: implements
+    from: SYM-ingest-xtb-bought-volume
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:05:15.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb591b865196
+  - type: covered_by
+    from: SYM-ingest-xtb-bought-volume
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:05:16.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8605b6548b5b
+  - type: validates
+    from: TEST-attention-rules
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:30:31.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d678c5bf9ad5

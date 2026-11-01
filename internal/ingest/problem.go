@@ -50,3 +50,24 @@ func Skipped(ref, reason string) Problem {
 
 // String returns "kind ref: reason".
 func (p Problem) String() string { return p.Kind.String() + " " + p.Ref + ": " + p.Reason }
+
+// CountUnsupported counts the problems among ps that OpenFief cannot book yet
+// (ProblemUnsupported): rows whose effect is missing from the ledger, the
+// import problems an attention item asks the owner about (D-130).
+func CountUnsupported(ps []Problem) int {
+	n := 0
+	for _, p := range ps {
+		if p.Kind == ProblemUnsupported {
+			n++
+		}
+	}
+	return n
+}
+
+// BatchProblems is how many rows of a completed import batch of a
+// connector instance OpenFief could not book (CountUnsupported).
+type BatchProblems struct {
+	Batch       BatchID
+	Instance    string
+	Unsupported int
+}

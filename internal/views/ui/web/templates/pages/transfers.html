@@ -34,6 +34,25 @@
   </div></div>
   {{end}}
 </section>
+{{if .Broken}}
+<section class="card" aria-labelledby="broken-title">
+  <h2 id="broken-title">Broken by a correction</h2>
+  <p class="muted">You confirmed these pairs, but an institution corrected a leg since, and they no longer match. Both legs count as money in and out again until a correction makes them match or you reject the pair; then confirm the corrected pair among the suggestions.</p>
+  <div class="table"><table>
+    {{template "transfer-head"}}
+    <tbody>
+    {{range .Broken}}
+    <tr>
+      <td>{{with .WithdrawalAccountId}}<a href="/accounts/{{.}}">{{.}}</a>{{else}}<span class="mono">{{.WithdrawalSource}}/{{.WithdrawalExternalId}}</span>{{end}}</td><td class="mono">{{.WithdrawalDate}}</td>
+      <td>{{with .DepositAccountId}}<a href="/accounts/{{.}}">{{.}}</a>{{else}}<span class="mono">{{.DepositSource}}/{{.DepositExternalId}}</span>{{end}}</td><td class="mono">{{.DepositDate}}</td>
+      <td class="num">{{with .Amount}}{{money .}}{{else}}<span class="muted">none</span>{{end}}</td>
+      <td>{{if $owner}}<form method="post" action="/transfers/reject" class="inline">{{template "transfer-keys" .}}<button type="submit" class="danger">Reject the pair</button></form>{{else}}<span class="muted">Waiting for the owner</span>{{end}}</td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+</section>
+{{end}}
 <section class="card" aria-labelledby="confirmed-title">
   <h2 id="confirmed-title">Confirmed</h2>
   {{if .Confirmed}}

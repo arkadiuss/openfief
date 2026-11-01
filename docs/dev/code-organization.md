@@ -12,11 +12,12 @@ Organized by domain, following DDD (domain-driven design). Names come from [the 
 | `views` | The read API and view plugins (built-in UI, Ghostfolio) | M0 |
 | `plugins` | The operator: Plugin, Grant, manifests, egress allow-lists, image verification | M0 |
 | `identity` | Owner, passkeys, script tokens, plugin identity | M0 |
+| `attention` | Attention items: their kinds, subjects, states and history, the checks that raise and clear them, and the outbox of their changes (D-130, D-131); schema `attention` | M0 |
 | `portfolio` | Sleeves, the model portfolio and its targets, backtest and max drawdown | M0 (model portfolio optional) |
 | `jurisdiction/pl` | Polish rules: bond terms, tax wrappers; later PIT-38 | M0 (bonds) |
 | `fiefs`, `execution`, `orchestration`, `models`, `audit` | Leases, intents/orders/policy, agents and wakes, model routing, audit log | M1+ |
 
-**Context map (P).** `ingest` writes to `ledger` and `valuation` through their app APIs. `valuation` reads `ledger`. `portfolio` reads `valuation` for prices and FX rates. `views` reads `ledger`, `valuation` and `portfolio`. `jurisdiction/pl` is pure rules used by `valuation`. `plugins` and `identity` are independent. Dependencies never point the other way. A tiny shared kernel `internal/kernel` holds money, currency, quantity and date types.
+**Context map (P).** `ingest` writes to `ledger` and `valuation` through their app APIs. `valuation` reads `ledger`. `portfolio` reads `valuation` for prices and FX rates. `views` reads `ledger`, `valuation`, `portfolio` and `attention`. `attention` reads `ledger`, `valuation`, `ingest` and the jurisdiction pack through ports in `attention/app` for its checks; a context that raises items itself, such as `valuation` for an instrument to classify (D-132), declares its own port, which `cmd` wires to `attention`'s items. `jurisdiction/pl` is pure rules used by `valuation`. `plugins` and `identity` are independent. Dependencies never point the other way. A tiny shared kernel `internal/kernel` holds money, currency, quantity and date types.
 
 ## Layout (P)
 

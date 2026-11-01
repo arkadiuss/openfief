@@ -482,6 +482,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b58a6f7c8938
+  - type: implements
+    from: SYM-attention-item-current
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:44:14.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a13b7e8f6052
+  - type: implements
+    from: SYM-attention-item-current
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:44:14.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0fde2f388c6
+  - type: covered_by
+    from: SYM-attention-item-current
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:44:14.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1cae30a927b8
+  - type: executable_for
+    from: SYM-ui-test-attention-page
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:53:49.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbe01d9ebccd
+  - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-response-descriptor
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:55:33.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f76f44c034f5
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-response-descriptor
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:55:33.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63ea75546811
   - type: validates
     from: TEST-ingest-app-held
     to: REQ-ingest-sync-carries-bound-holdings-lots

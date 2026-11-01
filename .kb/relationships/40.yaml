@@ -510,6 +510,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb15c00db556
+  - type: executable_for
+    from: SYM-attention-connectapi-test-helper-store-in-tx
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:42:25.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e87730ab6bbe
   - type: implements
     from: SYM-ingest-ticker-entry
     to: REQ-ingest-xtb-unconfirmed-ticker-waits

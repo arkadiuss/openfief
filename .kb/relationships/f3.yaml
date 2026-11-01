@@ -433,3 +433,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4207251234d8
+  - type: implements
+    from: SYM-ingest-ticker-entry-build
+    to: REQ-ingest-ticker-opening-lots
+    created_at: 2026-11-01T08:04:10.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f36a4502684
+  - type: covered_by
+    from: SYM-ingest-ticker-entry-build
+    to: TEST-ingest-ticker
+    created_at: 2026-11-01T08:04:10.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06500e444265
+  - type: executable_for
+    from: SYM-ingest-xtb-test-map-opening-again
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:14.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50565de4dce7

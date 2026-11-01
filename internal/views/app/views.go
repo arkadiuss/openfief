@@ -49,6 +49,7 @@ type Views struct {
 	connections Connections
 	pack        jurisdiction.Pack
 	terms       Terms
+	attention   AttentionItems
 }
 
 // New returns the queries over the given ports, with totals, valuations and

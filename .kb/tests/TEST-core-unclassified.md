@@ -1,5 +1,5 @@
 ---
-title: The core's stand-in for the attention store logs each item raised and cleared
+title: The core's adapter turns valuation's attention port into attention items
 status: active
 sourceFile: cmd/core/unclassified_test.go
 verification_scope: unit
@@ -9,4 +9,4 @@ origin:
 id: TEST-core-unclassified
 type: test
 ---
-loggedAttention over a text slog handler raises and clears an instrument-unclassified item for a synthetic ISIN and the log holds the kind and subject of each, with no error; it stands in until the attention store (D-130) is merged.
+TestValuationAttention drives valuationAttention, the adapter from valuation's AttentionRaiser port to the attention items, over a fake that records each call: raising instrument-unclassified for a synthetic ISIN must reach the items as the condition with the same kind, subject and detail, clearing it must name the same kind and subject, and a failing attention store must reach the caller as a wrapped error, so a revaluation that can't raise its item fails rather than dropping it (D-132, D-130).
