@@ -622,3 +622,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61184b183dc4
+  - type: implements
+    from: SYM-protobreak-entry-string
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:23:10.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a6c29581481
+  - type: covered_by
+    from: SYM-protobreak-entry-string
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:23:10.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83a90b49f835

@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a5a8bb37ac1
+  - type: implements
+    from: SYM-protobreak-judge-input
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:25:24.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcf1f57ed1c3
+  - type: covered_by
+    from: SYM-protobreak-judge-input
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:25:24.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc28347a0517

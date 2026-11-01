@@ -9,6 +9,7 @@ covers:
   - renovate.json
   - .golangci.yml
   - tools/affected/**
+  - tools/protobreak/**
 ---
 
 This page explains the machinery that takes a change from a commit on a branch to signed container images, a tagged release and the demo environment. It describes what the repository contains today, file by file. The rules this machinery enforces are in [sdlc.md](sdlc.md) and aren't repeated here. Where the two disagree, [Not built yet](#not-built-yet) says so.
@@ -77,7 +78,7 @@ Two targets drive a browser on demand and are in no check, since a check must no
 | `fmt:check` | `golangci-lint fmt --diff` in each module (gofumpt with extra rules, goimports) | a file would be reformatted |
 | `lint` | `lint:config` (`golangci-lint config verify`), then `lint:go` (`golangci-lint run`) in each module, with the `e2e` build tag so the end-to-end suite is linted too | any finding; [.golangci.yml](../../.golangci.yml) enables every linter except a commented list |
 | `lint:ci` | actionlint on the workflows, with its shellcheck and pyflakes integrations off | a workflow error |
-| `proto` | `buf lint`, `buf format --diff`, [proto-breaking.sh](../../scripts/proto-breaking.sh) (with the base's own `buf.lock`), [proto-check.sh](../../scripts/proto-check.sh) | a lint or format issue, a breaking change against the base, or a stale `sdk/go/gen` or `gen/openapi` (the read API's OpenAPI document, generated from its protobuf and `read_service.openapi-base.yaml`) |
+| `proto` | `buf lint`, `buf format --diff`, [proto-breaking.sh](../../scripts/proto-breaking.sh) (with the base's own `buf.lock`), [proto-check.sh](../../scripts/proto-check.sh) | a lint or format issue, a breaking change against the base that no new exception excuses ([below](#breaking-contract-changes)), or a stale `sdk/go/gen` or `gen/openapi` (the read API's OpenAPI document, generated from its protobuf and `read_service.openapi-base.yaml`) |
 | `vuln` | [vulncheck.sh](../../scripts/vulncheck.sh): govulncheck in each module, then `npm audit --audit-level=high` | a finding, or an unreachable vulnerability database |
 | `test` | `test:go` (`go test ./...` with the envtest binaries) in each module, then `test:script` for each of the twenty-one `scripts/tests/*.test.sh` | any failure |
 | `docs:check` | [check-docs.sh](../../scripts/check-docs.sh) | an undefined or duplicate GR, D, P, T, OQ or R ID, or a changed ground-rule line |
@@ -89,6 +90,17 @@ Two targets drive a browser on demand and are in no check, since a check must no
 Two steps compare against a base revision: the ground-rule check reads `DOCS_BASE`, and `proto:breaking` reads `PROTO_BASE`, then `DOCS_BASE`. Both default to `HEAD`, which locally means "against the last commit". CI sets `DOCS_BASE` to the pull request's base.
 
 A breaking contract change goes in only when an author decision names it, as D-157 removes the read API's `ListBrokerAccounts`. `proto:breaking` excuses exactly what that decision names, in the change that makes it, and still fails on every other breaking change; once the change is on the base, later comparisons no longer see it. The commit marks it breaking (`!` or a `BREAKING CHANGE:` footer), so the release notes list it.
+
+### Breaking contract changes
+
+[proto-breaking-exceptions.txt](../../scripts/proto-breaking-exceptions.txt) lists the removals author decisions approved, one a line: the decision, the buf rule it excuses and the removed element, fully qualified, as in `D-157 RPC_NO_DELETE openfief.views.v1.ReadService.ListBrokerAccounts`. [proto-breaking.sh](../../scripts/proto-breaking.sh) runs `buf breaking --error-format json` against the base. When buf finds nothing and the file is as on the base, it passes as before, without building anything else. Otherwise it builds the base's contracts into a buf image and hands buf's findings, the file now and at the base, and [DESIGN.md](../DESIGN.md) to `tools/protobreak judge` ([judge.go](../../tools/protobreak/judge.go)), which passes only when all of these hold:
+
+- Every entry cites a decision that exists, and a method's entry cites one that names the method as code, such as `` `ListBrokerAccounts` ``.
+- An entry excuses anything only while it is new, absent from the base's file. An entry already on the base never excuses a later removal, and the check is never off.
+- Only removals of a method (`RPC_NO_DELETE`) or a top-level message (`MESSAGE_NO_DELETE`) can be excused. A new message entry must name a message the base has that a method removed under the same decision holds: its request, its response, or a message they hold. So D-157 excuses `ListBrokerAccounts`, `ListBrokerAccountsRequest`, `ListBrokerAccountsResponse` and `BrokerAccount`, and nothing else.
+- Every finding is excused by a new entry, and every new entry excuses a finding. A field whose type changed next to the removal still fails, and so does an entry added before its removal or without one, so the file can't grow silently.
+
+Commits are checked too. In the range from the base, every commit that adds an entry must be marked breaking (`tools/protobreak marked`). Locally, where the base is `HEAD` and the commit isn't written yet, the `commit-msg` hook runs `task proto:breaking:commit`, which does the same for the staged file and the message being written; it skips merge commits, whose commits the range check sees one by one. Removing an entry needs no mark. The entries stay in the file as the record of what was approved; once on the base, they excuse nothing.
 
 ### Affected checks
 
@@ -127,10 +139,10 @@ The hook is less strict than CI by design: CI's `task check` stays whole, and ru
 
 ### Git hooks
 
-[lefthook.yml](../../lefthook.yml) defines five hooks. Each calls one task with `.bin/` first on `PATH`, so the pinned Task runs:
+[lefthook.yml](../../lefthook.yml) defines five hooks. Each calls task targets with `.bin/` first on `PATH`, so the pinned Task runs:
 
 - `pre-commit` runs `task check:commit`, which runs only the checks the staged change affects ([Affected checks](#affected-checks)).
-- `commit-msg` runs `task docs:fresh:commit` with the message file: the docs staleness gate on the staged files. It skips merge commits; CI checks the merged commits one by one.
+- `commit-msg` runs `task docs:fresh:commit` with the message file: the docs staleness gate on the staged files. It skips merge commits; CI checks the merged commits one by one. It also runs `task proto:breaking:commit`, which fails a commit that adds a breaking-change exception without marking itself breaking ([Breaking contract changes](#breaking-contract-changes)), and skips merges the same way.
 - `post-checkout` runs `task kibi:sync` for a branch checkout (lefthook's `{3}` argument is `1`), not for a file checkout.
 - `post-merge` runs `task kibi:sync`.
 - `post-rewrite` runs `task kibi:sync` after a rebase, not after an amend.
@@ -153,9 +165,9 @@ flowchart TD
     proto --> vuln["vuln"] --> test["test"] --> docs["docs:check"] --> site["docs:build"] --> dv["demo:validate"] --> kibi["kibi:staged (check-generated, check on staged)"]
   end
   part -->|"all green"| msg
-  cc -->|"all green"| msg["lefthook commit-msg: task docs:fresh:commit"]
-  msg -->|"pages updated, or Docs-Unchanged"| done["Commit is recorded"]
-  msg -->|"covered code without its page"| fix
+  cc -->|"all green"| msg["lefthook commit-msg: task docs:fresh:commit, task proto:breaking:commit"]
+  msg -->|"pages updated, or Docs-Unchanged; a new exception marked breaking"| done["Commit is recorded"]
+  msg -->|"covered code without its page, or an unmarked new exception"| fix
   cc -->|"a step fails"| fix["Fix the cause and stage again"]
   fix --> commit
   switch["git checkout, merge or rebase"] --> sync["post-checkout, post-merge or post-rewrite: task kibi:sync"]
@@ -332,7 +344,7 @@ sequenceDiagram
 
 ## Verification
 
-The pipeline's decisions live in shell scripts, and each script that decides something non-trivial has a test in [scripts/tests](../../scripts/tests). Each test works in a throwaway directory or git repository from `mktemp`. The git tests also clear `GIT_DIR` and its siblings, which a hook exports, so they can't touch the real repository. Each test is a kibi test record that covers a tooling requirement. `task test` runs all twenty-one in CI; the hook runs those that read a changed path, and all of them when `scripts/` changes. The selector's own decisions are table tests in [tools/affected](../../tools/affected/plan_test.go): change sets mapped to hook steps, images built or carried, and CI jobs (TEST-tooling-affected-plan, TEST-tooling-affected-images, TEST-tooling-affected-inputs).
+The pipeline's decisions live in shell scripts, and each script that decides something non-trivial has a test in [scripts/tests](../../scripts/tests). Each test works in a throwaway directory or git repository from `mktemp`. The git tests also clear `GIT_DIR` and its siblings, which a hook exports, so they can't touch the real repository. Each test is a kibi test record that covers a tooling requirement. `task test` runs all twenty-one in CI; the hook runs those that read a changed path, and all of them when `scripts/` changes. The selector's own decisions are table tests in [tools/affected](../../tools/affected/plan_test.go): change sets mapped to hook steps, images built or carried, and CI jobs (TEST-tooling-affected-plan, TEST-tooling-affected-images, TEST-tooling-affected-inputs). So are the breaking-change exceptions' in [tools/protobreak](../../tools/protobreak/judge_test.go): an approved removal with its new entries passes; a removal without them, another breaking change beside it, an entry already on the base, an entry that excuses nothing, a message the removed method never held, and a decision that is missing or doesn't name the method each fail; and an added entry needs `!` or a `BREAKING CHANGE:` footer (TEST-tooling-protobreak).
 
 | Test | Proves |
 |---|---|
@@ -347,7 +359,7 @@ The pipeline's decisions live in shell scripts, and each script that decides som
 | `release-bundle.test.sh` (TEST-tooling-release-bundle) | Against the real `deploy/` and a throwaway one: the install pins exactly the operator, egress proxy and core to the given digests, from arguments or images.yml's digest files, or to placeholders; the same images in another order give the same bytes; a missing or malformed digest, an image by tag, an image the install doesn't name and a base naming its image by tag are refused, and a failed run writes nothing. |
 | `release-verify.test.sh` (TEST-tooling-release-verify) | With a fake cosign: a CLI signed as `release.yml` on `main` verifies, one signed at another ref or by another workflow, a changed binary, a missing bundle or `SHA256SUMS` fail; an install's images verify by digest as `images.yml` on `main`, and a dry run's placeholders at a tag; an unsigned or mismatched digest and an image by tag fail. The [install guide](../guides/install.md) names exactly the two identities the script derives and GitHub's issuer, the operator's `OpenFiefCISubject` equals the images identity, and release.yml and images.yml are where the CLI and the images are signed. |
 | `release-notes.test.sh` (TEST-tooling-release-notes) | Stable notes start after the previous stable, beta notes after the previous release of either channel, a first release covers all history, and both `!` and `BREAKING CHANGE:` count as breaking. |
-| `proto-breaking.test.sh` (TEST-tooling-proto-breaking) | A base without contracts passes; adding a field passes; changing a field's type fails and names it; `PROTO_BASE` and `DOCS_BASE` both select the base. Needs `buf` on `PATH`. |
+| `proto-breaking.test.sh` (TEST-tooling-proto-breaking) | A base without contracts passes; adding a field passes; changing a field's type fails and names it; `PROTO_BASE` and `DOCS_BASE` both select the base. A synthetic decision's method removal fails without its exceptions and passes with them, saying what it excused; a field type changed beside it still fails, and so does an entry whose decision doesn't name the method; at `commit-msg` and against the base, a commit adding entries must be marked breaking; once committed, the entries excuse neither a later removal nor themselves again. Needs `buf` and `go` on `PATH`. |
 | `demo.test.sh` (TEST-tooling-demo) | 199 checks against a fake hcloud with synthetic prices, and a fake curl that plays the Cloudflare DNS API on a record file. DNS records are created, updated in place on a new IPv4, left alone on a second run, and deleted only when they carry the demo's comment; a record set by hand at the demo's name is refused; without a Cloudflare token the demo falls back to sslip.io. Without a labelled SSH key, only a throwaway Ed25519 public key is uploaded, and `down` deletes it. `demo.sh dns-site` creates the apex's Pages A and AAAA records and the `www` CNAME, changes nothing on a second run or over matching records made by hand with its comment, reconciles a changed address list exactly, adds the verification TXT only with `GITHUB_PAGES_CHALLENGE`, deletes the retired `managed-by=openfief-docs` record, refuses a foreign record at the apex or `www`, and never touches the demo's records, nor the demo its records. A missing token is refused before any API call. `plan` prices the server and IPv4 and creates nothing. `up` over budget is refused, counting existing resources; otherwise it creates the firewall before the server, with labels, keys and rules, and a second `up` creates nothing. `down` needs the matching `CONFIRM`. The rendered cloud-init pins k3s for the CPU, leaves no placeholder and holds no token. |
 | `demo-pin-images.test.sh` (TEST-tooling-demo-pin-images) | With a fake cosign: signed images get their digests, the demo's `Plugin`s, `nbp` and `ui`, render with their pinned plugin images, and comments survive; only `images.yml` on `main` is trusted; an unsigned image fails and keeps its placeholder; a malformed tag or digest is refused. |
 | `demo-validate.test.sh` (TEST-tooling-demo-validate) | The committed manifests pass; an OCI source without cosign verification, an image pinned by tag only, a Flux path that doesn't build and an undefined substitution variable each fail. |

@@ -1,5 +1,5 @@
 ---
-title: The read API serves sleeve kinds, connector bindings and broker accounts
+title: The read API serves sleeve kinds and connector bindings, and has no path to broker accounts
 status: active
 sourceFile: internal/views/connectapi/connections_test.go
 origin:

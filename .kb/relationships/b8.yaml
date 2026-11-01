@@ -734,3 +734,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-261d209e05ab
+  - type: implements
+    from: SYM-protobreak-contracts-reachable
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:25:16.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-983fd5da520e
+  - type: covered_by
+    from: SYM-protobreak-contracts-reachable
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:25:16.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc3911e9b3be

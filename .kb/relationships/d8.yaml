@@ -587,3 +587,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe477af5e277
+  - type: executable_for
+    from: SYM-protobreak-test-check-marked
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:27:19.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddbe9e335d7c

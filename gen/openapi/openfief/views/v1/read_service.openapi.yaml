@@ -276,40 +276,6 @@ components:
         - BOOK_KIND_FX
         - BOOK_KIND_EQUITY
       description: BookKind is the kind of a ledger account inside an account.
-    openfief.views.v1.BrokerAccount:
-      type: object
-      properties:
-        connectorInstance:
-          type: string
-          title: connector_instance
-        id:
-          type: string
-          title: id
-          description: |-
-            The institution's own ID of the account, such as an IBKR Flex account
-             ID.
-        institution:
-          type: string
-          title: institution
-        accountId:
-          type: string
-          title: account_id
-          description: The OpenFief account it is mapped to; empty while it is unmapped.
-        lastSeen:
-          type: string
-          title: last_seen
-          description: The day a delivery last reported it, YYYY-MM-DD.
-        inLastDelivery:
-          type: boolean
-          title: in_last_delivery
-          description: |-
-            Whether the instance's last delivery that reported broker accounts
-             reported it.
-      title: BrokerAccount
-      additionalProperties: false
-      description: |-
-        BrokerAccount is deprecated with ListBrokerAccounts, which never returns
-         one (D-121): the owner's AccountService lists broker accounts.
     openfief.views.v1.ClassAmount:
       type: object
       properties:
@@ -850,25 +816,6 @@ components:
           format: int32
           description: How many items are open.
       title: ListAttentionItemsResponse
-      additionalProperties: false
-    openfief.views.v1.ListBrokerAccountsRequest:
-      type: object
-      properties:
-        unmapped:
-          type: boolean
-          title: unmapped
-          description: Only the broker accounts not mapped to an OpenFief account.
-      title: ListBrokerAccountsRequest
-      additionalProperties: false
-    openfief.views.v1.ListBrokerAccountsResponse:
-      type: object
-      properties:
-        brokerAccounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/openfief.views.v1.BrokerAccount'
-          title: broker_accounts
-      title: ListBrokerAccountsResponse
       additionalProperties: false
     openfief.views.v1.ListCashRequest:
       type: object
@@ -2268,33 +2215,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListAttentionItemsResponse'
-  /v1/broker-accounts:
-    get:
-      tags:
-        - ReadService
-      summary: ListBrokerAccounts
-      description: |-
-        ListBrokerAccounts is deprecated and always fails with UNIMPLEMENTED:
-         broker account numbers are listed only through the owner's
-         AccountService.ListBrokerAccounts (proto/openfief/ingest/v1/accounts.proto),
-         so read sessions, script tokens and plugins never see one (D-121). It
-         stays in the contract so that the read API changes only by addition.
-      operationId: openfief.views.v1.ReadService.ListBrokerAccounts
-      parameters:
-        - name: unmapped
-          in: query
-          description: Only the broker accounts not mapped to an OpenFief account.
-          schema:
-            type: boolean
-            title: unmapped
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/openfief.views.v1.ListBrokerAccountsResponse'
-      deprecated: true
   /v1/connector-bindings:
     get:
       tags:

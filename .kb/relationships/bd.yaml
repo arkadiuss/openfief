@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-776df0cb2b03
+  - type: validates
+    from: TEST-tooling-protobreak
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:21:28.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f63b4ed1b5e

@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9be3cff079c
+  - type: executable_for
+    from: SYM-protobreak-test-parse-findings-refuses-what-it-cant-read
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:27:05.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-261ab28df6ea

@@ -391,3 +391,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25524d462d41
+  - type: implements
+    from: SYM-protobreak-run-marked
+    to: REQ-tooling-breaking-exception-commit-marked
+    created_at: 2026-11-01T19:22:50.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3110d70b1f50
+  - type: covered_by
+    from: SYM-protobreak-run-marked
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:22:50.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0dcfe20021f

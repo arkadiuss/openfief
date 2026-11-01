@@ -1,6 +1,6 @@
 ---
 title: 'The read API must never serve a broker account: its deprecated ListBrokerAccounts must answer UNIMPLEMENTED over Connect and REST.'
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-121
 tags:
   - strict-modeling

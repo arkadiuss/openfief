@@ -123710,16 +123710,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-plugins
-  - id: SYM-views-connectapi-test-ra-retired
-    title: retired
-    sourceFile: internal/views/connectapi/readaccess_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T11:31:28.455Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-connectapi-read-access
   - id: SYM-viewsv1-plugin-get-market-data
     title: Plugin.GetMarketData
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -123879,3 +123869,548 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-plugin-refusals
+  - id: SYM-protobreak-main
+    title: main
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:19.820Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-run
+    title: run
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:26.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-run-judge
+    title: runJudge
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:33.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-read-judge-input
+    title: readJudgeInput
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:40.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-run-marked
+    title: runMarked
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:47.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-exception-commit-marked
+  - id: SYM-protobreak-read-files
+    title: readFiles
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:54.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-entry
+    title: Entry
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:00.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-entry-string
+    title: Entry.String
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:07.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-parse-exceptions
+    title: parseExceptions
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:15.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-parse-entry
+    title: parseEntry
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:23.348Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-new-entries
+    title: newEntries
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:32.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-parse-decisions
+    title: parseDecisions
+    sourceFile: tools/protobreak/decisions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:43.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-names
+    title: names
+    sourceFile: tools/protobreak/decisions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:51.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-finding
+    title: Finding
+    sourceFile: tools/protobreak/findings.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:57.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-finding-string
+    title: Finding.String
+    sourceFile: tools/protobreak/findings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:05.298Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-parse-findings
+    title: parseFindings
+    sourceFile: tools/protobreak/findings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:12.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-removed
+    title: removed
+    sourceFile: tools/protobreak/findings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:19.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts
+    title: contracts
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:25.728Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-index-contracts
+    title: indexContracts
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:33.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts-index-message
+    title: contracts.indexMessage
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:39.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-trim-dot
+    title: trimDot
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:46.335Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts-package-of
+    title: contracts.packageOf
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:54.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts-has-message
+    title: contracts.hasMessage
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:04.672Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts-reachable
+    title: contracts.reachable
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:13.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-judge-input
+    title: judgeInput
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:22.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-judge
+    title: judge
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:29.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-check-decisions
+    title: checkDecisions
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:36.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-check-fresh
+    title: checkFresh
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:43.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-excuse
+    title: excuse
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:51.577Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-short-name
+    title: shortName
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:00.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-marked-breaking
+    title: markedBreaking
+    sourceFile: tools/protobreak/marked.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:07.940Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-exception-commit-marked
+  - id: SYM-protobreak-check-marked
+    title: checkMarked
+    sourceFile: tools/protobreak/marked.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:16.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-exception-commit-marked
+  - id: SYM-protobreak-test-helper-base-set
+    title: baseSet
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:23.635Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-judge
+    title: TestJudge
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:31.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-helper-check-verdict
+    title: checkVerdict
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:38.125Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-parse-exceptions
+    title: TestParseExceptions
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:46.088Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-parse-findings-refuses-what-it-cant-read
+    title: TestParseFindingsRefusesWhatItCantRead
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:56.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-check-marked
+    title: TestCheckMarked
+    sourceFile: tools/protobreak/marked_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:27:13.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-helper-write-inputs
+    title: writeInputs
+    sourceFile: tools/protobreak/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:27:24.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-run
+    title: TestRun
+    sourceFile: tools/protobreak/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:27:32.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-tooling-proto-breaking-protobreak
+    title: protobreak
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:27:42.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-tooling-proto-breaking-show
+    title: show
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:27:51.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-views-connectapi-test-ra-removed
+    title: removed
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:28:00.003Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-views-connectapi-test-ra-test-read-access-removed-methods
+    title: TestReadAccessRemovedMethods
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:28:08.513Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access

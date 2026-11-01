@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-331500e885e7
+  - type: validates
+    from: TEST-views-connectapi-read-access
+    to: REQ-views-read-api-list-broker-accounts-removed
+    created_at: 2026-11-01T19:22:10.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-808c2ba48c3c
