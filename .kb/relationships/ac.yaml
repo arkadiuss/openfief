@@ -412,3 +412,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-296dd8eb734c
+  - type: executable_for
+    from: SYM-views-connectapi-test-ra-retired
+    to: TEST-views-connectapi-read-access
+    created_at: 2026-11-01T11:31:32.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-417397e49e5e

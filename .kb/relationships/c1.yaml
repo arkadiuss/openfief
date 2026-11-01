@@ -559,3 +559,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d6c59ac509d
+  - type: implements
+    from: SYM-operator-market-data-items
+    to: REQ-ingest-market-data-list-declared-granted
+    created_at: 2026-11-01T10:11:13.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-027ab38775ec
+  - type: covered_by
+    from: SYM-operator-market-data-items
+    to: TEST-operator-market-data
+    created_at: 2026-11-01T10:11:13.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8125f55e572b

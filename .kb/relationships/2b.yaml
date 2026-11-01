@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e72dec53c12e
+  - type: implements
+    from: SYM-views-ghostfolio-cash-account-name
+    to: REQ-views-ghostfolio-cash-account-per-currency
+    created_at: 2026-11-01T10:13:56.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ce9e3157c2c

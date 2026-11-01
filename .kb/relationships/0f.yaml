@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5fc535d3a9e2
+  - type: implements
+    from: SYM-valuation-app-revaluer-raise-unclassified
+    to: REQ-valuation-unclassifiable-instrument-attention-item
+    created_at: 2026-11-01T10:15:33.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f0735dae8ca

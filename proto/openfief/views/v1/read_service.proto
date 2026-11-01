@@ -1127,6 +1127,14 @@ message Plugin {
   string phase = 9;
   // Whether a version of it runs.
   bool ready = 10;
+  // Whether it is a market-data connector: its manifest declares it and
+  // its PluginGrant approves it, so each sync tells it every instrument the
+  // owner holds and the model portfolio's targets, and it learns what the
+  // owner holds (D-93, D-123).
+  bool market_data = 11;
+  // Whether its signed manifest declares it a market-data connector,
+  // approved or not.
+  bool requested_market_data = 12;
 }
 
 // AttentionItemState is where an attention item stands (D-130).
@@ -1178,7 +1186,10 @@ message AttentionItem {
   // "transfer-broken"; later checks add kinds.
   string kind = 2;
   // What it is about, unique within its kind: an instrument, an
-  // assertion, a batch, a broker account, a ticker, a setting or a pair.
+  // assertion, a batch, a ticker, a setting or a pair. An unmapped broker
+  // account's item names only its connector instance: the read API never
+  // serves a broker account number (D-121, D-137), so two such items of one
+  // instance share a subject and differ by id.
   string subject = 3;
   // Its latest change's state and detail.
   AttentionItemState state = 4;

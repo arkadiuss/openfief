@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d2f504a823a
+  - type: implements
+    from: SYM-views-ghostfolio-project
+    to: REQ-views-ghostfolio-cash-account-per-currency
+    created_at: 2026-11-01T10:13:48.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28af7c37931a

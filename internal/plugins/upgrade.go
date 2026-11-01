@@ -120,5 +120,6 @@ func subtract(p, q *Permissions) Permissions {
 		DataTiers:       missing(p.DataTiers, q.DataTiers),
 		BrowserPaths:    missing(p.BrowserPaths, q.BrowserPaths),
 		ClusterServices: missing(p.ClusterServices, q.ClusterServices),
+		MarketData:      p.MarketData && !q.MarketData,
 	}
 }

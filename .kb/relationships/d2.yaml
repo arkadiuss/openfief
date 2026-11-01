@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68e49c643c56
+  - type: executable_for
+    from: SYM-ui-test-plugins-page-market-data
+    to: TEST-ui-plugins
+    created_at: 2026-11-01T10:18:32.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b8d05ec1fc4

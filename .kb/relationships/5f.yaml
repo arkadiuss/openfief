@@ -622,3 +622,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc79ce3935ff
+  - type: implements
+    from: SYM-views-kube-nested-bool
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:12:59.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e71364dbfa0
+  - type: covered_by
+    from: SYM-views-kube-nested-bool
+    to: TEST-views-kube
+    created_at: 2026-11-01T10:12:59.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-280b51c6c918

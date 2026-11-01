@@ -734,3 +734,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcb85aee0183
+  - type: implements
+    from: SYM-views-plugin-of
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:12:51.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f11bfc702d3a
+  - type: covered_by
+    from: SYM-views-plugin-of
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-11-01T10:12:51.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b1cec7c1391

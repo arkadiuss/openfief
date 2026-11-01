@@ -2,6 +2,7 @@
   "capabilities": ["connector"],
   "egress": ["eodhd.com"],
   "secrets": [{"role": "api-token", "mountPath": "/etc/openfief/eodhd"}],
+  "marketData": true,
   "configSchema": {
     "type": "object",
     "properties": {

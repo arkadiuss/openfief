@@ -5843,9 +5843,17 @@ type Plugin struct {
 	// reconciled it.
 	Phase string `protobuf:"bytes,9,opt,name=phase,proto3" json:"phase,omitempty"`
 	// Whether a version of it runs.
-	Ready         bool `protobuf:"varint,10,opt,name=ready,proto3" json:"ready,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Ready bool `protobuf:"varint,10,opt,name=ready,proto3" json:"ready,omitempty"`
+	// Whether it is a market-data connector: its manifest declares it and
+	// its PluginGrant approves it, so each sync tells it every instrument the
+	// owner holds and the model portfolio's targets, and it learns what the
+	// owner holds (D-93, D-123).
+	MarketData bool `protobuf:"varint,11,opt,name=market_data,json=marketData,proto3" json:"market_data,omitempty"`
+	// Whether its signed manifest declares it a market-data connector,
+	// approved or not.
+	RequestedMarketData bool `protobuf:"varint,12,opt,name=requested_market_data,json=requestedMarketData,proto3" json:"requested_market_data,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *Plugin) Reset() {
@@ -5948,6 +5956,20 @@ func (x *Plugin) GetReady() bool {
 	return false
 }
 
+func (x *Plugin) GetMarketData() bool {
+	if x != nil {
+		return x.MarketData
+	}
+	return false
+}
+
+func (x *Plugin) GetRequestedMarketData() bool {
+	if x != nil {
+		return x.RequestedMarketData
+	}
+	return false
+}
+
 // AttentionItemChange is one entry of an attention item's history.
 type AttentionItemChange struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -6038,7 +6060,10 @@ type AttentionItem struct {
 	// "transfer-broken"; later checks add kinds.
 	Kind string `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
 	// What it is about, unique within its kind: an instrument, an
-	// assertion, a batch, a broker account, a ticker, a setting or a pair.
+	// assertion, a batch, a ticker, a setting or a pair. An unmapped broker
+	// account's item names only its connector instance: the read API never
+	// serves a broker account number (D-121, D-137), so two such items of one
+	// instance share a subject and differ by id.
 	Subject string `protobuf:"bytes,3,opt,name=subject,proto3" json:"subject,omitempty"`
 	// Its latest change's state and detail.
 	State  AttentionItemState `protobuf:"varint,4,opt,name=state,proto3,enum=openfief.views.v1.AttentionItemState" json:"state,omitempty"`
@@ -6598,7 +6623,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x12reporting_currency\x18\t \x01(\tR\x11reportingCurrency\"\x14\n" +
 	"\x12ListPluginsRequest\"J\n" +
 	"\x13ListPluginsResponse\x123\n" +
-	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xd8\x02\n" +
+	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xad\x03\n" +
 	"\x06Plugin\x12\x1a\n" +
 	"\binstance\x18\x01 \x01(\tR\binstance\x12\x14\n" +
 	"\x05image\x18\x02 \x01(\tR\x05image\x12!\n" +
@@ -6610,7 +6635,10 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\ftrust_reason\x18\b \x01(\tR\vtrustReason\x12\x14\n" +
 	"\x05phase\x18\t \x01(\tR\x05phase\x12\x14\n" +
 	"\x05ready\x18\n" +
-	" \x01(\bR\x05ready\"\xcc\x01\n" +
+	" \x01(\bR\x05ready\x12\x1f\n" +
+	"\vmarket_data\x18\v \x01(\bR\n" +
+	"marketData\x122\n" +
+	"\x15requested_market_data\x18\f \x01(\bR\x13requestedMarketData\"\xcc\x01\n" +
 	"\x13AttentionItemChange\x12\x10\n" +
 	"\x03seq\x18\x01 \x01(\x05R\x03seq\x12;\n" +
 	"\x05state\x18\x02 \x01(\x0e2%.openfief.views.v1.AttentionItemStateR\x05state\x12>\n" +

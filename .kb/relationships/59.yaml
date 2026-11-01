@@ -531,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44a3dfe055a8
+  - type: implements
+    from: SYM-views-ghostfolio-fee-symbol
+    to: REQ-views-ghostfolio-asset-uuid-takes-user
+    created_at: 2026-11-01T10:14:43.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f64cbe80ed77

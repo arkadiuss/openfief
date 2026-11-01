@@ -461,3 +461,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97e640a1de36
+  - type: implements
+    from: SYM-plugins-effective-permissions-market-data
+    to: REQ-ingest-market-data-list-declared-granted
+    created_at: 2026-11-01T10:10:51.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-610c9df8b367
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-market-data
+    to: TEST-plugins-market-data
+    created_at: 2026-11-01T10:10:51.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-471c73c20df0

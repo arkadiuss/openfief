@@ -207,7 +207,8 @@ type Connectors struct {
 	// fails without it.
 	CrossChecks CrossCheckPriceStore
 	// Declarations tells which instances declare cross-check prices in their
-	// manifest: only theirs are stored (D-112). Without it, none declares.
+	// manifest: only theirs are stored (D-112); and which are market-data
+	// connectors (D-123). Without it, none declares.
 	Declarations ConnectorDeclarations
 	// Brokers keeps the broker accounts instances report and the OpenFief
 	// accounts they are mapped to (D-72); a delivery that names broker
@@ -227,9 +228,9 @@ type Connectors struct {
 	// ISIN and their entries until the owner confirms each ticker's ISIN
 	// (D-116); a delivery with ticker entries fails without it.
 	Tickers TickerStore
-	// Lookup asks the market-data connectors, the running Instances bound
-	// to no account, to propose the ISIN of a ticker first reported; nil,
-	// or nil Instances, proposes none.
+	// Lookup asks the market-data connectors, the running Instances whose
+	// Declarations make them one (D-123), to propose the ISIN of a ticker
+	// first reported; nil, or nil Instances, proposes none.
 	Lookup    InstrumentLookup
 	Instances InstanceLister
 	// Today returns the date a batch starts on.

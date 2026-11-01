@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d65da7966ea4
+  - type: implements
+    from: SYM-views-ghostfolio-uuid-v5
+    to: REQ-views-ghostfolio-cash-account-uuid
+    created_at: 2026-11-01T10:14:24.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51b8f1ec6ec2
