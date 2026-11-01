@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85cf8025155b
+  - type: executable_for
+    from: SYM-e2e-bundle-bundle-deployments
+    to: TEST-e2e-bundle-install
+    created_at: 2026-11-01T13:55:04.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9972b8ba0d5

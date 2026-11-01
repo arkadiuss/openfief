@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a71f49a188c
+  - type: implements
+    from: SYM-release-bundle-fail
+    to: REQ-tooling-release-bundle-pinned
+    created_at: 2026-11-01T13:51:39.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-830f81ccfa36
+  - type: covered_by
+    from: SYM-release-bundle-fail
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-01T13:51:39.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8589aea3fce9

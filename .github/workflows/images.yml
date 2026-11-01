@@ -107,7 +107,10 @@ jobs:
       packages: write # push to GHCR
       id-token: write # keyless cosign signing
     strategy:
-      fail-fast: false
+      # A release (version set) stops every other image's build as soon as one fails, so a failed release cancels
+      # the builds that haven't pushed yet instead of finishing them under a version that never gets released. CI
+      # runs (no version) let each image finish, so one failure doesn't hide another.
+      fail-fast: ${{ inputs.version != '' }}
       matrix:
         include: ${{ fromJSON(needs.discover.outputs.images) }}
     steps:

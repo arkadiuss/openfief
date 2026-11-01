@@ -42754,6 +42754,8 @@ symbols:
       recorded_at: 2026-10-28T18:05:48.689Z
     relationships:
       - type: executable_for
+        target: TEST-e2e-bundle-install
+      - type: executable_for
         target: TEST-e2e-demo-stack
   - id: SYM-e2e-log-stderrf
     title: logStderrf
@@ -122688,3 +122690,251 @@ symbols:
         target: TEST-core-market-data
       - type: implements
         target: REQ-valuation-market-data-series-service
+  - id: SYM-release-bundle-fail
+    title: fail
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:51:34.735Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-pinned
+  - id: SYM-release-bundle-install-images
+    title: install_images
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:51:48.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-pinned
+  - id: SYM-release-bundle-given-images
+    title: given_images
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:01.984Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-pinned
+  - id: SYM-release-bundle-pin
+    title: pin
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:13.667Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-pinned
+  - id: SYM-release-bundle-check-pinned
+    title: check_pinned
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:25.878Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-pinned
+  - id: SYM-release-bundle-verify
+    title: verify
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:38.329Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-pinned
+  - id: SYM-release-bundle-test-run
+    title: run
+    sourceFile: scripts/tests/release-bundle.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:50.331Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-bundle
+  - id: SYM-release-bundle-test-fail-case
+    title: fail_case
+    sourceFile: scripts/tests/release-bundle.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:52:59.534Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-bundle
+  - id: SYM-release-bundle-test-expect-fail
+    title: expect_fail
+    sourceFile: scripts/tests/release-bundle.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:08.236Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-bundle
+  - id: SYM-release-bundle-test-images
+    title: images
+    sourceFile: scripts/tests/release-bundle.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:18.472Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-bundle
+  - id: SYM-e2e-bundle-bundle
+    title: bundle
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:31.872Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-read-bundle
+    title: readBundle
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:53:43.372Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-read-one
+    title: readOne
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:54:02.071Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-run-bundle
+    title: runBundle
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:54:17.097Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-install-bundle
+    title: installBundle
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:54:30.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-kube-remove-namespace
+    title: kube.removeNamespace
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:54:43.359Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-bundle-deployments
+    title: bundleDeployments
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:54:59.350Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-test-bundle-pins-image-digests
+    title: TestBundlePinsImageDigests
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:12.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-container-images
+    title: containerImages
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:24.033Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-test-bundle-becomes-ready
+    title: TestBundleBecomesReady
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:35.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-test-bundle-read-api
+    title: TestBundleReadAPI
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:43.709Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-forward-core
+    title: forwardCore
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:55:52.482Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+  - id: SYM-e2e-bundle-bundle-get
+    title: bundleGet
+    sourceFile: test/e2e/bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:56:03.168Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install

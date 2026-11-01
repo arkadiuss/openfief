@@ -587,3 +587,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03bba54549b1
+  - type: verified_by
+    from: SCEN-e2e-bundle-read-api
+    to: TEST-e2e-bundle-install
+    created_at: 2026-11-01T13:50:41.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a32670568211

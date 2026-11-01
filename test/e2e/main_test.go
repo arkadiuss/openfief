@@ -17,6 +17,10 @@
 // pods that aren't ready, the plugins and their allow-lists, and the logs of
 // the core, the operator, the plugins, the demo loader, the database and
 // CloudNativePG.
+//
+// With OPENFIEF_E2E_BUNDLE set, TestMain installs the release bundle in that
+// directory instead, as an owner installs a release, and only the TestBundle
+// tests run (bundle_test.go); task e2e runs that first, then the demo run.
 package e2e
 
 import (
@@ -80,6 +84,9 @@ func cnpgCluster() schema.GroupVersionResource {
 }
 
 func TestMain(m *testing.M) {
+	if dir := os.Getenv(bundleEnv); dir != "" {
+		os.Exit(runBundle(m, dir))
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), installTimeout)
 	k, err := connect()
 	if err == nil {
@@ -120,6 +127,10 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 	)
 	steps := []func() error{
 		func() error { return installCNPG(ctx, k, logf) },
+		func() error {
+			logf("e2e: applying deploy/crds")
+			return k.applyBuild(ctx, exec.CommandContext(ctx, "kustomize", "build", crdsDir))
+		},
 		func() error { return installDatabase(ctx, k, logf) },
 		func() error {
 			hash, trustErr := trustSigner(ctx, k, reg, logf)
@@ -170,13 +181,10 @@ func installCNPG(ctx context.Context, k *kube, logf func(string, ...any)) error 
 	return k.ensureLocalPath(ctx, logf)
 }
 
-// installDatabase applies deploy/crds and the demo's database, and waits
-// until the database is ready.
+// installDatabase applies the demo's database, after the CRDs made OpenFief's
+// namespace, and waits until the database is ready.
 func installDatabase(ctx context.Context, k *kube, logf func(string, ...any)) error {
-	logf("e2e: applying deploy/crds and deploy/demo/database")
-	if err := k.applyBuild(ctx, exec.CommandContext(ctx, "kustomize", "build", crdsDir)); err != nil {
-		return err
-	}
+	logf("e2e: applying deploy/demo/database")
 	database, err := build(exec.CommandContext(ctx, "kustomize", "build", databaseDir))
 	if err != nil {
 		return err
