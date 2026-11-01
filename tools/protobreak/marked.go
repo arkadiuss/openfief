@@ -7,8 +7,9 @@ import (
 	"strings"
 )
 
-// errUnmarked reports a commit that adds a breaking-change exception without marking itself breaking.
-var errUnmarked = errors.New("a commit that adds a breaking-change exception must be marked breaking")
+// errUnmarked reports a commit that breaks a contract, or adds a breaking-change exception, without
+// marking itself breaking.
+var errUnmarked = errors.New("a commit that breaks a contract or adds a breaking-change exception must be marked breaking")
 
 // breakingSubject is a Conventional Commits subject marked breaking, "type(scope)!: summary", and
 // breakingFooter the footer that marks one, "BREAKING CHANGE: what".

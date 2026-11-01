@@ -38,6 +38,47 @@ elif ! grep -q 'no contracts at HEAD' <<<"$out"; then
 fi
 
 git add -A && git commit -q -m "feat: add contracts"
+contracts_commit="$(git rev-parse HEAD)"
+
+# Before the first beta (an alpha tag only), a breaking change needs no exception, only a commit marked
+# breaking: the commit-msg hook and the range check both ask for the mark.
+git tag 2026.11.0-alpha.1
+sed -i 's/string name = 1;/int64 name = 1;/' proto/test/v1/test.proto
+if ! out="$(check)"; then
+  echo "FAIL: before the first beta a breaking change should pass the working-tree check, got: $out" >&2
+  failures=$((failures + 1))
+elif ! grep -q 'allowed before the first beta.*name' <<<"$out"; then
+  echo "FAIL: the check should say what it allowed, got: $out" >&2
+  failures=$((failures + 1))
+fi
+git add -A
+printf 'feat: change the name\n' >"$work/msg"
+if out="$(bash "$root/scripts/proto-breaking.sh" commit-msg "$work/msg" 2>&1)"; then
+  echo "FAIL: before the first beta an unmarked breaking commit should fail at commit-msg" >&2
+  failures=$((failures + 1))
+fi
+printf 'feat!: change the name\n' >"$work/msg"
+if ! out="$(bash "$root/scripts/proto-breaking.sh" commit-msg "$work/msg" 2>&1)"; then
+  echo "FAIL: before the first beta a breaking commit marked breaking should pass at commit-msg, got: $out" >&2
+  failures=$((failures + 1))
+fi
+git commit -q -m "feat: change the name"
+if out="$(PROTO_BASE="$contracts_commit" check)"; then
+  echo "FAIL: before the first beta an unmarked breaking commit should fail against the base" >&2
+  failures=$((failures + 1))
+elif ! grep -q 'must be marked breaking' <<<"$out"; then
+  echo "FAIL: the failure should ask for the breaking mark, got: $out" >&2
+  failures=$((failures + 1))
+fi
+git commit -q --amend -m "fix(api)!: change the name"
+if ! out="$(PROTO_BASE="$contracts_commit" check)"; then
+  echo "FAIL: before the first beta a breaking commit marked breaking should pass against the base, got: $out" >&2
+  failures=$((failures + 1))
+fi
+
+# From the first beta on, only an author decision's exceptions let a break through.
+git reset -q --hard "$contracts_commit"
+git tag 2026.11.0-beta.1
 cat >proto/test/v1/test.proto <<'PROTO'
 syntax = "proto3";
 

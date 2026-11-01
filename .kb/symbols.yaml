@@ -123920,6 +123920,8 @@ symbols:
       - type: covered_by
         target: TEST-tooling-protobreak
       - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+      - type: implements
         target: REQ-tooling-breaking-exception-commit-marked
   - id: SYM-protobreak-read-files
     title: readFiles
@@ -124196,6 +124198,8 @@ symbols:
       - type: covered_by
         target: TEST-tooling-protobreak
       - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+      - type: implements
         target: REQ-tooling-breaking-check-one-exception
   - id: SYM-protobreak-check-decisions
     title: checkDecisions
@@ -124342,16 +124346,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-01T19:27:24.153Z
-    relationships:
-      - type: executable_for
-        target: TEST-tooling-protobreak
-  - id: SYM-protobreak-test-run
-    title: TestRun
-    sourceFile: tools/protobreak/main_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T19:27:32.740Z
     relationships:
       - type: executable_for
         target: TEST-tooling-protobreak
@@ -125377,3 +125371,124 @@ symbols:
         target: TEST-ingest-connectapi-accounts
       - type: implements
         target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-protobreak-pre-beta
+    title: preBeta
+    sourceFile: tools/protobreak/stage.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:54:43.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-protobreak-verdict
+    title: verdict
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:54:50.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-protobreak-write-verdict
+    title: writeVerdict
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:54:58.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-protobreak-run-stage
+    title: runStage
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:05.990Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-tooling-proto-breaking-contracts
+    title: contracts
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:23.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-tooling-proto-breaking-breaks
+    title: breaks
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:29.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-tooling-proto-breaking-stage
+    title: stage
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:35.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-protobreak-test-pre-beta
+    title: TestPreBeta
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:41.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-run-judge
+    title: TestRunJudge
+    sourceFile: tools/protobreak/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:47.965Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-run-marked
+    title: TestRunMarked
+    sourceFile: tools/protobreak/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:53.679Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak

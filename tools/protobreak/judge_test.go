@@ -64,11 +64,18 @@ func TestJudge(t *testing.T) {
 	entries := []string{rpcEntry, requestEntry, gadgetEntry}
 	tests := []struct {
 		name           string
+		preBeta        bool
 		findings       []string
 		base, now      []string
 		wantExcused    []string
+		wantAllowed    int
 		wantProblemsIn []string
 	}{
+		{name: "before the first beta, a removal without entries is allowed", preBeta: true, findings: removal, wantAllowed: 3},
+		{name: "before the first beta, any other breaking change is allowed", preBeta: true, findings: []string{fieldChanged}, wantAllowed: 1},
+		{name: "before the first beta, entries still excuse their removal", preBeta: true, findings: removal, now: entries, wantExcused: entries},
+		{name: "before the first beta, a new entry that excuses nothing still fails", preBeta: true, now: []string{rpcEntry}, wantProblemsIn: []string{"excuses nothing"}},
+		{name: "before the first beta, an entry without a decision still fails", preBeta: true, findings: []string{rpcGone}, now: []string{"D-99 RPC_NO_DELETE test.v1.Things.ListGadgets"}, wantProblemsIn: []string{"no author decision D-99"}},
 		{name: "no change, no entries"},
 		{name: "a removal its decision names, entries added with it", findings: removal, now: entries, wantExcused: entries},
 		{name: "a removal without entries fails", findings: removal, wantProblemsIn: []string{"not excused", "ListGadgets"}},
@@ -86,7 +93,7 @@ func TestJudge(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			in := judgeInput{Decisions: parseDecisions(design), Base: indexContracts(baseSet())}
+			in := judgeInput{Decisions: parseDecisions(design), Base: indexContracts(baseSet()), PreBeta: tt.preBeta}
 			var err error
 			if in.Findings, err = parseFindings(strings.Join(tt.findings, "\n")); err != nil {
 				t.Fatalf("parseFindings: %v", err)
@@ -97,8 +104,11 @@ func TestJudge(t *testing.T) {
 			if in.Exceptions, err = parseExceptions(strings.Join(tt.now, "\n")); err != nil {
 				t.Fatalf("parseExceptions(now): %v", err)
 			}
-			excused, err := judge(&in)
-			checkVerdict(t, excused, err, tt.wantExcused, tt.wantProblemsIn)
+			v, err := judge(&in)
+			checkVerdict(t, v.Excused, err, tt.wantExcused, tt.wantProblemsIn)
+			if len(v.Allowed) != tt.wantAllowed {
+				t.Errorf("allowed %v, want %d findings", v.Allowed, tt.wantAllowed)
+			}
 		})
 	}
 }
@@ -158,6 +168,28 @@ func TestParseExceptions(t *testing.T) {
 			}
 			if diff := cmp.Diff(tt.want, got); diff != "" {
 				t.Errorf("entries (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+func TestPreBeta(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name, tags string
+		want       bool
+	}{
+		{name: "no tags", want: true},
+		{name: "alphas only", tags: "2026.11.0-alpha.1\n2026.11.0-alpha.2\nsdk/go/v0.1.0\n", want: true},
+		{name: "a beta", tags: "2026.11.0-alpha.1\n2026.11.0-beta.1\n", want: false},
+		{name: "a stable release", tags: "2026.12.0\n", want: false},
+		{name: "look-alikes", tags: "v2026.11.0\n2026.11.0-beta\nbeta.1\n", want: true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if got := preBeta(tt.tags); got != tt.want {
+				t.Errorf("preBeta(%q) = %v, want %v", tt.tags, got, tt.want)
 			}
 		})
 	}

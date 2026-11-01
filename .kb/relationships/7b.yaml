@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1423cfe96de3
+  - type: executable_for
+    from: SYM-protobreak-test-run-judge
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T20:55:50.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee342910c685

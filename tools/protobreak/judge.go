@@ -19,6 +19,17 @@ type judgeInput struct {
 	Decisions map[string]string
 	// Base indexes the base's contracts.
 	Base *contracts
+	// PreBeta is true until the first beta (preBeta): a breaking change no
+	// entry excuses is then allowed, in a commit marked breaking.
+	PreBeta bool
+}
+
+// verdict is what judge let through: the new entries that excused
+// findings, and, before the first beta, the findings no entry excused,
+// which the commits that make them must mark breaking.
+type verdict struct {
+	Excused []Entry
+	Allowed []Finding
 }
 
 // judge returns the new entries that excuse the findings, or an error wrapping errBreaking that lists
@@ -29,22 +40,28 @@ type judgeInput struct {
 //   - a new entry, one the base's exceptions file lacks, removes what the base has: a method entry a
 //     method, and a message entry a message that a new method entry of the same decision holds, as its
 //     request, its response or a message they hold, so a decision excuses a method and its messages only;
-//   - every finding is a removal that a new entry names, and every new entry excuses a finding.
+//   - every finding is a removal that a new entry names, and every new entry excuses a finding. Before
+//     the first beta (in.PreBeta), a finding no entry names is allowed instead, and returned, since the
+//     contracts may break then in a commit marked breaking; the entries are checked all the same.
 //
 // So an entry excuses its removal only in the change that adds it: once both are on the base, buf no
 // longer reports the removal and the entry excuses nothing again.
-func judge(in *judgeInput) ([]Entry, error) {
+func judge(in *judgeInput) (verdict, error) {
 	fresh := newEntries(in.BaseExceptions, in.Exceptions)
 	problems := checkDecisions(in.Exceptions, in.Decisions)
 	problems = append(problems, checkFresh(fresh, in.Base)...)
 	used := map[Entry]bool{}
+	var out verdict
 	for i := range in.Findings {
 		e, ok := excuse(&in.Findings[i], fresh, in.Base)
-		if !ok {
+		switch {
+		case ok:
+			used[e] = true
+		case in.PreBeta:
+			out.Allowed = append(out.Allowed, in.Findings[i])
+		default:
 			problems = append(problems, "not excused: "+in.Findings[i].String())
-			continue
 		}
-		used[e] = true
 	}
 	for _, e := range fresh {
 		if !used[e] {
@@ -52,9 +69,10 @@ func judge(in *judgeInput) ([]Entry, error) {
 		}
 	}
 	if len(problems) > 0 {
-		return nil, fmt.Errorf("%w:\n  %s", errBreaking, strings.Join(problems, "\n  "))
+		return verdict{}, fmt.Errorf("%w:\n  %s", errBreaking, strings.Join(problems, "\n  "))
 	}
-	return fresh, nil
+	out.Excused = fresh
+	return out, nil
 }
 
 // checkDecisions returns a problem for each entry whose decision doesn't exist, or doesn't name its
