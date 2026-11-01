@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e05c655f81d
+  - type: constrains
+    from: REQ-treasurybonds-valued-every-day-since-first-purchase
+    to: FACT-SUBJECT-34E32129990BBCFB
+    created_at: 2026-11-01T07:38:08.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d44b0ef37f0
+  - type: requires_property
+    from: REQ-treasurybonds-valued-every-day-since-first-purchase
+    to: FACT-PROP-22B728E1269DFE0E
+    created_at: 2026-11-01T07:38:09.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ff08069691d

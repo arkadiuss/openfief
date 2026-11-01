@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-794080458cce
+  - type: constrains
+    from: REQ-identity-read-access-no-state-change
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-01T07:40:24.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0c5bc96e7bd
+  - type: requires_property
+    from: REQ-identity-read-access-no-state-change
+    to: FACT-PROP-6C943A1576200D98
+    created_at: 2026-11-01T07:40:24.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70f2e50080bb

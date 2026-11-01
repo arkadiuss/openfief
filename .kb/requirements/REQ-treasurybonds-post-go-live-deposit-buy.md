@@ -1,6 +1,6 @@
 ---
 title: A treasury bond lot bought after go-live must be a deposit of its cost and a buy on its purchase date.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

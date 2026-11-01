@@ -1,6 +1,6 @@
 ---
 title: The performance chart must show the time-weighted return as an index from 100 at go-live, computed on gross value.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

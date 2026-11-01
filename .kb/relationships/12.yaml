@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62436a049f16
+  - type: constrains
+    from: REQ-ui-portfolio-chart-start-ignores-full-history
+    to: FACT-SUBJECT-9106B40681FB54C7
+    created_at: 2026-11-01T07:40:58.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9a71e466a57
+  - type: requires_property
+    from: REQ-ui-portfolio-chart-start-ignores-full-history
+    to: FACT-PROP-52F30216798B8054
+    created_at: 2026-11-01T07:40:58.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31d8458e20c2

@@ -538,3 +538,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd97e5b2f92c
+  - type: constrains
+    from: REQ-valuation-market-data-source-owner-switch
+    to: FACT-SUBJECT-C9C67D3EB8F4BC3F
+    created_at: 2026-11-01T07:37:08.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e867ec0d4252
+  - type: requires_property
+    from: REQ-valuation-market-data-source-owner-switch
+    to: FACT-PROP-0396362B14B0158E
+    created_at: 2026-11-01T07:37:08.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f132569a737
+  - type: constrains
+    from: REQ-ui-performance-index-100-on-start
+    to: FACT-SUBJECT-9106B40681FB54C7
+    created_at: 2026-11-01T07:40:45.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03186544a5e3
+  - type: requires_property
+    from: REQ-ui-performance-index-100-on-start
+    to: FACT-PROP-1A5DC5FB355FD6B0
+    created_at: 2026-11-01T07:40:45.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-361a09de1fad

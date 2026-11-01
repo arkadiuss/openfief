@@ -790,3 +790,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e215a9c76232
+  - type: constrains
+    from: REQ-valuation-market-data-source-chosen-on-first-need
+    to: FACT-SUBJECT-C9C67D3EB8F4BC3F
+    created_at: 2026-11-01T07:37:02.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ede4d0b38b5d
+  - type: requires_property
+    from: REQ-valuation-market-data-source-chosen-on-first-need
+    to: FACT-PROP-67C7C9B2B447F34B
+    created_at: 2026-11-01T07:37:02.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d8939f91fe2
+  - type: supersedes
+    from: REQ-valuation-market-data-source-chosen-on-first-need
+    to: REQ-valuation-market-data-rank-by-institution
+    created_at: 2026-11-01T07:37:02.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0752444085cc
