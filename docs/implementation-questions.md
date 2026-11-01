@@ -126,11 +126,6 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 ## Attention items
 
-47. **A new bounded context for attention items.**
-   - *Problem:* D-130 puts every check that needs the owner in one store, which no existing context owns, and [code-organization.md](dev/code-organization.md) says a new context needs the author's OK.
-   - *Today:* `internal/attention` is a context of its own, with its own `attention` schema, read by the views like the other contexts; its checks read the ledger, valuation and ingest through ports declared in `attention/app`. The context table in code-organization.md doesn't list it yet ([Attention items](concepts/attention.md)).
-   - *Options:* keep and add it to the table; or fold it into another context, such as views.
-
 48. **Which items the owner resolves by hand.**
    - *Problem:* D-130 names the states but not who moves an item to resolved.
    - *Today:* every kind resolves when its check clears; the owner may also resolve by hand only a flagged balance assertion and an import's left-out rows, whose condition never clears on its own. Any open item can be acknowledged; an acknowledged or owner-resolved item opens again when the check's detail changes, as a price check's acknowledgement covers only the same prices (D-112). A condition that comes back reopens the same item rather than raising a new one.
