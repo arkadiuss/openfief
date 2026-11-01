@@ -7,36 +7,12 @@ The implementation of M0 ran into these questions. No decision in [DESIGN.md](DE
 
 Items are grouped by area and numbered for discussion only; the numbers are not design IDs.
 
-## Built-in UI on a phone
-
-27. **What the installed app shows offline.**
-   - *Problem:* the author asked for a mobile PWA. D-69 makes the UI a backend-for-frontend whose pages hold the owner's record and are never cached; no decision says whether the app may keep any of the record on the device for offline reading.
-   - *Today:* the service worker caches only static files (styles, scripts, fonts, icons, the manifest) and a static offline page with Kasztan asleep; every page comes from the network, the cache is emptied on sign-out, and nothing of the record is stored on the device ([Built-in UI](concepts/ui.md#on-a-phone-and-as-an-app)).
-   - *Options:* keep; or keep the last overview (totals and accounts, no transactions) for offline reading, encrypted or not, cleared on sign-out, which puts portfolio data on the phone; or push notifications, which need a push service outside the owner's cluster.
-
 ## XTB
-
-32. **How closed CFD results and free-funds interest are booked.**
-   - *Problem:* D-24 imports closed CFD results as cash profit or loss, but the ledger has no kind for a trading result or for interest on cash (`NewInterest` needs a holding), and R-24's export had no CFD, so which `Cash Operations` type carries a CFD's result, and whether `Closed Positions`' `Profit/Loss` repeats it, wasn't seen. `Free funds interest` and its tax are in R-24.
-   - *Today:* each closed CFD position is an unsupported ingest problem naming its category, as is each free-funds interest row and its tax; cash is short by their sum.
-   - *Options:* a ledger kind for a cash result, posted against an income ledger account so performance doesn't count it as a deposit, for CFD results and interest on cash alike; or book losses as fees and profits as deposits, which misstates performance.
 
 33. **Holding assertions from `Open Positions`.**
    - *Problem:* D-18 stores a broker's position snapshot as balance assertions. An XTB position names its ticker only, so an assertion needs its ticker's confirmed ISIN, and the sheet's `Volume` format wasn't seen.
    - *Today:* none are made from `Open Positions`; only its CFD rows are read, to flag them.
    - *Options:* assert the summed volume per ticker on the report's date once the ticker is confirmed, leaving out unconfirmed ones; or wait for an export with open positions.
-
-34. **What a ticker confirmation covers, and its US listings.**
-   - *Problem:* D-116 has the owner confirm a ticker's ISIN once. A confirmation could hold for one connector instance or for every instance of the institution, and a wrong confirmation can't be changed. EODHD's supported exchanges (D-51) leave out US markets, which XTB lists with `.US`.
-   - *Today:* a confirmation holds for the instance that reported the ticker, is set once, and a different ISIN later is refused; a ticker of a market with no supported exchange, `.US` among them, gets no proposal and the owner types its ISIN.
-   - *Options:* keep; or share confirmations across instances of one institution; or let the owner correct a confirmation, superseding the transactions it booked (D-18).
-
-## Treasury bonds
-
-36. **A coupon booked on a lot the owner later deletes.**
-   - *Problem:* D-100 lets the owner delete a lot as a correction, which supersedes its transactions. Coupons the connector booked on it before are separate transactions, keyed by the lot and coupon date, and the connector can't tell which were booked: deleting a key never booked is refused (D-18).
-   - *Today:* a deleted lot is no longer open, so it gets no further coupons, but those booked earlier stay.
-   - *Options:* keep; or deliver, with a lot's deletion, a deletion of each coupon the core says was booked on it; or let a deletion of a key never booked be a no-op for coupons only.
 
 ## Accounts
 
