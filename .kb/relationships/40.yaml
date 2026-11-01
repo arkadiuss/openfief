@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e87730ab6bbe
+  - type: implements
+    from: SYM-ingest-ticker-entry
+    to: REQ-ingest-xtb-unconfirmed-ticker-waits
+    created_at: 2026-10-31T18:05:21.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bec91476f46b

@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
+	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -111,6 +112,29 @@ func check[T any](t *testing.T, what string, want, got T, err error) {
 	}
 }
 
+// TestExemptionClasses checks the owner's classifications (D-132): none at
+// first, one per instrument, and setting one again replaces it.
+func TestExemptionClasses(t *testing.T) {
+	t.Parallel()
+	store, _ := newStore(t)
+	ctx := t.Context()
+	got, err := store.ExemptionClasses(ctx)
+	check(t, "no classes", map[string]jurisdiction.ExemptionClass{}, got, err)
+	for _, c := range []jurisdiction.ExemptionClass{"other", "investment"} {
+		if saveErr := store.SaveExemptionClass(ctx, etfISIN, c); saveErr != nil {
+			t.Fatalf("SaveExemptionClass: %v", saveErr)
+		}
+	}
+	if saveErr := store.SaveExemptionClass(ctx, otherISIN, "savings"); saveErr != nil {
+		t.Fatalf("SaveExemptionClass: %v", saveErr)
+	}
+	got, err = store.ExemptionClasses(ctx)
+	check(t, "classes", map[string]jurisdiction.ExemptionClass{etfISIN: "investment", otherISIN: "savings"}, got, err)
+	if saveErr := store.SaveExemptionClass(ctx, etfISIN, ""); saveErr == nil {
+		t.Error("stored an empty class")
+	}
+}
+
 func TestReplaceValuations(t *testing.T) {
 	t.Parallel()
 	store, _ := newStore(t)
@@ -122,6 +146,7 @@ func TestReplaceValuations(t *testing.T) {
 			Value: money(t, "1267.125", "USD"), PLN: money(t, "5084.09", "PLN"), Source: "vendor",
 			PriceDate: date(t, "2026-03-02"), RateDate: date(t, "2026-03-02"),
 			Net: money(t, "5030.11", "PLN"), Liquidation: money(t, "4997.58", "PLN"),
+			TaxCost: money(t, "4800.00", "PLN"), SaleCost: money(t, "40.16", "PLN"),
 		}
 	}
 	gap := valuation.HoldingValuation{
@@ -134,6 +159,8 @@ func TestReplaceValuations(t *testing.T) {
 	noLots := row("2026-03-03")
 	noLots.Instrument, noLots.Net, noLots.Liquidation = instrument(t, otherISIN, "SHORT"), kernel.Money{}, kernel.Money{}
 	noLots.NetMissing, noLots.LiquidationMissing = valuation.MissingLots, valuation.MissingLots
+	// Without a net value, no cost basis or sale cost is stored (D-128).
+	noLots.TaxCost, noLots.SaleCost = kernel.Money{}, kernel.Money{}
 	all := []valuation.HoldingValuation{row("2026-03-02"), row("2026-03-03"), ikze, noLots, gap}
 	err := store.ReplaceValuations(ctx, acc1, date(t, "2026-03-02"), all, date(t, "2026-03-03"))
 	if err != nil {

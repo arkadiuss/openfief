@@ -1,6 +1,6 @@
 ---
 title: The OKI act's in-force date, limit and rate must be data the pack holds, not in force while unknown, and OKI's yearly tax must be the rate of the part of the average daily balance above the limit, averaged over the year's days on or after the in-force date and rounded half up to grosze.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-76
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ The OKI act's in-force date, limit and rate must be data the pack holds, not in 
 
 ## Context
 
-D-76 computes the yearly tax only once the act is in force, with its limit and rate. The act's numbers aren't known to the code, so the in-force date is unset and nothing is computed (docs/implementation-questions.md); averaging over the days given is this package's narrow reading. Modeled by Claude Code for the values work package; the author has not reviewed it yet.
-
-## Source
-
-> **[D-76]** Every account has a tax wrapper from the jurisdiction pack, which the owner sets when creating the account (D-72). The Polish pack's wrappers are a standard taxable account, IKE, IKZE and OKI (osobiste konto inwestycyjne). Inside OKI no Belka tax is due. Its yearly tax on the part of the average balance above the statutory limit, summed across all of the owner's OKI accounts, is computed from stored daily valuations only once the act is in force, with the limit and rate taken from the act.
-
-docs/DESIGN.md#D-76
+Closed: superseded by REQ-pl-oki-tax-computation. D-127 replaces D-76's balance limit with the act's exemptions and yearly rates, in force from 2027-01-01. Modeled by Claude Code for the taxes work package; the author has not reviewed it yet.

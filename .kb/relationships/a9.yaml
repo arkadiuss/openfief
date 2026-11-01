@@ -566,3 +566,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d90a5970f957
+  - type: implements
+    from: SYM-ledger-sales
+    to: REQ-ledger-sales
+    created_at: 2026-10-31T19:06:57.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9663107a77c
+  - type: covered_by
+    from: SYM-ledger-sales
+    to: TEST-ledger-sale
+    created_at: 2026-10-31T19:06:57.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f7abd9484f6
+  - type: implements
+    from: SYM-valuation-app-revaluer-sync-unclassified
+    to: REQ-valuation-unclassified-attention
+    created_at: 2026-10-31T20:08:37.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b0d9317a2dd
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-sync-unclassified
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T20:08:37.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b90375c08b08

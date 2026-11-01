@@ -405,3 +405,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6db9018a2b7
+  - type: verified_by
+    from: SCEN-pl-oki-exemption-class
+    to: TEST-pl-oki
+    created_at: 2026-10-31T18:33:19.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce38a69aeafd
+  - type: constrains
+    from: REQ-views-oki-tax-days
+    to: FACT-SUBJECT-10428880C95D3F5B
+    created_at: 2026-10-31T18:34:56.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72deb78d5ccc
+  - type: requires_property
+    from: REQ-views-oki-tax-days
+    to: FACT-PROP-3DDF24324C10EC04
+    created_at: 2026-10-31T18:34:56.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce5571dcdc78
+  - type: specified_by
+    from: REQ-views-oki-tax-days
+    to: SCEN-views-oki-tax-days
+    created_at: 2026-10-31T18:34:56.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bd76a95dcaf
+  - type: supersedes
+    from: REQ-views-oki-tax-days
+    to: REQ-views-yearly-taxes
+    created_at: 2026-10-31T18:34:56.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-696399b93add
+  - type: executable_for
+    from: SYM-views-connectapi-test-yearly-tax-under-the-act-over-rest
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:10:45.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93bfa38039ff
+  - type: implements
+    from: SYM-views-taxed-account
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:10:52.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cb0134586aa
+  - type: covered_by
+    from: SYM-views-taxed-account
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:10:52.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74f1f0421057
+  - type: implements
+    from: SYM-ledger-pg-store-delete-account
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:14:19.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-853d1a6f97b1
+  - type: validates
+    from: TEST-operator-browser-view
+    to: REQ-operator-older-plugin-keeps-browser-path
+    created_at: 2026-10-31T18:19:32.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab0884fe6084
+  - type: validates
+    from: TEST-operator-browser-view
+    to: REQ-operator-contested-browser-path-stops
+    created_at: 2026-10-31T18:20:09.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bc153bdd577

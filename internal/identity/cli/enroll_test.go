@@ -32,13 +32,6 @@ type fakeCore struct {
 	forwardDone bool
 	// linked is closed once EnrollLink was called.
 	linked chan struct{}
-	// allowed and allowedErr are what AllowedOrigins answers.
-	allowed    []string
-	allowedErr error
-}
-
-func (f *fakeCore) AllowedOrigins(context.Context) ([]string, error) {
-	return f.allowed, f.allowedErr
 }
 
 func (f *fakeCore) Forward(ctx context.Context, localPort int, ready chan struct{}) error {
@@ -61,7 +54,10 @@ func (f *fakeCore) EnrollLink(_ context.Context, host string, ttl time.Duration)
 	defer f.mu.Unlock()
 	f.host, f.ttl = host, ttl
 	close(f.linked)
-	return syntheticLink, f.linkErr
+	if f.linkErr != nil {
+		return "", f.linkErr
+	}
+	return syntheticLink, nil
 }
 
 // syncBuffer is a bytes.Buffer safe for one writer and one reader.
@@ -94,10 +90,9 @@ func TestEnroll(t *testing.T) {
 		wantPort int
 		wantHost string
 		wantTTL  time.Duration
-		wantWarn bool
 	}{
 		{name: "defaults", wantPort: 8080, wantHost: "localhost:8080", wantTTL: 15 * time.Minute},
-		{name: "another port and ttl", args: []string{"--port", "9090", "--ttl", "1h"}, wantPort: 9090, wantHost: "localhost:9090", wantTTL: time.Hour, wantWarn: true},
+		{name: "another port and ttl", args: []string{"--port", "9090", "--ttl", "1h"}, wantPort: 9090, wantHost: "localhost:9090", wantTTL: time.Hour},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -120,21 +115,18 @@ func TestEnroll(t *testing.T) {
 				t.Errorf("forwarded %d, link for %q lasting %v, forward stopped %v; want %d, %q, %v, stopped",
 					core.port, core.host, core.ttl, core.forwardDone, tt.wantPort, tt.wantHost, tt.wantTTL)
 			}
-			checkOutput(t, out.String(), tt.wantHost, tt.wantWarn)
+			checkOutput(t, out.String(), tt.wantHost)
 		})
 	}
 }
 
 // checkOutput checks what `openfief enroll` told the owner.
-func checkOutput(t *testing.T, text, host string, warn bool) {
+func checkOutput(t *testing.T, text, host string) {
 	t.Helper()
 	for _, want := range []string{syntheticLink, "first-run wizard", "Ctrl-C", "http://" + host} {
 		if !strings.Contains(text, want) {
 			t.Errorf("output lacks %q:\n%s", want, text)
 		}
-	}
-	if strings.Contains(text, "--auth-origin") != warn {
-		t.Errorf("output warns about --auth-origin: %v, want %v:\n%s", !warn, warn, text)
 	}
 }
 

@@ -198,9 +198,15 @@ func pbTotals(ts []views.DateTotal) []*viewsv1.DateTotal {
 		}
 		if !t.NetMissing {
 			total.NetReporting = pbMoney(t.Net)
+			if !t.NetOffset.Currency().IsZero() {
+				total.NetOffsetReporting = pbMoney(t.NetOffset)
+			}
 		}
 		if !t.LiquidationMissing {
 			total.LiquidationReporting = pbMoney(t.Liquidation)
+			if !t.LiquidationOffset.Currency().IsZero() {
+				total.LiquidationOffsetReporting = pbMoney(t.LiquidationOffset)
+			}
 		}
 		out = append(out, total)
 	}

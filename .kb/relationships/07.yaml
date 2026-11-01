@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c36e914a6a4
+  - type: implements
+    from: SYM-ledger-pg-store-delete-sleeve
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:12:31.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0e03d6546f4

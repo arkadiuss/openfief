@@ -636,3 +636,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7aa426d1bd9
+  - type: executable_for
+    from: SYM-pl-test-helper-oki-want
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:36.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7319734160a
+  - type: implements
+    from: SYM-pl-sum-values
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:05:28.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f73306480f6
+  - type: covered_by
+    from: SYM-pl-sum-values
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:05:28.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0ea40ab3f69
+  - type: executable_for
+    from: SYM-views-test-helper-listed-row
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:12:15.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c541db7a7f5b

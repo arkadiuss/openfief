@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2236196113ee
+  - type: executable_for
+    from: SYM-pl-test-helper-flow
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:13.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab509b8027f5

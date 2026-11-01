@@ -489,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b6c6b47832f0
+  - type: executable_for
+    from: SYM-ui-test-losses-offset-line
+    to: TEST-ui-taxes
+    created_at: 2026-10-31T19:13:36.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a74955b3d933
+  - type: implements
+    from: SYM-ingest-app-connectors-propose-isi-ns
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:01:50.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aadb6030d0d4

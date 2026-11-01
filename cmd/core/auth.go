@@ -43,18 +43,6 @@ type authConfig struct {
 	DemoSessions bool
 }
 
-// stringsFlag is a repeatable string flag.
-type stringsFlag []string
-
-// String returns the values joined by commas.
-func (s *stringsFlag) String() string { return strings.Join(*s, ",") }
-
-// Set adds one value.
-func (s *stringsFlag) Set(v string) error {
-	*s = append(*s, v)
-	return nil
-}
-
 // newAuth returns the auth use cases over pool, as cfg configures them.
 func newAuth(pool *pgxpool.Pool, cfg *authConfig, now func() time.Time) (*identityapp.Auth, error) {
 	store := identitypg.New(pool)
@@ -202,10 +190,15 @@ func (d demoMarker) DemoMarked(ctx context.Context) (bool, error) {
 }
 
 // enrollLink runs core enroll-link: it stores a one-time enrollment code
-// for origin, lasting ttl, and writes the link and its expiry to out. The
-// link is the only place the code is shown.
-func enrollLink(ctx context.Context, pool *pgxpool.Pool, origin identity.Origin, ttl time.Duration, out io.Writer, now time.Time) error {
-	link, err := identityapp.IssueEnrollmentLink(ctx, identitypg.New(pool), nil, now, origin, ttl)
+// for e.Origin, lasting e.TTL, and writes the link and its expiry to out.
+// The link is the only place the code is shown. An origin not in
+// e.Origins, the setting serve reads too, is refused (D-126).
+func enrollLink(ctx context.Context, pool *pgxpool.Pool, e *enrollArgs, out io.Writer, now time.Time) error {
+	origin, ttl := e.Origin, e.TTL
+	link, err := identityapp.IssueEnrollmentLink(ctx, identitypg.New(pool), nil, now, e.Origins, origin, ttl)
+	if errors.Is(err, identity.ErrOriginNotAllowed) {
+		return fmt.Errorf("enroll-link: %w: add it to %s (docs/guides/expose.md)", err, authOriginsEnv)
+	}
 	if err != nil {
 		return fmt.Errorf("enroll-link: %w", err)
 	}

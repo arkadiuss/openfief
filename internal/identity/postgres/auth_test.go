@@ -237,7 +237,7 @@ func TestAuthOverPostgres(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewAuth: %v", err)
 	}
-	link, err := app.IssueEnrollmentLink(ctx, store, nil, now, localOrigin(t), 0)
+	link, err := app.IssueEnrollmentLink(ctx, store, nil, now, origins, localOrigin(t), 0)
 	if err != nil {
 		t.Fatalf("IssueEnrollmentLink: %v", err)
 	}

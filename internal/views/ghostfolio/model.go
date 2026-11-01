@@ -33,7 +33,8 @@ const DataSourceManual = "MANUAL"
 const CommentPrefix = "openfief:"
 
 // Account is a Ghostfolio account the view owns: the UUID it derived for an
-// account of the record (AccountUUID), its name and its currency.
+// account of the record (AccountUUID), or for its cash in another currency
+// (CashAccountUUID), its name and its currency.
 type Account struct {
 	ID       string
 	Name     string
@@ -101,6 +102,26 @@ func namespace() uuid.UUID {
 // finds the same account and no storage is needed (D-64).
 func AccountUUID(instance string, account ledger.AccountID) string {
 	return uuidV5("account\x00" + instance + "\x00" + string(account))
+}
+
+// CashAccountUUID returns the ID of the Ghostfolio account the view
+// instance named instance owns for account's cash in currency c, a
+// currency other than the account's own owned account's: a UUID derived
+// from all three (D-133). A Ghostfolio account holds one cash balance, in
+// its own currency, so each other currency of an account's cash gets an
+// account of its own, and Ghostfolio's totals include all of the cash.
+func CashAccountUUID(instance string, account ledger.AccountID, c kernel.Currency) string {
+	return uuidV5("cash\x00" + instance + "\x00" + string(account) + "\x00" + c.String())
+}
+
+// CashAccountName returns the name of the owned account that holds the
+// cash in currency c of the account named name: the name and the
+// currency's code, such as "Synthetic broker (USD)".
+func CashAccountName(name string, c kernel.Currency) string {
+	if name == "" {
+		return c.String()
+	}
+	return name + " (" + c.String() + ")"
 }
 
 // bondNameSuffix follows the series code in a bond asset's name. No earlier

@@ -524,3 +524,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb9ac6a246ff
+  - type: constrains
+    from: REQ-ui-yearly-taxes
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-10-31T18:35:02.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d3571443ca4
+  - type: requires_property
+    from: REQ-ui-yearly-taxes
+    to: FACT-PROP-9E8FB4897983635A
+    created_at: 2026-10-31T18:35:02.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edee2790ea1a
+  - type: specified_by
+    from: REQ-ui-yearly-taxes
+    to: SCEN-ui-yearly-taxes
+    created_at: 2026-10-31T18:35:02.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3861829c2f37
+  - type: implements
+    from: SYM-ingest-app-tickers
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:24.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8609ed35585
+  - type: implements
+    from: SYM-treasurybonds-due-on-lot
+    to: REQ-treasurybonds-delivers-coupons
+    created_at: 2026-10-31T18:08:31.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d6c59ac509d

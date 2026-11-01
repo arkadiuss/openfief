@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8454c7b47962
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-issue-enrollment-link-refuses-origin
+    to: TEST-identity-auth-app
+    created_at: 2026-10-31T18:58:47.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0c394b8b6d8

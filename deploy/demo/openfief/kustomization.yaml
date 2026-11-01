@@ -37,9 +37,12 @@ patches:
       # The built-in UI's sign-in (docs/concepts/ui.md): the demo's public origin next to the base's
       # http://localhost:8080 (kubectl port-forward), and the read-only demo sessions behind "View demo", which the core
       # issues only on a database with the demo marker.
-      - op: add
-        path: /spec/template/spec/containers/0/args/-
-        value: --auth-origin=https://demo.openfief.dev
+      - op: test
+        path: /spec/template/spec/containers/0/env/1/name
+        value: OPENFIEF_AUTH_ORIGINS
+      - op: replace
+        path: /spec/template/spec/containers/0/env/1/value
+        value: http://localhost:8080,https://demo.openfief.dev
       - op: add
         path: /spec/template/spec/containers/0/args/-
         value: --demo-sessions

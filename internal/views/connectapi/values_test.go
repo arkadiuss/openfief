@@ -68,6 +68,7 @@ type accountValuesJSON struct {
 		NetReporting         *restMoney `json:"netReporting"`
 		LiquidationReporting *restMoney `json:"liquidationReporting"`
 		CashReporting        restMoney  `json:"cashReporting"`
+		NetOffsetReporting   *restMoney `json:"netOffsetReporting"`
 	} `json:"totals"`
 }
 
@@ -75,7 +76,9 @@ type accountValuesJSON struct {
 // owner's marginal rate: net values and totals are there, liquidation
 // values that need the rate are missing with the reason, and cash counts
 // in the totals: 1043.21 + 126 of holdings and -90 USD of cash at 4.00 are
-// 809.21 gross, 1035 + 120 - 360 = 795 net.
+// 809.21 gross. The rows' net values sum to 1035 + 120 - 360 = 795, but
+// IKZE taxes the whole withdrawal (D-128): 10% of 809.21 is 80.92, so the
+// net total is 728.29 and the losses-offset line -66.71.
 func TestValuesOverREST(t *testing.T) {
 	t.Parallel()
 	var vals accountValuesJSON
@@ -83,8 +86,9 @@ func TestValuesOverREST(t *testing.T) {
 	got := []string{
 		vals.Valuations[0].NetReporting.Amount, vals.Valuations[1].LiquidationMissing,
 		vals.Totals[0].ValueReporting.Amount, vals.Totals[0].NetReporting.Amount, vals.Totals[0].CashReporting.Amount,
+		vals.Totals[0].NetOffsetReporting.Amount,
 	}
-	if diff := cmp.Diff([]string{"1035", "marginal_rate", "809.21", "795", "-360"}, got); diff != "" {
+	if diff := cmp.Diff([]string{"1035", "marginal_rate", "809.21", "728.29", "-360", "-66.71"}, got); diff != "" {
 		t.Errorf("valuations and totals (-want +got):\n%s", diff)
 	}
 	if vals.Totals[0].LiquidationReporting != nil {
@@ -105,6 +109,36 @@ func TestYearlyTaxesOverREST(t *testing.T) {
 	getJSON(t, "/v1/yearly-taxes?year=2026", &taxes)
 	if len(taxes.Taxes) != 1 || taxes.Taxes[0].TaxWrapper != "oki" || taxes.Taxes[0].Year != 2026 || taxes.Taxes[0].InForce {
 		t.Errorf("yearly taxes = %+v", taxes)
+	}
+}
+
+// TestYearlyTaxUnderTheActOverREST reads 2027, under the act (D-127): no
+// account is in OKI, so every class averages zero and nothing is taxed,
+// at 0.85%.
+func TestYearlyTaxUnderTheActOverREST(t *testing.T) {
+	t.Parallel()
+	var y2027 struct {
+		Taxes []struct {
+			InForce  bool   `json:"inForce"`
+			Rate     string `json:"rate"`
+			Averages []struct {
+				ExemptionClass string    `json:"exemptionClass"`
+				Amount         restMoney `json:"amount"`
+			} `json:"averages"`
+			Exempt []struct {
+				ExemptionClass string `json:"exemptionClass"`
+			} `json:"exempt"`
+			Tax *restMoney `json:"tax"`
+		} `json:"taxes"`
+	}
+	getJSON(t, "/v1/yearly-taxes?year=2027", &y2027)
+	if len(y2027.Taxes) != 1 {
+		t.Fatalf("2027 = %+v", y2027)
+	}
+	got := y2027.Taxes[0]
+	if !got.InForce || got.Rate != "0.0085" || len(got.Averages) != 3 || got.Averages[0].ExemptionClass != "savings" ||
+		len(got.Exempt) != 3 || got.Tax == nil || got.Tax.Amount != "0" {
+		t.Errorf("2027 = %+v", got)
 	}
 }
 

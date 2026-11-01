@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe477af5e277
+  - type: executable_for
+    from: SYM-pl-test-totals
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:05:44.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e092e39b982

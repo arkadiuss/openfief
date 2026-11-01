@@ -685,3 +685,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bad38987237e
+  - type: implements
+    from: SYM-pl-oki-act-rate
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:01:19.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a93e63b1635
+  - type: implements
+    from: SYM-pl-oki-act-rate
+    to: REQ-pl-oki-tax-rate
+    created_at: 2026-10-31T19:01:19.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e809f575a3e2
+  - type: covered_by
+    from: SYM-pl-oki-act-rate
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:19.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc30785870b8
+  - type: implements
+    from: SYM-ui-clamp-year
+    to: REQ-ui-yearly-taxes
+    created_at: 2026-10-31T19:13:08.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dffc1bf64e6
+  - type: covered_by
+    from: SYM-ui-clamp-year
+    to: TEST-ui-taxes
+    created_at: 2026-10-31T19:13:08.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4ce8057902

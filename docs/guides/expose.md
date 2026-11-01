@@ -52,7 +52,7 @@ The services only plugins call, sign-in and the owner's entries such as statemen
 
 You sign in with a passkey (D-26). Browsers allow passkeys only in a secure context: HTTPS, or `http://localhost`. So a route on your own hostname needs TLS, which your Gateway or Ingress terminates, for example with a certificate from cert-manager.
 
-A passkey also works only on the hostname it was made for (D-60), and the core accepts a browser only from an origin on its allow-list, the `--auth-origin` flag, repeated once per origin. The default allows `http://localhost:8080`, for a port-forward. Add your own origin with a patch in your kustomize overlay:
+A passkey also works only on the hostname it was made for (D-60), and the core accepts a browser only from an origin on its allow-list, the core container's `OPENFIEF_AUTH_ORIGINS` environment variable, origins separated by commas. The default allows `http://localhost:8080`, for a port-forward. It is one setting that serving and issuing enrollment links both read, so the core also refuses a first-passkey link for an origin that isn't on it (D-126). Add your own origin with a patch in your kustomize overlay, keeping localhost if you still want the port-forward:
 
 ```yaml
 patches:
@@ -60,9 +60,12 @@ patches:
       kind: Deployment
       name: openfief-core
     patch: |-
-      - op: add
-        path: /spec/template/spec/containers/0/args/-
-        value: --auth-origin=https://fief.example.org
+      - op: test
+        path: /spec/template/spec/containers/0/env/1/name
+        value: OPENFIEF_AUTH_ORIGINS
+      - op: replace
+        path: /spec/template/spec/containers/0/env/1/value
+        value: http://localhost:8080,https://fief.example.org
 ```
 
 The Gateway component below adds this patch for you.
@@ -75,7 +78,7 @@ OpenFief ships the route as an optional kustomize component, [deploy/gateway](..
 
 - [httproute.yaml](../../deploy/gateway/httproute.yaml): the HTTPRoute `openfief`, every path of your hostname to `openfief-core` port `8080` (`http`). The placeholders are the Gateway (`gateway` in the namespace `gateway-system`, listener `https`) and the hostname (`openfief.invalid`, a name that can never resolve).
 - [networkpolicy.yaml](../../deploy/gateway/networkpolicy.yaml): a NetworkPolicy that admits the Gateway's data plane to the core's port `8080` alone, just as the demo's [core-from-traefik.yaml](../../deploy/demo/openfief/core-from-traefik.yaml) admits Traefik. The core's own policy admits only plugin pods, on `connect`. The placeholder admits every pod in the namespace `gateway-system`.
-- A patch that adds `--auth-origin=https://openfief.invalid` to the core.
+- A patch that sets the core's `OPENFIEF_AUTH_ORIGINS` to `http://localhost:8080,https://openfief.invalid`.
 
 An overlay of your own lists OpenFief's bases, adds the component and puts in your names. Here, in a directory `fief` next to OpenFief's `deploy` directories (or with the same paths as remote kustomize URLs), for the Gateway `home` in the namespace `gateway`, the hostname `fief.example.org`, and Envoy Gateway, whose proxies run in `envoy-gateway-system` with the label `app.kubernetes.io/component: proxy`:
 
@@ -118,7 +121,7 @@ patches:
           podSelector:
             matchLabels:
               app.kubernetes.io/component: proxy
-# The core accepts your browser on the route's hostname: copy it into the component's --auth-origin.
+# The core accepts your browser on the route's hostname: copy it into the component's OPENFIEF_AUTH_ORIGINS.
 replacements:
   - source:
       kind: HTTPRoute
@@ -129,10 +132,10 @@ replacements:
           kind: Deployment
           name: openfief-core
         fieldPaths:
-          - spec.template.spec.containers.[name=core].args.[=--auth-origin=https://openfief.invalid]
+          - spec.template.spec.containers.[name=core].env.[name=OPENFIEF_AUTH_ORIGINS].value
         options:
           delimiter: //
-          index: 1
+          index: 2
 ```
 
 `kustomize build fief` then renders the install with the route; [gateway.test.sh](../../scripts/tests/gateway.test.sh) builds exactly this overlay on every `task test`. The Gateway's listener must accept routes from the namespace `openfief`, through its `allowedRoutes`.

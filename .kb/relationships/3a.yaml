@@ -475,3 +475,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa1296c125e4
+  - type: implements
+    from: SYM-ingest-app-holdings-scope-held-accounts
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:06:35.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-262e86e587b7
+  - type: validates
+    from: TEST-ingest-app-account-changes
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:15:27.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6609c9e91098
+  - type: validates
+    from: TEST-ingest-app-account-changes
+    to: REQ-ingest-broker-account-remap
+    created_at: 2026-10-31T18:16:27.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4e862780717
+  - type: validates
+    from: TEST-ingest-app-account-changes
+    to: REQ-ingest-broker-account-numbers-owner-only
+    created_at: 2026-10-31T18:17:07.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10346a4ed99f

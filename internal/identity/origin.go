@@ -6,6 +6,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 // Errors about origins.
@@ -195,6 +196,27 @@ func (a Origins) Allowed(text string) (Origin, error) {
 
 // Equal reports whether a and b allow the same origins in the same order.
 func (a Origins) Equal(b Origins) bool { return slices.Equal(a.list, b.list) }
+
+// String returns the allowed origins separated by commas, as
+// ParseOriginList reads them.
+func (a Origins) String() string {
+	texts := make([]string, 0, len(a.list))
+	for _, o := range a.list {
+		texts = append(texts, o.String())
+	}
+	return strings.Join(texts, ",")
+}
+
+// ParseOriginList parses the core's one setting of the origins it accepts
+// (D-126), origins separated by commas, spaces or both, into an
+// allow-list; when text names none, the allow-list is def alone.
+func ParseOriginList(text, def string) (Origins, error) {
+	texts := strings.FieldsFunc(text, func(r rune) bool { return r == ',' || unicode.IsSpace(r) })
+	if len(texts) == 0 {
+		texts = []string{def}
+	}
+	return NewOrigins(texts)
+}
 
 // List returns the allowed origins, in the order given.
 func (a Origins) List() []Origin { return slices.Clone(a.list) }

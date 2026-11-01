@@ -241,6 +241,10 @@ func (fakeTerms) NumberFormat(context.Context) (jurisdiction.NumberFormat, bool,
 	return jurisdiction.NumberFormat{}, false, nil
 }
 
+func (fakeTerms) ExemptionClasses(context.Context) (map[string]jurisdiction.ExemptionClass, error) {
+	return map[string]jurisdiction.ExemptionClass{}, nil
+}
+
 // newViews returns the views over l with a bond and an ETF valued on
 // 2026-03-02 and USD at 4.00 PLN, configured by opts.
 func newViews(t *testing.T, l *fakeLedger, opts ...app.Option) *app.Views {

@@ -846,3 +846,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d06e70cfdb6
+  - type: constrains
+    from: REQ-valuation-realized-gains
+    to: FACT-SUBJECT-CF36AD8B532474E9
+    created_at: 2026-10-31T18:34:17.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aeee5e82560
+  - type: requires_property
+    from: REQ-valuation-realized-gains
+    to: FACT-PROP-F4F37905D7568AAB
+    created_at: 2026-10-31T18:34:17.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16c8f04da966
+  - type: specified_by
+    from: REQ-valuation-realized-gains
+    to: SCEN-valuation-realized-gains
+    created_at: 2026-10-31T18:34:17.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4562a366416
+  - type: executable_for
+    from: SYM-valuation-app-test-offered-classes
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T19:08:39.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-783fdcee1f18
+  - type: implements
+    from: SYM-valuationv1-instrument-class-proto-reflect
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:15:23.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccf44f4018b2
+  - type: covered_by
+    from: SYM-valuationv1-instrument-class-proto-reflect
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:15:23.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acaea95deb2f
+  - type: implements
+    from: SYM-ingest-isin-proposal
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:23.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8cf0d7b49ca
+  - type: implements
+    from: SYM-ingest-waiting-for-isin
+    to: REQ-ingest-xtb-unconfirmed-ticker-waits
+    created_at: 2026-10-31T18:05:27.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dba28ed081e3

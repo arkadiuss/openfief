@@ -35,9 +35,13 @@
   <h2 id="account-value-title">Value on {{.Date}}</h2>
   {{with .Total}}
   <div class="table"><table>
-    <thead><tr><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col" class="num">Of which cash</th></tr></thead>
-    <tbody><tr>{{template "three-values" .}}<td class="num">{{money .CashReporting}}</td></tr></tbody>
+    <thead><tr><th scope="col"><span class="sr-only">Line</span></th><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col" class="num">Of which cash</th></tr></thead>
+    <tbody>
+    <tr><th scope="row">Total</th>{{template "three-values" .}}<td class="num">{{money .CashReporting}}</td></tr>
+    <tr><th scope="row">Of which losses offset</th>{{template "losses-offset" .}}<td class="num empty">–</td></tr>
+    </tbody>
   </table></div>
+  {{template "losses-offset-help"}}
   <p class="muted">Holdings and cash in the reporting currency. Gross is before any tax or fee; net is what you keep at the planned exit; liquidation is the cash in hand if everything were sold today, after every tax and fee.{{if .CashUnconverted}} Some cash has no FX rate yet and is left out.{{end}}</p>
   {{else}}
   <p class="muted">Nothing is valued on this date yet.</p>

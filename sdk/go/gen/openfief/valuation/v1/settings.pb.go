@@ -178,9 +178,14 @@ type GetOwnerSettingsResponse struct {
 	TaxWrappers []string `protobuf:"bytes,5,rep,name=tax_wrappers,json=taxWrappers,proto3" json:"tax_wrappers,omitempty"`
 	// The owner's marginal income tax rate as a decimal fraction, such as
 	// "0.32"; empty until the owner sets it.
-	MarginalRate  string `protobuf:"bytes,6,opt,name=marginal_rate,json=marginalRate,proto3" json:"marginal_rate,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	MarginalRate string `protobuf:"bytes,6,opt,name=marginal_rate,json=marginalRate,proto3" json:"marginal_rate,omitempty"`
+	// The exemption classes the owner can classify an instrument in for OKI's
+	// yearly tax (D-127), such as "savings"; empty when no wrapper has one.
+	ExemptionClasses []string `protobuf:"bytes,7,rep,name=exemption_classes,json=exemptionClasses,proto3" json:"exemption_classes,omitempty"`
+	// The owner's classifications, in ISIN order.
+	InstrumentClasses []*InstrumentClass `protobuf:"bytes,8,rep,name=instrument_classes,json=instrumentClasses,proto3" json:"instrument_classes,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *GetOwnerSettingsResponse) Reset() {
@@ -255,6 +260,181 @@ func (x *GetOwnerSettingsResponse) GetMarginalRate() string {
 	return ""
 }
 
+func (x *GetOwnerSettingsResponse) GetExemptionClasses() []string {
+	if x != nil {
+		return x.ExemptionClasses
+	}
+	return nil
+}
+
+func (x *GetOwnerSettingsResponse) GetInstrumentClasses() []*InstrumentClass {
+	if x != nil {
+		return x.InstrumentClasses
+	}
+	return nil
+}
+
+// InstrumentClass is the owner's class of one instrument (D-132).
+type InstrumentClass struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The instrument's ISIN.
+	Isin string `protobuf:"bytes,1,opt,name=isin,proto3" json:"isin,omitempty"`
+	// One of GetOwnerSettingsResponse.exemption_classes.
+	ExemptionClass string `protobuf:"bytes,2,opt,name=exemption_class,json=exemptionClass,proto3" json:"exemption_class,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *InstrumentClass) Reset() {
+	*x = InstrumentClass{}
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InstrumentClass) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InstrumentClass) ProtoMessage() {}
+
+func (x *InstrumentClass) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InstrumentClass.ProtoReflect.Descriptor instead.
+func (*InstrumentClass) Descriptor() ([]byte, []int) {
+	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *InstrumentClass) GetIsin() string {
+	if x != nil {
+		return x.Isin
+	}
+	return ""
+}
+
+func (x *InstrumentClass) GetExemptionClass() string {
+	if x != nil {
+		return x.ExemptionClass
+	}
+	return ""
+}
+
+type SetExemptionClassRequest struct {
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	// The instrument's ISIN.
+	Isin string `protobuf:"bytes,3,opt,name=isin,proto3" json:"isin,omitempty"`
+	// One of GetOwnerSettingsResponse.exemption_classes.
+	ExemptionClass string `protobuf:"bytes,4,opt,name=exemption_class,json=exemptionClass,proto3" json:"exemption_class,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *SetExemptionClassRequest) Reset() {
+	*x = SetExemptionClassRequest{}
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetExemptionClassRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetExemptionClassRequest) ProtoMessage() {}
+
+func (x *SetExemptionClassRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetExemptionClassRequest.ProtoReflect.Descriptor instead.
+func (*SetExemptionClassRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SetExemptionClassRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *SetExemptionClassRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *SetExemptionClassRequest) GetIsin() string {
+	if x != nil {
+		return x.Isin
+	}
+	return ""
+}
+
+func (x *SetExemptionClassRequest) GetExemptionClass() string {
+	if x != nil {
+		return x.ExemptionClass
+	}
+	return ""
+}
+
+type SetExemptionClassResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetExemptionClassResponse) Reset() {
+	*x = SetExemptionClassResponse{}
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetExemptionClassResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetExemptionClassResponse) ProtoMessage() {}
+
+func (x *SetExemptionClassResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetExemptionClassResponse.ProtoReflect.Descriptor instead.
+func (*SetExemptionClassResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{5}
+}
+
 type SetNumberFormatRequest struct {
 	state        protoimpl.MessageState `protogen:"open.v1"`
 	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
@@ -267,7 +447,7 @@ type SetNumberFormatRequest struct {
 
 func (x *SetNumberFormatRequest) Reset() {
 	*x = SetNumberFormatRequest{}
-	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[3]
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -279,7 +459,7 @@ func (x *SetNumberFormatRequest) String() string {
 func (*SetNumberFormatRequest) ProtoMessage() {}
 
 func (x *SetNumberFormatRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[3]
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -292,7 +472,7 @@ func (x *SetNumberFormatRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetNumberFormatRequest.ProtoReflect.Descriptor instead.
 func (*SetNumberFormatRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{3}
+	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SetNumberFormatRequest) GetOrigin() string {
@@ -325,7 +505,7 @@ type SetNumberFormatResponse struct {
 
 func (x *SetNumberFormatResponse) Reset() {
 	*x = SetNumberFormatResponse{}
-	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[4]
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -337,7 +517,7 @@ func (x *SetNumberFormatResponse) String() string {
 func (*SetNumberFormatResponse) ProtoMessage() {}
 
 func (x *SetNumberFormatResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[4]
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -350,7 +530,7 @@ func (x *SetNumberFormatResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetNumberFormatResponse.ProtoReflect.Descriptor instead.
 func (*SetNumberFormatResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{4}
+	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *SetNumberFormatResponse) GetNumberFormat() *NumberFormat {
@@ -372,7 +552,7 @@ type SetMarginalRateRequest struct {
 
 func (x *SetMarginalRateRequest) Reset() {
 	*x = SetMarginalRateRequest{}
-	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[5]
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -384,7 +564,7 @@ func (x *SetMarginalRateRequest) String() string {
 func (*SetMarginalRateRequest) ProtoMessage() {}
 
 func (x *SetMarginalRateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[5]
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -397,7 +577,7 @@ func (x *SetMarginalRateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetMarginalRateRequest.ProtoReflect.Descriptor instead.
 func (*SetMarginalRateRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{5}
+	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SetMarginalRateRequest) GetOrigin() string {
@@ -429,7 +609,7 @@ type SetMarginalRateResponse struct {
 
 func (x *SetMarginalRateResponse) Reset() {
 	*x = SetMarginalRateResponse{}
-	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[6]
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -441,7 +621,7 @@ func (x *SetMarginalRateResponse) String() string {
 func (*SetMarginalRateResponse) ProtoMessage() {}
 
 func (x *SetMarginalRateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[6]
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -454,7 +634,7 @@ func (x *SetMarginalRateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetMarginalRateResponse.ProtoReflect.Descriptor instead.
 func (*SetMarginalRateResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{6}
+	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{9}
 }
 
 var File_openfief_valuation_v1_settings_proto protoreflect.FileDescriptor
@@ -468,14 +648,25 @@ const file_openfief_valuation_v1_settings_proto_rawDesc = "" +
 	"\x11decimal_separator\x18\x03 \x01(\tR\x10decimalSeparator\"V\n" +
 	"\x17GetOwnerSettingsRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
-	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"\xdb\x02\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"\xdf\x03\n" +
 	"\x18GetOwnerSettingsResponse\x12-\n" +
 	"\x12reporting_currency\x18\x01 \x01(\tR\x11reportingCurrency\x12H\n" +
 	"\rnumber_format\x18\x02 \x01(\v2#.openfief.valuation.v1.NumberFormatR\fnumberFormat\x122\n" +
 	"\x15number_format_default\x18\x03 \x01(\bR\x13numberFormatDefault\x12J\n" +
 	"\x0enumber_formats\x18\x04 \x03(\v2#.openfief.valuation.v1.NumberFormatR\rnumberFormats\x12!\n" +
 	"\ftax_wrappers\x18\x05 \x03(\tR\vtaxWrappers\x12#\n" +
-	"\rmarginal_rate\x18\x06 \x01(\tR\fmarginalRate\"g\n" +
+	"\rmarginal_rate\x18\x06 \x01(\tR\fmarginalRate\x12+\n" +
+	"\x11exemption_classes\x18\a \x03(\tR\x10exemptionClasses\x12U\n" +
+	"\x12instrument_classes\x18\b \x03(\v2&.openfief.valuation.v1.InstrumentClassR\x11instrumentClasses\"N\n" +
+	"\x0fInstrumentClass\x12\x12\n" +
+	"\x04isin\x18\x01 \x01(\tR\x04isin\x12'\n" +
+	"\x0fexemption_class\x18\x02 \x01(\tR\x0eexemptionClass\"\x94\x01\n" +
+	"\x18SetExemptionClassRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
+	"\x04isin\x18\x03 \x01(\tR\x04isin\x12'\n" +
+	"\x0fexemption_class\x18\x04 \x01(\tR\x0eexemptionClass\"\x1b\n" +
+	"\x19SetExemptionClassResponse\"g\n" +
 	"\x16SetNumberFormatRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x10\n" +
@@ -486,11 +677,12 @@ const file_openfief_valuation_v1_settings_proto_rawDesc = "" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
 	"\x04rate\x18\x03 \x01(\tR\x04rate\"\x19\n" +
-	"\x17SetMarginalRateResponse2\xef\x02\n" +
+	"\x17SetMarginalRateResponse2\xe7\x03\n" +
 	"\x0fSettingsService\x12x\n" +
 	"\x10GetOwnerSettings\x12..openfief.valuation.v1.GetOwnerSettingsRequest\x1a/.openfief.valuation.v1.GetOwnerSettingsResponse\"\x03\x90\x02\x01\x12p\n" +
 	"\x0fSetNumberFormat\x12-.openfief.valuation.v1.SetNumberFormatRequest\x1a..openfief.valuation.v1.SetNumberFormatResponse\x12p\n" +
-	"\x0fSetMarginalRate\x12-.openfief.valuation.v1.SetMarginalRateRequest\x1a..openfief.valuation.v1.SetMarginalRateResponseB\xec\x01\n" +
+	"\x0fSetMarginalRate\x12-.openfief.valuation.v1.SetMarginalRateRequest\x1a..openfief.valuation.v1.SetMarginalRateResponse\x12v\n" +
+	"\x11SetExemptionClass\x12/.openfief.valuation.v1.SetExemptionClassRequest\x1a0.openfief.valuation.v1.SetExemptionClassResponseB\xec\x01\n" +
 	"\x19com.openfief.valuation.v1B\rSettingsProtoP\x01ZJgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1;valuationv1\xa2\x02\x03OVX\xaa\x02\x15Openfief.Valuation.V1\xca\x02\x15Openfief\\Valuation\\V1\xe2\x02!Openfief\\Valuation\\V1\\GPBMetadata\xea\x02\x17Openfief::Valuation::V1b\x06proto3"
 
 var (
@@ -505,31 +697,37 @@ func file_openfief_valuation_v1_settings_proto_rawDescGZIP() []byte {
 	return file_openfief_valuation_v1_settings_proto_rawDescData
 }
 
-var file_openfief_valuation_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_openfief_valuation_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_openfief_valuation_v1_settings_proto_goTypes = []any{
-	(*NumberFormat)(nil),             // 0: openfief.valuation.v1.NumberFormat
-	(*GetOwnerSettingsRequest)(nil),  // 1: openfief.valuation.v1.GetOwnerSettingsRequest
-	(*GetOwnerSettingsResponse)(nil), // 2: openfief.valuation.v1.GetOwnerSettingsResponse
-	(*SetNumberFormatRequest)(nil),   // 3: openfief.valuation.v1.SetNumberFormatRequest
-	(*SetNumberFormatResponse)(nil),  // 4: openfief.valuation.v1.SetNumberFormatResponse
-	(*SetMarginalRateRequest)(nil),   // 5: openfief.valuation.v1.SetMarginalRateRequest
-	(*SetMarginalRateResponse)(nil),  // 6: openfief.valuation.v1.SetMarginalRateResponse
+	(*NumberFormat)(nil),              // 0: openfief.valuation.v1.NumberFormat
+	(*GetOwnerSettingsRequest)(nil),   // 1: openfief.valuation.v1.GetOwnerSettingsRequest
+	(*GetOwnerSettingsResponse)(nil),  // 2: openfief.valuation.v1.GetOwnerSettingsResponse
+	(*InstrumentClass)(nil),           // 3: openfief.valuation.v1.InstrumentClass
+	(*SetExemptionClassRequest)(nil),  // 4: openfief.valuation.v1.SetExemptionClassRequest
+	(*SetExemptionClassResponse)(nil), // 5: openfief.valuation.v1.SetExemptionClassResponse
+	(*SetNumberFormatRequest)(nil),    // 6: openfief.valuation.v1.SetNumberFormatRequest
+	(*SetNumberFormatResponse)(nil),   // 7: openfief.valuation.v1.SetNumberFormatResponse
+	(*SetMarginalRateRequest)(nil),    // 8: openfief.valuation.v1.SetMarginalRateRequest
+	(*SetMarginalRateResponse)(nil),   // 9: openfief.valuation.v1.SetMarginalRateResponse
 }
 var file_openfief_valuation_v1_settings_proto_depIdxs = []int32{
 	0, // 0: openfief.valuation.v1.GetOwnerSettingsResponse.number_format:type_name -> openfief.valuation.v1.NumberFormat
 	0, // 1: openfief.valuation.v1.GetOwnerSettingsResponse.number_formats:type_name -> openfief.valuation.v1.NumberFormat
-	0, // 2: openfief.valuation.v1.SetNumberFormatResponse.number_format:type_name -> openfief.valuation.v1.NumberFormat
-	1, // 3: openfief.valuation.v1.SettingsService.GetOwnerSettings:input_type -> openfief.valuation.v1.GetOwnerSettingsRequest
-	3, // 4: openfief.valuation.v1.SettingsService.SetNumberFormat:input_type -> openfief.valuation.v1.SetNumberFormatRequest
-	5, // 5: openfief.valuation.v1.SettingsService.SetMarginalRate:input_type -> openfief.valuation.v1.SetMarginalRateRequest
-	2, // 6: openfief.valuation.v1.SettingsService.GetOwnerSettings:output_type -> openfief.valuation.v1.GetOwnerSettingsResponse
-	4, // 7: openfief.valuation.v1.SettingsService.SetNumberFormat:output_type -> openfief.valuation.v1.SetNumberFormatResponse
-	6, // 8: openfief.valuation.v1.SettingsService.SetMarginalRate:output_type -> openfief.valuation.v1.SetMarginalRateResponse
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	3, // 2: openfief.valuation.v1.GetOwnerSettingsResponse.instrument_classes:type_name -> openfief.valuation.v1.InstrumentClass
+	0, // 3: openfief.valuation.v1.SetNumberFormatResponse.number_format:type_name -> openfief.valuation.v1.NumberFormat
+	1, // 4: openfief.valuation.v1.SettingsService.GetOwnerSettings:input_type -> openfief.valuation.v1.GetOwnerSettingsRequest
+	6, // 5: openfief.valuation.v1.SettingsService.SetNumberFormat:input_type -> openfief.valuation.v1.SetNumberFormatRequest
+	8, // 6: openfief.valuation.v1.SettingsService.SetMarginalRate:input_type -> openfief.valuation.v1.SetMarginalRateRequest
+	4, // 7: openfief.valuation.v1.SettingsService.SetExemptionClass:input_type -> openfief.valuation.v1.SetExemptionClassRequest
+	2, // 8: openfief.valuation.v1.SettingsService.GetOwnerSettings:output_type -> openfief.valuation.v1.GetOwnerSettingsResponse
+	7, // 9: openfief.valuation.v1.SettingsService.SetNumberFormat:output_type -> openfief.valuation.v1.SetNumberFormatResponse
+	9, // 10: openfief.valuation.v1.SettingsService.SetMarginalRate:output_type -> openfief.valuation.v1.SetMarginalRateResponse
+	5, // 11: openfief.valuation.v1.SettingsService.SetExemptionClass:output_type -> openfief.valuation.v1.SetExemptionClassResponse
+	8, // [8:12] is the sub-list for method output_type
+	4, // [4:8] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_openfief_valuation_v1_settings_proto_init() }
@@ -543,7 +741,7 @@ func file_openfief_valuation_v1_settings_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_valuation_v1_settings_proto_rawDesc), len(file_openfief_valuation_v1_settings_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -97,7 +97,8 @@ func TestParseArgs(t *testing.T) {
 		name    string
 		args    []string
 		dsn     string
-		pod     bool // KUBERNETES_SERVICE_HOST is set
+		pod     bool   // KUBERNETES_SERVICE_HOST is set
+		origins string // OPENFIEF_AUTH_ORIGINS
 		want    command
 		wantErr error // nil with wantFail: any error
 		fail    bool
@@ -122,27 +123,27 @@ func TestParseArgs(t *testing.T) {
 			want: command{Name: cmdServe, DSN: testDSN, Serve: tuned},
 		},
 		{
-			name: "auth flags", dsn: testDSN,
-			args: []string{
-				"--auth-origin=https://dev.example.com", "--auth-origin", "http://localhost:9000",
-				"--session-idle=1h", "--session-max=48h", "--demo-sessions",
-			},
+			name: "auth flags and the origins setting", dsn: testDSN, origins: "https://dev.example.com, http://localhost:9000",
+			args: []string{"--session-idle=1h", "--session-max=48h", "--demo-sessions"},
 			want: command{Name: cmdServe, DSN: testDSN, Serve: authed},
 		},
-		{name: "plain http off localhost", args: []string{"--auth-origin=http://dev.example.com"}, dsn: testDSN, wantErr: identity.ErrInvalidOrigin},
+		{name: "plain http off localhost", origins: "http://dev.example.com", dsn: testDSN, wantErr: identity.ErrInvalidOrigin},
+		// The origins are one setting that enroll-link reads too (D-126): no flag.
+		{name: "an origin flag", args: []string{"--auth-origin=https://dev.example.com"}, dsn: testDSN, fail: true},
 		{name: "idle above max", args: []string{"--session-idle=10h", "--session-max=1h"}, dsn: testDSN, wantErr: identity.ErrInvalidSessionPolicy},
 		{
 			name: "enroll-link", args: []string{"enroll-link"}, dsn: testDSN,
-			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "http://localhost:8080"), TTL: 15 * time.Minute}},
+			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "http://localhost:8080"), TTL: 15 * time.Minute, Origins: def.Auth.Origins}},
 		},
 		{
-			name: "enroll-link for a host", args: []string{"enroll-link", "--host=dev.example.com", "--ttl=1h"}, dsn: testDSN,
-			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "https://dev.example.com"), TTL: time.Hour}},
+			name: "enroll-link for a host", args: []string{"enroll-link", "--host=dev.example.com", "--ttl=1h"}, dsn: testDSN, origins: "https://dev.example.com",
+			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "https://dev.example.com"), TTL: time.Hour, Origins: mustOrigins(t, "https://dev.example.com")}},
 		},
 		{
 			name: "enroll-link for an origin", args: []string{"enroll-link", "--host=https://dev.example.com:8443"}, dsn: testDSN,
-			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "https://dev.example.com:8443"), TTL: 15 * time.Minute}},
+			want: command{Name: cmdEnrollLink, DSN: testDSN, Enroll: enrollArgs{Origin: mustOrigin(t, "https://dev.example.com:8443"), TTL: 15 * time.Minute, Origins: def.Auth.Origins}},
 		},
+		{name: "enroll-link with a bad origins setting", args: []string{"enroll-link"}, origins: "http://dev.example.com", dsn: testDSN, wantErr: identity.ErrInvalidOrigin},
 		{name: "enroll-link for an IP", args: []string{"enroll-link", "--host=192.0.2.1"}, dsn: testDSN, wantErr: identity.ErrInvalidOrigin},
 		{name: "enroll-link with an argument", args: []string{"enroll-link", "now"}, dsn: testDSN, wantErr: errUsage},
 		{name: "retry max below first", args: []string{"--sync-retry-first=1h", "--sync-retry-max=1m"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
@@ -195,15 +196,11 @@ func TestParseArgs(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := parseArgs(tt.args, func(k string) string {
-				switch {
-				case k == dsnEnv:
-					return tt.dsn
-				case k == inClusterEnv && tt.pod:
-					return "192.0.2.1"
-				}
-				return ""
-			})
+			env := map[string]string{dsnEnv: tt.dsn, authOriginsEnv: tt.origins}
+			if tt.pod {
+				env[inClusterEnv] = "192.0.2.1"
+			}
+			got, err := parseArgs(tt.args, func(k string) string { return env[k] })
 			wantFail := tt.fail || tt.wantErr != nil
 			if (err != nil) != wantFail || (tt.wantErr != nil && !errors.Is(err, tt.wantErr)) {
 				t.Fatalf("parseArgs error = %v, want %v (fail: %v)", err, tt.wantErr, wantFail)

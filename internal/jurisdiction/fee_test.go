@@ -52,6 +52,12 @@ func TestFeeRuleSaleCost(t *testing.T) {
 		{name: "0.29% of 1 000 = 2.90 is below the 14.00 minimum", rate: "0.0029", min: "14", convRate: "0", gross: "1000", want: "14"},
 		{name: "foreign: commission plus 0.5% conversion", rate: "0.0029", min: "14", convRate: "0.005", gross: "10000", foreign: true, want: "79.00"},
 		{name: "conversion only for a foreign instrument", rate: "0", min: "0", convRate: "0.005", gross: "10000", want: "0"},
+		{
+			// D-129: the minimum lifts the commission before the conversion fee
+			// is added: max(0.1% of 5 000 = 5, 14) + 0.5% of 5 000 = 14 + 25 =
+			// 39, not max(5 + 25, 14) = 30.
+			name: "the minimum applies before the conversion fee", rate: "0.001", min: "14", convRate: "0.005", gross: "5000", foreign: true, want: "39.00",
+		},
 		{name: "rounds half up to grosze: 0.25% of 1.02 = 0.00255", rate: "0.0025", min: "0", convRate: "0", gross: "1.02", want: "0.00"},
 		{name: "rounds half up: 0.5% of 1.01 = 0.00505", rate: "0.005", min: "0", convRate: "0", gross: "1.01", want: "0.01"},
 		{name: "nothing sold, nothing charged", rate: "0.0029", min: "14", convRate: "0", gross: "0", want: "0"},

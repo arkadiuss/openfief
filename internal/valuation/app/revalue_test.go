@@ -107,6 +107,7 @@ func TestRevalueStoresMarketValues(t *testing.T) {
 			Value: money(t, value, "USD"), PLN: money(t, pln, "PLN"), Source: "vendor",
 			PriceDate: date(t, priceDate), RateDate: date(t, "2026-03-02"),
 			Net: money(t, net, "PLN"), Liquidation: money(t, net, "PLN"),
+			TaxCost: money(t, "3960.00", "PLN"), SaleCost: money(t, "0", "PLN"),
 		}
 	}
 	want := []valuation.HoldingValuation{

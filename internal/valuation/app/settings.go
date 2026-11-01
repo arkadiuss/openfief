@@ -27,6 +27,11 @@ type OwnerSettings struct {
 
 	Wrappers []jurisdiction.Wrapper
 	Values   jurisdiction.Settings
+	// ExemptionClasses are the classes the owner can classify an instrument in
+	// for a yearly tax (OfferedClasses), and InstrumentClasses the owner's
+	// classes by ISIN (D-132).
+	ExemptionClasses  []jurisdiction.ExemptionClass
+	InstrumentClasses map[string]jurisdiction.ExemptionClass
 }
 
 // Settings are the owner's settings use cases (D-79): reading the display
@@ -75,7 +80,14 @@ func (s *Settings) Owner(ctx context.Context, origin, sessionToken string) (Owne
 	if err != nil {
 		return OwnerSettings{}, fmt.Errorf("loading the owner's settings: %w", err)
 	}
-	return OwnerSettings{DisplaySettings: display, Wrappers: s.pack.Wrappers(), Values: values}, nil
+	classes, err := s.store.ExemptionClasses(ctx)
+	if err != nil {
+		return OwnerSettings{}, fmt.Errorf("loading exemption classes: %w", err)
+	}
+	return OwnerSettings{
+		DisplaySettings: display, Wrappers: s.pack.Wrappers(), Values: values,
+		ExemptionClasses: OfferedClasses(s.pack), InstrumentClasses: classes,
+	}, nil
 }
 
 // SetNumberFormat makes f the owner's number format, for the owner. A

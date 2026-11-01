@@ -5,7 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"maps"
 	"net/http"
+	"slices"
 
 	"connectrpc.com/connect"
 
@@ -53,7 +55,24 @@ func (s *settingsService) GetOwnerSettings(ctx context.Context, req *connect.Req
 	if got.Values.HasMarginalRate {
 		out.MarginalRate = got.Values.MarginalRate.String()
 	}
+	for _, c := range got.ExemptionClasses {
+		out.ExemptionClasses = append(out.ExemptionClasses, string(c))
+	}
+	for _, isin := range slices.Sorted(maps.Keys(got.InstrumentClasses)) {
+		out.InstrumentClasses = append(out.InstrumentClasses,
+			&valuationv1.InstrumentClass{Isin: isin, ExemptionClass: string(got.InstrumentClasses[isin])})
+	}
 	return connect.NewResponse(out), nil
+}
+
+// SetExemptionClass classifies an instrument for a yearly tax (D-132).
+func (s *settingsService) SetExemptionClass(ctx context.Context, req *connect.Request[valuationv1.SetExemptionClassRequest]) (*connect.Response[valuationv1.SetExemptionClassResponse], error) {
+	err := s.settings.SetExemptionClass(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetIsin(),
+		jurisdiction.ExemptionClass(req.Msg.GetExemptionClass()))
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&valuationv1.SetExemptionClassResponse{}), nil
 }
 
 // SetNumberFormat makes one of the offered number formats the owner's.

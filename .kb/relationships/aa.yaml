@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e3f89f41c5d
+  - type: implements
+    from: SYM-core-entry-caller-lookup-instruments
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:01:39.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daeec7ef7c01

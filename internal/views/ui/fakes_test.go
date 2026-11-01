@@ -429,7 +429,7 @@ func (f *fakeRead) ListValuationTotals(_ context.Context, r *connect.Request[vie
 		From: r.Msg.GetFrom(), To: r.Msg.GetTo(), ReportingCurrency: "PLN",
 		Totals: []*viewsv1.DateTotal{
 			{Date: "2026-03-30", ValueReporting: pln("990.00"), NetReporting: pln("950.00")},
-			{Date: "2026-03-31", ValueReporting: pln("1500.00"), NetReporting: pln("1400.00"), CashReporting: pln("500.00")},
+			{Date: "2026-03-31", ValueReporting: pln("1500.00"), NetReporting: pln("1400.00"), CashReporting: pln("500.00"), NetOffsetReporting: pln("25.00")},
 		},
 	}), nil
 }
@@ -445,7 +445,7 @@ func (f *fakeRead) ListAccountValuations(_ context.Context, r *connect.Request[v
 			Value: &viewsv1.Money{Amount: "250.00", Currency: "EUR"}, ValueReporting: pln("1000.00"),
 			NetReporting: pln("950.00"), LiquidationMissing: "marginal_rate",
 		}},
-		Totals: []*viewsv1.DateTotal{{Date: r.Msg.GetTo(), ValueReporting: pln("1000.00"), NetReporting: pln("950.00"), CashReporting: pln("0")}},
+		Totals: []*viewsv1.DateTotal{{Date: r.Msg.GetTo(), ValueReporting: pln("1000.00"), NetReporting: pln("950.00"), CashReporting: pln("0"), NetOffsetReporting: pln("10.00")}},
 	}), nil
 }
 

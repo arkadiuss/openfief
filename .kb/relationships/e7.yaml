@@ -622,20 +622,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8c40b76d43d
-  - type: implements
-    from: SYM-pl-exchange-price
-    to: REQ-ingest-bond-lot-purchase-kinds
-    created_at: 2026-10-30T06:39:24.018Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2d288bb062c0
-  - type: implements
-    from: SYM-pl-exchange-price
-    to: REQ-pl-exchange-discount-taxed
-    created_at: 2026-10-30T06:39:24.071Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-904eed0af011
   - type: covered_by
     from: SYM-pl-exchange-price
     to: TEST-pl-terms
@@ -741,3 +727,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5582f6cf5591
+  - type: constrains
+    from: REQ-valuation-unclassified-attention
+    to: FACT-SUBJECT-D9167FC0C337F20A
+    created_at: 2026-10-31T18:34:32.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b15199a4d23c
+  - type: requires_property
+    from: REQ-valuation-unclassified-attention
+    to: FACT-PROP-B2C098EB40ADB8CF
+    created_at: 2026-10-31T18:34:32.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ae302bc11d4
+  - type: specified_by
+    from: REQ-valuation-unclassified-attention
+    to: SCEN-valuation-unclassified-attention
+    created_at: 2026-10-31T18:34:33.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6ba5d6036d8
+  - type: implements
+    from: SYM-ledger-sale
+    to: REQ-ledger-sales
+    created_at: 2026-10-31T19:06:52.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97dd8f3d1e60
+  - type: covered_by
+    from: SYM-ledger-sale
+    to: TEST-ledger-sale
+    created_at: 2026-10-31T19:06:52.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-461d720ed621
+  - type: executable_for
+    from: SYM-ledger-test-sales
+    to: TEST-ledger-sale
+    created_at: 2026-10-31T19:07:24.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05addc197158
+  - type: implements
+    from: SYM-pl-exchange-price
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:23:54.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe38e02ac23
+  - type: implements
+    from: SYM-pl-exchange-price
+    to: REQ-pl-exchange-discount-taxed-at-99-90
+    created_at: 2026-10-31T18:24:54.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbea0345b563

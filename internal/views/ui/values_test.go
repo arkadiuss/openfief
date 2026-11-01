@@ -26,6 +26,8 @@ type fakeSettings struct {
 	read *fakeRead
 	mu   sync.Mutex
 	rate string
+	// classes are the owner's exemption classes by ISIN (D-132).
+	classes map[string]string
 }
 
 // fakeFormats are the formats the fake offers, the Polish default first.
@@ -42,10 +44,15 @@ func (f *fakeSettings) GetOwnerSettings(_ context.Context, r *connect.Request[va
 	}
 	f.mu.Lock()
 	defer f.mu.Unlock()
-	return connect.NewResponse(&valuationv1.GetOwnerSettingsResponse{
+	out := &valuationv1.GetOwnerSettingsResponse{
 		ReportingCurrency: "PLN", NumberFormat: fakeFormats()[0], NumberFormatDefault: true,
 		NumberFormats: fakeFormats(), TaxWrappers: []string{"taxable", "ike", "ikze", "oki"}, MarginalRate: f.rate,
-	}), nil
+		ExemptionClasses: []string{"savings", "investment", "other"},
+	}
+	for isin, c := range f.classes {
+		out.InstrumentClasses = append(out.InstrumentClasses, &valuationv1.InstrumentClass{Isin: isin, ExemptionClass: c})
+	}
+	return connect.NewResponse(out), nil
 }
 
 func (f *fakeSettings) SetNumberFormat(_ context.Context, r *connect.Request[valuationv1.SetNumberFormatRequest]) (*connect.Response[valuationv1.SetNumberFormatResponse], error) {

@@ -47,6 +47,11 @@ type DateTotal struct {
 	// lacks it, so the total is not given.
 	Net, Liquidation               kernel.Money
 	NetMissing, LiquidationMissing bool
+	// NetOffset and LiquidationOffset are the losses-offset line (D-128):
+	// what the total's tax, counted as the wrappers' rules count it on the
+	// whole (TaxTotals), differs from its rows' own taxes by, set with the
+	// value; zero until taxed.
+	NetOffset, LiquidationOffset kernel.Money
 	// Cash is the cash in the totals, in the reporting currency.
 	Cash kernel.Money
 	// CashUnconverted reports cash with no FX rate on or before the date,

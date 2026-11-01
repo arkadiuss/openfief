@@ -678,3 +678,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3cc41f6808ae
+  - type: implements
+    from: SYM-pl-class-sums
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:02:40.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7096ecc009b
+  - type: covered_by
+    from: SYM-pl-class-sums
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:02:40.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b609fadf767
+  - type: validates
+    from: TEST-plugins-eodhd-lookup
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:57.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23323aa0f049

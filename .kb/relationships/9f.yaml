@@ -406,20 +406,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-543c0683cd2a
   - type: implements
-    from: SYM-exp-identity-kube-core-access-allowed-origins
-    to: REQ-identity-enroll-origin
-    created_at: 2026-10-29T22:36:35.221Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6e973b02328b
-  - type: covered_by
-    from: SYM-exp-identity-kube-core-access-allowed-origins
-    to: TEST-identity-kube-core-access
-    created_at: 2026-10-29T22:36:35.253Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d59e0f1a0c80
-  - type: implements
     from: SYM-ui-account-row
     to: REQ-ui-overview-values
     created_at: 2026-10-30T02:40:19.909Z
@@ -468,3 +454,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a927bb62ed29
+  - type: implements
+    from: SYM-pl-day-added
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:02:12.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f36518e4848b
+  - type: covered_by
+    from: SYM-pl-day-added
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:02:12.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e3fe6d3ea2a
+  - type: implements
+    from: SYM-views-tax-year-account-class-of
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:14:15.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e2c6d221e0e
+  - type: covered_by
+    from: SYM-views-tax-year-account-class-of
+    to: TEST-views-yearly-tax
+    created_at: 2026-10-31T19:14:15.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcdacb03a1f8
+  - type: implements
+    from: SYM-ingest-connectrpc-held-to
+    to: REQ-ingest-sync-carries-bound-holdings-lots
+    created_at: 2026-10-31T18:06:40.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-686e357e3b59

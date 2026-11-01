@@ -510,3 +510,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-173e0d9f4776
+  - type: verified_by
+    from: SCEN-views-ghostfolio-owned-and-cash-accounts-created
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-10-31T19:00:16.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fe988e032ae
+  - type: verified_by
+    from: SCEN-views-ghostfolio-owned-and-cash-accounts-created
+    to: TEST-views-ghostfolio-sync
+    created_at: 2026-10-31T19:00:16.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-429c598a246a
+  - type: verified_by
+    from: SCEN-views-ghostfolio-owned-and-cash-accounts-created
+    to: TEST-views-ghostfolio-plan
+    created_at: 2026-10-31T19:00:16.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44a3dfe055a8

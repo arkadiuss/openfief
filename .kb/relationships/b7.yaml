@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef1bc51b6489
+  - type: implements
+    from: SYM-pl-instances-delete-service-access
+    to: REQ-plugins-in-cluster-service-role-removed
+    created_at: 2026-10-31T18:17:57.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2363db79ca61

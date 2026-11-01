@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f3be0debb3d
+  - type: implements
+    from: SYM-viewsv1-class-amount
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:18:13.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cdead43ac50
+  - type: covered_by
+    from: SYM-viewsv1-class-amount
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:18:13.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b020e02ce03
+  - type: implements
+    from: SYM-plugins-eodhd-connector-lookup-instruments
+    to: REQ-ingest-xtb-isin-proposed
+    created_at: 2026-10-31T18:02:34.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4190b3e2427

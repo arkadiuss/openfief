@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-deedcd5520d0
+  - type: executable_for
+    from: SYM-valuation-test-realized-gains
+    to: TEST-valuation-realized
+    created_at: 2026-10-31T19:09:45.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83133e4d50d4

@@ -580,3 +580,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9114c38c7431
+  - type: implements
+    from: SYM-jurisdiction-class-value
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:06:26.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a37bf4cd704
+  - type: covered_by
+    from: SYM-jurisdiction-class-value
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:06:26.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7472f4531289
+  - type: implements
+    from: SYM-views-payments
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:11:16.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b848b041de6
+  - type: covered_by
+    from: SYM-views-payments
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:11:16.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e5342ccdd02
+  - type: implements
+    from: SYM-treasurybonds-mapper-lot-transactions
+    to: REQ-treasurybonds-lot-on-go-live-day-opening
+    created_at: 2026-10-31T18:11:19.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6abbd47f43d7
+  - type: constrains
+    from: REQ-views-ghostfolio-owned-and-cash-accounts
+    to: FACT-SUBJECT-2A49400A8B1F4128
+    created_at: 2026-10-31T19:58:42.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3ad4e601662
+  - type: requires_property
+    from: REQ-views-ghostfolio-owned-and-cash-accounts
+    to: FACT-PROP-78486AE0C6C5EFCD
+    created_at: 2026-10-31T19:58:42.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a05995684bb3
+  - type: specified_by
+    from: REQ-views-ghostfolio-owned-and-cash-accounts
+    to: SCEN-views-ghostfolio-owned-and-cash-accounts-created
+    created_at: 2026-10-31T19:58:42.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f69677899aa4
+  - type: supersedes
+    from: REQ-views-ghostfolio-owned-and-cash-accounts
+    to: REQ-views-ghostfolio-owned-accounts
+    created_at: 2026-10-31T19:58:42.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9479a0310aa6

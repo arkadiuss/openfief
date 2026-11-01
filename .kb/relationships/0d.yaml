@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a9261e46b7b
+  - type: executable_for
+    from: SYM-views-test-tax-totals
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:12:21.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d9f9e4e970f
+  - type: implements
+    from: SYM-exp-plugins-held-by
+    to: REQ-operator-older-plugin-keeps-browser-path
+    created_at: 2026-10-31T18:19:22.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02b7679348d2

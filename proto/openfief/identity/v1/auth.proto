@@ -25,7 +25,7 @@
 // - Every request carries origin: the origin the owner's browser uses,
 //   scheme, host and port, such as "https://dev.openfief.dev" or
 //   "http://localhost:8080". It must be on the core's allow-list
-//   (--auth-origin), or the call fails with PERMISSION_DENIED. Its host is
+//   (OPENFIEF_AUTH_ORIGINS), or the call fails with PERMISSION_DENIED. Its host is
 //   the WebAuthn relying party ID: a passkey works only on the host it was
 //   created on (D-60), and a session only on the host it was issued on.
 // - A missing, unknown, expired or revoked session fails with

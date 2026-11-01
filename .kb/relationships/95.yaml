@@ -419,27 +419,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be8827fd775c
-  - type: implements
-    from: SYM-pl-oki-act
-    to: REQ-pl-oki-act-as-data
-    created_at: 2026-10-29T22:06:58.971Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8f1a85d3ecd9
-  - type: implements
-    from: SYM-pl-oki-act
-    to: REQ-pl-oki-yearly-tax
-    created_at: 2026-10-29T22:06:59.009Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-271c6cc9b86c
-  - type: covered_by
-    from: SYM-pl-oki-act
-    to: TEST-pl-pack
-    created_at: 2026-10-29T22:06:59.039Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-303e477fbf72
   - type: executable_for
     from: SYM-valuation-app-test-revalue-fee-rule-and-short-holdings
     to: TEST-valuation-app-revalue
@@ -531,3 +510,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03db7cb9fe19
+  - type: implements
+    from: SYM-pl-oki-act
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T18:35:46.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5d78244af1f
+  - type: implements
+    from: SYM-pl-oki-act
+    to: REQ-pl-oki-act-in-force-2027
+    created_at: 2026-10-31T18:35:46.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75db05d6763d
+  - type: covered_by
+    from: SYM-pl-oki-act
+    to: TEST-pl-oki
+    created_at: 2026-10-31T18:35:46.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14927d58d3f4

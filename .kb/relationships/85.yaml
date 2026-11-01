@@ -489,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98b6ba9955a1
+  - type: implements
+    from: SYM-valuationv1-set-exemption-class-response-descriptor
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:17:20.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e05195c485c9
+  - type: covered_by
+    from: SYM-valuationv1-set-exemption-class-response-descriptor
+    to: TEST-core-settings
+    created_at: 2026-10-31T19:17:20.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04fae4100e53

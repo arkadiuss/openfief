@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9601ce1409d
+  - type: implements
+    from: SYM-ingest-connectapi-new-tickers
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:44.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce77f95a0522

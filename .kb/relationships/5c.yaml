@@ -594,3 +594,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-161d5e3d6add
+  - type: executable_for
+    from: SYM-pl-test-helper-oki-account
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:19.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a678c461eecf
+  - type: implements
+    from: SYM-pl-ikze-total
+    to: REQ-pl-totals-per-wrapper
+    created_at: 2026-10-31T19:05:21.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29e6e8edb0f9
+  - type: covered_by
+    from: SYM-pl-ikze-total
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:05:21.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51bf3159421e
+  - type: implements
+    from: SYM-views-payment
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:10:57.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b12c9dd97b3d
+  - type: covered_by
+    from: SYM-views-payment
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:10:57.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4604a1ec5aa6
+  - type: implements
+    from: SYM-views-plus
+    to: REQ-views-totals-losses-offset
+    created_at: 2026-10-31T19:12:05.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8449a6a6e825
+  - type: covered_by
+    from: SYM-views-plus
+    to: TEST-views-taxes
+    created_at: 2026-10-31T19:12:05.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7170e585734

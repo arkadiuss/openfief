@@ -79,7 +79,10 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Early-redemption fee | jurisdiction/pl | `pl.Terms.EarlyRedemptionFee` | The per-bond fee for redeeming before maturity, capped at the bond's accrued interest except for coupon types after their first interest period, and not charged on a withdrawal from IKE or IKZE. OTS has none: redeemed early, it earns no interest. | penalty |
 | Exchange price | jurisdiction/pl | `pl.Purchase.Price` | The price per bond of a series bought by exchanging (zamiana) maturing bonds, set in its issue letter: usually 99.90 PLN, 100 PLN for OTS. The discount below the nominal is taxed with the interest. | rollover price |
 | Lot value | jurisdiction/pl | `pl.LotValue` | A bond lot's statutory value on a date: its gross accrued value, the interest in it, its purchase discount and the early-redemption fee redeeming it that day would charge in its wrapper. The pack turns them into net and liquidation values. | |
-| OKI act | jurisdiction/pl | `pl.OKIAct` | What the act on OKI fixes for its yearly tax: the day it is in force from, the balance limit and the rate on the part of the average balance above it (D-76). Data, not in force until set. | |
+| OKI act | jurisdiction/pl | `pl.OKIAct` | What the act on OKI fixes for its yearly tax on asset value, held as data: the day it is in force from (2027-01-01), each year's rate and exempt amounts, and the readings that set later years' (D-127). | |
+| Exemption class | jurisdiction | `jurisdiction.ExemptionClass`; `pl.Savings`, `pl.Investment`, `pl.Other` | The class a yearly tax's exemptions put an asset in: for OKI, a savings asset, an investment asset or neither (D-127). The pack classifies what it can; the owner classifies the rest once (D-132). | asset class (that is the allocation's) |
+| Losses-offset line | views | `views.DateTotal.NetOffset`, `LiquidationOffset` | What a total's net or liquidation value, its tax counted on the whole as each wrapper counts it (PIT-38 across taxable accounts), differs from the sum of its rows, each of which carries its own tax as if it alone were sold (D-128). | |
+| Realized gain | valuation | `valuation.RealizedGain` | A sale's gain for tax, a loss when negative: its proceeds less its fees, less the cost of the lots it consumed, each at the NBP rate of the day before its event (D-128). | profit |
 | Connector | ingest | `ingest.Connector` | A plugin that brings data in through an ingest path. | integration |
 | View | views | `views.View` | A plugin that presents the canonical record elsewhere and never writes back. | sync, export |
 | Owned account | views | `ghostfolio.AccountUUID` | A Ghostfolio account the Ghostfolio view created, one per account, known by the UUID derived from the view instance's name and the account's ID. The view writes only into owned accounts. Inside the Ghostfolio adapter, activity is Ghostfolio's word for what the record calls a transaction. | managed account |
@@ -216,7 +219,7 @@ Don't create code for these before their milestone.
 | NBP table A | The National Bank of Poland's daily table of average exchange rates, used to convert foreign income for tax. |
 | NetworkPolicy | A Kubernetes resource restricting which pods a pod may talk to and be reached from. |
 | Notional | The money value of an order or position (quantity times price). |
-| OKI | Osobiste konto inwestycyjne, a Polish personal investment account: no Belka tax inside it, and a yearly tax on the part of its average balance above a statutory limit (D-76). |
+| OKI | Osobiste konto inwestycyjne, a Polish personal investment account: no Belka tax inside it, and from 2027 a yearly tax on the value of its assets above the exempt amounts (D-76, D-127). |
 | OMS | Order management system: the component that validates, routes and tracks orders. |
 | OPA / Rego | Open Policy Agent, a CNCF policy engine; Rego is its Datalog-inspired policy language. |
 | Paper trading | Trading against a simulated account with fake money. |

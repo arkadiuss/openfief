@@ -251,13 +251,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe37f8634b0b
-  - type: implements
-    from: SYM-views-ghostfolio-account
-    to: REQ-views-ghostfolio-owned-accounts
-    created_at: 2026-10-29T00:55:27.487Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ea0c41534a08
   - type: covered_by
     from: SYM-views-ghostfolio-account
     to: TEST-views-ghostfolio-project
@@ -384,13 +377,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f7851c08638
-  - type: implements
-    from: SYM-views-ghostfolio-cash-moves
-    to: REQ-views-ghostfolio-cash-balances
-    created_at: 2026-10-30T01:26:03.991Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-07760f7aa988
   - type: covered_by
     from: SYM-views-ghostfolio-cash-moves
     to: TEST-views-ghostfolio-project
@@ -517,3 +503,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67065da6f29f
+  - type: constrains
+    from: REQ-valuation-stored-cost-basis
+    to: FACT-SUBJECT-213364B7B95B537F
+    created_at: 2026-10-31T18:34:25.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee10874b7da1
+  - type: requires_property
+    from: REQ-valuation-stored-cost-basis
+    to: FACT-PROP-A623761A0A2AC14B
+    created_at: 2026-10-31T18:34:25.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f282a0b64243
+  - type: specified_by
+    from: REQ-valuation-stored-cost-basis
+    to: SCEN-valuation-stored-cost-basis
+    created_at: 2026-10-31T18:34:25.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f9e7fa17829
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-attention-clear
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T20:08:48.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-415e402cca36
+  - type: validates
+    from: TEST-ledger-app-deletions
+    to: REQ-portfolio-delete-unused
+    created_at: 2026-10-31T18:15:09.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ffdb7d37a43
+  - type: implements
+    from: SYM-views-ghostfolio-account
+    to: REQ-views-ghostfolio-owned-and-cash-accounts
+    created_at: 2026-10-31T20:02:57.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81c90018ab3a
+  - type: implements
+    from: SYM-views-ghostfolio-cash-moves
+    to: REQ-views-ghostfolio-cash-balances-per-currency
+    created_at: 2026-10-31T20:03:36.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-794833db5153

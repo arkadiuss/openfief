@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c18ea6d8949d
+  - type: implements
+    from: SYM-exp-operator-one-browser-view
+    to: REQ-operator-contested-browser-path-stops
+    created_at: 2026-10-31T18:19:40.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8851d4e9edff

@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa4a771d2f19
+  - type: implements
+    from: SYM-pl-pack-exemption-classes
+    to: REQ-pl-oki-exemption-class
+    created_at: 2026-10-31T19:01:32.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b75a0481f3c
+  - type: covered_by
+    from: SYM-pl-pack-exemption-classes
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:32.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-118c903797c2
