@@ -566,3 +566,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd26b12eb819
+  - type: implements
+    from: SYM-viewsv1-bond-payout-type
+    to: REQ-ui-bond-payout-setting
+    created_at: 2026-11-01T07:55:34.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c66a232d5cb8
+  - type: covered_by
+    from: SYM-viewsv1-bond-payout-type
+    to: TEST-ui-values
+    created_at: 2026-11-01T07:55:34.365Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe97645b4347
+  - type: implements
+    from: SYM-valuation-gen-pb-series-source-descriptor
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:13:47.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5dc057f46a6
+  - type: covered_by
+    from: SYM-valuation-gen-pb-series-source-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:13:47.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-707c428208f2

@@ -636,27 +636,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6a414e51e9d8
-  - type: executable_for
-    from: SYM-identity-app-auth-test-test-issue-enrollment-link-refuses-origin
-    to: TEST-identity-auth-app
-    created_at: 2026-10-31T18:58:47.362Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d0c394b8b6d8
-  - type: implements
-    from: SYM-ingest-xtb-labelled
-    to: REQ-ingest-xtb-start-open-positions
-    created_at: 2026-11-01T08:07:03.597Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-698aec61a7b0
-  - type: covered_by
-    from: SYM-ingest-xtb-labelled
-    to: TEST-ingest-xtb-opening
-    created_at: 2026-11-01T08:07:03.682Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d80158f09df9
   - type: implements
     from: SYM-viewsv1-attention-item-change-get-at
     to: REQ-views-attention-items
@@ -671,3 +650,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8454c7b47962
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-issue-enrollment-link-refuses-origin
+    to: TEST-identity-auth-app
+    created_at: 2026-10-31T18:58:47.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0c394b8b6d8
+  - type: implements
+    from: SYM-valuation-gen-pb-series-source-proto-reflect
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:13:39.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbe56851946d
+  - type: covered_by
+    from: SYM-valuation-gen-pb-series-source-proto-reflect
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:13:39.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5138d3121d92
+  - type: implements
+    from: SYM-ingest-xtb-labelled
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:07:03.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-698aec61a7b0
+  - type: covered_by
+    from: SYM-ingest-xtb-labelled
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:07:03.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d80158f09df9

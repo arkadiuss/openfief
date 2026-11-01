@@ -43,6 +43,19 @@ components:
             - $ref: '#/components/schemas/openfief.views.v1.FeeRule'
           title: fee_rule
           description: The fee rule its broker charges a sale (D-78); zero until set.
+        bondPayout:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.BondPayout'
+          title: bond_payout
+          description: |-
+            What happens to the coupons and maturities of a hand-entered bond
+             account (D-135); BOND_PAYOUT_CASH for every other account.
+        bondPayoutSince:
+          type: string
+          title: bond_payout_since
+          description: |-
+            The day bond_payout took effect, YYYY-MM-DD; empty when it never
+             changed.
       title: Account
       additionalProperties: false
       description: Account is one account at an institution. It belongs to one sleeve.
@@ -220,6 +233,16 @@ components:
       title: BacktestDay
       additionalProperties: false
       description: BacktestDay is the model portfolio's backtest at the end of one day.
+    openfief.views.v1.BondPayout:
+      type: string
+      title: BondPayout
+      enum:
+        - BOND_PAYOUT_UNSPECIFIED
+        - BOND_PAYOUT_CASH
+        - BOND_PAYOUT_PAID_OUT
+      description: |-
+        BondPayout is what happens to what a hand-entered bond account's bonds
+         pay, matching the option the bond registry offers (D-135).
     openfief.views.v1.Book:
       type: object
       properties:
@@ -1644,6 +1667,7 @@ components:
         - TRANSACTION_KIND_WITHDRAWAL
         - TRANSACTION_KIND_OPENING_LOT
         - TRANSACTION_KIND_INTEREST
+        - TRANSACTION_KIND_REDEMPTION
       description: TransactionKind is what kind of economic event a transaction is.
     openfief.views.v1.Transfer:
       type: object

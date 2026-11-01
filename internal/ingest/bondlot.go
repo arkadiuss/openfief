@@ -72,8 +72,9 @@ type BondLotEntries struct {
 	// Account is the account the lots are entered on; the connector books
 	// them there, so one instance serves every bond account.
 	Account ledger.AccountID
-	// GoLive is the account's go-live date: the date it was seeded on, or
-	// today for an account not seeded yet.
+	// GoLive is the go-live date of an account seeded with opening lots
+	// before D-98 was rewritten, and zero for every other account, whose
+	// lots are all deposits and buys on their purchase dates.
 	GoLive  kernel.Date
 	Lots    []BondLot
 	Deleted []BondLotKey

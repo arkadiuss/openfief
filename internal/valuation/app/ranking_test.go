@@ -29,13 +29,58 @@ func (f fakeOwners) CheckOwner(_ context.Context, _, token string) error {
 	return f.err
 }
 
-// fakeRankings keeps sources and the owner's order in memory, and records
-// the revaluations each change enqueued.
+// fakeRankings keeps sources, the owner's order, the series' sources and
+// the gap thresholds in memory, and records the revaluations each change
+// enqueued.
 type fakeRankings struct {
-	sources []valuation.Source
-	placed  map[valuation.MarketDataKind][]string
-	revals  []valuation.Revaluation
-	err     error
+	sources   []valuation.Source
+	placed    map[valuation.MarketDataKind][]string
+	series    []valuation.SeriesSource
+	available map[valuation.Series][]string
+	gaps      valuation.GapThresholds
+	revals    []valuation.Revaluation
+	err       error
+}
+
+func (f *fakeRankings) SeriesSources(context.Context) ([]valuation.SeriesSource, error) {
+	return f.series, f.err
+}
+
+func (f *fakeRankings) AvailableSources(_ context.Context, series valuation.Series) ([]string, error) {
+	return f.available[series], f.err
+}
+
+func (f *fakeRankings) SaveSeriesSource(_ context.Context, ss *valuation.SeriesSource, revals []valuation.Revaluation) (bool, error) {
+	if f.err != nil {
+		return false, f.err
+	}
+	for i := range f.series {
+		if f.series[i].Series == ss.Series {
+			changed := f.series[i].Source != ss.Source
+			f.series[i] = *ss
+			if changed {
+				f.revals = append(f.revals, revals...)
+			}
+			return changed, nil
+		}
+	}
+	f.series, f.revals = append(f.series, *ss), append(f.revals, revals...)
+	return true, nil
+}
+
+func (f *fakeRankings) GapThresholds(context.Context) (valuation.GapThresholds, error) {
+	return f.gaps, f.err
+}
+
+func (f *fakeRankings) SaveGapThreshold(_ context.Context, kind valuation.MarketDataKind, days int) error {
+	if f.err != nil {
+		return f.err
+	}
+	if f.gaps.Days == nil {
+		f.gaps.Days = map[valuation.MarketDataKind]int{}
+	}
+	f.gaps.Days[kind] = days
+	return nil
 }
 
 func (f *fakeRankings) SaveSources(_ context.Context, sources []valuation.Source) error {
@@ -100,12 +145,11 @@ func TestRankSources(t *testing.T) {
 	if names := got.Names(); !slices.Equal(names, []string{"ibkr-main", "prices-eu"}) {
 		t.Errorf("ranking after the owner's change = %v", names)
 	}
-	if diff := cmp.Diff(revals(t, "acc-1", "2026-03-02", "acc-2", "2026-03-05"), store.revals); diff != "" {
-		t.Errorf("a change revalues every account from its start (-want +got):\n%s", diff)
+	if got.GapThreshold != 7 || all[2].GapThreshold != 92 {
+		t.Errorf("gap thresholds = %d, %d; want the defaults 7 and 92", got.GapThreshold, all[2].GapThreshold)
 	}
-	store.revals = nil
-	if _, err := r.RankSources(ctx, "https://openfief.example", ownerToken, valuation.KindPrices, []string{"ibkr-main", "prices-eu"}); err != nil || store.revals != nil {
-		t.Errorf("the same ranking again = %v, revaluations %v; want none", err, store.revals)
+	if store.revals != nil {
+		t.Errorf("a change of ranking revalued %v; want nothing, since every series keeps its source", store.revals)
 	}
 }
 

@@ -13,16 +13,24 @@ import (
 	"github.com/arkadiuss/openfief/internal/valuation/app"
 )
 
-// fakeAttention records the items it was asked to raise and clear.
-type fakeAttention struct{ raised, cleared []string }
+// fakeAttention records the items of kind only it was asked to raise, with
+// their detail, and to clear.
+type fakeAttention struct {
+	only            string
+	raised, cleared []string
+}
 
-func (f *fakeAttention) Raise(_ context.Context, kind, subject, _ string) error {
-	f.raised = append(f.raised, kind+" "+subject)
+func (f *fakeAttention) Raise(_ context.Context, kind, subject, detail string) error {
+	if kind == f.only {
+		f.raised = append(f.raised, kind+" "+subject+": "+detail)
+	}
 	return nil
 }
 
 func (f *fakeAttention) Clear(_ context.Context, kind, subject string) error {
-	f.cleared = append(f.cleared, kind+" "+subject)
+	if kind == f.only {
+		f.cleared = append(f.cleared, kind+" "+subject)
+	}
 	return nil
 }
 
@@ -40,7 +48,7 @@ func TestRevalueRaisesUnclassified(t *testing.T) {
 		want    []string
 		cleared []string
 	}{
-		{name: "OKI, unclassified", wrapper: "oki", want: []string{app.UnclassifiedKind + " " + etfISIN}},
+		{name: "OKI, unclassified", wrapper: "oki", want: []string{app.UnclassifiedKind + " " + etfISIN + ": the jurisdiction pack can't tell this instrument's exemption class for oki's yearly tax"}},
 		{
 			name: "OKI, classified by the owner", wrapper: "oki", classes: map[string]jurisdiction.ExemptionClass{etfISIN: pl.Investment},
 			cleared: []string{app.UnclassifiedKind + " " + etfISIN},
@@ -54,7 +62,7 @@ func TestRevalueRaisesUnclassified(t *testing.T) {
 			s.prices = []valuation.Price{usdPrice(t, "2026-03-02", "100"), usdPrice(t, "2026-03-03", "101.5")}
 			s.rates = []valuation.FXRate{rate(t, "USD", "2026-02-27", "4.0000"), rate(t, "USD", "2026-03-02", "4.0000")}
 			s.wrappers[acc1], s.classes = tt.wrapper, tt.classes
-			attention := &fakeAttention{}
+			attention := &fakeAttention{only: app.UnclassifiedKind}
 			r := revaluer(t, etfLedger(t), s, "2026-03-03").WithAttention(attention)
 			if _, err := r.Revalue(t.Context(), acc1, date(t, "2026-03-02")); err != nil {
 				t.Fatalf("Revalue: %v", err)

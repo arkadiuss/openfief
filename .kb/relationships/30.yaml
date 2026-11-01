@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc1fab97d8c9
+  - type: verified_by
+    from: SCEN-valuation-market-data-series-service
+    to: TEST-core-market-data
+    created_at: 2026-11-01T08:56:11.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dace2dbd74a9

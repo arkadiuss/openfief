@@ -482,20 +482,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63016c653f71
-  - type: implements
-    from: SYM-treasurybonds-mapper-unique
-    to: REQ-treasurybonds-lot-mapping
-    created_at: 2026-10-30T06:38:24.314Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-da208a205100
-  - type: implements
-    from: SYM-treasurybonds-mapper-unique
-    to: REQ-treasurybonds-pre-go-live-opening-lot
-    created_at: 2026-10-30T06:38:24.385Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ecd6a4273813
   - type: covered_by
     from: SYM-treasurybonds-mapper-unique
     to: TEST-treasurybonds-mapper
@@ -531,6 +517,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48a5d5597665
+  - type: implements
+    from: SYM-ledger-fees
+    to: REQ-ledger-sales
+    created_at: 2026-10-31T19:07:19.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97029c5c11a4
+  - type: covered_by
+    from: SYM-ledger-fees
+    to: TEST-ledger-sale
+    created_at: 2026-10-31T19:07:19.744Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fcd23a94cf1
+  - type: verified_by
+    from: SCEN-ui-bond-payout-setting
+    to: TEST-ui-values
+    created_at: 2026-11-01T07:44:30.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f484a9d37955
+  - type: implements
+    from: SYM-treasurybonds-mapper-unique
+    to: REQ-treasurybonds-lot-on-purchase-date
+    created_at: 2026-11-01T07:59:37.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0af56625fe53
+  - type: implements
+    from: SYM-treasurybonds-mapper-unique
+    to: REQ-treasurybonds-lot-idempotent-series-date
+    created_at: 2026-11-01T08:44:48.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f029b0f3e74a
   - type: validates
     from: TEST-attention-app-checks
     to: REQ-core-attention-item-checks
@@ -580,17 +601,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c860bc320630
-  - type: implements
-    from: SYM-ledger-fees
-    to: REQ-ledger-sales
-    created_at: 2026-10-31T19:07:19.714Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-97029c5c11a4
-  - type: covered_by
-    from: SYM-ledger-fees
-    to: TEST-ledger-sale
-    created_at: 2026-10-31T19:07:19.744Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7fcd23a94cf1

@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-877f3a1c0e06
+  - type: verified_by
+    from: SCEN-valuation-gap-threshold-default
+    to: TEST-valuation-series
+    created_at: 2026-11-01T08:55:34.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f9433d758e1
+  - type: verified_by
+    from: SCEN-valuation-gap-threshold-default
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T08:55:35.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b24e8414c48
+  - type: verified_by
+    from: SCEN-valuation-gap-threshold-default
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T08:55:35.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-626f2639bef8

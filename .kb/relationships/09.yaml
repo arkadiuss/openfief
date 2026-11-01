@@ -664,3 +664,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb9ec09dfab0
+  - type: executable_for
+    from: SYM-valuation-test-helper-sourced-price
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:05:53.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dce2d4cc9a1d
+  - type: implements
+    from: SYM-valuation-app-dates-of
+    to: REQ-valuation-gap-item-per-account
+    created_at: 2026-11-01T09:06:43.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e64ec9914323
+  - type: covered_by
+    from: SYM-valuation-app-dates-of
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:06:43.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f1d7a5f5284
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-string
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:20:11.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e55ea49bfec
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-string
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:20:11.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec84673d6bb8

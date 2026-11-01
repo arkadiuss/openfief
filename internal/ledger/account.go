@@ -28,9 +28,21 @@ type Account struct {
 	Institution string
 	Name        string
 	Sleeve      portfolio.SleeveID
+	// Payout is what happens to the coupons and maturities of a
+	// hand-entered bond account (D-135); nil is the default, as cash.
+	Payout *PayoutSetting
 }
 
-// Validate reports whether a has an ID, an institution, a name and a sleeve.
+// PayoutSetting returns a's payout setting, the default for none.
+func (a Account) PayoutSetting() PayoutSetting {
+	if a.Payout == nil {
+		return PayoutSetting{}
+	}
+	return *a.Payout
+}
+
+// Validate reports whether a has an ID, an institution, a name and a
+// sleeve, and a valid payout setting.
 func (a Account) Validate() error {
 	switch {
 	case a.ID == "":
@@ -41,6 +53,9 @@ func (a Account) Validate() error {
 		return fmt.Errorf("%w %s: empty name", ErrInvalidAccount, a.ID)
 	case a.Sleeve == "":
 		return fmt.Errorf("%w %s: no sleeve", ErrInvalidAccount, a.ID)
+	}
+	if err := a.PayoutSetting().Validate(); err != nil {
+		return fmt.Errorf("%w %s: %w", ErrInvalidAccount, a.ID, err)
 	}
 	return nil
 }

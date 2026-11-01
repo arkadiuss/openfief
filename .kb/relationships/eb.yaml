@@ -272,13 +272,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88b7686b4027
-  - type: implements
-    from: SYM-valuation-postgres-store-rank-of
-    to: REQ-valuation-ranking-revalues
-    created_at: 2026-10-29T18:16:00.450Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2dcbc9aab30f
   - type: covered_by
     from: SYM-valuation-postgres-store-rank-of
     to: TEST-valuation-postgres-ranking
@@ -538,3 +531,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d49fd37e4dbb
+  - type: implements
+    from: SYM-ledger-account-payout-setting
+    to: REQ-ledger-payout-setting
+    created_at: 2026-11-01T07:50:45.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8a3bb880134
+  - type: covered_by
+    from: SYM-ledger-account-payout-setting
+    to: TEST-ledger-account
+    created_at: 2026-11-01T07:50:45.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9ec9d57bf05
+  - type: implements
+    from: SYM-valuation-postgres-store-rank-of
+    to: REQ-valuation-series-source-recorded
+    created_at: 2026-11-01T09:01:54.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec99aaf513ea
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-rankings-available-sources
+    to: TEST-valuation-app-ranking
+    created_at: 2026-11-01T09:09:09.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-120075cd04a5
+  - type: implements
+    from: SYM-valuation-gen-pb-series-source-string
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:13:25.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bb20c87377d
+  - type: covered_by
+    from: SYM-valuation-gen-pb-series-source-string
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:13:25.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-646a67b699fa

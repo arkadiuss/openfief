@@ -510,3 +510,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e33e3d9fec5d
+  - type: implements
+    from: SYM-ingest-connectapi-pb-payout
+    to: REQ-ingest-bond-payout-setting
+    created_at: 2026-11-01T07:47:40.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56d31cd4e132
+  - type: covered_by
+    from: SYM-ingest-connectapi-pb-payout
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T07:47:40.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5af5f616d7a1
+  - type: implements
+    from: SYM-valuation-by-source-type
+    to: REQ-valuation-market-data-never-other-source
+    created_at: 2026-11-01T09:03:10.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a8758548acc
+  - type: implements
+    from: SYM-valuation-by-source-type
+    to: REQ-valuation-market-data-other-sources-cross-checks
+    created_at: 2026-11-01T09:03:10.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da02523c032a
+  - type: covered_by
+    from: SYM-valuation-by-source-type
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:03:10.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d3e6a88cd79
+  - type: implements
+    from: SYM-valuation-validate-gap-threshold
+    to: REQ-valuation-gap-threshold-default
+    created_at: 2026-11-01T09:04:19.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0a2927f2c78
+  - type: covered_by
+    from: SYM-valuation-validate-gap-threshold
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:04:19.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbc889818a8e

@@ -4,11 +4,13 @@ import (
 	"context"
 	"errors"
 	"net/http"
+	"strings"
 	"sync"
 	"testing"
 
 	"connectrpc.com/connect"
 
+	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	valuationv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
@@ -191,6 +193,33 @@ func TestAccountTermsForms(t *testing.T) {
 	wantStatus(t, h.serve(t, withSession(form("/accounts/"+accountID+"/edit", "name=Renamed&sleeve=core&tax_wrapper=ike"), ownerSession)), http.StatusSeeOther)
 	if updated := h.accounts.lastUpdate(); updated.GetTaxWrapper() != "ike" || updated.GetFeeRule() != nil {
 		t.Errorf("UpdateAccount = %v, want ike with the fee rule kept", updated)
+	}
+}
+
+// TestBondPayoutForm shows the payout setting (D-135) only on a
+// hand-entered bond account's form, and hands the chosen one to the core.
+func TestBondPayoutForm(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	page := h.serve(t, withSession(request(http.MethodGet, "/accounts", ""), ownerSession))
+	if strings.Contains(page.Body.String(), `name="bond_payout"`) {
+		t.Error("a broker account's form offers a payout setting")
+	}
+	h.read.locked(func() { h.read.institution = bondInstitution })
+	page = h.serve(t, withSession(request(http.MethodGet, "/accounts", ""), ownerSession))
+	wantBody(t, page, `name="bond_payout"`, "Coupons and maturities", `<option value="paid-out">Paid out</option>`)
+	for _, tt := range []struct {
+		posted string
+		want   ingestv1.BondPayout
+	}{
+		{"&bond_payout=paid-out", ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT},
+		{"&bond_payout=cash", ingestv1.BondPayout_BOND_PAYOUT_CASH},
+		{"", ingestv1.BondPayout_BOND_PAYOUT_UNSPECIFIED},
+	} {
+		wantStatus(t, h.serve(t, withSession(form("/accounts/"+accountID+"/edit", "name=Bonds&sleeve=bonds"+tt.posted), ownerSession)), http.StatusSeeOther)
+		if got := h.accounts.lastUpdate().GetBondPayout(); got != tt.want {
+			t.Errorf("posting %q: UpdateAccount payout = %v, want %v", tt.posted, got, tt.want)
+		}
 	}
 }
 

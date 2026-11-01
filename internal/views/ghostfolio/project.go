@@ -228,7 +228,9 @@ func (p *projector) transaction(accountID string, t *ledger.Transaction) ([]Acti
 func (p *projector) activities(accountID, comment string, t *ledger.Transaction) ([]Activity, error) {
 	switch t.Kind {
 	case ledger.KindBuy, ledger.KindSell, ledger.KindOpeningLot:
-		return p.trade(accountID, comment, t)
+		return p.trade(accountID, comment, t, ledger.BookFee)
+	case ledger.KindRedemption:
+		return p.trade(accountID, comment, t, ledger.BookWithholdingTax)
 	case ledger.KindDividend:
 		return p.income(accountID, comment, TypeDividend, t)
 	case ledger.KindInterest:
@@ -241,9 +243,11 @@ func (p *projector) activities(accountID, comment string, t *ledger.Transaction)
 	return nil, fmt.Errorf("%w: kind %s", errMalformed, t.Kind)
 }
 
-// trade is a buy, a sell or an opening lot: one BUY or SELL, plus FEEs in
-// other currencies.
-func (p *projector) trade(accountID, comment string, t *ledger.Transaction) ([]Activity, error) {
+// trade is a buy, a sell, an opening lot or a redemption: one BUY or SELL,
+// its fee from t's postings to feeKind, plus FEEs in other currencies. A
+// redemption (D-135) is a SELL at its redemption value whose fee is the
+// tax withheld from it, as an income's is.
+func (p *projector) trade(accountID, comment string, t *ledger.Transaction, feeKind ledger.BookKind) ([]Activity, error) {
 	h, err := holdingPosting(t)
 	if err != nil {
 		return nil, err
@@ -264,7 +268,7 @@ func (p *projector) trade(accountID, comment string, t *ledger.Transaction) ([]A
 		return nil, fmt.Errorf("unit price: %w", err)
 	}
 	a := Activity{AccountID: accountID, Comment: comment, Type: typ, Date: date, Currency: h.Amount.Currency(), Quantity: qty, UnitPrice: unit}
-	return p.withFees(&a, h, t, ledger.BookFee)
+	return p.withFees(&a, h, t, feeKind)
 }
 
 // income is a dividend or interest: one activity of typ, DIVIDEND or

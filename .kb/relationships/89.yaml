@@ -517,6 +517,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d53279a3c78
+  - type: implements
+    from: SYM-treasurybonds-due-maturity
+    to: REQ-treasurybonds-maturity-redemption
+    created_at: 2026-11-01T07:49:02.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f03df9c6de82
+  - type: covered_by
+    from: SYM-treasurybonds-due-maturity
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:49:02.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b0d0e88a89c
   - type: constrains
     from: REQ-valuation-market-data-one-source
     to: FACT-SUBJECT-C9C67D3EB8F4BC3F
@@ -559,3 +573,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae2df6d87f35
+  - type: implements
+    from: SYM-valuation-gen-pb-set-series-source-request-string
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:16:35.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98af3fc43d33
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-series-source-request-string
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:16:35.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01a2248cae6e
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-request-string
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:18:43.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a76e4ead28a
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-request-string
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:18:43.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79dc0eb33aed

@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d35055ff2cc
+  - type: executable_for
+    from: SYM-ui-test-gap-threshold-form
+    to: TEST-ui-market-data
+    created_at: 2026-11-01T09:12:46.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a39fc8eff26e

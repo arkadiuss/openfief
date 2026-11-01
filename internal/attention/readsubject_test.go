@@ -22,6 +22,14 @@ func TestReadSubject(t *testing.T) {
 		{name: "ticker", kind: attention.KindTickerUnconfirmed, subject: "xtb-main/TESTA.PL", want: "xtb-main/TESTA.PL"},
 		{name: "batch", kind: attention.KindImportProblems, subject: "b-7", want: "b-7"},
 		{name: "instrument", kind: attention.KindPriceCheckFlagged, subject: "XX00000SYNT3/SYN", want: "XX00000SYNT3/SYN"},
+		{name: "assertion", kind: attention.KindAssertionFlagged, subject: "acc-1/2026-03-02/cash:PLN", want: "acc-1/2026-03-02/cash:PLN"},
+		{name: "setting", kind: attention.KindSettingMissing, subject: "marginal-rate", want: "marginal-rate"},
+		{name: "transfer pair", kind: attention.KindTransferBroken, subject: "acc-1/b-1+acc-2/b-2", want: "acc-1/b-1+acc-2/b-2"},
+		// Kinds other contexts raise: valuation's market-data gap, whose
+		// subject is the OpenFief account and the series, and its
+		// unclassified instrument, an ISIN; neither holds a broker account.
+		{name: "market-data gap", kind: attention.Kind("market-data-gap"), subject: "acc-1/price/XX00000SYNT3", want: "acc-1/price/XX00000SYNT3"},
+		{name: "unclassified instrument", kind: attention.Kind("instrument-unclassified"), subject: "XX00000SYNT3", want: "XX00000SYNT3"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

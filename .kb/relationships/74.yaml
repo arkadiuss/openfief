@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39c620d0de84
+  - type: executable_for
+    from: SYM-treasurybonds-test-book-maturities-waits
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:50:23.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd27a1f0a0d7
+  - type: executable_for
+    from: SYM-ledger-pg-test-redemption-round-trip
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-01T07:52:09.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e31f355d4bfc

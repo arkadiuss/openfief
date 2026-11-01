@@ -18,7 +18,7 @@ type attentionKind struct {
 }
 
 // attentionKindOf names kind, one of the core's kinds of attention items
-// (D-130, D-131, D-132); a kind it doesn't know shows its own name and no page.
+// (D-130, D-131, D-132, D-94); a kind it doesn't know shows its own name and no page.
 func attentionKindOf(kind string) attentionKind {
 	switch kind {
 	case "balance-assertion-flagged":
@@ -37,6 +37,8 @@ func attentionKindOf(kind string) attentionKind {
 		return attentionKind{"Transfer broken by a correction", "/transfers"}
 	case "instrument-unclassified":
 		return attentionKind{"Instrument to classify", "/settings"}
+	case "market-data-gap":
+		return attentionKind{"Market data stopped arriving", "/settings#series-sources-title"}
 	}
 	return attentionKind{Label: kind}
 }

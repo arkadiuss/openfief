@@ -91,6 +91,60 @@ func (SleeveRole) EnumDescriptor() ([]byte, []int) {
 	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{0}
 }
 
+// BondPayout is what happens to what a hand-entered bond account's bonds
+// pay, matching the option the bond registry offers (D-135).
+type BondPayout int32
+
+const (
+	BondPayout_BOND_PAYOUT_UNSPECIFIED BondPayout = 0
+	// Coupons and maturities stay as the account's cash.
+	BondPayout_BOND_PAYOUT_CASH BondPayout = 1
+	// Each coupon and maturity is followed by a withdrawal of the same
+	// amount on the same day.
+	BondPayout_BOND_PAYOUT_PAID_OUT BondPayout = 2
+)
+
+// Enum value maps for BondPayout.
+var (
+	BondPayout_name = map[int32]string{
+		0: "BOND_PAYOUT_UNSPECIFIED",
+		1: "BOND_PAYOUT_CASH",
+		2: "BOND_PAYOUT_PAID_OUT",
+	}
+	BondPayout_value = map[string]int32{
+		"BOND_PAYOUT_UNSPECIFIED": 0,
+		"BOND_PAYOUT_CASH":        1,
+		"BOND_PAYOUT_PAID_OUT":    2,
+	}
+)
+
+func (x BondPayout) Enum() *BondPayout {
+	p := new(BondPayout)
+	*p = x
+	return p
+}
+
+func (x BondPayout) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (BondPayout) Descriptor() protoreflect.EnumDescriptor {
+	return file_openfief_views_v1_read_service_proto_enumTypes[1].Descriptor()
+}
+
+func (BondPayout) Type() protoreflect.EnumType {
+	return &file_openfief_views_v1_read_service_proto_enumTypes[1]
+}
+
+func (x BondPayout) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use BondPayout.Descriptor instead.
+func (BondPayout) EnumDescriptor() ([]byte, []int) {
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{1}
+}
+
 // ValueKind is one of the three values of D-77.
 type ValueKind int32
 
@@ -133,11 +187,11 @@ func (x ValueKind) String() string {
 }
 
 func (ValueKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[1].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[2].Descriptor()
 }
 
 func (ValueKind) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[1]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[2]
 }
 
 func (x ValueKind) Number() protoreflect.EnumNumber {
@@ -146,7 +200,7 @@ func (x ValueKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ValueKind.Descriptor instead.
 func (ValueKind) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{1}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{2}
 }
 
 // BookKind is the kind of a ledger account inside an account.
@@ -195,11 +249,11 @@ func (x BookKind) String() string {
 }
 
 func (BookKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[2].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[3].Descriptor()
 }
 
 func (BookKind) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[2]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[3]
 }
 
 func (x BookKind) Number() protoreflect.EnumNumber {
@@ -208,7 +262,7 @@ func (x BookKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BookKind.Descriptor instead.
 func (BookKind) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{2}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{3}
 }
 
 // TransactionKind is what kind of economic event a transaction is.
@@ -226,21 +280,25 @@ const (
 	TransactionKind_TRANSACTION_KIND_OPENING_LOT   TransactionKind = 8
 	// Interest paid on a holding, such as a treasury bond's coupon (D-101).
 	TransactionKind_TRANSACTION_KIND_INTEREST TransactionKind = 9
+	// A holding redeemed by its issuer, such as a treasury bond at maturity
+	// (D-135).
+	TransactionKind_TRANSACTION_KIND_REDEMPTION TransactionKind = 11
 )
 
 // Enum value maps for TransactionKind.
 var (
 	TransactionKind_name = map[int32]string{
-		0: "TRANSACTION_KIND_UNSPECIFIED",
-		1: "TRANSACTION_KIND_BUY",
-		2: "TRANSACTION_KIND_SELL",
-		3: "TRANSACTION_KIND_DIVIDEND",
-		4: "TRANSACTION_KIND_FEE",
-		5: "TRANSACTION_KIND_FX_CONVERSION",
-		6: "TRANSACTION_KIND_DEPOSIT",
-		7: "TRANSACTION_KIND_WITHDRAWAL",
-		8: "TRANSACTION_KIND_OPENING_LOT",
-		9: "TRANSACTION_KIND_INTEREST",
+		0:  "TRANSACTION_KIND_UNSPECIFIED",
+		1:  "TRANSACTION_KIND_BUY",
+		2:  "TRANSACTION_KIND_SELL",
+		3:  "TRANSACTION_KIND_DIVIDEND",
+		4:  "TRANSACTION_KIND_FEE",
+		5:  "TRANSACTION_KIND_FX_CONVERSION",
+		6:  "TRANSACTION_KIND_DEPOSIT",
+		7:  "TRANSACTION_KIND_WITHDRAWAL",
+		8:  "TRANSACTION_KIND_OPENING_LOT",
+		9:  "TRANSACTION_KIND_INTEREST",
+		11: "TRANSACTION_KIND_REDEMPTION",
 	}
 	TransactionKind_value = map[string]int32{
 		"TRANSACTION_KIND_UNSPECIFIED":   0,
@@ -253,6 +311,7 @@ var (
 		"TRANSACTION_KIND_WITHDRAWAL":    7,
 		"TRANSACTION_KIND_OPENING_LOT":   8,
 		"TRANSACTION_KIND_INTEREST":      9,
+		"TRANSACTION_KIND_REDEMPTION":    11,
 	}
 )
 
@@ -267,11 +326,11 @@ func (x TransactionKind) String() string {
 }
 
 func (TransactionKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[3].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[4].Descriptor()
 }
 
 func (TransactionKind) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[3]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[4]
 }
 
 func (x TransactionKind) Number() protoreflect.EnumNumber {
@@ -280,7 +339,7 @@ func (x TransactionKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TransactionKind.Descriptor instead.
 func (TransactionKind) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{3}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{4}
 }
 
 // AssertionStatus is the result of checking a balance assertion.
@@ -319,11 +378,11 @@ func (x AssertionStatus) String() string {
 }
 
 func (AssertionStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[4].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[5].Descriptor()
 }
 
 func (AssertionStatus) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[4]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[5]
 }
 
 func (x AssertionStatus) Number() protoreflect.EnumNumber {
@@ -332,7 +391,7 @@ func (x AssertionStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AssertionStatus.Descriptor instead.
 func (AssertionStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{4}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{5}
 }
 
 // ValuationBasis says how a holding's gross value was found.
@@ -374,11 +433,11 @@ func (x ValuationBasis) String() string {
 }
 
 func (ValuationBasis) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[5].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[6].Descriptor()
 }
 
 func (ValuationBasis) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[5]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[6]
 }
 
 func (x ValuationBasis) Number() protoreflect.EnumNumber {
@@ -387,7 +446,7 @@ func (x ValuationBasis) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ValuationBasis.Descriptor instead.
 func (ValuationBasis) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{5}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{6}
 }
 
 // PriceCheckStatus is the result of comparing a price with a cross-check
@@ -433,11 +492,11 @@ func (x PriceCheckStatus) String() string {
 }
 
 func (PriceCheckStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[6].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[7].Descriptor()
 }
 
 func (PriceCheckStatus) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[6]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[7]
 }
 
 func (x PriceCheckStatus) Number() protoreflect.EnumNumber {
@@ -446,7 +505,7 @@ func (x PriceCheckStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PriceCheckStatus.Descriptor instead.
 func (PriceCheckStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{6}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{7}
 }
 
 // AllocationDimension is what an allocation groups by.
@@ -489,11 +548,11 @@ func (x AllocationDimension) String() string {
 }
 
 func (AllocationDimension) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[7].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[8].Descriptor()
 }
 
 func (AllocationDimension) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[7]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[8]
 }
 
 func (x AllocationDimension) Number() protoreflect.EnumNumber {
@@ -502,7 +561,7 @@ func (x AllocationDimension) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AllocationDimension.Descriptor instead.
 func (AllocationDimension) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{7}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{8}
 }
 
 // PerformanceGap says why a performance series ends before the last date
@@ -545,11 +604,11 @@ func (x PerformanceGap) String() string {
 }
 
 func (PerformanceGap) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[8].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[9].Descriptor()
 }
 
 func (PerformanceGap) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[8]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[9]
 }
 
 func (x PerformanceGap) Number() protoreflect.EnumNumber {
@@ -558,7 +617,7 @@ func (x PerformanceGap) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PerformanceGap.Descriptor instead.
 func (PerformanceGap) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{8}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{9}
 }
 
 // ModelTargetKind says what a model portfolio target is.
@@ -597,11 +656,11 @@ func (x ModelTargetKind) String() string {
 }
 
 func (ModelTargetKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[9].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[10].Descriptor()
 }
 
 func (ModelTargetKind) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[9]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[10]
 }
 
 func (x ModelTargetKind) Number() protoreflect.EnumNumber {
@@ -610,7 +669,7 @@ func (x ModelTargetKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ModelTargetKind.Descriptor instead.
 func (ModelTargetKind) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{9}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{10}
 }
 
 // ModelHistoryGap says why a target has no history in the reporting
@@ -651,11 +710,11 @@ func (x ModelHistoryGap) String() string {
 }
 
 func (ModelHistoryGap) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[10].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[11].Descriptor()
 }
 
 func (ModelHistoryGap) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[10]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[11]
 }
 
 func (x ModelHistoryGap) Number() protoreflect.EnumNumber {
@@ -664,7 +723,7 @@ func (x ModelHistoryGap) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ModelHistoryGap.Descriptor instead.
 func (ModelHistoryGap) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{10}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{11}
 }
 
 // SignatureTrust is how far an installed plugin's image is trusted (D-45,
@@ -726,11 +785,11 @@ func (x SignatureTrust) String() string {
 }
 
 func (SignatureTrust) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[11].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[12].Descriptor()
 }
 
 func (SignatureTrust) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[11]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[12]
 }
 
 func (x SignatureTrust) Number() protoreflect.EnumNumber {
@@ -739,7 +798,7 @@ func (x SignatureTrust) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SignatureTrust.Descriptor instead.
 func (SignatureTrust) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{11}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{12}
 }
 
 // AttentionItemState is where an attention item stands (D-130).
@@ -782,11 +841,11 @@ func (x AttentionItemState) String() string {
 }
 
 func (AttentionItemState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[12].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[13].Descriptor()
 }
 
 func (AttentionItemState) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[12]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[13]
 }
 
 func (x AttentionItemState) Number() protoreflect.EnumNumber {
@@ -795,7 +854,7 @@ func (x AttentionItemState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AttentionItemState.Descriptor instead.
 func (AttentionItemState) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{12}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{13}
 }
 
 // AttentionItemReason says why an attention item changed.
@@ -850,11 +909,11 @@ func (x AttentionItemReason) String() string {
 }
 
 func (AttentionItemReason) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_views_v1_read_service_proto_enumTypes[13].Descriptor()
+	return file_openfief_views_v1_read_service_proto_enumTypes[14].Descriptor()
 }
 
 func (AttentionItemReason) Type() protoreflect.EnumType {
-	return &file_openfief_views_v1_read_service_proto_enumTypes[13]
+	return &file_openfief_views_v1_read_service_proto_enumTypes[14]
 }
 
 func (x AttentionItemReason) Number() protoreflect.EnumNumber {
@@ -863,7 +922,7 @@ func (x AttentionItemReason) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AttentionItemReason.Descriptor instead.
 func (AttentionItemReason) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{13}
+	return file_openfief_views_v1_read_service_proto_rawDescGZIP(), []int{14}
 }
 
 // Money is an exact decimal amount in one currency.
@@ -1275,9 +1334,15 @@ type Account struct {
 	// "taxable", "ike", "ikze" or "oki" (D-76).
 	TaxWrapper string `protobuf:"bytes,5,opt,name=tax_wrapper,json=taxWrapper,proto3" json:"tax_wrapper,omitempty"`
 	// The fee rule its broker charges a sale (D-78); zero until set.
-	FeeRule       *FeeRule `protobuf:"bytes,6,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	FeeRule *FeeRule `protobuf:"bytes,6,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
+	// What happens to the coupons and maturities of a hand-entered bond
+	// account (D-135); BOND_PAYOUT_CASH for every other account.
+	BondPayout BondPayout `protobuf:"varint,7,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.views.v1.BondPayout" json:"bond_payout,omitempty"`
+	// The day bond_payout took effect, YYYY-MM-DD; empty when it never
+	// changed.
+	BondPayoutSince string `protobuf:"bytes,8,opt,name=bond_payout_since,json=bondPayoutSince,proto3" json:"bond_payout_since,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *Account) Reset() {
@@ -1350,6 +1415,20 @@ func (x *Account) GetFeeRule() *FeeRule {
 		return x.FeeRule
 	}
 	return nil
+}
+
+func (x *Account) GetBondPayout() BondPayout {
+	if x != nil {
+		return x.BondPayout
+	}
+	return BondPayout_BOND_PAYOUT_UNSPECIFIED
+}
+
+func (x *Account) GetBondPayoutSince() string {
+	if x != nil {
+		return x.BondPayoutSince
+	}
+	return ""
 }
 
 // FeeRule is how an account's broker charges a sale (D-78): rate of the
@@ -6279,7 +6358,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\n" +
 	"account_id\x18\x04 \x01(\tR\taccountId\x12\x1b\n" +
 	"\tlast_seen\x18\x05 \x01(\tR\blastSeen\x12(\n" +
-	"\x10in_last_delivery\x18\x06 \x01(\bR\x0einLastDelivery:\x02\x18\x01\"\xbf\x01\n" +
+	"\x10in_last_delivery\x18\x06 \x01(\bR\x0einLastDelivery:\x02\x18\x01\"\xab\x02\n" +
 	"\aAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12\x12\n" +
@@ -6287,7 +6366,10 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x06sleeve\x18\x04 \x01(\tR\x06sleeve\x12\x1f\n" +
 	"\vtax_wrapper\x18\x05 \x01(\tR\n" +
 	"taxWrapper\x125\n" +
-	"\bfee_rule\x18\x06 \x01(\v2\x1a.openfief.views.v1.FeeRuleR\afeeRule\"z\n" +
+	"\bfee_rule\x18\x06 \x01(\v2\x1a.openfief.views.v1.FeeRuleR\afeeRule\x12>\n" +
+	"\vbond_payout\x18\a \x01(\x0e2\x1d.openfief.views.v1.BondPayoutR\n" +
+	"bondPayout\x12*\n" +
+	"\x11bond_payout_since\x18\b \x01(\tR\x0fbondPayoutSince\"z\n" +
 	"\aFeeRule\x12\x12\n" +
 	"\x04rate\x18\x01 \x01(\tR\x04rate\x122\n" +
 	"\aminimum\x18\x02 \x01(\v2\x18.openfief.views.v1.MoneyR\aminimum\x12'\n" +
@@ -6661,7 +6743,12 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"SleeveRole\x12\x1b\n" +
 	"\x17SLEEVE_ROLE_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15SLEEVE_ROLE_DEFENSIVE\x10\x01\x12\x19\n" +
-	"\x15SLEEVE_ROLE_OFFENSIVE\x10\x02*m\n" +
+	"\x15SLEEVE_ROLE_OFFENSIVE\x10\x02*Y\n" +
+	"\n" +
+	"BondPayout\x12\x1b\n" +
+	"\x17BOND_PAYOUT_UNSPECIFIED\x10\x00\x12\x14\n" +
+	"\x10BOND_PAYOUT_CASH\x10\x01\x12\x18\n" +
+	"\x14BOND_PAYOUT_PAID_OUT\x10\x02*m\n" +
 	"\tValueKind\x12\x1a\n" +
 	"\x16VALUE_KIND_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10VALUE_KIND_GROSS\x10\x01\x12\x12\n" +
@@ -6674,7 +6761,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\rBOOK_KIND_FEE\x10\x03\x12\x1d\n" +
 	"\x19BOOK_KIND_WITHHOLDING_TAX\x10\x04\x12\x10\n" +
 	"\fBOOK_KIND_FX\x10\x05\x12\x14\n" +
-	"\x10BOOK_KIND_EQUITY\x10\x06*\xc5\x02\n" +
+	"\x10BOOK_KIND_EQUITY\x10\x06*\xe6\x02\n" +
 	"\x0fTransactionKind\x12 \n" +
 	"\x1cTRANSACTION_KIND_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14TRANSACTION_KIND_BUY\x10\x01\x12\x19\n" +
@@ -6685,7 +6772,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x18TRANSACTION_KIND_DEPOSIT\x10\x06\x12\x1f\n" +
 	"\x1bTRANSACTION_KIND_WITHDRAWAL\x10\a\x12 \n" +
 	"\x1cTRANSACTION_KIND_OPENING_LOT\x10\b\x12\x1d\n" +
-	"\x19TRANSACTION_KIND_INTEREST\x10\t*o\n" +
+	"\x19TRANSACTION_KIND_INTEREST\x10\t\x12\x1f\n" +
+	"\x1bTRANSACTION_KIND_REDEMPTION\x10\v*o\n" +
 	"\x0fAssertionStatus\x12 \n" +
 	"\x1cASSERTION_STATUS_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18ASSERTION_STATUS_MATCHED\x10\x01\x12\x1c\n" +
@@ -6780,258 +6868,260 @@ func file_openfief_views_v1_read_service_proto_rawDescGZIP() []byte {
 	return file_openfief_views_v1_read_service_proto_rawDescData
 }
 
-var file_openfief_views_v1_read_service_proto_enumTypes = make([]protoimpl.EnumInfo, 14)
+var file_openfief_views_v1_read_service_proto_enumTypes = make([]protoimpl.EnumInfo, 15)
 var file_openfief_views_v1_read_service_proto_msgTypes = make([]protoimpl.MessageInfo, 80)
 var file_openfief_views_v1_read_service_proto_goTypes = []any{
 	(SleeveRole)(0),                       // 0: openfief.views.v1.SleeveRole
-	(ValueKind)(0),                        // 1: openfief.views.v1.ValueKind
-	(BookKind)(0),                         // 2: openfief.views.v1.BookKind
-	(TransactionKind)(0),                  // 3: openfief.views.v1.TransactionKind
-	(AssertionStatus)(0),                  // 4: openfief.views.v1.AssertionStatus
-	(ValuationBasis)(0),                   // 5: openfief.views.v1.ValuationBasis
-	(PriceCheckStatus)(0),                 // 6: openfief.views.v1.PriceCheckStatus
-	(AllocationDimension)(0),              // 7: openfief.views.v1.AllocationDimension
-	(PerformanceGap)(0),                   // 8: openfief.views.v1.PerformanceGap
-	(ModelTargetKind)(0),                  // 9: openfief.views.v1.ModelTargetKind
-	(ModelHistoryGap)(0),                  // 10: openfief.views.v1.ModelHistoryGap
-	(SignatureTrust)(0),                   // 11: openfief.views.v1.SignatureTrust
-	(AttentionItemState)(0),               // 12: openfief.views.v1.AttentionItemState
-	(AttentionItemReason)(0),              // 13: openfief.views.v1.AttentionItemReason
-	(*Money)(nil),                         // 14: openfief.views.v1.Money
-	(*Instrument)(nil),                    // 15: openfief.views.v1.Instrument
-	(*Sleeve)(nil),                        // 16: openfief.views.v1.Sleeve
-	(*SleeveKind)(nil),                    // 17: openfief.views.v1.SleeveKind
-	(*ConnectorBinding)(nil),              // 18: openfief.views.v1.ConnectorBinding
-	(*BrokerAccount)(nil),                 // 19: openfief.views.v1.BrokerAccount
-	(*Account)(nil),                       // 20: openfief.views.v1.Account
-	(*FeeRule)(nil),                       // 21: openfief.views.v1.FeeRule
-	(*NumberFormat)(nil),                  // 22: openfief.views.v1.NumberFormat
-	(*YearlyTax)(nil),                     // 23: openfief.views.v1.YearlyTax
-	(*ClassAmount)(nil),                   // 24: openfief.views.v1.ClassAmount
-	(*Book)(nil),                          // 25: openfief.views.v1.Book
-	(*Posting)(nil),                       // 26: openfief.views.v1.Posting
-	(*Transaction)(nil),                   // 27: openfief.views.v1.Transaction
-	(*Holding)(nil),                       // 28: openfief.views.v1.Holding
-	(*Lot)(nil),                           // 29: openfief.views.v1.Lot
-	(*AssertionCheck)(nil),                // 30: openfief.views.v1.AssertionCheck
-	(*Valuation)(nil),                     // 31: openfief.views.v1.Valuation
-	(*DateTotal)(nil),                     // 32: openfief.views.v1.DateTotal
-	(*ValuationStatus)(nil),               // 33: openfief.views.v1.ValuationStatus
-	(*PriceCheck)(nil),                    // 34: openfief.views.v1.PriceCheck
-	(*AllocationGroup)(nil),               // 35: openfief.views.v1.AllocationGroup
-	(*UnvaluedHolding)(nil),               // 36: openfief.views.v1.UnvaluedHolding
-	(*ListSleevesRequest)(nil),            // 37: openfief.views.v1.ListSleevesRequest
-	(*ListSleevesResponse)(nil),           // 38: openfief.views.v1.ListSleevesResponse
-	(*ListSleeveKindsRequest)(nil),        // 39: openfief.views.v1.ListSleeveKindsRequest
-	(*ListSleeveKindsResponse)(nil),       // 40: openfief.views.v1.ListSleeveKindsResponse
-	(*ListConnectorBindingsRequest)(nil),  // 41: openfief.views.v1.ListConnectorBindingsRequest
-	(*ListConnectorBindingsResponse)(nil), // 42: openfief.views.v1.ListConnectorBindingsResponse
-	(*ListBrokerAccountsRequest)(nil),     // 43: openfief.views.v1.ListBrokerAccountsRequest
-	(*ListBrokerAccountsResponse)(nil),    // 44: openfief.views.v1.ListBrokerAccountsResponse
-	(*GetSettingsRequest)(nil),            // 45: openfief.views.v1.GetSettingsRequest
-	(*GetSettingsResponse)(nil),           // 46: openfief.views.v1.GetSettingsResponse
-	(*ListYearlyTaxesRequest)(nil),        // 47: openfief.views.v1.ListYearlyTaxesRequest
-	(*ListYearlyTaxesResponse)(nil),       // 48: openfief.views.v1.ListYearlyTaxesResponse
-	(*ListAccountsRequest)(nil),           // 49: openfief.views.v1.ListAccountsRequest
-	(*ListAccountsResponse)(nil),          // 50: openfief.views.v1.ListAccountsResponse
-	(*GetAccountRequest)(nil),             // 51: openfief.views.v1.GetAccountRequest
-	(*GetAccountResponse)(nil),            // 52: openfief.views.v1.GetAccountResponse
-	(*ListTransactionsRequest)(nil),       // 53: openfief.views.v1.ListTransactionsRequest
-	(*ListTransactionsResponse)(nil),      // 54: openfief.views.v1.ListTransactionsResponse
-	(*ListHoldingsRequest)(nil),           // 55: openfief.views.v1.ListHoldingsRequest
-	(*ListHoldingsResponse)(nil),          // 56: openfief.views.v1.ListHoldingsResponse
-	(*ListLotsRequest)(nil),               // 57: openfief.views.v1.ListLotsRequest
-	(*ListLotsResponse)(nil),              // 58: openfief.views.v1.ListLotsResponse
-	(*ListCashRequest)(nil),               // 59: openfief.views.v1.ListCashRequest
-	(*ListCashResponse)(nil),              // 60: openfief.views.v1.ListCashResponse
-	(*ListAssertionChecksRequest)(nil),    // 61: openfief.views.v1.ListAssertionChecksRequest
-	(*ListAssertionChecksResponse)(nil),   // 62: openfief.views.v1.ListAssertionChecksResponse
-	(*ListAccountValuationsRequest)(nil),  // 63: openfief.views.v1.ListAccountValuationsRequest
-	(*ListAccountValuationsResponse)(nil), // 64: openfief.views.v1.ListAccountValuationsResponse
-	(*GetValuationStatusRequest)(nil),     // 65: openfief.views.v1.GetValuationStatusRequest
-	(*GetValuationStatusResponse)(nil),    // 66: openfief.views.v1.GetValuationStatusResponse
-	(*ListValuationTotalsRequest)(nil),    // 67: openfief.views.v1.ListValuationTotalsRequest
-	(*ListValuationTotalsResponse)(nil),   // 68: openfief.views.v1.ListValuationTotalsResponse
-	(*ListValuationStatusesRequest)(nil),  // 69: openfief.views.v1.ListValuationStatusesRequest
-	(*ListValuationStatusesResponse)(nil), // 70: openfief.views.v1.ListValuationStatusesResponse
-	(*ListPriceChecksRequest)(nil),        // 71: openfief.views.v1.ListPriceChecksRequest
-	(*ListPriceChecksResponse)(nil),       // 72: openfief.views.v1.ListPriceChecksResponse
-	(*GetAllocationRequest)(nil),          // 73: openfief.views.v1.GetAllocationRequest
-	(*GetAllocationResponse)(nil),         // 74: openfief.views.v1.GetAllocationResponse
-	(*PerformanceDay)(nil),                // 75: openfief.views.v1.PerformanceDay
-	(*Transfer)(nil),                      // 76: openfief.views.v1.Transfer
-	(*ListTransfersRequest)(nil),          // 77: openfief.views.v1.ListTransfersRequest
-	(*ListTransfersResponse)(nil),         // 78: openfief.views.v1.ListTransfersResponse
-	(*GetPerformanceRequest)(nil),         // 79: openfief.views.v1.GetPerformanceRequest
-	(*GetPerformanceResponse)(nil),        // 80: openfief.views.v1.GetPerformanceResponse
-	(*ModelTarget)(nil),                   // 81: openfief.views.v1.ModelTarget
-	(*Drawdown)(nil),                      // 82: openfief.views.v1.Drawdown
-	(*ModelTargetHistory)(nil),            // 83: openfief.views.v1.ModelTargetHistory
-	(*BacktestDay)(nil),                   // 84: openfief.views.v1.BacktestDay
-	(*GetModelPortfolioRequest)(nil),      // 85: openfief.views.v1.GetModelPortfolioRequest
-	(*GetModelPortfolioResponse)(nil),     // 86: openfief.views.v1.GetModelPortfolioResponse
-	(*ListPluginsRequest)(nil),            // 87: openfief.views.v1.ListPluginsRequest
-	(*ListPluginsResponse)(nil),           // 88: openfief.views.v1.ListPluginsResponse
-	(*Plugin)(nil),                        // 89: openfief.views.v1.Plugin
-	(*AttentionItemChange)(nil),           // 90: openfief.views.v1.AttentionItemChange
-	(*AttentionItem)(nil),                 // 91: openfief.views.v1.AttentionItem
-	(*ListAttentionItemsRequest)(nil),     // 92: openfief.views.v1.ListAttentionItemsRequest
-	(*ListAttentionItemsResponse)(nil),    // 93: openfief.views.v1.ListAttentionItemsResponse
+	(BondPayout)(0),                       // 1: openfief.views.v1.BondPayout
+	(ValueKind)(0),                        // 2: openfief.views.v1.ValueKind
+	(BookKind)(0),                         // 3: openfief.views.v1.BookKind
+	(TransactionKind)(0),                  // 4: openfief.views.v1.TransactionKind
+	(AssertionStatus)(0),                  // 5: openfief.views.v1.AssertionStatus
+	(ValuationBasis)(0),                   // 6: openfief.views.v1.ValuationBasis
+	(PriceCheckStatus)(0),                 // 7: openfief.views.v1.PriceCheckStatus
+	(AllocationDimension)(0),              // 8: openfief.views.v1.AllocationDimension
+	(PerformanceGap)(0),                   // 9: openfief.views.v1.PerformanceGap
+	(ModelTargetKind)(0),                  // 10: openfief.views.v1.ModelTargetKind
+	(ModelHistoryGap)(0),                  // 11: openfief.views.v1.ModelHistoryGap
+	(SignatureTrust)(0),                   // 12: openfief.views.v1.SignatureTrust
+	(AttentionItemState)(0),               // 13: openfief.views.v1.AttentionItemState
+	(AttentionItemReason)(0),              // 14: openfief.views.v1.AttentionItemReason
+	(*Money)(nil),                         // 15: openfief.views.v1.Money
+	(*Instrument)(nil),                    // 16: openfief.views.v1.Instrument
+	(*Sleeve)(nil),                        // 17: openfief.views.v1.Sleeve
+	(*SleeveKind)(nil),                    // 18: openfief.views.v1.SleeveKind
+	(*ConnectorBinding)(nil),              // 19: openfief.views.v1.ConnectorBinding
+	(*BrokerAccount)(nil),                 // 20: openfief.views.v1.BrokerAccount
+	(*Account)(nil),                       // 21: openfief.views.v1.Account
+	(*FeeRule)(nil),                       // 22: openfief.views.v1.FeeRule
+	(*NumberFormat)(nil),                  // 23: openfief.views.v1.NumberFormat
+	(*YearlyTax)(nil),                     // 24: openfief.views.v1.YearlyTax
+	(*ClassAmount)(nil),                   // 25: openfief.views.v1.ClassAmount
+	(*Book)(nil),                          // 26: openfief.views.v1.Book
+	(*Posting)(nil),                       // 27: openfief.views.v1.Posting
+	(*Transaction)(nil),                   // 28: openfief.views.v1.Transaction
+	(*Holding)(nil),                       // 29: openfief.views.v1.Holding
+	(*Lot)(nil),                           // 30: openfief.views.v1.Lot
+	(*AssertionCheck)(nil),                // 31: openfief.views.v1.AssertionCheck
+	(*Valuation)(nil),                     // 32: openfief.views.v1.Valuation
+	(*DateTotal)(nil),                     // 33: openfief.views.v1.DateTotal
+	(*ValuationStatus)(nil),               // 34: openfief.views.v1.ValuationStatus
+	(*PriceCheck)(nil),                    // 35: openfief.views.v1.PriceCheck
+	(*AllocationGroup)(nil),               // 36: openfief.views.v1.AllocationGroup
+	(*UnvaluedHolding)(nil),               // 37: openfief.views.v1.UnvaluedHolding
+	(*ListSleevesRequest)(nil),            // 38: openfief.views.v1.ListSleevesRequest
+	(*ListSleevesResponse)(nil),           // 39: openfief.views.v1.ListSleevesResponse
+	(*ListSleeveKindsRequest)(nil),        // 40: openfief.views.v1.ListSleeveKindsRequest
+	(*ListSleeveKindsResponse)(nil),       // 41: openfief.views.v1.ListSleeveKindsResponse
+	(*ListConnectorBindingsRequest)(nil),  // 42: openfief.views.v1.ListConnectorBindingsRequest
+	(*ListConnectorBindingsResponse)(nil), // 43: openfief.views.v1.ListConnectorBindingsResponse
+	(*ListBrokerAccountsRequest)(nil),     // 44: openfief.views.v1.ListBrokerAccountsRequest
+	(*ListBrokerAccountsResponse)(nil),    // 45: openfief.views.v1.ListBrokerAccountsResponse
+	(*GetSettingsRequest)(nil),            // 46: openfief.views.v1.GetSettingsRequest
+	(*GetSettingsResponse)(nil),           // 47: openfief.views.v1.GetSettingsResponse
+	(*ListYearlyTaxesRequest)(nil),        // 48: openfief.views.v1.ListYearlyTaxesRequest
+	(*ListYearlyTaxesResponse)(nil),       // 49: openfief.views.v1.ListYearlyTaxesResponse
+	(*ListAccountsRequest)(nil),           // 50: openfief.views.v1.ListAccountsRequest
+	(*ListAccountsResponse)(nil),          // 51: openfief.views.v1.ListAccountsResponse
+	(*GetAccountRequest)(nil),             // 52: openfief.views.v1.GetAccountRequest
+	(*GetAccountResponse)(nil),            // 53: openfief.views.v1.GetAccountResponse
+	(*ListTransactionsRequest)(nil),       // 54: openfief.views.v1.ListTransactionsRequest
+	(*ListTransactionsResponse)(nil),      // 55: openfief.views.v1.ListTransactionsResponse
+	(*ListHoldingsRequest)(nil),           // 56: openfief.views.v1.ListHoldingsRequest
+	(*ListHoldingsResponse)(nil),          // 57: openfief.views.v1.ListHoldingsResponse
+	(*ListLotsRequest)(nil),               // 58: openfief.views.v1.ListLotsRequest
+	(*ListLotsResponse)(nil),              // 59: openfief.views.v1.ListLotsResponse
+	(*ListCashRequest)(nil),               // 60: openfief.views.v1.ListCashRequest
+	(*ListCashResponse)(nil),              // 61: openfief.views.v1.ListCashResponse
+	(*ListAssertionChecksRequest)(nil),    // 62: openfief.views.v1.ListAssertionChecksRequest
+	(*ListAssertionChecksResponse)(nil),   // 63: openfief.views.v1.ListAssertionChecksResponse
+	(*ListAccountValuationsRequest)(nil),  // 64: openfief.views.v1.ListAccountValuationsRequest
+	(*ListAccountValuationsResponse)(nil), // 65: openfief.views.v1.ListAccountValuationsResponse
+	(*GetValuationStatusRequest)(nil),     // 66: openfief.views.v1.GetValuationStatusRequest
+	(*GetValuationStatusResponse)(nil),    // 67: openfief.views.v1.GetValuationStatusResponse
+	(*ListValuationTotalsRequest)(nil),    // 68: openfief.views.v1.ListValuationTotalsRequest
+	(*ListValuationTotalsResponse)(nil),   // 69: openfief.views.v1.ListValuationTotalsResponse
+	(*ListValuationStatusesRequest)(nil),  // 70: openfief.views.v1.ListValuationStatusesRequest
+	(*ListValuationStatusesResponse)(nil), // 71: openfief.views.v1.ListValuationStatusesResponse
+	(*ListPriceChecksRequest)(nil),        // 72: openfief.views.v1.ListPriceChecksRequest
+	(*ListPriceChecksResponse)(nil),       // 73: openfief.views.v1.ListPriceChecksResponse
+	(*GetAllocationRequest)(nil),          // 74: openfief.views.v1.GetAllocationRequest
+	(*GetAllocationResponse)(nil),         // 75: openfief.views.v1.GetAllocationResponse
+	(*PerformanceDay)(nil),                // 76: openfief.views.v1.PerformanceDay
+	(*Transfer)(nil),                      // 77: openfief.views.v1.Transfer
+	(*ListTransfersRequest)(nil),          // 78: openfief.views.v1.ListTransfersRequest
+	(*ListTransfersResponse)(nil),         // 79: openfief.views.v1.ListTransfersResponse
+	(*GetPerformanceRequest)(nil),         // 80: openfief.views.v1.GetPerformanceRequest
+	(*GetPerformanceResponse)(nil),        // 81: openfief.views.v1.GetPerformanceResponse
+	(*ModelTarget)(nil),                   // 82: openfief.views.v1.ModelTarget
+	(*Drawdown)(nil),                      // 83: openfief.views.v1.Drawdown
+	(*ModelTargetHistory)(nil),            // 84: openfief.views.v1.ModelTargetHistory
+	(*BacktestDay)(nil),                   // 85: openfief.views.v1.BacktestDay
+	(*GetModelPortfolioRequest)(nil),      // 86: openfief.views.v1.GetModelPortfolioRequest
+	(*GetModelPortfolioResponse)(nil),     // 87: openfief.views.v1.GetModelPortfolioResponse
+	(*ListPluginsRequest)(nil),            // 88: openfief.views.v1.ListPluginsRequest
+	(*ListPluginsResponse)(nil),           // 89: openfief.views.v1.ListPluginsResponse
+	(*Plugin)(nil),                        // 90: openfief.views.v1.Plugin
+	(*AttentionItemChange)(nil),           // 91: openfief.views.v1.AttentionItemChange
+	(*AttentionItem)(nil),                 // 92: openfief.views.v1.AttentionItem
+	(*ListAttentionItemsRequest)(nil),     // 93: openfief.views.v1.ListAttentionItemsRequest
+	(*ListAttentionItemsResponse)(nil),    // 94: openfief.views.v1.ListAttentionItemsResponse
 }
 var file_openfief_views_v1_read_service_proto_depIdxs = []int32{
 	0,   // 0: openfief.views.v1.Sleeve.role:type_name -> openfief.views.v1.SleeveRole
 	0,   // 1: openfief.views.v1.SleeveKind.default_role:type_name -> openfief.views.v1.SleeveRole
-	21,  // 2: openfief.views.v1.Account.fee_rule:type_name -> openfief.views.v1.FeeRule
-	14,  // 3: openfief.views.v1.FeeRule.minimum:type_name -> openfief.views.v1.Money
-	14,  // 4: openfief.views.v1.YearlyTax.average:type_name -> openfief.views.v1.Money
-	14,  // 5: openfief.views.v1.YearlyTax.limit:type_name -> openfief.views.v1.Money
-	14,  // 6: openfief.views.v1.YearlyTax.excess:type_name -> openfief.views.v1.Money
-	14,  // 7: openfief.views.v1.YearlyTax.tax:type_name -> openfief.views.v1.Money
-	24,  // 8: openfief.views.v1.YearlyTax.averages:type_name -> openfief.views.v1.ClassAmount
-	24,  // 9: openfief.views.v1.YearlyTax.exempt:type_name -> openfief.views.v1.ClassAmount
-	14,  // 10: openfief.views.v1.YearlyTax.taxed:type_name -> openfief.views.v1.Money
-	14,  // 11: openfief.views.v1.ClassAmount.amount:type_name -> openfief.views.v1.Money
-	2,   // 12: openfief.views.v1.Book.kind:type_name -> openfief.views.v1.BookKind
-	15,  // 13: openfief.views.v1.Book.instrument:type_name -> openfief.views.v1.Instrument
-	25,  // 14: openfief.views.v1.Posting.book:type_name -> openfief.views.v1.Book
-	14,  // 15: openfief.views.v1.Posting.amount:type_name -> openfief.views.v1.Money
-	3,   // 16: openfief.views.v1.Transaction.kind:type_name -> openfief.views.v1.TransactionKind
-	26,  // 17: openfief.views.v1.Transaction.postings:type_name -> openfief.views.v1.Posting
-	15,  // 18: openfief.views.v1.Holding.instrument:type_name -> openfief.views.v1.Instrument
-	15,  // 19: openfief.views.v1.Lot.instrument:type_name -> openfief.views.v1.Instrument
-	14,  // 20: openfief.views.v1.Lot.cost:type_name -> openfief.views.v1.Money
-	25,  // 21: openfief.views.v1.AssertionCheck.book:type_name -> openfief.views.v1.Book
-	4,   // 22: openfief.views.v1.AssertionCheck.status:type_name -> openfief.views.v1.AssertionStatus
-	15,  // 23: openfief.views.v1.Valuation.instrument:type_name -> openfief.views.v1.Instrument
-	5,   // 24: openfief.views.v1.Valuation.basis:type_name -> openfief.views.v1.ValuationBasis
-	14,  // 25: openfief.views.v1.Valuation.value:type_name -> openfief.views.v1.Money
-	14,  // 26: openfief.views.v1.Valuation.value_reporting:type_name -> openfief.views.v1.Money
-	14,  // 27: openfief.views.v1.Valuation.net_reporting:type_name -> openfief.views.v1.Money
-	14,  // 28: openfief.views.v1.Valuation.liquidation_reporting:type_name -> openfief.views.v1.Money
-	14,  // 29: openfief.views.v1.DateTotal.value_reporting:type_name -> openfief.views.v1.Money
-	14,  // 30: openfief.views.v1.DateTotal.by_currency:type_name -> openfief.views.v1.Money
-	14,  // 31: openfief.views.v1.DateTotal.net_reporting:type_name -> openfief.views.v1.Money
-	14,  // 32: openfief.views.v1.DateTotal.liquidation_reporting:type_name -> openfief.views.v1.Money
-	14,  // 33: openfief.views.v1.DateTotal.cash_reporting:type_name -> openfief.views.v1.Money
-	14,  // 34: openfief.views.v1.DateTotal.net_offset_reporting:type_name -> openfief.views.v1.Money
-	14,  // 35: openfief.views.v1.DateTotal.liquidation_offset_reporting:type_name -> openfief.views.v1.Money
-	15,  // 36: openfief.views.v1.PriceCheck.instrument:type_name -> openfief.views.v1.Instrument
-	14,  // 37: openfief.views.v1.PriceCheck.price:type_name -> openfief.views.v1.Money
-	14,  // 38: openfief.views.v1.PriceCheck.cross_check:type_name -> openfief.views.v1.Money
-	6,   // 39: openfief.views.v1.PriceCheck.status:type_name -> openfief.views.v1.PriceCheckStatus
-	14,  // 40: openfief.views.v1.AllocationGroup.value_reporting:type_name -> openfief.views.v1.Money
-	15,  // 41: openfief.views.v1.UnvaluedHolding.instrument:type_name -> openfief.views.v1.Instrument
-	14,  // 42: openfief.views.v1.UnvaluedHolding.cash:type_name -> openfief.views.v1.Money
-	16,  // 43: openfief.views.v1.ListSleevesResponse.sleeves:type_name -> openfief.views.v1.Sleeve
-	17,  // 44: openfief.views.v1.ListSleeveKindsResponse.kinds:type_name -> openfief.views.v1.SleeveKind
-	18,  // 45: openfief.views.v1.ListConnectorBindingsResponse.bindings:type_name -> openfief.views.v1.ConnectorBinding
-	19,  // 46: openfief.views.v1.ListBrokerAccountsResponse.broker_accounts:type_name -> openfief.views.v1.BrokerAccount
-	22,  // 47: openfief.views.v1.GetSettingsResponse.number_format:type_name -> openfief.views.v1.NumberFormat
-	23,  // 48: openfief.views.v1.ListYearlyTaxesResponse.taxes:type_name -> openfief.views.v1.YearlyTax
-	20,  // 49: openfief.views.v1.ListAccountsResponse.accounts:type_name -> openfief.views.v1.Account
-	20,  // 50: openfief.views.v1.GetAccountResponse.account:type_name -> openfief.views.v1.Account
-	27,  // 51: openfief.views.v1.ListTransactionsResponse.transactions:type_name -> openfief.views.v1.Transaction
-	28,  // 52: openfief.views.v1.ListHoldingsResponse.holdings:type_name -> openfief.views.v1.Holding
-	29,  // 53: openfief.views.v1.ListLotsResponse.lots:type_name -> openfief.views.v1.Lot
-	14,  // 54: openfief.views.v1.ListCashResponse.balances:type_name -> openfief.views.v1.Money
-	4,   // 55: openfief.views.v1.ListAssertionChecksRequest.status:type_name -> openfief.views.v1.AssertionStatus
-	30,  // 56: openfief.views.v1.ListAssertionChecksResponse.checks:type_name -> openfief.views.v1.AssertionCheck
-	31,  // 57: openfief.views.v1.ListAccountValuationsResponse.valuations:type_name -> openfief.views.v1.Valuation
-	32,  // 58: openfief.views.v1.ListAccountValuationsResponse.totals:type_name -> openfief.views.v1.DateTotal
-	33,  // 59: openfief.views.v1.GetValuationStatusResponse.status:type_name -> openfief.views.v1.ValuationStatus
-	32,  // 60: openfief.views.v1.ListValuationTotalsResponse.totals:type_name -> openfief.views.v1.DateTotal
-	33,  // 61: openfief.views.v1.ListValuationStatusesResponse.statuses:type_name -> openfief.views.v1.ValuationStatus
-	6,   // 62: openfief.views.v1.ListPriceChecksRequest.status:type_name -> openfief.views.v1.PriceCheckStatus
-	34,  // 63: openfief.views.v1.ListPriceChecksResponse.checks:type_name -> openfief.views.v1.PriceCheck
-	7,   // 64: openfief.views.v1.GetAllocationRequest.by:type_name -> openfief.views.v1.AllocationDimension
-	1,   // 65: openfief.views.v1.GetAllocationRequest.value:type_name -> openfief.views.v1.ValueKind
-	7,   // 66: openfief.views.v1.GetAllocationResponse.by:type_name -> openfief.views.v1.AllocationDimension
-	1,   // 67: openfief.views.v1.GetAllocationResponse.value:type_name -> openfief.views.v1.ValueKind
-	14,  // 68: openfief.views.v1.GetAllocationResponse.total_reporting:type_name -> openfief.views.v1.Money
-	35,  // 69: openfief.views.v1.GetAllocationResponse.groups:type_name -> openfief.views.v1.AllocationGroup
-	36,  // 70: openfief.views.v1.GetAllocationResponse.unvalued:type_name -> openfief.views.v1.UnvaluedHolding
-	14,  // 71: openfief.views.v1.PerformanceDay.value_reporting:type_name -> openfief.views.v1.Money
-	14,  // 72: openfief.views.v1.PerformanceDay.holdings_reporting:type_name -> openfief.views.v1.Money
-	14,  // 73: openfief.views.v1.PerformanceDay.cash_reporting:type_name -> openfief.views.v1.Money
-	14,  // 74: openfief.views.v1.PerformanceDay.in_transit_reporting:type_name -> openfief.views.v1.Money
-	14,  // 75: openfief.views.v1.PerformanceDay.flow_reporting:type_name -> openfief.views.v1.Money
-	14,  // 76: openfief.views.v1.Transfer.amount:type_name -> openfief.views.v1.Money
-	76,  // 77: openfief.views.v1.ListTransfersResponse.suggested:type_name -> openfief.views.v1.Transfer
-	76,  // 78: openfief.views.v1.ListTransfersResponse.confirmed:type_name -> openfief.views.v1.Transfer
-	76,  // 79: openfief.views.v1.ListTransfersResponse.rejected:type_name -> openfief.views.v1.Transfer
-	76,  // 80: openfief.views.v1.ListTransfersResponse.broken:type_name -> openfief.views.v1.Transfer
-	75,  // 81: openfief.views.v1.GetPerformanceResponse.days:type_name -> openfief.views.v1.PerformanceDay
-	8,   // 82: openfief.views.v1.GetPerformanceResponse.gap:type_name -> openfief.views.v1.PerformanceGap
-	76,  // 83: openfief.views.v1.GetPerformanceResponse.transfers:type_name -> openfief.views.v1.Transfer
-	9,   // 84: openfief.views.v1.ModelTarget.kind:type_name -> openfief.views.v1.ModelTargetKind
-	15,  // 85: openfief.views.v1.ModelTarget.instrument:type_name -> openfief.views.v1.Instrument
-	81,  // 86: openfief.views.v1.ModelTargetHistory.target:type_name -> openfief.views.v1.ModelTarget
-	10,  // 87: openfief.views.v1.ModelTargetHistory.gap:type_name -> openfief.views.v1.ModelHistoryGap
-	82,  // 88: openfief.views.v1.ModelTargetHistory.drawdown:type_name -> openfief.views.v1.Drawdown
-	81,  // 89: openfief.views.v1.GetModelPortfolioResponse.targets:type_name -> openfief.views.v1.ModelTarget
-	84,  // 90: openfief.views.v1.GetModelPortfolioResponse.days:type_name -> openfief.views.v1.BacktestDay
-	82,  // 91: openfief.views.v1.GetModelPortfolioResponse.drawdown:type_name -> openfief.views.v1.Drawdown
-	83,  // 92: openfief.views.v1.GetModelPortfolioResponse.target_histories:type_name -> openfief.views.v1.ModelTargetHistory
-	89,  // 93: openfief.views.v1.ListPluginsResponse.plugins:type_name -> openfief.views.v1.Plugin
-	11,  // 94: openfief.views.v1.Plugin.trust:type_name -> openfief.views.v1.SignatureTrust
-	12,  // 95: openfief.views.v1.AttentionItemChange.state:type_name -> openfief.views.v1.AttentionItemState
-	13,  // 96: openfief.views.v1.AttentionItemChange.reason:type_name -> openfief.views.v1.AttentionItemReason
-	12,  // 97: openfief.views.v1.AttentionItem.state:type_name -> openfief.views.v1.AttentionItemState
-	90,  // 98: openfief.views.v1.AttentionItem.history:type_name -> openfief.views.v1.AttentionItemChange
-	91,  // 99: openfief.views.v1.ListAttentionItemsResponse.items:type_name -> openfief.views.v1.AttentionItem
-	37,  // 100: openfief.views.v1.ReadService.ListSleeves:input_type -> openfief.views.v1.ListSleevesRequest
-	39,  // 101: openfief.views.v1.ReadService.ListSleeveKinds:input_type -> openfief.views.v1.ListSleeveKindsRequest
-	45,  // 102: openfief.views.v1.ReadService.GetSettings:input_type -> openfief.views.v1.GetSettingsRequest
-	47,  // 103: openfief.views.v1.ReadService.ListYearlyTaxes:input_type -> openfief.views.v1.ListYearlyTaxesRequest
-	49,  // 104: openfief.views.v1.ReadService.ListAccounts:input_type -> openfief.views.v1.ListAccountsRequest
-	41,  // 105: openfief.views.v1.ReadService.ListConnectorBindings:input_type -> openfief.views.v1.ListConnectorBindingsRequest
-	43,  // 106: openfief.views.v1.ReadService.ListBrokerAccounts:input_type -> openfief.views.v1.ListBrokerAccountsRequest
-	51,  // 107: openfief.views.v1.ReadService.GetAccount:input_type -> openfief.views.v1.GetAccountRequest
-	53,  // 108: openfief.views.v1.ReadService.ListTransactions:input_type -> openfief.views.v1.ListTransactionsRequest
-	55,  // 109: openfief.views.v1.ReadService.ListHoldings:input_type -> openfief.views.v1.ListHoldingsRequest
-	57,  // 110: openfief.views.v1.ReadService.ListLots:input_type -> openfief.views.v1.ListLotsRequest
-	59,  // 111: openfief.views.v1.ReadService.ListCash:input_type -> openfief.views.v1.ListCashRequest
-	61,  // 112: openfief.views.v1.ReadService.ListAssertionChecks:input_type -> openfief.views.v1.ListAssertionChecksRequest
-	63,  // 113: openfief.views.v1.ReadService.ListAccountValuations:input_type -> openfief.views.v1.ListAccountValuationsRequest
-	65,  // 114: openfief.views.v1.ReadService.GetValuationStatus:input_type -> openfief.views.v1.GetValuationStatusRequest
-	67,  // 115: openfief.views.v1.ReadService.ListValuationTotals:input_type -> openfief.views.v1.ListValuationTotalsRequest
-	69,  // 116: openfief.views.v1.ReadService.ListValuationStatuses:input_type -> openfief.views.v1.ListValuationStatusesRequest
-	71,  // 117: openfief.views.v1.ReadService.ListPriceChecks:input_type -> openfief.views.v1.ListPriceChecksRequest
-	73,  // 118: openfief.views.v1.ReadService.GetAllocation:input_type -> openfief.views.v1.GetAllocationRequest
-	79,  // 119: openfief.views.v1.ReadService.GetPerformance:input_type -> openfief.views.v1.GetPerformanceRequest
-	77,  // 120: openfief.views.v1.ReadService.ListTransfers:input_type -> openfief.views.v1.ListTransfersRequest
-	85,  // 121: openfief.views.v1.ReadService.GetModelPortfolio:input_type -> openfief.views.v1.GetModelPortfolioRequest
-	87,  // 122: openfief.views.v1.ReadService.ListPlugins:input_type -> openfief.views.v1.ListPluginsRequest
-	92,  // 123: openfief.views.v1.ReadService.ListAttentionItems:input_type -> openfief.views.v1.ListAttentionItemsRequest
-	38,  // 124: openfief.views.v1.ReadService.ListSleeves:output_type -> openfief.views.v1.ListSleevesResponse
-	40,  // 125: openfief.views.v1.ReadService.ListSleeveKinds:output_type -> openfief.views.v1.ListSleeveKindsResponse
-	46,  // 126: openfief.views.v1.ReadService.GetSettings:output_type -> openfief.views.v1.GetSettingsResponse
-	48,  // 127: openfief.views.v1.ReadService.ListYearlyTaxes:output_type -> openfief.views.v1.ListYearlyTaxesResponse
-	50,  // 128: openfief.views.v1.ReadService.ListAccounts:output_type -> openfief.views.v1.ListAccountsResponse
-	42,  // 129: openfief.views.v1.ReadService.ListConnectorBindings:output_type -> openfief.views.v1.ListConnectorBindingsResponse
-	44,  // 130: openfief.views.v1.ReadService.ListBrokerAccounts:output_type -> openfief.views.v1.ListBrokerAccountsResponse
-	52,  // 131: openfief.views.v1.ReadService.GetAccount:output_type -> openfief.views.v1.GetAccountResponse
-	54,  // 132: openfief.views.v1.ReadService.ListTransactions:output_type -> openfief.views.v1.ListTransactionsResponse
-	56,  // 133: openfief.views.v1.ReadService.ListHoldings:output_type -> openfief.views.v1.ListHoldingsResponse
-	58,  // 134: openfief.views.v1.ReadService.ListLots:output_type -> openfief.views.v1.ListLotsResponse
-	60,  // 135: openfief.views.v1.ReadService.ListCash:output_type -> openfief.views.v1.ListCashResponse
-	62,  // 136: openfief.views.v1.ReadService.ListAssertionChecks:output_type -> openfief.views.v1.ListAssertionChecksResponse
-	64,  // 137: openfief.views.v1.ReadService.ListAccountValuations:output_type -> openfief.views.v1.ListAccountValuationsResponse
-	66,  // 138: openfief.views.v1.ReadService.GetValuationStatus:output_type -> openfief.views.v1.GetValuationStatusResponse
-	68,  // 139: openfief.views.v1.ReadService.ListValuationTotals:output_type -> openfief.views.v1.ListValuationTotalsResponse
-	70,  // 140: openfief.views.v1.ReadService.ListValuationStatuses:output_type -> openfief.views.v1.ListValuationStatusesResponse
-	72,  // 141: openfief.views.v1.ReadService.ListPriceChecks:output_type -> openfief.views.v1.ListPriceChecksResponse
-	74,  // 142: openfief.views.v1.ReadService.GetAllocation:output_type -> openfief.views.v1.GetAllocationResponse
-	80,  // 143: openfief.views.v1.ReadService.GetPerformance:output_type -> openfief.views.v1.GetPerformanceResponse
-	78,  // 144: openfief.views.v1.ReadService.ListTransfers:output_type -> openfief.views.v1.ListTransfersResponse
-	86,  // 145: openfief.views.v1.ReadService.GetModelPortfolio:output_type -> openfief.views.v1.GetModelPortfolioResponse
-	88,  // 146: openfief.views.v1.ReadService.ListPlugins:output_type -> openfief.views.v1.ListPluginsResponse
-	93,  // 147: openfief.views.v1.ReadService.ListAttentionItems:output_type -> openfief.views.v1.ListAttentionItemsResponse
-	124, // [124:148] is the sub-list for method output_type
-	100, // [100:124] is the sub-list for method input_type
-	100, // [100:100] is the sub-list for extension type_name
-	100, // [100:100] is the sub-list for extension extendee
-	0,   // [0:100] is the sub-list for field type_name
+	22,  // 2: openfief.views.v1.Account.fee_rule:type_name -> openfief.views.v1.FeeRule
+	1,   // 3: openfief.views.v1.Account.bond_payout:type_name -> openfief.views.v1.BondPayout
+	15,  // 4: openfief.views.v1.FeeRule.minimum:type_name -> openfief.views.v1.Money
+	15,  // 5: openfief.views.v1.YearlyTax.average:type_name -> openfief.views.v1.Money
+	15,  // 6: openfief.views.v1.YearlyTax.limit:type_name -> openfief.views.v1.Money
+	15,  // 7: openfief.views.v1.YearlyTax.excess:type_name -> openfief.views.v1.Money
+	15,  // 8: openfief.views.v1.YearlyTax.tax:type_name -> openfief.views.v1.Money
+	25,  // 9: openfief.views.v1.YearlyTax.averages:type_name -> openfief.views.v1.ClassAmount
+	25,  // 10: openfief.views.v1.YearlyTax.exempt:type_name -> openfief.views.v1.ClassAmount
+	15,  // 11: openfief.views.v1.YearlyTax.taxed:type_name -> openfief.views.v1.Money
+	15,  // 12: openfief.views.v1.ClassAmount.amount:type_name -> openfief.views.v1.Money
+	3,   // 13: openfief.views.v1.Book.kind:type_name -> openfief.views.v1.BookKind
+	16,  // 14: openfief.views.v1.Book.instrument:type_name -> openfief.views.v1.Instrument
+	26,  // 15: openfief.views.v1.Posting.book:type_name -> openfief.views.v1.Book
+	15,  // 16: openfief.views.v1.Posting.amount:type_name -> openfief.views.v1.Money
+	4,   // 17: openfief.views.v1.Transaction.kind:type_name -> openfief.views.v1.TransactionKind
+	27,  // 18: openfief.views.v1.Transaction.postings:type_name -> openfief.views.v1.Posting
+	16,  // 19: openfief.views.v1.Holding.instrument:type_name -> openfief.views.v1.Instrument
+	16,  // 20: openfief.views.v1.Lot.instrument:type_name -> openfief.views.v1.Instrument
+	15,  // 21: openfief.views.v1.Lot.cost:type_name -> openfief.views.v1.Money
+	26,  // 22: openfief.views.v1.AssertionCheck.book:type_name -> openfief.views.v1.Book
+	5,   // 23: openfief.views.v1.AssertionCheck.status:type_name -> openfief.views.v1.AssertionStatus
+	16,  // 24: openfief.views.v1.Valuation.instrument:type_name -> openfief.views.v1.Instrument
+	6,   // 25: openfief.views.v1.Valuation.basis:type_name -> openfief.views.v1.ValuationBasis
+	15,  // 26: openfief.views.v1.Valuation.value:type_name -> openfief.views.v1.Money
+	15,  // 27: openfief.views.v1.Valuation.value_reporting:type_name -> openfief.views.v1.Money
+	15,  // 28: openfief.views.v1.Valuation.net_reporting:type_name -> openfief.views.v1.Money
+	15,  // 29: openfief.views.v1.Valuation.liquidation_reporting:type_name -> openfief.views.v1.Money
+	15,  // 30: openfief.views.v1.DateTotal.value_reporting:type_name -> openfief.views.v1.Money
+	15,  // 31: openfief.views.v1.DateTotal.by_currency:type_name -> openfief.views.v1.Money
+	15,  // 32: openfief.views.v1.DateTotal.net_reporting:type_name -> openfief.views.v1.Money
+	15,  // 33: openfief.views.v1.DateTotal.liquidation_reporting:type_name -> openfief.views.v1.Money
+	15,  // 34: openfief.views.v1.DateTotal.cash_reporting:type_name -> openfief.views.v1.Money
+	15,  // 35: openfief.views.v1.DateTotal.net_offset_reporting:type_name -> openfief.views.v1.Money
+	15,  // 36: openfief.views.v1.DateTotal.liquidation_offset_reporting:type_name -> openfief.views.v1.Money
+	16,  // 37: openfief.views.v1.PriceCheck.instrument:type_name -> openfief.views.v1.Instrument
+	15,  // 38: openfief.views.v1.PriceCheck.price:type_name -> openfief.views.v1.Money
+	15,  // 39: openfief.views.v1.PriceCheck.cross_check:type_name -> openfief.views.v1.Money
+	7,   // 40: openfief.views.v1.PriceCheck.status:type_name -> openfief.views.v1.PriceCheckStatus
+	15,  // 41: openfief.views.v1.AllocationGroup.value_reporting:type_name -> openfief.views.v1.Money
+	16,  // 42: openfief.views.v1.UnvaluedHolding.instrument:type_name -> openfief.views.v1.Instrument
+	15,  // 43: openfief.views.v1.UnvaluedHolding.cash:type_name -> openfief.views.v1.Money
+	17,  // 44: openfief.views.v1.ListSleevesResponse.sleeves:type_name -> openfief.views.v1.Sleeve
+	18,  // 45: openfief.views.v1.ListSleeveKindsResponse.kinds:type_name -> openfief.views.v1.SleeveKind
+	19,  // 46: openfief.views.v1.ListConnectorBindingsResponse.bindings:type_name -> openfief.views.v1.ConnectorBinding
+	20,  // 47: openfief.views.v1.ListBrokerAccountsResponse.broker_accounts:type_name -> openfief.views.v1.BrokerAccount
+	23,  // 48: openfief.views.v1.GetSettingsResponse.number_format:type_name -> openfief.views.v1.NumberFormat
+	24,  // 49: openfief.views.v1.ListYearlyTaxesResponse.taxes:type_name -> openfief.views.v1.YearlyTax
+	21,  // 50: openfief.views.v1.ListAccountsResponse.accounts:type_name -> openfief.views.v1.Account
+	21,  // 51: openfief.views.v1.GetAccountResponse.account:type_name -> openfief.views.v1.Account
+	28,  // 52: openfief.views.v1.ListTransactionsResponse.transactions:type_name -> openfief.views.v1.Transaction
+	29,  // 53: openfief.views.v1.ListHoldingsResponse.holdings:type_name -> openfief.views.v1.Holding
+	30,  // 54: openfief.views.v1.ListLotsResponse.lots:type_name -> openfief.views.v1.Lot
+	15,  // 55: openfief.views.v1.ListCashResponse.balances:type_name -> openfief.views.v1.Money
+	5,   // 56: openfief.views.v1.ListAssertionChecksRequest.status:type_name -> openfief.views.v1.AssertionStatus
+	31,  // 57: openfief.views.v1.ListAssertionChecksResponse.checks:type_name -> openfief.views.v1.AssertionCheck
+	32,  // 58: openfief.views.v1.ListAccountValuationsResponse.valuations:type_name -> openfief.views.v1.Valuation
+	33,  // 59: openfief.views.v1.ListAccountValuationsResponse.totals:type_name -> openfief.views.v1.DateTotal
+	34,  // 60: openfief.views.v1.GetValuationStatusResponse.status:type_name -> openfief.views.v1.ValuationStatus
+	33,  // 61: openfief.views.v1.ListValuationTotalsResponse.totals:type_name -> openfief.views.v1.DateTotal
+	34,  // 62: openfief.views.v1.ListValuationStatusesResponse.statuses:type_name -> openfief.views.v1.ValuationStatus
+	7,   // 63: openfief.views.v1.ListPriceChecksRequest.status:type_name -> openfief.views.v1.PriceCheckStatus
+	35,  // 64: openfief.views.v1.ListPriceChecksResponse.checks:type_name -> openfief.views.v1.PriceCheck
+	8,   // 65: openfief.views.v1.GetAllocationRequest.by:type_name -> openfief.views.v1.AllocationDimension
+	2,   // 66: openfief.views.v1.GetAllocationRequest.value:type_name -> openfief.views.v1.ValueKind
+	8,   // 67: openfief.views.v1.GetAllocationResponse.by:type_name -> openfief.views.v1.AllocationDimension
+	2,   // 68: openfief.views.v1.GetAllocationResponse.value:type_name -> openfief.views.v1.ValueKind
+	15,  // 69: openfief.views.v1.GetAllocationResponse.total_reporting:type_name -> openfief.views.v1.Money
+	36,  // 70: openfief.views.v1.GetAllocationResponse.groups:type_name -> openfief.views.v1.AllocationGroup
+	37,  // 71: openfief.views.v1.GetAllocationResponse.unvalued:type_name -> openfief.views.v1.UnvaluedHolding
+	15,  // 72: openfief.views.v1.PerformanceDay.value_reporting:type_name -> openfief.views.v1.Money
+	15,  // 73: openfief.views.v1.PerformanceDay.holdings_reporting:type_name -> openfief.views.v1.Money
+	15,  // 74: openfief.views.v1.PerformanceDay.cash_reporting:type_name -> openfief.views.v1.Money
+	15,  // 75: openfief.views.v1.PerformanceDay.in_transit_reporting:type_name -> openfief.views.v1.Money
+	15,  // 76: openfief.views.v1.PerformanceDay.flow_reporting:type_name -> openfief.views.v1.Money
+	15,  // 77: openfief.views.v1.Transfer.amount:type_name -> openfief.views.v1.Money
+	77,  // 78: openfief.views.v1.ListTransfersResponse.suggested:type_name -> openfief.views.v1.Transfer
+	77,  // 79: openfief.views.v1.ListTransfersResponse.confirmed:type_name -> openfief.views.v1.Transfer
+	77,  // 80: openfief.views.v1.ListTransfersResponse.rejected:type_name -> openfief.views.v1.Transfer
+	77,  // 81: openfief.views.v1.ListTransfersResponse.broken:type_name -> openfief.views.v1.Transfer
+	76,  // 82: openfief.views.v1.GetPerformanceResponse.days:type_name -> openfief.views.v1.PerformanceDay
+	9,   // 83: openfief.views.v1.GetPerformanceResponse.gap:type_name -> openfief.views.v1.PerformanceGap
+	77,  // 84: openfief.views.v1.GetPerformanceResponse.transfers:type_name -> openfief.views.v1.Transfer
+	10,  // 85: openfief.views.v1.ModelTarget.kind:type_name -> openfief.views.v1.ModelTargetKind
+	16,  // 86: openfief.views.v1.ModelTarget.instrument:type_name -> openfief.views.v1.Instrument
+	82,  // 87: openfief.views.v1.ModelTargetHistory.target:type_name -> openfief.views.v1.ModelTarget
+	11,  // 88: openfief.views.v1.ModelTargetHistory.gap:type_name -> openfief.views.v1.ModelHistoryGap
+	83,  // 89: openfief.views.v1.ModelTargetHistory.drawdown:type_name -> openfief.views.v1.Drawdown
+	82,  // 90: openfief.views.v1.GetModelPortfolioResponse.targets:type_name -> openfief.views.v1.ModelTarget
+	85,  // 91: openfief.views.v1.GetModelPortfolioResponse.days:type_name -> openfief.views.v1.BacktestDay
+	83,  // 92: openfief.views.v1.GetModelPortfolioResponse.drawdown:type_name -> openfief.views.v1.Drawdown
+	84,  // 93: openfief.views.v1.GetModelPortfolioResponse.target_histories:type_name -> openfief.views.v1.ModelTargetHistory
+	90,  // 94: openfief.views.v1.ListPluginsResponse.plugins:type_name -> openfief.views.v1.Plugin
+	12,  // 95: openfief.views.v1.Plugin.trust:type_name -> openfief.views.v1.SignatureTrust
+	13,  // 96: openfief.views.v1.AttentionItemChange.state:type_name -> openfief.views.v1.AttentionItemState
+	14,  // 97: openfief.views.v1.AttentionItemChange.reason:type_name -> openfief.views.v1.AttentionItemReason
+	13,  // 98: openfief.views.v1.AttentionItem.state:type_name -> openfief.views.v1.AttentionItemState
+	91,  // 99: openfief.views.v1.AttentionItem.history:type_name -> openfief.views.v1.AttentionItemChange
+	92,  // 100: openfief.views.v1.ListAttentionItemsResponse.items:type_name -> openfief.views.v1.AttentionItem
+	38,  // 101: openfief.views.v1.ReadService.ListSleeves:input_type -> openfief.views.v1.ListSleevesRequest
+	40,  // 102: openfief.views.v1.ReadService.ListSleeveKinds:input_type -> openfief.views.v1.ListSleeveKindsRequest
+	46,  // 103: openfief.views.v1.ReadService.GetSettings:input_type -> openfief.views.v1.GetSettingsRequest
+	48,  // 104: openfief.views.v1.ReadService.ListYearlyTaxes:input_type -> openfief.views.v1.ListYearlyTaxesRequest
+	50,  // 105: openfief.views.v1.ReadService.ListAccounts:input_type -> openfief.views.v1.ListAccountsRequest
+	42,  // 106: openfief.views.v1.ReadService.ListConnectorBindings:input_type -> openfief.views.v1.ListConnectorBindingsRequest
+	44,  // 107: openfief.views.v1.ReadService.ListBrokerAccounts:input_type -> openfief.views.v1.ListBrokerAccountsRequest
+	52,  // 108: openfief.views.v1.ReadService.GetAccount:input_type -> openfief.views.v1.GetAccountRequest
+	54,  // 109: openfief.views.v1.ReadService.ListTransactions:input_type -> openfief.views.v1.ListTransactionsRequest
+	56,  // 110: openfief.views.v1.ReadService.ListHoldings:input_type -> openfief.views.v1.ListHoldingsRequest
+	58,  // 111: openfief.views.v1.ReadService.ListLots:input_type -> openfief.views.v1.ListLotsRequest
+	60,  // 112: openfief.views.v1.ReadService.ListCash:input_type -> openfief.views.v1.ListCashRequest
+	62,  // 113: openfief.views.v1.ReadService.ListAssertionChecks:input_type -> openfief.views.v1.ListAssertionChecksRequest
+	64,  // 114: openfief.views.v1.ReadService.ListAccountValuations:input_type -> openfief.views.v1.ListAccountValuationsRequest
+	66,  // 115: openfief.views.v1.ReadService.GetValuationStatus:input_type -> openfief.views.v1.GetValuationStatusRequest
+	68,  // 116: openfief.views.v1.ReadService.ListValuationTotals:input_type -> openfief.views.v1.ListValuationTotalsRequest
+	70,  // 117: openfief.views.v1.ReadService.ListValuationStatuses:input_type -> openfief.views.v1.ListValuationStatusesRequest
+	72,  // 118: openfief.views.v1.ReadService.ListPriceChecks:input_type -> openfief.views.v1.ListPriceChecksRequest
+	74,  // 119: openfief.views.v1.ReadService.GetAllocation:input_type -> openfief.views.v1.GetAllocationRequest
+	80,  // 120: openfief.views.v1.ReadService.GetPerformance:input_type -> openfief.views.v1.GetPerformanceRequest
+	78,  // 121: openfief.views.v1.ReadService.ListTransfers:input_type -> openfief.views.v1.ListTransfersRequest
+	86,  // 122: openfief.views.v1.ReadService.GetModelPortfolio:input_type -> openfief.views.v1.GetModelPortfolioRequest
+	88,  // 123: openfief.views.v1.ReadService.ListPlugins:input_type -> openfief.views.v1.ListPluginsRequest
+	93,  // 124: openfief.views.v1.ReadService.ListAttentionItems:input_type -> openfief.views.v1.ListAttentionItemsRequest
+	39,  // 125: openfief.views.v1.ReadService.ListSleeves:output_type -> openfief.views.v1.ListSleevesResponse
+	41,  // 126: openfief.views.v1.ReadService.ListSleeveKinds:output_type -> openfief.views.v1.ListSleeveKindsResponse
+	47,  // 127: openfief.views.v1.ReadService.GetSettings:output_type -> openfief.views.v1.GetSettingsResponse
+	49,  // 128: openfief.views.v1.ReadService.ListYearlyTaxes:output_type -> openfief.views.v1.ListYearlyTaxesResponse
+	51,  // 129: openfief.views.v1.ReadService.ListAccounts:output_type -> openfief.views.v1.ListAccountsResponse
+	43,  // 130: openfief.views.v1.ReadService.ListConnectorBindings:output_type -> openfief.views.v1.ListConnectorBindingsResponse
+	45,  // 131: openfief.views.v1.ReadService.ListBrokerAccounts:output_type -> openfief.views.v1.ListBrokerAccountsResponse
+	53,  // 132: openfief.views.v1.ReadService.GetAccount:output_type -> openfief.views.v1.GetAccountResponse
+	55,  // 133: openfief.views.v1.ReadService.ListTransactions:output_type -> openfief.views.v1.ListTransactionsResponse
+	57,  // 134: openfief.views.v1.ReadService.ListHoldings:output_type -> openfief.views.v1.ListHoldingsResponse
+	59,  // 135: openfief.views.v1.ReadService.ListLots:output_type -> openfief.views.v1.ListLotsResponse
+	61,  // 136: openfief.views.v1.ReadService.ListCash:output_type -> openfief.views.v1.ListCashResponse
+	63,  // 137: openfief.views.v1.ReadService.ListAssertionChecks:output_type -> openfief.views.v1.ListAssertionChecksResponse
+	65,  // 138: openfief.views.v1.ReadService.ListAccountValuations:output_type -> openfief.views.v1.ListAccountValuationsResponse
+	67,  // 139: openfief.views.v1.ReadService.GetValuationStatus:output_type -> openfief.views.v1.GetValuationStatusResponse
+	69,  // 140: openfief.views.v1.ReadService.ListValuationTotals:output_type -> openfief.views.v1.ListValuationTotalsResponse
+	71,  // 141: openfief.views.v1.ReadService.ListValuationStatuses:output_type -> openfief.views.v1.ListValuationStatusesResponse
+	73,  // 142: openfief.views.v1.ReadService.ListPriceChecks:output_type -> openfief.views.v1.ListPriceChecksResponse
+	75,  // 143: openfief.views.v1.ReadService.GetAllocation:output_type -> openfief.views.v1.GetAllocationResponse
+	81,  // 144: openfief.views.v1.ReadService.GetPerformance:output_type -> openfief.views.v1.GetPerformanceResponse
+	79,  // 145: openfief.views.v1.ReadService.ListTransfers:output_type -> openfief.views.v1.ListTransfersResponse
+	87,  // 146: openfief.views.v1.ReadService.GetModelPortfolio:output_type -> openfief.views.v1.GetModelPortfolioResponse
+	89,  // 147: openfief.views.v1.ReadService.ListPlugins:output_type -> openfief.views.v1.ListPluginsResponse
+	94,  // 148: openfief.views.v1.ReadService.ListAttentionItems:output_type -> openfief.views.v1.ListAttentionItemsResponse
+	125, // [125:149] is the sub-list for method output_type
+	101, // [101:125] is the sub-list for method input_type
+	101, // [101:101] is the sub-list for extension type_name
+	101, // [101:101] is the sub-list for extension extendee
+	0,   // [0:101] is the sub-list for field type_name
 }
 
 func init() { file_openfief_views_v1_read_service_proto_init() }
@@ -7044,7 +7134,7 @@ func file_openfief_views_v1_read_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_views_v1_read_service_proto_rawDesc), len(file_openfief_views_v1_read_service_proto_rawDesc)),
-			NumEnums:      14,
+			NumEnums:      15,
 			NumMessages:   80,
 			NumExtensions: 0,
 			NumServices:   1,

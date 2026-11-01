@@ -559,3 +559,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9cdf826f5b43
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-check-digit
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:50:17.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bbdb6ec37ad
+  - type: executable_for
+    from: SYM-valuation-test-prices-by-source
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:05:07.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc72aa845975
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-market-data-set-series-source
+    to: TEST-ui-market-data
+    created_at: 2026-11-01T09:12:25.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8a9b003dd73
+  - type: implements
+    from: SYM-valuation-gen-pb-list-series-sources-request-string
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:14:46.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd72876646bb
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-series-sources-request-string
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:14:46.691Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5090169b7e56

@@ -622,3 +622,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5a646a21d6a
+  - type: implements
+    from: SYM-connectorv1-bond-payout-enum
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:52:56.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25dc4d62edb4
+  - type: covered_by
+    from: SYM-connectorv1-bond-payout-enum
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T07:52:56.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65bb586976d4

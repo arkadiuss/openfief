@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78a39953780f
+  - type: implements
+    from: SYM-ingest-delivery-payout-from
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:48:09.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2daf8709e0cc
+  - type: covered_by
+    from: SYM-ingest-delivery-payout-from
+    to: TEST-ingest-delivery-held
+    created_at: 2026-11-01T07:48:09.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92821b5c3fd1

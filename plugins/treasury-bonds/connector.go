@@ -7,6 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/delivery"
 	"github.com/arkadiuss/openfief/internal/ingest/treasurybonds"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -28,10 +29,13 @@ type connector struct {
 }
 
 // Sync delivers the CPI and reference-rate readings for the months after
-// the watermark, and the watermark of the last of each. In a transactions
-// batch it also books, as interest, each coupon that fell due after go-live
-// on the open lots the request says the bound accounts hold (D-101,
-// D-117); an opening batch seeds nothing here. A watermark this connector
+// the watermark, and the watermark of the last of each. It also books each
+// coupon, as interest, and each maturity, as a redemption, that fell due
+// on the open lots the request says the bound accounts hold, each followed
+// by a withdrawal when the account pays it out (D-101, D-117, D-135): a
+// transactions batch for the accounts seeded with opening lots, an opening
+// batch for the others, whose lots are deposits and buys (D-98,
+// treasurybonds.AccountsBookedIn). It seeds nothing. A watermark this connector
 // never returned, or holdings that don't parse, is InvalidArgument; a
 // failed request to GUS or NBP is Unavailable, so the core retries the
 // batch.
@@ -49,10 +53,8 @@ func (c *connector) Sync(ctx context.Context, req *connect.Request[connectorv1.S
 		return nil, status(connect.CodeInternal, fmt.Errorf("treasury-bonds: %w", err))
 	}
 	d := &connectorv1.Delivery{BatchId: req.Msg.GetBatchId(), Institution: string(treasurybonds.Institution), IndexReadings: msgs}
-	if req.Msg.GetMode() == connectorv1.Mode_MODE_TRANSACTIONS {
-		if d, err = withCoupons(ctx, c.coupons, req.Msg, d, today); err != nil {
-			return nil, err
-		}
+	if d, err = withCoupons(ctx, c.coupons, req.Msg, d, today); err != nil {
+		return nil, err
 	}
 	return connect.NewResponse(&connectorv1.SyncResponse{Delivery: d, Watermark: watermark}), nil
 }
@@ -64,7 +66,11 @@ func withCoupons(ctx context.Context, coupons *treasurybonds.CouponSync, req *co
 	if err != nil {
 		return nil, status(connect.CodeInvalidArgument, err)
 	}
-	m, err := coupons.Coupons(ctx, held, terms, today)
+	mode := ingest.ModeOpening
+	if req.GetMode() == connectorv1.Mode_MODE_TRANSACTIONS {
+		mode = ingest.ModeTransactions
+	}
+	m, err := coupons.Coupons(ctx, treasurybonds.AccountsBookedIn(held, mode), terms, today)
 	if err != nil {
 		return nil, status(connect.CodeUnavailable, fmt.Errorf("treasury-bonds: %w", err))
 	}

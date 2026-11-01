@@ -41,8 +41,9 @@ type settingsData struct {
 	// Plugins are the installed plugins, shown read-only (D-46, D-56).
 	Plugins pluginList
 	// MarketData is the owner's ranking of market-data sources, one per
-	// kind (D-94).
+	// kind, and Series each series' source (D-94).
 	MarketData []rankingView
+	Series     []seriesView
 	// Values are the owner's number format and marginal PIT rate (D-78,
 	// D-113).
 	Values *valuesSettings
@@ -85,6 +86,10 @@ func (s *server) renderSettings(w http.ResponseWriter, r *http.Request, sess ses
 	}
 	if data.MarketData, err = s.loadRankings(r, sess); err != nil {
 		s.coreFailed(w, r, "ListSourceRankings", err)
+		return
+	}
+	if data.Series, err = s.loadSeries(r, sess); err != nil {
+		s.coreFailed(w, r, "ListSeriesSources", err)
 		return
 	}
 	if data.Model == nil {

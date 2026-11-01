@@ -1,9 +1,11 @@
 package postgres
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -46,12 +48,13 @@ func NewStore(pool *pgxpool.Pool) (*Store, error) {
 	return &Store{pool: pool, insert: c}, nil
 }
 
-// Prices returns the price of instrument on each date on or before
-// through that has one, in date order: of every source's, the
-// highest-ranked source's (D-94, valuation.RankedPrices).
+// Prices returns the prices of instrument dated on or before through from
+// its one source (SourceOf), in date order: never another source's, which
+// only cross-check them (D-94, valuation.PricesBySource). None when no
+// source has a price of it.
 func (s *Store) Prices(ctx context.Context, instrument string, through kernel.Date) ([]valuation.Price, error) {
-	rank, err := s.rankOf(ctx, valuation.KindPrices)
-	if err != nil {
+	src, ok, err := s.SourceOf(ctx, valuation.PriceSeries(instrument))
+	if err != nil || !ok {
 		return nil, err
 	}
 	rows, err := s.pool.Query(ctx, `
@@ -64,7 +67,7 @@ func (s *Store) Prices(ctx context.Context, instrument string, through kernel.Da
 	if err != nil {
 		return nil, fmt.Errorf("loading prices of %s: %w", instrument, err)
 	}
-	return valuation.RankedPrices(out, rank).Winners, nil
+	return valuation.PricesBySource(out, src.Source).Own, nil
 }
 
 // scanPrice reads one price row.
@@ -111,12 +114,12 @@ func scanIndexLevel(row pgx.CollectableRow) (valuation.IndexLevel, error) {
 	return valuation.IndexLevel{Index: index, Date: d, Level: v, Source: source}, nil
 }
 
-// FXRates returns the rate of currency on each date on or before through
-// that has one, in date order: of every source's, the highest-ranked
-// source's (D-94).
+// FXRates returns the rates of currency dated on or before through from
+// its one source (SourceOf), in date order: never another source's (D-94).
+// None when no source has a rate of it.
 func (s *Store) FXRates(ctx context.Context, currency kernel.Currency, through kernel.Date) ([]valuation.FXRate, error) {
-	rank, err := s.rankOf(ctx, valuation.KindFXRates)
-	if err != nil {
+	src, ok, err := s.SourceOf(ctx, valuation.FXSeries(currency))
+	if err != nil || !ok {
 		return nil, err
 	}
 	rows, err := s.pool.Query(ctx, `
@@ -129,7 +132,7 @@ func (s *Store) FXRates(ctx context.Context, currency kernel.Currency, through k
 	if err != nil {
 		return nil, fmt.Errorf("loading FX rates of %s: %w", currency, err)
 	}
-	return valuation.RankedFXRates(out, rank), nil
+	return valuation.FXRatesBySource(out, src.Source).Own, nil
 }
 
 // scanRate reads one FX rate row.
@@ -147,14 +150,10 @@ func scanRate(row pgx.CollectableRow) (valuation.FXRate, error) {
 	return valuation.FXRate{Currency: c, Date: d, Rate: r, Source: source}, nil
 }
 
-// IndexReadings returns the reading of each index kind and month, in kind,
-// year and month order: of every source's, the highest-ranked source's
-// (D-94).
+// IndexReadings returns the readings of each index kind from its one
+// source (SourceOf), in kind, year and month order: never another
+// source's (D-94).
 func (s *Store) IndexReadings(ctx context.Context) ([]valuation.IndexReading, error) {
-	rank, err := s.rankOf(ctx, valuation.KindIndexReadings)
-	if err != nil {
-		return nil, err
-	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT kind, year, month, value::text, source FROM valuation.index_readings ORDER BY kind, year, month, source`)
 	if err != nil {
@@ -164,7 +163,21 @@ func (s *Store) IndexReadings(ctx context.Context) ([]valuation.IndexReading, er
 	if err != nil {
 		return nil, fmt.Errorf("loading index readings: %w", err)
 	}
-	return valuation.RankedIndexReadings(out, rank), nil
+	var own []valuation.IndexReading
+	for _, kind := range []valuation.IndexKind{valuation.CPI, valuation.ReferenceRate} {
+		src, ok, err := s.SourceOf(ctx, valuation.IndexSeries(kind))
+		if err != nil {
+			return nil, err
+		}
+		if ok {
+			ofKind := slices.DeleteFunc(slices.Clone(out), func(r valuation.IndexReading) bool { return r.Kind != kind })
+			own = append(own, valuation.IndexReadingsBySource(ofKind, src.Source).Own...)
+		}
+	}
+	slices.SortStableFunc(own, func(a, b valuation.IndexReading) int {
+		return cmp.Or(cmp.Compare(a.Kind.String(), b.Kind.String()), cmp.Compare(a.Year, b.Year), cmp.Compare(a.Month, b.Month))
+	})
+	return own, nil
 }
 
 // scanReading reads one index reading row.

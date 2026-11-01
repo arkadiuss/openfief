@@ -545,6 +545,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7ec53d13b5e
+  - type: verified_by
+    from: SCEN-ledger-payout-setting
+    to: TEST-ledger-payout
+    created_at: 2026-11-01T07:44:16.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81ccc6cc9e0a
+  - type: verified_by
+    from: SCEN-ledger-payout-setting
+    to: TEST-ledger-account
+    created_at: 2026-11-01T07:44:16.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f283bcdab28
+  - type: verified_by
+    from: SCEN-ledger-payout-setting
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-01T07:44:16.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-400745f82822
   - type: implements
     from: SYM-viewsv1-attention-item-descriptor
     to: REQ-views-attention-items
@@ -559,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8760fad64cd0
+  - type: verified_by
+    from: SCEN-demo-fx-rates-one-source
+    to: TEST-demo-seed-unit
+    created_at: 2026-11-01T08:56:29.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39bc8f09fc5d
+  - type: verified_by
+    from: SCEN-demo-fx-rates-one-source
+    to: TEST-demo-seed-load
+    created_at: 2026-11-01T08:56:29.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f31f0ec25641

@@ -304,7 +304,7 @@ func TestApplyRules(t *testing.T) {
 		if got != changed {
 			t.Errorf("changed = %v, want %v", got, changed)
 		}
-		want := []recorded{{what: "rules pl/" + pl.RulesVersion, revals: revals(t, "acc-1", "2026-03-02", "acc-2", "2026-03-05")}}
+		want := []recorded{{what: "rules pl/" + pl.RulesVersion + " sources/" + valuation.SourceRulesVersion, revals: revals(t, "acc-1", "2026-03-02", "acc-2", "2026-03-05")}}
 		if diff := cmp.Diff(want, rec.calls, cmp.AllowUnexported(recorded{})); diff != "" {
 			t.Errorf("(-want +got):\n%s", diff)
 		}

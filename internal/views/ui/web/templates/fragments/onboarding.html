@@ -277,4 +277,7 @@
   <div class="unit"><input id="{{.Prefix}}-fee-minimum" name="fee_minimum" value="{{.Minimum}}" inputmode="decimal" size="8" autocomplete="off"><input id="{{.Prefix}}-fee-currency" name="fee_minimum_currency" value="{{.Currency}}" aria-label="Minimum's currency" maxlength="3" size="4" autocomplete="off" pattern="[A-Za-z]{3}"></div></div>
 <div class="field"><label for="{{.Prefix}}-fee-conversion">Currency conversion</label>
   <div class="unit"><input id="{{.Prefix}}-fee-conversion" name="fee_conversion" value="{{.Conversion}}" inputmode="decimal" size="6" autocomplete="off"><span>%</span></div></div>
+{{if .Bond}}<div class="field"><label for="{{.Prefix}}-payout">Coupons and maturities</label>
+  <select id="{{.Prefix}}-payout" name="bond_payout" aria-describedby="{{.Prefix}}-payout-help"><option value="cash"{{if not .PaidOut}} selected{{end}}>Stay as the account's cash</option><option value="paid-out"{{if .PaidOut}} selected{{end}}>Paid out</option></select>
+  <p class="help" id="{{.Prefix}}-payout-help">Pick what the bond registry does with them. Paid out, each is booked and then withdrawn on the same day, so it still counts as return. A change applies from today.</p></div>{{end}}
 {{end}}

@@ -552,13 +552,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06f1114b5bf6
-  - type: implements
-    from: SYM-valuation-postgres-store-save-sources
-    to: REQ-valuation-ranking-revalues
-    created_at: 2026-10-29T18:15:25.307Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7cba3ebb4b65
   - type: covered_by
     from: SYM-valuation-postgres-store-save-sources
     to: TEST-valuation-postgres-ranking
@@ -644,6 +637,41 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e65e4ec7e415
   - type: implements
+    from: SYM-viewsv1-class-amount-proto-reflect
+    to: REQ-views-oki-tax-days
+    created_at: 2026-10-31T19:18:41.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-debbbbc22191
+  - type: covered_by
+    from: SYM-viewsv1-class-amount-proto-reflect
+    to: TEST-views-connectapi-values
+    created_at: 2026-10-31T19:18:41.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84311268d806
+  - type: implements
+    from: SYM-ingest-pg-store-confirm-ticker
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:04:20.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-017bf52a711d
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-line
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-01T07:52:44.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41cfaff4862f
+  - type: implements
+    from: SYM-valuation-postgres-store-save-sources
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-11-01T07:42:51.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-318d5e391c6b
+  - type: implements
     from: SYM-core-attention-run
     to: REQ-attention-sweep
     created_at: 2026-10-31T18:33:33.752Z
@@ -693,30 +721,16 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-2ac79b84a32a
   - type: implements
-    from: SYM-viewsv1-class-amount-proto-reflect
-    to: REQ-views-oki-tax-days
-    created_at: 2026-10-31T19:18:41.239Z
+    from: SYM-valuation-gen-pb-source-ranking-get-gap-threshold-days
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:13:06.693Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-debbbbc22191
+    id: rel-8a0dfaa4c62e
   - type: covered_by
-    from: SYM-viewsv1-class-amount-proto-reflect
-    to: TEST-views-connectapi-values
-    created_at: 2026-10-31T19:18:41.326Z
+    from: SYM-valuation-gen-pb-source-ranking-get-gap-threshold-days
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:13:06.732Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-84311268d806
-  - type: implements
-    from: SYM-ingest-pg-store-confirm-ticker
-    to: REQ-ingest-xtb-isin-owner-confirms
-    created_at: 2026-10-31T18:04:20.013Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-017bf52a711d
-  - type: implements
-    from: SYM-valuation-postgres-store-save-sources
-    to: REQ-valuation-market-data-source-ranking
-    created_at: 2026-11-01T07:42:51.310Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-318d5e391c6b
+    id: rel-76f832a70f64

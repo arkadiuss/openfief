@@ -629,3 +629,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-422b67426e68
+  - type: implements
+    from: SYM-connectorv1-bond-payout-number
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:53:25.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d6ad1d2db55
+  - type: covered_by
+    from: SYM-connectorv1-bond-payout-number
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T07:53:25.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3374c41731c3
+  - type: validates
+    from: TEST-treasurybonds-maturities
+    to: REQ-treasurybonds-books-maturities
+    created_at: 2026-11-01T08:41:49.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46f34d746b93
+  - type: validates
+    from: TEST-treasurybonds-maturities
+    to: REQ-treasurybonds-payout-booked-then-withdrawn
+    created_at: 2026-11-01T08:41:49.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e55f846ce05c

@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a235161bdba
+  - type: implements
+    from: SYM-valuation-series
+    to: REQ-valuation-market-data-one-source
+    created_at: 2026-11-01T09:02:08.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd9defdca16c
+  - type: covered_by
+    from: SYM-valuation-series
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:02:08.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb596c26e0fe

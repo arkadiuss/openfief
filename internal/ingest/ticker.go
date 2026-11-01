@@ -165,7 +165,7 @@ func (e *TickerEntry) build(in ledger.Instrument) (ledger.Transaction, error) {
 	case ledger.KindOpeningLot:
 		t, err = ledger.NewOpeningLot(e.Header, in, e.Quantity, e.Amount, e.Opened)
 	case ledger.KindFee, ledger.KindFXConversion, ledger.KindDeposit, ledger.KindWithdrawal,
-		ledger.KindInterest, ledger.KindDeletion:
+		ledger.KindInterest, ledger.KindDeletion, ledger.KindRedemption:
 	}
 	if errors.Is(err, errNotTickerKind) {
 		return ledger.Transaction{}, fmt.Errorf("%w %s: kind %s is not a buy, sell, dividend or opening lot", ErrInvalidTickerEntry, e.Header.Key, e.Kind)

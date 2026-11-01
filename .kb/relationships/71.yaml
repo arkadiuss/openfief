@@ -517,27 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c92e96924842
-  - type: executable_for
-    from: SYM-attention-app-test-relay-publishes-in-order-and-resumes
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:40:38.759Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fc9bfb918a37
-  - type: executable_for
-    from: SYM-attention-connectapi-test-helper-owners-check-owner
-    to: TEST-attention-connectapi
-    created_at: 2026-10-31T18:42:10.358Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3ac12d3ab2b8
-  - type: executable_for
-    from: SYM-ui-test-helper-fake-attention
-    to: TEST-ui-attention
-    created_at: 2026-10-31T18:53:06.530Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-96eb0d254c03
   - type: implements
     from: SYM-viewsv1connect-read-service-client-get-settings
     to: REQ-views-oki-tax-days
@@ -581,6 +560,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-efa4d46b2d3f
   - type: constrains
+    from: REQ-ledger-redemption-kind
+    to: FACT-SUBJECT-309D9B8F15FCF155
+    created_at: 2026-11-01T07:44:51.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04f467a2fe40
+  - type: requires_property
+    from: REQ-ledger-redemption-kind
+    to: FACT-PROP-BBE9A3A911E4FA1E
+    created_at: 2026-11-01T07:44:51.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68cb1f3e8a6b
+  - type: specified_by
+    from: REQ-ledger-redemption-kind
+    to: SCEN-ledger-redemption-postings
+    created_at: 2026-11-01T07:44:51.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-710836205704
+  - type: constrains
     from: REQ-valuation-unclassifiable-instrument-attention-item
     to: FACT-SUBJECT-1FE117B3D88DA76E
     created_at: 2026-11-01T07:38:50.456Z
@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b44ad5a90bf3
+  - type: executable_for
+    from: SYM-attention-app-test-relay-publishes-in-order-and-resumes
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:38.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc9bfb918a37
+  - type: executable_for
+    from: SYM-attention-connectapi-test-helper-owners-check-owner
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:42:10.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ac12d3ab2b8
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-attention
+    to: TEST-ui-attention
+    created_at: 2026-10-31T18:53:06.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96eb0d254c03

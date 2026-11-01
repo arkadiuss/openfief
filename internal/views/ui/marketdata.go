@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"slices"
+	"strconv"
 
 	"connectrpc.com/connect"
 
@@ -32,11 +33,22 @@ func rankingKind(k valuationv1.MarketDataKind) (kindName, bool) {
 	return kindName{}, false
 }
 
-// rankingView is one kind's ranking on the settings page (D-94).
+// rankingView is one kind's ranking on the settings page, with its gap
+// threshold in days (D-94).
 type rankingView struct {
-	Label   string
-	Kind    string
-	Sources []*valuationv1.RankedSource
+	Label        string
+	Kind         string
+	Sources      []*valuationv1.RankedSource
+	GapThreshold int32
+}
+
+// seriesView is one series' source on the settings page (D-94): the
+// kind's label and form value, the series' key, its source, whether the
+// owner chose it, and every source with a value of it.
+type seriesView struct {
+	Label, Kind, Key, Source string
+	ByOwner                  bool
+	Available                []string
 }
 
 // Names returns the sources' names in their order, for the form.
@@ -62,9 +74,68 @@ func (s *server) loadRankings(r *http.Request, sess session) ([]rankingView, err
 		if !ok {
 			continue
 		}
-		out = append(out, rankingView{Label: name.Label, Kind: name.Value, Sources: rk.GetSources()})
+		out = append(out, rankingView{Label: name.Label, Kind: name.Value, Sources: rk.GetSources(), GapThreshold: rk.GetGapThresholdDays()})
 	}
 	return out, nil
+}
+
+// loadSeries reads every series that has a source.
+func (s *server) loadSeries(r *http.Request, sess session) ([]seriesView, error) {
+	resp, err := s.marketData.ListSeriesSources(r.Context(), connect.NewRequest(&valuationv1.ListSeriesSourcesRequest{
+		Origin: sess.Origin, SessionToken: sess.Token,
+	}))
+	if err != nil {
+		return nil, fmt.Errorf("ListSeriesSources: %w", err)
+	}
+	out := make([]seriesView, 0, len(resp.Msg.GetSeries()))
+	for _, ss := range resp.Msg.GetSeries() {
+		name, ok := rankingKind(ss.GetKind())
+		if !ok {
+			continue
+		}
+		out = append(out, seriesView{
+			Label: name.Label, Kind: name.Value, Key: ss.GetKey(), Source: ss.GetSource(), ByOwner: ss.GetByOwner(), Available: ss.GetAvailable(),
+		})
+	}
+	return out, nil
+}
+
+// setSeriesSource makes the posted source the source of the posted series
+// with the core's MarketDataService (D-94); the core revalues what it
+// affects.
+func (s *server) setSeriesSource(w http.ResponseWriter, r *http.Request, sess session) {
+	kind, ok := kindOf(r.PostFormValue("kind"))
+	if !ok {
+		http.Error(w, "bad form", http.StatusBadRequest)
+		return
+	}
+	_, err := s.marketData.SetSeriesSource(r.Context(), connect.NewRequest(&valuationv1.SetSeriesSourceRequest{
+		Origin: sess.Origin, SessionToken: sess.Token, Kind: kind, Key: r.PostFormValue("key"), Source: r.PostFormValue("source"),
+	}))
+	if err != nil {
+		s.actionFailed(w, r, sess, "SetSeriesSource", err)
+		return
+	}
+	http.Redirect(w, r, "/settings#series-sources-title", http.StatusSeeOther)
+}
+
+// setGapThreshold sets the posted kind's gap threshold, a whole number of
+// days, with the core's MarketDataService (D-94).
+func (s *server) setGapThreshold(w http.ResponseWriter, r *http.Request, sess session) {
+	kind, ok := kindOf(r.PostFormValue("kind"))
+	days, err := strconv.ParseInt(r.PostFormValue("days"), 10, 32)
+	if !ok || err != nil {
+		s.renderSettings(w, r, sess, http.StatusBadRequest, &settingsData{Error: "The gap threshold must be a whole number of days."})
+		return
+	}
+	_, err = s.marketData.SetGapThreshold(r.Context(), connect.NewRequest(&valuationv1.SetGapThresholdRequest{
+		Origin: sess.Origin, SessionToken: sess.Token, Kind: kind, Days: int32(days),
+	}))
+	if err != nil {
+		s.actionFailed(w, r, sess, "SetGapThreshold", err)
+		return
+	}
+	http.Redirect(w, r, "/settings#market-data-title", http.StatusSeeOther)
 }
 
 // rankSources moves one source of a kind up or down, or puts the kind's

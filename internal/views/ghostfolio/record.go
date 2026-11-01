@@ -263,6 +263,7 @@ func transactionKinds() map[viewsv1.TransactionKind]ledger.TransactionKind {
 		viewsv1.TransactionKind_TRANSACTION_KIND_WITHDRAWAL:    ledger.KindWithdrawal,
 		viewsv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT:   ledger.KindOpeningLot,
 		viewsv1.TransactionKind_TRANSACTION_KIND_INTEREST:      ledger.KindInterest,
+		viewsv1.TransactionKind_TRANSACTION_KIND_REDEMPTION:    ledger.KindRedemption,
 	}
 }
 

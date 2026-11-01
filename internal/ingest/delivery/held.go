@@ -16,8 +16,8 @@ import (
 var ErrMalformedHoldings = errors.New("malformed holdings in the sync request")
 
 // Held reads what a sync request says the instance's bound accounts hold
-// (D-117): each account's go-live date, tax wrapper, holdings and open
-// lots, and the bond series terms the core stores for them. Anything
+// (D-117): each account's go-live date, tax wrapper, payout setting
+// (D-135), holdings and open lots, and the bond series terms the core stores for them. Anything
 // malformed fails with an error wrapping ErrMalformedHoldings naming the
 // field.
 func Held(req *connectorv1.SyncRequest) ([]ingest.HeldAccount, []ingest.BondTerms, error) {
@@ -53,6 +53,11 @@ func heldAccount(a *connectorv1.AccountHoldings) (ingest.HeldAccount, error) {
 		}
 		out.GoLive = d
 	}
+	payout, err := payoutFrom(a.GetBondPayout(), a.GetBondPayoutSince())
+	if err != nil {
+		return ingest.HeldAccount{}, err
+	}
+	out.Payout = payout
 	for i, h := range a.GetHoldings() {
 		in, err := instrumentFrom(h.GetInstrument())
 		if err != nil {
@@ -70,6 +75,31 @@ func heldAccount(a *connectorv1.AccountHoldings) (ingest.HeldAccount, error) {
 			return ingest.HeldAccount{}, fmt.Errorf("lots[%d]: %w", i, err)
 		}
 		out.Lots = append(out.Lots, lot)
+	}
+	return out, nil
+}
+
+// payoutFrom reads an account's payout setting: unspecified is
+// ledger.PayoutCash, and a paid-out setting needs the day it took effect.
+func payoutFrom(p connectorv1.BondPayout, since string) (ledger.PayoutSetting, error) {
+	var out ledger.PayoutSetting
+	switch p {
+	case connectorv1.BondPayout_BOND_PAYOUT_UNSPECIFIED, connectorv1.BondPayout_BOND_PAYOUT_CASH:
+		out.Payout = ledger.PayoutCash
+	case connectorv1.BondPayout_BOND_PAYOUT_PAID_OUT:
+		out.Payout = ledger.PayoutPaidOut
+	default:
+		return ledger.PayoutSetting{}, fmt.Errorf("bond_payout: %w: %d", ledger.ErrUnknownPayout, int32(p))
+	}
+	if since != "" {
+		d, err := kernel.ParseDate(since)
+		if err != nil {
+			return ledger.PayoutSetting{}, fmt.Errorf("bond_payout_since: %w", err)
+		}
+		out.Since = d
+	}
+	if err := out.Validate(); err != nil {
+		return ledger.PayoutSetting{}, fmt.Errorf("bond_payout_since: %w", err)
 	}
 	return out, nil
 }

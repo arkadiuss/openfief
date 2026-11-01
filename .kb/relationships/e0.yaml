@@ -631,20 +631,6 @@ relationships:
     id: rel-0b4f426cc77c
   - type: validates
     from: TEST-treasurybonds-mapper
-    to: REQ-treasurybonds-pre-go-live-opening-lot
-    created_at: 2026-10-30T06:32:49.320Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ea4e5a442e0e
-  - type: validates
-    from: TEST-treasurybonds-mapper
-    to: REQ-treasurybonds-post-go-live-deposit-buy
-    created_at: 2026-10-30T06:32:49.422Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c15638d11125
-  - type: validates
-    from: TEST-treasurybonds-mapper
     to: REQ-ingest-bond-lot-delete-supersedes
     created_at: 2026-10-30T06:32:49.512Z
     created_by: kibi/upsert
@@ -748,34 +734,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd8acff19abb
-  - type: implements
-    from: SYM-attention-app-items-observe
-    to: REQ-attention-sweep
-    created_at: 2026-10-31T18:39:51.610Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8b5bfc7ea4c2
-  - type: covered_by
-    from: SYM-attention-app-items-observe
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:39:51.650Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f34e5b91707d
-  - type: implements
-    from: SYM-attentionv1-x
-    to: REQ-attention-owner-service
-    created_at: 2026-10-31T18:59:04.480Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eb7da13b166a
-  - type: covered_by
-    from: SYM-attentionv1-x
-    to: TEST-attention-connectapi
-    created_at: 2026-10-31T18:59:04.554Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f6ba98f70a29
   - type: verified_by
     from: SCEN-valuation-stored-cost-basis
     to: TEST-valuation-revaluation
@@ -804,13 +762,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1eedab119070
-  - type: validates
-    from: TEST-treasurybonds-mapper
-    to: REQ-treasurybonds-lot-on-go-live-day-opening
-    created_at: 2026-10-31T18:11:41.805Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0d1ffe5cd922
   - type: implements
     from: SYM-ui-posted-once
     to: REQ-ingest-bond-lot-exchange-price-by-letter
@@ -818,3 +769,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ab24c163457
+  - type: implements
+    from: SYM-viewsv1-account-get-bond-payout
+    to: REQ-ui-bond-payout-setting
+    created_at: 2026-11-01T07:55:55.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b708e620ae6
+  - type: covered_by
+    from: SYM-viewsv1-account-get-bond-payout
+    to: TEST-ui-values
+    created_at: 2026-11-01T07:55:55.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bef62694243c
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-lot-booked-on-purchase-date
+    created_at: 2026-11-01T08:41:25.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b09a21b6d2c3
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-lot-idempotent-series-date
+    created_at: 2026-11-01T08:41:25.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6b5cd0c94c7
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-treasurybonds-lots-any-order
+    created_at: 2026-11-01T08:41:25.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-915c4876a238
+  - type: implements
+    from: SYM-attention-app-items-observe
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:39:51.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b5bfc7ea4c2
+  - type: covered_by
+    from: SYM-attention-app-items-observe
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:51.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f34e5b91707d
+  - type: implements
+    from: SYM-attentionv1-x
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:59:04.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb7da13b166a
+  - type: covered_by
+    from: SYM-attentionv1-x
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:59:04.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6ba98f70a29
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-descriptor
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:20:44.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-911dde6d8617
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:20:44.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9a428067e7a

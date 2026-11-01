@@ -107,14 +107,14 @@ func TestBondLotService(t *testing.T) {
 		return fmt.Sprintf("http://127.0.0.1:%d", port), nil
 	}, staticTokens{}))
 
-	// The account is not seeded, so it goes live today and the lot, bought
-	// before, is one opening lot (D-98).
+	// The lot is booked on its real purchase date as a deposit of its cost
+	// and a buy (D-98).
 	got, err := lots.AddBondLot(t.Context(), edoRequest(session, string(demo.BondsAccount)))
-	if err != nil || got.Msg.GetNew() != 1 {
-		t.Fatalf("AddBondLot = %v, %v; want one new opening lot", got, err)
+	if err != nil || got.Msg.GetNew() != 2 {
+		t.Fatalf("AddBondLot = %v, %v; want a new deposit and buy", got, err)
 	}
 	again, err := lots.AddBondLot(t.Context(), edoRequest(session, string(demo.BondsAccount)))
-	if err != nil || again.Msg.GetUnchanged() != 1 || again.Msg.GetNew() != 0 {
+	if err != nil || again.Msg.GetUnchanged() != 2 || again.Msg.GetNew() != 0 {
 		t.Errorf("entering the lot again = %v, %v; want it unchanged (D-18, D-98)", again, err)
 	}
 	checkBondLotRefusals(t, lots, session)
@@ -123,8 +123,8 @@ func TestBondLotService(t *testing.T) {
 }
 
 // checkBondLotDeleted deletes the lot as a correction (D-100): a new version
-// of its opening lot, then nothing when deleted again; a lot never entered
-// is refused.
+// of its deposit and its buy, then nothing when deleted again; a lot never
+// entered is refused.
 func checkBondLotDeleted(t *testing.T, lots bondLotAPI, session string) {
 	t.Helper()
 	del := func(date string) (*connect.Response[ingestv1.DeleteBondLotResponse], error) {
@@ -133,10 +133,10 @@ func checkBondLotDeleted(t *testing.T, lots bondLotAPI, session string) {
 		}))
 	}
 	got, err := del("2026-05-04")
-	if err != nil || got.Msg.GetNewVersions() != 1 {
-		t.Errorf("DeleteBondLot = %v, %v; want the opening lot superseded", got, err)
+	if err != nil || got.Msg.GetNewVersions() != 2 {
+		t.Errorf("DeleteBondLot = %v, %v; want the deposit and the buy superseded", got, err)
 	}
-	if got, err = del("2026-05-04"); err != nil || got.Msg.GetUnchanged() != 1 {
+	if got, err = del("2026-05-04"); err != nil || got.Msg.GetUnchanged() != 2 {
 		t.Errorf("deleting again = %v, %v; want it unchanged", got, err)
 	}
 	if _, err = del("2026-05-05"); connect.CodeOf(err) != connect.CodeInvalidArgument {

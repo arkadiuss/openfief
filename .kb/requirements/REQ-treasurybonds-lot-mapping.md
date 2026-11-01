@@ -1,6 +1,6 @@
 ---
 title: The treasury bond connector must map each valid lot bought on or before the account's go-live to an opening lot on go-live and each later lot to a deposit and a buy on its purchase date, keyed by series and purchase date, map each deleted lot to deletions of those keys, and deliver each series' terms once.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-98
 tags:
   - strict-modeling
