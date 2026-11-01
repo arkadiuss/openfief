@@ -505,13 +505,6 @@ relationships:
     id: rel-60cb62c03469
   - type: validates
     from: TEST-valuation-ranking
-    to: REQ-valuation-market-data-highest-rank-wins
-    created_at: 2026-10-29T18:00:39.533Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1fe81429dc77
-  - type: validates
-    from: TEST-valuation-ranking
     to: REQ-valuation-market-data-default-ranking
     created_at: 2026-10-29T18:00:39.587Z
     created_by: kibi/upsert
@@ -734,3 +727,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf9c1f9924e8
+  - type: executable_for
+    from: SYM-valuation-postgres-test-one-source-per-series
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T09:10:49.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb7f888b597f
+  - type: implements
+    from: SYM-valuation-gen-pb-set-series-source-request-get-origin
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:17:05.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225948671f54
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-series-source-request-get-origin
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:17:05.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff70b37e7ef9

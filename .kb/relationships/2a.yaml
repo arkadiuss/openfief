@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c36da9ae691
+  - type: executable_for
+    from: SYM-valuation-test-choose-source
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:05:01.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dabb6cbe9bc3

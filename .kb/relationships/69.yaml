@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84fea2147951
+  - type: implements
+    from: SYM-valuation-gap-of
+    to: REQ-valuation-market-data-gap-attention-item
+    created_at: 2026-11-01T09:04:48.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e45cbe61be00
+  - type: covered_by
+    from: SYM-valuation-gap-of
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:04:48.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebfca044c4b6

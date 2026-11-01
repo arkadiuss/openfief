@@ -35,12 +35,30 @@ type RankingStore interface {
 	// only when it changed, enqueues revals in the same transaction; it
 	// reports whether it changed.
 	SaveSourceRanking(ctx context.Context, kind valuation.MarketDataKind, placed []string, revals []valuation.Revaluation) (bool, error)
+	// SeriesSources returns every series with a source, each with the
+	// sources that have a value of it.
+	SeriesSources(ctx context.Context) ([]valuation.SeriesSource, error)
+	// AvailableSources returns the sources with a value of series.
+	AvailableSources(ctx context.Context, series valuation.Series) ([]string, error)
+	// SaveSeriesSource records the owner's choice of a series' source and,
+	// only when the source changed, enqueues revals in the same
+	// transaction; it reports whether it changed.
+	SaveSeriesSource(ctx context.Context, ss *valuation.SeriesSource, revals []valuation.Revaluation) (bool, error)
+	// GapThresholds returns the owner's gap threshold of each kind that
+	// has one.
+	GapThresholds(ctx context.Context) (valuation.GapThresholds, error)
+	// SaveGapThreshold sets kind's gap threshold.
+	SaveGapThreshold(ctx context.Context, kind valuation.MarketDataKind, days int) error
 }
 
-// Rankings runs the owner's ranking of market-data sources (D-94): for
-// each kind of market data, the highest-ranked source with a value wins,
-// every source's values are stored, and a change of ranking revalues
-// every account (D-36).
+// Rankings runs the owner's ranking of market-data sources and the source
+// of each series (D-94): each instrument's prices, each currency's FX rates
+// and each period index's readings take every value from one source,
+// chosen from the kind's ranking when the series first needs a value,
+// which the owner can change for that one series; every other source's
+// values are kept as cross-checks. A change of ranking changes no series'
+// source, so it revalues nothing; a change of a series' source revalues
+// the accounts it affects (D-36).
 type Rankings struct {
 	planner *Planner
 	store   RankingStore
@@ -60,12 +78,17 @@ func (r *Rankings) SourceRankings(ctx context.Context, origin, sessionToken stri
 	if err := r.checkOwner(ctx, origin, sessionToken); err != nil {
 		return nil, err
 	}
+	gaps, err := r.store.GapThresholds(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("loading the source rankings: %w", err)
+	}
 	out := make([]valuation.Ranking, 0, len(valuation.MarketDataKinds()))
 	for _, kind := range valuation.MarketDataKinds() {
 		ranking, err := r.store.SourceRanking(ctx, kind)
 		if err != nil {
 			return nil, fmt.Errorf("loading the source rankings: %w", err)
 		}
+		ranking.GapThreshold = gaps.For(kind)
 		out = append(out, ranking)
 	}
 	return out, nil
@@ -74,9 +97,9 @@ func (r *Rankings) SourceRankings(ctx context.Context, origin, sessionToken stri
 // RankSources makes placed the owner's order of kind's sources, for the
 // owner, and returns the ranking that results. A ranking that breaks
 // valuation.ValidateRanking is an error wrapping ErrInvalidInput and
-// nothing changes. When the order changed, every account is revalued from
-// its first transaction in the same transaction (D-36), since the winning
-// value of any date may have changed.
+// nothing changes. The ranking only chooses the source of a series that
+// first needs a value from then on (D-94): every series keeps the source
+// it has, so nothing is revalued.
 func (r *Rankings) RankSources(ctx context.Context, origin, sessionToken string, kind valuation.MarketDataKind, placed []string) (valuation.Ranking, error) {
 	if err := r.checkOwner(ctx, origin, sessionToken); err != nil {
 		return valuation.Ranking{}, err
@@ -84,17 +107,18 @@ func (r *Rankings) RankSources(ctx context.Context, origin, sessionToken string,
 	if err := valuation.ValidateRanking(kind, placed); err != nil {
 		return valuation.Ranking{}, fmt.Errorf("%w: %w", ErrInvalidInput, err)
 	}
-	revals, err := r.planner.FromStart(ctx, "")
-	if err != nil {
-		return valuation.Ranking{}, fmt.Errorf("ranking the sources of %s: %w", kind, err)
-	}
-	if _, saveErr := r.store.SaveSourceRanking(ctx, kind, placed, revals); saveErr != nil {
+	if _, saveErr := r.store.SaveSourceRanking(ctx, kind, placed, nil); saveErr != nil {
 		return valuation.Ranking{}, fmt.Errorf("ranking the sources of %s: %w", kind, saveErr)
 	}
 	ranking, err := r.store.SourceRanking(ctx, kind)
 	if err != nil {
 		return valuation.Ranking{}, fmt.Errorf("ranking the sources of %s: %w", kind, err)
 	}
+	gaps, err := r.store.GapThresholds(ctx)
+	if err != nil {
+		return valuation.Ranking{}, fmt.Errorf("ranking the sources of %s: %w", kind, err)
+	}
+	ranking.GapThreshold = gaps.For(kind)
 	return ranking, nil
 }
 

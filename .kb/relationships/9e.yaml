@@ -651,27 +651,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-a29a64557d72
   - type: implements
-    from: SYM-valuation-split
-    to: REQ-valuation-ranked-source-order
-    created_at: 2026-10-29T18:18:07.712Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0aa4d7700bba
-  - type: implements
-    from: SYM-valuation-split
-    to: REQ-valuation-market-data-highest-rank-wins
-    created_at: 2026-10-29T18:18:07.778Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5a443dc976bc
-  - type: covered_by
-    from: SYM-valuation-split
-    to: TEST-valuation-ranking
-    created_at: 2026-10-29T18:18:07.838Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-04597e3e4e12
-  - type: implements
     from: SYM-core-new-flags
     to: REQ-core-serve-flags
     created_at: 2026-10-29T21:53:22.712Z

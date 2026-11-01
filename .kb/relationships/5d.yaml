@@ -462,16 +462,23 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-5b1d1334fe16
   - type: executable_for
-    from: SYM-ingest-xtb-test-helper-current
-    to: TEST-ingest-xtb-opening
-    created_at: 2026-11-01T08:05:56.809Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c752d67428f2
-  - type: executable_for
     from: SYM-ui-test-helper-new-fake-attention
     to: TEST-ui-attention
     created_at: 2026-10-31T18:53:12.894Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9efd6b05ce52
+  - type: implements
+    from: SYM-valuation-app-input-recorder-rules-version
+    to: REQ-valuation-source-rules-version
+    created_at: 2026-11-01T09:02:01.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0dc38946d3e
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-current
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:05:56.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c752d67428f2

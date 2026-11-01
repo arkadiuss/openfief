@@ -182,7 +182,7 @@
 {{with .MarketData}}
 <section class="card" aria-labelledby="market-data-title">
   <h2 id="market-data-title">Market-data sources</h2>
-  <p class="muted">For each kind of market data, the highest-ranked source with a value for a date wins, and the others are kept to cross-check it (D-94). By default the first-party connector ranks first: EODHD for prices, NBP for exchange rates and the treasury bond connector for CPI and the NBP reference rate. Changing the order revalues every account.</p>
+  <p class="muted">Each instrument's prices, each currency's exchange rate and each index reading come from one source (D-94). When one first needs a value, it takes the highest-ranked source below that has one, and keeps it: changing the order revalues nothing and only applies to what first needs a value afterwards. A day without a value takes the latest earlier one from the same source, never another source's; the other sources' values are kept to cross-check it. By default the first-party connector ranks first: EODHD for prices, NBP for exchange rates and the treasury bond connector for CPI and the NBP reference rate.</p>
   {{range .}}
   <h3>{{.Label}}</h3>
   {{if .Sources}}
@@ -201,6 +201,32 @@
   {{else}}
   <p class="muted">No connector has delivered any yet.</p>
   {{end}}
+  <form method="post" action="/settings/market-data/gap">
+    <input type="hidden" name="kind" value="{{.Kind}}">
+    <div class="field"><label for="gap-{{.Kind}}">Gap threshold</label>
+      <div class="unit"><input id="gap-{{.Kind}}" name="days" value="{{.GapThreshold}}" required inputmode="numeric" size="5" autocomplete="off" aria-describedby="gap-{{.Kind}}-help"><span>days</span></div>
+      <p class="help" id="gap-{{.Kind}}-help">When a source has had no value for longer than this on the day valued, an attention item says so, until values resume.</p></div>
+    <div class="actions"><button type="submit">Save gap threshold</button></div>
+  </form>
+  {{end}}
+  {{with $.Data.Series}}
+  <h3 id="series-sources-title">Source of each instrument, rate and index</h3>
+  <p class="muted">Choosing another source revalues the accounts it affects from their first transaction.</p>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Kind</th><th scope="col">Of</th><th scope="col">Source</th></tr></thead>
+    <tbody>
+    {{range $i, $s := .}}
+    <tr><td>{{.Label}}</td><td><span class="mono">{{.Key}}</span></td>
+      <td><form method="post" action="/settings/market-data/series" class="inline">
+        <input type="hidden" name="kind" value="{{.Kind}}"><input type="hidden" name="key" value="{{.Key}}">
+        <label class="sr-only" for="series-{{$i}}">Source of {{.Key}}</label>
+        <select id="series-{{$i}}" name="source">{{$chosen := .Source}}{{range .Available}}<option value="{{.}}"{{if eq . $chosen}} selected{{end}}>{{.}}</option>{{end}}</select>
+        {{if .ByOwner}}<span class="pill pill-neutral">your choice</span>{{else}}<span class="pill pill-neutral">from the ranking</span>{{end}}
+        <button type="submit" class="quiet">Save</button>
+      </form></td></tr>
+    {{end}}
+    </tbody>
+  </table></div>
   {{end}}
 </section>
 {{end}}

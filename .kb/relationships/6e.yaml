@@ -433,13 +433,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9090edf956c
-  - type: implements
-    from: SYM-valuation-postgres-store-save-source-ranking
-    to: REQ-valuation-ranking-revalues
-    created_at: 2026-10-29T18:16:07.367Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-14406a3aeeea
   - type: covered_by
     from: SYM-valuation-postgres-store-save-source-ranking
     to: TEST-valuation-postgres-ranking
@@ -608,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bae83fd484f3
+  - type: implements
+    from: SYM-valuation-postgres-store-save-source-ranking
+    to: REQ-valuation-series-source-recorded
+    created_at: 2026-11-01T09:01:46.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de582b376864
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-market-data-list-series-sources
+    to: TEST-ui-market-data
+    created_at: 2026-11-01T09:12:17.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9199b34c304f

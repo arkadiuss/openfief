@@ -17,25 +17,72 @@ import (
 
 // Errors the fake MarketDataService answers with.
 var (
-	errNotOwnerFake = errors.New("not the owner")
-	errTwiceFake    = errors.New(`invalid source ranking: "a" is ranked twice`)
+	errNotOwnerFake  = errors.New("not the owner")
+	errTwiceFake     = errors.New(`invalid source ranking: "a" is ranked twice`)
+	errNoValueFake   = errors.New(`invalid valuation input: "gone" has no value of prices/XX00000SYNT3/SYNT`)
+	errThresholdFake = errors.New("invalid gap threshold: prices: 0 days; it must be 1 to 3660")
 )
 
 // fakeMarketData is an in-memory MarketDataService with two price
-// sources, EODHD's in its default first place. Like the core, it wants the
-// owner's session and refuses a source named twice.
+// sources, EODHD's in its default first place, and one instrument whose
+// prices come from it. Like the core, it wants the owner's session and
+// refuses a source named twice, a series source without a value and a gap
+// threshold below one day.
 type fakeMarketData struct {
 	valuationv1connect.UnimplementedMarketDataServiceHandler
 
 	mu     sync.Mutex
 	prices []*valuationv1.RankedSource
+	series []*valuationv1.SeriesSource
 	set    [][]string
+	gaps   []int32
 }
 
 func newFakeMarketData() *fakeMarketData {
-	return &fakeMarketData{prices: []*valuationv1.RankedSource{
-		{Name: "prices-eu", Institution: "eodhd"}, {Name: "ibkr-flex-a", Institution: "ibkr"},
-	}}
+	return &fakeMarketData{
+		prices: []*valuationv1.RankedSource{{Name: "prices-eu", Institution: "eodhd"}, {Name: "ibkr-flex-a", Institution: "ibkr"}},
+		series: []*valuationv1.SeriesSource{{
+			Kind: valuationv1.MarketDataKind_MARKET_DATA_KIND_PRICES, Key: "XX00000SYNT3/SYNT", Source: "prices-eu",
+			Available: []string{"ibkr-flex-a", "prices-eu"},
+		}},
+	}
+}
+
+func (f *fakeMarketData) ListSeriesSources(_ context.Context, r *connect.Request[valuationv1.ListSeriesSourcesRequest]) (*connect.Response[valuationv1.ListSeriesSourcesResponse], error) {
+	if r.Msg.GetSessionToken() != ownerSession {
+		return nil, codeErr(connect.CodePermissionDenied, errNotOwnerFake)
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	return connect.NewResponse(&valuationv1.ListSeriesSourcesResponse{Series: f.series}), nil
+}
+
+func (f *fakeMarketData) SetSeriesSource(_ context.Context, r *connect.Request[valuationv1.SetSeriesSourceRequest]) (*connect.Response[valuationv1.SetSeriesSourceResponse], error) {
+	if r.Msg.GetSessionToken() != ownerSession {
+		return nil, codeErr(connect.CodePermissionDenied, errNotOwnerFake)
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	for _, ss := range f.series {
+		if ss.GetKind() == r.Msg.GetKind() && ss.GetKey() == r.Msg.GetKey() && slices.Contains(ss.GetAvailable(), r.Msg.GetSource()) {
+			ss.Source, ss.ByOwner = r.Msg.GetSource(), true
+			return connect.NewResponse(&valuationv1.SetSeriesSourceResponse{}), nil
+		}
+	}
+	return nil, codeErr(connect.CodeInvalidArgument, errNoValueFake)
+}
+
+func (f *fakeMarketData) SetGapThreshold(_ context.Context, r *connect.Request[valuationv1.SetGapThresholdRequest]) (*connect.Response[valuationv1.SetGapThresholdResponse], error) {
+	if r.Msg.GetSessionToken() != ownerSession {
+		return nil, codeErr(connect.CodePermissionDenied, errNotOwnerFake)
+	}
+	if r.Msg.GetDays() < 1 {
+		return nil, codeErr(connect.CodeInvalidArgument, errThresholdFake)
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.gaps = append(f.gaps, r.Msg.GetDays())
+	return connect.NewResponse(&valuationv1.SetGapThresholdResponse{}), nil
 }
 
 func (f *fakeMarketData) ListSourceRankings(_ context.Context, r *connect.Request[valuationv1.ListSourceRankingsRequest]) (*connect.Response[valuationv1.ListSourceRankingsResponse], error) {
@@ -45,9 +92,9 @@ func (f *fakeMarketData) ListSourceRankings(_ context.Context, r *connect.Reques
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	return connect.NewResponse(&valuationv1.ListSourceRankingsResponse{Rankings: []*valuationv1.SourceRanking{
-		{Kind: valuationv1.MarketDataKind_MARKET_DATA_KIND_PRICES, Sources: f.prices},
-		{Kind: valuationv1.MarketDataKind_MARKET_DATA_KIND_FX_RATES},
-		{Kind: valuationv1.MarketDataKind_MARKET_DATA_KIND_INDEX_READINGS},
+		{Kind: valuationv1.MarketDataKind_MARKET_DATA_KIND_PRICES, Sources: f.prices, GapThresholdDays: 7},
+		{Kind: valuationv1.MarketDataKind_MARKET_DATA_KIND_FX_RATES, GapThresholdDays: 7},
+		{Kind: valuationv1.MarketDataKind_MARKET_DATA_KIND_INDEX_READINGS, GapThresholdDays: 92},
 	}}), nil
 }
 
@@ -77,7 +124,74 @@ func TestSettingsShowsSourceRankings(t *testing.T) {
 	rec := h.serve(t, withSession(request(http.MethodGet, "/settings", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, `id="market-data-title"`, "Prices", "Exchange rates", "prices-eu", "eodhd", "ibkr-flex-a",
-		`name="up" value="ibkr-flex-a"`, "default place", "No connector has delivered any yet.")
+		`name="up" value="ibkr-flex-a"`, "default place", "No connector has delivered any yet.",
+		`id="gap-prices" name="days" value="7"`, `id="gap-index_readings" name="days" value="92"`,
+		`id="series-sources-title"`, "XX00000SYNT3/SYNT", `<option value="prices-eu" selected>prices-eu</option>`, "from the ranking")
+}
+
+func TestSeriesSourceForm(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name       string
+		body       string
+		wantStatus int
+		wantSource string
+		wantBody   string
+	}{
+		{name: "the owner switches the source", body: "kind=prices&key=XX00000SYNT3/SYNT&source=ibkr-flex-a", wantStatus: http.StatusSeeOther, wantSource: "ibkr-flex-a"},
+		{name: "an unknown kind", body: "kind=levels&key=x&source=a", wantStatus: http.StatusBadRequest, wantSource: "prices-eu"},
+		{
+			name: "the core refuses: shown with its reason", body: "kind=prices&key=XX00000SYNT3/SYNT&source=gone",
+			wantStatus: http.StatusBadRequest, wantSource: "prices-eu", wantBody: "has no value of",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			h := newHarness(t)
+			rec := h.serve(t, withSession(form("/settings/market-data/series", tt.body), ownerSession))
+			wantStatus(t, rec, tt.wantStatus)
+			var got string
+			h.marketData.locked(func() { got = h.marketData.series[0].GetSource() })
+			if got != tt.wantSource {
+				t.Errorf("source = %q, want %q", got, tt.wantSource)
+			}
+			if tt.wantBody != "" {
+				wantBody(t, rec, tt.wantBody)
+			}
+		})
+	}
+}
+
+func TestGapThresholdForm(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name       string
+		body       string
+		wantStatus int
+		wantGaps   []int32
+		wantBody   string
+	}{
+		{name: "the owner sets 14 days", body: "kind=prices&days=14", wantStatus: http.StatusSeeOther, wantGaps: []int32{14}},
+		{name: "not a number", body: "kind=prices&days=two", wantStatus: http.StatusBadRequest, wantBody: "whole number of days"},
+		{name: "the core refuses: shown with its reason", body: "kind=fx_rates&days=0", wantStatus: http.StatusBadRequest, wantBody: "invalid gap threshold"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			h := newHarness(t)
+			rec := h.serve(t, withSession(form("/settings/market-data/gap", tt.body), ownerSession))
+			wantStatus(t, rec, tt.wantStatus)
+			var got []int32
+			h.marketData.locked(func() { got = h.marketData.gaps })
+			if !slices.Equal(got, tt.wantGaps) {
+				t.Errorf("gap thresholds set = %v, want %v", got, tt.wantGaps)
+			}
+			if tt.wantBody != "" {
+				wantBody(t, rec, tt.wantBody)
+			}
+		})
+	}
 }
 
 func TestRankSourcesForm(t *testing.T) {

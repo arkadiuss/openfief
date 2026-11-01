@@ -629,3 +629,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46987ed1fcf4
+  - type: implements
+    from: SYM-valuation-series-gap-days
+    to: REQ-valuation-market-data-gap-attention-item
+    created_at: 2026-11-01T09:04:33.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a72b394fb70b
+  - type: covered_by
+    from: SYM-valuation-series-gap-days
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:04:33.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-553056ff41c1

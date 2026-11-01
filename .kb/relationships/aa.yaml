@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-daeec7ef7c01
+  - type: executable_for
+    from: SYM-ui-test-series-source-form
+    to: TEST-ui-market-data
+    created_at: 2026-11-01T09:12:39.828Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-361371d3fa4d

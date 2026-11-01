@@ -671,3 +671,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-68e49c643c56
+  - type: constrains
+    from: REQ-valuation-series-source-owner-choice
+    to: FACT-SUBJECT-431B4CEEE9046544
+    created_at: 2026-11-01T08:55:31.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8f27bc6338e
+  - type: requires_property
+    from: REQ-valuation-series-source-owner-choice
+    to: FACT-PROP-F7FA243EE2D53126
+    created_at: 2026-11-01T08:55:31.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0dd45228caf
+  - type: specified_by
+    from: REQ-valuation-series-source-owner-choice
+    to: SCEN-valuation-series-source-owner-choice
+    created_at: 2026-11-01T08:55:31.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6c5b792fe7d

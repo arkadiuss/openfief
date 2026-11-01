@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6ba98f70a29
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-descriptor
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:20:44.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-911dde6d8617
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-descriptor
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:20:44.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9a428067e7a

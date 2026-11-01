@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02ba8c54920f
+  - type: executable_for
+    from: SYM-valuation-test-gap-of
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:05:47.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9d70c9f8c1b

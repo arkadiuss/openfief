@@ -23,7 +23,8 @@ var (
 const maxSourceName = 64
 
 // MarketDataKind is a kind of market data whose sources the owner ranks
-// (D-94): prices, FX rates and index readings.
+// (D-94): prices, FX rates and index readings. Market index levels have
+// no ranking (D-124).
 type MarketDataKind int
 
 const (
@@ -97,10 +98,14 @@ type RankedSource struct {
 }
 
 // Ranking is the order of the sources of one kind of market data, the
-// highest first (D-94).
+// highest first (D-94): a series of that kind takes its source from it when
+// it first needs a value (ChooseSource).
 type Ranking struct {
 	Kind    MarketDataKind
 	Sources []RankedSource
+	// GapThreshold is the kind's gap threshold in days (GapThresholds),
+	// which the app fills in; RankSources leaves it zero.
+	GapThreshold int
 }
 
 // Names returns the sources' names, the highest-ranked first.
@@ -172,7 +177,7 @@ func ValidateRanking(kind MarketDataKind, sources []string) error {
 	return nil
 }
 
-// rankOf returns the position of each source in rank: a source rank
+// rankOf returns the order of sources in rank: a source rank
 // doesn't name comes after every named one, and two of those are ordered
 // by name.
 func rankOf(rank []string) func(a, b string) int {
@@ -193,79 +198,4 @@ func rankOf(rank []string) func(a, b string) int {
 		}
 		return cmp.Compare(a, b)
 	}
-}
-
-// Split is values of one kind of market data split by rank (D-94):
-// Winners holds the value of each key from the highest-ranked source with
-// one, in the order the keys first appear; Lower every other value, in
-// input order.
-type Split[T any] struct {
-	Winners []T
-	Lower   []T
-}
-
-// split splits values, keyed by key and from source, by rank.
-func split[T any](values []T, key, source func(*T) string, rank []string) Split[T] {
-	better := rankOf(rank)
-	best := map[string]int{}
-	var order []string
-	for i := range values {
-		k := key(&values[i])
-		j, seen := best[k]
-		switch {
-		case !seen:
-			best[k] = i
-			order = append(order, k)
-		case better(source(&values[i]), source(&values[j])) < 0:
-			best[k] = i
-		}
-	}
-	won := make(map[int]bool, len(best))
-	out := Split[T]{Winners: make([]T, 0, len(order))}
-	for _, k := range order {
-		won[best[k]] = true
-		out.Winners = append(out.Winners, values[best[k]])
-	}
-	for i := range values {
-		if !won[i] {
-			out.Lower = append(out.Lower, values[i])
-		}
-	}
-	return out
-}
-
-// RankedPrices splits prices into the winning price of each instrument and
-// date, from the highest-ranked source with a value (D-94), and the
-// lower-ranked ones, which serve as cross-checks (D-22).
-func RankedPrices(prices []Price, rank []string) Split[Price] {
-	return split(prices, func(p *Price) string { return p.Instrument + " " + p.Date.String() },
-		func(p *Price) string { return p.Source }, rank)
-}
-
-// RankedFXRates returns the winning FX rate of each currency and date,
-// from the highest-ranked source with a value (D-94).
-func RankedFXRates(rates []FXRate, rank []string) []FXRate {
-	return split(rates, func(r *FXRate) string { return r.Currency.String() + " " + r.Date.String() },
-		func(r *FXRate) string { return r.Source }, rank).Winners
-}
-
-// RankedIndexReadings returns the winning reading of each index kind and
-// month, from the highest-ranked source with a value (D-94).
-func RankedIndexReadings(readings []IndexReading, rank []string) []IndexReading {
-	return split(readings, func(r *IndexReading) string {
-		return r.Kind.String() + " " + strconv.Itoa(r.Year) + " " + strconv.Itoa(int(r.Month))
-	}, func(r *IndexReading) string { return r.Source }, rank).Winners
-}
-
-// LowerRankedChecks returns lower-ranked prices as cross-check prices of
-// the same instrument, date, close and source: a lower-ranked source's
-// value is compared with the winning price like an institution's own
-// price (D-94, D-22).
-func LowerRankedChecks(lower []Price) []CrossCheckPrice {
-	out := make([]CrossCheckPrice, 0, len(lower))
-	for i := range lower {
-		p := &lower[i]
-		out = append(out, CrossCheckPrice{Instrument: p.Instrument, Date: p.Date, Close: p.Close, Source: p.Source})
-	}
-	return out
 }

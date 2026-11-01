@@ -1,6 +1,6 @@
 ---
 title: Changing the owner's ranking of a kind of market data must enqueue a revaluation of every account from its first transaction in the same database transaction that stores it, and saving an unchanged ranking must enqueue nothing.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-36
 tags:
   - strict-modeling
@@ -34,14 +34,12 @@ Changing the owner's ranking of a kind of market data must enqueue a revaluation
 
 ## Context
 
-D-36 revalues on any change to prices, FX rates or index readings; a new ranking changes which value counts on any day. Modeled by Claude Code for the market-data work package (D-94, impl/market-data); the author has not reviewed it yet.
+An earlier refinement of D-94 by Claude Code (default firmness).
+
+## Why this changed
+
+D-94 was rewritten: a series' source is chosen from the ranking only when the series first needs a value and is then kept, so a change of ranking changes no stored value and revalues nothing. Superseded by REQ-valuation-series-source-recorded.
 
 ## Source
 
-> **[D-94]** The owner ranks the sources of each kind of market data (prices, exchange rates and index readings) in priority order, and for each date the highest-ranked source with a value wins. Every source's values are stored, so the lower-ranked ones serve as cross-checks (D-22). By default the first-party connector for each kind ranks first: NBP for exchange rates, EODHD for prices, and the treasury bond connector for CPI and the NBP reference rate.
-
 docs/DESIGN.md#D-94
-
-> **[D-36]** Any change to those inputs enqueues a revaluation in the same database transaction, through a PostgreSQL-backed job queue (River).
-
-docs/DESIGN.md#D-36

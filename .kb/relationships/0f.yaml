@@ -644,6 +644,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-090810fee468
   - type: implements
+    from: SYM-core-with-attention-service
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:33:40.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-524bc3dc7636
+  - type: covered_by
+    from: SYM-core-with-attention-service
+    to: TEST-core-attention
+    created_at: 2026-10-31T18:33:40.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e461f91268f8
+  - type: implements
+    from: SYM-viewsv1-list-attention-items-request-string
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:05:16.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0827dd8675c7
+  - type: covered_by
+    from: SYM-viewsv1-list-attention-items-request-string
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:05:16.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d5cf9718a5d
+  - type: implements
     from: SYM-valuation-app-revaluer-raise-unclassified
     to: REQ-valuation-unclassified-attention
     created_at: 2026-10-31T19:07:47.836Z
@@ -699,6 +727,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5fc535d3a9e2
+  - type: implements
+    from: SYM-valuation-gen-pb-series-source-get-source
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:14:09.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-752ac10bf427
+  - type: covered_by
+    from: SYM-valuation-gen-pb-series-source-get-source
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:14:09.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-066fcb85a297
   - type: executable_for
     from: SYM-ingest-test-keep-from-go-live-ticker-entries
     to: TEST-ingest-golive
@@ -713,31 +755,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00c7c6ab3e8a
-  - type: implements
-    from: SYM-core-with-attention-service
-    to: REQ-attention-owner-service
-    created_at: 2026-10-31T18:33:40.033Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-524bc3dc7636
-  - type: covered_by
-    from: SYM-core-with-attention-service
-    to: TEST-core-attention
-    created_at: 2026-10-31T18:33:40.078Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e461f91268f8
-  - type: implements
-    from: SYM-viewsv1-list-attention-items-request-string
-    to: REQ-views-attention-items
-    created_at: 2026-10-31T19:05:16.779Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0827dd8675c7
-  - type: covered_by
-    from: SYM-viewsv1-list-attention-items-request-string
-    to: TEST-views-connectapi-attention
-    created_at: 2026-10-31T19:05:16.836Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6d5cf9718a5d

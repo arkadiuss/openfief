@@ -685,3 +685,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe14c2684df4
+  - type: implements
+    from: SYM-valuation-series-string
+    to: REQ-valuation-market-data-one-source
+    created_at: 2026-11-01T09:02:16.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5172ae52ee4b
+  - type: covered_by
+    from: SYM-valuation-series-string
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:02:16.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a878026feea7
+  - type: implements
+    from: SYM-valuation-postgres-store-recorded-source
+    to: REQ-valuation-series-source-recorded
+    created_at: 2026-11-01T09:10:28.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64b401bae3b1
+  - type: implements
+    from: SYM-valuation-postgres-store-recorded-source
+    to: REQ-valuation-market-data-source-chosen-on-first-need
+    created_at: 2026-11-01T09:10:28.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-def52b29ed53
+  - type: covered_by
+    from: SYM-valuation-postgres-store-recorded-source
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T09:10:28.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c160ac47f8a
+  - type: implements
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-set-series-source
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:21:34.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5810def1685
+  - type: covered_by
+    from: SYM-valuation-gen-connect-unimplemented-market-data-service-handler-set-series-source
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:21:34.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8439132584a

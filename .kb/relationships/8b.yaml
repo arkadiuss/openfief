@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bad38987237e
+  - type: implements
+    from: SYM-valuation-default-gap-threshold
+    to: REQ-valuation-gap-threshold-default
+    created_at: 2026-11-01T09:04:11.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9459e651abff
+  - type: covered_by
+    from: SYM-valuation-default-gap-threshold
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:04:11.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58d56bc4da7e

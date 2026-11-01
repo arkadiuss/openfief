@@ -650,3 +650,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d04cd8523e4
+  - type: verified_by
+    from: SCEN-valuation-series-source-recorded
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T08:55:10.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f7633523a1a
+  - type: verified_by
+    from: SCEN-valuation-series-source-recorded
+    to: TEST-valuation-app-ranking
+    created_at: 2026-11-01T08:55:10.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bc99e08d740
+  - type: verified_by
+    from: SCEN-ui-market-data-series-sources
+    to: TEST-ui-market-data
+    created_at: 2026-11-01T08:56:18.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c17288b1c13

@@ -629,3 +629,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dfd9bde680d9
+  - type: constrains
+    from: REQ-valuation-gap-item-per-account
+    to: FACT-SUBJECT-431B4CEEE9046544
+    created_at: 2026-11-01T08:55:50.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfc3b30f138f
+  - type: requires_property
+    from: REQ-valuation-gap-item-per-account
+    to: FACT-PROP-93BB527C9EB76A71
+    created_at: 2026-11-01T08:55:50.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb55611744c6
+  - type: specified_by
+    from: REQ-valuation-gap-item-per-account
+    to: SCEN-valuation-gap-item-per-account
+    created_at: 2026-11-01T08:55:50.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d073ba1007a
+  - type: implements
+    from: SYM-valuation-series-source
+    to: REQ-valuation-market-data-one-source
+    created_at: 2026-11-01T09:02:55.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00f8cdbecb93
+  - type: covered_by
+    from: SYM-valuation-series-source
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:02:55.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07383c1b6d2f
+  - type: executable_for
+    from: SYM-valuation-app-test-revalue-raises-gaps
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:08:10.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf9064add44b

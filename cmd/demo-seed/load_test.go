@@ -83,7 +83,7 @@ func testConfig(t *testing.T, today string, reset bool) *config {
 	if err != nil {
 		t.Fatalf("ParseDate: %v", err)
 	}
-	return &config{Seed: defaultSeed, Today: d, Reset: reset, Offline: true, Wait: 2 * time.Minute}
+	return &config{Seed: defaultSeed, Today: d, Reset: reset, Offline: true, FXSource: defaultFXSource, Wait: 2 * time.Minute}
 }
 
 // quiet discards the loader's logs.

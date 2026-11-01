@@ -846,3 +846,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3221c6b1d79d
+  - type: implements
+    from: SYM-valuation-other-source-checks
+    to: REQ-valuation-other-source-price-checks
+    created_at: 2026-11-01T09:03:50.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-537e0f5e0849
+  - type: implements
+    from: SYM-valuation-other-source-checks
+    to: REQ-valuation-market-data-other-sources-cross-checks
+    created_at: 2026-11-01T09:03:50.069Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00c43fbf066e
+  - type: covered_by
+    from: SYM-valuation-other-source-checks
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:03:50.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f6f3e186643
+  - type: implements
+    from: SYM-valuation-app-needed-series
+    to: REQ-valuation-gap-item-per-account
+    created_at: 2026-11-01T09:06:28.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9cefc704f62
+  - type: covered_by
+    from: SYM-valuation-app-needed-series
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:06:28.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a876f1e2dbe9
+  - type: implements
+    from: SYM-valuation-app-rankings-set-series-source
+    to: REQ-valuation-series-source-owner-choice
+    created_at: 2026-11-01T09:07:15.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb75e0fcfb55
+  - type: implements
+    from: SYM-valuation-app-rankings-set-series-source
+    to: REQ-valuation-market-data-source-owner-switch
+    created_at: 2026-11-01T09:07:15.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05f0da6f4b65
+  - type: covered_by
+    from: SYM-valuation-app-rankings-set-series-source
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:07:15.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5b64e0ec36f
+  - type: implements
+    from: SYM-valuation-app-gap-subject
+    to: REQ-valuation-gap-item-per-account
+    created_at: 2026-11-01T09:07:40.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55c6bf66bc50
+  - type: covered_by
+    from: SYM-valuation-app-gap-subject
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:07:40.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5ece99617a4
+  - type: implements
+    from: SYM-valuation-postgres-store-gap-thresholds
+    to: REQ-valuation-gap-threshold-default
+    created_at: 2026-11-01T09:10:35.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad1947764e38
+  - type: covered_by
+    from: SYM-valuation-postgres-store-gap-thresholds
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T09:10:35.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6fdb0d914f7

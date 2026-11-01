@@ -1,14 +1,22 @@
-// OpenFief's market-data source ranking contract (docs/DESIGN.md D-94,
+// OpenFief's market-data sources contract (docs/DESIGN.md D-94, D-124,
 // D-79).
 //
-// The owner ranks the sources of each kind of market data (prices, FX
-// rates and index readings) in priority order. For each date the
-// highest-ranked source with a value wins; every source's values are
-// stored, so the lower-ranked ones serve as cross-checks (D-22). A source
-// is a connector instance that delivered values of the kind (D-48). By
-// default the first-party connector of each kind ranks first: EODHD for
-// prices, NBP for FX rates, and the treasury bond connector for CPI and
-// the NBP reference rate; the other sources follow by name.
+// Each series of market data, one instrument's prices, one currency's FX
+// rates to PLN or one period index's readings (CPI, the NBP reference
+// rate), takes every value from exactly one source: a connector instance
+// that delivered values of its kind (D-48, D-124). The source is chosen
+// from the owner's ranking of that kind's sources when the series first
+// needs a value, the highest-ranked source with a value of it, and the
+// owner can change it for that one series. A day without a value takes the
+// series' latest earlier one, never another source's; every other
+// source's values are stored as cross-checks (D-22). A series whose source
+// has had no value for longer than the kind's gap threshold raises an
+// attention item (D-130). By default the first-party connector of each
+// kind ranks first: EODHD for prices, NBP for FX rates, and the treasury
+// bond connector for CPI and the NBP reference rate; the other sources
+// follow by name. Market index levels, such as WIG20's, have no ranking
+// and no series source: each index and date keeps the level delivered last
+// (D-124).
 //
 // The core serves MarketDataService to VIEW plugins only, next to the
 // AuthService, as the owner's entry service for this kind of entry (D-79).
@@ -24,13 +32,16 @@
 //   PERMISSION_DENIED.
 // - A ranking that names a source twice, or a source with an empty name or
 //   one longer than 64 characters, or a kind that is unspecified, fails
-//   with INVALID_ARGUMENT and nothing changes.
+//   with INVALID_ARGUMENT and nothing changes. So does a series whose key
+//   names no instrument, no currency other than PLN or no index kind, a
+//   series source without any value of the series, and a gap threshold
+//   outside 1 to 3660 days.
 syntax = "proto3";
 
 package openfief.valuation.v1;
 
 // MarketDataService reads and changes the owner's ranking of market-data
-// sources.
+// sources, each series' source and the gap thresholds.
 service MarketDataService {
   // ListSourceRankings returns the ranking of every kind of market data.
   rpc ListSourceRankings(ListSourceRankingsRequest) returns (ListSourceRankingsResponse) {
@@ -38,9 +49,26 @@ service MarketDataService {
   }
 
   // SetSourceRanking replaces the owner's order of one kind's sources.
-  // Sources it doesn't name rank after them, in their default place. A
-  // change revalues every account (D-36).
+  // Sources it doesn't name rank after them, in their default place. The
+  // ranking only chooses the source of a series that first needs a value
+  // afterwards: every series keeps its source, so nothing is revalued.
   rpc SetSourceRanking(SetSourceRankingRequest) returns (SetSourceRankingResponse);
+
+  // ListSeriesSources returns every series that has a source, in kind then
+  // key order.
+  rpc ListSeriesSources(ListSeriesSourcesRequest) returns (ListSeriesSourcesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // SetSeriesSource makes one source the source of one series, the owner's
+  // choice. A change revalues, from their first transaction, the accounts
+  // that held the instrument, or every account for an FX rate or an index
+  // (D-36).
+  rpc SetSeriesSource(SetSeriesSourceRequest) returns (SetSeriesSourceResponse);
+
+  // SetGapThreshold sets one kind's gap threshold. It applies from the
+  // next revaluation, the end-of-day one at the latest.
+  rpc SetGapThreshold(SetGapThresholdRequest) returns (SetGapThresholdResponse);
 }
 
 // MarketDataKind is a kind of market data whose sources are ranked.
@@ -70,6 +98,26 @@ message RankedSource {
 message SourceRanking {
   MarketDataKind kind = 1;
   repeated RankedSource sources = 2;
+  // The kind's gap threshold in days: the owner's, or the default of 7 for
+  // prices and FX rates and 92 for index readings.
+  int32 gap_threshold_days = 3;
+}
+
+// SeriesSource is the one source of a series of market data.
+message SeriesSource {
+  MarketDataKind kind = 1;
+  // The series: the instrument (its ISIN and venue symbol, as the read API
+  // names it), the currency's ISO 4217 code, or the index kind, "cpi" or
+  // "reference_rate".
+  string key = 2;
+  // The connector instance the series takes every value from.
+  string source = 3;
+  // Whether the owner chose it; otherwise it was chosen from the ranking
+  // when the series first needed a value.
+  bool by_owner = 4;
+  // Every source with a value of the series, by name: what the owner can
+  // choose from.
+  repeated string available = 5;
 }
 
 message ListSourceRankingsRequest {
@@ -95,3 +143,34 @@ message SetSourceRankingResponse {
   // The kind's ranking as it now is.
   SourceRanking ranking = 1;
 }
+
+message ListSeriesSourcesRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message ListSeriesSourcesResponse {
+  repeated SeriesSource series = 1;
+}
+
+message SetSeriesSourceRequest {
+  string origin = 1;
+  string session_token = 2;
+  MarketDataKind kind = 3;
+  // The series' key, as SeriesSource names it.
+  string key = 4;
+  // The source to take every value from: one with a value of the series.
+  string source = 5;
+}
+
+message SetSeriesSourceResponse {}
+
+message SetGapThresholdRequest {
+  string origin = 1;
+  string session_token = 2;
+  MarketDataKind kind = 3;
+  // From 1 to 3660 days.
+  int32 days = 4;
+}
+
+message SetGapThresholdResponse {}

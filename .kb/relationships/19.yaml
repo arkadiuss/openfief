@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7870183d761d
+  - type: implements
+    from: SYM-valuation-gen-pb-set-series-source-response-proto-reflect
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:18:13.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f0b0d74fa3c
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-series-source-response-proto-reflect
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:18:13.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d1c37e42660

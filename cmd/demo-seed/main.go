@@ -38,14 +38,22 @@ const dsnEnv = "OPENFIEF_DEMO_DSN"
 const (
 	// defaultSeed seeds the demo dataset unless --seed says otherwise.
 	defaultSeed = 20261028
+	// defaultFXSource is the name of the demo's NBP connector instance
+	// (deploy/demo/plugins/nbp.yaml).
+	defaultFXSource = "nbp"
 	// defaultWait bounds the revaluations unless --wait says otherwise.
 	defaultWait = 10 * time.Minute
 	// exitUsage is the exit status for bad arguments.
 	exitUsage = 2
 )
 
-// errNoDSN reports a missing connection string.
-var errNoDSN = errors.New(dsnEnv + " is not set")
+// Errors of the arguments.
+var (
+	// errNoDSN reports a missing connection string.
+	errNoDSN = errors.New(dsnEnv + " is not set")
+	// errNoFXSource reports an empty --fx-source.
+	errNoFXSource = errors.New("--fx-source is empty")
+)
 
 // config is what one run of the loader needs.
 type config struct {
@@ -56,6 +64,11 @@ type config struct {
 	// Offline skips NBP and uses the committed table A rates.
 	Offline bool
 	NBPURL  string
+	// FXSource is the source the loaded FX rates are recorded under: the
+	// demo's NBP connector instance, so the history loaded here and the
+	// rates that instance syncs later are one series with one source
+	// (D-94).
+	FXSource string
 	// Wait bounds how long the revaluations may take.
 	Wait time.Duration
 }
@@ -85,6 +98,7 @@ func parseConfig(args []string, dsn string, now time.Time) (config, error) {
 	seed := fs.Uint64("seed", defaultSeed, "seed of the generated history and prices")
 	offline := fs.Bool("offline", false, "use the committed NBP rates instead of fetching them")
 	nbpURL := fs.String("nbp-url", nbp.DefaultBaseURL, "NBP Web API base URL")
+	fxSource := fs.String("fx-source", defaultFXSource, "the NBP connector instance the FX rates are recorded as from")
 	wait := fs.Duration("wait", defaultWait, "how long to wait for the revaluations")
 	if err := fs.Parse(args); err != nil {
 		return config{}, fmt.Errorf("parsing flags: %w", err)
@@ -92,7 +106,10 @@ func parseConfig(args []string, dsn string, now time.Time) (config, error) {
 	if dsn == "" {
 		return config{}, errNoDSN
 	}
-	cfg := config{DSN: dsn, Seed: *seed, Reset: *reset, Offline: *offline, NBPURL: *nbpURL, Wait: *wait}
+	if *fxSource == "" {
+		return config{}, errNoFXSource
+	}
+	cfg := config{DSN: dsn, Seed: *seed, Reset: *reset, Offline: *offline, NBPURL: *nbpURL, FXSource: *fxSource, Wait: *wait}
 	if *today == "" {
 		loc, err := time.LoadLocation("Europe/Warsaw")
 		if err != nil {

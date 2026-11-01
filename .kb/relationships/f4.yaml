@@ -524,3 +524,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c968e7ab991
+  - type: verified_by
+    from: SCEN-valuation-series-source-owner-choice
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T08:55:22.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-def03cfbd74f
+  - type: verified_by
+    from: SCEN-valuation-series-source-owner-choice
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T08:55:23.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecaf54dec5d2
+  - type: verified_by
+    from: SCEN-valuation-series-source-owner-choice
+    to: TEST-core-market-data
+    created_at: 2026-11-01T08:55:23.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f29af1664a84
+  - type: implements
+    from: SYM-valuation-gen-pb-set-series-source-response-string
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:17:56.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45d35292be25
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-series-source-response-string
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:17:56.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe1b9d7a4459

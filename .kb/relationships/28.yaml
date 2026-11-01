@@ -734,69 +734,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1d93d89fe79
-  - type: implements
-    from: SYM-treasury-bonds-config
-    to: REQ-treasurybonds-config-names-no-account
-    created_at: 2026-10-31T18:10:28.912Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e215a9c76232
-  - type: constrains
-    from: REQ-valuation-market-data-source-chosen-on-first-need
-    to: FACT-SUBJECT-C9C67D3EB8F4BC3F
-    created_at: 2026-11-01T07:37:02.173Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ede4d0b38b5d
-  - type: requires_property
-    from: REQ-valuation-market-data-source-chosen-on-first-need
-    to: FACT-PROP-67C7C9B2B447F34B
-    created_at: 2026-11-01T07:37:02.251Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9d8939f91fe2
-  - type: supersedes
-    from: REQ-valuation-market-data-source-chosen-on-first-need
-    to: REQ-valuation-market-data-rank-by-institution
-    created_at: 2026-11-01T07:37:02.339Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0752444085cc
-  - type: implements
-    from: SYM-ingest-ticker-entry-misfit
-    to: REQ-ingest-ticker-opening-lots
-    created_at: 2026-11-01T08:04:03.029Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0854c3fda2da
-  - type: covered_by
-    from: SYM-ingest-ticker-entry-misfit
-    to: TEST-ingest-ticker
-    created_at: 2026-11-01T08:04:03.115Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f2ca8afed83a
-  - type: implements
-    from: SYM-ui-cash-parts
-    to: REQ-ui-statement-upload-start
-    created_at: 2026-11-01T08:07:33.319Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b3c391ea655e
-  - type: covered_by
-    from: SYM-ui-cash-parts
-    to: TEST-ui-statements
-    created_at: 2026-11-01T08:07:33.403Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ef46fe1b2518
-  - type: implements
-    from: SYM-ui-cash-parts
-    to: REQ-ingest-xtb-open-positions-owner-cash
-    created_at: 2026-11-01T08:24:08.515Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-95a239ccbcfc
   - type: executable_for
     from: SYM-core-test-helper-attention-api
     to: TEST-core-attention
@@ -846,3 +783,94 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50fc49779758
+  - type: implements
+    from: SYM-treasury-bonds-config
+    to: REQ-treasurybonds-config-names-no-account
+    created_at: 2026-10-31T18:10:28.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e215a9c76232
+  - type: constrains
+    from: REQ-valuation-market-data-source-chosen-on-first-need
+    to: FACT-SUBJECT-C9C67D3EB8F4BC3F
+    created_at: 2026-11-01T07:37:02.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ede4d0b38b5d
+  - type: requires_property
+    from: REQ-valuation-market-data-source-chosen-on-first-need
+    to: FACT-PROP-67C7C9B2B447F34B
+    created_at: 2026-11-01T07:37:02.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d8939f91fe2
+  - type: supersedes
+    from: REQ-valuation-market-data-source-chosen-on-first-need
+    to: REQ-valuation-market-data-rank-by-institution
+    created_at: 2026-11-01T07:37:02.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0752444085cc
+  - type: implements
+    from: SYM-valuation-gen-pb-list-series-sources-response-proto-message
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:15:51.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e832bfca05
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-series-sources-response-proto-message
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:15:51.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3eede6404a02
+  - type: implements
+    from: SYM-valuation-gen-pb-set-series-source-request
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:16:20.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a5929fea879
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-series-source-request
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:16:20.562Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-369a8008f6a3
+  - type: implements
+    from: SYM-ingest-ticker-entry-misfit
+    to: REQ-ingest-ticker-opening-lots
+    created_at: 2026-11-01T08:04:03.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0854c3fda2da
+  - type: covered_by
+    from: SYM-ingest-ticker-entry-misfit
+    to: TEST-ingest-ticker
+    created_at: 2026-11-01T08:04:03.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2ca8afed83a
+  - type: implements
+    from: SYM-ui-cash-parts
+    to: REQ-ui-statement-upload-start
+    created_at: 2026-11-01T08:07:33.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3c391ea655e
+  - type: covered_by
+    from: SYM-ui-cash-parts
+    to: TEST-ui-statements
+    created_at: 2026-11-01T08:07:33.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef46fe1b2518
+  - type: implements
+    from: SYM-ui-cash-parts
+    to: REQ-ingest-xtb-open-positions-owner-cash
+    created_at: 2026-11-01T08:24:08.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95a239ccbcfc
