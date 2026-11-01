@@ -546,6 +546,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-2bfbdb9292f8
   - type: implements
+    from: SYM-ingest-xtb-record-instant
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:06:33.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-742cbdc82a65
+  - type: covered_by
+    from: SYM-ingest-xtb-record-instant
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:33.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89cd933d1234
+  - type: implements
     from: SYM-attention-change
     to: REQ-attention-reconcile
     created_at: 2026-10-31T18:44:05.106Z

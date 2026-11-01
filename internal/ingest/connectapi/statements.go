@@ -12,6 +12,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
@@ -35,6 +36,9 @@ var (
 	errSecondHeader = errors.New("the upload has a second header")
 	// errReceive reports a stream that broke off.
 	errReceive = errors.New("the upload broke off")
+	// errOpeningCash reports an opening cash balance that isn't an exact
+	// amount with its currency.
+	errOpeningCash = errors.New("the opening cash must be an exact amount with its currency")
 )
 
 // NewStatements returns the StatementService's path and HTTP handler over
@@ -66,6 +70,13 @@ func (s *statements) UploadStatement(ctx context.Context, stream *connect.Client
 		return nil, s.fail(ctx, errNoHeader)
 	}
 	file := app.NamedFile{Name: h.GetFileName(), Contents: &chunkReader{stream: stream}}
+	if h.GetOpeningCash() != "" || h.GetOpeningCashCurrency() != "" {
+		cash, err := openingCashFrom(h)
+		if err != nil {
+			return nil, s.fail(ctx, err)
+		}
+		file.OpeningCash = &cash
+	}
 	b, err := s.uploads.Upload(ctx, h.GetOrigin(), h.GetSessionToken(), ledger.AccountID(h.GetAccountId()), modeFrom(h.GetMode()), file)
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -103,10 +114,10 @@ func (s *statements) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, errNoHeader):
 		return connect.NewError(connect.CodeInvalidArgument, errNoHeader)
 	case errors.Is(err, app.ErrInvalidUpload), errors.Is(err, errSecondHeader), errors.Is(err, app.ErrEntryRefused),
-		errors.Is(err, app.ErrSeedingOutsideOpening):
+		errors.Is(err, app.ErrSeedingOutsideOpening), errors.Is(err, errOpeningCash), errors.Is(err, ingest.ErrOpeningCashOutsideOpening):
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	case errors.Is(err, app.ErrNoConnector), errors.Is(err, app.ErrNoEntries), errors.Is(err, ingest.ErrAccountNotBound),
-		errors.Is(err, ledger.ErrAlreadySeeded):
+		errors.Is(err, ledger.ErrAlreadySeeded), errors.Is(err, ingest.ErrStartedFromHistory), errors.Is(err, ingest.ErrOpeningCashEntered):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	case errors.Is(err, app.ErrConnectorUnavailable):
 		return connect.NewError(connect.CodeUnavailable, app.ErrConnectorUnavailable)
@@ -150,6 +161,20 @@ func (c *chunkReader) Read(p []byte) (int, error) {
 	n := copy(p, c.buf)
 	c.buf = c.buf[n:]
 	return n, nil
+}
+
+// openingCashFrom reads the opening cash a header carries (D-136), which
+// must be an exact amount and its currency.
+func openingCashFrom(h *ingestv1.StatementHeader) (kernel.Money, error) {
+	c, err := kernel.ParseCurrency(h.GetOpeningCashCurrency())
+	if err != nil {
+		return kernel.Money{}, errOpeningCash
+	}
+	cash, err := kernel.ParseMoney(h.GetOpeningCash(), c)
+	if err != nil {
+		return kernel.Money{}, errOpeningCash
+	}
+	return cash, nil
 }
 
 // modeFrom reads a request's mode; an unspecified or unknown one is the

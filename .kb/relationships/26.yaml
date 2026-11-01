@@ -560,6 +560,13 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-403e0ec7d1ec
   - type: executable_for
+    from: SYM-core-test-helper-check-xtb-opening
+    to: TEST-core-xtb-start
+    created_at: 2026-11-01T08:00:16.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee687f113beb
+  - type: executable_for
     from: SYM-attention-app-test-helper-fake-ledger
     to: TEST-attention-app-checks
     created_at: 2026-10-31T18:35:47.889Z

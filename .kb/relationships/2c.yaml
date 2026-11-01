@@ -734,3 +734,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9aa86cd7c22f
+  - type: verified_by
+    from: SCEN-ingest-opening-cash-entered-once
+    to: TEST-ingest-start
+    created_at: 2026-11-01T07:35:30.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8925e66d5440
+  - type: verified_by
+    from: SCEN-ingest-opening-cash-entered-once
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T07:35:30.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b3c55494b5e
+  - type: verified_by
+    from: SCEN-ingest-opening-cash-entered-once
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T07:35:30.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab4dfd9e09d5
+  - type: verified_by
+    from: SCEN-ingest-opening-cash-entered-once
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-01T07:35:30.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2171a0155d8
+  - type: verified_by
+    from: SCEN-ingest-opening-cash-entered-once
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-11-01T07:35:30.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7602e764264f
+  - type: verified_by
+    from: SCEN-ingest-opening-cash-entered-once
+    to: TEST-plugins-xtb
+    created_at: 2026-11-01T07:35:30.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-848a4afc34da
+  - type: verified_by
+    from: SCEN-ingest-opening-cash-entered-once
+    to: TEST-plugins-ibkr-flex
+    created_at: 2026-11-01T07:35:30.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb32c334eb72
+  - type: verified_by
+    from: SCEN-ingest-opening-cash-entered-once
+    to: TEST-core-xtb-start
+    created_at: 2026-11-01T07:35:30.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2973debf2f97
+  - type: constrains
+    from: REQ-ingest-start-from-whole-history
+    to: FACT-SUBJECT-6E456E81146115C7
+    created_at: 2026-11-01T07:36:02.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3acf449f1ed
+  - type: requires_property
+    from: REQ-ingest-start-from-whole-history
+    to: FACT-PROP-EC532B52B0254F1A
+    created_at: 2026-11-01T07:36:02.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e92d7dff0b4c
+  - type: specified_by
+    from: REQ-ingest-start-from-whole-history
+    to: SCEN-ingest-start-from-whole-history
+    created_at: 2026-11-01T07:36:02.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b188c18257a
+  - type: implements
+    from: SYM-ui-upload-form-start
+    to: REQ-ui-statement-upload-start
+    created_at: 2026-11-01T08:07:18.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d87728d4854
+  - type: covered_by
+    from: SYM-ui-upload-form-start
+    to: TEST-ui-statements
+    created_at: 2026-11-01T08:07:18.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f7eba99bc7f
+  - type: relates_to
+    from: REQ-ingest-start-from-whole-history
+    to: REQ-ingest-xtb-start-from-full-history
+    created_at: 2026-11-01T08:24:20.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02b4e846f444

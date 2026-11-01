@@ -559,6 +559,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d393eb50b562
+  - type: executable_for
+    from: SYM-pl-test-helper-span
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:06.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffbf2e041c0c
+  - type: implements
+    from: SYM-ingest-bond-lot-key-validate
+    to: REQ-ingest-bond-lot-exchange-price-by-letter
+    created_at: 2026-10-31T18:23:19.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ac2886a642a
+  - type: implements
+    from: SYM-ingest-app-uploads-booked
+    to: REQ-ingest-start-from-whole-history
+    created_at: 2026-11-01T08:02:30.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b9319a7aed6
+  - type: covered_by
+    from: SYM-ingest-app-uploads-booked
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T08:02:30.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a98694f07a1f
+  - type: executable_for
+    from: SYM-ingest-xtb-test-map-opening-golden
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:08.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-804b159d4705
   - type: implements
     from: SYM-attentionv1-acknowledge-attention-item-request-get-origin
     to: REQ-attention-owner-service
@@ -587,17 +622,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9ecbe14da76
-  - type: executable_for
-    from: SYM-pl-test-helper-span
-    to: TEST-pl-oki
-    created_at: 2026-10-31T19:03:06.894Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ffbf2e041c0c
-  - type: implements
-    from: SYM-ingest-bond-lot-key-validate
-    to: REQ-ingest-bond-lot-exchange-price-by-letter
-    created_at: 2026-10-31T18:23:19.764Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9ac2886a642a

@@ -657,6 +657,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7f40ae79837
+  - type: verified_by
+    from: SCEN-ingest-xtb-start-open-positions
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T07:35:27.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee4f1599a615
+  - type: verified_by
+    from: SCEN-ingest-xtb-start-open-positions
+    to: TEST-plugins-xtb
+    created_at: 2026-11-01T07:35:27.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fde31295cfe
+  - type: verified_by
+    from: SCEN-ingest-xtb-start-open-positions
+    to: TEST-core-xtb-start
+    created_at: 2026-11-01T07:35:27.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e01bf3e2b37b
   - type: implements
     from: SYM-core-attention-owners
     to: REQ-attention-owner-service

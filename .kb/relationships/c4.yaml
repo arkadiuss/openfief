@@ -601,13 +601,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48529f784761
-  - type: executable_for
-    from: SYM-attention-connectapi-test-helper-bearer
-    to: TEST-attention-connectapi
-    created_at: 2026-10-31T18:42:58.280Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bce5cb5a91f2
   - type: implements
     from: SYM-ui-instrument-class
     to: REQ-ui-yearly-taxes
@@ -657,3 +650,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0721612b216a
+  - type: executable_for
+    from: SYM-core-test-helper-check-xtb-started
+    to: TEST-core-xtb-start
+    created_at: 2026-11-01T08:00:33.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a42c543dad62
+  - type: validates
+    from: TEST-core-xtb-upload
+    to: REQ-ingest-xtb-start-from-full-history
+    created_at: 2026-11-01T08:22:47.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e31595272c0a
+  - type: executable_for
+    from: SYM-attention-connectapi-test-helper-bearer
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:42:58.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bce5cb5a91f2

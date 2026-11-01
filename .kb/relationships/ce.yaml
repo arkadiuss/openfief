@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7fbc95e0c0be
+  - type: executable_for
+    from: SYM-ingest-app-test-uploads-start-history-unreadable
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T08:01:31.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfbaef192daf

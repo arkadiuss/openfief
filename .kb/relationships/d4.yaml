@@ -574,6 +574,55 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-c9f54c59cfbb
   - type: implements
+    from: SYM-jurisdiction-asset-kind
+    to: REQ-pl-oki-exemption-class
+    created_at: 2026-10-31T19:06:13.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22b74e64abc8
+  - type: covered_by
+    from: SYM-jurisdiction-asset-kind
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:06:13.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9368374a2b53
+  - type: constrains
+    from: REQ-ingest-xtb-start-open-positions
+    to: FACT-SUBJECT-7B552889D0C16865
+    created_at: 2026-11-01T07:36:23.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee7b052b2321
+  - type: requires_property
+    from: REQ-ingest-xtb-start-open-positions
+    to: FACT-PROP-320B1D0B41153ECB
+    created_at: 2026-11-01T07:36:23.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1be32fefef34
+  - type: specified_by
+    from: REQ-ingest-xtb-start-open-positions
+    to: SCEN-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T07:36:23.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b5963d3262a
+  - type: supersedes
+    from: REQ-ingest-xtb-start-open-positions
+    to: REQ-ingest-xtb-opening-refused
+    created_at: 2026-11-01T07:36:23.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6f5f17dfb85
+  - type: relates_to
+    from: REQ-ingest-xtb-start-open-positions
+    to: REQ-ingest-xtb-start-from-open-positions
+    created_at: 2026-11-01T08:24:12.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93d6e36cc439
+  - type: implements
     from: SYM-attention-app-relay-publish
     to: REQ-attention-relay
     created_at: 2026-10-31T18:41:25.365Z
@@ -601,17 +650,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75cc936161dc
-  - type: implements
-    from: SYM-jurisdiction-asset-kind
-    to: REQ-pl-oki-exemption-class
-    created_at: 2026-10-31T19:06:13.428Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-22b74e64abc8
-  - type: covered_by
-    from: SYM-jurisdiction-asset-kind
-    to: TEST-pl-oki
-    created_at: 2026-10-31T19:06:13.472Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9368374a2b53

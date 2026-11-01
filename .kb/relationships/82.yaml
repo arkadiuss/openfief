@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4835d355927
+  - type: executable_for
+    from: SYM-ledger-pg-test-embedded-migrations-load
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-01T11:53:40.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad23d05e58b7

@@ -72,7 +72,8 @@ func (c *Client) Sync(ctx context.Context, instance string, sc *app.SyncCall) (a
 	return deliveryFrom(resp.Msg.GetDelivery(), sc.ID, resp.Msg.GetWatermark())
 }
 
-// ImportFile streams file to instance as batch id: a header, then the
+// ImportFile streams file to instance as batch id: a header, with the
+// opening cash the owner entered when there is one (D-136), then the
 // contents in chunks of ChunkSize bytes. A file that can't be read stops
 // the call, so the connector maps nothing, and the read's error is
 // returned. The connector's INVALID_ARGUMENT wraps app.ErrEntryRefused with
@@ -92,6 +93,9 @@ func (c *Client) ImportFile(ctx context.Context, instance string, id ingest.Batc
 	stream := call.svc.ImportFile(ctx)
 	stream.RequestHeader().Set("Authorization", call.auth)
 	header := &connectorv1.FileHeader{BatchId: string(id), Mode: m, FileName: file.Name, MediaType: file.MediaType}
+	if file.OpeningCash != nil {
+		header.OpeningCash = moneyTo(*file.OpeningCash)
+	}
 	sendErr := stream.Send(&connectorv1.ImportFileRequest{Part: &connectorv1.ImportFileRequest_Header{Header: header}})
 	if sendErr == nil {
 		sendErr = sendChunks(stream, file.Contents)

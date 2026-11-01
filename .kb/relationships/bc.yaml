@@ -685,6 +685,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5006e5f02861
+  - type: validates
+    from: TEST-valuation-postgres-ranking
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-11-01T07:44:25.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-beb08a95d47b
+  - type: implements
+    from: SYM-ingest-xtb-opening-columns
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:04:40.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c758dc8744db
+  - type: covered_by
+    from: SYM-ingest-xtb-opening-columns
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:04:40.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6a516a6f2e1
   - type: executable_for
     from: SYM-attention-test-helper-t0
     to: TEST-attention-rules
@@ -706,10 +727,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1af1e65bdbab
-  - type: validates
-    from: TEST-valuation-postgres-ranking
-    to: REQ-valuation-market-data-source-ranking
-    created_at: 2026-11-01T07:44:25.401Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-beb08a95d47b

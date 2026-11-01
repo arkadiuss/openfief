@@ -295,10 +295,15 @@ func (m *mapping) dividend(r *cashRow, withheld kernel.Money) error {
 
 // tickerEntry adds e, checked, and its ticker.
 func (m *mapping) tickerEntry(r *cashRow, e *ingest.TickerEntry) error {
+	return m.addEntry(r.rec.text(colName), e)
+}
+
+// addEntry adds e, checked, and its ticker, named name.
+func (m *mapping) addEntry(name string, e *ingest.TickerEntry) error {
 	if err := e.Validate(); err != nil {
 		return fmt.Errorf("%w: %w", errLedger, err)
 	}
-	m.ticker(r.symbol, r.rec.text(colName))
+	m.ticker(e.Symbol, name)
 	m.entries.TickerEntries = append(m.entries.TickerEntries, *e)
 	return nil
 }

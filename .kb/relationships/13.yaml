@@ -622,3 +622,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb8b838c09a3
+  - type: verified_by
+    from: SCEN-ingest-ticker-opening-lots
+    to: TEST-ingest-ticker
+    created_at: 2026-11-01T07:35:36.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-618974f0f0f0
+  - type: verified_by
+    from: SCEN-ingest-ticker-opening-lots
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-01T07:35:36.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab6d2988652a
+  - type: verified_by
+    from: SCEN-ingest-ticker-opening-lots
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T07:35:36.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5714338337b
+  - type: verified_by
+    from: SCEN-ingest-ticker-opening-lots
+    to: TEST-core-xtb-start
+    created_at: 2026-11-01T07:35:36.947Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db9ce13fa0d5

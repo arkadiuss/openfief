@@ -566,6 +566,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4c19501f0eb
+  - type: constrains
+    from: REQ-valuation-owner-exemption-class
+    to: FACT-SUBJECT-078270D8F81FFF3F
+    created_at: 2026-10-31T18:34:40.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-397ea9abb86c
+  - type: requires_property
+    from: REQ-valuation-owner-exemption-class
+    to: FACT-PROP-E8EEF2EB6C402335
+    created_at: 2026-10-31T18:34:40.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f883ec8c4ae9
+  - type: specified_by
+    from: REQ-valuation-owner-exemption-class
+    to: SCEN-valuation-owner-exemption-class
+    created_at: 2026-10-31T18:34:40.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b78dda9c0279
+  - type: constrains
+    from: REQ-identity-read-access-no-broker-account-numbers
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-01T07:40:18.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c004124d01e9
+  - type: requires_property
+    from: REQ-identity-read-access-no-broker-account-numbers
+    to: FACT-PROP-843453EC42A95A22
+    created_at: 2026-11-01T07:40:18.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a684364ec37b
+  - type: validates
+    from: TEST-core-xtb-start
+    to: REQ-ingest-xtb-start-from-open-positions
+    created_at: 2026-11-01T08:22:54.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a0dcd2559fd
+  - type: validates
+    from: TEST-core-xtb-start
+    to: REQ-ingest-xtb-open-positions-owner-cash
+    created_at: 2026-11-01T08:22:54.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-696636505695
   - type: executable_for
     from: SYM-attention-connectapi-test-helper-store-lock
     to: TEST-attention-connectapi
@@ -615,38 +664,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da2f992d134a
-  - type: constrains
-    from: REQ-valuation-owner-exemption-class
-    to: FACT-SUBJECT-078270D8F81FFF3F
-    created_at: 2026-10-31T18:34:40.499Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-397ea9abb86c
-  - type: requires_property
-    from: REQ-valuation-owner-exemption-class
-    to: FACT-PROP-E8EEF2EB6C402335
-    created_at: 2026-10-31T18:34:40.565Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f883ec8c4ae9
-  - type: specified_by
-    from: REQ-valuation-owner-exemption-class
-    to: SCEN-valuation-owner-exemption-class
-    created_at: 2026-10-31T18:34:40.647Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b78dda9c0279
-  - type: constrains
-    from: REQ-identity-read-access-no-broker-account-numbers
-    to: FACT-SUBJECT-2D17F0782309FD5E
-    created_at: 2026-11-01T07:40:18.008Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c004124d01e9
-  - type: requires_property
-    from: REQ-identity-read-access-no-broker-account-numbers
-    to: FACT-PROP-843453EC42A95A22
-    created_at: 2026-11-01T07:40:18.090Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a684364ec37b

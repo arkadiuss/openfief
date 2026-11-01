@@ -629,6 +629,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f1fc7b6c367
+  - type: verified_by
+    from: SCEN-pl-totals-per-wrapper
+    to: TEST-pl-totals
+    created_at: 2026-10-31T18:33:21.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eae34808367d
+  - type: implements
+    from: SYM-pl-index-oki-exemption
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T19:01:12.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96cfafdc442a
+  - type: covered_by
+    from: SYM-pl-index-oki-exemption
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:01:13.050Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2589a0666dc4
+  - type: implements
+    from: SYM-ledger-dispose-of
+    to: REQ-ledger-sales
+    created_at: 2026-10-31T19:07:14.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96767ff2ccaa
+  - type: covered_by
+    from: SYM-ledger-dispose-of
+    to: TEST-ledger-sale
+    created_at: 2026-10-31T19:07:14.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7b5867cfbe9
+  - type: implements
+    from: SYM-ingest-xtb-mapping-position-key
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:05:37.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9501e9441d9a
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-position-key
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:05:37.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e7bb06fe58
   - type: implements
     from: SYM-attention-pg-store-unpublished
     to: REQ-attention-relay
@@ -678,38 +727,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2858280b1b33
-  - type: verified_by
-    from: SCEN-pl-totals-per-wrapper
-    to: TEST-pl-totals
-    created_at: 2026-10-31T18:33:21.510Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eae34808367d
-  - type: implements
-    from: SYM-pl-index-oki-exemption
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:01:12.999Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-96cfafdc442a
-  - type: covered_by
-    from: SYM-pl-index-oki-exemption
-    to: TEST-pl-oki
-    created_at: 2026-10-31T19:01:13.050Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2589a0666dc4
-  - type: implements
-    from: SYM-ledger-dispose-of
-    to: REQ-ledger-sales
-    created_at: 2026-10-31T19:07:14.057Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-96767ff2ccaa
-  - type: covered_by
-    from: SYM-ledger-dispose-of
-    to: TEST-ledger-sale
-    created_at: 2026-10-31T19:07:14.103Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b7b5867cfbe9

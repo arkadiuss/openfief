@@ -363,6 +363,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a02ceba6393c
+  - type: constrains
+    from: REQ-pl-oki-exemption-class
+    to: FACT-SUBJECT-6F67BD2729C3241E
+    created_at: 2026-10-31T18:33:54.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-714bcb12bd0a
+  - type: requires_property
+    from: REQ-pl-oki-exemption-class
+    to: FACT-PROP-3FA32AE3CCF7495B
+    created_at: 2026-10-31T18:33:54.585Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79c7f4af6726
+  - type: specified_by
+    from: REQ-pl-oki-exemption-class
+    to: SCEN-pl-oki-exemption-class
+    created_at: 2026-10-31T18:33:54.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e79a1a90718c
+  - type: implements
+    from: SYM-jurisdiction-yearly-tax
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-10-31T18:36:32.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d3054bd11d0
+  - type: covered_by
+    from: SYM-jurisdiction-yearly-tax
+    to: TEST-pl-oki
+    created_at: 2026-10-31T18:36:32.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e09920676993
+  - type: executable_for
+    from: SYM-ingest-test-helper-entry-case
+    to: TEST-ingest-ticker
+    created_at: 2026-11-01T08:04:17.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d32b434c4ba6
   - type: implements
     from: SYM-attention-connectapi-attention-service
     to: REQ-attention-owner-service
@@ -405,38 +447,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffcb476c924b
-  - type: constrains
-    from: REQ-pl-oki-exemption-class
-    to: FACT-SUBJECT-6F67BD2729C3241E
-    created_at: 2026-10-31T18:33:54.527Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-714bcb12bd0a
-  - type: requires_property
-    from: REQ-pl-oki-exemption-class
-    to: FACT-PROP-3FA32AE3CCF7495B
-    created_at: 2026-10-31T18:33:54.585Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-79c7f4af6726
-  - type: specified_by
-    from: REQ-pl-oki-exemption-class
-    to: SCEN-pl-oki-exemption-class
-    created_at: 2026-10-31T18:33:54.622Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e79a1a90718c
-  - type: implements
-    from: SYM-jurisdiction-yearly-tax
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T18:36:32.863Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1d3054bd11d0
-  - type: covered_by
-    from: SYM-jurisdiction-yearly-tax
-    to: TEST-pl-oki
-    created_at: 2026-10-31T18:36:32.893Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e09920676993

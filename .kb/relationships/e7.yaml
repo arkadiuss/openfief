@@ -699,34 +699,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d00b9b32bdaf
-  - type: implements
-    from: SYM-attentionv1-acknowledge-attention-item-response
-    to: REQ-attention-owner-service
-    created_at: 2026-10-31T18:55:04.051Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eecacdcdcfed
-  - type: covered_by
-    from: SYM-attentionv1-acknowledge-attention-item-response
-    to: TEST-attention-connectapi
-    created_at: 2026-10-31T18:55:04.105Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5f312f2dd14b
-  - type: implements
-    from: SYM-attentionv1connect-attention-service-client-acknowledge-attention-item
-    to: REQ-attention-owner-service
-    created_at: 2026-10-31T18:59:29.732Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8e52b6b27aa1
-  - type: covered_by
-    from: SYM-attentionv1connect-attention-service-client-acknowledge-attention-item
-    to: TEST-attention-connectapi
-    created_at: 2026-10-31T18:59:29.805Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5582f6cf5591
   - type: constrains
     from: REQ-valuation-unclassified-attention
     to: FACT-SUBJECT-D9167FC0C337F20A
@@ -783,3 +755,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cbea0345b563
+  - type: implements
+    from: SYM-ingestv1-statement-header-get-opening-cash
+    to: REQ-ingest-opening-cash-entered-once
+    created_at: 2026-11-01T08:08:22.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-441c9c718999
+  - type: covered_by
+    from: SYM-ingestv1-statement-header-get-opening-cash
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-01T08:08:22.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c253d3f227b1
+  - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-response
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:55:04.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eecacdcdcfed
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-response
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:55:04.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f312f2dd14b
+  - type: implements
+    from: SYM-attentionv1connect-attention-service-client-acknowledge-attention-item
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:59:29.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e52b6b27aa1
+  - type: covered_by
+    from: SYM-attentionv1connect-attention-service-client-acknowledge-attention-item
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:59:29.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5582f6cf5591

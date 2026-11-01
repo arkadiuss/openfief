@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8125f55e572b
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-get-lot-opened
+    to: REQ-ingest-ticker-opening-lots
+    created_at: 2026-11-01T08:08:08.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be66ba1e49ae
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-get-lot-opened
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-01T08:08:08.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f139da865e2e

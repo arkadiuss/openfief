@@ -72,11 +72,17 @@ func uploadStatement(t *testing.T, c statementAPI, session, account string, file
 // mode as the owner's override; unspecified lets the core choose.
 func uploadStatementIn(t *testing.T, c statementAPI, session, account string, mode ingestv1.Mode, file []byte) (*ingestv1.UploadStatementResponse, error) {
 	t.Helper()
+	return uploadWithHeader(t, c, &ingestv1.StatementHeader{
+		Origin: localUI, SessionToken: session, AccountId: account, FileName: "statement.xml", Mode: mode,
+	}, file)
+}
+
+// uploadWithHeader uploads file with header h, as the built-in UI does.
+func uploadWithHeader(t *testing.T, c statementAPI, h *ingestv1.StatementHeader, file []byte) (*ingestv1.UploadStatementResponse, error) {
+	t.Helper()
 	stream := c.UploadStatement(t.Context())
 	stream.RequestHeader().Set("Authorization", "Bearer "+uiCaller)
-	parts := []*ingestv1.UploadStatementRequest{{Part: &ingestv1.UploadStatementRequest_Header{Header: &ingestv1.StatementHeader{
-		Origin: localUI, SessionToken: session, AccountId: account, FileName: "statement.xml", Mode: mode,
-	}}}}
+	parts := []*ingestv1.UploadStatementRequest{{Part: &ingestv1.UploadStatementRequest_Header{Header: h}}}
 	for len(file) > 0 {
 		n := min(len(file), 64<<10)
 		parts = append(parts, &ingestv1.UploadStatementRequest{Part: &ingestv1.UploadStatementRequest_Chunk{Chunk: file[:n]}})

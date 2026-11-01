@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b05ddd14fd1f
+  - type: executable_for
+    from: SYM-attention-pg-test-embedded-migrations-load
+    to: TEST-attention-pg-store
+    created_at: 2026-11-01T11:53:25.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-907e1876a354

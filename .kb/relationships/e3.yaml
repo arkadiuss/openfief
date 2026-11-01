@@ -622,3 +622,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b197298c893
+  - type: implements
+    from: SYM-ingest-xtb-is-digits
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:05:44.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a45519a97b37
+  - type: covered_by
+    from: SYM-ingest-xtb-is-digits
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:05:44.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28583c8fe1a3

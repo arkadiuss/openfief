@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b636f1e116e
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-map-opening
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:02.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43974126b488
