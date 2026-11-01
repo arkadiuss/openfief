@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b06f3f6ae8c7
+  - type: executable_for
+    from: SYM-core-test-helper-fake-attention-items
+    to: TEST-core-unclassified
+    created_at: 2026-11-01T06:41:46.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc98270e97b8

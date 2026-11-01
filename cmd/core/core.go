@@ -157,7 +157,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	client, err := revaluationClient(pool, vstore, cfg, now, log)
+	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, cfg.Auth.Origins), now, log)
+	client, err := revaluationClient(pool, vstore, cfg, valuationAttention{items: attn.items}, now, log)
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +166,6 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, cfg.Auth.Origins), now, log)
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, opts...)

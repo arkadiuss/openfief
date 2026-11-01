@@ -118769,56 +118769,6 @@ symbols:
         target: TEST-core-unclassified
       - type: implements
         target: REQ-valuation-unclassified-attention
-  - id: SYM-core-logged-attention
-    title: loggedAttention
-    sourceFile: cmd/core/unclassified.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T20:08:13.599Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-unclassified
-      - type: implements
-        target: REQ-valuation-unclassified-attention
-  - id: SYM-core-logged-attention-raise
-    title: loggedAttention.Raise
-    sourceFile: cmd/core/unclassified.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T20:08:19.146Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-unclassified
-      - type: implements
-        target: REQ-valuation-unclassified-attention
-  - id: SYM-core-logged-attention-clear
-    title: loggedAttention.Clear
-    sourceFile: cmd/core/unclassified.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T20:08:24.712Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-unclassified
-      - type: implements
-        target: REQ-valuation-unclassified-attention
-  - id: SYM-core-test-logged-attention
-    title: TestLoggedAttention
-    sourceFile: cmd/core/unclassified_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T20:08:29.947Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-unclassified
   - id: SYM-valuation-app-revaluer-sync-unclassified
     title: Revaluer.syncUnclassified
     sourceFile: internal/valuation/app/exemptionclass.go
@@ -118937,3 +118887,117 @@ symbols:
         target: TEST-views-ghostfolio-project
       - type: implements
         target: REQ-views-ghostfolio-owned-and-cash-accounts
+  - id: SYM-core-attention-items
+    title: attentionItems
+    sourceFile: cmd/core/unclassified.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:40:49.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unclassified
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-core-valuation-attention
+    title: valuationAttention
+    sourceFile: cmd/core/unclassified.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:40:57.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unclassified
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-core-valuation-attention-raise
+    title: valuationAttention.Raise
+    sourceFile: cmd/core/unclassified.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:41:07.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unclassified
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-core-valuation-attention-clear
+    title: valuationAttention.Clear
+    sourceFile: cmd/core/unclassified.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:41:16.375Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-unclassified
+      - type: implements
+        target: REQ-valuation-unclassified-attention
+  - id: SYM-core-test-valuation-attention
+    title: TestValuationAttention
+    sourceFile: cmd/core/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:41:25.912Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unclassified
+  - id: SYM-core-test-helper-attention-call
+    title: attentionCall
+    sourceFile: cmd/core/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:41:35.086Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unclassified
+  - id: SYM-core-test-helper-fake-attention-items
+    title: fakeAttentionItems
+    sourceFile: cmd/core/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:41:44.559Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-unclassified
+  - id: SYM-core-test-helper-fake-attention-items-raise
+    title: fakeAttentionItems.Raise
+    sourceFile: cmd/core/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:41:53.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unclassified
+  - id: SYM-core-test-helper-fake-attention-items-clear
+    title: fakeAttentionItems.Clear
+    sourceFile: cmd/core/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:42:03.214Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-unclassified
+  - id: SYM-ui-test-attention-kind-of
+    title: TestAttentionKindOf
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T06:42:12.475Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention

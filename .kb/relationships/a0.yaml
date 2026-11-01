@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b985e4b2fbf2
+  - type: implements
+    from: SYM-core-valuation-attention-clear
+    to: REQ-valuation-unclassified-attention
+    created_at: 2026-11-01T06:41:18.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa95956e506e
+  - type: covered_by
+    from: SYM-core-valuation-attention-clear
+    to: TEST-core-unclassified
+    created_at: 2026-11-01T06:41:18.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e1dba319cfe

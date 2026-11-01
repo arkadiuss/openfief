@@ -468,17 +468,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9efd6b05ce52
-  - type: implements
-    from: SYM-core-logged-attention
-    to: REQ-valuation-unclassified-attention
-    created_at: 2026-10-31T20:08:15.443Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7fca5a766bcb
-  - type: covered_by
-    from: SYM-core-logged-attention
-    to: TEST-core-unclassified
-    created_at: 2026-10-31T20:08:15.477Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-12fab51714b0

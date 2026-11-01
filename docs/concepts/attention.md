@@ -11,7 +11,7 @@ Several checks in OpenFief find something only the owner can settle: a balance a
 
 ## Concepts
 
-**An item per kind and subject.** An item's *kind* names the check that raised it, such as `price-check-flagged`, and its *subject* names what it is about, such as the instrument. At most one item stands for a kind and subject: when the same check finds the same thing again, the item is the same one. Kinds are lower-case words joined by hyphens, so a later check, such as the jurisdiction pack's unclassified instruments (D-132), adds its own kind without changing this context.
+**An item per kind and subject.** An item's *kind* names the check that raised it, such as `price-check-flagged`, and its *subject* names what it is about, such as the instrument. At most one item stands for a kind and subject: when the same check finds the same thing again, the item is the same one. Kinds are lower-case words joined by hyphens, so a check in another context adds its own kind without changing this one, such as valuation's `instrument-unclassified` (D-132, below).
 
 **Three states and an append-only history.** An item is *open* (it needs the owner), *acknowledged* (the owner has seen it and the condition still stands) or *resolved* (the condition cleared, or the owner resolved it). Every change is appended to the item's history with the state it moved to, why, the condition's detail then and when; nothing is changed in place, the way the ledger keeps every version of a transaction (D-18).
 
@@ -71,7 +71,7 @@ type AttentionItems interface {
 }
 ```
 
-`*attention/app.Items` implements it. A check that can list all its conditions should rather be an `app.Check` in the core's wiring, so a condition that clears is resolved without anyone calling `Clear`.
+`*attention/app.Items` implements it. Valuation raises `instrument-unclassified`, subject the ISIN, for each holding of an account in a wrapper with a yearly tax that the pack can't classify and the owner hasn't, and clears it once the owner has (D-132). Its port, `valuation/app.AttentionRaiser`, takes plain strings, so the core adapts it to the items (`valuationAttention` in [unclassified.go](../../cmd/core/unclassified.go)) and neither context imports the other. Such an item resolves only when a revaluation of the account clears it; Raise and Clear run in the attention schema's own transaction, not the revaluation's. A check that can list all its conditions should rather be an `app.Check` in the core's wiring, so a condition that clears is resolved without anyone calling `Clear`.
 
 **The store.** The `attention` schema ([0001_attention.sql](../../internal/attention/postgres/migrations/0001_attention.sql)) holds `items` (one row per kind and subject), `changes` (the history, numbered from 1 per item without gaps), `outbox` (one event per change) and `published` (one row per published event). Triggers refuse every update, delete and truncate, so all four are append-only; publishing an event adds a `published` row instead of marking the event. `Store.Append` writes the item, the change and its outbox event in one transaction, the caller's when inside `InTx`, so a change and its event commit together or not at all.
 

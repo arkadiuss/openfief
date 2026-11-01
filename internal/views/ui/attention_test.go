@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
+	"github.com/google/go-cmp/cmp"
 
 	attentionv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1/attentionv1connect"
@@ -187,4 +188,34 @@ func TestBrokenTransfer(t *testing.T) {
 	wantBody(t, rec, "Broken by a correction", "2 499,50 PLN", "Reject the pair", "No confirmed transfers yet.")
 	rec = h.serve(t, withSession(transferPost("/transfers/reject", "w1"), ownerSession))
 	wantStatus(t, rec, http.StatusSeeOther)
+}
+
+// TestAttentionKindOf checks how the attention page names each of the
+// core's kinds and links where the owner acts on it, an instrument to
+// classify (D-132) included, and that an unknown kind shows its own name
+// without a link.
+func TestAttentionKindOf(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		kind string
+		want attentionKind
+	}{
+		{"balance-assertion-flagged", attentionKind{"Flagged balance assertion", "/assertions"}},
+		{"price-check-flagged", attentionKind{"Flagged price check", "/price-checks"}},
+		{"import-problems", attentionKind{"Rows an import left out", "/accounts"}},
+		{"broker-account-unmapped", attentionKind{"Unmapped broker account", "/accounts"}},
+		{"ticker-unconfirmed", attentionKind{"Ticker to confirm", "/tickers"}},
+		{"setting-missing", attentionKind{"Missing setting", "/settings"}},
+		{"transfer-broken", attentionKind{"Transfer broken by a correction", "/transfers"}},
+		{"instrument-unclassified", attentionKind{"Instrument to classify", "/settings"}},
+		{"some-later-check", attentionKind{Label: "some-later-check"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.kind, func(t *testing.T) {
+			t.Parallel()
+			if diff := cmp.Diff(tt.want, attentionKindOf(tt.kind)); diff != "" {
+				t.Errorf("attentionKindOf(%q) (-want +got):\n%s", tt.kind, diff)
+			}
+		})
+	}
 }

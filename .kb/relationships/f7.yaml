@@ -496,13 +496,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1af174affeb
-  - type: executable_for
-    from: SYM-core-test-logged-attention
-    to: TEST-core-unclassified
-    created_at: 2026-10-31T20:08:31.847Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f2728f173acb
   - type: validates
     from: TEST-operator-cmd
     to: REQ-operator-namespace-scoped-except-service-read

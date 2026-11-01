@@ -121,8 +121,8 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 46. **Raising the attention item for an unclassified instrument.**
    - *Problem:* D-132 asks the owner to classify an instrument once through an attention item (D-130), whose store isn't built yet.
-   - *Today:* a revaluation of an OKI account raises `instrument-unclassified` for each holding the pack can't classify and the owner hasn't, and clears it once the owner has, through `app.AttentionRaiser` (`Raise`, `Clear`); `cmd/core` wires a stand-in that only logs them, and the settings page lists the instruments to classify.
-   - *Options:* wire the attention store's port once D-130 lands; or have the attention app find every unclassified instrument at once (a check with a find function), so items resolve on their own.
+   - *Today:* a revaluation of an OKI account raises `instrument-unclassified` for each holding the pack can't classify and the owner hasn't, and clears it once the owner has, through `app.AttentionRaiser` (`Raise`, `Clear`); `cmd/core` adapts that port to the attention items (`valuationAttention`), and the settings page lists the instruments to classify. An item resolves only when a revaluation of its account finds the instrument classified.
+   - *Options:* keep; or have the attention app find every unclassified instrument at once (a check with a find function), so items resolve on their own.
 
 ## Attention items
 
