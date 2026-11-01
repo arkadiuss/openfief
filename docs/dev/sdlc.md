@@ -40,11 +40,12 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 
 Modelled on OpenClaw: calendar versions, release channels and a separate release workflow.
 
-- Product versions are `YYYY.M.N`, with betas `YYYY.M.N-beta.K`. Tags carry no `v` prefix, because Go would read a root tag `v2026.11.0` as major version 2026 of the module **(P)**.
-- Channels: `beta` deploys to demo; `stable` is a GitHub release with signed images, the CRDs and the bootstrap install.
+- Product versions are `YYYY.M.N`, with pre-releases `YYYY.M.N-alpha.K` and `YYYY.M.N-beta.K`. Tags carry no `v` prefix, because Go would read a root tag `v2026.11.0` as major version 2026 of the module **(P)**.
+- Channels: `alpha` and `beta` are pre-release channels, published the same way: a GitHub pre-release, deployed to demo. `stable` is a GitHub release. The first release is an alpha.
+- Every release, an alpha included, ships signed images and the bootstrap install with the CRDs, every image in it pinned to the digest that was signed. An end-to-end test installs OpenFief from that bundle.
 - Every release also ships the `openfief` CLI for Linux and macOS on amd64 and arm64, signed with cosign and with an SBOM (software bill of materials), since installing OpenFief starts with it (D-80).
 - The release workflow is started manually, does a dry run before it publishes anything, and only the author releases.
-- The release workflow adds the first-party plugins to the catalog (D-88), commits that to `main` itself, and builds the operator and CLI from that commit, which it tags. A beta becomes a GitHub pre-release carrying the signed CLI.
+- The release workflow adds the first-party plugins to the catalog (D-88), commits that to `main` itself, and builds the operator and CLI from that commit, which it tags.
 - Contracts and SDKs use SemVer, independent of the product version. The Go SDK is tagged `sdk/go/vX.Y.Z`, as Go requires for a submodule **(P)**, and `buf breaking` gates every SDK release **(P)**.
 
 ## Dependencies (P)
