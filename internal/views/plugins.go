@@ -38,16 +38,17 @@ const (
 // (internal/plugins/operator): condition statuses, the trust of
 // status.signature and its signer kinds.
 const (
-	conditionTrue      = "True"
-	conditionFalse     = "False"
-	signatureVerified  = "Verified"
-	signerOpenFiefCI   = "OpenFiefCI"
-	signerPublisher    = "Publisher"
-	signerOwner        = "Owner"
-	phaseRemoving      = "Removing"
-	phasePending       = "Pending"
-	imageDigestPrefix  = "@"
-	imageDigestAlgoSep = ":"
+	conditionTrue         = "True"
+	conditionFalse        = "False"
+	signatureVerified     = "Verified"
+	signerOpenFiefCI      = "OpenFiefCI"
+	signerPublisher       = "Publisher"
+	signerOwner           = "Owner"
+	reasonUntrustedSigner = "UntrustedSigner"
+	phaseRemoving         = "Removing"
+	phasePending          = "Pending"
+	imageDigestPrefix     = "@"
+	imageDigestAlgoSep    = ":"
 )
 
 // Condition is one status condition of a Plugin: its status, True, False
@@ -76,6 +77,9 @@ type PluginRecord struct {
 	Trust      string
 	SignerKind string
 	Signer     string
+	// UntrustedSigners is status.untrustedSigners: who signed an image the
+	// operator refused as signed by no trusted signer (D-169).
+	UntrustedSigners []string
 	// RequestsMarketData: the manifest declares a market-data connector.
 	RequestsMarketData bool
 	// MarketData: the running version is one the grant approves.
@@ -98,8 +102,11 @@ type Plugin struct {
 	Trust        SignatureTrust
 	Signer       string
 	TrustReason  string
-	Phase        string
-	Ready        bool
+	// UntrustedSigners names who signed an image refused because no
+	// trusted signer did (D-169); empty otherwise.
+	UntrustedSigners []string
+	Phase            string
+	Ready            bool
 	// RequestsMarketData: its manifest declares a market-data connector.
 	RequestsMarketData bool
 	// MarketData: it is one, as the grant approves (D-123).
@@ -107,7 +114,8 @@ type Plugin struct {
 }
 
 // PluginOf returns the Plugin r describes. The signer is named only when a
-// trusted signer signed the image. The phase is Ready's reason, Removing
+// trusted signer signed the image, the untrusted signers only when the
+// image is refused for them (D-169). The phase is Ready's reason, Removing
 // while the resource is being deleted, and Pending before the operator
 // wrote a Ready condition.
 func PluginOf(r *PluginRecord) Plugin {
@@ -127,6 +135,9 @@ func PluginOf(r *PluginRecord) Plugin {
 	}
 	if p.Trust.Signed() {
 		p.Signer = r.Signer
+	}
+	if p.Trust == TrustRefused && r.Signature.Reason == reasonUntrustedSigner {
+		p.UntrustedSigners = slices.Clone(r.UntrustedSigners)
 	}
 	switch {
 	case r.Deleting:

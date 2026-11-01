@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f56d4556360f
+  - type: executable_for
+    from: SYM-cosign-test-helper-check-inspect-case
+    to: TEST-plugins-cosign
+    created_at: 2026-11-01T22:10:14.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27e8c406f685

@@ -1171,6 +1171,12 @@ message Plugin {
   // Whether its signed manifest declares it a market-data connector,
   // approved or not.
   bool requested_market_data = 12;
+  // Who signed its image when the operator refused it as signed only by
+  // signers it doesn't trust (trust_reason "UntrustedSigner"), so the
+  // owner can trust one or recognise a forgery (D-169): a keyless signer as
+  // "<subject> (issuer <issuer>)", a key as "public key sha256:<hex>".
+  // Empty otherwise.
+  repeated string untrusted_signers = 13;
 }
 
 // AttentionItemState is where an attention item stands (D-130).

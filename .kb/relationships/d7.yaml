@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3286debcfc90
+  - type: executable_for
+    from: SYM-cosign-test-helper-inspected
+    to: TEST-plugins-cosign
+    created_at: 2026-11-01T22:10:21.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0caaac55fef1
+  - type: executable_for
+    from: SYM-e2e-test-helper-refused-as
+    to: TEST-e2e-plugin-refusals
+    created_at: 2026-11-01T22:11:54.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b411208be2e3

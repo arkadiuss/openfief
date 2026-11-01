@@ -32,15 +32,18 @@ import (
 // The suite's bundle run (task e2e runs it before the demo run): TestMain
 // installs OpenFief from the release bundle that task e2e rendered with
 // scripts/release-bundle.sh from the images task e2e:images pushed to the
-// suite's registry, each pinned by digest, as an owner installs a release:
-// the CRDs file, a CloudNativePG cluster openfief-db (the install's one
-// prerequisite, here the demo's deploy/demo/database), then the install file,
-// unchanged. Only the TestBundle tests run against it, and TestMain removes
-// the install again afterwards, so the demo run starts from an empty
-// namespace.
+// suite's registry, each pinned by digest, as an owner installs a release
+// (docs/guides/install.md): CloudNativePG from the bundle's pinned release
+// manifest, the CRDs file, the bundle's openfief-db cluster, then the
+// install file, all unchanged. Between the CRDs and the install it adds the
+// suite's key to the owner's trusted signers, as an owner who signs plugins
+// with their own key does (D-45), since this checkout's UI image can't carry
+// the release pipeline's signature. Only the TestBundle tests run against
+// it, and TestMain removes the install again afterwards, so the demo run
+// starts from an empty namespace.
 const (
-	// bundleEnv names the directory with the bundle's two files; set, it
-	// makes TestMain install the bundle instead of the demo's stack.
+	// bundleEnv names the directory with the bundle's files; set, it makes
+	// TestMain install the bundle instead of the demo's stack.
 	bundleEnv = "OPENFIEF_E2E_BUNDLE"
 	// removeTimeout bounds the removal of OpenFief's namespace.
 	removeTimeout = 5 * time.Minute
@@ -53,26 +56,30 @@ const (
 )
 
 var (
-	// errBundleFiles reports a bundle directory without exactly one CRDs
-	// file and one install file.
-	errBundleFiles = errors.New("the bundle needs exactly one openfief-crds-*.yaml and one openfief-install-*.yaml")
+	// errBundleFiles reports a bundle directory without exactly one file
+	// of each kind the bundle holds.
+	errBundleFiles = errors.New("the bundle needs exactly one openfief-crds-*.yaml, openfief-install-*.yaml, " +
+		"openfief-db-*.yaml and cnpg-*.yaml")
 	// errNotPinned reports an image in the bundle that isn't pinned by digest.
 	errNotPinned = errors.New("image not pinned by digest")
 )
 
-// bundle is a rendered release bundle: its CRDs and its install manifests.
+// bundle is a rendered release bundle: its CRDs, its install manifests,
+// its database cluster and CloudNativePG's release manifest.
 type bundle struct {
-	crds, install []byte
+	crds, install, database, cnpg []byte
 }
 
-// readBundle reads the bundle's two files from dir.
+// readBundle reads the bundle's files from dir.
 func readBundle(dir string) (bundle, error) {
 	crds, crdsErr := readOne(dir, "openfief-crds-*.yaml")
 	install, installErr := readOne(dir, "openfief-install-*.yaml")
-	if err := errors.Join(crdsErr, installErr); err != nil {
+	database, databaseErr := readOne(dir, "openfief-db-*.yaml")
+	cnpg, cnpgErr := readOne(dir, "cnpg-*.yaml")
+	if err := errors.Join(crdsErr, installErr, databaseErr, cnpgErr); err != nil {
 		return bundle{}, err
 	}
-	return bundle{crds: crds, install: install}, nil
+	return bundle{crds: crds, install: install, database: database, cnpg: cnpg}, nil
 }
 
 // readOne reads the one file in dir that matches pattern.
@@ -131,29 +138,48 @@ func runBundle(m *testing.M, dir string) int {
 }
 
 // installBundle installs the bundle in dir on a cluster without OpenFief:
-// it removes OpenFief's namespace if an earlier run left it, installs
-// CloudNativePG, applies the bundle's CRDs, the database and the bundle's
-// install, in the order an owner would.
+// it removes OpenFief's namespace if an earlier run left it, then applies,
+// in the order the install guide gives, the bundle's CloudNativePG manifest,
+// its CRDs, the owner's trusted signer (the suite's key), with which it
+// builds the CLI (buildCLI), its database and its install.
 func installBundle(ctx context.Context, k *kube, dir string, logf func(string, ...any)) error {
 	b, err := readBundle(dir)
 	if err != nil {
 		return err
 	}
-	if err := k.removeNamespace(ctx, logf); err != nil {
+	reg, err := registryFromEnv()
+	if err != nil {
 		return err
 	}
-	if err := installCNPG(ctx, k, logf); err != nil {
-		return err
+	steps := []func() error{
+		func() error { return k.removeNamespace(ctx, logf) },
+		func() error {
+			logf("e2e: installing CloudNativePG from the release bundle in %s", dir)
+			return applyCNPG(ctx, k, b.cnpg)
+		},
+		func() error {
+			logf("e2e: applying the release bundle's CRDs from %s", dir)
+			return k.apply(ctx, b.crds)
+		},
+		func() error {
+			signer, trustErr := trustSigner(ctx, k, reg, logf)
+			if trustErr != nil {
+				return trustErr
+			}
+			return buildCLI(ctx, reg, signer, logf)
+		},
+		func() error { return applyDatabase(ctx, k, logf, "the release bundle's openfief-db", b.database) },
+		func() error {
+			logf("e2e: applying the release bundle's install from %s", dir)
+			return k.apply(ctx, b.install)
+		},
 	}
-	logf("e2e: applying the release bundle's CRDs from %s", dir)
-	if err := k.apply(ctx, b.crds); err != nil {
-		return err
+	for _, step := range steps {
+		if stepErr := step(); stepErr != nil {
+			return stepErr
+		}
 	}
-	if err := installDatabase(ctx, k, logf); err != nil {
-		return err
-	}
-	logf("e2e: applying the release bundle's install from %s", dir)
-	return k.apply(ctx, b.install)
+	return nil
 }
 
 // removeNamespace deletes OpenFief's namespace, with everything in it, and

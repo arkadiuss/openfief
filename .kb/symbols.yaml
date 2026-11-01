@@ -124842,3 +124842,394 @@ symbols:
         target: TEST-ingest-connectapi-accounts
       - type: implements
         target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-plugins-untrusted-signer
+    title: UntrustedSigner
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:12.116Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-untrusted-signer-string
+    title: UntrustedSigner.String
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:19.306Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-untrusted-signer-error
+    title: UntrustedSignerError
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:25.341Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-untrusted-signer-error-error
+    title: UntrustedSignerError.Error
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:32.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-untrusted-signer-error-is
+    title: UntrustedSignerError.Is
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:39.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-fn-append-new
+    title: appendNew
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:46.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-cosign-fn-untrusted-signer
+    title: Verifier.untrustedSigner
+    sourceFile: internal/plugins/cosign/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:54.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cosign
+      - type: implements
+        target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-cosign-fn-untrusted-keyless
+    title: Verifier.untrustedKeyless
+    sourceFile: internal/plugins/cosign/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:01.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cosign
+      - type: implements
+        target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-cosign-fn-untrusted-key
+    title: Verifier.untrustedKey
+    sourceFile: internal/plugins/cosign/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:08.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cosign
+      - type: implements
+        target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-cosign-fn-signs-digest
+    title: signsDigest
+    sourceFile: internal/plugins/cosign/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:16.517Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cosign
+      - type: implements
+        target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-operator-fn-untrusted-signers
+    title: untrustedSigners
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:23.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-views-pb-plugin-get-untrusted-signers
+    title: Plugin.GetUntrustedSigners
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:32.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-release-bundle-check-cnpg
+    title: check_cnpg
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:39.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-database
+  - id: SYM-release-bundle-check-database
+    title: check_database
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:44.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-database
+  - id: SYM-plugins-test-decide-names-untrusted-signers
+    title: TestDecideNamesUntrustedSigners
+    sourceFile: internal/plugins/untrusted_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:51.401Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-untrusted-signer
+  - id: SYM-plugins-test-untrusted-signer-error-message
+    title: TestUntrustedSignerErrorMessage
+    sourceFile: internal/plugins/untrusted_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:58.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-untrusted-signer
+  - id: SYM-plugins-test-helper-named-signers
+    title: namedSigners
+    sourceFile: internal/plugins/untrusted_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:05.352Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-untrusted-signer
+  - id: SYM-cosign-test-helper-check-inspect-case
+    title: checkInspectCase
+    sourceFile: internal/plugins/cosign/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:12.142Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-helper-inspected
+    title: inspected
+    sourceFile: internal/plugins/cosign/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:18.821Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-helper-key-bundle-with-hint
+    title: keyBundleWithHint
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:25.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-helper-sign-with-key
+    title: signWithKey
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:32.529Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-operator-test-helper-untrusted-images
+    title: untrustedImages
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:39.802Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-helper-untrusted-images-verify-image
+    title: untrustedImages.VerifyImage
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:47.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-helper-test-untrusted-signer
+    title: testUntrustedSigner
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:53.952Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-e2e-firstrun-build-cli
+    title: buildCLI
+    sourceFile: test/e2e/firstrun_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:01.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-firstrun-test-bundle-first-run
+    title: TestBundleFirstRun
+    sourceFile: test/e2e/firstrun_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:08.339Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-firstrun-install-ui-with-cli
+    title: installUIWithCLI
+    sourceFile: test/e2e/firstrun_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:15.736Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-firstrun-enroll-with-cli
+    title: enrollWithCLI
+    sourceFile: test/e2e/firstrun_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:22.943Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-test-helper-apply-cnpg
+    title: applyCNPG
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:30.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-helper-apply-database
+    title: applyDatabase
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:38.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-helper-suite-signer
+    title: suiteSigner
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:45.345Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-helper-refused-as
+    title: refusedAs
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:52.008Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-names-refusal
+    title: namesRefusal
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:58.904Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals

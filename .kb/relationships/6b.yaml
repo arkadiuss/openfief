@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1707c24a594
+  - type: validates
+    from: TEST-ui-plugins
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T21:51:42.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93be7dad0761

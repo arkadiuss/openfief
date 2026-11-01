@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d0ceaa83d79
+  - type: implements
+    from: SYM-cosign-fn-signs-digest
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T22:09:19.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdbb8af2f178
+  - type: implements
+    from: SYM-cosign-fn-signs-digest
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-11-01T22:09:19.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c3db3a091bf
+  - type: covered_by
+    from: SYM-cosign-fn-signs-digest
+    to: TEST-plugins-cosign
+    created_at: 2026-11-01T22:09:19.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a73d060637a4

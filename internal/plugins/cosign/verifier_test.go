@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
+	"strings"
 	"testing"
 	"time"
 
@@ -43,6 +45,10 @@ type world struct {
 	// trusted is what the verifier trusts: vs, unless a case changes it.
 	trusted   root.TrustedMaterial
 	publisher plugins.Signer
+	// untrusted are the key signers a case's setup made and expects
+	// Inspect to name (D-169): the keys are fresh, so a case can't spell
+	// them out.
+	untrusted []plugins.UntrustedSigner
 }
 
 // foreignCA trusts everything of logs except its Fulcio CAs, which come
@@ -100,6 +106,9 @@ type inspectCase struct {
 	want     outcome
 	// wantErr is the Inspect or Decide error.
 	wantErr error
+	// wantUntrusted are the signers Inspect names that the policy doesn't
+	// hold (D-169).
+	wantUntrusted []plugins.UntrustedSigner
 }
 
 func TestInspect(t *testing.T) {
@@ -193,7 +202,8 @@ func TestInspect(t *testing.T) {
 					statement(t, img, SignPredicateType), time.Now().Add(5*time.Minute)))
 				return img, plugins.Catalog{}, nil
 			},
-			wantErr: plugins.ErrUnsigned,
+			wantErr:       plugins.ErrUntrustedSigner,
+			wantUntrusted: []plugins.UntrustedSigner{{Issuer: plugins.GitHubActionsIssuer, Subject: subjectFork}},
 		},
 		{
 			name: "wrong identity: right subject from another issuer",
@@ -204,16 +214,65 @@ func TestInspect(t *testing.T) {
 					statement(t, img, SignPredicateType), time.Now().Add(5*time.Minute)))
 				return img, plugins.Catalog{}, nil
 			},
-			wantErr: plugins.ErrUnsigned,
+			wantErr:       plugins.ErrUntrustedSigner,
+			wantUntrusted: []plugins.UntrustedSigner{{Issuer: issuerOther, Subject: plugins.OpenFiefCISubject}},
 		},
 		{
 			name: "untrusted signer: a key nobody added",
 			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
 				t.Helper()
 				img := w.reg.push(t, labelledImage(t, labelView))
-				w.reg.attach(t, img, keyBundle(t, statement(t, img, SignPredicateType)).bundle)
+				stranger := keyBundle(t, statement(t, img, SignPredicateType))
+				w.reg.attach(t, img, stranger.bundle)
+				w.untrusted = append(w.untrusted, plugins.UntrustedSigner{KeySHA256: stranger.fingerprint})
 				other := keyBundle(t, statement(t, img, SignPredicateType)).publicKey
 				return img, plugins.Catalog{}, []plugins.Signer{{Name: "laptop", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{PublicKey: other}}}
+			},
+			wantErr: plugins.ErrUntrustedSigner,
+		},
+		{
+			name: "untrusted signer and a trusted one: the trusted one decides",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				img := w.reg.push(t, labelledImage(t, labelView))
+				w.reg.attach(t, img, keylessBundle(t, w.vs, subjectFork, plugins.GitHubActionsIssuer,
+					statement(t, img, SignPredicateType), time.Now().Add(5*time.Minute)))
+				w.signCI(t, img)
+				return img, plugins.Catalog{}, nil
+			},
+			declared:      labelView,
+			want:          outcome{plugins.Unverified, "openfief-ci"},
+			wantUntrusted: []plugins.UntrustedSigner{{Issuer: plugins.GitHubActionsIssuer, Subject: subjectFork}},
+		},
+		{
+			name: "key signature over another image names nobody",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				other := w.reg.push(t, labelledImage(t, labelConnector))
+				img := w.reg.push(t, labelledImage(t, labelView))
+				w.reg.attach(t, img, keyBundle(t, statement(t, other, SignPredicateType)).bundle)
+				return img, plugins.Catalog{}, nil
+			},
+			wantErr: plugins.ErrUnsigned,
+		},
+		{
+			name: "key attestation is not a signature and names nobody",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				img := w.reg.push(t, labelledImage(t, labelView))
+				w.reg.attach(t, img, keyBundle(t, statement(t, img, "https://spdx.dev/Document")).bundle)
+				return img, plugins.Catalog{}, nil
+			},
+			wantErr: plugins.ErrUnsigned,
+		},
+		{
+			name: "forged key signature: another key under a trusted key's hint names nobody",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				img := w.reg.push(t, labelledImage(t, labelView))
+				trusted := keyBundle(t, statement(t, img, SignPredicateType))
+				w.reg.attach(t, img, keyBundleWithHint(t, statement(t, img, SignPredicateType), trusted.hint))
+				return img, plugins.Catalog{}, []plugins.Signer{{Name: "laptop", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{PublicKey: trusted.publicKey}}}
 			},
 			wantErr: plugins.ErrUnsigned,
 		},
@@ -339,22 +398,47 @@ func TestInspect(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := runInspectCase(t, &tt)
-			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
-				t.Fatalf("Inspect and Decide error (-want +got):\n%s", diff)
-			}
-			if diff := cmp.Diff(tt.want, got); diff != "" {
-				t.Errorf("decision (-want +got):\n%s", diff)
-			}
+			checkInspectCase(t, &tt)
 		})
 	}
 }
 
-// runInspectCase builds the case's world, inspects its image and lets the
-// trust policy decide.
-func runInspectCase(t *testing.T, tt *inspectCase) (outcome, error) {
+// checkInspectCase runs one TestInspect case and checks its decision, its
+// error and the untrusted signers Inspect named, the case's own and those
+// its setup made with fresh keys (world.untrusted), each also named in the
+// refusal (D-169).
+func checkInspectCase(t *testing.T, tt *inspectCase) {
 	t.Helper()
 	w := newWorld(t, tt.referrersAPI, tt.wrap)
+	got, err := runInspectCase(t, tt, w)
+	wantUntrusted := append(slices.Clone(tt.wantUntrusted), w.untrusted...)
+	if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
+		t.Fatalf("Inspect and Decide error (-want +got):\n%s", diff)
+	}
+	if diff := cmp.Diff(tt.want, got.decided); diff != "" {
+		t.Errorf("decision (-want +got):\n%s", diff)
+	}
+	if diff := cmp.Diff(wantUntrusted, got.untrusted, cmpopts.EquateEmpty()); diff != "" {
+		t.Errorf("untrusted signers (-want +got):\n%s", diff)
+	}
+	for _, u := range wantUntrusted {
+		if err != nil && !strings.Contains(err.Error(), u.String()) {
+			t.Errorf("refusal %q does not name %s", err, u)
+		}
+	}
+}
+
+// inspected is what runInspectCase found: the decision, and the untrusted
+// signers Inspect named.
+type inspected struct {
+	decided   outcome
+	untrusted []plugins.UntrustedSigner
+}
+
+// runInspectCase sets the case up in w, inspects its image and lets the
+// trust policy decide.
+func runInspectCase(t *testing.T, tt *inspectCase, w *world) (inspected, error) {
+	t.Helper()
 	img, catalog, owner := tt.setup(t, w)
 	policy, err := plugins.NewTrustPolicy(catalog, owner)
 	if err != nil {
@@ -362,7 +446,7 @@ func runInspectCase(t *testing.T, tt *inspectCase) (outcome, error) {
 	}
 	signed, err := virtualTestVerifier(t, &policy, w.trusted).Inspect(t.Context(), img)
 	if err != nil {
-		return outcome{}, err
+		return inspected{}, err
 	}
 	var declared *plugins.Manifest
 	if tt.declared != "" {
@@ -374,9 +458,9 @@ func runInspectCase(t *testing.T, tt *inspectCase) (outcome, error) {
 	}
 	d, err := policy.Decide(&signed, declared)
 	if err != nil {
-		return outcome{}, fmt.Errorf("decide: %w", err)
+		return inspected{untrusted: signed.Untrusted}, fmt.Errorf("decide: %w", err)
 	}
-	return outcome{d.Trust, d.Signer.Name}, nil
+	return inspected{decided: outcome{d.Trust, d.Signer.Name}, untrusted: signed.Untrusted}, nil
 }
 
 func TestProductionVerifierRequiresSCT(t *testing.T) {

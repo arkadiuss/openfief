@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d15c60231d73
+  - type: implements
+    from: SYM-plugins-fn-append-new
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T22:08:49.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf5e2493d7eb
+  - type: covered_by
+    from: SYM-plugins-fn-append-new
+    to: TEST-plugins-untrusted-signer
+    created_at: 2026-11-01T22:08:49.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b110729ac522

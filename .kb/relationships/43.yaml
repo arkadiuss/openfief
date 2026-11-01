@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-061b49fccaf5
+  - type: implements
+    from: SYM-plugins-untrusted-signer-error-error
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T22:08:34.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26316b60a0b2
+  - type: covered_by
+    from: SYM-plugins-untrusted-signer-error-error
+    to: TEST-plugins-untrusted-signer
+    created_at: 2026-11-01T22:08:35.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225a430be3d9

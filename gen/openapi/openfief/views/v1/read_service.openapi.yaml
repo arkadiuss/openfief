@@ -1459,6 +1459,17 @@ components:
           description: |-
             Whether its signed manifest declares it a market-data connector,
              approved or not.
+        untrustedSigners:
+          type: array
+          items:
+            type: string
+          title: untrusted_signers
+          description: |-
+            Who signed its image when the operator refused it as signed only by
+             signers it doesn't trust (trust_reason "UntrustedSigner"), so the
+             owner can trust one or recognise a forgery (D-169): a keyless signer as
+             "<subject> (issuer <issuer>)", a key as "public key sha256:<hex>".
+             Empty otherwise.
       title: Plugin
       additionalProperties: false
       description: Plugin is one installed plugin instance.

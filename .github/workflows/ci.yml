@@ -165,7 +165,9 @@ jobs:
     # kube-router NetworkPolicy controller, the bundled Traefik and servicelb, and secrets encryption, as
     # deploy/demo/cloud-init.yaml configures it. kind's default CNI, kindnet, enforces NetworkPolicy too.
     # The suite (test/e2e) runs twice: first it installs the release bundle (task release:bundle) of this checkout's
-    # images, pinned by digest, checks it and removes it; then it installs the demo's stack. Either logs pods, events,
+    # images, pinned by digest, with the CloudNativePG manifest and openfief-db cluster it ships, checks it, runs the
+    # owner's first run with the openfief CLI built from this checkout (plugin install ui, enroll and a passkey), and
+    # removes it; then it installs the demo's stack. Either logs pods, events,
     # specs, policies, endpoints, plugins and logs on any failure: read the "diagnostics:" lines of the failing test.
     # task e2e:images also starts a registry container on the cluster's Docker network for the plugin images, which
     # the suite signs with a key made for the run, so the operator deploys them as it would an owner's (D-57), and
@@ -174,8 +176,8 @@ jobs:
     needs: plan
     if: needs.plan.outputs.code == 'true'
     runs-on: ubuntu-24.04
-    # The bundle run adds about five minutes to the demo run's.
-    timeout-minutes: 40
+    # The bundle run, with its database and first run, adds about ten minutes to the demo run's.
+    timeout-minutes: 45
     permissions:
       contents: read
     strategy:

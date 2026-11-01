@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad6251e500ab
+  - type: executable_for
+    from: SYM-cosign-test-helper-key-bundle-with-hint
+    to: TEST-plugins-cosign
+    created_at: 2026-11-01T22:10:27.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b86eae19248a

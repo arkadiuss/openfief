@@ -2,9 +2,12 @@ package cosign
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"slices"
 	"strings"
 	"time"
 
@@ -44,6 +47,8 @@ type Verifier struct {
 type keyVerifier struct {
 	identity plugins.SignerIdentity
 	verifier *verify.Verifier
+	// fingerprint is the hex SHA-256 of the key's DER form.
+	fingerprint string
 }
 
 // New returns a Verifier for the policy's signers, checking keyless
@@ -104,6 +109,11 @@ func newKeyVerifier(id plugins.SignerIdentity) (keyVerifier, error) {
 	if err != nil {
 		return keyVerifier{}, fmt.Errorf("public key: %w", err)
 	}
+	der, err := cryptoutils.MarshalPublicKeyToDER(pub)
+	if err != nil {
+		return keyVerifier{}, fmt.Errorf("public key: %w", err)
+	}
+	sum := sha256.Sum256(der)
 	sv, err := signature.LoadDefaultVerifier(pub)
 	if err != nil {
 		return keyVerifier{}, fmt.Errorf("public key: %w", err)
@@ -114,14 +124,15 @@ func newKeyVerifier(id plugins.SignerIdentity) (keyVerifier, error) {
 	if err != nil {
 		return keyVerifier{}, fmt.Errorf("key verifier: %w", err)
 	}
-	return keyVerifier{identity: id, verifier: v}, nil
+	return keyVerifier{identity: id, verifier: v, fingerprint: hex.EncodeToString(sum[:])}, nil
 }
 
 // Inspect reads an image from its registry: the identities of the trusted
-// signers whose signatures over its digest verify, and its manifest label.
-// The label is read only from a signed image. A missing or invalid label
-// fails with plugins.ErrManifestLabel; a registry that cannot be read fails
-// with another error, worth retrying.
+// signers whose signatures over its digest verify, the signers of its other
+// signatures (D-169, see untrustedSigner), and its manifest label. The label
+// is read only from an image a trusted signer signed. A missing or invalid
+// label fails with plugins.ErrManifestLabel; a registry that cannot be read
+// fails with another error, worth retrying.
 func (v *Verifier) Inspect(ctx context.Context, image plugins.ImageRef) (plugins.SignedImage, error) {
 	d, err := name.NewDigest(image.String())
 	if err != nil {
@@ -140,6 +151,10 @@ func (v *Verifier) Inspect(ctx context.Context, image plugins.ImageRef) (plugins
 	for _, b := range bundles {
 		if id, ok := v.verifyBundle(b, digest); ok {
 			out.Signatures = append(out.Signatures, id)
+			continue
+		}
+		if u, ok := v.untrustedSigner(b, digest); ok && !slices.Contains(out.Untrusted, u) {
+			out.Untrusted = append(out.Untrusted, u)
 		}
 	}
 	if len(out.Signatures) == 0 {
@@ -188,6 +203,83 @@ func (v *Verifier) verifyKeyless(b *bundle.Bundle, artifact verify.ArtifactPolic
 	}
 	cert := res.Signature.Certificate
 	return plugins.SignerIdentity{Issuer: cert.Issuer, Subject: cert.SubjectAlternativeName}, true
+}
+
+// untrustedSigner names who made a bundle that verifyBundle did not accept,
+// when it is a `cosign sign` signature over the image digest by a signer the
+// policy doesn't hold (D-169). A keyless bundle must pass every check
+// verifyKeyless makes except the certificate identity: chain, SCT,
+// transparency log and timestamps against the same trust root; it names the
+// certificate's issuer and subject. A bundle signed with a key that isn't
+// trusted can't be verified without that key, so it names the fingerprint
+// its key hint gives (sigstore-go's and cosign's hint: the base64 SHA-256 of
+// the key's DER form) once its DSSE statement is a signature over this
+// digest. A bundle whose hint names a trusted key failed that key's check,
+// so it is no signature and names nothing. This never adds to what
+// verifyBundle accepts.
+func (v *Verifier) untrustedSigner(b *bundle.Bundle, digest []byte) (plugins.UntrustedSigner, bool) {
+	content, err := b.VerificationContent()
+	if err != nil {
+		return plugins.UntrustedSigner{}, false
+	}
+	if content.Certificate() != nil {
+		return v.untrustedKeyless(b, digest)
+	}
+	pk := content.PublicKey()
+	if pk == nil || !signsDigest(b, digest) {
+		return plugins.UntrustedSigner{}, false
+	}
+	return v.untrustedKey(pk.Hint())
+}
+
+// untrustedKeyless verifies a certificate-signed bundle against the trust
+// root with every check but the certificate identity, and names the
+// certificate's issuer and subject.
+func (v *Verifier) untrustedKeyless(b *bundle.Bundle, digest []byte) (plugins.UntrustedSigner, bool) {
+	policy := verify.NewPolicy(verify.WithArtifactDigest("sha256", digest), verify.WithoutIdentitiesUnsafe())
+	res, err := v.keyless.Verify(b, policy)
+	if err != nil || !isSignature(res) || res.Signature == nil || res.Signature.Certificate == nil {
+		return plugins.UntrustedSigner{}, false
+	}
+	cert := res.Signature.Certificate
+	return plugins.UntrustedSigner{Issuer: cert.Issuer, Subject: cert.SubjectAlternativeName}, true
+}
+
+// untrustedKey names the key a bundle's key hint gives, unless the hint is
+// not a base64 SHA-256 or names a key the policy trusts.
+func (v *Verifier) untrustedKey(hint string) (plugins.UntrustedSigner, bool) {
+	sum, err := base64.StdEncoding.DecodeString(hint)
+	if err != nil || len(sum) != sha256.Size {
+		return plugins.UntrustedSigner{}, false
+	}
+	fingerprint := hex.EncodeToString(sum)
+	for _, k := range v.keys {
+		if k.fingerprint == fingerprint {
+			return plugins.UntrustedSigner{}, false
+		}
+	}
+	return plugins.UntrustedSigner{KeySHA256: fingerprint}, true
+}
+
+// signsDigest reports whether b holds a signed DSSE envelope whose in-toto
+// statement is a `cosign sign` signature with digest among its subjects. It
+// checks the statement's shape only, not its signature.
+func signsDigest(b *bundle.Bundle, digest []byte) bool {
+	env, err := b.Envelope()
+	if err != nil || len(env.Signatures) == 0 {
+		return false
+	}
+	st, err := env.Statement()
+	if err != nil || st.GetPredicateType() != SignPredicateType {
+		return false
+	}
+	want := hex.EncodeToString(digest)
+	for _, s := range st.GetSubject() {
+		if s.GetDigest()["sha256"] == want {
+			return true
+		}
+	}
+	return false
 }
 
 // isSignature reports whether a verified bundle is a `cosign sign`

@@ -267,6 +267,17 @@ type PluginStatus struct {
 	// this also names the signer and its kind, for the UI to show.
 	// +optional
 	Signature *SignatureStatus `json:"signature,omitempty"`
+
+	// UntrustedSigners names the signers of spec.image's valid signatures
+	// while the SignatureVerified condition is False with reason
+	// UntrustedSigner, none of whom the operator trusts (D-169): a keyless
+	// signer as its certificate's subject and issuer, a key as "public key
+	// sha256:" and its fingerprint. The owner trusts one by adding it to the
+	// trusted signers (D-45), or recognises a forgery. Absent otherwise.
+	// +optional
+	// +kubebuilder:validation:MaxItems=32
+	// +kubebuilder:validation:items:MaxLength=1024
+	UntrustedSigners []string `json:"untrustedSigners,omitempty"`
 }
 
 // SignatureStatus is the trusted signature on a plugin's image.

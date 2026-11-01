@@ -91,7 +91,8 @@ func (p *Plugins) InstalledPlugins(context.Context) ([]views.PluginRecord, error
 // RecordOf reads what the views show of a Plugin resource: its name,
 // spec.image, spec.manifest.capabilities, status.effective.capabilities,
 // spec.manifest.marketData and status.effective.marketData (D-123), its
-// Ready and SignatureVerified conditions and status.signature. A field
+// Ready and SignatureVerified conditions, status.signature and
+// status.untrustedSigners (D-169). A field
 // that is missing or of another type reads as empty.
 func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 	r := views.PluginRecord{
@@ -103,6 +104,8 @@ func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 		Trust:      nestedString(u, "status", "signature", "trust"),
 		SignerKind: nestedString(u, "status", "signature", "signerKind"),
 		Signer:     nestedString(u, "status", "signature", "signer"),
+
+		UntrustedSigners: nestedStrings(u, "status", "untrustedSigners"),
 
 		RequestsMarketData: nestedBool(u, "spec", "manifest", "marketData"),
 		MarketData:         nestedBool(u, "status", "effective", "marketData"),

@@ -55,12 +55,13 @@ vars:
   # replace directives, so `go install` can't build it: the release archive is checked against these sha256s.
   FLUX_CLI_SHA256_LINUX_AMD64: b4d22673e9246cbd628881f1a9ef3b090085dced291e42d804555cee8e8d42c5
   FLUX_CLI_SHA256_LINUX_ARM64: 6663c154755b732f43dc993d72321f71c2fc1ff0bcb94b2696e0a8638fa562b4
-  # CloudNativePG for the end-to-end suite (task e2e): the operator version that the demo's chart pins
-  # (deploy/demo/cnpg/helmrelease.yaml, chart 0.29.1 ships 1.30.1), from its release manifest. Bump both together,
-  # with the manifest's new sha256.
+  # CloudNativePG's release manifest, which every release bundle ships (task release:bundle, docs/dev/sdlc.md) and the
+  # end-to-end suite installs (task e2e): the operator version that the demo's chart pins
+  # (deploy/demo/cnpg/helmrelease.yaml, chart 0.29.1 ships 1.30.1). Bump both together, with the manifest's new sha256,
+  # and the install guide (docs/guides/install.md), which names both; scripts/tests/release-bundle.test.sh checks it.
   CNPG_VERSION: 1.30.1
   CNPG_MANIFEST_SHA256: 37237f145d8138256ea25ae830f87759255665ff08f8d552fdd8224a5ec032fb
-  E2E_CNPG_MANIFEST: '{{.ROOT_DIR}}/.bin/e2e/cnpg-{{.CNPG_VERSION}}.yaml'
+  CNPG_MANIFEST: '{{.ROOT_DIR}}/.bin/cnpg/cnpg-{{.CNPG_VERSION}}.yaml'
   # The cluster the CI e2e job creates (.github/workflows/ci.yml); task e2e:images loads the images into it.
   E2E_CLUSTER_NAME: openfief-e2e
   # Where task e2e:images writes the addresses of the suite's registry, which task e2e passes to the suite.
@@ -469,14 +470,16 @@ tasks:
     deps: [tool:kustomize, tool:gojq, kibi:install]
     cmds:
       - bash scripts/assert-local-cluster.sh
-      - task: e2e:cnpg
+      - task: cnpg:manifest
       # -v streams each step and wait as it happens, so a CI log shows where a run stopped.
       # The suite runs kustomize by name, so the pinned one goes first on PATH.
       # The registry addresses and images task e2e:images wrote (OPENFIEF_E2E_REGISTRY, OPENFIEF_E2E_CLUSTER_REGISTRY,
       # OPENFIEF_E2E_BUNDLE_IMAGES).
       # Two runs of one suite, each with its own TestMain install: the bundle run (OPENFIEF_E2E_BUNDLE, the TestBundle
       # tests) installs the release bundle task release:bundle renders from the images in the suite's registry, pinned
-      # by digest, and removes it again; the demo run installs the demo's stack.
+      # by digest, with the CloudNativePG manifest and the openfief-db cluster it ships, runs the owner's first run with
+      # the openfief CLI it builds from this checkout (test/e2e/firstrun_test.go), and removes it again; the demo run
+      # installs the demo's stack.
       - |
         set -e
         if [ ! -f '{{.E2E_REGISTRY_ENV}}' ]; then
@@ -489,11 +492,13 @@ tasks:
           exit 1
         fi
         rm -rf '{{.E2E_BUNDLE_DIR}}'
-        PATH='{{.BIN}}':"$PATH" bash scripts/release-bundle.sh e2e '{{.E2E_BUNDLE_DIR}}' $OPENFIEF_E2E_BUNDLE_IMAGES
-        export PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.E2E_CNPG_MANIFEST}}'
+        PATH='{{.BIN}}':"$PATH" CNPG='{{.CNPG_MANIFEST}}' CNPG_SHA256='{{.CNPG_MANIFEST_SHA256}}' \
+          bash scripts/release-bundle.sh e2e '{{.E2E_BUNDLE_DIR}}' $OPENFIEF_E2E_BUNDLE_IMAGES
+        export PATH='{{.BIN}}':"$PATH" OPENFIEF_E2E_CNPG_MANIFEST='{{.CNPG_MANIFEST}}'
         # A failed bundle run still lets the demo run report; the task fails if either failed.
         bundle=0
-        OPENFIEF_E2E_BUNDLE='{{.E2E_BUNDLE_DIR}}' go test -tags e2e -count=1 -v -timeout 15m -run '^TestBundle' ./test/e2e/... || bundle=$?
+        OPENFIEF_E2E_BUNDLE='{{.E2E_BUNDLE_DIR}}' \
+          go test -tags e2e -count=1 -v -timeout 20m -run '^TestBundle' ./test/e2e/... || bundle=$?
         go test -tags e2e -count=1 -v -timeout 20m -skip '^TestBundle' ./test/e2e/...
         if [ "$bundle" -ne 0 ]; then
           echo 'e2e: the bundle run failed (see the TestBundle output above)' >&2
@@ -521,20 +526,21 @@ tasks:
     cmds:
       - echo 'rancher/k3s:{{replace "+" "-" .K3S_VERSION}}'
 
-  e2e:cnpg:
+  cnpg:manifest:
     internal: true
-    # The CloudNativePG release manifest the suite installs, checked against its pinned sha256 and kept in .bin.
+    # CloudNativePG's release manifest, checked against its pinned sha256 and kept in .bin: the release bundle ships it
+    # (task release:bundle) and the end-to-end suite installs it (task e2e).
     cmds:
       - |
         set -e
-        mkdir -p '{{.BIN}}/e2e'
+        mkdir -p "$(dirname '{{.CNPG_MANIFEST}}')"
         work="$(mktemp -d)"
         trap 'rm -rf "$work"' EXIT
         curl -fsSL --retry 3 -o "$work/cnpg.yaml" 'https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v{{.CNPG_VERSION}}/cnpg-{{.CNPG_VERSION}}.yaml'
         echo '{{.CNPG_MANIFEST_SHA256}}  '"$work/cnpg.yaml" | sha256sum -c -
-        mv "$work/cnpg.yaml" '{{.E2E_CNPG_MANIFEST}}'
+        mv "$work/cnpg.yaml" '{{.CNPG_MANIFEST}}'
     status:
-      - echo '{{.CNPG_MANIFEST_SHA256}}  {{.E2E_CNPG_MANIFEST}}' | sha256sum -c - >/dev/null 2>&1
+      - echo '{{.CNPG_MANIFEST_SHA256}}  {{.CNPG_MANIFEST}}' | sha256sum -c - >/dev/null 2>&1
 
   dco:
     desc: 'DCO sign-off check (D-5) on the commits in BASE..HEAD, e.g. task dco BASE=origin/main HEAD=HEAD'
@@ -778,19 +784,20 @@ tasks:
       - PATH='{{.BIN}}':"$PATH" bash scripts/release-verify.sh images '{{.FILE}}' '{{.REPO}}' {{if .TAG}}'{{.TAG}}'{{end}}
 
   release:bundle:
-    desc: 'Render the release bundle into OUT (default dist/bundle): openfief-crds-VERSION.yaml and openfief-install-VERSION.yaml, every image pinned to a given digest. IMAGES lists repository@sha256:digest refs; in CI, DIGESTS=<dir> PREFIX=<registry prefix> reads images.yml''s digest files instead, and VERIFY=1 REPO=<owner/repo> checks each signature with cosign; a dry run passes PLACEHOLDER=1 PREFIX=... for all-zeros digests, e.g. task release:bundle VERSION=2026.11.0-alpha.1 IMAGES="ghcr.io/owner/openfief/core@sha256:..."'
+    desc: 'Render the release bundle into OUT (default dist/bundle): openfief-crds-VERSION.yaml, openfief-install-VERSION.yaml with every image pinned to a given digest, openfief-db-VERSION.yaml and CloudNativePG''s release manifest cnpg-CNPG_VERSION.yaml, checked against its pinned sha256. IMAGES lists repository@sha256:digest refs; in CI, DIGESTS=<dir> PREFIX=<registry prefix> reads images.yml''s digest files instead, and VERIFY=1 REPO=<owner/repo> checks each signature with cosign; a dry run passes PLACEHOLDER=1 PREFIX=... for all-zeros digests, e.g. task release:bundle VERSION=2026.11.0-alpha.1 IMAGES="ghcr.io/owner/openfief/core@sha256:..."'
     deps: [tool:kustomize, tool:gojq]
     requires:
       vars: [VERSION]
     cmds:
+      - task: cnpg:manifest
       - rm -rf '{{.OUT | default "dist/bundle"}}'
       - >-
         PATH='{{.BIN}}':"$PATH" DIGESTS='{{.DIGESTS}}' PREFIX='{{.PREFIX}}' VERIFY='{{.VERIFY | default "0"}}' REPO='{{.REPO}}'
-        PLACEHOLDER='{{.PLACEHOLDER | default "0"}}'
+        PLACEHOLDER='{{.PLACEHOLDER | default "0"}}' CNPG='{{.CNPG_MANIFEST}}' CNPG_SHA256='{{.CNPG_MANIFEST_SHA256}}'
         bash scripts/release-bundle.sh '{{.VERSION}}' '{{.OUT | default "dist/bundle"}}' {{.IMAGES}}
 
   release:assets:
-    desc: Package the docs site as of this version into dist/ (the CRDs and bootstrap install come from task release:bundle)
+    desc: Package the docs site as of this version into dist/ (the CRDs, bootstrap install, database and CloudNativePG manifest come from task release:bundle)
     requires:
       vars: [VERSION]
     cmds:
@@ -806,7 +813,8 @@ tasks:
       - task: release:check
       - |
         set -e
-        for f in 'dist/bundle/openfief-crds-{{.VERSION}}.yaml' 'dist/bundle/openfief-install-{{.VERSION}}.yaml'; do
+        for f in 'dist/bundle/openfief-crds-{{.VERSION}}.yaml' 'dist/bundle/openfief-install-{{.VERSION}}.yaml' \
+          'dist/bundle/openfief-db-{{.VERSION}}.yaml' 'dist/bundle/cnpg-{{.CNPG_VERSION}}.yaml'; do
           [ -f "$f" ] || { echo "release:publish: $f is missing (task release:bundle)" >&2; exit 1; }
         done
       - task: release:assets
@@ -819,7 +827,8 @@ tasks:
         prerelease=--prerelease
         [ '{{.CHANNEL}}' != stable ] || prerelease=
         gh release create '{{.VERSION}}' --verify-tag $prerelease --title '{{.VERSION}}' --notes-file dist/release-notes.md \
-          dist/bundle/openfief-*-'{{.VERSION}}'.yaml 'dist/openfief-docs-{{.VERSION}}.tar.gz' $(find dist/cli -type f | sort)
+          dist/bundle/openfief-*-'{{.VERSION}}'.yaml 'dist/bundle/cnpg-{{.CNPG_VERSION}}.yaml' \
+          'dist/openfief-docs-{{.VERSION}}.tar.gz' $(find dist/cli -type f | sort)
       - >-
         gh pr create --base main --head 'release/{{.VERSION}}' --title 'chore(release): catalog the first-party plugins of {{.VERSION}}'
         --body 'Adds the plugin digests release {{.VERSION}} signed to the catalog (D-88), as tagged in {{.VERSION}}.'

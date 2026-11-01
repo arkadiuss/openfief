@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"sync"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -30,10 +31,13 @@ type Verification struct {
 	// Signature names the trusted signer when Status is True; nil
 	// otherwise.
 	Signature *v1alpha1.SignatureStatus
+	// UntrustedSigners names who signed the image when Reason is
+	// ReasonUntrustedSigner (D-169); empty otherwise.
+	UntrustedSigners []string
 }
 
 // Verified reports whether the image may be deployed.
-func (v Verification) Verified() bool { return v.Status == metav1.ConditionTrue }
+func (v *Verification) Verified() bool { return v.Status == metav1.ConditionTrue }
 
 // Reasons of the SignatureVerified condition.
 const (
@@ -45,9 +49,10 @@ const (
 	// ReasonTrustedSigner: a trusted signer signed the image, but it is not
 	// a verified plugin (D-45). The condition is True.
 	ReasonTrustedSigner = "SignedByTrustedSigner"
-	// ReasonUnsigned: no valid signature by a trusted signer.
+	// ReasonUnsigned: no valid signature at all.
 	ReasonUnsigned = "Unsigned"
-	// ReasonUntrustedSigner: signed, but by no trusted signer.
+	// ReasonUntrustedSigner: signed, but by no trusted signer; the message
+	// and status.untrustedSigners name the signers (D-169).
 	ReasonUntrustedSigner = "UntrustedSigner"
 	// ReasonManifestMismatch: spec.manifest is not the image's signed
 	// manifest label.
@@ -120,7 +125,11 @@ func (v *PolicyVerifier) VerifyImage(ctx context.Context, image plugins.ImageRef
 	}
 	d, err := v.policy.Decide(&signed, declared)
 	if err != nil {
-		return Verification{Status: metav1.ConditionFalse, Reason: refusalReason(err), Message: err.Error()}
+		refused := Verification{Status: metav1.ConditionFalse, Reason: refusalReason(err), Message: err.Error()}
+		if u, ok := errors.AsType[*plugins.UntrustedSignerError](err); ok {
+			refused.UntrustedSigners = slices.Clone(u.Signers)
+		}
+		return refused
 	}
 	sig := &v1alpha1.SignatureStatus{Trust: string(d.Trust), SignerKind: string(d.Signer.Kind), Signer: d.Signer.Name}
 	switch d.Trust {

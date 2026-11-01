@@ -5960,8 +5960,14 @@ type Plugin struct {
 	// Whether its signed manifest declares it a market-data connector,
 	// approved or not.
 	RequestedMarketData bool `protobuf:"varint,12,opt,name=requested_market_data,json=requestedMarketData,proto3" json:"requested_market_data,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// Who signed its image when the operator refused it as signed only by
+	// signers it doesn't trust (trust_reason "UntrustedSigner"), so the
+	// owner can trust one or recognise a forgery (D-169): a keyless signer as
+	// "<subject> (issuer <issuer>)", a key as "public key sha256:<hex>".
+	// Empty otherwise.
+	UntrustedSigners []string `protobuf:"bytes,13,rep,name=untrusted_signers,json=untrustedSigners,proto3" json:"untrusted_signers,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Plugin) Reset() {
@@ -6076,6 +6082,13 @@ func (x *Plugin) GetRequestedMarketData() bool {
 		return x.RequestedMarketData
 	}
 	return false
+}
+
+func (x *Plugin) GetUntrustedSigners() []string {
+	if x != nil {
+		return x.UntrustedSigners
+	}
+	return nil
 }
 
 // AttentionItemChange is one entry of an attention item's history.
@@ -6737,7 +6750,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x12reporting_currency\x18\t \x01(\tR\x11reportingCurrency\"\x14\n" +
 	"\x12ListPluginsRequest\"J\n" +
 	"\x13ListPluginsResponse\x123\n" +
-	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xad\x03\n" +
+	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xda\x03\n" +
 	"\x06Plugin\x12\x1a\n" +
 	"\binstance\x18\x01 \x01(\tR\binstance\x12\x14\n" +
 	"\x05image\x18\x02 \x01(\tR\x05image\x12!\n" +
@@ -6752,7 +6765,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	" \x01(\bR\x05ready\x12\x1f\n" +
 	"\vmarket_data\x18\v \x01(\bR\n" +
 	"marketData\x122\n" +
-	"\x15requested_market_data\x18\f \x01(\bR\x13requestedMarketData\"\xcc\x01\n" +
+	"\x15requested_market_data\x18\f \x01(\bR\x13requestedMarketData\x12+\n" +
+	"\x11untrusted_signers\x18\r \x03(\tR\x10untrustedSigners\"\xcc\x01\n" +
 	"\x13AttentionItemChange\x12\x10\n" +
 	"\x03seq\x18\x01 \x01(\x05R\x03seq\x12;\n" +
 	"\x05state\x18\x02 \x01(\x0e2%.openfief.views.v1.AttentionItemStateR\x05state\x12>\n" +

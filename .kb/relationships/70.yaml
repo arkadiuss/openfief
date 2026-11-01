@@ -391,3 +391,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25524d462d41
+  - type: executable_for
+    from: SYM-operator-test-helper-untrusted-images-verify-image
+    to: TEST-operator-reconcile
+    created_at: 2026-11-01T22:10:49.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71e504eddd13

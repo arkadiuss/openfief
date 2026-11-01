@@ -150,7 +150,7 @@ The [operator](operator.md#the-signature-and-manifest-check) records the trust i
 | `False`: unsigned, an untrusted signer, a manifest that doesn't match (D-57) | `SIGNATURE_TRUST_REFUSED` |
 | `Unknown` or no condition yet | `SIGNATURE_TRUST_NOT_CHECKED` |
 
-The signer is named only for a trusted signature, so a refused image never shows one.
+The signer is named only for a trusted signature, so a refused image never shows one. An image refused because only signers the operator doesn't trust signed it, reason `UntrustedSigner`, carries those signers instead in `untrusted_signers`, from the `Plugin`'s `status.untrustedSigners`, so the owner can trust one or recognise a forgery (D-169); any other plugin carries none.
 
 The list comes from the `Plugins` port, set with `WithPlugins`. `internal/views/kube` implements it: `kube.Plugins` watches the `Plugin` resources of the `openfief` namespace with a client-go informer and reads the fields above from them as unstructured data (`RecordOf`), so the views context doesn't import the operator's Go types; a test converts an operator-written `v1alpha1.Plugin` to check the field names. `cmd/core serve` starts it in a cluster with the core's ServiceAccount, which already has `get`, `list` and `watch` on Plugins for connector discovery; PluginGrants aren't read, since the `Plugin`'s status holds the effective capabilities. Outside a cluster, or until the watch has synced, `Plugins` fails with `ErrPluginsUnknown`, which the API answers as `UNAVAILABLE` (`503`).
 
