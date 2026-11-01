@@ -608,3 +608,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebf943b6e33c
+  - type: validates
+    from: TEST-identity-app-access
+    to: REQ-identity-authz-one-interface
+    created_at: 2026-11-01T22:45:55.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae75a5230eaa
+  - type: validates
+    from: TEST-identity-app-access
+    to: REQ-identity-authz-owner-acts-every-account
+    created_at: 2026-11-01T22:45:55.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31e5bcaafa6f
+  - type: validates
+    from: TEST-identity-app-access
+    to: REQ-identity-authz-readers-view-every-account
+    created_at: 2026-11-01T22:45:55.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42c4558fcb6f
+  - type: executable_for
+    from: SYM-views-app-test-authz-test-views-when-the-authorizer-fails
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:53:14.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6740992480e

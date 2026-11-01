@@ -188,7 +188,7 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 // maturities from that day anew. Its ID and institution stay. It returns
 // the account as stored.
 func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id ledger.AccountID, c *AccountChange) (AccountEntry, error) {
-	if err := a.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
+	if err := mayChange(ctx, a.Owners, origin, sessionToken, id); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing an account: %w", err)
 	}
 	acc, err := a.stored(ctx, id)
@@ -217,7 +217,7 @@ func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id l
 // does, and maps broker, one of the broker accounts instance reported, to
 // it when broker is not empty (D-72). Binding again changes nothing.
 func (a *Accounts) Bind(ctx context.Context, origin, sessionToken string, id ledger.AccountID, instance string, broker ingest.BrokerAccountID) error {
-	if err := a.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
+	if err := mayChange(ctx, a.Owners, origin, sessionToken, id); err != nil {
 		return fmt.Errorf("binding an account: %w", err)
 	}
 	if _, err := a.stored(ctx, id); err != nil {

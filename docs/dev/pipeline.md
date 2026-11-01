@@ -60,7 +60,7 @@ sequenceDiagram
 
 Every step is a task target, and `task --list` shows them with descriptions. Three conventions recur:
 
-- **Pinned tools in `.bin/`.** The `vars` block pins golangci-lint, govulncheck, lefthook, Task itself, actionlint, controller-gen, Hugo, buf and its three generators (Go, Connect and the read API's OpenAPI), and for the demo hcloud, kustomize and gojq. The internal `tool:*` targets `go install` them into `.bin/`, and a `status` check skips the install unless the version changed. Go tools are built with the toolchain in `go.mod` (`GO_TOOLCHAIN`, now `go1.27.3`), because golangci-lint refuses code that targets a newer Go than it was built with. The envtest API server and etcd come from [envtest-assets.sh](../../scripts/envtest-assets.sh), which checks each archive against a pinned SHA-512. The flux CLI can't be built with `go install`, so `tool:flux` downloads its release archive and checks a pinned sha256. The k3s and Flux versions a demo machine installs are pinned here too, with their sha256 sums, and rendered into its cloud-init. The end-to-end suite reads two more pins: `CNPG_VERSION` with the sha256 of CloudNativePG's release manifest, which the internal `e2e:cnpg` target downloads into `.bin/e2e/` and checks, and `K3S_VERSION` again, as the k3s image of the k3d cluster (`task e2e:k3s-image`).
+- **Pinned tools in `.bin/`.** The `vars` block pins golangci-lint, govulncheck, lefthook, Task itself, actionlint, controller-gen, Hugo, buf and its three generators (Go, Connect and the read API's OpenAPI), zed (SpiceDB's CLI, for the authorization schema), and for the demo hcloud, kustomize and gojq. The internal `tool:*` targets `go install` them into `.bin/`, and a `status` check skips the install unless the version changed. Go tools are built with the toolchain in `go.mod` (`GO_TOOLCHAIN`, now `go1.27.3`), because golangci-lint refuses code that targets a newer Go than it was built with. The envtest API server and etcd come from [envtest-assets.sh](../../scripts/envtest-assets.sh), which checks each archive against a pinned SHA-512. The flux CLI can't be built with `go install`, so `tool:flux` downloads its release archive and checks a pinned sha256. The k3s and Flux versions a demo machine installs are pinned here too, with their sha256 sums, and rendered into its cloud-init. The end-to-end suite reads two more pins: `CNPG_VERSION` with the sha256 of CloudNativePG's release manifest, which the internal `e2e:cnpg` target downloads into `.bin/e2e/` and checks, and `K3S_VERSION` again, as the k3s image of the k3d cluster (`task e2e:k3s-image`).
 - **Explicit paths.** Tasks call `{{.BIN}}/golangci-lint`, not `golangci-lint`, so a global install can't shadow the pin.
 - **Skip until it exists.** Some targets print "skipping" and succeed while their input is missing: `GO_GUARD` (no `go.mod`) and `PROTO_GUARD` (no `.proto` files). The pipeline was built ahead of the product. Today nothing skips: `go.mod` and the contracts in `proto/` exist, and `e2e` runs the suite in `test/e2e`.
 
@@ -84,6 +84,7 @@ Two targets drive a browser on demand and are in no check, since a check must no
 | `docs:build` | [docgen](../../tools/docgen/main.go) writes the reference pages, then Hugo and [docs-diagrams.mjs](../../scripts/docs-diagrams.mjs) build the site ([docs.md](docs.md)) | a broken link, a diagram that doesn't render, or a docs page naming a kibi ID or task that doesn't exist |
 | `docs:fresh` (CI only) | `git log` over the range from `DOCS_BASE`, piped into `docgen fresh` | covered code changed without a page covering it and without a `Docs-Unchanged:` trailer, or a Go package no page covers |
 | `demo:validate` | [validate.sh](../../scripts/demo/validate.sh): `kustomize build` of `deploy/demo`, of every git path its Flux Kustomizations apply, and of `deploy/demo/openfief` | a layer doesn't build, an image isn't pinned by digest, an OCI source doesn't require a cosign signature, or a substituting layer uses a variable cloud-init doesn't define |
+| `authz:validate` | `zed validate authz/validation.yaml`, offline: the authorization model's SpiceDB schema ([authz/schema.zed](../../authz/schema.zed), D-164) against its relationships and assertions | the schema doesn't parse, or an assertion fails |
 | `kibi:check` or `kibi:staged` | `kibi check` through kibi-check.sh (CI); `kibi check-generated --staged --changed-only` and `kibi check --staged` (hook) | a knowledge-base rule violation |
 
 Two steps compare against a base revision: the ground-rule check reads `DOCS_BASE`, and `proto:breaking` reads `PROTO_BASE`, then `DOCS_BASE`. Both default to `HEAD`, which locally means "against the last commit". CI sets `DOCS_BASE` to the pull request's base.
@@ -98,7 +99,7 @@ The tool sorts each changed path by the first rule that matches it, in [classify
 
 | Change | What the hook runs |
 |---|---|
-| `go.mod`, `go.sum`, `go.work`, `go.work.sum` (both modules), `.golangci.yml`, `Taskfile.yml`, `lefthook.yml`, `tools/`, `scripts/`, `proto/`, `buf.*`, generated code (`gen/`, `sdk/go/gen/`), `design/`, `package.json`, `package-lock.json`; a merge being committed; a file in no rule, package or test's reach; a Go file in a directory that is no package (a package removed or not yet listed); a path with whitespace | everything: `check:commit:full` |
+| `go.mod`, `go.sum`, `go.work`, `go.work.sum` (both modules), `.golangci.yml`, `Taskfile.yml`, `lefthook.yml`, `tools/`, `scripts/`, `proto/`, `buf.*`, generated code (`gen/`, `sdk/go/gen/`), `design/`, `authz/`, `package.json`, `package-lock.json`; a merge being committed; a file in no rule, package or test's reach; a Go file in a directory that is no package (a package removed or not yet listed); a path with whitespace | everything: `check:commit:full` |
 | A Go file | its package is changed. Lint and `govulncheck` run on it and on every package that imports it, directly or not (reverse imports from `go list`); tests run on those and on every package whose tests import one of them. A package with no files without a build tag, such as `test/e2e`, is only linted: govulncheck and `go test` build without tags. `fmt:check:files` checks the staged Go files. |
 | A file a package embeds (`go:embed`, from `go list`'s `EmbedFiles`) | the same as a Go file of that package |
 | Any other file under a package's directory (test data, a Dockerfile) | that package's tests |
@@ -150,7 +151,7 @@ flowchart TD
   subgraph cc["task check:commit:full (in order, stops at the first failure)"]
     direction TB
     gen["gen:check"] --> labels["plugins:labels:check"] --> fmt["fmt:check"] --> lint["lint"] --> lintci["lint:ci"] --> proto["proto"]
-    proto --> vuln["vuln"] --> test["test"] --> docs["docs:check"] --> site["docs:build"] --> dv["demo:validate"] --> kibi["kibi:staged (check-generated, check on staged)"]
+    proto --> vuln["vuln"] --> test["test"] --> docs["docs:check"] --> site["docs:build"] --> dv["demo:validate"] --> az["authz:validate"] --> kibi["kibi:staged (check-generated, check on staged)"]
   end
   part -->|"all green"| msg
   cc -->|"all green"| msg["lefthook commit-msg: task docs:fresh:commit"]
@@ -369,6 +370,7 @@ task lint:ci                   # actionlint over the workflows
 task gen:check                 # regenerate, then fail on drift
 task proto                     # buf lint, breaking and generated-code checks
 task demo:validate             # build every demo layer offline; digests and signatures
+task authz:validate            # the authorization schema's assertions (zed validate)
 task demo:plan ENV=demo        # read-only Hetzner (and Cloudflare) API calls; needs HCLOUD_TOKEN
 task ci:images PREFIX=ghcr.io/arkadiuss/openfief
 task release:check CHANNEL=alpha VERSION=2026.11.0-alpha.1

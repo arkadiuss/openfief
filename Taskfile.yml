@@ -23,6 +23,9 @@ vars:
   ENVTEST_K8S_VERSION: 1.36.2
   # renovate: datasource=go depName=github.com/gohugoio/hugo
   HUGO_VERSION: v0.168.0
+  # zed checks the authorization model's SpiceDB schema against its assertions (authz/, D-164).
+  # renovate: datasource=go depName=github.com/authzed/zed
+  ZED_VERSION: v1.2.1
   # renovate: datasource=go depName=github.com/bufbuild/buf
   BUF_VERSION: v1.75.0
   # The code generators must match the runtime versions in sdk/go/go.mod (google.golang.org/protobuf, connectrpc.com/connect).
@@ -109,11 +112,11 @@ tasks:
 
   tools:
     desc: Install the pinned Go tools into .bin/
-    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:lefthook, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:hcloud, tool:kustomize, tool:gojq, tool:hugo]
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:lefthook, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:hcloud, tool:kustomize, tool:gojq, tool:hugo, tool:zed]
 
   tools:ci:
     internal: true
-    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:kustomize, tool:gojq, tool:hugo]
+    deps: [tool:golangci-lint, tool:govulncheck, tool:actionlint, tool:task, tool:controller-gen, tool:envtest, tool:proto, tool:kustomize, tool:gojq, tool:hugo, tool:zed]
 
   tool:hcloud:
     internal: true
@@ -200,6 +203,13 @@ tasks:
       - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' CGO_ENABLED=0 go install github.com/gohugoio/hugo@{{.HUGO_VERSION}}
     status:
       - '{{.BIN}}/hugo version 2>&1 | grep -q "hugo {{.HUGO_VERSION}} "'
+
+  tool:zed:
+    internal: true
+    cmds:
+      - GOBIN='{{.BIN}}' GOTOOLCHAIN='{{.GO_TOOLCHAIN | default "local"}}' go install github.com/authzed/zed/cmd/zed@{{.ZED_VERSION}}
+    status:
+      - '{{.BIN}}/zed version 2>&1 | grep -qx "client: zed {{.ZED_VERSION}}"'
 
   tool:proto:
     internal: true
@@ -288,6 +298,7 @@ tasks:
       - task: docs:build
       - task: docs:fresh
       - task: demo:validate
+      - task: authz:validate
       - task: kibi:check
 
   check:commit:
@@ -314,6 +325,7 @@ tasks:
       - task: docs:check
       - task: docs:build
       - task: demo:validate
+      - task: authz:validate
       - task: kibi:staged
 
   gen:
@@ -412,6 +424,12 @@ tasks:
     deps: [tool:proto]
     cmds:
       - PATH='{{.BIN}}':"$PATH" bash scripts/proto-check.sh
+
+  authz:validate:
+    desc: Check the authorization model's SpiceDB schema against its relationships and assertions (zed validate, offline; D-164)
+    deps: [tool:zed]
+    cmds:
+      - '{{.BIN}}/zed validate authz/validation.yaml'
 
   lint:ci:
     desc: Lint the GitHub Actions workflows (actionlint, offline)

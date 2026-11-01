@@ -529,9 +529,17 @@ func TestScriptTokensFromSession(t *testing.T) {
 	if !tok.ExpiresAt.Equal(tok.CreatedAt.Add(app.DefaultScriptTokenTTL)) {
 		t.Errorf("default lifetime: expires %s", tok.ExpiresAt)
 	}
-	for _, token := range []string{secret, ns.Token} {
-		if _, err := f.auth.Authenticate(ctx, token); err != nil {
+	callers := map[string]identity.Caller{
+		secret:   {Holder: identity.HolderScriptToken, ID: string(tok.ID)},
+		ns.Token: {Holder: identity.HolderOwner, ID: string(ns.Session.ID)},
+	}
+	for token, want := range callers {
+		p, err := f.auth.Authenticate(ctx, token)
+		if err != nil {
 			t.Errorf("Authenticate(%.8s...) = %v", token, err)
+		}
+		if got := p.Caller(); got != want {
+			t.Errorf("Authenticate(%.8s...).Caller() = %+v, want %+v", token, got, want)
 		}
 	}
 	if _, _, err := f.auth.CreateScriptToken(ctx, local, ns.Token, "bad name", 0); !errors.Is(err, app.ErrInvalidRequest) {
@@ -619,7 +627,11 @@ func checkDemoSession(t *testing.T, f *authFixture, ns *app.NewSession, err erro
 	if ns.Session.Scope != identity.SessionScopeRead || ns.Session.Authenticator != identity.AuthenticatorDemo {
 		t.Errorf("demo session = %+v, want read scope from the demo authenticator", ns.Session)
 	}
-	if _, err := f.auth.Authenticate(t.Context(), ns.Token); err != nil {
+	p, err := f.auth.Authenticate(t.Context(), ns.Token)
+	if err != nil {
 		t.Errorf("read API with a demo session: %v", err)
+	}
+	if want := (identity.Caller{Holder: identity.HolderDemoSession, ID: string(ns.Session.ID)}); p.Caller() != want {
+		t.Errorf("demo session caller = %+v, want %+v", p.Caller(), want)
 	}
 }

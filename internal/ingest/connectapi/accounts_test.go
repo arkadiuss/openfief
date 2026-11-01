@@ -334,6 +334,14 @@ func TestAccountServiceErrors(t *testing.T) {
 			}))
 			return connect.CodeOf(err)
 		}},
+		{name: "an account the owner may not change", want: connect.CodePermissionDenied, call: func(c accountsClient) connect.Code {
+			_, err := c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{Origin: local, SessionToken: ownerSession, AccountId: deniedAccount, Name: "X", Sleeve: "core"}))
+			return connect.CodeOf(err)
+		}},
+		{name: "binding an account the owner may not change", want: connect.CodePermissionDenied, call: func(c accountsClient) connect.Code {
+			_, err := c.BindAccount(ctx, connect.NewRequest(&ingestv1.BindAccountRequest{Origin: local, SessionToken: ownerSession, AccountId: deniedAccount, ConnectorInstance: "ibkr-main"}))
+			return connect.CodeOf(err)
+		}},
 		{name: "an unknown account", want: connect.CodeNotFound, call: func(c accountsClient) connect.Code {
 			_, err := c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{Origin: local, SessionToken: ownerSession, AccountId: "nope", Name: "X", Sleeve: "core"}))
 			return connect.CodeOf(err)

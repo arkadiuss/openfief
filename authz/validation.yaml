@@ -1,0 +1,43 @@
+# The relationships and assertions `zed validate` checks schema.zed against (task authz:validate).
+# Synthetic IDs only. The first block is what holds in M0 (D-163); the viewer lines are the second
+# alpha's grants (D-65, D-164), declared so the schema is checked with them now.
+schemaFile: ./schema.zed
+relationships: |-
+  household:home#owner@person:owner
+  household:home#reader@script_token:nightly
+  household:home#reader@view_plugin:ui
+  household:home#reader@demo_session:demo
+  account:brokerage#household@household:home
+  account:bonds#household@household:home
+  account:bonds#viewer@person:viewer
+  account:bonds#viewer@script_token:granted
+assertions:
+  assertTrue:
+    # The owner views and changes every account.
+    - account:brokerage#view@person:owner
+    - account:brokerage#change@person:owner
+    - account:bonds#view@person:owner
+    - account:bonds#change@person:owner
+    # Every other holder of read access views every account.
+    - account:brokerage#view@script_token:nightly
+    - account:bonds#view@script_token:nightly
+    - account:brokerage#view@view_plugin:ui
+    - account:bonds#view@view_plugin:ui
+    - account:brokerage#view@demo_session:demo
+    - account:bonds#view@demo_session:demo
+    # A viewer views only the accounts granted to it.
+    - account:bonds#view@person:viewer
+    - account:bonds#view@script_token:granted
+  assertFalse:
+    # No holder of read access changes anything.
+    - account:brokerage#change@script_token:nightly
+    - account:bonds#change@script_token:nightly
+    - account:brokerage#change@view_plugin:ui
+    - account:brokerage#change@demo_session:demo
+    # A viewer neither changes its account nor views another.
+    - account:bonds#change@person:viewer
+    - account:brokerage#view@person:viewer
+    - account:brokerage#view@script_token:granted
+    - account:bonds#change@script_token:granted
+    # Nobody else views anything.
+    - account:brokerage#view@person:stranger

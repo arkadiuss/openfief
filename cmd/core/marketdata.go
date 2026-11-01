@@ -22,8 +22,8 @@ import (
 
 // valuationOwners is ownerSessions answering with the valuation context's
 // errors.
-func valuationOwners(auth *identityapp.Auth, origins identity.Origins) ownerSessions {
-	return ownerSessions{auth: auth, origins: origins, noSession: valuationapp.ErrNoSession, notOwner: valuationapp.ErrNotOwner}
+func valuationOwners(auth *identityapp.Auth, origins identity.Origins) *ownerSessions {
+	return &ownerSessions{auth: auth, origins: origins, noSession: valuationapp.ErrNoSession, notOwner: valuationapp.ErrNotOwner}
 }
 
 // newRankings returns the owner's ranking of market-data sources (D-94)

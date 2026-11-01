@@ -32,8 +32,27 @@ var (
 	errNotView = errors.New("not a view plugin")
 )
 
-// owners accepts ownerSession; readSession is not the owner's.
+// owners accepts ownerSession; readSession is not the owner's. It refuses
+// the owner a change to deniedAccount, as an authorizer that denies some
+// accounts would (D-163).
 type owners struct{}
+
+// deniedAccount is the account owners refuses to let the owner change; the
+// decider puts the deposit of the pair named deniedPair there.
+const deniedAccount = "acc-denied"
+
+func (o owners) Changeable(ctx context.Context, origin, token string, accounts []ledger.AccountID) ([]ledger.AccountID, error) {
+	if err := o.CheckOwner(ctx, origin, token); err != nil {
+		return nil, err
+	}
+	out := make([]ledger.AccountID, 0, len(accounts))
+	for _, a := range accounts {
+		if a != deniedAccount {
+			out = append(out, a)
+		}
+	}
+	return out, nil
+}
 
 func (owners) CheckOwner(_ context.Context, _, token string) error {
 	switch token {
@@ -46,7 +65,16 @@ func (owners) CheckOwner(_ context.Context, _, token string) error {
 }
 
 // decider answers each decision with version 1 of it, or fails with err.
+// A withdrawal is in acc-1; a deposit whose ID is "into-denied" is in
+// deniedAccount, any other in acc-2.
 type decider struct{ err error }
+
+func (decider) TransferAccounts(_ context.Context, pair ledger.TransferPair) ([]ledger.AccountID, error) {
+	if pair.Deposit.ExternalID == "into-denied" {
+		return []ledger.AccountID{"acc-1", deniedAccount}, nil
+	}
+	return []ledger.AccountID{"acc-1", "acc-2"}, nil
+}
 
 func (d decider) DecideTransfer(_ context.Context, pair ledger.TransferPair, decision ledger.TransferDecision) (ledger.TransferLink, error) {
 	if d.err != nil {
@@ -122,15 +150,17 @@ func TestTransferServiceErrors(t *testing.T) {
 		name            string
 		caller, session string
 		err             error
+		deposit         string
 		want            connect.Code
 	}{
-		{"not a view plugin", "other", ownerSession, nil, connect.CodePermissionDenied},
-		{"no session", viewCaller, "nope", nil, connect.CodeUnauthenticated},
-		{"a read session", viewCaller, readSession, nil, connect.CodePermissionDenied},
-		{"not a transfer", viewCaller, ownerSession, ledger.ErrInvalidTransfer, connect.CodeInvalidArgument},
-		{"unknown leg", viewCaller, ownerSession, app.ErrUnknownTransaction, connect.CodeNotFound},
-		{"taken leg", viewCaller, ownerSession, ledger.ErrTransferTaken, connect.CodeFailedPrecondition},
-		{"store down", viewCaller, ownerSession, errDown, connect.CodeInternal},
+		{"a leg in an account the owner may not change", viewCaller, ownerSession, nil, "into-denied", connect.CodePermissionDenied},
+		{"not a view plugin", "other", ownerSession, nil, "d1", connect.CodePermissionDenied},
+		{"no session", viewCaller, "nope", nil, "d1", connect.CodeUnauthenticated},
+		{"a read session", viewCaller, readSession, nil, "d1", connect.CodePermissionDenied},
+		{"not a transfer", viewCaller, ownerSession, ledger.ErrInvalidTransfer, "d1", connect.CodeInvalidArgument},
+		{"unknown leg", viewCaller, ownerSession, app.ErrUnknownTransaction, "d1", connect.CodeNotFound},
+		{"taken leg", viewCaller, ownerSession, ledger.ErrTransferTaken, "d1", connect.CodeFailedPrecondition},
+		{"store down", viewCaller, ownerSession, errDown, "d1", connect.CodeInternal},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -139,7 +169,7 @@ func TestTransferServiceErrors(t *testing.T) {
 			_, err := c.ConfirmTransfer(t.Context(), connect.NewRequest(&ledgerv1.ConfirmTransferRequest{
 				Origin: local, SessionToken: tt.session,
 				Withdrawal: &ledgerv1.TransactionKey{Source: "test", ExternalId: "w1"},
-				Deposit:    &ledgerv1.TransactionKey{Source: "test", ExternalId: "d1"},
+				Deposit:    &ledgerv1.TransactionKey{Source: "test", ExternalId: tt.deposit},
 			}))
 			if got := connect.CodeOf(err); got != tt.want {
 				t.Errorf("ConfirmTransfer error = %v (%v), want %v", got, err, tt.want)

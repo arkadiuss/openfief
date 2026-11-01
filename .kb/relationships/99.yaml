@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-902924a0316e
+  - type: verified_by
+    from: SCEN-views-authz-hidden-account-not-found
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:46:10.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a35f2ab513c2
+  - type: verified_by
+    from: SCEN-views-authz-hidden-account-not-found
+    to: TEST-views-connectapi-authz
+    created_at: 2026-11-01T22:46:10.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d30295109c83

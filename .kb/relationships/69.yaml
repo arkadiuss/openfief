@@ -531,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-523d404b5373
+  - type: validates
+    from: TEST-ingest-app-authz
+    to: REQ-identity-authz-one-interface
+    created_at: 2026-11-01T22:46:01.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8be82c71e559

@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4bb60be7b9d
+  - type: executable_for
+    from: SYM-core-test-fake-sessions
+    to: TEST-core-owner-sessions
+    created_at: 2026-11-01T22:50:06.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6faf5c1293e0

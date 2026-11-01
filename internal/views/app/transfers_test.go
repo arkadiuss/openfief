@@ -72,7 +72,7 @@ func TestTransfers(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := newTransferFixture(t, tt.links...).views(t).Transfers(t.Context())
+			got, err := newTransferFixture(t, tt.links...).views(t).Transfers(reader(t))
 			if err != nil {
 				t.Fatalf("Transfers: %v", err)
 			}
@@ -96,7 +96,7 @@ func TestTransfersFailWithTheLedger(t *testing.T) {
 	t.Parallel()
 	f := newTransferFixture(t)
 	f.ledger.fail = errStore
-	if _, err := f.views(t).Transfers(t.Context()); err == nil {
+	if _, err := f.views(t).Transfers(reader(t)); err == nil {
 		t.Fatal("Transfers on a failing ledger succeeded")
 	}
 }

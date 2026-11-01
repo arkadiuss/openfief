@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ca8b756ac89
+  - type: executable_for
+    from: SYM-views-app-test-authz-two-bindings-bindings
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:52:41.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a737dd35292
