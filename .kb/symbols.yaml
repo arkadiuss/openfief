@@ -1242,7 +1242,7 @@ symbols:
       - type: covered_by
         target: TEST-tooling-release-version
       - type: implements
-        target: REQ-tooling-release-version
+        target: REQ-tooling-release-channel-version
   - id: SYM-release-version-test-expect
     title: expect
     status: active
@@ -122938,3 +122938,115 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-bundle-install
+  - id: SYM-release-verify-fail
+    title: fail
+    sourceFile: scripts/release-verify.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T14:59:24.466Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-verify
+      - type: implements
+        target: REQ-tooling-release-verify-signatures
+  - id: SYM-release-verify-identity
+    title: identity
+    sourceFile: scripts/release-verify.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T14:59:35.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-verify
+      - type: implements
+        target: REQ-docs-install-guide-identities
+  - id: SYM-release-verify-verify-cli
+    title: verify_cli
+    sourceFile: scripts/release-verify.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T14:59:44.818Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-verify
+      - type: implements
+        target: REQ-tooling-release-verify-signatures
+  - id: SYM-release-verify-verify-images
+    title: verify_images
+    sourceFile: scripts/release-verify.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T14:59:53.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-verify
+      - type: implements
+        target: REQ-tooling-release-verify-signatures
+  - id: SYM-release-verify-test-run
+    title: run
+    sourceFile: scripts/tests/release-verify.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T15:00:01.065Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-verify
+  - id: SYM-release-verify-test-check
+    title: check
+    sourceFile: scripts/tests/release-verify.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T15:00:09.149Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-verify
+  - id: SYM-release-verify-test-passes
+    title: passes
+    sourceFile: scripts/tests/release-verify.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T15:00:17.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-verify
+  - id: SYM-release-verify-test-fails
+    title: fails
+    sourceFile: scripts/tests/release-verify.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T15:00:25.359Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-verify
+  - id: SYM-release-verify-test-yes-if
+    title: yes_if
+    sourceFile: scripts/tests/release-verify.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T15:00:33.865Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-verify
+  - id: SYM-release-verify-test-cli-dir
+    title: cli_dir
+    sourceFile: scripts/tests/release-verify.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T15:00:41.494Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-verify

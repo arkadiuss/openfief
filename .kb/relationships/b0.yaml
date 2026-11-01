@@ -538,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cbc44add4dc8
+  - type: constrains
+    from: REQ-docs-install-guide-identities
+    to: FACT-SUBJECT-B731EB40202C1399
+    created_at: 2026-11-01T14:59:03.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a187fbc94d7a
+  - type: requires_property
+    from: REQ-docs-install-guide-identities
+    to: FACT-PROP-760E72B7C6408A4C
+    created_at: 2026-11-01T14:59:04.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc00d2cb47ba
+  - type: specified_by
+    from: REQ-docs-install-guide-identities
+    to: SCEN-docs-install-guide-identities
+    created_at: 2026-11-01T14:59:04.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e9823b38077

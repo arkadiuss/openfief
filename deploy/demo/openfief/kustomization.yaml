@@ -1,8 +1,8 @@
 # OpenFief on the demo machine: the plugin operator, the egress proxy, the core, the demo dataset loader and the demo's
 # plugin instances (../plugins), images pinned by digest (D-17). image-fields.yaml makes a Plugin's spec.image an image
 # field, so `images:` pins plugin images too.
-# This is the template CI deploys from: after every push to main (and every beta), `task deploy:demo` sets each
-# digest to the one whose keyless signature from this repository's images workflow verifies, renders this
+# This is the template CI deploys from: after every push to main (and every alpha or beta), `task deploy:demo` sets
+# each digest to the one whose keyless signature from this repository's images workflow verifies, renders this
 # directory, and publishes it as the signed OCI artifact that Flux on the demo machine follows (../stack.yaml).
 # PLACEHOLDER: sha256 of 64 zeros. The real digests are never committed here; CI fills them in each time.
 #

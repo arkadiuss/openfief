@@ -720,7 +720,7 @@ tasks:
       - PATH='{{.BIN}}':"$PATH" bash scripts/demo/validate.sh
 
   release:check:
-    desc: 'Validate a release version for its channel, e.g. task release:check CHANNEL=beta VERSION=2026.11.0-beta.1'
+    desc: 'Validate a release version for its channel (alpha, beta or stable), e.g. task release:check CHANNEL=alpha VERSION=2026.11.0-alpha.1'
     requires:
       vars: [CHANNEL, VERSION]
     cmds:
@@ -753,16 +753,29 @@ tasks:
   release:cli:sign:
     desc: Keyless cosign signatures of every file in dist/cli, each as a Sigstore bundle next to it (CI only)
     cmds:
-      # The certificate subject is release.yml at the ref the release ran from, refs/heads/main for a publish; verify
-      # with cosign verify-blob --bundle <file>.sigstore.json --certificate-identity
-      # https://github.com/arkadiuss/openfief/.github/workflows/release.yml@refs/heads/main
-      # --certificate-oidc-issuer https://token.actions.githubusercontent.com <file>.
+      # The certificate subject is release.yml at the ref the release ran from, refs/heads/main for a publish
+      # (task release:cli:verify; the owner's command is in docs/guides/install.md). A dry run signs too.
       - |
         set -e
         for f in dist/cli/openfief-*; do
           case "$f" in *.sigstore.json) continue ;; esac
           cosign sign-blob --yes --bundle "$f.sigstore.json" "$f"
         done
+
+  release:cli:verify:
+    desc: 'Verify dist/cli as the install guide does: SHA256SUMS, then each file''s keyless signature by release.yml of REPO at REF (default refs/heads/main), e.g. task release:cli:verify REPO=arkadiuss/openfief'
+    requires:
+      vars: [REPO]
+    cmds:
+      - bash scripts/release-verify.sh cli '{{.DIR | default "dist/cli"}}' '{{.REPO}}' '{{.REF | default "refs/heads/main"}}'
+
+  release:images:verify:
+    desc: 'Verify each image a bundle''s install file runs as images.yml on main of REPO signed it, as the install guide does; TAG verifies <repository>:TAG instead (a dry run''s placeholder bundle), e.g. task release:images:verify FILE=dist/bundle/openfief-install-2026.11.0-alpha.1.yaml REPO=arkadiuss/openfief'
+    deps: [tool:gojq]
+    requires:
+      vars: [FILE, REPO]
+    cmds:
+      - PATH='{{.BIN}}':"$PATH" bash scripts/release-verify.sh images '{{.FILE}}' '{{.REPO}}' {{if .TAG}}'{{.TAG}}'{{end}}
 
   release:bundle:
     desc: 'Render the release bundle into OUT (default dist/bundle): openfief-crds-VERSION.yaml and openfief-install-VERSION.yaml, every image pinned to a given digest. IMAGES lists repository@sha256:digest refs; in CI, DIGESTS=<dir> PREFIX=<registry prefix> reads images.yml''s digest files instead, and VERIFY=1 REPO=<owner/repo> checks each signature with cosign; a dry run passes PLACEHOLDER=1 PREFIX=... for all-zeros digests, e.g. task release:bundle VERSION=2026.11.0-alpha.1 IMAGES="ghcr.io/owner/openfief/core@sha256:..."'

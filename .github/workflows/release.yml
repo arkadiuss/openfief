@@ -1,8 +1,16 @@
 # Release workflow (docs/dev/sdlc.md#releases): started by hand, always plans and builds as a dry run first,
 # and publishes only when dry_run is false, from main, by the repository owner.
+#   alpha:  YYYY.M.N-alpha.K, published exactly like a beta.
 #   beta:   YYYY.M.N-beta.K, a tag on a GitHub pre-release; publishes the demo artifact, which a demo machine's Flux
 #           applies.
 #   stable: YYYY.M.N, a tag on a GitHub release.
+# A dry run (the default) runs every job but catalog and publish and publishes nothing: no tag, no GitHub release,
+# no release branch, no pushed image or `latest`. It builds every image without pushing it, renders the bundle at
+# placeholder digests and verifies the images main's last build signed with the identity the install guide gives,
+# and builds the CLI and, when the owner started the run, signs it keylessly for real (a Rekor entry is all that
+# leaves the run) and verifies it as the guide does, at the run's own ref. The bundle and CLI stay on the run as
+# artifacts. Start one with
+#   gh workflow run release.yml --ref main -f channel=alpha -f version=2026.11.0-alpha.1 -f dry_run=true
 # Every channel ships signed images, the signed openfief CLI, the docs, and the bundle: the CRDs and the bootstrap
 # install, each image pinned to the digest this run signed (task release:bundle).
 # Order (D-88): the plugin images are built and signed first; the catalog job adds each to the catalog with the
@@ -18,10 +26,10 @@ on:
       channel:
         description: Release channel
         type: choice
-        options: [beta, stable]
+        options: [alpha, beta, stable]
         required: true
       version:
-        description: YYYY.M.N for stable, YYYY.M.N-beta.K for beta (no v prefix)
+        description: YYYY.M.N for stable, YYYY.M.N-beta.K for beta, YYYY.M.N-alpha.K for alpha (no v prefix)
         type: string
         required: true
       dry_run:
@@ -151,7 +159,9 @@ jobs:
     # The CRDs and the bootstrap install (docs/dev/sdlc.md#releases), every image pinned to the digest images.yml
     # pushed and signed in this run: the digest-<name> artifacts of both image jobs. task release:bundle checks each
     # digest's keyless signature before it pins it. A dry run pushes nothing, so it pins all-zeros placeholders
-    # instead and checks the rest of the bundle.
+    # instead and checks the rest of the bundle. Either way, task release:images:verify then checks the install's
+    # images with the guide's identity (docs/guides/install.md): on a real run the pinned digests, on a dry run the
+    # images tagged main, which images.yml signed on main's last build.
     name: bundle
     needs: [plan, catalog, images]
     if: ${{ !cancelled() && !failure() }}
@@ -168,7 +178,6 @@ jobs:
         with:
           tools: 'false'
       - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
-        if: needs.plan.outputs.publish == 'true'
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         if: needs.plan.outputs.publish == 'true'
         with:
@@ -188,6 +197,12 @@ jobs:
         env:
           VERSION: ${{ inputs.version }}
           PREFIX: ghcr.io/${{ github.repository }}
+      - name: task release:images:verify
+        run: task release:images:verify FILE="dist/bundle/openfief-install-$VERSION.yaml" REPO="$REPO" TAG="$TAG"
+        env:
+          VERSION: ${{ inputs.version }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ needs.plan.outputs.publish != 'true' && 'main' || '' }}
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: bundle
@@ -196,7 +211,9 @@ jobs:
 
   cli:
     # The openfief CLI for Linux and macOS on amd64 and arm64, with an SBOM and keyless cosign signatures
-    # (docs/dev/sdlc.md#releases), built from the release commit so it embeds the release's catalog.
+    # (docs/dev/sdlc.md#releases), built from the release commit so it embeds the release's catalog. The owner's dry
+    # run signs and verifies too, for real: the certificate names release.yml at the run's ref, and only Rekor
+    # records it. Anyone else's dry run builds without signing, so release.yml's identity on main stays the owner's.
     name: cli
     needs: [plan, catalog]
     if: ${{ !cancelled() && !failure() }}
@@ -218,10 +235,17 @@ jobs:
         env:
           VERSION: ${{ inputs.version }}
       - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
-        if: needs.plan.outputs.publish == 'true'
+        if: github.actor == github.repository_owner
       - name: task release:cli:sign
-        if: needs.plan.outputs.publish == 'true'
+        if: github.actor == github.repository_owner
         run: task release:cli:sign
+      # As the install guide verifies it; a real run is from main (the plan job's guard), so REF is refs/heads/main.
+      - name: task release:cli:verify
+        if: github.actor == github.repository_owner
+        run: task release:cli:verify REPO="$REPO" REF="$REF"
+        env:
+          REPO: ${{ github.repository }}
+          REF: ${{ github.ref }}
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: cli
@@ -262,11 +286,12 @@ jobs:
           GH_REPO: ${{ github.repository }}
 
   deploy-demo:
-    # Betas deploy to demo: the beta's signed digests are published as the demo's signed manifests artifact, and
-    # Flux applies it. Skipped until the demo machine exists: see the deploy-demo job in ci.yml.
+    # Alphas and betas deploy to demo (docs/dev/sdlc.md#releases): the pre-release's signed digests are published as
+    # the demo's signed manifests artifact, and Flux applies it. Without a demo machine nothing pulls it: see the
+    # deploy-demo job in ci.yml.
     name: deploy demo
     needs: [plan, publish]
-    if: needs.plan.outputs.publish == 'true' && inputs.channel == 'beta'
+    if: needs.plan.outputs.publish == 'true' && inputs.channel != 'stable'
     permissions:
       contents: read
       packages: write

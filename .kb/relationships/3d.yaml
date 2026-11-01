@@ -412,3 +412,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddf4cb37e052
+  - type: executable_for
+    from: SYM-release-verify-test-cli-dir
+    to: TEST-tooling-release-verify
+    created_at: 2026-11-01T15:00:44.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cbf883edc7c

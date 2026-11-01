@@ -531,3 +531,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14927d58d3f4
+  - type: constrains
+    from: REQ-tooling-release-verify-signatures
+    to: FACT-SUBJECT-6A67E472A68A30B4
+    created_at: 2026-11-01T14:58:48.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3d747276411
+  - type: requires_property
+    from: REQ-tooling-release-verify-signatures
+    to: FACT-PROP-C9E21D0EF63BD383
+    created_at: 2026-11-01T14:58:48.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5222700e3cbc
+  - type: specified_by
+    from: REQ-tooling-release-verify-signatures
+    to: SCEN-tooling-release-verify-cli
+    created_at: 2026-11-01T14:58:49.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4b5b5c5a347
+  - type: specified_by
+    from: REQ-tooling-release-verify-signatures
+    to: SCEN-tooling-release-verify-images
+    created_at: 2026-11-01T14:58:49.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5a57321e0df
