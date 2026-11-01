@@ -839,6 +839,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-773bac894a3b
+  - type: supersedes
+    from: REQ-views-read-api-list-broker-accounts-removed
+    to: REQ-views-read-api-serves-no-broker-accounts
+    created_at: 2026-11-01T19:22:03.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bbd757d4464
   - type: implements
     from: SYM-ingestv1-bond-payout
     to: REQ-ingest-bond-payout-change-from-day

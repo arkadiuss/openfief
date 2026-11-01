@@ -441,20 +441,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-4b91ae222d5b
   - type: implements
-    from: SYM-viewsv1-broker-account-proto-reflect
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:45:48.725Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b1eba686e1d5
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-proto-reflect
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:45:48.771Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-75d7387d3b3b
-  - type: implements
     from: SYM-valuation-gen-pb-source-ranking-get-sources
     to: REQ-valuation-market-data-service
     created_at: 2026-10-29T18:23:59.620Z
@@ -678,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-225a430be3d9
+  - type: implements
+    from: SYM-protobreak-marked-breaking
+    to: REQ-tooling-breaking-exception-commit-marked
+    created_at: 2026-11-01T19:26:11.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c68773d1ae89
+  - type: covered_by
+    from: SYM-protobreak-marked-breaking
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:26:11.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfefb8d38920

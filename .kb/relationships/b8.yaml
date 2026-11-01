@@ -727,6 +727,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92ef0b50570f
+  - type: validates
+    from: TEST-ingest-app-scheduler
+    to: REQ-ingest-market-data-list-declared-granted
+    created_at: 2026-11-01T10:06:08.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-261d209e05ab
+  - type: implements
+    from: SYM-protobreak-contracts-reachable
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:25:16.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-983fd5da520e
+  - type: covered_by
+    from: SYM-protobreak-contracts-reachable
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:25:16.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc3911e9b3be
   - type: implements
     from: SYM-ledger-pg-encode-earlier
     to: REQ-ledger-payout-setting-history
@@ -741,10 +762,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ed73234ac9e
-  - type: validates
-    from: TEST-ingest-app-scheduler
-    to: REQ-ingest-market-data-list-declared-granted
-    created_at: 2026-11-01T10:06:08.595Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-261d209e05ab

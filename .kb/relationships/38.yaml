@@ -504,20 +504,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-3f37ed061728
   - type: implements
-    from: SYM-viewsv1-broker-account-get-account-id
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:46:32.770Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-298be5ac49df
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-get-account-id
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:46:32.824Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b3b8127f93b8
-  - type: implements
     from: SYM-viewsv1-list-connector-bindings-response-reset
     to: REQ-views-onboarding-lists
     created_at: 2026-10-29T13:49:13.352Z

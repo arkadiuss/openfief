@@ -735,6 +735,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-76f832a70f64
   - type: implements
+    from: SYM-protobreak-check-decisions
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:25:39.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d31dee5270cc
+  - type: covered_by
+    from: SYM-protobreak-check-decisions
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:25:39.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9847fea94d0
+  - type: implements
     from: SYM-connectorv1-bond-payout-period-reset
     to: REQ-ingest-sync-carries-payout-history
     created_at: 2026-11-01T17:28:21.922Z

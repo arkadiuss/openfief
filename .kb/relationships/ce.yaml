@@ -706,6 +706,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ba8fe033451
+  - type: executable_for
+    from: SYM-views-connectapi-test-ra-test-read-access-removed-methods
+    to: TEST-views-connectapi-read-access
+    created_at: 2026-11-01T19:28:11.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40f50481d39d
   - type: implements
     from: SYM-ledger-payout-setting-validate
     to: REQ-ledger-payout-setting-history

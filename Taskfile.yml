@@ -397,10 +397,17 @@ tasks:
       - '{{.PROTO_GUARD}} {{.BIN}}/buf format --diff --exit-code'
 
   proto:breaking:
-    desc: 'Fail on breaking contract changes against a base revision (PROTO_BASE or DOCS_BASE, default HEAD), e.g. PROTO_BASE=origin/main task proto:breaking'
+    desc: 'Fail on breaking contract changes against a base revision (PROTO_BASE or DOCS_BASE, default HEAD) but the ones an author decision names in scripts/proto-breaking-exceptions.txt, e.g. PROTO_BASE=origin/main task proto:breaking'
     deps: [tool:buf]
     cmds:
       - PATH='{{.BIN}}':"$PATH" bash scripts/proto-breaking.sh
+
+  proto:breaking:commit:
+    desc: 'A commit that adds a breaking-change exception must be marked breaking (commit-msg hook), e.g. task proto:breaking:commit MSG=.git/COMMIT_EDITMSG'
+    requires:
+      vars: [MSG]
+    cmds:
+      - bash scripts/proto-breaking.sh commit-msg '{{.MSG}}'
 
   proto:gen:
     desc: Generate the Go code for the contracts into sdk/go/gen and the read API's OpenAPI into gen/openapi (pinned local plugins, no remote BSR)

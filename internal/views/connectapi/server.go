@@ -17,10 +17,9 @@ import (
 )
 
 // readService implements the generated ReadServiceHandler over the views use
-// cases. Every error goes through toConnectError. The embedded handler
-// answers the deprecated ListBrokerAccounts with UNIMPLEMENTED: broker
-// account numbers are listed only through the owner's AccountService
-// (D-121), never through the read API.
+// cases. Every error goes through toConnectError. The read API has no
+// method that lists broker accounts (D-121, D-157): their numbers are
+// listed only through the owner's AccountService.
 type readService struct {
 	viewsv1connect.UnimplementedReadServiceHandler
 

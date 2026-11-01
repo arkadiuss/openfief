@@ -81,20 +81,20 @@ func TestRESTConnections(t *testing.T) {
 	}
 }
 
-// TestReadAPIServesNoBrokerAccounts checks D-121: the deprecated
-// ListBrokerAccounts answers UNIMPLEMENTED, over REST and Connect alike:
-// the read API has no way to the broker accounts at all.
+// TestReadAPIServesNoBrokerAccounts checks D-121 and D-157: the read API
+// has no ListBrokerAccounts at all, so its REST path and its Connect
+// procedure are both not found, and neither names a broker account.
 func TestReadAPIServesNoBrokerAccounts(t *testing.T) {
 	t.Parallel()
 	a := api{handler: connectionsAPI(t)}
 	for _, path := range []string{"/v1/broker-accounts", "/v1/broker-accounts?unmapped=true"} {
 		_, rec := a.serve(t, http.MethodGet, path, goodToken)
-		if rec.Code != http.StatusNotImplemented || bytes.Contains(rec.Body.Bytes(), []byte("U000000")) {
-			t.Errorf("GET %s = %d %s, want 501 naming no broker account", path, rec.Code, rec.Body)
+		if rec.Code != http.StatusNotFound || bytes.Contains(rec.Body.Bytes(), []byte("U000000")) {
+			t.Errorf("GET %s = %d %s, want 404 naming no broker account", path, rec.Code, rec.Body)
 		}
 	}
 	_, rec := a.serve(t, http.MethodPost, "/openfief.views.v1.ReadService/ListBrokerAccounts", goodToken)
-	if rec.Code == http.StatusOK || bytes.Contains(rec.Body.Bytes(), []byte("U000000")) {
-		t.Errorf("Connect ListBrokerAccounts = %d %s, want a refusal naming no broker account", rec.Code, rec.Body)
+	if rec.Code != http.StatusNotFound || bytes.Contains(rec.Body.Bytes(), []byte("U000000")) {
+		t.Errorf("Connect ListBrokerAccounts = %d %s, want 404 naming no broker account", rec.Code, rec.Body)
 	}
 }

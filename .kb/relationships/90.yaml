@@ -371,20 +371,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-a05df3f49dd5
   - type: implements
-    from: SYM-viewsv1-broker-account-descriptor
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:45:59.211Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8847d32bc581
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-descriptor
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:45:59.263Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c59be0d9b9c3
-  - type: implements
     from: SYM-pl-cli-upgrade
     to: REQ-plugins-upgrade-applies-on-confirmation
     created_at: 2026-10-29T17:07:28.821Z

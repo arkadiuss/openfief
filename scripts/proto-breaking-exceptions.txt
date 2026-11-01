@@ -1,0 +1,10 @@
+# Breaking contract changes the author approved (docs/dev/pipeline.md#breaking-contract-changes).
+# One entry a line: the author decision (docs/DESIGN.md) that names the removal, the buf rule it excuses
+# (RPC_NO_DELETE or MESSAGE_NO_DELETE) and the removed method or message, fully qualified.
+# scripts/proto-breaking.sh lets an entry through only in the change that adds it, with its removal, in a
+# commit marked breaking; an entry already on the base excuses nothing again. tools/protobreak checks that
+# the decision names the method and that each message is one the removed method held.
+D-157 RPC_NO_DELETE openfief.views.v1.ReadService.ListBrokerAccounts
+D-157 MESSAGE_NO_DELETE openfief.views.v1.ListBrokerAccountsRequest
+D-157 MESSAGE_NO_DELETE openfief.views.v1.ListBrokerAccountsResponse
+D-157 MESSAGE_NO_DELETE openfief.views.v1.BrokerAccount
