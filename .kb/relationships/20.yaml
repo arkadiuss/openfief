@@ -518,6 +518,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-877acfdd054f
   - type: implements
+    from: SYM-attention-app-unmapped-broker-accounts
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:35:17.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6bff5e27e0
+  - type: covered_by
+    from: SYM-attention-app-unmapped-broker-accounts
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:35:17.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6c8d7e3e486
+  - type: implements
     from: SYM-views-connectapi-clamp-int32
     to: REQ-views-oki-tax-days
     created_at: 2026-10-31T18:37:14.691Z

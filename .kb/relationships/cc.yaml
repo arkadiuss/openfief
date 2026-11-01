@@ -447,6 +447,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4c498febfcb
+  - type: executable_for
+    from: SYM-attention-pg-test-helper-at
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:46:36.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01109e45bbe1
+  - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-request-proto-reflect
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:54:35.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e97795cba83
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-request-proto-reflect
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:54:36.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f59c379e5313
+  - type: implements
+    from: SYM-attentionv1connect-attention-service-handler
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:59:42.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb3f42c125fa
+  - type: covered_by
+    from: SYM-attentionv1connect-attention-service-handler
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:59:43.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c5369738955
   - type: implements
     from: SYM-pl-pit38
     to: REQ-pl-totals-per-wrapper

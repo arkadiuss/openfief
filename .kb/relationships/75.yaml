@@ -524,3 +524,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39bd2a1f2ca6
+  - type: implements
+    from: SYM-attention-reason-string
+    to: REQ-attention-reconcile
+    created_at: 2026-10-31T18:43:53.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba1a386bf0f2
+  - type: implements
+    from: SYM-attention-reason-string
+    to: REQ-core-attention-item-store
+    created_at: 2026-10-31T18:43:54.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d114383b2a9
+  - type: covered_by
+    from: SYM-attention-reason-string
+    to: TEST-attention-rules
+    created_at: 2026-10-31T18:43:54.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd88b9171f4b
+  - type: implements
+    from: SYM-attentionv1-resolve-attention-item-request-string
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:55:51.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed7dcdf82723
+  - type: covered_by
+    from: SYM-attentionv1-resolve-attention-item-request-string
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:55:52.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e53ed389a5e0

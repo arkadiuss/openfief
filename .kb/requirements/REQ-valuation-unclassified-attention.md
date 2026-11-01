@@ -34,7 +34,7 @@ A revaluation of an account in a wrapper with a yearly tax must raise an attenti
 
 ## Context
 
-D-132 asks the owner once through an attention item (D-130). The attention store isn't built yet, so the core wires no port and nothing is raised (docs/implementation-questions.md). Modeled by Claude Code for the taxes work package; the author has not reviewed it yet.
+D-132 asks the owner once through an attention item (D-130). Valuation declares the port (`valuation/app.AttentionRaiser`) and the core adapts it to the attention context's items (`valuationAttention` in cmd/core), so the item lands in the attention store; until the attention context merged, the core only logged it. The open points are in docs/implementation-questions.md (Taxes). Modeled by Claude Code for the taxes work package; the author has not reviewed it yet.
 
 ## Source
 

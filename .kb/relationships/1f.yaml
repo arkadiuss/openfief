@@ -623,6 +623,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-4ef148589bb3
   - type: implements
+    from: SYM-attentionv1-attention-item-changed-proto-message
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:57:28.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27b5e223365d
+  - type: covered_by
+    from: SYM-attentionv1-attention-item-changed-proto-message
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:57:28.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b3d386033b7
+  - type: implements
     from: SYM-valuation-account-terms-sale-gain
     to: REQ-valuation-realized-gains
     created_at: 2026-10-31T19:09:33.327Z

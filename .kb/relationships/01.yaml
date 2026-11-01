@@ -650,6 +650,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd7475681239
+  - type: executable_for
+    from: SYM-attention-connectapi-test-helper-store-append
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:42:47.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-616a86995395
+  - type: executable_for
+    from: SYM-attention-pg-test-helper-new-pool
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:46:41.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7930bc57ac78
   - type: implements
     from: SYM-views-tax-year-account-payments
     to: REQ-views-oki-tax-days

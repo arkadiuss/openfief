@@ -734,6 +734,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1d93d89fe79
+  - type: executable_for
+    from: SYM-core-test-helper-attention-api
+    to: TEST-core-attention
+    created_at: 2026-10-31T18:33:45.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4350495c522f
+  - type: implements
+    from: SYM-attention-app-log-publisher
+    to: REQ-attention-relay
+    created_at: 2026-10-31T18:41:29.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0051c73b11e4
+  - type: covered_by
+    from: SYM-attention-app-log-publisher
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:41:29.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c59bca6d0fea
+  - type: implements
+    from: SYM-views-connectapi-pb-attention-item
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T18:50:47.106Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-761a2c02b9ce
+  - type: covered_by
+    from: SYM-views-connectapi-pb-attention-item
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T18:50:47.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04087bc11cda
+  - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-response-string
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:55:16.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a17f5ab0873f
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-response-string
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:55:16.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50fc49779758
   - type: implements
     from: SYM-treasury-bonds-config
     to: REQ-treasurybonds-config-names-no-account

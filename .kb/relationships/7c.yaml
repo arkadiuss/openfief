@@ -490,6 +490,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-2c45acd5a0cf
   - type: implements
+    from: SYM-attention-pg-new
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:45:09.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-441d901af759
+  - type: covered_by
+    from: SYM-attention-pg-new
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:45:09.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-435b4b621c00
+  - type: implements
     from: SYM-jurisdiction-tax-day
     to: REQ-pl-oki-tax-computation
     created_at: 2026-10-31T19:06:32.783Z

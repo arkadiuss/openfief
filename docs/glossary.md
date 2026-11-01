@@ -89,6 +89,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Read API | views | `views` + `connectapi` | The public, read-only API: the `openfief.views.v1.ReadService` protobuf service, served as Connect and transcoded to REST under `/v1` (D-50). | |
 | Allocation | views | `views.Allocation` | The portfolio's value in the reporting currency on a date, split into groups by asset class, currency, institution or sleeve (D-30). | breakdown |
 | Allocation item | views | `views.AllocationItem` | One valued holding or cash balance of an account on a date: what an allocation groups. | position |
+| Attention item | attention | `attention.Item` | Something a check found that needs the owner, such as a flagged balance assertion or an unmapped broker account, in one append-only store: its kind (the check), its subject, its state (open, acknowledged or resolved) and its history (D-130). | alert, notification, issue |
 | Asset class | views | `views.AssetClass` | The kind of asset an allocation item is: `cash`, `treasury_bond` (a bond series) or `listed` (any other instrument: a stock or ETF in M0). | asset type |
 | Date total | views | `views.DateTotal` | The sum of the stored valuations dated on one date, in the reporting currency and per original currency. | |
 | Time-weighted return | views | `views.Performance` | The portfolio's return chained day by day from its value, holdings plus cash, across external cash flows, so money put in or taken out is not performance (D-61). | performance (alone), profit |

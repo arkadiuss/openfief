@@ -602,6 +602,34 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-c42341024345
   - type: implements
+    from: SYM-attention-app-imports
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:34:34.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a53a7837722
+  - type: covered_by
+    from: SYM-attention-app-imports
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:34:34.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d1d5338509a
+  - type: implements
+    from: SYM-attentionv1-attention-item-changed-get-subject
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:58:05.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae5bab5dec0f
+  - type: covered_by
+    from: SYM-attentionv1-attention-item-changed-get-subject
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:58:05.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fed57cd40b58
+  - type: implements
     from: SYM-ingest-connectrpc-tickers-to
     to: REQ-ingest-xtb-isin-proposed
     created_at: 2026-10-31T18:02:17.754Z

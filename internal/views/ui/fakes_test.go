@@ -17,6 +17,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1/attentionv1connect"
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
@@ -317,6 +318,8 @@ type fakeRead struct {
 	dates      []string
 	// transfers holds the owner's decisions ListTransfers answers from.
 	transfers *fakeTransfers
+	// attention holds the items ListAttentionItems answers from.
+	attention *fakeAttention
 	// modelOn turns the model portfolio on; off, GetModelPortfolio is
 	// not found, as the core answers (D-52).
 	modelOn bool
@@ -580,6 +583,7 @@ type harness struct {
 	checks     *fakePriceChecks
 	settings   *fakeSettings
 	transfers  *fakeTransfers
+	attention  *fakeAttention
 	tickers    *fakeTickers
 	read       *fakeRead
 	handler    http.Handler
@@ -596,6 +600,8 @@ func newHarness(t *testing.T) *harness {
 	}
 	h.settings = &fakeSettings{read: h.read}
 	h.transfers = &fakeTransfers{}
+	h.attention = newFakeAttention()
+	h.read.attention = h.attention
 	h.tickers = &fakeTickers{}
 	h.read.transfers = h.transfers
 	mux := http.NewServeMux()
@@ -609,6 +615,7 @@ func newHarness(t *testing.T) *harness {
 	mux.Handle(valuationv1connect.NewPriceCheckServiceHandler(h.checks))
 	mux.Handle(valuationv1connect.NewSettingsServiceHandler(h.settings))
 	mux.Handle(ledgerv1connect.NewTransferServiceHandler(h.transfers))
+	mux.Handle(attentionv1connect.NewAttentionServiceHandler(h.attention))
 	mux.Handle(ingestv1connect.NewTickerServiceHandler(h.tickers))
 	mux.Handle(viewsv1connect.NewReadServiceHandler(h.read))
 	core := httptest.NewServer(mux)
@@ -629,6 +636,7 @@ func newHarness(t *testing.T) *harness {
 		Settings:    valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Transfers:   ledgerv1connect.NewTransferServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Tickers:     ingestv1connect.NewTickerServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Attention:   attentionv1connect.NewAttentionServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 	})
 	if err != nil {
 		t.Fatalf("New: %v", err)

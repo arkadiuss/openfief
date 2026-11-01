@@ -121,8 +121,30 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 46. **Raising the attention item for an unclassified instrument.**
    - *Problem:* D-132 asks the owner to classify an instrument once through an attention item (D-130), whose store isn't built yet.
-   - *Today:* a revaluation of an OKI account raises `instrument-unclassified` for each holding the pack can't classify and the owner hasn't, and clears it once the owner has, through `app.AttentionRaiser` (`Raise`, `Clear`); `cmd/core` wires a stand-in that only logs them, and the settings page lists the instruments to classify.
-   - *Options:* wire the attention store's port once D-130 lands; or have the attention app find every unclassified instrument at once (a check with a find function), so items resolve on their own.
+   - *Today:* a revaluation of an OKI account raises `instrument-unclassified` for each holding the pack can't classify and the owner hasn't, and clears it once the owner has, through `app.AttentionRaiser` (`Raise`, `Clear`); `cmd/core` adapts that port to the attention items (`valuationAttention`), and the settings page lists the instruments to classify. An item resolves only when a revaluation of its account finds the instrument classified.
+   - *Options:* keep; or have the attention app find every unclassified instrument at once (a check with a find function), so items resolve on their own.
+
+## Attention items
+
+48. **Which items the owner resolves by hand.**
+   - *Problem:* D-130 names the states but not who moves an item to resolved.
+   - *Today:* every kind resolves when its check clears; the owner may also resolve by hand only a flagged balance assertion and an import's left-out rows, whose condition never clears on its own. Any open item can be acknowledged; an acknowledged or owner-resolved item opens again when the check's detail changes, as a price check's acknowledgement covers only the same prices (D-112). A condition that comes back reopens the same item rather than raising a new one.
+   - *Options:* keep; or let the owner resolve any kind, which hides a condition that still stands; or raise a new item each time a condition comes back.
+
+49. **What an import problem item covers.**
+   - *Problem:* D-130 lists import problems without saying which.
+   - *Today:* one item per completed batch with rows OpenFief can't book yet (`ProblemUnsupported`); rows left out on purpose don't count. Only the count is stored per batch, not the rows, and batches completed before this change have none. The rows of an unconfirmed ticker are counted too, though they also have their own item and are booked once the ticker is confirmed.
+   - *Options:* keep; or store each problem row and raise an item per row or per kind of row; or leave the waiting rows out.
+
+50. **When the checks run.**
+   - *Problem:* D-130 doesn't say whether an item is raised in the check's own transaction or later.
+   - *Today:* the core runs every check at start and then every minute, each kind in one transaction of the attention schema, and publishes the outbox after each run. A finding reaches the store up to a minute after the check found it; the change and its outbox event are always in one transaction. The publisher only logs.
+   - *Options:* keep; or raise each item in the transaction that changes the check's data, which needs every context to write the attention schema; or a River job per change.
+
+51. **What "confirm the corrected pair" means for a broken transfer.**
+   - *Problem:* D-131 has the owner confirm the corrected pair or reject it, but a broken pair's legs no longer match, so it can't be confirmed as a transfer, and a confirmed link keeps its legs from being confirmed with another leg.
+   - *Today:* the owner rejects the broken pair on the transfers page, which the core allows without checking the legs; the corrected legs then return to the suggestions, where the owner confirms the corrected pair. A correction that makes the legs match again heals the link and resolves the item.
+   - *Options:* keep; or let confirming a corrected pair that shares a leg supersede the broken link in one step; or let the owner keep a link whose amounts differ, with the difference as a cash flow.
 
 ## Kibi evidence
 

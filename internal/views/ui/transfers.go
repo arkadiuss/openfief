@@ -16,6 +16,8 @@ import (
 // confirmed or rejected, each of which a later decision corrects.
 type transfersView struct {
 	Suggested, Confirmed, Rejected []*viewsv1.Transfer
+	// Broken are the confirmed pairs a correction broke (D-131).
+	Broken []*viewsv1.Transfer
 	// Error is the core's reason for refusing the last decision; empty
 	// when there is none.
 	Error string
@@ -36,7 +38,8 @@ func (s *server) renderTransfers(w http.ResponseWriter, r *http.Request, sess se
 		return
 	}
 	view := transfersView{
-		Suggested: resp.Msg.GetSuggested(), Confirmed: resp.Msg.GetConfirmed(), Rejected: resp.Msg.GetRejected(), Error: refusal,
+		Suggested: resp.Msg.GetSuggested(), Confirmed: resp.Msg.GetConfirmed(), Rejected: resp.Msg.GetRejected(),
+		Broken: resp.Msg.GetBroken(), Error: refusal,
 	}
 	s.show(w, r, status, "transfers", page{Title: "Transfers", Session: &sess, Data: view})
 }

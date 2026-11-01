@@ -511,6 +511,13 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-08af021f6c68
   - type: validates
+    from: TEST-ledger-transfer-broken
+    to: REQ-ledger-transfer-broken-stops-counting
+    created_at: 2026-10-31T18:30:53.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1538d4f5370a
+  - type: validates
     from: TEST-views-ghostfolio-plan-properties
     to: REQ-views-ghostfolio-earlier-bond-assets-removed
     created_at: 2026-10-31T18:21:11.621Z

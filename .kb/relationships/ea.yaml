@@ -377,6 +377,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b31f7105d4a
+  - type: implements
+    from: SYM-attentionv1-acknowledge-attention-item-response-proto-reflect
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:55:27.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-211c0c5d8fcf
+  - type: covered_by
+    from: SYM-attentionv1-acknowledge-attention-item-response-proto-reflect
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:55:27.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e853a7e27fa5
+  - type: implements
+    from: SYM-attentionv1-resolve-attention-item-request-descriptor
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:56:10.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5d02576907d
+  - type: covered_by
+    from: SYM-attentionv1-resolve-attention-item-request-descriptor
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:56:10.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6db9018a2b7
   - type: verified_by
     from: SCEN-pl-oki-exemption-class
     to: TEST-pl-oki

@@ -40,8 +40,9 @@ func (l *Ledger) TransferLinks(ctx context.Context) ([]ledger.TransferLink, erro
 // and their current versions one possible transfer (ledger.CheckTransfer);
 // a leg that is not stored fails with ErrUnknownTransaction. A decision
 // equal to the pair's current one appends nothing; any other appends the
-// pair's next version, which supersedes the earlier ones (D-18).
-// Confirming a leg of another confirmed transfer fails with
+// pair's next version, which supersedes the earlier ones (D-18). Rejecting
+// a confirmed pair needs no check of its legs, so the owner can reject a
+// link a correction broke (D-131). Confirming a leg of another confirmed transfer fails with
 // ledger.ErrTransferTaken.
 func (l *Ledger) DecideTransfer(ctx context.Context, pair ledger.TransferPair, decision ledger.TransferDecision) (ledger.TransferLink, error) {
 	var out ledger.TransferLink
@@ -92,12 +93,12 @@ func decideIn(ctx context.Context, tx Store, pair ledger.TransferPair, decision 
 	if err := tx.LockTransferLinks(ctx); err != nil {
 		return ledger.TransferLink{}, fmt.Errorf("locking transfer links: %w", err)
 	}
-	if err := checkLegs(ctx, tx, pair); err != nil {
-		return ledger.TransferLink{}, err
-	}
 	current, err := currentLinks(ctx, tx)
 	if err != nil {
 		return ledger.TransferLink{}, err
+	}
+	if legsErr := checkLegs(ctx, tx, pair, decision == ledger.TransferRejected && confirmedNow(current, pair)); legsErr != nil {
+		return ledger.TransferLink{}, legsErr
 	}
 	link, changed, err := ledger.DecideTransferLink(current, pair, decision)
 	if err != nil {
@@ -112,9 +113,26 @@ func decideIn(ctx context.Context, tx Store, pair ledger.TransferPair, decision 
 	return link, nil
 }
 
-// checkLegs checks that the current versions of pair's legs are one
-// possible transfer (ledger.CheckTransfer).
-func checkLegs(ctx context.Context, store TransactionLog, pair ledger.TransferPair) error {
+// confirmedNow reports whether pair's current link among current is
+// confirmed.
+func confirmedNow(current []ledger.TransferLink, pair ledger.TransferPair) bool {
+	for _, l := range current {
+		if l.Pair == pair {
+			return l.Decision == ledger.TransferConfirmed
+		}
+	}
+	return false
+}
+
+// checkLegs checks that pair's legs are stored and their current versions
+// one possible transfer (ledger.CheckTransfer). correcting skips the
+// check: rejecting a confirmed pair whose legs no longer match after a
+// correction, or whose leg was deleted, is how the owner answers its
+// broken link (D-131).
+func checkLegs(ctx context.Context, store TransactionLog, pair ledger.TransferPair, correcting bool) error {
+	if correcting {
+		return nil
+	}
 	w, err := currentByKey(ctx, store, pair.Withdrawal)
 	if err != nil {
 		return err

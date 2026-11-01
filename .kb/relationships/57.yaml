@@ -363,6 +363,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a02ceba6393c
+  - type: implements
+    from: SYM-attention-connectapi-attention-service
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:41:44.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6d1c71482ff
+  - type: covered_by
+    from: SYM-attention-connectapi-attention-service
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:41:44.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17cc83fe2699
+  - type: implements
+    from: SYM-attention-pg-event-payload
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T18:45:49.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22befaaa5a8a
+  - type: covered_by
+    from: SYM-attention-pg-event-payload
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T18:45:49.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8de7bc50c8c0
+  - type: implements
+    from: SYM-viewsv1-attention-item-change-proto-reflect
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:02:34.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd42ab0824b9
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-change-proto-reflect
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:02:34.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffcb476c924b
   - type: constrains
     from: REQ-pl-oki-exemption-class
     to: FACT-SUBJECT-6F67BD2729C3241E

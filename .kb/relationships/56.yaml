@@ -398,6 +398,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-268b93affe67
+  - type: implements
+    from: SYM-attention-app-missing-settings
+    to: REQ-attention-checks
+    created_at: 2026-10-31T18:35:36.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e8a7c2ae825
+  - type: covered_by
+    from: SYM-attention-app-missing-settings
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:35:36.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dab87163fe7c
+  - type: implements
+    from: SYM-ingest-batch-problems
+    to: REQ-ingest-unsupported-rows-counted
+    created_at: 2026-10-31T18:49:35.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60a640f32056
+  - type: covered_by
+    from: SYM-ingest-batch-problems
+    to: TEST-ingest-problem
+    created_at: 2026-10-31T18:49:35.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e09e7cacfce
   - type: executable_for
     from: SYM-pl-test-totals-properties
     to: TEST-pl-totals
