@@ -328,34 +328,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66f66709f932
-  - type: implements
-    from: SYM-viewsv1-broker-account-string
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:45:30.528Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-db8cee620280
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-string
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:45:30.556Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b2fc1da52aea
-  - type: implements
-    from: SYM-viewsv1-list-broker-accounts-response-descriptor
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:51:22.066Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-92a967c4f301
-  - type: covered_by
-    from: SYM-viewsv1-list-broker-accounts-response-descriptor
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:51:22.104Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-78f502794301
   - type: executable_for
     from: SYM-valuation-app-test-helper-fake-rankings
     to: TEST-valuation-app-ranking

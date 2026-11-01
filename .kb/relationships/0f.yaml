@@ -482,20 +482,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-318c991c8a0e
-  - type: implements
-    from: SYM-viewsv1-broker-account-get-last-seen
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:46:40.471Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5f723580a6e0
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-get-last-seen
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:46:40.511Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-94560b8f81ca
   - type: executable_for
     from: SYM-fd-identity-cli-test-enroll-fails
     to: TEST-identity-cli
