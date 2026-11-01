@@ -129,7 +129,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Pending approval | plugins | `plugins.Rollout.Pending` | What a plugin's current version requests that its grant does not approve. The owner approves it by adding it to the grant. | diff |
 | Plugin identity | identity | `plugins.ServiceAccountName` | The ServiceAccount `plugin-<name>` in the `openfief` namespace, proven to the core by its projected token with audience `openfief-core`, and to the egress proxy by a second one with audience `openfief-egress`. | |
 | Signing keys | plugins | `plugins.SigningKeys` | The cluster's ServiceAccount token issuer and the public keys that verify its tokens. The operator publishes them in the ConfigMap `openfief-sa-jwks`, which every plugin mounts, so a plugin can check the core's token without reaching the Kubernetes API (D-59). | JWKS (that is their file format) |
-| Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor. | user, customer |
+| Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor, who holds every account and alone changes anything. | user, customer |
+| Viewer | identity | `identity.Viewer` | A person the owner enrolls with their own passkey and grants accounts to; sees only those accounts, read-only (D-65). From the second alpha. | guest, user |
 | Script token | identity | `identity.ScriptToken` | A scoped, expiring, read-only personal API token. | API key |
 | Script token secret | identity | `identity.FormatSecret` | What a script presents as its bearer token: `ofs_`, the script token's ID, `_` and a random key. Shown once when the token is issued; only the SHA-256 hash of the key is stored. | API key, password |
 | Authenticator | identity | `identity.Authenticator` | A way for the owner to prove who they are before the core issues a session: a passkey (owner scope), or the demo authenticator (read scope, demo databases only). Every authenticator resolves to the one owner. | login provider, IdP |
@@ -249,10 +250,12 @@ Don't create code for these before their milestone.
 | PWA | Progressive web app: a website installable on a phone like an app. |
 | RBAC | Role-based access control: in Kubernetes, Roles and ClusterRoles define what an identity may do. |
 | Reader / decider split | One model reads untrusted text and emits typed notes; a separate decider sees only those notes. |
+| ReBAC | Relationship-based access control: who may do what follows from relationships, such as a viewer granted an account, rather than from roles alone. Popularized by Google's Zanzibar paper (2019), which described one relationship graph and one permission check behind Drive, YouTube and its other products. |
 | Reconcile loop | The Kubernetes controller pattern: repeatedly compare desired state with actual state and act to remove the difference. |
 | RP ID | Relying-party ID: the domain a WebAuthn passkey is bound to. |
 | SDK | Software development kit: the libraries plugin authors build on. OpenFief's are `sdk/go` (a separate Go module) and, later, `sdk/ts`, Apache-2.0 like the contracts (D-5). |
 | Smokescreen | Stripe's open-source egress proxy, written in Go, which checks each client's HTTP CONNECT destinations against a per-client allow-list. |
+| SpiceDB | An open-source authorization database modeled on Zanzibar, by Authzed: a schema of object types, relations and permissions, a store of relationships, and calls that check a permission or list the objects a subject may reach. `zed validate` checks a schema against relationships and assertions written next to it. |
 | TIF | Time in force: how long an order stays working (for example day, or good-till-cancelled). |
 | TokenRequest / TokenReview | Kubernetes APIs: TokenRequest issues a short-lived ServiceAccount token for a chosen audience; TokenReview checks whether a token is valid. |
 | TWR / MWR | Time-weighted return chains the returns between cash flows, so deposits and withdrawals don't count as performance; it is the standard for comparing with a benchmark. Money-weighted return (an IRR, such as XIRR) weights by the money invested, so it reflects the investor's timing. |
