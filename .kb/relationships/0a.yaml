@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f809e1a18e44
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-starts-record-starts
+    to: TEST-ingest-app-starts
+    created_at: 2026-11-01T17:22:02.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-353e6088272d

@@ -888,6 +888,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4f21eb23769
+  - type: constrains
+    from: REQ-ingest-ticker-trading-currency
+    to: FACT-SUBJECT-8A8B03F40D5773D9
+    created_at: 2026-11-01T16:50:34.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c91cce523b5
+  - type: requires_property
+    from: REQ-ingest-ticker-trading-currency
+    to: FACT-PROP-4B14D3E53764E25C
+    created_at: 2026-11-01T16:50:35.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12156130c438
+  - type: specified_by
+    from: REQ-ingest-ticker-trading-currency
+    to: SCEN-ingest-ticker-trading-currency
+    created_at: 2026-11-01T16:50:35.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc6680550545
   - type: implements
     from: SYM-views-ghostfolio-cash-account-uuid
     to: REQ-views-ghostfolio-cash-account-uuid

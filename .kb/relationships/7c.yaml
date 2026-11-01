@@ -608,6 +608,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-818a54a9ecd4
+  - type: constrains
+    from: REQ-ingest-opening-upload-starts-account
+    to: FACT-SUBJECT-35AB9D52039A8BCF
+    created_at: 2026-11-01T16:50:56.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c95c618450e
+  - type: requires_property
+    from: REQ-ingest-opening-upload-starts-account
+    to: FACT-PROP-F345DA41FCCD767E
+    created_at: 2026-11-01T16:50:56.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a39476dec24c
+  - type: specified_by
+    from: REQ-ingest-opening-upload-starts-account
+    to: SCEN-ingest-opening-upload-starts-account
+    created_at: 2026-11-01T16:50:56.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27c4e1a56c1d
   - type: implements
     from: SYM-views-ghostfolio-bond-symbol
     to: REQ-views-ghostfolio-asset-uuid-takes-user

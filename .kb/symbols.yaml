@@ -108920,7 +108920,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-read-export
     title: readExport
     sourceFile: internal/ingest/xtb/mapper.go
@@ -115119,7 +115119,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-opening-columns
     title: openingColumns
     sourceFile: internal/ingest/xtb/opening.go
@@ -115132,7 +115132,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-opening-date
     title: openingDate
     sourceFile: internal/ingest/xtb/opening.go
@@ -115145,9 +115145,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-from-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-start-from-open-positions
   - id: SYM-ingest-xtb-mapping-opening
     title: mapping.opening
     sourceFile: internal/ingest/xtb/opening.go
@@ -115160,9 +115160,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-from-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-start-from-open-positions
   - id: SYM-ingest-xtb-mapping-opening-cash
     title: mapping.openingCash
     sourceFile: internal/ingest/xtb/opening.go
@@ -115190,9 +115190,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-from-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-start-from-open-positions
   - id: SYM-ingest-xtb-bought-volume
     title: boughtVolume
     sourceFile: internal/ingest/xtb/opening.go
@@ -115205,7 +115205,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-mapping-price
     title: mapping.price
     sourceFile: internal/ingest/xtb/opening.go
@@ -115218,20 +115218,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
-  - id: SYM-ingest-xtb-mapping-quoted-in-account-currency
-    title: mapping.quotedInAccountCurrency
-    sourceFile: internal/ingest/xtb/opening.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T08:05:28.002Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-opening
-      - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-mapping-position-key
     title: mapping.positionKey
     sourceFile: internal/ingest/xtb/opening.go
@@ -115244,7 +115231,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-is-digits
     title: isDigits
     sourceFile: internal/ingest/xtb/opening.go
@@ -115257,7 +115244,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-test-helper-money
     title: money
     sourceFile: internal/ingest/xtb/opening_test.go
@@ -115340,7 +115327,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-cell-time
     title: cellTime
     sourceFile: internal/ingest/xtb/sheets.go
@@ -115353,7 +115340,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-utc-date
     title: utcDate
     sourceFile: internal/ingest/xtb/sheets.go
@@ -115366,7 +115353,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-report-date
     title: reportDate
     sourceFile: internal/ingest/xtb/sheets.go
@@ -115379,7 +115366,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-labelled
     title: labelled
     sourceFile: internal/ingest/xtb/sheets.go
@@ -115392,7 +115379,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtbtest-report
     title: report
     sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
@@ -115405,7 +115392,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ui-upload-form-start
     title: uploadForm.Start
     sourceFile: internal/views/ui/statements.go
@@ -119892,7 +119879,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ingest-app-test-helper-held-ledger-account
@@ -119917,7 +119904,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingest-connectapi-payout-from
     title: payoutFrom
     sourceFile: internal/ingest/connectapi/accounts.go
@@ -119930,7 +119917,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingest-connectapi-test-account-service-bond-payout
     title: TestAccountServiceBondPayout
     sourceFile: internal/ingest/connectapi/accounts_test.go
@@ -119953,7 +119940,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-ingest-delivery-payout-from
     title: payoutFrom
     sourceFile: internal/ingest/delivery/held.go
@@ -119966,7 +119953,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-delivery-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-ingest-check-payout
     title: CheckPayout
     sourceFile: internal/ingest/payout.go
@@ -119979,7 +119966,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-treasurybonds-payout
@@ -120233,7 +120220,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-account
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ledger-new-redemption
     title: NewRedemption
     sourceFile: internal/ledger/events.go
@@ -120260,7 +120247,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-string
@@ -120275,7 +120262,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ledger-parse-payout
     title: ParsePayout
     sourceFile: internal/ledger/payout.go
@@ -120288,7 +120275,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ledger-payout-setting
     title: PayoutSetting
     sourceFile: internal/ledger/payout.go
@@ -120302,7 +120289,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-setting-paid-out
@@ -120317,7 +120304,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-setting-changed
@@ -120332,7 +120319,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-setting-validate
@@ -120347,7 +120334,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ledger-test-payout-setting-paid-out
     title: TestPayoutSettingPaidOut
     sourceFile: internal/ledger/payout_test.go
@@ -120400,7 +120387,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ui-posted-payout
     title: postedPayout
     sourceFile: internal/views/ui/accounts.go
@@ -120415,7 +120402,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-ui-test-bond-payout-form
     title: TestBondPayoutForm
     sourceFile: internal/views/ui/values_test.go
@@ -120459,7 +120446,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-enum
     title: BondPayout.Enum
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120472,7 +120459,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-string
     title: BondPayout.String
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120485,7 +120472,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-descriptor
     title: BondPayout.Descriptor
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120498,7 +120485,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-type
     title: BondPayout.Type
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120511,7 +120498,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-number
     title: BondPayout.Number
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120524,7 +120511,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-enum-descriptor
     title: BondPayout.EnumDescriptor
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120537,7 +120524,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-account-holdings-get-bond-payout
     title: AccountHoldings.GetBondPayout
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120550,7 +120537,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-account-holdings-get-bond-payout-since
     title: AccountHoldings.GetBondPayoutSince
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120563,7 +120550,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-ingestv1-bond-payout
     title: BondPayout
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120577,7 +120564,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-enum
     title: BondPayout.Enum
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120590,7 +120577,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-string
     title: BondPayout.String
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120603,7 +120590,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-descriptor
     title: BondPayout.Descriptor
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120616,7 +120603,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-type
     title: BondPayout.Type
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120629,7 +120616,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-number
     title: BondPayout.Number
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120642,7 +120629,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-enum-descriptor
     title: BondPayout.EnumDescriptor
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120655,7 +120642,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-account-get-bond-payout
     title: Account.GetBondPayout
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120668,7 +120655,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-account-get-bond-payout-since
     title: Account.GetBondPayoutSince
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120681,7 +120668,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-create-account-request-get-bond-payout
     title: CreateAccountRequest.GetBondPayout
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120694,7 +120681,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-update-account-request-get-bond-payout
     title: UpdateAccountRequest.GetBondPayout
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120707,7 +120694,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-viewsv1-bond-payout
     title: BondPayout
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120721,7 +120708,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-enum
     title: BondPayout.Enum
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120734,7 +120721,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-string
     title: BondPayout.String
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120747,7 +120734,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-descriptor
     title: BondPayout.Descriptor
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120760,7 +120747,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-type
     title: BondPayout.Type
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120773,7 +120760,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-number
     title: BondPayout.Number
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120786,7 +120773,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-enum-descriptor
     title: BondPayout.EnumDescriptor
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120799,7 +120786,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-account-get-bond-payout
     title: Account.GetBondPayout
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120812,7 +120799,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-account-get-bond-payout-since
     title: Account.GetBondPayoutSince
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120825,7 +120812,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-valuation-series
     title: Series
     sourceFile: internal/valuation/series.go
@@ -124414,3 +124401,979 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-read-access
+  - id: SYM-core-ledger-importer-current-transactions
+    title: ledgerImporter.CurrentTransactions
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:19:46.713Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-core-test-helper-xtb-opening-export
+    title: xtbOpeningExport
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:19:55.408Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-helper-xtb-listing-connector
+    title: xtbListingConnector
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:01.790Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-helper-xtb-listing-connector-lookup-instruments
+    title: xtbListingConnector.LookupInstruments
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:09.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-xtb-opening-upload
+    title: TestXTBOpeningUpload
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:16.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-helper-check-opening-starts-account
+    title: checkOpeningStartsAccount
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:23.976Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-helper-check-opening-lot-costs
+    title: checkOpeningLotCosts
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:31.456Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-demo-seed-loader-build
+    title: loaderBuild
+    sourceFile: cmd/demo-seed/build.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:38.359Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-reseed-on-new-loader
+  - id: SYM-demo-seed-build-digest
+    title: buildDigest
+    sourceFile: cmd/demo-seed/build.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:45.026Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-reseed-on-new-loader
+  - id: SYM-demo-seed-test-loader-build
+    title: TestLoaderBuild
+    sourceFile: cmd/demo-seed/build_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:51.493Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit
+  - id: SYM-ingest-app-payout-ledger
+    title: PayoutLedger
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:58.474Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-accounts-first-payout
+    title: Accounts.firstPayout
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:05.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-accounts-payout-from
+    title: Accounts.payoutFrom
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:12.671Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-accounts-supersede-payouts
+    title: Accounts.supersedePayouts
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:20.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-accounts-changed
+    title: Accounts.changed
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:27.342Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-account-starts
+    title: AccountStarts
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:34.121Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-starts
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-app-connectors-go-live
+    title: Connectors.goLive
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:41.178Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-starts
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-app-connectors-record-starts
+    title: Connectors.recordStarts
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:48.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-starts
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-app-test-helper-mem-starts
+    title: memStarts
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:53.754Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-mem-starts-record-starts
+    title: memStarts.RecordStarts
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:00.310Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-mem-starts-start
+    title: memStarts.Start
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:07.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-waiting-tickers
+    title: waitingTickers
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:13.612Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-waiting-tickers-confirmed-tickers
+    title: waitingTickers.ConfirmedTickers
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:20.848Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-waiting-tickers-hold-tickers
+    title: waitingTickers.HoldTickers
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:27.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-uploads-opening-starts-account
+    title: TestUploadsOpeningStartsAccount
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:34.780Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-connectapi-payout-from-day
+    title: payoutFromDay
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:42.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-connectapi-test-helper-mem-registry-current-transactions
+    title: memRegistry.CurrentTransactions
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:49.305Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-registry-import
+    title: memRegistry.Import
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:56.527Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-check-payout-back-to-cash
+    title: checkPayoutBackToCash
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:03.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-withdrawal
+    title: withdrawal
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:10.949Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectrpc-date-to
+    title: dateTo
+    sourceFile: internal/ingest/connectrpc/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:17.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-ingest-delivery-payout-period-from
+    title: payoutPeriodFrom
+    sourceFile: internal/ingest/delivery/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:24.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-ingest-opening-starts
+    title: OpeningStarts
+    sourceFile: internal/ingest/golive.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:31.398Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-golive
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-test-opening-starts
+    title: TestOpeningStarts
+    sourceFile: internal/ingest/golive_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:38.111Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-golive
+  - id: SYM-ingest-listing
+    title: Listing
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:44.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-minor-unit-of
+    title: minorUnitOf
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:51.402Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-parse-trading-currency
+    title: ParseTradingCurrency
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:58.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-exchange-currency-code
+    title: exchangeCurrencyCode
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:05.566Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-exchange-currency
+    title: ExchangeCurrency
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:13.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-listing-of
+    title: ListingOf
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:20.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-listing-price
+    title: Listing.Price
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:27.646Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-currency-places
+    title: CurrencyPlaces
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:34.763Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-test-helper-currency
+    title: currency
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:41.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-listing-of
+    title: TestListingOf
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:47.593Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-opening-lot-trading-currency
+    title: TestOpeningLotTradingCurrency
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:54.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-helper-cost-of
+    title: costOf
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:00.276Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-helper-listing-in
+    title: listingIn
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:06.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-parse-trading-currency
+    title: TestParseTradingCurrency
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:12.865Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-check-payout-from
+    title: CheckPayoutFrom
+    sourceFile: internal/ingest/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:20.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-stale-payouts
+    title: StalePayouts
+    sourceFile: internal/ingest/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:27.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-test-check-payout-from
+    title: TestCheckPayoutFrom
+    sourceFile: internal/ingest/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:33.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout
+  - id: SYM-ingest-test-helper-payout-tx
+    title: payoutTx
+    sourceFile: internal/ingest/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:40.045Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout
+  - id: SYM-ingest-test-stale-payouts
+    title: TestStalePayouts
+    sourceFile: internal/ingest/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:46.203Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout
+  - id: SYM-ingest-pg-store-record-starts
+    title: Store.RecordStarts
+    sourceFile: internal/ingest/postgres/starts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:53.500Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-pg-store-start
+    title: Store.Start
+    sourceFile: internal/ingest/postgres/starts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:00.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-pg-listing-row
+    title: listingRow
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:06.639Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-pg-listing-row-listing
+    title: listingRow.listing
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:13.531Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-pg-entry-row-money
+    title: entryRow.money
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:20.779Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-ticker-entry-priced-by-listing
+    title: TickerEntry.PricedByListing
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:28.006Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-ticker-entry-listing-cost
+    title: TickerEntry.listingCost
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:35.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-ingest-xtb-test-helper-render-ticker-entry
+    title: renderTickerEntry
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:42.276Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ledger-payout-period
+    title: PayoutPeriod
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:49.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-payout-setting-on
+    title: PayoutSetting.On
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:56.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-payout-setting-periods
+    title: PayoutSetting.periods
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:03.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-test-helper-setting-of
+    title: settingOf
+    sourceFile: internal/ledger/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:09.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-payout
+  - id: SYM-ledger-test-helper-changed-setting
+    title: changedSetting
+    sourceFile: internal/ledger/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:15.843Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-payout
+  - id: SYM-ledger-test-payout-setting-validate
+    title: TestPayoutSettingValidate
+    sourceFile: internal/ledger/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:22.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-payout
+  - id: SYM-ledger-pg-stored-period
+    title: storedPeriod
+    sourceFile: internal/ledger/postgres/payout.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:29.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-pg-encode-earlier
+    title: encodeEarlier
+    sourceFile: internal/ledger/postgres/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:36.582Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-pg-decode-earlier
+    title: decodeEarlier
+    sourceFile: internal/ledger/postgres/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:43.423Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-connectorv1-ticker-transaction-get-open-price
+    title: TickerTransaction.GetOpenPrice
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:51.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-ingest-xtb-opening-lot-trading-currency
+  - id: SYM-connectorv1-instrument-proposal-get-currency
+    title: InstrumentProposal.GetCurrency
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:58.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-trading-currency
+  - id: SYM-connectorv1-account-holdings-get-bond-payout-earlier
+    title: AccountHoldings.GetBondPayoutEarlier
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:05.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period
+    title: BondPayoutPeriod
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:12.012Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-reset
+    title: BondPayoutPeriod.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:19.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-string
+    title: BondPayoutPeriod.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:27.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-proto-message
+    title: BondPayoutPeriod.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:35.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-proto-reflect
+    title: BondPayoutPeriod.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:42.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-descriptor
+    title: BondPayoutPeriod.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:50.728Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-get-bond-payout
+    title: BondPayoutPeriod.GetBondPayout
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:58.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-get-since
+    title: BondPayoutPeriod.GetSince
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:29:05.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-ingestv1-update-account-request-get-bond-payout-from
+    title: UpdateAccountRequest.GetBondPayoutFrom
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:29:12.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day

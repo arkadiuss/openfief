@@ -40,7 +40,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `
@@ -73,10 +73,11 @@ func TestRegistryRoundTrip(t *testing.T) {
 	sleeves, err := store.Sleeves(ctx)
 	checkResult(t, "Sleeves", []portfolio.Sleeve{renamed, play}, sleeves, err)
 
-	// A hand-entered bond account paid out since a day keeps its payout setting (D-135).
+	// A hand-entered bond account paid out since a day keeps its payout setting (D-135) and the setting in force
+	// before it (D-162).
 	moved := ledger.Account{
 		ID: acc2, Institution: "treasury-bonds", Name: "Moved", Sleeve: "play",
-		Payout: &ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: date(t, "2026-03-02")},
+		Payout: &ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: date(t, "2026-03-02"), Earlier: []ledger.PayoutPeriod{{Payout: ledger.PayoutCash}}},
 	}
 	if saveErr := store.SaveAccount(ctx, moved); saveErr != nil {
 		t.Fatalf("SaveAccount: %v", saveErr)

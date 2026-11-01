@@ -27,25 +27,26 @@ var (
 // reported without an ISIN, the market-data connector's proposals, the
 // owner's confirmations, and the ticker entries waiting for one.
 type TickerStore interface {
-	// ConfirmedTickers returns the ISIN the owner confirmed for each ticker
-	// symbol of instance.
-	ConfirmedTickers(ctx context.Context, instance string) (map[string]ledger.ISIN, error)
+	// ConfirmedTickers returns the listing the owner's confirmation settled
+	// for each ticker symbol of instance (ingest.ListingOf, D-159).
+	ConfirmedTickers(ctx context.Context, instance string) (map[string]ingest.Listing, error)
 	// HoldTickers records the tickers instance reported, keeping an earlier
 	// name, and the entries waiting for their ticker's ISIN, each once by
 	// key: holding a key again replaces its entry. It returns the tickers it
 	// hadn't seen before.
 	HoldTickers(ctx context.Context, instance string, tickers []ingest.Ticker, waiting []ingest.TickerEntry) ([]ingest.Ticker, error)
-	// SaveProposals records the ISIN proposed for tickers of instance,
-	// replacing an earlier proposal.
+	// SaveProposals records the ISIN proposed for tickers of instance, with
+	// the currency its listing trades in, replacing an earlier proposal.
 	SaveProposals(ctx context.Context, instance string, proposals []ingest.ISINProposal) error
 	// PendingTickers returns every ticker without a confirmation, by
 	// instance and symbol.
 	PendingTickers(ctx context.Context) ([]ingest.PendingTicker, error)
 	// ConfirmTicker records the owner's confirmation and returns the
-	// entries still waiting for the ticker. A ticker never reported is
+	// entries still waiting for the ticker, with the listing the
+	// confirmation settles (ingest.ListingOf). A ticker never reported is
 	// ErrUnknownTicker; one confirmed with another ISIN ErrTickerConfirmed.
 	// Confirming the same ISIN again changes nothing.
-	ConfirmTicker(ctx context.Context, c ingest.TickerConfirmation) ([]ingest.TickerEntry, error)
+	ConfirmTicker(ctx context.Context, c ingest.TickerConfirmation) ([]ingest.TickerEntry, ingest.Listing, error)
 	// BookedTickerEntries drops the waiting entries of instance with keys,
 	// once the ledger holds them.
 	BookedTickerEntries(ctx context.Context, instance string, keys []ledger.TransactionKey) error
@@ -188,13 +189,15 @@ func (t *Tickers) Pending(ctx context.Context, origin, sessionToken string) ([]i
 // Confirm records, for the owner, isin as the ISIN of instance's ticker
 // symbol, then books every entry waiting for it into the ledger, its keys
 // scoped to instance as a delivery's are, and returns what was imported.
-// Waiting opening lots join their account's seeding (book). Confirming
-// again books whatever still waits.
+// Waiting opening lots join their account's opening on its go-live date
+// (book, D-160), their cost in the trading currency of the listing the
+// confirmation settles (D-159). Confirming again books whatever still
+// waits.
 func (t *Tickers) Confirm(ctx context.Context, origin, sessionToken string, c ingest.TickerConfirmation) (ingest.ImportSummary, error) {
 	if err := t.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("confirming a ticker: %w", err)
 	}
-	waiting, err := t.Store.ConfirmTicker(ctx, c)
+	waiting, listing, err := t.Store.ConfirmTicker(ctx, c)
 	if err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, err)
 	}
@@ -204,7 +207,7 @@ func (t *Tickers) Confirm(ctx context.Context, origin, sessionToken string, c in
 	txs := make([]ledger.Transaction, 0, len(waiting))
 	keys := make([]ledger.TransactionKey, 0, len(waiting))
 	for i := range waiting {
-		tx, txErr := waiting[i].Transaction(c.ISIN)
+		tx, txErr := waiting[i].Transaction(listing)
 		if txErr != nil {
 			return ingest.ImportSummary{}, fmt.Errorf("booking %s: %w", waiting[i].Header.Key, txErr)
 		}

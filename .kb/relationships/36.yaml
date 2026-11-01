@@ -657,3 +657,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ecf552d7ad3
+  - type: constrains
+    from: REQ-ui-bond-payout-change-date
+    to: FACT-SUBJECT-4911082C13118B09
+    created_at: 2026-11-01T16:50:25.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d2a1cb86639
+  - type: requires_property
+    from: REQ-ui-bond-payout-change-date
+    to: FACT-PROP-95B7C90395053D6D
+    created_at: 2026-11-01T16:50:25.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-487027ebeee7
+  - type: specified_by
+    from: REQ-ui-bond-payout-change-date
+    to: SCEN-ui-bond-payout-change-date
+    created_at: 2026-11-01T16:50:25.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f67bc005601
+  - type: supersedes
+    from: REQ-ui-bond-payout-change-date
+    to: REQ-ui-bond-payout-setting
+    created_at: 2026-11-01T16:50:25.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45d648410dc5

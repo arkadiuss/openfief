@@ -714,20 +714,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b1458e4b515c
   - type: implements
-    from: SYM-attentionv1-resolve-attention-item-response-reset
-    to: REQ-attention-owner-service
-    created_at: 2026-10-31T18:56:41.907Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6fe18709e497
-  - type: covered_by
-    from: SYM-attentionv1-resolve-attention-item-response-reset
-    to: TEST-attention-connectapi
-    created_at: 2026-10-31T18:56:41.960Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8ee03d428187
-  - type: implements
     from: SYM-ingest-app-bond-lots-add
     to: REQ-ingest-bond-lot-handed-with-account
     created_at: 2026-10-31T18:09:10.169Z
@@ -762,6 +748,48 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a7a648300dc
+  - type: executable_for
+    from: SYM-treasurybonds-test-book-maturities-waits
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:50:23.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd27a1f0a0d7
+  - type: executable_for
+    from: SYM-ledger-pg-test-redemption-round-trip
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-01T07:52:09.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e31f355d4bfc
+  - type: implements
+    from: SYM-attentionv1-resolve-attention-item-response-reset
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:56:41.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fe18709e497
+  - type: covered_by
+    from: SYM-attentionv1-resolve-attention-item-response-reset
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:56:41.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ee03d428187
+  - type: implements
+    from: SYM-ingest-listing-of
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-01T17:24:22.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f4634a6191f
+  - type: covered_by
+    from: SYM-ingest-listing-of
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:24:22.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4cdaee5660b
   - type: validates
     from: TEST-views-ghostfolio-sync
     to: REQ-views-ghostfolio-cash-account-per-currency
@@ -818,17 +846,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39c620d0de84
-  - type: executable_for
-    from: SYM-treasurybonds-test-book-maturities-waits
-    to: TEST-treasurybonds-maturities
-    created_at: 2026-11-01T07:50:23.984Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bd27a1f0a0d7
-  - type: executable_for
-    from: SYM-ledger-pg-test-redemption-round-trip
-    to: TEST-ledger-pg-store
-    created_at: 2026-11-01T07:52:09.479Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e31f355d4bfc

@@ -142,19 +142,28 @@ func render(m *ingest.Mapping) string {
 			}
 		}
 		for j := range e.TickerEntries {
-			te := &e.TickerEntries[j]
-			opened := ""
-			if !te.Opened.IsZero() {
-				opened = " opened=" + te.Opened.String()
-			}
-			fmt.Fprintf(&b, "%s ticker-entry %s %s %s %s units=%s amount=%s charge=%s%s %q ref=%s\n",
-				e.Account, te.Header.Key, te.Kind, te.Header.Date, te.Symbol, te.Quantity, te.Amount, te.Charge, opened, te.Description, te.Ref)
+			renderTickerEntry(&b, e.Account, &e.TickerEntries[j])
 		}
 	}
 	for _, p := range m.Problems {
 		fmt.Fprintf(&b, "problem %s\n", p)
 	}
 	return b.String()
+}
+
+// renderTickerEntry writes one ticker entry of broker account account, with
+// an opening lot's open date and, for one priced by listing, its open
+// price (D-159).
+func renderTickerEntry(b *strings.Builder, account ingest.BrokerAccountID, te *ingest.TickerEntry) {
+	opened := ""
+	if !te.Opened.IsZero() {
+		opened = " opened=" + te.Opened.String()
+	}
+	if te.PricedByListing() {
+		opened += " open-price=" + te.OpenPrice.String()
+	}
+	fmt.Fprintf(b, "%s ticker-entry %s %s %s %s units=%s amount=%s charge=%s%s %q ref=%s\n",
+		account, te.Header.Key, te.Kind, te.Header.Date, te.Symbol, te.Quantity, te.Amount, te.Charge, opened, te.Description, te.Ref)
 }
 
 // TestMapNeverKeepsTransferComments checks that nothing of a deposit's or

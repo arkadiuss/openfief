@@ -790,3 +790,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd957f9eda17
+  - type: verified_by
+    from: SCEN-demo-reseed-on-new-loader
+    to: TEST-demo-dataset
+    created_at: 2026-11-01T16:48:24.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7fd21e43951
+  - type: verified_by
+    from: SCEN-demo-reseed-on-new-loader
+    to: TEST-demo-seed-unit
+    created_at: 2026-11-01T16:48:24.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8484090ef093
+  - type: verified_by
+    from: SCEN-demo-reseed-on-new-loader
+    to: TEST-demo-seed-load
+    created_at: 2026-11-01T16:48:24.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d992e6b4c3f8

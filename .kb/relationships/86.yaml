@@ -538,13 +538,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-147c8312f063
-  - type: implements
-    from: SYM-viewsv1-account-get-bond-payout-since
-    to: REQ-ui-bond-payout-setting
-    created_at: 2026-11-01T07:56:02.591Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e538bd53db1f
   - type: covered_by
     from: SYM-viewsv1-account-get-bond-payout-since
     to: TEST-ui-values
@@ -573,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f76847a7a591
+  - type: implements
+    from: SYM-ledger-payout-setting-periods
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-01T17:27:05.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ee4711a3dc2
+  - type: covered_by
+    from: SYM-ledger-payout-setting-periods
+    to: TEST-ledger-payout
+    created_at: 2026-11-01T17:27:05.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5822139c3bfd
+  - type: implements
+    from: SYM-viewsv1-account-get-bond-payout-since
+    to: REQ-ui-bond-payout-change-date
+    created_at: 2026-11-01T17:36:26.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d168d682e223

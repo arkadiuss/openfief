@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-794833db5153
-  - type: implements
-    from: SYM-viewsv1-bond-payout-type
-    to: REQ-ui-bond-payout-setting
-    created_at: 2026-11-01T07:55:34.319Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c66a232d5cb8
   - type: covered_by
     from: SYM-viewsv1-bond-payout-type
     to: TEST-ui-values
@@ -587,6 +580,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c00e9e380ae2
+  - type: implements
+    from: SYM-viewsv1-bond-payout-type
+    to: REQ-ui-bond-payout-change-date
+    created_at: 2026-11-01T17:37:56.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73374b088c99
   - type: executable_for
     from: SYM-plugins-cli-test-render-proposal-market-data
     to: TEST-plugins-cli-render

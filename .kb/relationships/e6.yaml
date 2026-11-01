@@ -706,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f09dbee0b39a
+  - type: implements
+    from: SYM-demo-seed-loader-build
+    to: REQ-demo-reseed-on-new-loader
+    created_at: 2026-11-01T17:20:40.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e8a8a0fb641
+  - type: covered_by
+    from: SYM-demo-seed-loader-build
+    to: TEST-demo-seed-unit
+    created_at: 2026-11-01T17:20:41.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70ceea9dcd46

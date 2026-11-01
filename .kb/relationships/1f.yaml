@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c380cae6599
+  - type: implements
+    from: SYM-demo-seed-build-digest
+    to: REQ-demo-reseed-on-new-loader
+    created_at: 2026-11-01T17:20:47.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64a643f80e7c
+  - type: covered_by
+    from: SYM-demo-seed-build-digest
+    to: TEST-demo-seed-unit
+    created_at: 2026-11-01T17:20:47.618Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fe5aa55d772

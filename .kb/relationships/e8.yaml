@@ -468,13 +468,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-471c73c20df0
-  - type: implements
-    from: SYM-ingestv1-account-get-bond-payout
-    to: REQ-ingest-bond-payout-setting
-    created_at: 2026-11-01T07:54:41.590Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5cd9726151fa
   - type: covered_by
     from: SYM-ingestv1-account-get-bond-payout
     to: TEST-ingest-connectapi-accounts
@@ -489,3 +482,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-acc658c80d85
+  - type: constrains
+    from: REQ-ledger-payout-setting-history
+    to: FACT-SUBJECT-FD62B4328BE42BDF
+    created_at: 2026-11-01T16:49:50.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-829ef48a3fff
+  - type: requires_property
+    from: REQ-ledger-payout-setting-history
+    to: FACT-PROP-226C582CE38FD0A0
+    created_at: 2026-11-01T16:49:50.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9994f6288843
+  - type: specified_by
+    from: REQ-ledger-payout-setting-history
+    to: SCEN-ledger-payout-setting-history
+    created_at: 2026-11-01T16:49:50.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccf57032cfde
+  - type: supersedes
+    from: REQ-ledger-payout-setting-history
+    to: REQ-ledger-payout-setting
+    created_at: 2026-11-01T16:49:50.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5723a5dc6ed0
+  - type: implements
+    from: SYM-ingestv1-account-get-bond-payout
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:32:13.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ff39f314d70

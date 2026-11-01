@@ -164,6 +164,17 @@ type AccountSeeding interface {
 	GoLive(ctx context.Context, account ledger.AccountID) (kernel.Date, bool, error)
 }
 
+// AccountStarts keeps the go-live date an opening upload recorded for each
+// account it started (D-160), even when nothing could be booked yet.
+// *ingest/postgres.Store implements it.
+type AccountStarts interface {
+	// RecordStarts records each account's go-live; an account started
+	// before keeps its date.
+	RecordStarts(ctx context.Context, starts map[ledger.AccountID]kernel.Date) error
+	// Start returns account's recorded go-live, and false when none was.
+	Start(ctx context.Context, account ledger.AccountID) (kernel.Date, bool, error)
+}
+
 // ConnectorDeclarations tells what the running version of each connector
 // instance declares in its signed manifest (D-112, D-109).
 // ingest/kube.Discovery implements it from the Plugin resources.
@@ -228,6 +239,11 @@ type Connectors struct {
 	// account's go-live (ingest.KeepFromGoLive). Without it, no account
 	// counts as seeded.
 	Seeding AccountSeeding
+	// Starts keeps the go-live an opening upload recorded for an account
+	// it started before anything could be booked (D-160): until the ledger
+	// knows the account's go-live, it counts as seeded from that date. Nil
+	// records none.
+	Starts AccountStarts
 	// Tickers keeps the tickers instances name instruments by without an
 	// ISIN and their entries until the owner confirms each ticker's ISIN
 	// (D-116); a delivery with ticker entries fails without it.
@@ -256,23 +272,21 @@ func (c *Connectors) Sync(ctx context.Context, instance string, call *SyncCall) 
 }
 
 // GoLiveDates returns the go-live date of each of accounts that is seeded,
-// as Seeding answers; none without Seeding.
+// as Seeding answers, or else started by an opening upload, as Starts
+// answers (D-160); none without either.
 func (c *Connectors) GoLiveDates(ctx context.Context, accounts []ledger.AccountID) (map[ledger.AccountID]kernel.Date, error) {
 	out := map[ledger.AccountID]kernel.Date{}
-	if c.Seeding == nil {
-		return out, nil
-	}
 	asked := map[ledger.AccountID]bool{}
 	for _, a := range accounts {
 		if asked[a] {
 			continue
 		}
 		asked[a] = true
-		day, seeded, err := c.Seeding.GoLive(ctx, a)
+		day, live, err := c.goLive(ctx, a)
 		if err != nil {
 			return nil, fmt.Errorf("go-live of %s: %w", a, err)
 		}
-		if seeded {
+		if live {
 			out[a] = day
 		}
 	}
@@ -350,7 +364,7 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
-	r, err := c.admit(ctx, instance, source, mode, d, only)
+	r, starts, err := c.admit(ctx, instance, source, mode, d, only)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
@@ -367,6 +381,9 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	if err := c.markSeeded(ctx, instance, r.Seeding); err != nil {
+		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
+	}
+	if err := c.recordStarts(ctx, source, mode, starts); err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	batch.Complete(&m, imported)
@@ -425,30 +442,32 @@ func (c *Connectors) keepFromGoLive(ctx context.Context, source string, mode ing
 // opening batch of it seeds, what its accounts' go-live keeps out left out
 // (keepFromGoLive), and its ticker entries booked or held (bookTickers),
 // after checking that every account it names is in only, when only is
-// set, and bound to instance.
-func (c *Connectors) admit(ctx context.Context, instance, source string, mode ingest.Mode, d *Delivery, only []ledger.AccountID) (ingest.Resolution, error) {
+// set, and bound to instance. It also returns the mapping to import before
+// its ticker entries were booked or held, from which an opening upload
+// records the accounts it starts (recordStarts).
+func (c *Connectors) admit(ctx context.Context, instance, source string, mode ingest.Mode, d *Delivery, only []ledger.AccountID) (ingest.Resolution, *ingest.Mapping, error) {
 	r, err := c.resolveBrokerAccounts(ctx, instance, mode, d)
 	if err != nil {
-		return ingest.Resolution{}, err
+		return ingest.Resolution{}, nil, err
 	}
 	if only != nil {
 		if boundErr := ingest.CheckBound(instance, only, &r.Mapping); boundErr != nil {
-			return ingest.Resolution{}, fmt.Errorf("refused: %w", boundErr)
+			return ingest.Resolution{}, nil, fmt.Errorf("refused: %w", boundErr)
 		}
 	}
 	if boundErr := c.checkBound(ctx, instance, &r.Mapping); boundErr != nil {
-		return ingest.Resolution{}, boundErr
+		return ingest.Resolution{}, nil, boundErr
 	}
 	kept, err := c.keepFromGoLive(ctx, source, mode, &r.Mapping)
 	if err != nil {
-		return ingest.Resolution{}, err
+		return ingest.Resolution{}, nil, err
 	}
 	booked, err := c.bookTickers(ctx, instance, &kept)
 	if err != nil {
-		return ingest.Resolution{}, err
+		return ingest.Resolution{}, nil, err
 	}
 	r.Mapping = booked
-	return r, nil
+	return r, &kept, nil
 }
 
 // checkBound refuses m unless every account it names is bound to instance.
@@ -603,4 +622,39 @@ func sourcedReadings(instance string, readings []ingest.IndexReading) ([]ingest.
 		out[i] = r
 	}
 	return out, nil
+}
+
+// goLive returns account's go-live: the ledger's when it is seeded, else
+// the one an opening upload recorded (D-160), and whether it has either.
+func (c *Connectors) goLive(ctx context.Context, account ledger.AccountID) (kernel.Date, bool, error) {
+	if c.Seeding != nil {
+		day, seeded, err := c.Seeding.GoLive(ctx, account)
+		if err != nil {
+			return kernel.Date{}, false, fmt.Errorf("seeding: %w", err)
+		}
+		if seeded {
+			return day, true, nil
+		}
+	}
+	if c.Starts == nil {
+		return kernel.Date{}, false, nil
+	}
+	day, started, err := c.Starts.Start(ctx, account)
+	if err != nil {
+		return kernel.Date{}, false, fmt.Errorf("recorded start: %w", err)
+	}
+	return day, started, nil
+}
+
+// recordStarts records the go-live of each account an opening upload's
+// mapping m starts (ingest.OpeningStarts, D-160); any other batch, or no
+// Starts, records none.
+func (c *Connectors) recordStarts(ctx context.Context, source string, mode ingest.Mode, m *ingest.Mapping) error {
+	if c.Starts == nil || source != SourceUpload || mode != ingest.ModeOpening {
+		return nil
+	}
+	if err := c.Starts.RecordStarts(ctx, ingest.OpeningStarts(m)); err != nil {
+		return fmt.Errorf("recording account starts: %w", err)
+	}
+	return nil
 }

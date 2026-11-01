@@ -151,7 +151,12 @@ func tickerEntry(e *ingest.TickerEntry) (*connectorv1.TickerTransaction, error) 
 		Symbol:    e.Symbol,
 		Key:       &connectorv1.TransactionKey{Source: e.Header.Key.Source, ExternalId: e.Header.Key.ExternalID},
 		AccountId: string(e.Header.Account), Kind: kind, Date: e.Header.Date.String(),
-		Amount: money(e.Amount), Description: e.Description, Ref: e.Ref,
+		Description: e.Description, Ref: e.Ref,
+	}
+	if e.PricedByListing() {
+		out.OpenPrice = e.OpenPrice.String()
+	} else {
+		out.Amount = money(e.Amount)
 	}
 	if !e.Quantity.IsZero() {
 		out.Quantity = e.Quantity.String()

@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f6f68c0b341
+  - type: implements
+    from: SYM-ingest-pg-entry-row-money
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-01T17:26:23.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a3a1f9e1662
+  - type: covered_by
+    from: SYM-ingest-pg-entry-row-money
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:26:23.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7b9cdd3d6f7

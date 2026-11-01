@@ -545,13 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa7a60fa06cd
-  - type: implements
-    from: SYM-connectorv1-bond-payout-enum-descriptor
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:53:33.195Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a792de6635ac
   - type: covered_by
     from: SYM-connectorv1-bond-payout-enum-descriptor
     to: TEST-ingest-connectrpc-held
@@ -559,13 +552,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7c461239fa4
-  - type: implements
-    from: SYM-connectorv1-account-holdings-get-bond-payout
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:53:40.442Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6327d1d8e7a8
   - type: covered_by
     from: SYM-connectorv1-account-holdings-get-bond-payout
     to: TEST-ingest-connectrpc-held
@@ -608,6 +594,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d7f92f1e06f
+  - type: implements
+    from: SYM-connectorv1-account-holdings-get-bond-payout
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:34:09.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d07705b5047
+  - type: implements
+    from: SYM-connectorv1-bond-payout-enum-descriptor
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:35:02.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3d7b8fa2be4
   - type: validates
     from: TEST-views-kube
     to: REQ-plugins-install-shows-market-data-list

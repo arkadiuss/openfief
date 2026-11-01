@@ -650,3 +650,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d4a1375dd43
+  - type: constrains
+    from: REQ-ingest-bond-payout-change-from-day
+    to: FACT-SUBJECT-25A56A86C231BC37
+    created_at: 2026-11-01T16:50:03.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbee31abf5a0
+  - type: requires_property
+    from: REQ-ingest-bond-payout-change-from-day
+    to: FACT-PROP-C2986E452C9834FD
+    created_at: 2026-11-01T16:50:03.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be6f8db2277f
+  - type: specified_by
+    from: REQ-ingest-bond-payout-change-from-day
+    to: SCEN-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T16:50:03.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46d542de4ebe
+  - type: supersedes
+    from: REQ-ingest-bond-payout-change-from-day
+    to: REQ-ingest-bond-payout-setting
+    created_at: 2026-11-01T16:50:03.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f2db44963f2
+  - type: implements
+    from: SYM-ingest-app-connectors-go-live
+    to: REQ-ingest-opening-upload-starts-account
+    created_at: 2026-11-01T17:21:43.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-780654ca22d9
+  - type: covered_by
+    from: SYM-ingest-app-connectors-go-live
+    to: TEST-ingest-app-starts
+    created_at: 2026-11-01T17:21:43.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7ad93d2353e
+  - type: implements
+    from: SYM-ledger-pg-stored-period
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-01T17:27:31.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac0c3164c936
+  - type: covered_by
+    from: SYM-ledger-pg-stored-period
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-01T17:27:31.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63cdc9628c4c

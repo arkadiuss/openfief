@@ -43,9 +43,12 @@ Modelled on OpenClaw: calendar versions, release channels and a separate release
 - Product versions are `YYYY.M.N`, with pre-releases `YYYY.M.N-alpha.K` and `YYYY.M.N-beta.K`. Tags carry no `v` prefix, because Go would read a root tag `v2026.11.0` as major version 2026 of the module **(P)**.
 - Channels: `alpha` and `beta` are pre-release channels, published the same way: a GitHub pre-release, deployed to demo. `stable` is a GitHub release. The first release is an alpha.
 - Every release, an alpha included, ships signed images and the bootstrap install with the CRDs, every image in it pinned to the digest that was signed. An end-to-end test installs OpenFief from that bundle.
+- The bootstrap install brings its database by default: CloudNativePG's release manifest, pinned by sha256, and a minimal `openfief-db` cluster the owner can edit (D-14). An owner whose cluster already runs CloudNativePG skips its part.
+- Until the first beta, the read API and the plugin contracts may break between releases: a breaking change is marked breaking and listed in the release notes, and needs no author decision. Stored data is migrated from the first alpha on (D-161).
 - Every release also ships the `openfief` CLI for Linux and macOS on amd64 and arm64, signed with cosign and with an SBOM (software bill of materials), since installing OpenFief starts with it (D-80).
 - The release workflow is started manually, does a dry run before it publishes anything, and only the author releases.
 - The release workflow adds the first-party plugins to the catalog (D-88), commits that to `main` itself, and builds the operator and CLI from that commit, which it tags.
+- Stored data (D-161): from the first release on, every change to what is stored ships with a migration of what is already stored, in the context's own numbered migrations. Before it, a change to the schema still ships as a migration, but nothing already stored is converted: an installation may need data entered again, and the demo reseeds itself whenever the loader changes ([demo.md](demo.md#demo-data)).
 - Contracts and SDKs use SemVer, independent of the product version. The Go SDK is tagged `sdk/go/vX.Y.Z`, as Go requires for a submodule **(P)**, and `buf breaking` gates every SDK release **(P)**.
 
 ## Dependencies (P)

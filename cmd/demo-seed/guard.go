@@ -39,11 +39,20 @@ CREATE TABLE IF NOT EXISTS demo.marker (
     seed      text NOT NULL,
     loaded_on date NOT NULL,
     loaded_at timestamptz NOT NULL DEFAULT now()
-);`
+);
+ALTER TABLE demo.marker ADD COLUMN IF NOT EXISTS loader text NOT NULL DEFAULT '';`
 
-// resetSQL drops everything the demo loaded: the ledger, valuation and River
-// schemas. Migrate creates them again.
-const resetSQL = `DROP SCHEMA IF EXISTS ledger, valuation, river CASCADE`
+// resetSQL drops everything the demo loaded, the ledger and valuation
+// schemas, which migrate creates again, and the revaluations still queued
+// for it. River's own schema stays, so a core running on the database
+// keeps its workers while the demo is reseeded under it (D-161); the loads
+// that follow enqueue the revaluations again.
+const resetSQL = `DROP SCHEMA IF EXISTS ledger, valuation CASCADE;
+DO $$ BEGIN
+    IF to_regclass('river.river_job') IS NOT NULL THEN
+        DELETE FROM river.river_job WHERE state::text IN ('available', 'scheduled', 'retryable');
+    END IF;
+END $$;`
 
 // prepare decides, under the guard lock and before anything is written,
 // what to do with the database (demo.DecideLoad), and does its part: it
@@ -59,10 +68,10 @@ func prepare(ctx context.Context, pool *pgxpool.Pool, cfg *config) (demo.LoadAct
 		if err != nil {
 			return err
 		}
-		if action, err = demo.DecideLoad(st, cfg.Reset); err != nil {
+		if action, err = demo.DecideLoad(st, cfg.Reset, cfg.Loader); err != nil {
 			return fmt.Errorf("demo guard: %w", err)
 		}
-		return mark(ctx, tx, action, cfg.Seed, cfg.Today)
+		return mark(ctx, tx, action, cfg)
 	})
 	if err != nil {
 		return 0, fmt.Errorf("checking the database: %w", err)
@@ -79,7 +88,10 @@ func inspect(ctx context.Context, tx pgx.Tx) (demo.DatabaseState, error) {
 		return st, err
 	}
 	if exists {
-		if err := tx.QueryRow(ctx, "SELECT EXISTS (SELECT FROM demo.marker WHERE demo)").Scan(&st.Marked); err != nil {
+		// to_jsonb reads a marker written before it recorded its loader too.
+		err := tx.QueryRow(ctx, `SELECT count(*) > 0, coalesce(max(to_jsonb(m) ->> 'loader'), '')
+			FROM demo.marker m WHERE demo`).Scan(&st.Marked, &st.Loader)
+		if err != nil {
 			return st, fmt.Errorf("reading the demo marker: %w", err)
 		}
 	}
@@ -112,7 +124,7 @@ func tableExists(ctx context.Context, tx pgx.Tx, table string) (bool, error) {
 
 // mark does action's part in tx: it writes the demo marker for a fresh
 // load, and for a reset also drops the demo's data.
-func mark(ctx context.Context, tx pgx.Tx, action demo.LoadAction, seed uint64, today kernel.Date) error {
+func mark(ctx context.Context, tx pgx.Tx, action demo.LoadAction, cfg *config) error {
 	switch action {
 	case demo.LoadAgain:
 		return nil
@@ -126,9 +138,10 @@ func mark(ctx context.Context, tx pgx.Tx, action demo.LoadAction, seed uint64, t
 		return fmt.Errorf("creating the demo marker: %w", err)
 	}
 	_, err := tx.Exec(ctx, `
-		INSERT INTO demo.marker (demo, seed, loaded_on) VALUES (true, $1, $2)
-		ON CONFLICT (demo) DO UPDATE SET seed = EXCLUDED.seed, loaded_on = EXCLUDED.loaded_on, loaded_at = now()`,
-		strconv.FormatUint(seed, 10), today.String())
+		INSERT INTO demo.marker (demo, seed, loaded_on, loader) VALUES (true, $1, $2, $3)
+		ON CONFLICT (demo) DO UPDATE SET seed = EXCLUDED.seed, loaded_on = EXCLUDED.loaded_on, loader = EXCLUDED.loader,
+		    loaded_at = now()`,
+		strconv.FormatUint(cfg.Seed, 10), cfg.Today.String(), cfg.Loader)
 	if err != nil {
 		return fmt.Errorf("writing the demo marker: %w", err)
 	}

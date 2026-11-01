@@ -89,7 +89,7 @@ Two targets drive a browser on demand and are in no check, since a check must no
 
 Two steps compare against a base revision: the ground-rule check reads `DOCS_BASE`, and `proto:breaking` reads `PROTO_BASE`, then `DOCS_BASE`. Both default to `HEAD`, which locally means "against the last commit". CI sets `DOCS_BASE` to the pull request's base.
 
-A breaking contract change goes in only when an author decision names it, as D-157 removes the read API's `ListBrokerAccounts`. `proto:breaking` excuses exactly what that decision names, in the change that makes it, and still fails on every other breaking change; once the change is on the base, later comparisons no longer see it. The commit marks it breaking (`!` or a `BREAKING CHANGE:` footer), so the release notes list it.
+Until the first beta, a contract change marked breaking (`!` or a `BREAKING CHANGE:` footer) may break the contracts ([sdlc.md](sdlc.md#releases)). From the first beta, a breaking contract change goes in only when an author decision names it, as D-157 removes the read API's `ListBrokerAccounts`. `proto:breaking` excuses exactly what that decision names, in the change that makes it, and still fails on every other breaking change; once the change is on the base, later comparisons no longer see it. The commit marks it breaking (`!` or a `BREAKING CHANGE:` footer), so the release notes list it.
 
 ### Breaking contract changes
 

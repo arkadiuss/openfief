@@ -566,13 +566,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ca226892215
-  - type: implements
-    from: SYM-ingest-xtb-opening-date
-    to: REQ-ingest-xtb-start-open-positions
-    created_at: 2026-11-01T08:04:47.501Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9fecfdfafb91
   - type: covered_by
     from: SYM-ingest-xtb-opening-date
     to: TEST-ingest-xtb-opening
@@ -587,3 +580,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b02a1990e268
+  - type: implements
+    from: SYM-connectorv1-bond-payout-period-get-since
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:29:07.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bfe75372325
+  - type: covered_by
+    from: SYM-connectorv1-bond-payout-period-get-since
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T17:29:07.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-200ca5f61d95
+  - type: implements
+    from: SYM-ingest-xtb-opening-date
+    to: REQ-ingest-xtb-opening-lot-trading-currency
+    created_at: 2026-11-01T17:50:55.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c72302fdf8a

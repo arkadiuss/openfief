@@ -545,13 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7291c9ebdb07
-  - type: implements
-    from: SYM-viewsv1-bond-payout-string
-    to: REQ-ui-bond-payout-setting
-    created_at: 2026-11-01T07:55:19.986Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-222b6952edda
   - type: covered_by
     from: SYM-viewsv1-bond-payout-string
     to: TEST-ui-values
@@ -608,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b831984f1c9
+  - type: implements
+    from: SYM-viewsv1-bond-payout-string
+    to: REQ-ui-bond-payout-change-date
+    created_at: 2026-11-01T17:37:44.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d95df722775b

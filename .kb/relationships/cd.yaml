@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c8f121b6a54
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-registry-import
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T17:22:58.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd5077d3e9ca

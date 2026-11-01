@@ -1,6 +1,6 @@
 ---
 title: The owner must be able to set a hand-entered bond account's payout setting when creating or changing the account through AccountService, in force from that day, and a paid-out setting on an account at any other institution must be refused as invalid.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-135
 tags:
   - strict-modeling

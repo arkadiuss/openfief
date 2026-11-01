@@ -545,13 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42957844bbf5
-  - type: implements
-    from: SYM-ledger-payout-setting
-    to: REQ-ledger-payout-setting
-    created_at: 2026-11-01T07:51:23.438Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e7dab335b3e1
   - type: covered_by
     from: SYM-ledger-payout-setting
     to: TEST-ledger-payout
@@ -580,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-635bde69c027
+  - type: implements
+    from: SYM-ledger-payout-setting
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-01T17:30:29.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff34c2e87db6
