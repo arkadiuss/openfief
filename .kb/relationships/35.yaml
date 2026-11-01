@@ -643,3 +643,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9479a0310aa6
+  - type: executable_for
+    from: SYM-valuation-app-test-set-gap-threshold
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:08:03.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a71f49a188c

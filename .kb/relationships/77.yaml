@@ -433,13 +433,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-612585aefa99
-  - type: implements
-    from: SYM-valuation-postgres-placed-in
-    to: REQ-valuation-ranking-revalues
-    created_at: 2026-10-29T18:15:53.552Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b4caea3c2d71
   - type: covered_by
     from: SYM-valuation-postgres-placed-in
     to: TEST-valuation-postgres-ranking
@@ -615,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-949e68f60619
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-proto-reflect
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:20:33.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbaa6938f6d4
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-proto-reflect
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:20:33.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03b902a3fd9a

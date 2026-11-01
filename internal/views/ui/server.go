@@ -208,6 +208,8 @@ func (s *server) settingsRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /settings/enrollment-links", s.withOwner(s.createEnrollmentLink))
 	mux.HandleFunc("POST /settings/model", s.withOwner(s.saveModel))
 	mux.HandleFunc("POST /settings/market-data", s.withOwner(s.rankSources))
+	mux.HandleFunc("POST /settings/market-data/gap", s.withOwner(s.setGapThreshold))
+	mux.HandleFunc("POST /settings/market-data/series", s.withOwner(s.setSeriesSource))
 	mux.HandleFunc("POST /settings/number-format", s.withOwner(s.setNumberFormat))
 	mux.HandleFunc("POST /settings/marginal-rate", s.withOwner(s.setMarginalRate))
 	mux.HandleFunc("POST /settings/exemption-class", s.withOwner(s.setExemptionClass))

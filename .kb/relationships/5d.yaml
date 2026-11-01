@@ -468,3 +468,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9efd6b05ce52
+  - type: implements
+    from: SYM-valuation-app-input-recorder-rules-version
+    to: REQ-valuation-source-rules-version
+    created_at: 2026-11-01T09:02:01.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0dc38946d3e

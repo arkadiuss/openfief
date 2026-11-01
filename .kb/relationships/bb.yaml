@@ -384,13 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69ab87fe579e
-  - type: implements
-    from: SYM-valuation-postgres-querier
-    to: REQ-valuation-ranking-revalues
-    created_at: 2026-10-29T18:15:39.388Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e875aa9ecf7c
   - type: covered_by
     from: SYM-valuation-postgres-querier
     to: TEST-valuation-postgres-ranking
@@ -405,13 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cc7d742f273
-  - type: implements
-    from: SYM-valuation-ranking-names
-    to: REQ-valuation-market-data-highest-rank-wins
-    created_at: 2026-10-29T18:17:33.059Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4291224a327d
   - type: covered_by
     from: SYM-valuation-ranking-names
     to: TEST-valuation-ranking

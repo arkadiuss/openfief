@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bdd7ced41cb
+  - type: implements
+    from: SYM-valuation-choose-source
+    to: REQ-valuation-market-data-source-chosen-on-first-need
+    created_at: 2026-11-01T09:03:02.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17428e54c170
+  - type: covered_by
+    from: SYM-valuation-choose-source
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:03:02.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31d2cd128972

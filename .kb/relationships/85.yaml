@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04fae4100e53
+  - type: executable_for
+    from: SYM-valuation-postgres-test-rates-and-readings-one-source
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T09:10:56.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b02285bb36d6

@@ -49,8 +49,12 @@ type RevalueResult struct {
 // then replaces the stored valuations dated on or after from with the new
 // rows and records the valued-through date (valuation.ValuedThrough). A
 // missing price, FX rate or index reading is stored as a row with the gap,
-// not an error. The rows depend only on the log, the stored inputs and
-// today, so running it again gives the same result.
+// not an error. Each price, FX rate and index reading comes from its
+// series' one source, and a day it lacks takes its latest earlier value
+// (D-94); a series a holding needs today whose source has had no value
+// for longer than the gap threshold raises an attention item (raiseGaps).
+// The rows depend only on the log, the stored inputs and today, so running
+// it again gives the same result.
 func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from kernel.Date) (RevalueResult, error) {
 	today := r.today()
 	log, err := r.log.Log(ctx, account)
@@ -61,7 +65,8 @@ func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from k
 	if first, ok := firstDate(log); ok && first.After(start) {
 		start = first
 	}
-	rows, err := r.rows(ctx, log, account, start, today)
+	in := newInputCache(r.store, account, today)
+	rows, err := r.rows(ctx, in, log, account, start, today)
 	if err != nil {
 		return RevalueResult{}, err
 	}
@@ -73,7 +78,7 @@ func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from k
 	if err := r.store.ReplaceValuations(ctx, account, from, rows, through); err != nil {
 		return RevalueResult{}, fmt.Errorf("revaluing %s: storing: %w", account, err)
 	}
-	if err := r.raiseUnclassified(ctx, account, rows); err != nil {
+	if err := r.raiseItems(ctx, in, account, rows, today); err != nil {
 		return RevalueResult{}, fmt.Errorf("revaluing %s: %w", account, err)
 	}
 	res := RevalueResult{Start: start, ValuedThrough: through, Rows: len(rows)}
@@ -86,9 +91,8 @@ func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from k
 }
 
 // rows values account's holdings on each day from start to today, in date
-// then instrument order; none when log is empty.
-func (r *Revaluer) rows(ctx context.Context, log []ledger.VersionedTransaction, account ledger.AccountID, start, today kernel.Date) ([]valuation.HoldingValuation, error) {
-	in := newInputCache(r.store, account, today)
+// then instrument order, with the inputs in loads; none when log is empty.
+func (r *Revaluer) rows(ctx context.Context, in *inputCache, log []ledger.VersionedTransaction, account ledger.AccountID, start, today kernel.Date) ([]valuation.HoldingValuation, error) {
 	if len(log) == 0 {
 		return nil, nil
 	}

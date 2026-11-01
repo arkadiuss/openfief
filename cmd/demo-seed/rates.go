@@ -44,7 +44,9 @@ func demoCurrencies() []string { return []string{"EUR", "USD"} }
 // before ds.FXFrom, the earliest day the dataset needs one for, to its
 // today: fetched from NBP through its adapter (D-20), or, offline or when
 // NBP fails, the committed ones. Either way they are NBP's own published
-// rates.
+// rates, the ones the demo's NBP connector instance delivers, so they are
+// recorded as from it (cfg.FXSource): each currency's rates then have one
+// source, whose later syncs continue the history loaded here (D-94).
 func fxRates(ctx context.Context, cfg *config, ds *demo.Dataset, log *slog.Logger) ([]valuation.FXRate, error) {
 	from := ds.FXFrom.AddDays(-rateLookback)
 	if !cfg.Offline {
@@ -52,7 +54,7 @@ func fxRates(ctx context.Context, cfg *config, ds *demo.Dataset, log *slog.Logge
 		rates, err := app.FetchRates(ctx, client, from, ds.Today, nbp.MaxRangeDays)
 		if err == nil {
 			log.Info("fetched FX rates from NBP", "rates", len(rates))
-			return onlyDemoCurrencies(rates), nil
+			return fromSource(onlyDemoCurrencies(rates), cfg.FXSource), nil
 		}
 		log.Warn("NBP unreachable: using the committed NBP rates", "error", err)
 	}
@@ -61,7 +63,15 @@ func fxRates(ctx context.Context, cfg *config, ds *demo.Dataset, log *slog.Logge
 		return nil, err
 	}
 	log.Info("using the committed NBP rates", "rates", len(rates))
-	return rates, nil
+	return fromSource(rates, cfg.FXSource), nil
+}
+
+// fromSource returns rates with source as their source.
+func fromSource(rates []valuation.FXRate, source string) []valuation.FXRate {
+	for i := range rates {
+		rates[i].Source = source
+	}
+	return rates
 }
 
 // onlyDemoCurrencies returns the rates of demoCurrencies among rates.

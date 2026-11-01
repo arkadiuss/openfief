@@ -391,20 +391,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee7c398f1899
-  - type: implements
-    from: SYM-valuation-lower-ranked-checks
-    to: REQ-valuation-lower-ranked-cross-checks
-    created_at: 2026-10-29T18:18:47.956Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b938de4b21c1
-  - type: covered_by
-    from: SYM-valuation-lower-ranked-checks
-    to: TEST-valuation-ranking
-    created_at: 2026-10-29T18:18:47.995Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-019d6ab410cf
   - type: executable_for
     from: SYM-jurisdiction-test-helper-rng-next
     to: TEST-jurisdiction-fee
@@ -594,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7291c9ebdb07
+  - type: implements
+    from: SYM-valuation-gen-pb-list-series-sources-response-get-series
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:16:14.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f57ee0b9a7f
+  - type: covered_by
+    from: SYM-valuation-gen-pb-list-series-sources-response-get-series
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:16:14.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b831984f1c9

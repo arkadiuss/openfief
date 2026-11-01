@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2363db79ca61
+  - type: implements
+    from: SYM-valuation-postgres-value-table-of
+    to: REQ-valuation-series-source-owner-choice
+    created_at: 2026-11-01T09:10:08.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14f2b0140219
+  - type: covered_by
+    from: SYM-valuation-postgres-value-table-of
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T09:10:08.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22ae65c7cff7

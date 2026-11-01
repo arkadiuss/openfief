@@ -36,10 +36,15 @@ func TestParseConfig(t *testing.T) {
 		wantToday string
 		wantReset bool
 		wantSeed  uint64
+		wantFX    string
 		wantErr   bool
 	}{
-		{name: "defaults: today in Warsaw, the default seed", dsn: "postgres://demo", wantToday: "2026-10-29", wantSeed: defaultSeed},
-		{name: "flags", args: []string{"--reset-demo", "--today", "2026-10-01", "--seed", "7"}, dsn: "postgres://demo", wantToday: "2026-10-01", wantReset: true, wantSeed: 7},
+		{name: "defaults: today in Warsaw, the default seed", dsn: "postgres://demo", wantToday: "2026-10-29", wantSeed: defaultSeed, wantFX: "nbp"},
+		{
+			name: "flags", args: []string{"--reset-demo", "--today", "2026-10-01", "--seed", "7", "--fx-source", "nbp-b"}, dsn: "postgres://demo",
+			wantToday: "2026-10-01", wantReset: true, wantSeed: 7, wantFX: "nbp-b",
+		},
+		{name: "no FX source", args: []string{"--fx-source", ""}, dsn: "postgres://demo", wantErr: true},
 		{name: "no DSN", wantErr: true},
 		{name: "bad date", args: []string{"--today", "28.10.2026"}, dsn: "postgres://demo", wantErr: true},
 		{name: "unknown flag", args: []string{"--force"}, dsn: "postgres://demo", wantErr: true},
@@ -54,7 +59,7 @@ func TestParseConfig(t *testing.T) {
 				}
 				return
 			}
-			if err != nil || got.Today.String() != tt.wantToday || got.Reset != tt.wantReset || got.Seed != tt.wantSeed || got.DSN != tt.dsn {
+			if err != nil || got.Today.String() != tt.wantToday || got.Reset != tt.wantReset || got.Seed != tt.wantSeed || got.DSN != tt.dsn || got.FXSource != tt.wantFX {
 				t.Errorf("parseConfig = %+v, %v; want today %s, reset %v, seed %d", got, err, tt.wantToday, tt.wantReset, tt.wantSeed)
 			}
 		})
@@ -76,6 +81,24 @@ func TestCommittedRatesParse(t *testing.T) {
 	}
 	if seen["USD"] < 250 || seen["EUR"] < 250 || len(seen) != 2 {
 		t.Errorf("committed rates per currency = %v, want a year of USD and EUR", seen)
+	}
+}
+
+// TestFXRatesFromTheInstance checks that the loaded rates are recorded as
+// from the demo's NBP connector instance, so each currency's rates have
+// one source, whose later syncs continue them (D-94).
+func TestFXRatesFromTheInstance(t *testing.T) {
+	t.Parallel()
+	cfg := config{Offline: true, FXSource: "nbp"}
+	ds := demo.Dataset{FXFrom: mustDate(t, "2026-01-15"), Today: mustDate(t, "2026-02-27")}
+	rates, err := fxRates(t.Context(), &cfg, &ds, quiet())
+	if err != nil || len(rates) == 0 {
+		t.Fatalf("fxRates = %d rates, %v; want the committed ones", len(rates), err)
+	}
+	for _, r := range rates {
+		if r.Source != "nbp" {
+			t.Fatalf("rate %s %s from %q, want the instance nbp", r.Currency, r.Date, r.Source)
+		}
 	}
 }
 

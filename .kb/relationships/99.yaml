@@ -608,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94486ece4554
+  - type: implements
+    from: SYM-valuation-app-input-cache-read
+    to: REQ-valuation-gap-item-per-account
+    created_at: 2026-11-01T09:06:20.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6630cf82ffc
+  - type: covered_by
+    from: SYM-valuation-app-input-cache-read
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:06:20.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9704d750857

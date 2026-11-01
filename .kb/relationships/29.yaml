@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c541db7a7f5b
+  - type: implements
+    from: SYM-valuation-app-planner-for-instrument-from-start
+    to: REQ-valuation-series-source-owner-choice
+    created_at: 2026-11-01T09:07:32.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9748befeb79
+  - type: covered_by
+    from: SYM-valuation-app-planner-for-instrument-from-start
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:07:32.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6741927d0e3a

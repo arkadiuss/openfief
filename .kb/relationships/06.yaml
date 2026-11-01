@@ -601,3 +601,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ac2886a642a
+  - type: implements
+    from: SYM-valuation-postgres-store-save-series-source
+    to: REQ-valuation-series-source-owner-choice
+    created_at: 2026-11-01T09:10:00.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd69c3c0b2d7
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-series-source
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T09:10:00.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48120b47f4ca
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-reset
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:20:01.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-915aa0e0ae14
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-response-reset
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:20:01.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a023616834c1

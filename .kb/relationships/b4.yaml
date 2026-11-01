@@ -398,13 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dcc964a9f9ec
-  - type: executable_for
-    from: SYM-valuation-postgres-test-ranked-prices
-    to: TEST-valuation-postgres-ranking
-    created_at: 2026-10-29T18:16:13.170Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ddcfe6c121de
   - type: validates
     from: TEST-valuation-postgres-terms
     to: REQ-valuation-sale-fee-rule-zero
@@ -545,3 +538,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da535d515907
+  - type: implements
+    from: SYM-valuation-series-gap
+    to: REQ-valuation-market-data-gap-attention-item
+    created_at: 2026-11-01T09:04:25.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-389502870a05
+  - type: covered_by
+    from: SYM-valuation-series-gap
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:04:25.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f18f8ce3cc6
+  - type: implements
+    from: SYM-valuation-postgres-store-available-sources
+    to: REQ-valuation-series-source-owner-choice
+    created_at: 2026-11-01T09:09:38.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db1f736ecd6e
+  - type: covered_by
+    from: SYM-valuation-postgres-store-available-sources
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T09:09:38.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-838d648f46e6
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-response
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:19:50.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6b9e64ae7c8
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-response
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:19:50.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-347c02f6baf7

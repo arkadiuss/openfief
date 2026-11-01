@@ -510,3 +510,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80881a04621d
+  - type: constrains
+    from: REQ-valuation-series-source-recorded
+    to: FACT-SUBJECT-431B4CEEE9046544
+    created_at: 2026-11-01T08:55:19.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a272c196b7b3
+  - type: requires_property
+    from: REQ-valuation-series-source-recorded
+    to: FACT-PROP-B25CA636EC5E6426
+    created_at: 2026-11-01T08:55:19.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c76c61e984f4
+  - type: specified_by
+    from: REQ-valuation-series-source-recorded
+    to: SCEN-valuation-series-source-recorded
+    created_at: 2026-11-01T08:55:20.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c88fd916b151
+  - type: supersedes
+    from: REQ-valuation-series-source-recorded
+    to: REQ-valuation-ranking-revalues
+    created_at: 2026-11-01T08:55:20.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8e2ce9f2d08
+  - type: implements
+    from: SYM-valuation-gen-pb-set-gap-threshold-request-get-origin
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:19:15.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c102d7613ca4
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-gap-threshold-request-get-origin
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:19:15.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-480b88613fc7

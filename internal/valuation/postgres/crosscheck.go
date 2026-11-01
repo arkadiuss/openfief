@@ -37,22 +37,18 @@ func (s *Store) SaveCrossCheckPrices(ctx context.Context, prices []valuation.Cro
 }
 
 // CrossCheckedPrices returns the prices to compare and what to compare
-// them with (D-22, D-94, D-111): the winning price of every date of each
-// instrument that has a cross-check price or more than one source's price
-// on some date, in instrument then date order; and every cross-check price
-// with every lower-ranked source's price as one
-// (valuation.LowerRankedChecks), in instrument, date and source order.
+// them with (D-22, D-94, D-111): the prices of each instrument's one source
+// (SourceOf) for every instrument that has a cross-check price or prices
+// from more than one source, in instrument then date order; and every
+// cross-check price with every other source's price as one
+// (valuation.OtherSourceChecks), in instrument, date and source order.
 func (s *Store) CrossCheckedPrices(ctx context.Context) ([]valuation.Price, []valuation.CrossCheckPrice, error) {
-	rank, err := s.rankOf(ctx, valuation.KindPrices)
-	if err != nil {
-		return nil, nil, err
-	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT p.instrument, p.date::text, p.close::text, p.currency, p.source FROM valuation.prices p
 		WHERE p.instrument IN (
 			SELECT instrument FROM valuation.cross_check_prices
 			UNION
-			SELECT instrument FROM valuation.prices GROUP BY instrument, date HAVING count(*) > 1)
+			SELECT instrument FROM valuation.prices GROUP BY instrument HAVING count(DISTINCT source) > 1)
 		ORDER BY p.instrument, p.date, p.source`)
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading cross-checked prices: %w", err)
@@ -61,8 +57,20 @@ func (s *Store) CrossCheckedPrices(ctx context.Context) ([]valuation.Price, []va
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading cross-checked prices: %w", err)
 	}
-	ranked := valuation.RankedPrices(all, rank)
-	prices := ranked.Winners
+	var prices, others []valuation.Price
+	for start := 0; start < len(all); {
+		end := start
+		for end < len(all) && all[end].Instrument == all[start].Instrument {
+			end++
+		}
+		src, _, srcErr := s.SourceOf(ctx, valuation.PriceSeries(all[start].Instrument))
+		if srcErr != nil {
+			return nil, nil, srcErr
+		}
+		split := valuation.PricesBySource(all[start:end], src.Source)
+		prices, others = append(prices, split.Own...), append(others, split.Others...)
+		start = end
+	}
 	rows, err = s.pool.Query(ctx, `
 		SELECT instrument, date::text, close::text, currency, source FROM valuation.cross_check_prices
 		ORDER BY instrument, date, source`)
@@ -73,7 +81,7 @@ func (s *Store) CrossCheckedPrices(ctx context.Context) ([]valuation.Price, []va
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading cross-check prices: %w", err)
 	}
-	checks = append(checks, valuation.LowerRankedChecks(ranked.Lower)...)
+	checks = append(checks, valuation.OtherSourceChecks(others)...)
 	slices.SortStableFunc(checks, func(a, b valuation.CrossCheckPrice) int {
 		return cmp.Or(cmp.Compare(a.Instrument, b.Instrument), a.Date.Compare(b.Date), cmp.Compare(a.Source, b.Source))
 	})

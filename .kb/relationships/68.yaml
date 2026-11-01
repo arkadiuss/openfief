@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55c6e7123924
+  - type: implements
+    from: SYM-valuation-app-revaluer-raise-items
+    to: REQ-valuation-gap-item-per-account
+    created_at: 2026-11-01T09:06:00.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1eed7b24c6d
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-raise-items
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T09:06:00.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1372b01f14c

@@ -447,13 +447,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25ab2f0e5112
-  - type: implements
-    from: SYM-valuation-app-ranking-store
-    to: REQ-valuation-ranking-revalues
-    created_at: 2026-10-29T18:12:32.790Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bdb2cb99f38d
   - type: covered_by
     from: SYM-valuation-app-ranking-store
     to: TEST-valuation-app-ranking

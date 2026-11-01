@@ -552,13 +552,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06f1114b5bf6
-  - type: implements
-    from: SYM-valuation-postgres-store-save-sources
-    to: REQ-valuation-ranking-revalues
-    created_at: 2026-10-29T18:15:25.307Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7cba3ebb4b65
   - type: covered_by
     from: SYM-valuation-postgres-store-save-sources
     to: TEST-valuation-postgres-ranking
@@ -720,3 +713,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-318d5e391c6b
+  - type: implements
+    from: SYM-valuation-gen-pb-source-ranking-get-gap-threshold-days
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:13:06.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a0dfaa4c62e
+  - type: covered_by
+    from: SYM-valuation-gen-pb-source-ranking-get-gap-threshold-days
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:13:06.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76f832a70f64

@@ -713,3 +713,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-beb08a95d47b
+  - type: validates
+    from: TEST-valuation-postgres-ranking
+    to: REQ-valuation-market-data-one-source
+    created_at: 2026-11-01T09:01:22.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ed8bf37be57
+  - type: validates
+    from: TEST-valuation-postgres-ranking
+    to: REQ-valuation-market-data-source-instance
+    created_at: 2026-11-01T09:01:22.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a18ec4799763
+  - type: validates
+    from: TEST-valuation-postgres-ranking
+    to: REQ-valuation-cross-check-prices-never-source
+    created_at: 2026-11-01T09:01:22.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9332777a9b8a
+  - type: validates
+    from: TEST-valuation-postgres-ranking
+    to: REQ-valuation-market-data-other-sources-cross-checks
+    created_at: 2026-11-01T09:01:22.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22338e6737a2
+  - type: validates
+    from: TEST-valuation-postgres-ranking
+    to: REQ-valuation-market-data-source-chosen-on-first-need
+    created_at: 2026-11-01T09:01:22.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5418b1c0265
+  - type: validates
+    from: TEST-valuation-postgres-ranking
+    to: REQ-valuation-market-data-never-other-source
+    created_at: 2026-11-01T09:01:22.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52f16a873aa2

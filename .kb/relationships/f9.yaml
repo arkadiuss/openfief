@@ -629,3 +629,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-722c4821ba21
+  - type: implements
+    from: SYM-valuation-postgres-store-all-available
+    to: REQ-valuation-series-source-owner-choice
+    created_at: 2026-11-01T09:09:53.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d0325c37c30
+  - type: covered_by
+    from: SYM-valuation-postgres-store-all-available
+    to: TEST-valuation-postgres-ranking
+    created_at: 2026-11-01T09:09:53.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df77b2ca25b9
+  - type: implements
+    from: SYM-valuation-gen-pb-set-series-source-request-get-source
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:17:34.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-872f3b67052e
+  - type: covered_by
+    from: SYM-valuation-gen-pb-set-series-source-request-get-source
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:17:34.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a20ec09b9b8a

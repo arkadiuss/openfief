@@ -461,13 +461,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b12ea7bf4de3
-  - type: executable_for
-    from: SYM-valuation-test-helper-ranked-price
-    to: TEST-valuation-ranking
-    created_at: 2026-10-29T18:19:15.411Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3458821249f9
   - type: implements
     from: SYM-valuationv1connect-settings-service-client-interface
     to: REQ-valuation-settings-service
@@ -594,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-461da9839f9e
+  - type: implements
+    from: SYM-valuation-gen-connect-market-data-service-client-set-gap-threshold
+    to: REQ-valuation-market-data-series-service
+    created_at: 2026-11-01T09:21:14.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a276bc6deb01
+  - type: covered_by
+    from: SYM-valuation-gen-connect-market-data-service-client-set-gap-threshold
+    to: TEST-core-market-data
+    created_at: 2026-11-01T09:21:14.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f33aa46df13
