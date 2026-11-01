@@ -21,6 +21,7 @@ kibi counts a requirement as *tested* only when an end-to-end test of one of its
 - Every test entity declares its `verification_scope` (`unit`, `integration` or `end_to_end`), matching what the test really runs. A unit or integration test is never relabelled to count as end to end.
 - Unit and integration tests prove the pieces and stay linked to the symbols they cover (`covered_by`); their receipts are recorded but don't make a requirement tested.
 - End-to-end tests in `test/e2e` carry a `kibi.proof-contract.v1` for the end-to-end integration, which `kibi proof inspect` proposes and `.kb/proof/integrations.json` holds; nobody hand-writes either. CI's end-to-end job runs `kibi prove`, and the requirements report the site publishes from `main` shows that run's receipts.
+- An agent may add scenarios and tests that verify a firm requirement, and link them to it, without the author; it never changes a firm requirement's statement.
 - A behavior the owner relies on gets an end-to-end scenario. Each milestone's acceptance criteria (P-10 for M0) become scenarios verified end to end, so *tested* grows where it matters, not by count.
 
 ## Setup notes
