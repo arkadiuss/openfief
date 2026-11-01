@@ -7,14 +7,14 @@
 # PLACEHOLDER: sha256 of 64 zeros. The real digests are never committed here; CI fills them in each time.
 #
 # The core and the demo-seed Job start together (docs/dev/demo.md#demo-data). They don't clash because:
-#   - the Job runs without --reset-demo, so it never drops the schemas (River's included) under the running core:
-#     it loads an empty database, or loads the same day again, which changes nothing;
+#   - the Job runs without --reset-demo: it loads an empty database, or loads the same day again with the same build,
+#     which changes nothing; a reseed drops only the ledger and valuation schemas, never River's;
 #   - the core runs with --ensure-defaults=false, so it writes no default sleeves that would make the loader take
 #     the database for a real one; the demo dataset brings its own sleeves;
 #   - both migrate under advisory locks, and both run River workers on the same queue, which River allows.
 # Each deploy that changes the Job's image re-creates it (Flux's force annotation; a Job's template is immutable).
-# On a later day that run fails with "run with --reset-demo" and leaves the loaded data alone; refreshing the demo
-# to a new day is the manual reset in docs/dev/demo.md.
+# A new image is a new build of the loader, which reseeds the demo for today on its own, so the demo's data matches
+# the code deployed: nothing stored before the first release is migrated (D-161, docs/dev/demo.md#demo-data).
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:

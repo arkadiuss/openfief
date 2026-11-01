@@ -31,7 +31,7 @@ func newAccounts(d *connectorDeps, owners ingestapp.Owners, terms accountTerms) 
 	store := ingestpg.New(d.pool)
 	return &ingestapp.Accounts{
 		Owners: owners, Ledger: d.ledger, Bindings: store, Brokers: store, Terms: terms, Pack: jurisdictionPack(), Now: d.now,
-		Deletions: d.ledger, Connections: store, Forget: terms,
+		Deletions: d.ledger, Connections: store, Forget: terms, Payouts: ledgerImporter{ledger: d.ledger},
 	}
 }
 

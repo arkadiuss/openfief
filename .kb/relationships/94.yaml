@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89da3b8b71d4
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-render-ticker-entry
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-11-01T17:26:44.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9f0a60eaa22

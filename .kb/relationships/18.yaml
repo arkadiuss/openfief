@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa0550cdb051
+  - type: executable_for
+    from: SYM-ingest-test-opening-lot-trading-currency
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:24:56.399Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-463c923ba19e

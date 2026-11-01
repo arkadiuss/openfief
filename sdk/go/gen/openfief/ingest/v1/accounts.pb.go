@@ -140,8 +140,8 @@ type Account struct {
 	// What happens to the coupons and maturities of a hand-entered bond
 	// account (D-135); BOND_PAYOUT_CASH for every other account.
 	BondPayout BondPayout `protobuf:"varint,7,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
-	// The day bond_payout took effect, YYYY-MM-DD; empty when it never
-	// changed.
+	// The day bond_payout took effect, YYYY-MM-DD; empty for the account's
+	// first setting, which covers its whole history (D-162).
 	BondPayoutSince string `protobuf:"bytes,8,opt,name=bond_payout_since,json=bondPayoutSince,proto3" json:"bond_payout_since,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -490,9 +490,14 @@ type UpdateAccountRequest struct {
 	// The new fee rule; unset keeps the account's.
 	FeeRule *FeeRule `protobuf:"bytes,7,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
 	// The new payout setting (D-135); unspecified keeps the account's.
-	BondPayout    BondPayout `protobuf:"varint,8,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	BondPayout BondPayout `protobuf:"varint,8,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
+	// The day bond_payout takes effect from, YYYY-MM-DD (D-162): today or an
+	// earlier day; empty is today. The coupons and maturities that fell due
+	// from that day on are booked anew under it on the next sync, superseding
+	// those booked before. A day after today fails with INVALID_ARGUMENT.
+	BondPayoutFrom string `protobuf:"bytes,9,opt,name=bond_payout_from,json=bondPayoutFrom,proto3" json:"bond_payout_from,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *UpdateAccountRequest) Reset() {
@@ -579,6 +584,13 @@ func (x *UpdateAccountRequest) GetBondPayout() BondPayout {
 		return x.BondPayout
 	}
 	return BondPayout_BOND_PAYOUT_UNSPECIFIED
+}
+
+func (x *UpdateAccountRequest) GetBondPayoutFrom() string {
+	if x != nil {
+		return x.BondPayoutFrom
+	}
+	return ""
 }
 
 type UpdateAccountResponse struct {
@@ -1181,7 +1193,7 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	" \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
 	"bondPayout\"N\n" +
 	"\x15CreateAccountResponse\x125\n" +
-	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xb8\x02\n" +
+	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xe2\x02\n" +
 	"\x14UpdateAccountRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1d\n" +
@@ -1193,7 +1205,8 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"taxWrapper\x126\n" +
 	"\bfee_rule\x18\a \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
 	"\vbond_payout\x18\b \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
-	"bondPayout\"N\n" +
+	"bondPayout\x12(\n" +
+	"\x10bond_payout_from\x18\t \x01(\tR\x0ebondPayoutFrom\"N\n" +
 	"\x15UpdateAccountResponse\x125\n" +
 	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xc6\x01\n" +
 	"\x12BindAccountRequest\x12\x16\n" +

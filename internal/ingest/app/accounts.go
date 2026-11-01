@@ -74,6 +74,18 @@ type AccountChange struct {
 	Fee *jurisdiction.FeeRule
 	// Payout is the new payout setting (D-135); nil keeps the account's.
 	Payout *ledger.Payout
+	// PayoutFrom is the day Payout takes effect from (D-162): today or an
+	// earlier day; zero is today.
+	PayoutFrom kernel.Date
+}
+
+// PayoutLedger is what a change of an account's payout setting reads from
+// and writes to the ledger (D-162): the account's current transactions,
+// and the import of the deletions that supersede the payout withdrawals the
+// new setting no longer makes. cmd/core implements it over ledger/app.Ledger.
+type PayoutLedger interface {
+	CurrentTransactions(ctx context.Context, account ledger.AccountID) ([]ledger.Transaction, error)
+	Import(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error)
 }
 
 // NewAccount is an account the owner creates (D-72): its name,
@@ -120,6 +132,9 @@ type Accounts struct {
 	Deletions   AccountDeletions
 	Connections AccountConnections
 	Forget      TermsForgetter
+	// Payouts supersedes the payout withdrawals a changed payout setting no
+	// longer makes (D-162); nil supersedes none.
+	Payouts PayoutLedger
 }
 
 // Create creates the account n names, records its tax wrapper, the pack's
@@ -155,7 +170,7 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 		institution = broker.Institution
 	}
 	entry.Account = ledger.Account{ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name, Sleeve: n.Sleeve}
-	if entry.Payout, err = a.payout(&entry.Account, n.Payout); err != nil {
+	if entry.Payout, err = a.firstPayout(&entry.Account, n.Payout); err != nil {
 		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
 	}
 	if err := a.storeNew(ctx, &entry, n); err != nil {
@@ -166,7 +181,12 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 
 // Update renames the stored account id and moves it to a sleeve, and
 // records its tax wrapper and fee rule when c changes them, and its payout
-// setting, in force from today (D-135); its ID and institution stay. It returns the account as stored.
+// setting (D-135), in force from the day c gives, today or earlier, today
+// when it gives none (D-162). The payout withdrawals booked from that day on
+// that the new setting no longer makes are then superseded
+// (ingest.StalePayouts), and the next sync books the coupons and
+// maturities from that day anew. Its ID and institution stay. It returns
+// the account as stored.
 func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id ledger.AccountID, c *AccountChange) (AccountEntry, error) {
 	if err := a.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing an account: %w", err)
@@ -175,21 +195,8 @@ func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id l
 	if err != nil {
 		return AccountEntry{}, err
 	}
-	entry, err := a.entry(ctx, acc)
+	entry, from, err := a.changed(ctx, acc, c)
 	if err != nil {
-		return AccountEntry{}, err
-	}
-	if c.Wrapper != "" {
-		entry.Wrapper = c.Wrapper
-	}
-	if c.Fee != nil {
-		entry.Fee = *c.Fee
-	}
-	if err = a.checkTerms(entry.Wrapper, &entry.Fee); err != nil {
-		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
-	}
-	entry.Name, entry.Sleeve = c.Name, c.Sleeve
-	if entry.Payout, err = a.payout(&entry.Account, c.Payout); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
 	if err := a.save(ctx, entry.Account); err != nil {
@@ -197,6 +204,11 @@ func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id l
 	}
 	if err := a.recordTerms(ctx, id, c.Wrapper, c.Fee); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
+	}
+	if c.Payout != nil {
+		if err := a.supersedePayouts(ctx, &entry.Account, from); err != nil {
+			return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
+		}
 	}
 	return entry, nil
 }
@@ -271,23 +283,50 @@ func (a *Accounts) newEntry(n *NewAccount) (AccountEntry, error) {
 	return entry, nil
 }
 
-// payout returns acc's payout setting with p in force from today, or acc's
-// own for nil p, checked: only a hand-entered bond account may pay out
-// (ingest.CheckPayout), as an invalid account otherwise.
-func (a *Accounts) payout(acc *ledger.Account, p *ledger.Payout) (*ledger.PayoutSetting, error) {
+// firstPayout returns a new account's payout setting p, which covers its
+// whole history (D-162), or acc's own, none, for nil p, checked as payout
+// checks it.
+func (a *Accounts) firstPayout(acc *ledger.Account, p *ledger.Payout) (*ledger.PayoutSetting, error) {
 	if p == nil {
 		return acc.Payout, nil
 	}
 	if err := ingest.CheckPayout(ingest.InstitutionID(acc.Institution), *p); err != nil {
 		return nil, fmt.Errorf("%w: %w", ledger.ErrInvalidAccount, err)
 	}
+	return &ledger.PayoutSetting{Payout: *p}, nil
+}
+
+// payout returns acc's payout setting with p in force from the day from
+// (D-162), or acc's own for nil p, checked: only a hand-entered bond
+// account may pay out (ingest.CheckPayout), as an invalid account
+// otherwise.
+func (a *Accounts) payout(acc *ledger.Account, p *ledger.Payout, from kernel.Date) (*ledger.PayoutSetting, error) {
+	if p == nil {
+		return acc.Payout, nil
+	}
+	if err := ingest.CheckPayout(ingest.InstitutionID(acc.Institution), *p); err != nil {
+		return nil, fmt.Errorf("%w: %w", ledger.ErrInvalidAccount, err)
+	}
+	s := acc.PayoutSetting().Changed(*p, from)
+	return &s, nil
+}
+
+// payoutFrom returns the day a payout change takes effect from: from, or
+// today when it is zero, and never after today (ingest.CheckPayoutFrom),
+// as an invalid account otherwise.
+func (a *Accounts) payoutFrom(from kernel.Date) (kernel.Date, error) {
 	now := a.Now().UTC()
 	today, err := kernel.NewDate(now.Year(), now.Month(), now.Day())
 	if err != nil {
-		return nil, fmt.Errorf("today: %w", err)
+		return kernel.Date{}, fmt.Errorf("today: %w", err)
 	}
-	s := acc.PayoutSetting().Changed(*p, today)
-	return &s, nil
+	if from.IsZero() {
+		return today, nil
+	}
+	if err := ingest.CheckPayoutFrom(from, today); err != nil {
+		return kernel.Date{}, fmt.Errorf("%w: %w", ledger.ErrInvalidAccount, err)
+	}
+	return from, nil
 }
 
 // checkTerms checks that w is one of the pack's wrappers and fee a valid
@@ -396,4 +435,57 @@ func (a *Accounts) connect(ctx context.Context, account ledger.AccountID, instan
 // hasAccount reports whether accounts hold id.
 func hasAccount(accounts []ledger.Account, id ledger.AccountID) bool {
 	return slices.ContainsFunc(accounts, func(acc ledger.Account) bool { return acc.ID == id })
+}
+
+// supersedePayouts imports the deletions of acc's payout withdrawals dated
+// on or after from that its payout setting no longer makes
+// (ingest.StalePayouts); without Payouts, none. Running it again finds
+// none left.
+func (a *Accounts) supersedePayouts(ctx context.Context, acc *ledger.Account, from kernel.Date) error {
+	if a.Payouts == nil {
+		return nil
+	}
+	current, err := a.Payouts.CurrentTransactions(ctx, acc.ID)
+	if err != nil {
+		return fmt.Errorf("loading transactions: %w", err)
+	}
+	stale, err := ingest.StalePayouts(current, acc.PayoutSetting(), from)
+	if err != nil {
+		return fmt.Errorf("superseding payout withdrawals: %w", err)
+	}
+	if len(stale) == 0 {
+		return nil
+	}
+	if _, err := a.Payouts.Import(ctx, stale, nil); err != nil {
+		return fmt.Errorf("superseding payout withdrawals: %w", err)
+	}
+	return nil
+}
+
+// changed returns account acc as c changes it, checked, with the day a
+// payout change takes effect from: its name and sleeve, its tax wrapper
+// and fee rule when c gives them, and its payout setting (payout).
+func (a *Accounts) changed(ctx context.Context, acc ledger.Account, c *AccountChange) (AccountEntry, kernel.Date, error) {
+	entry, entryErr := a.entry(ctx, acc)
+	if entryErr != nil {
+		return AccountEntry{}, kernel.Date{}, entryErr
+	}
+	if c.Wrapper != "" {
+		entry.Wrapper = c.Wrapper
+	}
+	if c.Fee != nil {
+		entry.Fee = *c.Fee
+	}
+	if err := a.checkTerms(entry.Wrapper, &entry.Fee); err != nil {
+		return AccountEntry{}, kernel.Date{}, err
+	}
+	entry.Name, entry.Sleeve = c.Name, c.Sleeve
+	from, err := a.payoutFrom(c.PayoutFrom)
+	if err != nil {
+		return AccountEntry{}, kernel.Date{}, err
+	}
+	if entry.Payout, err = a.payout(&entry.Account, c.Payout, from); err != nil {
+		return AccountEntry{}, kernel.Date{}, err
+	}
+	return entry, from, nil
 }

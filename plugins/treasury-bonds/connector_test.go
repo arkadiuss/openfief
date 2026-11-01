@@ -229,7 +229,8 @@ func heldRequest(mode connectorv1.Mode) *connectorv1.SyncRequest {
 			{
 				AccountId: "acc-new", TaxWrapper: "taxable",
 				BondPayout: connectorv1.BondPayout_BOND_PAYOUT_PAID_OUT, BondPayoutSince: "2026-01-01",
-				Lots: []*connectorv1.OpenLot{{Instrument: coi, Quantity: "1", Opened: "2024-10-10", Cost: pln("100")}},
+				BondPayoutEarlier: []*connectorv1.BondPayoutPeriod{{BondPayout: connectorv1.BondPayout_BOND_PAYOUT_CASH}},
+				Lots:              []*connectorv1.OpenLot{{Instrument: coi, Quantity: "1", Opened: "2024-10-10", Cost: pln("100")}},
 			},
 		},
 		BondTerms: []*connectorv1.BondTerms{
@@ -324,7 +325,8 @@ func TestSyncBooksAccountsNeverSeeded(t *testing.T) {
 	client := served(t, fakeCPI{}, fakeRates{})
 	// An opening batch books the accounts never seeded, whose lots are on
 	// their real purchase dates (D-98), from purchase on; the coupon that
-	// fell due after the payout setting took effect is paid out (D-135).
+	// fell due after the payout setting took effect is paid out (D-135), and
+	// the one before it follows the cash setting in force then (D-162).
 	opening, err := client.Sync(t.Context(), asCore(heldRequest(connectorv1.Mode_MODE_OPENING)))
 	if err != nil {
 		t.Fatalf("opening Sync: %v", err)

@@ -41,10 +41,10 @@ In xStation, open the account's operation history and export it to Excel. For a 
 
 On the account's page, under **Upload statement**, **How the account starts** offers the two starts while the account hasn't started:
 
-- **From the holdings of a current statement (opening).** The connector reads `Open Positions` and makes one opening lot per position: its volume, first acquired on its open date, at a cost of its volume times its open price. The account goes live on the date the report was generated, in UTC. Enter the account's cash on that date under **Cash at the start**, in the account's currency (the export holds no cash balance), and upload. You enter the cash once: a later upload with cash is refused. Leave it empty if the account held no cash; it then goes live with its first opening lot whose ticker you confirm.
+- **From the holdings of a current statement (opening).** The connector reads `Open Positions` and makes one opening lot per position: its volume, first acquired on its open date, at a cost of its volume times its open price. The account goes live on the date the report was generated, in UTC, as soon as you upload, even while every position still waits for its ticker (D-160): every later upload is in transactions mode. Enter the account's cash on that date under **Cash at the start**, in the account's currency (the export holds no cash balance), with this upload. You enter the cash once: a later upload with cash is refused. Leave it empty if the account held no cash.
 - **From a statement of its whole history (transactions).** Every deposit, buy, sale and dividend from the first deposit on is booked, so cash and holdings add up without any cash entered.
 
-A position quoted in another currency than the account's, such as a London ETF in a PLN account, isn't seeded yet: the export gives its open price in the instrument's currency and no rate, so the upload lists it as a problem ([Implementation questions](../implementation-questions.md)).
+The export gives each open price in the instrument's trading currency without naming it, so an opening lot's cost is booked in the currency of the listing you confirm for its ticker, or, when the listing names none, of the exchange its market suffix names, such as PLN for `.PL` and EUR for `.DE` (D-159). A London price is in pence, so a `.UK` position's cost is booked in pounds, the price divided by 100. A position on a market OpenFief knows no exchange of is listed as a problem.
 
 The first upload names the XTB account it found. If it says the broker account isn't mapped, pick it for this account on the **Accounts** page (D-72) and upload the file again. The XTB account number is kept only for that mapping; the read API never serves it (D-121).
 
@@ -55,7 +55,7 @@ The upload's result lists the rows left out. Rows that wait for a ticker's ISIN 
 - Check the proposal against the instrument's documents or the exchange's site, then press **Confirm**.
 - When no proposal is shown, type the ISIN and press **Save**. A US listing never gets a proposal: the market-data connector covers European exchanges only (D-51).
 
-Each confirmation books that ticker's waiting rows at once, opening lots too, and holds for every later upload. It can't be changed afterwards, so check it first.
+Each confirmation books that ticker's waiting rows at once, opening lots too, which join the account's start on its go-live date, and holds for every later upload. It can't be changed afterwards, so check it first.
 
 ## 4. Upload again whenever you like
 
@@ -70,6 +70,6 @@ Upload a newer export at any time, without choosing anything: once the account h
 | `Stock purchase`, `Stock sell` of a stock or ETF | A buy or sale of the ticker, its units from the comment and its cost or proceeds in the account's currency, once the ticker is confirmed |
 | `Dividend` with its `Withholding tax` | A dividend of the ticker with the tax withheld, once the ticker is confirmed |
 | Open and closed CFD positions | Flagged as not supported (D-24) |
-| `Free funds interest` and its tax, other types | Left out as not supported yet ([Implementation questions](../implementation-questions.md)) |
+| `Free funds interest` and its tax, other types | Left out as not supported yet; D-152 books free-funds interest as cash income |
 
 Amounts are rounded to the grosz (or the cent): the export stores them as binary floating-point numbers, and the rounding takes away their last-digit noise. An amount with a real fraction of a grosz is refused as a problem instead. [Ingest](../concepts/ingest.md#mapping-an-xstation-export) explains the mapping in detail.

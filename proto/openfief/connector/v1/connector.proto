@@ -338,7 +338,7 @@ message TickerTransaction {
   string quantity = 7;
   // A buy's cost, a sale's proceeds, a dividend's gross amount, or an
   // opening lot's cost; positive, or zero for an opening lot that cost
-  // nothing.
+  // nothing. Unset for an opening lot priced by open_price.
   Money amount = 8;
   // A buy's or sale's fee, or the tax withheld from a dividend; unset for
   // none.
@@ -350,6 +350,13 @@ message TickerTransaction {
   // The date an opening lot's units were first acquired, on or before its
   // date; empty for any other kind.
   string lot_opened = 12;
+  // An opening lot's open price per unit, a non-negative decimal, in its
+  // instrument's trading currency, which the institution doesn't name
+  // (D-159), with amount unset: the core books the lot's cost, quantity
+  // times this price, in the currency of the confirmed ticker's listing, or
+  // of the exchange its market names, once the owner confirms its ISIN.
+  // Empty for any other kind and for an opening lot priced by amount.
+  string open_price = 13;
 }
 
 message LookupInstrumentsRequest {
@@ -364,6 +371,10 @@ message InstrumentProposal {
   string isin = 2;
   // The instrument's name at the market-data source, for the owner.
   string name = 3;
+  // The currency the listing found trades in, as the source names it, such
+  // as "PLN", or "GBX" for a London listing quoted in pence; empty when the
+  // source gives none (D-159).
+  string currency = 4;
 }
 
 message LookupInstrumentsResponse {
@@ -422,10 +433,24 @@ message AccountHoldings {
   // maturities of a hand-entered bond account stay as its cash or are paid
   // out. Unspecified is BOND_PAYOUT_CASH.
   BondPayout bond_payout = 6;
-  // The day bond_payout took effect, "YYYY-MM-DD", or empty for an account
-  // that never changed it: what falls due before it follows the other
-  // setting, so a change never rewrites what was booked.
+  // The day bond_payout took effect, "YYYY-MM-DD", or empty for an
+  // account's first setting, which covers its whole history (D-162): what
+  // falls due before it follows the setting in force on its day, in
+  // bond_payout_earlier.
   string bond_payout_since = 7;
+  // The settings in force before bond_payout_since, oldest first; empty
+  // for an account that never changed its setting (D-162). The first has
+  // no since; each later one took effect on a later day.
+  repeated BondPayoutPeriod bond_payout_earlier = 8;
+}
+
+// BondPayoutPeriod is a payout setting in force from since until the next
+// one took effect (D-162).
+message BondPayoutPeriod {
+  BondPayout bond_payout = 1;
+  // The day it took effect, "YYYY-MM-DD", or empty for an account's first
+  // setting, which covers its history from the start.
+  string since = 2;
 }
 
 // BondPayout is what happens to what a hand-entered bond account's bonds

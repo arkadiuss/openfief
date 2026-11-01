@@ -182,7 +182,7 @@ func PayoutWithdrawal(t *ledger.Transaction, payout ledger.PayoutSetting) (ledge
 		return ledger.Transaction{}, false, nil
 	}
 	h := ledger.TransactionHeader{
-		Key:     ledger.TransactionKey{Source: t.Key.Source, ExternalID: t.Key.ExternalID + ":payout"},
+		Key:     ledger.TransactionKey{Source: t.Key.Source, ExternalID: t.Key.ExternalID + ingest.PayoutSuffix},
 		Account: t.Account, Date: t.Date,
 	}
 	w, err := ledger.NewWithdrawal(h, cash)

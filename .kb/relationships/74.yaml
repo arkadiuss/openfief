@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ee03d428187
+  - type: implements
+    from: SYM-ingest-listing-of
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-01T17:24:22.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f4634a6191f
+  - type: covered_by
+    from: SYM-ingest-listing-of
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:24:22.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4cdaee5660b

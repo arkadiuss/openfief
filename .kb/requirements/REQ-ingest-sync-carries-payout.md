@@ -1,6 +1,6 @@
 ---
 title: Each sync request must carry each bound account's payout setting and the day it took effect, and a plugin must refuse an unknown setting or a paid-out one without a valid day.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-135
 tags:
   - strict-modeling

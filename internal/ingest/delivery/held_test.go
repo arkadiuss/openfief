@@ -69,8 +69,9 @@ func TestHeldRefuses(t *testing.T) {
 			r.BondTerms[0].Instrument = &connectorv1.Instrument{Isin: "US0378331005", Symbol: "AAPL"}
 		}},
 		{name: "an unknown payout setting", change: func(r *connectorv1.SyncRequest) { r.Accounts[0].BondPayout = 9 }},
-		{name: "paid out since no day", change: func(r *connectorv1.SyncRequest) {
+		{name: "a later setting since no day", change: func(r *connectorv1.SyncRequest) {
 			r.Accounts[0].BondPayout = connectorv1.BondPayout_BOND_PAYOUT_PAID_OUT
+			r.Accounts[0].BondPayoutEarlier = []*connectorv1.BondPayoutPeriod{{BondPayout: connectorv1.BondPayout_BOND_PAYOUT_CASH}}
 		}},
 		{name: "paid out since a day that is no date", change: func(r *connectorv1.SyncRequest) {
 			r.Accounts[0].BondPayout, r.Accounts[0].BondPayoutSince = connectorv1.BondPayout_BOND_PAYOUT_PAID_OUT, "1.1.2026"

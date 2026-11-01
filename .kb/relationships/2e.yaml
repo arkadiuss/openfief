@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43f537f85699
+  - type: executable_for
+    from: SYM-ingest-test-stale-payouts
+    to: TEST-ingest-payout
+    created_at: 2026-11-01T17:25:48.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6cf1aaab299

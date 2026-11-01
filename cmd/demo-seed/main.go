@@ -8,7 +8,9 @@
 // It is for demo databases only. It refuses a database that holds ledger or
 // valuation data without the demo marker it writes itself, so it cannot
 // overwrite a real portfolio by accident; --reset-demo empties a marked demo
-// database first. It logs internal IDs and counts only, never amounts.
+// database first, and so does a demo database another build of the loader
+// filled: data stored before the first release is reseeded, not migrated
+// (D-161). It logs internal IDs and counts only, never amounts.
 //
 // Usage:
 //
@@ -71,6 +73,10 @@ type config struct {
 	FXSource string
 	// Wait bounds how long the revaluations may take.
 	Wait time.Duration
+	// Loader names this build of the loader (loaderBuild): a marked
+	// database another build filled is reseeded (D-161). Empty never
+	// reseeds on its own.
+	Loader string
 }
 
 func main() {
@@ -79,6 +85,9 @@ func main() {
 	if err != nil {
 		log.Error("demo-seed: bad arguments", "error", err)
 		os.Exit(exitUsage)
+	}
+	if cfg.Loader, err = loaderBuild(); err != nil {
+		log.Warn("demo-seed: unknown build, a demo another build loaded is not reseeded", "error", err)
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	err = run(ctx, &cfg, log)

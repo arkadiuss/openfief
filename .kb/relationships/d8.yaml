@@ -559,13 +559,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e092e39b982
-  - type: implements
-    from: SYM-connectorv1-account-holdings-get-bond-payout-since
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:53:47.850Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3b9a43e0e7d7
   - type: covered_by
     from: SYM-connectorv1-account-holdings-get-bond-payout-since
     to: TEST-ingest-connectrpc-held
@@ -587,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe477af5e277
+  - type: implements
+    from: SYM-connectorv1-account-holdings-get-bond-payout-since
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:34:20.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2228a434dff8

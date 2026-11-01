@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-781391c416c1
+  - type: executable_for
+    from: SYM-core-test-helper-xtb-listing-connector-lookup-instruments
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:20:11.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1225caaaad65

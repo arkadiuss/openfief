@@ -196,7 +196,8 @@ func TestAccountTermsForms(t *testing.T) {
 	}
 }
 
-// TestBondPayoutForm shows the payout setting (D-135) only on a
+// TestBondPayoutForm shows the payout setting (D-135), with the day a
+// change takes effect from (D-162), only on a
 // hand-entered bond account's form, and hands the chosen one to the core.
 func TestBondPayoutForm(t *testing.T) {
 	t.Parallel()
@@ -207,18 +208,20 @@ func TestBondPayoutForm(t *testing.T) {
 	}
 	h.read.locked(func() { h.read.institution = bondInstitution })
 	page = h.serve(t, withSession(request(http.MethodGet, "/accounts", ""), ownerSession))
-	wantBody(t, page, `name="bond_payout"`, "Coupons and maturities", `<option value="paid-out">Paid out</option>`)
+	wantBody(t, page, `name="bond_payout"`, "Coupons and maturities", `<option value="paid-out">Paid out</option>`,
+		`name="bond_payout_from" type="date"`, "Change takes effect from")
 	for _, tt := range []struct {
-		posted string
-		want   ingestv1.BondPayout
+		posted   string
+		want     ingestv1.BondPayout
+		wantFrom string
 	}{
-		{"&bond_payout=paid-out", ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT},
-		{"&bond_payout=cash", ingestv1.BondPayout_BOND_PAYOUT_CASH},
-		{"", ingestv1.BondPayout_BOND_PAYOUT_UNSPECIFIED},
+		{"&bond_payout=paid-out", ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT, ""},
+		{"&bond_payout=cash&bond_payout_from=2026-01-01", ingestv1.BondPayout_BOND_PAYOUT_CASH, "2026-01-01"},
+		{"", ingestv1.BondPayout_BOND_PAYOUT_UNSPECIFIED, ""},
 	} {
 		wantStatus(t, h.serve(t, withSession(form("/accounts/"+accountID+"/edit", "name=Bonds&sleeve=bonds"+tt.posted), ownerSession)), http.StatusSeeOther)
-		if got := h.accounts.lastUpdate().GetBondPayout(); got != tt.want {
-			t.Errorf("posting %q: UpdateAccount payout = %v, want %v", tt.posted, got, tt.want)
+		if got := h.accounts.lastUpdate(); got.GetBondPayout() != tt.want || got.GetBondPayoutFrom() != tt.wantFrom {
+			t.Errorf("posting %q: UpdateAccount payout = %v from %q, want %v from %q", tt.posted, got.GetBondPayout(), got.GetBondPayoutFrom(), tt.want, tt.wantFrom)
 		}
 	}
 }

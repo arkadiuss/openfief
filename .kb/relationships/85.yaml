@@ -524,3 +524,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1fdf31673044
+  - type: verified_by
+    from: SCEN-ingest-xtb-opening-lot-trading-currency
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T16:48:17.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7539bca62487
+  - type: verified_by
+    from: SCEN-ingest-xtb-opening-lot-trading-currency
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-11-01T16:48:17.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7181f2fe3789
+  - type: verified_by
+    from: SCEN-ingest-xtb-opening-lot-trading-currency
+    to: TEST-plugins-xtb
+    created_at: 2026-11-01T16:48:17.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f8cd2417369

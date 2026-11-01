@@ -16,7 +16,8 @@ import (
 // ForgetAccount removes what the ingest schema holds of a deleted account
 // (D-120), in one transaction: its connector bindings, and the mappings of
 // the broker accounts mapped to it, which are left unmapped as when first
-// reported. Forgetting it again changes nothing.
+// reported, and the go-live an opening upload recorded for it (D-160).
+// Forgetting it again changes nothing.
 func (s *Store) ForgetAccount(ctx context.Context, account ledger.AccountID) error {
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, `DELETE FROM ingest.connector_bindings WHERE account_id = $1`, string(account)); err != nil {
@@ -26,6 +27,9 @@ func (s *Store) ForgetAccount(ctx context.Context, account ledger.AccountID) err
 			UPDATE ingest.broker_accounts SET account_id = NULL, mapped_at = NULL, seeded = false
 			WHERE account_id = $1`, string(account)); err != nil {
 			return fmt.Errorf("broker accounts: %w", err)
+		}
+		if _, err := tx.Exec(ctx, `DELETE FROM ingest.account_starts WHERE account_id = $1`, string(account)); err != nil {
+			return fmt.Errorf("start: %w", err)
 		}
 		return nil
 	})

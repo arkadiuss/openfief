@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-999b8a23e670
+  - type: executable_for
+    from: SYM-core-test-helper-check-opening-starts-account
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:20:26.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c6804568842

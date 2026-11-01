@@ -573,13 +573,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcd7022821dd
-  - type: implements
-    from: SYM-ingestv1-update-account-request-get-bond-payout
-    to: REQ-ingest-bond-payout-setting
-    created_at: 2026-11-01T07:55:01.109Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d5c0af483c9c
   - type: covered_by
     from: SYM-ingestv1-update-account-request-get-bond-payout
     to: TEST-ingest-connectapi-accounts
@@ -587,13 +580,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64cec2474d6d
-  - type: implements
-    from: SYM-ingest-xtb-is-digits
-    to: REQ-ingest-xtb-start-open-positions
-    created_at: 2026-11-01T08:05:44.379Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a45519a97b37
   - type: covered_by
     from: SYM-ingest-xtb-is-digits
     to: TEST-ingest-xtb-opening
@@ -643,3 +629,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-312b67daa42f
+  - type: implements
+    from: SYM-core-ledger-importer-current-transactions
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:19:49.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-549213b17fbd
+  - type: covered_by
+    from: SYM-core-ledger-importer-current-transactions
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T17:19:49.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5b526e83e0e
+  - type: implements
+    from: SYM-ingest-delivery-payout-period-from
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:23:27.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-419f0161b7c8
+  - type: covered_by
+    from: SYM-ingest-delivery-payout-period-from
+    to: TEST-ingest-delivery-held
+    created_at: 2026-11-01T17:23:27.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d51380aa6ff6
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-bond-payout
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:33:59.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f4455c1c16b
+  - type: implements
+    from: SYM-ingest-xtb-is-digits
+    to: REQ-ingest-xtb-opening-lot-trading-currency
+    created_at: 2026-11-01T17:38:28.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbc61408180d

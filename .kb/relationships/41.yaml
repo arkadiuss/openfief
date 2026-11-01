@@ -643,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62df83ae6905
+  - type: implements
+    from: SYM-ingest-connectrpc-date-to
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:23:19.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-019f1062ef15
+  - type: covered_by
+    from: SYM-ingest-connectrpc-date-to
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T17:23:19.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81d51a781fc9

@@ -12,7 +12,8 @@ import (
 
 // newUploads returns the statement upload use case (D-7, D-49, D-109) over
 // d: the owner's sessions checked by owners, the account's bound instance
-// from the ingest schema, its seeding and whether it holds transactions
+// from the ingest schema, its seeding, or the start an opening upload
+// recorded (D-160), and whether it holds transactions
 // from the ledger for the mode (D-109, D-136), the
 // file streamed to it through d.entries with its media type sniffed from
 // its first bytes, its delivery imported into the ledger and valuation
@@ -23,7 +24,7 @@ import (
 func newUploads(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Uploads {
 	store := ingestpg.New(d.pool)
 	connectors := entryConnectors(d, store)
-	connectors.Seeding = d.ledger
+	connectors.Seeding, connectors.Starts = d.ledger, store
 	return &ingestapp.Uploads{
 		Owners: owners, Bindings: store, Batches: store, Connectors: connectors, Instances: d.entries,
 		NewBatchID: newBatchID, History: d.ledger,

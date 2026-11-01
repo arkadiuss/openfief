@@ -192,12 +192,14 @@ func (s *server) createAccount(w http.ResponseWriter, r *http.Request, sess sess
 }
 
 // updateAccount hands an account's new name, sleeve, tax wrapper, sale
-// fee rule or payout setting (D-135) to the core (UpdateAccount).
+// fee rule or payout setting (D-135), with the day a payout change takes
+// effect from (D-162), to the core (UpdateAccount).
 func (s *server) updateAccount(w http.ResponseWriter, r *http.Request, sess session) {
 	_, err := s.accounts.UpdateAccount(r.Context(), connect.NewRequest(&ingestv1.UpdateAccountRequest{
 		Origin: sess.Origin, SessionToken: sess.Token, AccountId: r.PathValue("id"),
 		Name: strings.TrimSpace(r.PostFormValue("name")), Sleeve: r.PostFormValue("sleeve"),
 		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r), BondPayout: postedPayout(r),
+		BondPayoutFrom: strings.TrimSpace(r.PostFormValue("bond_payout_from")),
 	}))
 	s.accountEntryDone(w, r, sess, "UpdateAccount", err)
 }

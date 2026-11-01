@@ -538,3 +538,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e673c780fda
+  - type: constrains
+    from: REQ-ingest-sync-carries-payout-history
+    to: FACT-SUBJECT-8EC6E0F87B5129F6
+    created_at: 2026-11-01T16:50:12.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7afb44b3da51
+  - type: requires_property
+    from: REQ-ingest-sync-carries-payout-history
+    to: FACT-PROP-105351AB6CC23133
+    created_at: 2026-11-01T16:50:12.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f78fa7304a8
+  - type: specified_by
+    from: REQ-ingest-sync-carries-payout-history
+    to: SCEN-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T16:50:12.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-407b5c8c7e7f
+  - type: supersedes
+    from: REQ-ingest-sync-carries-payout-history
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T16:50:12.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3ff2af3f4a0

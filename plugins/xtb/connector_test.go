@@ -197,7 +197,7 @@ func TestImportFileOpening(t *testing.T) {
 	wantLot := []*connectorv1.TickerTransaction{{
 		Symbol: "TESTA.PL", Key: &connectorv1.TransactionKey{Source: "xtb", ExternalId: "open-position:TESTA.PL@20260105T100000Z#1"},
 		BrokerAccount: xtbtest.Account, Kind: connectorv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT, Date: "2026-01-31",
-		Quantity: "4", Amount: &connectorv1.Money{Amount: "400", Currency: "PLN"}, Description: "opening lot TESTA.PL",
+		Quantity: "4", OpenPrice: "100", Description: "opening lot TESTA.PL",
 		Ref: "Open Positions#10", LotOpened: "2026-01-05",
 	}}
 	if diff := cmp.Diff(wantLot, d.GetTickerTransactions(), protocmp.Transform()); diff != "" {

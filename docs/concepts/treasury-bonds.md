@@ -236,4 +236,4 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 ## Not built yet
 
 - **D-9**, **D-97**: anything that fetches series terms (the owner types each series' terms with its lots; D-97 waits on OQ-30); and an import of the bond service's export, if one exists (OQ-22).
-- **D-127**: the rates of 2028 on and the exempt amounts of 2030 on need the NBP reference rate and the CPI index the core doesn't store yet ([Implementation questions](../implementation-questions.md)).
+- **D-127**: the rates of 2028 on and the exempt amounts of 2030 on, which D-145 takes from the finance minister's announcements added to the act's data with each release.

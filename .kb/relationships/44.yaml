@@ -872,5 +872,32 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-bfb8c785aa2a
+      },
+    {
+        type: verified_by,
+        from: SCEN-ingest-opening-upload-starts-account,
+        to: TEST-ingest-golive,
+        created_at: 2026-11-01T16:48:20.499Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-21f80d2e38fd
+      },
+    {
+        type: verified_by,
+        from: SCEN-ingest-opening-upload-starts-account,
+        to: TEST-ingest-app-starts,
+        created_at: 2026-11-01T16:48:20.624Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-4ebb61dd938d
+      },
+    {
+        type: verified_by,
+        from: SCEN-ingest-opening-upload-starts-account,
+        to: TEST-core-xtb-opening,
+        created_at: 2026-11-01T16:48:20.697Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-d600f80caa6b
       }
   ]
