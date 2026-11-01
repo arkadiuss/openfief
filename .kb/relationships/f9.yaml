@@ -622,3 +622,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3469ddd033c1
+  - type: implements
+    from: SYM-ui-build-line
+    to: REQ-ui-performance-chart-twr-index-from-charts-start
+    created_at: 2026-11-01T13:11:44.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b299a3d76e1a
+  - type: implements
+    from: SYM-ui-build-line
+    to: REQ-ui-time-chart-marks-tracking-start
+    created_at: 2026-11-01T13:11:44.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e32622fe8b8
+  - type: covered_by
+    from: SYM-ui-build-line
+    to: TEST-ui-chart-start
+    created_at: 2026-11-01T13:11:44.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a5a8bb37ac1

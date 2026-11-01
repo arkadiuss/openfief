@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7a371cd9a2b
+  - type: executable_for
+    from: SYM-views-app-test-helper-opening-usd
+    to: TEST-views-app-performance
+    created_at: 2026-11-01T13:13:11.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d1d90c0db13

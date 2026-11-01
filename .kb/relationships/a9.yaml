@@ -428,13 +428,6 @@ relationships:
     id: rel-87efc3fdf502
   - type: implements
     from: SYM-ui-performance-view
-    to: REQ-ui-performance-chart
-    created_at: 2026-10-30T06:33:21.921Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2f1abeba91d6
-  - type: implements
-    from: SYM-ui-performance-view
     to: REQ-ui-transfers-page
     created_at: 2026-10-30T06:33:21.988Z
     created_by: kibi/upsert
@@ -601,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d90a5970f957
+  - type: implements
+    from: SYM-ui-performance-view
+    to: REQ-ui-performance-chart-from-charts-start
+    created_at: 2026-11-01T13:04:27.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-999b8a23e670

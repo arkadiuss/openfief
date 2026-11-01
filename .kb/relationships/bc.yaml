@@ -251,13 +251,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-08763bed0746
-  - type: implements
-    from: SYM-views-app-model-days
-    to: REQ-views-model-line-from-go-live
-    created_at: 2026-10-28T23:38:24.217Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8ebc65fb7e88
   - type: covered_by
     from: SYM-views-app-model-days
     to: TEST-views-app-model
@@ -265,13 +258,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef93af1df144
-  - type: validates
-    from: TEST-ui-model
-    to: REQ-views-model-line-from-go-live
-    created_at: 2026-10-29T00:07:41.787Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9ef4b63c4aaa
   - type: validates
     from: TEST-ui-model
     to: REQ-portfolio-model-optional
@@ -552,27 +538,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43685a025eec
-  - type: validates
-    from: TEST-ui-model
-    to: REQ-ui-performance-chart
-    created_at: 2026-10-30T06:33:03.250Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fba5a80d3fd7
-  - type: validates
-    from: TEST-ui-model
-    to: REQ-ui-performance-chart-twr-index
-    created_at: 2026-10-30T06:33:03.336Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a5296114fe59
-  - type: validates
-    from: TEST-ui-model
-    to: REQ-views-model-line-on-performance-chart
-    created_at: 2026-10-30T06:33:03.441Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eb07056311b0
   - type: implements
     from: SYM-connectorv1-bond-purchase-enum-descriptor
     to: REQ-ingest-bond-lot-messages
@@ -741,3 +706,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1af1e65bdbab
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-ui-performance-chart-from-charts-start
+    created_at: 2026-11-01T13:03:29.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1c6d53033ac
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-ui-performance-chart-twr-index-from-charts-start
+    created_at: 2026-11-01T13:03:29.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b15e3e4eded2
+  - type: validates
+    from: TEST-ui-model
+    to: REQ-views-model-line-from-charts-start
+    created_at: 2026-11-01T13:03:29.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8338541e0ca
+  - type: implements
+    from: SYM-views-app-model-days
+    to: REQ-views-model-line-from-charts-start
+    created_at: 2026-11-01T13:05:48.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9be3cff079c

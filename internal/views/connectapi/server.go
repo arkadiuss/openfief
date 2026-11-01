@@ -313,7 +313,9 @@ func (s *readService) GetAllocation(ctx context.Context, req *connect.Request[vi
 	return connect.NewResponse(pbAllocation(&a)), nil
 }
 
-// GetPerformance answers GET /v1/performance.
+// GetPerformance answers GET /v1/performance: the portfolio's
+// time-weighted return, or one account's when the request names it
+// (D-138).
 func (s *readService) GetPerformance(ctx context.Context, req *connect.Request[viewsv1.GetPerformanceRequest]) (*connect.Response[viewsv1.GetPerformanceResponse], error) {
 	from, err := parseOptionalDate(req.Msg.GetFrom())
 	if err != nil {
@@ -323,7 +325,12 @@ func (s *readService) GetPerformance(ctx context.Context, req *connect.Request[v
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}
-	p, err := s.views.Performance(ctx, from, to)
+	var p app.Performance
+	if id := req.Msg.GetAccountId(); id != "" {
+		p, err = s.views.AccountPerformance(ctx, ledger.AccountID(id), from, to)
+	} else {
+		p, err = s.views.Performance(ctx, from, to)
+	}
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}

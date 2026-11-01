@@ -81,18 +81,43 @@ func TestPerformance(t *testing.T) {
 		from, to       string
 		change         func(t *testing.T, f *fixture)
 		wantFrom, want string
-		days           func(t *testing.T) []performanceDay
-		gap            views.PerformanceGap
+		// start is the charts' default start, "" with no transactions.
+		start string
+		days  func(t *testing.T) []performanceDay
+		gap   views.PerformanceGap
 	}{
 		{
-			name: "from go-live to the valued-through date by default", wantFrom: "2026-03-01", want: "2026-03-03", days: threeDays,
+			name: "from the first day to the valued-through date by default, with no seeded account", wantFrom: "2026-03-01", want: "2026-03-03", start: "2026-03-01", days: threeDays,
 		},
 		{
-			name: "a from before go-live starts at go-live, a to after the valued-through date stops there",
-			from: "2026-01-01", to: "2026-03-05", wantFrom: "2026-03-01", want: "2026-03-05", days: threeDays, gap: views.GapUnvalued,
+			name: "an account seeded from a starting balance later moves the default start to its seeding day",
+			change: func(t *testing.T, f *fixture) {
+				t.Helper()
+				f.ledger.txs["acc-2"] = []ledger.Transaction{openingUSD(t)}
+			},
+			wantFrom: "2026-03-02", want: "2026-03-03", start: "2026-03-02",
+			days: func(t *testing.T) []performanceDay {
+				t.Helper()
+				return []performanceDay{
+					{date(t, "2026-03-02"), dec(t, "1500"), dec(t, "400"), dec(t, "100")},
+					{date(t, "2026-03-03"), dec(t, "1450"), dec(t, "0"), dec(t, "96.6666666667")},
+				}
+			},
 		},
 		{
-			name: "a later from starts the index there", from: "2026-03-02", wantFrom: "2026-03-02", want: "2026-03-03",
+			name: "a chosen start before the seeding day is kept, with the default still named",
+			change: func(t *testing.T, f *fixture) {
+				t.Helper()
+				f.ledger.txs["acc-2"] = []ledger.Transaction{openingUSD(t)}
+			},
+			from: "2026-03-01", wantFrom: "2026-03-01", want: "2026-03-03", start: "2026-03-02", days: threeDays,
+		},
+		{
+			name: "a from before the first day starts on it, a to after the valued-through date stops there",
+			from: "2026-01-01", to: "2026-03-05", wantFrom: "2026-03-01", want: "2026-03-05", start: "2026-03-01", days: threeDays, gap: views.GapUnvalued,
+		},
+		{
+			name: "a later from starts the index there", from: "2026-03-02", wantFrom: "2026-03-02", want: "2026-03-03", start: "2026-03-01",
 			days: func(t *testing.T) []performanceDay {
 				t.Helper()
 				return []performanceDay{
@@ -106,7 +131,7 @@ func TestPerformance(t *testing.T) {
 			change: func(_ *testing.T, f *fixture) {
 				delete(f.statuses, "acc-2")
 			},
-			wantFrom: "2026-03-01", want: "2026-03-03", gap: views.GapUnvalued,
+			wantFrom: "2026-03-01", want: "2026-03-03", start: "2026-03-01", gap: views.GapUnvalued,
 			days: func(t *testing.T) []performanceDay {
 				t.Helper()
 				return []performanceDay{{date(t, "2026-03-01"), dec(t, "1000"), dec(t, "1000"), dec(t, "100")}}
@@ -115,7 +140,7 @@ func TestPerformance(t *testing.T) {
 		{
 			name:     "nothing valued after from",
 			from:     "2026-03-04",
-			wantFrom: "2026-03-04", want: "2026-03-04", gap: views.GapUnvalued,
+			wantFrom: "2026-03-04", want: "2026-03-04", start: "2026-03-01", gap: views.GapUnvalued,
 			days: func(*testing.T) []performanceDay { return []performanceDay{} },
 		},
 		{
@@ -138,7 +163,7 @@ func TestPerformance(t *testing.T) {
 				t.Fatalf("Performance() error = %v", err)
 			}
 			want := app.Performance{
-				From: optionalDate(t, tt.wantFrom), To: optionalDate(t, tt.want),
+				From: optionalDate(t, tt.wantFrom), To: optionalDate(t, tt.want), Start: optionalDate(t, tt.start),
 				Series:  views.PerformanceSeries{Gap: tt.gap},
 				Pending: len(f.ledger.txs) > 0 && f.statuses["acc-2"].Pending,
 			}
@@ -152,6 +177,124 @@ func TestPerformance(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestAccountPerformance(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name            string
+		account         ledger.AccountID
+		seedACC2        bool
+		from            string
+		wantFrom, start string
+		pending         bool
+		days            func(t *testing.T) []performanceDay
+	}{
+		{
+			name: "an account's default start is its own first day", account: "acc-1",
+			wantFrom: "2026-03-01", start: "2026-03-01",
+			days: func(t *testing.T) []performanceDay {
+				t.Helper()
+				return []performanceDay{
+					{date(t, "2026-03-01"), dec(t, "1000"), dec(t, "1000"), dec(t, "100")},
+					{date(t, "2026-03-02"), dec(t, "1100"), dec(t, "0"), dec(t, "110")},
+					{date(t, "2026-03-03"), dec(t, "1050"), dec(t, "0"), dec(t, "105")},
+				}
+			},
+		},
+		{
+			name: "a later account seeded from a starting balance doesn't move another account's start", account: "acc-1", seedACC2: true,
+			wantFrom: "2026-03-01", start: "2026-03-01",
+			days: func(t *testing.T) []performanceDay {
+				t.Helper()
+				return []performanceDay{
+					{date(t, "2026-03-01"), dec(t, "1000"), dec(t, "1000"), dec(t, "100")},
+					{date(t, "2026-03-02"), dec(t, "1100"), dec(t, "0"), dec(t, "110")},
+					{date(t, "2026-03-03"), dec(t, "1050"), dec(t, "0"), dec(t, "105")},
+				}
+			},
+		},
+		{
+			name: "a chosen start is 100 on it", account: "acc-1", from: "2026-03-02",
+			wantFrom: "2026-03-02", start: "2026-03-01",
+			days: func(t *testing.T) []performanceDay {
+				t.Helper()
+				return []performanceDay{
+					{date(t, "2026-03-02"), dec(t, "1100"), dec(t, "0"), dec(t, "100")},
+					{date(t, "2026-03-03"), dec(t, "1050"), dec(t, "0"), dec(t, "95.4545454545")},
+				}
+			},
+		},
+		{
+			name: "a seeded account starts on its seeding day, its revaluation pending", account: "acc-2", seedACC2: true,
+			wantFrom: "2026-03-02", start: "2026-03-02", pending: true,
+			days: func(t *testing.T) []performanceDay {
+				t.Helper()
+				return []performanceDay{
+					{date(t, "2026-03-02"), dec(t, "400"), dec(t, "400"), dec(t, "100")},
+					{date(t, "2026-03-03"), dec(t, "400"), dec(t, "0"), dec(t, "100")},
+				}
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			f := newPerformanceFixture(t)
+			if tt.seedACC2 {
+				f.ledger.txs["acc-2"] = []ledger.Transaction{openingUSD(t)}
+			}
+			got, err := f.views(t).AccountPerformance(context.Background(), tt.account, optionalDate(t, tt.from), kernel.Date{})
+			if err != nil {
+				t.Fatalf("AccountPerformance() error = %v", err)
+			}
+			if diff := cmp.Diff(tt.days(t), performanceDays(got.Series.Days)); diff != "" {
+				t.Errorf("AccountPerformance() days mismatch (-want +got):\n%s", diff)
+			}
+			want := app.Performance{
+				From: date(t, tt.wantFrom), To: date(t, "2026-03-03"), Start: date(t, tt.start), Pending: tt.pending,
+			}
+			got.Series = views.PerformanceSeries{}
+			if diff := cmp.Diff(want, got); diff != "" {
+				t.Errorf("AccountPerformance() mismatch (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+func TestAccountPerformanceEdges(t *testing.T) {
+	t.Parallel()
+	t.Run("an unknown account", func(t *testing.T) {
+		t.Parallel()
+		f := newPerformanceFixture(t)
+		if _, err := f.views(t).AccountPerformance(context.Background(), "acc-missing", kernel.Date{}, kernel.Date{}); !errors.Is(err, app.ErrUnknownAccount) {
+			t.Errorf("AccountPerformance(unknown) error = %v, want %v", err, app.ErrUnknownAccount)
+		}
+	})
+	t.Run("an account with no transactions has no days", func(t *testing.T) {
+		t.Parallel()
+		f := newPerformanceFixture(t)
+		got, err := f.views(t).AccountPerformance(context.Background(), "acc-3", kernel.Date{}, kernel.Date{})
+		if err != nil || len(got.Series.Days) != 0 || !got.Start.IsZero() {
+			t.Errorf("AccountPerformance(acc-3) = %+v, %v, want no days and no start", got, err)
+		}
+	})
+}
+
+// openingUSD is acc-2's 100 USD as opening cash on 2026-03-02: the account
+// seeded from a starting balance that day (D-23).
+func openingUSD(t *testing.T) ledger.Transaction {
+	t.Helper()
+	day := date(t, "2026-03-02")
+	h := ledger.TransactionHeader{
+		Key:     ledger.TransactionKey{Source: "test", ExternalID: ledger.OpeningCashID(cur(t, "USD"), day)},
+		Account: "acc-2", Date: day,
+	}
+	opening, err := ledger.NewOpeningCash(h, money(t, "100", "USD"))
+	if err != nil {
+		t.Fatalf("NewOpeningCash: %v", err)
+	}
+	return opening
 }
 
 // optionalDate parses s, or returns the zero date for "".

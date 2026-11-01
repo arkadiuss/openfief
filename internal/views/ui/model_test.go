@@ -98,13 +98,20 @@ func (f *fakeRead) GetPerformance(_ context.Context, r *connect.Request[viewsv1.
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
 	}
-	return connect.NewResponse(&viewsv1.GetPerformanceResponse{
-		From: "2026-03-30", To: r.Msg.GetTo(), ReportingCurrency: "PLN", RevaluationPending: true,
+	f.locked(func() { f.performance = append(f.performance, r.Msg) })
+	// The default start is 2026-03-30 (D-138); a chosen one of 03-31
+	// rebases the index there.
+	resp := &viewsv1.GetPerformanceResponse{
+		From: "2026-03-30", To: r.Msg.GetTo(), ReportingCurrency: "PLN", RevaluationPending: true, DefaultFrom: "2026-03-30",
 		Days: []*viewsv1.PerformanceDay{
 			{Date: "2026-03-30", Index: "100", ValueReporting: pln("1490.00")},
 			{Date: "2026-03-31", Index: "101.5", ValueReporting: pln("1512.34")},
 		},
-	}), nil
+	}
+	if r.Msg.GetFrom() == "2026-03-31" {
+		resp.From, resp.Days = "2026-03-31", []*viewsv1.PerformanceDay{{Date: "2026-03-31", Index: "100", ValueReporting: pln("1512.34")}}
+	}
+	return connect.NewResponse(resp), nil
 }
 
 func (f *fakeRead) GetModelPortfolio(_ context.Context, r *connect.Request[viewsv1.GetModelPortfolioRequest]) (*connect.Response[viewsv1.GetModelPortfolioResponse], error) {
@@ -112,7 +119,7 @@ func (f *fakeRead) GetModelPortfolio(_ context.Context, r *connect.Request[views
 		return nil, err
 	}
 	var on bool
-	f.locked(func() { on = f.modelOn })
+	f.locked(func() { on, f.model = f.modelOn, append(f.model, r.Msg) })
 	if !on {
 		return nil, codeErr(connect.CodeNotFound, errModelOff)
 	}

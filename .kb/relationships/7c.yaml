@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-435b4b621c00
+  - type: implements
+    from: SYM-ui-chart-start-view-default-link
+    to: REQ-ui-chart-start-view-parameter
+    created_at: 2026-11-01T13:10:50.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4fded269dda
+  - type: covered_by
+    from: SYM-ui-chart-start-view-default-link
+    to: TEST-ui-chart-start
+    created_at: 2026-11-01T13:10:50.980Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-818a54a9ecd4

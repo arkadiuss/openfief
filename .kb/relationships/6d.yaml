@@ -575,13 +575,6 @@ relationships:
     id: rel-248174b78558
   - type: validates
     from: TEST-ui-values
-    to: REQ-AUTO-718AA30AAFD0E6E8
-    created_at: 2026-10-30T02:37:10.205Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9e78b2802a33
-  - type: validates
-    from: TEST-ui-values
     to: REQ-pl-ikze-liquidation-missing
     created_at: 2026-10-30T02:37:10.233Z
     created_by: kibi/upsert
@@ -832,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8aedf50d8d9
+  - type: validates
+    from: TEST-ui-values
+    to: REQ-ui-value-chart-from-charts-start
+    created_at: 2026-11-01T13:03:43.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-773bac894a3b

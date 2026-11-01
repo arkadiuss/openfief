@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9246e112eaa
+  - type: executable_for
+    from: SYM-views-test-history-of
+    to: TEST-views-chart-start
+    created_at: 2026-11-01T13:12:17.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb5f3c39b5c8

@@ -237,13 +237,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-673825fb8bdb
-  - type: implements
-    from: SYM-views-app-earlier
-    to: REQ-views-performance-query
-    created_at: 2026-10-28T21:00:14.468Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f79ef79ae708
   - type: covered_by
     from: SYM-views-app-earlier
     to: TEST-views-app-performance
@@ -566,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49bc0cabe35e
+  - type: implements
+    from: SYM-views-app-earlier
+    to: REQ-views-performance-query-charts-start
+    created_at: 2026-11-01T13:07:30.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5576708ed896

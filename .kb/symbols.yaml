@@ -54852,7 +54852,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-views-performance
     title: Views.Performance
     sourceFile: internal/views/app/performance.go
@@ -54865,9 +54865,9 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-AUTO-718AA30AAFD0E6E8
+        target: REQ-ui-portfolio-chart-default-start
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-record-type
     title: record
     sourceFile: internal/views/app/performance.go
@@ -54880,7 +54880,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-views-recorded
     title: Views.recorded
     sourceFile: internal/views/app/performance.go
@@ -54893,7 +54893,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-earlier
     title: earlier
     sourceFile: internal/views/app/performance.go
@@ -54906,7 +54906,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-later
     title: later
     sourceFile: internal/views/app/performance.go
@@ -54919,7 +54919,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-first-date-of-transactions
     title: firstDate
     sourceFile: internal/views/app/performance.go
@@ -54932,7 +54932,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-views-valuations-for
     title: Views.valuationsFor
     sourceFile: internal/views/app/performance.go
@@ -54945,7 +54945,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-views-cash-rates
     title: Views.cashRates
     sourceFile: internal/views/app/performance.go
@@ -54958,7 +54958,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-performance
       - type: implements
-        target: REQ-views-performance-query
+        target: REQ-views-performance-query-charts-start
       - type: implements
         target: REQ-views-performance-value
   - id: SYM-views-app-test-helper-new-performance-fixture
@@ -59789,7 +59789,7 @@ symbols:
       - type: implements
         target: REQ-portfolio-rebase
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
   - id: SYM-portfolio-test-max-drawdown
     title: TestMaxDrawdown
     sourceFile: internal/portfolio/drawdown_test.go
@@ -62275,7 +62275,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-option-type
@@ -62290,7 +62290,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-with-model
@@ -62305,7 +62305,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-model-portfolio-type
@@ -62320,7 +62320,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-end-of-history
@@ -62335,7 +62335,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-views-model-portfolio
@@ -62350,7 +62350,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-model-days
@@ -62365,7 +62365,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-views-model-range
@@ -62380,7 +62380,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app-model
       - type: implements
-        target: REQ-views-model-line-from-go-live
+        target: REQ-views-model-line-from-charts-start
       - type: implements
         target: REQ-views-model-portfolio
   - id: SYM-views-app-test-helper-fake-models
@@ -63897,7 +63897,7 @@ symbols:
       - type: implements
         target: REQ-ui-overview-values
       - type: implements
-        target: REQ-ui-performance-chart
+        target: REQ-ui-performance-chart-from-charts-start
       - type: implements
         target: REQ-ui-transfers-page
   - id: SYM-ui-model-view
@@ -64021,9 +64021,9 @@ symbols:
       - type: implements
         target: REQ-ui-overview-values
       - type: implements
-        target: REQ-ui-performance-chart-twr-index
+        target: REQ-ui-performance-chart-twr-index-from-charts-start
       - type: implements
-        target: REQ-views-model-line-on-performance-chart
+        target: REQ-views-model-line-from-charts-start
   - id: SYM-ui-server-performance
     title: server.performance
     sourceFile: internal/views/ui/performance.go
@@ -64042,7 +64042,7 @@ symbols:
       - type: implements
         target: REQ-ui-overview-values
       - type: implements
-        target: REQ-ui-performance-chart
+        target: REQ-ui-performance-chart-from-charts-start
       - type: implements
         target: REQ-ui-transfers-page
   - id: SYM-views-ghostfolio-activity-type
@@ -120849,3 +120849,313 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-attention
+  - id: SYM-views-account-history
+    title: AccountHistory
+    sourceFile: internal/views/chartstart.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:09:39.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-chart-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-default-start
+  - id: SYM-views-history-of
+    title: HistoryOf
+    sourceFile: internal/views/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:09:49.060Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-chart-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-default-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-start-ignores-full-history
+  - id: SYM-views-chart-start
+    title: ChartStart
+    sourceFile: internal/views/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:09:58.129Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-chart-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-default-start
+      - type: implements
+        target: REQ-ui-portfolio-chart-start-ignores-full-history
+  - id: SYM-views-chosen-start
+    title: ChosenStart
+    sourceFile: internal/views/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:09.184Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-chart-start
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-views-app-views-account-performance
+    title: Views.AccountPerformance
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:19.443Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-ui-account-chart-default-start
+      - type: implements
+        target: REQ-views-account-performance
+  - id: SYM-views-app-views-performance-of
+    title: Views.performance
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:28.820Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-performance
+      - type: implements
+        target: REQ-ui-performance-index-100-on-start
+      - type: implements
+        target: REQ-views-performance-query-charts-start
+  - id: SYM-ui-chart-start-view
+    title: chartStartView
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:37.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-chart-start-view-parameter
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-ui-chart-start-view-default-link
+    title: chartStartView.DefaultLink
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:47.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-chart-start-view-parameter
+  - id: SYM-ui-parse-start
+    title: parseStart
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:10:56.643Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-ui-optional-string
+    title: optionalString
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:04.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-time-chart-start-owner-chosen
+  - id: SYM-ui-account-charts-type
+    title: accountCharts
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:14.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-account-chart-default-start
+  - id: SYM-ui-server-account-charts
+    title: server.accountCharts
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:25.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-account-chart-default-start
+      - type: implements
+        target: REQ-ui-performance-chart-from-charts-start
+  - id: SYM-ui-build-line
+    title: buildLine
+    sourceFile: internal/views/ui/performance.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:39.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start
+      - type: implements
+        target: REQ-ui-performance-chart-twr-index-from-charts-start
+      - type: implements
+        target: REQ-ui-time-chart-marks-tracking-start
+  - id: SYM-views-pb-get-performance-request-get-account-id
+    title: GetPerformanceRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:11:51.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-pb-get-performance-response-get-default-from
+    title: GetPerformanceResponse.GetDefaultFrom
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:02.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-views-test-history-of
+    title: TestHistoryOf
+    sourceFile: internal/views/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:13.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-chart-start
+  - id: SYM-views-test-helper-history
+    title: history
+    sourceFile: internal/views/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:23.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-chart-start
+  - id: SYM-views-test-chart-start
+    title: TestChartStart
+    sourceFile: internal/views/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:33.330Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-chart-start
+  - id: SYM-views-test-chosen-start
+    title: TestChosenStart
+    sourceFile: internal/views/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:43.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-chart-start
+  - id: SYM-views-app-test-account-performance
+    title: TestAccountPerformance
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:12:52.527Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-account-performance-edges
+    title: TestAccountPerformanceEdges
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:00.711Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-app-test-helper-opening-usd
+    title: openingUSD
+    sourceFile: internal/views/app/performance_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:08.915Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-performance
+  - id: SYM-views-connectapi-test-connect-account-performance
+    title: TestConnectAccountPerformance
+    sourceFile: internal/views/connectapi/connect_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:17.196Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect
+  - id: SYM-ui-test-overview-chart-start
+    title: TestOverviewChartStart
+    sourceFile: internal/views/ui/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:24.372Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-chart-start
+  - id: SYM-ui-test-account-charts
+    title: TestAccountCharts
+    sourceFile: internal/views/ui/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T13:13:31.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-chart-start
