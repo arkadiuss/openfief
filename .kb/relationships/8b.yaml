@@ -365,13 +365,6 @@ relationships:
     id: rel-0090f61823a4
   - type: implements
     from: SYM-treasurybonds-same-terms
-    to: REQ-treasurybonds-lot-mapping
-    created_at: 2026-10-29T01:22:33.700Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d558ea78d577
-  - type: implements
-    from: SYM-treasurybonds-same-terms
     to: REQ-AUTO-FD50BCD71546E83F
     created_at: 2026-10-29T01:22:33.729Z
     created_by: kibi/upsert
@@ -692,3 +685,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc4ce8057902
+  - type: verified_by
+    from: SCEN-treasurybonds-payouts-from-purchase
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-11-01T07:44:38.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29978e3ecec3
+  - type: verified_by
+    from: SCEN-treasurybonds-payouts-from-purchase
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-01T07:44:38.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf673754b9dd
+  - type: implements
+    from: SYM-treasurybonds-same-terms
+    to: REQ-treasurybonds-lot-on-purchase-date
+    created_at: 2026-11-01T07:59:50.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c34e13701c

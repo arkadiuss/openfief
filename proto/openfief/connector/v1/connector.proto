@@ -109,6 +109,10 @@ enum TransactionKind {
   // Deletes the transaction its key names, as a correction (D-100): a new
   // version with no postings that supersedes the current one and keeps it.
   TRANSACTION_KIND_DELETION = 10;
+  // A holding redeemed by its issuer, such as a treasury bond at maturity
+  // (D-135): its holding posting gives up the units at the redemption
+  // value, with the tax withheld at source posted to withholding tax.
+  TRANSACTION_KIND_REDEMPTION = 11;
 }
 
 // TransactionKey identifies a transaction across re-imports (D-18). The core
@@ -406,6 +410,26 @@ message AccountHoldings {
   repeated Holding holdings = 4;
   // The open lots, oldest first, each with what is left of it.
   repeated OpenLot lots = 5;
+  // The account's payout setting (D-135): whether the coupons and
+  // maturities of a hand-entered bond account stay as its cash or are paid
+  // out. Unspecified is BOND_PAYOUT_CASH.
+  BondPayout bond_payout = 6;
+  // The day bond_payout took effect, "YYYY-MM-DD", or empty for an account
+  // that never changed it: what falls due before it follows the other
+  // setting, so a change never rewrites what was booked.
+  string bond_payout_since = 7;
+}
+
+// BondPayout is what happens to what a hand-entered bond account's bonds
+// pay, matching the option the bond registry offers (D-135).
+enum BondPayout {
+  // Treated as BOND_PAYOUT_CASH.
+  BOND_PAYOUT_UNSPECIFIED = 0;
+  // Coupons and maturities stay as the account's cash.
+  BOND_PAYOUT_CASH = 1;
+  // Coupons and maturities are paid out: each is booked as interest or a
+  // redemption, then a withdrawal of the same amount on the same day.
+  BOND_PAYOUT_PAID_OUT = 2;
 }
 
 // Holding is a non-zero quantity of one instrument held in an account.
@@ -505,11 +529,12 @@ message ImportBondLotsRequest {
   // The core's ID for this import batch; a retry reuses it.
   string batch_id = 1;
   repeated BondLot lots = 2;
-  // The account's go-live date, "YYYY-MM-DD" (D-98): a lot bought on or
-  // before it is an opening lot on it, keeping its purchase date and cost,
-  // and a later one is a deposit of its cost and a buy on its purchase
-  // date. The core sends the date the account was seeded on, or today for
-  // an account not seeded yet.
+  // Empty for every account the owner entered lots on since D-98 was
+  // rewritten: each lot is a deposit of its cost and a buy on its purchase
+  // date. Only an account seeded earlier with opening lots carries the
+  // date it was seeded on, "YYYY-MM-DD": a lot bought on or before it
+  // keeps being booked as the opening lot it was, keeping its key, and a
+  // later one is a deposit and a buy.
   string go_live = 3;
   // Lots the owner deletes as a correction (D-100): the connector delivers
   // a deletion of each of their transactions.

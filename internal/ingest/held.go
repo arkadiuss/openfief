@@ -16,7 +16,10 @@ type HeldAccount struct {
 	// what fell due on or before it is history its opening lots hold.
 	GoLive kernel.Date
 	// Wrapper is the account's tax wrapper key, such as "taxable" (D-76).
-	Wrapper  string
+	Wrapper string
+	// Payout is the account's payout setting (D-135): whether what its
+	// bonds pay stays as its cash or is paid out.
+	Payout   ledger.PayoutSetting
 	Holdings []ledger.Holding
 	// Lots are the account's open lots, oldest first.
 	Lots []ledger.Lot

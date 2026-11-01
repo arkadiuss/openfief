@@ -545,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ef128a80cc0
+  - type: implements
+    from: SYM-treasurybonds-due-maturities
+    to: REQ-treasurybonds-maturity-redemption
+    created_at: 2026-11-01T07:49:11.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f964a4a578cf
+  - type: covered_by
+    from: SYM-treasurybonds-due-maturities
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:49:11.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30fd0606ce5a

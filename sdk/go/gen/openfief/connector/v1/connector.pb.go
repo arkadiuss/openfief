@@ -126,6 +126,10 @@ const (
 	// Deletes the transaction its key names, as a correction (D-100): a new
 	// version with no postings that supersedes the current one and keeps it.
 	TransactionKind_TRANSACTION_KIND_DELETION TransactionKind = 10
+	// A holding redeemed by its issuer, such as a treasury bond at maturity
+	// (D-135): its holding posting gives up the units at the redemption
+	// value, with the tax withheld at source posted to withholding tax.
+	TransactionKind_TRANSACTION_KIND_REDEMPTION TransactionKind = 11
 )
 
 // Enum value maps for TransactionKind.
@@ -142,6 +146,7 @@ var (
 		8:  "TRANSACTION_KIND_OPENING_LOT",
 		9:  "TRANSACTION_KIND_INTEREST",
 		10: "TRANSACTION_KIND_DELETION",
+		11: "TRANSACTION_KIND_REDEMPTION",
 	}
 	TransactionKind_value = map[string]int32{
 		"TRANSACTION_KIND_UNSPECIFIED":   0,
@@ -155,6 +160,7 @@ var (
 		"TRANSACTION_KIND_OPENING_LOT":   8,
 		"TRANSACTION_KIND_INTEREST":      9,
 		"TRANSACTION_KIND_DELETION":      10,
+		"TRANSACTION_KIND_REDEMPTION":    11,
 	}
 )
 
@@ -341,6 +347,61 @@ func (Index) EnumDescriptor() ([]byte, []int) {
 	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{4}
 }
 
+// BondPayout is what happens to what a hand-entered bond account's bonds
+// pay, matching the option the bond registry offers (D-135).
+type BondPayout int32
+
+const (
+	// Treated as BOND_PAYOUT_CASH.
+	BondPayout_BOND_PAYOUT_UNSPECIFIED BondPayout = 0
+	// Coupons and maturities stay as the account's cash.
+	BondPayout_BOND_PAYOUT_CASH BondPayout = 1
+	// Coupons and maturities are paid out: each is booked as interest or a
+	// redemption, then a withdrawal of the same amount on the same day.
+	BondPayout_BOND_PAYOUT_PAID_OUT BondPayout = 2
+)
+
+// Enum value maps for BondPayout.
+var (
+	BondPayout_name = map[int32]string{
+		0: "BOND_PAYOUT_UNSPECIFIED",
+		1: "BOND_PAYOUT_CASH",
+		2: "BOND_PAYOUT_PAID_OUT",
+	}
+	BondPayout_value = map[string]int32{
+		"BOND_PAYOUT_UNSPECIFIED": 0,
+		"BOND_PAYOUT_CASH":        1,
+		"BOND_PAYOUT_PAID_OUT":    2,
+	}
+)
+
+func (x BondPayout) Enum() *BondPayout {
+	p := new(BondPayout)
+	*p = x
+	return p
+}
+
+func (x BondPayout) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (BondPayout) Descriptor() protoreflect.EnumDescriptor {
+	return file_openfief_connector_v1_connector_proto_enumTypes[5].Descriptor()
+}
+
+func (BondPayout) Type() protoreflect.EnumType {
+	return &file_openfief_connector_v1_connector_proto_enumTypes[5]
+}
+
+func (x BondPayout) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use BondPayout.Descriptor instead.
+func (BondPayout) EnumDescriptor() ([]byte, []int) {
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{5}
+}
+
 // BondPurchase is how the bonds of a lot were bought (D-100).
 type BondPurchase int32
 
@@ -379,11 +440,11 @@ func (x BondPurchase) String() string {
 }
 
 func (BondPurchase) Descriptor() protoreflect.EnumDescriptor {
-	return file_openfief_connector_v1_connector_proto_enumTypes[5].Descriptor()
+	return file_openfief_connector_v1_connector_proto_enumTypes[6].Descriptor()
 }
 
 func (BondPurchase) Type() protoreflect.EnumType {
-	return &file_openfief_connector_v1_connector_proto_enumTypes[5]
+	return &file_openfief_connector_v1_connector_proto_enumTypes[6]
 }
 
 func (x BondPurchase) Number() protoreflect.EnumNumber {
@@ -392,7 +453,7 @@ func (x BondPurchase) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BondPurchase.Descriptor instead.
 func (BondPurchase) EnumDescriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{5}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{6}
 }
 
 // Money is an exact amount in one currency.
@@ -1991,9 +2052,17 @@ type AccountHoldings struct {
 	TaxWrapper string     `protobuf:"bytes,3,opt,name=tax_wrapper,json=taxWrapper,proto3" json:"tax_wrapper,omitempty"`
 	Holdings   []*Holding `protobuf:"bytes,4,rep,name=holdings,proto3" json:"holdings,omitempty"`
 	// The open lots, oldest first, each with what is left of it.
-	Lots          []*OpenLot `protobuf:"bytes,5,rep,name=lots,proto3" json:"lots,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Lots []*OpenLot `protobuf:"bytes,5,rep,name=lots,proto3" json:"lots,omitempty"`
+	// The account's payout setting (D-135): whether the coupons and
+	// maturities of a hand-entered bond account stay as its cash or are paid
+	// out. Unspecified is BOND_PAYOUT_CASH.
+	BondPayout BondPayout `protobuf:"varint,6,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.connector.v1.BondPayout" json:"bond_payout,omitempty"`
+	// The day bond_payout took effect, "YYYY-MM-DD", or empty for an account
+	// that never changed it: what falls due before it follows the other
+	// setting, so a change never rewrites what was booked.
+	BondPayoutSince string `protobuf:"bytes,7,opt,name=bond_payout_since,json=bondPayoutSince,proto3" json:"bond_payout_since,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *AccountHoldings) Reset() {
@@ -2059,6 +2128,20 @@ func (x *AccountHoldings) GetLots() []*OpenLot {
 		return x.Lots
 	}
 	return nil
+}
+
+func (x *AccountHoldings) GetBondPayout() BondPayout {
+	if x != nil {
+		return x.BondPayout
+	}
+	return BondPayout_BOND_PAYOUT_UNSPECIFIED
+}
+
+func (x *AccountHoldings) GetBondPayoutSince() string {
+	if x != nil {
+		return x.BondPayoutSince
+	}
+	return ""
 }
 
 // Holding is a non-zero quantity of one instrument held in an account.
@@ -2615,11 +2698,12 @@ type ImportBondLotsRequest struct {
 	// The core's ID for this import batch; a retry reuses it.
 	BatchId string     `protobuf:"bytes,1,opt,name=batch_id,json=batchId,proto3" json:"batch_id,omitempty"`
 	Lots    []*BondLot `protobuf:"bytes,2,rep,name=lots,proto3" json:"lots,omitempty"`
-	// The account's go-live date, "YYYY-MM-DD" (D-98): a lot bought on or
-	// before it is an opening lot on it, keeping its purchase date and cost,
-	// and a later one is a deposit of its cost and a buy on its purchase
-	// date. The core sends the date the account was seeded on, or today for
-	// an account not seeded yet.
+	// Empty for every account the owner entered lots on since D-98 was
+	// rewritten: each lot is a deposit of its cost and a buy on its purchase
+	// date. Only an account seeded earlier with opening lots carries the
+	// date it was seeded on, "YYYY-MM-DD": a lot bought on or before it
+	// keeps being booked as the opening lot it was, keeping its key, and a
+	// later one is a deposit and a buy.
 	GoLive string `protobuf:"bytes,3,opt,name=go_live,json=goLive,proto3" json:"go_live,omitempty"`
 	// Lots the owner deletes as a correction (D-100): the connector delivers
 	// a deletion of each of their transactions.
@@ -2869,7 +2953,7 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\aindices\x18\x05 \x03(\tR\aindices\x12B\n" +
 	"\baccounts\x18\x06 \x03(\v2&.openfief.connector.v1.AccountHoldingsR\baccounts\x12?\n" +
 	"\n" +
-	"bond_terms\x18\a \x03(\v2 .openfief.connector.v1.BondTermsR\tbondTerms\"\xda\x01\n" +
+	"bond_terms\x18\a \x03(\v2 .openfief.connector.v1.BondTermsR\tbondTerms\"\xca\x02\n" +
 	"\x0fAccountHoldings\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x12\x17\n" +
@@ -2877,7 +2961,10 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\vtax_wrapper\x18\x03 \x01(\tR\n" +
 	"taxWrapper\x12:\n" +
 	"\bholdings\x18\x04 \x03(\v2\x1e.openfief.connector.v1.HoldingR\bholdings\x122\n" +
-	"\x04lots\x18\x05 \x03(\v2\x1e.openfief.connector.v1.OpenLotR\x04lots\"h\n" +
+	"\x04lots\x18\x05 \x03(\v2\x1e.openfief.connector.v1.OpenLotR\x04lots\x12B\n" +
+	"\vbond_payout\x18\x06 \x01(\x0e2!.openfief.connector.v1.BondPayoutR\n" +
+	"bondPayout\x12*\n" +
+	"\x11bond_payout_since\x18\a \x01(\tR\x0fbondPayoutSince\"h\n" +
 	"\aHolding\x12A\n" +
 	"\n" +
 	"instrument\x18\x01 \x01(\v2!.openfief.connector.v1.InstrumentR\n" +
@@ -2935,7 +3022,7 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\rBOOK_KIND_FEE\x10\x03\x12\x1d\n" +
 	"\x19BOOK_KIND_WITHHOLDING_TAX\x10\x04\x12\x10\n" +
 	"\fBOOK_KIND_FX\x10\x05\x12\x14\n" +
-	"\x10BOOK_KIND_EQUITY\x10\x06*\xe4\x02\n" +
+	"\x10BOOK_KIND_EQUITY\x10\x06*\x85\x03\n" +
 	"\x0fTransactionKind\x12 \n" +
 	"\x1cTRANSACTION_KIND_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14TRANSACTION_KIND_BUY\x10\x01\x12\x19\n" +
@@ -2948,7 +3035,8 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\x1cTRANSACTION_KIND_OPENING_LOT\x10\b\x12\x1d\n" +
 	"\x19TRANSACTION_KIND_INTEREST\x10\t\x12\x1d\n" +
 	"\x19TRANSACTION_KIND_DELETION\x10\n" +
-	"*c\n" +
+	"\x12\x1f\n" +
+	"\x1bTRANSACTION_KIND_REDEMPTION\x10\v*c\n" +
 	"\vProblemKind\x12\x1c\n" +
 	"\x18PROBLEM_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18PROBLEM_KIND_UNSUPPORTED\x10\x01\x12\x18\n" +
@@ -2960,7 +3048,12 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\x05Index\x12\x15\n" +
 	"\x11INDEX_UNSPECIFIED\x10\x00\x12\r\n" +
 	"\tINDEX_CPI\x10\x01\x12\x18\n" +
-	"\x14INDEX_REFERENCE_RATE\x10\x02*a\n" +
+	"\x14INDEX_REFERENCE_RATE\x10\x02*Y\n" +
+	"\n" +
+	"BondPayout\x12\x1b\n" +
+	"\x17BOND_PAYOUT_UNSPECIFIED\x10\x00\x12\x14\n" +
+	"\x10BOND_PAYOUT_CASH\x10\x01\x12\x18\n" +
+	"\x14BOND_PAYOUT_PAID_OUT\x10\x02*a\n" +
 	"\fBondPurchase\x12\x1d\n" +
 	"\x19BOND_PURCHASE_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12BOND_PURCHASE_CASH\x10\x01\x12\x1a\n" +
@@ -2985,7 +3078,7 @@ func file_openfief_connector_v1_connector_proto_rawDescGZIP() []byte {
 	return file_openfief_connector_v1_connector_proto_rawDescData
 }
 
-var file_openfief_connector_v1_connector_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
+var file_openfief_connector_v1_connector_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
 var file_openfief_connector_v1_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
 var file_openfief_connector_v1_connector_proto_goTypes = []any{
 	(BookKind)(0),                     // 0: openfief.connector.v1.BookKind
@@ -2993,104 +3086,106 @@ var file_openfief_connector_v1_connector_proto_goTypes = []any{
 	(ProblemKind)(0),                  // 2: openfief.connector.v1.ProblemKind
 	(Mode)(0),                         // 3: openfief.connector.v1.Mode
 	(Index)(0),                        // 4: openfief.connector.v1.Index
-	(BondPurchase)(0),                 // 5: openfief.connector.v1.BondPurchase
-	(*Money)(nil),                     // 6: openfief.connector.v1.Money
-	(*Instrument)(nil),                // 7: openfief.connector.v1.Instrument
-	(*Book)(nil),                      // 8: openfief.connector.v1.Book
-	(*Posting)(nil),                   // 9: openfief.connector.v1.Posting
-	(*TransactionKey)(nil),            // 10: openfief.connector.v1.TransactionKey
-	(*Transaction)(nil),               // 11: openfief.connector.v1.Transaction
-	(*BalanceAssertion)(nil),          // 12: openfief.connector.v1.BalanceAssertion
-	(*BrokerAccount)(nil),             // 13: openfief.connector.v1.BrokerAccount
-	(*Problem)(nil),                   // 14: openfief.connector.v1.Problem
-	(*Price)(nil),                     // 15: openfief.connector.v1.Price
-	(*FxRate)(nil),                    // 16: openfief.connector.v1.FxRate
-	(*IndexReading)(nil),              // 17: openfief.connector.v1.IndexReading
-	(*IndexLevel)(nil),                // 18: openfief.connector.v1.IndexLevel
-	(*BondTerms)(nil),                 // 19: openfief.connector.v1.BondTerms
-	(*Delivery)(nil),                  // 20: openfief.connector.v1.Delivery
-	(*Ticker)(nil),                    // 21: openfief.connector.v1.Ticker
-	(*TickerTransaction)(nil),         // 22: openfief.connector.v1.TickerTransaction
-	(*LookupInstrumentsRequest)(nil),  // 23: openfief.connector.v1.LookupInstrumentsRequest
-	(*InstrumentProposal)(nil),        // 24: openfief.connector.v1.InstrumentProposal
-	(*LookupInstrumentsResponse)(nil), // 25: openfief.connector.v1.LookupInstrumentsResponse
-	(*SyncRequest)(nil),               // 26: openfief.connector.v1.SyncRequest
-	(*AccountHoldings)(nil),           // 27: openfief.connector.v1.AccountHoldings
-	(*Holding)(nil),                   // 28: openfief.connector.v1.Holding
-	(*OpenLot)(nil),                   // 29: openfief.connector.v1.OpenLot
-	(*SyncResponse)(nil),              // 30: openfief.connector.v1.SyncResponse
-	(*FileHeader)(nil),                // 31: openfief.connector.v1.FileHeader
-	(*ImportFileRequest)(nil),         // 32: openfief.connector.v1.ImportFileRequest
-	(*ImportFileResponse)(nil),        // 33: openfief.connector.v1.ImportFileResponse
-	(*BondLot)(nil),                   // 34: openfief.connector.v1.BondLot
-	(*BondLotKey)(nil),                // 35: openfief.connector.v1.BondLotKey
-	(*ImportBondLotsRequest)(nil),     // 36: openfief.connector.v1.ImportBondLotsRequest
-	(*ImportBondLotsResponse)(nil),    // 37: openfief.connector.v1.ImportBondLotsResponse
+	(BondPayout)(0),                   // 5: openfief.connector.v1.BondPayout
+	(BondPurchase)(0),                 // 6: openfief.connector.v1.BondPurchase
+	(*Money)(nil),                     // 7: openfief.connector.v1.Money
+	(*Instrument)(nil),                // 8: openfief.connector.v1.Instrument
+	(*Book)(nil),                      // 9: openfief.connector.v1.Book
+	(*Posting)(nil),                   // 10: openfief.connector.v1.Posting
+	(*TransactionKey)(nil),            // 11: openfief.connector.v1.TransactionKey
+	(*Transaction)(nil),               // 12: openfief.connector.v1.Transaction
+	(*BalanceAssertion)(nil),          // 13: openfief.connector.v1.BalanceAssertion
+	(*BrokerAccount)(nil),             // 14: openfief.connector.v1.BrokerAccount
+	(*Problem)(nil),                   // 15: openfief.connector.v1.Problem
+	(*Price)(nil),                     // 16: openfief.connector.v1.Price
+	(*FxRate)(nil),                    // 17: openfief.connector.v1.FxRate
+	(*IndexReading)(nil),              // 18: openfief.connector.v1.IndexReading
+	(*IndexLevel)(nil),                // 19: openfief.connector.v1.IndexLevel
+	(*BondTerms)(nil),                 // 20: openfief.connector.v1.BondTerms
+	(*Delivery)(nil),                  // 21: openfief.connector.v1.Delivery
+	(*Ticker)(nil),                    // 22: openfief.connector.v1.Ticker
+	(*TickerTransaction)(nil),         // 23: openfief.connector.v1.TickerTransaction
+	(*LookupInstrumentsRequest)(nil),  // 24: openfief.connector.v1.LookupInstrumentsRequest
+	(*InstrumentProposal)(nil),        // 25: openfief.connector.v1.InstrumentProposal
+	(*LookupInstrumentsResponse)(nil), // 26: openfief.connector.v1.LookupInstrumentsResponse
+	(*SyncRequest)(nil),               // 27: openfief.connector.v1.SyncRequest
+	(*AccountHoldings)(nil),           // 28: openfief.connector.v1.AccountHoldings
+	(*Holding)(nil),                   // 29: openfief.connector.v1.Holding
+	(*OpenLot)(nil),                   // 30: openfief.connector.v1.OpenLot
+	(*SyncResponse)(nil),              // 31: openfief.connector.v1.SyncResponse
+	(*FileHeader)(nil),                // 32: openfief.connector.v1.FileHeader
+	(*ImportFileRequest)(nil),         // 33: openfief.connector.v1.ImportFileRequest
+	(*ImportFileResponse)(nil),        // 34: openfief.connector.v1.ImportFileResponse
+	(*BondLot)(nil),                   // 35: openfief.connector.v1.BondLot
+	(*BondLotKey)(nil),                // 36: openfief.connector.v1.BondLotKey
+	(*ImportBondLotsRequest)(nil),     // 37: openfief.connector.v1.ImportBondLotsRequest
+	(*ImportBondLotsResponse)(nil),    // 38: openfief.connector.v1.ImportBondLotsResponse
 }
 var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	0,  // 0: openfief.connector.v1.Book.kind:type_name -> openfief.connector.v1.BookKind
-	7,  // 1: openfief.connector.v1.Book.instrument:type_name -> openfief.connector.v1.Instrument
-	8,  // 2: openfief.connector.v1.Posting.book:type_name -> openfief.connector.v1.Book
-	6,  // 3: openfief.connector.v1.Posting.amount:type_name -> openfief.connector.v1.Money
-	10, // 4: openfief.connector.v1.Transaction.key:type_name -> openfief.connector.v1.TransactionKey
+	8,  // 1: openfief.connector.v1.Book.instrument:type_name -> openfief.connector.v1.Instrument
+	9,  // 2: openfief.connector.v1.Posting.book:type_name -> openfief.connector.v1.Book
+	7,  // 3: openfief.connector.v1.Posting.amount:type_name -> openfief.connector.v1.Money
+	11, // 4: openfief.connector.v1.Transaction.key:type_name -> openfief.connector.v1.TransactionKey
 	1,  // 5: openfief.connector.v1.Transaction.kind:type_name -> openfief.connector.v1.TransactionKind
-	9,  // 6: openfief.connector.v1.Transaction.postings:type_name -> openfief.connector.v1.Posting
-	8,  // 7: openfief.connector.v1.BalanceAssertion.book:type_name -> openfief.connector.v1.Book
+	10, // 6: openfief.connector.v1.Transaction.postings:type_name -> openfief.connector.v1.Posting
+	9,  // 7: openfief.connector.v1.BalanceAssertion.book:type_name -> openfief.connector.v1.Book
 	2,  // 8: openfief.connector.v1.Problem.kind:type_name -> openfief.connector.v1.ProblemKind
-	7,  // 9: openfief.connector.v1.Price.instrument:type_name -> openfief.connector.v1.Instrument
-	6,  // 10: openfief.connector.v1.Price.close:type_name -> openfief.connector.v1.Money
+	8,  // 9: openfief.connector.v1.Price.instrument:type_name -> openfief.connector.v1.Instrument
+	7,  // 10: openfief.connector.v1.Price.close:type_name -> openfief.connector.v1.Money
 	4,  // 11: openfief.connector.v1.IndexReading.index:type_name -> openfief.connector.v1.Index
-	7,  // 12: openfief.connector.v1.BondTerms.instrument:type_name -> openfief.connector.v1.Instrument
-	6,  // 13: openfief.connector.v1.BondTerms.early_redemption_fee:type_name -> openfief.connector.v1.Money
-	11, // 14: openfief.connector.v1.Delivery.transactions:type_name -> openfief.connector.v1.Transaction
-	12, // 15: openfief.connector.v1.Delivery.balance_assertions:type_name -> openfief.connector.v1.BalanceAssertion
-	14, // 16: openfief.connector.v1.Delivery.problems:type_name -> openfief.connector.v1.Problem
-	15, // 17: openfief.connector.v1.Delivery.prices:type_name -> openfief.connector.v1.Price
-	16, // 18: openfief.connector.v1.Delivery.fx_rates:type_name -> openfief.connector.v1.FxRate
-	17, // 19: openfief.connector.v1.Delivery.index_readings:type_name -> openfief.connector.v1.IndexReading
-	18, // 20: openfief.connector.v1.Delivery.index_levels:type_name -> openfief.connector.v1.IndexLevel
-	19, // 21: openfief.connector.v1.Delivery.bond_terms:type_name -> openfief.connector.v1.BondTerms
-	15, // 22: openfief.connector.v1.Delivery.cross_check_prices:type_name -> openfief.connector.v1.Price
-	13, // 23: openfief.connector.v1.Delivery.broker_accounts:type_name -> openfief.connector.v1.BrokerAccount
-	21, // 24: openfief.connector.v1.Delivery.tickers:type_name -> openfief.connector.v1.Ticker
-	22, // 25: openfief.connector.v1.Delivery.ticker_transactions:type_name -> openfief.connector.v1.TickerTransaction
-	10, // 26: openfief.connector.v1.TickerTransaction.key:type_name -> openfief.connector.v1.TransactionKey
+	8,  // 12: openfief.connector.v1.BondTerms.instrument:type_name -> openfief.connector.v1.Instrument
+	7,  // 13: openfief.connector.v1.BondTerms.early_redemption_fee:type_name -> openfief.connector.v1.Money
+	12, // 14: openfief.connector.v1.Delivery.transactions:type_name -> openfief.connector.v1.Transaction
+	13, // 15: openfief.connector.v1.Delivery.balance_assertions:type_name -> openfief.connector.v1.BalanceAssertion
+	15, // 16: openfief.connector.v1.Delivery.problems:type_name -> openfief.connector.v1.Problem
+	16, // 17: openfief.connector.v1.Delivery.prices:type_name -> openfief.connector.v1.Price
+	17, // 18: openfief.connector.v1.Delivery.fx_rates:type_name -> openfief.connector.v1.FxRate
+	18, // 19: openfief.connector.v1.Delivery.index_readings:type_name -> openfief.connector.v1.IndexReading
+	19, // 20: openfief.connector.v1.Delivery.index_levels:type_name -> openfief.connector.v1.IndexLevel
+	20, // 21: openfief.connector.v1.Delivery.bond_terms:type_name -> openfief.connector.v1.BondTerms
+	16, // 22: openfief.connector.v1.Delivery.cross_check_prices:type_name -> openfief.connector.v1.Price
+	14, // 23: openfief.connector.v1.Delivery.broker_accounts:type_name -> openfief.connector.v1.BrokerAccount
+	22, // 24: openfief.connector.v1.Delivery.tickers:type_name -> openfief.connector.v1.Ticker
+	23, // 25: openfief.connector.v1.Delivery.ticker_transactions:type_name -> openfief.connector.v1.TickerTransaction
+	11, // 26: openfief.connector.v1.TickerTransaction.key:type_name -> openfief.connector.v1.TransactionKey
 	1,  // 27: openfief.connector.v1.TickerTransaction.kind:type_name -> openfief.connector.v1.TransactionKind
-	6,  // 28: openfief.connector.v1.TickerTransaction.amount:type_name -> openfief.connector.v1.Money
-	6,  // 29: openfief.connector.v1.TickerTransaction.charge:type_name -> openfief.connector.v1.Money
-	21, // 30: openfief.connector.v1.LookupInstrumentsRequest.tickers:type_name -> openfief.connector.v1.Ticker
-	24, // 31: openfief.connector.v1.LookupInstrumentsResponse.proposals:type_name -> openfief.connector.v1.InstrumentProposal
+	7,  // 28: openfief.connector.v1.TickerTransaction.amount:type_name -> openfief.connector.v1.Money
+	7,  // 29: openfief.connector.v1.TickerTransaction.charge:type_name -> openfief.connector.v1.Money
+	22, // 30: openfief.connector.v1.LookupInstrumentsRequest.tickers:type_name -> openfief.connector.v1.Ticker
+	25, // 31: openfief.connector.v1.LookupInstrumentsResponse.proposals:type_name -> openfief.connector.v1.InstrumentProposal
 	3,  // 32: openfief.connector.v1.SyncRequest.mode:type_name -> openfief.connector.v1.Mode
-	7,  // 33: openfief.connector.v1.SyncRequest.instruments:type_name -> openfief.connector.v1.Instrument
-	27, // 34: openfief.connector.v1.SyncRequest.accounts:type_name -> openfief.connector.v1.AccountHoldings
-	19, // 35: openfief.connector.v1.SyncRequest.bond_terms:type_name -> openfief.connector.v1.BondTerms
-	28, // 36: openfief.connector.v1.AccountHoldings.holdings:type_name -> openfief.connector.v1.Holding
-	29, // 37: openfief.connector.v1.AccountHoldings.lots:type_name -> openfief.connector.v1.OpenLot
-	7,  // 38: openfief.connector.v1.Holding.instrument:type_name -> openfief.connector.v1.Instrument
-	7,  // 39: openfief.connector.v1.OpenLot.instrument:type_name -> openfief.connector.v1.Instrument
-	6,  // 40: openfief.connector.v1.OpenLot.cost:type_name -> openfief.connector.v1.Money
-	20, // 41: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	3,  // 42: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
-	31, // 43: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
-	20, // 44: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	6,  // 45: openfief.connector.v1.BondLot.early_redemption_fee:type_name -> openfief.connector.v1.Money
-	5,  // 46: openfief.connector.v1.BondLot.purchase:type_name -> openfief.connector.v1.BondPurchase
-	34, // 47: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
-	35, // 48: openfief.connector.v1.ImportBondLotsRequest.deleted:type_name -> openfief.connector.v1.BondLotKey
-	20, // 49: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	26, // 50: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
-	32, // 51: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
-	36, // 52: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
-	23, // 53: openfief.connector.v1.ConnectorService.LookupInstruments:input_type -> openfief.connector.v1.LookupInstrumentsRequest
-	30, // 54: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
-	33, // 55: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
-	37, // 56: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
-	25, // 57: openfief.connector.v1.ConnectorService.LookupInstruments:output_type -> openfief.connector.v1.LookupInstrumentsResponse
-	54, // [54:58] is the sub-list for method output_type
-	50, // [50:54] is the sub-list for method input_type
-	50, // [50:50] is the sub-list for extension type_name
-	50, // [50:50] is the sub-list for extension extendee
-	0,  // [0:50] is the sub-list for field type_name
+	8,  // 33: openfief.connector.v1.SyncRequest.instruments:type_name -> openfief.connector.v1.Instrument
+	28, // 34: openfief.connector.v1.SyncRequest.accounts:type_name -> openfief.connector.v1.AccountHoldings
+	20, // 35: openfief.connector.v1.SyncRequest.bond_terms:type_name -> openfief.connector.v1.BondTerms
+	29, // 36: openfief.connector.v1.AccountHoldings.holdings:type_name -> openfief.connector.v1.Holding
+	30, // 37: openfief.connector.v1.AccountHoldings.lots:type_name -> openfief.connector.v1.OpenLot
+	5,  // 38: openfief.connector.v1.AccountHoldings.bond_payout:type_name -> openfief.connector.v1.BondPayout
+	8,  // 39: openfief.connector.v1.Holding.instrument:type_name -> openfief.connector.v1.Instrument
+	8,  // 40: openfief.connector.v1.OpenLot.instrument:type_name -> openfief.connector.v1.Instrument
+	7,  // 41: openfief.connector.v1.OpenLot.cost:type_name -> openfief.connector.v1.Money
+	21, // 42: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	3,  // 43: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
+	32, // 44: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
+	21, // 45: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	7,  // 46: openfief.connector.v1.BondLot.early_redemption_fee:type_name -> openfief.connector.v1.Money
+	6,  // 47: openfief.connector.v1.BondLot.purchase:type_name -> openfief.connector.v1.BondPurchase
+	35, // 48: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
+	36, // 49: openfief.connector.v1.ImportBondLotsRequest.deleted:type_name -> openfief.connector.v1.BondLotKey
+	21, // 50: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	27, // 51: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
+	33, // 52: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
+	37, // 53: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
+	24, // 54: openfief.connector.v1.ConnectorService.LookupInstruments:input_type -> openfief.connector.v1.LookupInstrumentsRequest
+	31, // 55: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
+	34, // 56: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
+	38, // 57: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
+	26, // 58: openfief.connector.v1.ConnectorService.LookupInstruments:output_type -> openfief.connector.v1.LookupInstrumentsResponse
+	55, // [55:59] is the sub-list for method output_type
+	51, // [51:55] is the sub-list for method input_type
+	51, // [51:51] is the sub-list for extension type_name
+	51, // [51:51] is the sub-list for extension extendee
+	0,  // [0:51] is the sub-list for field type_name
 }
 
 func init() { file_openfief_connector_v1_connector_proto_init() }
@@ -3107,7 +3202,7 @@ func file_openfief_connector_v1_connector_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_connector_v1_connector_proto_rawDesc), len(file_openfief_connector_v1_connector_proto_rawDesc)),
-			NumEnums:      6,
+			NumEnums:      7,
 			NumMessages:   32,
 			NumExtensions: 0,
 			NumServices:   1,

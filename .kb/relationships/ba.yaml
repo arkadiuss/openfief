@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7b5867cfbe9
+  - type: implements
+    from: SYM-ui-posted-payout
+    to: REQ-ui-bond-payout-setting
+    created_at: 2026-11-01T07:52:23.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fbd1b06b0f4
+  - type: covered_by
+    from: SYM-ui-posted-payout
+    to: TEST-ui-values
+    created_at: 2026-11-01T07:52:23.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7001af1d3882

@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7368a02b844e
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-ledger-account
+    to: TEST-ingest-app-held
+    created_at: 2026-11-01T07:47:31.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3f2ba3ea48c

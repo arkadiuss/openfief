@@ -580,13 +580,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7bb00dccfac
-  - type: implements
-    from: SYM-demo-seed-importer-add-opening-lots
-    to: REQ-ingest-bond-lot-go-live
-    created_at: 2026-10-30T06:34:12.011Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1598fe1423ce
   - type: covered_by
     from: SYM-demo-seed-importer-add-opening-lots
     to: TEST-demo-seed-load
@@ -643,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42ee200d1722
+  - type: implements
+    from: SYM-demo-seed-importer-add-opening-lots
+    to: REQ-demo-real-pipelines
+    created_at: 2026-11-01T08:00:37.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43df3eff8095

@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-017bf52a711d
+  - type: executable_for
+    from: SYM-treasury-bonds-test-helper-line
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-01T07:52:44.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41cfaff4862f

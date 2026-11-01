@@ -30,8 +30,9 @@
 //   words. A name it can make no ID from, an empty institution, an unknown
 //   sleeve, a tax wrapper the jurisdiction pack doesn't have, a fee rule
 //   whose rates aren't decimal fractions from 0 up to 1 or whose minimum
-//   is negative or has no currency, or a malformed instance name fails
-//   with INVALID_ARGUMENT; a name
+//   is negative or has no currency, a paid-out payout setting on an
+//   account that is not at the "treasury-bonds" institution (D-135), or a
+//   malformed instance name fails with INVALID_ARGUMENT; a name
 //   whose ID is taken with ALREADY_EXISTS; an unknown account with
 //   NOT_FOUND; a broker account the instance never reported, or one mapped
 //   to another account, with FAILED_PRECONDITION. Nothing is stored then.
@@ -62,6 +63,67 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// BondPayout is the payout setting of a hand-entered bond account
+// (D-135), matching the option the bond registry offers. Only an account
+// at the "treasury-bonds" institution may be paid out; asking for it on
+// another fails with INVALID_ARGUMENT. A change takes effect on the day
+// it is made: a coupon or maturity follows the setting in force on the
+// day it falls due.
+type BondPayout int32
+
+const (
+	// In a request, keeps the account's setting; a new account's is
+	// BOND_PAYOUT_CASH.
+	BondPayout_BOND_PAYOUT_UNSPECIFIED BondPayout = 0
+	// Coupons and maturities stay as the account's cash.
+	BondPayout_BOND_PAYOUT_CASH BondPayout = 1
+	// Each coupon and maturity is booked, then withdrawn: a withdrawal of
+	// the same amount on the same day, so the account's cash matches the
+	// registry and the payout still counts as return.
+	BondPayout_BOND_PAYOUT_PAID_OUT BondPayout = 2
+)
+
+// Enum value maps for BondPayout.
+var (
+	BondPayout_name = map[int32]string{
+		0: "BOND_PAYOUT_UNSPECIFIED",
+		1: "BOND_PAYOUT_CASH",
+		2: "BOND_PAYOUT_PAID_OUT",
+	}
+	BondPayout_value = map[string]int32{
+		"BOND_PAYOUT_UNSPECIFIED": 0,
+		"BOND_PAYOUT_CASH":        1,
+		"BOND_PAYOUT_PAID_OUT":    2,
+	}
+)
+
+func (x BondPayout) Enum() *BondPayout {
+	p := new(BondPayout)
+	*p = x
+	return p
+}
+
+func (x BondPayout) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (BondPayout) Descriptor() protoreflect.EnumDescriptor {
+	return file_openfief_ingest_v1_accounts_proto_enumTypes[0].Descriptor()
+}
+
+func (BondPayout) Type() protoreflect.EnumType {
+	return &file_openfief_ingest_v1_accounts_proto_enumTypes[0]
+}
+
+func (x BondPayout) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use BondPayout.Descriptor instead.
+func (BondPayout) EnumDescriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_accounts_proto_rawDescGZIP(), []int{0}
+}
+
 // Account is one account at an institution, in one sleeve.
 type Account struct {
 	state       protoimpl.MessageState `protogen:"open.v1"`
@@ -74,9 +136,15 @@ type Account struct {
 	// "taxable", "ike", "ikze" or "oki" (D-76).
 	TaxWrapper string `protobuf:"bytes,5,opt,name=tax_wrapper,json=taxWrapper,proto3" json:"tax_wrapper,omitempty"`
 	// The fee rule its broker charges a sale (D-78); all zero until set.
-	FeeRule       *FeeRule `protobuf:"bytes,6,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	FeeRule *FeeRule `protobuf:"bytes,6,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
+	// What happens to the coupons and maturities of a hand-entered bond
+	// account (D-135); BOND_PAYOUT_CASH for every other account.
+	BondPayout BondPayout `protobuf:"varint,7,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
+	// The day bond_payout took effect, YYYY-MM-DD; empty when it never
+	// changed.
+	BondPayoutSince string `protobuf:"bytes,8,opt,name=bond_payout_since,json=bondPayoutSince,proto3" json:"bond_payout_since,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *Account) Reset() {
@@ -149,6 +217,20 @@ func (x *Account) GetFeeRule() *FeeRule {
 		return x.FeeRule
 	}
 	return nil
+}
+
+func (x *Account) GetBondPayout() BondPayout {
+	if x != nil {
+		return x.BondPayout
+	}
+	return BondPayout_BOND_PAYOUT_UNSPECIFIED
+}
+
+func (x *Account) GetBondPayoutSince() string {
+	if x != nil {
+		return x.BondPayoutSince
+	}
+	return ""
 }
 
 // FeeRule is how an account's broker charges a sale (D-78): rate of the
@@ -245,7 +327,9 @@ type CreateAccountRequest struct {
 	// "taxable" for Poland.
 	TaxWrapper string `protobuf:"bytes,8,opt,name=tax_wrapper,json=taxWrapper,proto3" json:"tax_wrapper,omitempty"`
 	// The fee rule (D-78); unset for the zero rule.
-	FeeRule       *FeeRule `protobuf:"bytes,9,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
+	FeeRule *FeeRule `protobuf:"bytes,9,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
+	// The payout setting (D-135); unspecified for BOND_PAYOUT_CASH.
+	BondPayout    BondPayout `protobuf:"varint,10,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -343,6 +427,13 @@ func (x *CreateAccountRequest) GetFeeRule() *FeeRule {
 	return nil
 }
 
+func (x *CreateAccountRequest) GetBondPayout() BondPayout {
+	if x != nil {
+		return x.BondPayout
+	}
+	return BondPayout_BOND_PAYOUT_UNSPECIFIED
+}
+
 type CreateAccountResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Account       *Account               `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
@@ -397,7 +488,9 @@ type UpdateAccountRequest struct {
 	// The new tax wrapper; empty keeps the account's.
 	TaxWrapper string `protobuf:"bytes,6,opt,name=tax_wrapper,json=taxWrapper,proto3" json:"tax_wrapper,omitempty"`
 	// The new fee rule; unset keeps the account's.
-	FeeRule       *FeeRule `protobuf:"bytes,7,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
+	FeeRule *FeeRule `protobuf:"bytes,7,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
+	// The new payout setting (D-135); unspecified keeps the account's.
+	BondPayout    BondPayout `protobuf:"varint,8,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -479,6 +572,13 @@ func (x *UpdateAccountRequest) GetFeeRule() *FeeRule {
 		return x.FeeRule
 	}
 	return nil
+}
+
+func (x *UpdateAccountRequest) GetBondPayout() BondPayout {
+	if x != nil {
+		return x.BondPayout
+	}
+	return BondPayout_BOND_PAYOUT_UNSPECIFIED
 }
 
 type UpdateAccountResponse struct {
@@ -1049,7 +1149,7 @@ var File_openfief_ingest_v1_accounts_proto protoreflect.FileDescriptor
 
 const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\n" +
-	"!openfief/ingest/v1/accounts.proto\x12\x12openfief.ingest.v1\"\xc0\x01\n" +
+	"!openfief/ingest/v1/accounts.proto\x12\x12openfief.ingest.v1\"\xad\x02\n" +
 	"\aAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12\x12\n" +
@@ -1057,12 +1157,15 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\x06sleeve\x18\x04 \x01(\tR\x06sleeve\x12\x1f\n" +
 	"\vtax_wrapper\x18\x05 \x01(\tR\n" +
 	"taxWrapper\x126\n" +
-	"\bfee_rule\x18\x06 \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\"\x8b\x01\n" +
+	"\bfee_rule\x18\x06 \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
+	"\vbond_payout\x18\a \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
+	"bondPayout\x12*\n" +
+	"\x11bond_payout_since\x18\b \x01(\tR\x0fbondPayoutSince\"\x8b\x01\n" +
 	"\aFeeRule\x12\x12\n" +
 	"\x04rate\x18\x01 \x01(\tR\x04rate\x12\x18\n" +
 	"\aminimum\x18\x02 \x01(\tR\aminimum\x12)\n" +
 	"\x10minimum_currency\x18\x03 \x01(\tR\x0fminimumCurrency\x12'\n" +
-	"\x0fconversion_rate\x18\x04 \x01(\tR\x0econversionRate\"\xd0\x02\n" +
+	"\x0fconversion_rate\x18\x04 \x01(\tR\x0econversionRate\"\x91\x03\n" +
 	"\x14CreateAccountRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
@@ -1073,9 +1176,12 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\x0ebroker_account\x18\a \x01(\tR\rbrokerAccount\x12\x1f\n" +
 	"\vtax_wrapper\x18\b \x01(\tR\n" +
 	"taxWrapper\x126\n" +
-	"\bfee_rule\x18\t \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\"N\n" +
+	"\bfee_rule\x18\t \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
+	"\vbond_payout\x18\n" +
+	" \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
+	"bondPayout\"N\n" +
 	"\x15CreateAccountResponse\x125\n" +
-	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xf7\x01\n" +
+	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xb8\x02\n" +
 	"\x14UpdateAccountRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1d\n" +
@@ -1085,7 +1191,9 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\x06sleeve\x18\x05 \x01(\tR\x06sleeve\x12\x1f\n" +
 	"\vtax_wrapper\x18\x06 \x01(\tR\n" +
 	"taxWrapper\x126\n" +
-	"\bfee_rule\x18\a \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\"N\n" +
+	"\bfee_rule\x18\a \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
+	"\vbond_payout\x18\b \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
+	"bondPayout\"N\n" +
 	"\x15UpdateAccountResponse\x125\n" +
 	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xc6\x01\n" +
 	"\x12BindAccountRequest\x12\x16\n" +
@@ -1123,7 +1231,12 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\x0ebroker_account\x18\x04 \x01(\tR\rbrokerAccount\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x05 \x01(\tR\taccountId\"\x1c\n" +
-	"\x1aRemapBrokerAccountResponse2\x8c\x05\n" +
+	"\x1aRemapBrokerAccountResponse*Y\n" +
+	"\n" +
+	"BondPayout\x12\x1b\n" +
+	"\x17BOND_PAYOUT_UNSPECIFIED\x10\x00\x12\x14\n" +
+	"\x10BOND_PAYOUT_CASH\x10\x01\x12\x18\n" +
+	"\x14BOND_PAYOUT_PAID_OUT\x10\x022\x8c\x05\n" +
 	"\x0eAccountService\x12d\n" +
 	"\rCreateAccount\x12(.openfief.ingest.v1.CreateAccountRequest\x1a).openfief.ingest.v1.CreateAccountResponse\x12d\n" +
 	"\rUpdateAccount\x12(.openfief.ingest.v1.UpdateAccountRequest\x1a).openfief.ingest.v1.UpdateAccountResponse\x12^\n" +
@@ -1145,48 +1258,53 @@ func file_openfief_ingest_v1_accounts_proto_rawDescGZIP() []byte {
 	return file_openfief_ingest_v1_accounts_proto_rawDescData
 }
 
+var file_openfief_ingest_v1_accounts_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_openfief_ingest_v1_accounts_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_openfief_ingest_v1_accounts_proto_goTypes = []any{
-	(*Account)(nil),                    // 0: openfief.ingest.v1.Account
-	(*FeeRule)(nil),                    // 1: openfief.ingest.v1.FeeRule
-	(*CreateAccountRequest)(nil),       // 2: openfief.ingest.v1.CreateAccountRequest
-	(*CreateAccountResponse)(nil),      // 3: openfief.ingest.v1.CreateAccountResponse
-	(*UpdateAccountRequest)(nil),       // 4: openfief.ingest.v1.UpdateAccountRequest
-	(*UpdateAccountResponse)(nil),      // 5: openfief.ingest.v1.UpdateAccountResponse
-	(*BindAccountRequest)(nil),         // 6: openfief.ingest.v1.BindAccountRequest
-	(*BindAccountResponse)(nil),        // 7: openfief.ingest.v1.BindAccountResponse
-	(*BrokerAccount)(nil),              // 8: openfief.ingest.v1.BrokerAccount
-	(*ListBrokerAccountsRequest)(nil),  // 9: openfief.ingest.v1.ListBrokerAccountsRequest
-	(*ListBrokerAccountsResponse)(nil), // 10: openfief.ingest.v1.ListBrokerAccountsResponse
-	(*DeleteAccountRequest)(nil),       // 11: openfief.ingest.v1.DeleteAccountRequest
-	(*DeleteAccountResponse)(nil),      // 12: openfief.ingest.v1.DeleteAccountResponse
-	(*RemapBrokerAccountRequest)(nil),  // 13: openfief.ingest.v1.RemapBrokerAccountRequest
-	(*RemapBrokerAccountResponse)(nil), // 14: openfief.ingest.v1.RemapBrokerAccountResponse
+	(BondPayout)(0),                    // 0: openfief.ingest.v1.BondPayout
+	(*Account)(nil),                    // 1: openfief.ingest.v1.Account
+	(*FeeRule)(nil),                    // 2: openfief.ingest.v1.FeeRule
+	(*CreateAccountRequest)(nil),       // 3: openfief.ingest.v1.CreateAccountRequest
+	(*CreateAccountResponse)(nil),      // 4: openfief.ingest.v1.CreateAccountResponse
+	(*UpdateAccountRequest)(nil),       // 5: openfief.ingest.v1.UpdateAccountRequest
+	(*UpdateAccountResponse)(nil),      // 6: openfief.ingest.v1.UpdateAccountResponse
+	(*BindAccountRequest)(nil),         // 7: openfief.ingest.v1.BindAccountRequest
+	(*BindAccountResponse)(nil),        // 8: openfief.ingest.v1.BindAccountResponse
+	(*BrokerAccount)(nil),              // 9: openfief.ingest.v1.BrokerAccount
+	(*ListBrokerAccountsRequest)(nil),  // 10: openfief.ingest.v1.ListBrokerAccountsRequest
+	(*ListBrokerAccountsResponse)(nil), // 11: openfief.ingest.v1.ListBrokerAccountsResponse
+	(*DeleteAccountRequest)(nil),       // 12: openfief.ingest.v1.DeleteAccountRequest
+	(*DeleteAccountResponse)(nil),      // 13: openfief.ingest.v1.DeleteAccountResponse
+	(*RemapBrokerAccountRequest)(nil),  // 14: openfief.ingest.v1.RemapBrokerAccountRequest
+	(*RemapBrokerAccountResponse)(nil), // 15: openfief.ingest.v1.RemapBrokerAccountResponse
 }
 var file_openfief_ingest_v1_accounts_proto_depIdxs = []int32{
-	1,  // 0: openfief.ingest.v1.Account.fee_rule:type_name -> openfief.ingest.v1.FeeRule
-	1,  // 1: openfief.ingest.v1.CreateAccountRequest.fee_rule:type_name -> openfief.ingest.v1.FeeRule
-	0,  // 2: openfief.ingest.v1.CreateAccountResponse.account:type_name -> openfief.ingest.v1.Account
-	1,  // 3: openfief.ingest.v1.UpdateAccountRequest.fee_rule:type_name -> openfief.ingest.v1.FeeRule
-	0,  // 4: openfief.ingest.v1.UpdateAccountResponse.account:type_name -> openfief.ingest.v1.Account
-	8,  // 5: openfief.ingest.v1.ListBrokerAccountsResponse.broker_accounts:type_name -> openfief.ingest.v1.BrokerAccount
-	2,  // 6: openfief.ingest.v1.AccountService.CreateAccount:input_type -> openfief.ingest.v1.CreateAccountRequest
-	4,  // 7: openfief.ingest.v1.AccountService.UpdateAccount:input_type -> openfief.ingest.v1.UpdateAccountRequest
-	6,  // 8: openfief.ingest.v1.AccountService.BindAccount:input_type -> openfief.ingest.v1.BindAccountRequest
-	9,  // 9: openfief.ingest.v1.AccountService.ListBrokerAccounts:input_type -> openfief.ingest.v1.ListBrokerAccountsRequest
-	11, // 10: openfief.ingest.v1.AccountService.DeleteAccount:input_type -> openfief.ingest.v1.DeleteAccountRequest
-	13, // 11: openfief.ingest.v1.AccountService.RemapBrokerAccount:input_type -> openfief.ingest.v1.RemapBrokerAccountRequest
-	3,  // 12: openfief.ingest.v1.AccountService.CreateAccount:output_type -> openfief.ingest.v1.CreateAccountResponse
-	5,  // 13: openfief.ingest.v1.AccountService.UpdateAccount:output_type -> openfief.ingest.v1.UpdateAccountResponse
-	7,  // 14: openfief.ingest.v1.AccountService.BindAccount:output_type -> openfief.ingest.v1.BindAccountResponse
-	10, // 15: openfief.ingest.v1.AccountService.ListBrokerAccounts:output_type -> openfief.ingest.v1.ListBrokerAccountsResponse
-	12, // 16: openfief.ingest.v1.AccountService.DeleteAccount:output_type -> openfief.ingest.v1.DeleteAccountResponse
-	14, // 17: openfief.ingest.v1.AccountService.RemapBrokerAccount:output_type -> openfief.ingest.v1.RemapBrokerAccountResponse
-	12, // [12:18] is the sub-list for method output_type
-	6,  // [6:12] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	2,  // 0: openfief.ingest.v1.Account.fee_rule:type_name -> openfief.ingest.v1.FeeRule
+	0,  // 1: openfief.ingest.v1.Account.bond_payout:type_name -> openfief.ingest.v1.BondPayout
+	2,  // 2: openfief.ingest.v1.CreateAccountRequest.fee_rule:type_name -> openfief.ingest.v1.FeeRule
+	0,  // 3: openfief.ingest.v1.CreateAccountRequest.bond_payout:type_name -> openfief.ingest.v1.BondPayout
+	1,  // 4: openfief.ingest.v1.CreateAccountResponse.account:type_name -> openfief.ingest.v1.Account
+	2,  // 5: openfief.ingest.v1.UpdateAccountRequest.fee_rule:type_name -> openfief.ingest.v1.FeeRule
+	0,  // 6: openfief.ingest.v1.UpdateAccountRequest.bond_payout:type_name -> openfief.ingest.v1.BondPayout
+	1,  // 7: openfief.ingest.v1.UpdateAccountResponse.account:type_name -> openfief.ingest.v1.Account
+	9,  // 8: openfief.ingest.v1.ListBrokerAccountsResponse.broker_accounts:type_name -> openfief.ingest.v1.BrokerAccount
+	3,  // 9: openfief.ingest.v1.AccountService.CreateAccount:input_type -> openfief.ingest.v1.CreateAccountRequest
+	5,  // 10: openfief.ingest.v1.AccountService.UpdateAccount:input_type -> openfief.ingest.v1.UpdateAccountRequest
+	7,  // 11: openfief.ingest.v1.AccountService.BindAccount:input_type -> openfief.ingest.v1.BindAccountRequest
+	10, // 12: openfief.ingest.v1.AccountService.ListBrokerAccounts:input_type -> openfief.ingest.v1.ListBrokerAccountsRequest
+	12, // 13: openfief.ingest.v1.AccountService.DeleteAccount:input_type -> openfief.ingest.v1.DeleteAccountRequest
+	14, // 14: openfief.ingest.v1.AccountService.RemapBrokerAccount:input_type -> openfief.ingest.v1.RemapBrokerAccountRequest
+	4,  // 15: openfief.ingest.v1.AccountService.CreateAccount:output_type -> openfief.ingest.v1.CreateAccountResponse
+	6,  // 16: openfief.ingest.v1.AccountService.UpdateAccount:output_type -> openfief.ingest.v1.UpdateAccountResponse
+	8,  // 17: openfief.ingest.v1.AccountService.BindAccount:output_type -> openfief.ingest.v1.BindAccountResponse
+	11, // 18: openfief.ingest.v1.AccountService.ListBrokerAccounts:output_type -> openfief.ingest.v1.ListBrokerAccountsResponse
+	13, // 19: openfief.ingest.v1.AccountService.DeleteAccount:output_type -> openfief.ingest.v1.DeleteAccountResponse
+	15, // 20: openfief.ingest.v1.AccountService.RemapBrokerAccount:output_type -> openfief.ingest.v1.RemapBrokerAccountResponse
+	15, // [15:21] is the sub-list for method output_type
+	9,  // [9:15] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_openfief_ingest_v1_accounts_proto_init() }
@@ -1199,13 +1317,14 @@ func file_openfief_ingest_v1_accounts_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_ingest_v1_accounts_proto_rawDesc), len(file_openfief_ingest_v1_accounts_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_openfief_ingest_v1_accounts_proto_goTypes,
 		DependencyIndexes: file_openfief_ingest_v1_accounts_proto_depIdxs,
+		EnumInfos:         file_openfief_ingest_v1_accounts_proto_enumTypes,
 		MessageInfos:      file_openfief_ingest_v1_accounts_proto_msgTypes,
 	}.Build()
 	File_openfief_ingest_v1_accounts_proto = out.File

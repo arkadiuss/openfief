@@ -566,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf66a4f9822c
+  - type: constrains
+    from: REQ-treasurybonds-payouts-from-purchase
+    to: FACT-SUBJECT-7F62B31170D482ED
+    created_at: 2026-11-01T07:46:18.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b072052de475
+  - type: requires_property
+    from: REQ-treasurybonds-payouts-from-purchase
+    to: FACT-PROP-8D6573943DEDAB03
+    created_at: 2026-11-01T07:46:18.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b22d2be2bf87
+  - type: specified_by
+    from: REQ-treasurybonds-payouts-from-purchase
+    to: SCEN-treasurybonds-payouts-from-purchase
+    created_at: 2026-11-01T07:46:18.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70f7b3de8728

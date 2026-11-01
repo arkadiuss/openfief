@@ -143,7 +143,7 @@ func TestAccountServiceRoundTrip(t *testing.T) {
 	}))
 	want := &ingestv1.Account{
 		Id: "ibkr-main", Institution: "ibkr", Name: "IBKR main", Sleeve: "satellite", TaxWrapper: "taxable",
-		FeeRule: &ingestv1.FeeRule{Rate: "0", Minimum: "0", ConversionRate: "0"},
+		FeeRule: &ingestv1.FeeRule{Rate: "0", Minimum: "0", ConversionRate: "0"}, BondPayout: ingestv1.BondPayout_BOND_PAYOUT_CASH,
 	}
 	if err != nil || !gocmp.Equal(want, created.Msg.GetAccount(), protocmp.Transform()) {
 		t.Fatalf("CreateAccount = %v, %v; want %v", created, err, want)
@@ -153,7 +153,10 @@ func TestAccountServiceRoundTrip(t *testing.T) {
 		Origin: local, SessionToken: ownerSession, AccountId: "ibkr-main", Name: "IBKR", Sleeve: "core",
 		TaxWrapper: "ikze", FeeRule: fee,
 	}))
-	want = &ingestv1.Account{Id: "ibkr-main", Institution: "ibkr", Name: "IBKR", Sleeve: "core", TaxWrapper: "ikze", FeeRule: fee}
+	want = &ingestv1.Account{
+		Id: "ibkr-main", Institution: "ibkr", Name: "IBKR", Sleeve: "core", TaxWrapper: "ikze", FeeRule: fee,
+		BondPayout: ingestv1.BondPayout_BOND_PAYOUT_CASH,
+	}
 	if err != nil || !gocmp.Equal(want, updated.Msg.GetAccount(), protocmp.Transform()) {
 		t.Errorf("UpdateAccount = %v, %v; want %v", updated, err, want)
 	}
@@ -164,6 +167,28 @@ func TestAccountServiceRoundTrip(t *testing.T) {
 	}
 	if diff := gocmp.Diff([]string{"ibkr-main>ibkr-main", "bonds-main>acc-bonds"}, links.bound); diff != "" || links.brokers[0].Account != "ibkr-main" {
 		t.Errorf("bindings (-want +got):\n%s\nU0000001 mapped to %q", diff, links.brokers[0].Account)
+	}
+}
+
+// TestAccountServiceBondPayout pays out a hand-entered bond account's
+// coupons and maturities from today (D-135).
+func TestAccountServiceBondPayout(t *testing.T) {
+	t.Parallel()
+	reg, links := fixture()
+	c := newAccountsClient(t, reg, links, viewCaller)
+	ctx := t.Context()
+	// A hand-entered bond account's coupons and maturities paid out from today (D-135).
+	paid, err := c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
+		Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Name: "Bonds", Sleeve: "bonds",
+		BondPayout: ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT,
+	}))
+	if err != nil || paid.Msg.GetAccount().GetBondPayout() != ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT ||
+		paid.Msg.GetAccount().GetBondPayoutSince() != "2026-03-02" {
+		t.Errorf("UpdateAccount paying out = %v, %v; want paid out since 2026-03-02", paid, err)
+	}
+	i := slices.IndexFunc(reg.accounts, func(a ledger.Account) bool { return a.ID == bondsAccount })
+	if got := reg.accounts[i].PayoutSetting(); got.Payout != ledger.PayoutPaidOut || got.Since.String() != "2026-03-02" {
+		t.Errorf("stored payout = %+v, want paid out since 2026-03-02", got)
 	}
 }
 
@@ -227,6 +252,18 @@ func TestAccountServiceErrors(t *testing.T) {
 			_, err := c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
 				Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Name: "X", Sleeve: "core",
 				FeeRule: &ingestv1.FeeRule{Rate: "0,29%"},
+			}))
+			return connect.CodeOf(err)
+		}},
+		{name: "paying out an account that is not a hand-entered bond account", want: connect.CodeInvalidArgument, call: func(c accountsClient) connect.Code {
+			req := create(ownerSession, "Cash", "core", "", "")
+			req.Msg.BondPayout = ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT
+			_, err := c.CreateAccount(ctx, req)
+			return connect.CodeOf(err)
+		}},
+		{name: "a payout setting outside the declared ones", want: connect.CodeInvalidArgument, call: func(c accountsClient) connect.Code {
+			_, err := c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
+				Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Name: "Bonds", Sleeve: "bonds", BondPayout: 7,
 			}))
 			return connect.CodeOf(err)
 		}},

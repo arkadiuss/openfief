@@ -14,11 +14,12 @@ import (
 )
 
 // DueCoupon is one coupon that fell due on an open lot of a held account:
-// the account, the lot's instrument, series terms, purchase date and bonds,
-// and the interest period it pays.
+// the account with its payout setting, the lot's instrument, series terms,
+// purchase date and bonds, and the interest period it pays.
 type DueCoupon struct {
 	Account   ledger.AccountID
 	Wrapper   string
+	Payout    ledger.PayoutSetting
 	Lot       ledger.Lot
 	Terms     pl.Terms
 	Period    int
@@ -26,14 +27,16 @@ type DueCoupon struct {
 	Purchased kernel.Date
 }
 
-// DueCoupons returns every coupon (pl.CouponDates) that fell due after its
-// account's go-live and on or before today on an open lot of a coupon
-// series held in accounts (D-117), in account, lot and period order. What
-// fell due on or before go-live is history the opening lots hold (D-98),
-// and an account not seeded yet has no lots. A lot whose instrument is no
+// DueCoupons returns every coupon (pl.CouponDates) that fell due on or
+// before today on an open lot of a coupon series held in accounts (D-117),
+// in account, lot and period order. An account whose lots are deposits and
+// buys on their purchase dates has its whole history, so every coupon
+// since purchase is due (D-98); in an account seeded with opening lots,
+// only those after its go-live are, since what fell due on or before it is
+// history the opening lots hold. A lot whose instrument is no
 // bond series is not a bond and is left out; a bond series without terms
 // is a problem, and so is a lot whose purchase date doesn't match its
-// series.
+// series; DueMaturities leaves such lots to these problems.
 func DueCoupons(accounts []ingest.HeldAccount, terms []ingest.BondTerms, today kernel.Date) ([]DueCoupon, []ingest.Problem) {
 	var (
 		out      []DueCoupon
@@ -41,9 +44,6 @@ func DueCoupons(accounts []ingest.HeldAccount, terms []ingest.BondTerms, today k
 	)
 	for i := range accounts {
 		a := &accounts[i]
-		if a.GoLive.IsZero() {
-			continue
-		}
 		for j := range a.Lots {
 			due, problem := dueOnLot(a, &a.Lots[j], terms, today)
 			out = append(out, due...)
@@ -64,7 +64,7 @@ func dueOnLot(a *ingest.HeldAccount, lot *ledger.Lot, terms []ingest.BondTerms, 
 	}
 	t, ok := termsOf(terms, lot.Instrument)
 	if !ok {
-		p := ingest.Skipped(lotRef(a.Account, s, lot.Opened), "no series terms to compute its coupons")
+		p := ingest.Skipped(lotRef(a.Account, s, lot.Opened), "no series terms to compute its coupons and maturity")
 		return nil, &p
 	}
 	dates, err := pl.CouponDates(s, lot.Opened)
@@ -74,9 +74,9 @@ func dueOnLot(a *ingest.HeldAccount, lot *ledger.Lot, terms []ingest.BondTerms, 
 	}
 	var out []DueCoupon
 	for k, due := range dates {
-		if due.After(a.GoLive) && !due.After(today) {
+		if (a.GoLive.IsZero() || due.After(a.GoLive)) && !due.After(today) {
 			out = append(out, DueCoupon{
-				Account: a.Account, Wrapper: a.Wrapper, Lot: *lot, Terms: t, Period: k + 1, Due: due, Purchased: lot.Opened,
+				Account: a.Account, Wrapper: a.Wrapper, Payout: a.Payout, Lot: *lot, Terms: t, Period: k + 1, Due: due, Purchased: lot.Opened,
 			})
 		}
 	}
@@ -131,29 +131,59 @@ func CPIYears(due []DueCoupon) ([]int, bool) {
 // BookCoupons books each due coupon as interest (D-101) in its account: its
 // lot's bonds times what one bond is paid (pl.Terms.Coupon), with the Belka
 // tax the account's wrapper withholds (pl.BelkaTax), on the day it fell
-// due. readings supply the period index readings. Each is keyed
+// due, followed by a withdrawal of the cash it brought when the account's
+// payout setting pays it out (PayoutWithdrawal, D-135). readings supply the
+// period index readings. Each is keyed
 // "lot:<series>:<purchase date>:coupon:<due date>" under the source
 // SourcePrefix plus the account, as the lot itself, so it is idempotent per
 // lot and coupon date: delivering it again on every sync changes nothing.
 // A coupon whose reading is missing waits as a problem, and so does one in
 // an account with a wrapper the pack doesn't know.
 func BookCoupons(due []DueCoupon, readings []valuation.IndexReading) (ingest.Mapping, error) {
+	return bookPayouts(due, func(c *DueCoupon) payout {
+		t, err := bookCoupon(c, readings)
+		return payout{tx: t, err: err, setting: c.Payout, ref: couponRef(c), waiting: "its period's index reading is not published yet"}
+	})
+}
+
+// payout is one coupon or maturity booked: its transaction or the error
+// that kept it from being booked, its account's payout setting, how a
+// problem names it, and why it waits for a missing index reading.
+type payout struct {
+	tx      ledger.Transaction
+	err     error
+	setting ledger.PayoutSetting
+	ref     string
+	waiting string
+}
+
+// bookPayouts books each of due with book, followed by its payout
+// withdrawal when its account pays it out (PayoutWithdrawal). One whose
+// index reading is missing, or whose account's wrapper the pack doesn't
+// know, waits as a problem; any other error fails.
+func bookPayouts[T any](due []T, book func(*T) payout) (ingest.Mapping, error) {
 	var out ingest.Mapping
 	for i := range due {
-		c := &due[i]
-		t, err := bookCoupon(c, readings)
-		_, missing := errors.AsType[*pl.MissingIndexError](err)
+		p := book(&due[i])
+		_, missing := errors.AsType[*pl.MissingIndexError](p.err)
 		switch {
 		case missing:
-			out.Problems = append(out.Problems, ingest.Skipped(couponRef(c), "its period's index reading is not published yet"))
+			out.Problems = append(out.Problems, ingest.Skipped(p.ref, p.waiting))
 			continue
-		case errors.Is(err, pl.ErrUnknownTaxWrapper):
-			out.Problems = append(out.Problems, ingest.Skipped(couponRef(c), "the account's tax wrapper is unknown"))
+		case errors.Is(p.err, pl.ErrUnknownTaxWrapper):
+			out.Problems = append(out.Problems, ingest.Skipped(p.ref, "the account's tax wrapper is unknown"))
 			continue
-		case err != nil:
+		case p.err != nil:
+			return ingest.Mapping{}, p.err
+		}
+		out.Transactions = append(out.Transactions, p.tx)
+		w, paid, err := PayoutWithdrawal(&p.tx, p.setting)
+		if err != nil {
 			return ingest.Mapping{}, err
 		}
-		out.Transactions = append(out.Transactions, t)
+		if paid {
+			out.Transactions = append(out.Transactions, w)
+		}
 	}
 	return out, nil
 }
@@ -192,24 +222,45 @@ func bookCoupon(c *DueCoupon, readings []valuation.IndexReading) (ledger.Transac
 	return t, nil
 }
 
-// CouponSync books the coupons that fell due on the treasury bonds the
-// core says each bound account holds (D-117), fetching the CPI and NBP
-// reference-rate readings their periods need from GUS and NBP, since the
-// connector stores nothing.
+// AccountsBookedIn returns the accounts of accounts whose coupons and
+// maturities a sync batch of mode books: in a transactions batch those
+// seeded with opening lots, which the core syncs in that mode (D-95), and
+// in an opening batch the others, whose lots are deposits and buys and
+// which are never seeded (D-98). So a sync that runs both batches books
+// each account once, and never seeds an account twice.
+func AccountsBookedIn(accounts []ingest.HeldAccount, mode ingest.Mode) []ingest.HeldAccount {
+	var out []ingest.HeldAccount
+	for i := range accounts {
+		if seeded := !accounts[i].GoLive.IsZero(); seeded == (mode == ingest.ModeTransactions) {
+			out = append(out, accounts[i])
+		}
+	}
+	return out
+}
+
+// CouponSync books the coupons and maturities that fell due on the
+// treasury bonds the core says each bound account holds (D-117, D-135),
+// fetching the CPI and NBP reference-rate readings their periods need from
+// GUS and NBP, since the connector stores nothing.
 type CouponSync struct {
 	CPI   CPISource
 	Rates ReferenceRateSource
 }
 
-// Coupons returns the mapping of every coupon due on accounts' open lots
-// as of today (DueCoupons, BookCoupons). It asks GUS once per CPI year the
-// coupons need, at most maxCPIYearsPerSync years, the earliest first: a
-// coupon whose year is left for a later sync waits as a problem. NBP's
-// archive is asked only when a reference-rate coupon is due. A failed
-// request fails the sync.
+// Coupons returns the mapping of every coupon due and every lot matured on
+// accounts' open lots as of today (DueCoupons, BookCoupons, DueMaturities,
+// BookMaturities), each paid out when its account's payout setting says
+// so. It asks GUS once per CPI year they need, at most maxCPIYearsPerSync
+// years, the earliest first: a coupon or maturity whose year is left for a
+// later sync waits as a problem. NBP's archive is asked only when a
+// reference-rate period is due. A failed request fails the sync.
 func (c *CouponSync) Coupons(ctx context.Context, accounts []ingest.HeldAccount, terms []ingest.BondTerms, today kernel.Date) (ingest.Mapping, error) {
 	due, problems := DueCoupons(accounts, terms, today)
+	matured := DueMaturities(accounts, terms, today)
 	years, needRate := CPIYears(due)
+	maturityYears, maturityRate := MaturityCPIYears(matured)
+	years = slices.Compact(slices.Sorted(slices.Values(append(years, maturityYears...))))
+	needRate = needRate || maturityRate
 	var readings []valuation.IndexReading
 	for i, y := range years {
 		if i == maxCPIYearsPerSync {
@@ -226,7 +277,7 @@ func (c *CouponSync) Coupons(ctx context.Context, accounts []ingest.HeldAccount,
 		if err != nil {
 			return ingest.Mapping{}, fmt.Errorf("reference rates: %w", err)
 		}
-		rates, err := ReferenceReadings(changes, earliestPurchase(due), today)
+		rates, err := ReferenceReadings(changes, earliestPurchase(due, matured), today)
 		if err != nil {
 			return ingest.Mapping{}, err
 		}
@@ -236,16 +287,27 @@ func (c *CouponSync) Coupons(ctx context.Context, accounts []ingest.HeldAccount,
 	if err != nil {
 		return ingest.Mapping{}, err
 	}
-	m.Problems = append(problems, m.Problems...)
+	r, err := BookMaturities(matured, readings)
+	if err != nil {
+		return ingest.Mapping{}, err
+	}
+	m.Transactions = append(m.Transactions, r.Transactions...)
+	m.Problems = slices.Concat(problems, m.Problems, r.Problems)
 	return m, nil
 }
 
-// earliestPurchase returns the earliest purchase date of due's lots.
-func earliestPurchase(due []DueCoupon) kernel.Date {
+// earliestPurchase returns the earliest purchase date of the lots of due
+// and matured.
+func earliestPurchase(due []DueCoupon, matured []DueMaturity) kernel.Date {
 	var first kernel.Date
 	for i := range due {
 		if first.IsZero() || due[i].Purchased.Before(first) {
 			first = due[i].Purchased
+		}
+	}
+	for i := range matured {
+		if first.IsZero() || matured[i].Lot.Opened.Before(first) {
+			first = matured[i].Lot.Opened
 		}
 	}
 	return first

@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2dec301c1c31
+  - type: executable_for
+    from: SYM-treasury-bonds-test-sync-books-accounts-never-seeded
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-01T07:52:37.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b47fc8965f7b

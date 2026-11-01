@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efe654da0bc0
+  - type: verified_by
+    from: SCEN-views-paid-out-payout-counts-as-return
+    to: TEST-views-performance
+    created_at: 2026-11-01T07:44:28.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-924dac5970df

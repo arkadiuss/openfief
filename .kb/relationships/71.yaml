@@ -559,3 +559,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-efa4d46b2d3f
+  - type: constrains
+    from: REQ-ledger-redemption-kind
+    to: FACT-SUBJECT-309D9B8F15FCF155
+    created_at: 2026-11-01T07:44:51.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04f467a2fe40
+  - type: requires_property
+    from: REQ-ledger-redemption-kind
+    to: FACT-PROP-BBE9A3A911E4FA1E
+    created_at: 2026-11-01T07:44:51.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68cb1f3e8a6b
+  - type: specified_by
+    from: REQ-ledger-redemption-kind
+    to: SCEN-ledger-redemption-postings
+    created_at: 2026-11-01T07:44:51.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-710836205704

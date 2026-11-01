@@ -9,6 +9,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 )
@@ -71,6 +72,8 @@ type AccountChange struct {
 	Wrapper jurisdiction.Wrapper
 	// Fee is the new fee rule; nil keeps the account's.
 	Fee *jurisdiction.FeeRule
+	// Payout is the new payout setting (D-135); nil keeps the account's.
+	Payout *ledger.Payout
 }
 
 // NewAccount is an account the owner creates (D-72): its name,
@@ -92,6 +95,9 @@ type NewAccount struct {
 	Wrapper jurisdiction.Wrapper
 	// Fee is the account's fee rule; nil for the zero rule.
 	Fee *jurisdiction.FeeRule
+	// Payout is the account's payout setting (D-135); nil keeps its
+	// payouts as cash.
+	Payout *ledger.Payout
 }
 
 // Accounts are the owner's account entries (D-72, D-73): creating and
@@ -149,6 +155,9 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 		institution = broker.Institution
 	}
 	entry.Account = ledger.Account{ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name, Sleeve: n.Sleeve}
+	if entry.Payout, err = a.payout(&entry.Account, n.Payout); err != nil {
+		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
+	}
 	if err := a.storeNew(ctx, &entry, n); err != nil {
 		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
 	}
@@ -156,8 +165,8 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 }
 
 // Update renames the stored account id and moves it to a sleeve, and
-// records its tax wrapper and fee rule when c changes them; its ID and
-// institution stay. It returns the account as stored.
+// records its tax wrapper and fee rule when c changes them, and its payout
+// setting, in force from today (D-135); its ID and institution stay. It returns the account as stored.
 func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id ledger.AccountID, c *AccountChange) (AccountEntry, error) {
 	if err := a.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing an account: %w", err)
@@ -176,10 +185,13 @@ func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id l
 	if c.Fee != nil {
 		entry.Fee = *c.Fee
 	}
-	if err := a.checkTerms(entry.Wrapper, &entry.Fee); err != nil {
+	if err = a.checkTerms(entry.Wrapper, &entry.Fee); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
 	entry.Name, entry.Sleeve = c.Name, c.Sleeve
+	if entry.Payout, err = a.payout(&entry.Account, c.Payout); err != nil {
+		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
+	}
 	if err := a.save(ctx, entry.Account); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
@@ -257,6 +269,25 @@ func (a *Accounts) newEntry(n *NewAccount) (AccountEntry, error) {
 		return AccountEntry{}, err
 	}
 	return entry, nil
+}
+
+// payout returns acc's payout setting with p in force from today, or acc's
+// own for nil p, checked: only a hand-entered bond account may pay out
+// (ingest.CheckPayout), as an invalid account otherwise.
+func (a *Accounts) payout(acc *ledger.Account, p *ledger.Payout) (*ledger.PayoutSetting, error) {
+	if p == nil {
+		return acc.Payout, nil
+	}
+	if err := ingest.CheckPayout(ingest.InstitutionID(acc.Institution), *p); err != nil {
+		return nil, fmt.Errorf("%w: %w", ledger.ErrInvalidAccount, err)
+	}
+	now := a.Now().UTC()
+	today, err := kernel.NewDate(now.Year(), now.Month(), now.Day())
+	if err != nil {
+		return nil, fmt.Errorf("today: %w", err)
+	}
+	s := acc.PayoutSetting().Changed(*p, today)
+	return &s, nil
 }
 
 // checkTerms checks that w is one of the pack's wrappers and fee a valid

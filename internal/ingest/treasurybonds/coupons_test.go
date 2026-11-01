@@ -70,9 +70,9 @@ func TestDueCoupons(t *testing.T) {
 			terms:   []ingest.BondTerms{termsOf(t, "COI1029", "0.06")}, want: []string{"a COI1029 2026-10-29 1"},
 		},
 		{
-			name:    "an account not seeded has nothing due",
+			name:    "an account not seeded holds its whole history: every coupon since purchase (D-98)",
 			account: ingest.HeldAccount{Account: "a", Lots: []ledger.Lot{heldLot(t, "COI1028", "10", "2024-10-10")}},
-			terms:   []ingest.BondTerms{coi},
+			terms:   []ingest.BondTerms{coi}, want: []string{"a COI1028 2025-10-10 1", "a COI1028 2026-10-10 2"},
 		},
 		{
 			name:    "capitalized bonds and instruments that are no bond pay none",
@@ -144,6 +144,30 @@ func TestCouponSyncCoupons(t *testing.T) {
 	}
 	if diff := cmp.Diff(wantProblems, problemRefs(m.Problems)); diff != "" {
 		t.Errorf("Coupons problems (-want +got):\n%s", diff)
+	}
+}
+
+func TestAccountsBookedIn(t *testing.T) {
+	t.Parallel()
+	accounts := []ingest.HeldAccount{{Account: "seeded", GoLive: mustDate(t, "2025-01-01")}, {Account: "real-dates"}}
+	tests := []struct {
+		mode ingest.Mode
+		want []string
+	}{
+		{mode: ingest.ModeTransactions, want: []string{"seeded"}},
+		{mode: ingest.ModeOpening, want: []string{"real-dates"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.mode.String(), func(t *testing.T) {
+			t.Parallel()
+			var got []string
+			for _, a := range treasurybonds.AccountsBookedIn(accounts, tt.mode) {
+				got = append(got, string(a.Account))
+			}
+			if diff := cmp.Diff(tt.want, got); diff != "" {
+				t.Errorf("AccountsBookedIn (-want +got):\n%s", diff)
+			}
+		})
 	}
 }
 

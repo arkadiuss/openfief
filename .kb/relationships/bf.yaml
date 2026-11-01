@@ -645,13 +645,6 @@ relationships:
     id: rel-3bdb562dd859
   - type: implements
     from: SYM-treasurybonds-mapper-deletions
-    to: REQ-treasurybonds-lot-mapping
-    created_at: 2026-10-30T06:38:49.243Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-20ec283fa714
-  - type: implements
-    from: SYM-treasurybonds-mapper-deletions
     to: REQ-treasurybonds-pre-go-live-opening-lot
     created_at: 2026-10-30T06:38:49.296Z
     created_by: kibi/upsert
@@ -769,3 +762,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4cbd4ab6579c
+  - type: constrains
+    from: REQ-treasurybonds-payout-withdrawal
+    to: FACT-SUBJECT-EFFC6623019BD505
+    created_at: 2026-11-01T07:45:33.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdc07fd33eb3
+  - type: requires_property
+    from: REQ-treasurybonds-payout-withdrawal
+    to: FACT-PROP-24BFE543B81BD2FE
+    created_at: 2026-11-01T07:45:33.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-193ae5412ffb
+  - type: specified_by
+    from: REQ-treasurybonds-payout-withdrawal
+    to: SCEN-treasurybonds-payout-withdrawal
+    created_at: 2026-11-01T07:45:33.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-187a3635d91c
+  - type: constrains
+    from: REQ-treasurybonds-lot-on-purchase-date
+    to: FACT-SUBJECT-8422AA93FAB9FA88
+    created_at: 2026-11-01T07:46:04.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9bea3999331
+  - type: requires_property
+    from: REQ-treasurybonds-lot-on-purchase-date
+    to: FACT-PROP-696582A948B6C80F
+    created_at: 2026-11-01T07:46:05.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8126db67be4
+  - type: specified_by
+    from: REQ-treasurybonds-lot-on-purchase-date
+    to: SCEN-treasurybonds-lot-on-purchase-date
+    created_at: 2026-11-01T07:46:05.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3de810711475
+  - type: supersedes
+    from: REQ-treasurybonds-lot-on-purchase-date
+    to: REQ-treasurybonds-lot-mapping
+    created_at: 2026-11-01T07:46:48.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfd356dcc1bd
+  - type: implements
+    from: SYM-treasurybonds-mapper-deletions
+    to: REQ-treasurybonds-lot-on-purchase-date
+    created_at: 2026-11-01T07:58:41.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e6a65691939

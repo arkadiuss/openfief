@@ -398,3 +398,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e09920676993
+  - type: implements
+    from: SYM-treasurybonds-payout-withdrawal
+    to: REQ-treasurybonds-payout-withdrawal
+    created_at: 2026-11-01T07:49:51.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-366ba04c325a
+  - type: covered_by
+    from: SYM-treasurybonds-payout-withdrawal
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:49:51.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5ad9b338251

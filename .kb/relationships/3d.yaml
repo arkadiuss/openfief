@@ -321,3 +321,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36beb0fd8f1f
+  - type: implements
+    from: SYM-ingestv1-bond-payout-descriptor
+    to: REQ-ingest-bond-payout-setting
+    created_at: 2026-11-01T07:54:14.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-028f598fb9b3
+  - type: covered_by
+    from: SYM-ingestv1-bond-payout-descriptor
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T07:54:14.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79284f08a4eb

@@ -30,8 +30,9 @@
 //   words. A name it can make no ID from, an empty institution, an unknown
 //   sleeve, a tax wrapper the jurisdiction pack doesn't have, a fee rule
 //   whose rates aren't decimal fractions from 0 up to 1 or whose minimum
-//   is negative or has no currency, or a malformed instance name fails
-//   with INVALID_ARGUMENT; a name
+//   is negative or has no currency, a paid-out payout setting on an
+//   account that is not at the "treasury-bonds" institution (D-135), or a
+//   malformed instance name fails with INVALID_ARGUMENT; a name
 //   whose ID is taken with ALREADY_EXISTS; an unknown account with
 //   NOT_FOUND; a broker account the instance never reported, or one mapped
 //   to another account, with FAILED_PRECONDITION. Nothing is stored then.
@@ -100,8 +101,9 @@ type AccountServiceClient interface {
 	// given, binds it to the account, and maps the broker account to it.
 	CreateAccount(context.Context, *connect.Request[v1.CreateAccountRequest]) (*connect.Response[v1.CreateAccountResponse], error)
 	// UpdateAccount renames an account, moves it to another sleeve, or
-	// changes its tax wrapper or fee rule, which revalues it (D-36); its ID
-	// and institution stay.
+	// changes its tax wrapper or fee rule, which revalues it (D-36), or the
+	// payout setting of a hand-entered bond account (D-135); its ID and
+	// institution stay.
 	UpdateAccount(context.Context, *connect.Request[v1.UpdateAccountRequest]) (*connect.Response[v1.UpdateAccountResponse], error)
 	// BindAccount binds a connector instance to a stored account, as
 	// `core connector bind` does, and maps the broker account to it when one
@@ -219,8 +221,9 @@ type AccountServiceHandler interface {
 	// given, binds it to the account, and maps the broker account to it.
 	CreateAccount(context.Context, *connect.Request[v1.CreateAccountRequest]) (*connect.Response[v1.CreateAccountResponse], error)
 	// UpdateAccount renames an account, moves it to another sleeve, or
-	// changes its tax wrapper or fee rule, which revalues it (D-36); its ID
-	// and institution stay.
+	// changes its tax wrapper or fee rule, which revalues it (D-36), or the
+	// payout setting of a hand-entered bond account (D-135); its ID and
+	// institution stay.
 	UpdateAccount(context.Context, *connect.Request[v1.UpdateAccountRequest]) (*connect.Response[v1.UpdateAccountResponse], error)
 	// BindAccount binds a connector instance to a stored account, as
 	// `core connector bind` does, and maps the broker account to it when one

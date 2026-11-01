@@ -195,6 +195,39 @@ func TestMap(t *testing.T) {
 	if diff := cmp.Diff(want, rows(t, &m)); diff != "" {
 		t.Errorf("Map transactions (-want +got):\n%s", diff)
 	}
+
+	// D-98: without a go-live, as in every account not seeded with opening
+	// lots, each lot is a deposit and a buy on its real purchase date, in
+	// any order, and a deleted lot deletes both.
+	e.GoLive = kernel.Date{}
+	e.Lots, e.Deleted = []ingest.BondLot{lots[1], lots[0]}, []ingest.BondLotKey{key(t, "EDO0536", "2026-05-10")}
+	onDates, _, err := treasurybonds.Mapper{}.Map(&e, today)
+	if err != nil {
+		t.Fatalf("Map without go-live: %v", err)
+	}
+	wantReal := []mapRow{
+		{
+			Key: k("lot:EDO0536:2026-05-15:deposit"), Kind: ledger.KindDeposit, Date: "2026-05-15",
+			Description: "Cash for treasury bonds EDO0536", Postings: []string{"cash:PLN 500 PLN", "equity:PLN -500 PLN"},
+		},
+		{
+			Key: k("lot:EDO0536:2026-05-15:buy"), Kind: ledger.KindBuy, Date: "2026-05-15",
+			Description: "Treasury bonds EDO0536", Postings: []string{"holding:" + edo.String() + " 500 PLN 5", "cash:PLN -500 PLN"},
+		},
+		{
+			Key: k("lot:EDO0536:2026-05-04:deposit"), Kind: ledger.KindDeposit, Date: "2026-05-04",
+			Description: "Cash for treasury bonds EDO0536", Postings: []string{"cash:PLN 3996 PLN", "equity:PLN -3996 PLN"},
+		},
+		{
+			Key: k("lot:EDO0536:2026-05-04:buy"), Kind: ledger.KindBuy, Date: "2026-05-04",
+			Description: "Treasury bonds EDO0536", Postings: []string{"holding:" + edo.String() + " 3996 PLN 40", "cash:PLN -3996 PLN"},
+		},
+		{Key: k("lot:EDO0536:2026-05-10:deposit"), Kind: ledger.KindDeletion, Date: "2026-05-10", Description: "Deleted treasury bonds EDO0536"},
+		{Key: k("lot:EDO0536:2026-05-10:buy"), Kind: ledger.KindDeletion, Date: "2026-05-10", Description: "Deleted treasury bonds EDO0536"},
+	}
+	if diff := cmp.Diff(wantReal, rows(t, &onDates)); diff != "" {
+		t.Errorf("Map without go-live (-want +got):\n%s", diff)
+	}
 	wantTerms := []ingest.BondTerms{{Instrument: edo, Terms: lots[0].Terms}, {Instrument: tos, Terms: lots[2].Terms}}
 	if diff := cmp.Diff(wantTerms, terms); diff != "" {
 		t.Errorf("Map terms, each series once (-want +got):\n%s", diff)
@@ -216,12 +249,16 @@ func TestMapKeepsKeysAcrossReEntry(t *testing.T) {
 	t.Parallel()
 	today := mustDate(t, "2026-10-29")
 	mapper := treasurybonds.Mapper{}
-	for _, goLive := range []string{"2026-05-04", "2026-05-03"} {
-		first, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: mustDate(t, goLive), Lots: []ingest.BondLot{lot(t, "EDO0536", "40", "2026-05-04", "0.06")}}, today)
+	for _, goLive := range []string{"", "2026-05-04", "2026-05-03"} {
+		var live kernel.Date
+		if goLive != "" {
+			live = mustDate(t, goLive)
+		}
+		first, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: live, Lots: []ingest.BondLot{lot(t, "EDO0536", "40", "2026-05-04", "0.06")}}, today)
 		if err != nil {
 			t.Fatalf("Map: %v", err)
 		}
-		fixed, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: mustDate(t, goLive), Lots: []ingest.BondLot{lot(t, "EDO0536", "45", "2026-05-04", "0.06")}}, today)
+		fixed, _, err := mapper.Map(&ingest.BondLotEntries{Account: account, GoLive: live, Lots: []ingest.BondLot{lot(t, "EDO0536", "45", "2026-05-04", "0.06")}}, today)
 		if err != nil {
 			t.Fatalf("Map: %v", err)
 		}
@@ -251,7 +288,6 @@ func TestMapRefuses(t *testing.T) {
 		wantErr error
 	}{
 		{name: "no account", entries: ingest.BondLotEntries{GoLive: goLive, Lots: []ingest.BondLot{good}}, wantErr: treasurybonds.ErrNoAccount},
-		{name: "no go-live", account: account, entries: ingest.BondLotEntries{Lots: []ingest.BondLot{good}}, wantErr: treasurybonds.ErrNoGoLive},
 		{name: "a lot under the wrong series", account: account, entries: ingest.BondLotEntries{GoLive: goLive, Lots: []ingest.BondLot{good, lot(t, "EDO0536", "1", "2026-06-02", "0.06")}}, wantErr: ingest.ErrInvalidBondLot},
 		{name: "a lot bought after today", account: account, entries: ingest.BondLotEntries{GoLive: goLive, Lots: []ingest.BondLot{lot(t, "EDO1136", "1", "2026-11-02", "0.06")}}, wantErr: ingest.ErrInvalidBondLot},
 		{name: "a purchase neither cash nor exchange", account: account, entries: ingest.BondLotEntries{GoLive: goLive, Lots: []ingest.BondLot{unknown}}, wantErr: ingest.ErrInvalidBondLot},

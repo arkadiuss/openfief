@@ -298,6 +298,23 @@ message Account {
   string tax_wrapper = 5;
   // The fee rule its broker charges a sale (D-78); zero until set.
   FeeRule fee_rule = 6;
+  // What happens to the coupons and maturities of a hand-entered bond
+  // account (D-135); BOND_PAYOUT_CASH for every other account.
+  BondPayout bond_payout = 7;
+  // The day bond_payout took effect, YYYY-MM-DD; empty when it never
+  // changed.
+  string bond_payout_since = 8;
+}
+
+// BondPayout is what happens to what a hand-entered bond account's bonds
+// pay, matching the option the bond registry offers (D-135).
+enum BondPayout {
+  BOND_PAYOUT_UNSPECIFIED = 0;
+  // Coupons and maturities stay as the account's cash.
+  BOND_PAYOUT_CASH = 1;
+  // Each coupon and maturity is followed by a withdrawal of the same
+  // amount on the same day.
+  BOND_PAYOUT_PAID_OUT = 2;
 }
 
 // FeeRule is how an account's broker charges a sale (D-78): rate of the
@@ -422,6 +439,9 @@ enum TransactionKind {
   TRANSACTION_KIND_OPENING_LOT = 8;
   // Interest paid on a holding, such as a treasury bond's coupon (D-101).
   TRANSACTION_KIND_INTEREST = 9;
+  // A holding redeemed by its issuer, such as a treasury bond at maturity
+  // (D-135).
+  TRANSACTION_KIND_REDEMPTION = 11;
 }
 
 // Transaction is the current version of one economic event, keyed by its

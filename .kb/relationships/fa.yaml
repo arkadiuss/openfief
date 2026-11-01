@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb01c84a95c3
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-check-digit
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:50:17.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9bbdb6ec37ad

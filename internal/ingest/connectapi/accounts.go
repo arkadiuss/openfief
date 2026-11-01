@@ -42,7 +42,7 @@ func (s *accountService) CreateAccount(ctx context.Context, req *connect.Request
 	acc, err := s.accounts.Create(ctx, m.GetOrigin(), m.GetSessionToken(), &app.NewAccount{
 		Name: m.GetName(), Institution: ingest.InstitutionID(m.GetInstitution()), Sleeve: portfolio.SleeveID(m.GetSleeve()),
 		Instance: m.GetConnectorInstance(), BrokerAccount: ingest.BrokerAccountID(m.GetBrokerAccount()),
-		Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee,
+		Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee, Payout: payoutFrom(m.GetBondPayout()),
 	})
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -51,7 +51,7 @@ func (s *accountService) CreateAccount(ctx context.Context, req *connect.Request
 }
 
 // UpdateAccount renames an account, moves it to another sleeve or changes
-// its tax wrapper or fee rule.
+// its tax wrapper, fee rule or payout setting.
 func (s *accountService) UpdateAccount(ctx context.Context, req *connect.Request[ingestv1.UpdateAccountRequest]) (*connect.Response[ingestv1.UpdateAccountResponse], error) {
 	m := req.Msg
 	fee, err := feeRuleFrom(m.GetFeeRule())
@@ -60,6 +60,7 @@ func (s *accountService) UpdateAccount(ctx context.Context, req *connect.Request
 	}
 	acc, err := s.accounts.Update(ctx, m.GetOrigin(), m.GetSessionToken(), ledger.AccountID(m.GetAccountId()), &app.AccountChange{
 		Name: m.GetName(), Sleeve: portfolio.SleeveID(m.GetSleeve()), Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee,
+		Payout: payoutFrom(m.GetBondPayout()),
 	})
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -118,12 +119,45 @@ func (s *accountService) RemapBrokerAccount(ctx context.Context, req *connect.Re
 	return connect.NewResponse(&ingestv1.RemapBrokerAccountResponse{}), nil
 }
 
-// pbAccount converts an account with its terms.
+// pbAccount converts an account with its terms and payout setting.
 func pbAccount(a *app.AccountEntry) *ingestv1.Account {
-	return &ingestv1.Account{
+	out := &ingestv1.Account{
 		Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve),
-		TaxWrapper: string(a.Wrapper), FeeRule: pbFeeRule(&a.Fee),
+		TaxWrapper: string(a.Wrapper), FeeRule: pbFeeRule(&a.Fee), BondPayout: pbPayout(a.PayoutSetting().Payout),
 	}
+	if since := a.PayoutSetting().Since; !since.IsZero() {
+		out.BondPayoutSince = since.String()
+	}
+	return out
+}
+
+// pbPayout converts a payout setting (D-135).
+func pbPayout(p ledger.Payout) ingestv1.BondPayout {
+	switch p {
+	case ledger.PayoutCash:
+		return ingestv1.BondPayout_BOND_PAYOUT_CASH
+	case ledger.PayoutPaidOut:
+		return ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT
+	}
+	return ingestv1.BondPayout_BOND_PAYOUT_UNSPECIFIED
+}
+
+// payoutFrom reads a requested payout setting: nil for unspecified, which
+// keeps the account's, and an out-of-range value as it is, which the
+// accounts refuse.
+func payoutFrom(p ingestv1.BondPayout) *ledger.Payout {
+	var out ledger.Payout
+	switch p {
+	case ingestv1.BondPayout_BOND_PAYOUT_UNSPECIFIED:
+		return nil
+	case ingestv1.BondPayout_BOND_PAYOUT_CASH:
+		out = ledger.PayoutCash
+	case ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT:
+		out = ledger.PayoutPaidOut
+	default:
+		out = ledger.Payout(p)
+	}
+	return &out
 }
 
 // pbFeeRule converts a fee rule; a minimum of zero has no currency.

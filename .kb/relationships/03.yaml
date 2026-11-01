@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c062b3c76fcb
+  - type: constrains
+    from: REQ-views-paid-out-payout-counts-as-return
+    to: FACT-SUBJECT-134DCCCDF96783CB
+    created_at: 2026-11-01T07:45:39.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1d1cc47c65d
+  - type: requires_property
+    from: REQ-views-paid-out-payout-counts-as-return
+    to: FACT-PROP-B6ACB7AC5704E5C4
+    created_at: 2026-11-01T07:45:40.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a20c8f6990e
+  - type: specified_by
+    from: REQ-views-paid-out-payout-counts-as-return
+    to: SCEN-views-paid-out-payout-counts-as-return
+    created_at: 2026-11-01T07:45:40.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c33605a6ce86

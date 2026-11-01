@@ -326,6 +326,7 @@ func transactionKinds() map[ledger.TransactionKind]connectorv1.TransactionKind {
 		ledger.KindOpeningLot:   connectorv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT,
 		ledger.KindInterest:     connectorv1.TransactionKind_TRANSACTION_KIND_INTEREST,
 		ledger.KindDeletion:     connectorv1.TransactionKind_TRANSACTION_KIND_DELETION,
+		ledger.KindRedemption:   connectorv1.TransactionKind_TRANSACTION_KIND_REDEMPTION,
 	}
 }
 

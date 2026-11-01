@@ -112,7 +112,7 @@ func (e *TickerEntry) Transaction(isin ledger.ISIN) (ledger.Transaction, error) 
 		}
 		t, err = ledger.NewDividend(e.Header, in, e.Amount, e.Charge)
 	case ledger.KindFee, ledger.KindFXConversion, ledger.KindDeposit, ledger.KindWithdrawal,
-		ledger.KindOpeningLot, ledger.KindInterest, ledger.KindDeletion:
+		ledger.KindOpeningLot, ledger.KindInterest, ledger.KindDeletion, ledger.KindRedemption:
 		err = errNotTickerKind
 	}
 	if t.Kind == 0 && err == nil {

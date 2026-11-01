@@ -39,7 +39,7 @@ func (h *heldConnector) Sync(_ context.Context, req *connect.Request[connectorv1
 
 // TestClientSyncSendsHoldings checks that what the core says the bound
 // accounts hold (D-117) reaches a plugin intact: go-live, tax wrapper,
-// holdings, open lots and bond terms.
+// payout setting (D-135), holdings, open lots and bond terms.
 func TestClientSyncSendsHoldings(t *testing.T) {
 	t.Parallel()
 	pln, err := kernel.ParseCurrency("PLN")
@@ -59,6 +59,7 @@ func TestClientSyncSendsHoldings(t *testing.T) {
 	held := []ingest.HeldAccount{
 		{
 			Account: "acc-bonds", GoLive: goLive(t), Wrapper: "taxable",
+			Payout:   ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: goLive(t)},
 			Holdings: []ledger.Holding{{Account: "acc-bonds", Instrument: in, Quantity: forty}},
 			Lots: []ledger.Lot{{
 				Instrument: in, Opened: goLive(t), Quantity: forty, Cost: kernel.NewMoney(kernel.NewDecimal(3996, 0), pln), Opening: true,

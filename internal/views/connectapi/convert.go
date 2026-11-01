@@ -71,12 +71,28 @@ func pbSleeve(s *portfolio.Sleeve) *viewsv1.Sleeve {
 	}
 }
 
-// pbAccount converts an account with its tax wrapper and fee rule.
+// pbAccount converts an account with its tax wrapper, fee rule and payout
+// setting (D-135).
 func pbAccount(a *ledger.Account, terms *app.AccountTerms) *viewsv1.Account {
-	return &viewsv1.Account{
+	out := &viewsv1.Account{
 		Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve),
-		TaxWrapper: string(terms.Wrapper), FeeRule: pbFeeRule(&terms.Fee),
+		TaxWrapper: string(terms.Wrapper), FeeRule: pbFeeRule(&terms.Fee), BondPayout: pbPayout(a.PayoutSetting().Payout),
 	}
+	if since := a.PayoutSetting().Since; !since.IsZero() {
+		out.BondPayoutSince = since.String()
+	}
+	return out
+}
+
+// pbPayout converts a payout setting.
+func pbPayout(p ledger.Payout) viewsv1.BondPayout {
+	switch p {
+	case ledger.PayoutCash:
+		return viewsv1.BondPayout_BOND_PAYOUT_CASH
+	case ledger.PayoutPaidOut:
+		return viewsv1.BondPayout_BOND_PAYOUT_PAID_OUT
+	}
+	return viewsv1.BondPayout_BOND_PAYOUT_UNSPECIFIED
 }
 
 // pbFeeRule converts a fee rule; a zero minimum is unset.

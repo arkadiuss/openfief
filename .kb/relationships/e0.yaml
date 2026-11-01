@@ -790,3 +790,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2ab24c163457
+  - type: implements
+    from: SYM-viewsv1-account-get-bond-payout
+    to: REQ-ui-bond-payout-setting
+    created_at: 2026-11-01T07:55:55.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b708e620ae6
+  - type: covered_by
+    from: SYM-viewsv1-account-get-bond-payout
+    to: TEST-ui-values
+    created_at: 2026-11-01T07:55:55.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bef62694243c

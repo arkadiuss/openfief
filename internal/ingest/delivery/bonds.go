@@ -84,13 +84,19 @@ func purchaseFrom(p connectorv1.BondPurchase) (ingest.BondPurchase, error) {
 	return 0, fmt.Errorf("%w: %d", errBadPurchase, p)
 }
 
-// BondLotEntries reads an ImportBondLots request: its account (D-118), its go-live date, its lots
-// in order (BondLots) and the lots it deletes. Anything malformed fails
+// BondLotEntries reads an ImportBondLots request: its account (D-118), its
+// go-live date when it has one (empty for every account not seeded with
+// opening lots, D-98), its lots in order (BondLots) and the lots it
+// deletes. Anything malformed fails
 // with an error wrapping ErrMalformedLot naming the field.
 func BondLotEntries(req *connectorv1.ImportBondLotsRequest) (ingest.BondLotEntries, error) {
-	goLive, err := kernel.ParseDate(req.GetGoLive())
-	if err != nil {
-		return ingest.BondLotEntries{}, fmt.Errorf("%w: go_live: %w", ErrMalformedLot, err)
+	var goLive kernel.Date
+	if req.GetGoLive() != "" {
+		d, err := kernel.ParseDate(req.GetGoLive())
+		if err != nil {
+			return ingest.BondLotEntries{}, fmt.Errorf("%w: go_live: %w", ErrMalformedLot, err)
+		}
+		goLive = d
 	}
 	lots, err := BondLots(req.GetLots())
 	if err != nil {

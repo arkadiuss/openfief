@@ -128,7 +128,7 @@
 {{with .BondLot}}
 <section class="card" aria-labelledby="bond-lot-title">
   <h2 id="bond-lot-title">Add bond lot</h2>
-  <p class="muted">A lot of treasury bonds you bought for cash at 100 PLN each or by exchanging maturing bonds at 99.90 PLN each, with the series' terms from its issue letter. A lot bought by this account's go-live date is an opening lot; a later one is a deposit and a buy. The core hands it to this account's connector; the lot then appears under open lots, valued by the bond rules. Entering the same series and day again replaces that lot.</p>
+  <p class="muted">A lot of treasury bonds you bought for cash at 100 PLN each or by exchanging maturing bonds at 99.90 PLN each, with the series' terms from its issue letter. It is booked on its purchase date, as a deposit of its cost and a buy, and lots can be entered in any order. The core hands it to this account's connector; the lot then appears under open lots, valued by the bond rules. Entering the same series and day again replaces that lot.</p>
   <form method="post" action="/accounts/{{$.Data.Account.Id}}/bond-lots">
     <div class="fields">
       <div class="field">

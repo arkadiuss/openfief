@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d71396402c48
+  - type: implements
+    from: SYM-ingestv1-create-account-request-get-bond-payout
+    to: REQ-ingest-bond-payout-setting
+    created_at: 2026-11-01T07:54:54.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23b502d8e1f8
+  - type: covered_by
+    from: SYM-ingestv1-create-account-request-get-bond-payout
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T07:54:54.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6603c02eb0bf

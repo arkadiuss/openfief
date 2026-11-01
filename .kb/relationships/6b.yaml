@@ -608,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77221cffac7a
+  - type: implements
+    from: SYM-connectorv1-bond-payout-number
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:53:25.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d6ad1d2db55
+  - type: covered_by
+    from: SYM-connectorv1-bond-payout-number
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T07:53:25.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3374c41731c3

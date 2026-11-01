@@ -468,3 +468,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df291b778d71
+  - type: constrains
+    from: REQ-treasurybonds-maturity-redemption
+    to: FACT-SUBJECT-558DD26E88908F51
+    created_at: 2026-11-01T07:45:24.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-513a92ce5294
+  - type: requires_property
+    from: REQ-treasurybonds-maturity-redemption
+    to: FACT-PROP-65DB92BCD6F7AA10
+    created_at: 2026-11-01T07:45:24.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2fc2247a54d
+  - type: specified_by
+    from: REQ-treasurybonds-maturity-redemption
+    to: SCEN-treasurybonds-maturity-redemption
+    created_at: 2026-11-01T07:45:24.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1b9b221da3e

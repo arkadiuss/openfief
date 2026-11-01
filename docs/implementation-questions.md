@@ -62,18 +62,23 @@ Items are grouped by area and numbered for discussion only; the numbers are not 
 
 35. **What a sync request carries besides the holdings and open lots.**
    - *Problem:* D-117 has every sync request carry the holdings and open lots of the bound accounts, so the treasury-bonds connector can book each coupon with the Polish pack's rules. A coupon's rate needs the series' terms, which the owner enters with a lot and only the core stores (D-97), its tax needs the account's tax wrapper (D-76), and what fell due before go-live is history the opening lots hold (D-98); a plugin stores nothing.
-   - *Today:* each account in the request also carries its go-live date and tax wrapper, and the request carries the stored terms of the bonds among the lots (`SyncRequest.accounts`, `bond_terms`, [Ingest](concepts/ingest.md#what-a-sync-tells-a-bound-connector)). The connector books every coupon due after go-live on every sync, keyed per lot and coupon date, which covers those due since its last sync and stays idempotent; it asks GUS and NBP for the readings the coupons need.
+   - *Today:* each account in the request also carries its go-live date and tax wrapper, and the request carries the stored terms of the bonds among the lots (`SyncRequest.accounts`, `bond_terms`, [Ingest](concepts/ingest.md#what-a-sync-tells-a-bound-connector)). The connector books every coupon due on every sync (after go-live only in an account seeded with opening lots), keyed per lot and coupon date, which covers those due since its last sync and stays idempotent; it asks GUS and NBP for the readings the coupons need.
    - *Options:* keep; or keep the request to holdings and lots and have the connector deliver the coupons gross, leaving the tax to the core; or book only coupons dated after the last sync's watermark, which misses those of a lot entered later with an earlier purchase date.
 
 36. **A coupon booked on a lot the owner later deletes.**
    - *Problem:* D-100 lets the owner delete a lot as a correction, which supersedes its transactions. Coupons the connector booked on it before are separate transactions, keyed by the lot and coupon date, and the connector can't tell which were booked: deleting a key never booked is refused (D-18).
-   - *Today:* a deleted lot is no longer open, so it gets no further coupons, but those booked earlier stay.
+   - *Today:* a deleted lot is no longer open, so it gets no further coupons or redemption, but those booked earlier stay, and so do their payout withdrawals (D-135).
    - *Options:* keep; or deliver, with a lot's deletion, a deletion of each coupon the core says was booked on it; or let a deletion of a key never booked be a no-op for coupons only.
 
-37. **The last period's interest and the redemption at maturity.**
-   - *Problem:* a coupon series (ROR, DOR, COI) pays its last period's interest with the nominal at maturity, and OpenFief books no redemption yet; the valuation keeps a matured lot at its redemption value.
-   - *Today:* the last period's interest is not booked as a coupon, so a matured lot is valued with it and nothing is counted twice; the redemption itself is not booked.
-   - *Options:* keep until redemptions are decided; or book the redemption at maturity, the nominal and the last period's interest, as a sell of the lot.
+52. **Moving bond lots entered as opening lots to their purchase dates.**
+   - *Problem:* D-98 (rewritten) books every hand-entered lot on its purchase date as a deposit and a buy, and an account no longer goes live on its first entry. Accounts whose lots were entered before hold them as opening lots dated on the day the first was entered, keyed `lot:<series>:<purchase date>`; booking them again on their purchase dates would hold them twice, and the connector can't tell which lots were booked which way.
+   - *Today:* such an account keeps its go-live: the core sends it with each entry, a lot bought on or before it is still mapped to its old opening lot and key, and its coupons and maturities count from go-live. An account never seeded gets no go-live, so all its lots are deposits and buys and everything since purchase is booked. The owner can move an old account by deleting every opening lot (D-100), which leaves it unseeded, and entering the lots again. Nothing migrates on its own.
+   - *Options:* keep; or have the core migrate such an account once, delivering a deletion of each opening lot with its deposit and buy in one batch; or refuse entries on a seeded bond account until the owner re-enters it.
+
+53. **When a change of the payout setting takes effect.**
+   - *Problem:* D-135 gives each hand-entered bond account a payout setting, but doesn't say what a change does to coupons and maturities that fell due before it. The connector books everything due on every sync, so a setting applied to the past would add, or stop delivering, withdrawals for payouts already booked.
+   - *Today:* a change takes effect on the day it is made (`PayoutSetting.Since`): a coupon or redemption follows the setting in force on the day it fell due, so what was booked is never rewritten. A setting chosen when the account is created applies from that day.
+   - *Options:* keep; or let the owner give the day the registry option changed, which may be in the past; or apply the current setting to all payouts.
 
 ## Accounts
 

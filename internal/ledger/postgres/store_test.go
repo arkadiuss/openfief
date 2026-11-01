@@ -40,7 +40,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `
@@ -73,7 +73,11 @@ func TestRegistryRoundTrip(t *testing.T) {
 	sleeves, err := store.Sleeves(ctx)
 	checkResult(t, "Sleeves", []portfolio.Sleeve{renamed, play}, sleeves, err)
 
-	moved := ledger.Account{ID: acc2, Institution: "other-broker", Name: "Moved", Sleeve: "play"}
+	// A hand-entered bond account paid out since a day keeps its payout setting (D-135).
+	moved := ledger.Account{
+		ID: acc2, Institution: "treasury-bonds", Name: "Moved", Sleeve: "play",
+		Payout: &ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: date(t, "2026-03-02")},
+	}
 	if saveErr := store.SaveAccount(ctx, moved); saveErr != nil {
 		t.Fatalf("SaveAccount: %v", saveErr)
 	}
@@ -89,6 +93,19 @@ func TestRegistryRoundTrip(t *testing.T) {
 	if err := store.SaveAccount(ctx, ledger.Account{ID: "acc-9", Institution: "x", Name: "x", Sleeve: "nowhere"}); err == nil {
 		t.Errorf("SaveAccount with an unknown sleeve succeeded, want a foreign key error")
 	}
+}
+
+// TestRedemptionRoundTrip checks that a redemption (D-135) is stored and
+// read back as it was booked.
+func TestRedemptionRoundTrip(t *testing.T) {
+	t.Parallel()
+	store, _ := seededStore(t)
+	r := must(t)(ledger.NewRedemption(header(t, acc1, "10-redemption", "2026-04-05"), instrument(t, isinA, "TSTA"), qty(t, "10"),
+		money(t, "1007.50", "PLN"), money(t, "1.43", "PLN")))
+	want := []ledger.VersionedTransaction{versioned(&r, 1)}
+	appendAll(t, store, want)
+	got, err := store.Log(t.Context(), acc1)
+	checkResult(t, "Log(acc-1)", want, got, err)
 }
 
 // logFixture is one synthetic transaction of every kind, a correction, and a

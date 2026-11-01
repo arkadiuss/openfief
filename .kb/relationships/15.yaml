@@ -685,3 +685,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8614ce0f8769
+  - type: constrains
+    from: REQ-ledger-payout-setting
+    to: FACT-SUBJECT-FD62B4328BE42BDF
+    created_at: 2026-11-01T07:44:59.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c684b05eacc
+  - type: requires_property
+    from: REQ-ledger-payout-setting
+    to: FACT-PROP-34DA61A796F3590E
+    created_at: 2026-11-01T07:45:00.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbf3e8b58776
+  - type: specified_by
+    from: REQ-ledger-payout-setting
+    to: SCEN-ledger-payout-setting
+    created_at: 2026-11-01T07:45:00.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af1776c41491

@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5484ee56b62d
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-booked
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:50:30.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb08524f8bb8

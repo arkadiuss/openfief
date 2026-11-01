@@ -22,6 +22,8 @@ func TestAccountValidate(t *testing.T) {
 		{name: "no ID", edit: func(a *ledger.Account) { a.ID = "" }, wantErr: ledger.ErrInvalidAccount},
 		{name: "no institution", edit: func(a *ledger.Account) { a.Institution = "" }, wantErr: ledger.ErrInvalidAccount},
 		{name: "no name", edit: func(a *ledger.Account) { a.Name = "" }, wantErr: ledger.ErrInvalidAccount},
+		{name: "paid out without the day it took effect", edit: func(a *ledger.Account) { a.Payout = &ledger.PayoutSetting{Payout: ledger.PayoutPaidOut} }, wantErr: ledger.ErrInvalidAccount},
+		{name: "an unknown payout", edit: func(a *ledger.Account) { a.Payout = &ledger.PayoutSetting{Payout: ledger.Payout(9)} }, wantErr: ledger.ErrInvalidAccount},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

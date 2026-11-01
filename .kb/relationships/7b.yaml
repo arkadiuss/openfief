@@ -552,3 +552,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e4f1918ee13
+  - type: implements
+    from: SYM-connectorv1-bond-payout-enum-descriptor
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:53:33.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a792de6635ac
+  - type: covered_by
+    from: SYM-connectorv1-bond-payout-enum-descriptor
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T07:53:33.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7c461239fa4
+  - type: implements
+    from: SYM-connectorv1-account-holdings-get-bond-payout
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:53:40.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6327d1d8e7a8
+  - type: covered_by
+    from: SYM-connectorv1-account-holdings-get-bond-payout
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T07:53:40.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-451702e17cfa

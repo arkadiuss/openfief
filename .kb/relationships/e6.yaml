@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1251d810068b
+  - type: verified_by
+    from: SCEN-treasurybonds-payout-withdrawal
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:44:26.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d0116f9ce9a
+  - type: verified_by
+    from: SCEN-treasurybonds-payout-withdrawal
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-01T07:44:26.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f7ce9d8afdc

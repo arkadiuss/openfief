@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c541db7a7f5b
+  - type: implements
+    from: SYM-ledger-parse-payout
+    to: REQ-ledger-payout-setting
+    created_at: 2026-11-01T07:51:17.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0110c689bb90
+  - type: covered_by
+    from: SYM-ledger-parse-payout
+    to: TEST-ledger-payout
+    created_at: 2026-11-01T07:51:17.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a52b575c62f8
