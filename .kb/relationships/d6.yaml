@@ -923,3 +923,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58fd3e07c473
+  - type: verified_by
+    from: SCEN-ingest-ticker-trading-currency
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T16:48:13.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f0ef42824c6
+  - type: verified_by
+    from: SCEN-ingest-ticker-trading-currency
+    to: TEST-ingest-ticker
+    created_at: 2026-11-01T16:48:13.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ff4299101c9
+  - type: verified_by
+    from: SCEN-ingest-ticker-trading-currency
+    to: TEST-plugins-eodhd-lookup
+    created_at: 2026-11-01T16:48:14.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ec168b39e77
+  - type: verified_by
+    from: SCEN-ingest-ticker-trading-currency
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-01T16:48:14.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c477b8cef130
+  - type: verified_by
+    from: SCEN-ingest-ticker-trading-currency
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T16:48:14.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f753276d4cec
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-waiting-tickers-hold-tickers
+    to: TEST-ingest-app-starts
+    created_at: 2026-11-01T17:22:30.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-619124b084d9
+  - type: implements
+    from: SYM-ingest-connectapi-payout-from-day
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:22:44.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e98b41b6a43
+  - type: covered_by
+    from: SYM-ingest-connectapi-payout-from-day
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T17:22:44.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5e8cff9d72c

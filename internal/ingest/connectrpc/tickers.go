@@ -73,9 +73,11 @@ func tickerEntryFrom(field string, t *connectorv1.TickerTransaction) (ingest.Tic
 	if err != nil {
 		return ingest.TickerEntry{}, err
 	}
-	amount, err := moneyFrom(field+".amount", t.GetAmount())
-	if err != nil {
-		return ingest.TickerEntry{}, err
+	var amount kernel.Money
+	if t.GetAmount() != nil || t.GetOpenPrice() == "" {
+		if amount, err = moneyFrom(field+".amount", t.GetAmount()); err != nil {
+			return ingest.TickerEntry{}, err
+		}
 	}
 	e := ingest.TickerEntry{
 		Symbol: t.GetSymbol(),
@@ -100,8 +102,16 @@ func tickerEntryFrom(field string, t *connectorv1.TickerTransaction) (ingest.Tic
 }
 
 // optionalFrom reads into e the fields a ticker transaction may leave
-// empty: an opening lot's lot_opened and the quantity.
+// empty: an opening lot's lot_opened and open_price (D-159), and the
+// quantity.
 func optionalFrom(field string, t *connectorv1.TickerTransaction, e *ingest.TickerEntry) error {
+	if t.GetOpenPrice() != "" {
+		price, err := decimalFrom(field+".open_price", t.GetOpenPrice())
+		if err != nil {
+			return err
+		}
+		e.OpenPrice = price
+	}
 	if t.GetLotOpened() != "" {
 		opened, err := dateFrom(field+".lot_opened", t.GetLotOpened())
 		if err != nil {
@@ -155,7 +165,11 @@ func proposalsFrom(asked []ingest.Ticker, ps []*connectorv1.InstrumentProposal) 
 		if len(name) > maxProposalName {
 			name = name[:maxProposalName]
 		}
-		out = append(out, ingest.ISINProposal{Symbol: p.GetSymbol(), ISIN: isin, Name: string(name)})
+		currency := p.GetCurrency()
+		if _, _, ok := ingest.ParseTradingCurrency(currency); !ok {
+			currency = ""
+		}
+		out = append(out, ingest.ISINProposal{Symbol: p.GetSymbol(), ISIN: isin, Name: string(name), Currency: currency})
 	}
 	return out, nil
 }

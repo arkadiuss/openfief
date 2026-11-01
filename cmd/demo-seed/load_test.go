@@ -123,11 +123,23 @@ func TestLoadEndToEnd(t *testing.T) {
 	if again := count(t, pool, "SELECT count(*) FROM ledger.transaction_versions"); again != versions {
 		t.Errorf("loading another day without --reset-demo: %d transaction versions, want %d unchanged", again, versions)
 	}
-	next.Reset = true
+	next.Reset, next.Loader = true, "build-1"
 	if err := load(t.Context(), pool, next, quiet()); err != nil {
 		t.Fatalf("loading another day with --reset-demo: %v", err)
 	}
 	checkLoaded(t, pool, next.Today)
+
+	// A deploy of another build of the loader reseeds the demo on its own
+	// (D-161): no --reset-demo, and the data is that build's.
+	rebuilt := testConfig(t, "2026-10-30", false)
+	rebuilt.Loader = "build-2"
+	if err := load(t.Context(), pool, rebuilt, quiet()); err != nil {
+		t.Fatalf("loading with another build of the loader: %v", err)
+	}
+	checkLoaded(t, pool, rebuilt.Today)
+	if got := count(t, pool, "SELECT count(*) FROM demo.marker WHERE loader = 'build-2' AND loaded_on = '2026-10-30'"); got != 1 {
+		t.Errorf("the demo marker names build-2 on 2026-10-30 %d times, want once", got)
+	}
 }
 
 // checkLoaded checks that every demo account has holdings and is valued

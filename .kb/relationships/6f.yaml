@@ -636,13 +636,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbc4cc27f9a4
-  - type: implements
-    from: SYM-ingest-xtb-mapping-add-entry
-    to: REQ-ingest-xtb-start-open-positions
-    created_at: 2026-11-01T08:04:32.779Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1e9d325e2e4f
   - type: covered_by
     from: SYM-ingest-xtb-mapping-add-entry
     to: TEST-ingest-xtb-opening
@@ -657,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c2b2084e33e4
+  - type: implements
+    from: SYM-ingest-xtb-mapping-add-entry
+    to: REQ-ingest-xtb-opening-lot-trading-currency
+    created_at: 2026-11-01T17:38:58.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c421d5dc90f0

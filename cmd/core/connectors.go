@@ -156,7 +156,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 			Caller: caller, Bindings: store, Ledger: ledgerImporter{ledger: d.ledger},
 			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
 			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
-			Seeding: d.ledger, Sources: sourceInputs{rankings: d.rankings}, Declarations: discovery,
+			Seeding: d.ledger, Starts: store, Sources: sourceInputs{rankings: d.rankings}, Declarations: discovery,
 			Tickers: store, Lookup: caller, Instances: discovery,
 		},
 		Instances: discovery,
@@ -276,6 +276,16 @@ func (i ledgerImporter) Import(ctx context.Context, txs []ledger.Transaction, as
 		return ingest.ImportSummary{}, fmt.Errorf("ledger: %w", err)
 	}
 	return importSummary(&sum), nil
+}
+
+// CurrentTransactions returns account's current transactions, which a
+// payout change reads (D-162).
+func (i ledgerImporter) CurrentTransactions(ctx context.Context, account ledger.AccountID) ([]ledger.Transaction, error) {
+	txs, err := i.ledger.CurrentTransactions(ctx, account)
+	if err != nil {
+		return nil, fmt.Errorf("ledger: %w", err)
+	}
+	return txs, nil
 }
 
 // AddOpeningLots adds opening lots one at a time through the ledger.

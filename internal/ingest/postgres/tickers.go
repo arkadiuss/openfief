@@ -18,21 +18,45 @@ var _ app.TickerStore = (*Store)(nil)
 // errStoredEntry reports a stored ticker entry that doesn't read back.
 var errStoredEntry = errors.New("stored ticker entry")
 
-// ConfirmedTickers returns the ISIN the owner confirmed for each ticker of
-// instance.
-func (s *Store) ConfirmedTickers(ctx context.Context, instance string) (map[string]ledger.ISIN, error) {
-	rows, err := s.pool.Query(ctx, `SELECT symbol, isin FROM ingest.tickers WHERE instance = $1 AND isin IS NOT NULL`, instance)
+// selectListing reads what a ticker's listing is made of (listingRow);
+// callers add FROM and WHERE.
+const selectListing = `SELECT symbol, country, coalesce(isin, ''), coalesce(proposed_isin, ''), proposed_currency`
+
+// listingRow is the columns of selectListing.
+type listingRow struct {
+	symbol, country, isin, proposed, currency string
+}
+
+// listing returns the listing r's confirmation settles (ingest.ListingOf).
+func (r *listingRow) listing() (ingest.Listing, error) {
+	isin, err := ledger.ParseISIN(r.isin)
+	if err != nil {
+		return ingest.Listing{}, fmt.Errorf("ticker %s: %w", r.symbol, err)
+	}
+	proposal := ingest.ISINProposal{Symbol: r.symbol, Currency: r.currency}
+	if r.proposed != "" {
+		if proposal.ISIN, err = ledger.ParseISIN(r.proposed); err != nil {
+			return ingest.Listing{}, fmt.Errorf("ticker %s: %w", r.symbol, err)
+		}
+	}
+	return ingest.ListingOf(&ingest.Ticker{Symbol: r.symbol, Country: r.country}, &proposal, isin), nil
+}
+
+// ConfirmedTickers returns the listing the owner's confirmation settled for
+// each ticker of instance (D-116, D-159).
+func (s *Store) ConfirmedTickers(ctx context.Context, instance string) (map[string]ingest.Listing, error) {
+	rows, err := s.pool.Query(ctx, selectListing+` FROM ingest.tickers WHERE instance = $1 AND isin IS NOT NULL`, instance)
 	if err != nil {
 		return nil, fmt.Errorf("loading the confirmed tickers of %s: %w", instance, err)
 	}
-	out := map[string]ledger.ISIN{}
-	var symbol, code string
-	_, err = pgx.ForEachRow(rows, []any{&symbol, &code}, func() error {
-		isin, parseErr := ledger.ParseISIN(code)
-		if parseErr != nil {
-			return fmt.Errorf("ticker %s: %w", symbol, parseErr)
+	out := map[string]ingest.Listing{}
+	var r listingRow
+	_, err = pgx.ForEachRow(rows, []any{&r.symbol, &r.country, &r.isin, &r.proposed, &r.currency}, func() error {
+		l, listingErr := r.listing()
+		if listingErr != nil {
+			return listingErr
 		}
-		out[symbol] = isin
+		out[r.symbol] = l
 		return nil
 	})
 	if err != nil {
@@ -76,33 +100,43 @@ func holdEntry(ctx context.Context, tx pgx.Tx, instance string, e *ingest.Ticker
 	if !e.Charge.IsZero() {
 		charge, chargeCurrency = e.Charge.Amount().String(), e.Charge.Currency().String()
 	}
-	var opened *string
+	var opened, openPrice *string
 	if !e.Opened.IsZero() {
 		day := e.Opened.String()
 		opened = &day
 	}
+	if e.PricedByListing() {
+		price := e.OpenPrice.String()
+		openPrice = &price
+	}
 	_, err := tx.Exec(ctx, `INSERT INTO ingest.ticker_entries (instance, key_source, external_id, symbol, account_id, kind,
-			date, quantity, amount, currency, charge, charge_currency, description, ref, lot_opened)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+			date, quantity, amount, currency, charge, charge_currency, description, ref, lot_opened, open_price)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
 		ON CONFLICT (instance, key_source, external_id) DO UPDATE SET symbol = EXCLUDED.symbol,
 			account_id = EXCLUDED.account_id, kind = EXCLUDED.kind, date = EXCLUDED.date, quantity = EXCLUDED.quantity,
 			amount = EXCLUDED.amount, currency = EXCLUDED.currency, charge = EXCLUDED.charge,
 			charge_currency = EXCLUDED.charge_currency, description = EXCLUDED.description, ref = EXCLUDED.ref,
-			lot_opened = EXCLUDED.lot_opened`,
+			lot_opened = EXCLUDED.lot_opened, open_price = EXCLUDED.open_price`,
 		instance, e.Header.Key.Source, e.Header.Key.ExternalID, e.Symbol, string(e.Header.Account), e.Kind.String(),
 		e.Header.Date.String(), e.Quantity.String(), e.Amount.Amount().String(), e.Amount.Currency().String(),
-		charge, chargeCurrency, e.Description, e.Ref, opened)
+		charge, chargeCurrency, e.Description, e.Ref, opened, openPrice)
 	if err != nil {
 		return fmt.Errorf("holding %s: %w", e.Header.Key, err)
 	}
 	return nil
 }
 
-// SaveProposals records the ISIN proposed for tickers of instance.
+// SaveProposals records the ISIN proposed for tickers of instance, with the
+// currency its listing trades in (D-159); a currency that is no three
+// letters is kept as none.
 func (s *Store) SaveProposals(ctx context.Context, instance string, proposals []ingest.ISINProposal) error {
 	for _, p := range proposals {
-		_, err := s.pool.Exec(ctx, `UPDATE ingest.tickers SET proposed_isin = $3, proposed_name = $4
-			WHERE instance = $1 AND symbol = $2`, instance, p.Symbol, p.ISIN.String(), p.Name)
+		currency := p.Currency
+		if _, _, ok := ingest.ParseTradingCurrency(currency); !ok {
+			currency = ""
+		}
+		_, err := s.pool.Exec(ctx, `UPDATE ingest.tickers SET proposed_isin = $3, proposed_name = $4, proposed_currency = $5
+			WHERE instance = $1 AND symbol = $2`, instance, p.Symbol, p.ISIN.String(), p.Name, currency)
 		if err != nil {
 			return fmt.Errorf("saving the proposal for %s of %s: %w", p.Symbol, instance, err)
 		}
@@ -149,40 +183,48 @@ func scanPending(row pgx.CollectableRow) (ingest.PendingTicker, error) {
 }
 
 // ConfirmTicker records the owner's ISIN for a ticker, once, and returns the
-// entries still waiting for it, in key order.
-func (s *Store) ConfirmTicker(ctx context.Context, c ingest.TickerConfirmation) ([]ingest.TickerEntry, error) {
-	var out []ingest.TickerEntry
+// entries still waiting for it, in key order, with the listing the
+// confirmation settles (D-159).
+func (s *Store) ConfirmTicker(ctx context.Context, c ingest.TickerConfirmation) ([]ingest.TickerEntry, ingest.Listing, error) {
+	var (
+		out     []ingest.TickerEntry
+		listing ingest.Listing
+	)
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
-		var current *string
-		err := tx.QueryRow(ctx, `SELECT isin FROM ingest.tickers WHERE instance = $1 AND symbol = $2 FOR UPDATE`,
-			c.Instance, c.Symbol).Scan(&current)
+		var r listingRow
+		err := tx.QueryRow(ctx, selectListing+` FROM ingest.tickers WHERE instance = $1 AND symbol = $2 FOR UPDATE`,
+			c.Instance, c.Symbol).Scan(&r.symbol, &r.country, &r.isin, &r.proposed, &r.currency)
 		switch {
 		case errors.Is(err, pgx.ErrNoRows):
 			return app.ErrUnknownTicker
 		case err != nil:
 			return fmt.Errorf("loading the ticker: %w", err)
-		case current != nil && *current != c.ISIN.String():
+		case r.isin != "" && r.isin != c.ISIN.String():
 			return app.ErrTickerConfirmed
-		case current == nil:
+		case r.isin == "":
 			if _, execErr := tx.Exec(ctx, `UPDATE ingest.tickers SET isin = $3, confirmed_at = now()
 				WHERE instance = $1 AND symbol = $2`, c.Instance, c.Symbol, c.ISIN.String()); execErr != nil {
 				return fmt.Errorf("confirming the ticker: %w", execErr)
 			}
 		}
+		r.isin = c.ISIN.String()
+		if listing, err = r.listing(); err != nil {
+			return err
+		}
 		out, err = waitingEntries(ctx, tx, c.Instance, c.Symbol)
 		return err
 	})
 	if err != nil {
-		return nil, fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, err)
+		return nil, ingest.Listing{}, fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, err)
 	}
-	return out, nil
+	return out, listing, nil
 }
 
 // waitingEntries returns the entries of instance's ticker symbol, in key
 // order.
 func waitingEntries(ctx context.Context, tx pgx.Tx, instance, symbol string) ([]ingest.TickerEntry, error) {
 	rows, err := tx.Query(ctx, `SELECT key_source, external_id, account_id, kind, date::text, quantity, amount, currency,
-			charge, charge_currency, description, ref, coalesce(lot_opened::text, '')
+			charge, charge_currency, description, ref, coalesce(lot_opened::text, ''), coalesce(open_price, '')
 		FROM ingest.ticker_entries WHERE instance = $1 AND symbol = $2
 		ORDER BY key_source COLLATE "C", external_id COLLATE "C"`, instance, symbol)
 	if err != nil {
@@ -191,7 +233,7 @@ func waitingEntries(ctx context.Context, tx pgx.Tx, instance, symbol string) ([]
 	out, err := pgx.CollectRows(rows, func(row pgx.CollectableRow) (ingest.TickerEntry, error) {
 		var r entryRow
 		if scanErr := row.Scan(&r.source, &r.id, &r.account, &r.kind, &r.date, &r.quantity, &r.amount, &r.currency,
-			&r.charge, &r.chargeCurrency, &r.description, &r.ref, &r.opened); scanErr != nil {
+			&r.charge, &r.chargeCurrency, &r.description, &r.ref, &r.opened, &r.openPrice); scanErr != nil {
 			return ingest.TickerEntry{}, fmt.Errorf("scanning a waiting entry: %w", scanErr)
 		}
 		return r.entry(symbol)
@@ -205,7 +247,7 @@ func waitingEntries(ctx context.Context, tx pgx.Tx, instance, symbol string) ([]
 // entryRow is one stored ticker entry's columns.
 type entryRow struct {
 	source, id, account, kind, date, quantity, amount, currency string
-	charge, chargeCurrency, description, ref, opened            string
+	charge, chargeCurrency, description, ref, opened, openPrice string
 }
 
 // entry returns the ticker entry of symbol r stores.
@@ -216,9 +258,8 @@ func (r *entryRow) entry(symbol string) (ingest.TickerEntry, error) {
 	kind, ok := kinds[r.kind]
 	on, dateErr := kernel.ParseDate(r.date)
 	qty, qtyErr := kernel.ParseQuantity(r.quantity)
-	cur, curErr := kernel.ParseCurrency(r.currency)
-	amount, amountErr := kernel.ParseMoney(r.amount, cur)
-	if err := errors.Join(dateErr, qtyErr, curErr, amountErr); !ok || err != nil {
+	amount, amountErr := r.money()
+	if err := errors.Join(dateErr, qtyErr, amountErr); !ok || err != nil {
 		return ingest.TickerEntry{}, fmt.Errorf("%w %s/%s: %w", errStoredEntry, r.source, r.id, err)
 	}
 	e := ingest.TickerEntry{
@@ -226,6 +267,13 @@ func (r *entryRow) entry(symbol string) (ingest.TickerEntry, error) {
 		Header: ledger.TransactionHeader{
 			Key: ledger.TransactionKey{Source: r.source, ExternalID: r.id}, Account: ledger.AccountID(r.account), Date: on,
 		},
+	}
+	if r.openPrice != "" {
+		price, err := kernel.ParseDecimal(r.openPrice)
+		if err != nil {
+			return ingest.TickerEntry{}, fmt.Errorf("%w %s/%s: %w", errStoredEntry, r.source, r.id, err)
+		}
+		e.OpenPrice = price
 	}
 	if r.opened != "" {
 		opened, err := kernel.ParseDate(r.opened)
@@ -244,6 +292,23 @@ func (r *entryRow) entry(symbol string) (ingest.TickerEntry, error) {
 		}
 	}
 	return e, nil
+}
+
+// money returns r's amount, or none for an opening lot priced by its open
+// price in its trading currency, stored without a currency (D-159).
+func (r *entryRow) money() (kernel.Money, error) {
+	if r.currency == "" {
+		return kernel.Money{}, nil
+	}
+	cur, err := kernel.ParseCurrency(r.currency)
+	if err != nil {
+		return kernel.Money{}, fmt.Errorf("currency: %w", err)
+	}
+	m, err := kernel.ParseMoney(r.amount, cur)
+	if err != nil {
+		return kernel.Money{}, fmt.Errorf("amount: %w", err)
+	}
+	return m, nil
 }
 
 // BookedTickerEntries drops the waiting entries of instance with keys.

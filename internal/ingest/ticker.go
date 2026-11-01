@@ -76,8 +76,11 @@ func validTickerSymbol(s string) error {
 // a dividend's gross amount or an opening lot's cost; Charge is a buy's or
 // sale's fee, or the tax withheld from a dividend, zero for none and always
 // zero for an opening lot. Opened is the date an opening lot's units were
-// first acquired, and zero for any other kind. Ref names its statement row,
-// as Problem.Ref does.
+// first acquired, and zero for any other kind. An opening lot whose
+// institution gives its open price in its instrument's trading currency,
+// which it doesn't name, has no Amount and its OpenPrice per unit: its cost
+// is booked in the trading currency of the confirmed listing (D-159).
+// Ref names its statement row, as Problem.Ref does.
 type TickerEntry struct {
 	Symbol      string
 	Header      ledger.TransactionHeader
@@ -86,6 +89,7 @@ type TickerEntry struct {
 	Amount      kernel.Money
 	Charge      kernel.Money
 	Opened      kernel.Date
+	OpenPrice   kernel.Decimal
 	Description string
 	Ref         string
 }
@@ -98,13 +102,25 @@ var errNotTickerKind = errors.New("not a ticker entry kind")
 // instrument's: Validate books an entry with it to check its amounts.
 const checkISIN = "XX0000000002"
 
-// Transaction returns the transaction e books once its ticker's ISIN is
-// confirmed as isin: the instrument is isin with the ticker's symbol.
-func (e *TickerEntry) Transaction(isin ledger.ISIN) (ledger.Transaction, error) {
+// Transaction returns the transaction e books once its ticker's listing
+// l is confirmed (D-116): the instrument is l's ISIN with the ticker's
+// symbol, and an opening lot priced by its open price costs its quantity
+// times that price, in l's trading currency's major unit, rounded half to
+// even to the currency's minor unit (D-159). Such a lot on a listing with
+// no known trading currency fails with ErrUnknownTradingCurrency.
+func (e *TickerEntry) Transaction(l Listing) (ledger.Transaction, error) {
 	if reason := e.misfit(); reason != "" {
 		return ledger.Transaction{}, fmt.Errorf("%w %s: %s", ErrInvalidTickerEntry, e.Header.Key, reason)
 	}
-	t, err := e.build(ledger.Instrument{ISIN: isin, Symbol: e.Symbol})
+	c := *e
+	if e.PricedByListing() {
+		cost, err := e.listingCost(l)
+		if err != nil {
+			return ledger.Transaction{}, err
+		}
+		c.Amount = cost
+	}
+	t, err := c.build(ledger.Instrument{ISIN: l.ISIN, Symbol: e.Symbol})
 	if err != nil {
 		return ledger.Transaction{}, err
 	}
@@ -112,9 +128,19 @@ func (e *TickerEntry) Transaction(isin ledger.ISIN) (ledger.Transaction, error) 
 	return t, nil
 }
 
+// PricedByListing reports whether e is an opening lot priced by its open
+// price in its instrument's trading currency (D-159), with no Amount.
+func (e *TickerEntry) PricedByListing() bool {
+	return e.Kind == ledger.KindOpeningLot && e.Amount.Currency().IsZero()
+}
+
+// checkCurrency is the trading currency Validate books a lot priced by
+// listing in, to check its amounts.
+const checkCurrency = "PLN"
+
 // Validate reports whether e has a valid symbol and books a valid
-// transaction with any confirmed ISIN. Its account may still be empty when
-// a broker account names it.
+// transaction with any confirmed listing. Its account may still be empty
+// when a broker account names it.
 func (e *TickerEntry) Validate() error {
 	if err := validTickerSymbol(e.Symbol); err != nil {
 		return err
@@ -123,21 +149,29 @@ func (e *TickerEntry) Validate() error {
 	if err != nil {
 		return fmt.Errorf("check ISIN: %w", err)
 	}
+	currency, err := kernel.ParseCurrency(checkCurrency)
+	if err != nil {
+		return fmt.Errorf("check currency: %w", err)
+	}
 	h := e.Header
 	if h.Account == "" {
 		h.Account = "broker-account"
 	}
 	c := *e
 	c.Header = h
-	_, err = c.Transaction(isin)
+	_, err = c.Transaction(Listing{ISIN: isin, Currency: currency})
 	return err
 }
 
 // misfit returns why e's fields don't fit its kind, or "": only an opening
-// lot has a lot open date, a dividend has no quantity and an opening lot no
-// charge.
+// lot has a lot open date or an open price, a dividend has no quantity, an
+// opening lot no charge, and an open price is not negative.
 func (e *TickerEntry) misfit() string {
 	switch {
+	case e.Kind != ledger.KindOpeningLot && !e.OpenPrice.IsZero():
+		return "only an opening lot has an open price"
+	case e.OpenPrice.Sign() < 0:
+		return "a negative open price"
 	case e.Kind != ledger.KindOpeningLot && !e.Opened.IsZero():
 		return "only an opening lot has a lot open date"
 	case e.Kind == ledger.KindDividend && !e.Quantity.IsZero():
@@ -186,11 +220,13 @@ type TickerConfirmation struct {
 
 // ISINProposal is the ISIN a market-data connector found for a ticker's
 // code and market, with the instrument's name there, for the owner to
-// confirm (D-116).
+// confirm (D-116), and the currency the listing found trades in, as the
+// connector names it, such as "GBX", or empty when it names none (D-159).
 type ISINProposal struct {
-	Symbol string
-	ISIN   ledger.ISIN
-	Name   string
+	Symbol   string
+	ISIN     ledger.ISIN
+	Name     string
+	Currency string
 }
 
 // PendingTicker is a ticker of a connector instance whose ISIN the owner
@@ -204,11 +240,12 @@ type PendingTicker struct {
 }
 
 // BookTickerEntries returns m with each ticker entry whose symbol confirmed
-// maps to an ISIN booked as a transaction, and the entries that wait for the
-// owner to confirm their ticker's ISIN, each also an ingest problem in the
-// result (D-116). An entry that books no valid transaction is an ingest
-// problem too and doesn't wait. m's ticker entries must have their account.
-func BookTickerEntries(m *Mapping, confirmed map[string]ledger.ISIN) (Mapping, []TickerEntry) {
+// maps to a listing booked as a transaction (TickerEntry.Transaction), and
+// the entries that wait for the owner to confirm their ticker's ISIN, each
+// also an ingest problem in the result (D-116). An entry that books no
+// valid transaction, or an opening lot whose trading currency is unknown
+// (D-159), is an ingest problem too and doesn't wait. m's ticker entries must have their account.
+func BookTickerEntries(m *Mapping, confirmed map[string]Listing) (Mapping, []TickerEntry) {
 	out := *m
 	out.Transactions = append([]ledger.Transaction(nil), m.Transactions...)
 	out.Problems = append([]Problem(nil), m.Problems...)
@@ -216,14 +253,18 @@ func BookTickerEntries(m *Mapping, confirmed map[string]ledger.ISIN) (Mapping, [
 	var waiting []TickerEntry
 	for i := range m.TickerEntries {
 		e := &m.TickerEntries[i]
-		isin, ok := confirmed[e.Symbol]
+		listing, ok := confirmed[e.Symbol]
 		if !ok {
 			waiting = append(waiting, *e)
 			out.Problems = append(out.Problems, WaitingForISIN(e))
 			continue
 		}
-		t, err := e.Transaction(isin)
-		if err != nil {
+		t, err := e.Transaction(listing)
+		switch {
+		case errors.Is(err, ErrUnknownTradingCurrency):
+			out.Problems = append(out.Problems, Unsupported(e.Ref, "the trading currency of "+e.Symbol+" is unknown"))
+			continue
+		case err != nil:
 			out.Problems = append(out.Problems, Unsupported(e.Ref, "not a valid ledger transaction"))
 			continue
 		}
@@ -236,4 +277,18 @@ func BookTickerEntries(m *Mapping, confirmed map[string]ledger.ISIN) (Mapping, [
 // is not confirmed.
 func WaitingForISIN(e *TickerEntry) Problem {
 	return Unsupported(e.Ref, "waits for the owner to confirm the ISIN of "+e.Symbol)
+}
+
+// listingCost returns the cost of e, an opening lot priced by listing, on
+// listing l: its quantity times its open price in l's major unit, rounded
+// half to even to the currency's minor unit.
+func (e *TickerEntry) listingCost(l Listing) (kernel.Money, error) {
+	if l.Currency.IsZero() {
+		return kernel.Money{}, fmt.Errorf("%w: %s", ErrUnknownTradingCurrency, e.Symbol)
+	}
+	cost, err := l.Price(e.OpenPrice).Mul(e.Quantity.Decimal()).Round(CurrencyPlaces(l.Currency), kernel.RoundHalfEven)
+	if err != nil {
+		return kernel.Money{}, fmt.Errorf("%w %s: cost: %w", ErrInvalidTickerEntry, e.Header.Key, err)
+	}
+	return kernel.NewMoney(cost, l.Currency), nil
 }

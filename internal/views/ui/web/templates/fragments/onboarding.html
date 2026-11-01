@@ -279,5 +279,8 @@
   <div class="unit"><input id="{{.Prefix}}-fee-conversion" name="fee_conversion" value="{{.Conversion}}" inputmode="decimal" size="6" autocomplete="off"><span>%</span></div></div>
 {{if .Bond}}<div class="field"><label for="{{.Prefix}}-payout">Coupons and maturities</label>
   <select id="{{.Prefix}}-payout" name="bond_payout" aria-describedby="{{.Prefix}}-payout-help"><option value="cash"{{if not .PaidOut}} selected{{end}}>Stay as the account's cash</option><option value="paid-out"{{if .PaidOut}} selected{{end}}>Paid out</option></select>
-  <p class="help" id="{{.Prefix}}-payout-help">Pick what the bond registry does with them. Paid out, each is booked and then withdrawn on the same day, so it still counts as return. A change applies from today.</p></div>{{end}}
+  <p class="help" id="{{.Prefix}}-payout-help">Pick what the bond registry does with them. Paid out, each is booked and then withdrawn on the same day, so it still counts as return.</p></div>
+<div class="field"><label for="{{.Prefix}}-payout-from">Change takes effect from</label>
+  <input id="{{.Prefix}}-payout-from" name="bond_payout_from" type="date" autocomplete="off" aria-describedby="{{.Prefix}}-payout-from-help">
+  <p class="help" id="{{.Prefix}}-payout-from-help">Empty is today; an earlier day is allowed, a later one isn't. The next sync books the coupons and maturities from that day again under the new setting.</p></div>{{end}}
 {{end}}

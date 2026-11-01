@@ -18,6 +18,9 @@ type DatabaseState struct {
 	// Rows counts the rows of ledger and valuation data: sleeves, accounts,
 	// transactions and valuation inputs.
 	Rows int64
+	// Loader names the build of the loader that loaded a marked database,
+	// as the marker records it; empty when the marker doesn't say.
+	Loader string
 }
 
 // LoadAction is what the demo loader does with a database.
@@ -49,14 +52,18 @@ func (a LoadAction) String() string {
 	return fmt.Sprintf("LoadAction(%d)", int(a))
 }
 
-// DecideLoad decides what the demo loader may do with a database in state
-// st, given whether the operator asked to reset the demo. It is the guard
-// that keeps the loader away from real data: a database with ledger or
-// valuation data and no demo marker is refused, with or without reset. Only
-// a marked demo database is ever reset; an empty one is loaded fresh.
-func DecideLoad(st DatabaseState, reset bool) (LoadAction, error) {
+// DecideLoad decides what the demo loader, of build loader, may do with a
+// database in state st, given whether the operator asked to reset the
+// demo. It is the guard that keeps the loader away from real data: a
+// database with ledger or valuation data and no demo marker is refused,
+// with or without reset. Only a marked demo database is ever reset: when
+// asked to, or when another build of the loader filled it, so a deploy of
+// changed code reseeds the demo rather than migrating its data (D-161). A
+// loader that doesn't know its build (empty) never reseeds on its own. An
+// empty database is loaded fresh.
+func DecideLoad(st DatabaseState, reset bool, loader string) (LoadAction, error) {
 	switch {
-	case st.Marked && reset:
+	case st.Marked && (reset || (loader != "" && st.Loader != loader)):
 		return ResetAndLoad, nil
 	case st.Marked:
 		return LoadAgain, nil

@@ -208,8 +208,8 @@ func TestPayoutWithdrawal(t *testing.T) {
 			want:   []string{interest, "withdrawal lot:COI1028:2024-10-10:coupon:2025-10-10:payout 2025-10-10 -53.05 PLN"},
 		},
 		{
-			name:   "paid out only from a later day: what fell due before stays as cash",
-			payout: ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: mustDate(t, "2025-10-11")},
+			name:   "paid out only from a later day: what fell due before follows the earlier setting",
+			payout: ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: mustDate(t, "2025-10-11"), Earlier: []ledger.PayoutPeriod{{Payout: ledger.PayoutCash}}},
 			want:   []string{interest},
 		},
 	}

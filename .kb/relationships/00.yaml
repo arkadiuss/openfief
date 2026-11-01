@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da0a2d6c5b2b
+  - type: executable_for
+    from: SYM-core-test-helper-xtb-opening-export
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:19:57.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae7c197247fe

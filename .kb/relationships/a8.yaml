@@ -804,13 +804,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-daa679c729c0
-  - type: implements
-    from: SYM-ingestv1-bond-payout-string
-    to: REQ-ingest-bond-payout-setting
-    created_at: 2026-11-01T07:54:07.401Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e3613c174539
   - type: covered_by
     from: SYM-ingestv1-bond-payout-string
     to: TEST-ingest-connectapi-accounts
@@ -860,3 +853,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31d2cd128972
+  - type: implements
+    from: SYM-ingest-listing
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-01T17:23:46.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00e3f5bb0578
+  - type: covered_by
+    from: SYM-ingest-listing
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:23:46.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9930aedd6002
+  - type: implements
+    from: SYM-ingestv1-bond-payout-string
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:33:28.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25df8b915531

@@ -54,8 +54,8 @@ components:
           type: string
           title: bond_payout_since
           description: |-
-            The day bond_payout took effect, YYYY-MM-DD; empty when it never
-             changed.
+            The day bond_payout took effect, YYYY-MM-DD; empty for the account's
+             first setting, which covers its whole history (D-162).
       title: Account
       additionalProperties: false
       description: Account is one account at an institution. It belongs to one sleeve.

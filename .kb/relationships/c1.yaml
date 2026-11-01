@@ -608,6 +608,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63dd5f84e3c9
+  - type: executable_for
+    from: SYM-demo-seed-test-loader-build
+    to: TEST-demo-seed-unit
+    created_at: 2026-11-01T17:20:53.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef27e818df1d
+  - type: implements
+    from: SYM-connectorv1-bond-payout-period-proto-reflect
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:28:45.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbfffccce39f
+  - type: covered_by
+    from: SYM-connectorv1-bond-payout-period-proto-reflect
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T17:28:45.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-185383fb2a05
   - type: implements
     from: SYM-operator-market-data-items
     to: REQ-ingest-market-data-list-declared-granted

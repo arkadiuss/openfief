@@ -94,8 +94,8 @@ message Account {
   // What happens to the coupons and maturities of a hand-entered bond
   // account (D-135); BOND_PAYOUT_CASH for every other account.
   BondPayout bond_payout = 7;
-  // The day bond_payout took effect, YYYY-MM-DD; empty when it never
-  // changed.
+  // The day bond_payout took effect, YYYY-MM-DD; empty for the account's
+  // first setting, which covers its whole history (D-162).
   string bond_payout_since = 8;
 }
 
@@ -170,6 +170,11 @@ message UpdateAccountRequest {
   FeeRule fee_rule = 7;
   // The new payout setting (D-135); unspecified keeps the account's.
   BondPayout bond_payout = 8;
+  // The day bond_payout takes effect from, YYYY-MM-DD (D-162): today or an
+  // earlier day; empty is today. The coupons and maturities that fell due
+  // from that day on are booked anew under it on the next sync, superseding
+  // those booked before. A day after today fails with INVALID_ARGUMENT.
+  string bond_payout_from = 9;
 }
 
 message UpdateAccountResponse {

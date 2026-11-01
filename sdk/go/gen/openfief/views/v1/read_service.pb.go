@@ -1338,8 +1338,8 @@ type Account struct {
 	// What happens to the coupons and maturities of a hand-entered bond
 	// account (D-135); BOND_PAYOUT_CASH for every other account.
 	BondPayout BondPayout `protobuf:"varint,7,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.views.v1.BondPayout" json:"bond_payout,omitempty"`
-	// The day bond_payout took effect, YYYY-MM-DD; empty when it never
-	// changed.
+	// The day bond_payout took effect, YYYY-MM-DD; empty for the account's
+	// first setting, which covers its whole history (D-162).
 	BondPayoutSince string `protobuf:"bytes,8,opt,name=bond_payout_since,json=bondPayoutSince,proto3" json:"bond_payout_since,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache

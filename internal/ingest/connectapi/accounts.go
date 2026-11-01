@@ -58,9 +58,13 @@ func (s *accountService) UpdateAccount(ctx context.Context, req *connect.Request
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
+	from, err := payoutFromDay(m.GetBondPayoutFrom())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
 	acc, err := s.accounts.Update(ctx, m.GetOrigin(), m.GetSessionToken(), ledger.AccountID(m.GetAccountId()), &app.AccountChange{
 		Name: m.GetName(), Sleeve: portfolio.SleeveID(m.GetSleeve()), Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee,
-		Payout: payoutFrom(m.GetBondPayout()),
+		Payout: payoutFrom(m.GetBondPayout()), PayoutFrom: from,
 	})
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -158,6 +162,20 @@ func payoutFrom(p ingestv1.BondPayout) *ledger.Payout {
 		out = ledger.Payout(p)
 	}
 	return &out
+}
+
+// payoutFromDay reads the day a payout change takes effect from
+// (D-162), YYYY-MM-DD: the zero date for empty, which is today, and a
+// malformed one as an invalid account.
+func payoutFromDay(s string) (kernel.Date, error) {
+	if s == "" {
+		return kernel.Date{}, nil
+	}
+	d, err := kernel.ParseDate(s)
+	if err != nil {
+		return kernel.Date{}, fmt.Errorf("%w: bond_payout_from: %w", ledger.ErrInvalidAccount, err)
+	}
+	return d, nil
 }
 
 // pbFeeRule converts a fee rule; a minimum of zero has no currency.

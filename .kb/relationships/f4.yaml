@@ -559,6 +559,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e01a82c9d29
+  - type: implements
+    from: SYM-ingest-exchange-currency-code
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-01T17:24:08.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c48e6c4dba51
+  - type: covered_by
+    from: SYM-ingest-exchange-currency-code
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:24:08.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8886dbb77f41
   - type: executable_for
     from: SYM-operator-test-test-reconcile-market-data
     to: TEST-operator-market-data

@@ -46,6 +46,7 @@ Modelled on OpenClaw: calendar versions, release channels and a separate release
 - Every release also ships the `openfief` CLI for Linux and macOS on amd64 and arm64, signed with cosign and with an SBOM (software bill of materials), since installing OpenFief starts with it (D-80).
 - The release workflow is started manually, does a dry run before it publishes anything, and only the author releases.
 - The release workflow adds the first-party plugins to the catalog (D-88), commits that to `main` itself, and builds the operator and CLI from that commit, which it tags.
+- Stored data (D-161): from the first release on, every change to what is stored ships with a migration of what is already stored, in the context's own numbered migrations. Before it, a change to the schema still ships as a migration, but nothing already stored is converted: an installation may need data entered again, and the demo reseeds itself whenever the loader changes ([demo.md](demo.md#demo-data)).
 - Contracts and SDKs use SemVer, independent of the product version. The Go SDK is tagged `sdk/go/vX.Y.Z`, as Go requires for a submodule **(P)**, and `buf breaking` gates every SDK release **(P)**.
 
 ## Dependencies (P)

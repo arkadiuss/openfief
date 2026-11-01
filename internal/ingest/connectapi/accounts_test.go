@@ -26,10 +26,22 @@ import (
 )
 
 // memRegistry is the ledger's accounts over the default sleeves, in
-// memory, or failing with err.
+// memory, or failing with err, with the accounts' current transactions
+// and what was imported, for a payout change (D-162).
 type memRegistry struct {
 	accounts []ledger.Account
+	current  []ledger.Transaction
+	imported []ledger.Transaction
 	err      error
+}
+
+func (m *memRegistry) CurrentTransactions(context.Context, ledger.AccountID) ([]ledger.Transaction, error) {
+	return m.current, m.err
+}
+
+func (m *memRegistry) Import(_ context.Context, txs []ledger.Transaction, _ []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
+	m.imported = append(m.imported, txs...)
+	return ingest.ImportSummary{}, m.err
 }
 
 func (m *memRegistry) Accounts(context.Context) ([]ledger.Account, error) { return m.accounts, m.err }
@@ -113,7 +125,7 @@ type accountsClient struct {
 func newAccountsClient(t *testing.T, reg *memRegistry, links *memLinks, caller string) accountsClient {
 	t.Helper()
 	accounts := &app.Accounts{
-		Owners: owners{}, Ledger: reg, Bindings: links, Brokers: links, Pack: pl.NewPack(),
+		Owners: owners{}, Ledger: reg, Bindings: links, Brokers: links, Pack: pl.NewPack(), Payouts: reg,
 		Terms: &memTerms{wrappers: map[ledger.AccountID]jurisdiction.Wrapper{}, fees: map[ledger.AccountID]jurisdiction.FeeRule{}},
 		Now:   func() time.Time { return time.Date(2026, time.March, 2, 6, 0, 0, 0, time.UTC) },
 	}
@@ -171,7 +183,8 @@ func TestAccountServiceRoundTrip(t *testing.T) {
 }
 
 // TestAccountServiceBondPayout pays out a hand-entered bond account's
-// coupons and maturities from today (D-135).
+// coupons and maturities from today (D-135), then keeps them as cash from
+// an earlier day (D-162).
 func TestAccountServiceBondPayout(t *testing.T) {
 	t.Parallel()
 	reg, links := fixture()
@@ -190,6 +203,60 @@ func TestAccountServiceBondPayout(t *testing.T) {
 	if got := reg.accounts[i].PayoutSetting(); got.Payout != ledger.PayoutPaidOut || got.Since.String() != "2026-03-02" {
 		t.Errorf("stored payout = %+v, want paid out since 2026-03-02", got)
 	}
+	checkPayoutBackToCash(t, c, reg)
+}
+
+// checkPayoutBackToCash changes acc-bonds, paid out since 2026-03-02, back
+// to cash from an earlier day, then refuses a change from tomorrow.
+func checkPayoutBackToCash(t *testing.T, c accountsClient, reg *memRegistry) {
+	t.Helper()
+	ctx := t.Context()
+	// Back to cash from a day before the change the owner gives (D-162): the
+	// account keeps its payouts as cash over its whole history again, and the
+	// payout withdrawals booked from that day on are superseded, earlier ones stay.
+	reg.current = []ledger.Transaction{
+		withdrawal(t, "lot:COI1028:2024-10-10:coupon:2025-10-10:payout", "2025-10-10"),
+		withdrawal(t, "lot:COI1028:2024-10-10:coupon:2026-01-10:payout", "2026-01-10"),
+	}
+	cash, err := c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
+		Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Name: "Bonds", Sleeve: "bonds",
+		BondPayout: ingestv1.BondPayout_BOND_PAYOUT_CASH, BondPayoutFrom: "2026-01-01",
+	}))
+	if err != nil || cash.Msg.GetAccount().GetBondPayout() != ingestv1.BondPayout_BOND_PAYOUT_CASH ||
+		cash.Msg.GetAccount().GetBondPayoutSince() != "" {
+		t.Errorf("UpdateAccount back to cash = %v, %v; want cash over the whole history", cash, err)
+	}
+	if len(reg.imported) != 1 || reg.imported[0].Kind != ledger.KindDeletion || reg.imported[0].Date.String() != "2026-01-10" {
+		t.Errorf("imported %v, want the deletion of the payout withdrawal of 2026-01-10", reg.imported)
+	}
+	// A change can't take effect after today.
+	_, err = c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
+		Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Name: "Bonds", Sleeve: "bonds",
+		BondPayout: ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT, BondPayoutFrom: "2026-03-03",
+	}))
+	if connect.CodeOf(err) != connect.CodeInvalidArgument {
+		t.Errorf("UpdateAccount from tomorrow = %v, want InvalidArgument", err)
+	}
+}
+
+// withdrawal returns a synthetic payout withdrawal of acc-bonds keyed id.
+func withdrawal(t *testing.T, id, day string) ledger.Transaction {
+	t.Helper()
+	d, err := kernel.ParseDate(day)
+	if err != nil {
+		t.Fatal(err)
+	}
+	pln, err := kernel.ParseCurrency("PLN")
+	if err != nil {
+		t.Fatal(err)
+	}
+	w, err := ledger.NewWithdrawal(ledger.TransactionHeader{
+		Key: ledger.TransactionKey{Source: "bonds-main:treasury-bonds:acc-bonds", ExternalID: id}, Account: bondsAccount, Date: d,
+	}, kernel.NewMoney(kernel.NewDecimal(5305, -2), pln))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return w
 }
 
 func TestAccountServiceErrors(t *testing.T) {

@@ -1,6 +1,6 @@
 ---
 title: Each account must keep a payout setting, cash by default or paid out, with the day it took effect, and what falls due must be paid out only when the setting is paid out and took effect on or before that day.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-135
 tags:
   - strict-modeling
