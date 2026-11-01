@@ -1,3 +1,7 @@
+{{define "scripts"}}
+<script src="/static/vendor/chart-4.5.1.umd.min.js" defer></script>
+<script src="/static/app.js" defer></script>
+{{end}}
 {{define "content"}}
 {{with .Data}}
 <p class="lede">{{.Account.Institution}} · sleeve {{.Account.Sleeve}} · {{wrapper .Account.TaxWrapper}} · showing {{.Date}}</p>
@@ -47,6 +51,32 @@
   <p class="muted">Nothing is valued on this date yet.</p>
   {{end}}
 </section>
+
+{{with .Charts}}
+<section class="card" aria-labelledby="account-charts-title">
+  <h2 id="account-charts-title">Over time</h2>
+  {{template "chart-start" .Start}}
+  {{with .Value}}
+  <h3>Value</h3>
+  {{if .Points}}
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="The account's gross, net and liquidation values with cash from {{.From}} to {{.To}}, in {{.Currency}}{{if .Mark}}; tracking began on {{.Mark}}{{end}}"></canvas></div>
+  <p class="muted">The account's gross, net and liquidation values, cash included, from {{.From}} to {{.To}} in {{.Currency}}.{{if .Gaps}} The liquidation line skips {{.Gaps}} day(s) without a liquidation value.{{end}}</p>
+  {{else}}
+  <p class="muted">No valued days yet.</p>
+  {{end}}
+  {{end}}
+  {{with .Performance}}
+  <h3>Performance</h3>
+  {{if .Points}}
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="The account's time-weighted return from {{.From}} to {{.To}}, 100 on {{.From}}"></canvas></div>
+  <p class="muted">From {{.From}} to {{.To}}: the account's time-weighted return as an index, 100 on {{.From}}. Every deposit and withdrawal is money in or out of the account, transfers between your accounts included, so none counts as performance. In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
+  {{if .Pending}}<p><span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation pending</span> <span class="muted">The lines may still change.</span></p>{{end}}
+  {{else}}
+  <p class="muted">No valued days yet.</p>
+  {{end}}
+  {{end}}
+</section>
+{{end}}
 
 <section class="card" aria-labelledby="holdings-title">
   <h2 id="holdings-title">Holdings</h2>

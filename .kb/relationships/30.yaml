@@ -545,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0928d03090f
+  - type: implements
+    from: SYM-views-account-history
+    to: REQ-ui-portfolio-chart-default-start
+    created_at: 2026-11-01T13:09:43.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7da05d0dfecb
+  - type: covered_by
+    from: SYM-views-account-history
+    to: TEST-views-chart-start
+    created_at: 2026-11-01T13:09:43.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a1317489d46

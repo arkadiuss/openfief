@@ -271,7 +271,7 @@ func parseOptionalDate(s string) (kernel.Date, error) {
 func pbPerformance(p *app.Performance, reporting kernel.Currency) *viewsv1.GetPerformanceResponse {
 	out := &viewsv1.GetPerformanceResponse{
 		From: pbDate(p.From), To: pbDate(p.To), Gap: viewsv1.PerformanceGap(enumNumber(int(p.Series.Gap))),
-		RevaluationPending: p.Pending, ReportingCurrency: reporting.String(),
+		RevaluationPending: p.Pending, ReportingCurrency: reporting.String(), DefaultFrom: pbDate(p.Start),
 		Days:      make([]*viewsv1.PerformanceDay, 0, len(p.Series.Days)),
 		Transfers: pbTransfers(p.Series.Transfers),
 	}

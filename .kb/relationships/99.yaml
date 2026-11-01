@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9704d750857
+  - type: verified_by
+    from: SCEN-views-performance-query-charts-start
+    to: TEST-views-app-performance
+    created_at: 2026-11-01T13:01:26.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd021c62de5f

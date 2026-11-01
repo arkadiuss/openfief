@@ -336,6 +336,10 @@ type fakeRead struct {
 	format *viewsv1.NumberFormat
 	// values are the value kinds GetAllocation was asked for.
 	values []viewsv1.ValueKind
+	// performance are the GetPerformance requests, model the
+	// GetModelPortfolio ones.
+	performance []*viewsv1.GetPerformanceRequest
+	model       []*viewsv1.GetModelPortfolioRequest
 }
 
 func (f *fakeRead) GetSettings(_ context.Context, r *connect.Request[viewsv1.GetSettingsRequest]) (*connect.Response[viewsv1.GetSettingsResponse], error) {

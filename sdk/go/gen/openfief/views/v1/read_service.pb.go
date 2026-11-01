@@ -5184,12 +5184,19 @@ func (x *ListTransfersResponse) GetBroken() []*Transfer {
 
 type GetPerformanceRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The first date, YYYY-MM-DD; empty, or a date before go-live, means
-	// go-live. The index is 100 on it.
+	// The first date, the charts' start the owner chose (D-138), YYYY-MM-DD;
+	// empty means the default start (the response's default_from), and a
+	// date before the first transaction means that transaction's date. The
+	// index is 100 on it.
 	From string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
 	// The last date, inclusive, YYYY-MM-DD, at most 3700 days after from;
 	// empty means the latest date any account is valued through.
-	To            string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	To string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`
+	// One account's time-weighted return instead of the portfolio's, by its
+	// ID; empty means the portfolio. An account's every deposit and
+	// withdrawal is a cash flow of it, a transfer from or to another of the
+	// owner's accounts included.
+	AccountId     string `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -5238,6 +5245,13 @@ func (x *GetPerformanceRequest) GetTo() string {
 	return ""
 }
 
+func (x *GetPerformanceRequest) GetAccountId() string {
+	if x != nil {
+		return x.AccountId
+	}
+	return ""
+}
+
 type GetPerformanceResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The range asked for, as resolved; both empty when nothing is recorded
@@ -5255,8 +5269,15 @@ type GetPerformanceResponse struct {
 	Transfers []*Transfer `protobuf:"bytes,6,rep,name=transfers,proto3" json:"transfers,omitempty"`
 	// The currency of every *_reporting value.
 	ReportingCurrency string `protobuf:"bytes,7,opt,name=reporting_currency,json=reportingCurrency,proto3" json:"reporting_currency,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// The charts' default start (D-138), YYYY-MM-DD, which is also where
+	// tracking began, which the charts mark. The portfolio's is the latest
+	// day an account was seeded from a starting balance (D-23), or its first
+	// transaction's date when none was: an account with its whole history,
+	// or opened later, doesn't move it. An account's is its own first day.
+	// Empty when nothing is recorded yet.
+	DefaultFrom   string `protobuf:"bytes,8,opt,name=default_from,json=defaultFrom,proto3" json:"default_from,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetPerformanceResponse) Reset() {
@@ -5334,6 +5355,13 @@ func (x *GetPerformanceResponse) GetTransfers() []*Transfer {
 func (x *GetPerformanceResponse) GetReportingCurrency() string {
 	if x != nil {
 		return x.ReportingCurrency
+	}
+	return ""
+}
+
+func (x *GetPerformanceResponse) GetDefaultFrom() string {
+	if x != nil {
+		return x.DefaultFrom
 	}
 	return ""
 }
@@ -5643,9 +5671,10 @@ func (x *BacktestDay) GetIndex() string {
 
 type GetModelPortfolioRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The first date of days, YYYY-MM-DD; empty, or a date before go-live,
-	// means go-live, the first transaction's date. The index is 100 on the
-	// first day of days.
+	// The first date of days, YYYY-MM-DD; empty means the charts' default
+	// start (D-138), as GetPerformance resolves it, and a date before the
+	// first transaction means that transaction's date. The index is 100 on
+	// the first day of days.
 	From string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
 	// The last date, inclusive, YYYY-MM-DD; empty means the latest date any
 	// account is valued through. Nothing later is used.
@@ -6627,10 +6656,12 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\tsuggested\x18\x01 \x03(\v2\x1b.openfief.views.v1.TransferR\tsuggested\x129\n" +
 	"\tconfirmed\x18\x02 \x03(\v2\x1b.openfief.views.v1.TransferR\tconfirmed\x127\n" +
 	"\brejected\x18\x03 \x03(\v2\x1b.openfief.views.v1.TransferR\brejected\x123\n" +
-	"\x06broken\x18\x04 \x03(\v2\x1b.openfief.views.v1.TransferR\x06broken\";\n" +
+	"\x06broken\x18\x04 \x03(\v2\x1b.openfief.views.v1.TransferR\x06broken\"Z\n" +
 	"\x15GetPerformanceRequest\x12\x12\n" +
 	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
-	"\x02to\x18\x02 \x01(\tR\x02to\"\xc3\x02\n" +
+	"\x02to\x18\x02 \x01(\tR\x02to\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x03 \x01(\tR\taccountId\"\xe6\x02\n" +
 	"\x16GetPerformanceResponse\x12\x12\n" +
 	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
 	"\x02to\x18\x02 \x01(\tR\x02to\x125\n" +
@@ -6638,7 +6669,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x03gap\x18\x04 \x01(\x0e2!.openfief.views.v1.PerformanceGapR\x03gap\x12/\n" +
 	"\x13revaluation_pending\x18\x05 \x01(\bR\x12revaluationPending\x129\n" +
 	"\ttransfers\x18\x06 \x03(\v2\x1b.openfief.views.v1.TransferR\ttransfers\x12-\n" +
-	"\x12reporting_currency\x18\a \x01(\tR\x11reportingCurrency\"\xdd\x01\n" +
+	"\x12reporting_currency\x18\a \x01(\tR\x11reportingCurrency\x12!\n" +
+	"\fdefault_from\x18\b \x01(\tR\vdefaultFrom\"\xdd\x01\n" +
 	"\vModelTarget\x126\n" +
 	"\x04kind\x18\x01 \x01(\x0e2\".openfief.views.v1.ModelTargetKindR\x04kind\x12=\n" +
 	"\n" +

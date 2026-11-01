@@ -61,14 +61,20 @@
 
 {{template "allocation" .Allocation}}
 
+<section class="card" aria-labelledby="start-title">
+  <h2 id="start-title">Time charts</h2>
+  {{template "chart-start" .Start}}
+  {{if not .Start.Default}}<p class="muted">No transactions yet: the charts start once there are.</p>{{end}}
+</section>
+
 {{template "value-chart" .Value}}
 
 <section class="card" aria-labelledby="history-title">
   <h2 id="history-title">Performance</h2>
   {{with .History}}
   {{if .Points}}
-  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Time-weighted return{{if .Model}} and the model portfolio's backtest{{end}} from {{.From}} to {{.To}}, 100 on {{.From}}"></canvas></div>
-  <p class="muted">From go-live ({{.From}}) to {{.To}}: the portfolio's time-weighted return as an index, 100 on {{.From}}, so deposits, withdrawals and the transfers between your accounts you confirmed don't count as performance.{{with .Value}} Its value with cash on {{$.Data.History.To}} is <span class="mono">{{money .}}</span>.{{end}} In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Time-weighted return{{if .Model}} and the model portfolio's backtest{{end}} from {{.From}} to {{.To}}, 100 on {{.From}}{{if .Default}}; tracking began on {{.Default}}{{end}}"></canvas></div>
+  <p class="muted">From {{.From}} to {{.To}}: the portfolio's time-weighted return as an index, 100 on {{.From}}, so deposits, withdrawals and the transfers between your accounts you confirmed don't count as performance.{{with .Default}} Tracking began on <span class="mono">{{.}}</span>.{{end}}{{with .Value}} Its value with cash on {{$.Data.History.To}} is <span class="mono">{{money .}}</span>.{{end}} In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
   {{if .Pending}}<p><span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation pending</span> <span class="muted">The line may still change.</span></p>{{end}}
   {{if .Suggested}}<p class="alert alert-warn"><a href="/transfers">{{.Suggested}} suggested transfer(s)</a> between your accounts wait for you: until you confirm one, its withdrawal and deposit count as money in and out.</p>{{end}}
   {{else}}
@@ -112,7 +118,7 @@
     {{end}}
   </nav>
   {{if .Points}}
-  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="{{if eq .Kind.Key "all"}}Gross, net and liquidation values{{else}}{{.Kind.Label}} value{{end}} with cash from {{.From}} to {{.To}}, in {{.Currency}}"></canvas></div>
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="{{if eq .Kind.Key "all"}}Gross, net and liquidation values{{else}}{{.Kind.Label}} value{{end}} with cash from {{.From}} to {{.To}}, in {{.Currency}}{{if .Mark}}; tracking began on {{.Mark}}{{end}}"></canvas></div>
   <p class="muted">{{if eq .Kind.Key "all"}}The portfolio's gross, net and liquidation values{{else}}The portfolio's {{.Kind.Label}} value{{end}}, cash included, from {{.From}} to {{.To}} in {{.Currency}}.{{if .Gaps}} {{if eq .Kind.Key "all"}}The liquidation line{{else}}The line{{end}} skips {{.Gaps}} day(s) without {{if eq .Kind.Key "all"}}a Liquidation{{else}}a {{.Kind.Label}}{{end}} value.{{end}}</p>
   {{else}}
   <p class="muted">No valued days yet.</p>

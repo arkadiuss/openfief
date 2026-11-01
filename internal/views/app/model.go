@@ -54,12 +54,13 @@ func endOfHistory() (kernel.Date, error) {
 
 // ModelPortfolio returns the model portfolio, or an error wrapping
 // ErrModelOff while it is off (D-52). from and to resolve as Performance
-// does: a zero from is go-live, a from before go-live starts there, and a
-// zero to is the latest valued-through date of any account, so the
-// model's line and the time-weighted return cover the same days, both 100
-// on the first (D-53). With nothing recorded, a zero from is the
-// backtest's first day and a zero to all stored history. The drawdowns
-// cover the whole history through to (D-54).
+// does: a zero from is the charts' default start (D-138), a from before
+// the first transaction starts there, and a zero to is the latest
+// valued-through date of any account, so the model's line and the
+// time-weighted return cover the same days, both 100 on the first (D-53).
+// With nothing recorded, a zero from is the backtest's first day and a
+// zero to all stored history. The drawdowns cover the whole history
+// through to (D-54).
 func (v *Views) ModelPortfolio(ctx context.Context, from, to kernel.Date) (ModelPortfolio, error) {
 	if v.models == nil {
 		return ModelPortfolio{}, ErrModelOff
@@ -102,7 +103,7 @@ func (v *Views) modelRange(ctx context.Context, from, to kernel.Date) (modelDays
 		return modelDays{}, err
 	}
 	if len(rec.txs) > 0 {
-		from = later(from, rec.goLive)
+		from = views.ChosenStart(from, rec.first, rec.start)
 		if to.IsZero() {
 			to = later(rec.latest, from)
 		}

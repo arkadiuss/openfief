@@ -11,10 +11,14 @@ import (
 )
 
 // performanceView is the performance chart (D-30, D-106): the portfolio's
-// time-weighted return from go-live (D-61) and, while the model portfolio
-// is on, its backtest as a second line, both 100 on the first day (D-53).
+// or an account's time-weighted return (D-61) from the charts' start
+// (D-138) and, while the model portfolio is on, its backtest as a second
+// line, both 100 on the first day (D-53).
 type performanceView struct {
 	From, To string
+	// Default is the charts' default start, where tracking began, which
+	// the chart marks (D-138).
+	Default  string
 	Currency string
 	Points   int
 	// Value is the portfolio's value with cash on To.
@@ -112,8 +116,17 @@ func buildModel(m *viewsv1.GetModelPortfolioResponse) *modelView {
 // index per day and the model's index on the same days, its numbers
 // written in f.
 func buildPerformance(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPortfolioResponse, f numberFormat) performanceView {
-	chart := chartData{Kind: "line", Label: "Portfolio (time-weighted return)", Currency: "index", Group: f.Group, Decimal: f.Decimal}
-	v := performanceView{Currency: p.GetReportingCurrency(), Pending: p.GetRevaluationPending()}
+	return buildLine(p, m, f, "Portfolio (time-weighted return)")
+}
+
+// buildLine is buildPerformance with the time-weighted return's line
+// named label: the portfolio's, or an account's.
+func buildLine(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPortfolioResponse, f numberFormat, label string) performanceView {
+	chart := chartData{
+		Kind: "line", Label: label, Currency: "index", Group: f.Group, Decimal: f.Decimal,
+		Mark: p.GetDefaultFrom(),
+	}
+	v := performanceView{Currency: p.GetReportingCurrency(), Pending: p.GetRevaluationPending(), Default: p.GetDefaultFrom()}
 	for _, d := range p.GetDays() {
 		chart.Labels = append(chart.Labels, d.GetDate())
 		chart.Values = append(chart.Values, d.GetIndex())
@@ -142,16 +155,18 @@ func buildPerformance(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPort
 	return v
 }
 
-// performance reads the time-weighted return from go-live up to date,
-// while it is on the model portfolio over the same days, and how many
-// suggested transfers wait for the owner. A model portfolio
-// that is off answers not found: then the page shows none of it (D-52).
-func (s *server) performance(r *http.Request, sess session, date kernel.Date) (performanceView, error) {
-	perf, err := s.read.GetPerformance(r.Context(), bearer(&viewsv1.GetPerformanceRequest{To: date.String()}, sess))
+// performance reads the time-weighted return from start, or from the
+// charts' default start when start is zero (D-138), up to date, while it
+// is on the model portfolio over the same days, and how many suggested
+// transfers wait for the owner. A model portfolio that is off answers not
+// found: then the page shows none of it (D-52).
+func (s *server) performance(r *http.Request, sess session, start, date kernel.Date) (performanceView, error) {
+	perf, err := s.read.GetPerformance(r.Context(), bearer(&viewsv1.GetPerformanceRequest{From: optionalString(start), To: date.String()}, sess))
 	if err != nil {
 		return performanceView{}, fmt.Errorf("GetPerformance: %w", err)
 	}
-	model, err := s.read.GetModelPortfolio(r.Context(), bearer(&viewsv1.GetModelPortfolioRequest{To: date.String()}, sess))
+	// The model's line starts on the day the portfolio's does (D-53).
+	model, err := s.read.GetModelPortfolio(r.Context(), bearer(&viewsv1.GetModelPortfolioRequest{From: perf.Msg.GetFrom(), To: date.String()}, sess))
 	var on *viewsv1.GetModelPortfolioResponse
 	switch {
 	case err == nil:
