@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f8cd2417369
+  - type: executable_for
+    from: SYM-plugins-test-test-market-data-label-and-diff
+    to: TEST-plugins-market-data
+    created_at: 2026-11-01T10:16:50.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fdad6f5cba6

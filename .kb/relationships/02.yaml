@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc60d03f6024
+  - type: executable_for
+    from: SYM-operator-test-market-data
+    to: TEST-operator-market-data
+    created_at: 2026-11-01T10:17:08.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7b66c2816e6

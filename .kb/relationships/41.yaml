@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81d51a781fc9
+  - type: validates
+    from: TEST-ingest-kube
+    to: REQ-ingest-market-data-list-declared-granted
+    created_at: 2026-11-01T10:06:11.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-335ddb59d1df

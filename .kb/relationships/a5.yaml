@@ -482,6 +482,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bdc2a74ef9ef
+  - type: executable_for
+    from: SYM-ingest-test-count-unsupported
+    to: TEST-ingest-problem
+    created_at: 2026-10-31T18:49:41.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd1f61806c20
   - type: implements
     from: SYM-ingest-pg-store-hold-tickers
     to: REQ-ingest-xtb-unconfirmed-ticker-waits
@@ -518,6 +525,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0c39c64df48e
   - type: validates
+    from: TEST-attention-read-subject
+    to: REQ-identity-read-access-no-broker-account-numbers
+    created_at: 2026-11-01T10:05:30.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-160a8a4b7036
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-client-import-file-opening-cash
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-11-01T08:02:59.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-538c5328cc37
+  - type: validates
     from: TEST-plugins-treasury-bonds
     to: REQ-treasurybonds-lot-booked-on-purchase-date
     created_at: 2026-11-01T08:41:31.428Z
@@ -538,17 +559,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6000f518966
-  - type: executable_for
-    from: SYM-ingest-connectrpc-test-client-import-file-opening-cash
-    to: TEST-ingest-connectrpc-client
-    created_at: 2026-11-01T08:02:59.952Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-538c5328cc37
-  - type: executable_for
-    from: SYM-ingest-test-count-unsupported
-    to: TEST-ingest-problem
-    created_at: 2026-10-31T18:49:41.969Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cd1f61806c20

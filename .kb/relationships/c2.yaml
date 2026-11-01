@@ -538,3 +538,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac7eaaef8925
+  - type: implements
+    from: SYM-plugins-cli-write-declarations
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:12:35.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-251556ac2dc5

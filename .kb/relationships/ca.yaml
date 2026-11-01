@@ -650,3 +650,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b2a008504bb
+  - type: validates
+    from: TEST-views-connectapi-read-access
+    to: REQ-identity-read-access-scope
+    created_at: 2026-11-01T10:05:26.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6da8e2de3a7
+  - type: validates
+    from: TEST-views-connectapi-read-access
+    to: REQ-identity-read-access-no-secrets
+    created_at: 2026-11-01T10:05:27.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e145bbbce60
+  - type: validates
+    from: TEST-views-connectapi-read-access
+    to: REQ-identity-read-access-no-broker-account-numbers
+    created_at: 2026-11-01T10:05:27.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9dab034669c2
+  - type: validates
+    from: TEST-views-connectapi-read-access
+    to: REQ-identity-read-access-no-state-change
+    created_at: 2026-11-01T10:05:27.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-331500e885e7

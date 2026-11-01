@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33d2340dfbff
+  - type: implements
+    from: SYM-views-kube-record-of
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:12:43.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a78ec836d51a

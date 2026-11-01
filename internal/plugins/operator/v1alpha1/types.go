@@ -163,6 +163,12 @@ type Manifest struct {
 	// owner uploads (D-109).
 	// +optional
 	StatementFiles bool `json:"statementFiles,omitempty"`
+
+	// MarketData declares a market-data connector, which each sync tells
+	// the instruments the owner holds and the model portfolio's targets
+	// (D-93). The PluginGrant approves it (D-123).
+	// +optional
+	MarketData bool `json:"marketData,omitempty"`
 }
 
 // SecretMount asks for the instance's Secret of one role to be mounted
@@ -220,6 +226,11 @@ type Permissions struct {
 	// +kubebuilder:validation:MaxItems=1
 	// +listType=atomic
 	ClusterServices []ClusterServiceRef `json:"clusterServices,omitempty"`
+	// MarketData lets a market-data connector receive, on each sync, the
+	// instruments the owner holds and the model portfolio's targets
+	// (D-93, D-123).
+	// +optional
+	MarketData bool `json:"marketData,omitempty"`
 }
 
 // PluginStatus is what the operator observed and did.

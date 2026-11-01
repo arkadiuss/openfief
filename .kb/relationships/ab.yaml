@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3ff2af3f4a0
+  - type: validates
+    from: TEST-views-connectapi-plugins
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:06:23.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a53227fe457

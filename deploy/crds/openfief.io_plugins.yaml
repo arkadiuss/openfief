@@ -171,6 +171,12 @@ spec:
                     maxItems: 8
                     type: array
                     x-kubernetes-list-type: set
+                  marketData:
+                    description: |-
+                      MarketData declares a market-data connector, which each sync tells
+                      the instruments the owner holds and the model portfolio's targets
+                      (D-93). The PluginGrant approves it (D-123).
+                    type: boolean
                   secrets:
                     description: |-
                       Secrets lists, by role, the Kubernetes Secrets the plugin needs
@@ -398,6 +404,12 @@ spec:
                         maxItems: 8
                         type: array
                         x-kubernetes-list-type: set
+                      marketData:
+                        description: |-
+                          MarketData declares a market-data connector, which each sync tells
+                          the instruments the owner holds and the model portfolio's targets
+                          (D-93). The PluginGrant approves it (D-123).
+                        type: boolean
                       secrets:
                         description: |-
                           Secrets lists, by role, the Kubernetes Secrets the plugin needs
@@ -518,6 +530,12 @@ spec:
                     maxItems: 64
                     type: array
                     x-kubernetes-list-type: set
+                  marketData:
+                    description: |-
+                      MarketData lets a market-data connector receive, on each sync, the
+                      instruments the owner holds and the model portfolio's targets
+                      (D-93, D-123).
+                    type: boolean
                   secrets:
                     description: |-
                       Secrets lists Secret names: <instance>-<role> for each role the
@@ -608,6 +626,12 @@ spec:
                     maxItems: 64
                     type: array
                     x-kubernetes-list-type: set
+                  marketData:
+                    description: |-
+                      MarketData lets a market-data connector receive, on each sync, the
+                      instruments the owner holds and the model portfolio's targets
+                      (D-93, D-123).
+                    type: boolean
                   secrets:
                     description: |-
                       Secrets lists Secret names: <instance>-<role> for each role the

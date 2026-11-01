@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-379aebbdf58e
+  - type: validates
+    from: TEST-pl-oki
+    to: REQ-valuation-unclassifiable-instrument-counts-as-neither
+    created_at: 2026-11-01T10:06:33.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c672667ce8bc

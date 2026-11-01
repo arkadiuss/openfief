@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05432ddb3992
+  - type: executable_for
+    from: SYM-views-connectapi-test-ra-named-like-asecret
+    to: TEST-views-connectapi-read-access
+    created_at: 2026-11-01T10:17:39.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67a6f17ade46

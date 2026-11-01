@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2a4c8a003bc
+  - type: validates
+    from: TEST-core-read-tokens
+    to: REQ-identity-read-access-holders
+    created_at: 2026-11-01T10:06:26.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f6cf36d75bb

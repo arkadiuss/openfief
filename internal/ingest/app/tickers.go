@@ -92,7 +92,8 @@ func (c *Connectors) bookTickers(ctx context.Context, instance string, m *ingest
 }
 
 // proposeISINs asks each market-data connector instance, the running ones
-// bound to no account, in name order, for the ISINs of tickers of instance
+// whose manifest declares it and whose grant approves that (D-123), in
+// name order, for the ISINs of tickers of instance
 // it hasn't been proposed yet, and keeps the first proposal for each. An
 // instance that can't look instruments up or fails is passed over.
 func (c *Connectors) proposeISINs(ctx context.Context, instance string, tickers []ingest.Ticker) error {
@@ -127,8 +128,8 @@ func (c *Connectors) proposeISINs(ctx context.Context, instance string, tickers 
 	return nil
 }
 
-// marketDataInstances returns the running connector instances bound to no
-// account, in name order: those that can deliver market data only.
+// marketDataInstances returns the running market-data connector
+// instances, in name order (marketData).
 func (c *Connectors) marketDataInstances(ctx context.Context) ([]string, error) {
 	all, err := c.Instances.ConnectorInstances(ctx)
 	if err != nil {
@@ -136,16 +137,30 @@ func (c *Connectors) marketDataInstances(ctx context.Context) ([]string, error) 
 	}
 	var out []string
 	for _, inst := range all {
-		bound, err := c.Bindings.BoundAccounts(ctx, inst)
+		ok, err := c.marketData(ctx, inst)
 		if err != nil {
-			return nil, fmt.Errorf("connector bindings: %w", err)
+			return nil, err
 		}
-		if len(bound) == 0 {
+		if ok {
 			out = append(out, inst)
 		}
 	}
 	slices.Sort(out)
 	return out, nil
+}
+
+// marketData reports whether instance is a market-data connector: its
+// running version's manifest declares it and its grant approves that
+// (D-123). Without Declarations no instance is one.
+func (c *Connectors) marketData(ctx context.Context, instance string) (bool, error) {
+	if c.Declarations == nil {
+		return false, nil
+	}
+	d, err := c.Declarations.Declarations(ctx, instance)
+	if err != nil {
+		return false, fmt.Errorf("manifest declarations: %w", err)
+	}
+	return d.MarketData, nil
 }
 
 // Tickers is the owner's service for the tickers that connectors report

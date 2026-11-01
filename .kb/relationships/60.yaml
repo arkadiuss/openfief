@@ -538,3 +538,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba9c2f473450
+  - type: implements
+    from: SYM-plugins-effective-permissions-grant-singles
+    to: REQ-ingest-market-data-list-declared-granted
+    created_at: 2026-11-01T10:10:58.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cca60d2146ce
+  - type: implements
+    from: SYM-plugins-effective-permissions-grant-singles
+    to: REQ-plugins-effective-intersection
+    created_at: 2026-11-01T10:10:58.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32f0ba48ad05
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-grant-singles
+    to: TEST-plugins-market-data
+    created_at: 2026-11-01T10:10:58.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5569505cf27
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-grant-singles
+    to: TEST-plugins-effective
+    created_at: 2026-11-01T10:10:58.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a66d64023ae

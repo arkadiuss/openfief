@@ -107,6 +107,26 @@ Config given: none
 	}
 }
 
+// TestRenderProposalMarketData checks that the install shows the owner that
+// a market-data connector will learn what they hold (D-123), and that a
+// connector that doesn't declare it says nothing of it.
+func TestRenderProposalMarketData(t *testing.T) {
+	t.Parallel()
+	const line = "  Market data:  it is a market-data connector: each sync tells it every instrument you hold\n" +
+		"                and the model portfolio's targets, so it learns what you hold (D-123)\n"
+	for _, declared := range []bool{true, false} {
+		p := &app.Proposal{
+			Plugin: plugins.Plugin{Name: "prices", Image: sampleImage, Manifest: plugins.Manifest{
+				Capabilities: []plugins.Capability{plugins.CapabilityConnector}, MarketData: declared,
+			}},
+			Decision: plugins.TrustDecision{Trust: plugins.Unverified, Signer: plugins.OpenFiefCI()},
+		}
+		if got := cli.RenderProposal(p); strings.Contains(got, line) != declared {
+			t.Errorf("declared %v: summary\n%s", declared, got)
+		}
+	}
+}
+
 func TestRenderProposalWithoutPermissions(t *testing.T) {
 	t.Parallel()
 	p := &app.Proposal{

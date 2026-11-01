@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3d7b8fa2be4
+  - type: validates
+    from: TEST-views-kube
+    to: REQ-plugins-install-shows-market-data-list
+    created_at: 2026-11-01T10:06:20.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1423cfe96de3

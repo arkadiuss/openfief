@@ -118,6 +118,12 @@ spec:
                 maxItems: 64
                 type: array
                 x-kubernetes-list-type: set
+              marketData:
+                description: |-
+                  MarketData lets a market-data connector receive, on each sync, the
+                  instruments the owner holds and the model portfolio's targets
+                  (D-93, D-123).
+                type: boolean
               secrets:
                 description: |-
                   Secrets lists Secret names: <instance>-<role> for each role the

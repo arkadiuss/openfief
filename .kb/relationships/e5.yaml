@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-788f69f43a94
+  - type: validates
+    from: TEST-views-yearly-tax
+    to: REQ-valuation-unclassifiable-instrument-counts-as-neither
+    created_at: 2026-11-01T10:06:35.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-809c2edb2817
+  - type: validates
+    from: TEST-views-yearly-tax
+    to: REQ-valuation-owner-classification-stays
+    created_at: 2026-11-01T10:06:36.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab6764974d1d
+  - type: executable_for
+    from: SYM-attention-test-read-subject
+    to: TEST-attention-read-subject
+    created_at: 2026-11-01T10:18:13.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3ac762f1986

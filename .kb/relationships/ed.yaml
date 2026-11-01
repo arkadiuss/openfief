@@ -552,3 +552,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d41f286fbd0
+  - type: implements
+    from: SYM-views-connectapi-read-service
+    to: REQ-identity-read-access-scope
+    created_at: 2026-11-01T10:13:22.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8b61b643a08
+  - type: implements
+    from: SYM-views-connectapi-read-service
+    to: REQ-identity-read-access-no-state-change
+    created_at: 2026-11-01T10:13:22.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ff6a549c405
+  - type: implements
+    from: SYM-views-connectapi-read-service
+    to: REQ-identity-read-access-no-secrets
+    created_at: 2026-11-01T10:13:23.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5da4ca51ecc8
+  - type: covered_by
+    from: SYM-views-connectapi-read-service
+    to: TEST-views-connectapi-read-access
+    created_at: 2026-11-01T10:13:23.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e33e3d9fec5d

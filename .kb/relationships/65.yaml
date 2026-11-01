@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84d7869c149d
+  - type: implements
+    from: SYM-views-ghostfolio-projector-symbol
+    to: REQ-views-ghostfolio-asset-uuid-takes-user
+    created_at: 2026-11-01T10:14:54.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52a436a61aa2

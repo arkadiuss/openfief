@@ -623,19 +623,27 @@ func (f *fixedScope) MarketDataScope(context.Context) (ingest.MarketDataScope, e
 	return f.scope, nil
 }
 
-// TestSchedulerAsksMarketDataConnectorsForTheScope checks that an instance
-// bound to no account, a market-data connector, syncs in transactions mode
-// and is asked to price the scope (D-93), and a bound one is not.
+// TestSchedulerAsksMarketDataConnectorsForTheScope checks that only a
+// market-data connector, an instance whose manifest declares it and whose
+// grant approves that, is asked to price the scope (D-93, D-123), bound to
+// accounts or not, and that one bound to no account syncs in transactions
+// mode. An instance bound to no account that isn't one, such as nbp-fx, and
+// a broker connector are asked for nothing.
 func TestSchedulerAsksMarketDataConnectorsForTheScope(t *testing.T) {
 	t.Parallel()
 	scope := ingest.MarketDataScope{Indices: []string{"FAKE20"}}
 	for _, tt := range []struct {
-		name      string
-		bound     []ledger.AccountID
-		wantMode  ingest.Mode
-		wantScope ingest.MarketDataScope
+		name       string
+		bound      []ledger.AccountID
+		marketData bool
+		noDecl     bool
+		wantMode   ingest.Mode
+		wantScope  ingest.MarketDataScope
 	}{
-		{name: "a market-data connector", wantMode: ingest.ModeTransactions, wantScope: scope},
+		{name: "a market-data connector", marketData: true, wantMode: ingest.ModeTransactions, wantScope: scope},
+		{name: "a market-data connector bound to an account", marketData: true, bound: []ledger.AccountID{"acc-1"}, wantMode: ingest.ModeOpening, wantScope: scope},
+		{name: "bound to no account, not declared", wantMode: ingest.ModeTransactions},
+		{name: "no declarations port", noDecl: true, wantMode: ingest.ModeTransactions},
 		{name: "a broker connector", bound: []ledger.AccountID{"acc-1"}, wantMode: ingest.ModeOpening},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
@@ -644,6 +652,9 @@ func TestSchedulerAsksMarketDataConnectorsForTheScope(t *testing.T) {
 			store := newMemStore()
 			conns := connectors(t, caller, &fakeLedger{}, &fakeStores{})
 			conns.Bindings = &fakeBindings{accounts: tt.bound}
+			if !tt.noDecl {
+				conns.Declarations = fakeDeclarations{byInstance: map[string]ingest.Declarations{"eodhd": {MarketData: tt.marketData}}}
+			}
 			s := &app.Scheduler{
 				Connectors: conns, Instances: listed{names: []string{"eodhd"}}, Store: store,
 				Scope: &fixedScope{scope: scope}, Policy: ingest.SyncPolicy{Interval: time.Hour, RetryFirst: time.Minute, RetryMax: time.Hour},

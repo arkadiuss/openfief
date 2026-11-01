@@ -1,6 +1,6 @@
 ---
 title: The core must ask every connector instance bound to no account to price each instrument held today in any account, other than treasury bonds with stored series terms, and the model portfolio's instrument and index targets while it is on, each once, and must ask an instance bound to an account for nothing.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-93
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ The core must ask every connector instance bound to no account to price each ins
 
 ## Context
 
-D-93 has each sync request to a market-data connector carry what is held and what the model portfolio targets. No manifest field marks a market-data connector, so the narrowest reading treats an instance that feeds no account as one, and a broker connector never learns what is held elsewhere (implementation questions). Bonds have no market price (D-9). Modeled by Claude Code for the market-data work package (D-93, D-94, D-95, impl/market-data); the author has not reviewed it yet.
-
-## Source
-
-> **[D-93]** Each sync request to a market-data connector carries the instruments the owner holds and the model portfolio's targets, so a newly bought instrument is priced without configuration. An optional list in the instance's config adds instruments to watch.
-
-docs/DESIGN.md#D-93
+Closed: superseded by REQ-ingest-market-data-scope-declared. D-123 makes a connector a market-data connector only when its manifest declares it and its grant approves that, not when it is bound to no account. Modeled by Claude Code for the read-access work package (impl/read-access); the author has not reviewed it yet.

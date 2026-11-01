@@ -194,12 +194,22 @@ func describe(p *plugins.Permissions) string {
 		{"dataTiers", api.DataTiers},
 		{"browserPaths", api.BrowserPaths},
 		{"clusterServices", clusterServiceNames(api.ClusterServices)},
+		{"marketData", marketDataItems(api.MarketData)},
 	} {
 		if len(f.items) > 0 {
 			parts = append(parts, f.name+": "+strings.Join(f.items, ", "))
 		}
 	}
 	return strings.Join(parts, "; ")
+}
+
+// marketDataItems writes the market-data permission (D-123) as one item,
+// "true", or none.
+func marketDataItems(on bool) []string {
+	if on {
+		return []string{"true"}
+	}
+	return nil
 }
 
 // clusterServiceNames writes in-cluster services as namespace/service:port.

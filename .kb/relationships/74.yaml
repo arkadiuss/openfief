@@ -510,13 +510,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-364089f111cc
-  - type: implements
-    from: SYM-ingest-conn-rpc-instruments-to
-    to: REQ-ingest-market-data-scope
-    created_at: 2026-10-29T17:16:34.020Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ed8c873617a2
   - type: covered_by
     from: SYM-ingest-conn-rpc-instruments-to
     to: TEST-ingest-connectrpc-client
@@ -797,3 +790,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b4cdaee5660b
+  - type: validates
+    from: TEST-views-ghostfolio-sync
+    to: REQ-views-ghostfolio-cash-account-per-currency
+    created_at: 2026-11-01T10:06:31.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cac9081c6dc0
+  - type: verified_by
+    from: SCEN-ingest-market-data-scope-declared
+    to: TEST-ingest-marketdata
+    created_at: 2026-11-01T10:06:53.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a810fa7a3c8
+  - type: verified_by
+    from: SCEN-ingest-market-data-scope-declared
+    to: TEST-ingest-app-pricing
+    created_at: 2026-11-01T10:06:53.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c4509dd2734
+  - type: verified_by
+    from: SCEN-ingest-market-data-scope-declared
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-11-01T10:06:53.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d351ddb3c17
+  - type: verified_by
+    from: SCEN-ingest-market-data-scope-declared
+    to: TEST-portfolio-app-models
+    created_at: 2026-11-01T10:06:53.554Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1f280559881
+  - type: verified_by
+    from: SCEN-ingest-market-data-scope-declared
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-11-01T10:06:53.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3daca3aadf37
+  - type: implements
+    from: SYM-ingest-conn-rpc-instruments-to
+    to: REQ-ingest-market-data-scope-declared
+    created_at: 2026-11-01T10:09:51.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7b8af578810
+  - type: executable_for
+    from: SYM-plugins-test-market-data-outcome
+    to: TEST-plugins-market-data
+    created_at: 2026-11-01T10:16:30.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39c620d0de84

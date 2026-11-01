@@ -15,8 +15,9 @@ import (
 
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), is a valid manifest asking for exactly what the
-// plugin needs: the connector capability, eodhd.com and the Secret with the
-// owner's API key (D-22), nothing else.
+// plugin needs: the connector capability, eodhd.com, the Secret with the
+// owner's API key (D-22) and the market-data declaration that makes each
+// sync tell it what the owner holds (D-93, D-123), nothing else.
 func TestManifest(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("manifest.json")
@@ -31,6 +32,7 @@ func TestManifest(t *testing.T) {
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		Egress:       []plugins.EgressHost{{Host: "eodhd.com", Port: 443}},
 		Secrets:      []plugins.SecretMount{{Role: "api-token", MountPath: keyMount}},
+		MarketData:   true,
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)
