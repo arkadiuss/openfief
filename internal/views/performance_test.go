@@ -33,7 +33,7 @@ func dec(t *testing.T, s string) kernel.Decimal {
 }
 
 // event is one transaction of a performance case: a deposit, withdrawal,
-// opening cash, buy of ETF1 or opening lot of ETF1, in account acc, on day
+// opening cash, buy of ETF1, interest on ETF1 or opening lot of ETF1, in account acc, on day
 // offset day, of amount in currency (the cost for a buy or a lot), qty units.
 type event struct {
 	kind, acc   string
@@ -61,6 +61,8 @@ func (e *event) build(t *testing.T, n int) ledger.Transaction {
 		tx, err = ledger.NewOpeningCash(h, amount)
 	case "buy":
 		tx, err = ledger.NewBuy(h, instrument(t, isinIE, "ETF1"), kernel.NewQuantity(dec(t, e.qty)), amount, kernel.Money{})
+	case "interest":
+		tx, err = ledger.NewInterest(h, instrument(t, isinIE, "ETF1"), amount, kernel.Money{})
 	case "opening-lot":
 		tx, err = ledger.NewOpeningLot(h, instrument(t, isinIE, "ETF1"), kernel.NewQuantity(dec(t, e.qty)), amount, h.Date.AddDays(-30))
 	default:
@@ -203,6 +205,22 @@ func TestPerformance(t *testing.T) {
 			},
 			// (1600 - 500) / 1000 = 1.1; then 1550 / 1600 = 0.96875.
 			want: []pt{{0, "1000", "0", "1000", "100"}, {1, "1600", "0", "500", "110"}, {2, "1550", "0", "0", "106.5625"}},
+		},
+		{
+			// D-135: a paid-out coupon is interest, then a withdrawal of the
+			// same amount on the same day; the withdrawal is a cash flow, so
+			// the coupon still counts as return.
+			name: "a paid-out payout still counts as return",
+			c: perfCase{
+				events: investedEvents(
+					event{kind: "interest", acc: "acc-1", day: 1, amount: "50", cur: "PLN"},
+					event{kind: "withdrawal", acc: "acc-1", day: 1, amount: "50", cur: "PLN"},
+				),
+				rows: []row{{"acc-1", 0, "10", "1000.00"}, {"acc-1", 1, "10", "1100.00"}, {"acc-1", 2, "10", "1100.00"}},
+				last: 2, through: 2,
+			},
+			// (1100 + 50) / 1000 = 1.15: the price move and the coupon.
+			want: []pt{{0, "1000", "0", "1000", "100"}, {1, "1100", "0", "-50", "115"}, {2, "1100", "0", "0", "115"}},
 		},
 		{
 			name: "a withdrawal is not a loss",

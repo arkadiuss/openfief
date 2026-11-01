@@ -419,6 +419,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-93421057d3f1
+  - type: implements
+    from: SYM-ingest-app-ticker-store
+    to: REQ-ingest-xtb-isin-owner-confirms
+    created_at: 2026-10-31T18:03:16.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae60ee0132b
+  - type: implements
+    from: SYM-views-ghostfolio-syncer-actual
+    to: REQ-views-ghostfolio-owned-and-cash-accounts
+    created_at: 2026-10-31T20:03:15.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7368a02b844e
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-held-ledger-account
+    to: TEST-ingest-app-held
+    created_at: 2026-11-01T07:47:31.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3f2ba3ea48c
   - type: executable_for
     from: SYM-attention-app-test-helper-recorder-publish
     to: TEST-attention-app-items
@@ -440,17 +461,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f09a19f3ca73
-  - type: implements
-    from: SYM-ingest-app-ticker-store
-    to: REQ-ingest-xtb-isin-owner-confirms
-    created_at: 2026-10-31T18:03:16.778Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7ae60ee0132b
-  - type: implements
-    from: SYM-views-ghostfolio-syncer-actual
-    to: REQ-views-ghostfolio-owned-and-cash-accounts
-    created_at: 2026-10-31T20:03:15.865Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7368a02b844e

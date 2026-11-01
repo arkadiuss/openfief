@@ -171,7 +171,7 @@ func TestImportBondLotsRefuses(t *testing.T) {
 		goLive string
 		lots   []*connectorv1.BondLot
 	}{
-		{name: "no go-live date", lots: []*connectorv1.BondLot{edoLot()}},
+		{name: "a malformed go-live date", goLive: "1.6.2026", lots: []*connectorv1.BondLot{edoLot()}},
 		{name: "an unknown bond type", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.Series = "XYZ0536" })},
 		{name: "a purchase date of another series", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.PurchaseDate = "2026-06-04" })},
 		{name: "bought after today", goLive: "2026-06-01", lots: with(func(l *connectorv1.BondLot) { l.Series, l.PurchaseDate = "EDO1136", "2026-11-04" })},
@@ -203,7 +203,9 @@ func TestImportBondLotsRefuses(t *testing.T) {
 // since 2025-06-01 with 10 COI1028 bonds bought on 2024-10-10 (first year
 // 6.55%, margin 1.50%) and 5 EDO0536 bonds, which pay no coupons; an IKE
 // one live since 2026-08-20 with 100 ROR0827 bonds bought that day (first
-// month 4.25%, no margin); and one not seeded yet.
+// month 4.25%, no margin); and one never seeded, whose single COI1028 bond
+// was entered on its real purchase date (D-98) and whose payouts are paid
+// out since 2026-01-01 (D-135).
 func heldRequest(mode connectorv1.Mode) *connectorv1.SyncRequest {
 	pln := func(amount string) *connectorv1.Money { return &connectorv1.Money{Amount: amount, Currency: "PLN"} }
 	coi := bondInstrument("COI1028")
@@ -224,7 +226,11 @@ func heldRequest(mode connectorv1.Mode) *connectorv1.SyncRequest {
 				AccountId: "acc-bonds-ike", GoLive: "2026-08-20", TaxWrapper: "ike",
 				Lots: []*connectorv1.OpenLot{{Instrument: ror, Quantity: "100", Opened: "2026-08-20", Cost: pln("10000"), Opening: true}},
 			},
-			{AccountId: "acc-new", TaxWrapper: "taxable"},
+			{
+				AccountId: "acc-new", TaxWrapper: "taxable",
+				BondPayout: connectorv1.BondPayout_BOND_PAYOUT_PAID_OUT, BondPayoutSince: "2026-01-01",
+				Lots: []*connectorv1.OpenLot{{Instrument: coi, Quantity: "1", Opened: "2024-10-10", Cost: pln("100")}},
+			},
 		},
 		BondTerms: []*connectorv1.BondTerms{
 			{Instrument: coi, FirstPeriodRate: "0.0655", Margin: "0.015", EarlyRedemptionFee: pln("2.00")},
@@ -303,20 +309,45 @@ func TestSyncBooksCoupons(t *testing.T) {
 		t.Error("the sync with coupons delivered no index readings")
 	}
 
-	// An opening batch seeds; it books no coupons.
-	opening, err := client.Sync(t.Context(), asCore(heldRequest(connectorv1.Mode_MODE_OPENING)))
-	if err != nil {
-		t.Fatalf("opening Sync: %v", err)
-	}
-	if n := len(opening.Msg.GetDelivery().GetTransactions()); n != 0 {
-		t.Errorf("an opening sync delivered %d transactions, want none", n)
-	}
-
 	// Holdings that don't parse refuse the sync.
 	bad := heldRequest(connectorv1.Mode_MODE_TRANSACTIONS)
 	bad.Accounts[0].Lots[0].Opened = "10.10.2024"
 	if _, err := client.Sync(t.Context(), asCore(bad)); connect.CodeOf(err) != connect.CodeInvalidArgument {
 		t.Errorf("Sync with a malformed lot = %v, want InvalidArgument", err)
+	}
+}
+
+// TestSyncBooksAccountsNeverSeeded checks the opening batch of an
+// instance whose accounts hold lots on their real purchase dates.
+func TestSyncBooksAccountsNeverSeeded(t *testing.T) {
+	t.Parallel()
+	client := served(t, fakeCPI{}, fakeRates{})
+	// An opening batch books the accounts never seeded, whose lots are on
+	// their real purchase dates (D-98), from purchase on; the coupon that
+	// fell due after the payout setting took effect is paid out (D-135).
+	opening, err := client.Sync(t.Context(), asCore(heldRequest(connectorv1.Mode_MODE_OPENING)))
+	if err != nil {
+		t.Fatalf("opening Sync: %v", err)
+	}
+	type line struct{ ID, Kind, Cash string }
+	txs := opening.Msg.GetDelivery().GetTransactions()
+	gotOpening := make([]line, 0, len(txs))
+	for _, tx := range txs {
+		l := line{ID: tx.GetKey().GetExternalId(), Kind: tx.GetKind().String()}
+		for _, p := range tx.GetPostings() {
+			if p.GetBook().GetKind() == connectorv1.BookKind_BOOK_KIND_CASH {
+				l.Cash = p.GetAmount().GetAmount()
+			}
+		}
+		gotOpening = append(gotOpening, l)
+	}
+	wantOpening := []line{
+		{ID: "lot:COI1028:2024-10-10:coupon:2025-10-10", Kind: "TRANSACTION_KIND_INTEREST", Cash: "5.31"},
+		{ID: "lot:COI1028:2024-10-10:coupon:2026-10-10", Kind: "TRANSACTION_KIND_INTEREST", Cash: "3.56"},
+		{ID: "lot:COI1028:2024-10-10:coupon:2026-10-10:payout", Kind: "TRANSACTION_KIND_WITHDRAWAL", Cash: "-3.56"},
+	}
+	if diff := cmp.Diff(wantOpening, gotOpening); diff != "" {
+		t.Errorf("opening sync (-want +got):\n%s", diff)
 	}
 }
 

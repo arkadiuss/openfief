@@ -301,12 +301,14 @@ func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.
 // those the owner deletes, to instance as transactions batch id, and
 // imports what it maps (D-9, D-49: manual bond-lot entries go through the
 // core to the right connector). It sends the account with the lots (D-118),
-// so one instance serves every bond account, and the account's go-live
-// date, as Seeding answers, or today for an account not seeded yet, which
-// then goes live with its first lots (D-98, D-119). The opening lots
-// delivered are added to the account one at a time
-// (LedgerImporter.AddOpeningLots). Every transaction and balance assertion
-// delivered must be in account, or nothing is imported.
+// so one instance serves every bond account. Each lot is booked on its
+// real purchase date, as a deposit of its cost and a buy, so the account's
+// history starts at its first purchase (D-98); only an account seeded with
+// opening lots before that rule gets its go-live date, as Seeding answers,
+// so those lots keep their keys. Any opening lots delivered are added to
+// the account one at a time (LedgerImporter.AddOpeningLots). Every
+// transaction and balance assertion delivered must be in account, or
+// nothing is imported.
 func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, account ledger.AccountID, entries *ingest.BondLotEntries) (ingest.Batch, error) {
 	e := *entries
 	e.Account = account
@@ -314,10 +316,7 @@ func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ing
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("import bond lots into %s batch %s: %w", instance, id, err)
 	}
-	var ok bool
-	if e.GoLive, ok = goLive[account]; !ok {
-		e.GoLive = c.Today()
-	}
+	e.GoLive = goLive[account]
 	d, err := c.Caller.ImportBondLots(ctx, instance, id, &e)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("import bond lots into %s batch %s: %w", instance, id, err)

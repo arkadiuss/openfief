@@ -524,6 +524,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f2bb258d16a
+  - type: constrains
+    from: REQ-ui-bond-payout-setting
+    to: FACT-SUBJECT-2D2E7787EF69C462
+    created_at: 2026-11-01T07:45:48.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9343ffae8c2e
+  - type: requires_property
+    from: REQ-ui-bond-payout-setting
+    to: FACT-PROP-527D65C16830E6EE
+    created_at: 2026-11-01T07:45:48.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f7be0d89e7b
+  - type: specified_by
+    from: REQ-ui-bond-payout-setting
+    to: SCEN-ui-bond-payout-setting
+    created_at: 2026-11-01T07:45:48.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-178a18cdd260
+  - type: executable_for
+    from: SYM-ledger-test-payout-setting-changed
+    to: TEST-ledger-payout
+    created_at: 2026-11-01T07:51:56.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dcf562c93e5
   - type: executable_for
     from: SYM-ui-test-helper-fake-attention-resolve-attention-item
     to: TEST-ui-attention

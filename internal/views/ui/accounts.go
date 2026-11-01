@@ -191,13 +191,13 @@ func (s *server) createAccount(w http.ResponseWriter, r *http.Request, sess sess
 	s.accountEntryDone(w, r, sess, "CreateAccount", err)
 }
 
-// updateAccount hands an account's new name, sleeve, tax wrapper or sale
-// fee rule to the core (UpdateAccount).
+// updateAccount hands an account's new name, sleeve, tax wrapper, sale
+// fee rule or payout setting (D-135) to the core (UpdateAccount).
 func (s *server) updateAccount(w http.ResponseWriter, r *http.Request, sess session) {
 	_, err := s.accounts.UpdateAccount(r.Context(), connect.NewRequest(&ingestv1.UpdateAccountRequest{
 		Origin: sess.Origin, SessionToken: sess.Token, AccountId: r.PathValue("id"),
 		Name: strings.TrimSpace(r.PostFormValue("name")), Sleeve: r.PostFormValue("sleeve"),
-		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r),
+		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r), BondPayout: postedPayout(r),
 	}))
 	s.accountEntryDone(w, r, sess, "UpdateAccount", err)
 }
@@ -309,9 +309,23 @@ func postedFeeRule(r *http.Request) *ingestv1.FeeRule {
 	return rule
 }
 
+// postedPayout reads an account form's payout setting (D-135): "cash" or
+// "paid-out"; anything else, such as a form without the field, keeps the
+// account's.
+func postedPayout(r *http.Request) ingestv1.BondPayout {
+	switch r.PostFormValue("bond_payout") {
+	case "cash":
+		return ingestv1.BondPayout_BOND_PAYOUT_CASH
+	case "paid-out":
+		return ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT
+	}
+	return ingestv1.BondPayout_BOND_PAYOUT_UNSPECIFIED
+}
+
 // termsForm is what an account form's tax wrapper and fee rule fields
 // show: their ID prefix, the wrappers to pick from, and the account's own
-// terms, or none for a new account.
+// terms, or none for a new account, with a hand-entered bond account's
+// payout setting.
 type termsForm struct {
 	Prefix     string
 	Wrappers   []string
@@ -320,6 +334,10 @@ type termsForm struct {
 	Minimum    string
 	Currency   string
 	Conversion string
+	// Bond says the account is a hand-entered bond account, which has a
+	// payout setting (D-135); PaidOut says its payouts are paid out.
+	Bond    bool
+	PaidOut bool
 }
 
 // termsFields returns the tax wrapper and fee rule fields with IDs under
@@ -329,6 +347,7 @@ func termsFields(prefix string, wrappers []string, acc *viewsv1.Account) termsFo
 	f := termsForm{
 		Prefix: prefix, Wrappers: wrappers, Wrapper: acc.GetTaxWrapper(),
 		Rate: toPercent(rule.GetRate()), Conversion: toPercent(rule.GetConversionRate()),
+		Bond: acc.GetInstitution() == bondInstitution, PaidOut: acc.GetBondPayout() == viewsv1.BondPayout_BOND_PAYOUT_PAID_OUT,
 	}
 	if !isZero(rule.GetMinimum().GetAmount()) {
 		f.Minimum, f.Currency = rule.GetMinimum().GetAmount(), rule.GetMinimum().GetCurrency()

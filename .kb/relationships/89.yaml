@@ -517,6 +517,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d53279a3c78
+  - type: implements
+    from: SYM-treasurybonds-due-maturity
+    to: REQ-treasurybonds-maturity-redemption
+    created_at: 2026-11-01T07:49:02.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f03df9c6de82
+  - type: covered_by
+    from: SYM-treasurybonds-due-maturity
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:49:02.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b0d0e88a89c
   - type: constrains
     from: REQ-valuation-market-data-one-source
     to: FACT-SUBJECT-C9C67D3EB8F4BC3F

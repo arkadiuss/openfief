@@ -601,6 +601,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b42efc1ad84
+  - type: executable_for
+    from: SYM-ledger-test-payout-setting-paid-out
+    to: TEST-ledger-payout
+    created_at: 2026-11-01T07:51:49.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85ffba864a73
   - type: implements
     from: SYM-ingest-xtb-mapper-map
     to: REQ-ingest-xtb-start-open-positions

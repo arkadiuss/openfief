@@ -686,20 +686,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-776263d35138
   - type: implements
-    from: SYM-viewsv1-list-attention-items-response-proto-message
-    to: REQ-views-attention-items
-    created_at: 2026-10-31T19:06:05.039Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-58de91d92293
-  - type: covered_by
-    from: SYM-viewsv1-list-attention-items-response-proto-message
-    to: TEST-views-connectapi-attention
-    created_at: 2026-10-31T19:06:05.097Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cf9c1f9924e8
-  - type: implements
     from: SYM-pl-add-day
     to: REQ-pl-oki-tax-computation
     created_at: 2026-10-31T19:02:19.082Z
@@ -713,6 +699,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5484ee56b62d
+  - type: executable_for
+    from: SYM-treasurybonds-test-helper-booked
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:50:30.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb08524f8bb8
   - type: constrains
     from: REQ-ui-time-chart-marks-tracking-start
     to: FACT-SUBJECT-9106B40681FB54C7
@@ -727,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aeb88dc41fa5
+  - type: implements
+    from: SYM-viewsv1-list-attention-items-response-proto-message
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:06:05.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58de91d92293
+  - type: covered_by
+    from: SYM-viewsv1-list-attention-items-response-proto-message
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:06:05.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf9c1f9924e8

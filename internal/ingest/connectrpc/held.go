@@ -8,7 +8,8 @@ import (
 )
 
 // heldTo writes what each bound account holds (D-117): its go-live date,
-// empty while not seeded, tax wrapper, holdings and open lots.
+// empty while not seeded, tax wrapper, payout setting (D-135), holdings and
+// open lots.
 func heldTo(accounts []ingest.HeldAccount) []*connectorv1.AccountHoldings {
 	if len(accounts) == 0 {
 		return nil
@@ -19,6 +20,10 @@ func heldTo(accounts []ingest.HeldAccount) []*connectorv1.AccountHoldings {
 		pb := &connectorv1.AccountHoldings{AccountId: string(a.Account), TaxWrapper: a.Wrapper}
 		if !a.GoLive.IsZero() {
 			pb.GoLive = a.GoLive.String()
+		}
+		pb.BondPayout = payoutTo(a.Payout.Payout)
+		if !a.Payout.Since.IsZero() {
+			pb.BondPayoutSince = a.Payout.Since.String()
 		}
 		for j := range a.Holdings {
 			h := &a.Holdings[j]
@@ -36,6 +41,17 @@ func heldTo(accounts []ingest.HeldAccount) []*connectorv1.AccountHoldings {
 		out = append(out, pb)
 	}
 	return out
+}
+
+// payoutTo writes a payout setting.
+func payoutTo(p ledger.Payout) connectorv1.BondPayout {
+	switch p {
+	case ledger.PayoutCash:
+		return connectorv1.BondPayout_BOND_PAYOUT_CASH
+	case ledger.PayoutPaidOut:
+		return connectorv1.BondPayout_BOND_PAYOUT_PAID_OUT
+	}
+	return connectorv1.BondPayout_BOND_PAYOUT_UNSPECIFIED
 }
 
 // bondTermsTo writes treasury bond series terms: rates as fractions, the

@@ -524,48 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70f81a25f43b
-  - type: implements
-    from: SYM-attention-app-items-sweep
-    to: REQ-attention-sweep
-    created_at: 2026-10-31T18:39:15.390Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6f2571da94e8
-  - type: covered_by
-    from: SYM-attention-app-items-sweep
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:39:15.426Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-66bc60dc0962
-  - type: implements
-    from: SYM-attention-app-items-clear
-    to: REQ-attention-sweep
-    created_at: 2026-10-31T18:39:25.657Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-92d231ec0c51
-  - type: covered_by
-    from: SYM-attention-app-items-clear
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:39:25.687Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c81a45b516aa
-  - type: executable_for
-    from: SYM-attention-app-test-helper-found
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:40:06.355Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1fc360f37deb
-  - type: executable_for
-    from: SYM-attention-app-test-owner-actions
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:40:24.884Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-778fe21a8c80
   - type: constrains
     from: REQ-pl-oki-tax-computation
     to: FACT-SUBJECT-A0C1D8F44C929AB5
@@ -615,3 +573,101 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-886cfc114e06
+  - type: constrains
+    from: REQ-views-ghostfolio-redemption-sell
+    to: FACT-SUBJECT-85358A991DE9337D
+    created_at: 2026-11-01T07:45:58.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c04e4ffcd0e
+  - type: requires_property
+    from: REQ-views-ghostfolio-redemption-sell
+    to: FACT-PROP-8B9FBEA45AD84A2B
+    created_at: 2026-11-01T07:45:58.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-744afcd7b99d
+  - type: specified_by
+    from: REQ-views-ghostfolio-redemption-sell
+    to: SCEN-views-ghostfolio-redemption-sell
+    created_at: 2026-11-01T07:45:58.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6365193379d
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-account-service-bond-payout
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T07:47:56.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc04b23e3a6a
+  - type: implements
+    from: SYM-ledger-new-redemption
+    to: REQ-ledger-redemption-kind
+    created_at: 2026-11-01T07:50:54.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fea5cecef24b
+  - type: covered_by
+    from: SYM-ledger-new-redemption
+    to: TEST-ledger-events
+    created_at: 2026-11-01T07:50:54.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09e3ccfc5651
+  - type: implements
+    from: SYM-viewsv1-bond-payout-enum
+    to: REQ-ui-bond-payout-setting
+    created_at: 2026-11-01T07:55:13.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68c92aa14bbd
+  - type: covered_by
+    from: SYM-viewsv1-bond-payout-enum
+    to: TEST-ui-values
+    created_at: 2026-11-01T07:55:13.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b0dfdc944a1
+  - type: implements
+    from: SYM-attention-app-items-sweep
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:39:15.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f2571da94e8
+  - type: covered_by
+    from: SYM-attention-app-items-sweep
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:15.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66bc60dc0962
+  - type: implements
+    from: SYM-attention-app-items-clear
+    to: REQ-attention-sweep
+    created_at: 2026-10-31T18:39:25.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92d231ec0c51
+  - type: covered_by
+    from: SYM-attention-app-items-clear
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:39:25.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c81a45b516aa
+  - type: executable_for
+    from: SYM-attention-app-test-helper-found
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:06.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fc360f37deb
+  - type: executable_for
+    from: SYM-attention-app-test-owner-actions
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:40:24.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-778fe21a8c80

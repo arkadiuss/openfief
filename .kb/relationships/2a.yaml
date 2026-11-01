@@ -601,6 +601,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b14119244ef
+  - type: verified_by
+    from: SCEN-ingest-sync-carries-payout
+    to: TEST-ingest-app-held
+    created_at: 2026-11-01T07:44:21.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce59fa0cdf7e
+  - type: verified_by
+    from: SCEN-ingest-sync-carries-payout
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T07:44:21.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0441a1b19777
+  - type: verified_by
+    from: SCEN-ingest-sync-carries-payout
+    to: TEST-ingest-delivery-held
+    created_at: 2026-11-01T07:44:21.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc5bd5bb3592
+  - type: implements
+    from: SYM-connectorv1-bond-payout-type
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:53:18.202Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-129612c43784
+  - type: covered_by
+    from: SYM-connectorv1-bond-payout-type
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T07:53:18.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e454d5215be
   - type: executable_for
     from: SYM-core-test-helper-xtb-go-live
     to: TEST-core-xtb-start

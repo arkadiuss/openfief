@@ -552,20 +552,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f09387e90aa
-  - type: implements
-    from: SYM-viewsv1-attention-item-get-state
-    to: REQ-views-attention-items
-    created_at: 2026-10-31T19:04:35.823Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cb43247866d6
-  - type: covered_by
-    from: SYM-viewsv1-attention-item-get-state
-    to: TEST-views-connectapi-attention
-    created_at: 2026-10-31T19:04:35.879Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-85cf8025155b
   - type: executable_for
     from: SYM-pl-test-oki-yearly-tax
     to: TEST-pl-oki
@@ -622,3 +608,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77221cffac7a
+  - type: implements
+    from: SYM-connectorv1-bond-payout-number
+    to: REQ-ingest-sync-carries-payout
+    created_at: 2026-11-01T07:53:25.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d6ad1d2db55
+  - type: covered_by
+    from: SYM-connectorv1-bond-payout-number
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T07:53:25.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3374c41731c3
+  - type: validates
+    from: TEST-treasurybonds-maturities
+    to: REQ-treasurybonds-books-maturities
+    created_at: 2026-11-01T08:41:49.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46f34d746b93
+  - type: validates
+    from: TEST-treasurybonds-maturities
+    to: REQ-treasurybonds-payout-booked-then-withdrawn
+    created_at: 2026-11-01T08:41:49.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e55f846ce05c
+  - type: implements
+    from: SYM-viewsv1-attention-item-get-state
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:04:35.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb43247866d6
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-get-state
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:04:35.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85cf8025155b

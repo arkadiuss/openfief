@@ -510,6 +510,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b524bf0f7f6e
+  - type: implements
+    from: SYM-views-ghostfolio-projector-balances
+    to: REQ-views-ghostfolio-cash-balances-per-currency
+    created_at: 2026-10-31T19:02:10.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac3e5f8ad2ec
+  - type: implements
+    from: SYM-views-ghostfolio-projector-balances
+    to: REQ-views-ghostfolio-cash-balance
+    created_at: 2026-10-31T19:02:47.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-472207586ced
+  - type: implements
+    from: SYM-treasurybonds-maturity-cpi-years
+    to: REQ-treasurybonds-maturity-redemption
+    created_at: 2026-11-01T07:49:20.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9398f857923
+  - type: covered_by
+    from: SYM-treasurybonds-maturity-cpi-years
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:49:20.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6327b3cc8645
+  - type: implements
+    from: SYM-treasurybonds-maturity-cpi-years
+    to: REQ-treasurybonds-books-maturities
+    created_at: 2026-11-01T08:43:23.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4442f71e3de0
   - type: executable_for
     from: SYM-attention-app-test-helper-mem-store-mark-published
     to: TEST-attention-app-items
@@ -566,17 +601,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4821ae08ee2
-  - type: implements
-    from: SYM-views-ghostfolio-projector-balances
-    to: REQ-views-ghostfolio-cash-balances-per-currency
-    created_at: 2026-10-31T19:02:10.513Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ac3e5f8ad2ec
-  - type: implements
-    from: SYM-views-ghostfolio-projector-balances
-    to: REQ-views-ghostfolio-cash-balance
-    created_at: 2026-10-31T19:02:47.852Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-472207586ced

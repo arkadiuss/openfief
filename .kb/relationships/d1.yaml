@@ -518,20 +518,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-29a6c493ed1e
   - type: implements
-    from: SYM-attention-pg-store-append-exported
-    to: REQ-attention-outbox-same-transaction
-    created_at: 2026-10-31T19:20:52.470Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0d20398c871a
-  - type: covered_by
-    from: SYM-attention-pg-store-append-exported
-    to: TEST-attention-pg-store
-    created_at: 2026-10-31T19:20:52.726Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-56a5edfddfbf
-  - type: implements
     from: SYM-ingest-app-connectors-book-tickers
     to: REQ-ingest-xtb-unconfirmed-ticker-waits
     created_at: 2026-10-31T18:05:10.368Z
@@ -559,3 +545,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a8b2a5ca4e68
+  - type: validates
+    from: TEST-treasurybonds-coupons
+    to: REQ-treasurybonds-account-history-from-first-purchase
+    created_at: 2026-11-01T08:41:50.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a8606c718a7
+  - type: implements
+    from: SYM-attention-pg-store-append-exported
+    to: REQ-attention-outbox-same-transaction
+    created_at: 2026-10-31T19:20:52.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d20398c871a
+  - type: covered_by
+    from: SYM-attention-pg-store-append-exported
+    to: TEST-attention-pg-store
+    created_at: 2026-10-31T19:20:52.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56a5edfddfbf

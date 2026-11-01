@@ -825,13 +825,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d12138b3f16f
-  - type: validates
-    from: TEST-views-connectapi-attention
-    to: REQ-ledger-transfer-broken-stops-counting
-    created_at: 2026-10-31T18:30:48.415Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-02bd8c271036
   - type: implements
     from: SYM-views-app-views-taxed-account
     to: REQ-views-totals-losses-offset
@@ -853,3 +846,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ae991802ee5
+  - type: verified_by
+    from: SCEN-views-ghostfolio-redemption-sell
+    to: TEST-views-ghostfolio-project
+    created_at: 2026-11-01T07:44:32.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f1f1184dd8d
+  - type: validates
+    from: TEST-views-connectapi-attention
+    to: REQ-ledger-transfer-broken-stops-counting
+    created_at: 2026-10-31T18:30:48.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02bd8c271036

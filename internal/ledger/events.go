@@ -100,6 +100,25 @@ func NewInterest(h TransactionHeader, in Instrument, gross, withholding kernel.M
 	return h.build(KindInterest, postings...)
 }
 
+// NewRedemption books qty units of in redeemed by their issuer for value,
+// such as a treasury bond at maturity (D-135), of which withholding was
+// withheld at source, such as Belka tax on its interest and purchase
+// discount: the holding gives up the units at value, withholding tax
+// takes the withheld part and cash receives the rest. Which lots the
+// units come from is derived later, FIFO. A zero Money withholding means
+// none was withheld.
+func NewRedemption(h TransactionHeader, in Instrument, qty kernel.Quantity, value, withholding kernel.Money) (Transaction, error) {
+	if err := needPositive(h, "quantity", qty.Decimal()); err != nil {
+		return Transaction{}, err
+	}
+	postings, err := incomePostings(h, "redemption value", in, value, withholding)
+	if err != nil {
+		return Transaction{}, err
+	}
+	postings[0].Quantity = qty.Neg()
+	return h.build(KindRedemption, postings...)
+}
+
 // incomePostings returns the postings of income gross on in, named what, of
 // which withholding was withheld at source.
 func incomePostings(h TransactionHeader, what string, in Instrument, gross, withholding kernel.Money) ([]Posting, error) {

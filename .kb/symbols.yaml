@@ -66755,11 +66755,11 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-bondlots
       - type: implements
-        target: REQ-ingest-bond-account-live-on-first-lot
-      - type: implements
         target: REQ-ingest-bond-lot-handed-with-account
       - type: implements
         target: REQ-ingest-bond-lot-handoff
+      - type: implements
+        target: REQ-treasurybonds-account-history-from-first-purchase
   - id: SYM-ingest-app-connectors-store-terms
     title: Connectors.storeTerms
     sourceFile: internal/ingest/app/connectors.go
@@ -67523,7 +67523,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper
     title: Mapper
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -67539,7 +67539,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper-map
     title: Mapper.Map
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -67554,7 +67554,11 @@ symbols:
       - type: implements
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-booked-on-purchase-date
+      - type: implements
+        target: REQ-treasurybonds-lot-on-purchase-date
+      - type: implements
+        target: REQ-treasurybonds-lots-any-order
       - type: implements
         target: REQ-treasurybonds-one-instance-all-accounts
   - id: SYM-treasurybonds-add-terms
@@ -67571,7 +67575,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-same-terms
     title: sameTerms
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -67586,7 +67590,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper-lot-transactions
     title: Mapper.lotTransactions
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -67597,13 +67601,17 @@ symbols:
       recorded_at: 2026-10-29T01:22:37.994Z
     relationships:
       - type: covered_by
+        target: TEST-core-bond-lots
+      - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
         target: REQ-AUTO-FD50BCD71546E83F
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-booked-on-purchase-date
       - type: implements
-        target: REQ-treasurybonds-lot-on-go-live-day-opening
+        target: REQ-treasurybonds-lot-on-purchase-date
+      - type: implements
+        target: REQ-treasurybonds-valued-every-day-since-first-purchase
   - id: SYM-treasurybonds-test-helper-must-date
     title: mustDate
     sourceFile: internal/ingest/treasurybonds/mapper_test.go
@@ -85672,11 +85680,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-bond-account-live-on-first-lot
+        target: REQ-ingest-sync-mode-from-ledger
       - type: implements
         target: REQ-ingest-keeps-from-go-live-uploads
-      - type: implements
-        target: REQ-ingest-sync-mode-from-ledger
   - id: SYM-ingest-app-connectors-keep-from-go-live
     title: Connectors.keepFromGoLive
     sourceFile: internal/ingest/app/connectors.go
@@ -102681,8 +102687,6 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-seed
       - type: implements
-        target: REQ-ledger-manual-opening-lots-one-at-a-time
-      - type: implements
         target: REQ-ledger-opening-lots-one-at-a-time
   - id: SYM-ledger-app-guard-opening-lots
     title: guardOpeningLots
@@ -102805,8 +102809,6 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-seed
-      - type: implements
-        target: REQ-ledger-manual-opening-lots-one-at-a-time
       - type: implements
         target: REQ-ledger-opening-lots-one-at-a-time
   - id: SYM-ledger-test-check-opening-lots
@@ -103145,7 +103147,7 @@ symbols:
       - type: covered_by
         target: TEST-core-bond-lots
       - type: implements
-        target: REQ-ingest-bond-lot-go-live
+        target: REQ-ingest-bond-lot-no-go-live
   - id: SYM-demo-seed-importer-add-opening-lots
     title: importer.AddOpeningLots
     sourceFile: cmd/demo-seed/load.go
@@ -103158,7 +103160,7 @@ symbols:
       - type: covered_by
         target: TEST-demo-seed-load
       - type: implements
-        target: REQ-ingest-bond-lot-go-live
+        target: REQ-demo-real-pipelines
   - id: SYM-ingest-app-bond-lots-delete
     title: BondLots.Delete
     sourceFile: internal/ingest/app/bondlots.go
@@ -103507,9 +103509,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-idempotent-series-date
       - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper-unique
     title: Mapper.unique
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -103522,9 +103524,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-idempotent-series-date
       - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-lot-id
     title: lotID
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -103537,9 +103539,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-idempotent-series-date
       - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper-header
     title: Mapper.header
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -103552,9 +103554,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-idempotent-series-date
       - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-mapper-deletions
     title: Mapper.deletions
     sourceFile: internal/ingest/treasurybonds/mapper.go
@@ -103567,11 +103569,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-mapper
       - type: implements
-        target: REQ-treasurybonds-lot-mapping
+        target: REQ-treasurybonds-lot-booked-on-purchase-date
       - type: implements
-        target: REQ-treasurybonds-lot-on-go-live-day-opening
-      - type: implements
-        target: REQ-treasurybonds-pre-go-live-opening-lot
+        target: REQ-treasurybonds-lot-on-purchase-date
   - id: SYM-treasurybonds-test-helper-key
     title: key
     sourceFile: internal/ingest/treasurybonds/mapper_test.go
@@ -119969,3 +119969,949 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-postgres-store
+  - id: SYM-ingest-app-accounts-payout
+    title: Accounts.payout
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:47:20.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-ingest-app-test-helper-held-ledger-account
+    title: heldLedger.Account
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:47:28.955Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-connectapi-pb-payout
+    title: pbPayout
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:47:37.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingest-connectapi-payout-from
+    title: payoutFrom
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:47:46.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingest-connectapi-test-account-service-bond-payout
+    title: TestAccountServiceBondPayout
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:47:53.691Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectrpc-payout-to
+    title: payoutTo
+    sourceFile: internal/ingest/connectrpc/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:47:59.852Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-ingest-delivery-payout-from
+    title: payoutFrom
+    sourceFile: internal/ingest/delivery/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:48:07.199Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-ingest-check-payout
+    title: CheckPayout
+    sourceFile: internal/ingest/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:48:13.691Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-treasurybonds-payout
+    title: payout
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:48:20.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-payout-withdrawal
+  - id: SYM-treasurybonds-book-payouts
+    title: bookPayouts
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:48:27.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-payout-booked-then-withdrawn
+      - type: implements
+        target: REQ-treasurybonds-payout-withdrawal
+  - id: SYM-treasurybonds-accounts-booked-in
+    title: AccountsBookedIn
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:48:35.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-account-history-from-first-purchase
+      - type: implements
+        target: REQ-treasurybonds-payouts-from-purchase
+  - id: SYM-treasurybonds-test-accounts-booked-in
+    title: TestAccountsBookedIn
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:48:42.599Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-opening
+    title: opening
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:48:50.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-treasurybonds-lot-booked-on-purchase-date
+      - type: implements
+        target: REQ-treasurybonds-lot-on-purchase-date
+  - id: SYM-treasurybonds-due-maturity
+    title: DueMaturity
+    sourceFile: internal/ingest/treasurybonds/maturities.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:48:59.718Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-maturity-redemption
+  - id: SYM-treasurybonds-due-maturities
+    title: DueMaturities
+    sourceFile: internal/ingest/treasurybonds/maturities.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:49:09.099Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-books-maturities
+      - type: implements
+        target: REQ-treasurybonds-maturity-redemption
+  - id: SYM-treasurybonds-maturity-cpi-years
+    title: MaturityCPIYears
+    sourceFile: internal/ingest/treasurybonds/maturities.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:49:17.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-books-maturities
+      - type: implements
+        target: REQ-treasurybonds-maturity-redemption
+  - id: SYM-treasurybonds-book-maturities
+    title: BookMaturities
+    sourceFile: internal/ingest/treasurybonds/maturities.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:49:26.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-books-maturities
+      - type: implements
+        target: REQ-treasurybonds-maturity-redemption
+  - id: SYM-treasurybonds-maturity-ref
+    title: maturityRef
+    sourceFile: internal/ingest/treasurybonds/maturities.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:49:33.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-maturity-redemption
+  - id: SYM-treasurybonds-book-maturity
+    title: bookMaturity
+    sourceFile: internal/ingest/treasurybonds/maturities.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:49:41.424Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-books-maturities
+      - type: implements
+        target: REQ-treasurybonds-maturity-redemption
+  - id: SYM-treasurybonds-payout-withdrawal
+    title: PayoutWithdrawal
+    sourceFile: internal/ingest/treasurybonds/maturities.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:49:48.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-maturities
+      - type: implements
+        target: REQ-treasurybonds-payout-booked-then-withdrawn
+      - type: implements
+        target: REQ-treasurybonds-payout-withdrawal
+  - id: SYM-treasurybonds-test-helper-maturities
+    title: maturities
+    sourceFile: internal/ingest/treasurybonds/maturities_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:49:55.515Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-maturities
+  - id: SYM-treasurybonds-test-due-maturities
+    title: TestDueMaturities
+    sourceFile: internal/ingest/treasurybonds/maturities_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:50:02.597Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-maturities
+  - id: SYM-treasurybonds-test-book-maturities
+    title: TestBookMaturities
+    sourceFile: internal/ingest/treasurybonds/maturities_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:50:09.460Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-maturities
+  - id: SYM-treasurybonds-test-helper-check-digit
+    title: checkDigit
+    sourceFile: internal/ingest/treasurybonds/maturities_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:50:15.615Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-maturities
+  - id: SYM-treasurybonds-test-book-maturities-waits
+    title: TestBookMaturitiesWaits
+    sourceFile: internal/ingest/treasurybonds/maturities_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:50:21.763Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-maturities
+  - id: SYM-treasurybonds-test-helper-booked
+    title: booked
+    sourceFile: internal/ingest/treasurybonds/maturities_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:50:27.749Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-maturities
+  - id: SYM-treasurybonds-test-payout-withdrawal
+    title: TestPayoutWithdrawal
+    sourceFile: internal/ingest/treasurybonds/maturities_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:50:34.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-maturities
+  - id: SYM-ledger-account-payout-setting
+    title: Account.PayoutSetting
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:50:42.533Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-payout-setting
+  - id: SYM-ledger-new-redemption
+    title: NewRedemption
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:50:51.309Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-ledger-redemption-kind
+  - id: SYM-ledger-payout
+    title: Payout
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:50:58.750Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-ledger-payout-string
+    title: Payout.String
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:51:08.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting
+  - id: SYM-ledger-parse-payout
+    title: ParsePayout
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:51:15.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting
+  - id: SYM-ledger-payout-setting
+    title: PayoutSetting
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:51:21.086Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-ledger-payout-setting-paid-out
+    title: PayoutSetting.PaidOut
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:51:27.898Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-ledger-payout-setting-changed
+    title: PayoutSetting.Changed
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:51:34.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-ledger-payout-setting-validate
+    title: PayoutSetting.Validate
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:51:41.501Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting
+  - id: SYM-ledger-test-payout-setting-paid-out
+    title: TestPayoutSettingPaidOut
+    sourceFile: internal/ledger/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:51:47.349Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-payout
+  - id: SYM-ledger-test-payout-setting-changed
+    title: TestPayoutSettingChanged
+    sourceFile: internal/ledger/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:51:53.657Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-payout
+  - id: SYM-ledger-test-payout-keys
+    title: TestPayoutKeys
+    sourceFile: internal/ledger/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:51:59.744Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-payout
+  - id: SYM-ledger-pg-test-redemption-round-trip
+    title: TestRedemptionRoundTrip
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:52:06.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-views-connectapi-pb-payout
+    title: pbPayout
+    sourceFile: internal/views/connectapi/convert.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:52:13.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-payout-setting
+  - id: SYM-ui-posted-payout
+    title: postedPayout
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:52:20.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+      - type: implements
+        target: REQ-ui-bond-payout-setting
+  - id: SYM-ui-test-bond-payout-form
+    title: TestBondPayoutForm
+    sourceFile: internal/views/ui/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:52:27.869Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-values
+  - id: SYM-treasury-bonds-test-sync-books-accounts-never-seeded
+    title: TestSyncBooksAccountsNeverSeeded
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:52:34.872Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-helper-line
+    title: line
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:52:41.698Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-connectorv1-bond-payout
+    title: BondPayout
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:52:47.577Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-connectorv1-bond-payout-enum
+    title: BondPayout.Enum
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:52:54.439Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-connectorv1-bond-payout-string
+    title: BondPayout.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:53:01.517Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-connectorv1-bond-payout-descriptor
+    title: BondPayout.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:53:08.662Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-connectorv1-bond-payout-type
+    title: BondPayout.Type
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:53:15.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-connectorv1-bond-payout-number
+    title: BondPayout.Number
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:53:23.041Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-connectorv1-bond-payout-enum-descriptor
+    title: BondPayout.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:53:30.452Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-connectorv1-account-holdings-get-bond-payout
+    title: AccountHoldings.GetBondPayout
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:53:37.905Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-connectorv1-account-holdings-get-bond-payout-since
+    title: AccountHoldings.GetBondPayoutSince
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:53:45.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout
+  - id: SYM-ingestv1-bond-payout
+    title: BondPayout
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:53:51.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-bond-payout-enum
+    title: BondPayout.Enum
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:53:57.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-bond-payout-string
+    title: BondPayout.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:54:04.827Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-bond-payout-descriptor
+    title: BondPayout.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:54:11.724Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-bond-payout-type
+    title: BondPayout.Type
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:54:18.663Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-bond-payout-number
+    title: BondPayout.Number
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:54:25.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-bond-payout-enum-descriptor
+    title: BondPayout.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:54:32.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-account-get-bond-payout
+    title: Account.GetBondPayout
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:54:39.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-account-get-bond-payout-since
+    title: Account.GetBondPayoutSince
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:54:45.725Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-create-account-request-get-bond-payout
+    title: CreateAccountRequest.GetBondPayout
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:54:52.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-ingestv1-update-account-request-get-bond-payout
+    title: UpdateAccountRequest.GetBondPayout
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:54:58.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-setting
+  - id: SYM-viewsv1-bond-payout
+    title: BondPayout
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:55:04.185Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-bond-payout-setting
+  - id: SYM-viewsv1-bond-payout-enum
+    title: BondPayout.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:55:10.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-bond-payout-setting
+  - id: SYM-viewsv1-bond-payout-string
+    title: BondPayout.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:55:17.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-bond-payout-setting
+  - id: SYM-viewsv1-bond-payout-descriptor
+    title: BondPayout.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:55:24.664Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-bond-payout-setting
+  - id: SYM-viewsv1-bond-payout-type
+    title: BondPayout.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:55:32.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-bond-payout-setting
+  - id: SYM-viewsv1-bond-payout-number
+    title: BondPayout.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:55:39.048Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-bond-payout-setting
+  - id: SYM-viewsv1-bond-payout-enum-descriptor
+    title: BondPayout.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:55:46.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-bond-payout-setting
+  - id: SYM-viewsv1-account-get-bond-payout
+    title: Account.GetBondPayout
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:55:53.446Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-bond-payout-setting
+  - id: SYM-viewsv1-account-get-bond-payout-since
+    title: Account.GetBondPayoutSince
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:56:00.473Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-bond-payout-setting

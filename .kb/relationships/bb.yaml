@@ -517,6 +517,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-274623831806
+  - type: executable_for
+    from: SYM-pl-test-helper-flow
+    to: TEST-pl-oki
+    created_at: 2026-10-31T19:03:13.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab509b8027f5
+  - type: implements
+    from: SYM-treasurybonds-accounts-booked-in
+    to: REQ-treasurybonds-payouts-from-purchase
+    created_at: 2026-11-01T07:48:37.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1cade48febf
+  - type: covered_by
+    from: SYM-treasurybonds-accounts-booked-in
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-11-01T07:48:37.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e78a41fd7223
+  - type: implements
+    from: SYM-valuation-postgres-querier
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-11-01T07:43:18.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1ff26dc7652
+  - type: implements
+    from: SYM-treasurybonds-accounts-booked-in
+    to: REQ-treasurybonds-account-history-from-first-purchase
+    created_at: 2026-11-01T08:44:55.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d45ca45e07e3
   - type: constrains
     from: REQ-attention-checks
     to: FACT-SUBJECT-B8835D65C4A064E6
@@ -553,23 +588,9 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-2236196113ee
   - type: executable_for
-    from: SYM-pl-test-helper-flow
-    to: TEST-pl-oki
-    created_at: 2026-10-31T19:03:13.217Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ab509b8027f5
-  - type: executable_for
     from: SYM-core-test-valuation-attention
     to: TEST-core-unclassified
     created_at: 2026-11-01T06:41:27.924Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7f6f68c0b341
-  - type: implements
-    from: SYM-valuation-postgres-querier
-    to: REQ-valuation-market-data-source-ranking
-    created_at: 2026-11-01T07:43:18.746Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a1ff26dc7652

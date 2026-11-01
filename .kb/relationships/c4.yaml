@@ -650,6 +650,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0721612b216a
+  - type: implements
+    from: SYM-treasurybonds-opening
+    to: REQ-treasurybonds-lot-on-purchase-date
+    created_at: 2026-11-01T07:48:53.616Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dafee4a373e5
+  - type: covered_by
+    from: SYM-treasurybonds-opening
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-11-01T07:48:53.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac49e8a57215
+  - type: implements
+    from: SYM-treasurybonds-opening
+    to: REQ-treasurybonds-lot-booked-on-purchase-date
+    created_at: 2026-11-01T08:43:48.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a1c0243c9b0
   - type: executable_for
     from: SYM-core-test-helper-check-xtb-started
     to: TEST-core-xtb-start

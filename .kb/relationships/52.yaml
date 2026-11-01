@@ -365,13 +365,6 @@ relationships:
     id: rel-8e05a4ea66be
   - type: implements
     from: SYM-treasurybonds-mapper-map
-    to: REQ-treasurybonds-lot-mapping
-    created_at: 2026-10-29T01:22:23.428Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9bc6f3fbc006
-  - type: implements
-    from: SYM-treasurybonds-mapper-map
     to: REQ-AUTO-FD50BCD71546E83F
     created_at: 2026-10-29T01:22:23.460Z
     created_by: kibi/upsert
@@ -671,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e29da865f3b
+  - type: implements
+    from: SYM-treasurybonds-mapper-map
+    to: REQ-treasurybonds-lot-on-purchase-date
+    created_at: 2026-11-01T07:59:12.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28c479b6a638
+  - type: implements
+    from: SYM-treasurybonds-mapper-map
+    to: REQ-treasurybonds-lot-booked-on-purchase-date
+    created_at: 2026-11-01T08:43:29.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f665b8a2dad4
+  - type: implements
+    from: SYM-treasurybonds-mapper-map
+    to: REQ-treasurybonds-lots-any-order
+    created_at: 2026-11-01T08:43:29.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe14c2684df4
