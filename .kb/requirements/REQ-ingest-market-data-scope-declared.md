@@ -34,7 +34,11 @@ The core must ask every market-data connector instance, one whose manifest decla
 
 ## Context
 
-D-93 has each sync of a market-data connector carry what the owner holds and the model's targets; D-123 makes a connector one only when its manifest declares it and its grant approves that, so the core no longer treats an instance bound to no account as one. Replaces REQ-ingest-market-data-scope. Modeled by Claude Code for the read-access work package (impl/read-access); the author has not reviewed it yet.
+D-93 has each sync of a market-data connector carry what the owner holds and the model's targets; D-123 makes a connector one only when its manifest declares it and its grant approves that. Modeled by Claude Code for the read-access work package (impl/read-access); the author has not reviewed it yet.
+
+## Why this changed
+
+REQ-ingest-market-data-scope treated every instance bound to no account as a market-data connector, because no decision said how the core could tell one. D-123 now says it: the manifest declares it and the grant approves it, so the scope follows that declaration instead of the instance's bindings.
 
 ## Source
 
