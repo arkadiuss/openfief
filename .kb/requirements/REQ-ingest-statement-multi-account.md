@@ -1,6 +1,6 @@
 ---
 title: A statement that covers several accounts must book every mapped account bound to that connector instance and report the broker accounts that aren't mapped.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

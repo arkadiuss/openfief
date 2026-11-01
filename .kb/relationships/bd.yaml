@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-54574ec23020
+  - type: constrains
+    from: REQ-ledger-owner-cash-stored-as-assertion
+    to: FACT-SUBJECT-A6E408782DCB5399
+    created_at: 2026-11-01T12:31:25.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-923ec556486c
+  - type: requires_property
+    from: REQ-ledger-owner-cash-stored-as-assertion
+    to: FACT-PROP-47A37112747FBB4D
+    created_at: 2026-11-01T12:31:26.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cbe11a54044

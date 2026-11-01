@@ -575,8 +575,8 @@ relationships:
     id: rel-4162b4d84e9e
   - type: implements
     from: SYM-ingest-pg-store-remap-broker-account
-    to: REQ-ingest-broker-account-remap
-    created_at: 2026-10-31T18:16:07.029Z
+    to: REQ-ingest-broker-account-remap-per-instance
+    created_at: 2026-11-01T12:34:36.950Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-0e4f1918ee13
+    id: rel-4d7f92f1e06f

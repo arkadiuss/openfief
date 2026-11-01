@@ -658,13 +658,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-279a26f3f90f
   - type: implements
-    from: SYM-ingest-app-accounts-remap
-    to: REQ-ingest-broker-account-remap
-    created_at: 2026-10-31T18:15:46.777Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fc1dfea73927
-  - type: implements
     from: SYM-operator-cmd-main
     to: REQ-operator-namespace-scoped-except-service-read
     created_at: 2026-10-31T18:18:09.643Z
@@ -685,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95527274dc82
+  - type: implements
+    from: SYM-ingest-app-accounts-remap
+    to: REQ-ingest-broker-account-remap-per-instance
+    created_at: 2026-11-01T12:33:02.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8163604c9acd

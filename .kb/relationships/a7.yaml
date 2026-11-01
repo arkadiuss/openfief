@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0acbe82fda0d
+  - type: constrains
+    from: REQ-ingest-undeclared-cross-check-prices-attention-item
+    to: FACT-SUBJECT-4022BDCF8FBBCB20
+    created_at: 2026-11-01T12:24:38.125Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4dac894f8c5
+  - type: requires_property
+    from: REQ-ingest-undeclared-cross-check-prices-attention-item
+    to: FACT-PROP-C85FA4BD3755483C
+    created_at: 2026-11-01T12:24:38.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a67ac769213

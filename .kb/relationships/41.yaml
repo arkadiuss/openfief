@@ -629,3 +629,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c403c8f9e06
+  - type: constrains
+    from: REQ-ledger-owner-cash-difference-default-deposit
+    to: FACT-SUBJECT-A6E408782DCB5399
+    created_at: 2026-11-01T12:31:51.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d8ed3fb028c
+  - type: requires_property
+    from: REQ-ledger-owner-cash-difference-default-deposit
+    to: FACT-PROP-0EE1B1BE9C0B4960
+    created_at: 2026-11-01T12:31:51.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62df83ae6905

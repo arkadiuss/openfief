@@ -818,3 +818,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02b4e846f444
+  - type: constrains
+    from: REQ-pl-oki-average-value-exact
+    to: FACT-SUBJECT-D256A25BDCDCE899
+    created_at: 2026-11-01T12:26:04.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b767fd2d05f4
+  - type: requires_property
+    from: REQ-pl-oki-average-value-exact
+    to: FACT-PROP-BCEF12C21790C690
+    created_at: 2026-11-01T12:26:04.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49a9cec20659
+  - type: constrains
+    from: REQ-ledger-cash-income-kind
+    to: FACT-SUBJECT-7522D6C27E74C2F2
+    created_at: 2026-11-01T12:29:07.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d015ac17a3e
+  - type: requires_property
+    from: REQ-ledger-cash-income-kind
+    to: FACT-PROP-5D7B15065A7D4B54
+    created_at: 2026-11-01T12:29:07.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f04b0554c19
+  - type: constrains
+    from: REQ-ingest-remap-check-ignores-assertions
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-11-01T12:30:33.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e81814dbbe9
+  - type: requires_property
+    from: REQ-ingest-remap-check-ignores-assertions
+    to: FACT-PROP-13700D16764C000F
+    created_at: 2026-11-01T12:30:33.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-973b4b5145d3

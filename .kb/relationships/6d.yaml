@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8aedf50d8d9
+  - type: constrains
+    from: REQ-views-read-api-list-broker-accounts-removed
+    to: FACT-SUBJECT-5D5273B6E7DF2D96
+    created_at: 2026-11-01T12:30:51.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41f345dd4f27
+  - type: requires_property
+    from: REQ-views-read-api-list-broker-accounts-removed
+    to: FACT-PROP-11D73A5EAF96A65D
+    created_at: 2026-11-01T12:30:51.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a689a4f48f8

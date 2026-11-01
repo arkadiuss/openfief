@@ -573,3 +573,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb9ac6a246ff
+  - type: constrains
+    from: REQ-pl-oki-form-decides-cash-class
+    to: FACT-SUBJECT-D256A25BDCDCE899
+    created_at: 2026-11-01T12:27:19.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c60c95693905
+  - type: requires_property
+    from: REQ-pl-oki-form-decides-cash-class
+    to: FACT-PROP-C81BD0872811E78F
+    created_at: 2026-11-01T12:27:19.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58b00ad98628
+  - type: constrains
+    from: REQ-ledger-cash-income-tax-withheld
+    to: FACT-SUBJECT-C8A82F9ACFF225C1
+    created_at: 2026-11-01T12:29:20.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceaf11c02839
+  - type: requires_property
+    from: REQ-ledger-cash-income-tax-withheld
+    to: FACT-PROP-724C906DCEA25476
+    created_at: 2026-11-01T12:29:20.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63dd5f84e3c9

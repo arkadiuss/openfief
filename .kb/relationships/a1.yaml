@@ -559,3 +559,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02ba8c54920f
+  - type: constrains
+    from: REQ-ingest-remap-check-never-unsafe
+    to: FACT-SUBJECT-4C19ADBE1BA1D461
+    created_at: 2026-11-01T12:30:41.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14f4caa7f01b
+  - type: requires_property
+    from: REQ-ingest-remap-check-never-unsafe
+    to: FACT-PROP-011A8391D8E52C37
+    created_at: 2026-11-01T12:30:41.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-762f83579a86

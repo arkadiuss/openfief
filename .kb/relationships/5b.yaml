@@ -475,13 +475,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9bca16745d7
-  - type: implements
-    from: SYM-ingest-mapped-accounts
-    to: REQ-ingest-statement-multi-account
-    created_at: 2026-10-30T04:28:47.472Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8a146267d865
   - type: covered_by
     from: SYM-ingest-mapped-accounts
     to: TEST-ingest-app-brokers
@@ -545,3 +538,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3aa057cf500
+  - type: constrains
+    from: REQ-ingest-multi-account-transactions-books-every-mapped
+    to: FACT-SUBJECT-B4872D883DCCB3F1
+    created_at: 2026-11-01T12:24:07.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8bd48067b8c
+  - type: requires_property
+    from: REQ-ingest-multi-account-transactions-books-every-mapped
+    to: FACT-PROP-E81DFC5CF4939D72
+    created_at: 2026-11-01T12:24:07.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e1861b7e391
+  - type: supersedes
+    from: REQ-ingest-multi-account-transactions-books-every-mapped
+    to: REQ-ingest-statement-multi-account
+    created_at: 2026-11-01T12:24:07.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-291d71d081ff
+  - type: constrains
+    from: REQ-valuation-acknowledgement-covers-one-check
+    to: FACT-SUBJECT-ECF86A4CFE17F2A3
+    created_at: 2026-11-01T12:24:55.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ab4b3827db4
+  - type: requires_property
+    from: REQ-valuation-acknowledgement-covers-one-check
+    to: FACT-PROP-E93F9328362EB540
+    created_at: 2026-11-01T12:24:55.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c21abc7dfb1
+  - type: constrains
+    from: REQ-pl-oki-base-and-tax-whole-zloty
+    to: FACT-SUBJECT-D256A25BDCDCE899
+    created_at: 2026-11-01T12:25:57.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89b7e83d7d43
+  - type: requires_property
+    from: REQ-pl-oki-base-and-tax-whole-zloty
+    to: FACT-PROP-D7FD4CA51435BBA5
+    created_at: 2026-11-01T12:25:57.251Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffd19c084fad
+  - type: implements
+    from: SYM-ingest-mapped-accounts
+    to: REQ-ingest-multi-account-transactions-books-every-mapped
+    created_at: 2026-11-01T12:35:41.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85d62a711657

@@ -797,3 +797,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5582f6cf5591
+  - type: constrains
+    from: REQ-attention-unclassified-instrument-resolves-itself
+    to: FACT-SUBJECT-A9563048F0AE7021
+    created_at: 2026-11-01T12:27:44.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf129c23acdc
+  - type: requires_property
+    from: REQ-attention-unclassified-instrument-resolves-itself
+    to: FACT-PROP-99A4D0EB1E968DE7
+    created_at: 2026-11-01T12:27:44.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b64a60b1bd86

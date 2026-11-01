@@ -524,3 +524,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc1fab97d8c9
+  - type: constrains
+    from: REQ-attention-unclassified-instrument-is-check
+    to: FACT-SUBJECT-A9563048F0AE7021
+    created_at: 2026-11-01T12:27:33.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4455dba3dc04
+  - type: requires_property
+    from: REQ-attention-unclassified-instrument-is-check
+    to: FACT-PROP-239D489D29F2BEC5
+    created_at: 2026-11-01T12:27:33.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0928d03090f

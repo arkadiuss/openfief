@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a741993848a3
+  - type: constrains
+    from: REQ-valuation-price-check-threshold-clear-restores-default
+    to: FACT-SUBJECT-ECF86A4CFE17F2A3
+    created_at: 2026-11-01T12:25:13.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0accb557840d
+  - type: requires_property
+    from: REQ-valuation-price-check-threshold-clear-restores-default
+    to: FACT-PROP-DD30C0C0B16348C7
+    created_at: 2026-11-01T12:25:13.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a03826c200b

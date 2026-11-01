@@ -454,3 +454,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7368a02b844e
+  - type: constrains
+    from: REQ-ingest-sync-carries-tax-wrapper
+    to: FACT-SUBJECT-8EC6E0F87B5129F6
+    created_at: 2026-11-01T12:25:21.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79a4d287ef42
+  - type: requires_property
+    from: REQ-ingest-sync-carries-tax-wrapper
+    to: FACT-PROP-D5F3F0E6481364F9
+    created_at: 2026-11-01T12:25:21.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e1e56cb3f83

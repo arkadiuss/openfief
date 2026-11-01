@@ -489,3 +489,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-10ae4b84dc6f
+  - type: constrains
+    from: REQ-ingest-undeclared-cross-check-prices-rest-imported
+    to: FACT-SUBJECT-4022BDCF8FBBCB20
+    created_at: 2026-11-01T12:24:46.852Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbe239bbefcc
+  - type: requires_property
+    from: REQ-ingest-undeclared-cross-check-prices-rest-imported
+    to: FACT-PROP-BC6CE5477A0250D6
+    created_at: 2026-11-01T12:24:46.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cd33d0f5cbc
+  - type: constrains
+    from: REQ-ui-offline-overview-wiped-on-session-end
+    to: FACT-SUBJECT-6AC55871A4F16CF6
+    created_at: 2026-11-01T12:28:52.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-359420f65507
+  - type: requires_property
+    from: REQ-ui-offline-overview-wiped-on-session-end
+    to: FACT-PROP-C0F7039201741609
+    created_at: 2026-11-01T12:28:52.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0631753730d2
