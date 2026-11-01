@@ -90510,7 +90510,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-brokers
       - type: implements
-        target: REQ-ingest-statement-multi-account
+        target: REQ-ingest-multi-account-transactions-books-every-mapped
   - id: SYM-ingest-connectapi-statements-list-statement-accounts
     title: statements.ListStatementAccounts
     sourceFile: internal/ingest/connectapi/statements.go
@@ -105509,7 +105509,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-account-changes
       - type: implements
-        target: REQ-ingest-broker-account-remap
+        target: REQ-ingest-broker-account-remap-per-instance
       - type: implements
         target: REQ-ingest-remap-unused-broker-account
   - id: SYM-ingest-app-accounts-check-remappable
@@ -105524,7 +105524,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-account-changes
       - type: implements
-        target: REQ-ingest-broker-account-remap
+        target: REQ-ingest-broker-account-remap-per-instance
       - type: implements
         target: REQ-ingest-remap-unused-broker-account
   - id: SYM-ingest-app-test-helper-fake-removals
@@ -105670,7 +105670,7 @@ symbols:
       - type: covered_by
         target: TEST-core-removals
       - type: implements
-        target: REQ-ingest-broker-account-remap
+        target: REQ-ingest-broker-account-remap-per-instance
       - type: implements
         target: REQ-ingest-remap-unused-broker-account
   - id: SYM-ingest-pg-store-forget-account
@@ -105698,7 +105698,7 @@ symbols:
       - type: covered_by
         target: TEST-core-removals
       - type: implements
-        target: REQ-ingest-broker-account-remap
+        target: REQ-ingest-broker-account-remap-per-instance
       - type: implements
         target: REQ-ingest-remap-unused-broker-account
   - id: SYM-ledger-app-deletion-store
@@ -106089,7 +106089,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ingest-broker-account-remap
+        target: REQ-ingest-broker-account-remap-per-instance
       - type: implements
         target: REQ-ui-delete-and-remap
   - id: SYM-ui-test-delete-and-remap-forms

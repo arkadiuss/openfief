@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-435b4b621c00
+  - type: constrains
+    from: REQ-ingest-sync-carries-bond-series-terms
+    to: FACT-SUBJECT-8EC6E0F87B5129F6
+    created_at: 2026-11-01T12:25:30.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0af7c912a48
+  - type: requires_property
+    from: REQ-ingest-sync-carries-bond-series-terms
+    to: FACT-PROP-AD23B087D833D66F
+    created_at: 2026-11-01T12:25:31.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8b8fba91e19

@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d22793d8ac99
+  - type: constrains
+    from: REQ-pl-oki-account-held-from-first-transaction
+    to: FACT-SUBJECT-D256A25BDCDCE899
+    created_at: 2026-11-01T12:26:49.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28acd7338071
+  - type: requires_property
+    from: REQ-pl-oki-account-held-from-first-transaction
+    to: FACT-PROP-C81DDED2DAB0F734
+    created_at: 2026-11-01T12:26:50.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c380cae6599
