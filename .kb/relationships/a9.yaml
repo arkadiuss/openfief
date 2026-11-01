@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b90375c08b08
+  - type: executable_for
+    from: SYM-ingest-xtb-test-map-opening-skips-history
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:20.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fe3023f41eb

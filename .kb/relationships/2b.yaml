@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1574eac50a31
+  - type: executable_for
+    from: SYM-core-test-helper-current-xtb-export
+    to: TEST-core-xtb-start
+    created_at: 2026-11-01T07:59:40.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7415694f5fed
+  - type: implements
+    from: SYM-ingest-app-account-history
+    to: REQ-ingest-start-from-whole-history
+    created_at: 2026-11-01T08:02:14.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-513927dd6e0e
+  - type: covered_by
+    from: SYM-ingest-app-account-history
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T08:02:14.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-824d3272904a

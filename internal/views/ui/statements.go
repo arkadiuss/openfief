@@ -7,6 +7,7 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
+	"strings"
 
 	"connectrpc.com/connect"
 
@@ -25,6 +26,8 @@ const (
 	uploadChunk = 64 << 10
 	// maxModeBytes caps the mode field.
 	maxModeBytes = 32
+	// maxCashBytes caps each opening cash field: an amount or a currency.
+	maxCashBytes = 64
 )
 
 // Errors of a malformed upload form.
@@ -38,11 +41,17 @@ var (
 
 // uploadForm is the "Upload statement" form of an account whose bound
 // connector takes statement files (D-109): Mode is the mode the core
-// chooses for its next upload, which the owner may override.
+// chooses for its next upload, which the owner may override. While it is
+// opening, the account hasn't started, and the form asks how it starts:
+// from the holdings of a current statement with the cash balance the owner
+// enters once, or from a statement of its whole history (D-136).
 type uploadForm struct {
 	Instance string
 	Mode     string
 }
+
+// Start reports whether the form asks how the account starts.
+func (f *uploadForm) Start() bool { return f.Mode == modeName(ingestv1.Mode_MODE_OPENING) }
 
 // uploadForm returns the account's upload form, and false when its bound
 // connector takes no statement files, as the core's StatementService says.
@@ -101,13 +110,16 @@ func (s *server) uploadStatement(w http.ResponseWriter, r *http.Request, sess se
 		s.errorPage(w, r, http.StatusBadRequest, "The upload form is malformed.")
 		return
 	}
-	mode, file, err := uploadParts(mr)
+	form, file, err := uploadParts(mr)
 	if err != nil {
 		s.errorPage(w, r, http.StatusBadRequest, "The upload form is malformed: send the mode, then one statement file.")
 		return
 	}
 	header := &ingestv1.StatementHeader{
-		Origin: sess.Origin, SessionToken: sess.Token, AccountId: r.PathValue("id"), FileName: file.FileName(), Mode: mode,
+		Origin: sess.Origin, SessionToken: sess.Token, AccountId: r.PathValue("id"), FileName: file.FileName(), Mode: form.mode,
+	}
+	if form.cash != "" {
+		header.OpeningCash, header.OpeningCashCurrency = form.cash, strings.ToUpper(form.currency)
 	}
 	resp, err := s.sendStatement(r.Context(), header, file)
 	if err != nil {
@@ -117,26 +129,61 @@ func (s *server) uploadStatement(w http.ResponseWriter, r *http.Request, sess se
 	s.renderAccount(w, r, sess, http.StatusOK, accountForm{Upload: resp})
 }
 
-// uploadParts reads the form's first part, the mode, and returns it with the
-// second part, the file, ready to read.
-func uploadParts(mr *multipart.Reader) (ingestv1.Mode, *multipart.Part, error) {
+// uploadFields are the upload form's fields before the file: the mode and,
+// on an account that hasn't started, the opening cash the owner entered
+// and its currency, empty for none (D-136).
+type uploadFields struct {
+	mode           ingestv1.Mode
+	cash, currency string
+}
+
+// uploadParts reads the form's first part, the mode, and the opening cash
+// fields that may follow it, and returns them with the next part, the
+// file, ready to read.
+func uploadParts(mr *multipart.Reader) (uploadFields, *multipart.Part, error) {
+	var f uploadFields
 	part, err := mr.NextPart()
 	if err != nil || part.FormName() != "mode" {
-		return 0, nil, errUploadForm
+		return f, nil, errUploadForm
 	}
 	value, err := io.ReadAll(io.LimitReader(part, maxModeBytes))
 	if err != nil {
-		return 0, nil, errUploadForm
+		return f, nil, errUploadForm
 	}
 	mode, ok := uploadMode(string(value))
 	if !ok {
-		return 0, nil, errUploadForm
+		return f, nil, errUploadForm
 	}
-	file, err := mr.NextPart()
-	if err != nil || file.FormName() != "statement" || file.FileName() == "" {
-		return 0, nil, errUploadForm
+	f.mode = mode
+	file, err := cashParts(mr, &f)
+	if err != nil {
+		return f, nil, err
 	}
-	return mode, file, nil
+	return f, file, nil
+}
+
+// cashParts reads into f the opening cash fields that follow the mode, in
+// any order, and returns the part after them, which must be the file.
+func cashParts(mr *multipart.Reader, f *uploadFields) (*multipart.Part, error) {
+	for {
+		part, err := mr.NextPart()
+		if err != nil {
+			return nil, errUploadForm
+		}
+		fields := map[string]*string{"opening_cash": &f.cash, "opening_cash_currency": &f.currency}
+		field, ok := fields[part.FormName()]
+		if !ok {
+			if part.FormName() != "statement" || part.FileName() == "" {
+				return nil, errUploadForm
+			}
+			return part, nil
+		}
+		v, err := io.ReadAll(io.LimitReader(part, maxCashBytes))
+		if err != nil {
+			return nil, errUploadForm
+		}
+		*field = strings.TrimSpace(string(v))
+	}
 }
 
 // sendStatement streams header and then file to the core, and returns the

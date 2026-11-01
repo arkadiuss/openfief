@@ -35,12 +35,22 @@ func tickerMapping(t *testing.T) ingest.Mapping {
 		Charge: kernel.NewMoney(kernel.NewDecimal(19, -1), pln), Ref: "Cash Operations#8",
 		Header: ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "acc-1", ExternalID: "9000000004"}, Account: "acc-1", Date: day},
 	}
+	opened, err := kernel.ParseDate("2025-11-04")
+	if err != nil {
+		t.Fatal(err)
+	}
+	lot := ingest.TickerEntry{
+		Symbol: "TESTA.PL", Kind: ledger.KindOpeningLot, Quantity: kernel.NewQuantity(kernel.NewDecimal(7, 0)),
+		Amount: kernel.NewMoney(kernel.NewDecimal(86415, -2), pln), Opened: opened, Description: "opening lot TESTA.PL",
+		Ref:    "Open Positions#10",
+		Header: ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "xtb", ExternalID: "open-position:9000000201"}, Date: day},
+	}
 	return ingest.Mapping{
 		BrokerAccounts: []ingest.BrokerAccountID{"0000000"},
 		Tickers:        []ingest.Ticker{{Symbol: "TESTA.PL", Code: "TESTA", Country: "PL", Name: "Test Alpha SA"}},
 		TickerEntries:  []ingest.TickerEntry{dividend},
 		ByBrokerAccount: []ingest.BrokerEntries{{
-			Account: "0000000", TickerEntries: []ingest.TickerEntry{buy},
+			Account: "0000000", TickerEntries: []ingest.TickerEntry{buy, lot},
 		}},
 	}
 }
@@ -75,6 +85,10 @@ func TestTickersRefused(t *testing.T) {
 		{name: "invalid ticker", change: func(d *connectorv1.Delivery) { d.Tickers[0].Country = "pl" }},
 		{name: "buy for nothing", change: func(d *connectorv1.Delivery) { d.TickerTransactions[0].Amount.Amount = "-1" }},
 		{name: "both accounts", change: func(d *connectorv1.Delivery) { d.TickerTransactions[0].AccountId = "acc-1" }},
+		{name: "a lot open date on a buy", change: func(d *connectorv1.Delivery) { d.TickerTransactions[0].LotOpened = "2025-11-04" }},
+		{name: "a malformed lot open date", change: func(d *connectorv1.Delivery) {
+			d.TickerTransactions[0].Kind, d.TickerTransactions[0].LotOpened = connectorv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT, "4.11.2025"
+		}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

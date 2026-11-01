@@ -643,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-670437a4b2fd
+  - type: implements
+    from: SYM-ingest-xtb-cell-time
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:06:41.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5627732b0ccf
+  - type: covered_by
+    from: SYM-ingest-xtb-cell-time
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:41.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8143333c53f3

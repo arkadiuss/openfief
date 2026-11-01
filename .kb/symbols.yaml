@@ -85657,7 +85657,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-sync-keeps-from-go-live
+        target: REQ-ingest-keeps-from-go-live-uploads
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
   - id: SYM-ingest-app-connectors-go-live-dates
@@ -85674,7 +85674,7 @@ symbols:
       - type: implements
         target: REQ-ingest-bond-account-live-on-first-lot
       - type: implements
-        target: REQ-ingest-sync-keeps-from-go-live
+        target: REQ-ingest-keeps-from-go-live-uploads
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
   - id: SYM-ingest-app-connectors-keep-from-go-live
@@ -85689,7 +85689,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-connectors
       - type: implements
-        target: REQ-ingest-sync-keeps-from-go-live
+        target: REQ-ingest-keeps-from-go-live-uploads
   - id: SYM-ingest-app-test-helper-fixed-seeding
     title: fixedSeeding
     sourceFile: internal/ingest/app/connectors_test.go
@@ -86116,7 +86116,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-golive
       - type: implements
-        target: REQ-ingest-sync-keeps-from-go-live
+        target: REQ-ingest-keeps-from-go-live-uploads
   - id: SYM-ingest-test-helper-go-live-date
     title: goLiveDate
     sourceFile: internal/ingest/golive_test.go
@@ -91357,15 +91357,18 @@ symbols:
     title: uploadForm
     sourceFile: internal/views/ui/statements.go
     status: active
-    symbol_role: behavioral
+    symbol_role: type-shape
     origin:
       kind: agent
       recorded_at: 2026-10-30T06:20:57.528Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-ui-statements
       - type: implements
         target: REQ-ui-statement-upload-file-connectors-only
+      - type: implements
+        target: REQ-ui-statement-upload-start
   - id: SYM-ui-uc-server-upload-form
     title: server.uploadForm
     sourceFile: internal/views/ui/statements.go
@@ -108848,10 +108851,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-xtb-mapper
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-opening-refused
+        target: REQ-ingest-xtb-start-open-positions
   - id: SYM-ingest-xtb-read-export
     title: readExport
     sourceFile: internal/ingest/xtb/mapper.go
@@ -120774,3 +120779,900 @@ symbols:
         target: TEST-core-market-data
       - type: implements
         target: REQ-valuation-market-data-series-service
+  - id: SYM-core-test-helper-upload-with-header
+    title: uploadWithHeader
+    sourceFile: cmd/core/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:59:20.875Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-statements
+  - id: SYM-core-test-helper-xtb-go-live
+    title: xtbGoLive
+    sourceFile: cmd/core/xtbstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:59:29.426Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-start
+  - id: SYM-core-test-helper-current-xtb-export
+    title: currentXTBExport
+    sourceFile: cmd/core/xtbstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:59:37.398Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-start
+  - id: SYM-core-test-helper-xtb-core
+    title: xtbCore
+    sourceFile: cmd/core/xtbstart_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:59:43.947Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-start
+  - id: SYM-core-test-helper-start-xtb-core
+    title: startXTBCore
+    sourceFile: cmd/core/xtbstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:59:52.057Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-start
+  - id: SYM-core-test-helper-xtb-core-header
+    title: xtbCore.header
+    sourceFile: cmd/core/xtbstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T07:59:59.608Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-start
+  - id: SYM-core-test-xtb-start-from-open-positions
+    title: TestXTBStartFromOpenPositions
+    sourceFile: cmd/core/xtbstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:00:06.341Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-start
+  - id: SYM-core-test-helper-check-xtb-opening
+    title: checkXTBOpening
+    sourceFile: cmd/core/xtbstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:00:13.534Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-start
+  - id: SYM-core-test-helper-check-xtb-opening-again
+    title: checkXTBOpeningAgain
+    sourceFile: cmd/core/xtbstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:00:21.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-start
+  - id: SYM-core-test-helper-check-xtb-started
+    title: checkXTBStarted
+    sourceFile: cmd/core/xtbstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:00:30.295Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-start
+  - id: SYM-ingest-app-test-connectors-upload-keeps-from-go-live
+    title: TestConnectorsUploadKeepsFromGoLive
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:00:39.026Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-helper-fake-history
+    title: fakeHistory
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:00:44.968Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-helper-fake-history-has-transactions-from
+    title: fakeHistory.HasTransactionsFrom
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:00:51.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-helper-synthetic-cash
+    title: syntheticCash
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:00:58.694Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-uploads-start
+    title: TestUploadsStart
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:01:06.708Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-helper-start-uploads
+    title: startUploads
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:01:14.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-helper-start-file
+    title: startFile
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:01:22.266Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-uploads-start-history-unreadable
+    title: TestUploadsStartHistoryUnreadable
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:01:29.101Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-helper-fake-ticker-store
+    title: fakeTickerStore
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:01:34.825Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-helper-fake-ticker-store-confirm-ticker
+    title: fakeTickerStore.ConfirmTicker
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:01:41.816Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-helper-fake-ticker-store-booked-ticker-entries
+    title: fakeTickerStore.BookedTickerEntries
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:01:49.229Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-test-tickers-confirm-opening-lots
+    title: TestTickersConfirmOpeningLots
+    sourceFile: internal/ingest/app/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:01:56.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-start
+  - id: SYM-ingest-app-tickers-book
+    title: Tickers.book
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:02:03.738Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-start
+      - type: implements
+        target: REQ-ingest-ticker-opening-lots
+  - id: SYM-ingest-app-account-history
+    title: AccountHistory
+    sourceFile: internal/ingest/app/uploads.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:02:11.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-start
+      - type: implements
+        target: REQ-ingest-start-from-whole-history
+  - id: SYM-ingest-app-uploads-next-mode
+    title: Uploads.nextMode
+    sourceFile: internal/ingest/app/uploads.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:02:19.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-start
+      - type: implements
+        target: REQ-ingest-start-from-whole-history
+      - type: implements
+        target: REQ-ingest-xtb-start-from-full-history
+  - id: SYM-ingest-app-uploads-booked
+    title: Uploads.booked
+    sourceFile: internal/ingest/app/uploads.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:02:27.036Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-start
+      - type: implements
+        target: REQ-ingest-start-from-whole-history
+  - id: SYM-ingest-connectapi-opening-cash-from
+    title: openingCashFrom
+    sourceFile: internal/ingest/connectapi/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:02:34.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-opening-cash-entered-once
+  - id: SYM-ingest-connectapi-test-helper-file-caller-has-transactions-from
+    title: fileCaller.HasTransactionsFrom
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:02:42.069Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-upload-statement-opening-cash
+    title: TestUploadStatementOpeningCash
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:02:49.633Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectrpc-test-client-import-file-opening-cash
+    title: TestClientImportFileOpeningCash
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:02:57.246Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-connectrpc-optional-from
+    title: optionalFrom
+    sourceFile: internal/ingest/connectrpc/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:03:04.519Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-opening-lots
+  - id: SYM-ingest-delivery-opening-cash
+    title: OpeningCash
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:03:12.001Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-ingest-opening-cash-entered-once
+  - id: SYM-ingest-before-go-live
+    title: beforeGoLive
+    sourceFile: internal/ingest/golive.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:03:18.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-golive
+      - type: implements
+        target: REQ-ingest-keeps-from-go-live-uploads
+  - id: SYM-ingest-test-keep-from-go-live-ticker-entries
+    title: TestKeepFromGoLiveTickerEntries
+    sourceFile: internal/ingest/golive_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:03:24.784Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-golive
+  - id: SYM-ingest-start-mode
+    title: StartMode
+    sourceFile: internal/ingest/start.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:03:32.075Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-start
+      - type: implements
+        target: REQ-ingest-start-from-whole-history
+      - type: implements
+        target: REQ-ingest-xtb-start-from-full-history
+  - id: SYM-ingest-check-opening-cash
+    title: CheckOpeningCash
+    sourceFile: internal/ingest/start.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:03:39.549Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-start
+      - type: implements
+        target: REQ-ingest-opening-cash-entered-once
+      - type: implements
+        target: REQ-ingest-xtb-open-positions-owner-cash
+  - id: SYM-ingest-test-start-mode
+    title: TestStartMode
+    sourceFile: internal/ingest/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:03:46.412Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-start
+  - id: SYM-ingest-test-check-opening-cash
+    title: TestCheckOpeningCash
+    sourceFile: internal/ingest/start_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:03:53.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-start
+  - id: SYM-ingest-ticker-entry-misfit
+    title: TickerEntry.misfit
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:04:00.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-opening-lots
+  - id: SYM-ingest-ticker-entry-build
+    title: TickerEntry.build
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:04:08.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker
+      - type: implements
+        target: REQ-ingest-ticker-opening-lots
+  - id: SYM-ingest-test-helper-entry-case
+    title: entryCase
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:04:15.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-test-resolve-broker-accounts-reseeding-ticker-entries
+    title: TestResolveBrokerAccountsReseedingTickerEntries
+    sourceFile: internal/ingest/ticker_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:04:22.751Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker
+  - id: SYM-ingest-xtb-mapping-add-entry
+    title: mapping.addEntry
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:04:30.145Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-opening-columns
+    title: openingColumns
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:04:37.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-opening-date
+    title: openingDate
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:04:45.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-from-open-positions
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-mapping-opening
+    title: mapping.opening
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:04:52.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-from-open-positions
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-mapping-opening-cash
+    title: mapping.openingCash
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:04:59.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-opening-cash-entered-once
+      - type: implements
+        target: REQ-ingest-xtb-open-positions-owner-cash
+  - id: SYM-ingest-xtb-mapping-opening-lot
+    title: mapping.openingLot
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:05:06.611Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-from-open-positions
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-bought-volume
+    title: boughtVolume
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:05:13.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-mapping-price
+    title: mapping.price
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:05:20.419Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-mapping-quoted-in-account-currency
+    title: mapping.quotedInAccountCurrency
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:05:28.002Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-mapping-position-key
+    title: mapping.positionKey
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:05:35.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-is-digits
+    title: isDigits
+    sourceFile: internal/ingest/xtb/opening.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:05:41.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-test-helper-money
+    title: money
+    sourceFile: internal/ingest/xtb/opening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:05:48.200Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-opening
+  - id: SYM-ingest-xtb-test-helper-current
+    title: current
+    sourceFile: internal/ingest/xtb/opening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:05:54.558Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-opening
+  - id: SYM-ingest-xtb-test-helper-map-opening
+    title: mapOpening
+    sourceFile: internal/ingest/xtb/opening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:06:00.317Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-opening
+  - id: SYM-ingest-xtb-test-map-opening-golden
+    title: TestMapOpeningGolden
+    sourceFile: internal/ingest/xtb/opening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:06:05.965Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-opening
+  - id: SYM-ingest-xtb-test-map-opening-again
+    title: TestMapOpeningAgain
+    sourceFile: internal/ingest/xtb/opening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:06:11.806Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-opening
+  - id: SYM-ingest-xtb-test-map-opening-skips-history
+    title: TestMapOpeningSkipsHistory
+    sourceFile: internal/ingest/xtb/opening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:06:17.858Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-opening
+  - id: SYM-ingest-xtb-test-map-opening-position-keys
+    title: TestMapOpeningPositionKeys
+    sourceFile: internal/ingest/xtb/opening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:06:24.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-opening
+  - id: SYM-ingest-xtb-record-instant
+    title: record.instant
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:06:31.299Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-cell-time
+    title: cellTime
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:06:38.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-utc-date
+    title: utcDate
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:06:46.447Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-report-date
+    title: reportDate
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:06:54.068Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtb-labelled
+    title: labelled
+    sourceFile: internal/ingest/xtb/sheets.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:07:01.008Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ingest-xtbtest-report
+    title: report
+    sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:07:08.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-opening
+      - type: implements
+        target: REQ-ingest-xtb-start-open-positions
+  - id: SYM-ui-upload-form-start
+    title: uploadForm.Start
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:07:16.088Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ui-statement-upload-start
+  - id: SYM-ui-upload-fields
+    title: uploadFields
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:07:23.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ui-statement-upload-start
+  - id: SYM-ui-cash-parts
+    title: cashParts
+    sourceFile: internal/views/ui/statements.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:07:30.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-statements
+      - type: implements
+        target: REQ-ingest-xtb-open-positions-owner-cash
+      - type: implements
+        target: REQ-ui-statement-upload-start
+  - id: SYM-ui-test-upload-statement-opening-cash
+    title: TestUploadStatementOpeningCash
+    sourceFile: internal/views/ui/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:07:37.906Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-statements
+  - id: SYM-plugins-ibkr-flex-test-helper-import-file-with
+    title: importFileWith
+    sourceFile: plugins/ibkr-flex/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:07:44.893Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex
+  - id: SYM-plugins-xtb-test-helper-import-with
+    title: importWith
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:07:52.290Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-plugins-xtb-test-import-file-opening
+    title: TestImportFileOpening
+    sourceFile: plugins/xtb/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:07:59.560Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-xtb
+  - id: SYM-connectorv1-ticker-transaction-get-lot-opened
+    title: TickerTransaction.GetLotOpened
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:08:06.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-opening-lots
+  - id: SYM-connectorv1-file-header-get-opening-cash
+    title: FileHeader.GetOpeningCash
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:08:13.162Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-opening-cash-entered-once
+  - id: SYM-ingestv1-statement-header-get-opening-cash
+    title: StatementHeader.GetOpeningCash
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:08:20.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-opening-cash-entered-once
+  - id: SYM-ingestv1-statement-header-get-opening-cash-currency
+    title: StatementHeader.GetOpeningCashCurrency
+    sourceFile: sdk/go/gen/openfief/ingest/v1/statements.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T08:08:27.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-opening-cash-entered-once

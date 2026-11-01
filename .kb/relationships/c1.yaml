@@ -510,20 +510,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2156d35c12da
-  - type: implements
-    from: SYM-viewsv1-attention-item-change-reset
-    to: REQ-views-attention-items
-    created_at: 2026-10-31T19:02:11.134Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-31643325b3ec
-  - type: covered_by
-    from: SYM-viewsv1-attention-item-change-reset
-    to: TEST-views-connectapi-attention
-    created_at: 2026-10-31T19:02:11.181Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fb9ac6a246ff
   - type: constrains
     from: REQ-ui-yearly-taxes
     to: FACT-SUBJECT-90104E84491E6BE9
@@ -559,3 +545,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d6c59ac509d
+  - type: implements
+    from: SYM-connectorv1-ticker-transaction-get-lot-opened
+    to: REQ-ingest-ticker-opening-lots
+    created_at: 2026-11-01T08:08:08.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be66ba1e49ae
+  - type: covered_by
+    from: SYM-connectorv1-ticker-transaction-get-lot-opened
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-01T08:08:08.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f139da865e2e
+  - type: implements
+    from: SYM-viewsv1-attention-item-change-reset
+    to: REQ-views-attention-items
+    created_at: 2026-10-31T19:02:11.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31643325b3ec
+  - type: covered_by
+    from: SYM-viewsv1-attention-item-change-reset
+    to: TEST-views-connectapi-attention
+    created_at: 2026-10-31T19:02:11.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb9ac6a246ff

@@ -615,6 +615,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-57dab4367138
+  - type: executable_for
+    from: SYM-pl-test-pit38-tax
+    to: TEST-pl-totals
+    created_at: 2026-10-31T19:05:55.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34df9dcd359b
+  - type: implements
+    from: SYM-ingest-app-tickers-book
+    to: REQ-ingest-ticker-opening-lots
+    created_at: 2026-11-01T08:02:06.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b4ff07a4783
+  - type: covered_by
+    from: SYM-ingest-app-tickers-book
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T08:02:06.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fee545111516
   - type: implements
     from: SYM-attention-pg-migrate-tx
     to: REQ-attention-outbox-same-transaction
@@ -657,10 +678,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4229aeee214
-  - type: executable_for
-    from: SYM-pl-test-pit38-tax
-    to: TEST-pl-totals
-    created_at: 2026-10-31T19:05:55.737Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-34df9dcd359b

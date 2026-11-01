@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-37af1a252744
+  - type: implements
+    from: SYM-ingest-xtb-report-date
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:06:56.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7170b2c339d9
+  - type: covered_by
+    from: SYM-ingest-xtb-report-date
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:56.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cbc5c64af93

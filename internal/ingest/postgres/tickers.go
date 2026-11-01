@@ -76,16 +76,22 @@ func holdEntry(ctx context.Context, tx pgx.Tx, instance string, e *ingest.Ticker
 	if !e.Charge.IsZero() {
 		charge, chargeCurrency = e.Charge.Amount().String(), e.Charge.Currency().String()
 	}
+	var opened *string
+	if !e.Opened.IsZero() {
+		day := e.Opened.String()
+		opened = &day
+	}
 	_, err := tx.Exec(ctx, `INSERT INTO ingest.ticker_entries (instance, key_source, external_id, symbol, account_id, kind,
-			date, quantity, amount, currency, charge, charge_currency, description, ref)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+			date, quantity, amount, currency, charge, charge_currency, description, ref, lot_opened)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
 		ON CONFLICT (instance, key_source, external_id) DO UPDATE SET symbol = EXCLUDED.symbol,
 			account_id = EXCLUDED.account_id, kind = EXCLUDED.kind, date = EXCLUDED.date, quantity = EXCLUDED.quantity,
 			amount = EXCLUDED.amount, currency = EXCLUDED.currency, charge = EXCLUDED.charge,
-			charge_currency = EXCLUDED.charge_currency, description = EXCLUDED.description, ref = EXCLUDED.ref`,
+			charge_currency = EXCLUDED.charge_currency, description = EXCLUDED.description, ref = EXCLUDED.ref,
+			lot_opened = EXCLUDED.lot_opened`,
 		instance, e.Header.Key.Source, e.Header.Key.ExternalID, e.Symbol, string(e.Header.Account), e.Kind.String(),
 		e.Header.Date.String(), e.Quantity.String(), e.Amount.Amount().String(), e.Amount.Currency().String(),
-		charge, chargeCurrency, e.Description, e.Ref)
+		charge, chargeCurrency, e.Description, e.Ref, opened)
 	if err != nil {
 		return fmt.Errorf("holding %s: %w", e.Header.Key, err)
 	}
@@ -176,7 +182,7 @@ func (s *Store) ConfirmTicker(ctx context.Context, c ingest.TickerConfirmation) 
 // order.
 func waitingEntries(ctx context.Context, tx pgx.Tx, instance, symbol string) ([]ingest.TickerEntry, error) {
 	rows, err := tx.Query(ctx, `SELECT key_source, external_id, account_id, kind, date::text, quantity, amount, currency,
-			charge, charge_currency, description, ref
+			charge, charge_currency, description, ref, coalesce(lot_opened::text, '')
 		FROM ingest.ticker_entries WHERE instance = $1 AND symbol = $2
 		ORDER BY key_source COLLATE "C", external_id COLLATE "C"`, instance, symbol)
 	if err != nil {
@@ -185,7 +191,7 @@ func waitingEntries(ctx context.Context, tx pgx.Tx, instance, symbol string) ([]
 	out, err := pgx.CollectRows(rows, func(row pgx.CollectableRow) (ingest.TickerEntry, error) {
 		var r entryRow
 		if scanErr := row.Scan(&r.source, &r.id, &r.account, &r.kind, &r.date, &r.quantity, &r.amount, &r.currency,
-			&r.charge, &r.chargeCurrency, &r.description, &r.ref); scanErr != nil {
+			&r.charge, &r.chargeCurrency, &r.description, &r.ref, &r.opened); scanErr != nil {
 			return ingest.TickerEntry{}, fmt.Errorf("scanning a waiting entry: %w", scanErr)
 		}
 		return r.entry(symbol)
@@ -199,12 +205,14 @@ func waitingEntries(ctx context.Context, tx pgx.Tx, instance, symbol string) ([]
 // entryRow is one stored ticker entry's columns.
 type entryRow struct {
 	source, id, account, kind, date, quantity, amount, currency string
-	charge, chargeCurrency, description, ref                    string
+	charge, chargeCurrency, description, ref, opened            string
 }
 
 // entry returns the ticker entry of symbol r stores.
 func (r *entryRow) entry(symbol string) (ingest.TickerEntry, error) {
-	kinds := map[string]ledger.TransactionKind{"buy": ledger.KindBuy, "sell": ledger.KindSell, "dividend": ledger.KindDividend}
+	kinds := map[string]ledger.TransactionKind{
+		"buy": ledger.KindBuy, "sell": ledger.KindSell, "dividend": ledger.KindDividend, "opening-lot": ledger.KindOpeningLot,
+	}
 	kind, ok := kinds[r.kind]
 	on, dateErr := kernel.ParseDate(r.date)
 	qty, qtyErr := kernel.ParseQuantity(r.quantity)
@@ -218,6 +226,13 @@ func (r *entryRow) entry(symbol string) (ingest.TickerEntry, error) {
 		Header: ledger.TransactionHeader{
 			Key: ledger.TransactionKey{Source: r.source, ExternalID: r.id}, Account: ledger.AccountID(r.account), Date: on,
 		},
+	}
+	if r.opened != "" {
+		opened, err := kernel.ParseDate(r.opened)
+		if err != nil {
+			return ingest.TickerEntry{}, fmt.Errorf("%w %s/%s: %w", errStoredEntry, r.source, r.id, err)
+		}
+		e.Opened = opened
 	}
 	if r.charge != "" {
 		c, err := kernel.ParseCurrency(r.chargeCurrency)

@@ -41,6 +41,28 @@ func Mode(m connectorv1.Mode) (ingest.Mode, error) {
 	return 0, fmt.Errorf("%w: %s", ErrNoMode, m)
 }
 
+// ErrMalformedOpeningCash reports an ImportFile header whose opening cash
+// doesn't parse as an exact amount in a currency.
+var ErrMalformedOpeningCash = errors.New("malformed opening_cash")
+
+// OpeningCash reads the cash balance the owner entered with an ImportFile
+// header (D-136): the zero Money when the header carries none.
+func OpeningCash(h *connectorv1.FileHeader) (kernel.Money, error) {
+	m := h.GetOpeningCash()
+	if m == nil {
+		return kernel.Money{}, nil
+	}
+	c, err := kernel.ParseCurrency(m.GetCurrency())
+	if err != nil {
+		return kernel.Money{}, fmt.Errorf("%w: currency: %w", ErrMalformedOpeningCash, err)
+	}
+	cash, err := kernel.ParseMoney(m.GetAmount(), c)
+	if err != nil {
+		return kernel.Money{}, fmt.Errorf("%w: amount: %w", ErrMalformedOpeningCash, err)
+	}
+	return cash, nil
+}
+
 // FromMapping writes a mapping as a delivery for batch from institution:
 // its transactions, balance assertions, ingest problems and cross-check
 // prices, in order. Cross-check prices go in cross_check_prices, never in
@@ -136,6 +158,9 @@ func tickerEntry(e *ingest.TickerEntry) (*connectorv1.TickerTransaction, error) 
 	}
 	if !e.Charge.IsZero() {
 		out.Charge = money(e.Charge)
+	}
+	if !e.Opened.IsZero() {
+		out.LotOpened = e.Opened.String()
 	}
 	return out, nil
 }

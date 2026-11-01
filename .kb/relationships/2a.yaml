@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dabb6cbe9bc3
+  - type: executable_for
+    from: SYM-core-test-helper-xtb-go-live
+    to: TEST-core-xtb-start
+    created_at: 2026-11-01T07:59:32.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9a9a7740bcd

@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a023616834c1
+  - type: implements
+    from: SYM-ingest-app-uploads-booked
+    to: REQ-ingest-start-from-whole-history
+    created_at: 2026-11-01T08:02:30.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b9319a7aed6
+  - type: covered_by
+    from: SYM-ingest-app-uploads-booked
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T08:02:30.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a98694f07a1f
+  - type: executable_for
+    from: SYM-ingest-xtb-test-map-opening-golden
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:08.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-804b159d4705

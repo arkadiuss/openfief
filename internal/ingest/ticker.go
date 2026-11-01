@@ -68,12 +68,16 @@ func validTickerSymbol(s string) error {
 	return nil
 }
 
-// TickerEntry is a buy, sell or dividend of an instrument an institution
-// named by ticker only (D-116). The core books it with the ISIN the owner
-// confirmed for the ticker (Transaction), and until then holds it as an
-// ingest problem. Amount is a buy's cost, a sale's proceeds or a dividend's
-// gross amount; Charge is a buy's or sale's fee, or the tax withheld from a
-// dividend, zero for none. Ref names its statement row, as Problem.Ref does.
+// TickerEntry is a buy, sell, dividend or opening lot of an instrument an
+// institution named by ticker only (D-116), such as a position of an
+// xStation export that seeds an account (D-136). The core books it with the
+// ISIN the owner confirmed for the ticker (Transaction), and until then
+// holds it as an ingest problem. Amount is a buy's cost, a sale's proceeds,
+// a dividend's gross amount or an opening lot's cost; Charge is a buy's or
+// sale's fee, or the tax withheld from a dividend, zero for none and always
+// zero for an opening lot. Opened is the date an opening lot's units were
+// first acquired, and zero for any other kind. Ref names its statement row,
+// as Problem.Ref does.
 type TickerEntry struct {
 	Symbol      string
 	Header      ledger.TransactionHeader
@@ -81,6 +85,7 @@ type TickerEntry struct {
 	Quantity    kernel.Quantity
 	Amount      kernel.Money
 	Charge      kernel.Money
+	Opened      kernel.Date
 	Description string
 	Ref         string
 }
@@ -96,33 +101,12 @@ const checkISIN = "XX0000000002"
 // Transaction returns the transaction e books once its ticker's ISIN is
 // confirmed as isin: the instrument is isin with the ticker's symbol.
 func (e *TickerEntry) Transaction(isin ledger.ISIN) (ledger.Transaction, error) {
-	in := ledger.Instrument{ISIN: isin, Symbol: e.Symbol}
-	var (
-		t   ledger.Transaction
-		err error
-	)
-	switch e.Kind {
-	case ledger.KindBuy:
-		t, err = ledger.NewBuy(e.Header, in, e.Quantity, e.Amount, e.Charge)
-	case ledger.KindSell:
-		t, err = ledger.NewSell(e.Header, in, e.Quantity, e.Amount, e.Charge)
-	case ledger.KindDividend:
-		if !e.Quantity.IsZero() {
-			return ledger.Transaction{}, fmt.Errorf("%w %s: a dividend has no quantity", ErrInvalidTickerEntry, e.Header.Key)
-		}
-		t, err = ledger.NewDividend(e.Header, in, e.Amount, e.Charge)
-	case ledger.KindFee, ledger.KindFXConversion, ledger.KindDeposit, ledger.KindWithdrawal,
-		ledger.KindOpeningLot, ledger.KindInterest, ledger.KindDeletion:
-		err = errNotTickerKind
+	if reason := e.misfit(); reason != "" {
+		return ledger.Transaction{}, fmt.Errorf("%w %s: %s", ErrInvalidTickerEntry, e.Header.Key, reason)
 	}
-	if t.Kind == 0 && err == nil {
-		err = errNotTickerKind
-	}
-	if errors.Is(err, errNotTickerKind) {
-		return ledger.Transaction{}, fmt.Errorf("%w %s: kind %s is not a buy, sell or dividend", ErrInvalidTickerEntry, e.Header.Key, e.Kind)
-	}
+	t, err := e.build(ledger.Instrument{ISIN: isin, Symbol: e.Symbol})
 	if err != nil {
-		return ledger.Transaction{}, fmt.Errorf("%w: %w", ErrInvalidTickerEntry, err)
+		return ledger.Transaction{}, err
 	}
 	t.Description = e.Description
 	return t, nil
@@ -147,6 +131,49 @@ func (e *TickerEntry) Validate() error {
 	c.Header = h
 	_, err = c.Transaction(isin)
 	return err
+}
+
+// misfit returns why e's fields don't fit its kind, or "": only an opening
+// lot has a lot open date, a dividend has no quantity and an opening lot no
+// charge.
+func (e *TickerEntry) misfit() string {
+	switch {
+	case e.Kind != ledger.KindOpeningLot && !e.Opened.IsZero():
+		return "only an opening lot has a lot open date"
+	case e.Kind == ledger.KindDividend && !e.Quantity.IsZero():
+		return "a dividend has no quantity"
+	case e.Kind == ledger.KindOpeningLot && !e.Charge.IsZero():
+		return "an opening lot has no charge"
+	}
+	return ""
+}
+
+// build books e's kind of transaction of in. A kind a ticker entry can't
+// be, or a transaction the ledger refuses, fails with ErrInvalidTickerEntry.
+func (e *TickerEntry) build(in ledger.Instrument) (ledger.Transaction, error) {
+	var (
+		t   ledger.Transaction
+		err = errNotTickerKind
+	)
+	switch e.Kind {
+	case ledger.KindBuy:
+		t, err = ledger.NewBuy(e.Header, in, e.Quantity, e.Amount, e.Charge)
+	case ledger.KindSell:
+		t, err = ledger.NewSell(e.Header, in, e.Quantity, e.Amount, e.Charge)
+	case ledger.KindDividend:
+		t, err = ledger.NewDividend(e.Header, in, e.Amount, e.Charge)
+	case ledger.KindOpeningLot:
+		t, err = ledger.NewOpeningLot(e.Header, in, e.Quantity, e.Amount, e.Opened)
+	case ledger.KindFee, ledger.KindFXConversion, ledger.KindDeposit, ledger.KindWithdrawal,
+		ledger.KindInterest, ledger.KindDeletion:
+	}
+	if errors.Is(err, errNotTickerKind) {
+		return ledger.Transaction{}, fmt.Errorf("%w %s: kind %s is not a buy, sell, dividend or opening lot", ErrInvalidTickerEntry, e.Header.Key, e.Kind)
+	}
+	if err != nil {
+		return ledger.Transaction{}, fmt.Errorf("%w: %w", ErrInvalidTickerEntry, err)
+	}
+	return t, nil
 }
 
 // TickerConfirmation is the ISIN the owner confirmed for a ticker of one

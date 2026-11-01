@@ -475,3 +475,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0dc38946d3e
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-current
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:05:56.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c752d67428f2

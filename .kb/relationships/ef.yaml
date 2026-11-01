@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc0e5a4bc0eb
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-synthetic-cash
+    to: TEST-ingest-app-start
+    created_at: 2026-11-01T08:01:01.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-583f21f89238

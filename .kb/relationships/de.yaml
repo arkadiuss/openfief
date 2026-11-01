@@ -559,6 +559,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac2e6954f5ff
+  - type: executable_for
+    from: SYM-ingest-test-resolve-broker-accounts-reseeding-ticker-entries
+    to: TEST-ingest-ticker
+    created_at: 2026-11-01T08:04:25.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e91a896e9b1
   - type: implements
     from: SYM-attention-pg-migrate
     to: REQ-attention-outbox-same-transaction

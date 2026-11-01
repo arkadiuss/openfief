@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-066fcb85a297
+  - type: executable_for
+    from: SYM-ingest-test-keep-from-go-live-ticker-entries
+    to: TEST-ingest-golive
+    created_at: 2026-11-01T08:03:27.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01aff253084e
+  - type: executable_for
+    from: SYM-ingest-xtb-test-map-opening-position-keys
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:26.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00c7c6ab3e8a

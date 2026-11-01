@@ -580,13 +580,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c7e1fe9d189
-  - type: implements
-    from: SYM-ingest-xtb-mapper-map
-    to: REQ-ingest-xtb-opening-refused
-    created_at: 2026-10-31T13:28:16.285Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-18dd5d09a4e2
   - type: covered_by
     from: SYM-ingest-xtb-mapper-map
     to: TEST-ingest-xtb-mapper
@@ -664,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d1c37e42660
+  - type: implements
+    from: SYM-ingest-xtb-mapper-map
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T08:09:34.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72d88be66a24
+  - type: covered_by
+    from: SYM-ingest-xtb-mapper-map
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:09:34.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e98b068672b2

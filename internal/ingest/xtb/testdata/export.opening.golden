@@ -1,0 +1,9 @@
+broker accounts [0000000]
+ticker TESTA.PL code=TESTA country=PL name="Test Alpha SA"
+0000000 tx xtb/opening-cash:PLN:2026-06-30 deposit 2026-06-30 account="" "opening cash"
+  cash:PLN 2500.5 PLN
+  equity:PLN -2500.5 PLN
+0000000 ticker-entry xtb/open-position:TESTA.PL@20251104T100000Z#1 opening-lot 2026-06-30 TESTA.PL units=7 amount=864.15 PLN charge=0  opened=2025-11-04 "opening lot TESTA.PL" ref=Open Positions#10
+0000000 ticker-entry xtb/open-position:TESTA.PL@20260210T093000Z#1 opening-lot 2026-06-30 TESTA.PL units=3 amount=390.3 PLN charge=0  opened=2026-02-10 "opening lot TESTA.PL" ref=Open Positions#11
+problem unsupported Open Positions#12: a position quoted in another currency than the account's is not seeded yet: the export doesn't give its cost in PLN
+problem unsupported Open Positions#13: open CFD position (category "CMD") is not supported (D-24)

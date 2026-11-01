@@ -839,3 +839,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-369a8008f6a3
+  - type: implements
+    from: SYM-ingest-ticker-entry-misfit
+    to: REQ-ingest-ticker-opening-lots
+    created_at: 2026-11-01T08:04:03.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0854c3fda2da
+  - type: covered_by
+    from: SYM-ingest-ticker-entry-misfit
+    to: TEST-ingest-ticker
+    created_at: 2026-11-01T08:04:03.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2ca8afed83a
+  - type: implements
+    from: SYM-ui-cash-parts
+    to: REQ-ui-statement-upload-start
+    created_at: 2026-11-01T08:07:33.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3c391ea655e
+  - type: covered_by
+    from: SYM-ui-cash-parts
+    to: TEST-ui-statements
+    created_at: 2026-11-01T08:07:33.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef46fe1b2518
+  - type: implements
+    from: SYM-ui-cash-parts
+    to: REQ-ingest-xtb-open-positions-owner-cash
+    created_at: 2026-11-01T08:24:08.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95a239ccbcfc

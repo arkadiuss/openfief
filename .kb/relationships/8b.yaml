@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58d56bc4da7e
+  - type: verified_by
+    from: SCEN-ui-statement-upload-start
+    to: TEST-ui-statements
+    created_at: 2026-11-01T07:35:38.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e3931a8203f

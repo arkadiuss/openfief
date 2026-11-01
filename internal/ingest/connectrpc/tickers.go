@@ -63,7 +63,7 @@ func brokerEntriesOf(m *ingest.Mapping, id ingest.BrokerAccountID) *ingest.Broke
 }
 
 // tickerEntryFrom translates one ticker transaction, which must book a
-// valid transaction.
+// valid transaction: a buy, sell, dividend or opening lot (D-136).
 func tickerEntryFrom(field string, t *connectorv1.TickerTransaction) (ingest.TickerEntry, error) {
 	kind, err := transactionKindFrom(field, t.GetKind())
 	if err != nil {
@@ -90,17 +90,33 @@ func tickerEntryFrom(field string, t *connectorv1.TickerTransaction) (ingest.Tic
 			return ingest.TickerEntry{}, err
 		}
 	}
-	if t.GetQuantity() != "" {
-		q, err := decimalFrom(field+".quantity", t.GetQuantity())
-		if err != nil {
-			return ingest.TickerEntry{}, err
-		}
-		e.Quantity = kernel.NewQuantity(q)
+	if err := optionalFrom(field, t, &e); err != nil {
+		return ingest.TickerEntry{}, err
 	}
 	if err := e.Validate(); err != nil {
 		return ingest.TickerEntry{}, invalid(field, err)
 	}
 	return e, nil
+}
+
+// optionalFrom reads into e the fields a ticker transaction may leave
+// empty: an opening lot's lot_opened and the quantity.
+func optionalFrom(field string, t *connectorv1.TickerTransaction, e *ingest.TickerEntry) error {
+	if t.GetLotOpened() != "" {
+		opened, err := dateFrom(field+".lot_opened", t.GetLotOpened())
+		if err != nil {
+			return err
+		}
+		e.Opened = opened
+	}
+	if t.GetQuantity() != "" {
+		q, err := decimalFrom(field+".quantity", t.GetQuantity())
+		if err != nil {
+			return err
+		}
+		e.Quantity = kernel.NewQuantity(q)
+	}
+	return nil
 }
 
 // tickersTo writes tickers for a lookup request.

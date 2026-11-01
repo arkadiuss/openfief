@@ -210,6 +210,12 @@ func (fakeVerifier) VerifyCore(_ context.Context, token string) error {
 // chunks of at most 1000 bytes.
 func importFile(t *testing.T, c *connector, mode connectorv1.Mode, file []byte) (*connectorv1.ImportFileResponse, error) {
 	t.Helper()
+	return importFileWith(t, c, &connectorv1.FileHeader{BatchId: "b-2", Mode: mode, FileName: "activity.xml", MediaType: "application/xml"}, file)
+}
+
+// importFileWith streams file to c as the core with header h.
+func importFileWith(t *testing.T, c *connector, h *connectorv1.FileHeader, file []byte) (*connectorv1.ImportFileResponse, error) {
+	t.Helper()
 	server := openfief.NewConnectorServer("", c, fakeVerifier{})
 	srv := httptest.NewUnstartedServer(server.Handler)
 	srv.Config.Protocols = server.Protocols
@@ -220,9 +226,7 @@ func importFile(t *testing.T, c *connector, mode connectorv1.Mode, file []byte) 
 	client := connectorv1connect.NewConnectorServiceClient(&http.Client{Transport: &http.Transport{Protocols: &p}}, srv.URL)
 	stream := client.ImportFile(t.Context())
 	stream.RequestHeader().Set("Authorization", "Bearer "+coreToken)
-	msgs := []*connectorv1.ImportFileRequest{{Part: &connectorv1.ImportFileRequest_Header{
-		Header: &connectorv1.FileHeader{BatchId: "b-2", Mode: mode, FileName: "activity.xml", MediaType: "application/xml"},
-	}}}
+	msgs := []*connectorv1.ImportFileRequest{{Part: &connectorv1.ImportFileRequest_Header{Header: h}}}
 	for len(file) > 0 {
 		n := min(len(file), 1000)
 		msgs = append(msgs, &connectorv1.ImportFileRequest{Part: &connectorv1.ImportFileRequest_Chunk{Chunk: file[:n]}})
@@ -262,6 +266,14 @@ func TestImportFile(t *testing.T) {
 		if _, err := importFile(t, c, tt.mode, tt.file); connect.CodeOf(err) != connect.CodeInvalidArgument {
 			t.Errorf("%s: ImportFile = %v, want InvalidArgument", tt.name, err)
 		}
+	}
+	withCash := &connectorv1.FileHeader{
+		BatchId: "b-3", Mode: connectorv1.Mode_MODE_OPENING, FileName: "activity.xml",
+		OpeningCash: &connectorv1.Money{Amount: "100", Currency: "USD"},
+	}
+	if _, err := importFileWith(t, c, withCash, statement(t)); connect.CodeOf(err) != connect.CodeInvalidArgument ||
+		!strings.Contains(err.Error(), "holds the account's cash") {
+		t.Errorf("ImportFile with opening cash = %v, want InvalidArgument: the statement holds the cash", err)
 	}
 }
 

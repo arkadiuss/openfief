@@ -315,21 +315,26 @@ message Ticker {
   string name = 4;
 }
 
-// TickerTransaction is a buy, sell or dividend of an instrument named by
-// ticker only (D-116): what the core needs to book it once the ISIN is
-// confirmed. Its fields mean what Transaction's do.
+// TickerTransaction is a buy, sell, dividend or opening lot of an
+// instrument named by ticker only (D-116, D-136): what the core needs to
+// book it once the ISIN is confirmed. Its fields mean what Transaction's do.
 message TickerTransaction {
   // The symbol of one of the delivery's tickers.
   string symbol = 1;
   TransactionKey key = 2;
   string account_id = 3;
   string broker_account = 4;
-  // TRANSACTION_KIND_BUY, TRANSACTION_KIND_SELL or TRANSACTION_KIND_DIVIDEND.
+  // TRANSACTION_KIND_BUY, TRANSACTION_KIND_SELL, TRANSACTION_KIND_DIVIDEND
+  // or TRANSACTION_KIND_OPENING_LOT.
   TransactionKind kind = 5;
+  // The transaction's date; an opening lot's is the account's go-live date.
   string date = 6;
-  // The units bought or sold, positive; empty for a dividend.
+  // The units bought, sold or held in an opening lot, positive; empty for a
+  // dividend.
   string quantity = 7;
-  // A buy's cost, a sale's proceeds or a dividend's gross amount, positive.
+  // A buy's cost, a sale's proceeds, a dividend's gross amount, or an
+  // opening lot's cost; positive, or zero for an opening lot that cost
+  // nothing.
   Money amount = 8;
   // A buy's or sale's fee, or the tax withheld from a dividend; unset for
   // none.
@@ -338,6 +343,9 @@ message TickerTransaction {
   // Where the row is in the statement, as in Problem: the ingest problem
   // that holds it while it waits names it so.
   string ref = 11;
+  // The date an opening lot's units were first acquired, on or before its
+  // date; empty for any other kind.
+  string lot_opened = 12;
 }
 
 message LookupInstrumentsRequest {
@@ -445,6 +453,12 @@ message FileHeader {
   string file_name = 3;
   // The file's media type, such as "text/csv", when known.
   string media_type = 4;
+  // The cash balance the owner entered once, with an opening batch of a
+  // statement that holds none, such as an xStation export's open positions
+  // (D-136); unset for none. The connector books it as the account's
+  // opening cash on its go-live date. A connector whose statement holds the
+  // account's cash, or that can't book it, answers INVALID_ARGUMENT.
+  Money opening_cash = 5;
 }
 
 message ImportFileRequest {
