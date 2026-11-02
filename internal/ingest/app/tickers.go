@@ -28,7 +28,7 @@ var (
 // owner's confirmations, and the ticker entries waiting for one.
 type TickerStore interface {
 	// ConfirmedTickers returns the listing the owner's confirmation settled
-	// for each ticker symbol of instance (ingest.ListingOf, D-159).
+	// for each ticker symbol of instance (ingest.ListingOf, D-159, D-170).
 	ConfirmedTickers(ctx context.Context, instance string) (map[string]ingest.Listing, error)
 	// HoldTickers records the tickers instance reported, keeping an earlier
 	// name, and the entries waiting for their ticker's ISIN, each once by
@@ -43,9 +43,12 @@ type TickerStore interface {
 	PendingTickers(ctx context.Context) ([]ingest.PendingTicker, error)
 	// ConfirmTicker records the owner's confirmation and returns the
 	// entries still waiting for the ticker, with the listing the
-	// confirmation settles (ingest.ListingOf). A ticker never reported is
-	// ErrUnknownTicker; one confirmed with another ISIN ErrTickerConfirmed.
-	// Confirming the same ISIN again changes nothing.
+	// confirmation settles (ingest.ConfirmListing). A ticker never reported
+	// is ErrUnknownTicker; one confirmed with another ISIN or trading
+	// currency ErrTickerConfirmed; one whose listing names no currency on an
+	// exchange that quotes in more than one, confirmed without picking one
+	// of them, an *ingest.TradingCurrencyChoiceError that records nothing
+	// (D-170). Confirming the same ISIN again changes nothing.
 	ConfirmTicker(ctx context.Context, c ingest.TickerConfirmation) ([]ingest.TickerEntry, ingest.Listing, error)
 	// BookedTickerEntries drops the waiting entries of instance with keys,
 	// once the ledger holds them.
@@ -191,8 +194,10 @@ func (t *Tickers) Pending(ctx context.Context, origin, sessionToken string) ([]i
 // scoped to instance as a delivery's are, and returns what was imported.
 // Waiting opening lots join their account's opening on its go-live date
 // (book, D-160), their cost in the trading currency of the listing the
-// confirmation settles (D-159). Confirming again books whatever still
-// waits.
+// confirmation settles (D-159), or the one the owner picks when the
+// listing names none and its exchange quotes in more than one: until the
+// owner picks one, the confirmation is refused and they keep waiting
+// (D-170). Confirming again books whatever still waits.
 func (t *Tickers) Confirm(ctx context.Context, origin, sessionToken string, c ingest.TickerConfirmation) (ingest.ImportSummary, error) {
 	if err := t.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("confirming a ticker: %w", err)

@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0da165b81e9d
+  - type: implements
+    from: SYM-ui-server-tickers-page
+    to: REQ-ui-ticker-currency-choice
+    created_at: 2026-11-02T00:00:11.449Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3b09e828158

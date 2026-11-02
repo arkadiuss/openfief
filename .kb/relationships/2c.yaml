@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9aa86cd7c22f
+  - type: implements
+    from: SYM-ui-server-confirm-ticker
+    to: REQ-ui-ticker-currency-choice
+    created_at: 2026-11-01T23:59:59.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5f99f5cf4fc

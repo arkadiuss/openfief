@@ -20,26 +20,68 @@ var errStoredEntry = errors.New("stored ticker entry")
 
 // selectListing reads what a ticker's listing is made of (listingRow);
 // callers add FROM and WHERE.
-const selectListing = `SELECT symbol, country, coalesce(isin, ''), coalesce(proposed_isin, ''), proposed_currency`
+const selectListing = `SELECT symbol, country, coalesce(isin, ''), coalesce(proposed_isin, ''), proposed_currency, currency`
 
-// listingRow is the columns of selectListing.
+// listingRow is the columns of selectListing: chosen is the trading
+// currency the owner picked when confirming (D-170), "" for none.
 type listingRow struct {
-	symbol, country, isin, proposed, currency string
+	symbol, country, isin, proposed, currency, chosen string
+}
+
+// dest returns r's scan destinations, in selectListing's order.
+func (r *listingRow) dest() []any {
+	return []any{&r.symbol, &r.country, &r.isin, &r.proposed, &r.currency, &r.chosen}
 }
 
 // listing returns the listing r's confirmation settles (ingest.ListingOf).
 func (r *listingRow) listing() (ingest.Listing, error) {
+	ticker, proposal, isin, err := r.parts()
+	if err != nil {
+		return ingest.Listing{}, err
+	}
+	return ingest.ListingOf(&ticker, &proposal, isin, r.chosen), nil
+}
+
+// confirm returns the listing the owner's confirmation c of r's ticker
+// settles, and whether it must be recorded: a ticker not confirmed yet
+// takes c's ISIN and picked trading currency, or why the owner must pick
+// another (ingest.ConfirmListing, D-170); one confirmed with c's ISIN keeps
+// its listing, unless c picks another currency than the one recorded,
+// which, like another ISIN, is ErrTickerConfirmed.
+func (r *listingRow) confirm(c *ingest.TickerConfirmation) (ingest.Listing, bool, error) {
+	if r.isin != "" {
+		if r.isin != c.ISIN.String() || (c.Currency != "" && c.Currency != r.chosen) {
+			return ingest.Listing{}, false, app.ErrTickerConfirmed
+		}
+		l, err := r.listing()
+		return l, false, err
+	}
+	r.isin = c.ISIN.String()
+	ticker, proposal, isin, err := r.parts()
+	if err != nil {
+		return ingest.Listing{}, false, err
+	}
+	l, err := ingest.ConfirmListing(&ticker, &proposal, isin, c.Currency)
+	if err != nil {
+		return ingest.Listing{}, false, fmt.Errorf("confirming the ticker: %w", err)
+	}
+	return l, true, nil
+}
+
+// parts returns the ticker, the market-data connector's proposal and the
+// confirmed ISIN r holds.
+func (r *listingRow) parts() (ingest.Ticker, ingest.ISINProposal, ledger.ISIN, error) {
 	isin, err := ledger.ParseISIN(r.isin)
 	if err != nil {
-		return ingest.Listing{}, fmt.Errorf("ticker %s: %w", r.symbol, err)
+		return ingest.Ticker{}, ingest.ISINProposal{}, ledger.ISIN{}, fmt.Errorf("ticker %s: %w", r.symbol, err)
 	}
 	proposal := ingest.ISINProposal{Symbol: r.symbol, Currency: r.currency}
 	if r.proposed != "" {
 		if proposal.ISIN, err = ledger.ParseISIN(r.proposed); err != nil {
-			return ingest.Listing{}, fmt.Errorf("ticker %s: %w", r.symbol, err)
+			return ingest.Ticker{}, ingest.ISINProposal{}, ledger.ISIN{}, fmt.Errorf("ticker %s: %w", r.symbol, err)
 		}
 	}
-	return ingest.ListingOf(&ingest.Ticker{Symbol: r.symbol, Country: r.country}, &proposal, isin), nil
+	return ingest.Ticker{Symbol: r.symbol, Country: r.country}, proposal, isin, nil
 }
 
 // ConfirmedTickers returns the listing the owner's confirmation settled for
@@ -51,7 +93,7 @@ func (s *Store) ConfirmedTickers(ctx context.Context, instance string) (map[stri
 	}
 	out := map[string]ingest.Listing{}
 	var r listingRow
-	_, err = pgx.ForEachRow(rows, []any{&r.symbol, &r.country, &r.isin, &r.proposed, &r.currency}, func() error {
+	_, err = pgx.ForEachRow(rows, r.dest(), func() error {
 		l, listingErr := r.listing()
 		if listingErr != nil {
 			return listingErr
@@ -148,7 +190,7 @@ func (s *Store) SaveProposals(ctx context.Context, instance string, proposals []
 // and symbol, with its proposal and how many entries wait for it.
 func (s *Store) PendingTickers(ctx context.Context) ([]ingest.PendingTicker, error) {
 	rows, err := s.pool.Query(ctx, `SELECT t.instance, t.symbol, t.code, t.country, t.name, coalesce(t.proposed_isin, ''),
-			t.proposed_name, (SELECT count(*) FROM ingest.ticker_entries e WHERE e.instance = t.instance AND e.symbol = t.symbol)
+			t.proposed_name, t.proposed_currency, (SELECT count(*) FROM ingest.ticker_entries e WHERE e.instance = t.instance AND e.symbol = t.symbol)
 		FROM ingest.tickers t WHERE t.isin IS NULL ORDER BY t.instance COLLATE "C", t.symbol COLLATE "C"`)
 	if err != nil {
 		return nil, fmt.Errorf("loading the tickers to confirm: %w", err)
@@ -168,7 +210,7 @@ func scanPending(row pgx.CollectableRow) (ingest.PendingTicker, error) {
 		waiting  int64
 	)
 	if err := row.Scan(&p.Instance, &p.Ticker.Symbol, &p.Ticker.Code, &p.Ticker.Country, &p.Ticker.Name, &proposed,
-		&p.Proposal.Name, &waiting); err != nil {
+		&p.Proposal.Name, &p.Proposal.Currency, &waiting); err != nil {
 		return ingest.PendingTicker{}, fmt.Errorf("scanning a ticker: %w", err)
 	}
 	p.Waiting = int(waiting)
@@ -182,9 +224,12 @@ func scanPending(row pgx.CollectableRow) (ingest.PendingTicker, error) {
 	return p, nil
 }
 
-// ConfirmTicker records the owner's ISIN for a ticker, once, and returns the
-// entries still waiting for it, in key order, with the listing the
-// confirmation settles (D-159).
+// ConfirmTicker records the owner's ISIN for a ticker, once, with the
+// trading currency the owner picked when the confirmation must pick one
+// (ingest.ConfirmListing, D-170), and returns the entries still waiting for
+// it, in key order, with the listing the confirmation settles (D-159). A
+// confirmation that picks wrongly records nothing, so the entries keep
+// waiting; confirming again with another pick is ErrTickerConfirmed.
 func (s *Store) ConfirmTicker(ctx context.Context, c ingest.TickerConfirmation) ([]ingest.TickerEntry, ingest.Listing, error) {
 	var (
 		out     []ingest.TickerEntry
@@ -193,23 +238,22 @@ func (s *Store) ConfirmTicker(ctx context.Context, c ingest.TickerConfirmation) 
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		var r listingRow
 		err := tx.QueryRow(ctx, selectListing+` FROM ingest.tickers WHERE instance = $1 AND symbol = $2 FOR UPDATE`,
-			c.Instance, c.Symbol).Scan(&r.symbol, &r.country, &r.isin, &r.proposed, &r.currency)
+			c.Instance, c.Symbol).Scan(r.dest()...)
 		switch {
 		case errors.Is(err, pgx.ErrNoRows):
 			return app.ErrUnknownTicker
 		case err != nil:
 			return fmt.Errorf("loading the ticker: %w", err)
-		case r.isin != "" && r.isin != c.ISIN.String():
-			return app.ErrTickerConfirmed
-		case r.isin == "":
-			if _, execErr := tx.Exec(ctx, `UPDATE ingest.tickers SET isin = $3, confirmed_at = now()
-				WHERE instance = $1 AND symbol = $2`, c.Instance, c.Symbol, c.ISIN.String()); execErr != nil {
-				return fmt.Errorf("confirming the ticker: %w", execErr)
-			}
 		}
-		r.isin = c.ISIN.String()
-		if listing, err = r.listing(); err != nil {
+		var record bool
+		if listing, record, err = r.confirm(&c); err != nil {
 			return err
+		}
+		if record {
+			if _, err = tx.Exec(ctx, `UPDATE ingest.tickers SET isin = $3, currency = $4, confirmed_at = now()
+				WHERE instance = $1 AND symbol = $2`, c.Instance, c.Symbol, c.ISIN.String(), c.Currency); err != nil {
+				return fmt.Errorf("confirming the ticker: %w", err)
+			}
 		}
 		out, err = waitingEntries(ctx, tx, c.Instance, c.Symbol)
 		return err

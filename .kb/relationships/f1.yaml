@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d95df722775b
+  - type: executable_for
+    from: SYM-ingest-test-helper-confirm-outcome
+    to: TEST-ingest-listing
+    created_at: 2026-11-02T00:00:41.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70076a665de2

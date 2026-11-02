@@ -531,13 +531,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f23f3f4d8641
-  - type: implements
-    from: SYM-ingest-currency-places
-    to: REQ-ingest-ticker-trading-currency
-    created_at: 2026-11-01T17:24:37.172Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d89bee1effd1
   - type: covered_by
     from: SYM-ingest-currency-places
     to: TEST-ingest-listing
@@ -566,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a73d060637a4
+  - type: implements
+    from: SYM-ingest-currency-places
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:03.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66e836ffe1a4

@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cbb213f8472c
+  - type: implements
+    from: SYM-ingest-exchange-currencies
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:57:37.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d28324715761
+  - type: covered_by
+    from: SYM-ingest-exchange-currencies
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T23:57:37.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4828d0440b7f

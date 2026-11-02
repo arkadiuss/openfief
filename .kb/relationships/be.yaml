@@ -706,13 +706,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53d0062fbeb2
-  - type: implements
-    from: SYM-ingest-minor-unit-of
-    to: REQ-ingest-ticker-trading-currency
-    created_at: 2026-11-01T17:23:53.723Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6375950995e2
   - type: covered_by
     from: SYM-ingest-minor-unit-of
     to: TEST-ingest-listing
@@ -741,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b928862e177
+  - type: implements
+    from: SYM-ingest-minor-unit-of
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:45.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e962fc34b218
