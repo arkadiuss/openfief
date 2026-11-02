@@ -13,8 +13,9 @@ import (
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
 )
 
-// tickerMapping is a mapping of a buy of TESTA.PL by broker account
-// 0000000 and a dividend of it in account acc-1.
+// tickerMapping is a mapping of a buy, an opening lot and a holding of
+// TESTA.PL by broker account 0000000 and a dividend and a holding of it in
+// account acc-1 (D-116, D-155).
 func tickerMapping(t *testing.T) ingest.Mapping {
 	t.Helper()
 	pln, err := kernel.ParseCurrency("PLN")
@@ -45,12 +46,16 @@ func tickerMapping(t *testing.T) ingest.Mapping {
 		Ref:    "Open Positions#10",
 		Header: ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "xtb", ExternalID: "open-position:9000000201"}, Date: day},
 	}
+	held := ingest.TickerAssertion{Symbol: "TESTA.PL", Date: day, Quantity: kernel.NewQuantity(kernel.NewDecimal(7, 0)), Ref: "Open Positions#10"}
+	inAccount := held
+	inAccount.Account = "acc-1"
 	return ingest.Mapping{
-		BrokerAccounts: []ingest.BrokerAccountID{"0000000"},
-		Tickers:        []ingest.Ticker{{Symbol: "TESTA.PL", Code: "TESTA", Country: "PL", Name: "Test Alpha SA"}},
-		TickerEntries:  []ingest.TickerEntry{dividend},
+		BrokerAccounts:   []ingest.BrokerAccountID{"0000000"},
+		Tickers:          []ingest.Ticker{{Symbol: "TESTA.PL", Code: "TESTA", Country: "PL", Name: "Test Alpha SA"}},
+		TickerEntries:    []ingest.TickerEntry{dividend},
+		TickerAssertions: []ingest.TickerAssertion{inAccount},
 		ByBrokerAccount: []ingest.BrokerEntries{{
-			Account: "0000000", TickerEntries: []ingest.TickerEntry{buy, lot},
+			Account: "0000000", TickerEntries: []ingest.TickerEntry{buy, lot}, TickerAssertions: []ingest.TickerAssertion{held},
 		}},
 	}
 }
@@ -89,6 +94,10 @@ func TestTickersRefused(t *testing.T) {
 		{name: "a malformed lot open date", change: func(d *connectorv1.Delivery) {
 			d.TickerTransactions[0].Kind, d.TickerTransactions[0].LotOpened = connectorv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT, "4.11.2025"
 		}},
+		{name: "a holding of an unknown symbol", change: func(d *connectorv1.Delivery) { d.TickerAssertions[0].Symbol = "OTHER.PL" }},
+		{name: "a negative holding", change: func(d *connectorv1.Delivery) { d.TickerAssertions[0].Quantity = "-1" }},
+		{name: "a holding without a date", change: func(d *connectorv1.Delivery) { d.TickerAssertions[0].Date = "" }},
+		{name: "a holding in both accounts", change: func(d *connectorv1.Delivery) { d.TickerAssertions[1].AccountId = "acc-1" }},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

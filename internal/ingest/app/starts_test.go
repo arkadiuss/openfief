@@ -43,8 +43,8 @@ func (w *waitingTickers) ConfirmedTickers(context.Context, string) (map[string]i
 	return map[string]ingest.Listing{}, nil
 }
 
-func (w *waitingTickers) HoldTickers(_ context.Context, _ string, _ []ingest.Ticker, waiting []ingest.TickerEntry) ([]ingest.Ticker, error) {
-	w.held += len(waiting)
+func (w *waitingTickers) HoldTickers(_ context.Context, h *ingest.TickerHold) ([]ingest.Ticker, error) {
+	w.held += len(h.Waiting.Entries)
 	return nil, nil
 }
 

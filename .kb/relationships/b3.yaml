@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-658d8d46c333
+  - type: implements
+    from: SYM-ingest-app-tickers-authorize
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:15:05.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d2b7a07f850
+  - type: covered_by
+    from: SYM-ingest-app-tickers-authorize
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:15:05.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48b8c1008987

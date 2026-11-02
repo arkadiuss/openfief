@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7b1610fa2ff
+  - type: implements
+    from: SYM-ingest-pg-confirmation-code
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:17:11.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc2401f6013e
+  - type: implements
+    from: SYM-ingest-pg-confirmation-code
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:17:11.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56bae2aa65c5
+  - type: covered_by
+    from: SYM-ingest-pg-confirmation-code
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:17:11.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77e2eb6b29b7

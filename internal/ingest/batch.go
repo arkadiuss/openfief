@@ -171,4 +171,5 @@ type Mapping struct {
 	ByBrokerAccount  []BrokerEntries
 	Tickers          []Ticker
 	TickerEntries    []TickerEntry
+	TickerAssertions []TickerAssertion
 }

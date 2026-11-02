@@ -762,3 +762,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fbef2d5c67d
+  - type: validates
+    from: TEST-ingest-postgres-tickers
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T06:59:53.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5af9a759b677
+  - type: validates
+    from: TEST-ingest-postgres-tickers
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T06:59:53.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e975cde2cf8
+  - type: validates
+    from: TEST-ingest-postgres-tickers
+    to: REQ-ingest-xtb-unconfirmed-ticker-asserted-on-confirm
+    created_at: 2026-11-02T06:59:53.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adbb29930555

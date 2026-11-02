@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6e870164ccb
+  - type: implements
+    from: SYM-ingest-pg-store-confirmed-ticker-list
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:16:33.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c968e4be23e
+  - type: covered_by
+    from: SYM-ingest-pg-store-confirmed-ticker-list
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:16:33.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfdb58aff999

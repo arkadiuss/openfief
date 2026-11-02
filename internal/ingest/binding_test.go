@@ -39,6 +39,11 @@ func TestCheckBound(t *testing.T) {
 			want: []ledger.AccountID{"acc-8"},
 		},
 		{
+			name: "a ticker holding in another account", bound: []ledger.AccountID{"acc-1"},
+			m:    ingest.Mapping{TickerAssertions: []ingest.TickerAssertion{{Symbol: "TESTA.PL", Account: "acc-7"}}},
+			want: []ledger.AccountID{"acc-7"},
+		},
+		{
 			name: "no binding at all lists each account once, sorted",
 			m:    ingest.Mapping{Transactions: []ledger.Transaction{tx("acc-2"), tx("acc-1"), tx("acc-2")}, Assertions: []ledger.BalanceAssertion{assertion("acc-1")}},
 			want: []ledger.AccountID{"acc-1", "acc-2"},

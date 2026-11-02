@@ -311,6 +311,12 @@ message Delivery {
   // with the ISIN the owner confirmed for its ticker, and holds it as an
   // ingest problem until the owner does.
   repeated TickerTransaction ticker_transactions = 14;
+  // The holdings of instruments named in tickers that the institution
+  // reports, such as the summed volume of each ticker's open positions in
+  // an xStation export (D-155). The core asserts each as a balance
+  // assertion of the instrument the owner confirmed for its ticker, and
+  // holds it until the owner does.
+  repeated TickerAssertion ticker_assertions = 15;
 }
 
 // Ticker is an instrument as an institution that reports no ISIN names it
@@ -366,6 +372,24 @@ message TickerTransaction {
   // of the exchange its market names, once the owner confirms its ISIN.
   // Empty for any other kind and for an opening lot priced by amount.
   string open_price = 13;
+}
+
+// TickerAssertion is a holding of an instrument named by ticker only that
+// the institution reports for an account at the end of a date (D-155),
+// like a BalanceAssertion of a holding.
+message TickerAssertion {
+  // The symbol of one of the delivery's tickers.
+  string symbol = 1;
+  // The OpenFief account ID; empty when broker_account names the account.
+  string account_id = 2;
+  // The institution's own ID of the account, as on Transaction (D-72).
+  string broker_account = 3;
+  // YYYY-MM-DD.
+  string date = 4;
+  // The units held, a non-negative decimal.
+  string quantity = 5;
+  // Where the rows are in the statement, as in Problem.
+  string ref = 6;
 }
 
 message LookupInstrumentsRequest {

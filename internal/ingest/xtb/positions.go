@@ -101,3 +101,59 @@ func (m *mapping) positionRef(sheetName string, rec record) string {
 	}
 	return ref
 }
+
+// holding is the summed volume of one ticker's open stock or ETF positions,
+// with its name and the first row that names it.
+type holding struct {
+	symbol, name, ref string
+	volume            kernel.Decimal
+	unread            bool
+}
+
+// holdings asserts the account's holdings from Open Positions (D-155): for
+// each stock or ETF ticker, the summed volume of its open positions at the
+// end of the report's date, as a ticker assertion, which the core asserts
+// once the ticker's ISIN is confirmed. An export without the report's
+// date, or without the Volume column, asserts nothing. A ticker one of
+// whose positions can't be read is not asserted, and that is an ingest
+// problem, since its sum would be wrong.
+func (m *mapping) holdings() {
+	if m.x.open == nil || m.x.reported.IsZero() || !m.x.open.has(colVolume) {
+		return
+	}
+	for _, h := range m.sumHoldings() {
+		if h.unread {
+			m.problem(ingest.Unsupported(h.ref, "the holding of "+shown(h.symbol)+" is not asserted: one of its open positions can't be read"))
+			continue
+		}
+		a := ingest.TickerAssertion{Symbol: h.symbol, Date: m.x.reported, Quantity: kernel.NewQuantity(h.volume), Ref: h.ref}
+		m.ticker(h.symbol, h.name)
+		m.entries.TickerAssertions = append(m.entries.TickerAssertions, a)
+	}
+}
+
+// sumHoldings sums the volumes of Open Positions' stock and ETF positions
+// by ticker, in the order the sheet first names them.
+func (m *mapping) sumHoldings() []*holding {
+	var order []*holding
+	bySymbol := map[string]*holding{}
+	for _, rec := range m.x.open.records() {
+		symbol := rec.text(colTicker)
+		if !stockCategory(rec.text(colCategory)) || symbol == "" || (&ingest.Ticker{Symbol: symbol}).Validate() != nil {
+			continue
+		}
+		h, ok := bySymbol[symbol]
+		if !ok {
+			h = &holding{symbol: symbol, name: rec.text(colPositionName), ref: m.positionRef(sheetOpen, rec)}
+			bySymbol[symbol] = h
+			order = append(order, h)
+		}
+		volume, err := boughtVolume(rec)
+		if err != nil {
+			h.unread = true
+			continue
+		}
+		h.volume = h.volume.Add(volume)
+	}
+	return order
+}

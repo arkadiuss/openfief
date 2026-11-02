@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a63cadb7729c
+  - type: implements
+    from: SYM-ledger-app-ledger-withdraw-assertions
+    to: REQ-ledger-withdraw-holding-assertions
+    created_at: 2026-11-02T07:10:54.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1f8e56f93a9
+  - type: covered_by
+    from: SYM-ledger-app-ledger-withdraw-assertions
+    to: TEST-ledger-app-withdraw
+    created_at: 2026-11-02T07:10:54.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b50f7165f185

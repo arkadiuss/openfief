@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-221a2f6e34e5
+  - type: implements
+    from: SYM-ingest-app-tickers-confirm
+    to: REQ-ingest-xtb-unconfirmed-ticker-asserted-on-confirm
+    created_at: 2026-11-02T07:31:44.342Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecea19bf3a78

@@ -706,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f08162f17215
+  - type: implements
+    from: SYM-ingest-pg-confirmation
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:17:03.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ec7cb9adf41
+  - type: implements
+    from: SYM-ingest-pg-confirmation
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:17:03.271Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d24f17c8d6d2
+  - type: covered_by
+    from: SYM-ingest-pg-confirmation
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:17:03.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8deed3cd427

@@ -391,3 +391,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa62edc9fd92
+  - type: executable_for
+    from: SYM-ingest-test-helper-buy-of
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:12:31.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2356a72292d
+  - type: implements
+    from: SYM-ingest-ticker-booking
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:13:23.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c2b9f8bacf6
+  - type: implements
+    from: SYM-ingest-ticker-booking
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:13:23.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10ef73c21cc4
+  - type: covered_by
+    from: SYM-ingest-ticker-booking
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:13:23.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-782c4a9650ea

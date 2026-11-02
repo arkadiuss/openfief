@@ -790,3 +790,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da951edcfe6a
+  - type: implements
+    from: SYM-ingest-xtb-holding
+    to: REQ-ingest-xtb-holdings-mapping
+    created_at: 2026-11-02T07:21:00.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1353f01a66a7
+  - type: implements
+    from: SYM-ingest-xtb-holding
+    to: REQ-ingest-xtb-open-positions-assert-holdings
+    created_at: 2026-11-02T07:21:00.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89d307f6fb48
+  - type: covered_by
+    from: SYM-ingest-xtb-holding
+    to: TEST-ingest-xtb-holdings
+    created_at: 2026-11-02T07:21:00.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7578ba153889

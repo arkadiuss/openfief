@@ -706,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f08d9cd4882
+  - type: implements
+    from: SYM-ingest-app-assertion-withdrawer
+    to: REQ-ledger-withdraw-holding-assertions
+    created_at: 2026-11-02T07:14:42.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ff472e638c9
+  - type: implements
+    from: SYM-ingest-app-assertion-withdrawer
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:14:42.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f2179ecc513
+  - type: covered_by
+    from: SYM-ingest-app-assertion-withdrawer
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:14:43.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8eea41faec75

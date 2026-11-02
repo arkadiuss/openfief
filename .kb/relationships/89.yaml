@@ -615,3 +615,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5b8741fc13a
+  - type: implements
+    from: SYM-core-ledger-importer-withdraw-assertions
+    to: REQ-ledger-withdraw-holding-assertions
+    created_at: 2026-11-02T07:01:33.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a346cc770517
+  - type: covered_by
+    from: SYM-core-ledger-importer-withdraw-assertions
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:01:33.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b189e0a97d1
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-response-proto-message
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:09:02.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29b74e93742f
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-response-proto-message
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:09:02.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e3e8d05d7a1
+  - type: executable_for
+    from: SYM-ingest-app-test-fake-ticker-store-rows
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:16:04.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dec9852375a6
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-check-correction
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:20:05.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-248289cfdd6c

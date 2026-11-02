@@ -846,3 +846,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d52d2a812188
+  - type: executable_for
+    from: SYM-core-test-helper-check-holding-asserted
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:01:25.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b11c922cb2e
+  - type: implements
+    from: SYM-ingest-pg-confirmed
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:17:42.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-481c7901e8f5
+  - type: implements
+    from: SYM-ingest-pg-confirmed
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:17:43.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a00ddaa11e5
+  - type: covered_by
+    from: SYM-ingest-pg-confirmed
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:17:43.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3753376c4d3

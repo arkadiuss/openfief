@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 )
@@ -67,6 +68,9 @@ type AssertionStore interface {
 	// AssertionChecks returns account's checks, in date then ledger account
 	// order.
 	AssertionChecks(ctx context.Context, account ledger.AccountID) ([]AssertionCheck, error)
+	// DeleteAssertionCheck removes the check of account's assertion of book
+	// on day, if there is one.
+	DeleteAssertionCheck(ctx context.Context, account ledger.AccountID, day kernel.Date, book ledger.Book) error
 }
 
 // TransferLinkStore stores the owner's transfer links (D-105). It only ever

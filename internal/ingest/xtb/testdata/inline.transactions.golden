@@ -18,6 +18,7 @@ ticker TESTB.UK code=TESTB country=GB name="Test Beta PLC"
 0000000 ticker-entry xtb/9000000003 buy 2025-11-05 TESTB.UK units=5 amount=500 PLN charge=0  "buy TESTB.UK" ref=Cash Operations#14[ID=9000000003]
 0000000 ticker-entry xtb/9000000004 dividend 2026-03-02 TESTB.UK units=0 amount=12.5 PLN charge=1.88 PLN "dividend TESTB.UK" ref=Cash Operations#11[ID=9000000004]
 0000000 ticker-entry xtb/9000000006 sell 2026-04-01 TESTA.PL units=3 amount=399.99 PLN charge=0  "sell TESTA.PL" ref=Cash Operations#9[ID=9000000006]
+0000000 ticker-assertion TESTA.PL 2026-06-30 units=7 ref=Open Positions#10
 problem unsupported Cash Operations#7[ID=9000000010]: cash operation type "Sec fee" is not supported
 problem unsupported Cash Operations#6[ID=9000000011]: category "CFD" is not a stock or ETF (D-24)
 problem unsupported Open Positions#11: open CFD position (category "CMD") is not supported (D-24)

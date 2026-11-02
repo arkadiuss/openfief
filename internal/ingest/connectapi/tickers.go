@@ -68,6 +68,43 @@ func (s *tickers) ConfirmTicker(ctx context.Context, req *connect.Request[ingest
 	return connect.NewResponse(&ingestv1.ConfirmTickerResponse{Booked: booked}), nil
 }
 
+// ListConfirmedTickers returns the tickers whose ISIN is confirmed, once
+// per institution (D-153).
+func (s *tickers) ListConfirmedTickers(ctx context.Context, req *connect.Request[ingestv1.ListConfirmedTickersRequest]) (*connect.Response[ingestv1.ListConfirmedTickersResponse], error) {
+	confirmed, err := s.uc.Confirmed(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	out := &ingestv1.ListConfirmedTickersResponse{Tickers: make([]*ingestv1.ConfirmedTicker, 0, len(confirmed))}
+	for i := range confirmed {
+		c := &confirmed[i]
+		out.Tickers = append(out.Tickers, &ingestv1.ConfirmedTicker{
+			Institution: c.Institution, Instance: c.Instance, Symbol: c.Ticker.Symbol, Country: c.Ticker.Country,
+			Name: c.Ticker.Name, Isin: c.ISIN.String(), TradingCurrency: c.TradingCurrency,
+			CurrencyChoices: c.CurrencyChoices(), Booked: count(c.Booked),
+		})
+	}
+	return connect.NewResponse(out), nil
+}
+
+// CorrectTicker records the owner's corrected ISIN for a confirmed ticker,
+// with the trading currency the owner picked when its listing names none
+// (D-170), and books every row of the ticker anew (D-153).
+func (s *tickers) CorrectTicker(ctx context.Context, req *connect.Request[ingestv1.CorrectTickerRequest]) (*connect.Response[ingestv1.CorrectTickerResponse], error) {
+	isin, err := ledger.ParseISIN(req.Msg.GetIsin())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	c := ingest.TickerConfirmation{
+		Instance: req.Msg.GetInstance(), Symbol: req.Msg.GetSymbol(), ISIN: isin, Currency: req.Msg.GetCurrency(),
+	}
+	sum, err := s.uc.Correct(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), c)
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&ingestv1.CorrectTickerResponse{Booked: count(sum.New + sum.NewVersions + sum.Unchanged)}), nil
+}
+
 // fail maps err to its Connect error.
 func (s *tickers) fail(ctx context.Context, err error) *connect.Error {
 	if choice, ok := errors.AsType[*ingest.TradingCurrencyChoiceError](err); ok {
@@ -84,6 +121,8 @@ func (s *tickers) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeNotFound, app.ErrUnknownTicker)
 	case errors.Is(err, app.ErrTickerConfirmed):
 		return connect.NewError(connect.CodeFailedPrecondition, app.ErrTickerConfirmed)
+	case errors.Is(err, ingest.ErrTickerNotConfirmed):
+		return connect.NewError(connect.CodeFailedPrecondition, ingest.ErrTickerNotConfirmed)
 	}
 	s.log.LogAttrs(ctx, slog.LevelError, "ticker confirmation failed", slog.String("error", err.Error()))
 	return connect.NewError(connect.CodeInternal, errInternal)

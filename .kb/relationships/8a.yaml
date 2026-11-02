@@ -615,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64953e7d9105
+  - type: implements
+    from: SYM-ingest-connectapi-tickers-correct-ticker
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:14:12.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17a69b0fdbe0
+  - type: covered_by
+    from: SYM-ingest-connectapi-tickers-correct-ticker
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:14:12.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae91607d4619
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-withdrawer
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:16:11.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49be24f78fb9

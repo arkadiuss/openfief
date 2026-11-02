@@ -1,8 +1,9 @@
 {{define "content"}}
 {{with .Data}}
-<p class="lede">Some institutions, such as XTB, name an instrument only by its ticker and market, with no ISIN. Confirm each ticker's ISIN once: the market-data connector proposes the one it found for the ticker on its market, or type it when it found none. The rows of a ticker wait, left out of the ledger, until its ISIN is confirmed, and are booked then. When the listing names no trading currency and the ticker's exchange quotes in more than one, as London does in pence (GBX), pounds and dollars, pick the one its prices are in: none is assumed.</p>
+<p class="lede">Some institutions, such as XTB, name an instrument only by its ticker and market, with no ISIN. Confirm each ticker's ISIN once: it holds for every account at the same institution. The market-data connector proposes the one it found for the ticker on its market, or type it when it found none. The rows of a ticker and the holdings its statements report wait, left out of the ledger, until its ISIN is confirmed, and are booked then. When the listing names no trading currency and the ticker's exchange quotes in more than one, as London does in pence (GBX), pounds and dollars, pick the one its prices are in: none is assumed.</p>
 {{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
 {{if .Booked}}<p role="status">Confirmed: {{.Booked}} waiting row(s) booked.</p>{{end}}
+{{if .Corrected}}<p role="status">Corrected: {{.Corrected}} row(s) booked anew.</p>{{end}}
 {{if not .Tickers}}
 <p>Every ticker is confirmed.</p>
 {{else}}
@@ -36,6 +37,42 @@
   {{end}}
   </tbody>
 </table></div>
+{{end}}
+{{if .Confirmed}}
+<section class="card" id="confirmed" aria-labelledby="confirmed-title">
+  <h2 id="confirmed-title">Confirmed tickers</h2>
+  <p class="muted">A wrong ISIN can be corrected. Every row of the ticker, at every account of the institution, is then booked anew with the corrected one: what was booked under the old ISIN is superseded and kept in the log, never erased, and the holdings are asserted of the corrected instrument.</p>
+  <div class="table"><table>
+    <thead><tr>
+      <th scope="col">Ticker</th><th scope="col">Name</th><th scope="col">Institution</th><th scope="col">ISIN</th><th scope="col">Trading currency</th><th scope="col" class="num">Rows booked</th><th scope="col">Correct</th>
+    </tr></thead>
+    <tbody>
+    {{range .Confirmed}}
+    <tr>
+      <td class="mono">{{.Symbol}}</td>
+      <td>{{.Name}}</td>
+      <td>{{.Institution}}</td>
+      <td class="mono">{{.Isin}}</td>
+      <td>{{if .TradingCurrency}}{{.TradingCurrency}}{{else}}<span class="muted">unknown</span>{{end}}</td>
+      <td class="num">{{.Booked}}</td>
+      <td>
+        <form method="post" action="/tickers/correct" class="inline">
+          <input type="hidden" name="instance" value="{{.Instance}}"><input type="hidden" name="symbol" value="{{.Symbol}}">
+          <label for="correct-{{.Institution}}-{{.Symbol}}" class="sr-only">Corrected ISIN of {{.Symbol}}</label>
+          <input id="correct-{{.Institution}}-{{.Symbol}}" name="isin" class="mono" maxlength="12" autocomplete="off" spellcheck="false" value="{{.Isin}}" placeholder="ISIN">
+          {{if .CurrencyChoices}}<label for="correct-currency-{{.Institution}}-{{.Symbol}}" class="sr-only">Trading currency of {{.Symbol}}</label>
+          <select id="correct-currency-{{.Institution}}-{{.Symbol}}" name="currency">
+            <option value="" selected>The listing's{{if .TradingCurrency}}: {{.TradingCurrency}}{{end}}</option>
+            {{range .CurrencyChoices}}<option value="{{.}}">{{.}}</option>{{end}}
+          </select>{{end}}
+          <button type="submit" class="danger" aria-label="Correct the ISIN of {{.Symbol}}">Correct</button>
+        </form>
+      </td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+</section>
 {{end}}
 {{end}}
 {{end}}

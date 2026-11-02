@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2815b343193a
+  - type: executable_for
+    from: SYM-ingest-app-test-fake-withdrawer-withdraw-assertions
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:16:18.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8918bd0421d

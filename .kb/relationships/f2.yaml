@@ -580,3 +580,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b9d0f23f5fd
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-string
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:06:38.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c64a93d54a7f
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-string
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:06:38.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4481ee39253c
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-correct-ticker-response-descriptor
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:06:52.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef8d6eb99d2d
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-correct-ticker-response-descriptor
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:06:52.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e87e8bd8f1e

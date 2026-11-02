@@ -144,6 +144,9 @@ func render(m *ingest.Mapping) string {
 		for j := range e.TickerEntries {
 			renderTickerEntry(&b, e.Account, &e.TickerEntries[j])
 		}
+		for _, a := range e.TickerAssertions {
+			fmt.Fprintf(&b, "%s ticker-assertion %s %s units=%s ref=%s\n", e.Account, a.Symbol, a.Date, a.Quantity, a.Ref)
+		}
 	}
 	for _, p := range m.Problems {
 		fmt.Fprintf(&b, "problem %s\n", p)

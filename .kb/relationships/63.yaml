@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-760eb5f0ae24
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-correct-ticker-response
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:06:44.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20156d0cd9a3
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-correct-ticker-response
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:06:44.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39a3f29043b3

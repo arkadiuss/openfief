@@ -825,3 +825,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44f8221aef54
+  - type: verified_by
+    from: SCEN-ingest-ticker-assertion-contract
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:00:17.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e43e444789eb
+  - type: verified_by
+    from: SCEN-ingest-ticker-assertion-contract
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:00:17.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4fedfe8c547
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-request-reset
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:08:25.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b450abdae53
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-request-reset
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:08:25.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c24b1c65b000
+  - type: implements
+    from: SYM-ingestv1connect-tickers-unimplemented-ticker-service-handler-list-confirmed-tickers
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:09:39.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7232fe69c2a
+  - type: covered_by
+    from: SYM-ingestv1connect-tickers-unimplemented-ticker-service-handler-list-confirmed-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:09:39.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-275a9a0043d9
+  - type: executable_for
+    from: SYM-ingest-test-test-book-ticker-assertions
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:11:51.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a4262431749

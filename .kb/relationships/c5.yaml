@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b603e1cb128f
-  - type: covered_by
-    from: SYM-ingest-pg-listing-row
-    to: TEST-core-xtb-opening
-    created_at: 2026-11-01T17:26:08.867Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f4017dee3941
   - type: implements
     from: SYM-operator-grant-from-resource
     to: REQ-ingest-market-data-list-declared-granted
@@ -546,16 +539,16 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-1e69c746a4f3
   - type: implements
-    from: SYM-ingest-pg-listing-row
-    to: REQ-ingest-trading-currency-listing-or-exchange
-    created_at: 2026-11-02T01:03:09.841Z
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-get-symbol
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:06:08.372Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-c6774749eba8
-  - type: implements
-    from: SYM-ingest-pg-listing-row
-    to: REQ-ingest-owner-picks-ambiguous-trading-currency
-    created_at: 2026-11-02T02:37:04.651Z
+    id: rel-ba522f5d4b45
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-get-symbol
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:06:08.431Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-dc10304c5a3c
+    id: rel-4bfbcc5e87ad

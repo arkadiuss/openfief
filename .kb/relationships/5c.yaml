@@ -671,3 +671,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa5fb3619224
+  - type: verified_by
+    from: SCEN-ui-tickers-correct
+    to: TEST-ui-tickers
+    created_at: 2026-11-02T07:00:24.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c74b1cc630f9
+  - type: implements
+    from: SYM-ingest-pg-hold-rows
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:18:14.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a3d4400636b
+  - type: implements
+    from: SYM-ingest-pg-hold-rows
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:18:14.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e352262a79c4
+  - type: covered_by
+    from: SYM-ingest-pg-hold-rows
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:18:14.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4006183c640a
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-ticker-buy
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:20:24.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bb213f40dbd

@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3d72615fb95
+  - type: validates
+    from: TEST-ledger-app-withdraw
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T06:59:55.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55ec0eb4e1d3
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-get-origin
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:05:51.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57ec096785da
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-get-origin
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:05:51.750Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8324dbe1b832

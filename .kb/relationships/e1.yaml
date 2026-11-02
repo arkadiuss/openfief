@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b1ce44bcfc1
+  - type: validates
+    from: TEST-ledger-pg-store
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:00:12.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c1d7addb6a0
+  - type: implements
+    from: SYM-ledger-pg-store-delete-assertion-check
+    to: REQ-ledger-withdraw-holding-assertions
+    created_at: 2026-11-02T07:11:15.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-569916add433
+  - type: covered_by
+    from: SYM-ledger-pg-store-delete-assertion-check
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-02T07:11:15.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-635831a46370

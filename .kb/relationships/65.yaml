@@ -692,3 +692,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8353ecddb244
+  - type: implements
+    from: SYM-connector-gen-pb-ticker-assertion-descriptor
+    to: REQ-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:01:54.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff2c9a9556f6
+  - type: covered_by
+    from: SYM-connector-gen-pb-ticker-assertion-descriptor
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:01:55.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c02b362727fa
+  - type: executable_for
+    from: SYM-ingest-xtb-test-test-map-holdings
+    to: TEST-ingest-xtb-holdings
+    created_at: 2026-11-02T07:20:38.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e9b9603d442

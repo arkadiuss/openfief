@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b90d1e87c9fb
+  - type: executable_for
+    from: SYM-ingest-test-helper-listing-of
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:12:44.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bed915ccd922

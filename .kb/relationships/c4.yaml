@@ -713,3 +713,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06e1c152f0d0
+  - type: validates
+    from: TEST-core-xtb-upload
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T06:59:59.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca93de0f43be
+  - type: validates
+    from: TEST-core-xtb-upload
+    to: REQ-ingest-xtb-open-positions-assert-holdings
+    created_at: 2026-11-02T06:59:59.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c8effdc3a92
+  - type: validates
+    from: TEST-core-xtb-upload
+    to: REQ-ingest-xtb-unconfirmed-ticker-asserted-on-confirm
+    created_at: 2026-11-02T06:59:59.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe5695ed3491
+  - type: validates
+    from: TEST-core-xtb-upload
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T06:59:59.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be45736ed027
+  - type: implements
+    from: SYM-ingest-pg-confirm-in
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:16:56.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc18fc43af6a
+  - type: implements
+    from: SYM-ingest-pg-confirm-in
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:16:56.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91542e4850e9
+  - type: covered_by
+    from: SYM-ingest-pg-confirm-in
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:16:56.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2563a5c43a01

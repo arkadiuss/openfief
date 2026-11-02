@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f841b155aed
+  - type: validates
+    from: TEST-ingest-binding
+    to: REQ-ingest-xtb-open-positions-assert-holdings
+    created_at: 2026-11-02T07:00:04.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d985549f2bc2
+  - type: implements
+    from: SYM-ingest-listing-code
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:14:05.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-513b4f9ef932
+  - type: covered_by
+    from: SYM-ingest-listing-code
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:14:05.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-608ce0bb455e

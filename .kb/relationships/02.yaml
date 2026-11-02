@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5882104e1202
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-get-currency
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:05:28.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-684bdd2e9a98
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-get-currency
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:05:28.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4f761585b1e

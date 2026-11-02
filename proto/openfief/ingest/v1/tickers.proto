@@ -4,8 +4,12 @@
 // ticker and market only, with no ISIN (D-35). For each new ticker, the
 // market-data connector looks the ISIN up by ticker and market and
 // proposes it; the owner confirms it once, or enters it when the lookup
-// found none. The rows of a ticker not confirmed yet wait as ingest
-// problems, and the core books them once it is. The built-in UI hands the
+// found none. A confirmation holds for every account at the ticker's
+// institution, and the owner can correct it, which books every row of the
+// ticker anew and supersedes what was booked under the old ISIN (D-153).
+// The rows of a ticker not confirmed yet, and the holdings an institution
+// reports for it (D-155), wait, the rows as ingest problems, and the core
+// books them once it is. The built-in UI hands the
 // owner's confirmations to the core through TickerService, one owner-only
 // service for this kind of entry (D-79), on the core's plugin port (D-115).
 //
@@ -22,7 +26,9 @@
 // - An ISIN without a valid check digit fails with INVALID_ARGUMENT; a
 //   ticker no connector instance reported with NOT_FOUND; a ticker already
 //   confirmed with another ISIN, or another trading currency, with
-//   FAILED_PRECONDITION.
+//   FAILED_PRECONDITION, as does a correction of a ticker never confirmed.
+// - Confirming or correcting asks whether the owner may change every
+//   account the ticker's rows are in (D-163); PERMISSION_DENIED otherwise.
 // - When the confirmed ISIN's listing names no trading currency and the
 //   exchange the ticker's market suffix names quotes in more than one, as
 //   London does in pence (GBX), pounds and dollars, the owner picks one
@@ -41,10 +47,25 @@ service TickerService {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
 
-  // ConfirmTicker records the ISIN of one ticker, proposed or typed, and
-  // books every row waiting for it. Confirming the same ISIN again books
-  // whatever still waits.
+  // ConfirmTicker records the ISIN of one ticker, proposed or typed, for
+  // every account at its institution, and books every row waiting for it
+  // at any of the institution's connector instances. Confirming the same
+  // ISIN again books whatever still waits.
   rpc ConfirmTicker(ConfirmTickerRequest) returns (ConfirmTickerResponse);
+
+  // ListConfirmedTickers returns every ticker whose ISIN is confirmed, once
+  // per institution.
+  rpc ListConfirmedTickers(ListConfirmedTickersRequest) returns (ListConfirmedTickersResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // CorrectTicker replaces a confirmed ticker's ISIN, or its trading
+  // currency, for every account at its institution, keeping the earlier
+  // confirmation, and books every row of the ticker anew with it: the
+  // transactions booked under the old ISIN are superseded, never erased
+  // (D-18), and its holdings are asserted of the corrected instrument.
+  // Correcting to the current ISIN and currency books nothing new.
+  rpc CorrectTicker(CorrectTickerRequest) returns (CorrectTickerResponse);
 }
 
 message ListPendingTickersRequest {
@@ -99,5 +120,61 @@ message ConfirmTickerRequest {
 
 message ConfirmTickerResponse {
   // The rows booked now.
+  int32 booked = 1;
+}
+
+message ListConfirmedTickersRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+// ConfirmedTicker is a ticker whose ISIN the owner confirmed, for every
+// account at its institution (D-153).
+message ConfirmedTicker {
+  // The institution, as its connectors name it, such as "xtb".
+  string institution = 1;
+  // A connector instance of the institution that reported it, the first by
+  // name, which CorrectTicker takes.
+  string instance = 2;
+  // The ticker as the institution names it, such as "TESTA.PL".
+  string symbol = 3;
+  // The ISO 3166-1 alpha-2 code of its market's country, or empty.
+  string country = 4;
+  // Its display name at the institution.
+  string name = 5;
+  // The confirmed ISIN.
+  string isin = 6;
+  // The trading currency its listing settled, such as "GBX" for pence, or
+  // empty when none is known.
+  string trading_currency = 7;
+  // The trading currencies its exchange quotes in, when more than one, as
+  // on PendingTicker: a correction to an ISIN whose listing names none
+  // picks one of them (D-170).
+  repeated string currency_choices = 8;
+  // How many statement rows are booked with it.
+  int32 booked = 9;
+}
+
+message ListConfirmedTickersResponse {
+  // In institution, then symbol order.
+  repeated ConfirmedTicker tickers = 1;
+}
+
+message CorrectTickerRequest {
+  string origin = 1;
+  string session_token = 2;
+  // A connector instance that reported the ticker, as listed.
+  string instance = 3;
+  string symbol = 4;
+  // The corrected ISIN, with a valid check digit.
+  string isin = 5;
+  // The trading currency the owner picked, one of the ticker's
+  // currency_choices, when the listing of isin names none (D-170); empty
+  // otherwise.
+  string currency = 6;
+}
+
+message CorrectTickerResponse {
+  // The rows booked anew.
   int32 booked = 1;
 }

@@ -1000,20 +1000,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6e48c88f4d9
-  - type: covered_by
-    from: SYM-ingest-pg-listing-row-dest
-    to: TEST-core-xtb-opening
-    created_at: 2026-11-01T23:58:41.203Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-663794a32330
-  - type: implements
-    from: SYM-ingest-pg-listing-row-dest
-    to: REQ-ingest-owner-picks-ambiguous-trading-currency
-    created_at: 2026-11-02T02:37:15.704Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-696fd822dd8a
   - type: implements
     from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-currency
     to: REQ-ledger-cash-checkpoint-service
@@ -1028,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50b03b6f3832
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-holding-lines
+    to: TEST-ingest-xtb-holdings
+    created_at: 2026-11-02T07:20:45.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4edfdfdb3e0b

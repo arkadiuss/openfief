@@ -4,4 +4,6 @@ ticker TESTB.UK code=TESTB country=GB name="Test Beta PLC"
 0000000 ticker-entry xtb/open-position:TESTA.PL@20251104T100000Z#1 opening-lot 2026-06-30 TESTA.PL units=7 amount=0  charge=0  opened=2025-11-04 open-price=123.45 "opening lot TESTA.PL" ref=Open Positions#10
 0000000 ticker-entry xtb/open-position:TESTA.PL@20260210T093000Z#1 opening-lot 2026-06-30 TESTA.PL units=3 amount=0  charge=0  opened=2026-02-10 open-price=130.1 "opening lot TESTA.PL" ref=Open Positions#11
 0000000 ticker-entry xtb/open-position:TESTB.UK@20251105T233000Z#1 opening-lot 2026-06-30 TESTB.UK units=5 amount=0  charge=0  opened=2025-11-05 open-price=20 "opening lot TESTB.UK" ref=Open Positions#12
+0000000 ticker-assertion TESTA.PL 2026-06-30 units=10 ref=Open Positions#10
+0000000 ticker-assertion TESTB.UK 2026-06-30 units=5 ref=Open Positions#12
 problem unsupported Open Positions#13: open CFD position (category "CMD") is not supported (D-24)

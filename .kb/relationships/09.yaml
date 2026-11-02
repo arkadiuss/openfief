@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd6f08dd2981
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-check-confirmed-once
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:19:57.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63e946e611ce

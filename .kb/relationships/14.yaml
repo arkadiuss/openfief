@@ -580,3 +580,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f0bca52dc97
+  - type: implements
+    from: SYM-ingest-pg-store-correct-ticker
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:16:41.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecfb06bb1e77
+  - type: implements
+    from: SYM-ingest-pg-store-correct-ticker
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:16:41.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a473d333951c
+  - type: covered_by
+    from: SYM-ingest-pg-store-correct-ticker
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:16:41.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb2ee2bd6213

@@ -58,7 +58,9 @@ const centPlaces = 2
 // ISIN (D-116). In opening mode it maps each open stock or ETF position to
 // an opening lot, as a ticker entry too, and the cash balance the owner
 // entered to the account's opening cash, both on the report's date, the
-// account's go-live. Everything is named by the XTB account in
+// account's go-live. In both modes Open Positions also asserts the
+// account's holdings: each stock or ETF ticker's summed volume on the
+// report's date, as a ticker assertion (D-155). Everything is named by the XTB account in
 // ByBrokerAccount, which the core maps to the OpenFief account the owner
 // chose (D-72). Only stocks and ETFs are booked; CFD positions are ingest
 // problems (D-24). The comments of deposits and withdrawals, which name the
@@ -74,9 +76,12 @@ type export struct {
 	// goLive is the date of Open Positions' report, the account's go-live
 	// date in opening mode (D-136); zero in transactions mode.
 	goLive kernel.Date
-	cash   *table
-	closed *table
-	open   *table
+	// reported is the date of Open Positions' report, on which its
+	// holdings are asserted (D-155); zero when the export has none.
+	reported kernel.Date
+	cash     *table
+	closed   *table
+	open     *table
 }
 
 // Map maps the export data, uploaded under fileName, in mode, with
@@ -108,11 +113,13 @@ func (Mapper) Map(data []byte, fileName string, mode ingest.Mode, openingCash ke
 		if err := run.opening(openingCash); err != nil {
 			return ingest.Mapping{}, err
 		}
+		run.holdings()
 		return run.result(), nil
 	}
 	run.cashOperations()
 	run.closedPositions()
 	run.openPositions()
+	run.holdings()
 	return run.result(), nil
 }
 
@@ -154,7 +161,18 @@ func readExport(wb *workbook, fileName string, mode ingest.Mode) (*export, error
 			return nil, err
 		}
 	}
+	x.reported = x.reportedOn()
 	return x, nil
+}
+
+// reportedOn returns the date of Open Positions' report, or zero when the
+// export has no Open Positions or no report date.
+func (x *export) reportedOn() kernel.Date {
+	if x.open == nil {
+		return kernel.Date{}
+	}
+	day, _ := reportDate(x.open.sheet, x.open.header, x.date1904)
+	return day
 }
 
 // tables returns the export's tables that are present.
@@ -263,7 +281,7 @@ func (m *mapping) result() ingest.Mapping {
 		BrokerAccounts: []ingest.BrokerAccountID{m.x.account},
 		Tickers:        m.tickers,
 	}
-	if len(m.entries.Transactions) > 0 || len(m.entries.TickerEntries) > 0 {
+	if len(m.entries.Transactions) > 0 || len(m.entries.TickerEntries) > 0 || len(m.entries.TickerAssertions) > 0 {
 		out.ByBrokerAccount = []ingest.BrokerEntries{m.entries}
 	}
 	return out

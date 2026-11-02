@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3eb03ef52e04
+  - type: executable_for
+    from: SYM-ingest-app-test-test-tickers-correct-refused
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:15:27.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7625f83c2c92
