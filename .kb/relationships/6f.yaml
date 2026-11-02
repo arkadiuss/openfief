@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c58533de13d8
-  - type: implements
-    from: SYM-treasurybonds-coupon-sync-coupons
-    to: REQ-treasurybonds-coupons-as-interest
-    created_at: 2026-10-31T13:57:11.472Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0b62c0b8b271
   - type: covered_by
     from: SYM-treasurybonds-coupon-sync-coupons
     to: TEST-treasurybonds-coupons
@@ -671,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e424de16dd70
+  - type: implements
+    from: SYM-treasurybonds-coupon-sync-coupons
+    to: REQ-treasurybonds-coupons-booked-every-sync
+    created_at: 2026-11-02T09:19:58.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07f084e51ab6

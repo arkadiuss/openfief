@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4af93ee0bda
+  - type: implements
+    from: SYM-ingest-app-holdings-scope-held
+    to: REQ-ingest-sync-carries-tax-wrapper
+    created_at: 2026-11-02T09:21:56.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c3cabdfc022

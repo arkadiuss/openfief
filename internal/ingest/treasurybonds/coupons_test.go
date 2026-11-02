@@ -197,8 +197,12 @@ func TestCouponSyncWaitsAndFails(t *testing.T) {
 	if len(m.Transactions) != 0 || len(m.Problems) != 1 {
 		t.Errorf("BookCoupons without readings = %d transactions, %v; want one problem", len(m.Transactions), m.Problems)
 	}
+}
 
-	// Years of CPI one sync asks for are capped; the rest wait for the next sync.
+func TestCouponSyncKeepsCPIYears(t *testing.T) {
+	t.Parallel()
+	today := mustDate(t, "2026-10-29")
+	// Five COI lots bought a year apart need more years of CPI than one sync asks GUS for.
 	many := make([]ingest.HeldAccount, 0, 5)
 	manyTerms := make([]ingest.BondTerms, 0, 5)
 	for _, s := range []struct{ series, bought string }{
@@ -208,10 +212,34 @@ func TestCouponSyncWaitsAndFails(t *testing.T) {
 		manyTerms = append(manyTerms, termsOf(t, s.series, "0.05"))
 	}
 	cpi := &fakeCPI{}
-	if _, err := (&treasurybonds.CouponSync{CPI: cpi, Rates: &fakeRates{}}).Coupons(t.Context(), many, manyTerms, today); err != nil {
-		t.Fatalf("Coupons: %v", err)
+	sync := &treasurybonds.CouponSync{CPI: cpi, Rates: &fakeRates{}}
+	type syncResult struct {
+		Asked    []int
+		Booked   int
+		Problems []string
 	}
-	if len(cpi.years) != 4 {
-		t.Errorf("one sync asked GUS for %v; want at most 4 years", cpi.years)
+	got := make([]syncResult, 0, 3)
+	for range 3 {
+		cpi.years = nil
+		m, err := sync.Coupons(t.Context(), many, manyTerms, today)
+		if err != nil {
+			t.Fatalf("Coupons: %v", err)
+		}
+		got = append(got, syncResult{Asked: cpi.years, Booked: len(m.Transactions), Problems: problemRefs(m.Problems)})
+	}
+	// The first sync asks for four years and books what they pay; the coupons and maturities of later years wait.
+	// The second asks only for the years it lacks, so every coupon and maturity since purchase is booked (D-143),
+	// and the third asks GUS for nothing it was served in full.
+	want := []syncResult{
+		{Asked: []int{2020, 2021, 2022, 2023}, Booked: 14, Problems: []string{
+			"a-COI0127 COI0127 bought 2023-01-10 coupon 2026-01-10",
+			"a-COI0128 COI0128 bought 2024-01-10 coupon 2026-01-10",
+			"a-COI0126 COI0126 bought 2022-01-10 maturity 2026-01-10",
+		}},
+		{Asked: []int{2024}, Booked: 17},
+		{Booked: 17},
+	}
+	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty()); diff != "" {
+		t.Errorf("three syncs (-want +got):\n%s", diff)
 	}
 }

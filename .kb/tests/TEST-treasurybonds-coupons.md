@@ -1,5 +1,5 @@
 ---
-title: The treasury-bonds connector books each coupon due after go-live as interest, and waits on missing readings
+title: The treasury-bonds connector books each coupon due since purchase as interest on every sync, keeps CPI years, and waits on missing readings
 status: active
 sourceFile: internal/ingest/treasurybonds/coupons_test.go
 verification_scope: unit

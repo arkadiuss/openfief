@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-365408bdbcaf
+  - type: validates
+    from: TEST-treasurybonds-coupons
+    to: REQ-treasurybonds-coupons-since-purchase-every-sync
+    created_at: 2026-11-02T09:18:09.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0266e16eccbc
+  - type: validates
+    from: TEST-treasurybonds-coupons
+    to: REQ-treasurybonds-coupons-keyed-per-lot-and-date
+    created_at: 2026-11-02T09:18:09.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-951f85c2dacc

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"slices"
+	"sync"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
@@ -29,7 +30,8 @@ type DueCoupon struct {
 
 // DueCoupons returns every coupon (pl.CouponDates) that fell due on or
 // before today on an open lot of a coupon series held in accounts (D-117),
-// in account, lot and period order. An account whose lots are deposits and
+// in account, lot and period order: all of them since the lot's purchase,
+// on every sync, so a lot entered late gets its earlier coupons (D-143). An account whose lots are deposits and
 // buys on their purchase dates has its whole history, so every coupon
 // since purchase is due (D-98); in an account seeded with opening lots,
 // only those after its go-live are, since what fell due on or before it is
@@ -136,7 +138,8 @@ func CPIYears(due []DueCoupon) ([]int, bool) {
 // period index readings. Each is keyed
 // "lot:<series>:<purchase date>:coupon:<due date>" under the source
 // SourcePrefix plus the account, as the lot itself, so it is idempotent per
-// lot and coupon date: delivering it again on every sync changes nothing.
+// lot and coupon date (D-143): delivering it again on every sync changes
+// nothing.
 // A coupon whose reading is missing waits as a problem, and so does one in
 // an account with a wrapper the pack doesn't know.
 func BookCoupons(due []DueCoupon, readings []valuation.IndexReading) (ingest.Mapping, error) {
@@ -239,21 +242,32 @@ func AccountsBookedIn(accounts []ingest.HeldAccount, mode ingest.Mode) []ingest.
 }
 
 // CouponSync books the coupons and maturities that fell due on the
-// treasury bonds the core says each bound account holds (D-117, D-135),
-// fetching the CPI and NBP reference-rate readings their periods need from
-// GUS and NBP, since the connector stores nothing.
+// treasury bonds the core says each bound account holds (D-117, D-135,
+// D-143), fetching the CPI and NBP reference-rate readings their periods
+// need from GUS and NBP, since the connector stores nothing. It keeps in
+// memory each year of CPI GUS served in full, whose twelve final readings
+// never change, so a later sync asks only for the years it lacks. Use it by
+// pointer.
 type CouponSync struct {
 	CPI   CPISource
 	Rates ReferenceRateSource
+
+	// mu guards kept.
+	mu sync.Mutex
+	// kept holds the CPI readings of each year GUS served in full.
+	kept map[int][]valuation.IndexReading
 }
 
 // Coupons returns the mapping of every coupon due and every lot matured on
 // accounts' open lots as of today (DueCoupons, BookCoupons, DueMaturities,
 // BookMaturities), each paid out when its account's payout setting says
-// so. It asks GUS once per CPI year they need, at most maxCPIYearsPerSync
-// years, the earliest first: a coupon or maturity whose year is left for a
-// later sync waits as a problem. NBP's archive is asked only when a
-// reference-rate period is due. A failed request fails the sync.
+// so. It asks GUS once per CPI year they need that it doesn't keep from an
+// earlier sync, at most maxCPIYearsPerSync years, the earliest first: a
+// coupon or maturity whose year is left for a later sync waits as a
+// problem, and since the years served in full are kept, each sync gets
+// further until every coupon since each lot's purchase is booked (D-143).
+// NBP's archive is asked only when a reference-rate period is due. A
+// failed request fails the sync.
 func (c *CouponSync) Coupons(ctx context.Context, accounts []ingest.HeldAccount, terms []ingest.BondTerms, today kernel.Date) (ingest.Mapping, error) {
 	due, problems := DueCoupons(accounts, terms, today)
 	matured := DueMaturities(accounts, terms, today)
@@ -261,27 +275,14 @@ func (c *CouponSync) Coupons(ctx context.Context, accounts []ingest.HeldAccount,
 	maturityYears, maturityRate := MaturityCPIYears(matured)
 	years = slices.Compact(slices.Sorted(slices.Values(append(years, maturityYears...))))
 	needRate = needRate || maturityRate
-	var readings []valuation.IndexReading
-	for i, y := range years {
-		if i == maxCPIYearsPerSync {
-			break
-		}
-		cpi, err := c.CPI.CPI(ctx, y)
-		if err != nil {
-			return ingest.Mapping{}, fmt.Errorf("CPI for %d: %w", y, err)
-		}
-		readings = append(readings, cpi...)
+	readings, err := c.cpiReadings(ctx, years)
+	if err != nil {
+		return ingest.Mapping{}, err
 	}
 	if needRate {
-		changes, err := c.Rates.ReferenceRates(ctx)
-		if err != nil {
-			return ingest.Mapping{}, fmt.Errorf("reference rates: %w", err)
-		}
-		rates, err := ReferenceReadings(changes, earliestPurchase(due, matured), today)
-		if err != nil {
+		if readings, err = c.withReferenceRates(ctx, readings, earliestPurchase(due, matured), today); err != nil {
 			return ingest.Mapping{}, err
 		}
-		readings = append(readings, rates...)
 	}
 	m, err := BookCoupons(due, readings)
 	if err != nil {
@@ -294,6 +295,70 @@ func (c *CouponSync) Coupons(ctx context.Context, accounts []ingest.HeldAccount,
 	m.Transactions = append(m.Transactions, r.Transactions...)
 	m.Problems = slices.Concat(problems, m.Problems, r.Problems)
 	return m, nil
+}
+
+// withReferenceRates returns readings with the NBP reference-rate readings
+// of every month from the month of from up to today.
+func (c *CouponSync) withReferenceRates(ctx context.Context, readings []valuation.IndexReading, from, today kernel.Date) ([]valuation.IndexReading, error) {
+	changes, err := c.Rates.ReferenceRates(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("reference rates: %w", err)
+	}
+	rates, err := ReferenceReadings(changes, from, today)
+	if err != nil {
+		return nil, err
+	}
+	return append(readings, rates...), nil
+}
+
+// cpiReadings returns the CPI readings of years, in order: those of a year
+// kept from an earlier sync, and of at most maxCPIYearsPerSync more, asked
+// of GUS, the earliest first. A year GUS serves in full, twelve months, is
+// kept for later syncs; a later year is left out, to be asked next time.
+func (c *CouponSync) cpiReadings(ctx context.Context, years []int) ([]valuation.IndexReading, error) {
+	var (
+		out   []valuation.IndexReading
+		asked int
+	)
+	for _, y := range years {
+		if kept, ok := c.keptYear(y); ok {
+			out = append(out, kept...)
+			continue
+		}
+		if asked == maxCPIYearsPerSync {
+			continue
+		}
+		asked++
+		cpi, err := c.CPI.CPI(ctx, y)
+		if err != nil {
+			return nil, fmt.Errorf("CPI for %d: %w", y, err)
+		}
+		c.keep(y, cpi)
+		out = append(out, cpi...)
+	}
+	return out, nil
+}
+
+// keptYear returns the CPI readings of year kept from an earlier sync, and
+// whether there are any.
+func (c *CouponSync) keptYear(year int) ([]valuation.IndexReading, bool) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	r, ok := c.kept[year]
+	return r, ok
+}
+
+// keep keeps the CPI readings of year when they are the whole year.
+func (c *CouponSync) keep(year int, readings []valuation.IndexReading) {
+	if len(readings) != monthsPerYear {
+		return
+	}
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if c.kept == nil {
+		c.kept = map[int][]valuation.IndexReading{}
+	}
+	c.kept[year] = slices.Clone(readings)
 }
 
 // earliestPurchase returns the earliest purchase date of the lots of due

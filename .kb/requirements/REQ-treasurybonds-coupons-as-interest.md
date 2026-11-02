@@ -1,6 +1,6 @@
 ---
 title: In a transactions sync, the treasury-bonds connector must book each coupon that fell due after the account's go-live and on or before today on an open lot the request names as interest, keyed per lot and coupon date, with Belka tax withheld by the account's tax wrapper.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-117
 tags:
   - strict-modeling

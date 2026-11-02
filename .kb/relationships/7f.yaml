@@ -482,3 +482,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-530ced11ac29
+  - type: implements
+    from: SYM-ingest-delivery-bond-terms-from
+    to: REQ-ingest-sync-carries-bond-series-terms
+    created_at: 2026-11-02T09:22:18.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6577f8e05e08

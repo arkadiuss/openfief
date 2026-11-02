@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67530fe102af
+  - type: implements
+    from: SYM-treasurybonds-coupon-sync-keep
+    to: REQ-treasurybonds-cpi-years-kept
+    created_at: 2026-11-02T09:22:52.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e56032d5c54e
+  - type: covered_by
+    from: SYM-treasurybonds-coupon-sync-keep
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-11-02T09:22:53.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7aca03350983

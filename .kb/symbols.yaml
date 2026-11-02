@@ -103942,6 +103942,8 @@ symbols:
         target: REQ-ingest-sync-carries-bound-holdings-lots
       - type: implements
         target: REQ-ingest-sync-carries-holdings
+      - type: implements
+        target: REQ-ingest-sync-carries-tax-wrapper
   - id: SYM-ingest-app-holdings-scope-add-terms
     title: HoldingsScope.addTerms
     sourceFile: internal/ingest/app/held.go
@@ -103953,6 +103955,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-bond-series-terms
       - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-app-test-helper-held-ledger
@@ -104094,6 +104098,8 @@ symbols:
         target: REQ-ingest-sync-carries-bound-holdings-lots
       - type: implements
         target: REQ-ingest-sync-carries-holdings
+      - type: implements
+        target: REQ-ingest-sync-carries-tax-wrapper
   - id: SYM-ingest-connectrpc-bond-terms-to
     title: bondTermsTo
     sourceFile: internal/ingest/connectrpc/held.go
@@ -104105,6 +104111,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-bond-series-terms
       - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-connectrpc-instrument-to
@@ -104194,6 +104202,8 @@ symbols:
         target: REQ-ingest-sync-carries-bound-holdings-lots
       - type: implements
         target: REQ-ingest-sync-carries-holdings
+      - type: implements
+        target: REQ-ingest-sync-carries-tax-wrapper
   - id: SYM-ingest-delivery-open-lot-from
     title: openLotFrom
     sourceFile: internal/ingest/delivery/held.go
@@ -104220,6 +104230,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-bond-series-terms
       - type: implements
         target: REQ-ingest-sync-carries-holdings
   - id: SYM-ingest-delivery-instrument-from
@@ -104305,7 +104317,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-due-coupons
@@ -104320,7 +104332,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
+      - type: implements
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
       - type: implements
         target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-due-on-lot
@@ -104335,7 +104349,9 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
+      - type: implements
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
       - type: implements
         target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-terms-of
@@ -104350,7 +104366,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-lot-ref
@@ -104365,7 +104381,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
   - id: SYM-treasurybonds-cpi-years
     title: CPIYears
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104378,7 +104394,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
   - id: SYM-treasurybonds-book-coupons
     title: BookCoupons
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104393,7 +104409,7 @@ symbols:
       - type: implements
         target: REQ-ledger-coupons-as-interest
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-ref
@@ -104408,7 +104424,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
   - id: SYM-treasurybonds-book-coupon
     title: bookCoupon
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104423,7 +104439,9 @@ symbols:
       - type: implements
         target: REQ-ledger-coupons-as-interest
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
+      - type: implements
+        target: REQ-treasurybonds-coupons-keyed-per-lot-and-date
       - type: implements
         target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-sync
@@ -104439,7 +104457,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-sync-coupons
@@ -104454,7 +104472,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-earliest-purchase
@@ -104469,7 +104487,7 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-coupons
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
   - id: SYM-treasurybonds-test-helper-held-lot
     title: heldLot
     sourceFile: internal/ingest/treasurybonds/coupons_test.go
@@ -104631,7 +104649,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-treasury-bonds
       - type: implements
-        target: REQ-treasurybonds-coupons-as-interest
+        target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasury-bonds-test-helper-held-request
@@ -130446,3 +130464,75 @@ symbols:
         target: REQ-ingest-xtb-holdings-mapping
       - type: implements
         target: REQ-ingest-xtb-open-positions-assert-holdings
+  - id: SYM-treasurybonds-coupon-sync-cpi-readings
+    title: CouponSync.cpiReadings
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T09:22:35.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-cpi-years-kept
+  - id: SYM-treasurybonds-coupon-sync-kept-year
+    title: CouponSync.keptYear
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T09:22:42.833Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-cpi-years-kept
+  - id: SYM-treasurybonds-coupon-sync-keep
+    title: CouponSync.keep
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T09:22:50.178Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-cpi-years-kept
+  - id: SYM-treasurybonds-test-coupon-sync-keeps-cpi-years
+    title: TestCouponSyncKeepsCPIYears
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T09:23:06.414Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-test-sync-result
+    title: syncResult
+    sourceFile: internal/ingest/treasurybonds/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T09:42:08.727Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-coupons
+  - id: SYM-treasurybonds-coupon-sync-with-reference-rates
+    title: CouponSync.withReferenceRates
+    sourceFile: internal/ingest/treasurybonds/coupons.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T09:44:38.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-coupons
+      - type: implements
+        target: REQ-treasurybonds-coupons-booked-every-sync
