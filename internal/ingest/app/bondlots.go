@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -41,6 +42,15 @@ type Owners interface {
 	Changeable(ctx context.Context, origin, sessionToken string, accounts []ledger.AccountID) ([]ledger.AccountID, error)
 }
 
+// ErrLotSyncing reports a bond lot deletion refused because the account's
+// connector instance is syncing: the sync may already have read the lot,
+// and would book its coupons after the deletion (D-154).
+var ErrLotSyncing = errors.New("the account's connector is syncing it now; delete the lot again when the sync ends")
+
+// deleteTimeout bounds a bond lot deletion's call and import, which hold
+// the instance's claim; the claim lasts leaseMargin longer.
+const deleteTimeout = 5 * time.Minute
+
 // AccountBindings finds the connector instances bound to an account.
 // *ingest/postgres.Store implements it.
 type AccountBindings interface {
@@ -75,6 +85,12 @@ type BondLots struct {
 	// tells the connector what it booked there (D-154); nil tells it
 	// nothing, so only the lot's own transactions are deleted.
 	Booked AccountTransactions
+	// Claims claims the account's instance against its syncs while Delete
+	// runs, so no sync that read the lot books its coupons after the
+	// deletion (D-154); nil claims nothing.
+	Claims SyncClaims
+	// Now returns the time a claim starts from; Claims needs it.
+	Now func() time.Time
 	// Today returns the date a lot may be bought on at the latest.
 	Today func() kernel.Date
 	// NewBatchID returns a fresh import batch ID.
@@ -121,7 +137,11 @@ func (b *BondLots) Add(ctx context.Context, origin, sessionToken string, account
 // and of each one it booked for the lot since, such as its coupons, so
 // their cash goes too (D-154); Delete imports them as a new transactions
 // batch. Each deletion supersedes its transaction, which the ledger keeps
-// (D-18); deleting it again changes nothing. A key without
+// (D-18); deleting it again changes nothing. Delete holds the instance's
+// sync claim from reading what was booked to importing the deletions, so
+// a sync either ran before it, and what it booked for the lot is deleted
+// too, or runs after it, when the lot is no longer open; while a sync
+// holds the claim Delete wraps ErrLotSyncing. A key without
 // a series or date wraps ingest.ErrInvalidBondLot, and a lot never entered
 // wraps ledger.ErrNothingToDelete; otherwise Delete fails as Add does.
 func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, account ledger.AccountID, key ingest.BondLotKey) (ingest.Batch, error) {
@@ -135,17 +155,71 @@ func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, acco
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}
-	booked, err := b.booked(ctx, instance, account)
+	batch, err := b.deleteClaimed(ctx, instance, account, key)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
+	}
+	return batch, nil
+}
+
+// deleteClaimed claims instance against its syncs, deletes the lot of
+// account that key names (deleteLot), and releases the claim; a failed
+// release fails the deletion too.
+func (b *BondLots) deleteClaimed(ctx context.Context, instance string, account ledger.AccountID, key ingest.BondLotKey) (ingest.Batch, error) {
+	release, err := b.claim(ctx, instance)
+	if err != nil {
+		return ingest.Batch{}, err
+	}
+	batch, err := b.deleteLot(ctx, instance, account, key)
+	if rerr := release(); rerr != nil {
+		return ingest.Batch{}, errors.Join(err, rerr)
+	}
+	if err != nil {
+		return ingest.Batch{}, err
+	}
+	return batch, nil
+}
+
+// claim claims instance against its syncs for deleteTimeout and leaseMargin
+// from now, and returns the function that releases that claim, and no
+// other; while a sync holds it, it fails wrapping ErrLotSyncing. Without
+// Claims it claims nothing.
+func (b *BondLots) claim(ctx context.Context, instance string) (func() error, error) {
+	if b.Claims == nil {
+		return func() error { return nil }, nil
+	}
+	now := b.Now()
+	until := now.Add(deleteTimeout + leaseMargin)
+	if _, err := b.Claims.ClaimSync(ctx, instance, now, until); err != nil {
+		if errors.Is(err, ErrSyncRunning) {
+			return nil, fmt.Errorf("%w: %w", ErrLotSyncing, err)
+		}
+		return nil, fmt.Errorf("claiming %s: %w", instance, err)
+	}
+	return func() error {
+		if err := b.Claims.ReleaseSync(context.WithoutCancel(ctx), instance, until); err != nil {
+			return fmt.Errorf("releasing %s: %w", instance, err)
+		}
+		return nil
+	}, nil
+}
+
+// deleteLot tells instance what it booked in account with key as a deleted
+// lot, and imports and records its delivery, within deleteTimeout.
+func (b *BondLots) deleteLot(ctx context.Context, instance string, account ledger.AccountID, key ingest.BondLotKey) (ingest.Batch, error) {
+	ctx, cancel := context.WithTimeout(ctx, deleteTimeout)
+	defer cancel()
+	booked, err := b.booked(ctx, instance, account)
+	if err != nil {
+		return ingest.Batch{}, err
 	}
 	entries := &ingest.BondLotEntries{Deleted: []ingest.BondLotKey{key}, Booked: booked}
 	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, entries)
 	if err != nil {
-		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
+		return ingest.Batch{}, err
 	}
 	if err := b.Batches.RecordBatch(ctx, instance, &batch); err != nil {
-		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
+		return ingest.Batch{}, fmt.Errorf("recording the batch: %w", err)
 	}
 	return batch, nil
 }

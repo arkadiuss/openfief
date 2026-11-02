@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00164a906bbb
+  - type: executable_for
+    from: SYM-ingest-pg-test-sync-store-holds-and-releases-claims
+    to: TEST-ingest-postgres
+    created_at: 2026-11-02T11:52:11.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae870b668d3

@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2193c508854d
+  - type: executable_for
+    from: SYM-core-test-helper-new-bond-race
+    to: TEST-core-bond-lot-sync-race
+    created_at: 2026-11-02T12:16:59.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c972bc83f641

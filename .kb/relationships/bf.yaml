@@ -727,13 +727,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-edda926dabef
-  - type: validates
-    from: TEST-core-bond-coupons
-    to: REQ-treasurybonds-delivers-coupons
-    created_at: 2026-10-31T18:08:45.482Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c183805f7895
   - type: constrains
     from: REQ-treasurybonds-payout-withdrawal
     to: FACT-SUBJECT-EFFC6623019BD505
@@ -986,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12edbdeca050
+  - type: validates
+    from: TEST-core-bond-coupons
+    to: REQ-treasurybonds-coupons-since-purchase-every-sync
+    created_at: 2026-11-02T11:24:41.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c86579f5a382

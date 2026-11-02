@@ -59,6 +59,15 @@ func (m *memStore) ClaimSync(_ context.Context, instance string, now, until time
 	return c, nil
 }
 
+func (m *memStore) ReleaseSync(_ context.Context, instance string, until time.Time) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	if in := m.get(instance); in.leaseUntil.Equal(until) {
+		in.leaseUntil = time.Time{}
+	}
+	return nil
+}
+
 func (m *memStore) StartBatch(_ context.Context, instance string, b app.OpenBatch, _ time.Time) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
@@ -70,12 +79,12 @@ func (m *memStore) StartBatch(_ context.Context, instance string, b app.OpenBatc
 	return nil
 }
 
-func (m *memStore) CompleteSync(_ context.Context, instance string, b *ingest.Batch, watermark string, next, _ time.Time) error {
+func (m *memStore) CompleteSync(_ context.Context, instance string, b *ingest.Batch, watermark string, next, _, hold time.Time) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	in := m.get(instance)
 	in.claim.Watermark, in.claim.Failures, in.claim.Open = watermark, 0, nil
-	in.next, in.leaseUntil = next, time.Time{}
+	in.next, in.leaseUntil = next, hold
 	m.outcomes = append(m.outcomes, string(b.ID)+":completed")
 	return nil
 }

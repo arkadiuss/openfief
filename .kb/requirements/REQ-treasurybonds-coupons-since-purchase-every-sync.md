@@ -29,15 +29,19 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-143#3
-  recorded_at: '2026-11-01T12:25:40.500Z'
+  recorded_at: '2026-11-02T11:22:28.778Z'
 id: REQ-treasurybonds-coupons-since-purchase-every-sync
 type: req
 ---
 On every sync, the treasury-bonds connector must book every coupon due since each lot's purchase.
 
+## Why this changed
+
+On 2026-11-01 the author recorded D-143, answering the implementation's question #35: the treasury-bonds connector books every coupon due since each lot's purchase on every sync, keyed per lot and coupon date. The decision gives the reason: a sync stays idempotent and a lot entered late gets its earlier coupons. REQ-treasurybonds-delivers-coupons (D-117) had the connector deliver each coupon that fell due since its last sync, which would never deliver the earlier coupons of a lot entered late, so on 2026-11-02 the design session, for the author, had this requirement replace it, with D-143 as the authorization, and reworded D-117 to match.
+
 ## Context
 
-The author recorded it on 2026-11-01, answering the implementation's question #35. The decision gives the reason: a lot entered late gets its earlier coupons. D-117 has the connector deliver coupons as interest (REQ-treasurybonds-delivers-coupons), and D-98 books each lot on its real purchase date. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author recorded it on 2026-11-01, answering the implementation's question #35. The decision gives the reason: a lot entered late gets its earlier coupons. D-117 has the connector deliver coupons as interest, computed with the Polish pack's bond rules from the holdings and open lots its sync request carries, so the core holds no bond logic (REQ-treasurybonds-coupons-as-interest), and D-98 books each lot on its real purchase date. No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

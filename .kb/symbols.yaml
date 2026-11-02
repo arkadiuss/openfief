@@ -39018,7 +39018,11 @@ symbols:
       recorded_at: 2026-10-28T16:52:20.988Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-held
+      - type: covered_by
         target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
       - type: implements
         target: REQ-ingest-core-owns-schedules
       - type: implements
@@ -39708,6 +39712,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
       - type: implements
         target: REQ-ingest-scheduler-retry
       - type: implements
@@ -67059,6 +67065,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi
       - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+      - type: implements
         target: REQ-ingest-bond-lot-service
       - type: implements
         target: REQ-ingest-uploads-through-core
@@ -69193,11 +69201,15 @@ symbols:
       - type: covered_by
         target: TEST-core-bond-coupons
       - type: covered_by
+        target: TEST-core-bond-lot-sync-race
+      - type: covered_by
         target: TEST-core-bond-lots
       - type: implements
         target: REQ-core-bond-lot-service
       - type: implements
         target: REQ-ingest-bond-lot-delete-deletes-coupons
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
       - type: implements
         target: REQ-ingest-uploads-through-core
   - id: SYM-core-with-bond-lot-service
@@ -85677,7 +85689,11 @@ symbols:
       recorded_at: 2026-10-29T17:15:20.258Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-held
+      - type: covered_by
         target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
       - type: implements
         target: REQ-ingest-seeded-account-transactions-mode
       - type: implements
@@ -102700,6 +102716,8 @@ symbols:
       - type: implements
         target: REQ-ingest-bond-lot-delete-entry
       - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+      - type: implements
         target: REQ-ingest-bond-lot-delete-supersedes
   - id: SYM-ingest-app-test-bond-lots-delete
     title: TestBondLotsDelete
@@ -104331,7 +104349,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasurybonds-due-coupons
     title: DueCoupons
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104347,8 +104365,6 @@ symbols:
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-coupons-since-purchase-every-sync
-      - type: implements
-        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-due-on-lot
     title: dueOnLot
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104364,8 +104380,6 @@ symbols:
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-coupons-since-purchase-every-sync
-      - type: implements
-        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-terms-of
     title: termsOf
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104380,7 +104394,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasurybonds-lot-ref
     title: lotRef
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104422,8 +104436,6 @@ symbols:
         target: REQ-ledger-coupons-as-interest
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
-      - type: implements
-        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-ref
     title: couponRef
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104454,8 +104466,6 @@ symbols:
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-coupons-keyed-per-lot-and-date
-      - type: implements
-        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-sync
     title: CouponSync
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104471,7 +104481,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasurybonds-coupon-sync-coupons
     title: CouponSync.Coupons
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104486,7 +104496,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasurybonds-earliest-purchase
     title: earliestPurchase
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104663,7 +104673,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasury-bonds-test-helper-held-request
     title: heldRequest
     sourceFile: plugins/treasury-bonds/connector_test.go
@@ -130842,3 +130852,283 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-bond-coupons
+  - id: SYM-ingest-app-sync-claims
+    status: active
+    title: SyncClaims
+    sourceFile: internal/ingest/app/scheduler.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:50:10.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+  - id: SYM-ingest-app-bond-lots-delete-claimed
+    status: active
+    title: BondLots.deleteClaimed
+    sourceFile: internal/ingest/app/bondlots.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:50:24.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-deletes-coupons
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+  - id: SYM-ingest-pg-store-release-sync
+    status: active
+    title: Store.ReleaseSync
+    sourceFile: internal/ingest/postgres/store.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:50:32.142Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+  - id: SYM-ingest-app-test-helper-sync-during-delete
+    title: syncDuringDelete
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:51:27.925Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-sync-during-delete-import-bond-lots
+    title: syncDuringDelete.ImportBondLots
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:51:36.256Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-bond-lots-delete-holds-the-sync-claim
+    title: TestBondLotsDeleteHoldsTheSyncClaim
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:51:44.337Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-scheduler-reads-holdings-under-its-claim
+    title: TestSchedulerReadsHoldingsUnderItsClaim
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:51:52.456Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-mem-store-release-sync
+    title: memStore.ReleaseSync
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:00.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-pg-test-sync-store-holds-and-releases-claims
+    title: TestSyncStoreHoldsAndReleasesClaims
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:08.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-core-test-helper-gate
+    title: gate
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:15.958Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-new-gate
+    title: newGate
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:23.651Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gate-pass
+    title: gate.pass
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:31.697Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gated-coupons
+    title: gatedCoupons
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:39.646Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gated-coupons-sync
+    title: gatedCoupons.Sync
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:55.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gated-coupons-import-bond-lots
+    title: gatedCoupons.ImportBondLots
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:02.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gated-coupons-syncs-seen
+    title: gatedCoupons.syncsSeen
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:10.658Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-result
+    title: result
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:18.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-sync-bonds
+    title: syncBonds
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:26.443Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-delete-bond-lot
+    title: deleteBondLot
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:33.975Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-current-keys
+    title: currentKeys
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:41.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-bond-race
+    title: bondRace
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:49.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-bond-lot-deletion-during-sync
+    title: TestBondLotDeletionDuringSync
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:57.122Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-sync-during-bond-lot-deletion
+    title: TestSyncDuringBondLotDeletion
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:54:05.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-ingest-app-bond-lots-claim
+    status: active
+    title: BondLots.claim
+    sourceFile: internal/ingest/app/bondlots.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T12:16:39.535Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+  - id: SYM-ingest-app-bond-lots-delete-lot
+    status: active
+    title: BondLots.deleteLot
+    sourceFile: internal/ingest/app/bondlots.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T12:16:48.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-deletes-coupons
+  - id: SYM-core-test-helper-new-bond-race
+    title: newBondRace
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T12:16:56.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race

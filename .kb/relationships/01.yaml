@@ -693,13 +693,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-340e566755b2
   - type: implements
-    from: SYM-treasurybonds-terms-of
-    to: REQ-treasurybonds-delivers-coupons
-    created_at: 2026-10-31T18:08:40.216Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c921f7519370
-  - type: implements
     from: SYM-treasury-bonds-connector-import-bond-lots
     to: REQ-treasurybonds-one-instance-all-accounts
     created_at: 2026-10-31T18:09:45.843Z
@@ -762,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c7cc36246b1
+  - type: implements
+    from: SYM-treasurybonds-terms-of
+    to: REQ-treasurybonds-coupons-since-purchase-every-sync
+    created_at: 2026-11-02T11:24:13.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee5148d3c9f9

@@ -43,7 +43,7 @@ func TestUnsupportedBatches(t *testing.T) {
 		ID: "b-1", Institution: "xtb", Source: app.SourceSync, Mode: ingest.ModeTransactions,
 		Problems: []ingest.Problem{ingest.Unsupported("row 9", "dividend adjustment")},
 	}
-	if err := s.CompleteSync(ctx, "xtb-main", synced, "w-1", t0().Add(time.Hour), t0().Add(time.Minute)); err != nil {
+	if err := s.CompleteSync(ctx, "xtb-main", synced, "w-1", t0().Add(time.Hour), t0().Add(time.Minute), time.Time{}); err != nil {
 		t.Fatalf("CompleteSync: %v", err)
 	}
 	got, err := s.UnsupportedBatches(ctx)

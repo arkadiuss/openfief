@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8f11459fe4d
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-sync-during-delete
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-11-02T11:51:30.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79855dcf1972

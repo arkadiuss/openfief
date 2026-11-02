@@ -1,6 +1,6 @@
 ---
 title: The treasury-bonds connector must deliver each coupon that fell due since its last sync as interest, computed with the Polish pack's bond rules from the holdings and open lots its sync request carries, so that the core holds no bond logic.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

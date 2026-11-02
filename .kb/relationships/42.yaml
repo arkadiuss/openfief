@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2370a908b0bc
+  - type: executable_for
+    from: SYM-core-test-helper-delete-bond-lot
+    to: TEST-core-bond-lot-sync-race
+    created_at: 2026-11-02T11:53:36.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-819ca7c440a5

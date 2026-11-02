@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80fcd3b66c41
+  - type: implements
+    from: SYM-ingest-app-sync-claims
+    to: REQ-ingest-bond-lot-delete-excludes-sync
+    created_at: 2026-11-02T11:50:14.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-530769d42eca
+  - type: covered_by
+    from: SYM-ingest-app-sync-claims
+    to: TEST-ingest-app-held
+    created_at: 2026-11-02T11:50:14.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a039370000d3

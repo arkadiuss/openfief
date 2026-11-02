@@ -136,7 +136,8 @@ func (e *entryCaller) get() (*connectrpc.Client, error) {
 // recorded in the ingest schema. The connector is told the go-live of an
 // account seeded with opening lots, from the ledger, as a sync is, so such
 // an account's opening lots keep their keys (D-98); and a deleted lot's
-// connector learns what it booked in the account from the ledger (D-154).
+// connector learns what it booked in the account from the ledger, while the
+// deletion holds the instance's sync claim in the ingest schema (D-154).
 func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots {
 	store := ingestpg.New(d.pool)
 	connectors := entryConnectors(d, store)
@@ -144,6 +145,8 @@ func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots 
 	return &ingestapp.BondLots{
 		Owners: owners, Bindings: store, Batches: store, Connectors: connectors,
 		Booked:     ledgerImporter{ledger: d.ledger},
+		Claims:     store,
+		Now:        d.now,
 		Today:      d.today,
 		NewBatchID: newBatchID,
 	}

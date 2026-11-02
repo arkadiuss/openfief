@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2778f661afb8
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-attempt
+    to: REQ-ingest-bond-lot-delete-excludes-sync
+    created_at: 2026-11-02T11:50:58.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0fcfee8000
+  - type: covered_by
+    from: SYM-ingest-sched-app-scheduler-attempt
+    to: TEST-ingest-app-held
+    created_at: 2026-11-02T11:50:58.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c5a7b4a14bc

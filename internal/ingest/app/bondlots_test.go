@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"slices"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -271,6 +272,58 @@ func with(r *refusal, change func(r *refusal)) *refusal {
 }
 
 // fakeTransactions are an account's current transactions.
+// syncDuringDelete is a connector that, while a bond lot deletion calls it,
+// tries a sync's claim on its instance, as a sync starting then would.
+type syncDuringDelete struct {
+	*fakeCaller
+
+	claims   *memStore
+	claimErr error
+}
+
+func (s *syncDuringDelete) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, e *ingest.BondLotEntries) (app.Delivery, error) {
+	_, s.claimErr = s.claims.ClaimSync(ctx, instance, t0().Add(time.Minute), t0().Add(time.Hour))
+	return s.fakeCaller.ImportBondLots(ctx, instance, id, e)
+}
+
+// TestBondLotsDeleteHoldsTheSyncClaim checks that a bond lot deletion holds
+// its instance's sync claim while it runs and releases it after, and that
+// it is refused while a sync holds it, so no sync that read the lot books
+// its coupons after the deletion (D-154).
+func TestBondLotsDeleteHoldsTheSyncClaim(t *testing.T) {
+	t.Parallel()
+	inner := &fakeCaller{delivery: bondDelivery(t, bondsAccount)}
+	claims := newMemStore()
+	caller := &syncDuringDelete{fakeCaller: inner, claims: claims}
+	b := bondLots(t, inner, &fakeLedger{summary: ingest.ImportSummary{NewVersions: 2}}, &fakeStores{}, []string{"bonds-main"})
+	b.Connectors.Caller = caller
+	b.Claims, b.Now = claims, t0
+	lot := edoLot(t)
+
+	if _, err := claims.ClaimSync(t.Context(), "bonds-main", t0(), t0().Add(time.Minute)); err != nil {
+		t.Fatalf("a sync's claim: %v", err)
+	}
+	if _, err := b.Delete(t.Context(), "https://ui.example.com", "owner", bondsAccount, lot.Key()); !errors.Is(err, app.ErrLotSyncing) {
+		t.Errorf("Delete while a sync runs = %v, want ErrLotSyncing", err)
+	}
+	if inner.instance != "" {
+		t.Errorf("Delete while a sync runs called %s", inner.instance)
+	}
+	if err := claims.ReleaseSync(t.Context(), "bonds-main", t0().Add(time.Minute)); err != nil {
+		t.Fatalf("ReleaseSync: %v", err)
+	}
+
+	if _, err := b.Delete(t.Context(), "https://ui.example.com", "owner", bondsAccount, lot.Key()); err != nil {
+		t.Fatalf("Delete: %v", err)
+	}
+	if !errors.Is(caller.claimErr, app.ErrSyncRunning) {
+		t.Errorf("a sync claiming the instance during the deletion got %v, want ErrSyncRunning", caller.claimErr)
+	}
+	if _, err := claims.ClaimSync(t.Context(), "bonds-main", t0().Add(time.Minute), t0().Add(time.Hour)); err != nil {
+		t.Errorf("a sync's claim after the deletion: %v, want the claim released", err)
+	}
+}
+
 type fakeTransactions []ledger.Transaction
 
 func (f fakeTransactions) CurrentTransactions(context.Context, ledger.AccountID) ([]ledger.Transaction, error) {

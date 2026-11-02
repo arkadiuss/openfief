@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61fece200fd1
+  - type: implements
+    from: SYM-ingest-app-bond-lots-claim
+    to: REQ-ingest-bond-lot-delete-excludes-sync
+    created_at: 2026-11-02T12:16:42.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4c8aa33f9de
+  - type: covered_by
+    from: SYM-ingest-app-bond-lots-claim
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-11-02T12:16:42.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ffdc549603f
