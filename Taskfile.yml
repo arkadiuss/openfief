@@ -905,7 +905,9 @@ tasks:
       - node scripts/app-icons.mjs
 
   ui:browser:
-    desc: "Browser checks of the built-in UI over its fakes: phone and desktop screenshots in SHOTS, no sideways scroll, installable, service worker (needs Chromium; not part of check)"
+    desc: "Browser checks of the built-in UI over its fakes: phone and desktop screenshots in SHOTS, no sideways scroll, installable, service worker (needs Chromium; not part of check; CI runs it as its own job)"
+    # kibi:install brings playwright-core, with which ui-browser.mjs drives Chromium.
+    deps: [kibi:install]
     vars:
       SHOTS: '{{.SHOTS | default "/tmp/openfief-ui-shots"}}'
     cmds:

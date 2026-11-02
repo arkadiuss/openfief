@@ -138,6 +138,37 @@ jobs:
       - name: task test:pg
         run: task test:pg
 
+  ui-browser:
+    # The built-in UI in a browser over its in-memory fakes (scripts/ui-browser.mjs): no page scrolls sideways at
+    # 360 or 390 px, the phone menu, installability and the service worker. Not in task check, which must not need
+    # Chromium; the runner image's Chrome drives it here, as it does the e2e passkey test.
+    name: task ui:browser
+    needs: plan
+    if: needs.plan.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+          # playwright-core comes from the npm packages (task ui:browser installs them).
+          node: 'true'
+      - name: task ui:browser
+        run: task ui:browser SHOTS="$RUNNER_TEMP/ui-shots"
+      - name: Upload the screenshots
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ui-browser-screenshots
+          path: ${{ runner.temp }}/ui-shots
+          if-no-files-found: ignore
+          retention-days: 7
+
   dco:
     name: DCO sign-off
     if: github.event_name == 'pull_request'
