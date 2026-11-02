@@ -53102,6 +53102,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-auth
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-overview-wipe-triggers
       - type: implements
         target: REQ-ui-session-cookie
   - id: SYM-ui-session-token
@@ -99198,7 +99202,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pwa
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-cached-type
     title: cachedType
     sourceFile: internal/views/ui/pwa.go
@@ -99211,7 +99215,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pwa
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-app-colors
     title: appColors
     sourceFile: internal/views/ui/pwa.go
@@ -99343,7 +99347,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pwa
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-pwa
     title: pwa
     sourceFile: internal/views/ui/pwa.go
@@ -99359,7 +99363,7 @@ symbols:
       - type: implements
         target: REQ-ui-installable-app
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-asset-list
     title: assetList
     sourceFile: internal/views/ui/pwa.go
@@ -99372,7 +99376,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pwa
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-static-assets
     title: staticAssets
     sourceFile: internal/views/ui/pwa.go
@@ -99385,7 +99389,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pwa
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-build-pwa
     title: buildPWA
     sourceFile: internal/views/ui/pwa.go
@@ -99400,7 +99404,7 @@ symbols:
       - type: implements
         target: REQ-ui-installable-app
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-serve-bytes
     title: serveBytes
     sourceFile: internal/views/ui/pwa.go
@@ -99413,7 +99417,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pwa
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-pwa-routes
     title: pwa.routes
     sourceFile: internal/views/ui/pwa.go
@@ -99428,7 +99432,7 @@ symbols:
       - type: implements
         target: REQ-ui-installable-app
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-pages-execute
     title: pages.execute
     sourceFile: internal/views/ui/templates.go
@@ -99441,7 +99445,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pwa
       - type: implements
-        target: REQ-ui-service-worker-static-only
+        target: REQ-ui-service-worker-static-files
   - id: SYM-ui-pwa-test-test-serve-for-browser
     title: TestServeForBrowser
     sourceFile: internal/views/ui/browser_test.go
@@ -126477,3 +126481,197 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-authz
+  - id: SYM-ui-offline-overview
+    title: offlineOverview
+    sourceFile: internal/views/ui/offline.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:22:34.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-keeps-last-overview-only
+      - type: implements
+        target: REQ-ui-offline-never-keeps-records
+  - id: SYM-ui-offline-overview-encode
+    title: offlineOverview.encode
+    sourceFile: internal/views/ui/offline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:22:46.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-overview-contents
+  - id: SYM-ui-offline-values
+    title: offlineValues
+    sourceFile: internal/views/ui/offline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:22:58.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-overview-contents
+  - id: SYM-ui-offline-account
+    title: offlineAccount
+    sourceFile: internal/views/ui/offline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:23:10.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-overview-contents
+  - id: SYM-ui-offline-allocation
+    title: offlineAllocation
+    sourceFile: internal/views/ui/offline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:23:21.800Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-overview-contents
+  - id: SYM-ui-offline-share
+    title: offlineShare
+    sourceFile: internal/views/ui/offline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:23:33.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-overview-contents
+  - id: SYM-ui-three-values
+    title: threeValues
+    sourceFile: internal/views/ui/offline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:23:43.802Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-overview-contents
+  - id: SYM-ui-build-offline-overview
+    title: buildOfflineOverview
+    sourceFile: internal/views/ui/offline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:23:54.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-keeps-last-overview-only
+      - type: implements
+        target: REQ-ui-offline-never-keeps-records
+  - id: SYM-ui-session-end
+    title: sessionEnd
+    sourceFile: internal/views/ui/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:24:05.362Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-offline
+      - type: implements
+        target: REQ-ui-offline-overview-wipe-triggers
+      - type: implements
+        target: REQ-ui-offline-overview-wiped-on-session-end
+  - id: SYM-ui-test-helper-kept-overview
+    title: keptOverview
+    sourceFile: internal/views/ui/offline_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:24:29.391Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-offline
+  - id: SYM-ui-test-build-offline-overview
+    title: TestBuildOfflineOverview
+    sourceFile: internal/views/ui/offline_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:24:42.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-offline
+  - id: SYM-ui-test-offline-overview-keys
+    title: TestOfflineOverviewKeys
+    sourceFile: internal/views/ui/offline_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:24:54.559Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-offline
+  - id: SYM-ui-test-overview-hands-over-only-the-overview
+    title: TestOverviewHandsOverOnlyTheOverview
+    sourceFile: internal/views/ui/offline_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:07.101Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-offline
+  - id: SYM-ui-test-session-end-wipes-the-kept-overview
+    title: TestSessionEndWipesTheKeptOverview
+    sourceFile: internal/views/ui/offline_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:20.039Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-offline
+  - id: SYM-ui-test-session-end
+    title: TestSessionEnd
+    sourceFile: internal/views/ui/offline_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:32.590Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-offline
+  - id: SYM-ui-test-offline-scripts
+    title: TestOfflineScripts
+    sourceFile: internal/views/ui/offline_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:45.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-offline

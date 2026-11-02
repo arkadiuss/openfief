@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f3ee9ee990b
+  - type: implements
+    from: SYM-ui-offline-overview
+    to: REQ-ui-offline-keeps-last-overview-only
+    created_at: 2026-11-02T10:22:37.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecf1cae076d4
+  - type: implements
+    from: SYM-ui-offline-overview
+    to: REQ-ui-offline-never-keeps-records
+    created_at: 2026-11-02T10:22:37.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65842619818e
+  - type: covered_by
+    from: SYM-ui-offline-overview
+    to: TEST-ui-offline
+    created_at: 2026-11-02T10:22:37.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0deae01469cc

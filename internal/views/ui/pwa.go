@@ -192,6 +192,9 @@ type workerConfig struct {
 	Offline string   `json:"offline"`
 	SignIn  []string `json:"signIn"`
 	SignOut string   `json:"signOut"`
+	// OfflineDB is the database holding the overview kept for reading
+	// offline (D-151), which the worker deletes on sign-out.
+	OfflineDB string `json:"offlineDb"`
 }
 
 // pwa holds the installable app's generated files.
@@ -267,7 +270,7 @@ func buildPWA(p *pages, static fs.FS) (*pwa, error) {
 	}
 	cfg, err := json.Marshal(workerConfig{
 		Version: list.version, Cache: cachePrefix + list.version, Assets: list.urls, Offline: offlinePath,
-		SignIn: signInPaths(), SignOut: signOutPath,
+		SignIn: signInPaths(), SignOut: signOutPath, OfflineDB: offlineDB,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("ui: service worker config: %w", err)

@@ -5,6 +5,7 @@
 {{define "content"}}
 {{with $.Session.Attention}}<p class="alert alert-warn"><a href="/attention">{{.}} attention item(s)</a> wait for you: checks that need you, in one place.</p>{{end}}
 {{with .Data}}
+<div hidden data-offline-overview="{{.Offline}}"></div>
 {{if .Flagged}}<p class="alert alert-warn"><a href="/assertions">{{.Flagged}} flagged balance assertion(s)</a> need attention.</p>{{end}}
 {{if .FlaggedPrices}}<p class="alert alert-warn"><a href="/price-checks">{{.FlaggedPrices}} flagged price check(s)</a>: an institution's own price differs from the valuation price.</p>{{end}}
 <section class="card total" aria-labelledby="total-title">

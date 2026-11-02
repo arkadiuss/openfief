@@ -566,13 +566,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea868d31079c
-  - type: implements
-    from: SYM-ui-pwa-cached-type
-    to: REQ-ui-service-worker-static-only
-    created_at: 2026-10-30T08:33:28.771Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1b3c3827aa04
   - type: covered_by
     from: SYM-ui-pwa-cached-type
     to: TEST-ui-pwa
@@ -678,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-626f2639bef8
+  - type: implements
+    from: SYM-ui-pwa-cached-type
+    to: REQ-ui-service-worker-static-files
+    created_at: 2026-11-02T10:26:32.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6053a4ec151

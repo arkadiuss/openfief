@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8548091eb718
+  - type: verified_by
+    from: SCEN-ui-offline-overview-contents
+    to: TEST-ui-offline
+    created_at: 2026-11-02T10:10:59.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e143693ec8b
+  - type: verified_by
+    from: SCEN-ui-offline-overview-contents
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-02T10:10:59.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3256c6a125a6

@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e55c51a98469
+  - type: executable_for
+    from: SYM-ui-test-offline-scripts
+    to: TEST-ui-offline
+    created_at: 2026-11-02T10:25:48.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-331c77d16d4f

@@ -94,6 +94,9 @@ type overviewData struct {
 	Start   chartStartView
 	Value   *valueChartView
 	History performanceView
+	// Offline is what of this overview the installed app keeps for
+	// reading offline (D-151), as JSON.
+	Offline string
 }
 
 // chartData is the data a chart canvas carries for app.js: amounts stay
@@ -173,7 +176,8 @@ func buildAllocation(resp *viewsv1.GetAllocationResponse, d dimension, k valueKi
 // with how many balance assertions and price checks are flagged, every
 // account with its valuation status, the allocation chart and the
 // value over time as the time-weighted return, with the model portfolio
-// while it is on.
+// while it is on. The page also carries what of it the installed app keeps
+// for reading offline (D-151).
 func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) {
 	ctx := r.Context()
 	accounts, err := s.read.ListAccounts(ctx, bearer(&viewsv1.ListAccountsRequest{}, sess))
@@ -216,6 +220,8 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 		s.coreFailed(w, r, "ListPriceChecks", err)
 		return
 	}
+	offline := buildOfflineOverview(&data, sessionEnd(sess.Described), requestFormat(r))
+	data.Offline = offline.encode()
 	s.show(w, r, http.StatusOK, "overview", page{Title: "Overview", Session: &sess, Data: data})
 }
 

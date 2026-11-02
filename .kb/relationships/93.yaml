@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44f8221aef54
+  - type: implements
+    from: SYM-ui-offline-share
+    to: REQ-ui-offline-overview-contents
+    created_at: 2026-11-02T10:23:35.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2278c1e552e7
+  - type: covered_by
+    from: SYM-ui-offline-share
+    to: TEST-ui-offline
+    created_at: 2026-11-02T10:23:35.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-983c511b90e8

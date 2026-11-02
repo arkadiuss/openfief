@@ -2,6 +2,7 @@
 <script src="/static/webauthn.js" defer></script>
 {{end}}
 {{define "content"}}
+<div hidden data-offline-wipe></div>
 {{with .Data}}
 <section class="card signin">
   <div>
