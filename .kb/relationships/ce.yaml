@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dde75c88a2fb
+  - type: implements
+    from: SYM-ingest-xtb-sheet-reader
+    to: REQ-ingest-xtb-reader-bounded
+    created_at: 2026-11-02T21:02:09.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-401c9eb5aff4
+  - type: covered_by
+    from: SYM-ingest-xtb-sheet-reader
+    to: TEST-ingest-xtb-xlsx
+    created_at: 2026-11-02T21:02:09.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-765f6bc05071

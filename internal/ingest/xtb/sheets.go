@@ -69,12 +69,12 @@ func findTable(s *sheet, required ...string) (*table, error) {
 
 // labels returns the column of each text label of a row, the first when a
 // label repeats.
-func labels(cells []cell) map[string]int {
+func labels(cells row) map[string]int {
 	cols := map[string]int{}
-	for i, c := range cells {
-		l := strings.TrimSpace(c.value)
-		if _, dup := cols[l]; c.kind == cellText && l != "" && !dup {
-			cols[l] = i
+	for _, e := range cells {
+		l := strings.TrimSpace(e.cell.value)
+		if _, dup := cols[l]; e.cell.kind == cellText && l != "" && !dup {
+			cols[l] = e.col
 		}
 	}
 	return cols
@@ -91,19 +91,19 @@ func hasAll(cols map[string]int, labels []string) bool {
 }
 
 // firstText returns the first non-empty cell's text, if it is text.
-func firstText(cells []cell) (string, bool) {
-	for _, c := range cells {
-		if c.kind == cellEmpty {
+func firstText(cells row) (string, bool) {
+	for _, e := range cells {
+		if e.cell.kind == cellEmpty {
 			continue
 		}
-		return strings.TrimSpace(c.value), c.kind == cellText
+		return strings.TrimSpace(e.cell.value), e.cell.kind == cellText
 	}
 	return "", false
 }
 
 // empty reports whether every cell is empty or blank text.
-func empty(cells []cell) bool {
-	return !slices.ContainsFunc(cells, func(c cell) bool { return strings.TrimSpace(c.value) != "" })
+func empty(cells row) bool {
+	return !slices.ContainsFunc(cells, func(e entry) bool { return strings.TrimSpace(e.cell.value) != "" })
 }
 
 // record is one data row of a table.
@@ -131,11 +131,10 @@ func (t *table) has(label string) bool {
 // no such column.
 func (r record) cell(label string) cell {
 	i, ok := r.t.cols[label]
-	cells := r.t.sheet.row(r.n)
-	if !ok || i >= len(cells) {
+	if !ok {
 		return cell{}
 	}
-	return cells[i]
+	return r.t.sheet.row(r.n).at(i)
 }
 
 // text returns the trimmed text of column label, or a number as written.
@@ -147,7 +146,8 @@ func (r record) errorf(label string) error {
 }
 
 // decimal returns the exact decimal written in column label: a number cell
-// as the file writes it, or text holding a plain decimal.
+// as the file writes it, or text holding a decimal, either of them possibly
+// in scientific notation such as 1.5E-7, within kernel.ParseDecimal's bounds.
 func (r record) decimal(label string) (kernel.Decimal, error) {
 	c := r.cell(label)
 	if c.kind != cellNumber && c.kind != cellText {
@@ -271,16 +271,18 @@ func reportDate(s *sheet, header int, date1904 bool) (kernel.Date, bool) {
 
 // labelled returns the first non-empty cell after the text cell label in
 // cells, and false when cells hold no such pair.
-func labelled(cells []cell, label string) (cell, bool) {
-	i := slices.IndexFunc(cells, func(c cell) bool { return c.kind == cellText && strings.TrimSpace(c.value) == label })
+func labelled(cells row, label string) (cell, bool) {
+	i := slices.IndexFunc(cells, func(e entry) bool {
+		return e.cell.kind == cellText && strings.TrimSpace(e.cell.value) == label
+	})
 	if i < 0 {
 		return cell{}, false
 	}
-	j := slices.IndexFunc(cells[i+1:], func(c cell) bool { return c.kind != cellEmpty })
+	j := slices.IndexFunc(cells[i+1:], func(e entry) bool { return e.cell.kind != cellEmpty })
 	if j < 0 {
 		return cell{}, false
 	}
-	return cells[i+1+j], true
+	return cells[i+1+j].cell, true
 }
 
 // maxSerialDays bounds a date serial: day 2958465 is 9999-12-31.
@@ -314,12 +316,12 @@ func parseWritten(s string) (time.Time, bool) {
 // the number as text (R-24).
 func accountNumber(s *sheet) (string, error) {
 	cells := s.row(1)
-	for i, c := range cells {
-		if c.kind != cellText || strings.TrimSpace(c.value) != labelAccount {
+	for i, e := range cells {
+		if e.cell.kind != cellText || strings.TrimSpace(e.cell.value) != labelAccount {
 			continue
 		}
 		for _, v := range cells[i+1:] {
-			if n := strings.TrimSpace(v.value); n != "" {
+			if n := strings.TrimSpace(v.cell.value); n != "" {
 				return n, nil
 			}
 		}
@@ -348,11 +350,8 @@ func summaryCurrencies(s *sheet, header int) []string {
 }
 
 // cellAt returns the trimmed value of the cell in column col, or "".
-func cellAt(cells []cell, col int) string {
-	if col >= len(cells) {
-		return ""
-	}
-	return strings.TrimSpace(cells[col].value)
+func cellAt(cells row, col int) string {
+	return strings.TrimSpace(cells.at(col).value)
 }
 
 // shown returns s for an ingest problem's reason: at most 40 printable

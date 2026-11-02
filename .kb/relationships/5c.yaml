@@ -671,3 +671,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa5fb3619224
+  - type: implements
+    from: SYM-ingest-xtb-zip-parts-keep-text
+    to: REQ-ingest-xtb-reader-bounded
+    created_at: 2026-11-02T20:59:00.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2981f778dfe3
+  - type: covered_by
+    from: SYM-ingest-xtb-zip-parts-keep-text
+    to: TEST-ingest-xtb-xlsx
+    created_at: 2026-11-02T20:59:00.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0b4d4063320

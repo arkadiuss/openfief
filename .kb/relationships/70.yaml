@@ -335,20 +335,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80818b44a42d
-  - type: implements
-    from: SYM-ingest-xtb-x-rels
-    to: REQ-ingest-xtb-export-mapping
-    created_at: 2026-10-31T13:34:23.119Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-983c254e1cbd
-  - type: covered_by
-    from: SYM-ingest-xtb-x-rels
-    to: TEST-ingest-xtb-mapper
-    created_at: 2026-10-31T13:34:23.148Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-22c74684f580
   - type: executable_for
     from: SYM-attention-connectapi-test-helper-view-only
     to: TEST-attention-connectapi
