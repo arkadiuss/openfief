@@ -29,6 +29,9 @@ a:hover { text-decoration-thickness: 2px; }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 code { font-family: var(--font-mono); font-size: 0.88em; background: var(--sunken); padding: 0.1em 0.35em; border-radius: var(--radius-input); }
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* Signer identities (keyless: a workflow URL and its issuer) are long, unbroken strings: they wrap anywhere rather
+   than push a phone's page sideways. */
+.mono.ident { white-space: normal; overflow-wrap: anywhere; }
 .muted { color: var(--muted); font-size: 0.92rem; }
 .sr-only {
   position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;

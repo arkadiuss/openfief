@@ -14,8 +14,8 @@
       <td>{{range $i, $c := .Capabilities}}{{if $i}}, {{end}}{{$c}}{{else}}none{{end}}{{if .RequestedCapabilities}}<br><span class="muted">requests {{range $i, $c := .RequestedCapabilities}}{{if $i}}, {{end}}{{$c}}{{end}}</span>{{end}}
         {{- if .MarketData}}<br><span class="pill pill-neutral">Market data</span><br><span class="muted">Each sync tells it every instrument you hold and the model portfolio's targets.</span>
         {{- else if .RequestedMarketData}}<br><span class="muted">Asks to be told every instrument you hold, as a market-data connector; not approved.</span>{{end}}</td>
-      <td>{{template "trust-badge" .Trust}}<br><span class="muted">{{trust .Trust}}{{if .Signer}}: <span class="mono">{{.Signer}}</span>{{end}}</span>{{if .TrustReason}}<br><span class="muted">{{.TrustReason}}</span>{{end}}
-        {{- if .UntrustedSigners}}<br><span class="muted">Signed only by a signer you don't trust:{{range $i, $s := .UntrustedSigners}}{{if $i}},{{end}} <span class="mono">{{$s}}</span>{{end}}. It runs once you add that signer to your trusted signers; if you don't know it, the image may be forged.</span>{{end}}</td>
+      <td>{{template "trust-badge" .Trust}}<br><span class="muted">{{trust .Trust}}{{if .Signer}}: <span class="mono ident">{{.Signer}}</span>{{end}}</span>{{if .TrustReason}}<br><span class="muted">{{.TrustReason}}</span>{{end}}
+        {{- if .UntrustedSigners}}<br><span class="muted">Signed only by a signer you don't trust:{{range $i, $s := .UntrustedSigners}}{{if $i}},{{end}} <span class="mono ident">{{$s}}</span>{{end}}. It runs once you add that signer to your trusted signers; if you don't know it, the image may be forged.</span>{{end}}</td>
       <td>{{.Phase}}</td>
       <td><code title="{{.Image}}">{{.ImageDigest}}</code></td>
     </tr>
