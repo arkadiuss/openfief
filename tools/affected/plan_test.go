@@ -256,3 +256,32 @@ func TestNeedsCode(t *testing.T) {
 		})
 	}
 }
+
+func TestNeedsUI(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		changes []change
+		want    bool
+	}{
+		{"docs only", []change{{path: "docs/concepts/ui.md"}}, false},
+		{"code the UI doesn't render", []change{{path: "internal/ledger/ledger.go"}, {path: "deploy/core/deployment.yaml"}}, false},
+		{"a UI template", []change{{path: "internal/views/ui/web/templates/fragments/plugins.html"}}, true},
+		{"the UI's stylesheet", []change{{path: "internal/views/ui/web/static/style.css"}}, true},
+		{"a view the UI renders", []change{{path: "internal/views/plugins.go"}}, true},
+		{"the UI plugin", []change{{path: "plugins/ui/main.go"}}, true},
+		{"a design token", []change{{path: "docs/x.md"}, {path: "design/tokens.css"}}, true},
+		{"the browser script", []change{{path: "scripts/ui-browser.mjs"}}, true},
+		{"the job", []change{{path: ".github/workflows/ui-browser.yml"}}, true},
+		{"the npm packages", []change{{path: "package-lock.json"}}, true},
+		{"a sibling with the same prefix", []change{{path: "designs/x.md"}, {path: "scripts/ui-browser.mjs.bak"}}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if got := needsUI(tt.changes).code; got != tt.want {
+				t.Errorf("needsUI() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

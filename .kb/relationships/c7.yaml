@@ -447,3 +447,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-843a706424fc
+  - type: implements
+    from: SYM-affected-ui-inputs
+    to: REQ-tooling-ci-ui-browser-checks
+    created_at: 2026-11-02T12:07:35.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45ff5c0a483f
+  - type: covered_by
+    from: SYM-affected-ui-inputs
+    to: TEST-tooling-affected-plan
+    created_at: 2026-11-02T12:07:35.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9bdcf3039fd

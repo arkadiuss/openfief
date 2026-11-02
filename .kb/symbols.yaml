@@ -97998,6 +97998,8 @@ symbols:
         target: TEST-tooling-affected-inputs
       - type: implements
         target: REQ-tooling-ci-docs-only-pr
+      - type: implements
+        target: REQ-tooling-ci-ui-browser-checks
   - id: SYM-affected-ci-decision
     title: ciDecision
     sourceFile: tools/affected/commands.go
@@ -126465,3 +126467,39 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-authz
+  - id: SYM-affected-needs-ui
+    title: needsUI
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T12:07:19.084Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-ci-ui-browser-checks
+  - id: SYM-affected-ui-inputs
+    title: uiInputs
+    sourceFile: tools/affected/commands.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T12:07:32.160Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-affected-plan
+      - type: implements
+        target: REQ-tooling-ci-ui-browser-checks
+  - id: SYM-affected-test-test-needs-ui
+    title: TestNeedsUI
+    sourceFile: tools/affected/plan_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T12:07:58.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-affected-plan

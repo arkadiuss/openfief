@@ -209,9 +209,10 @@ func TestRunCI(t *testing.T) {
 	tests := []struct {
 		name, stdin, event, want string
 	}{
-		{"a push runs everything", "", "push", "code=true\n"},
-		{"a docs-only pull request", "M\x00docs/x.md\x00M\x00.kb/symbols.yaml\x00", "pull_request", "code=false\n"},
-		{"a code pull request", "M\x00docs/x.md\x00M\x00cmd/core/main.go\x00", "pull_request", "code=true\n"},
+		{"a push runs everything", "", "push", "code=true\nui=true\n"},
+		{"a docs-only pull request", "M\x00docs/x.md\x00M\x00.kb/symbols.yaml\x00", "pull_request", "code=false\nui=false\n"},
+		{"a code pull request", "M\x00docs/x.md\x00M\x00cmd/core/main.go\x00", "pull_request", "code=true\nui=false\n"},
+		{"a UI pull request", "M\x00internal/views/ui/web/static/style.css\x00", "pull_request", "code=true\nui=true\n"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

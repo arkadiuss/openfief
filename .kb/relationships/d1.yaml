@@ -594,3 +594,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43900ba8ed31
+  - type: implements
+    from: SYM-affected-needs-ui
+    to: REQ-tooling-ci-ui-browser-checks
+    created_at: 2026-11-02T12:07:21.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fcc331c35e2
+  - type: covered_by
+    from: SYM-affected-needs-ui
+    to: TEST-tooling-affected-plan
+    created_at: 2026-11-02T12:07:21.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7977ae5c8cb

@@ -84,9 +84,18 @@ jobs:
         env:
           VERSION: ${{ inputs.version }}
 
+  ui-browser:
+    # The built-in UI's browser checks on the release ref (docs/dev/testing.md): a release needs them green, so
+    # no image is built, signed or published until they pass.
+    name: ui-browser
+    needs: plan
+    permissions:
+      contents: read
+    uses: ./.github/workflows/ui-browser.yml
+
   plugin-images:
     name: plugin images
-    needs: plan
+    needs: [plan, ui-browser]
     permissions:
       contents: read
       packages: write

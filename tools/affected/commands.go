@@ -103,8 +103,9 @@ func writeLines(w io.Writer, lines []string) error {
 }
 
 // runCI reads `git diff --name-status --no-renames -z <base> HEAD` on standard input and prints code=true when a
-// CI run needs the end-to-end and PostgreSQL jobs: always outside a pull request (a push to main runs the whole
-// suite), and for a pull request that changes anything other than documentation and requirements.
+// CI run needs the end-to-end and PostgreSQL jobs, and ui=true when it needs the UI's browser checks: always
+// outside a pull request (a push to main runs the whole suite), and for a pull request that changes anything
+// other than documentation and requirements, or anything the UI's browser checks read (uiInputs).
 func runCI(args []string, e *env) error {
 	flags := flag.NewFlagSet("ci", flag.ContinueOnError)
 	flags.SetOutput(e.stderr)
@@ -112,18 +113,20 @@ func runCI(args []string, e *env) error {
 	if err := flags.Parse(args); err != nil {
 		return fmt.Errorf("ci: %w", err)
 	}
-	d := ciDecision{code: true, why: "a " + *event + " run runs the whole suite"}
+	whole := ciDecision{code: true, why: "a " + *event + " run runs the whole suite"}
+	d, ui := whole, whole
 	if *event == "pull_request" {
 		data, err := io.ReadAll(e.stdin)
 		if err != nil {
 			return fmt.Errorf("ci: %w", err)
 		}
-		d = needsCode(parseNameStatus(data))
+		changes := parseNameStatus(data)
+		d, ui = needsCode(changes), needsUI(changes)
 	}
-	if _, err := io.WriteString(e.stderr, "affected: "+d.why+"\n"); err != nil {
+	if _, err := io.WriteString(e.stderr, "affected: "+d.why+"\naffected: "+ui.why+"\n"); err != nil {
 		return fmt.Errorf("ci: %w", err)
 	}
-	return writeLines(e.stdout, []string{fmt.Sprintf("code=%t", d.code)})
+	return writeLines(e.stdout, []string{fmt.Sprintf("code=%t", d.code), fmt.Sprintf("ui=%t", ui.code)})
 }
 
 // ciDecision is whether a CI run needs the end-to-end and PostgreSQL jobs, and why.
@@ -140,6 +143,27 @@ func needsCode(changes []change) ciDecision {
 		}
 	}
 	return ciDecision{why: fmt.Sprintf("all %d changed paths are documentation or requirements: the end-to-end and PostgreSQL jobs are skipped", len(changes))}
+}
+
+// uiInputs are what the UI's browser checks (task ui:browser) read: the UI and the views it renders, its plugin,
+// the design system it serves, the script and the job that drive the browser, and the files they install from.
+// Anything else reaches the UI only through them, and a push to main runs the checks whatever changed.
+func uiInputs() []string {
+	return []string{
+		"internal/views", "plugins/ui", "design", "scripts/ui-browser.mjs",
+		".github/workflows/ui-browser.yml", ".github/workflows/ci.yml", ".github/actions/setup",
+		"package.json", "package-lock.json", "patches", "Taskfile.yml", "go.mod", "go.sum",
+	}
+}
+
+// needsUI decides whether a change set can affect what the UI's browser checks see.
+func needsUI(changes []change) ciDecision {
+	for _, c := range changes {
+		if touches([]string{c.path}, uiInputs()) {
+			return ciDecision{code: true, why: c.path + " can change the UI in a browser: its browser checks run"}
+		}
+	}
+	return ciDecision{why: fmt.Sprintf("none of the %d changed paths can change the UI in a browser: its browser checks are skipped", len(changes))}
 }
 
 // runImages reads what scripts/ci-images-select.sh wrote (the image matrix, each image's earlier build and the

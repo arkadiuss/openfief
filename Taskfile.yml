@@ -590,7 +590,7 @@ tasks:
       - PATH='{{.BIN}}':"$PATH" bash scripts/ci-images-select.sh '{{.PREFIX}}' '{{.MODE}}' '{{.ARG}}' '{{.GO_MODULES}}'
 
   ci:plan:
-    desc: 'Whether a CI run needs the end-to-end and PostgreSQL jobs, as the GitHub output code=true|false: always outside a pull request, and for a pull request that changes more than docs and requirements, e.g. task ci:plan EVENT=pull_request BASE=origin/main'
+    desc: 'Whether a CI run needs the end-to-end and PostgreSQL jobs (code=true|false) and the UI''s browser checks (ui=true|false), as GitHub outputs: always outside a pull request; for a pull request, when it changes more than docs and requirements, or what ui:browser reads, e.g. task ci:plan EVENT=pull_request BASE=origin/main'
     silent: true
     requires:
       vars: [EVENT]

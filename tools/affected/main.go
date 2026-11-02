@@ -7,8 +7,8 @@
 //	affected images -in DIR -modules "DIRS" -mode reuse|base|all
 //
 // hook prints the task targets the staged change needs; ci prints whether a CI run needs the end-to-end and
-// PostgreSQL jobs; images prints which images CI builds and which keep their signed digest. Every run says
-// what it selected and why on standard error.
+// PostgreSQL jobs and the UI's browser checks; images prints which images CI builds and which keep their signed
+// digest. Every run says what it selected and why on standard error.
 //
 // It never runs git, go, cosign or task itself: scripts/check-commit.sh and scripts/ci-images-select.sh
 // collect their output into DIR, and run what it prints.
