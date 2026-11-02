@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58d56bc4da7e
+  - type: constrains
+    from: REQ-identity-owner-enrolls-viewers
+    to: FACT-SUBJECT-0CCD0586630E26D4
+    created_at: 2026-11-02T00:53:24.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c89c4dd9ca14
+  - type: requires_property
+    from: REQ-identity-owner-enrolls-viewers
+    to: FACT-PROP-47364CFD07DC48AE
+    created_at: 2026-11-02T00:53:24.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c5946245fa
+  - type: supersedes
+    from: REQ-identity-owner-enrolls-viewers
+    to: REQ-identity-single-owner
+    created_at: 2026-11-02T00:53:24.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-510ac396e420

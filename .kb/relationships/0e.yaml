@@ -531,13 +531,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1864a39f340
-  - type: implements
-    from: SYM-ingest-pg-store-start
-    to: REQ-ingest-opening-upload-starts-account
-    created_at: 2026-11-01T17:26:02.959Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9267fe000803
   - type: covered_by
     from: SYM-ingest-pg-store-start
     to: TEST-core-xtb-opening
@@ -545,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8bbb6d30f53
+  - type: constrains
+    from: REQ-ingest-ambiguous-currency-positions-wait
+    to: FACT-SUBJECT-D71C9249729CE51B
+    created_at: 2026-11-02T00:56:31.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd34558f79fa
+  - type: requires_property
+    from: REQ-ingest-ambiguous-currency-positions-wait
+    to: FACT-PROP-72B387926E5333CA
+    created_at: 2026-11-02T00:56:31.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd25e9dc9577
+  - type: implements
+    from: SYM-ingest-pg-store-start
+    to: REQ-ingest-opening-upload-records-go-live
+    created_at: 2026-11-02T01:04:40.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27a5bb54d36e

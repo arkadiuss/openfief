@@ -811,13 +811,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0752444085cc
-  - type: implements
-    from: SYM-views-connectapi-pb-attention-item
-    to: REQ-identity-read-access-no-broker-account-numbers
-    created_at: 2026-11-01T10:13:14.608Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-622685df91ca
   - type: covered_by
     from: SYM-views-connectapi-pb-attention-item
     to: TEST-views-connectapi-read-access
@@ -909,3 +902,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f755259fd64d
+  - type: constrains
+    from: REQ-ledger-first-payout-setting-whole-history
+    to: FACT-SUBJECT-FD62B4328BE42BDF
+    created_at: 2026-11-02T00:55:13.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d44235b8025
+  - type: requires_property
+    from: REQ-ledger-first-payout-setting-whole-history
+    to: FACT-PROP-0211B8CCA4612DAD
+    created_at: 2026-11-02T00:55:14.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfd15b856c64
+  - type: supersedes
+    from: REQ-ledger-first-payout-setting-whole-history
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-02T00:55:14.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76bcfc06fb34
+  - type: specified_by
+    from: REQ-ledger-first-payout-setting-whole-history
+    to: SCEN-ledger-payout-setting-history
+    created_at: 2026-11-02T00:55:14.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af9e88edc3d3
+  - type: specified_by
+    from: REQ-ledger-first-payout-setting-whole-history
+    to: SCEN-ingest-bond-payout-change-from-day
+    created_at: 2026-11-02T00:55:14.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20c4e2de7cfa
+  - type: implements
+    from: SYM-views-connectapi-pb-attention-item
+    to: REQ-identity-read-access-never-broker-account-numbers
+    created_at: 2026-11-02T01:19:21.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9942bee2f44c

@@ -489,3 +489,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96d3da139a08
+  - type: constrains
+    from: REQ-identity-read-access-never-state-change
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-02T00:53:49.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6663ea91c246
+  - type: requires_property
+    from: REQ-identity-read-access-never-state-change
+    to: FACT-PROP-6C943A1576200D98
+    created_at: 2026-11-02T00:53:49.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-198ec0bab4aa
+  - type: supersedes
+    from: REQ-identity-read-access-never-state-change
+    to: REQ-identity-read-access-no-state-change
+    created_at: 2026-11-02T00:53:49.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9edea7c9819c

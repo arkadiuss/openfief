@@ -678,13 +678,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f2db44963f2
-  - type: implements
-    from: SYM-ingest-app-connectors-go-live
-    to: REQ-ingest-opening-upload-starts-account
-    created_at: 2026-11-01T17:21:43.452Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-780654ca22d9
   - type: covered_by
     from: SYM-ingest-app-connectors-go-live
     to: TEST-ingest-app-starts
@@ -692,13 +685,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c7ad93d2353e
-  - type: implements
-    from: SYM-ledger-pg-stored-period
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:27:31.840Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ac0c3164c936
   - type: covered_by
     from: SYM-ledger-pg-stored-period
     to: TEST-ledger-pg-store
@@ -706,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63cdc9628c4c
+  - type: implements
+    from: SYM-ingest-app-connectors-go-live
+    to: REQ-ingest-opening-upload-records-go-live
+    created_at: 2026-11-02T01:03:59.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c316aa3fd94
+  - type: implements
+    from: SYM-ledger-pg-stored-period
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:07:20.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84aecafd4602

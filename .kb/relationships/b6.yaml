@@ -435,8 +435,8 @@ relationships:
     id: rel-a2a4c8a003bc
   - type: validates
     from: TEST-core-read-tokens
-    to: REQ-identity-read-access-holders
-    created_at: 2026-11-01T10:06:26.201Z
+    to: REQ-identity-read-access-holders-incl-owner
+    created_at: 2026-11-02T01:20:12.210Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-0f6cf36d75bb
+    id: rel-73fcb3a54fc0

@@ -1,6 +1,6 @@
 ---
 title: Read access must never include a broker account number.
-status: open
+status: closed
 text_ref: design-decisions:D-137#3
 tags:
   - strict-modeling

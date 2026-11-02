@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a23697a61ac
+  - type: constrains
+    from: REQ-ui-charts-start-default-clears-setting
+    to: FACT-SUBJECT-9106B40681FB54C7
+    created_at: 2026-11-02T00:56:03.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46846e7e7fcf
+  - type: requires_property
+    from: REQ-ui-charts-start-default-clears-setting
+    to: FACT-PROP-268E27E107EBD760
+    created_at: 2026-11-02T00:56:03.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44af878793b0

@@ -622,3 +622,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5bf152ee1926
+  - type: constrains
+    from: REQ-views-unbound-attention-owner-only
+    to: FACT-SUBJECT-A9563048F0AE7021
+    created_at: 2026-11-02T00:55:40.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb8774c23cc8
+  - type: requires_property
+    from: REQ-views-unbound-attention-owner-only
+    to: FACT-PROP-8E195F11407B01E2
+    created_at: 2026-11-02T00:55:40.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7128bfb9258

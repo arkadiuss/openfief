@@ -671,10 +671,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17832f02556c
-  - type: implements
-    from: SYM-ingest-xtb-report-date
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:51:16.253Z
+  - type: constrains
+    from: REQ-ingest-payout-change-rebooks-after-date
+    to: FACT-SUBJECT-89703181979CBC78
+    created_at: 2026-11-02T00:55:29.605Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-d0984e1c16d3
+    id: rel-8d2aad921cdf
+  - type: requires_property
+    from: REQ-ingest-payout-change-rebooks-after-date
+    to: FACT-PROP-AC98FE1AAFE0A849
+    created_at: 2026-11-02T00:55:29.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4579bf129ca
+  - type: supersedes
+    from: REQ-ingest-payout-change-rebooks-after-date
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-02T00:55:29.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-317e274620b0
+  - type: supersedes
+    from: REQ-ingest-payout-change-rebooks-after-date
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-02T00:55:29.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb029cda8017
+  - type: specified_by
+    from: REQ-ingest-payout-change-rebooks-after-date
+    to: SCEN-ingest-bond-payout-change-from-day
+    created_at: 2026-11-02T00:55:29.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b59450f494a6
+  - type: specified_by
+    from: REQ-ingest-payout-change-rebooks-after-date
+    to: SCEN-ingest-sync-carries-payout-history
+    created_at: 2026-11-02T00:55:29.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d5147dd3eb1
+  - type: implements
+    from: SYM-ingest-xtb-report-date
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T01:00:58.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c797987d80b6

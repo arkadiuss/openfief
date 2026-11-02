@@ -505,8 +505,8 @@ relationships:
     id: rel-0f72c366f791
   - type: implements
     from: SYM-ingest-connectapi-payout-from
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:31:52.916Z
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:09:13.274Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-497d1a9bceb1
+    id: rel-6e1c8ea15c9d

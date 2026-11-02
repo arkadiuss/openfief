@@ -1,6 +1,6 @@
 ---
 title: The owner must be able to change a hand-entered bond account's payout setting from a day given, today when none is and never later, and the payout withdrawals booked from that day that the new setting no longer makes must be superseded.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-162
 tags:
   - strict-modeling

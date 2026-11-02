@@ -692,13 +692,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6741927d0e3a
-  - type: implements
-    from: SYM-ingest-app-account-starts
-    to: REQ-ingest-opening-upload-starts-account
-    created_at: 2026-11-01T17:21:36.635Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f0b80c3effe2
   - type: covered_by
     from: SYM-ingest-app-account-starts
     to: TEST-ingest-app-starts
@@ -707,9 +700,16 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-6a0121955944
   - type: implements
-    from: SYM-ledger-parse-payout
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:30:09.853Z
+    from: SYM-ingest-app-account-starts
+    to: REQ-ingest-opening-upload-records-go-live
+    created_at: 2026-11-02T01:03:49.221Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-98807b7b272b
+    id: rel-8b5b6a49c873
+  - type: implements
+    from: SYM-ledger-parse-payout
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:05:18.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcce24f8f70b

@@ -720,13 +720,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6738b4fefe49
-  - type: implements
-    from: SYM-viewsv1-bond-payout
-    to: REQ-ui-bond-payout-change-date
-    created_at: 2026-11-01T17:36:38.954Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-75ee95daafac
   - type: validates
     from: TEST-cmd-openfief
     to: REQ-plugins-untrusted-signer-named
@@ -734,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5027ed59415
+  - type: implements
+    from: SYM-viewsv1-bond-payout
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:17:18.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84be1f9a0103

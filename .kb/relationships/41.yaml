@@ -643,13 +643,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62df83ae6905
-  - type: implements
-    from: SYM-ingest-connectrpc-date-to
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:23:19.946Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-019f1062ef15
   - type: covered_by
     from: SYM-ingest-connectrpc-date-to
     to: TEST-ingest-connectrpc-held
@@ -664,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-335ddb59d1df
+  - type: implements
+    from: SYM-ingest-connectrpc-date-to
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:15:58.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d3cd878b26d

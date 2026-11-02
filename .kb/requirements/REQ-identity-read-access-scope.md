@@ -1,6 +1,6 @@
 ---
 title: 'Read access must be everything the read API serves: sleeves, accounts, transactions, lots, holdings, cash, valuations with their three values, the allocation, performance, the model portfolio while it is on, price checks, transfers, attention items and the installed plugins.'
-status: open
+status: closed
 text_ref: design-decisions:D-137#1
 tags:
   - strict-modeling

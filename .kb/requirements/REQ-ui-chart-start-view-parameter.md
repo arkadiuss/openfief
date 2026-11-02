@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must keep the charts' start the owner chose in the page's URL, as a view parameter shared by the page's time charts, with a link back to the default, and must not store it as a setting.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-138
 tags:
   - strict-modeling

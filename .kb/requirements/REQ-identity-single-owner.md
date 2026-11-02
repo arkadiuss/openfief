@@ -1,6 +1,6 @@
 ---
 title: OpenFief must have a single user, the owner, with no other users and no tenants.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

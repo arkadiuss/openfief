@@ -741,13 +741,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-659ec11d3bee
-  - type: implements
-    from: SYM-ingest-ticker-entry-priced-by-listing
-    to: REQ-ingest-ticker-trading-currency
-    created_at: 2026-11-01T17:26:30.615Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-232e1a4ca57b
   - type: covered_by
     from: SYM-ingest-ticker-entry-priced-by-listing
     to: TEST-ingest-listing
@@ -755,13 +748,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e77b7fd601b3
-  - type: implements
-    from: SYM-ledger-payout-period
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:26:51.622Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e33f2faba19d
   - type: covered_by
     from: SYM-ledger-payout-period
     to: TEST-ledger-payout
@@ -769,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9bf621b3c2fc
+  - type: implements
+    from: SYM-ingest-ticker-entry-priced-by-listing
+    to: REQ-ingest-xtb-opening-lot-cost-trading-currency
+    created_at: 2026-11-02T01:03:39.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddd411c6607f
+  - type: implements
+    from: SYM-ledger-payout-period
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:05:38.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-509e2bcc61ca

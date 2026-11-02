@@ -517,13 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebfca044c4b6
-  - type: implements
-    from: SYM-viewsv1-bond-payout-number
-    to: REQ-ui-bond-payout-change-date
-    created_at: 2026-11-01T17:37:30.999Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b5fe0b801fdb
   - type: executable_for
     from: SYM-views-connectapi-test-ra-read-access
     to: TEST-views-connectapi-read-access
@@ -545,3 +538,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-29c3cf513968
+  - type: implements
+    from: SYM-viewsv1-bond-payout-number
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:18:06.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63f5b31d62a3

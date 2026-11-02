@@ -860,10 +860,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f675c3d3f4df
-  - type: implements
-    from: SYM-viewsv1-account-get-bond-payout
-    to: REQ-ui-bond-payout-change-date
-    created_at: 2026-11-01T17:36:16.151Z
+  - type: constrains
+    from: REQ-identity-authz-readers-view-every-account
+    to: FACT-SUBJECT-D9B8F3ECCEFE14B1
+    created_at: 2026-11-02T00:57:07.706Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-a306afe4695d
+    id: rel-60ff2a45f07e
+  - type: requires_property
+    from: REQ-identity-authz-readers-view-every-account
+    to: FACT-PROP-144491712AC22FF5
+    created_at: 2026-11-02T00:57:07.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aac7f4cf126
+  - type: implements
+    from: SYM-viewsv1-account-get-bond-payout
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:16:54.152Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2732bcb4fdbd

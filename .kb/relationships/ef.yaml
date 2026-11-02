@@ -657,13 +657,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-583f21f89238
-  - type: implements
-    from: SYM-connectorv1-instrument-proposal-get-currency
-    to: REQ-ingest-ticker-trading-currency
-    created_at: 2026-11-01T17:28:01.073Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3094a370463f
   - type: covered_by
     from: SYM-connectorv1-instrument-proposal-get-currency
     to: TEST-ingest-connectrpc-tickers
@@ -685,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b84aae7f193e
+  - type: implements
+    from: SYM-connectorv1-instrument-proposal-get-currency
+    to: REQ-ingest-trading-currency-listing-or-exchange
+    created_at: 2026-11-02T01:01:28.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f01455bc142e

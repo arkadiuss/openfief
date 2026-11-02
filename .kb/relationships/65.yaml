@@ -673,8 +673,8 @@ relationships:
     id: rel-ab27867f3927
   - type: implements
     from: SYM-viewsv1-bond-payout-enum
-    to: REQ-ui-bond-payout-change-date
-    created_at: 2026-11-01T17:37:06.223Z
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:17:42.787Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-84d7869c149d
+    id: rel-ead39905f3a6

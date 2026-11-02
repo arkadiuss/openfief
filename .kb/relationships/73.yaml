@@ -573,3 +573,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aedbefc58df5
+  - type: constrains
+    from: REQ-ingest-trading-currency-listing-or-exchange
+    to: FACT-SUBJECT-D71C9249729CE51B
+    created_at: 2026-11-02T00:54:17.626Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c85f6e90844
+  - type: requires_property
+    from: REQ-ingest-trading-currency-listing-or-exchange
+    to: FACT-PROP-C135350DD37FAECA
+    created_at: 2026-11-02T00:54:17.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a88e6dcaacd9
+  - type: supersedes
+    from: REQ-ingest-trading-currency-listing-or-exchange
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-02T00:54:17.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e3f36e9fb0e
+  - type: specified_by
+    from: REQ-ingest-trading-currency-listing-or-exchange
+    to: SCEN-ingest-ticker-trading-currency
+    created_at: 2026-11-02T00:54:17.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dbdc7968d2d
+  - type: constrains
+    from: REQ-ingest-xtb-opening-lot-cost-trading-currency
+    to: FACT-SUBJECT-8A8B03F40D5773D9
+    created_at: 2026-11-02T00:54:23.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35ac8979cf41
+  - type: requires_property
+    from: REQ-ingest-xtb-opening-lot-cost-trading-currency
+    to: FACT-PROP-D15EC4765A277319
+    created_at: 2026-11-02T00:54:23.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6171b0513c2
+  - type: supersedes
+    from: REQ-ingest-xtb-opening-lot-cost-trading-currency
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-02T00:54:23.500Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4ed8b886f3b
+  - type: specified_by
+    from: REQ-ingest-xtb-opening-lot-cost-trading-currency
+    to: SCEN-ingest-ticker-trading-currency
+    created_at: 2026-11-02T00:54:23.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f7580830e2a

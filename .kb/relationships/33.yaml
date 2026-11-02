@@ -517,13 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d7a46d849e0
-  - type: implements
-    from: SYM-attention-read-subject
-    to: REQ-identity-read-access-no-broker-account-numbers
-    created_at: 2026-11-01T10:13:07.000Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bf5effd78b5c
   - type: covered_by
     from: SYM-attention-read-subject
     to: TEST-attention-read-subject
@@ -573,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d7f75ae92f0
+  - type: implements
+    from: SYM-attention-read-subject
+    to: REQ-identity-read-access-never-broker-account-numbers
+    created_at: 2026-11-02T01:19:10.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c39bb6aa5695

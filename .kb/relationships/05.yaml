@@ -496,10 +496,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb5f3c39b5c8
-  - type: implements
-    from: SYM-views-connectapi-pb-payout
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:31:22.056Z
+  - type: constrains
+    from: REQ-demo-reseeded-before-first-release
+    to: FACT-SUBJECT-8445428BF4E0E148
+    created_at: 2026-11-02T00:55:02.317Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-a6866cef83a5
+    id: rel-10c74a2ff946
+  - type: requires_property
+    from: REQ-demo-reseeded-before-first-release
+    to: FACT-PROP-7E39466CC0E53195
+    created_at: 2026-11-02T00:55:02.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6ee4d890952
+  - type: supersedes
+    from: REQ-demo-reseeded-before-first-release
+    to: REQ-demo-reseed-on-new-loader
+    created_at: 2026-11-02T00:55:02.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51d5f030e1c7
+  - type: specified_by
+    from: REQ-demo-reseeded-before-first-release
+    to: SCEN-demo-reseed-on-new-loader
+    created_at: 2026-11-02T00:55:02.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-738ca1245c47
+  - type: implements
+    from: SYM-views-connectapi-pb-payout
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:07:30.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11fae1cd0933

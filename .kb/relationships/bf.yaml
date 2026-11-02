@@ -917,16 +917,16 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e6fdb0d914f7
   - type: implements
-    from: SYM-ingest-xtb-utc-date
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:51:27.073Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5a319a4d9464
-  - type: implements
     from: SYM-ingest-app-bond-series
     to: REQ-ingest-market-data-scope-declared
     created_at: 2026-11-01T10:07:43.791Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3fcdf7d6a885
+  - type: implements
+    from: SYM-ingest-xtb-utc-date
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T01:01:08.942Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f818cd950ae

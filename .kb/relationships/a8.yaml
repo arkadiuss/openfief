@@ -839,13 +839,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31d2cd128972
-  - type: implements
-    from: SYM-ingest-listing
-    to: REQ-ingest-ticker-trading-currency
-    created_at: 2026-11-01T17:23:46.838Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-00e3f5bb0578
   - type: covered_by
     from: SYM-ingest-listing
     to: TEST-ingest-listing
@@ -853,10 +846,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9930aedd6002
-  - type: implements
-    from: SYM-ingestv1-bond-payout-string
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:33:28.421Z
+  - type: constrains
+    from: REQ-views-unbound-attention-names-instance-only
+    to: FACT-SUBJECT-A9563048F0AE7021
+    created_at: 2026-11-02T00:55:35.406Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-25df8b915531
+    id: rel-df2cc032c985
+  - type: requires_property
+    from: REQ-views-unbound-attention-names-instance-only
+    to: FACT-PROP-4595A40EA82F16FD
+    created_at: 2026-11-02T00:55:35.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c1380f99c1c
+  - type: implements
+    from: SYM-ingest-listing
+    to: REQ-ingest-trading-currency-listing-or-exchange
+    created_at: 2026-11-02T01:02:08.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5df32f3dbd8e
+  - type: implements
+    from: SYM-ingestv1-bond-payout-string
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:11:29.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26d9d39579dc

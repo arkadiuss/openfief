@@ -603,8 +603,8 @@ relationships:
     id: rel-6b831984f1c9
   - type: implements
     from: SYM-viewsv1-bond-payout-string
-    to: REQ-ui-bond-payout-change-date
-    created_at: 2026-11-01T17:37:44.058Z
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:18:18.617Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-d95df722775b
+    id: rel-5d547c65e16f

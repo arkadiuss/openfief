@@ -1,6 +1,6 @@
 ---
 title: The demo loader must reseed a marked demo database that another build of the loader filled, so the demo's data always matches the code deployed, without migrating what an older build stored.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-161
 tags:
   - strict-modeling

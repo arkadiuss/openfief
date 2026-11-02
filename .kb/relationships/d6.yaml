@@ -965,13 +965,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-619124b084d9
-  - type: implements
-    from: SYM-ingest-connectapi-payout-from-day
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:22:44.500Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1e98b41b6a43
   - type: covered_by
     from: SYM-ingest-connectapi-payout-from-day
     to: TEST-ingest-connectapi-accounts
@@ -1000,3 +993,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3511725fc4ea
+  - type: implements
+    from: SYM-ingest-connectapi-payout-from-day
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:09:26.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6e48c88f4d9

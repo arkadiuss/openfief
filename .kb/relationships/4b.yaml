@@ -580,13 +580,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d6b474752c9
-  - type: implements
-    from: SYM-ingest-stale-payouts
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:25:29.770Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5dd705855c13
   - type: covered_by
     from: SYM-ingest-stale-payouts
     to: TEST-ingest-payout
@@ -594,10 +587,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-967afc7a4bc7
-  - type: implements
-    from: SYM-connectorv1-bond-payout-descriptor
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:34:40.986Z
+  - type: constrains
+    from: REQ-ingest-owner-picks-ambiguous-trading-currency
+    to: FACT-SUBJECT-D71C9249729CE51B
+    created_at: 2026-11-02T00:56:25.562Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-fe3ba9f0938a
+    id: rel-a4277ac2fd0e
+  - type: requires_property
+    from: REQ-ingest-owner-picks-ambiguous-trading-currency
+    to: FACT-PROP-C30671095DA3D609
+    created_at: 2026-11-02T00:56:25.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b121dd422a9b
+  - type: supersedes
+    from: REQ-ingest-owner-picks-ambiguous-trading-currency
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-02T00:56:25.664Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-085af8cb0071
+  - type: implements
+    from: SYM-ingest-stale-payouts
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:09:52.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbe49eb94a5a
+  - type: implements
+    from: SYM-connectorv1-bond-payout-descriptor
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:13:17.792Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d22cb1789f5

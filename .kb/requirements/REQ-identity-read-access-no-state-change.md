@@ -1,6 +1,6 @@
 ---
 title: Read access must never include any change of state.
-status: open
+status: closed
 text_ref: design-decisions:D-137#4
 tags:
   - strict-modeling

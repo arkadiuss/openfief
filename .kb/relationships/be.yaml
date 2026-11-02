@@ -706,13 +706,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53d0062fbeb2
-  - type: implements
-    from: SYM-ingest-minor-unit-of
-    to: REQ-ingest-ticker-trading-currency
-    created_at: 2026-11-01T17:23:53.723Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6375950995e2
   - type: covered_by
     from: SYM-ingest-minor-unit-of
     to: TEST-ingest-listing
@@ -720,13 +713,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1b1e403e85a
-  - type: implements
-    from: SYM-ingest-check-payout-from
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:25:22.803Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5a5f678eda05
   - type: covered_by
     from: SYM-ingest-check-payout-from
     to: TEST-ingest-payout
@@ -736,8 +722,22 @@ relationships:
     id: rel-8d88daf97937
   - type: implements
     from: SYM-ingest-xtb-labelled
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:38:38.956Z
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T00:59:18.912Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-7b928862e177
+    id: rel-bceb2711c797
+  - type: implements
+    from: SYM-ingest-minor-unit-of
+    to: REQ-ingest-minor-unit-price-to-major
+    created_at: 2026-11-02T01:02:39.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-237883c609a2
+  - type: implements
+    from: SYM-ingest-check-payout-from
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:09:01.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba4c46b097dd

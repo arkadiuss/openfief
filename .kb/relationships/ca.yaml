@@ -631,46 +631,11 @@ relationships:
     id: rel-57a57c203c76
   - type: validates
     from: TEST-views-connectapi-read-access
-    to: REQ-identity-read-access-scope
-    created_at: 2026-11-01T10:05:26.961Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b6da8e2de3a7
-  - type: validates
-    from: TEST-views-connectapi-read-access
-    to: REQ-identity-read-access-no-secrets
-    created_at: 2026-11-01T10:05:27.064Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2e145bbbce60
-  - type: validates
-    from: TEST-views-connectapi-read-access
-    to: REQ-identity-read-access-no-broker-account-numbers
-    created_at: 2026-11-01T10:05:27.166Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9dab034669c2
-  - type: validates
-    from: TEST-views-connectapi-read-access
-    to: REQ-identity-read-access-no-state-change
-    created_at: 2026-11-01T10:05:27.258Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-331500e885e7
-  - type: validates
-    from: TEST-views-connectapi-read-access
     to: REQ-views-read-api-list-broker-accounts-removed
     created_at: 2026-11-01T19:22:10.967Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-808c2ba48c3c
-  - type: implements
-    from: SYM-ingest-opening-starts
-    to: REQ-ingest-opening-upload-starts-account
-    created_at: 2026-11-01T17:23:34.050Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3c86649513a2
   - type: covered_by
     from: SYM-ingest-opening-starts
     to: TEST-ingest-golive
@@ -685,3 +650,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b2a008504bb
+  - type: implements
+    from: SYM-ingest-opening-starts
+    to: REQ-ingest-opening-upload-records-go-live
+    created_at: 2026-11-02T01:04:19.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeb347aa894e
+  - type: validates
+    from: TEST-views-connectapi-read-access
+    to: REQ-identity-read-access-kinds-of-record
+    created_at: 2026-11-02T01:18:49.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b2f147e6180
+  - type: validates
+    from: TEST-views-connectapi-read-access
+    to: REQ-identity-read-access-never-secrets
+    created_at: 2026-11-02T01:19:04.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e3770b03825
+  - type: validates
+    from: TEST-views-connectapi-read-access
+    to: REQ-identity-read-access-never-broker-account-numbers
+    created_at: 2026-11-02T01:19:31.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dfa229b113e
+  - type: validates
+    from: TEST-views-connectapi-read-access
+    to: REQ-identity-read-access-never-state-change
+    created_at: 2026-11-02T01:19:47.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03984b1ed171

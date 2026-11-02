@@ -908,5 +908,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-d600f80caa6b
+      },
+    {
+        type: constrains,
+        from: REQ-tooling-no-migration-before-first-release,
+        to: FACT-SUBJECT-2DBF2310DB3A7412,
+        created_at: 2026-11-02T00:54:56.064Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-0f849816fffe
+      },
+    {
+        type: requires_property,
+        from: REQ-tooling-no-migration-before-first-release,
+        to: FACT-PROP-C8CD4D22EA5905FD,
+        created_at: 2026-11-02T00:54:56.137Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-352f189888a8
       }
   ]

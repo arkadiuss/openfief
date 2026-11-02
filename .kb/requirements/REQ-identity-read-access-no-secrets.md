@@ -1,6 +1,6 @@
 ---
 title: Read access must never include a secret, credential, passkey, session or token.
-status: open
+status: closed
 text_ref: design-decisions:D-137#2
 tags:
   - strict-modeling

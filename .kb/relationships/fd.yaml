@@ -533,8 +533,8 @@ relationships:
     id: rel-d678c5bf9ad5
   - type: implements
     from: SYM-ingest-xtb-bought-volume
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:38:07.924Z
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T00:58:48.905Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-563ddaa78232
+    id: rel-fd696162f670

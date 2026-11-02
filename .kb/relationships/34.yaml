@@ -580,10 +580,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce5a1b7fb77e
-  - type: implements
-    from: SYM-ledger-payout-setting-paid-out
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:30:50.927Z
+  - type: constrains
+    from: REQ-identity-read-access-kinds-of-record
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-02T00:53:30.822Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-cbb213f8472c
+    id: rel-02083b62801f
+  - type: requires_property
+    from: REQ-identity-read-access-kinds-of-record
+    to: FACT-PROP-E0C6C7004926D992
+    created_at: 2026-11-02T00:53:30.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7fb61d99a18
+  - type: supersedes
+    from: REQ-identity-read-access-kinds-of-record
+    to: REQ-identity-read-access-scope
+    created_at: 2026-11-02T00:53:30.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ca18a014ef3
+  - type: constrains
+    from: REQ-identity-read-access-never-broker-account-numbers
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-02T00:53:43.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d277264efb2
+  - type: requires_property
+    from: REQ-identity-read-access-never-broker-account-numbers
+    to: FACT-PROP-843453EC42A95A22
+    created_at: 2026-11-02T00:53:43.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6319d3e4b0c9
+  - type: supersedes
+    from: REQ-identity-read-access-never-broker-account-numbers
+    to: REQ-identity-read-access-no-broker-account-numbers
+    created_at: 2026-11-02T00:53:43.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-021ae0de687e
+  - type: implements
+    from: SYM-ledger-payout-setting-paid-out
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:06:19.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce74f05d0f64

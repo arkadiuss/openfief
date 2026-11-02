@@ -477,8 +477,8 @@ relationships:
     id: rel-a325e9eb46d6
   - type: implements
     from: SYM-ingestv1-bond-payout-number
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:33:17.772Z
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:11:16.616Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-9ec8bb30f2e7
+    id: rel-9f6584b8d481

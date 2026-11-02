@@ -603,8 +603,8 @@ relationships:
     id: rel-6d52120838b8
   - type: implements
     from: SYM-ingest-xtb-mapping-price
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:39:39.974Z
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T01:00:18.966Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-56e6448b1288
+    id: rel-91d76d4a899f

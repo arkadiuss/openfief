@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b603e1cb128f
-  - type: implements
-    from: SYM-ingest-pg-listing-row
-    to: REQ-ingest-ticker-trading-currency
-    created_at: 2026-11-01T17:26:08.832Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-59b07a946943
   - type: covered_by
     from: SYM-ingest-pg-listing-row
     to: TEST-core-xtb-opening
@@ -552,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e69c746a4f3
+  - type: implements
+    from: SYM-ingest-pg-listing-row
+    to: REQ-ingest-trading-currency-listing-or-exchange
+    created_at: 2026-11-02T01:03:09.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6774749eba8

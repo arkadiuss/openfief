@@ -686,13 +686,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-819fbc36a63a
   - type: implements
-    from: SYM-ingest-delivery-payout-from
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:35:55.094Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6c68d1d4e95d
-  - type: implements
     from: SYM-viewsv1-plugin-get-market-data
     to: REQ-plugins-install-shows-market-data-list
     created_at: 2026-11-01T11:48:17.889Z
@@ -706,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78a39953780f
+  - type: implements
+    from: SYM-ingest-delivery-payout-from
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:16:20.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebdaef627acc

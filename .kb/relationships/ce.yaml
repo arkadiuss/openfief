@@ -715,8 +715,8 @@ relationships:
     id: rel-40f50481d39d
   - type: implements
     from: SYM-ledger-payout-setting-validate
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:31:01.695Z
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:06:39.886Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-dde75c88a2fb
+    id: rel-384ea4cd464c

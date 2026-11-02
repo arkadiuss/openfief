@@ -776,13 +776,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ee03d428187
-  - type: implements
-    from: SYM-ingest-listing-of
-    to: REQ-ingest-ticker-trading-currency
-    created_at: 2026-11-01T17:24:22.801Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6f4634a6191f
   - type: covered_by
     from: SYM-ingest-listing-of
     to: TEST-ingest-listing
@@ -846,3 +839,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39c620d0de84
+  - type: constrains
+    from: REQ-ingest-opening-upload-records-go-live
+    to: FACT-SUBJECT-35AB9D52039A8BCF
+    created_at: 2026-11-02T00:54:36.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2d38b4bfdf9
+  - type: requires_property
+    from: REQ-ingest-opening-upload-records-go-live
+    to: FACT-PROP-FAA9BE990576D697
+    created_at: 2026-11-02T00:54:36.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a536a27b172
+  - type: supersedes
+    from: REQ-ingest-opening-upload-records-go-live
+    to: REQ-ingest-opening-upload-starts-account
+    created_at: 2026-11-02T00:54:36.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe5d9a369bd8
+  - type: specified_by
+    from: REQ-ingest-opening-upload-records-go-live
+    to: SCEN-ingest-opening-upload-starts-account
+    created_at: 2026-11-02T00:54:36.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89f3d69d4403
+  - type: implements
+    from: SYM-ingest-listing-of
+    to: REQ-ingest-trading-currency-listing-or-exchange
+    created_at: 2026-11-02T01:02:19.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5818bfd53ea3

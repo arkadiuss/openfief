@@ -608,13 +608,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5eaebb76de70
-  - type: implements
-    from: SYM-ingest-xtb-mapping-opening-lot
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:39:18.859Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3286debcfc90
   - type: executable_for
     from: SYM-cosign-test-helper-inspected
     to: TEST-plugins-cosign
@@ -629,3 +622,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b411208be2e3
+  - type: constrains
+    from: REQ-identity-read-access-viewable-accounts-only
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-02T00:54:01.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d847381054a0
+  - type: requires_property
+    from: REQ-identity-read-access-viewable-accounts-only
+    to: FACT-PROP-ADE7259607474988
+    created_at: 2026-11-02T00:54:01.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c1233d8d0f5
+  - type: implements
+    from: SYM-ingest-xtb-mapping-opening-lot
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T00:59:58.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1be09bcc25ca

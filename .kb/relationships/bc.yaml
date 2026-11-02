@@ -756,16 +756,16 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-261ab28df6ea
   - type: implements
-    from: SYM-ingestv1-bond-payout-type
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:33:38.948Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-546e871b8f28
-  - type: implements
     from: SYM-ingest-xtb-opening-columns
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:50:43.535Z
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T01:00:29.513Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-386a5dacc5b5
+    id: rel-911f9915a2ea
+  - type: implements
+    from: SYM-ingestv1-bond-payout-type
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:11:45.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-925909b61a87

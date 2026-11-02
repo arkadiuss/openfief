@@ -741,13 +741,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-121a2a3f19d7
-  - type: implements
-    from: SYM-ledger-payout-setting-on
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:26:58.468Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-745dbe584326
   - type: covered_by
     from: SYM-ledger-payout-setting-on
     to: TEST-ledger-payout
@@ -755,13 +748,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bc3077036f1
-  - type: implements
-    from: SYM-ledger-payout-setting-changed
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:30:40.505Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9d29ae13bcd7
   - type: executable_for
     from: SYM-protobreak-test-run-marked
     to: TEST-tooling-protobreak
@@ -769,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f782b261fafe
+  - type: implements
+    from: SYM-ledger-payout-setting-changed
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:05:58.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0014e7828b72
+  - type: implements
+    from: SYM-ledger-payout-setting-on
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:06:09.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13836800ef50

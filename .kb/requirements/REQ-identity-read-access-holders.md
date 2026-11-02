@@ -1,6 +1,6 @@
 ---
 title: Read access must be held by script tokens, view plugins and demo sessions, and by nothing else.
-status: open
+status: closed
 text_ref: design-decisions:D-137#5
 tags:
   - strict-modeling
