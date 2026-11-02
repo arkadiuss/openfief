@@ -30,7 +30,7 @@ cat >"$work/bin/cosign" <<'EOF'
 echo "cosign $*" >>"$FAKE_LOG"
 [ "$1" = verify ] || exit 2
 ref="$2"
-case "$*" in *"--certificate-identity https://github.com/example/openfief/.github/workflows/images.yml@refs/heads/main"*) ;; *) exit 1 ;; esac
+case "$*" in *"--certificate-identity https://github.com/example/openfief/.github/workflows/images.yml@refs/heads/main"*"--certificate-github-workflow-repository example/openfief --certificate-github-workflow-ref refs/heads/main"*) ;; *) exit 1 ;; esac
 if [[ "$ref" == *@* ]]; then
   digest="${ref#*@}"
 else

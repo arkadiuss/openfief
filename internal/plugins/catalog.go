@@ -66,22 +66,31 @@ type signerDoc struct {
 	Issuer         string `json:"issuer,omitempty"`
 	Subject        string `json:"subject,omitempty"`
 	SubjectPattern string `json:"subjectPattern,omitempty"`
-	PublicKey      string `json:"publicKey,omitempty"`
+	// SourceRepository and SourceRef pin the repository and ref of the
+	// signing run (SignerIdentity); both are optional, so documents written
+	// before they existed read the same.
+	SourceRepository string `json:"sourceRepository,omitempty"`
+	SourceRef        string `json:"sourceRef,omitempty"`
+	PublicKey        string `json:"publicKey,omitempty"`
 }
 
 func (d *signerDoc) signer(kind SignerKind) Signer {
-	return Signer{Name: d.Name, Kind: kind, Identity: SignerIdentity{
-		Issuer: d.Issuer, Subject: d.Subject, SubjectPattern: d.SubjectPattern, PublicKey: d.PublicKey,
-	}}
+	id := SignerIdentity{Issuer: d.Issuer, Subject: d.Subject, SubjectPattern: d.SubjectPattern, PublicKey: d.PublicKey}
+	if d.SourceRepository != "" || d.SourceRef != "" {
+		id.Source = &SignerSource{Repository: d.SourceRepository, Ref: d.SourceRef}
+	}
+	return Signer{Name: d.Name, Kind: kind, Identity: id}
 }
 
 // ParseCatalog reads the catalog's JSON form:
 //
 //	{"plugins": [{"name": "...", "version": "2026.11.0", "image": "repo@sha256:...",
-//	  "publisher": {"name": "...", "issuer": "...", "subject": "..."}}]}
+//	  "publisher": {"name": "...", "issuer": "...", "subject": "...",
+//	                "sourceRepository": "https://...", "sourceRef": "refs/heads/main"}}]}
 //
-// where a publisher gives either an issuer and exact subject or a PEM
-// "publicKey". Unknown fields are refused, so a newer catalog format is never
+// where a publisher gives either an issuer and exact subject, optionally
+// with the "sourceRepository" and "sourceRef" its signing run must come
+// from, or a PEM "publicKey". Unknown fields are refused, so a newer catalog format is never
 // half-read.
 func ParseCatalog(data []byte) (Catalog, error) {
 	var doc struct {
@@ -115,10 +124,13 @@ func ParseCatalog(data []byte) (Catalog, error) {
 // ParseOwnerSigners reads the owner's trusted signers (D-45) in JSON form:
 //
 //	{"signers": [{"name": "...", "issuer": "...", "subject": "..."},
-//	             {"name": "...", "issuer": "...", "subjectPattern": "..."},
+//	             {"name": "...", "issuer": "...", "subjectPattern": "...",
+//	              "sourceRepository": "https://...", "sourceRef": "refs/heads/main"},
 //	             {"name": "...", "publicKey": "-----BEGIN PUBLIC KEY-----..."}]}
 //
-// Unknown fields are refused.
+// A keyless signer may pin the "sourceRepository" and "sourceRef" its
+// signing run must come from, which a subject naming a reusable workflow
+// needs. Unknown fields are refused.
 func ParseOwnerSigners(data []byte) ([]Signer, error) {
 	var doc struct {
 		Signers []signerDoc `json:"signers"`

@@ -407,14 +407,16 @@ actionlint checks the workflows only statically. To exercise the release workflo
 ```sh
 cosign verify ghcr.io/arkadiuss/openfief/operator:main \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-  --certificate-identity https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main
+  --certificate-identity https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main \
+  --certificate-github-workflow-repository arkadiuss/openfief \
+  --certificate-github-workflow-ref refs/heads/main
 cosign verify ghcr.io/arkadiuss/openfief/demo-manifests:demo \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
   --certificate-identity https://github.com/arkadiuss/openfief/.github/workflows/deploy-demo.yml@refs/heads/main
 docker buildx imagetools inspect ghcr.io/arkadiuss/openfief/operator:main --format '{{ json .SBOM }}'
 ```
 
-pin-images.sh trusts the first identity and Flux the second. Both assume that Fulcio names the reusable workflow that ran the job, not the workflow that called it; this page hasn't been checked against a real certificate. On the machine, `flux get sources oci` and `flux get kustomizations` show what Flux verified and applied ([demo.md](demo.md#reach-the-demo)).
+pin-images.sh trusts the first identity and Flux the second. Both assume that Fulcio names the reusable workflow that ran the job, not the workflow that called it; this page hasn't been checked against a real certificate. Because of that, the first also pins the repository and ref of the run, as every script that verifies an image or the CLI does ([verified-digest.sh](../../scripts/verified-digest.sh), [release-verify.sh](../../scripts/release-verify.sh), [release-catalog.sh](../../scripts/release-catalog.sh)): any repository may call `images.yml`. Flux's `matchOIDCIdentity` matches only the issuer and subject, so the demo's second identity can't pin them; what keeps it safe is that Flux pulls only from this repository's GHCR package, which other repositories can't push to. On the machine, `flux get sources oci` and `flux get kustomizations` show what Flux verified and applied ([demo.md](demo.md#reach-the-demo)).
 
 Nothing tests [assert-local-cluster.sh](../../scripts/assert-local-cluster.sh), gen-check.sh, proto-check.sh, envtest-assets.sh, test-pg.sh or go-packages.sh, a demo machine's boot, or the tasks only CI runs: `image:sign`, `deploy:demo` as a whole and `release:publish`. `crane tag` and the carry job have only run against fakes here; that `crane tag` keeps the digest is what crane documents, and image-carry.sh checks it on every carry.
 

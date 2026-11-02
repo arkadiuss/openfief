@@ -40,9 +40,10 @@ if ! out="$(run 2026.11.0 ghcr.io/Example/OpenFief digests catalog.json)"; then
   echo "FAIL: adding two plugins: $out" >&2
   failures=$((failures + 1))
 fi
-want="ghcr.io/example/openfief/nbp-fx@$da 2026.11.0 openfief https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main
-ghcr.io/example/openfief/ui@$db 2026.11.0 openfief https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main"
-got="$(gojq -r '.plugins[] | "\(.image) \(.version) \(.publisher.name) \(.publisher.subject)"' catalog.json)"
+ci="openfief https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main https://github.com/arkadiuss/openfief refs/heads/main"
+want="ghcr.io/example/openfief/nbp-fx@$da 2026.11.0 $ci
+ghcr.io/example/openfief/ui@$db 2026.11.0 $ci"
+got="$(gojq -r '.plugins[] | "\(.image) \(.version) \(.publisher.name) \(.publisher.subject) \(.publisher.sourceRepository) \(.publisher.sourceRef)"' catalog.json)"
 if [ "$got" != "$want" ]; then
   echo "FAIL: catalog entries: want $want, got $got" >&2
   failures=$((failures + 1))

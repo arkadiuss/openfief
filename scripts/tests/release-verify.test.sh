@@ -17,9 +17,10 @@ zero="sha256:$(printf '0%.0s' {1..64})"
 op='sha256:1111111111111111111111111111111111111111111111111111111111111111'
 co='sha256:3333333333333333333333333333333333333333333333333333333333333333'
 
-# The fake cosign logs its arguments. verify-blob passes when the bundle holds "<identity> <sha256 of the file>"
-# for the identity and file it was given, with GitHub's issuer; verify "verifies" only the refs in FAKE_SIGNED
-# (ref=digest) and prints the digest as cosign's JSON does.
+# The fake cosign logs its arguments. verify-blob passes when the bundle holds
+# "<identity> <source repository> <source ref> <sha256 of the file>" for the identity, workflow repository and ref
+# and file it was given, with GitHub's issuer; verify "verifies" only the refs in FAKE_SIGNED (ref=digest), and only
+# when it pins the run's repository and ref, and prints the digest as cosign's JSON does.
 mkdir -p "$work/bin"
 cat >"$work/bin/cosign" <<'EOF'
 #!/usr/bin/env bash
@@ -27,19 +28,23 @@ echo "$*" >>"$FAKE_LOG"
 case "$1" in
   verify-blob)
     shift
-    bundle="" id="" iss="" file=""
+    bundle="" id="" iss="" repo="" ref="" file=""
     while [ $# -gt 0 ]; do
       case "$1" in
         --bundle) bundle="$2"; shift 2 ;;
         --certificate-identity) id="$2"; shift 2 ;;
         --certificate-oidc-issuer) iss="$2"; shift 2 ;;
+        --certificate-github-workflow-repository) repo="$2"; shift 2 ;;
+        --certificate-github-workflow-ref) ref="$2"; shift 2 ;;
         *) file="$1"; shift ;;
       esac
     done
     [ "$iss" = https://token.actions.githubusercontent.com ] || exit 1
-    [ "$(cat "$bundle")" = "$id $(sha256sum <"$file" | cut -d' ' -f1)" ]
+    [ -n "$repo" ] && [ -n "$ref" ] || exit 1
+    [ "$(cat "$bundle")" = "$id $repo $ref $(sha256sum <"$file" | cut -d' ' -f1)" ]
     ;;
   verify)
+    case "$*" in *" --certificate-github-workflow-repository "*" --certificate-github-workflow-ref refs/heads/main "*) ;; *) exit 1 ;; esac
     for entry in $FAKE_SIGNED; do
       if [ "${entry%%=*}" = "$2" ]; then
         printf '[{"critical":{"image":{"docker-manifest-digest":"%s"}}}]\n' "${entry#*=}"
@@ -86,16 +91,17 @@ yes_if() {
   if "$@" >/dev/null 2>&1; then echo yes; else echo no; fi
 }
 
-# cli_dir writes a release's CLI files into $work/cli, each signed as identity $1.
+# cli_dir writes a release's CLI files into $work/cli, each signed as identity $1 in a run of repository $2 (default
+# $repo) at ref $3 (default refs/heads/main).
 cli_dir() {
-  local id="$1" f
+  local id="$1" source="${2:-$repo}" ref="${3:-refs/heads/main}" f
   rm -rf "$work/cli"
   mkdir -p "$work/cli"
   for p in linux-amd64 linux-arm64 darwin-amd64 darwin-arm64; do echo "binary $p" >"$work/cli/openfief-2026.11.0-alpha.1-$p"; done
   echo '{"bomFormat":"CycloneDX"}' >"$work/cli/openfief-2026.11.0-alpha.1.cdx.json"
   (cd "$work/cli" && sha256sum openfief-2026.11.0-alpha.1[-.]* >openfief-2026.11.0-alpha.1-SHA256SUMS)
   for f in "$work/cli"/openfief-*; do
-    echo "$id $(sha256sum <"$f" | cut -d' ' -f1)" >"$f.sigstore.json"
+    echo "$id $source $ref $(sha256sum <"$f" | cut -d' ' -f1)" >"$f.sigstore.json"
   done
 }
 
@@ -111,7 +117,12 @@ check "an unknown kind is refused" "$(fails "" identity docs "$repo")"
 cli_dir "$cli_main"
 check "a CLI signed by release.yml on main verifies" "$(passes "" cli "$work/cli" "$repo")"
 check "every file was verified with GitHub's issuer" "$(yes_if test "$(grep -c -- "--certificate-identity $cli_main --certificate-oidc-issuer $issuer" "$work/log")" -eq 6)"
-cli_dir "https://github.com/$repo/.github/workflows/release.yml@refs/heads/try/alpha"
+check "every file was verified as a run of the repository on main" "$(yes_if test "$(grep -c -- "--certificate-github-workflow-repository $repo --certificate-github-workflow-ref refs/heads/main" "$work/log")" -eq 6)"
+cli_dir "$cli_main" example/attacker
+check "a CLI signed by release.yml's identity from another repository's run fails" "$(fails "" cli "$work/cli" "$repo")"
+cli_dir "$cli_main" "$repo" refs/heads/feature
+check "a CLI signed by release.yml's identity from another ref's run fails" "$(fails "" cli "$work/cli" "$repo")"
+cli_dir "https://github.com/$repo/.github/workflows/release.yml@refs/heads/try/alpha" "$repo" refs/heads/try/alpha
 check "a dry run's CLI verifies at its own ref" "$(passes "" cli "$work/cli" "$repo" refs/heads/try/alpha)"
 check "a dry run's CLI doesn't verify as main" "$(fails "" cli "$work/cli" "$repo")"
 cli_dir "https://github.com/$repo/.github/workflows/images.yml@refs/heads/main"
@@ -156,6 +167,7 @@ EOF
 signed="ghcr.io/example/openfief/operator@$op=$op ghcr.io/example/openfief/core@$co=$co"
 check "an install of signed digests verifies" "$(passes "$signed" images "$work/install.yaml" "$repo")"
 check "each image is verified once, as images.yml on main" "$(yes_if test "$(grep -c -- "--certificate-identity $images_main --certificate-oidc-issuer $issuer" "$work/log")" -eq 2)"
+check "each image is verified as a run of the repository on main" "$(yes_if test "$(grep -c -- "--certificate-github-workflow-repository $repo --certificate-github-workflow-ref refs/heads/main" "$work/log")" -eq 2)"
 check "an unsigned digest fails" "$(fails "ghcr.io/example/openfief/operator@$op=$op" images "$work/install.yaml" "$repo")"
 check "the failure names the image" "$(yes_if grep -q "ghcr.io/example/openfief/core@$co has no signature" "$work/out")"
 check "a signature for another digest fails" "$(fails "ghcr.io/example/openfief/operator@$op=$co ghcr.io/example/openfief/core@$co=$co" images "$work/install.yaml" "$repo")"
@@ -179,6 +191,10 @@ check "the guide verifies the CLI as release.yml on main" "$(yes_if grep -qF -- 
 check "the guide verifies the images as images.yml on main" "$(yes_if grep -qF -- "--certificate-identity $own_images" "$guide")"
 check "the guide names no other identity" "$(yes_if test -z "$(grep -o -- '--certificate-identity [^ ]*' "$guide" | grep -vxF -e "--certificate-identity $own_cli" -e "--certificate-identity $own_images")")"
 check "the guide names GitHub's issuer and no other" "$(yes_if test "$(grep -o -- '--certificate-oidc-issuer [^ ]*' "$guide" | sort -u)" = "--certificate-oidc-issuer $issuer")"
+check "the guide pins every check to this repository's run" "$(yes_if test "$(grep -c -- '--certificate-github-workflow-repository arkadiuss/openfief \\$' "$guide")" -eq 2)"
+check "the guide pins every check to main's run" "$(yes_if test "$(grep -c -- '--certificate-github-workflow-ref refs/heads/main ' "$guide")" -eq 2)"
+check "the guide pins no other repository or ref" "$(yes_if test "$(grep -o -- '--certificate-github-workflow-[a-z]* [^ ]*' "$guide" | sort -u | tr '\n' ' ')" = "--certificate-github-workflow-ref refs/heads/main --certificate-github-workflow-repository arkadiuss/openfief ")"
+check "the operator pins the same source repository and ref" "$(yes_if grep -qF 'OpenFiefCISourceRepository = "https://github.com/arkadiuss/openfief"' "$root/internal/plugins/trust.go")"
 check "the operator trusts the same images identity" "$(yes_if grep -qF "OpenFiefCISubject = \"$own_images\"" "$root/internal/plugins/trust.go")"
 check "release.yml signs the CLI" "$(yes_if grep -q 'run: task release:cli:sign' "$root/.github/workflows/release.yml")"
 check "images.yml signs the images" "$(yes_if grep -q 'run: task image:sign' "$root/.github/workflows/images.yml")"

@@ -298,12 +298,13 @@ There is no released `openfief` CLI yet, so build it from the repository with `g
 
 ### Trust your signer
 
-The owner lists their signers in `signers.json`, in the optional ConfigMap `openfief-trusted-signers` ([deploy/operator](../../deploy/operator/kustomization.yaml)). A keyless signer is an issuer plus an exact `subject`, or a `subjectPattern` that must match the whole subject; a key signer is its public key in PEM:
+The owner lists their signers in `signers.json`, in the optional ConfigMap `openfief-trusted-signers` ([deploy/operator](../../deploy/operator/kustomization.yaml)). A keyless signer is an issuer plus an exact `subject`, or a `subjectPattern` that must match the whole subject, and optionally the `sourceRepository` and `sourceRef` of the run that signs; a key signer is its public key in PEM. Pin the source repository and ref when your signing workflow is a reusable one (`on: workflow_call`): Fulcio then certifies the called workflow as the subject, which any repository may call, and only the source fields name the repository and ref of the run that called it. Pinning them for any GitHub Actions signer costs nothing:
 
 ```json
 {"signers": [
   {"name": "my-ci", "issuer": "https://token.actions.githubusercontent.com",
-   "subject": "https://github.com/example/nbp-fx/.github/workflows/release.yml@refs/heads/main"},
+   "subject": "https://github.com/example/nbp-fx/.github/workflows/release.yml@refs/heads/main",
+   "sourceRepository": "https://github.com/example/nbp-fx", "sourceRef": "refs/heads/main"},
   {"name": "laptop", "publicKey": "-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----\n"}
 ]}
 ```

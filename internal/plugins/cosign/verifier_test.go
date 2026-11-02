@@ -24,6 +24,11 @@ const (
 	subjectPublisher = "https://github.com/example/sample-plugin/.github/workflows/release.yml@refs/heads/main"
 	subjectFork      = "https://github.com/fork/openfief/.github/workflows/images.yml@refs/heads/main"
 	issuerOther      = "https://issuer.example.com"
+	// sourcePublisher is the publisher's own repository; sourceAttacker is
+	// a repository whose workflow calls someone else's reusable workflow.
+	sourcePublisher = "https://github.com/example/sample-plugin"
+	sourceAttacker  = "https://github.com/attacker/caller"
+	refFeature      = "refs/heads/feature"
 )
 
 // virtualTestVerifier is a Verifier whose keyless signatures chain to the
@@ -42,7 +47,11 @@ func virtualTestVerifier(t *testing.T, policy *plugins.TrustPolicy, vs root.Trus
 type world struct {
 	reg *testRegistry
 	vs  *ca.VirtualSigstore
-	// trusted is what the verifier trusts: vs, unless a case changes it.
+	// gh certifies GitHub Actions runs with their source repository and
+	// ref, as Fulcio does; its certificates are logged in vs.
+	gh *githubCA
+	// trusted is what the verifier trusts: vs and gh, unless a case
+	// changes it.
 	trusted   root.TrustedMaterial
 	publisher plugins.Signer
 	// untrusted are the key signers a case's setup made and expects
@@ -70,8 +79,9 @@ func newWorld(t *testing.T, referrersAPI bool, wrap func(http.Handler) http.Hand
 	if err != nil {
 		t.Fatalf("virtual sigstore: %v", err)
 	}
+	gh := newGitHubCA(t)
 	return &world{
-		reg: newTestRegistry(t, referrersAPI, wrap), vs: vs, trusted: vs,
+		reg: newTestRegistry(t, referrersAPI, wrap), vs: vs, gh: gh, trusted: withCA{TrustedMaterial: vs, extra: gh.authority},
 		publisher: plugins.Signer{
 			Name: "example-publisher", Kind: plugins.SignerPublisher,
 			Identity: plugins.SignerIdentity{Issuer: plugins.GitHubActionsIssuer, Subject: subjectPublisher},
@@ -82,8 +92,14 @@ func newWorld(t *testing.T, referrersAPI bool, wrap func(http.Handler) http.Hand
 // signCI attaches an OpenFief CI keyless signature of image.
 func (w *world) signCI(t *testing.T, image plugins.ImageRef) {
 	t.Helper()
-	w.reg.attach(t, image, keylessBundle(t, w.vs, plugins.OpenFiefCISubject, plugins.GitHubActionsIssuer,
-		statement(t, image, SignPredicateType), time.Now().Add(5*time.Minute)))
+	w.signRun(t, image, openFiefCIRun())
+}
+
+// signRun attaches a keyless signature of image made in the GitHub Actions
+// run run.
+func (w *world) signRun(t *testing.T, image plugins.ImageRef, run githubRun) {
+	t.Helper()
+	w.reg.attach(t, image, githubBundle(t, w.vs, w.gh, run, statement(t, image, SignPredicateType), time.Now().Add(5*time.Minute)))
 }
 
 // outcome is the trust decision for an inspected image.
@@ -204,6 +220,93 @@ func TestInspect(t *testing.T) {
 			},
 			wantErr:       plugins.ErrUntrustedSigner,
 			wantUntrusted: []plugins.UntrustedSigner{{Issuer: plugins.GitHubActionsIssuer, Subject: subjectFork}},
+		},
+		{
+			name: "wrong identity: OpenFief's reusable workflow called from another repository",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				img := w.reg.push(t, labelledImage(t, labelView))
+				run := openFiefCIRun()
+				run.repository = sourceAttacker
+				w.signRun(t, img, run)
+				return img, plugins.Catalog{}, nil
+			},
+			wantErr: plugins.ErrUntrustedSigner,
+			wantUntrusted: []plugins.UntrustedSigner{{
+				Issuer: plugins.GitHubActionsIssuer, Subject: plugins.OpenFiefCISubject,
+				Source: &plugins.SignerSource{Repository: sourceAttacker, Ref: plugins.OpenFiefCISourceRef},
+			}},
+		},
+		{
+			name: "wrong identity: OpenFief's reusable workflow called from another ref",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				img := w.reg.push(t, labelledImage(t, labelView))
+				run := openFiefCIRun()
+				run.ref = refFeature
+				w.signRun(t, img, run)
+				return img, plugins.Catalog{}, nil
+			},
+			wantErr: plugins.ErrUntrustedSigner,
+			wantUntrusted: []plugins.UntrustedSigner{{
+				Issuer: plugins.GitHubActionsIssuer, Subject: plugins.OpenFiefCISubject,
+				Source: &plugins.SignerSource{Repository: plugins.OpenFiefCISourceRepository, Ref: refFeature},
+			}},
+		},
+		{
+			name: "wrong identity: OpenFief's subject with no source repository",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				img := w.reg.push(t, labelledImage(t, labelView))
+				w.reg.attach(t, img, keylessBundle(t, w.vs, plugins.OpenFiefCISubject, plugins.GitHubActionsIssuer,
+					statement(t, img, SignPredicateType), time.Now().Add(5*time.Minute)))
+				return img, plugins.Catalog{}, nil
+			},
+			wantErr:       plugins.ErrUntrustedSigner,
+			wantUntrusted: []plugins.UntrustedSigner{{Issuer: plugins.GitHubActionsIssuer, Subject: plugins.OpenFiefCISubject}},
+		},
+		{
+			name: "a broad owner pattern takes a caller's signature as the owner's, never as OpenFief CI's",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				img := w.reg.push(t, labelledImage(t, labelView))
+				run := openFiefCIRun()
+				run.repository = sourceAttacker
+				w.signRun(t, img, run)
+				return img, plugins.Catalog{}, []plugins.Signer{{Name: "my-ci", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{
+					Issuer: plugins.GitHubActionsIssuer, SubjectPattern: `https://github\.com/.*`,
+				}}}
+			},
+			declared: labelView,
+			want:     outcome{plugins.Unverified, "my-ci"},
+		},
+		{
+			name: "owner's keyless identity pinned to its source repository and ref",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				img := w.reg.push(t, labelledImage(t, labelView))
+				w.signRun(t, img, githubRun{subject: subjectPublisher, issuer: plugins.GitHubActionsIssuer, repository: sourcePublisher, ref: plugins.OpenFiefCISourceRef})
+				return img, plugins.Catalog{}, []plugins.Signer{{Name: "my-ci", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{
+					Issuer: plugins.GitHubActionsIssuer, Subject: subjectPublisher, Source: &plugins.SignerSource{Repository: sourcePublisher, Ref: plugins.OpenFiefCISourceRef},
+				}}}
+			},
+			declared: labelView,
+			want:     outcome{plugins.Unverified, "my-ci"},
+		},
+		{
+			name: "owner's keyless identity pinned to its source repository, signed from another",
+			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
+				t.Helper()
+				img := w.reg.push(t, labelledImage(t, labelView))
+				w.signRun(t, img, githubRun{subject: subjectPublisher, issuer: plugins.GitHubActionsIssuer, repository: sourceAttacker, ref: plugins.OpenFiefCISourceRef})
+				return img, plugins.Catalog{}, []plugins.Signer{{Name: "my-ci", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{
+					Issuer: plugins.GitHubActionsIssuer, Subject: subjectPublisher, Source: &plugins.SignerSource{Repository: sourcePublisher, Ref: plugins.OpenFiefCISourceRef},
+				}}}
+			},
+			wantErr: plugins.ErrUntrustedSigner,
+			wantUntrusted: []plugins.UntrustedSigner{{
+				Issuer: plugins.GitHubActionsIssuer, Subject: subjectPublisher, Source: &plugins.SignerSource{Repository: sourceAttacker, Ref: plugins.OpenFiefCISourceRef},
+			}},
 		},
 		{
 			name: "wrong identity: right subject from another issuer",
@@ -472,7 +575,7 @@ func TestProductionVerifierRequiresSCT(t *testing.T) {
 	if err != nil {
 		t.Fatalf("policy: %v", err)
 	}
-	v, err := New(&policy, w.vs)
+	v, err := New(&policy, w.trusted)
 	if err != nil {
 		t.Fatalf("New: %v", err)
 	}

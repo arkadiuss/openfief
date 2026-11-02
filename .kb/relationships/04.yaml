@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0611dddc8177
+  - type: implements
+    from: SYM-plugins-fn-is-https-url
+    to: REQ-plugins-signer-source-pinned
+    created_at: 2026-11-02T20:28:16.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-493127bb2207
+  - type: covered_by
+    from: SYM-plugins-fn-is-https-url
+    to: TEST-plugins-trust
+    created_at: 2026-11-02T20:28:16.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a825fd313cb

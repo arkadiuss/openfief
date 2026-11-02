@@ -39,7 +39,24 @@ const GitHubActionsIssuer = "https://token.actions.githubusercontent.com"
 // which pushes and signs images only from main (docs/dev/sdlc.md). Fulcio
 // takes the subject of a reusable workflow's certificate from its
 // job_workflow_ref, so this names the signing workflow and its ref exactly.
+//
+// The subject alone does not name OpenFief's CI: images.yml is a reusable
+// workflow in a public repository, so any repository's workflow can call it
+// and get a certificate with this very subject for a job that builds its own
+// code. OpenFiefCI therefore also pins the repository and ref the calling
+// run came from, OpenFiefCISourceRepository and OpenFiefCISourceRef.
 const OpenFiefCISubject = "https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main"
+
+// OpenFiefCISourceRepository is the repository whose run OpenFief's CI
+// signature must come from: Fulcio's source repository URI extension
+// (OID 1.3.6.1.4.1.57264.1.12), which for GitHub Actions names the
+// repository of the workflow run, the caller of a reusable workflow.
+const OpenFiefCISourceRepository = "https://github.com/arkadiuss/openfief"
+
+// OpenFiefCISourceRef is the ref OpenFief's CI signature must come from:
+// Fulcio's source repository ref extension (OID 1.3.6.1.4.1.57264.1.14),
+// the git ref of the workflow run.
+const OpenFiefCISourceRef = "refs/heads/main"
 
 // SignerKind is one of D-45's three kinds of trusted signer.
 type SignerKind string
@@ -56,25 +73,45 @@ const (
 
 // SignerIdentity is who made a signature. A keyless identity is the OIDC
 // issuer and subject that Fulcio certified, the subject given exactly or as
-// an RE2 pattern that must match all of it; a key identity is a public key
-// in PEM form. Exactly one of the two is set.
+// an RE2 pattern that must match all of it, and optionally the Source the
+// signing run must come from; a key identity is a public key in PEM form.
+// Exactly one of the two is set.
 //
 // The same type describes what a verified signature was made by: then the
-// subject is the certificate's exact subject, or the key is the one that
-// verified the signature.
+// subject is the certificate's exact subject and Source the repository and
+// ref the certificate names (nil when it names neither), or the key is the
+// one that verified the signature.
 type SignerIdentity struct {
 	Issuer         string
 	Subject        string
 	SubjectPattern string
-	PublicKey      string
+	// Source pins the repository and ref of the signing run; nil pins
+	// neither. OpenFief's CI always pins both.
+	Source    *SignerSource
+	PublicKey string
+}
+
+// SignerSource is the repository and git ref a keyless signature's run came
+// from, as Fulcio certifies them in its source repository URI and source
+// repository ref extensions. They matter for a subject that names a reusable
+// workflow: Fulcio's subject is then the called workflow, which any
+// repository may call, while the source names the caller's run. A field left
+// empty in a signer's pin matches any value.
+type SignerSource struct {
+	// Repository is the https URL of the repository, such as
+	// https://github.com/example/plugin.
+	Repository string
+	// Ref is the git ref, such as refs/heads/main.
+	Ref string
 }
 
 // Validate reports a malformed identity: neither or both of a keyless
 // identity and a public key, a keyless identity without an https issuer, both
 // or neither of a subject and a subject pattern, a pattern that does not
-// compile, or a public key that is not one PEM "PUBLIC KEY" block.
+// compile, a malformed source, or a public key that is not one PEM
+// "PUBLIC KEY" block.
 func (id SignerIdentity) Validate() error {
-	keyless := id.Issuer != "" || id.Subject != "" || id.SubjectPattern != ""
+	keyless := id.Issuer != "" || id.Subject != "" || id.SubjectPattern != "" || id.Source != nil
 	switch {
 	case keyless == (id.PublicKey != ""):
 		return fmt.Errorf("%w: give either an issuer and subject or a public key", ErrInvalidSigner)
@@ -89,18 +126,17 @@ func (id SignerIdentity) Validate() error {
 func (id SignerIdentity) IsKey() bool { return id.PublicKey != "" }
 
 // Matches reports whether a signature made by signed counts as one by id:
-// the same issuer and a subject equal to id's or matching all of its
-// pattern, or the same public key. A malformed id matches nothing.
+// the same issuer, a subject equal to id's or matching all of its pattern,
+// and a source that id's source pin admits; or the same public key. A
+// malformed id matches nothing.
 func (id SignerIdentity) Matches(signed SignerIdentity) bool {
 	if id.Validate() != nil {
 		return false
 	}
 	if id.IsKey() {
-		want, wantErr := publicKeyDER(id.PublicKey)
-		got, gotErr := publicKeyDER(signed.PublicKey)
-		return wantErr == nil && gotErr == nil && bytes.Equal(want, got)
+		return samePublicKey(id.PublicKey, signed.PublicKey)
 	}
-	if signed.IsKey() || signed.Issuer != id.Issuer || signed.Subject == "" {
+	if signed.IsKey() || signed.Issuer != id.Issuer || signed.Subject == "" || !id.Source.admits(signed.Source) {
 		return false
 	}
 	if id.Subject != "" {
@@ -110,8 +146,8 @@ func (id SignerIdentity) Matches(signed SignerIdentity) bool {
 	return err == nil && re.MatchString(signed.Subject)
 }
 
-// String names the identity in messages: the issuer and subject, or the
-// public key's SHA-256 fingerprint.
+// String names the identity in messages: the issuer and subject, with the
+// source when set, or the public key's SHA-256 fingerprint.
 func (id SignerIdentity) String() string {
 	if id.IsKey() {
 		der, err := publicKeyDER(id.PublicKey)
@@ -125,14 +161,28 @@ func (id SignerIdentity) String() string {
 	if subject == "" {
 		subject = "~" + id.SubjectPattern
 	}
-	return subject + " (issuer " + id.Issuer + ")"
+	return keylessName(subject, id.Issuer, id.Source)
 }
 
-// validateKeyless checks the issuer, subject and pattern of a keyless
-// identity.
+// keylessName names a keyless signer in messages: its subject and issuer,
+// then the source repository and ref, each only when set, so a reusable
+// workflow's signature from another repository reads differently from the
+// same workflow's signature from its own.
+func keylessName(subject, issuer string, source *SignerSource) string {
+	s := subject + " (issuer " + issuer
+	if source != nil && source.Repository != "" {
+		s += ", source " + source.Repository
+	}
+	if source != nil && source.Ref != "" {
+		s += ", ref " + source.Ref
+	}
+	return s + ")"
+}
+
+// validateKeyless checks the issuer, subject, pattern and source of a
+// keyless identity.
 func (id SignerIdentity) validateKeyless() error {
-	host, isHTTPS := strings.CutPrefix(id.Issuer, "https://")
-	if !isHTTPS || host == "" || strings.ContainsAny(host, " \t\n") {
+	if !isHTTPSURL(id.Issuer) {
 		return fmt.Errorf("%w: issuer %q is not an https URL", ErrInvalidSigner, id.Issuer)
 	}
 	if (id.Subject == "") == (id.SubjectPattern == "") {
@@ -143,7 +193,55 @@ func (id SignerIdentity) validateKeyless() error {
 			return fmt.Errorf("%w: subjectPattern %q: %w", ErrInvalidSigner, id.SubjectPattern, err)
 		}
 	}
+	if id.Source != nil {
+		return id.Source.validate()
+	}
 	return nil
+}
+
+// validate reports a source pin that pins nothing, a repository that is not
+// an https URL, or a ref that is not a git ref under refs/.
+func (s *SignerSource) validate() error {
+	switch {
+	case s.Repository == "" && s.Ref == "":
+		return fmt.Errorf("%w: a source needs sourceRepository or sourceRef", ErrInvalidSigner)
+	case s.Repository != "" && !isHTTPSURL(s.Repository):
+		return fmt.Errorf("%w: sourceRepository %q is not an https URL", ErrInvalidSigner, s.Repository)
+	case s.Ref != "" && (!strings.HasPrefix(s.Ref, "refs/") || strings.ContainsAny(s.Ref, " \t\n")):
+		return fmt.Errorf("%w: sourceRef %q is not a git ref such as refs/heads/main", ErrInvalidSigner, s.Ref)
+	}
+	return nil
+}
+
+// admits reports whether a signature whose run came from signed counts for
+// the pin s: no pin admits any source, and a pin needs each field it sets
+// to be equal.
+func (s *SignerSource) admits(signed *SignerSource) bool {
+	if s == nil {
+		return true
+	}
+	if signed == nil {
+		return false
+	}
+	return (s.Repository == "" || s.Repository == signed.Repository) && (s.Ref == "" || s.Ref == signed.Ref)
+}
+
+// pinsBoth reports whether s pins both a repository and a ref.
+func (s *SignerSource) pinsBoth() bool {
+	return s != nil && s.Repository != "" && s.Ref != ""
+}
+
+// isHTTPSURL reports whether s is https:// and a host, with no whitespace.
+func isHTTPSURL(s string) bool {
+	host, isHTTPS := strings.CutPrefix(s, "https://")
+	return isHTTPS && host != "" && !strings.ContainsAny(host, " \t\n")
+}
+
+// samePublicKey reports whether two PEM public keys are the same key.
+func samePublicKey(a, b string) bool {
+	want, wantErr := publicKeyDER(a)
+	got, gotErr := publicKeyDER(b)
+	return wantErr == nil && gotErr == nil && bytes.Equal(want, got)
 }
 
 // anchored makes an RE2 pattern match whole strings only.
@@ -166,14 +264,18 @@ type Signer struct {
 	Identity SignerIdentity
 }
 
-// Validate reports a signer without a name or kind, or with a malformed
-// identity.
+// Validate reports a signer without a name or kind, with a malformed
+// identity, or of kind SignerOpenFiefCI without a keyless identity that pins
+// both the source repository and the source ref: its subject names a
+// reusable workflow anyone can call, so only those name OpenFief's CI.
 func (s *Signer) Validate() error {
 	switch {
 	case s.Name == "":
 		return fmt.Errorf("%w: a signer needs a name", ErrInvalidSigner)
 	case s.Kind != SignerOpenFiefCI && s.Kind != SignerPublisher && s.Kind != SignerOwner:
 		return fmt.Errorf("%w: signer %q: unknown kind %q", ErrInvalidSigner, s.Name, s.Kind)
+	case s.Kind == SignerOpenFiefCI && !s.Identity.Source.pinsBoth():
+		return fmt.Errorf("%w: signer %q: OpenFief's CI needs a keyless identity with sourceRepository and sourceRef", ErrInvalidSigner, s.Name)
 	}
 	if err := s.Identity.Validate(); err != nil {
 		return fmt.Errorf("signer %q: %w", s.Name, err)
@@ -182,11 +284,15 @@ func (s *Signer) Validate() error {
 }
 
 // OpenFiefCI is OpenFief's CI as a trusted signer: keyless, GitHub Actions,
-// exactly OpenFiefCISubject.
+// exactly OpenFiefCISubject, from a run of OpenFiefCISourceRepository at
+// OpenFiefCISourceRef.
 func OpenFiefCI() Signer {
 	return Signer{
 		Name: "openfief-ci", Kind: SignerOpenFiefCI,
-		Identity: SignerIdentity{Issuer: GitHubActionsIssuer, Subject: OpenFiefCISubject},
+		Identity: SignerIdentity{
+			Issuer: GitHubActionsIssuer, Subject: OpenFiefCISubject,
+			Source: &SignerSource{Repository: OpenFiefCISourceRepository, Ref: OpenFiefCISourceRef},
+		},
 	}
 }
 
@@ -220,23 +326,26 @@ type SignedImage struct {
 // UntrustedSigner is who made a signature over an image when the trust
 // policy holds no such signer (D-169). A keyless signature names the issuer
 // and subject of a certificate that verified against the Sigstore trust
-// root; a signature made with a key names the SHA-256 fingerprint of that
-// key's DER form, as the signature's key hint gives it, which nothing can
-// check without the key itself. Exactly one of the two is set.
+// root, and the source the certificate names, if any; a
+// signature made with a key names the SHA-256 fingerprint of that key's DER
+// form, as the signature's key hint gives it, which nothing can check
+// without the key itself. Exactly one of the two is set.
 type UntrustedSigner struct {
 	Issuer    string
 	Subject   string
+	Source    *SignerSource
 	KeySHA256 string
 }
 
 // String names the signer as SignerIdentity.String names a trusted one, so
 // the owner can compare it with their trusted signers: the subject and
-// issuer, or "public key sha256:" and the key's fingerprint.
+// issuer with the source repository and ref, or "public key sha256:" and
+// the key's fingerprint.
 func (u UntrustedSigner) String() string {
 	if u.KeySHA256 != "" {
 		return "public key sha256:" + u.KeySHA256
 	}
-	return u.Subject + " (issuer " + u.Issuer + ")"
+	return keylessName(u.Subject, u.Issuer, u.Source)
 }
 
 // UntrustedSignerError is ErrUntrustedSigner for one image: the signers of

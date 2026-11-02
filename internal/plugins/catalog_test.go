@@ -46,6 +46,24 @@ func TestParseCatalog(t *testing.T) {
 			}}},
 		},
 		{
+			name: "keyless publisher pinned to its source repository and ref",
+			in: `{"plugins":[{"name":"sample","image":"` + imageA + `","publisher":{"name":"example","issuer":"` + issuerExample + `","subject":"` + subjectCI +
+				`","sourceRepository":"https://github.com/example/sample-plugin","sourceRef":"refs/heads/main"}}]}`,
+			want: plugins.Catalog{Entries: []plugins.CatalogEntry{{
+				Name: "sample", Image: img,
+				Publisher: plugins.Signer{
+					Name: "example", Kind: plugins.SignerPublisher,
+					Identity: fromSource(issuerExample, subjectCI, "https://github.com/example/sample-plugin", "refs/heads/main"),
+				},
+			}}},
+		},
+		{
+			name: "publisher with a source ref that is not a ref",
+			in: `{"plugins":[{"name":"sample","image":"` + imageA + `","publisher":{"name":"example","issuer":"` + issuerExample + `","subject":"` + subjectCI +
+				`","sourceRef":"main"}}]}`,
+			wantErr: plugins.ErrInvalidSigner,
+		},
+		{
 			name: "key publisher",
 			in:   `{"plugins":[{"name":"sample","image":"` + imageA + `","publisher":{"name":"example","publicKey":` + string(keyJSON) + `}}]}`,
 			want: plugins.Catalog{Entries: []plugins.CatalogEntry{{
@@ -151,6 +169,20 @@ func TestParseOwnerSigners(t *testing.T) {
 				{Name: "my-tags", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{Issuer: issuerExample, SubjectPattern: `https://example\.com/.*`}},
 				{Name: "laptop", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{PublicKey: keyPEM}},
 			},
+		},
+		{
+			name: "keyless pinned to its source repository and ref",
+			in: `{"signers":[{"name":"my-ci","issuer":"` + issuerExample + `","subjectPattern":"https://example\\.com/.*",` +
+				`"sourceRepository":"https://github.com/example/my-plugin","sourceRef":"refs/heads/main"}]}`,
+			want: []plugins.Signer{{Name: "my-ci", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{
+				Issuer: issuerExample, SubjectPattern: `https://example\.com/.*`,
+				Source: &plugins.SignerSource{Repository: "https://github.com/example/my-plugin", Ref: "refs/heads/main"},
+			}}},
+		},
+		{
+			name:    "source repository that is not a URL",
+			in:      `{"signers":[{"name":"my-ci","issuer":"` + issuerExample + `","subject":"` + subjectCI + `","sourceRepository":"example/my-plugin"}]}`,
+			wantErr: plugins.ErrInvalidSigner,
 		},
 		{name: "no name", in: `{"signers":[{"issuer":"` + issuerExample + `","subject":"` + subjectCI + `"}]}`, wantErr: plugins.ErrInvalidSigner},
 		{name: "no identity", in: `{"signers":[{"name":"x"}]}`, wantErr: plugins.ErrInvalidSigner},

@@ -17,8 +17,10 @@ import (
 
 // Synthetic signer identities.
 
+// ciSignature is a signature by OpenFief's CI: its reusable workflow, run
+// from its own repository's main branch.
 func ciSignature() plugins.SignerIdentity {
-	return plugins.SignerIdentity{Issuer: plugins.GitHubActionsIssuer, Subject: plugins.OpenFiefCISubject}
+	return plugins.OpenFiefCI().Identity
 }
 
 func publisherSignature() plugins.SignerIdentity {

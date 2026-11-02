@@ -40,6 +40,18 @@ func keyless(issuer, subject string) plugins.SignerIdentity {
 	return plugins.SignerIdentity{Issuer: issuer, Subject: subject}
 }
 
+// fromSource is a keyless identity whose signing run came from repository
+// at ref, as Fulcio's source repository extensions certify it.
+func fromSource(issuer, subject, repository, ref string) plugins.SignerIdentity {
+	return plugins.SignerIdentity{Issuer: issuer, Subject: subject, Source: &plugins.SignerSource{Repository: repository, Ref: ref}}
+}
+
+// openFiefCISigned is a signature by OpenFief's CI: its subject from its own
+// repository's main branch.
+func openFiefCISigned() plugins.SignerIdentity {
+	return fromSource(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject, plugins.OpenFiefCISourceRepository, plugins.OpenFiefCISourceRef)
+}
+
 func TestSignerIdentityValidate(t *testing.T) {
 	t.Parallel()
 	keyPEM := newPublicKeyPEM(t)
@@ -52,6 +64,22 @@ func TestSignerIdentityValidate(t *testing.T) {
 		{name: "keyless subject pattern", id: plugins.SignerIdentity{Issuer: issuerExample, SubjectPattern: `https://github\.com/example/.*`}},
 		{name: "public key", id: plugins.SignerIdentity{PublicKey: keyPEM}},
 		{name: "OpenFief CI", id: plugins.OpenFiefCI().Identity},
+		{name: "keyless pinned to a source repository and ref", id: fromSource(issuerExample, subjectCI, "https://github.com/example/sample-plugin", "refs/heads/main")},
+		{name: "source repository not https", id: fromSource(issuerExample, subjectCI, "http://github.com/example/sample-plugin", ""), wantErr: plugins.ErrInvalidSigner},
+		{name: "source repository as owner/repo", id: fromSource(issuerExample, subjectCI, "example/sample-plugin", ""), wantErr: plugins.ErrInvalidSigner},
+		{name: "source ref not a git ref", id: fromSource(issuerExample, subjectCI, "", "main"), wantErr: plugins.ErrInvalidSigner},
+		{name: "source pinning nothing", id: fromSource(issuerExample, subjectCI, "", ""), wantErr: plugins.ErrInvalidSigner},
+		{name: "repository pinned alone", id: fromSource(issuerExample, subjectCI, "https://github.com/example/sample-plugin", "")},
+		{name: "ref pinned alone", id: fromSource(issuerExample, subjectCI, "", "refs/tags/v1.0.0")},
+		{
+			name: "source without a subject", id: plugins.SignerIdentity{Source: &plugins.SignerSource{Repository: "https://github.com/example/sample-plugin"}},
+			wantErr: plugins.ErrInvalidSigner,
+		},
+		{
+			name:    "public key with a source",
+			id:      plugins.SignerIdentity{PublicKey: keyPEM, Source: &plugins.SignerSource{Ref: "refs/heads/main"}},
+			wantErr: plugins.ErrInvalidSigner,
+		},
 		{name: "empty", id: plugins.SignerIdentity{}, wantErr: plugins.ErrInvalidSigner},
 		{name: "keyless and key", id: plugins.SignerIdentity{Issuer: issuerExample, Subject: subjectCI, PublicKey: keyPEM}, wantErr: plugins.ErrInvalidSigner},
 		{name: "subject without issuer", id: keyless("", subjectCI), wantErr: plugins.ErrInvalidSigner},
@@ -105,9 +133,30 @@ func TestSignerIdentityMatches(t *testing.T) {
 		{name: "keyless against key", id: keyless(issuerExample, subjectCI), signed: plugins.SignerIdentity{PublicKey: keyA}},
 		{name: "pattern against empty subject", id: plugins.SignerIdentity{Issuer: issuerExample, SubjectPattern: ".*"}, signed: keyless(issuerExample, "")},
 		{name: "invalid identity matches nothing", id: plugins.SignerIdentity{}, signed: plugins.SignerIdentity{}},
+		{name: "OpenFief CI", id: plugins.OpenFiefCI().Identity, signed: openFiefCISigned(), want: true},
 		{
-			name: "OpenFief CI", id: plugins.OpenFiefCI().Identity,
-			signed: keyless(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject), want: true,
+			name: "OpenFief CI subject without a source", id: plugins.OpenFiefCI().Identity,
+			signed: keyless(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject),
+		},
+		{
+			name: "OpenFief CI subject called from another repository", id: plugins.OpenFiefCI().Identity,
+			signed: fromSource(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject, "https://github.com/attacker/openfief-caller", plugins.OpenFiefCISourceRef),
+		},
+		{
+			name: "OpenFief CI subject called from another ref", id: plugins.OpenFiefCI().Identity,
+			signed: fromSource(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject, plugins.OpenFiefCISourceRepository, "refs/heads/feature"),
+		},
+		{
+			name: "unpinned source accepts any repository", id: keyless(issuerExample, subjectCI),
+			signed: fromSource(issuerExample, subjectCI, "https://github.com/example/other", "refs/heads/dev"), want: true,
+		},
+		{
+			name: "a repository pinned alone accepts any ref", id: fromSource(issuerExample, subjectCI, "https://github.com/example/sample-plugin", ""),
+			signed: fromSource(issuerExample, subjectCI, "https://github.com/example/sample-plugin", "refs/tags/v1.0.0"), want: true,
+		},
+		{
+			name: "a repository pinned alone refuses another repository", id: fromSource(issuerExample, subjectCI, "https://github.com/example/sample-plugin", ""),
+			signed: fromSource(issuerExample, subjectCI, "https://github.com/example/other", "refs/tags/v1.0.0"),
 		},
 		{
 			name: "OpenFief CI from a fork", id: plugins.OpenFiefCI().Identity,
@@ -137,6 +186,10 @@ func TestSignerIdentityString(t *testing.T) {
 	}{
 		{name: "keyless", id: keyless(issuerExample, subjectCI), want: subjectCI + " (issuer " + issuerExample + ")"},
 		{name: "pattern", id: plugins.SignerIdentity{Issuer: issuerExample, SubjectPattern: "a.*"}, want: "~a.* (issuer " + issuerExample + ")"},
+		{
+			name: "keyless with a source", id: fromSource(issuerExample, subjectCI, "https://github.com/example/sample-plugin", "refs/heads/main"),
+			want: subjectCI + " (issuer " + issuerExample + ", source https://github.com/example/sample-plugin, ref refs/heads/main)",
+		},
 		{name: "bad key", id: plugins.SignerIdentity{PublicKey: "x"}, want: "invalid public key"},
 	}
 	for _, tt := range tests {
@@ -186,7 +239,7 @@ func newPolicyFixture(t *testing.T) policyFixture {
 func TestTrustPolicyDecide(t *testing.T) {
 	t.Parallel()
 	f := newPolicyFixture(t)
-	ci := keyless(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject)
+	ci := openFiefCISigned()
 	publisher := keyless(issuerExample, subjectCI)
 	ownerTag := keyless(plugins.GitHubActionsIssuer, "https://github.com/owner-example/plugin/.github/workflows/release.yml@refs/tags/v1.2.0")
 	stranger := keyless(plugins.GitHubActionsIssuer, "https://github.com/stranger/plugin/.github/workflows/release.yml@refs/heads/main")
@@ -239,6 +292,18 @@ func TestTrustPolicyDecide(t *testing.T) {
 		},
 		{name: "no signature", image: imageA, wantErr: plugins.ErrUnsigned},
 		{name: "untrusted signer", image: imageA, sigs: []plugins.SignerIdentity{stranger}, wantErr: plugins.ErrUntrustedSigner},
+		{
+			name: "OpenFief CI's reusable workflow called from another repository", image: imageB,
+			sigs: []plugins.SignerIdentity{fromSource(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject,
+				"https://github.com/attacker/openfief-caller", plugins.OpenFiefCISourceRef)},
+			wantErr: plugins.ErrUntrustedSigner,
+		},
+		{
+			name: "OpenFief CI's reusable workflow called from another ref", image: imageB,
+			sigs: []plugins.SignerIdentity{fromSource(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject,
+				plugins.OpenFiefCISourceRepository, "refs/heads/feature")},
+			wantErr: plugins.ErrUntrustedSigner,
+		},
 		{
 			name: "untrusted key", image: imageA, sigs: []plugins.SignerIdentity{{PublicKey: newPublicKeyPEM(t)}},
 			wantErr: plugins.ErrUntrustedSigner,
@@ -331,6 +396,27 @@ func TestSignerValidate(t *testing.T) {
 		{name: "no name", signer: plugins.Signer{Kind: plugins.SignerOwner, Identity: id}, wantErr: plugins.ErrInvalidSigner},
 		{name: "unknown kind", signer: plugins.Signer{Name: "s", Kind: "Anyone", Identity: id}, wantErr: plugins.ErrInvalidSigner},
 		{name: "bad identity", signer: plugins.Signer{Name: "s", Kind: plugins.SignerOwner}, wantErr: plugins.ErrInvalidSigner},
+		{name: "OpenFief CI pins its source", signer: plugins.OpenFiefCI()},
+		{
+			name:    "OpenFief CI without a source repository",
+			signer:  plugins.Signer{Name: "ci", Kind: plugins.SignerOpenFiefCI, Identity: fromSource(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject, "", plugins.OpenFiefCISourceRef)},
+			wantErr: plugins.ErrInvalidSigner,
+		},
+		{
+			name:    "OpenFief CI without a source ref",
+			signer:  plugins.Signer{Name: "ci", Kind: plugins.SignerOpenFiefCI, Identity: fromSource(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject, plugins.OpenFiefCISourceRepository, "")},
+			wantErr: plugins.ErrInvalidSigner,
+		},
+		{
+			name:    "OpenFief CI by subject alone",
+			signer:  plugins.Signer{Name: "ci", Kind: plugins.SignerOpenFiefCI, Identity: keyless(plugins.GitHubActionsIssuer, plugins.OpenFiefCISubject)},
+			wantErr: plugins.ErrInvalidSigner,
+		},
+		{
+			name:    "OpenFief CI as a key",
+			signer:  plugins.Signer{Name: "ci", Kind: plugins.SignerOpenFiefCI, Identity: plugins.SignerIdentity{PublicKey: newPublicKeyPEM(t)}},
+			wantErr: plugins.ErrInvalidSigner,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

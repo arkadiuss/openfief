@@ -468,3 +468,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9a0b084b351
+  - type: implements
+    from: SYM-plugins-signer-identity-matches
+    to: REQ-plugins-signer-source-pinned
+    created_at: 2026-11-02T20:01:16.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-294590271c82

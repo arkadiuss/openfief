@@ -12,9 +12,13 @@ prefix="$(tr '[:upper:]' '[:lower:]' <<<"${2:?registry prefix}")"
 digests="${3:?digests dir}"
 catalog="${4:-internal/plugins/catalog/plugins.json}"
 
-# OpenFief's CI identity, as plugins.OpenFiefCI() trusts it (internal/plugins/trust.go).
+# OpenFief's CI identity, as plugins.OpenFiefCI() trusts it (internal/plugins/trust.go): the reusable images.yml
+# workflow on main, run from this repository's main branch (D-181). The source repository and ref are pinned too,
+# because any repository may call images.yml and get a certificate with the same subject.
 issuer='https://token.actions.githubusercontent.com'
 subject='https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main'
+source_repo='arkadiuss/openfief'
+source_ref='refs/heads/main'
 
 entries='[]'
 for dockerfile in plugins/*/Dockerfile; do
@@ -31,14 +35,17 @@ for dockerfile in plugins/*/Dockerfile; do
   fi
   image="$prefix/$name@$digest"
   if [ "${VERIFY:-0}" = 1 ]; then
-    cosign verify --certificate-identity "$subject" --certificate-oidc-issuer "$issuer" "$image" >/dev/null
+    cosign verify --certificate-identity "$subject" --certificate-oidc-issuer "$issuer" \
+      --certificate-github-workflow-repository "$source_repo" --certificate-github-workflow-ref "$source_ref" "$image" >/dev/null
   fi
   if gojq -e --arg n "$name" --arg v "$version" 'any(.plugins[]?; .name == $n and .version == $v)' "$catalog" >/dev/null; then
     echo "release-catalog: $catalog already has $name $version" >&2
     exit 1
   fi
   entries="$(gojq -c --arg n "$name" --arg v "$version" --arg i "$image" --arg iss "$issuer" --arg sub "$subject" \
-    '. + [{name: $n, version: $v, image: $i, publisher: {name: "openfief", issuer: $iss, subject: $sub}}]' <<<"$entries")"
+    --arg repo "https://github.com/$source_repo" --arg ref "$source_ref" \
+    '. + [{name: $n, version: $v, image: $i,
+      publisher: {name: "openfief", issuer: $iss, subject: $sub, sourceRepository: $repo, sourceRef: $ref}}]' <<<"$entries")"
 done
 
 tmp="$(mktemp)"

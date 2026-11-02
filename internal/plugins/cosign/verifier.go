@@ -14,6 +14,7 @@ import (
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
 	"github.com/sigstore/sigstore-go/pkg/bundle"
+	"github.com/sigstore/sigstore-go/pkg/fulcio/certificate"
 	"github.com/sigstore/sigstore-go/pkg/root"
 	"github.com/sigstore/sigstore-go/pkg/verify"
 	"github.com/sigstore/sigstore/pkg/cryptoutils"
@@ -88,13 +89,29 @@ func newVerifier(policy *plugins.TrustPolicy, trusted root.TrustedMaterial, keyl
 }
 
 // certificateIdentity is a keyless signer as sigstore-go's identity check:
-// the exact issuer, and the exact subject or the anchored subject pattern.
+// the exact issuer, the exact subject or the anchored subject pattern, and
+// the exact source repository URI and source ref extensions where the
+// signer pins them. Without the source extensions, a subject naming a
+// reusable workflow would accept a certificate from any repository that
+// calls it.
 func certificateIdentity(id plugins.SignerIdentity) (verify.CertificateIdentity, error) {
 	pattern := ""
 	if id.SubjectPattern != "" {
 		pattern = `^(?:` + id.SubjectPattern + `)$`
 	}
-	ci, err := verify.NewShortCertificateIdentity(id.Issuer, "", id.Subject, pattern)
+	san, err := verify.NewSANMatcher(id.Subject, pattern)
+	if err != nil {
+		return verify.CertificateIdentity{}, fmt.Errorf("certificate identity: %w", err)
+	}
+	issuer, err := verify.NewIssuerMatcher(id.Issuer, "")
+	if err != nil {
+		return verify.CertificateIdentity{}, fmt.Errorf("certificate identity: %w", err)
+	}
+	var source certificate.Extensions
+	if id.Source != nil {
+		source = certificate.Extensions{SourceRepositoryURI: id.Source.Repository, SourceRepositoryRef: id.Source.Ref}
+	}
+	ci, err := verify.NewCertificateIdentity(san, issuer, source)
 	if err != nil {
 		return verify.CertificateIdentity{}, fmt.Errorf("certificate identity: %w", err)
 	}
@@ -202,7 +219,7 @@ func (v *Verifier) verifyKeyless(b *bundle.Bundle, artifact verify.ArtifactPolic
 		return plugins.SignerIdentity{}, false
 	}
 	cert := res.Signature.Certificate
-	return plugins.SignerIdentity{Issuer: cert.Issuer, Subject: cert.SubjectAlternativeName}, true
+	return plugins.SignerIdentity{Issuer: cert.Issuer, Subject: cert.SubjectAlternativeName, Source: sourceOf(cert)}, true
 }
 
 // untrustedSigner names who made a bundle that verifyBundle did not accept,
@@ -242,7 +259,17 @@ func (v *Verifier) untrustedKeyless(b *bundle.Bundle, digest []byte) (plugins.Un
 		return plugins.UntrustedSigner{}, false
 	}
 	cert := res.Signature.Certificate
-	return plugins.UntrustedSigner{Issuer: cert.Issuer, Subject: cert.SubjectAlternativeName}, true
+	return plugins.UntrustedSigner{Issuer: cert.Issuer, Subject: cert.SubjectAlternativeName, Source: sourceOf(cert)}, true
+}
+
+// sourceOf is the repository and ref a certificate says its signing run
+// came from (Fulcio's source repository URI and ref extensions), or nil
+// when it names neither.
+func sourceOf(cert *certificate.Summary) *plugins.SignerSource {
+	if cert.SourceRepositoryURI == "" && cert.SourceRepositoryRef == "" {
+		return nil
+	}
+	return &plugins.SignerSource{Repository: cert.SourceRepositoryURI, Ref: cert.SourceRepositoryRef}
 }
 
 // untrustedKey names the key a bundle's key hint gives, unless the hint is
