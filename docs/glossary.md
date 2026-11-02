@@ -234,6 +234,7 @@ Don't create code for these before their milestone.
 | NetworkPolicy | A Kubernetes resource restricting which pods a pod may talk to and be reached from. |
 | Notional | The money value of an order or position (quantity times price). |
 | OKI | Osobiste konto inwestycyjne, a Polish personal investment account: no Belka tax inside it, and from 2027 a yearly tax on the value of its assets above the exempt amounts (D-76, D-127). |
+| OpenTelemetry / OTLP | OpenTelemetry is the vendor-neutral standard for traces, metrics and logs, a CNCF project formed in 2019 by merging OpenTracing and OpenCensus. OTLP is its wire protocol, which collectors and tracing back ends accept. |
 | OMS | Order management system: the component that validates, routes and tracks orders. |
 | OPA / Rego | Open Policy Agent, a CNCF policy engine; Rego is its Datalog-inspired policy language. |
 | Paper trading | Trading against a simulated account with fake money. |

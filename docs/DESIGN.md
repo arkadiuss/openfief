@@ -34,6 +34,7 @@ Written by the author and never edited. A conflict with a ground rule is recorde
 - **[D-31]** M0 has no time-box. Its scope is everything decided in this document.
 - **[D-161]** Nothing stored before the first release is migrated: a change before it may need data entered again, and the demo is reseeded. From the first release on, every change to stored data ships with a migration of what is already stored.
 - **[D-5]** The core is licensed AGPL-3.0, the plugin contracts and SDK Apache-2.0, and contributions carry a DCO sign-off.
+- **[D-171]** The name stays OpenFief (GR-14). TMview lists no mark named OpenFief. Marks named Fief are registered for financial and software services in Switzerland, for software in France and for software services in the Benelux, so registering OpenFief as a mark, or offering a paid hosted service in those countries (GR-1), needs a trademark lawyer's view first.
 
 | Milestone | Scope | State |
 |---|---|---|
@@ -109,6 +110,7 @@ Existing trackers can't hold what OpenFief has to get exactly right: FIFO tax lo
 - **[D-108]** The Ghostfolio plugin books a dividend as quantity 1 at the gross amount, with the withheld tax as its fee, and a standalone fee against a manual "OpenFief fees" asset per currency. Each of its Ghostfolio accounts' cash balance follows OpenFief's cash, so Ghostfolio's totals include it. Listed instruments need the owner's mapping from ISIN to Ghostfolio's data source and symbol.
 - **[D-133]** Each currency of an account's cash other than its Ghostfolio account's gets an owned Ghostfolio account of its own, holding only that balance, with a UUID derived from the instance, the account and the currency, so Ghostfolio's totals include all of the account's cash.
 - **[D-134]** The UUID symbols D-64 and D-108 derive for bond and fee assets also take the Ghostfolio user's ID, so two installs whose instances share a name never collide in one Ghostfolio.
+- **[D-177]** Cash income (D-152) reaches Ghostfolio as an `INTEREST` activity on a manual asset per currency, so Ghostfolio counts it as return, as OpenFief does.
 - **[D-6]** OpenFief's public API is read-only REST/JSON with an OpenAPI spec, versioned `/v1`, covering accounts, transactions, tax lots, holdings and valuations. Every view plugin, the built-in UI included, uses it. MCP access waits for M2, so that model access to holdings goes through the model router.
 - **[D-50]** The read API (D-6) is defined in protobuf with HTTP annotations, like the plugin contracts (D-11). The core serves it both as Connect, for generated Go and TypeScript clients, and as REST under `/v1` through transcoding (Buf's Vanguard). The OpenAPI spec is generated from the same definitions.
 - **[D-30]** The built-in UI draws three charts in M0: allocation (by asset class, currency, broker or sleeve), value over time, and performance (D-106). The time charts start on the charts' start date (D-138).
@@ -132,6 +134,7 @@ XTB shut down its public API in 2025, and neither the treasury bond registry nor
 - **[D-170]** When the listing gives no currency and the exchange its market suffix names quotes in more than one, as London does in pence, pounds and dollars, the owner picks the trading currency when confirming the ticker's ISIN (D-116), and its positions wait until then; no currency is assumed.
 - **[D-160]** An opening upload starts its account at once: the account's go-live is recorded with the upload, even when nothing can be booked yet. Positions waiting for their ticker's ISIN (D-116) join the opening when the owner confirms it, and later uploads are imported as transactions.
 - **[D-155]** An XTB export's `Open Positions` sheet also asserts the account's holdings (D-18): for each ticker with a confirmed ISIN (D-116), the summed volume of its open positions on the report's date. A ticker not confirmed yet is asserted once the owner confirms it.
+- **[D-178]** For each confirmed ticker the account holds that an export's `Open Positions` sheet doesn't list, the export asserts a holding of zero, since the sheet lists every open position.
 - **[D-97]** The treasury bond connector reads each series' terms (first-period rate, margin and early-redemption fee) from the issuer's site, obligacjeskarbowe.pl, once its terms of use are confirmed to allow it (OQ-30, D-8). Until then the owner enters them with a lot, and the latest entry for a series wins.
 - **[D-22]** Prices come from a market-data connector plugin where the user brings the API key (D-51); IBKR Flex prices serve as a cross-check.
 - **[D-110]** A cross-check price is flagged when it differs from the stored price by more than 1% of it, in either direction. The owner can set a different threshold for a single instrument, such as a thinly traded Warsaw listing.
@@ -193,7 +196,9 @@ Double-entry keeps cash, withholding tax and currency conversion consistent by c
 - **[D-145]** OKI's rate from 2028 and its exempt amounts from 2030 come from the finance minister's announcements, added to the act's data with each release; OpenFief never computes them, and the amounts never fall.
 - **[D-146]** An OKI account counts as held from its first transaction, and the current year's tax is an estimate over the days so far.
 - **[D-147]** The owner sets an OKI account's form when creating it: a bank account, a treasury bond account, a brokerage account or a fund register. The form decides whether its PLN cash is a savings or an investment asset.
+- **[D-174]** Until an OKI account's form is set, its PLN cash counts as an investment asset, so the estimate errs high, and an attention item (D-130) asks for the form. The owner can change the form later, and every year's OKI tax follows it.
 - **[D-148]** An unclassified instrument's attention item (D-132) is a check the attention store runs, so it resolves itself once the owner classifies the instrument.
+- **[D-175]** D-148's check covers the instruments the OKI accounts held in the tax year, through the date they are valued through.
 - **[D-77]** Every holding, account and total has three values, computed by the jurisdiction pack for each kind of product and tax wrapper:
   - **Gross:** before any tax or fee; market value, or the accrued value of a bond or deposit.
   - **Net:** what the owner keeps at the planned exit (maturity, or a withdrawal from a wrapper once its conditions are met), after the taxes due then and without early-exit fees.
@@ -201,6 +206,7 @@ Double-entry keeps cash, withholding tax and currency conversion consistent by c
   Tables show all three side by side. The allocation and value-over-time charts each have a switch between them that starts on gross, the value broker statements show, and the value-over-time chart (D-30) can draw all three lines. The performance chart is computed on gross value (D-106).
 - **[D-128]** A holding's net and liquidation values carry its own tax as if it alone were sold. Account and portfolio totals count the tax as PIT-38 does: the tax year's realized and unrealized gains and losses of every taxable account offset each other, and the base and the tax are rounded to whole złoty; a losses-offset line reconciles the rows with the total. Losses carried from earlier years are not counted. IKE and IKZE follow their own rules: an IKE's early return is taxed on what is withdrawn above what was paid in.
 - **[D-149]** For an IKE whose earlier history is unknown (D-23), the owner enters its total payments in, which its early return is taxed above.
+- **[D-176]** Until an IKE's earlier payments are entered (D-149), its early return's tax is shown as missing, never estimated, and an attention item asks for them.
 - **[D-150]** The tax cost of a sale includes its buy fees, as PIT-38 deducts them, in each row's tax and in the totals alike. Dividends stay out of the netting, because Polish tax counts them as a separate source of income that capital losses don't offset.
 - **[D-78]** Liquidation value estimates a sale's commission with a fee rule the owner sets per account: a percentage with a minimum, plus a currency-conversion percentage for instruments in a foreign currency. The rule is zero until set. Withdrawing from IKZE before 65 is taxed as income at the owner's marginal PIT rate, a setting the owner enters once. Until it is set, an IKZE's liquidation value is shown as missing rather than guessed.
 - **[D-129]** D-78's minimum is an amount in any currency, converted at the valuation day's rate; the commission applies to holdings priced at market, not to bonds or cash; foreign means priced in another currency than the pack's; and the minimum applies to the commission before the currency-conversion percentage is added.
@@ -241,6 +247,8 @@ Each plugin runs out of the core's process, with its own network policy, secrets
 - **[D-13]** An operator manages plugins through a `Plugin` custom resource, from M0.
 - **[D-55]** The operator manages plugin workloads only and never touches money. Fiefs, intents, approvals and the ledger live in PostgreSQL behind the core, never in custom resources or etcd: etcd is not a transactional ledger, and GR-6's guarantee must not depend on who has Kubernetes API access. The only custom resources are `Plugin` and `PluginGrant`.
 - **[D-14]** PostgreSQL via CloudNativePG, and no NATS in M0.
+- **[D-172]** Tracing is off until the owner sets an OpenTelemetry (OTLP) endpoint, and every exporter passes an allow-list of span attributes, so no amount, identifier or token leaves. Plugins send their spans to the core, which applies the same allow-list and exports them; no plugin reaches the collector itself. Metrics go out over OTLP through the same allow-list; logs stay on standard output.
+- **[D-173]** A call through the egress proxy is traced with its host, status and duration only, never its path or query, which can name what the owner holds. A database span carries the operation's name, never the statement text or its arguments.
 - **[D-15]** The operator is namespace-scoped: a Role in the `openfief` namespace only. The CRDs are installed once by a cluster admin. Namespace-per-agent is revisited at M2.
 - **[D-16]** Plugin permissions are split into the `Plugin` resource (what the vendor requests) and a `PluginGrant` (what the user approved). The operator enforces only what is in both. An upgrade that requests more waits for approval.
 - **[D-17]** Plugin images must be pinned by digest, and their signatures are verified with cosign.
@@ -319,6 +327,5 @@ GR-12 puts the security model first, per use case. M0 has one use case, tracking
 Questions and tensions for later milestones live in their proposal files.
 
 - **[T-12]** Reporting currency vs exchange rates. D-62 makes the reporting currency a setting, but D-20 converts amounts with NBP table A, which quotes every currency only against PLN. A reporting currency other than PLN needs cross rates through PLN or another FX plugin. Proposed: P-49.
-- **[OQ-8]** Domain and trademark check for "OpenFief" (TMview, classes 9/36/42).
 - **[OQ-22]** Verify the assumptions behind D-9, D-23 and D-24 against real accounts: IBKR Flex open positions report lots with open date and cost basis; the author's IBKR lot-matching method is FIFO; how far back one Flex request reaches; the xStation export's columns, and whether it separates CFDs from stocks; whether obligacjeskarbowe.pl offers any CSV export.
 - **[OQ-30]** Do obligacjeskarbowe.pl's terms of use allow a connector to read series terms from the site automatically (D-97, D-8)?
