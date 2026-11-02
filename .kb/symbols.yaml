@@ -48546,10 +48546,11 @@ symbols:
     title: Principal
     sourceFile: internal/identity/app/auth.go
     status: active
-    symbol_role: behavioral
+    symbol_role: type-shape
     origin:
       kind: agent
       recorded_at: 2026-10-28T19:32:09.243Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-identity-auth-app
