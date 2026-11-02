@@ -241,6 +241,10 @@ The database enforces the log's rules for every role, with triggers rather than 
 
 Transfer links live in `ledger.transfer_links` ([0005_transfer_links.sql](../../internal/ledger/postgres/migrations/0005_transfer_links.sql)), one row per version of a pair, with the same triggers as the log: `UPDATE`, `DELETE` and `TRUNCATE` fail with `OFA01`, a version without its predecessor with `OFA02`. `Ledger.DecideTransfer` ([transfers.go](../../internal/ledger/app/transfers.go)) runs in one database transaction: it locks the table against other decisions (`LockTransferLinks`, `LOCK TABLE ... IN EXCLUSIVE MODE`, which lets reads through), loads the current versions of both legs by key, checks them, decides and appends. Two confirmations racing for one deposit therefore can't both pass the check. `app.Transfers` puts the owner check (D-79) in front of it, with its own `Owners` port and `ErrNoSession` and `ErrNotOwner`, then asks the core's [authorizer](../glossary.md) through the port's `Changeable` whether the owner may change the accounts of both stored legs (D-163, `Ledger.TransferAccounts`); a leg in an account it may not change refuses the decision with `ErrNotOwner`.
 
+### Tracing
+
+With tracing on ([Send traces to a collector](../guides/tracing.md)), each import, seed and addition of opening lots runs in a span `ledger.import` that names which of the three it is, never the transactions, and each query in it is a child span named by its SQL operation alone. The revaluations it queues carry the trace in their job's metadata.
+
 ## Decisions
 
 - **D-2**: the core is the system of record for transactions and lots.

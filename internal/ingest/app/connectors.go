@@ -11,7 +11,11 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
+
+// tracerScope names the ingest use cases' spans (telemetry.Run).
+const tracerScope = "github.com/arkadiuss/openfief/internal/ingest/app"
 
 const (
 	// SourceSync is the ingest path of a batch the core pulled from a
@@ -258,17 +262,18 @@ type Connectors struct {
 }
 
 // Sync pulls instance's data since the call's watermark as its import
-// batch and imports it.
+// batch and imports it. It runs in a span ingest.sync naming the instance
+// and the mode.
 func (c *Connectors) Sync(ctx context.Context, instance string, call *SyncCall) (SyncResult, error) {
-	d, err := c.Caller.Sync(ctx, instance, call)
-	if err != nil {
-		return SyncResult{}, fmt.Errorf("sync %s batch %s: %w", instance, call.ID, err)
-	}
-	batch, err := c.deliver(ctx, instance, call.ID, SourceSync, call.Mode, &d, nil)
-	if err != nil {
-		return SyncResult{}, err
-	}
-	return SyncResult{Batch: batch, Watermark: d.Watermark}, nil
+	var (
+		res SyncResult
+		err error
+	)
+	telemetry.Run(ctx, tracerScope, "ingest.sync", func(ctx context.Context) error {
+		res, err = c.syncBatch(ctx, instance, call)
+		return err
+	}, telemetry.KeyInstance.String(instance), telemetry.KeyMode.String(call.Mode.String()))
+	return res, err
 }
 
 // GoLiveDates returns the go-live date of each of accounts that is seeded,
@@ -299,17 +304,19 @@ func (c *Connectors) GoLiveDates(ctx context.Context, accounts []ledger.AccountI
 // several accounts, such as an IBKR Flex statement of linked accounts,
 // books every mapped account bound to instance, and the batch lists the
 // broker accounts that aren't mapped (D-109); a transaction or balance
-// assertion in an account not bound to instance refuses it whole.
+// assertion in an account not bound to instance refuses it whole. It runs
+// in a span ingest.import_file naming the instance and the mode, never the
+// file.
 func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, file NamedFile) (ingest.Batch, error) {
-	d, err := c.Caller.ImportFile(ctx, instance, id, mode, file)
-	if err != nil {
-		return ingest.Batch{}, fmt.Errorf("import file into %s batch %s: %w", instance, id, err)
-	}
-	b, err := c.deliver(ctx, instance, id, SourceUpload, mode, &d, nil)
-	if err != nil {
-		return ingest.Batch{}, fmt.Errorf("import file into %s: %w", instance, err)
-	}
-	return b, nil
+	var (
+		res ingest.Batch
+		err error
+	)
+	telemetry.Run(ctx, tracerScope, "ingest.import_file", func(ctx context.Context) error {
+		res, err = c.importFileBatch(ctx, instance, id, mode, file)
+		return err
+	}, telemetry.KeyInstance.String(instance), telemetry.KeyMode.String(mode.String()))
+	return res, err
 }
 
 // ImportBondLots hands treasury bond lots the owner entered for account, and
@@ -323,8 +330,48 @@ func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.
 // so those lots keep their keys. Any opening lots delivered are added to
 // the account one at a time (LedgerImporter.AddOpeningLots). Every
 // transaction and balance assertion delivered must be in account, or
-// nothing is imported.
+// nothing is imported. It runs in a span ingest.import_bond_lots naming the
+// instance, never the lots.
 func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ingest.BatchID, account ledger.AccountID, entries *ingest.BondLotEntries) (ingest.Batch, error) {
+	var (
+		res ingest.Batch
+		err error
+	)
+	telemetry.Run(ctx, tracerScope, "ingest.import_bond_lots", func(ctx context.Context) error {
+		res, err = c.importBondLotsBatch(ctx, instance, id, account, entries)
+		return err
+	}, telemetry.KeyInstance.String(instance))
+	return res, err
+}
+
+// syncBatch is Sync without its span.
+func (c *Connectors) syncBatch(ctx context.Context, instance string, call *SyncCall) (SyncResult, error) {
+	d, err := c.Caller.Sync(ctx, instance, call)
+	if err != nil {
+		return SyncResult{}, fmt.Errorf("sync %s batch %s: %w", instance, call.ID, err)
+	}
+	batch, err := c.deliver(ctx, instance, call.ID, SourceSync, call.Mode, &d, nil)
+	if err != nil {
+		return SyncResult{}, err
+	}
+	return SyncResult{Batch: batch, Watermark: d.Watermark}, nil
+}
+
+// importFileBatch is ImportFile without its span.
+func (c *Connectors) importFileBatch(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, file NamedFile) (ingest.Batch, error) {
+	d, err := c.Caller.ImportFile(ctx, instance, id, mode, file)
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("import file into %s batch %s: %w", instance, id, err)
+	}
+	b, err := c.deliver(ctx, instance, id, SourceUpload, mode, &d, nil)
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("import file into %s: %w", instance, err)
+	}
+	return b, nil
+}
+
+// importBondLotsBatch is ImportBondLots without its span.
+func (c *Connectors) importBondLotsBatch(ctx context.Context, instance string, id ingest.BatchID, account ledger.AccountID, entries *ingest.BondLotEntries) (ingest.Batch, error) {
 	e := *entries
 	e.Account = account
 	goLive, err := c.GoLiveDates(ctx, []ledger.AccountID{account})

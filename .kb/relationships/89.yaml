@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79dc0eb33aed
+  - type: implements
+    from: SYM-operator-cmd-manage
+    to: REQ-AUTO-0F49083BE9F08807
+    created_at: 2026-11-02T03:14:46.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64c483021b48
+  - type: implements
+    from: SYM-operator-cmd-manage
+    to: REQ-operator-namespace-scoped-except-service-read
+    created_at: 2026-11-02T03:14:46.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-995f08292b8c
+  - type: covered_by
+    from: SYM-operator-cmd-manage
+    to: TEST-operator-cmd
+    created_at: 2026-11-02T03:14:46.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19ef49c12c0a

@@ -118,7 +118,7 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 		if err := migrate(ctx, p.pool); err != nil {
 			return err
 		}
-		vstore, err := valuationpg.NewStore(p.pool)
+		vstore, err := valuationpg.NewStore(p.pool, jobTracing()...)
 		if err != nil {
 			return fmt.Errorf("valuation store: %w", err)
 		}
@@ -149,7 +149,7 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery, cfg *syncConfig) *ingestapp.Scheduler {
 	tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
 	store := ingestpg.New(d.pool)
-	caller := connectrpc.NewClient(connectrpc.H2CClient(), discovery.BaseURL, tokens)
+	caller := connectrpc.NewClient(pluginClient(), discovery.BaseURL, tokens)
 	inputs := valuationInputs{recorder: d.recorder}
 	return &ingestapp.Scheduler{
 		Connectors: &ingestapp.Connectors{
@@ -187,7 +187,7 @@ func runConnectors(ctx context.Context, d *connectorDeps, c *cluster, cfg *syncC
 	}
 	if d.entries != nil {
 		tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
-		d.entries.set(connectrpc.NewClient(connectrpc.H2CClient(), discovery.BaseURL, tokens))
+		d.entries.set(connectrpc.NewClient(pluginClient(), discovery.BaseURL, tokens))
 		d.entries.setDiscovery(discovery)
 	}
 	ticker := time.NewTicker(schedulerTick)

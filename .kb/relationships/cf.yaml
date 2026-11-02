@@ -643,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6db6c8ed1693
+  - type: verified_by
+    from: SCEN-telemetry-bad-variable-refused
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:06:32.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fa4333b7da5
+  - type: executable_for
+    from: SYM-ingest-app-test-tracing-span-want
+    to: TEST-ingest-app-tracing
+    created_at: 2026-11-02T03:21:32.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c9ef5905b82

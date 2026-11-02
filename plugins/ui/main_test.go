@@ -104,13 +104,28 @@ func TestUploadClient(t *testing.T) {
 // proxy, sets no Authorization of its own and has a timeout.
 func TestReadClient(t *testing.T) {
 	t.Parallel()
-	c := readClient()
-	tr, ok := c.Transport.(*http.Transport)
-	if !ok {
-		t.Fatalf("transport is %T", c.Transport)
-	}
-	if tr.Proxy != nil {
+	if directTransport().Proxy != nil {
 		t.Error("the read API client uses a proxy")
+	}
+	var got []string
+	srv := httptest.NewServer(http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
+		got = r.Header.Values("Authorization")
+	}))
+	defer srv.Close()
+	c := readClient()
+	req, err := http.NewRequestWithContext(t.Context(), http.MethodGet, srv.URL, http.NoBody)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp, err := c.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := resp.Body.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if len(got) != 0 {
+		t.Errorf("Authorization = %q, want none of the client's own", got)
 	}
 	if c.Timeout != coreTimeout {
 		t.Errorf("timeout = %v, want %v", c.Timeout, coreTimeout)

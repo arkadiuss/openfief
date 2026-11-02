@@ -18,9 +18,10 @@ const shutdownTimeout = 20 * time.Second
 
 // ServeConnector serves svc's connector contract to the core until ctx is
 // done (D-49, D-59): on ListenAddress, behind the CoreVerifier
-// NewCoreVerifier builds from the plugin's environment. It then stops
-// taking calls and gives the ones in flight up to 20 seconds to finish. It
-// returns nil after such a shutdown and the error otherwise.
+// NewCoreVerifier builds from the plugin's environment, with the plugin's
+// tracing started (StartTelemetry). It then stops taking calls, gives the
+// ones in flight up to 20 seconds to finish and sends the spans still
+// buffered. It returns nil after such a shutdown and the error otherwise.
 func ServeConnector(ctx context.Context, svc connectorv1connect.ConnectorServiceHandler, opts ...connect.HandlerOption) error {
 	addr, err := ListenAddress()
 	if err != nil {
@@ -30,7 +31,9 @@ func ServeConnector(ctx context.Context, svc connectorv1connect.ConnectorService
 	if err != nil {
 		return err
 	}
-	return serveUntilDone(ctx, NewConnectorServer(addr, svc, v, opts...))
+	return withTelemetry(ctx, func() error {
+		return serveUntilDone(ctx, NewConnectorServer(addr, svc, v, opts...))
+	})
 }
 
 // serveUntilDone runs srv until it fails or ctx is done, then shuts it down.

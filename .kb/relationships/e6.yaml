@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70ceea9dcd46
+  - type: executable_for
+    from: SYM-telemetry-test-test-parse-config-never-quotes-headers
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:16:41.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb3549115b60

@@ -720,3 +720,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52454862d069
+  - type: constrains
+    from: REQ-telemetry-deploy-component
+    to: FACT-SUBJECT-C2248168E923C9DE
+    created_at: 2026-11-02T03:07:46.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e12ace717d3
+  - type: requires_property
+    from: REQ-telemetry-deploy-component
+    to: FACT-PROP-69FAA219DBE171F9
+    created_at: 2026-11-02T03:07:46.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8962d4c190f0
+  - type: specified_by
+    from: REQ-telemetry-deploy-component
+    to: SCEN-telemetry-deploy-component
+    created_at: 2026-11-02T03:07:46.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9711dc5aaf7f
+  - type: implements
+    from: SYM-uiplugin-direct-transport
+    to: REQ-AUTO-902181B0129A6321
+    created_at: 2026-11-02T03:14:53.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-219fe3fe8446
+  - type: implements
+    from: SYM-uiplugin-direct-transport
+    to: REQ-ui-plugin-packaging
+    created_at: 2026-11-02T03:14:53.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd4280209ebd
+  - type: covered_by
+    from: SYM-uiplugin-direct-transport
+    to: TEST-ui-plugin
+    created_at: 2026-11-02T03:14:53.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43fbeb815069

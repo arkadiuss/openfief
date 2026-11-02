@@ -629,3 +629,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b368ab3e4b2d
+  - type: implements
+    from: SYM-telemetry-run
+    to: REQ-telemetry-domain-spans
+    created_at: 2026-11-02T03:12:17.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a368c19ed013
+  - type: covered_by
+    from: SYM-telemetry-run
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:12:17.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55c58d85d71f
+  - type: implements
+    from: SYM-sdk-go-new-connector-server
+    to: REQ-telemetry-plugins-sdk
+    created_at: 2026-11-02T03:15:59.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b60b3726c5c
+  - type: covered_by
+    from: SYM-sdk-go-new-connector-server
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:15:59.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58fe756a2516

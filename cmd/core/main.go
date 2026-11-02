@@ -35,6 +35,13 @@
 // ServiceAccount whose audience is the instance (D-59). connector bind lets
 // an instance write to an account; connector sync syncs one instance now
 // and needs the cluster too. Outside a cluster serve doesn't sync.
+//
+// serve and the connector commands trace their requests, connector calls,
+// queries, revaluation jobs and syncs with OpenTelemetry when the standard
+// variables name an OTLP endpoint (OTEL_EXPORTER_OTLP_ENDPOINT and its
+// kin, docs/guides/tracing.md); without one nothing is recorded or sent.
+// Spans name operations only: never an amount, a holding, an account
+// number, a token or a query's arguments.
 package main
 
 import (
@@ -73,7 +80,7 @@ func main() {
 func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) error {
 	switch cmd.Name {
 	case cmdServe:
-		return serve(ctx, cmd, log, time.Now)
+		return withTracing(ctx, func() error { return serve(ctx, cmd, log, time.Now) })
 	case cmdMigrate:
 		return withPool(ctx, cmd.DSN, func(d *deps) error {
 			if err := migrate(ctx, d.pool); err != nil {
@@ -98,8 +105,10 @@ func run(ctx context.Context, cmd *command, out io.Writer, log *slog.Logger) err
 		})
 	case cmdBind, cmdSync:
 		cl := clusterOrNil(log)
-		return withConnectorDeps(ctx, cmd.DSN, log, func(d *connectorDeps) error {
-			return connectorCommand(ctx, cmd, d, cl, out)
+		return withTracing(ctx, func() error {
+			return withConnectorDeps(ctx, cmd.DSN, log, func(d *connectorDeps) error {
+				return connectorCommand(ctx, cmd, d, cl, out)
+			})
 		})
 	}
 	return fmt.Errorf("%w: %q", errUsage, cmd.Name)

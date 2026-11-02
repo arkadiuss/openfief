@@ -12,6 +12,7 @@ import (
 
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1/connectorv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
 
 // AudiencePrefix starts the audience of the token the core presents to a
@@ -69,7 +70,9 @@ func bearerToken(value string) (string, bool) {
 
 // NewConnectorServer returns a server on addr, such as ListenAddress gives,
 // that serves svc's connector contract (D-49) to the core only (RequireCore).
-// It speaks HTTP/1.1 and HTTP/2 without TLS, since ImportFile streams.
+// It speaks HTTP/1.1 and HTTP/2 without TLS, since ImportFile streams. Each
+// call runs in a server span that continues the core's trace
+// (telemetry.ServerHandler).
 func NewConnectorServer(addr string, svc connectorv1connect.ConnectorServiceHandler, v CoreVerifier, opts ...connect.HandlerOption) *http.Server {
 	mux := http.NewServeMux()
 	path, h := connectorv1connect.NewConnectorServiceHandler(svc, opts...)
@@ -77,7 +80,7 @@ func NewConnectorServer(addr string, svc connectorv1connect.ConnectorServiceHand
 	var p http.Protocols
 	p.SetHTTP1(true)
 	p.SetUnencryptedHTTP2(true)
-	return &http.Server{Addr: addr, Handler: mux, Protocols: &p, ReadHeaderTimeout: readHeaderTimeout}
+	return &http.Server{Addr: addr, Handler: telemetry.ServerHandler(mux), Protocols: &p, ReadHeaderTimeout: readHeaderTimeout}
 }
 
 // ReceiveFile reads an ImportFile stream: its header, then its chunks in

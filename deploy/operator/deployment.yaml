@@ -36,6 +36,11 @@ spec:
             - --core-service-account=openfief-core
             # Signers the owner trusts besides OpenFief's CI and the catalog (D-45); see kustomization.yaml.
             - --trusted-signers=/etc/openfief/trust/signers.json
+          # Tracing is off: nothing is recorded or sent without an OTLP endpoint. The standard OpenTelemetry
+          # variables turn it on, best through the optional component ../tracing (docs/guides/tracing.md), e.g.:
+          # env:
+          #   - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          #     value: http://otel-collector.observability:4318
           ports:
             - name: probes
               containerPort: 8081

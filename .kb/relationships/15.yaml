@@ -755,3 +755,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99e6a6c5bd5b
+  - type: implements
+    from: SYM-ingest-app-connectors-import-file-batch
+    to: REQ-ingest-connector-batches
+    created_at: 2026-11-02T03:14:09.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7332fc25728
+  - type: implements
+    from: SYM-ingest-app-connectors-import-file-batch
+    to: REQ-ingest-uploads-through-core
+    created_at: 2026-11-02T03:14:09.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b36bf1288dd
+  - type: covered_by
+    from: SYM-ingest-app-connectors-import-file-batch
+    to: TEST-ingest-app-connectors
+    created_at: 2026-11-02T03:14:09.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca2df8ff90eb
+  - type: executable_for
+    from: SYM-core-tracing-test-denied-keys
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:18:32.890Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe5612d4db06

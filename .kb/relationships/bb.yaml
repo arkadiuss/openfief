@@ -608,3 +608,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8025ebdf3e3d
+  - type: constrains
+    from: REQ-telemetry-standard-variables
+    to: FACT-SUBJECT-30780576F5E0F88D
+    created_at: 2026-11-02T03:06:30.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbeeb6cd096e
+  - type: requires_property
+    from: REQ-telemetry-standard-variables
+    to: FACT-PROP-A8CFF78CF1EDD6F1
+    created_at: 2026-11-02T03:06:30.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b16517c85dfb
+  - type: specified_by
+    from: REQ-telemetry-standard-variables
+    to: SCEN-telemetry-standard-variables
+    created_at: 2026-11-02T03:06:30.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed5fc9b94664
+  - type: implements
+    from: SYM-telemetry-redacting-exporter
+    to: REQ-telemetry-private-spans
+    created_at: 2026-11-02T03:10:40.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d795aa305acd
+  - type: covered_by
+    from: SYM-telemetry-redacting-exporter
+    to: TEST-telemetry-redact
+    created_at: 2026-11-02T03:10:40.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5041e0a3437
+  - type: executable_for
+    from: SYM-telemetry-test-contains-any
+    to: TEST-telemetry-redact
+    created_at: 2026-11-02T03:16:54.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5009e44fd6e

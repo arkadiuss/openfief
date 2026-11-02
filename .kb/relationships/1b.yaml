@@ -531,3 +531,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff240b117a52
+  - type: constrains
+    from: REQ-telemetry-trace-propagation
+    to: FACT-SUBJECT-0F7CCDCA324FB944
+    created_at: 2026-11-02T03:06:57.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8f48fb07d01
+  - type: requires_property
+    from: REQ-telemetry-trace-propagation
+    to: FACT-PROP-56EA30A301E8CC22
+    created_at: 2026-11-02T03:06:58.034Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a447b47d7397
+  - type: specified_by
+    from: REQ-telemetry-trace-propagation
+    to: SCEN-telemetry-trace-propagation
+    created_at: 2026-11-02T03:06:58.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76ab29f6ab7a
+  - type: executable_for
+    from: SYM-operator-test-tracing-test-traced-reconciles
+    to: TEST-operator-tracing
+    created_at: 2026-11-02T03:22:20.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-162601dc8a53

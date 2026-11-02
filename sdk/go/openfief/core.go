@@ -4,12 +4,16 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
 
 // CoreHTTPClient returns an HTTP client for a plugin's calls to the core,
 // such as a view plugin's calls to the read API. Every request carries
 // "Authorization: Bearer <token>" with the token tokens returns at that
 // moment (D-27). It never uses a proxy: plugins reach the core directly.
+// Each call runs in a client span that propagates the trace to the core
+// (telemetry.Transport).
 func CoreHTTPClient(tokens TokenSource) *http.Client {
 	base, ok := http.DefaultTransport.(*http.Transport)
 	if !ok {
@@ -17,7 +21,7 @@ func CoreHTTPClient(tokens TokenSource) *http.Client {
 	}
 	t := base.Clone()
 	t.Proxy = nil
-	return &http.Client{Transport: &bearerTransport{base: t, tokens: tokens}}
+	return &http.Client{Transport: &bearerTransport{base: telemetry.Transport(t), tokens: tokens}}
 }
 
 // bearerTransport sets the Authorization header of every request it sends.

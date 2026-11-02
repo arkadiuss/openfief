@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51e68cab947d
+  - type: implements
+    from: SYM-telemetry-redacted-span
+    to: REQ-telemetry-private-spans
+    created_at: 2026-11-02T03:11:00.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d60a88630c0
+  - type: covered_by
+    from: SYM-telemetry-redacted-span
+    to: TEST-telemetry-redact
+    created_at: 2026-11-02T03:11:00.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26c2c66b5763

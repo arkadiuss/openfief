@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd6f08dd2981
+  - type: executable_for
+    from: SYM-core-tracing-test-call-core-ports
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:20:01.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edb93352d395

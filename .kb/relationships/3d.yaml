@@ -433,3 +433,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ada6bc7e748c
+  - type: implements
+    from: SYM-telemetry-telemetry
+    to: REQ-telemetry-off-by-default
+    created_at: 2026-11-02T03:11:42.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-343b0d297749
+  - type: implements
+    from: SYM-telemetry-telemetry
+    to: REQ-telemetry-flush-on-shutdown
+    created_at: 2026-11-02T03:11:42.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aad28ec30eb
+  - type: covered_by
+    from: SYM-telemetry-telemetry
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:11:42.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-451f51983f4a

@@ -853,3 +853,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-057fbab3774b
+  - type: implements
+    from: SYM-telemetry-start
+    to: REQ-telemetry-off-by-default
+    created_at: 2026-11-02T03:11:56.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbf95c827fae
+  - type: implements
+    from: SYM-telemetry-start
+    to: REQ-telemetry-standard-variables
+    created_at: 2026-11-02T03:11:56.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60af3e80f997
+  - type: covered_by
+    from: SYM-telemetry-start
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:11:56.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a8cd6b49dde
+  - type: executable_for
+    from: SYM-core-tracing-test-send
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:20:10.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f304e2c8ee8

@@ -832,3 +832,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9810a18c24ce
+  - type: implements
+    from: SYM-telemetry-start-from-env
+    to: REQ-telemetry-off-by-default
+    created_at: 2026-11-02T03:11:49.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1413f0e8c8f9
+  - type: covered_by
+    from: SYM-telemetry-start-from-env
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:11:49.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abd8e7abe990

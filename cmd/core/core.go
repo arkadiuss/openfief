@@ -34,11 +34,11 @@ type deps struct {
 	pool *pgxpool.Pool
 }
 
-// withPool connects to dsn, runs fn and closes the pool.
+// withPool connects to dsn (newPool), runs fn and closes the pool.
 func withPool(ctx context.Context, dsn string, fn func(d *deps) error) error {
-	pool, err := pgxpool.New(ctx, dsn)
+	pool, err := newPool(ctx, dsn)
 	if err != nil {
-		return fmt.Errorf("connecting: %w", err)
+		return err
 	}
 	defer pool.Close()
 	return fn(&deps{pool: pool})
@@ -142,7 +142,7 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func() time.Time, log *slog.Logger,
 	callers identityconnect.Callers, installed *viewskube.Plugins,
 ) (*core, error) {
-	vstore, err := valuationpg.NewStore(pool)
+	vstore, err := valuationpg.NewStore(pool, jobTracing()...)
 	if err != nil {
 		return nil, fmt.Errorf("valuation store: %w", err)
 	}

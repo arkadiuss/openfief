@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-563ddaa78232
+  - type: implements
+    from: SYM-telemetry-config-enabled
+    to: REQ-telemetry-off-by-default
+    created_at: 2026-11-02T03:09:15.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6940409918fe
+  - type: covered_by
+    from: SYM-telemetry-config-enabled
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:09:15.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b2311c69221

@@ -255,6 +255,10 @@ Only plugin pods get NetworkPolicies from the operator. The core's install manif
 
 Install order ([deploy/crds/kustomization.yaml](../../deploy/crds/kustomization.yaml), [deploy/operator/kustomization.yaml](../../deploy/operator/kustomization.yaml)): a cluster admin runs `kubectl apply -k deploy/crds`, which creates the `openfief` namespace with `pod-security.kubernetes.io/enforce: restricted` and both CRDs. Then `kubectl apply -k deploy/operator` installs the operator, after an overlay pins its image by digest. Its [role.yaml](../../deploy/operator/role.yaml) is generated from the `+kubebuilder:rbac` markers in [reconciler.go](../../internal/plugins/operator/reconciler.go): read `plugins` and `plugingrants`; update their status; update `plugins/finalizers`, which owner references with `blockOwnerDeletion` need; full control of ServiceAccounts, ConfigMaps, Services, Deployments and NetworkPolicies; create and patch events, in both the core and the `events.k8s.io` API groups; manage Leases for leader election. All of it is limited to `openfief`, but within the namespace it isn't limited to the operator's own objects: Kubernetes RBAC can't restrict `create` by name.
 
+### Tracing
+
+With tracing on ([Send traces to a collector](../guides/tracing.md)), the operator runs each reconcile of a Plugin, a PluginGrant or the signing keys in a span `operator.reconcile` that names the controller and nothing about the object, and wraps a failed reconcile's error with the controller's name. `cmd/operator` starts the tracing from the standard OpenTelemetry variables and sends the spans still buffered when it stops. The operator gives plugins none of those variables ([Implementation questions](../implementation-questions.md#tracing)).
+
 ## Decisions
 
 - **D-10**: Kubernetes-oriented; the operator is a controller-runtime manager.

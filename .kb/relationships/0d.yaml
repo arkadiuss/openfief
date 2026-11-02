@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b636f1e116e
+  - type: verified_by
+    from: SCEN-telemetry-trace-propagation
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:06:49.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bbf8326d4a59
+  - type: verified_by
+    from: SCEN-telemetry-trace-propagation
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:06:49.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8ade0e8da55

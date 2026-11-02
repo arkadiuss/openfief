@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72e7a4e7ea4b
+  - type: executable_for
+    from: SYM-telemetry-test-test-config-sampler
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:16:48.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47e157980043

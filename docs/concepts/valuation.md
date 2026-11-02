@@ -357,6 +357,10 @@ sequenceDiagram
 
 `Closes` uses the `close` field, not `adjusted_close`, which EODHD back-adjusts for splits and dividends; a stored price is what the instrument closed at that day. It leaves out a day whose close is null or not positive, and asks for the whole history when `from` is zero. The adapter keeps EODHD's JSON inside the package, parses every close from its text into a `kernel.Decimal`, and rejects, as `ErrMalformedResponse`, a body that isn't the documented array, a bad date or a close that isn't a number. The API key travels as the `api_token` query parameter, so the client strips the request URL from transport errors: no error it returns contains the key. It sends `User-Agent: openfief` and reads at most 16 MiB. The caller supplies the `http.Client`, including its proxy.
 
+### Tracing
+
+With tracing on ([Send traces to a collector](../guides/tracing.md)), the core's River clients record a span for each batch of jobs queued, `river.insert_many`, and one for each job worked, `river.work/valuation.revalue_account`, linked to the span that queued it; `postgres.NewStore` and `postgres.Config` take the River plugins that do it from `cmd/core`. Each revaluation runs in a span `valuation.revalue`, which names no account, date or value. The spans carry the job's kind, queue, attempt and outcome, never its arguments.
+
 ## Decisions
 
 - **D-22**, **D-51**: the EODHD adapter, on the owner's API key, for the Warsaw Stock Exchange, LSE, Xetra and Euronext; and the cross-check of the stored prices against cross-check prices, which the IBKR connector delivers from its Flex statements ([Ingest](ingest.md#mapping-a-flex-statement)).

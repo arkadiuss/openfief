@@ -12,6 +12,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 	"github.com/riverqueue/river/riverdriver/riverpgxv5"
+	"github.com/riverqueue/river/rivertype"
 
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -39,9 +40,11 @@ var (
 	_ app.Recorder = (*Store)(nil)
 )
 
-// NewStore returns the store over pool. Run Migrate first.
-func NewStore(pool *pgxpool.Pool) (*Store, error) {
-	c, err := river.NewClient(riverpgxv5.New(pool), &river.Config{Schema: RiverSchema})
+// NewStore returns the store over pool. Run Migrate first. Its River
+// client, which only enqueues, installs plugins, such as the core's job
+// tracing.
+func NewStore(pool *pgxpool.Pool, plugins ...rivertype.Plugin) (*Store, error) {
+	c, err := river.NewClient(riverpgxv5.New(pool), &river.Config{Schema: RiverSchema, Plugins: plugins})
 	if err != nil {
 		return nil, fmt.Errorf("valuation store: %w", err)
 	}

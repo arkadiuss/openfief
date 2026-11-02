@@ -643,3 +643,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee342910c685
+  - type: executable_for
+    from: SYM-telemetry-test-collector-received
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:17:31.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e595d7c8eb4b

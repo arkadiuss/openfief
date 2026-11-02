@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dde75c88a2fb
+  - type: implements
+    from: SYM-telemetry-redacted-span-links
+    to: REQ-telemetry-private-spans
+    created_at: 2026-11-02T03:11:21.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5806f171aa10
+  - type: covered_by
+    from: SYM-telemetry-redacted-span-links
+    to: TEST-telemetry-redact
+    created_at: 2026-11-02T03:11:21.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e40d71b24d6f

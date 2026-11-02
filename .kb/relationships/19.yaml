@@ -678,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f34206398ff2
+  - type: verified_by
+    from: SCEN-telemetry-standard-variables
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:06:23.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-363889564f00
+  - type: verified_by
+    from: SCEN-telemetry-standard-variables
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:06:23.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44d49650ac44
+  - type: verified_by
+    from: SCEN-telemetry-standard-variables
+    to: TEST-deploy-tracing-component
+    created_at: 2026-11-02T03:06:23.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58db17f23bc9
+  - type: executable_for
+    from: SYM-valuation-app-test-tracing-test-revalue-runs-in-a-span
+    to: TEST-valuation-app-tracing
+    created_at: 2026-11-02T03:22:12.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52ab7b7fa5df

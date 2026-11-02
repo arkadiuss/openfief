@@ -391,3 +391,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa62edc9fd92
+  - type: implements
+    from: SYM-telemetry-export-off
+    to: REQ-telemetry-off-by-default
+    created_at: 2026-11-02T03:09:29.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59860d064ca2
+  - type: implements
+    from: SYM-telemetry-export-off
+    to: REQ-telemetry-bad-variable-refused
+    created_at: 2026-11-02T03:09:29.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd6892e42dbf
+  - type: covered_by
+    from: SYM-telemetry-export-off
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:09:29.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b188254bb619
+  - type: executable_for
+    from: SYM-telemetry-test-check-domain-span
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:18:17.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18d7a119138d

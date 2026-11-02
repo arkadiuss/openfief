@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4108ae0a2c17
+  - type: executable_for
+    from: SYM-core-tracing-test-check-text
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:21:17.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-790f068b1450

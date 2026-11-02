@@ -685,3 +685,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ce9e3157c2c
+  - type: implements
+    from: SYM-sdk-go-core-httpclient
+    to: REQ-telemetry-plugins-sdk
+    created_at: 2026-11-02T03:15:52.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f61c59d3276e
+  - type: covered_by
+    from: SYM-sdk-go-core-httpclient
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:15:52.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e6309544515
+  - type: executable_for
+    from: SYM-telemetry-test-env
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:16:13.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eec8bd8f81ac

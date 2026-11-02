@@ -867,3 +867,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d3c8f06fcf1
+  - type: constrains
+    from: REQ-telemetry-trace-boundary
+    to: FACT-SUBJECT-0F7CCDCA324FB944
+    created_at: 2026-11-02T03:07:06.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a992c1a82ab
+  - type: requires_property
+    from: REQ-telemetry-trace-boundary
+    to: FACT-PROP-E2A6A6ED59BD2E8F
+    created_at: 2026-11-02T03:07:07.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45bbb358f6f5
+  - type: specified_by
+    from: REQ-telemetry-trace-boundary
+    to: SCEN-telemetry-trace-boundary
+    created_at: 2026-11-02T03:07:07.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-484ef6b25152

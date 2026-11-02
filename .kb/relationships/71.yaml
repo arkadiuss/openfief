@@ -615,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96eb0d254c03
+  - type: constrains
+    from: REQ-telemetry-plugins-sdk
+    to: FACT-SUBJECT-017BD07A11139A56
+    created_at: 2026-11-02T03:07:35.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bf76d37d175
+  - type: requires_property
+    from: REQ-telemetry-plugins-sdk
+    to: FACT-PROP-5BE8F3420A704722
+    created_at: 2026-11-02T03:07:35.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b25e237d31b0
+  - type: specified_by
+    from: REQ-telemetry-plugins-sdk
+    to: SCEN-telemetry-plugins-sdk
+    created_at: 2026-11-02T03:07:35.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a4cbee2b88

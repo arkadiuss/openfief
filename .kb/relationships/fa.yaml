@@ -608,3 +608,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47beab6195f2
+  - type: implements
+    from: SYM-telemetry-redact
+    to: REQ-telemetry-private-spans
+    created_at: 2026-11-02T03:10:34.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02ea321053f5
+  - type: covered_by
+    from: SYM-telemetry-redact
+    to: TEST-telemetry-redact
+    created_at: 2026-11-02T03:10:34.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4074a2485f1b
+  - type: covered_by
+    from: SYM-telemetry-redact
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:10:34.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ac33a80a619
