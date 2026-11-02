@@ -554,8 +554,8 @@ relationships:
     id: rel-c6774749eba8
   - type: implements
     from: SYM-ingest-pg-listing-row
-    to: REQ-ingest-ticker-currency-picked
-    created_at: 2026-11-01T23:40:16.373Z
+    to: REQ-ingest-owner-picks-ambiguous-trading-currency
+    created_at: 2026-11-02T02:37:04.651Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-37cfb4b7746c
+    id: rel-dc10304c5a3c

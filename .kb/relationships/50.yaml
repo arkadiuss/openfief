@@ -608,13 +608,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d76232e01820
-  - type: implements
-    from: SYM-ingest-pending-ticker-currency-choices
-    to: REQ-ingest-ticker-currency-pick-required
-    created_at: 2026-11-01T23:58:20.561Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0661dc528af9
   - type: covered_by
     from: SYM-ingest-pending-ticker-currency-choices
     to: TEST-ingest-listing
@@ -622,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1185983aa4f6
+  - type: implements
+    from: SYM-ingest-pending-ticker-currency-choices
+    to: REQ-ingest-owner-picks-ambiguous-trading-currency
+    created_at: 2026-11-02T02:38:37.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a48d73b98f4e

@@ -1,6 +1,6 @@
 ---
 title: An opening lot named by ticker with its open price must be booked, once its ticker is confirmed, at its quantity times that price in the trading currency of the confirmed listing, else of the exchange its market names when that exchange quotes in only one, else the one the owner picked; no currency is assumed, and a price in a minor unit is converted to the major unit.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-170
 tags:
   - strict-modeling

@@ -757,8 +757,8 @@ relationships:
     id: rel-b5d80d31f8ef
   - type: implements
     from: SYM-ui-server-tickers-page
-    to: REQ-ui-ticker-currency-choice
-    created_at: 2026-11-02T00:00:11.449Z
+    to: REQ-ingest-owner-picks-ambiguous-trading-currency
+    created_at: 2026-11-02T02:40:02.591Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-d3b09e828158
+    id: rel-4b5c5ca39a7b

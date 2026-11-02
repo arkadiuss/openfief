@@ -1,6 +1,6 @@
 ---
 title: The built-in UI's tickers page must offer a choice of trading currency for a ticker whose exchange quotes in more than one, required when the proposal names no currency, and hand the owner's pick to the core with the ISIN.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-170
 tags:
   - strict-modeling

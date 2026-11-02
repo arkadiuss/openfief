@@ -876,8 +876,15 @@ relationships:
     id: rel-5818bfd53ea3
   - type: implements
     from: SYM-ingest-listing-of
-    to: REQ-ingest-ticker-currency-picked
-    created_at: 2026-11-01T23:39:24.560Z
+    to: REQ-ingest-owner-picks-ambiguous-trading-currency
+    created_at: 2026-11-02T02:36:36.395Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-ad8d03fc258c
+    id: rel-de7d2b05fc31
+  - type: implements
+    from: SYM-ingest-listing-of
+    to: REQ-ingest-ambiguous-trading-currency-not-assumed
+    created_at: 2026-11-02T02:36:36.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94a7d487e25b

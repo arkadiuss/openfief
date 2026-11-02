@@ -694,8 +694,8 @@ relationships:
     id: rel-7b7691fc4b11
   - type: implements
     from: SYM-ingest-connectapi-tickers-fail
-    to: REQ-ingest-ticker-currency-pick-required
-    created_at: 2026-11-01T23:59:48.632Z
+    to: REQ-ingest-owner-picks-ambiguous-trading-currency
+    created_at: 2026-11-02T02:38:12.652Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-2d4d3eedbb19
+    id: rel-d9a4f849d883

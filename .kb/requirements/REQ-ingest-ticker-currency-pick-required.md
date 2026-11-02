@@ -1,6 +1,6 @@
 ---
 title: 'Confirming a ticker whose listing names no trading currency, on an exchange that quotes in more than one, must require the owner''s pick of one of that exchange''s currencies: a confirmation without one, or with a pick where there is nothing to pick, must be refused with INVALID_ARGUMENT naming the choices and record nothing, so the ticker''s entries keep waiting.'
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-170
 tags:
   - strict-modeling

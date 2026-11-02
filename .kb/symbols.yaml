@@ -107641,9 +107641,9 @@ symbols:
       - type: covered_by
         target: TEST-core-xtb-upload
       - type: implements
-        target: REQ-ingest-ticker-confirmation
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-ticker-confirmation
       - type: implements
         target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-connectrpc-test-helper-lookup-connector
@@ -110019,9 +110019,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-tickers
       - type: implements
-        target: REQ-ingest-xtb-isin-owner-confirms
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
       - type: implements
-        target: REQ-ui-ticker-currency-choice
+        target: REQ-ingest-xtb-isin-owner-confirms
       - type: implements
         target: REQ-ui-tickers-to-confirm
   - id: SYM-ui-server-render-tickers
@@ -110051,9 +110051,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-tickers
       - type: implements
-        target: REQ-ingest-xtb-isin-owner-confirms
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
       - type: implements
-        target: REQ-ui-ticker-currency-choice
+        target: REQ-ingest-xtb-isin-owner-confirms
       - type: implements
         target: REQ-ui-tickers-to-confirm
   - id: SYM-ui-test-helper-fake-tickers
@@ -123898,8 +123898,6 @@ symbols:
         target: TEST-ingest-listing
       - type: implements
         target: REQ-ingest-trading-currency-listing-or-exchange
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-ingest-minor-unit-of
     title: minorUnitOf
     sourceFile: internal/ingest/listing.go
@@ -123913,8 +123911,6 @@ symbols:
         target: TEST-ingest-listing
       - type: implements
         target: REQ-ingest-minor-unit-price-to-major
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-ingest-parse-trading-currency
     title: ParseTradingCurrency
     sourceFile: internal/ingest/listing.go
@@ -123928,8 +123924,6 @@ symbols:
         target: TEST-ingest-listing
       - type: implements
         target: REQ-ingest-trading-currency-listing-or-exchange
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-ingest-listing-of
     title: ListingOf
     sourceFile: internal/ingest/listing.go
@@ -123942,9 +123936,11 @@ symbols:
       - type: covered_by
         target: TEST-ingest-listing
       - type: implements
-        target: REQ-ingest-trading-currency-listing-or-exchange
+        target: REQ-ingest-ambiguous-trading-currency-not-assumed
       - type: implements
-        target: REQ-ingest-ticker-currency-picked
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
+      - type: implements
+        target: REQ-ingest-trading-currency-listing-or-exchange
   - id: SYM-ingest-listing-price
     title: Listing.Price
     sourceFile: internal/ingest/listing.go
@@ -123958,8 +123954,6 @@ symbols:
         target: TEST-ingest-listing
       - type: implements
         target: REQ-ingest-minor-unit-price-to-major
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-ingest-currency-places
     title: CurrencyPlaces
     sourceFile: internal/ingest/listing.go
@@ -123973,8 +123967,6 @@ symbols:
         target: TEST-ingest-listing
       - type: implements
         target: REQ-ingest-xtb-opening-lot-cost-trading-currency
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-ingest-test-helper-currency
     title: currency
     sourceFile: internal/ingest/listing_test.go
@@ -124130,9 +124122,9 @@ symbols:
       - type: covered_by
         target: TEST-core-xtb-opening
       - type: implements
-        target: REQ-ingest-trading-currency-listing-or-exchange
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
       - type: implements
-        target: REQ-ingest-ticker-currency-picked
+        target: REQ-ingest-trading-currency-listing-or-exchange
   - id: SYM-ingest-pg-listing-row-listing
     title: listingRow.listing
     sourceFile: internal/ingest/postgres/tickers.go
@@ -124146,8 +124138,6 @@ symbols:
         target: TEST-core-xtb-opening
       - type: implements
         target: REQ-ingest-trading-currency-listing-or-exchange
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-ingest-pg-entry-row-money
     title: entryRow.money
     sourceFile: internal/ingest/postgres/tickers.go
@@ -124161,8 +124151,6 @@ symbols:
         target: TEST-core-xtb-opening
       - type: implements
         target: REQ-ingest-xtb-opening-lot-cost-trading-currency
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-ingest-ticker-entry-priced-by-listing
     title: TickerEntry.PricedByListing
     sourceFile: internal/ingest/ticker.go
@@ -124176,8 +124164,6 @@ symbols:
         target: TEST-ingest-listing
       - type: implements
         target: REQ-ingest-xtb-opening-lot-cost-trading-currency
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-ingest-ticker-entry-listing-cost
     title: TickerEntry.listingCost
     sourceFile: internal/ingest/ticker.go
@@ -124191,8 +124177,6 @@ symbols:
         target: TEST-ingest-listing
       - type: implements
         target: REQ-ingest-xtb-opening-lot-cost-trading-currency
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-ingest-xtb-test-helper-render-ticker-entry
     title: renderTickerEntry
     sourceFile: internal/ingest/xtb/mapper_test.go
@@ -124337,8 +124321,6 @@ symbols:
         target: TEST-ingest-connectrpc-tickers
       - type: implements
         target: REQ-ingest-trading-currency-listing-or-exchange
-      - type: implements
-        target: REQ-ingest-ticker-currency-picked
   - id: SYM-connectorv1-account-holdings-get-bond-payout-earlier
     title: AccountHoldings.GetBondPayoutEarlier
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -125534,7 +125516,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-listing
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-ingest-trading-currency-choice-error-error
     title: TradingCurrencyChoiceError.Error
     sourceFile: internal/ingest/listing.go
@@ -125547,7 +125529,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-listing
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-ingest-exchange-currencies
     title: ExchangeCurrencies
     sourceFile: internal/ingest/listing.go
@@ -125560,7 +125542,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-listing
       - type: implements
-        target: REQ-ingest-ticker-currency-picked
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
+      - type: implements
+        target: REQ-ingest-trading-currency-listing-or-exchange
   - id: SYM-ingest-settled-code
     title: settledCode
     sourceFile: internal/ingest/listing.go
@@ -125573,7 +125557,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-listing
       - type: implements
-        target: REQ-ingest-ticker-currency-picked
+        target: REQ-ingest-trading-currency-listing-or-exchange
   - id: SYM-ingest-currency-choices
     title: CurrencyChoices
     sourceFile: internal/ingest/listing.go
@@ -125586,7 +125570,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-listing
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-ingest-confirm-listing
     title: ConfirmListing
     sourceFile: internal/ingest/listing.go
@@ -125599,7 +125583,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-listing
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-ambiguous-currency-positions-wait
+      - type: implements
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-ingest-pending-ticker-currency-choices
     title: PendingTicker.CurrencyChoices
     sourceFile: internal/ingest/ticker.go
@@ -125612,7 +125598,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-listing
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-ingest-pg-listing-row-dest
     title: listingRow.dest
     sourceFile: internal/ingest/postgres/tickers.go
@@ -125625,7 +125611,7 @@ symbols:
       - type: covered_by
         target: TEST-core-xtb-opening
       - type: implements
-        target: REQ-ingest-ticker-currency-picked
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-ingest-pg-listing-row-parts
     title: listingRow.parts
     sourceFile: internal/ingest/postgres/tickers.go
@@ -125638,7 +125624,7 @@ symbols:
       - type: covered_by
         target: TEST-core-xtb-opening
       - type: implements
-        target: REQ-ingest-ticker-currency-picked
+        target: REQ-ingest-trading-currency-listing-or-exchange
   - id: SYM-ingest-pg-listing-row-confirm
     title: listingRow.confirm
     sourceFile: internal/ingest/postgres/tickers.go
@@ -125651,7 +125637,9 @@ symbols:
       - type: covered_by
         target: TEST-core-xtb-opening
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-ambiguous-currency-positions-wait
+      - type: implements
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-ingestv1-pending-ticker-get-proposed-currency
     title: PendingTicker.GetProposedCurrency
     sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
@@ -125664,7 +125652,7 @@ symbols:
       - type: covered_by
         target: TEST-core-xtb-upload
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-ingestv1-pending-ticker-get-currency-choices
     title: PendingTicker.GetCurrencyChoices
     sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
@@ -125677,7 +125665,7 @@ symbols:
       - type: covered_by
         target: TEST-core-xtb-upload
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-ingestv1-confirm-ticker-request-get-currency
     title: ConfirmTickerRequest.GetCurrency
     sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
@@ -125690,7 +125678,7 @@ symbols:
       - type: covered_by
         target: TEST-core-xtb-upload
       - type: implements
-        target: REQ-ingest-ticker-currency-pick-required
+        target: REQ-ingest-owner-picks-ambiguous-trading-currency
   - id: SYM-core-test-helper-confirm-picking
     title: confirmPicking
     sourceFile: cmd/core/xtb_test.go
