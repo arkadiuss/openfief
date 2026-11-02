@@ -1,6 +1,9 @@
 package ingest
 
 import (
+	"errors"
+	"fmt"
+	"slices"
 	"strconv"
 )
 
@@ -8,8 +11,8 @@ import (
 // sends and takes, beyond its capabilities: whether it may send cross-check
 // prices (D-112), whether it takes statement files the owner uploads
 // (D-109), and whether it is a market-data connector that its grant
-// approves as one (D-123). The manifest is signed with the plugin's image
-// (D-42).
+// approves as one (D-123), and the institutions it books for (D-182). The
+// manifest is signed with the plugin's image (D-42).
 type Declarations struct {
 	CrossCheckPrices bool
 	StatementFiles   bool
@@ -17,6 +20,22 @@ type Declarations struct {
 	// grant approves it, so each sync tells it the instruments the owner
 	// holds and the model portfolio's targets (D-93, D-123).
 	MarketData bool
+	// Institutions are the institutions the connector books for (D-182).
+	Institutions []InstitutionID
+}
+
+// ErrUndeclaredInstitution reports a delivery that names an institution its
+// connector's manifest doesn't declare (D-182): nothing of it is imported.
+var ErrUndeclaredInstitution = errors.New("the connector's manifest doesn't declare the institution its delivery names")
+
+// CheckInstitution refuses a delivery naming institution unless d declares
+// it (D-182), so a connector can't book, or rank its market data, as
+// another institution's.
+func (d *Declarations) CheckInstitution(institution InstitutionID) error {
+	if slices.Contains(d.Institutions, institution) {
+		return nil
+	}
+	return fmt.Errorf("%w: %q", ErrUndeclaredInstitution, institution)
 }
 
 // UndeclaredCrossCheckPrices is the ingest problem a delivery's n

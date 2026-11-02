@@ -510,3 +510,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-982aa626d9af
+  - type: implements
+    from: SYM-ingest-app-connectors-declarations
+    to: REQ-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:21:31.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca0dcd7782fe
+  - type: implements
+    from: SYM-ingest-app-connectors-declarations
+    to: REQ-ingest-cross-check-prices-declared-only
+    created_at: 2026-11-02T22:21:31.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c30fc240e285
+  - type: covered_by
+    from: SYM-ingest-app-connectors-declarations
+    to: TEST-ingest-app-connectors
+    created_at: 2026-11-02T22:21:31.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb718f651f96

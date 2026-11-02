@@ -171,6 +171,17 @@ spec:
                     maxItems: 8
                     type: array
                     x-kubernetes-list-type: set
+                  institutions:
+                    description: |-
+                      Institutions are the institutions a connector books for, such as
+                      ibkr: the core refuses a delivery that names any other (D-182).
+                    items:
+                      maxLength: 63
+                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                      type: string
+                    maxItems: 16
+                    type: array
+                    x-kubernetes-list-type: set
                   marketData:
                     description: |-
                       MarketData declares a market-data connector, which each sync tells
@@ -402,6 +413,17 @@ spec:
                           maxLength: 64
                           type: string
                         maxItems: 8
+                        type: array
+                        x-kubernetes-list-type: set
+                      institutions:
+                        description: |-
+                          Institutions are the institutions a connector books for, such as
+                          ibkr: the core refuses a delivery that names any other (D-182).
+                        items:
+                          maxLength: 63
+                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                          type: string
+                        maxItems: 16
                         type: array
                         x-kubernetes-list-type: set
                       marketData:

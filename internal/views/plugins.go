@@ -84,6 +84,9 @@ type PluginRecord struct {
 	RequestsMarketData bool
 	// MarketData: the running version is one the grant approves.
 	MarketData bool
+	// Institutions are the institutions its manifest declares it books
+	// for (D-182).
+	Institutions []string
 }
 
 // Plugin is an installed plugin instance as the read API shows it (D-46,
@@ -93,6 +96,7 @@ type PluginRecord struct {
 // condition's reason, with whether it runs. MarketData says that each sync
 // tells it every instrument the owner holds and the model's targets, and
 // RequestsMarketData that its manifest asks for that (D-93, D-123).
+// Institutions are those it books for (D-182).
 type Plugin struct {
 	Instance     string
 	Image        string
@@ -111,6 +115,9 @@ type Plugin struct {
 	RequestsMarketData bool
 	// MarketData: it is one, as the grant approves (D-123).
 	MarketData bool
+	// Institutions are the institutions its manifest declares it books
+	// for; the core refuses a delivery naming any other (D-182).
+	Institutions []string
 }
 
 // PluginOf returns the Plugin r describes. The signer is named only when a
@@ -132,6 +139,7 @@ func PluginOf(r *PluginRecord) Plugin {
 
 		RequestsMarketData: r.RequestsMarketData,
 		MarketData:         r.MarketData,
+		Institutions:       slices.Clone(r.Institutions),
 	}
 	if p.Trust.Signed() {
 		p.Signer = r.Signer

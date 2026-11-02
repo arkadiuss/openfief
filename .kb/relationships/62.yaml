@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e531ee7f026e
+  - type: implements
+    from: SYM-plugins-valid-instance-name
+    to: REQ-plugins-secrets-never-platform
+    created_at: 2026-11-02T22:22:31.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38a4d5a2f2d7

@@ -145,6 +145,7 @@ func pbPlugin(p *views.Plugin) *viewsv1.Plugin {
 		Trust: viewsv1.SignatureTrust(enumNumber(int(p.Trust))), Signer: p.Signer, TrustReason: p.TrustReason,
 		UntrustedSigners: p.UntrustedSigners,
 		Phase:            p.Phase, Ready: p.Ready, MarketData: p.MarketData, RequestedMarketData: p.RequestsMarketData,
+		Institutions: p.Institutions,
 	}
 }
 

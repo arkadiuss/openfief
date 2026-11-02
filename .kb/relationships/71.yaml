@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96eb0d254c03
+  - type: executable_for
+    from: SYM-plugins-app-test-prepare-refuses-reserved-name
+    to: TEST-plugins-app-install
+    created_at: 2026-11-02T22:26:55.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c83351975a8

@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79dc0eb33aed
+  - type: implements
+    from: SYM-plugins-grant-validate
+    to: REQ-plugins-secrets-never-platform
+    created_at: 2026-11-02T22:22:54.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2c5e04d47e8
+  - type: implements
+    from: SYM-valuation-default-institution
+    to: REQ-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:25:36.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5213dbdc2532

@@ -71,7 +71,8 @@ func ResolveInstallSource(c *Catalog, arg string) (InstallSource, error) {
 // DefaultInstanceName is the instance name an install uses when the owner
 // gives none (D-48): the catalog entry's name, or else the last path
 // component of the image's repository. It is empty when neither is a valid
-// instance name, and the owner must name the instance.
+// instance name, or each is reserved (D-182), and the owner must name the
+// instance.
 func DefaultInstanceName(src *InstallSource) string {
 	candidates := []string{}
 	if src.Entry != nil {
@@ -88,9 +89,9 @@ func DefaultInstanceName(src *InstallSource) string {
 }
 
 // validInstanceName reports whether n is a plugin name the Plugin CRD
-// accepts.
+// accepts and not one the platform keeps for itself (D-182).
 func validInstanceName(n string) bool {
-	return n != "" && len(n) <= maxInstanceNameLen && validPluginName(n)
+	return n != "" && len(n) <= maxInstanceNameLen && validPluginName(n) && !ReservedName(n)
 }
 
 // PlanInstall builds the Plugin and the Grant that installing a signed image
@@ -112,32 +113,6 @@ func PlanInstall(name string, img *SignedImage, config []byte, cs *ClusterServic
 		return Plugin{}, Grant{}, fmt.Errorf("install %q: %w", name, err)
 	}
 	return p, g, nil
-}
-
-// UninstallSecrets is what an uninstall does with the Secrets an instance
-// named: Delete them, or Keep them because another instance still names
-// them. Both lists are sorted and hold each name once.
-type UninstallSecrets struct {
-	Delete []string
-	Keep   []string
-}
-
-// SecretsToDelete splits the Secrets an uninstalled instance named, in its
-// manifest or its grant, into those the uninstall deletes (D-58) and those it
-// keeps because another installed instance still names them. Each instance
-// mounts its own <instance>-<role> Secrets (D-89), so this keeps only a
-// Secret another instance's grant names, or one two instance-role pairs
-// spell alike, such as instance "a-b" with role "c" and "a" with "b-c".
-func SecretsToDelete(instance, others []string) UninstallSecrets {
-	var out UninstallSecrets
-	for _, s := range uniqueSorted(instance) {
-		if slices.Contains(others, s) {
-			out.Keep = append(out.Keep, s)
-			continue
-		}
-		out.Delete = append(out.Delete, s)
-	}
-	return out
 }
 
 // uniqueSorted returns xs sorted, each value once.

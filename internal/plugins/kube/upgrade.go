@@ -93,6 +93,7 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 			CrossCheckPrices: m.CrossCheckPrices,
 			StatementFiles:   m.StatementFiles,
 			MarketData:       m.MarketData,
+			Institutions:     m.Institutions,
 		},
 		Config: rawOf(r.Spec.Config),
 	}

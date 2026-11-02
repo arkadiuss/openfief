@@ -111,7 +111,7 @@ func checkDeclarations(t *testing.T, d *kube.Discovery) {
 	if decl, err := d.Declarations(t.Context(), "ibkr-main"); err != nil || !decl.CrossCheckPrices || decl.StatementFiles {
 		t.Errorf("Declarations(ibkr-main) = %+v, %v; want cross-check prices only", decl, err)
 	}
-	if decl, err := d.Declarations(t.Context(), "absent"); err != nil || decl != (ingest.Declarations{}) {
+	if decl, err := d.Declarations(t.Context(), "absent"); err != nil || !cmp.Equal(decl, ingest.Declarations{}) {
 		t.Errorf("Declarations of no Plugin = %+v, %v; want none", decl, err)
 	}
 }
@@ -135,6 +135,11 @@ func TestDeployedDeclarations(t *testing.T) {
 		{name: "both declared", manifest: map[string]any{"crossCheckPrices": true, "statementFiles": true}, want: ingest.Declarations{CrossCheckPrices: true, StatementFiles: true}},
 		{name: "statement files only", manifest: map[string]any{"statementFiles": true}, want: ingest.Declarations{StatementFiles: true}},
 		{name: "not a boolean", manifest: map[string]any{"crossCheckPrices": "yes"}},
+		{
+			name: "institutions (D-182)", manifest: map[string]any{"institutions": []any{"ibkr", "ibkr-ie"}},
+			want: ingest.Declarations{Institutions: []ingest.InstitutionID{"ibkr", "ibkr-ie"}},
+		},
+		{name: "institutions not strings", manifest: map[string]any{"institutions": []any{int64(1)}}},
 		{name: "nothing running"},
 	}
 	for _, tt := range tests {
@@ -149,8 +154,8 @@ func TestDeployedDeclarations(t *testing.T) {
 					t.Fatalf("setting status.effective.marketData: %v", err)
 				}
 			}
-			if got := kube.DeployedDeclarations(u); got != tt.want {
-				t.Errorf("DeployedDeclarations() = %+v, want %+v", got, tt.want)
+			if diff := cmp.Diff(tt.want, kube.DeployedDeclarations(u)); diff != "" {
+				t.Errorf("DeployedDeclarations() (-want +got):\n%s", diff)
 			}
 		})
 	}

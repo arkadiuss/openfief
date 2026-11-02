@@ -53,7 +53,7 @@ func installed() fakePlugins {
 			Ready:     views.Condition{Status: "True", Reason: "Running"},
 			Signature: views.Condition{Status: "True", Reason: "SignedByTrustedSigner"},
 			Trust:     "Unverified", SignerKind: "OpenFiefCI", Signer: "openfief-ci",
-			RequestsMarketData: true, MarketData: true,
+			RequestsMarketData: true, MarketData: true, Institutions: []string{"eodhd"},
 		},
 	}
 }
@@ -110,7 +110,7 @@ func TestConnectListPlugins(t *testing.T) {
 			Capabilities: []string{"connector"}, RequestedCapabilities: []string{"connector"},
 			Trust: viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI, Signer: "openfief-ci",
 			TrustReason: "SignedByTrustedSigner", Phase: "Running", Ready: true,
-			MarketData: true, RequestedMarketData: true,
+			MarketData: true, RequestedMarketData: true, Institutions: []string{"eodhd"},
 		},
 		{
 			Instance: "ui", Image: pluginImage, ImageDigest: views.ImageDigest(pluginImage),

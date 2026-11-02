@@ -3020,9 +3020,13 @@ symbols:
       recorded_at: 2026-10-28T05:24:56.767Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-institutions
+      - type: covered_by
         target: TEST-plugins-manifest
       - type: implements
         target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-plugins-manifest-validation
   - id: SYM-plugins-validate-capabilities
@@ -3081,10 +3085,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-manifest
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
       - type: implements
         target: REQ-AUTO-761F6500ECFC0316
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-validate-secret-mounts
     title: validateSecretMounts
     sourceFile: internal/plugins/manifest.go
@@ -3286,6 +3294,8 @@ symbols:
         target: TEST-plugins-plugin-grant
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-grant
     title: Grant
     sourceFile: internal/plugins/permissions.go
@@ -3313,6 +3323,8 @@ symbols:
         target: TEST-plugins-plugin-grant
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-valid-plugin-name
     title: validPluginName
     sourceFile: internal/plugins/permissions.go
@@ -21513,6 +21525,8 @@ symbols:
       - type: implements
         target: REQ-ingest-connector-batches
       - type: implements
+        target: REQ-ingest-delivery-declared-institution
+      - type: implements
         target: REQ-ingest-instance-scoped-keys
   - id: SYM-ingest-conn-app-connectors-store-inputs
     title: Connectors.storeInputs
@@ -23415,7 +23429,11 @@ symbols:
       recorded_at: 2026-10-28T08:55:53.625Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-institutions
+      - type: covered_by
         target: TEST-plugins-manifest-label
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-plugins-manifest-in-image
       - type: implements
@@ -23430,7 +23448,11 @@ symbols:
       recorded_at: 2026-10-28T08:56:02.442Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-institutions
+      - type: covered_by
         target: TEST-plugins-manifest-label
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-plugins-manifest-in-image
       - type: implements
@@ -57835,6 +57857,8 @@ symbols:
         target: REQ-plugins-cli-install-source
       - type: implements
         target: REQ-plugins-instance-per-install
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-valid-instance-name
     title: validInstanceName
     sourceFile: internal/plugins/install.go
@@ -57848,6 +57872,8 @@ symbols:
         target: TEST-plugins-install
       - type: implements
         target: REQ-plugins-cli-install-source
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-plan-install
     title: PlanInstall
     sourceFile: internal/plugins/install.go
@@ -57865,7 +57891,7 @@ symbols:
         target: REQ-plugins-cli-install-plan
   - id: SYM-plugins-secrets-to-delete
     title: SecretsToDelete
-    sourceFile: internal/plugins/install.go
+    sourceFile: internal/plugins/secret_owner.go
     status: active
     symbol_role: behavioral
     origin:
@@ -57876,6 +57902,8 @@ symbols:
         target: TEST-plugins-install
       - type: implements
         target: REQ-plugins-cli-uninstall-secrets
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
       - type: implements
         target: REQ-plugins-uninstall-keeps-data
   - id: SYM-plugins-unique-sorted
@@ -57963,7 +57991,7 @@ symbols:
         target: TEST-plugins-install
   - id: SYM-plugins-uninstall-secrets
     title: UninstallSecrets
-    sourceFile: internal/plugins/install.go
+    sourceFile: internal/plugins/secret_owner.go
     status: active
     symbol_role: behavioral
     origin:
@@ -57974,6 +58002,8 @@ symbols:
         target: TEST-plugins-install
       - type: implements
         target: REQ-plugins-cli-uninstall-secrets
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-app-image-inspector
     title: ImageInspector
     sourceFile: internal/plugins/app/install.go
@@ -58114,6 +58144,8 @@ symbols:
         target: TEST-plugins-app-install
       - type: implements
         target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
       - type: implements
         target: REQ-plugins-uninstall-keeps-data
   - id: SYM-plugins-app-uninstall
@@ -58317,6 +58349,8 @@ symbols:
         target: TEST-plugins-kube-instances
       - type: implements
         target: REQ-plugins-cli-list
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-kube-describe-status
     title: describeStatus
     sourceFile: internal/plugins/kube/instances.go
@@ -58358,6 +58392,8 @@ symbols:
         target: TEST-plugins-kube-instances
       - type: implements
         target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
       - type: implements
         target: REQ-plugins-uninstall-keeps-data
   - id: SYM-plugins-kube-owner-signers
@@ -58592,6 +58628,8 @@ symbols:
         target: TEST-plugins-cli-render
       - type: implements
         target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-cli-write-instances
     title: WriteInstances
     sourceFile: internal/plugins/cli/render.go
@@ -69784,6 +69822,8 @@ symbols:
       - type: implements
         target: REQ-views-installed-plugins
       - type: implements
+        target: REQ-views-plugin-institutions
+      - type: implements
         target: REQ-views-removed-instance-mark
   - id: SYM-views-connectapi-test-helper-fake-plugins
     title: fakePlugins
@@ -69994,6 +70034,8 @@ symbols:
         target: REQ-plugins-verified-status
       - type: implements
         target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-plugin-institutions
   - id: SYM-views-kube-nested-string
     title: nestedString
     sourceFile: internal/views/kube/plugins.go
@@ -70268,6 +70310,8 @@ symbols:
         target: REQ-plugins-install-shows-market-data-list
       - type: implements
         target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-institutions
       - type: implements
         target: REQ-views-plugin-trust-level
   - id: SYM-views-trust-of
@@ -86693,6 +86737,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-ranking
       - type: implements
+        target: REQ-ingest-delivery-declared-institution
+      - type: implements
         target: REQ-valuation-market-data-default-ranking
   - id: SYM-valuation-source
     title: Source
@@ -90053,7 +90099,7 @@ symbols:
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
   - id: SYM-ingest-app-connectors-declared-cross-checks
-    title: Connectors.declaredCrossChecks
+    title: declaredCrossChecks
     sourceFile: internal/ingest/app/connectors.go
     status: active
     symbol_role: behavioral
@@ -90305,10 +90351,11 @@ symbols:
     title: Declarations
     sourceFile: internal/ingest/declarations.go
     status: active
-    symbol_role: behavioral
+    symbol_role: type-shape
     origin:
       kind: agent
       recorded_at: 2026-10-30T04:30:10.837Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-ingest-app-scheduler
@@ -90316,6 +90363,8 @@ symbols:
         target: TEST-ingest-declarations
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-ingest-market-data-list-declared-granted
       - type: implements
@@ -90394,6 +90443,8 @@ symbols:
         target: TEST-ingest-kube
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-ingest-market-data-list-declared-granted
       - type: implements
@@ -90829,6 +90880,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-plugins-install-shows-market-data-list
       - type: implements
@@ -123043,7 +123096,11 @@ symbols:
       recorded_at: 2026-11-01T10:11:03.305Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-institutions
+      - type: covered_by
         target: TEST-plugins-market-data
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-ingest-market-data-list-declared-granted
   - id: SYM-operator-market-data-items
@@ -127406,3 +127463,267 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-manifests
+  - id: SYM-plugins-reserved-name
+    title: ReservedName
+    sourceFile: internal/plugins/secret_owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:18.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-validate-unreserved
+    title: validateUnreserved
+    sourceFile: internal/plugins/secret_owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:30.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-validate-institutions
+    title: validateInstitutions
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:42.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-institutions
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
+  - id: SYM-plugins-kube-instances-secret-owners
+    title: Instances.secretOwners
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:53.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-kube-instances-delete-owned-secret
+    title: Instances.deleteOwnedSecret
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:21:05.749Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-ingest-declarations-check-institution
+    title: Declarations.CheckInstitution
+    sourceFile: internal/ingest/declarations.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:21:16.809Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
+  - id: SYM-ingest-app-connectors-declarations
+    title: Connectors.declarations
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:21:28.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
+  - id: SYM-plugins-test-reserved-name
+    title: TestReservedName
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:19.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-manifest-institutions
+    title: TestManifestInstitutions
+    sourceFile: internal/plugins/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:29.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-institutions
+  - id: SYM-plugins-app-test-uninstall-leaves-secrets-not-owned
+    title: TestUninstallLeavesSecretsNotOwned
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:41.271Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-prepare-refuses-reserved-name
+    title: TestPrepareRefusesReservedName
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:52.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-kube-test-instances-owned-secret
+    title: ownedSecret
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:04.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-ingest-app-test-conn-undeclared-institution
+    title: TestConnectorsUndeclaredInstitution
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:17.013Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-conn-test-institutions
+    title: testInstitutions
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:29.365Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-test-check-institution
+    title: TestCheckInstitution
+    sourceFile: internal/ingest/declarations_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:39.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-declarations
+  - id: SYM-ingest-connectapi-test-bonds-instance
+    title: bondsInstance
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:52.196Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-bonds-instance-declarations
+    title: bondsInstance.Declarations
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:04.846Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-plugins-kube-owners-of
+    title: ownersOf
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:33:43.035Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-kube-describe-plugin
+    title: describePlugin
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:33:53.427Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-views-pb-plugin-get-institutions
+    title: Plugin.GetInstitutions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:59:55.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-plugin-institutions
+  - id: SYM-core-test-helper-bonds-discovery
+    title: bondsDiscovery
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:47:04.818Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-bonds-discovery-instances
+    title: bondsDiscovery.ConnectorInstances
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:47:15.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-bonds-discovery-declarations
+    title: bondsDiscovery.Declarations
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:47:26.475Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots

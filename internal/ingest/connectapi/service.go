@@ -121,7 +121,8 @@ func (s *service) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	case errors.Is(err, ledger.ErrBookedBeforeGoLive), errors.Is(err, ledger.ErrGoLiveMismatch):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
-	case errors.Is(err, app.ErrNoConnector), errors.Is(err, app.ErrNoEntries), errors.Is(err, ingest.ErrAccountNotBound):
+	case errors.Is(err, app.ErrNoConnector), errors.Is(err, app.ErrNoEntries), errors.Is(err, ingest.ErrAccountNotBound),
+		errors.Is(err, ingest.ErrUndeclaredInstitution):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	case errors.Is(err, app.ErrConnectorUnavailable):
 		return connect.NewError(connect.CodeUnavailable, app.ErrConnectorUnavailable)

@@ -1,5 +1,6 @@
 {
   "capabilities": ["connector"],
+  "institutions": ["nbp"],
   "egress": ["api.nbp.pl"],
   "configSchema": {
     "type": "object",

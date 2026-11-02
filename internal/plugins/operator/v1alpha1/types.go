@@ -169,6 +169,15 @@ type Manifest struct {
 	// (D-93). The PluginGrant approves it (D-123).
 	// +optional
 	MarketData bool `json:"marketData,omitempty"`
+
+	// Institutions are the institutions a connector books for, such as
+	// ibkr: the core refuses a delivery that names any other (D-182).
+	// +optional
+	// +kubebuilder:validation:MaxItems=16
+	// +kubebuilder:validation:items:MaxLength=63
+	// +kubebuilder:validation:items:Pattern=`^[a-z0-9]([-a-z0-9]*[a-z0-9])?$`
+	// +listType=set
+	Institutions []string `json:"institutions,omitempty"`
 }
 
 // SecretMount asks for the instance's Secret of one role to be mounted

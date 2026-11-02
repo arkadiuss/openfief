@@ -97,6 +97,9 @@ type Manifest struct {
 	// targets (D-93). It is a permission the grant approves, so the owner
 	// sees at install that the plugin will learn what they hold (D-123).
 	MarketData bool
+	// Institutions are the institutions a connector books for, such as
+	// "ibkr": the core refuses a delivery that names any other (D-182).
+	Institutions []string
 }
 
 // Validate returns every problem in m, each a *FieldError, joined; or nil.
@@ -115,10 +118,27 @@ func (m *Manifest) Validate() error {
 	if m.MarketData && !slices.Contains(m.Capabilities, CapabilityConnector) {
 		errs = append(errs, &FieldError{Field: "marketData", Err: ErrMarketDataNeedsConnector})
 	}
+	errs = append(errs, validateInstitutions(m)...)
 	if len(m.ConfigSchema) > 0 && !json.Valid(m.ConfigSchema) {
 		errs = append(errs, &FieldError{Field: "configSchema", Err: ErrInvalidJSON})
 	}
 	return errors.Join(errs...)
+}
+
+// validateInstitutions checks a manifest's institutions (D-182): each a
+// lower-case DNS label, such as "ibkr", named once, and declared only by a
+// connector.
+func validateInstitutions(m *Manifest) []error {
+	var errs []error
+	if len(m.Institutions) > 0 && !slices.Contains(m.Capabilities, CapabilityConnector) {
+		errs = append(errs, &FieldError{Field: "institutions", Err: ErrInstitutionsNeedConnector})
+	}
+	for i, in := range m.Institutions {
+		if validateLabel(in) != nil {
+			errs = append(errs, fieldErr(indexed("institutions", i), ErrInvalidName, in))
+		}
+	}
+	return append(errs, duplicates("institutions", m.Institutions, func(s string) string { return s })...)
 }
 
 func validateCapabilities(cs []Capability) []error {
@@ -157,6 +177,7 @@ func validateSecretNames(field string, names []string) []error {
 		if !validSecretName(n) {
 			errs = append(errs, fieldErr(indexed(field, i), ErrInvalidName, n))
 		}
+		errs = append(errs, validateUnreserved(indexed(field, i), n)...)
 	}
 	return append(errs, duplicates(field, names, func(s string) string { return s })...)
 }

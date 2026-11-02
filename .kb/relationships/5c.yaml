@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0b4d4063320
+  - type: implements
+    from: SYM-views-connectapi-pb-plugin
+    to: REQ-views-plugin-institutions
+    created_at: 2026-11-02T22:26:10.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e036f2d50122

@@ -68,7 +68,10 @@ func ParseMarketDataKind(s string) (MarketDataKind, error) {
 // DefaultInstitution returns the institution of the first-party connector
 // that ranks first for k unless the owner ranks otherwise (D-94): EODHD for
 // prices, NBP for FX rates and the treasury bond connector for CPI and the
-// NBP reference rate. A connector names its institution on every delivery.
+// NBP reference rate. A connector names its institution on every delivery,
+// and the core refuses one naming an institution its signed manifest
+// doesn't declare (D-182), so a source ranks first by default only when its
+// manifest declares that institution.
 func DefaultInstitution(k MarketDataKind) string {
 	switch k {
 	case KindPrices:

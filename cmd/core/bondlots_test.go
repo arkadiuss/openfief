@@ -11,6 +11,7 @@ import (
 	"connectrpc.com/connect"
 
 	"github.com/arkadiuss/openfief/internal/demo"
+	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/connectrpc"
 	"github.com/arkadiuss/openfief/internal/ingest/delivery"
 	"github.com/arkadiuss/openfief/internal/ingest/treasurybonds"
@@ -86,6 +87,18 @@ func edoRequest(session, account string) *connect.Request[ingestv1.AddBondLotReq
 	})
 }
 
+// bondsDiscovery is the cluster as discovery sees it: bonds-main runs and
+// books for the treasury bond registry (D-182).
+type bondsDiscovery struct{}
+
+func (bondsDiscovery) ConnectorInstances(context.Context) ([]string, error) {
+	return []string{"bonds-main"}, nil
+}
+
+func (bondsDiscovery) Declarations(context.Context, string) (ingest.Declarations, error) {
+	return ingest.Declarations{Institutions: []ingest.InstitutionID{ingest.TreasuryBonds}}, nil
+}
+
 func TestBondLotService(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
@@ -103,6 +116,7 @@ func TestBondLotService(t *testing.T) {
 		t.Fatalf("AddBondLot before the core found any connector = %v, want Unavailable", err)
 	}
 	port := serveConnector(t, bondsConnector{})
+	c.deps.entries.setDiscovery(bondsDiscovery{})
 	c.deps.entries.set(connectrpc.NewClient(connectrpc.H2CClient(), func(string) (string, error) {
 		return fmt.Sprintf("http://127.0.0.1:%d", port), nil
 	}, staticTokens{}))

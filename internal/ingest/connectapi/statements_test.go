@@ -115,7 +115,7 @@ func (flexInstance) ConnectorInstances(context.Context) ([]string, error) {
 }
 
 func (flexInstance) Declarations(context.Context, string) (ingest.Declarations, error) {
-	return ingest.Declarations{StatementFiles: true}, nil
+	return ingest.Declarations{StatementFiles: true, Institutions: []ingest.InstitutionID{"ibkr"}}, nil
 }
 
 // viewStreams admits streams bearing viewCaller, like cmd/core's

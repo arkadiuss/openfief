@@ -118,7 +118,8 @@ func (s *statements) fail(ctx context.Context, err error) *connect.Error {
 		errors.Is(err, app.ErrSeedingOutsideOpening), errors.Is(err, errOpeningCash), errors.Is(err, ingest.ErrOpeningCashOutsideOpening):
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	case errors.Is(err, app.ErrNoConnector), errors.Is(err, app.ErrNoEntries), errors.Is(err, ingest.ErrAccountNotBound),
-		errors.Is(err, ledger.ErrAlreadySeeded), errors.Is(err, ingest.ErrStartedFromHistory), errors.Is(err, ingest.ErrOpeningCashEntered):
+		errors.Is(err, ledger.ErrAlreadySeeded), errors.Is(err, ingest.ErrStartedFromHistory), errors.Is(err, ingest.ErrOpeningCashEntered),
+		errors.Is(err, ingest.ErrUndeclaredInstitution):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	case errors.Is(err, app.ErrConnectorUnavailable):
 		return connect.NewError(connect.CodeUnavailable, app.ErrConnectorUnavailable)

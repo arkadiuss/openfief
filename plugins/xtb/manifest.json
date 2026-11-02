@@ -1,5 +1,6 @@
 {
   "capabilities": ["connector"],
+  "institutions": ["xtb"],
   "statementFiles": true,
   "configSchema": {
     "type": "object",

@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42f1f144712e
+  - type: executable_for
+    from: SYM-core-test-helper-bonds-discovery-declarations
+    to: TEST-core-bond-lots
+    created_at: 2026-11-02T23:47:28.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2624b0c7e3f0

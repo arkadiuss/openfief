@@ -313,6 +313,8 @@ func TestManifest(t *testing.T) {
 		// It sends IBKR's mark prices as cross-check prices (D-112) and maps
 		// uploaded Flex statements (D-109).
 		CrossCheckPrices: true, StatementFiles: true,
+		// It books for the institution every delivery names (D-182).
+		Institutions: []string{institution},
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)

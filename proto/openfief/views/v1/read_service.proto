@@ -1137,6 +1137,10 @@ message Plugin {
   // "<subject> (issuer <issuer>)", a key as "public key sha256:<hex>".
   // Empty otherwise.
   repeated string untrusted_signers = 13;
+  // The institutions its signed manifest declares it books for, such as
+  // "ibkr": the core refuses a delivery of a connector that names any
+  // other (D-182). Empty for a view.
+  repeated string institutions = 14;
 }
 
 // AttentionItemState is where an attention item stands (D-130).

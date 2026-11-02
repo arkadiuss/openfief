@@ -59,6 +59,10 @@ func TestResolveInstallSource(t *testing.T) {
 		},
 		{name: "image the catalog does not pin", arg: imageB, want: installOutcome{Image: imageB, Name: "sample-connector"}},
 		{name: "repository name is no instance name", arg: imageOther, want: installOutcome{Image: imageOther}},
+		{
+			name: "repository name is reserved for the platform", arg: "registry.example.com/someone/openfief@" + digestB,
+			want: installOutcome{Image: "registry.example.com/someone/openfief@" + digestB},
+		},
 		{name: "tag refused", arg: "registry.example.com/openfief/sample:1.0", wantErr: plugins.ErrImageNotPinned},
 		{name: "unknown name", arg: "missing", wantErr: plugins.ErrNotInCatalog},
 		{name: "name of several versions", arg: "twice", wantErr: plugins.ErrAmbiguousCatalogName},
@@ -173,6 +177,8 @@ func TestPlanInstallRefuses(t *testing.T) {
 		{name: "name too long for the CRD", instance: "a23456789012345678901234567890123456789012345678901234567", wantFields: []string{"name"}},
 		{name: "invalid name", instance: "Sample", wantFields: []string{"name", "plugin"}},
 		{name: "config not JSON", instance: "sample", config: `{`, wantFields: []string{"config"}},
+		{name: "name reserved for the platform", instance: "openfief", wantFields: []string{"name", "plugin"}},
+		{name: "name with the platform's prefix", instance: "openfief-db", wantFields: []string{"name", "plugin"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -192,30 +198,67 @@ func TestPlanInstallRefuses(t *testing.T) {
 
 func TestSecretsToDelete(t *testing.T) {
 	t.Parallel()
+	owned := func(names ...string) map[string]string {
+		out := map[string]string{}
+		for _, n := range names {
+			out[n] = "a"
+		}
+		return out
+	}
 	tests := []struct {
-		name     string
-		instance []string
-		others   []string
-		wantDel  []string
-		wantKept []string
+		name         string
+		named        []string
+		others       []string
+		owners       map[string]string
+		wantDel      []string
+		wantKept     []string
+		wantNotOwned []string
 	}{
-		{name: "nothing shared", instance: []string{"b-token", "a-cert"}, wantDel: []string{"a-cert", "b-token"}},
-		{name: "named by manifest and grant", instance: []string{"a-cert", "a-cert"}, wantDel: []string{"a-cert"}},
+		{name: "nothing shared", named: []string{"a-token", "a-cert"}, owners: owned("a-token", "a-cert"), wantDel: []string{"a-cert", "a-token"}},
+		{name: "named by manifest and grant", named: []string{"a-cert", "a-cert"}, owners: owned("a-cert"), wantDel: []string{"a-cert"}},
 		{
-			name: "another instance of the image still names one", instance: []string{"a-cert", "shared"},
-			others: []string{"shared", "unrelated"}, wantDel: []string{"a-cert"}, wantKept: []string{"shared"},
+			name: "another instance of the image still names one", named: []string{"a-cert", "shared"},
+			others: []string{"shared", "unrelated"}, owners: owned("a-cert", "shared"), wantDel: []string{"a-cert"}, wantKept: []string{"shared"},
 		},
+		{name: "a named Secret that doesn't exist", named: []string{"a-cert", "a-gone"}, owners: owned("a-cert"), wantDel: []string{"a-cert"}},
+		{
+			name: "unlabelled and another instance's Secrets are left alone", named: []string{"a-cert", "a-key", "openfief-db-app"},
+			owners: map[string]string{"a-cert": "a", "a-key": "", "openfief-db-app": ""}, wantDel: []string{"a-cert"},
+			wantNotOwned: []string{"a-key", "openfief-db-app"},
+		},
+		{name: "labelled for another instance", named: []string{"a-b-c"}, owners: map[string]string{"a-b-c": "a-b"}, wantNotOwned: []string{"a-b-c"}},
 		{name: "no secrets"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got := plugins.SecretsToDelete(tt.instance, tt.others)
-			if diff := cmp.Diff(tt.wantDel, got.Delete); diff != "" {
-				t.Errorf("deleted (-want +got):\n%s", diff)
+			got := plugins.SecretsToDelete("a", tt.named, tt.others, tt.owners)
+			want := plugins.UninstallSecrets{Delete: tt.wantDel, Keep: tt.wantKept, NotOwned: tt.wantNotOwned}
+			if diff := cmp.Diff(want, got); diff != "" {
+				t.Errorf("uninstall secrets (-want +got):\n%s", diff)
 			}
-			if diff := cmp.Diff(tt.wantKept, got.Keep); diff != "" {
-				t.Errorf("kept (-want +got):\n%s", diff)
+		})
+	}
+}
+
+func TestReservedName(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		want bool
+	}{
+		{name: "openfief", want: true},
+		{name: "openfief-db", want: true},
+		{name: "openfief-db-app", want: true},
+		{name: "openfiefs"},
+		{name: "my-openfief"},
+		{name: "ibkr-main"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if got := plugins.ReservedName(tt.name); got != tt.want {
+				t.Errorf("ReservedName(%q) = %v, want %v", tt.name, got, tt.want)
 			}
 		})
 	}

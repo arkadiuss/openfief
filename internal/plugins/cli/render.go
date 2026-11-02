@@ -51,6 +51,7 @@ func RenderProposal(p *app.Proposal) string {
 		fmt.Fprintf(&b, "  Secrets:      %s\n", noneText)
 	} else {
 		b.WriteString("  Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself\n")
+		fmt.Fprintf(&b, "                and label it %s=%s, or uninstall leaves it in place (D-182)\n", plugins.OwnerInstanceLabel, p.Plugin.Name)
 		for _, s := range m.Secrets {
 			fmt.Fprintf(&b, "                %s (role %s) at %s\n", plugins.SecretName(p.Plugin.Name, s.Role), s.Role, s.MountPath)
 		}
@@ -191,6 +192,9 @@ func RenderUninstallPlan(plan *app.UninstallPlan) string {
 	if len(plan.Secrets.Keep) > 0 {
 		fmt.Fprintf(&b, "Keeps Secrets another instance uses: %s\n", strings.Join(plan.Secrets.Keep, ", "))
 	}
+	if len(plan.Secrets.NotOwned) > 0 {
+		fmt.Fprintf(&b, "Leaves Secrets not labelled %s=%s: %s\n", plugins.OwnerInstanceLabel, in.Name, strings.Join(plan.Secrets.NotOwned, ", "))
+	}
 	b.WriteString("Keeps the data it brought into the ledger; reinstalling under the same name continues from it.\n")
 	return b.String()
 }
@@ -244,11 +248,14 @@ func yesNo(b bool) string {
 	return "no"
 }
 
-// writeDeclarations writes what a connector's manifest declares: that it
-// is a market-data connector, which learns what the owner holds (D-123),
-// and what it sends and takes (D-112, D-109); nothing when it declares
-// none of them.
+// writeDeclarations writes what a connector's manifest declares: the
+// institutions it books for (D-182), that it is a market-data connector,
+// which learns what the owner holds (D-123), and what it sends and takes
+// (D-112, D-109); nothing when it declares none of them.
 func writeDeclarations(b *strings.Builder, m *plugins.Manifest) {
+	if slices.Contains(m.Capabilities, plugins.CapabilityConnector) {
+		fmt.Fprintf(b, "  Institutions: %s\n", joinOr(m.Institutions, "none: the core refuses everything it delivers (D-182)"))
+	}
 	if m.MarketData {
 		b.WriteString(marketDataText)
 	}

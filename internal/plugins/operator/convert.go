@@ -28,6 +28,7 @@ func pluginFromSpec(name string, spec *v1alpha1.PluginSpec) (*plugins.Plugin, er
 			CrossCheckPrices: spec.Manifest.CrossCheckPrices,
 			StatementFiles:   spec.Manifest.StatementFiles,
 			MarketData:       spec.Manifest.MarketData,
+			Institutions:     spec.Manifest.Institutions,
 		},
 		Config: rawJSON(spec.Config),
 	}

@@ -33,6 +33,8 @@ func TestManifest(t *testing.T) {
 		Egress:       []plugins.EgressHost{{Host: "eodhd.com", Port: 443}},
 		Secrets:      []plugins.SecretMount{{Role: "api-token", MountPath: keyMount}},
 		MarketData:   true,
+		// It books for the institution every delivery names (D-182).
+		Institutions: []string{institution},
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)

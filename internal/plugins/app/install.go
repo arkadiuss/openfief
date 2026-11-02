@@ -31,6 +31,9 @@ var (
 	// Secret another installed instance already names: two instances never
 	// share a Secret (D-89).
 	ErrSecretInUse = errors.New("another instance already names that Secret")
+	// ErrSecretNotOwned reports a Secret an uninstall left alone because it
+	// doesn't carry the instance's plugins.OwnerInstanceLabel (D-182).
+	ErrSecretNotOwned = errors.New("the Secret is not labelled as this instance's")
 	// ErrClusterService reports an in-cluster service the owner picked that
 	// can't be reached as D-74 needs: no such port, or no pods selected.
 	ErrClusterService = errors.New("in-cluster service unusable")
@@ -53,6 +56,9 @@ type Instance struct {
 	HasPlugin, HasGrant bool
 	// Secrets are the Secret names its manifest or its grant names.
 	Secrets []string
+	// SecretOwners maps each of Secrets that exists to the instance its
+	// plugins.OwnerInstanceLabel names, empty when it has none (D-182).
+	SecretOwners map[string]string
 	// Signature is the reason of the Plugin's SignatureVerified condition,
 	// such as Verified or SignedByTrustedSigner, and for an image refused
 	// as signed by untrusted signers those signers in parentheses (D-169);
@@ -128,7 +134,9 @@ type InstanceStore interface {
 	// missing.
 	Update(ctx context.Context, p *plugins.Plugin, g *plugins.Grant) error
 	// Delete removes an instance's grant, its Plugin and the named Secrets;
-	// one already gone is not an error.
+	// one already gone is not an error. A named Secret that doesn't carry
+	// the instance's plugins.OwnerInstanceLabel when it is deleted is left
+	// alone, and Delete reports it (D-182).
 	Delete(ctx context.Context, name string, secrets []string) error
 }
 
@@ -269,8 +277,8 @@ func Install(ctx context.Context, store InstanceStore, p *Proposal) error {
 // UninstallPlan is what uninstalling an instance removes (D-58): its
 // PluginGrant and its Plugin, whose owned workload the cluster's garbage
 // collector deletes and whose allow-list entry the operator drops, and the
-// Secrets no other instance names. Data the instance brought into the
-// ledger is never touched.
+// Secrets labelled as the instance's that no other instance names (D-182).
+// Data the instance brought into the ledger is never touched.
 type UninstallPlan struct {
 	Instance Instance
 	Secrets  plugins.UninstallSecrets
@@ -293,7 +301,7 @@ func PlanUninstall(ctx context.Context, store InstanceStore, name string) (Unins
 			others = append(others, all[j].Secrets...)
 		}
 	}
-	return UninstallPlan{Instance: all[i], Secrets: plugins.SecretsToDelete(all[i].Secrets, others)}, nil
+	return UninstallPlan{Instance: all[i], Secrets: plugins.SecretsToDelete(name, all[i].Secrets, others, all[i].SecretOwners)}, nil
 }
 
 // Uninstall carries out a confirmed plan.

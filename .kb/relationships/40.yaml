@@ -559,3 +559,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72e7a4e7ea4b
+  - type: constrains
+    from: REQ-ingest-delivery-declared-institution
+    to: FACT-SUBJECT-CAD68A36D51B31B5
+    created_at: 2026-11-02T22:20:04.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c850eb401c14
+  - type: requires_property
+    from: REQ-ingest-delivery-declared-institution
+    to: FACT-PROP-7FB3AA71B980DFAC
+    created_at: 2026-11-02T22:20:04.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a165d3057d8
+  - type: specified_by
+    from: REQ-ingest-delivery-declared-institution
+    to: SCEN-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:20:05.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88cc722bbdfb

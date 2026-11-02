@@ -88,6 +88,17 @@ func TestGrantValidate(t *testing.T) {
 				{"permissions.dataTiers[0]", plugins.ErrInvalidDataTier},
 			},
 		},
+		{
+			name: "names reserved for the platform (D-182)",
+			change: func(g *plugins.Grant) {
+				g.Plugin = "openfief"
+				g.Permissions.Secrets = []string{"openfief-db-app", "sample-cert"}
+			},
+			want: []fieldError{
+				{"plugin", plugins.ErrReservedName},
+				{"permissions.secrets[0]", plugins.ErrReservedName},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

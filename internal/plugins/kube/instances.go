@@ -57,18 +57,7 @@ func (s *Instances) List(ctx context.Context) ([]app.Instance, error) {
 		return byName[name]
 	}
 	for i := range ps.Items {
-		p := &ps.Items[i]
-		in := get(p.Name)
-		in.HasPlugin, in.Image, in.BrowserPath = true, p.Spec.Image, p.Spec.Manifest.BrowserPath
-		for _, sm := range p.Spec.Manifest.Secrets {
-			in.Secrets = append(in.Secrets, plugins.SecretName(p.Name, sm.Role))
-		}
-		if r := p.Spec.ClusterService; r != nil {
-			if cs, err := clusterServiceOf(r); err == nil {
-				in.ClusterService = &cs
-			}
-		}
-		describeStatus(in, &p.Status)
+		describePlugin(get(ps.Items[i].Name), &ps.Items[i])
 	}
 	for i := range gs.Items {
 		g := &gs.Items[i]
@@ -76,14 +65,35 @@ func (s *Instances) List(ctx context.Context) ([]app.Instance, error) {
 		in.HasGrant = true
 		in.Secrets = append(in.Secrets, g.Spec.Secrets...)
 	}
+	owners, err := s.secretOwners(ctx)
+	if err != nil {
+		return nil, err
+	}
 	out := make([]app.Instance, 0, len(byName))
 	for _, in := range byName {
 		slices.Sort(in.Secrets)
 		in.Secrets = slices.Compact(in.Secrets)
+		in.SecretOwners = ownersOf(in.Secrets, owners)
 		out = append(out, *in)
 	}
 	slices.SortFunc(out, func(a, b app.Instance) int { return strings.Compare(a.Name, b.Name) })
 	return out, nil
+}
+
+// describePlugin copies what a Plugin says about its instance: its image,
+// browser path, the Secret each role names, its in-cluster service and
+// what the operator reported.
+func describePlugin(in *app.Instance, p *v1alpha1.Plugin) {
+	in.HasPlugin, in.Image, in.BrowserPath = true, p.Spec.Image, p.Spec.Manifest.BrowserPath
+	for _, sm := range p.Spec.Manifest.Secrets {
+		in.Secrets = append(in.Secrets, plugins.SecretName(p.Name, sm.Role))
+	}
+	if r := p.Spec.ClusterService; r != nil {
+		if cs, err := clusterServiceOf(r); err == nil {
+			in.ClusterService = &cs
+		}
+	}
+	describeStatus(in, &p.Status)
 }
 
 // describeStatus copies what the operator reported about a Plugin: an
@@ -136,9 +146,11 @@ func (s *Instances) Create(ctx context.Context, p *plugins.Plugin, g *plugins.Gr
 // Delete removes an instance: its PluginGrant first, so the operator stops
 // it at once, then its Plugin, whose owned workload objects the garbage
 // collector deletes and whose egress allow-list entry the operator drops
-// (D-58), then the named Secrets and, when the Plugin names an in-cluster
-// service, the Role and RoleBinding that let the operator read it (D-74).
-// Objects already gone are skipped.
+// (D-58), then the named Secrets that are labelled as the instance's
+// (D-182) and, when the Plugin names an in-cluster service, the Role and
+// RoleBinding that let the operator read it (D-74). Objects already gone are
+// skipped; a Secret not labelled as the instance's is left alone and
+// reported.
 func (s *Instances) Delete(ctx context.Context, name string, secrets []string) error {
 	access, hasAccess, err := s.clusterServiceOfPlugin(ctx, name)
 	if err != nil {
@@ -148,21 +160,77 @@ func (s *Instances) Delete(ctx context.Context, name string, secrets []string) e
 		&v1alpha1.PluginGrant{ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: name}},
 		&v1alpha1.Plugin{ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: name}},
 	}
-	objs := make([]client.Object, 0, len(own)+len(secrets))
-	objs = append(objs, own...)
-	for _, sec := range secrets {
-		objs = append(objs, &corev1.Secret{ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: sec}})
-	}
 	var errs []error
-	for _, obj := range objs {
+	for _, obj := range own {
 		if err := s.Client.Delete(ctx, obj); err != nil && !apierrors.IsNotFound(err) {
 			errs = append(errs, fmt.Errorf("delete %T %q: %w", obj, obj.GetName(), err))
+		}
+	}
+	for _, sec := range secrets {
+		if err := s.deleteOwnedSecret(ctx, name, sec); err != nil {
+			errs = append(errs, err)
 		}
 	}
 	if hasAccess {
 		errs = append(errs, s.deleteServiceAccess(ctx, name, access)...)
 	}
 	return errors.Join(errs...)
+}
+
+// secretOwners maps every Secret in the openfief namespace to the instance
+// its plugins.OwnerInstanceLabel names, empty when it has none (D-182). It
+// reads only the Secrets' metadata, never their data.
+func (s *Instances) secretOwners(ctx context.Context) (map[string]string, error) {
+	list := &metav1.PartialObjectMetadataList{}
+	list.SetGroupVersionKind(corev1.SchemeGroupVersion.WithKind("SecretList"))
+	if err := s.Client.List(ctx, list, client.InNamespace(plugins.Namespace)); err != nil {
+		return nil, fmt.Errorf("list secrets: %w", err)
+	}
+	out := make(map[string]string, len(list.Items))
+	for i := range list.Items {
+		out[list.Items[i].Name] = list.Items[i].Labels[plugins.OwnerInstanceLabel]
+	}
+	return out, nil
+}
+
+// ownersOf returns, for each of names that owners holds, the instance its
+// label names; nil when owners holds none of them.
+func ownersOf(names []string, owners map[string]string) map[string]string {
+	var out map[string]string
+	for _, name := range names {
+		if owner, ok := owners[name]; ok {
+			if out == nil {
+				out = map[string]string{}
+			}
+			out[name] = owner
+		}
+	}
+	return out
+}
+
+// deleteOwnedSecret deletes the Secret name when its
+// plugins.OwnerInstanceLabel names instance, and only the version it read, so
+// a Secret relabelled in between is not deleted (D-182). One already gone
+// is not an error; one not labelled as instance's is left alone and
+// reported with app.ErrSecretNotOwned.
+func (s *Instances) deleteOwnedSecret(ctx context.Context, instance, name string) error {
+	md := &metav1.PartialObjectMetadata{}
+	md.SetGroupVersionKind(corev1.SchemeGroupVersion.WithKind("Secret"))
+	err := s.Client.Get(ctx, client.ObjectKey{Namespace: plugins.Namespace, Name: name}, md)
+	switch {
+	case apierrors.IsNotFound(err):
+		return nil
+	case err != nil:
+		return fmt.Errorf("read Secret %q: %w", name, err)
+	case md.Labels[plugins.OwnerInstanceLabel] != instance:
+		return fmt.Errorf("%w: %s, label %s=%s to delete it", app.ErrSecretNotOwned, name, plugins.OwnerInstanceLabel, instance)
+	}
+	sec := &corev1.Secret{ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: name}}
+	pre := client.Preconditions{UID: &md.UID, ResourceVersion: &md.ResourceVersion}
+	if err := s.Client.Delete(ctx, sec, pre); err != nil && !apierrors.IsNotFound(err) {
+		return fmt.Errorf("delete Secret %q: %w", name, err)
+	}
+	return nil
 }
 
 // OwnerSigners reads the owner's trusted signers from the ConfigMap the
@@ -208,6 +276,7 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 				CrossCheckPrices: m.CrossCheckPrices,
 				StatementFiles:   m.StatementFiles,
 				MarketData:       m.MarketData,
+				Institutions:     slices.Clone(m.Institutions),
 			},
 			Config: raw(p.Config),
 		},
