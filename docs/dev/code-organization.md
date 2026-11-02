@@ -17,7 +17,7 @@ Organized by domain, following DDD (domain-driven design). Names come from [the 
 | `jurisdiction/pl` | Polish rules: bond terms, tax wrappers; later PIT-38 | M0 (bonds) |
 | `fiefs`, `execution`, `orchestration`, `models`, `audit` | Leases, intents/orders/policy, agents and wakes, model routing, audit log | M1+ |
 
-**Context map (P).** `ingest` writes to `ledger` and `valuation` through their app APIs. `valuation` reads `ledger`. `portfolio` reads `valuation` for prices and FX rates. `views` reads `ledger`, `valuation`, `portfolio` and `attention`. `attention` reads `ledger`, `valuation`, `ingest` and the jurisdiction pack through ports in `attention/app` for its checks; a context that raises items itself, such as `valuation` for an instrument to classify (D-132), declares its own port, which `cmd` wires to `attention`'s items. `jurisdiction/pl` is pure rules used by `valuation`. `plugins` and `identity` are independent. Dependencies never point the other way. A tiny shared kernel `internal/kernel` holds money, currency, quantity and date types.
+**Context map.** `ingest` writes to `ledger` and `valuation` through their app APIs, and reads `plugins` for what a connector's signed manifest declares. `valuation` reads `ledger`. `portfolio` owns sleeves and which account is in which sleeve, and reads `ledger` and `valuation`; `ledger` knows nothing of sleeves. `views` reads `ledger`, `valuation`, `portfolio`, `attention`, `ingest` (accounts' connectors and statement uploads), `plugins` (the installed plugins) and `identity` (the authorizer, D-163). `attention` reads `ledger`, `valuation`, `ingest` and the jurisdiction pack through ports in `attention/app` for its checks; a context that raises items itself, such as `valuation` for an instrument to classify (D-132), declares its own port, which `cmd` wires to `attention`'s items. `jurisdiction/pl` is pure rules, used by `valuation`, `ingest`, `views` and `attention`. `plugins` and `identity` depend on no other context. Dependencies never point the other way. A tiny shared kernel `internal/kernel` holds money, currency, quantity and date types. An architecture test enforces it ([Architecture tests](#architecture-tests)).
 
 ## Layout (P)
 
@@ -50,7 +50,9 @@ site/                    the docs site: Hugo config, theme, site-only pages (doc
 - Adapters import `app` and domain packages.
 - Only `cmd` imports adapters.
 - A context never imports another context's adapters or reads its tables: each context owns its schema **(P)**.
-- Enforced by lint (`.golangci.yml`).
+- Enforced by lint (`.golangci.yml`) and by the architecture tests.
+
+**Plugins.** A plugin, first-party ones included, imports only `sdk/go`, never `internal/`. What a connector needs to build a delivery lives in the SDK, so our own plugins prove the SDK is enough. An architecture test enforces it.
 
 **Interfaces.** Declare an interface where it's consumed (in `app`), keep it small, and return concrete types.
 
@@ -67,3 +69,19 @@ site/                    the docs site: Hugo config, theme, site-only pages (doc
 **Requirements.** Every behavioral function is owned by a kibi requirement ([kibi.md](kibi.md)).
 
 **New context.** Add it to the table above and its terms to the glossary, and get the author's OK. Contexts are design decisions, not refactors.
+
+## Architecture tests
+
+Lint checks what one file does; architecture tests check how the code fits together, from the whole module's packages, types and SQL. They run in `task check` with the other Go tests and fail on a new violation. Each rule they enforce is stated above or in [testing.md](testing.md):
+
+- **Context map.** No context imports another that the map doesn't name, and `kernel` imports no context.
+- **Layering.** A domain package imports only the kernel, its own context's domain and the domains the map allows; an `app` package imports domain and other contexts' `app` packages, never an adapter; no context imports another context's adapters; only `cmd` imports adapters.
+- **Plugins.** Nothing under `plugins/` or `sdk/` imports `internal/` or `cmd/`.
+- **Schemas.** A context's SQL, in its migrations and its adapters' queries, names only its own schema.
+- **Money.** No `float32` or `float64` in domain, `app` and kernel packages, and no `float` or `double` field in the contracts under `proto/`. Code that only draws, such as chart coordinates, is listed by package.
+- **Pure domain.** No `go` statements and no package-level variables other than errors and constants in domain packages, beyond what depguard and forbidigo already ban.
+- **Privacy (GR-12).** No logging call takes a value of a money, quantity, price or rate type, an ISIN, a broker account number or a token, as an argument or inside an error it logs.
+- **Banned packages.** No package named `util`, `common`, `helpers`, `models` or `types`.
+- **Stable tests.** No `time.Sleep` and no `t.Skip` in tests, outside a listed few that wait on something outside the process or need a tool a contributor may lack, each with its reason.
+
+A rule that the code breaks today starts with those breaks listed in a checked-in baseline, each with its reason. The test fails on any break the baseline doesn't list and on any listed break that no longer happens, so the list only shrinks and is never edited to get green.
