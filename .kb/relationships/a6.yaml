@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f31f0ec25641
+  - type: executable_for
+    from: SYM-plugins-test-untrusted-signer-error-message
+    to: TEST-plugins-untrusted-signer
+    created_at: 2026-11-01T22:10:00.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52d638dd6382

@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"google.golang.org/protobuf/reflect/protoreflect"
+	"google.golang.org/protobuf/reflect/protoregistry"
 	"google.golang.org/protobuf/types/descriptorpb"
 
 	"github.com/arkadiuss/openfief/internal/attention"
@@ -23,9 +24,9 @@ import (
 // access it serves. A method missing here fails TestReadAccessMethods, so
 // nothing joins the read API without being placed against D-137. The
 // methods marked beyondD137 serve what D-137's list doesn't name; the
-// author is asked about them (implementation questions). A deprecated
-// method answers UNIMPLEMENTED and serves nothing, so it needs no place
-// (retired).
+// author is asked about them (implementation questions). Every method
+// needs a place, a deprecated one too: the read API keeps none that serves
+// nothing.
 func readAccess() map[protoreflect.Name]string {
 	return map[protoreflect.Name]string{
 		"ListSleeves":           "sleeves",
@@ -56,12 +57,40 @@ func readAccess() map[protoreflect.Name]string {
 
 const beyondD137 = "beyond D-137's list"
 
-// retired reports whether m is deprecated: it answers UNIMPLEMENTED and
-// serves nothing, as the read API's broker accounts did before their
-// removal (D-121).
-func retired(m protoreflect.MethodDescriptor) bool {
-	opts, ok := m.Options().(*descriptorpb.MethodOptions)
-	return ok && opts.GetDeprecated()
+// removed names what an author decision took off the read API, with the
+// decision: D-157 removed ListBrokerAccounts and its messages rather than
+// keep them deprecated, since the read API never serves a broker account
+// (D-121).
+func removed() map[protoreflect.FullName]string {
+	return map[protoreflect.FullName]string{
+		"openfief.views.v1.ReadService.ListBrokerAccounts": "D-157",
+		"openfief.views.v1.ListBrokerAccountsRequest":      "D-157",
+		"openfief.views.v1.ListBrokerAccountsResponse":     "D-157",
+		"openfief.views.v1.BrokerAccount":                  "D-157",
+	}
+}
+
+// TestReadAccessRemovedMethods checks that what removed names is absent
+// from the read API's contract, as a method and as a message alike, and
+// that no method left is deprecated (D-157).
+func TestReadAccessRemovedMethods(t *testing.T) {
+	t.Parallel()
+	file := viewsv1.File_openfief_views_v1_read_service_proto
+	svc := file.Services().ByName("ReadService")
+	if svc == nil {
+		t.Fatal("no ReadService")
+	}
+	for name, decision := range removed() {
+		if d, err := protoregistry.GlobalFiles.FindDescriptorByName(name); err == nil {
+			t.Errorf("%s removed it, but the read API still has %s", decision, d.FullName())
+		}
+	}
+	for i := range svc.Methods().Len() {
+		m := svc.Methods().Get(i)
+		if opts, ok := m.Options().(*descriptorpb.MethodOptions); ok && opts.GetDeprecated() {
+			t.Errorf("%s is deprecated: remove it under an author decision instead (D-157)", m.Name())
+		}
+	}
 }
 
 // TestReadAccessMethods enumerates the read API's methods and checks that
@@ -79,9 +108,6 @@ func TestReadAccessMethods(t *testing.T) {
 	served := map[string]bool{}
 	for i := range svc.Methods().Len() {
 		m := svc.Methods().Get(i)
-		if retired(m) {
-			continue
-		}
 		what, ok := access[m.Name()]
 		if !ok {
 			t.Errorf("%s is not placed against D-137's read access: add it to readAccess", m.Name())
@@ -131,8 +157,7 @@ func namedLikeASecret(f protoreflect.FieldDescriptor) bool {
 // TestReadAccessReturnsNoSecrets walks every message each served method
 // returns, nested ones included, and checks that none has a field named
 // for a secret, credential, passkey, session or token, and none is a
-// broker account (D-121, D-137). A deprecated method, which answers
-// UNIMPLEMENTED, is skipped.
+// broker account (D-121, D-137).
 func TestReadAccessReturnsNoSecrets(t *testing.T) {
 	t.Parallel()
 	svc := viewsv1.File_openfief_views_v1_read_service_proto.Services().ByName("ReadService")
@@ -141,9 +166,6 @@ func TestReadAccessReturnsNoSecrets(t *testing.T) {
 	}
 	for i := range svc.Methods().Len() {
 		m := svc.Methods().Get(i)
-		if retired(m) {
-			continue
-		}
 		seen := map[protoreflect.FullName]bool{}
 		walkMessage(t, m.Name(), m.Output(), seen)
 	}

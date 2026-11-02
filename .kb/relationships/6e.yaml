@@ -587,13 +587,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bd9c9adcb07
-  - type: implements
-    from: SYM-ingestv1-create-account-request-get-bond-payout
-    to: REQ-ingest-bond-payout-setting
-    created_at: 2026-11-01T07:54:54.718Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-23b502d8e1f8
   - type: covered_by
     from: SYM-ingestv1-create-account-request-get-bond-payout
     to: TEST-ingest-connectapi-accounts
@@ -629,3 +622,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-983efaf03fe0
+  - type: implements
+    from: SYM-ingest-app-accounts-payout-from
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:21:15.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c309eed02a8d
+  - type: covered_by
+    from: SYM-ingest-app-accounts-payout-from
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T17:21:15.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daf3d0ef4493
+  - type: implements
+    from: SYM-ingestv1-create-account-request-get-bond-payout
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:33:49.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4edbb922b80

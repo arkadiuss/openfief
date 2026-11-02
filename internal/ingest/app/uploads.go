@@ -105,7 +105,7 @@ func (u *Uploads) FileAccounts(ctx context.Context, origin, sessionToken string)
 		out = append(out, accounts...)
 	}
 	slices.SortFunc(out, func(a, b FileAccount) int { return strings.Compare(string(a.Account), string(b.Account)) })
-	return out, nil
+	return u.changeable(ctx, origin, sessionToken, out)
 }
 
 // Upload checks that the caller is the owner (an owner-scoped session on
@@ -138,7 +138,7 @@ func (u *Uploads) FileAccounts(ctx context.Context, origin, sessionToken string)
 // ErrSeedingOutsideOpening for a statement in the wrong mode. Uploading the
 // same statement again imports nothing new (D-18).
 func (u *Uploads) Upload(ctx context.Context, origin, sessionToken string, account ledger.AccountID, mode ingest.Mode, file NamedFile) (ingest.Batch, error) {
-	if err := u.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
+	if err := mayChange(ctx, u.Owners, origin, sessionToken, account); err != nil {
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
 	}
 	instance, err := boundInstance(ctx, u.Bindings, account)

@@ -1,6 +1,6 @@
 ---
 title: 'The XTB connector must seed an account from a current xStation export in opening mode: one opening lot per open stock or ETF position quoted in the account''s currency, on the report''s date, first acquired on its open date at its volume times its open price, by ticker until the owner confirms its ISIN.'
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-136
 tags:
   - strict-modeling

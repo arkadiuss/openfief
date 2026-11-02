@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ec5f5b3c92d
-  - type: implements
-    from: SYM-ledger-payout-setting-paid-out
-    to: REQ-ledger-payout-setting
-    created_at: 2026-11-01T07:51:30.429Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-62ff0a6fee1c
   - type: covered_by
     from: SYM-ledger-payout-setting-paid-out
     to: TEST-ledger-payout
@@ -587,3 +580,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce5a1b7fb77e
+  - type: implements
+    from: SYM-ledger-payout-setting-paid-out
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-01T17:30:50.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbb213f8472c
+  - type: implements
+    from: SYM-ingest-exchange-currencies
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:57:37.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d28324715761
+  - type: covered_by
+    from: SYM-ingest-exchange-currencies
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T23:57:37.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4828d0440b7f
+  - type: implements
+    from: SYM-views-app-with-authorizer
+    to: REQ-views-authz-hidden-account-not-found
+    created_at: 2026-11-01T22:49:33.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb5899eeb35a
+  - type: covered_by
+    from: SYM-views-app-with-authorizer
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:49:33.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-563e6ba255e7

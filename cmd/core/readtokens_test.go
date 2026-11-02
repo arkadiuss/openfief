@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	viewsapp "github.com/arkadiuss/openfief/internal/views/app"
@@ -59,11 +60,12 @@ func TestReadTokens(t *testing.T) {
 		name      string
 		tokens    readTokens
 		token     string
+		want      identity.Caller
 		wantErr   error
 		wantOther bool
 	}{
-		{name: "the owner's token", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}, plugins: fakeViewCallers{view: "view"}}, token: "own"},
-		{name: "a view plugin's token", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}, plugins: fakeViewCallers{view: "view"}}, token: "view"},
+		{name: "the owner's token", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}, plugins: fakeViewCallers{view: "view"}}, token: "own", want: identity.Caller{Holder: identity.HolderScriptToken, ID: "t1"}},
+		{name: "a view plugin's token", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}, plugins: fakeViewCallers{view: "view"}}, token: "view", want: identity.Caller{Holder: identity.HolderViewPlugin, ID: "ghostfolio"}},
 		{name: "neither", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}, plugins: fakeViewCallers{view: "view"}}, token: "other", wantErr: viewsapp.ErrInvalidToken},
 		{name: "no plugin callers", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}}, token: "view", wantErr: viewsapp.ErrInvalidToken},
 		{name: "the owner's store is down", tokens: readTokens{auth: fakeOwnerTokens{down: true}, plugins: fakeViewCallers{view: "view"}}, token: "view", wantOther: true},
@@ -72,7 +74,10 @@ func TestReadTokens(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			err := tt.tokens.VerifyToken(t.Context(), tt.token)
+			got, err := tt.tokens.VerifyToken(t.Context(), tt.token)
+			if got != tt.want {
+				t.Errorf("VerifyToken caller = %+v, want %+v", got, tt.want)
+			}
 			switch {
 			case tt.wantOther:
 				if err == nil || errors.Is(err, viewsapp.ErrInvalidToken) {

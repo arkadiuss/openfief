@@ -227,6 +227,7 @@ func TestDecideLoad(t *testing.T) {
 		name    string
 		state   demo.DatabaseState
 		reset   bool
+		loader  string
 		want    demo.LoadAction
 		wantErr error
 	}{
@@ -234,13 +235,18 @@ func TestDecideLoad(t *testing.T) {
 		{name: "empty database with reset is loaded fresh", state: demo.DatabaseState{}, reset: true, want: demo.LoadFresh},
 		{name: "demo database is loaded again", state: demo.DatabaseState{Marked: true, Rows: 500}, want: demo.LoadAgain},
 		{name: "demo database with reset is reset", state: demo.DatabaseState{Marked: true, Rows: 500}, reset: true, want: demo.ResetAndLoad},
+		{name: "demo database of the same loader is loaded again", state: demo.DatabaseState{Marked: true, Rows: 500, Loader: "build-1"}, loader: "build-1", want: demo.LoadAgain},
+		{name: "demo database of another loader is reseeded", state: demo.DatabaseState{Marked: true, Rows: 500, Loader: "build-1"}, loader: "build-2", want: demo.ResetAndLoad},
+		{name: "demo database of an unrecorded loader is reseeded", state: demo.DatabaseState{Marked: true, Rows: 500}, loader: "build-2", want: demo.ResetAndLoad},
+		{name: "a loader of unknown build never reseeds on its own", state: demo.DatabaseState{Marked: true, Rows: 500, Loader: "build-1"}, want: demo.LoadAgain},
+		{name: "unmarked database with data is refused by another loader", state: demo.DatabaseState{Rows: 1}, loader: "build-2", wantErr: demo.ErrNotDemoDatabase},
 		{name: "unmarked database with data is refused", state: demo.DatabaseState{Rows: 1}, wantErr: demo.ErrNotDemoDatabase},
 		{name: "unmarked database with data is refused even with reset", state: demo.DatabaseState{Rows: 1}, reset: true, wantErr: demo.ErrNotDemoDatabase},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := demo.DecideLoad(tt.state, tt.reset)
+			got, err := demo.DecideLoad(tt.state, tt.reset, tt.loader)
 			if !errors.Is(err, tt.wantErr) || got != tt.want {
 				t.Errorf("DecideLoad = %s, %v; want %s, %v", got, err, tt.want, tt.wantErr)
 			}

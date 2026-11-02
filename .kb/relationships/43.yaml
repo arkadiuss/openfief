@@ -441,20 +441,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-4b91ae222d5b
   - type: implements
-    from: SYM-viewsv1-broker-account-proto-reflect
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:45:48.725Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b1eba686e1d5
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-proto-reflect
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:45:48.771Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-75d7387d3b3b
-  - type: implements
     from: SYM-valuation-gen-pb-source-ranking-get-sources
     to: REQ-valuation-market-data-service
     created_at: 2026-10-29T18:23:59.620Z
@@ -664,3 +650,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-061b49fccaf5
+  - type: implements
+    from: SYM-plugins-untrusted-signer-error-error
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T22:08:34.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26316b60a0b2
+  - type: covered_by
+    from: SYM-plugins-untrusted-signer-error-error
+    to: TEST-plugins-untrusted-signer
+    created_at: 2026-11-01T22:08:35.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225a430be3d9
+  - type: implements
+    from: SYM-protobreak-marked-breaking
+    to: REQ-tooling-breaking-exception-commit-marked
+    created_at: 2026-11-01T19:26:11.016Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c68773d1ae89
+  - type: covered_by
+    from: SYM-protobreak-marked-breaking
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:26:11.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfefb8d38920
+  - type: implements
+    from: SYM-ingest-pg-listing-row-parts
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:58:52.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ce69aee2ec7
+  - type: covered_by
+    from: SYM-ingest-pg-listing-row-parts
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T23:58:52.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c75cbadd4b69
+  - type: implements
+    from: SYM-identity-app-principal-caller
+    to: REQ-identity-authz-one-interface
+    created_at: 2026-11-01T22:48:50.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b2fad5667e1
+  - type: covered_by
+    from: SYM-identity-app-principal-caller
+    to: TEST-identity-app-access
+    created_at: 2026-11-01T22:48:50.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f9a0e6b8aa6

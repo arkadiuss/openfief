@@ -32,8 +32,8 @@ func (v *Views) SleeveKinds(ctx context.Context) ([]portfolio.Kind, error) {
 	return k, nil
 }
 
-// ConnectorBindings returns every connector binding, in instance then
-// account order.
+// ConnectorBindings returns every connector binding to an account the
+// caller may view (D-163), in instance then account order.
 func (v *Views) ConnectorBindings(ctx context.Context) ([]ingest.Binding, error) {
 	if v.connections == nil {
 		return nil, nil
@@ -42,5 +42,5 @@ func (v *Views) ConnectorBindings(ctx context.Context) ([]ingest.Binding, error)
 	if err != nil {
 		return nil, fmt.Errorf("loading connector bindings: %w", err)
 	}
-	return b, nil
+	return v.viewableBindings(ctx, b)
 }

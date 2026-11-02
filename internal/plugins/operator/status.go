@@ -82,7 +82,26 @@ func pluginStatus(o *observation, old []metav1.Condition) v1alpha1.PluginStatus 
 	if o.signature.Verified() && o.signature.Signature != nil {
 		st.Signature = o.signature.Signature.DeepCopy()
 	}
+	if o.signature.Status == metav1.ConditionFalse && o.signature.Reason == ReasonUntrustedSigner {
+		st.UntrustedSigners = untrustedSigners(o.signature.UntrustedSigners)
+	}
 	return st
+}
+
+// maxUntrustedSigners bounds status.untrustedSigners, as its schema does.
+const maxUntrustedSigners = 32
+
+// untrustedSigners is names as status.untrustedSigners holds them: at most
+// maxUntrustedSigners, each truncated like a condition message.
+func untrustedSigners(names []string) []string {
+	if len(names) == 0 {
+		return nil
+	}
+	out := make([]string, 0, min(len(names), maxUntrustedSigners))
+	for _, n := range names[:min(len(names), maxUntrustedSigners)] {
+		out = append(out, truncate(n))
+	}
+	return out
 }
 
 // condition is the status, reason and message of one condition.

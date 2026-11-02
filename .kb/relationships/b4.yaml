@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22d5a87ef847
+  - type: implements
+    from: SYM-ingestv1-pending-ticker-get-proposed-currency
+    to: REQ-ingest-ticker-currency-pick-required
+    created_at: 2026-11-01T23:59:14.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed0f31883210
+  - type: covered_by
+    from: SYM-ingestv1-pending-ticker-get-proposed-currency
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-01T23:59:14.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e96971c33e8
+  - type: executable_for
+    from: SYM-views-app-test-authz-two-bindings
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:52:34.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-541d4e6ea2cf

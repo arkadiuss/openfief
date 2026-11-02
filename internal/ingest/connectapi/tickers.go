@@ -39,24 +39,27 @@ func (s *tickers) ListPendingTickers(ctx context.Context, req *connect.Request[i
 		p := &pending[i]
 		t := &ingestv1.PendingTicker{
 			Instance: p.Instance, Symbol: p.Ticker.Symbol, Country: p.Ticker.Country, Name: p.Ticker.Name,
-			Waiting: count(p.Waiting),
+			Waiting: count(p.Waiting), CurrencyChoices: p.CurrencyChoices(),
 		}
 		if !p.Proposal.ISIN.IsZero() {
-			t.ProposedIsin, t.ProposedName = p.Proposal.ISIN.String(), p.Proposal.Name
+			t.ProposedIsin, t.ProposedName, t.ProposedCurrency = p.Proposal.ISIN.String(), p.Proposal.Name, p.Proposal.Currency
 		}
 		out.Tickers = append(out.Tickers, t)
 	}
 	return connect.NewResponse(out), nil
 }
 
-// ConfirmTicker records the owner's ISIN for a ticker and books what waits
-// for it.
+// ConfirmTicker records the owner's ISIN for a ticker, with the trading
+// currency the owner picked when its listing names none and its exchange
+// quotes in more than one (D-170), and books what waits for it.
 func (s *tickers) ConfirmTicker(ctx context.Context, req *connect.Request[ingestv1.ConfirmTickerRequest]) (*connect.Response[ingestv1.ConfirmTickerResponse], error) {
 	isin, err := ledger.ParseISIN(req.Msg.GetIsin())
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
-	c := ingest.TickerConfirmation{Instance: req.Msg.GetInstance(), Symbol: req.Msg.GetSymbol(), ISIN: isin}
+	c := ingest.TickerConfirmation{
+		Instance: req.Msg.GetInstance(), Symbol: req.Msg.GetSymbol(), ISIN: isin, Currency: req.Msg.GetCurrency(),
+	}
 	sum, err := s.uc.Confirm(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), c)
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -67,6 +70,9 @@ func (s *tickers) ConfirmTicker(ctx context.Context, req *connect.Request[ingest
 
 // fail maps err to its Connect error.
 func (s *tickers) fail(ctx context.Context, err error) *connect.Error {
+	if choice, ok := errors.AsType[*ingest.TradingCurrencyChoiceError](err); ok {
+		return connect.NewError(connect.CodeInvalidArgument, choice)
+	}
 	switch {
 	case errors.Is(err, app.ErrNoSession):
 		return connect.NewError(connect.CodeUnauthenticated, app.ErrNoSession)

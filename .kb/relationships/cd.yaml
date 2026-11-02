@@ -713,3 +713,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b6ade8e5d70
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-registry-import
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T17:22:58.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd5077d3e9ca
+  - type: executable_for
+    from: SYM-views-app-test-authz-denying-authorizer-may-act
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:52:20.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52386d8883ee

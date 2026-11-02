@@ -112,17 +112,22 @@ func (m *mapping) openingCash(cash kernel.Money) error {
 }
 
 // openingLot returns the opening lot of an open stock or ETF position:
-// its volume, first acquired on its open date, at a cost of its volume
-// times its open price, rounded half to even to the account currency's
-// minor unit. The open price is in the instrument's currency, and the
-// export gives no rate (R-24), so only a position quoted in the account's
-// currency can be seeded: one whose value, in the account's currency, is
-// its volume times its current price, to within a minor unit. seen counts
-// the positions keyed so far, for positionKey.
+// its volume, first acquired on its open date, at its open price per unit.
+// The open price is in the instrument's trading currency, which the export
+// doesn't name (R-24), so the lot carries the price and no cost: the core
+// books its cost, volume times price, in the trading currency of the
+// listing the owner confirms for the ticker, or of the exchange its market
+// suffix names (D-159), or the one the owner picks when that exchange
+// quotes in more than one (D-170). A position on a market with no exchange
+// the core knows can't be priced and is unsupported. seen counts the positions
+// keyed so far, for positionKey.
 func (m *mapping) openingLot(rec record, seen map[string]int) (ingest.TickerEntry, error) {
 	symbol := rec.text(colTicker)
 	if symbol == "" {
 		return ingest.TickerEntry{}, unsupported("an open position without a ticker is not supported")
+	}
+	if len(ingest.ExchangeCurrencies(splitSymbol(symbol).Country)) == 0 {
+		return ingest.TickerEntry{}, unsupported("an open position on a market of unknown currency is not supported")
 	}
 	volume, err := boughtVolume(rec)
 	if err != nil {
@@ -132,9 +137,6 @@ func (m *mapping) openingLot(rec record, seen map[string]int) (ingest.TickerEntr
 	if err != nil {
 		return ingest.TickerEntry{}, err
 	}
-	if quoteErr := m.quotedInAccountCurrency(rec, volume); quoteErr != nil {
-		return ingest.TickerEntry{}, quoteErr
-	}
 	opened, err := rec.instant(colOpenTime, m.x.date1904)
 	if err != nil {
 		return ingest.TickerEntry{}, err
@@ -143,14 +145,10 @@ func (m *mapping) openingLot(rec record, seen map[string]int) (ingest.TickerEntr
 	if !ok {
 		return ingest.TickerEntry{}, rec.errorf(colOpenTime)
 	}
-	cost, err := price.Mul(volume).Round(m.x.places, kernel.RoundHalfEven)
-	if err != nil {
-		return ingest.TickerEntry{}, rec.errorf(colOpenPrice)
-	}
 	key := ledger.TransactionKey{Source: BrokerSource, ExternalID: openingLotPrefix + m.positionKey(rec, symbol, opened, seen)}
 	return ingest.TickerEntry{
 		Symbol: symbol, Kind: ledger.KindOpeningLot, Quantity: kernel.NewQuantity(volume),
-		Amount: kernel.NewMoney(cost, m.x.currency), Opened: openDate,
+		OpenPrice: price, Opened: openDate,
 		Header:      ledger.TransactionHeader{Key: key, Date: m.x.goLive},
 		Description: "opening lot " + symbol, Ref: m.positionRef(sheetOpen, rec),
 	}, nil
@@ -191,27 +189,6 @@ func (m *mapping) price(rec record, label string) (kernel.Decimal, error) {
 		return rounded, nil
 	}
 	return d, nil
-}
-
-// quotedInAccountCurrency fails unless the position of volume units is
-// quoted in the account's currency: its value, which the export gives in
-// the account's currency, is its volume times its current price, to within
-// one minor unit.
-func (m *mapping) quotedInAccountCurrency(rec record, volume kernel.Decimal) error {
-	value, err := rec.decimal(colValue)
-	if err != nil {
-		return err
-	}
-	current, err := m.price(rec, colCurrentPrice)
-	if err != nil {
-		return err
-	}
-	diff := value.Sub(current.Mul(volume))
-	unit := kernel.NewDecimal(1, -m.x.places)
-	if diff.Cmp(unit) > 0 || diff.Neg().Cmp(unit) > 0 {
-		return unsupported("a position quoted in another currency than the account's is not seeded yet: the export doesn't give its cost in %s", m.x.currency)
-	}
-	return nil
 }
 
 // positionKey returns the key of an open position: its position ID when

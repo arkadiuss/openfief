@@ -559,3 +559,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd40b079edff
+  - type: constrains
+    from: REQ-demo-reseed-on-new-loader
+    to: FACT-SUBJECT-8445428BF4E0E148
+    created_at: 2026-11-01T16:51:03.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1437487dd4c7
+  - type: requires_property
+    from: REQ-demo-reseed-on-new-loader
+    to: FACT-PROP-D80C12A4DDCC9F2C
+    created_at: 2026-11-01T16:51:03.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a395640ff214
+  - type: specified_by
+    from: REQ-demo-reseed-on-new-loader
+    to: SCEN-demo-reseed-on-new-loader
+    created_at: 2026-11-01T16:51:03.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7549b52e7b6d
+  - type: implements
+    from: SYM-ledger-app-may-change
+    to: REQ-core-authz-change-refused
+    created_at: 2026-11-01T22:49:20.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f65c0df8824d
+  - type: covered_by
+    from: SYM-ledger-app-may-change
+    to: TEST-ledger-app-authz
+    created_at: 2026-11-01T22:49:20.116Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03b46571973b
+  - type: implements
+    from: SYM-release-bundle-check-cnpg
+    to: REQ-tooling-release-bundle-database
+    created_at: 2026-11-01T22:09:41.410Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f412270fe85a
+  - type: covered_by
+    from: SYM-release-bundle-check-cnpg
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-01T22:09:41.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84a530e92e24

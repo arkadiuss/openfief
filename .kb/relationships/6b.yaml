@@ -608,13 +608,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-77221cffac7a
-  - type: implements
-    from: SYM-connectorv1-bond-payout-number
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:53:25.710Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3d6ad1d2db55
   - type: covered_by
     from: SYM-connectorv1-bond-payout-number
     to: TEST-ingest-connectrpc-held
@@ -699,3 +692,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9e061acee9f
+  - type: implements
+    from: SYM-connectorv1-bond-payout-number
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:35:12.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1707c24a594
+  - type: implements
+    from: SYM-core-owner-sessions-changeable
+    to: REQ-identity-authz-one-interface
+    created_at: 2026-11-01T22:47:19.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dba228191c4
+  - type: implements
+    from: SYM-core-owner-sessions-changeable
+    to: REQ-core-authz-change-refused
+    created_at: 2026-11-01T22:47:19.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eb3f1373a99
+  - type: covered_by
+    from: SYM-core-owner-sessions-changeable
+    to: TEST-core-owner-sessions
+    created_at: 2026-11-01T22:47:19.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-926d83941308
+  - type: validates
+    from: TEST-ui-plugins
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T21:51:42.958Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93be7dad0761

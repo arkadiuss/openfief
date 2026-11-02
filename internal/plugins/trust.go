@@ -207,12 +207,52 @@ const (
 // SignedImage is what the registry holds for an image, checked
 // cryptographically by an adapter: the identities whose signatures over the
 // image digest verified, and the manifest from the image's signed manifest
-// label (D-42).
+// label (D-42). Untrusted names the signers of the image's other signatures,
+// those no trusted signer made (D-169); they never make an image deployable,
+// and only say why one is refused.
 type SignedImage struct {
 	Image      ImageRef
 	Signatures []SignerIdentity
 	Manifest   Manifest
+	Untrusted  []UntrustedSigner
 }
+
+// UntrustedSigner is who made a signature over an image when the trust
+// policy holds no such signer (D-169). A keyless signature names the issuer
+// and subject of a certificate that verified against the Sigstore trust
+// root; a signature made with a key names the SHA-256 fingerprint of that
+// key's DER form, as the signature's key hint gives it, which nothing can
+// check without the key itself. Exactly one of the two is set.
+type UntrustedSigner struct {
+	Issuer    string
+	Subject   string
+	KeySHA256 string
+}
+
+// String names the signer as SignerIdentity.String names a trusted one, so
+// the owner can compare it with their trusted signers: the subject and
+// issuer, or "public key sha256:" and the key's fingerprint.
+func (u UntrustedSigner) String() string {
+	if u.KeySHA256 != "" {
+		return "public key sha256:" + u.KeySHA256
+	}
+	return u.Subject + " (issuer " + u.Issuer + ")"
+}
+
+// UntrustedSignerError is ErrUntrustedSigner for one image: the signers of
+// its valid signatures, none of whom the trust policy holds (D-169).
+type UntrustedSignerError struct {
+	Image   ImageRef
+	Signers []string
+}
+
+// Error names the image and its signers.
+func (e *UntrustedSignerError) Error() string {
+	return ErrUntrustedSigner.Error() + ": " + e.Image.String() + " is signed by " + strings.Join(e.Signers, ", ")
+}
+
+// Is makes the error match ErrUntrustedSigner.
+func (e *UntrustedSignerError) Is(target error) bool { return target == ErrUntrustedSigner }
 
 // TrustDecision is why an image may be deployed: its trust level and the
 // signer that earned it.
@@ -265,19 +305,28 @@ func (p *TrustPolicy) Signers() []Signer { return append([]Signer(nil), p.signer
 // nil, the Plugin's declared manifest against the image's signed manifest
 // label (D-42). The image is Verified when a catalog entry pins its digest
 // and that entry's publisher signed it, Unverified when any other trusted
-// signer signed it. It fails with ErrUnsigned, ErrUntrustedSigner or
-// ErrManifestMismatch.
+// signer signed it. It fails with ErrUnsigned when the image has no valid
+// signature at all, with an *UntrustedSignerError naming the signers when
+// its only valid signatures are by signers the policy doesn't hold (D-169),
+// or with ErrManifestMismatch.
 func (p *TrustPolicy) Decide(img *SignedImage, declared *Manifest) (TrustDecision, error) {
 	if len(img.Signatures) == 0 {
-		return TrustDecision{}, fmt.Errorf("%w: %s", ErrUnsigned, img.Image)
+		if len(img.Untrusted) == 0 {
+			return TrustDecision{}, fmt.Errorf("%w: %s", ErrUnsigned, img.Image)
+		}
+		names := make([]string, 0, len(img.Untrusted))
+		for _, u := range img.Untrusted {
+			names = appendNew(names, u.String())
+		}
+		return TrustDecision{}, &UntrustedSignerError{Image: img.Image, Signers: names}
 	}
 	d, ok := p.trusted(img)
 	if !ok {
 		names := make([]string, 0, len(img.Signatures))
 		for _, s := range img.Signatures {
-			names = append(names, s.String())
+			names = appendNew(names, s.String())
 		}
-		return TrustDecision{}, fmt.Errorf("%w: %s is signed by %s", ErrUntrustedSigner, img.Image, strings.Join(names, ", "))
+		return TrustDecision{}, &UntrustedSignerError{Image: img.Image, Signers: names}
 	}
 	if declared != nil && !declared.Equal(&img.Manifest) {
 		return TrustDecision{}, fmt.Errorf("%w: %s", ErrManifestMismatch, img.Image)
@@ -300,6 +349,14 @@ func (p *TrustPolicy) trusted(img *SignedImage) (TrustDecision, bool) {
 		}
 	}
 	return TrustDecision{}, false
+}
+
+// appendNew appends s to names unless names already holds it.
+func appendNew(names []string, s string) []string {
+	if slices.Contains(names, s) {
+		return names
+	}
+	return append(names, s)
 }
 
 // signedBy reports whether any of img's signatures was made by id.

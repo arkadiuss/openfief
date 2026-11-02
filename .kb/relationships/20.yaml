@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5f3acf3891a
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-withdrawal
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T17:23:13.322Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c193650df73c

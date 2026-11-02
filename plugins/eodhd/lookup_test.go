@@ -45,8 +45,8 @@ func TestLookupInstruments(t *testing.T) {
 		t.Fatalf("LookupInstruments: %v", err)
 	}
 	want := &connectorv1.LookupInstrumentsResponse{Proposals: []*connectorv1.InstrumentProposal{
-		{Symbol: "FAKEW.PL", Isin: fakewISIN, Name: "Fake Warsaw SA"},
-		{Symbol: "SYNT.DE", Isin: syntISIN, Name: "Synthetic Test ETF"},
+		{Symbol: "FAKEW.PL", Isin: fakewISIN, Name: "Fake Warsaw SA", Currency: "PLN"},
+		{Symbol: "SYNT.DE", Isin: syntISIN, Name: "Synthetic Test ETF", Currency: "EUR"},
 	}}
 	if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
 		t.Errorf("proposals (-want +got):\n%s", diff)

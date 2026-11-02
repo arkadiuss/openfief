@@ -54,8 +54,9 @@ type Instance struct {
 	// Secrets are the Secret names its manifest or its grant names.
 	Secrets []string
 	// Signature is the reason of the Plugin's SignatureVerified condition,
-	// such as Verified or SignedByTrustedSigner; empty before the operator
-	// checked it.
+	// such as Verified or SignedByTrustedSigner, and for an image refused
+	// as signed by untrusted signers those signers in parentheses (D-169);
+	// empty before the operator checked it.
 	Signature string
 	// Ready is the status of its Ready condition, with the reason when it is
 	// not True, such as "False (NoGrant)"; empty before the operator saw it.

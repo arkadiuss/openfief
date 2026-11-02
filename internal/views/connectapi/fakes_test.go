@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -30,18 +31,18 @@ const (
 
 var errStore = errors.New("store unavailable")
 
-// fakeVerifier accepts goodToken, cannot check brokenToken and rejects
-// anything else.
+// fakeVerifier accepts goodToken as a script token, cannot check
+// brokenToken and rejects anything else.
 type fakeVerifier struct{}
 
-func (fakeVerifier) VerifyToken(_ context.Context, token string) error {
+func (fakeVerifier) VerifyToken(_ context.Context, token string) (identity.Caller, error) {
 	switch token {
 	case goodToken:
-		return nil
+		return identity.Caller{Holder: identity.HolderScriptToken, ID: "test"}, nil
 	case brokenToken:
-		return errStore
+		return identity.Caller{}, errStore
 	}
-	return fmt.Errorf("%w: unknown", app.ErrInvalidToken)
+	return identity.Caller{}, fmt.Errorf("%w: unknown", app.ErrInvalidToken)
 }
 
 // fakeLedger answers the ledger queries from fixed data, like

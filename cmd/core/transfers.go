@@ -11,9 +11,10 @@ import (
 	ledgerconnect "github.com/arkadiuss/openfief/internal/ledger/connectapi"
 )
 
-// ledgerOwners is ownerSessions answering with the ledger context's errors.
-func ledgerOwners(auth *identityapp.Auth, origins identity.Origins) ownerSessions {
-	return ownerSessions{auth: auth, origins: origins, noSession: ledgerapp.ErrNoSession, notOwner: ledgerapp.ErrNotOwner}
+// ledgerOwners is ownerSessions answering with the ledger context's errors,
+// asking authz which accounts the owner may change.
+func ledgerOwners(auth *identityapp.Auth, origins identity.Origins, authz identityapp.Authorizer) *ownerSessions {
+	return &ownerSessions{auth: auth, origins: origins, noSession: ledgerapp.ErrNoSession, notOwner: ledgerapp.ErrNotOwner, authz: authz}
 }
 
 // newTransfers returns the owner's transfer decisions (D-105, D-79) over

@@ -364,20 +364,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ccb0f394ea9d
   - type: implements
-    from: SYM-viewsv1-broker-account-proto-message
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:45:38.845Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-47801e0945a3
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-proto-message
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:45:38.911Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e3f7f14768a9
-  - type: implements
     from: SYM-ui-kind-of
     to: REQ-ui-market-data-ranking
     created_at: 2026-10-29T18:20:16.028Z
@@ -552,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f03e5b71df78
+  - type: verified_by
+    from: SCEN-ingest-xtb-opening-lot-trading-currency
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T16:48:17.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7539bca62487
+  - type: verified_by
+    from: SCEN-ingest-xtb-opening-lot-trading-currency
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-11-01T16:48:17.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7181f2fe3789
+  - type: verified_by
+    from: SCEN-ingest-xtb-opening-lot-trading-currency
+    to: TEST-plugins-xtb
+    created_at: 2026-11-01T16:48:17.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f8cd2417369

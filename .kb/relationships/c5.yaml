@@ -517,6 +517,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c586211451b
+  - type: executable_for
+    from: SYM-ingest-test-check-opening-cash
+    to: TEST-ingest-start
+    created_at: 2026-11-01T08:03:55.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b603e1cb128f
+  - type: covered_by
+    from: SYM-ingest-pg-listing-row
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:26:08.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4017dee3941
   - type: implements
     from: SYM-operator-grant-from-resource
     to: REQ-ingest-market-data-list-declared-granted
@@ -531,10 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1e69c746a4f3
-  - type: executable_for
-    from: SYM-ingest-test-check-opening-cash
-    to: TEST-ingest-start
-    created_at: 2026-11-01T08:03:55.663Z
+  - type: implements
+    from: SYM-ingest-pg-listing-row
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:40:16.373Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-b603e1cb128f
+    id: rel-37cfb4b7746c

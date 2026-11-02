@@ -629,20 +629,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-142b8b07e898
-  - type: implements
-    from: SYM-viewsv1-broker-account-get-in-last-delivery
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:46:48.204Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-354bf0766499
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-get-in-last-delivery
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:46:48.276Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dbe5b44d7200
   - type: constrains
     from: REQ-core-plugin-port-scope
     to: FACT-SUBJECT-6F7481453A4533AF
@@ -923,3 +909,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a09111a9cb54
+  - type: executable_for
+    from: SYM-core-test-helper-xtb-listing-connector-lookup-instruments
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:20:11.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1225caaaad65
+  - type: implements
+    from: SYM-ledger-app-ledger-transfer-accounts
+    to: REQ-core-authz-change-refused
+    created_at: 2026-11-01T22:49:27.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f57148e6a9c
+  - type: covered_by
+    from: SYM-ledger-app-ledger-transfer-accounts
+    to: TEST-ledger-app-authz
+    created_at: 2026-11-01T22:49:27.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6a52fef07fa

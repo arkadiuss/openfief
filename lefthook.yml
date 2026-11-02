@@ -9,6 +9,8 @@ commit-msg:
   commands:
     docs-fresh:
       run: PATH="$PWD/.bin:$PATH" task docs:fresh:commit MSG={1}
+    proto-breaking:
+      run: PATH="$PWD/.bin:$PATH" task proto:breaking:commit MSG={1}
 
 post-checkout:
   commands:

@@ -132,7 +132,7 @@ func TestTickerEntryTransaction(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			e := entryCase(t, tt.kind, tt.quantity, tt.opened, tt.charge)
-			got, err := e.Transaction(isin(t, isinA))
+			got, err := e.Transaction(ingest.Listing{ISIN: isin(t, isinA)})
 			if !errors.Is(err, tt.wantErr) {
 				t.Fatalf("Transaction() error = %v, want %v", err, tt.wantErr)
 			}
@@ -148,7 +148,7 @@ func TestBookTickerEntries(t *testing.T) {
 	buyA := entry(t, "TESTA.PL", "9000000002", ledger.KindBuy)
 	buyB := entry(t, "TESTB.UK", "9000000003", ledger.KindBuy)
 	m := ingest.Mapping{TickerEntries: []ingest.TickerEntry{buyA, buyB}}
-	got, waiting := ingest.BookTickerEntries(&m, map[string]ledger.ISIN{"TESTA.PL": isin(t, isinA)})
+	got, waiting := ingest.BookTickerEntries(&m, map[string]ingest.Listing{"TESTA.PL": {ISIN: isin(t, isinA)}})
 	if len(got.Transactions) != 1 || got.Transactions[0].Key != buyA.Header.Key {
 		t.Errorf("booked %v, want only %s", got.Transactions, buyA.Header.Key)
 	}

@@ -671,13 +671,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5138d3121d92
-  - type: implements
-    from: SYM-ingest-xtb-labelled
-    to: REQ-ingest-xtb-start-open-positions
-    created_at: 2026-11-01T08:07:03.597Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-698aec61a7b0
   - type: covered_by
     from: SYM-ingest-xtb-labelled
     to: TEST-ingest-xtb-opening
@@ -713,3 +706,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b8233c42c83
+  - type: implements
+    from: SYM-protobreak-contracts
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:24:28.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34401e631c85
+  - type: covered_by
+    from: SYM-protobreak-contracts
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:24:28.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53d0062fbeb2
+  - type: covered_by
+    from: SYM-ingest-minor-unit-of
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:23:53.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1b1e403e85a
+  - type: implements
+    from: SYM-ingest-check-payout-from
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:25:22.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a5f678eda05
+  - type: covered_by
+    from: SYM-ingest-check-payout-from
+    to: TEST-ingest-payout
+    created_at: 2026-11-01T17:25:22.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d88daf97937
+  - type: implements
+    from: SYM-ingest-xtb-labelled
+    to: REQ-ingest-xtb-opening-lot-trading-currency
+    created_at: 2026-11-01T17:38:38.956Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b928862e177
+  - type: implements
+    from: SYM-ingest-minor-unit-of
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:45.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e962fc34b218
+  - type: implements
+    from: SYM-identity-app-caller-key
+    to: REQ-identity-authz-one-interface
+    created_at: 2026-11-01T22:48:29.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d7adbb081c0
+  - type: covered_by
+    from: SYM-identity-app-caller-key
+    to: TEST-identity-app-access
+    created_at: 2026-11-01T22:48:29.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63b774167ff4

@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must offer the payout setting only on a hand-entered bond account's change form and hand the owner's choice to the core, and a form without it must keep the account's setting.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-135
 tags:
   - strict-modeling

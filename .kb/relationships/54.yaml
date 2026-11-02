@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24b95c1459bb
+  - type: executable_for
+    from: SYM-ingest-app-test-test-file-accounts-only-changeable
+    to: TEST-ingest-app-authz
+    created_at: 2026-11-01T22:51:20.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-676422c82ba6

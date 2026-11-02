@@ -48531,10 +48531,11 @@ symbols:
     title: Principal
     sourceFile: internal/identity/app/auth.go
     status: active
-    symbol_role: behavioral
+    symbol_role: type-shape
     origin:
       kind: agent
       recorded_at: 2026-10-28T19:32:09.243Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-identity-auth-app
@@ -84393,163 +84394,6 @@ symbols:
         target: TEST-views-connectapi-connections
       - type: implements
         target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account
-    title: BrokerAccount
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:45:13.603Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-reset
-    title: BrokerAccount.Reset
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:45:20.853Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-string
-    title: BrokerAccount.String
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:45:27.929Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-proto-message
-    title: BrokerAccount.ProtoMessage
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:45:36.331Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-proto-reflect
-    title: BrokerAccount.ProtoReflect
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:45:46.243Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-descriptor
-    title: BrokerAccount.Descriptor
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:45:56.333Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-get-connector-instance
-    title: BrokerAccount.GetConnectorInstance
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:46:06.344Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-get-id
-    title: BrokerAccount.GetId
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:46:15.986Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-get-institution
-    title: BrokerAccount.GetInstitution
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:46:23.546Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-get-account-id
-    title: BrokerAccount.GetAccountId
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:46:30.527Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-get-last-seen
-    title: BrokerAccount.GetLastSeen
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:46:38.371Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-broker-account-get-in-last-delivery
-    title: BrokerAccount.GetInLastDelivery
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:46:45.784Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
   - id: SYM-viewsv1-list-sleeve-kinds-request
     title: ListSleeveKindsRequest
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -84892,190 +84736,6 @@ symbols:
         target: TEST-views-connectapi-connections
       - type: implements
         target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-request
-    title: ListBrokerAccountsRequest
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:49:52.645Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-request-reset
-    title: ListBrokerAccountsRequest.Reset
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:50:00.351Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-request-string
-    title: ListBrokerAccountsRequest.String
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:50:07.858Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-request-proto-message
-    title: ListBrokerAccountsRequest.ProtoMessage
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:50:15.139Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-request-proto-reflect
-    title: ListBrokerAccountsRequest.ProtoReflect
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:50:21.854Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-request-descriptor
-    title: ListBrokerAccountsRequest.Descriptor
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:50:28.698Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-request-get-unmapped
-    title: ListBrokerAccountsRequest.GetUnmapped
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:50:36.315Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-response
-    title: ListBrokerAccountsResponse
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:50:42.344Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-response-reset
-    title: ListBrokerAccountsResponse.Reset
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:50:49.746Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-response-string
-    title: ListBrokerAccountsResponse.String
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:50:57.694Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-response-proto-message
-    title: ListBrokerAccountsResponse.ProtoMessage
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:51:05.068Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-response-proto-reflect
-    title: ListBrokerAccountsResponse.ProtoReflect
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:51:12.607Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-response-descriptor
-    title: ListBrokerAccountsResponse.Descriptor
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:51:19.823Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1-list-broker-accounts-response-get-broker-accounts
-    title: ListBrokerAccountsResponse.GetBrokerAccounts
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:51:27.115Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
   - id: SYM-viewsv1connect-read-service-client-list-sleeve-kinds
     title: readServiceClient.ListSleeveKinds
     sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
@@ -85102,19 +84762,6 @@ symbols:
         target: TEST-views-connectapi-connections
       - type: implements
         target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1connect-read-service-client-list-broker-accounts
-    title: readServiceClient.ListBrokerAccounts
-    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:51:48.258Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
   - id: SYM-viewsv1connect-unimplemented-read-service-handler-list-sleeve-kinds
     title: UnimplementedReadServiceHandler.ListSleeveKinds
     sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
@@ -85136,19 +84783,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T13:52:01.704Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-connections
-      - type: implements
-        target: REQ-views-onboarding-lists
-  - id: SYM-viewsv1connect-unimplemented-read-service-handler-list-broker-accounts
-    title: UnimplementedReadServiceHandler.ListBrokerAccounts
-    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:52:08.656Z
     relationships:
       - type: covered_by
         target: TEST-views-connectapi-connections
@@ -108009,6 +107643,8 @@ symbols:
       - type: implements
         target: REQ-ingest-ticker-confirmation
       - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+      - type: implements
         target: REQ-ingest-xtb-isin-owner-confirms
   - id: SYM-ingest-connectrpc-test-helper-lookup-connector
     title: lookupConnector
@@ -108461,6 +108097,7 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-31T13:24:59.014Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-core-xtb-upload
@@ -108919,7 +108556,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-read-export
     title: readExport
     sourceFile: internal/ingest/xtb/mapper.go
@@ -110384,6 +110021,8 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-isin-owner-confirms
       - type: implements
+        target: REQ-ui-ticker-currency-choice
+      - type: implements
         target: REQ-ui-tickers-to-confirm
   - id: SYM-ui-server-render-tickers
     title: server.renderTickers
@@ -110413,6 +110052,8 @@ symbols:
         target: TEST-ui-tickers
       - type: implements
         target: REQ-ingest-xtb-isin-owner-confirms
+      - type: implements
+        target: REQ-ui-ticker-currency-choice
       - type: implements
         target: REQ-ui-tickers-to-confirm
   - id: SYM-ui-test-helper-fake-tickers
@@ -114960,7 +114601,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-opening-columns
     title: openingColumns
     sourceFile: internal/ingest/xtb/opening.go
@@ -114973,7 +114614,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-opening-date
     title: openingDate
     sourceFile: internal/ingest/xtb/opening.go
@@ -114986,9 +114627,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-from-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-start-from-open-positions
   - id: SYM-ingest-xtb-mapping-opening
     title: mapping.opening
     sourceFile: internal/ingest/xtb/opening.go
@@ -115001,9 +114642,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-from-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-start-from-open-positions
   - id: SYM-ingest-xtb-mapping-opening-cash
     title: mapping.openingCash
     sourceFile: internal/ingest/xtb/opening.go
@@ -115031,9 +114672,9 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-from-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-start-from-open-positions
   - id: SYM-ingest-xtb-bought-volume
     title: boughtVolume
     sourceFile: internal/ingest/xtb/opening.go
@@ -115046,7 +114687,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-mapping-price
     title: mapping.price
     sourceFile: internal/ingest/xtb/opening.go
@@ -115059,20 +114700,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
-  - id: SYM-ingest-xtb-mapping-quoted-in-account-currency
-    title: mapping.quotedInAccountCurrency
-    sourceFile: internal/ingest/xtb/opening.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T08:05:28.002Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-opening
-      - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-mapping-position-key
     title: mapping.positionKey
     sourceFile: internal/ingest/xtb/opening.go
@@ -115085,7 +114713,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-is-digits
     title: isDigits
     sourceFile: internal/ingest/xtb/opening.go
@@ -115098,7 +114726,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-test-helper-money
     title: money
     sourceFile: internal/ingest/xtb/opening_test.go
@@ -115181,7 +114809,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-cell-time
     title: cellTime
     sourceFile: internal/ingest/xtb/sheets.go
@@ -115194,7 +114822,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-utc-date
     title: utcDate
     sourceFile: internal/ingest/xtb/sheets.go
@@ -115207,7 +114835,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-report-date
     title: reportDate
     sourceFile: internal/ingest/xtb/sheets.go
@@ -115220,7 +114848,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtb-labelled
     title: labelled
     sourceFile: internal/ingest/xtb/sheets.go
@@ -115233,7 +114861,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ingest-xtbtest-report
     title: report
     sourceFile: internal/ingest/xtb/xtbtest/xtbtest.go
@@ -115246,7 +114874,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-opening
       - type: implements
-        target: REQ-ingest-xtb-start-open-positions
+        target: REQ-ingest-xtb-opening-lot-trading-currency
   - id: SYM-ui-upload-form-start
     title: uploadForm.Start
     sourceFile: internal/views/ui/statements.go
@@ -119733,7 +119361,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ingest-app-test-helper-held-ledger-account
@@ -119758,7 +119386,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingest-connectapi-payout-from
     title: payoutFrom
     sourceFile: internal/ingest/connectapi/accounts.go
@@ -119771,7 +119399,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingest-connectapi-test-account-service-bond-payout
     title: TestAccountServiceBondPayout
     sourceFile: internal/ingest/connectapi/accounts_test.go
@@ -119794,7 +119422,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-ingest-delivery-payout-from
     title: payoutFrom
     sourceFile: internal/ingest/delivery/held.go
@@ -119807,7 +119435,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-delivery-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-ingest-check-payout
     title: CheckPayout
     sourceFile: internal/ingest/payout.go
@@ -119820,7 +119448,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-treasurybonds-payout
@@ -120074,7 +119702,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-account
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ledger-new-redemption
     title: NewRedemption
     sourceFile: internal/ledger/events.go
@@ -120101,7 +119729,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-string
@@ -120116,7 +119744,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ledger-parse-payout
     title: ParsePayout
     sourceFile: internal/ledger/payout.go
@@ -120129,7 +119757,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ledger-payout-setting
     title: PayoutSetting
     sourceFile: internal/ledger/payout.go
@@ -120143,7 +119771,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-setting-paid-out
@@ -120158,7 +119786,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-setting-changed
@@ -120173,7 +119801,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
   - id: SYM-ledger-payout-setting-validate
@@ -120188,7 +119816,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-payout
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ledger-test-payout-setting-paid-out
     title: TestPayoutSettingPaidOut
     sourceFile: internal/ledger/payout_test.go
@@ -120241,7 +119869,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-payout-setting
+        target: REQ-ledger-payout-setting-history
   - id: SYM-ui-posted-payout
     title: postedPayout
     sourceFile: internal/views/ui/accounts.go
@@ -120256,7 +119884,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-ui-test-bond-payout-form
     title: TestBondPayoutForm
     sourceFile: internal/views/ui/values_test.go
@@ -120300,7 +119928,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-enum
     title: BondPayout.Enum
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120313,7 +119941,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-string
     title: BondPayout.String
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120326,7 +119954,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-descriptor
     title: BondPayout.Descriptor
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120339,7 +119967,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-type
     title: BondPayout.Type
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120352,7 +119980,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-number
     title: BondPayout.Number
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120365,7 +119993,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-bond-payout-enum-descriptor
     title: BondPayout.EnumDescriptor
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120378,7 +120006,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-account-holdings-get-bond-payout
     title: AccountHoldings.GetBondPayout
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120391,7 +120019,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-connectorv1-account-holdings-get-bond-payout-since
     title: AccountHoldings.GetBondPayoutSince
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -120404,7 +120032,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-held
       - type: implements
-        target: REQ-ingest-sync-carries-payout
+        target: REQ-ingest-sync-carries-payout-history
   - id: SYM-ingestv1-bond-payout
     title: BondPayout
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120418,7 +120046,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-enum
     title: BondPayout.Enum
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120431,7 +120059,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-string
     title: BondPayout.String
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120444,7 +120072,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-descriptor
     title: BondPayout.Descriptor
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120457,7 +120085,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-type
     title: BondPayout.Type
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120470,7 +120098,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-number
     title: BondPayout.Number
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120483,7 +120111,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-bond-payout-enum-descriptor
     title: BondPayout.EnumDescriptor
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120496,7 +120124,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-account-get-bond-payout
     title: Account.GetBondPayout
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120509,7 +120137,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-account-get-bond-payout-since
     title: Account.GetBondPayoutSince
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120522,7 +120150,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-create-account-request-get-bond-payout
     title: CreateAccountRequest.GetBondPayout
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120535,7 +120163,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-ingestv1-update-account-request-get-bond-payout
     title: UpdateAccountRequest.GetBondPayout
     sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
@@ -120548,7 +120176,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi-accounts
       - type: implements
-        target: REQ-ingest-bond-payout-setting
+        target: REQ-ingest-bond-payout-change-from-day
   - id: SYM-viewsv1-bond-payout
     title: BondPayout
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120562,7 +120190,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-enum
     title: BondPayout.Enum
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120575,7 +120203,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-string
     title: BondPayout.String
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120588,7 +120216,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-descriptor
     title: BondPayout.Descriptor
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120601,7 +120229,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-type
     title: BondPayout.Type
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120614,7 +120242,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-number
     title: BondPayout.Number
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120627,7 +120255,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-bond-payout-enum-descriptor
     title: BondPayout.EnumDescriptor
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120640,7 +120268,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-account-get-bond-payout
     title: Account.GetBondPayout
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120653,7 +120281,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-viewsv1-account-get-bond-payout-since
     title: Account.GetBondPayoutSince
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -120666,7 +120294,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-values
       - type: implements
-        target: REQ-ui-bond-payout-setting
+        target: REQ-ui-bond-payout-change-date
   - id: SYM-valuation-series
     title: Series
     sourceFile: internal/valuation/series.go
@@ -123538,16 +123166,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-plugins
-  - id: SYM-views-connectapi-test-ra-retired
-    title: retired
-    sourceFile: internal/views/connectapi/readaccess_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T11:31:28.455Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-connectapi-read-access
   - id: SYM-viewsv1-plugin-get-market-data
     title: Plugin.GetMarketData
     sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
@@ -123872,21 +123490,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-attention-app-unclassified
-  - id: SYM-ingest-app-accounts-change-terms
-    title: Accounts.changeTerms
-    sourceFile: internal/ingest/app/accountforms.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T04:18:47.036Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-account-forms
-      - type: implements
-        target: REQ-ingest-account-form-checks
-      - type: implements
-        target: REQ-ingest-oki-account-form-set-at-creation
   - id: SYM-ingest-app-accounts-check-form
     title: Accounts.checkForm
     sourceFile: internal/ingest/app/accountforms.go
@@ -125142,3 +124745,2986 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-connectapi-accounts
+  - id: SYM-core-ledger-importer-current-transactions
+    title: ledgerImporter.CurrentTransactions
+    sourceFile: cmd/core/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:19:46.713Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-core-test-helper-xtb-opening-export
+    title: xtbOpeningExport
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:19:55.408Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-helper-xtb-listing-connector
+    title: xtbListingConnector
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:01.790Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-helper-xtb-listing-connector-lookup-instruments
+    title: xtbListingConnector.LookupInstruments
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:09.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-xtb-opening-upload
+    title: TestXTBOpeningUpload
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:16.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-helper-check-opening-starts-account
+    title: checkOpeningStartsAccount
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:23.976Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-core-test-helper-check-opening-lot-costs
+    title: checkOpeningLotCosts
+    sourceFile: cmd/core/xtbopening_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:31.456Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-opening
+  - id: SYM-demo-seed-loader-build
+    title: loaderBuild
+    sourceFile: cmd/demo-seed/build.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:38.359Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-reseed-on-new-loader
+  - id: SYM-demo-seed-build-digest
+    title: buildDigest
+    sourceFile: cmd/demo-seed/build.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:45.026Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-unit
+      - type: implements
+        target: REQ-demo-reseed-on-new-loader
+  - id: SYM-demo-seed-test-loader-build
+    title: TestLoaderBuild
+    sourceFile: cmd/demo-seed/build_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:51.493Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-unit
+  - id: SYM-ingest-app-payout-ledger
+    title: PayoutLedger
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:20:58.474Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-accounts-first-payout
+    title: Accounts.firstPayout
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:05.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-accounts-payout-from
+    title: Accounts.payoutFrom
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:12.671Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-accounts-supersede-payouts
+    title: Accounts.supersedePayouts
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:20.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-accounts-changed
+    title: Accounts.changed
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:27.342Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-app-account-starts
+    title: AccountStarts
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:34.121Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-starts
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-app-connectors-go-live
+    title: Connectors.goLive
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:41.178Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-starts
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-app-connectors-record-starts
+    title: Connectors.recordStarts
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:48.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-starts
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-app-test-helper-mem-starts
+    title: memStarts
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:21:53.754Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-mem-starts-record-starts
+    title: memStarts.RecordStarts
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:00.310Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-mem-starts-start
+    title: memStarts.Start
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:07.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-waiting-tickers
+    title: waitingTickers
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:13.612Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-waiting-tickers-confirmed-tickers
+    title: waitingTickers.ConfirmedTickers
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:20.848Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-helper-waiting-tickers-hold-tickers
+    title: waitingTickers.HoldTickers
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:27.722Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-app-test-uploads-opening-starts-account
+    title: TestUploadsOpeningStartsAccount
+    sourceFile: internal/ingest/app/starts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:34.780Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-starts
+  - id: SYM-ingest-connectapi-payout-from-day
+    title: payoutFromDay
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:42.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-connectapi-test-helper-mem-registry-current-transactions
+    title: memRegistry.CurrentTransactions
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:49.305Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-registry-import
+    title: memRegistry.Import
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:22:56.527Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-check-payout-back-to-cash
+    title: checkPayoutBackToCash
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:03.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-withdrawal
+    title: withdrawal
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:10.949Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectrpc-date-to
+    title: dateTo
+    sourceFile: internal/ingest/connectrpc/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:17.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-ingest-delivery-payout-period-from
+    title: payoutPeriodFrom
+    sourceFile: internal/ingest/delivery/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:24.736Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-ingest-opening-starts
+    title: OpeningStarts
+    sourceFile: internal/ingest/golive.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:31.398Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-golive
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-test-opening-starts
+    title: TestOpeningStarts
+    sourceFile: internal/ingest/golive_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:38.111Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-golive
+  - id: SYM-ingest-listing
+    title: Listing
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:44.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-minor-unit-of
+    title: minorUnitOf
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:51.402Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-parse-trading-currency
+    title: ParseTradingCurrency
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:23:58.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-listing-of
+    title: ListingOf
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:20.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-listing-price
+    title: Listing.Price
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:27.646Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-currency-places
+    title: CurrencyPlaces
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:34.763Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-test-helper-currency
+    title: currency
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:41.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-listing-of
+    title: TestListingOf
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:47.593Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-opening-lot-trading-currency
+    title: TestOpeningLotTradingCurrency
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:24:54.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-helper-cost-of
+    title: costOf
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:00.276Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-helper-listing-in
+    title: listingIn
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:06.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-parse-trading-currency
+    title: TestParseTradingCurrency
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:12.865Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-check-payout-from
+    title: CheckPayoutFrom
+    sourceFile: internal/ingest/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:20.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-stale-payouts
+    title: StalePayouts
+    sourceFile: internal/ingest/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:27.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-ingest-test-check-payout-from
+    title: TestCheckPayoutFrom
+    sourceFile: internal/ingest/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:33.631Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout
+  - id: SYM-ingest-test-helper-payout-tx
+    title: payoutTx
+    sourceFile: internal/ingest/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:40.045Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout
+  - id: SYM-ingest-test-stale-payouts
+    title: TestStalePayouts
+    sourceFile: internal/ingest/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:46.203Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout
+  - id: SYM-ingest-pg-store-record-starts
+    title: Store.RecordStarts
+    sourceFile: internal/ingest/postgres/starts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:25:53.500Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-pg-store-start
+    title: Store.Start
+    sourceFile: internal/ingest/postgres/starts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:00.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-opening-upload-starts-account
+  - id: SYM-ingest-pg-listing-row
+    title: listingRow
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:06.639Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-pg-listing-row-listing
+    title: listingRow.listing
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:13.531Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-pg-entry-row-money
+    title: entryRow.money
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:20.779Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-ticker-entry-priced-by-listing
+    title: TickerEntry.PricedByListing
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:28.006Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-ticker-entry-listing-cost
+    title: TickerEntry.listingCost
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:35.245Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-xtb-test-helper-render-ticker-entry
+    title: renderTickerEntry
+    sourceFile: internal/ingest/xtb/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:42.276Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-mapper
+  - id: SYM-ledger-payout-period
+    title: PayoutPeriod
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:49.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-payout-setting-on
+    title: PayoutSetting.On
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:26:56.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-payout-setting-periods
+    title: PayoutSetting.periods
+    sourceFile: internal/ledger/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:03.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-payout
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-test-helper-setting-of
+    title: settingOf
+    sourceFile: internal/ledger/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:09.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-payout
+  - id: SYM-ledger-test-helper-changed-setting
+    title: changedSetting
+    sourceFile: internal/ledger/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:15.843Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-payout
+  - id: SYM-ledger-test-payout-setting-validate
+    title: TestPayoutSettingValidate
+    sourceFile: internal/ledger/payout_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:22.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-payout
+  - id: SYM-ledger-pg-stored-period
+    title: storedPeriod
+    sourceFile: internal/ledger/postgres/payout.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:29.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-pg-encode-earlier
+    title: encodeEarlier
+    sourceFile: internal/ledger/postgres/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:36.582Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-ledger-pg-decode-earlier
+    title: decodeEarlier
+    sourceFile: internal/ledger/postgres/payout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:43.423Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-payout-setting-history
+  - id: SYM-connectorv1-ticker-transaction-get-open-price
+    title: TickerTransaction.GetOpenPrice
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:51.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-xtb
+      - type: implements
+        target: REQ-ingest-xtb-opening-lot-trading-currency
+  - id: SYM-connectorv1-instrument-proposal-get-currency
+    title: InstrumentProposal.GetCurrency
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:27:58.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-tickers
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-connectorv1-account-holdings-get-bond-payout-earlier
+    title: AccountHoldings.GetBondPayoutEarlier
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:05.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period
+    title: BondPayoutPeriod
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:12.012Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-reset
+    title: BondPayoutPeriod.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:19.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-string
+    title: BondPayoutPeriod.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:27.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-proto-message
+    title: BondPayoutPeriod.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:35.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-proto-reflect
+    title: BondPayoutPeriod.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:42.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-descriptor
+    title: BondPayoutPeriod.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:50.728Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-get-bond-payout
+    title: BondPayoutPeriod.GetBondPayout
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:28:58.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-connectorv1-bond-payout-period-get-since
+    title: BondPayoutPeriod.GetSince
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:29:05.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-held
+      - type: implements
+        target: REQ-ingest-sync-carries-payout-history
+  - id: SYM-ingestv1-update-account-request-get-bond-payout-from
+    title: UpdateAccountRequest.GetBondPayoutFrom
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T17:29:12.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-bond-payout-change-from-day
+  - id: SYM-plugins-untrusted-signer
+    title: UntrustedSigner
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:12.116Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-untrusted-signer-string
+    title: UntrustedSigner.String
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:19.306Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-untrusted-signer-error
+    title: UntrustedSignerError
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:25.341Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-untrusted-signer-error-error
+    title: UntrustedSignerError.Error
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:32.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-untrusted-signer-error-is
+    title: UntrustedSignerError.Is
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:39.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-plugins-fn-append-new
+    title: appendNew
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:46.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-untrusted-signer
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-cosign-fn-untrusted-signer
+    title: Verifier.untrustedSigner
+    sourceFile: internal/plugins/cosign/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:08:54.094Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cosign
+      - type: implements
+        target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-cosign-fn-untrusted-keyless
+    title: Verifier.untrustedKeyless
+    sourceFile: internal/plugins/cosign/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:01.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cosign
+      - type: implements
+        target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-cosign-fn-untrusted-key
+    title: Verifier.untrustedKey
+    sourceFile: internal/plugins/cosign/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:08.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cosign
+      - type: implements
+        target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-cosign-fn-signs-digest
+    title: signsDigest
+    sourceFile: internal/plugins/cosign/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:16.517Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cosign
+      - type: implements
+        target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-operator-fn-untrusted-signers
+    title: untrustedSigners
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:23.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-reconcile
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+  - id: SYM-views-pb-plugin-get-untrusted-signers
+    title: Plugin.GetUntrustedSigners
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:32.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-plugins-untrusted-signer-named
+      - type: implements
+        target: REQ-views-installed-plugins
+  - id: SYM-release-bundle-check-cnpg
+    title: check_cnpg
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:39.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-database
+  - id: SYM-release-bundle-check-database
+    title: check_database
+    sourceFile: scripts/release-bundle.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:44.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-bundle
+      - type: implements
+        target: REQ-tooling-release-bundle-database
+  - id: SYM-plugins-test-decide-names-untrusted-signers
+    title: TestDecideNamesUntrustedSigners
+    sourceFile: internal/plugins/untrusted_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:51.401Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-untrusted-signer
+  - id: SYM-plugins-test-untrusted-signer-error-message
+    title: TestUntrustedSignerErrorMessage
+    sourceFile: internal/plugins/untrusted_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:09:58.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-untrusted-signer
+  - id: SYM-plugins-test-helper-named-signers
+    title: namedSigners
+    sourceFile: internal/plugins/untrusted_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:05.352Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-untrusted-signer
+  - id: SYM-cosign-test-helper-check-inspect-case
+    title: checkInspectCase
+    sourceFile: internal/plugins/cosign/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:12.142Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-helper-inspected
+    title: inspected
+    sourceFile: internal/plugins/cosign/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:18.821Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-helper-key-bundle-with-hint
+    title: keyBundleWithHint
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:25.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-helper-sign-with-key
+    title: signWithKey
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:32.529Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-operator-test-helper-untrusted-images
+    title: untrustedImages
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:39.802Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-helper-untrusted-images-verify-image
+    title: untrustedImages.VerifyImage
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:47.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-operator-test-helper-test-untrusted-signer
+    title: testUntrustedSigner
+    sourceFile: internal/plugins/operator/reconciler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:10:53.952Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-reconcile
+  - id: SYM-e2e-firstrun-build-cli
+    title: buildCLI
+    sourceFile: test/e2e/firstrun_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:01.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-firstrun-test-bundle-first-run
+    title: TestBundleFirstRun
+    sourceFile: test/e2e/firstrun_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:08.339Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-firstrun-install-ui-with-cli
+    title: installUIWithCLI
+    sourceFile: test/e2e/firstrun_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:15.736Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-firstrun-enroll-with-cli
+    title: enrollWithCLI
+    sourceFile: test/e2e/firstrun_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:22.943Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+  - id: SYM-e2e-test-helper-apply-cnpg
+    title: applyCNPG
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:30.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-helper-apply-database
+    title: applyDatabase
+    sourceFile: test/e2e/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:38.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-install
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-helper-suite-signer
+    title: suiteSigner
+    sourceFile: test/e2e/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:45.345Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-bundle-first-run
+      - type: executable_for
+        target: TEST-e2e-demo-stack
+  - id: SYM-e2e-test-helper-refused-as
+    title: refusedAs
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:52.008Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-e2e-test-helper-names-refusal
+    title: namesRefusal
+    sourceFile: test/e2e/refusal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:11:58.904Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugin-refusals
+  - id: SYM-protobreak-main
+    title: main
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:19.820Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-run
+    title: run
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:26.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-run-judge
+    title: runJudge
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:33.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-read-judge-input
+    title: readJudgeInput
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:40.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-run-marked
+    title: runMarked
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:47.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+      - type: implements
+        target: REQ-tooling-breaking-exception-commit-marked
+  - id: SYM-protobreak-read-files
+    title: readFiles
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:22:54.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-entry
+    title: Entry
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:00.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-entry-string
+    title: Entry.String
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:07.890Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-parse-exceptions
+    title: parseExceptions
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:15.522Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-parse-entry
+    title: parseEntry
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:23.348Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-new-entries
+    title: newEntries
+    sourceFile: tools/protobreak/exceptions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:32.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-parse-decisions
+    title: parseDecisions
+    sourceFile: tools/protobreak/decisions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:43.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-names
+    title: names
+    sourceFile: tools/protobreak/decisions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:51.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-finding
+    title: Finding
+    sourceFile: tools/protobreak/findings.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:23:57.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-finding-string
+    title: Finding.String
+    sourceFile: tools/protobreak/findings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:05.298Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-parse-findings
+    title: parseFindings
+    sourceFile: tools/protobreak/findings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:12.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-removed
+    title: removed
+    sourceFile: tools/protobreak/findings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:19.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts
+    title: contracts
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:25.728Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-index-contracts
+    title: indexContracts
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:33.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts-index-message
+    title: contracts.indexMessage
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:39.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-trim-dot
+    title: trimDot
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:46.335Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts-package-of
+    title: contracts.packageOf
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:24:54.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts-has-message
+    title: contracts.hasMessage
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:04.672Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-contracts-reachable
+    title: contracts.reachable
+    sourceFile: tools/protobreak/contracts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:13.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-judge-input
+    title: judgeInput
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:22.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-judge
+    title: judge
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:29.278Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-check-decisions
+    title: checkDecisions
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:36.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-check-fresh
+    title: checkFresh
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:43.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-excuse
+    title: excuse
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:25:51.577Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-short-name
+    title: shortName
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:00.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-protobreak-marked-breaking
+    title: markedBreaking
+    sourceFile: tools/protobreak/marked.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:07.940Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-exception-commit-marked
+  - id: SYM-protobreak-check-marked
+    title: checkMarked
+    sourceFile: tools/protobreak/marked.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:16.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-exception-commit-marked
+  - id: SYM-protobreak-test-helper-base-set
+    title: baseSet
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:23.635Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-judge
+    title: TestJudge
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:31.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-helper-check-verdict
+    title: checkVerdict
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:38.125Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-parse-exceptions
+    title: TestParseExceptions
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:46.088Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-parse-findings-refuses-what-it-cant-read
+    title: TestParseFindingsRefusesWhatItCantRead
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:26:56.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-check-marked
+    title: TestCheckMarked
+    sourceFile: tools/protobreak/marked_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:27:13.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-helper-write-inputs
+    title: writeInputs
+    sourceFile: tools/protobreak/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:27:24.153Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-tooling-proto-breaking-protobreak
+    title: protobreak
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:27:42.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-tooling-proto-breaking-show
+    title: show
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:27:51.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-views-connectapi-test-ra-removed
+    title: removed
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:28:00.003Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-views-connectapi-test-ra-test-read-access-removed-methods
+    title: TestReadAccessRemovedMethods
+    sourceFile: internal/views/connectapi/readaccess_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T19:28:08.513Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-read-access
+  - id: SYM-protobreak-pre-beta
+    title: preBeta
+    sourceFile: tools/protobreak/stage.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:54:43.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-protobreak-verdict
+    title: verdict
+    sourceFile: tools/protobreak/judge.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:54:50.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-protobreak-write-verdict
+    title: writeVerdict
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:54:58.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-protobreak
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-protobreak-run-stage
+    title: runStage
+    sourceFile: tools/protobreak/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:05.990Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-tooling-proto-breaking-contracts
+    title: contracts
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:23.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-check-one-exception
+  - id: SYM-tooling-proto-breaking-breaks
+    title: breaks
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:29.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-tooling-proto-breaking-stage
+    title: stage
+    sourceFile: scripts/proto-breaking.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:35.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-proto-breaking
+      - type: implements
+        target: REQ-tooling-breaking-before-first-beta
+  - id: SYM-protobreak-test-pre-beta
+    title: TestPreBeta
+    sourceFile: tools/protobreak/judge_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:41.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-run-judge
+    title: TestRunJudge
+    sourceFile: tools/protobreak/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:47.965Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-protobreak-test-run-marked
+    title: TestRunMarked
+    sourceFile: tools/protobreak/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:55:53.679Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-protobreak
+  - id: SYM-ingest-trading-currency-choice-error
+    title: TradingCurrencyChoiceError
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:57:12.440Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+  - id: SYM-ingest-trading-currency-choice-error-error
+    title: TradingCurrencyChoiceError.Error
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:57:23.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+  - id: SYM-ingest-exchange-currencies
+    title: ExchangeCurrencies
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:57:34.727Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-settled-code
+    title: settledCode
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:57:45.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-currency-choices
+    title: CurrencyChoices
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:57:55.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+  - id: SYM-ingest-confirm-listing
+    title: ConfirmListing
+    sourceFile: internal/ingest/listing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:58:06.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+  - id: SYM-ingest-pending-ticker-currency-choices
+    title: PendingTicker.CurrencyChoices
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:58:18.242Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-listing
+      - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+  - id: SYM-ingest-pg-listing-row-dest
+    title: listingRow.dest
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:58:38.590Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-pg-listing-row-parts
+    title: listingRow.parts
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:58:49.796Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-ticker-currency-picked
+  - id: SYM-ingest-pg-listing-row-confirm
+    title: listingRow.confirm
+    sourceFile: internal/ingest/postgres/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:59:01.364Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-opening
+      - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+  - id: SYM-ingestv1-pending-ticker-get-proposed-currency
+    title: PendingTicker.GetProposedCurrency
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:59:12.525Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+  - id: SYM-ingestv1-pending-ticker-get-currency-choices
+    title: PendingTicker.GetCurrencyChoices
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:59:23.625Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+  - id: SYM-ingestv1-confirm-ticker-request-get-currency
+    title: ConfirmTickerRequest.GetCurrency
+    sourceFile: sdk/go/gen/openfief/ingest/v1/tickers.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T23:59:34.934Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-xtb-upload
+      - type: implements
+        target: REQ-ingest-ticker-currency-pick-required
+  - id: SYM-core-test-helper-confirm-picking
+    title: confirmPicking
+    sourceFile: cmd/core/xtb_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T00:00:20.047Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-xtb-upload
+  - id: SYM-ingest-test-confirm-listing
+    title: TestConfirmListing
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T00:00:29.985Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-helper-confirm-outcome
+    title: confirmOutcome
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T00:00:39.418Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ingest-test-exchange-currencies
+    title: TestExchangeCurrencies
+    sourceFile: internal/ingest/listing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T00:00:49.215Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-listing
+  - id: SYM-ui-test-helper-london-currencies
+    title: londonCurrencies
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T00:01:00.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-core-sessions
+    title: sessions
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:10.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-sessions
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-core-owner-sessions-changeable
+    title: ownerSessions.Changeable
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:17.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-sessions
+      - type: implements
+        target: REQ-core-authz-change-refused
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-core-owner-sessions-session
+    title: ownerSessions.session
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:23.683Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-sessions
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-action
+    title: Action
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:29.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-action-string
+    title: Action.String
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:36.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-holder
+    title: Holder
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:42.152Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-holder-string
+    title: Holder.String
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:48.447Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-caller
+    title: Caller
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:54.916Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-may-act
+    title: MayAct
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:01.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-app-authorizer
+    title: Authorizer
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:08.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-app-policy
+    title: Policy
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:13.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-app-policy-may-act
+    title: Policy.MayAct
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:19.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-app-caller-key
+    title: callerKey
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:26.649Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-app-with-caller
+    title: WithCaller
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:33.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-app-caller-from
+    title: CallerFrom
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:40.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-app-principal-caller
+    title: Principal.Caller
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:47.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-ingest-app-may-change
+    title: mayChange
+    sourceFile: internal/ingest/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:53.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ingest-app-uploads-changeable
+    title: Uploads.changeable
+    sourceFile: internal/ingest/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:59.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ingest-app-accounts-authorize-remap
+    title: Accounts.authorizeRemap
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:05.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ingest-app-accounts-mapped-to
+    title: Accounts.mappedTo
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:12.003Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ledger-app-may-change
+    title: mayChange
+    sourceFile: internal/ledger/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:17.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ledger-app-ledger-transfer-accounts
+    title: Ledger.TransferAccounts
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:24.351Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-views-app-with-authorizer
+    title: WithAuthorizer
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:31.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-hidden-account-not-found
+  - id: SYM-views-app-views-may-view
+    title: Views.mayView
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:37.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-hidden-account-not-found
+  - id: SYM-views-app-views-viewable
+    title: Views.viewable
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:43.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-totals-over-viewable
+  - id: SYM-views-app-views-viewable-bindings
+    title: Views.viewableBindings
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:49.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-totals-over-viewable
+  - id: SYM-views-app-shown-links
+    title: shownLinks
+    sourceFile: internal/views/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:57.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-totals-over-viewable
+  - id: SYM-core-test-fake-sessions
+    title: fakeSessions
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:03.714Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-fake-sessions-session
+    title: fakeSessions.Session
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:10.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-recording-authorizer
+    title: recordingAuthorizer
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:16.231Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-recording-authorizer-may-act
+    title: recordingAuthorizer.MayAct
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:22.877Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-test-owner-sessions-changeable
+    title: TestOwnerSessionsChangeable
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:29.568Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-check-asked-owner
+    title: checkAskedOwner
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:37.220Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-identity-test-test-may-act
+    title: TestMayAct
+    sourceFile: internal/identity/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:43.618Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access
+  - id: SYM-identity-test-test-action-and-holder-names
+    title: TestActionAndHolderNames
+    sourceFile: internal/identity/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:49.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access
+  - id: SYM-identity-app-test-test-policy-may-act
+    title: TestPolicyMayAct
+    sourceFile: internal/identity/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:55.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-access
+  - id: SYM-identity-app-test-test-caller-in-context
+    title: TestCallerInContext
+    sourceFile: internal/identity/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:00.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-access
+  - id: SYM-identity-app-test-test-principal-caller
+    title: TestPrincipalCaller
+    sourceFile: internal/identity/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:06.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-access
+  - id: SYM-ingest-app-test-test-owner-services-need-the-change
+    title: TestOwnerServicesNeedTheChange
+    sourceFile: internal/ingest/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:12.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-authz
+  - id: SYM-ingest-app-test-test-file-accounts-only-changeable
+    title: TestFileAccountsOnlyChangeable
+    sourceFile: internal/ingest/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:17.950Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-authz
+  - id: SYM-ingest-app-test-helper-fake-owners-changeable
+    title: fakeOwners.Changeable
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:24.789Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-authz
+  - id: SYM-ingest-connectapi-test-helper-owners-changeable
+    title: owners.Changeable
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:31.816Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ledger-app-test-fake-owners-changeable
+    title: fakeOwners.Changeable
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:38.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-authz
+  - id: SYM-ledger-app-test-test-transfers-need-the-change-of-both-accounts
+    title: TestTransfersNeedTheChangeOfBothAccounts
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:45.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-authz
+  - id: SYM-ledger-app-test-test-transfer-accounts
+    title: TestTransferAccounts
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:52.474Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-authz
+  - id: SYM-ledger-connectapi-test-helper-owners-changeable
+    title: owners.Changeable
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:59.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-helper-decider-transfer-accounts
+    title: decider.TransferAccounts
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:05.524Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-views-app-test-authz-denying-authorizer
+    title: denyingAuthorizer
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:12.002Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-denying-authorizer-may-act
+    title: denyingAuthorizer.MayAct
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:18.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-with-authorizer
+    title: withAuthorizer
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:24.896Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-two-bindings
+    title: twoBindings
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:31.628Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-two-bindings-bindings
+    title: twoBindings.Bindings
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:38.650Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-without-acc2
+    title: withoutAcc2
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:45.083Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-views-compute-over-viewable-accounts
+    title: TestViewsComputeOverViewableAccounts
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:51.577Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-views-refuse-an-account-the-caller-may-not-view
+    title: TestViewsRefuseAnAccountTheCallerMayNotView
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:58.323Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-err-of
+    title: errOf
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:05.644Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-views-when-the-authorizer-fails
+    title: TestViewsWhenTheAuthorizerFails
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:12.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-views-without-a-caller
+    title: TestViewsWithoutACaller
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:19.052Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-transfers-over-viewable-accounts
+    title: TestTransfersOverViewableAccounts
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:25.538Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-helper-reader
+    title: reader
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:32.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-connectapi-test-authz-acc1-only
+    title: acc1Only
+    sourceFile: internal/views/connectapi/authz_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:38.770Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz
+  - id: SYM-views-connectapi-test-authz-acc1-only-may-act
+    title: acc1Only.MayAct
+    sourceFile: internal/views/connectapi/authz_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:45.447Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz
+  - id: SYM-views-connectapi-test-authz-test-rest-serves-only-viewable-accounts
+    title: TestRESTServesOnlyViewableAccounts
+    sourceFile: internal/views/connectapi/authz_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:52.236Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz
+  - id: SYM-views-connectapi-test-authz-check-hidden
+    title: checkHidden
+    sourceFile: internal/views/connectapi/authz_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:59.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz
+  - id: SYM-ingest-app-accounts-changed-tax-details
+    title: Accounts.changedTaxDetails
+    sourceFile: internal/ingest/app/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T06:15:49.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-forms
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation

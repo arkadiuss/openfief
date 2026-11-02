@@ -279,20 +279,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4bc165824f4
-  - type: implements
-    from: SYM-viewsv1-list-broker-accounts-request-proto-message
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:50:17.184Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-becb9fb83235
-  - type: covered_by
-    from: SYM-viewsv1-list-broker-accounts-request-proto-message
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:50:17.216Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1e6b0ed42a39
   - type: executable_for
     from: SYM-fd-views-kube-test-browser-route-of
     to: TEST-views-kube-browser
@@ -580,6 +566,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbc61f785e7e
+  - type: constrains
+    from: REQ-ingest-xtb-opening-lot-trading-currency
+    to: FACT-SUBJECT-7B552889D0C16865
+    created_at: 2026-11-01T16:50:44.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f7ee02154f1
+  - type: requires_property
+    from: REQ-ingest-xtb-opening-lot-trading-currency
+    to: FACT-PROP-BAD41871D798F5EB
+    created_at: 2026-11-01T16:50:44.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a6e12789864
+  - type: specified_by
+    from: REQ-ingest-xtb-opening-lot-trading-currency
+    to: SCEN-ingest-xtb-opening-lot-trading-currency
+    created_at: 2026-11-01T16:50:44.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b28612b040f
+  - type: supersedes
+    from: REQ-ingest-xtb-opening-lot-trading-currency
+    to: REQ-ingest-xtb-start-open-positions
+    created_at: 2026-11-01T16:50:44.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9b38d725fdb
   - type: implements
     from: SYM-ingest-app-pricing-scope
     to: REQ-ingest-market-data-scope-declared
@@ -587,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a63dcfa4b330
+  - type: executable_for
+    from: SYM-identity-app-test-test-policy-may-act
+    to: TEST-identity-app-access
+    created_at: 2026-11-01T22:50:57.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d810ac995f90
+  - type: executable_for
+    from: SYM-views-app-test-authz-err-of
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:53:08.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3aee28b64f61

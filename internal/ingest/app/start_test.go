@@ -117,17 +117,20 @@ func TestUploadsStartHistoryUnreadable(t *testing.T) {
 	}
 }
 
-// fakeTickerStore holds the waiting entries of one ticker and records the
-// keys booked.
+// fakeTickerStore holds the waiting entries of one ticker, the listing
+// confirming it settles, and records the keys booked.
 type fakeTickerStore struct {
 	app.TickerStore
 
 	waiting []ingest.TickerEntry
+	listing ingest.Listing
 	booked  []ledger.TransactionKey
 }
 
-func (f *fakeTickerStore) ConfirmTicker(context.Context, ingest.TickerConfirmation) ([]ingest.TickerEntry, error) {
-	return f.waiting, nil
+func (f *fakeTickerStore) ConfirmTicker(_ context.Context, c ingest.TickerConfirmation) ([]ingest.TickerEntry, ingest.Listing, error) {
+	l := f.listing
+	l.ISIN = c.ISIN
+	return f.waiting, l, nil
 }
 
 func (f *fakeTickerStore) BookedTickerEntries(_ context.Context, _ string, keys []ledger.TransactionKey) error {

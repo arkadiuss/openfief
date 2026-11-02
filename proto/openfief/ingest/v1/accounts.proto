@@ -94,8 +94,8 @@ message Account {
   // What happens to the coupons and maturities of a hand-entered bond
   // account (D-135); BOND_PAYOUT_CASH for every other account.
   BondPayout bond_payout = 7;
-  // The day bond_payout took effect, YYYY-MM-DD; empty when it never
-  // changed.
+  // The day bond_payout took effect, YYYY-MM-DD; empty for the account's
+  // first setting, which covers its whole history (D-162).
   string bond_payout_since = 8;
   // The account's form, a key of the jurisdiction pack, set when the
   // account is created, such as an OKI account's "bank-account",
@@ -187,14 +187,19 @@ message UpdateAccountRequest {
   FeeRule fee_rule = 7;
   // The new payout setting (D-135); unspecified keeps the account's.
   BondPayout bond_payout = 8;
+  // The day bond_payout takes effect from, YYYY-MM-DD (D-162): today or an
+  // earlier day; empty is today. The coupons and maturities that fell due
+  // from that day on are booked anew under it on the next sync, superseding
+  // those booked before. A day after today fails with INVALID_ARGUMENT.
+  string bond_payout_from = 9;
   // The account's form (D-147); empty keeps the account's. A form, once
   // set, never changes; an account moved into a wrapper with forms takes
   // one here.
-  string account_form = 9;
+  string account_form = 10;
   // What was paid into the account before its history is known, as a
   // decimal amount in the pack's currency (D-149); empty keeps the
   // account's.
-  string earlier_payments = 10;
+  string earlier_payments = 11;
 }
 
 message UpdateAccountResponse {

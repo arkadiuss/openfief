@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb7c8485c3c8
+  - type: executable_for
+    from: SYM-views-app-test-authz-with-authorizer
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:52:27.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db01315039f8

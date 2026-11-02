@@ -21,9 +21,11 @@ func heldTo(accounts []ingest.HeldAccount) []*connectorv1.AccountHoldings {
 		if !a.GoLive.IsZero() {
 			pb.GoLive = a.GoLive.String()
 		}
-		pb.BondPayout = payoutTo(a.Payout.Payout)
-		if !a.Payout.Since.IsZero() {
-			pb.BondPayoutSince = a.Payout.Since.String()
+		pb.BondPayout, pb.BondPayoutSince = payoutTo(a.Payout.Payout), dateTo(a.Payout.Since)
+		for _, e := range a.Payout.Earlier {
+			pb.BondPayoutEarlier = append(pb.BondPayoutEarlier, &connectorv1.BondPayoutPeriod{
+				BondPayout: payoutTo(e.Payout), Since: dateTo(e.Since),
+			})
 		}
 		for j := range a.Holdings {
 			h := &a.Holdings[j]
@@ -41,6 +43,14 @@ func heldTo(accounts []ingest.HeldAccount) []*connectorv1.AccountHoldings {
 		out = append(out, pb)
 	}
 	return out
+}
+
+// dateTo writes a date as "YYYY-MM-DD", or empty for the zero date.
+func dateTo(d kernel.Date) string {
+	if d.IsZero() {
+		return ""
+	}
+	return d.String()
 }
 
 // payoutTo writes a payout setting.

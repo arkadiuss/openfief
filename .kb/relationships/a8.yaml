@@ -566,20 +566,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f85a215bfd0
-  - type: implements
-    from: SYM-viewsv1-broker-account-reset
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:45:22.939Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0294b66e488d
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-reset
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:45:22.987Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cc60756b9659
   - type: verified_by
     from: SCEN-ingest-sync-keeps-from-go-live
     to: TEST-ingest-golive
@@ -797,13 +783,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-daa679c729c0
-  - type: implements
-    from: SYM-ingestv1-bond-payout-string
-    to: REQ-ingest-bond-payout-setting
-    created_at: 2026-11-01T07:54:07.401Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e3613c174539
   - type: covered_by
     from: SYM-ingestv1-bond-payout-string
     to: TEST-ingest-connectapi-accounts
@@ -860,3 +839,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c4da19234dd
+  - type: covered_by
+    from: SYM-ingest-listing
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:23:46.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9930aedd6002
+  - type: implements
+    from: SYM-ingestv1-bond-payout-string
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:33:28.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25df8b915531
+  - type: implements
+    from: SYM-ingest-listing
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:13.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49e8ac7bb73d

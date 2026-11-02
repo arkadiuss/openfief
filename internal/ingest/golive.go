@@ -69,6 +69,31 @@ func KeepFromGoLive(m *Mapping, mode Mode, goLive map[ledger.AccountID]kernel.Da
 	return out
 }
 
+// OpeningStarts returns the go-live date of each account an opening
+// upload's mapping m starts (D-160): the latest date of its seeding
+// transactions and opening-lot ticker entries, whether they can be booked
+// now or wait for their ticker's ISIN (D-116). An account with neither is
+// not in it. m's ticker entries must have their account.
+func OpeningStarts(m *Mapping) map[ledger.AccountID]kernel.Date {
+	out := map[ledger.AccountID]kernel.Date{}
+	start := func(account ledger.AccountID, day kernel.Date) {
+		if d, ok := out[account]; !ok || day.After(d) {
+			out[account] = day
+		}
+	}
+	for i := range m.Transactions {
+		if t := &m.Transactions[i]; ledger.IsSeeding(t) {
+			start(t.Account, t.Date)
+		}
+	}
+	for i := range m.TickerEntries {
+		if e := &m.TickerEntries[i]; e.Kind == ledger.KindOpeningLot {
+			start(e.Header.Account, e.Header.Date)
+		}
+	}
+	return out
+}
+
 // beforeGoLive returns why a transaction or ticker entry of account on day,
 // seeding it or not, is left out of a batch in mode, and whether it is.
 func beforeGoLive(account ledger.AccountID, day kernel.Date, seeding bool, mode Mode, goLive map[ledger.AccountID]kernel.Date) (string, bool) {

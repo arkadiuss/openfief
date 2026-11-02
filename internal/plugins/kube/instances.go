@@ -86,10 +86,14 @@ func (s *Instances) List(ctx context.Context) ([]app.Instance, error) {
 	return out, nil
 }
 
-// describeStatus copies what the operator reported about a Plugin.
+// describeStatus copies what the operator reported about a Plugin: an
+// image refused for its untrusted signers names them (D-169).
 func describeStatus(in *app.Instance, st *v1alpha1.PluginStatus) {
 	if c := meta.FindStatusCondition(st.Conditions, v1alpha1.ConditionSignatureVerified); c != nil {
 		in.Signature = c.Reason
+		if c.Status == metav1.ConditionFalse && len(st.UntrustedSigners) > 0 {
+			in.Signature += " (" + strings.Join(st.UntrustedSigners, ", ") + ")"
+		}
 	}
 	if c := meta.FindStatusCondition(st.Conditions, v1alpha1.ConditionReady); c != nil {
 		in.Ready = string(c.Status)

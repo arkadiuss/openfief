@@ -524,24 +524,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e4b4243e356
-  - type: implements
-    from: SYM-ingest-app-accounts-change-terms
-    to: REQ-ingest-account-form-checks
-    created_at: 2026-11-02T04:18:50.200Z
+  - type: executable_for
+    from: SYM-e2e-test-helper-suite-signer
+    to: TEST-e2e-demo-stack
+    created_at: 2026-11-01T22:11:47.767Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-2c76357c7fc8
-  - type: implements
-    from: SYM-ingest-app-accounts-change-terms
-    to: REQ-ingest-oki-account-form-set-at-creation
-    created_at: 2026-11-02T04:18:50.236Z
+    id: rel-f4fa7610c2f1
+  - type: executable_for
+    from: SYM-e2e-test-helper-suite-signer
+    to: TEST-e2e-bundle-first-run
+    created_at: 2026-11-01T22:11:47.812Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-04ec13a862a3
-  - type: covered_by
-    from: SYM-ingest-app-accounts-change-terms
-    to: TEST-ingest-app-account-forms
-    created_at: 2026-11-02T04:18:50.272Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-97bdcd85621f
+    id: rel-a4f82c42bc84

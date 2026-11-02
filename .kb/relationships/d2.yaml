@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0e585e88642
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-check-payout-back-to-cash
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T17:23:06.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfb71b5abf7c
+  - type: validates
+    from: TEST-plugins-kube-instances
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T21:51:33.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96cddcc71791

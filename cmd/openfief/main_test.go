@@ -37,6 +37,8 @@ type world struct {
 	signersFile      string
 	signersJSON      string
 	dir              string
+	// keyName is the signing key as a refusal names it (D-169).
+	keyName string
 }
 
 func newWorld(t *testing.T) *world {
@@ -53,6 +55,7 @@ func newWorld(t *testing.T) *world {
 		t.Fatalf("signers: %v", err)
 	}
 	w.signersJSON = string(doc)
+	w.keyName = plugins.SignerIdentity{PublicKey: key}.String()
 	w.signersFile = w.file(t, "signers.json", w.signersJSON)
 	return w
 }
@@ -105,10 +108,12 @@ func TestInstallVerifiesSignatures(t *testing.T) {
 		objs    []client.Object
 		args    []string
 		wantErr error
+		// wantNamed is what the refusal must name.
+		wantNamed string
 	}{
 		{name: "owner's key from a file", args: []string{w.signed.String(), "--trusted-signers", w.signersFile, "--config", good}},
 		{name: "owner's key from the cluster", objs: []client.Object{signersCM}, args: []string{w.signed.String(), "--config", good}},
-		{name: "key not trusted counts as unsigned", args: []string{w.signed.String()}, wantErr: plugins.ErrUnsigned},
+		{name: "key not trusted is named (D-169)", args: []string{w.signed.String()}, wantErr: plugins.ErrUntrustedSigner, wantNamed: w.keyName},
 		{name: "unsigned", args: []string{w.unsigned.String(), "--trusted-signers", w.signersFile}, wantErr: plugins.ErrUnsigned},
 		{name: "config the schema rejects", args: []string{w.signed.String(), "--trusted-signers", w.signersFile, "--config", bad}, wantErr: app.ErrConfig},
 	}
@@ -119,6 +124,9 @@ func TestInstallVerifiesSignatures(t *testing.T) {
 			out, err := runCLI(t, store.Client, "y\n", append([]string{"plugin", "install", "--name", "sample"}, tt.args...)...)
 			if !errors.Is(err, tt.wantErr) {
 				t.Fatalf("error = %v, want %v\n%s", err, tt.wantErr, out)
+			}
+			if err != nil && !strings.Contains(err.Error(), tt.wantNamed) {
+				t.Errorf("error = %v, want it to name %s", err, tt.wantNamed)
 			}
 			if err != nil {
 				return

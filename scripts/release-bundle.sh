@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 # Renders a release's bundle (docs/dev/sdlc.md#releases): the CRDs and the bootstrap install, with every image the
-# install names pinned to the digest the release signed (D-17), as two plain manifests:
+# install names pinned to the digest the release signed (D-17), and the database the install brings by default (D-14),
+# as plain manifests:
 #   <out dir>/openfief-crds-<version>.yaml     deploy/crds: the openfief namespace and the Plugin and PluginGrant CRDs,
 #                                              the part that needs a cluster admin (D-15)
 #   <out dir>/openfief-install-<version>.yaml  deploy/operator, deploy/egress-proxy and deploy/core
+#   <out dir>/openfief-db-<version>.yaml       deploy/database: a minimal CloudNativePG cluster openfief-db, for the
+#                                              owner to edit
+#   <out dir>/cnpg-<cnpg version>.yaml         CloudNativePG's own release manifest, byte for byte: CNPG=<file> names
+#                                              it, CNPG_SHA256 is its pinned sha256 (the Taskfile's
+#                                              CNPG_MANIFEST_SHA256), and a file with any other sum is refused. An
+#                                              owner whose cluster already runs CloudNativePG skips it.
 # Plugins aren't in it: they are installed with the CLI (D-46), and the catalog the operator and the CLI embed pins
 # each first-party plugin's signed digest (D-88).
 #
@@ -18,13 +25,14 @@
 # Every image the install names must get a digest. With VERIFY=1 and REPO=<owner/repo> (the release workflow), each
 # pinned image must also carry a keyless cosign signature from that repository's images.yml on main, for that same
 # digest (scripts/verified-digest.sh, which needs cosign and gojq).
-# The output depends only on deploy/ and the images given, so the same inputs give byte-identical files.
+# The output depends only on deploy/, the images and the CloudNativePG manifest given, so the same inputs give
+# byte-identical files.
 # Needs kustomize and gojq on PATH. DEPLOY overrides the deploy/ directory (tests).
 # Usage: release-bundle.sh <version> <out dir> [image...]
 set -euo pipefail
 shopt -s inherit_errexit
 
-usage='usage: release-bundle.sh <version> <out dir> [image...]'
+usage='usage: CNPG=<cnpg-X.Y.Z.yaml> CNPG_SHA256=<sha256> release-bundle.sh <version> <out dir> [image...]'
 if [ "$#" -lt 2 ]; then
   echo "$usage" >&2
   exit 2
@@ -45,6 +53,30 @@ fail() {
 
 # The version names the files, so it may hold only what a file name and a tag can.
 [[ "$version" =~ ^[0-9A-Za-z][0-9A-Za-z.-]*$ ]] || fail "'$version' is not a version"
+
+# check_cnpg fails unless CNPG names CloudNativePG's release manifest, cnpg-<version>.yaml as upstream names it,
+# with the pinned sha256 CNPG_SHA256.
+check_cnpg() {
+  [ -n "${CNPG:-}" ] && [ -n "${CNPG_SHA256:-}" ] ||
+    fail "CNPG and CNPG_SHA256 must name CloudNativePG's release manifest and its pinned sha256 (task release:bundle)"
+  [[ "$(basename "$CNPG")" =~ ^cnpg-[0-9]+\.[0-9]+\.[0-9]+\.yaml$ ]] ||
+    fail "CNPG: $(basename "$CNPG") is not named cnpg-<version>.yaml, as CloudNativePG's release names it"
+  [[ "$CNPG_SHA256" =~ ^[0-9a-f]{64}$ ]] || fail "CNPG_SHA256: '$CNPG_SHA256' is not a sha256"
+  [ -f "$CNPG" ] || fail "CNPG: $CNPG is not a file"
+  local sum
+  sum="$(sha256sum "$CNPG" | cut -d' ' -f1)"
+  [ "$sum" = "$CNPG_SHA256" ] || fail "CNPG: $CNPG has sha256 $sum, not the pinned $CNPG_SHA256"
+}
+
+# check_database fails unless the manifests in file $1 are exactly one CloudNativePG Cluster openfief-db in namespace
+# openfief, the cluster the install reads its database from, and run no image of their own.
+check_database() {
+  local objects
+  objects="$(gojq -r --yaml-input -s '[.[] | select(. != null) | "\(.kind)/\(.metadata.namespace)/\(.metadata.name)"] | join(" ")' "$1")"
+  [ "$objects" = "Cluster/openfief/openfief-db" ] ||
+    fail "deploy/database must hold exactly the Cluster openfief/openfief-db, not: $objects"
+  [ -z "$(install_images "$1")" ] || fail "deploy/database runs an image of its own"
+}
 
 # install_images prints each image the manifests in file $1 run, once, sorted.
 install_images() {
@@ -133,12 +165,15 @@ verify() {
   done < <(install_images "$1")
 }
 
+check_cnpg
 given_images "$@"
 
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 mkdir "$work/install"
 kustomize build "$deploy/crds" >"$work/crds.yaml"
+kustomize build "$deploy/database" >"$work/database.yaml"
+check_database "$work/database.yaml"
 for base in operator egress-proxy core; do
   printf -- '---\n'
   kustomize build "$deploy/$base"
@@ -162,5 +197,15 @@ mkdir -p "$out"
   printf '#   kubectl apply --server-side -f openfief-install-%s.yaml\n' "$version"
   cat "$work/install.yaml"
 } >"$out/openfief-install-$version.yaml"
-echo "release-bundle: wrote $out/openfief-crds-$version.yaml and $out/openfief-install-$version.yaml" >&2
+{
+  printf '# OpenFief %s: its database, the smallest CloudNativePG cluster that works (D-14): one instance on the\n' "$version"
+  printf "# cluster's default storage class. Edit it to suit your cluster (size, storageClass, CloudNativePG's backups), but\n"
+  printf '# keep its name, namespace, database and owner: the install reads the Secret openfief-db-app CloudNativePG makes.\n'
+  printf '# Apply after %s and openfief-crds-%s.yaml:\n' "$(basename "$CNPG")" "$version"
+  printf '#   kubectl apply --server-side -f openfief-db-%s.yaml\n' "$version"
+  cat "$work/database.yaml"
+} >"$out/openfief-db-$version.yaml"
+cp "$CNPG" "$out/$(basename "$CNPG")"
+echo "release-bundle: wrote $out/openfief-crds-$version.yaml, $out/openfief-install-$version.yaml," \
+  "$out/openfief-db-$version.yaml and $out/$(basename "$CNPG")" >&2
 install_images "$out/openfief-install-$version.yaml" | sed 's/^/release-bundle: pinned /' >&2

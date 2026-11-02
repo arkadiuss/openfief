@@ -39,6 +39,10 @@ The read API's ListBrokerAccounts method and its messages must be removed from t
 
 The author recorded it on 2026-11-01, settling the last implementation questions (#33, #38, #39). D-121 lists broker account numbers only through the owner's account service, and the read API never serves them (REQ-views-read-api-no-broker-account-numbers). No end-to-end test proves it yet, so its evidence floor is asserted.
 
+## Why this changed
+
+It supersedes REQ-views-read-api-serves-no-broker-accounts, which kept ListBrokerAccounts in the contract as a deprecated method answering UNIMPLEMENTED so the read API changed only by addition. D-157 removes the method and its messages instead, as the one breaking change the author approved.
+
 ## Source
 
 > The read API's `ListBrokerAccounts` method and its messages are removed from the contract, not kept as deprecated. The breaking-change check lets this one removal through as an exception the author approved, and stays on for every other change.

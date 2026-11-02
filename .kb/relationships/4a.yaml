@@ -650,3 +650,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ec49c525185
+  - type: executable_for
+    from: SYM-ingest-test-listing-of
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:24:50.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ada38e5e6f77
+  - type: implements
+    from: SYM-protobreak-run-stage
+    to: REQ-tooling-breaking-before-first-beta
+    created_at: 2026-11-01T20:55:08.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72478cab1f8a
+  - type: covered_by
+    from: SYM-protobreak-run-stage
+    to: TEST-tooling-proto-breaking
+    created_at: 2026-11-01T20:55:08.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a49472d7cc33

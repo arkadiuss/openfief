@@ -1,0 +1,55 @@
+// OpenFief's authorization model (D-163, D-164), as a SpiceDB schema.
+// `task authz:validate` checks it against the relationships and assertions
+// in validation.yaml; CI runs it as part of `task check`.
+//
+// Until SpiceDB answers the core's authorization interface (from the second
+// alpha), the core's only implementation, identity.MayAct, gives the same
+// answers as this schema with the relationships below: the owner may act on
+// every account, and every other holder of read access (D-137) views every
+// account.
+
+// person is someone with their own passkey: the owner, and from the second
+// alpha the viewers the owner enrolls (D-65).
+definition person {}
+
+// script_token is one of the owner's script tokens (D-27).
+definition script_token {}
+
+// view_plugin is a view plugin, by its plugin identity (D-27).
+definition view_plugin {}
+
+// demo_session is a read-scoped session from the demo authenticator.
+definition demo_session {}
+
+// household is the one household an installation serves, with no tenants
+// (D-65).
+definition household {
+	// owner holds every account and alone changes anything.
+	relation owner: person
+
+	// reader is every other holder of read access (D-137), viewing every
+	// account until script tokens and view plugins are granted accounts as
+	// viewers are (D-164).
+	relation reader: script_token | view_plugin | demo_session
+
+	// change_accounts is changing every account of the household.
+	permission change_accounts = owner
+
+	// view_accounts is viewing every account of the household.
+	permission view_accounts = change_accounts + reader
+}
+
+// account is one of the household's accounts.
+definition account {
+	relation household: household
+
+	// viewer is someone, a script token or a view plugin granted this
+	// account to view (D-65, D-164). From the second alpha.
+	relation viewer: person | script_token | view_plugin
+
+	// change is changing the account or anything recorded in it.
+	permission change = household->change_accounts
+
+	// view is reading the account and everything recorded in it.
+	permission view = change + viewer + household->view_accounts
+}

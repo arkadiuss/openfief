@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d7e88a999c2
+  - type: executable_for
+    from: SYM-ledger-app-test-fake-owners-changeable
+    to: TEST-ledger-app-authz
+    created_at: 2026-11-01T22:51:41.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-074416b7d687

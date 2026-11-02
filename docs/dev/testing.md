@@ -33,6 +33,7 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 - External institutions are fixture servers in the cluster; end-to-end tests never call a real broker.
 - `task e2e` refuses any kubeconfig context that isn't local **(P)**.
 - Each end-to-end test verifies a kibi scenario.
+- An end-to-end test follows the owner's first run: the `openfief` CLI built from the commit installs the UI plugin and enrolls the first passkey. Only downloading the CLI from a release stays outside the suite.
 - End-to-end tests log in with a real passkey ceremony: they drive the browser at `http://localhost` through a port-forward and use the browser's virtual authenticator. No flag weakens the product's origin check for tests.
 - Plugin images reach the operator from a throwaway registry on the cluster's Docker network, read over plain HTTP: go-containerregistry allows HTTP to a private address, and the nodes pull with `ctr --plain-http`. The image's digest and its signature (D-56), from a key made for the run and trusted through `openfief-trusted-signers` (D-45), are what make it trustworthy, not TLS. No operator flag or setting exists for the tests.
 

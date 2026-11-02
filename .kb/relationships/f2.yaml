@@ -328,34 +328,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66f66709f932
-  - type: implements
-    from: SYM-viewsv1-broker-account-string
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:45:30.528Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-db8cee620280
-  - type: covered_by
-    from: SYM-viewsv1-broker-account-string
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:45:30.556Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b2fc1da52aea
-  - type: implements
-    from: SYM-viewsv1-list-broker-accounts-response-descriptor
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:51:22.066Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-92a967c4f301
-  - type: covered_by
-    from: SYM-viewsv1-list-broker-accounts-response-descriptor
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:51:22.104Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-78f502794301
   - type: executable_for
     from: SYM-valuation-app-test-helper-fake-rankings
     to: TEST-valuation-app-ranking
@@ -559,3 +531,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f23f3f4d8641
+  - type: covered_by
+    from: SYM-ingest-currency-places
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:24:37.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d0ceaa83d79
+  - type: implements
+    from: SYM-cosign-fn-signs-digest
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T22:09:19.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdbb8af2f178
+  - type: implements
+    from: SYM-cosign-fn-signs-digest
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-11-01T22:09:19.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c3db3a091bf
+  - type: covered_by
+    from: SYM-cosign-fn-signs-digest
+    to: TEST-plugins-cosign
+    created_at: 2026-11-01T22:09:19.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a73d060637a4
+  - type: implements
+    from: SYM-ingest-currency-places
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:03.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66e836ffe1a4

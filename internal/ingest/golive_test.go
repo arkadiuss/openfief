@@ -175,3 +175,35 @@ func TestKeepFromGoLiveTickerEntries(t *testing.T) {
 		})
 	}
 }
+
+// TestOpeningStarts checks the go-live an opening upload records for each
+// account it starts (D-160): the latest date of its seeding transactions
+// and opening-lot ticker entries, which may all still wait for their
+// ticker; an account with neither isn't started.
+func TestOpeningStarts(t *testing.T) {
+	t.Parallel()
+	usd := kernel.NewMoney(kernel.NewDecimal(100, 0), currency(t, "USD"))
+	header := func(account ledger.AccountID, id, day string) ledger.TransactionHeader {
+		return ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "xtb", ExternalID: id}, Account: account, Date: goLiveDate(t, day)}
+	}
+	cash, err := ledger.NewOpeningCash(header("acc-1", ledger.OpeningCashID(usd.Currency(), goLiveDate(t, "2026-03-31")), "2026-03-31"), usd)
+	if err != nil {
+		t.Fatal(err)
+	}
+	deposit, err := ledger.NewDeposit(header("acc-3", "9000000001", "2026-04-02"), usd)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lot := func(account ledger.AccountID, id, day string) ingest.TickerEntry {
+		return ingest.TickerEntry{Symbol: "TESTA.PL", Kind: ledger.KindOpeningLot, Header: header(account, id, day)}
+	}
+	buy := ingest.TickerEntry{Symbol: "TESTA.PL", Kind: ledger.KindBuy, Header: header("acc-3", "9000000002", "2026-04-03")}
+	m := ingest.Mapping{
+		Transactions:  []ledger.Transaction{cash, deposit},
+		TickerEntries: []ingest.TickerEntry{lot("acc-1", "open-position:1", "2026-03-31"), lot("acc-2", "open-position:2", "2026-06-30"), buy},
+	}
+	want := map[ledger.AccountID]kernel.Date{"acc-1": goLiveDate(t, "2026-03-31"), "acc-2": goLiveDate(t, "2026-06-30")}
+	if diff := cmp.Diff(want, ingest.OpeningStarts(&m)); diff != "" {
+		t.Errorf("OpeningStarts (-want +got):\n%s", diff)
+	}
+}

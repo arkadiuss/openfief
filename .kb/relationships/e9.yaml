@@ -440,3 +440,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fba5c5eefaf4
+  - type: implements
+    from: SYM-ingest-app-accounts-changed
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:21:29.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b23266468bb
+  - type: covered_by
+    from: SYM-ingest-app-accounts-changed
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T17:21:29.673Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-055d7066a6b8

@@ -23,19 +23,10 @@ var (
 	ErrEarlierPayments = errors.New("invalid earlier payments")
 )
 
-// changeTerms changes entry's wrapper and fee rule to c's when c gives
-// them, checks them, its form and its earlier payments, and returns the
-// form to record (changedForm).
-func (a *Accounts) changeTerms(entry *AccountEntry, c *AccountChange) (jurisdiction.AccountForm, error) {
-	if c.Wrapper != "" {
-		entry.Wrapper = c.Wrapper
-	}
-	if c.Fee != nil {
-		entry.Fee = *c.Fee
-	}
-	if err := a.checkTerms(entry.Wrapper, &entry.Fee); err != nil {
-		return "", err
-	}
+// changedTaxDetails checks entry's form and earlier payments as c changes
+// them, entry already in its new wrapper, and returns the form to record
+// (changedForm).
+func (a *Accounts) changedTaxDetails(entry *AccountEntry, c *AccountChange) (jurisdiction.AccountForm, error) {
 	form, err := a.changedForm(entry, c.Form)
 	if err != nil {
 		return "", err

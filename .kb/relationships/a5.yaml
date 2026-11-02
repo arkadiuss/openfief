@@ -566,3 +566,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f57c44949f3
+  - type: constrains
+    from: REQ-identity-authz-per-account
+    to: FACT-SUBJECT-D9B8F3ECCEFE14B1
+    created_at: 2026-11-01T22:44:56.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d67321d99a7
+  - type: requires_property
+    from: REQ-identity-authz-per-account
+    to: FACT-PROP-927C19E8BA3FA56F
+    created_at: 2026-11-01T22:44:56.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-328aaea6a41e
+  - type: implements
+    from: SYM-tooling-proto-breaking-stage
+    to: REQ-tooling-breaking-before-first-beta
+    created_at: 2026-11-01T20:55:37.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e623011544a
+  - type: covered_by
+    from: SYM-tooling-proto-breaking-stage
+    to: TEST-tooling-proto-breaking
+    created_at: 2026-11-01T20:55:37.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df8bf8d937fb

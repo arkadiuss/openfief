@@ -158,7 +158,7 @@ func TestPerformance(t *testing.T) {
 			if tt.change != nil {
 				tt.change(t, f)
 			}
-			got, err := f.views(t).Performance(context.Background(), optionalDate(t, tt.from), optionalDate(t, tt.to))
+			got, err := f.views(t).Performance(reader(t), optionalDate(t, tt.from), optionalDate(t, tt.to))
 			if err != nil {
 				t.Fatalf("Performance() error = %v", err)
 			}
@@ -244,7 +244,7 @@ func TestAccountPerformance(t *testing.T) {
 			if tt.seedACC2 {
 				f.ledger.txs["acc-2"] = []ledger.Transaction{openingUSD(t)}
 			}
-			got, err := f.views(t).AccountPerformance(context.Background(), tt.account, optionalDate(t, tt.from), kernel.Date{})
+			got, err := f.views(t).AccountPerformance(reader(t), tt.account, optionalDate(t, tt.from), kernel.Date{})
 			if err != nil {
 				t.Fatalf("AccountPerformance() error = %v", err)
 			}
@@ -267,14 +267,14 @@ func TestAccountPerformanceEdges(t *testing.T) {
 	t.Run("an unknown account", func(t *testing.T) {
 		t.Parallel()
 		f := newPerformanceFixture(t)
-		if _, err := f.views(t).AccountPerformance(context.Background(), "acc-missing", kernel.Date{}, kernel.Date{}); !errors.Is(err, app.ErrUnknownAccount) {
+		if _, err := f.views(t).AccountPerformance(reader(t), "acc-missing", kernel.Date{}, kernel.Date{}); !errors.Is(err, app.ErrUnknownAccount) {
 			t.Errorf("AccountPerformance(unknown) error = %v, want %v", err, app.ErrUnknownAccount)
 		}
 	})
 	t.Run("an account with no transactions has no days", func(t *testing.T) {
 		t.Parallel()
 		f := newPerformanceFixture(t)
-		got, err := f.views(t).AccountPerformance(context.Background(), "acc-3", kernel.Date{}, kernel.Date{})
+		got, err := f.views(t).AccountPerformance(reader(t), "acc-3", kernel.Date{}, kernel.Date{})
 		if err != nil || len(got.Series.Days) != 0 || !got.Start.IsZero() {
 			t.Errorf("AccountPerformance(acc-3) = %+v, %v, want no days and no start", got, err)
 		}
@@ -311,7 +311,7 @@ func TestPerformanceFailures(t *testing.T) {
 	t.Run("a reversed range", func(t *testing.T) {
 		t.Parallel()
 		f := newPerformanceFixture(t)
-		if _, err := f.views(t).Performance(context.Background(), date(t, "2026-03-03"), date(t, "2026-03-02")); !errors.Is(err, views.ErrInvalidRange) {
+		if _, err := f.views(t).Performance(reader(t), date(t, "2026-03-03"), date(t, "2026-03-02")); !errors.Is(err, views.ErrInvalidRange) {
 			t.Errorf("Performance(reversed) error = %v, want %v", err, views.ErrInvalidRange)
 		}
 	})
@@ -319,7 +319,7 @@ func TestPerformanceFailures(t *testing.T) {
 		t.Parallel()
 		f := newPerformanceFixture(t)
 		f.valuations.fail = errStore
-		if _, err := f.views(t).Performance(context.Background(), kernel.Date{}, kernel.Date{}); !errors.Is(err, errStore) {
+		if _, err := f.views(t).Performance(reader(t), kernel.Date{}, kernel.Date{}); !errors.Is(err, errStore) {
 			t.Errorf("Performance() error = %v, want %v", err, errStore)
 		}
 	})
@@ -327,7 +327,7 @@ func TestPerformanceFailures(t *testing.T) {
 		t.Parallel()
 		f := newPerformanceFixture(t)
 		f.ledger.fail = errStore
-		if _, err := f.views(t).Performance(context.Background(), kernel.Date{}, kernel.Date{}); !errors.Is(err, errStore) {
+		if _, err := f.views(t).Performance(reader(t), kernel.Date{}, kernel.Date{}); !errors.Is(err, errStore) {
 			t.Errorf("Performance() error = %v, want %v", err, errStore)
 		}
 	})
@@ -338,7 +338,7 @@ func TestPerformanceFailures(t *testing.T) {
 		if err != nil {
 			t.Fatalf("app.New: %v", err)
 		}
-		if _, err := v.Performance(context.Background(), kernel.Date{}, kernel.Date{}); !errors.Is(err, errStore) {
+		if _, err := v.Performance(reader(t), kernel.Date{}, kernel.Date{}); !errors.Is(err, errStore) {
 			t.Errorf("Performance() error = %v, want %v", err, errStore)
 		}
 	})

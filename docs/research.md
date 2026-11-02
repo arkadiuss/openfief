@@ -32,6 +32,8 @@ External facts the design and proposals draw on, as found on the date shown. Thi
   - Stability: the README's public API covers only auth, health, import, export and public portfolio pages. Accounts, activities and market-data are the web app's internal endpoints, renamed within `/v1` without notice; there is no OpenAPI spec.
   - https://github.com/ghostfolio/ghostfolio (apps/api/src/app/endpoints/import, apps/api/src/app/activities, apps/api/src/services/import/import.service.ts)
 
+- **[R-25]** (2026-11-01) A knock-out search for the name, on the web and in third-party indexes of trademark registers; TMview, EUIPO's eSearch and USPTO's search refuse automated queries, so no register was searched directly. Nothing named OpenFief turned up: no product, company or mark. "Fief" alone is used by Fief (fief-dev), an open-source user and authentication server whose Python client was archived on 2025-04-26 and whose docs say the project is wrapping up its current chapter; by a French feature film and a novel, both titled Fief; and by board games about feudal France. None of these is in finance, and no mark named FIEF or OPENFIEF appeared in the indexes searched. "Open" adds little distinctiveness, so a conflict would turn on "Fief". Downloadable software is Nice class 9, hosted software class 42, and financial information services class 36. https://github.com/fief-dev/fief-python, https://www.github.com/fief-dev/docs, https://www.crew-united.com/en/Fief__365353.html, https://www.tmdn.org/tmview/
+
 ## Brokers and data sources
 
 - **[R-2]** (2026-10-25) XTB disabled its public xAPI on 2025-03-14. The only options left are statement import or reverse-engineered clients that breach its terms. http://developers.xstore.pro/

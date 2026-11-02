@@ -504,34 +504,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-7055675865b4
   - type: implements
-    from: SYM-viewsv1-broker-account
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:45:15.589Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a53a42e19b86
-  - type: covered_by
-    from: SYM-viewsv1-broker-account
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:45:15.635Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ee5c0ec37c24
-  - type: implements
-    from: SYM-viewsv1-list-broker-accounts-request-reset
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:50:02.565Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8b38e90878f4
-  - type: covered_by
-    from: SYM-viewsv1-list-broker-accounts-request-reset
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:50:02.614Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-109afdbea6d3
-  - type: implements
     from: SYM-jurisdiction-has-wrapper
     to: REQ-pl-tax-wrappers
     created_at: 2026-10-29T22:04:29.118Z
@@ -636,13 +608,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c541db7a7f5b
-  - type: implements
-    from: SYM-ledger-parse-payout
-    to: REQ-ledger-payout-setting
-    created_at: 2026-11-01T07:51:17.895Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0110c689bb90
   - type: covered_by
     from: SYM-ledger-parse-payout
     to: TEST-ledger-payout
@@ -727,3 +692,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6741927d0e3a
+  - type: implements
+    from: SYM-ingest-app-account-starts
+    to: REQ-ingest-opening-upload-starts-account
+    created_at: 2026-11-01T17:21:36.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0b80c3effe2
+  - type: covered_by
+    from: SYM-ingest-app-account-starts
+    to: TEST-ingest-app-starts
+    created_at: 2026-11-01T17:21:36.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a0121955944
+  - type: implements
+    from: SYM-ledger-parse-payout
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-01T17:30:09.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98807b7b272b

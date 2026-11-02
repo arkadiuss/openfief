@@ -31,14 +31,16 @@ func (f fakePlugins) InstalledPlugins(context.Context) ([]views.PluginRecord, er
 
 // installed are three plugins: ibkr-main, signed by OpenFief's CI and
 // running, prices, a market-data connector its grant approves (D-123), and
-// ui, refused. ibkr-old, which brought transactions in, is no longer
+// ui, refused as signed by a key nobody trusts, which it names (D-169).
+// ibkr-old, which brought transactions in, is no longer
 // installed.
 func installed() fakePlugins {
 	return fakePlugins{
 		{
 			Instance: "ui", Image: pluginImage, Requested: []string{"view"},
-			Ready:     views.Condition{Status: "False", Reason: "SignatureNotVerified"},
-			Signature: views.Condition{Status: "False", Reason: "Unsigned"},
+			Ready:            views.Condition{Status: "False", Reason: "SignatureNotVerified"},
+			Signature:        views.Condition{Status: "False", Reason: "UntrustedSigner"},
+			UntrustedSigners: []string{"public key sha256:0a0a"},
 		},
 		{
 			Instance: "ibkr-main", Image: pluginImage, Requested: []string{"connector"}, Effective: []string{"connector"},
@@ -113,7 +115,8 @@ func TestConnectListPlugins(t *testing.T) {
 		{
 			Instance: "ui", Image: pluginImage, ImageDigest: views.ImageDigest(pluginImage),
 			RequestedCapabilities: []string{"view"}, Trust: viewsv1.SignatureTrust_SIGNATURE_TRUST_REFUSED,
-			TrustReason: "Unsigned", Phase: "SignatureNotVerified",
+			TrustReason: "UntrustedSigner", Phase: "SignatureNotVerified",
+			UntrustedSigners: []string{"public key sha256:0a0a"},
 		},
 	}}
 	if diff := cmp.Diff(want, got.Msg, protocmp.Transform()); diff != "" {

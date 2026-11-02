@@ -510,13 +510,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09e0f97f68a5
-  - type: implements
-    from: SYM-ledger-payout
-    to: REQ-ledger-payout-setting
-    created_at: 2026-11-01T07:51:01.923Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-71de70e8b7d3
   - type: covered_by
     from: SYM-ledger-payout
     to: TEST-ledger-payout
@@ -524,13 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-549e4f074a6c
-  - type: implements
-    from: SYM-viewsv1-bond-payout-descriptor
-    to: REQ-ui-bond-payout-setting
-    created_at: 2026-11-01T07:55:26.887Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9fc88ec40620
   - type: covered_by
     from: SYM-viewsv1-bond-payout-descriptor
     to: TEST-ui-values
@@ -573,3 +559,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-591e3f686f23
+  - type: implements
+    from: SYM-ledger-payout
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-01T17:30:19.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8179c56180c5
+  - type: implements
+    from: SYM-viewsv1-bond-payout-descriptor
+    to: REQ-ui-bond-payout-change-date
+    created_at: 2026-11-01T17:36:51.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-945e5f298755

@@ -503,3 +503,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82ca7ee66e1e
+  - type: verified_by
+    from: SCEN-ingest-sync-carries-payout-history
+    to: TEST-ingest-connectrpc-held
+    created_at: 2026-11-01T16:48:07.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e0a80aad009
+  - type: verified_by
+    from: SCEN-ingest-sync-carries-payout-history
+    to: TEST-ingest-delivery-held
+    created_at: 2026-11-01T16:48:07.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e46b7e9d64e
+  - type: verified_by
+    from: SCEN-ingest-sync-carries-payout-history
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T16:48:07.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbee74d20029
+  - type: verified_by
+    from: SCEN-ingest-sync-carries-payout-history
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-01T16:48:07.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2058fd176b3

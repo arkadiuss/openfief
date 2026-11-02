@@ -57,6 +57,7 @@ func rules() []rule {
 		full("gen/", "generated code is checked against its contracts"),
 		full("sdk/go/gen/", "generated code is checked against its contracts"),
 		full("design/", "design assets are embedded in the UI and mounted into the docs site"),
+		full("authz/", "the authorization model's schema, which task authz:validate checks"),
 		full("package.json", "npm packages: kibi, Mermaid, playwright-core"),
 		full("package-lock.json", "npm packages: kibi, Mermaid, playwright-core"),
 		{prefix: "docs/", area: areaDocs, why: "documentation"},

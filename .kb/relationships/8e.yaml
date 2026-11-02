@@ -769,3 +769,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c74947c3239
+  - type: executable_for
+    from: SYM-views-connectapi-test-ra-removed
+    to: TEST-views-connectapi-read-access
+    created_at: 2026-11-01T19:28:02.833Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98b8eab45daf
+  - type: implements
+    from: SYM-ingest-pg-store-record-starts
+    to: REQ-ingest-opening-upload-starts-account
+    created_at: 2026-11-01T17:25:55.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7eef76dc0d3
+  - type: covered_by
+    from: SYM-ingest-pg-store-record-starts
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:25:55.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac6276ea999f

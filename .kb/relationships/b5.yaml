@@ -510,20 +510,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-359f736f597f
-  - type: implements
-    from: SYM-viewsv1-list-broker-accounts-response-string
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:50:59.787Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bd77f106c4db
-  - type: covered_by
-    from: SYM-viewsv1-list-broker-accounts-response-string
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:50:59.836Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8a891b284b47
   - type: validates
     from: TEST-core-front-door
     to: REQ-core-reverse-proxies-view-plugins
@@ -762,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-affc78294280
+  - type: implements
+    from: SYM-tooling-proto-breaking-contracts
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T20:55:26.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37db4c55efb8
+  - type: covered_by
+    from: SYM-tooling-proto-breaking-contracts
+    to: TEST-tooling-proto-breaking
+    created_at: 2026-11-01T20:55:26.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e55c51a98469

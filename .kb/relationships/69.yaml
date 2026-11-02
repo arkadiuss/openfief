@@ -370,34 +370,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47399e31dc6c
-  - type: executable_for
-    from: SYM-attention-app-test-helper-fake-owners
-    to: TEST-attention-app-items
-    created_at: 2026-10-31T18:38:40.543Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b8046ac53de7
-  - type: executable_for
-    from: SYM-attention-app-test-helper-fake-owners
-    to: TEST-attention-app-checks
-    created_at: 2026-10-31T18:38:40.571Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5f330ed2e8d3
-  - type: implements
-    from: SYM-attentionv1-resolve-attention-item-response-descriptor
-    to: REQ-attention-owner-service
-    created_at: 2026-10-31T18:57:07.258Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-48c931d970aa
-  - type: covered_by
-    from: SYM-attentionv1-resolve-attention-item-response-descriptor
-    to: TEST-attention-connectapi
-    created_at: 2026-10-31T18:57:07.295Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-84fea2147951
   - type: verified_by
     from: SCEN-views-totals-losses-offset
     to: TEST-views-taxes
@@ -447,6 +419,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e700f2cdcf1
+  - type: verified_by
+    from: SCEN-ingest-bond-payout-setting
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T07:44:19.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73870bd96e10
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-no-go-live
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-11-01T07:44:36.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72b5fd42a849
+  - type: covered_by
+    from: SYM-viewsv1-bond-payout-number
+    to: TEST-ui-values
+    created_at: 2026-11-01T07:55:41.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2e5afd137dd
+  - type: verified_by
+    from: SCEN-ingest-bond-lot-no-go-live
+    to: TEST-core-bond-lots
+    created_at: 2026-11-01T08:00:14.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d298489e262
   - type: constrains
     from: REQ-treasurybonds-account-history-from-first-purchase
     to: FACT-SUBJECT-34E32129990BBCFB
@@ -468,13 +468,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-075b70559134
-  - type: executable_for
-    from: SYM-views-connectapi-test-ra-read-access
-    to: TEST-views-connectapi-read-access
-    created_at: 2026-11-01T10:17:18.963Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-523d404b5373
   - type: validates
     from: TEST-plugins-xtb
     to: REQ-ingest-xtb-start-from-open-positions
@@ -482,41 +475,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebfa2a50c181
-  - type: verified_by
-    from: SCEN-ingest-bond-payout-setting
-    to: TEST-ingest-connectapi-accounts
-    created_at: 2026-11-01T07:44:19.126Z
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-owners
+    to: TEST-attention-app-items
+    created_at: 2026-10-31T18:38:40.543Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-73870bd96e10
-  - type: verified_by
-    from: SCEN-ingest-bond-lot-no-go-live
-    to: TEST-ingest-app-bondlots
-    created_at: 2026-11-01T07:44:36.412Z
+    id: rel-b8046ac53de7
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-owners
+    to: TEST-attention-app-checks
+    created_at: 2026-10-31T18:38:40.571Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-72b5fd42a849
+    id: rel-5f330ed2e8d3
   - type: implements
-    from: SYM-viewsv1-bond-payout-number
-    to: REQ-ui-bond-payout-setting
-    created_at: 2026-11-01T07:55:41.353Z
+    from: SYM-attentionv1-resolve-attention-item-response-descriptor
+    to: REQ-attention-owner-service
+    created_at: 2026-10-31T18:57:07.258Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-e73dc7b24440
+    id: rel-48c931d970aa
   - type: covered_by
-    from: SYM-viewsv1-bond-payout-number
-    to: TEST-ui-values
-    created_at: 2026-11-01T07:55:41.385Z
+    from: SYM-attentionv1-resolve-attention-item-response-descriptor
+    to: TEST-attention-connectapi
+    created_at: 2026-10-31T18:57:07.295Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-b2e5afd137dd
-  - type: verified_by
-    from: SCEN-ingest-bond-lot-no-go-live
-    to: TEST-core-bond-lots
-    created_at: 2026-11-01T08:00:14.424Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4d298489e262
+    id: rel-84fea2147951
   - type: implements
     from: SYM-valuation-gap-of
     to: REQ-valuation-market-data-gap-attention-item
@@ -531,3 +517,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebfca044c4b6
+  - type: implements
+    from: SYM-viewsv1-bond-payout-number
+    to: REQ-ui-bond-payout-change-date
+    created_at: 2026-11-01T17:37:30.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5fe0b801fdb
+  - type: executable_for
+    from: SYM-views-connectapi-test-ra-read-access
+    to: TEST-views-connectapi-read-access
+    created_at: 2026-11-01T10:17:18.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-523d404b5373
+  - type: validates
+    from: TEST-ingest-app-authz
+    to: REQ-identity-authz-one-interface
+    created_at: 2026-11-01T22:46:01.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8be82c71e559
+  - type: implements
+    from: SYM-plugins-untrusted-signer-string
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T22:08:21.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84b77a081940
+  - type: covered_by
+    from: SYM-plugins-untrusted-signer-string
+    to: TEST-plugins-untrusted-signer
+    created_at: 2026-11-01T22:08:21.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29c3cf513968

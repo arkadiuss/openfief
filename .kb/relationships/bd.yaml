@@ -454,13 +454,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-edaedb8b9e62
-  - type: implements
-    from: SYM-ingest-connectrpc-payout-to
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:48:02.372Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-06485c77120d
   - type: covered_by
     from: SYM-ingest-connectrpc-payout-to
     to: TEST-ingest-connectrpc-held
@@ -545,3 +538,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-776df0cb2b03
+  - type: executable_for
+    from: SYM-core-test-helper-check-opening-lot-costs
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:20:34.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf44e695b55b
+  - type: implements
+    from: SYM-ingest-app-accounts-first-payout
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:21:08.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a20e5855a86
+  - type: covered_by
+    from: SYM-ingest-app-accounts-first-payout
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-01T17:21:08.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e8fcd5e4dfa
+  - type: implements
+    from: SYM-ingest-connectrpc-payout-to
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:35:44.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a7c04c8af9b
+  - type: executable_for
+    from: SYM-core-test-recording-authorizer
+    to: TEST-core-owner-sessions
+    created_at: 2026-11-01T22:50:18.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff985705b0c6
+  - type: validates
+    from: TEST-tooling-protobreak
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:21:28.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f63b4ed1b5e

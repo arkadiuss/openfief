@@ -121,11 +121,22 @@ func TestInstancesCreateAndList(t *testing.T) {
 			PendingApproval: &v1alpha1.Permissions{Capabilities: []string{"view"}},
 		},
 	}
+	stranger := &v1alpha1.Plugin{
+		ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: "stranger"},
+		Spec:       v1alpha1.PluginSpec{Image: sampleImage, Manifest: v1alpha1.Manifest{Capabilities: []string{"view"}}},
+		Status: v1alpha1.PluginStatus{
+			Conditions: []metav1.Condition{
+				{Type: v1alpha1.ConditionReady, Status: metav1.ConditionFalse, Reason: "SignatureNotVerified"},
+				{Type: v1alpha1.ConditionSignatureVerified, Status: metav1.ConditionFalse, Reason: "UntrustedSigner"},
+			},
+			UntrustedSigners: []string{"https://example.com/stranger (issuer https://issuer.example.com)"},
+		},
+	}
 	orphan := &v1alpha1.PluginGrant{
 		ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: "orphan"},
 		Spec:       v1alpha1.Permissions{Secrets: []string{"orphan-key"}},
 	}
-	store := fakeCluster(t, running, orphan)
+	store := fakeCluster(t, running, stranger, orphan)
 	p, g := samplePlan(t, "sample")
 	if err := store.Create(ctx, &p, &g); err != nil {
 		t.Fatalf("create: %v", err)
@@ -144,6 +155,10 @@ func TestInstancesCreateAndList(t *testing.T) {
 		{Name: "orphan", HasGrant: true, Secrets: []string{"orphan-key"}},
 		{Name: "running", Image: sampleImage, HasPlugin: true, Signature: "SignedByTrustedSigner", Ready: "False (NoGrant)", Pending: true},
 		{Name: "sample", Image: sampleImage, HasPlugin: true, HasGrant: true, Secrets: []string{"sample-credentials"}},
+		{
+			Name: "stranger", Image: sampleImage, HasPlugin: true, Ready: "False (SignatureNotVerified)",
+			Signature: "UntrustedSigner (https://example.com/stranger (issuer https://issuer.example.com))",
+		},
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("instances (-want +got):\n%s", diff)

@@ -538,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe7a9b688d1f
+  - type: implements
+    from: SYM-protobreak-contracts-has-message
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:25:07.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac2e0a58df2e
+  - type: covered_by
+    from: SYM-protobreak-contracts-has-message
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:25:07.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffc491a7df70
+  - type: executable_for
+    from: SYM-core-test-helper-xtb-opening-export
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:19:57.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae7c197247fe

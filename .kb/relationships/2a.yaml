@@ -622,13 +622,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc5bd5bb3592
-  - type: implements
-    from: SYM-connectorv1-bond-payout-type
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:53:18.202Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-129612c43784
   - type: covered_by
     from: SYM-connectorv1-bond-payout-type
     to: TEST-ingest-connectrpc-held
@@ -699,3 +692,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb46a015cfc1
+  - type: implements
+    from: SYM-connectorv1-bond-payout-type
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:35:34.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7c83d800718
+  - type: verified_by
+    from: SCEN-ingest-ticker-currency-pick-required
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T23:37:57.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbb07fef6d7d
+  - type: verified_by
+    from: SCEN-ingest-ticker-currency-pick-required
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-01T23:37:57.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2347272e6360
+  - type: verified_by
+    from: SCEN-ingest-ticker-currency-pick-required
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T23:37:57.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-554d8457712c
+  - type: executable_for
+    from: SYM-core-test-recording-authorizer-may-act
+    to: TEST-core-owner-sessions
+    created_at: 2026-11-01T22:50:25.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-919f0439f7f8

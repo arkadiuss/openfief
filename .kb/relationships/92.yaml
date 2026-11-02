@@ -623,27 +623,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-a5031f0c915c
   - type: implements
-    from: SYM-valuation-postgres-store-save-exemption-class
-    to: REQ-valuation-owner-classification-stays
-    created_at: 2026-11-01T10:16:21.300Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6cea43aa27de
-  - type: implements
-    from: SYM-ingest-xtb-cell-time
-    to: REQ-ingest-xtb-start-open-positions
-    created_at: 2026-11-01T08:06:41.524Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5627732b0ccf
-  - type: covered_by
-    from: SYM-ingest-xtb-cell-time
-    to: TEST-ingest-xtb-opening
-    created_at: 2026-11-01T08:06:41.590Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8143333c53f3
-  - type: implements
     from: SYM-valuation-app-rankings-rank-sources
     to: REQ-valuation-series-source-recorded
     created_at: 2026-11-01T09:01:38.691Z
@@ -664,3 +643,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-670437a4b2fd
+  - type: covered_by
+    from: SYM-ingest-xtb-cell-time
+    to: TEST-ingest-xtb-opening
+    created_at: 2026-11-01T08:06:41.590Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8143333c53f3
+  - type: implements
+    from: SYM-ingest-xtb-cell-time
+    to: REQ-ingest-xtb-opening-lot-trading-currency
+    created_at: 2026-11-01T17:38:18.129Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9e46c32245e
+  - type: implements
+    from: SYM-valuation-postgres-store-save-exemption-class
+    to: REQ-valuation-owner-classification-stays
+    created_at: 2026-11-01T10:16:21.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cea43aa27de
+  - type: constrains
+    from: REQ-ui-ticker-currency-choice
+    to: FACT-SUBJECT-82D52EB7A043394F
+    created_at: 2026-11-01T23:38:25.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4f197a3965
+  - type: requires_property
+    from: REQ-ui-ticker-currency-choice
+    to: FACT-PROP-5DB2402B35E176B8
+    created_at: 2026-11-01T23:38:25.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77984e5a5888
+  - type: specified_by
+    from: REQ-ui-ticker-currency-choice
+    to: SCEN-ui-ticker-currency-choice
+    created_at: 2026-11-01T23:38:25.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80bfffff9318

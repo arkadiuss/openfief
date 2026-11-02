@@ -1,13 +1,13 @@
 ---
 title: Install a release
 weight: 5
-description: Install an OpenFief alpha on your own Kubernetes cluster from its release bundle, after verifying the CLI and every image with cosign, and create the first passkey.
+description: Install an OpenFief alpha on your own Kubernetes cluster from its release bundle, database included, after verifying the CLI and every image with cosign, and create the first passkey.
 covers:
   - scripts/release-verify.sh
   - scripts/tests/release-verify.test.sh
 ---
 
-Every OpenFief release, an alpha included, ships everything an install needs as assets of its GitHub release, and the first release is an alpha. This guide installs one on a cluster of your own, with synthetic or real data, and checks every file and image it runs against the identity of OpenFief's release pipeline before anything reaches the cluster.
+Every OpenFief release, an alpha included, ships everything an install needs as assets of its GitHub release, its database included, and the first release is an alpha. This guide installs one on a cluster of your own, with synthetic or real data, and checks every file and image it runs against the identity of OpenFief's release pipeline, or against a pinned checksum, before anything reaches the cluster.
 
 An alpha is a GitHub pre-release, so the releases page lists it, but `latest` never points at it: name its version. The examples use `2026.11.0-alpha.1`; use the version you are installing.
 
@@ -15,6 +15,8 @@ An alpha is a GitHub pre-release, so the releases page lists it, but `latest` ne
 |---|---|
 | `openfief-crds-<version>.yaml` | The `openfief` namespace and the `Plugin` and `PluginGrant` custom resource definitions, the part a cluster admin applies (D-15) |
 | `openfief-install-<version>.yaml` | The operator, the egress proxy and the core, each image pinned to the digest the release signed (D-17) |
+| `openfief-db-<version>.yaml` | The database: a minimal [CloudNativePG](https://cloudnative-pg.io) cluster `openfief-db`, for you to edit (D-14) |
+| `cnpg-1.30.1.yaml` | CloudNativePG's own release manifest, byte for byte, at the version the end-to-end tests run |
 | `openfief-<version>-<os>-<arch>` | The `openfief` CLI for `linux` and `darwin` (macOS) on `amd64` and `arm64` |
 | `openfief-<version>.cdx.json` | The CLI's software bill of materials, in CycloneDX |
 | `openfief-<version>-SHA256SUMS` | The checksums of the CLI files and the SBOM |
@@ -23,50 +25,23 @@ An alpha is a GitHub pre-release, so the releases page lists it, but `latest` ne
 
 ```mermaid
 flowchart LR
-  db["1. CloudNativePG and<br/>the openfief-db cluster"] --> dl["2. Download<br/>the assets"]
-  dl --> vc["3. Verify the CLI<br/>cosign verify-blob"]
-  vc --> vi["4. Verify the images<br/>cosign verify"]
-  vi --> ap["5. Apply the CRDs,<br/>then the install"]
+  dl["1. Download<br/>the assets"] --> vc["2. Verify the CLI<br/>cosign verify-blob"]
+  vc --> vi["3. Verify the images<br/>cosign verify"]
+  vi --> db["4. CloudNativePG<br/>(skip if it runs)"]
+  db --> ap["5. Apply the CRDs,<br/>the database, the install"]
   ap --> ui["6. Install the<br/>built-in UI"]
   ui --> en["7. openfief enroll:<br/>the first passkey"]
 ```
 
 ## Before you start
 
-- **A Kubernetes cluster** whose network plugin enforces NetworkPolicy, since every OpenFief component runs behind one: k3s and kind do out of the box. The end-to-end tests install each release's bundle on k3s and on kind.
-- **kubectl**, with a kubeconfig that is a cluster admin for step 5's CRDs, and that has `get` and `list` on pods and `create` on `pods/exec` and `pods/portforward` in `openfief` for `openfief enroll`.
+- **A Kubernetes cluster** whose network plugin enforces NetworkPolicy, since every OpenFief component runs behind one: k3s and kind do out of the box. A default storage class, or one you name in the database's manifest. The end-to-end tests install each release's bundle, CloudNativePG and the database included, on k3s and on kind.
+- **kubectl**, with a kubeconfig that is a cluster admin for step 4's operator and step 5's CRDs, and that has `get` and `list` on pods and `create` on `pods/exec` and `pods/portforward` in `openfief` for `openfief enroll`.
 - **cosign** 3 or later, the version the release signs with, to verify the signatures ([sigstore/cosign](https://github.com/sigstore/cosign)).
 - **The GitHub CLI** (`gh`), or `curl`, to download the assets.
 - **Encryption at rest.** OpenFief keeps credentials in Kubernetes Secrets and leaves their encryption to the cluster (D-29): turn on etcd encryption at rest (k3s: `--secrets-encryption`), and keep the database's disks and backups encrypted.
 
-## 1. Install CloudNativePG and the database
-
-OpenFief keeps its record in PostgreSQL run by [CloudNativePG](https://cloudnative-pg.io) (D-14). The release bundle doesn't install either: the install expects a CloudNativePG cluster named `openfief-db` in the namespace `openfief`, and reads its connection string from the Secret `openfief-db-app` that CloudNativePG creates for it. Install the operator first, at the version the end-to-end tests run, and wait for it:
-
-```bash
-kubectl apply --server-side -f https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.30.1/cnpg-1.30.1.yaml
-kubectl -n cnpg-system rollout status deployment/cnpg-controller-manager --timeout=5m
-```
-
-The cluster itself goes into the `openfief` namespace, which the CRDs file creates, so you apply it in step 5. Save it now as `openfief-db.yaml`. This is the smallest that works, one instance on the cluster's default storage class; size it, and add CloudNativePG's backups, to suit your cluster:
-
-```yaml
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: openfief-db
-  namespace: openfief
-spec:
-  instances: 1
-  storage:
-    size: 10Gi
-  bootstrap:
-    initdb:
-      database: openfief
-      owner: openfief
-```
-
-## 2. Download the assets
+## 1. Download the assets
 
 ```bash
 VERSION=2026.11.0-alpha.1
@@ -74,13 +49,14 @@ OS=linux     # or darwin
 ARCH=amd64   # or arm64
 gh release download "$VERSION" --repo arkadiuss/openfief \
   --pattern "openfief-crds-$VERSION.yaml" --pattern "openfief-install-$VERSION.yaml" \
+  --pattern "openfief-db-$VERSION.yaml" --pattern "cnpg-1.30.1.yaml" \
   --pattern "openfief-$VERSION-$OS-$ARCH" --pattern "openfief-$VERSION-$OS-$ARCH.sigstore.json" \
   --pattern "openfief-$VERSION-SHA256SUMS" --pattern "openfief-$VERSION-SHA256SUMS.sigstore.json"
 ```
 
-Without `gh`, each asset is at `https://github.com/arkadiuss/openfief/releases/download/$VERSION/<asset>`.
+Without `gh`, each asset is at `https://github.com/arkadiuss/openfief/releases/download/$VERSION/<asset>`. If your cluster already runs CloudNativePG, leave out `cnpg-1.30.1.yaml`.
 
-## 3. Verify the CLI
+## 2. Verify the CLI
 
 The release workflow, `release.yml`, signs every CLI file keylessly in the run that published the release, and only the repository owner can publish one, only from `main`. So a CLI file is genuine when its signature's certificate names exactly that workflow on `main`, issued to GitHub Actions. Check the binary and the checksums file, then the checksum:
 
@@ -100,7 +76,7 @@ Each `cosign` call prints `Verified OK`, and the checksum `OK`. Anything else, s
 install -m 0755 "openfief-$VERSION-$OS-$ARCH" ~/.local/bin/openfief
 ```
 
-## 4. Verify the images
+## 3. Verify the images
 
 The install file names each image by the digest the release signed, so what you verify is exactly what the cluster will run. The images are signed by a different workflow from the CLI: `images.yml`, which the release workflow calls to build them, and the certificate names the workflow that signed, so this identity is `images.yml` on `main`. It is the same identity the operator trusts for first-party plugins:
 
@@ -116,13 +92,29 @@ sed -n 's/^ *image: *//p' "openfief-install-$VERSION.yaml" | sort -u |
 
 It takes every image the file runs and prints `verified` for three of them, the operator, the egress proxy and the core, each as `ghcr.io/arkadiuss/openfief/<name>@sha256:<digest>`. An image it doesn't print, or one named by a tag rather than a digest, means the file isn't the one the release signed.
 
+## 4. Install CloudNativePG
+
+OpenFief keeps its record in PostgreSQL run by CloudNativePG (D-14). If your cluster already runs CloudNativePG, skip this step: step 5's database is a plain `postgresql.cnpg.io/v1` Cluster, and the end-to-end tests run it on 1.30.1.
+
+Otherwise install the operator from the release's copy of CloudNativePG's manifest. The release ships it unchanged, and its checksum is pinned in OpenFief's repository (`CNPG_MANIFEST_SHA256` in `Taskfile.yml`), the same sum as the file CloudNativePG publishes for that version, so check it first:
+
+```bash
+echo "37237f145d8138256ea25ae830f87759255665ff08f8d552fdd8224a5ec032fb  cnpg-1.30.1.yaml" | sha256sum --check   # macOS: shasum -a 256 --check
+kubectl apply --server-side -f cnpg-1.30.1.yaml
+kubectl -n cnpg-system rollout status deployment/cnpg-controller-manager --timeout=5m
+```
+
+The checksum prints `OK`; anything else, stop. The manifest is the same file as `https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.30.1/cnpg-1.30.1.yaml`, so you can apply that instead, after the same check.
+
 ## 5. Apply the CRDs, the database and the install
 
-In this order: the CRDs file creates the namespace the database and the install go into, and the core waits for its database.
+`openfief-db-$VERSION.yaml` is the smallest database that works: a CloudNativePG cluster `openfief-db` with one instance on the cluster's default storage class and 10 GiB. Edit it before you apply it: size the storage, set a `storageClass`, add CloudNativePG's backups. Keep its name, its namespace, `openfief`, and its database and owner, both `openfief`: the install reads its connection string from the Secret `openfief-db-app` that CloudNativePG creates for that cluster.
+
+Then apply, in this order: the CRDs file creates the namespace the database and the install go into, and the core waits for its database.
 
 ```bash
 kubectl apply --server-side -f "openfief-crds-$VERSION.yaml"
-kubectl apply --server-side -f openfief-db.yaml
+kubectl apply --server-side -f "openfief-db-$VERSION.yaml"
 kubectl -n openfief wait cluster.postgresql.cnpg.io/openfief-db --for=condition=Ready --timeout=10m
 kubectl apply --server-side -f "openfief-install-$VERSION.yaml"
 for d in openfief-operator egress-proxy openfief-core; do

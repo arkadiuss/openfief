@@ -839,3 +839,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa15e2b94c1e
+  - type: implements
+    from: SYM-operator-fn-untrusted-signers
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T22:09:27.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-035d6ad69cef
+  - type: covered_by
+    from: SYM-operator-fn-untrusted-signers
+    to: TEST-operator-reconcile
+    created_at: 2026-11-01T22:09:27.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f01cf35587c
+  - type: executable_for
+    from: SYM-plugins-test-decide-names-untrusted-signers
+    to: TEST-plugins-untrusted-signer
+    created_at: 2026-11-01T22:09:53.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5592d40dd97

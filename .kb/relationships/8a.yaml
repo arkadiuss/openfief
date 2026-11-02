@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-794833db5153
-  - type: implements
-    from: SYM-viewsv1-bond-payout-type
-    to: REQ-ui-bond-payout-setting
-    created_at: 2026-11-01T07:55:34.319Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c66a232d5cb8
   - type: covered_by
     from: SYM-viewsv1-bond-payout-type
     to: TEST-ui-values
@@ -622,3 +615,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8109e2e08c30
+  - type: implements
+    from: SYM-viewsv1-bond-payout-type
+    to: REQ-ui-bond-payout-change-date
+    created_at: 2026-11-01T17:37:56.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73374b088c99
+  - type: constrains
+    from: REQ-core-authz-change-refused
+    to: FACT-SUBJECT-6FCF2133B87D3E53
+    created_at: 2026-11-01T22:46:26.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eeb5cc7bf756
+  - type: requires_property
+    from: REQ-core-authz-change-refused
+    to: FACT-PROP-C9FBA5A4303976BE
+    created_at: 2026-11-01T22:46:26.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c97bef3c88b
+  - type: specified_by
+    from: REQ-core-authz-change-refused
+    to: SCEN-core-authz-change-refused
+    created_at: 2026-11-01T22:46:26.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64953e7d9105

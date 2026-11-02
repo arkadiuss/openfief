@@ -17,12 +17,12 @@ import (
 
 // listBrokerAccounts lists the unmapped broker accounts through the
 // owner's AccountService, the only place they are listed (D-121), after
-// checking that the read API serves none of them.
+// checking that the read API has no path to them (D-157).
 func listBrokerAccounts(t *testing.T, srv *httptest.Server, session string) *ingestv1.ListBrokerAccountsResponse {
 	t.Helper()
 	r := get(t, srv, "/v1/broker-accounts", session)
-	if r.status != http.StatusNotImplemented || bytes.Contains(r.body, []byte("U000000")) {
-		t.Errorf("GET /v1/broker-accounts = %d %s, want 501 naming no broker account (D-121)", r.status, r.body)
+	if r.status != http.StatusNotFound || bytes.Contains(r.body, []byte("U000000")) {
+		t.Errorf("GET /v1/broker-accounts = %d %s, want 404 naming no broker account (D-121, D-157)", r.status, r.body)
 	}
 	accounts := ingestv1connect.NewAccountServiceClient(srv.Client(), srv.URL, connect.WithInterceptors(viewBearer(uiCaller)))
 	resp, err := accounts.ListBrokerAccounts(t.Context(), connect.NewRequest(&ingestv1.ListBrokerAccountsRequest{

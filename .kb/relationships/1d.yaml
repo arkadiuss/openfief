@@ -783,13 +783,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83de374c11d2
-  - type: implements
-    from: SYM-ingest-xtbtest-report
-    to: REQ-ingest-xtb-start-open-positions
-    created_at: 2026-11-01T08:07:11.018Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3a5ceb7d8c56
   - type: covered_by
     from: SYM-ingest-xtbtest-report
     to: TEST-ingest-xtb-opening
@@ -825,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bee1ea06ca36
+  - type: implements
+    from: SYM-ingest-xtbtest-report
+    to: REQ-ingest-xtb-opening-lot-trading-currency
+    created_at: 2026-11-01T17:51:38.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85f1e058b175
+  - type: executable_for
+    from: SYM-views-app-test-authz-test-views-refuse-an-account-the-caller-may-not-view
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:53:01.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07366abfd210

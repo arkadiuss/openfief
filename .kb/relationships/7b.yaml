@@ -545,13 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa7a60fa06cd
-  - type: implements
-    from: SYM-connectorv1-bond-payout-enum-descriptor
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:53:33.195Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a792de6635ac
   - type: covered_by
     from: SYM-connectorv1-bond-payout-enum-descriptor
     to: TEST-ingest-connectrpc-held
@@ -559,13 +552,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7c461239fa4
-  - type: implements
-    from: SYM-connectorv1-account-holdings-get-bond-payout
-    to: REQ-ingest-sync-carries-payout
-    created_at: 2026-11-01T07:53:40.442Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6327d1d8e7a8
   - type: covered_by
     from: SYM-connectorv1-account-holdings-get-bond-payout
     to: TEST-ingest-connectrpc-held
@@ -608,6 +594,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d7f92f1e06f
+  - type: implements
+    from: SYM-connectorv1-account-holdings-get-bond-payout
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:34:09.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d07705b5047
+  - type: implements
+    from: SYM-connectorv1-bond-payout-enum-descriptor
+    to: REQ-ingest-sync-carries-payout-history
+    created_at: 2026-11-01T17:35:02.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3d7b8fa2be4
   - type: validates
     from: TEST-views-kube
     to: REQ-plugins-install-shows-market-data-list
@@ -615,3 +615,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1423cfe96de3
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-fake-owners-changeable
+    to: TEST-ingest-app-authz
+    created_at: 2026-11-01T22:51:27.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c7408eb4b53
+  - type: validates
+    from: TEST-views-plugins
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T21:51:36.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2a9521ea559
+  - type: validates
+    from: TEST-views-kube
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T21:51:38.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-761d5c2dbb4d
+  - type: executable_for
+    from: SYM-protobreak-test-run-judge
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T20:55:50.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee342910c685

@@ -20,7 +20,9 @@ func TestPluginsPage(t *testing.T) {
 			wantStatus(t, rec, http.StatusOK)
 			wantBody(t, rec, `href="/plugins"`, "Installed plugins",
 				"ibkr-main", "connector", "Unreviewed", "Signed by OpenFief", "openfief-ci", "Running", "sha256:a1a1",
-				"ui-local", "requests view", "Blocked", "Refused", "UntrustedSigner", "SignatureNotVerified")
+				"ui-local", "requests view", "Blocked", "Refused", "UntrustedSigner", "SignatureNotVerified",
+				"Signed only by a signer you don't trust:", "the image may be forged",
+				"https://example.com/stranger/.github/workflows/sign.yml@refs/heads/main (issuer https://token.actions.githubusercontent.com)")
 			if forms := strings.Count(rec.Body.String(), "<form"); forms != 1 {
 				t.Errorf("%d forms on the plugins page, want only sign-out", forms)
 			}

@@ -412,13 +412,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72f5fc205b82
-  - type: implements
-    from: SYM-ingest-app-accounts-payout
-    to: REQ-ingest-bond-payout-setting
-    created_at: 2026-11-01T07:47:23.683Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cd16c1093b68
   - type: covered_by
     from: SYM-ingest-app-accounts-payout
     to: TEST-ingest-connectapi-accounts
@@ -496,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9caefd6e450a
+  - type: implements
+    from: SYM-ingest-app-accounts-payout
+    to: REQ-ingest-bond-payout-change-from-day
+    created_at: 2026-11-01T17:31:32.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d619b75c46c2
+  - type: validates
+    from: TEST-operator-policy-verifier
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T21:51:29.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f323837d0d3c

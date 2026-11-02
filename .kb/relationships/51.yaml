@@ -622,13 +622,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-380fccb66d8b
-  - type: implements
-    from: SYM-ledger-payout-setting-changed
-    to: REQ-ledger-payout-setting
-    created_at: 2026-11-01T07:51:37.079Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8ac814d01970
   - type: covered_by
     from: SYM-ledger-payout-setting-changed
     to: TEST-ledger-payout
@@ -748,3 +741,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-121a2a3f19d7
+  - type: implements
+    from: SYM-ledger-payout-setting-on
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-01T17:26:58.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-745dbe584326
+  - type: covered_by
+    from: SYM-ledger-payout-setting-on
+    to: TEST-ledger-payout
+    created_at: 2026-11-01T17:26:58.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bc3077036f1
+  - type: implements
+    from: SYM-ledger-payout-setting-changed
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-01T17:30:40.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d29ae13bcd7
+  - type: executable_for
+    from: SYM-views-app-test-authz-test-views-compute-over-viewable-accounts
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:52:53.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17926d551ea8
+  - type: executable_for
+    from: SYM-protobreak-test-run-marked
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T20:55:55.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f782b261fafe

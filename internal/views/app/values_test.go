@@ -91,7 +91,7 @@ func ikzeTerms() *fakeTerms {
 func TestAccountTerms(t *testing.T) {
 	t.Parallel()
 	v := valuesViews(t, ikzeTerms(), pl.NewPack())
-	ctx := context.Background()
+	ctx := reader(t)
 	got1, err1 := v.AccountTerms(ctx, "acc-1")
 	got2, err2 := v.AccountTerms(ctx, "acc-2")
 	if err := errors.Join(err1, err2); err != nil {
@@ -107,7 +107,7 @@ func TestSettings(t *testing.T) {
 	t.Parallel()
 	terms := ikzeTerms()
 	v := valuesViews(t, terms, pl.NewPack())
-	ctx := context.Background()
+	ctx := reader(t)
 	summary := func(v *app.Views) []any {
 		t.Helper()
 		s, err := v.Settings(ctx)
@@ -135,7 +135,7 @@ func TestTotalsWithIKZECash(t *testing.T) {
 	t.Parallel()
 	terms := ikzeTerms()
 	v := valuesViews(t, terms, pl.NewPack())
-	got, err := v.AccountValuations(context.Background(), "acc-2", date(t, "2026-03-01"), date(t, "2026-03-01"))
+	got, err := v.AccountValuations(reader(t), "acc-2", date(t, "2026-03-01"), date(t, "2026-03-01"))
 	if err != nil {
 		t.Fatalf("AccountValuations: %v", err)
 	}
@@ -148,7 +148,7 @@ func TestTotalsWithIKZECash(t *testing.T) {
 		t.Errorf("totals (-want +got):\n%s", diff)
 	}
 	terms.settings = jurisdiction.Settings{MarginalRate: dec(t, "0.32"), HasMarginalRate: true}
-	got, err = v.AccountValuations(context.Background(), "acc-2", date(t, "2026-03-01"), date(t, "2026-03-01"))
+	got, err = v.AccountValuations(reader(t), "acc-2", date(t, "2026-03-01"), date(t, "2026-03-01"))
 	if err != nil || got.Totals[0].LiquidationMissing || !got.Totals[0].Liquidation.Equal(money(t, "292.40", "PLN")) {
 		t.Errorf("with the marginal rate: %+v, %v", got.Totals, err)
 	}
@@ -159,7 +159,7 @@ func TestTotalsWithIKZECash(t *testing.T) {
 func TestAllocationOfAKind(t *testing.T) {
 	t.Parallel()
 	v := valuesViews(t, ikzeTerms(), pl.NewPack())
-	ctx := context.Background()
+	ctx := reader(t)
 	net, err := v.Allocation(ctx, date(t, "2026-03-02"), views.BySleeve, views.Net)
 	if err != nil {
 		t.Fatalf("Allocation(net): %v", err)
@@ -188,7 +188,7 @@ func TestAllocationOfAKind(t *testing.T) {
 // 2026-03-02, so its tax can't be converted.
 func TestYearlyTaxes(t *testing.T) {
 	t.Parallel()
-	ctx := context.Background()
+	ctx := reader(t)
 	notInForce, err := valuesViews(t, ikzeTerms(), pl.NewPack()).YearlyTaxes(ctx, 2026)
 	if err != nil || len(notInForce) != 1 || notInForce[0].Wrapper != "oki" || notInForce[0].InForce {
 		t.Errorf("YearlyTaxes without an act = %+v, %v", notInForce, err)
@@ -211,7 +211,7 @@ func TestYearlyTaxes(t *testing.T) {
 // with no USD rate before 2026-03-02: its yearly tax can't be converted.
 func TestYearlyTaxesWithoutARate(t *testing.T) {
 	t.Parallel()
-	ctx := context.Background()
+	ctx := reader(t)
 	act := pl.CurrentOKIAct()
 	act.InForceFrom, act.Rates = date(t, "2026-01-01"), map[int]kernel.Decimal{2026: dec(t, "0.01")}
 	f := newFixture(t)
@@ -250,11 +250,11 @@ func TestHoldingsAndLotsMarkRemovedInstances(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	holdings, err := v.Holdings(context.Background(), "acc-1", f.on)
+	holdings, err := v.Holdings(reader(t), "acc-1", f.on)
 	if diff := cmp.Diff(map[ledger.Instrument][]string{etf1: {"ibkr-old"}}, holdings.Removed); err != nil || diff != "" {
 		t.Errorf("holdings marks, %v (-want +got):\n%s", err, diff)
 	}
-	lots, err := v.Lots(context.Background(), "acc-1", f.on)
+	lots, err := v.Lots(reader(t), "acc-1", f.on)
 	if diff := cmp.Diff(map[ledger.TransactionKey][]string{buy.Key: {"ibkr-old"}}, lots.Removed); err != nil || diff != "" {
 		t.Errorf("lot marks, %v (-want +got):\n%s", err, diff)
 	}

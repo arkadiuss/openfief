@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee7e348d2d71
+  - type: covered_by
+    from: SYM-connectorv1-instrument-proposal-get-currency
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-01T17:28:01.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3e6175700f0
+  - type: implements
+    from: SYM-connectorv1-instrument-proposal-get-currency
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:38:52.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c2b90bab527

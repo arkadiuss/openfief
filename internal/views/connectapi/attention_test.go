@@ -110,6 +110,7 @@ func TestRESTBrokenTransfers(t *testing.T) {
 		t.Fatal(err)
 	}
 	l.txs = append(l.txs, w, d)
+	l.accounts = append(l.accounts, ledger.Account{ID: "acc-2", Institution: "broker-b", Name: "Synthetic B", Sleeve: "core"})
 	l.links = []ledger.TransferLink{{Pair: ledger.TransferPair{Withdrawal: key("w1"), Deposit: key("d1")}, Decision: ledger.TransferConfirmed, Version: 1}}
 	req, rec := newAPI(t, l).serve(t, http.MethodGet, "/v1/transfers", goodToken)
 	if rec.Code != http.StatusOK {

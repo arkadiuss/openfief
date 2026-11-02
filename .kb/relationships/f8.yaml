@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb63e64421c7
+  - type: executable_for
+    from: SYM-ingest-test-helper-cost-of
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:25:02.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83cc99f00ae9

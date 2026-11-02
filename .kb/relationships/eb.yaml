@@ -440,6 +440,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c248dd7bc0b
+  - type: covered_by
+    from: SYM-ledger-account-payout-setting
+    to: TEST-ledger-account
+    created_at: 2026-11-01T07:50:45.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9ec9d57bf05
+  - type: implements
+    from: SYM-valuation-postgres-store-rank-of
+    to: REQ-valuation-market-data-source-ranking
+    created_at: 2026-11-01T07:44:00.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5aab9338c7c
   - type: verified_by
     from: SCEN-ingest-unsupported-rows-counted
     to: TEST-ingest-problem
@@ -519,34 +533,6 @@ relationships:
     id: rel-ffef09f294a8
   - type: implements
     from: SYM-valuation-postgres-store-rank-of
-    to: REQ-valuation-market-data-source-ranking
-    created_at: 2026-11-01T07:44:00.911Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f5aab9338c7c
-  - type: validates
-    from: TEST-core-unclassified
-    to: REQ-valuation-unclassifiable-instrument-attention-item
-    created_at: 2026-11-01T10:06:41.417Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d49fd37e4dbb
-  - type: implements
-    from: SYM-ledger-account-payout-setting
-    to: REQ-ledger-payout-setting
-    created_at: 2026-11-01T07:50:45.553Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b8a3bb880134
-  - type: covered_by
-    from: SYM-ledger-account-payout-setting
-    to: TEST-ledger-account
-    created_at: 2026-11-01T07:50:45.594Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d9ec9d57bf05
-  - type: implements
-    from: SYM-valuation-postgres-store-rank-of
     to: REQ-valuation-series-source-recorded
     created_at: 2026-11-01T09:01:54.067Z
     created_by: kibi/upsert
@@ -573,3 +559,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-646a67b699fa
+  - type: covered_by
+    from: SYM-ingest-parse-trading-currency
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T17:24:00.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9508102e051
+  - type: covered_by
+    from: SYM-ingest-pg-listing-row-listing
+    to: TEST-core-xtb-opening
+    created_at: 2026-11-01T17:26:16.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20a64fe9d61f
+  - type: implements
+    from: SYM-ledger-account-payout-setting
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-01T17:29:59.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8adf1e277801
+  - type: validates
+    from: TEST-core-unclassified
+    to: REQ-valuation-unclassifiable-instrument-attention-item
+    created_at: 2026-11-01T10:06:41.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d49fd37e4dbb
+  - type: implements
+    from: SYM-ingest-parse-trading-currency
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:56.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c95ab8ead89
+  - type: implements
+    from: SYM-ingest-pg-listing-row-listing
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:40:27.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-344b5cfd782b
+  - type: executable_for
+    from: SYM-views-app-test-authz-test-views-without-a-caller
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:53:21.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb099ec13761
