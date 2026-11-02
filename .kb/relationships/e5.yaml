@@ -629,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0783634c4b0
+  - type: validates
+    from: TEST-ui-format
+    to: REQ-ledger-cash-income-kind
+    created_at: 2026-11-02T05:51:01.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f841b155aed

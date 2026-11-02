@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6cf1aaab299
+  - type: implements
+    from: SYM-ledger-income-book
+    to: REQ-ledger-cash-income-kind
+    created_at: 2026-11-02T05:53:36.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19f1f684ca86
+  - type: covered_by
+    from: SYM-ledger-income-book
+    to: TEST-ledger-account
+    created_at: 2026-11-02T05:53:36.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b90d1e87c9fb

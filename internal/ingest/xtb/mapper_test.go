@@ -289,6 +289,7 @@ func TestMapAmounts(t *testing.T) {
 			t.Parallel()
 			e := fixture()
 			e.Cash = [][]xtbtest.Cell{xtbtest.CashRow("Deposit", "", "", "", at(2026, 1, 2, 10, 0), tt.amount, "9000000001", "")}
+			e.Closed = nil
 			m := mapExport(t, e)
 			got := "problem"
 			if len(m.ByBrokerAccount) == 1 && len(m.ByBrokerAccount[0].Transactions) == 1 {

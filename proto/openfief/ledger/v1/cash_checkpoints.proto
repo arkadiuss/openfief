@@ -5,9 +5,10 @@
 // assertion (D-18) and checks it against the cash derived from the
 // transaction log, which it never changes. A mismatch raises an attention
 // item (D-130); from it the owner books the difference as an ordinary
-// manual transaction: a deposit when the institution shows more cash, a
-// withdrawal when it shows less, so an unexplained difference never shows
-// as return. One owner-only service for this kind of entry (D-79).
+// manual transaction: by default a deposit when the institution shows more
+// cash, a withdrawal when it shows less, so an unexplained difference never
+// shows as return, or cash income (D-152) when it is income or a fee. One
+// owner-only service for this kind of entry (D-79).
 //
 // Calling conventions are the AuthService's
 // (proto/openfief/identity/v1/auth.proto), as in transfers.proto:
@@ -39,9 +40,10 @@ service CashCheckpointService {
   rpc RecordCashCheckpoint(RecordCashCheckpointRequest) returns (RecordCashCheckpointResponse);
 
   // BookCashDifference books the difference between a checkpoint and the
-  // cash derived on its date as a deposit or a withdrawal, dated on the
-  // checkpoint's date, so the checkpoint matches. Booking the same
-  // difference again books nothing new.
+  // cash derived on its date as a deposit or a withdrawal, or as cash
+  // income when the request asks, dated on the checkpoint's date, so the
+  // checkpoint matches. Booking the same difference again books nothing
+  // new.
   rpc BookCashDifference(BookCashDifferenceRequest) returns (BookCashDifferenceResponse);
 }
 
@@ -86,14 +88,19 @@ message BookCashDifferenceRequest {
   string date = 4;
   // The checkpoint's currency.
   string currency = 5;
+  // Book the difference as cash income (D-152), income when the
+  // institution shows more cash and a fee when it shows less, instead of
+  // the default deposit or withdrawal.
+  bool cash_income = 6;
 }
 
 message BookCashDifferenceResponse {
   // The booked transaction's key, with source "owner:cash-checkpoint".
   TransactionKey key = 1;
-  // "deposit" or "withdrawal".
+  // "deposit", "withdrawal" or "cash-income".
   string kind = 2;
-  // The amount deposited or withdrawn, positive, a decimal string.
+  // The amount deposited or withdrawn, positive, or the cash income,
+  // negative for a fee, a decimal string.
   string amount = 3;
   string currency = 4;
 }

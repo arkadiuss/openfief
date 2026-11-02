@@ -79,7 +79,7 @@ func TestCashCheckpoints(t *testing.T) {
 func checkBooking(t *testing.T, l *app.Ledger) {
 	t.Helper()
 	ctx, on, pln := t.Context(), date(t, "2026-03-31"), money(t, "0", "PLN").Currency()
-	booked, err := l.BookCashDifference(ctx, acc1, on, pln)
+	booked, err := l.BookCashDifference(ctx, acc1, on, pln, ledger.AsDepositOrWithdrawal)
 	if err != nil {
 		t.Fatalf("BookCashDifference: %v", err)
 	}
@@ -91,8 +91,36 @@ func checkBooking(t *testing.T, l *app.Ledger) {
 	if err != nil || len(stored) != 1 || stored[0].Flagged() || !stored[0].Assertion.Entered {
 		t.Errorf("stored checks = %+v, %v; want the entered checkpoint, matched", stored, err)
 	}
-	if _, err := l.BookCashDifference(ctx, acc1, on, pln); !errors.Is(err, ledger.ErrNoCashDifference) {
+	if _, err := l.BookCashDifference(ctx, acc1, on, pln, ledger.AsDepositOrWithdrawal); !errors.Is(err, ledger.ErrNoCashDifference) {
 		t.Errorf("booking again = %v, want ErrNoCashDifference", err)
+	}
+}
+
+// TestCashDifferenceAsCashIncome checks that the owner can book a cash
+// checkpoint's difference as cash income (D-158, D-152): less cash shown
+// than derived is booked as negative cash income, a fee, on the
+// checkpoint's date, after which the checkpoint matches.
+func TestCashDifferenceAsCashIncome(t *testing.T) {
+	t.Parallel()
+	ctx, on := t.Context(), date(t, "2026-03-31")
+	l, _ := seeded(t)
+	if _, err := l.Import(ctx, []ledger.Transaction{must(t)(ledger.NewDeposit(header(t, acc1, "d1", "2026-03-02"), money(t, "1000", "PLN")))}, nil); err != nil {
+		t.Fatalf("Import: %v", err)
+	}
+	if _, err := l.RecordCashCheckpoint(ctx, acc1, on, money(t, "990", "PLN")); err != nil {
+		t.Fatalf("RecordCashCheckpoint: %v", err)
+	}
+	booked, err := l.BookCashDifference(ctx, acc1, on, money(t, "0", "PLN").Currency(), ledger.AsCashIncome)
+	if err != nil {
+		t.Fatalf("BookCashDifference: %v", err)
+	}
+	if booked.Kind != ledger.KindCashIncome || !booked.Date.Equal(on) || !booked.Postings[1].Amount.Equal(money(t, "-10", "PLN")) {
+		t.Errorf("booked %s on %s, %v; want cash income of -10 PLN on %s", booked.Kind, booked.Date, booked.Postings, on)
+	}
+	checkCash(t, l, "990")
+	stored, err := l.AssertionChecks(ctx, acc1)
+	if err != nil || len(stored) != 1 || stored[0].Flagged() {
+		t.Errorf("stored checks = %+v, %v; want the checkpoint, matched", stored, err)
 	}
 }
 
@@ -118,16 +146,16 @@ func TestCashCheckpointRefusals(t *testing.T) {
 	if _, err := l.RecordCashCheckpoint(ctx, "acc-9", on, pln); !errors.Is(err, app.ErrUnknownAccount) {
 		t.Errorf("a checkpoint of an unknown account = %v, want ErrUnknownAccount", err)
 	}
-	if _, err := l.BookCashDifference(ctx, acc1, on, pln.Currency()); !errors.Is(err, app.ErrUnknownCheckpoint) {
+	if _, err := l.BookCashDifference(ctx, acc1, on, pln.Currency(), ledger.AsDepositOrWithdrawal); !errors.Is(err, app.ErrUnknownCheckpoint) {
 		t.Errorf("booking without a checkpoint = %v, want ErrUnknownCheckpoint", err)
 	}
 	if _, err := l.Import(ctx, nil, []ledger.BalanceAssertion{ledger.CashAssertion(acc1, on, pln)}); err != nil {
 		t.Fatalf("Import: %v", err)
 	}
-	if _, err := l.BookCashDifference(ctx, acc1, on, pln.Currency()); !errors.Is(err, app.ErrUnknownCheckpoint) {
+	if _, err := l.BookCashDifference(ctx, acc1, on, pln.Currency(), ledger.AsDepositOrWithdrawal); !errors.Is(err, app.ErrUnknownCheckpoint) {
 		t.Errorf("booking from a reported assertion = %v, want ErrUnknownCheckpoint", err)
 	}
-	if _, err := l.BookCashDifference(ctx, "acc-9", on, pln.Currency()); !errors.Is(err, app.ErrUnknownAccount) {
+	if _, err := l.BookCashDifference(ctx, "acc-9", on, pln.Currency(), ledger.AsDepositOrWithdrawal); !errors.Is(err, app.ErrUnknownAccount) {
 		t.Errorf("booking in an unknown account = %v, want ErrUnknownAccount", err)
 	}
 	l.WithAttention(&fakeAttention{err: errAttentionDown})
@@ -146,7 +174,7 @@ func (b fakeBook) RecordCashCheckpoint(_ context.Context, account ledger.Account
 	return app.AssertionCheck{Assertion: ledger.CashCheckpoint(account, on, cash), Status: app.AssertionMatched, Derived: cash.Amount()}, nil
 }
 
-func (b fakeBook) BookCashDifference(context.Context, ledger.AccountID, kernel.Date, kernel.Currency) (ledger.Transaction, error) {
+func (b fakeBook) BookCashDifference(context.Context, ledger.AccountID, kernel.Date, kernel.Currency, ledger.DifferenceBooking) (ledger.Transaction, error) {
 	if b.err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking: %w", b.err)
 	}
@@ -174,7 +202,7 @@ func TestCashCheckpointsNeedTheOwner(t *testing.T) {
 			if _, err := c.Record(t.Context(), "o", tt.session, acc1, on, pln); !errors.Is(err, tt.want) {
 				t.Errorf("Record = %v, want %v", err, tt.want)
 			}
-			if _, err := c.BookDifference(t.Context(), "o", tt.session, acc1, on, pln.Currency()); !errors.Is(err, tt.want) {
+			if _, err := c.BookDifference(t.Context(), "o", tt.session, acc1, on, pln.Currency(), ledger.AsCashIncome); !errors.Is(err, tt.want) {
 				t.Errorf("BookDifference = %v, want %v", err, tt.want)
 			}
 		})

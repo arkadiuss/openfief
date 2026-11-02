@@ -38,7 +38,7 @@ func (b checkpointBook) RecordCashCheckpoint(_ context.Context, account ledger.A
 	return app.AssertionCheck{Assertion: ledger.CashCheckpoint(account, on, cash), Status: status, Derived: derived}, nil
 }
 
-func (b checkpointBook) BookCashDifference(_ context.Context, account ledger.AccountID, on kernel.Date, c kernel.Currency) (ledger.Transaction, error) {
+func (b checkpointBook) BookCashDifference(_ context.Context, account ledger.AccountID, on kernel.Date, c kernel.Currency, as ledger.DifferenceBooking) (ledger.Transaction, error) {
 	if b.err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking: %w", b.err)
 	}
@@ -46,9 +46,8 @@ func (b checkpointBook) BookCashDifference(_ context.Context, account ledger.Acc
 	if err != nil {
 		return ledger.Transaction{}, fmt.Errorf("parsing: %w", err)
 	}
-	t, err := ledger.NewWithdrawal(ledger.TransactionHeader{
-		Key: ledger.TransactionKey{Source: ledger.CashCheckpointSource, ExternalID: on.String() + "/" + c.String() + "/95/100"}, Account: account, Date: on,
-	}, five.Neg())
+	a := ledger.CashCheckpoint(account, on, kernel.NewMoney(kernel.NewDecimal(95, 0), c))
+	t, err := ledger.CashDifference(&a, five.Amount().Add(kernel.NewDecimal(105, 0)), as)
 	if err != nil {
 		return ledger.Transaction{}, fmt.Errorf("building: %w", err)
 	}
@@ -85,18 +84,23 @@ func TestCashCheckpointService(t *testing.T) {
 	if diff := gocmp.Diff(want, rec.Msg.GetCheckpoint(), protocmp.Transform()); diff != "" {
 		t.Errorf("checkpoint (-want +got):\n%s", diff)
 	}
-	booked, err := c.BookCashDifference(ctx, connect.NewRequest(&ledgerv1.BookCashDifferenceRequest{
-		Origin: local, SessionToken: ownerSession, AccountId: "acc-1", Date: "2026-03-31", Currency: "PLN",
-	}))
-	if err != nil {
-		t.Fatalf("BookCashDifference: %v", err)
-	}
-	wantBooked := &ledgerv1.BookCashDifferenceResponse{
-		Key:  &ledgerv1.TransactionKey{Source: "owner:cash-checkpoint", ExternalId: "2026-03-31/PLN/95/100"},
-		Kind: "withdrawal", Amount: "5", Currency: "PLN",
-	}
-	if diff := gocmp.Diff(wantBooked, booked.Msg, protocmp.Transform()); diff != "" {
-		t.Errorf("booked (-want +got):\n%s", diff)
+	for _, tt := range []struct {
+		cashIncome   bool
+		kind, amount string
+	}{{false, "withdrawal", "5"}, {true, "cash-income", "-5"}} {
+		booked, err := c.BookCashDifference(ctx, connect.NewRequest(&ledgerv1.BookCashDifferenceRequest{
+			Origin: local, SessionToken: ownerSession, AccountId: "acc-1", Date: "2026-03-31", Currency: "PLN", CashIncome: tt.cashIncome,
+		}))
+		if err != nil {
+			t.Fatalf("BookCashDifference: %v", err)
+		}
+		wantBooked := &ledgerv1.BookCashDifferenceResponse{
+			Key:  &ledgerv1.TransactionKey{Source: "owner:cash-checkpoint", ExternalId: "2026-03-31/PLN/95/100"},
+			Kind: tt.kind, Amount: tt.amount, Currency: "PLN",
+		}
+		if diff := gocmp.Diff(wantBooked, booked.Msg, protocmp.Transform()); diff != "" {
+			t.Errorf("booked (-want +got):\n%s", diff)
+		}
 	}
 }
 

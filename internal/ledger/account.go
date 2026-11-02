@@ -80,6 +80,10 @@ const (
 	// BookEquity is the counterpart of what enters or leaves the account from
 	// outside: deposits, withdrawals and opening lots, in one currency.
 	BookEquity
+	// BookIncome is the source of income that no holding produces, such as
+	// a broker's interest on uninvested cash or a closed CFD's result
+	// (D-152), in one currency.
+	BookIncome
 )
 
 // String returns the kind's name, such as "cash", or a placeholder for an
@@ -98,13 +102,15 @@ func (k BookKind) String() string {
 		return "fx"
 	case BookEquity:
 		return "equity"
+	case BookIncome:
+		return "income"
 	}
 	return fmt.Sprintf("BookKind(%d)", int(k))
 }
 
 // Book is a ledger account: a double-entry account inside an account, cash
-// per currency, a holding per instrument, or fees, withholding tax, FX or
-// equity per currency. (Its Go name avoids ledger.LedgerAccount, which the
+// per currency, a holding per instrument, or fees, withholding tax, FX,
+// equity or income per currency. (Its Go name avoids ledger.LedgerAccount, which the
 // linter rejects as a stutter.) A holding has an instrument and no currency;
 // every other kind has a currency and no instrument. Books are comparable and
 // can be map keys.
@@ -144,6 +150,12 @@ func EquityBook(c kernel.Currency) Book {
 	return Book{Kind: BookEquity, Currency: c}
 }
 
+// IncomeBook returns the ledger account of income in c that no holding
+// produces (D-152).
+func IncomeBook(c kernel.Currency) Book {
+	return Book{Kind: BookIncome, Currency: c}
+}
+
 // Validate reports whether l's kind is known and it has exactly what its kind
 // needs: an instrument for a holding, a currency for every other kind.
 func (l Book) Validate() error {
@@ -156,7 +168,7 @@ func (l Book) Validate() error {
 			return fmt.Errorf("%w %s: %w", ErrInvalidBook, l, err)
 		}
 		return nil
-	case BookCash, BookFee, BookWithholdingTax, BookFX, BookEquity:
+	case BookCash, BookFee, BookWithholdingTax, BookFX, BookEquity, BookIncome:
 		if l.Currency.IsZero() || l.Instrument != (Instrument{}) {
 			return fmt.Errorf("%w %s: needs a currency and no instrument", ErrInvalidBook, l)
 		}

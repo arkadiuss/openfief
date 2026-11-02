@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea5808335c27
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-render-lines
+    to: TEST-ingest-xtb-cash-income
+    created_at: 2026-11-02T06:00:12.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b76d78ace65

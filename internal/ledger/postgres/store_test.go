@@ -109,6 +109,20 @@ func TestRedemptionRoundTrip(t *testing.T) {
 	checkResult(t, "Log(acc-1)", want, got, err)
 }
 
+// TestCashIncomeRoundTrip checks that cash income (D-152), with its tax
+// withheld, and a negative one, are stored and read back as they were
+// booked.
+func TestCashIncomeRoundTrip(t *testing.T) {
+	t.Parallel()
+	store, _ := seededStore(t)
+	interest := must(t)(ledger.NewCashIncome(header(t, acc1, "11-interest", "2026-04-30"), money(t, "12.34", "PLN"), money(t, "2.34", "PLN")))
+	loss := must(t)(ledger.NewCashIncome(header(t, acc1, "12-cfd", "2026-05-04"), money(t, "-7.25", "PLN"), kernel.Money{}))
+	want := []ledger.VersionedTransaction{versioned(&interest, 1), versioned(&loss, 1)}
+	appendAll(t, store, want)
+	got, err := store.Log(t.Context(), acc1)
+	checkResult(t, "Log(acc-1)", want, got, err)
+}
+
 // logFixture is one synthetic transaction of every kind, a correction, and a
 // deposit corrected from acc-2 into acc-1.
 type logFixture struct {

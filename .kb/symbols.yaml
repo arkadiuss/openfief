@@ -108486,7 +108486,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-A5EE8BC2AE68372A
       - type: implements
-        target: REQ-ingest-xtb-cfd-flagged
+        target: REQ-ingest-xtb-cfd-closed-cash-income
   - id: SYM-ingest-xtb-mapping-pair-withholding
     title: mapping.pairWithholding
     sourceFile: internal/ingest/xtb/cash.go
@@ -108742,7 +108742,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-A5EE8BC2AE68372A
       - type: implements
-        target: REQ-ingest-xtb-cfd-flagged
+        target: REQ-ingest-xtb-cfd-closed-cash-income
   - id: SYM-ingest-xtb-test-main
     title: TestMain
     sourceFile: internal/ingest/xtb/mapper_test.go
@@ -108877,7 +108877,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-A5EE8BC2AE68372A
       - type: implements
-        target: REQ-ingest-xtb-cfd-flagged
+        target: REQ-ingest-xtb-cfd-closed-cash-income
   - id: SYM-ingest-xtb-mapping-open-positions
     title: mapping.openPositions
     sourceFile: internal/ingest/xtb/positions.go
@@ -108892,7 +108892,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-A5EE8BC2AE68372A
       - type: implements
-        target: REQ-ingest-xtb-cfd-flagged
+        target: REQ-ingest-xtb-cfd-closed-cash-income
   - id: SYM-ingest-xtb-mapping-position-ref
     title: mapping.positionRef
     sourceFile: internal/ingest/xtb/positions.go
@@ -108907,7 +108907,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-A5EE8BC2AE68372A
       - type: implements
-        target: REQ-ingest-xtb-cfd-flagged
+        target: REQ-ingest-xtb-cfd-closed-cash-income
   - id: SYM-ingest-xtb-table
     title: table
     sourceFile: internal/ingest/xtb/sheets.go
@@ -128186,3 +128186,268 @@ symbols:
         target: TEST-views-connectapi-connect
       - type: implements
         target: REQ-views-api-contract
+  - id: SYM-ledger-income-book
+    title: IncomeBook
+    sourceFile: internal/ledger/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:53:33.774Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-account
+      - type: implements
+        target: REQ-ledger-cash-income-kind
+  - id: SYM-ledger-new-cash-income
+    title: NewCashIncome
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:53:40.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-ledger-cash-income-kind
+      - type: implements
+        target: REQ-ledger-cash-income-tax-withheld
+  - id: SYM-ledger-withheld-postings
+    title: withheldPostings
+    sourceFile: internal/ledger/events.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:53:47.766Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-events
+      - type: implements
+        target: REQ-ledger-cash-income-tax-withheld
+  - id: SYM-ledger-difference-booking
+    title: DifferenceBooking
+    sourceFile: internal/ledger/cashcheckpoint.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:53:55.437Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-cash-checkpoint
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-default-deposit
+  - id: SYM-ledger-difference-transaction
+    title: differenceTransaction
+    sourceFile: internal/ledger/cashcheckpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:54:02.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-cash-checkpoint
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-default-deposit
+  - id: SYM-ledger-connectapi-booked-amount
+    title: bookedAmount
+    sourceFile: internal/ledger/connectapi/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:54:10.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+  - id: SYM-ui-booked-as
+    title: bookedAs
+    sourceFile: internal/views/ui/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:54:18.460Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+      - type: implements
+        target: REQ-ui-cash-checkpoints
+  - id: SYM-ingest-xtb-mapping-interest
+    title: mapping.interest
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:54:25.613Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-cash-income
+      - type: implements
+        target: REQ-ingest-xtb-free-funds-interest
+  - id: SYM-ingest-xtb-mapping-pair-interest-tax
+    title: mapping.pairInterestTax
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:54:32.708Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-cash-income
+      - type: implements
+        target: REQ-ingest-xtb-free-funds-interest
+  - id: SYM-ingest-xtb-tax-names
+    title: taxNames
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:54:40.407Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-cash-income
+      - type: implements
+        target: REQ-ingest-xtb-free-funds-interest
+  - id: SYM-ingest-xtb-mapping-pair-tax
+    title: mapping.pairTax
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:54:47.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-cash-income
+      - type: implements
+        target: REQ-ingest-xtb-free-funds-interest
+  - id: SYM-ingest-xtb-mapping-closed-cfd
+    title: mapping.closedCFD
+    sourceFile: internal/ingest/xtb/positions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:54:55.326Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-cash-income
+      - type: implements
+        target: REQ-ingest-xtb-cfd-closed-cash-income
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-cash-income
+    title: BookCashDifferenceRequest.GetCashIncome
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:55:02.672Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledger-pg-test-cash-income-round-trip
+    title: TestCashIncomeRoundTrip
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:55:09.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-ledger-app-test-cash-difference-as-cash-income
+    title: TestCashDifferenceAsCashIncome
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:55:16.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ingest-xtb-test-map-cash-income
+    title: TestMapCashIncome
+    sourceFile: internal/ingest/xtb/cashincome_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:55:23.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-cash-income
+  - id: SYM-ingest-connectrpc-test-cash-income-round-trip
+    title: TestCashIncomeRoundTrip
+    sourceFile: internal/ingest/connectrpc/cashincome_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:55:29.640Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-cash-income
+  - id: SYM-ingest-xtb-cash-rows
+    title: cashRows
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:59:48.363Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-cash-income
+      - type: implements
+        target: REQ-ingest-xtb-free-funds-interest
+  - id: SYM-ingest-xtb-mapping-read-cash-rows
+    title: mapping.readCashRows
+    sourceFile: internal/ingest/xtb/cash.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T05:59:55.496Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-cash-income
+      - type: implements
+        target: REQ-ingest-xtb-free-funds-interest
+  - id: SYM-ledger-test-helper-cash-postings
+    title: cashPostings
+    sourceFile: internal/ledger/cashcheckpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T06:00:02.842Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-cash-checkpoint
+  - id: SYM-ingest-xtb-test-helper-render-lines
+    title: renderLines
+    sourceFile: internal/ingest/xtb/cashincome_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T06:00:09.717Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-cash-income

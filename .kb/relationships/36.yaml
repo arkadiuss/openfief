@@ -685,3 +685,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45d648410dc5
+  - type: validates
+    from: TEST-ledger-events
+    to: REQ-ledger-cash-income-kind
+    created_at: 2026-11-02T05:50:51.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32cfd0336219
+  - type: validates
+    from: TEST-ledger-events
+    to: REQ-ledger-cash-income-tax-withheld
+    created_at: 2026-11-02T05:50:51.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-624fdbb236f0
+  - type: validates
+    from: TEST-views-performance
+    to: REQ-portfolio-cash-income-counts-as-return
+    created_at: 2026-11-02T05:50:57.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f08d9cd4882

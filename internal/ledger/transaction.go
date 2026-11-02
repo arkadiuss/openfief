@@ -57,10 +57,16 @@ const (
 	// redemption value, which the account receives as cash less the tax
 	// withheld at source. It is no sale: the issuer withholds its tax.
 	KindRedemption
+	// KindCashIncome records income that no holding produces (D-152), such
+	// as a broker's interest on uninvested cash or a closed CFD's result,
+	// with any tax withheld from it. Performance counts it as return, not
+	// as money paid in. A negative one, such as a CFD's loss, takes cash
+	// out.
+	KindCashIncome
 )
 
 // lastKind is the highest valid transaction kind.
-const lastKind = KindRedemption
+const lastKind = KindCashIncome
 
 // String returns the kind's name, such as "buy", or a placeholder for an
 // invalid kind.
@@ -69,7 +75,7 @@ func (k TransactionKind) String() string {
 		KindBuy: "buy", KindSell: "sell", KindDividend: "dividend", KindFee: "fee",
 		KindFXConversion: "fx-conversion", KindDeposit: "deposit", KindWithdrawal: "withdrawal",
 		KindOpeningLot: "opening-lot", KindInterest: "interest", KindDeletion: "deletion",
-		KindRedemption: "redemption",
+		KindRedemption: "redemption", KindCashIncome: "cash-income",
 	}
 	if k >= KindBuy && k <= lastKind {
 		return names[k]

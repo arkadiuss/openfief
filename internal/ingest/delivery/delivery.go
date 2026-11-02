@@ -339,6 +339,8 @@ func bookKind(k ledger.BookKind) (connectorv1.BookKind, error) {
 		return connectorv1.BookKind_BOOK_KIND_FX, nil
 	case ledger.BookEquity:
 		return connectorv1.BookKind_BOOK_KIND_EQUITY, nil
+	case ledger.BookIncome:
+		return connectorv1.BookKind_BOOK_KIND_INCOME, nil
 	}
 	return 0, fmt.Errorf("%w: ledger account kind %d", ErrUnknownValue, k)
 }
@@ -357,6 +359,7 @@ func transactionKinds() map[ledger.TransactionKind]connectorv1.TransactionKind {
 		ledger.KindInterest:     connectorv1.TransactionKind_TRANSACTION_KIND_INTEREST,
 		ledger.KindDeletion:     connectorv1.TransactionKind_TRANSACTION_KIND_DELETION,
 		ledger.KindRedemption:   connectorv1.TransactionKind_TRANSACTION_KIND_REDEMPTION,
+		ledger.KindCashIncome:   connectorv1.TransactionKind_TRANSACTION_KIND_CASH_INCOME,
 	}
 }
 

@@ -72,6 +72,9 @@ enum BookKind {
   BOOK_KIND_FX = 5;
   // The counterpart of deposits, withdrawals and opening lots (D-33).
   BOOK_KIND_EQUITY = 6;
+  // The source of income that no holding produces, such as a broker's
+  // interest on uninvested cash or a closed CFD's result (D-152).
+  BOOK_KIND_INCOME = 7;
 }
 
 // Book names a ledger account: a holding names its instrument and no
@@ -113,6 +116,12 @@ enum TransactionKind {
   // (D-135): its holding posting gives up the units at the redemption
   // value, with the tax withheld at source posted to withholding tax.
   TRANSACTION_KIND_REDEMPTION = 11;
+  // Income that no holding produces, such as a broker's interest on
+  // uninvested cash or a closed CFD's result, with any tax withheld
+  // (D-152): income gives it, withholding tax takes the tax, cash gets the
+  // rest; a negative one, such as a CFD's loss, takes cash out.
+  // Performance counts it as return, never as money paid in.
+  TRANSACTION_KIND_CASH_INCOME = 12;
 }
 
 // TransactionKey identifies a transaction across re-imports (D-18). The core

@@ -214,6 +214,9 @@ const (
 	BookKind_BOOK_KIND_WITHHOLDING_TAX BookKind = 4
 	BookKind_BOOK_KIND_FX              BookKind = 5
 	BookKind_BOOK_KIND_EQUITY          BookKind = 6
+	// The source of income that no holding produces, such as a broker's
+	// interest on uninvested cash or a closed CFD's result (D-152).
+	BookKind_BOOK_KIND_INCOME BookKind = 7
 )
 
 // Enum value maps for BookKind.
@@ -226,6 +229,7 @@ var (
 		4: "BOOK_KIND_WITHHOLDING_TAX",
 		5: "BOOK_KIND_FX",
 		6: "BOOK_KIND_EQUITY",
+		7: "BOOK_KIND_INCOME",
 	}
 	BookKind_value = map[string]int32{
 		"BOOK_KIND_UNSPECIFIED":     0,
@@ -235,6 +239,7 @@ var (
 		"BOOK_KIND_WITHHOLDING_TAX": 4,
 		"BOOK_KIND_FX":              5,
 		"BOOK_KIND_EQUITY":          6,
+		"BOOK_KIND_INCOME":          7,
 	}
 )
 
@@ -283,6 +288,12 @@ const (
 	// A holding redeemed by its issuer, such as a treasury bond at maturity
 	// (D-135).
 	TransactionKind_TRANSACTION_KIND_REDEMPTION TransactionKind = 11
+	// Income that no holding produces, such as a broker's interest on
+	// uninvested cash or a closed CFD's result, with any tax withheld
+	// (D-152): income gives it, withholding tax takes the tax, cash gets the
+	// rest; a negative one, such as a CFD's loss, takes cash out.
+	// Performance counts it as return, never as money paid in.
+	TransactionKind_TRANSACTION_KIND_CASH_INCOME TransactionKind = 12
 )
 
 // Enum value maps for TransactionKind.
@@ -299,6 +310,7 @@ var (
 		8:  "TRANSACTION_KIND_OPENING_LOT",
 		9:  "TRANSACTION_KIND_INTEREST",
 		11: "TRANSACTION_KIND_REDEMPTION",
+		12: "TRANSACTION_KIND_CASH_INCOME",
 	}
 	TransactionKind_value = map[string]int32{
 		"TRANSACTION_KIND_UNSPECIFIED":   0,
@@ -312,6 +324,7 @@ var (
 		"TRANSACTION_KIND_OPENING_LOT":   8,
 		"TRANSACTION_KIND_INTEREST":      9,
 		"TRANSACTION_KIND_REDEMPTION":    11,
+		"TRANSACTION_KIND_CASH_INCOME":   12,
 	}
 )
 
@@ -6613,7 +6626,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x16VALUE_KIND_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10VALUE_KIND_GROSS\x10\x01\x12\x12\n" +
 	"\x0eVALUE_KIND_NET\x10\x02\x12\x1a\n" +
-	"\x16VALUE_KIND_LIQUIDATION\x10\x03*\xaa\x01\n" +
+	"\x16VALUE_KIND_LIQUIDATION\x10\x03*\xc0\x01\n" +
 	"\bBookKind\x12\x19\n" +
 	"\x15BOOK_KIND_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eBOOK_KIND_CASH\x10\x01\x12\x15\n" +
@@ -6621,7 +6634,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\rBOOK_KIND_FEE\x10\x03\x12\x1d\n" +
 	"\x19BOOK_KIND_WITHHOLDING_TAX\x10\x04\x12\x10\n" +
 	"\fBOOK_KIND_FX\x10\x05\x12\x14\n" +
-	"\x10BOOK_KIND_EQUITY\x10\x06*\xe6\x02\n" +
+	"\x10BOOK_KIND_EQUITY\x10\x06\x12\x14\n" +
+	"\x10BOOK_KIND_INCOME\x10\a*\x88\x03\n" +
 	"\x0fTransactionKind\x12 \n" +
 	"\x1cTRANSACTION_KIND_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14TRANSACTION_KIND_BUY\x10\x01\x12\x19\n" +
@@ -6633,7 +6647,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x1bTRANSACTION_KIND_WITHDRAWAL\x10\a\x12 \n" +
 	"\x1cTRANSACTION_KIND_OPENING_LOT\x10\b\x12\x1d\n" +
 	"\x19TRANSACTION_KIND_INTEREST\x10\t\x12\x1f\n" +
-	"\x1bTRANSACTION_KIND_REDEMPTION\x10\v*o\n" +
+	"\x1bTRANSACTION_KIND_REDEMPTION\x10\v\x12 \n" +
+	"\x1cTRANSACTION_KIND_CASH_INCOME\x10\f*o\n" +
 	"\x0fAssertionStatus\x12 \n" +
 	"\x1cASSERTION_STATUS_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18ASSERTION_STATUS_MATCHED\x10\x01\x12\x1c\n" +

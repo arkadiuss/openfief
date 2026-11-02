@@ -3,6 +3,7 @@ package ui
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/url"
 	"sync"
@@ -79,12 +80,13 @@ func TestCashCheckpointsOnTheAccountPage(t *testing.T) {
 	rec := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, `id="cash-checkpoints"`, "Cash checkpoints", "2026-03-31", "120,50 EUR", "20,50 EUR", "differs",
-		`action="/accounts/acc-synthetic-1/cash-checkpoints/book"`, "Book as a deposit", "2026-02-28", "matches", "nothing to book",
+		`action="/accounts/acc-synthetic-1/cash-checkpoints/book"`, "Book as a deposit", `name="as" value="cash-income"`,
+		"Book as cash income", "2026-02-28", "matches", "nothing to book",
 		`action="/accounts/acc-synthetic-1/cash-checkpoints"`, `name="date" value="2026-04-01"`, "Enter cash checkpoint", "cash checkpoint</span>")
 	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "Cash checkpoints", "20,50 EUR", "differs")
-	wantNoBody(t, rec, "Book as a deposit", "Enter cash checkpoint")
+	wantNoBody(t, rec, "Book as a deposit", "Book as cash income", "Enter cash checkpoint")
 }
 
 // TestCashCheckpointForms checks that the owner's checkpoint and booking
@@ -103,6 +105,10 @@ func TestCashCheckpointForms(t *testing.T) {
 	}
 	rec = h.serve(t, withSession(formPost(path+"/book", url.Values{"date": {"2026-03-31"}, "currency": {"EUR"}}), ownerSession))
 	wantStatus(t, rec, http.StatusSeeOther)
+	rec = h.serve(t, withSession(formPost(path+"/book", url.Values{"date": {"2026-03-31"}, "currency": {"EUR"}, "as": {"cash-income"}}), ownerSession))
+	wantStatus(t, rec, http.StatusSeeOther)
+	rec = h.serve(t, withSession(formPost(path+"/book", url.Values{"date": {"2026-03-31"}, "currency": {"EUR"}, "as": {"gift"}}), ownerSession))
+	wantStatus(t, rec, http.StatusBadRequest)
 
 	rec = h.serve(t, withSession(formPost(path, url.Values{"date": {"2026-03-31"}, "amount": {"1,5"}, "currency": {"EUR"}}), ownerSession))
 	wantStatus(t, rec, http.StatusBadRequest)
@@ -125,9 +131,10 @@ func TestCashCheckpointForms(t *testing.T) {
 	}
 	got := make([]string, 0, len(h.checkpoints.booked))
 	for _, b := range h.checkpoints.booked {
-		got = append(got, b.GetAccountId()+" "+b.GetDate()+" "+b.GetCurrency())
+		got = append(got, fmt.Sprintf("%s %s %s cash income %t", b.GetAccountId(), b.GetDate(), b.GetCurrency(), b.GetCashIncome()))
 	}
-	if diff := cmp.Diff([]string{"acc-synthetic-1 2026-03-31 EUR"}, got); diff != "" {
+	want := []string{"acc-synthetic-1 2026-03-31 EUR cash income false", "acc-synthetic-1 2026-03-31 EUR cash income true"}
+	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("booked (-want +got):\n%s", diff)
 	}
 }

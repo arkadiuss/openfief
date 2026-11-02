@@ -264,6 +264,7 @@ func transactionKinds() map[viewsv1.TransactionKind]ledger.TransactionKind {
 		viewsv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT:   ledger.KindOpeningLot,
 		viewsv1.TransactionKind_TRANSACTION_KIND_INTEREST:      ledger.KindInterest,
 		viewsv1.TransactionKind_TRANSACTION_KIND_REDEMPTION:    ledger.KindRedemption,
+		viewsv1.TransactionKind_TRANSACTION_KIND_CASH_INCOME:   ledger.KindCashIncome,
 	}
 }
 
@@ -290,6 +291,8 @@ func bookKindOf(k viewsv1.BookKind) (ledger.BookKind, error) {
 		return ledger.BookFX, nil
 	case viewsv1.BookKind_BOOK_KIND_EQUITY:
 		return ledger.BookEquity, nil
+	case viewsv1.BookKind_BOOK_KIND_INCOME:
+		return ledger.BookIncome, nil
 	case viewsv1.BookKind_BOOK_KIND_UNSPECIFIED:
 	}
 	return 0, fmt.Errorf("%w: ledger account kind %s", ErrBadRecord, k)

@@ -275,7 +275,7 @@ func (b *dayBuilder) applyThrough(day kernel.Date) {
 			case ledger.BookHolding:
 				k := holdingKey{account: t.Account, instrument: p.Book.Instrument}
 				b.units[k] = b.units[k].Add(p.Quantity)
-			case ledger.BookFee, ledger.BookWithholdingTax, ledger.BookFX, ledger.BookEquity:
+			case ledger.BookFee, ledger.BookWithholdingTax, ledger.BookFX, ledger.BookEquity, ledger.BookIncome:
 			}
 		}
 	}

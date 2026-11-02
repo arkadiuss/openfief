@@ -29,16 +29,38 @@ func CashCheckpoint(account AccountID, on kernel.Date, cash kernel.Money) Balanc
 	return a
 }
 
+// DifferenceBooking is how the owner books a cash checkpoint's difference
+// (D-158). The zero value is the default.
+type DifferenceBooking int
+
+// The ways to book a difference.
+const (
+	// AsDepositOrWithdrawal, the default, books a deposit when the
+	// institution shows more cash and a withdrawal when it shows less, so
+	// an unexplained difference never shows as return.
+	AsDepositOrWithdrawal DifferenceBooking = iota
+	// AsCashIncome books cash income (D-152), for a difference that is
+	// income, such as interest, when the institution shows more cash, or a
+	// fee when it shows less: performance counts it as return.
+	AsCashIncome
+)
+
+// ErrUnknownBooking reports a DifferenceBooking outside the declared
+// ones.
+var ErrUnknownBooking = errors.New("unknown way to book a cash difference")
+
 // CashDifference returns the ordinary manual transaction that books the
 // difference between a cash checkpoint and the cash derived on its date
-// (D-158): a deposit when the institution shows more cash, a withdrawal
-// when it shows less, so the difference never shows as return. It is
-// dated on the checkpoint's date, so the checkpoint matches once it is
-// booked; nothing overwrites the derived cash. Its key names the
-// checkpoint and both balances, so booking the same difference twice
-// books it once. A matching checkpoint fails with ErrNoCashDifference, an
-// assertion the owner didn't enter with ErrNotCheckpoint.
-func CashDifference(a *BalanceAssertion, derived kernel.Decimal) (Transaction, error) {
+// (D-158), as the owner chose: by default a deposit when the institution
+// shows more cash, a withdrawal when it shows less, so the difference
+// never shows as return; or cash income of the difference, negative when
+// the institution shows less (D-152). It is dated on the checkpoint's
+// date, so the checkpoint matches once it is booked; nothing overwrites
+// the derived cash. Its key names the checkpoint and both balances, so
+// booking the same difference twice books it once. A matching checkpoint
+// fails with ErrNoCashDifference, an assertion the owner didn't enter with
+// ErrNotCheckpoint.
+func CashDifference(a *BalanceAssertion, derived kernel.Decimal, as DifferenceBooking) (Transaction, error) {
 	if err := a.Validate(); err != nil {
 		return Transaction{}, err
 	}
@@ -53,24 +75,30 @@ func CashDifference(a *BalanceAssertion, derived kernel.Decimal) (Transaction, e
 		},
 		Account: a.Account, Date: a.Date,
 	}
-	var (
-		t   Transaction
-		err error
-	)
-	switch diff.Sign() {
-	case 0:
+	if diff.Sign() == 0 {
 		return Transaction{}, fmt.Errorf("%w: %s %s on %s", ErrNoCashDifference, a.Account, a.Book, a.Date)
-	case 1:
-		t, err = NewDeposit(h, diff)
-	default:
-		t, err = NewWithdrawal(h, diff.Neg())
 	}
+	t, err := differenceTransaction(h, diff, as)
 	if err != nil {
 		return Transaction{}, err
 	}
 	t.Description = fmt.Sprintf("Difference to the cash checkpoint of %s: %s shown, %s derived",
 		a.Date, kernel.NewMoney(a.Balance, a.Book.Currency), kernel.NewMoney(derived, a.Book.Currency))
 	return t, nil
+}
+
+// differenceTransaction books diff, not zero, as the owner chose.
+func differenceTransaction(h TransactionHeader, diff kernel.Money, as DifferenceBooking) (Transaction, error) {
+	switch as {
+	case AsDepositOrWithdrawal:
+		if diff.Sign() > 0 {
+			return NewDeposit(h, diff)
+		}
+		return NewWithdrawal(h, diff.Neg())
+	case AsCashIncome:
+		return NewCashIncome(h, diff, kernel.Money{})
+	}
+	return Transaction{}, fmt.Errorf("%w: %d", ErrUnknownBooking, as)
 }
 
 // CheckpointSubject returns the subject of the attention item a

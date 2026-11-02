@@ -5,9 +5,10 @@
 // assertion (D-18) and checks it against the cash derived from the
 // transaction log, which it never changes. A mismatch raises an attention
 // item (D-130); from it the owner books the difference as an ordinary
-// manual transaction: a deposit when the institution shows more cash, a
-// withdrawal when it shows less, so an unexplained difference never shows
-// as return. One owner-only service for this kind of entry (D-79).
+// manual transaction: by default a deposit when the institution shows more
+// cash, a withdrawal when it shows less, so an unexplained difference never
+// shows as return, or cash income (D-152) when it is income or a fee. One
+// owner-only service for this kind of entry (D-79).
 //
 // Calling conventions are the AuthService's
 // (proto/openfief/identity/v1/auth.proto), as in transfers.proto:
@@ -278,7 +279,11 @@ type BookCashDifferenceRequest struct {
 	// The checkpoint's date, YYYY-MM-DD.
 	Date string `protobuf:"bytes,4,opt,name=date,proto3" json:"date,omitempty"`
 	// The checkpoint's currency.
-	Currency      string `protobuf:"bytes,5,opt,name=currency,proto3" json:"currency,omitempty"`
+	Currency string `protobuf:"bytes,5,opt,name=currency,proto3" json:"currency,omitempty"`
+	// Book the difference as cash income (D-152), income when the
+	// institution shows more cash and a fee when it shows less, instead of
+	// the default deposit or withdrawal.
+	CashIncome    bool `protobuf:"varint,6,opt,name=cash_income,json=cashIncome,proto3" json:"cash_income,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -348,13 +353,21 @@ func (x *BookCashDifferenceRequest) GetCurrency() string {
 	return ""
 }
 
+func (x *BookCashDifferenceRequest) GetCashIncome() bool {
+	if x != nil {
+		return x.CashIncome
+	}
+	return false
+}
+
 type BookCashDifferenceResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The booked transaction's key, with source "owner:cash-checkpoint".
 	Key *TransactionKey `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	// "deposit" or "withdrawal".
+	// "deposit", "withdrawal" or "cash-income".
 	Kind string `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
-	// The amount deposited or withdrawn, positive, a decimal string.
+	// The amount deposited or withdrawn, positive, or the cash income,
+	// negative for a fee, a decimal string.
 	Amount        string `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 	Currency      string `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -443,14 +456,16 @@ const file_openfief_ledger_v1_cash_checkpoints_proto_rawDesc = "" +
 	"\x1cRecordCashCheckpointResponse\x12B\n" +
 	"\n" +
 	"checkpoint\x18\x01 \x01(\v2\".openfief.ledger.v1.CashCheckpointR\n" +
-	"checkpoint\"\xa7\x01\n" +
+	"checkpoint\"\xc8\x01\n" +
 	"\x19BookCashDifferenceRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x03 \x01(\tR\taccountId\x12\x12\n" +
 	"\x04date\x18\x04 \x01(\tR\x04date\x12\x1a\n" +
-	"\bcurrency\x18\x05 \x01(\tR\bcurrency\"\x9a\x01\n" +
+	"\bcurrency\x18\x05 \x01(\tR\bcurrency\x12\x1f\n" +
+	"\vcash_income\x18\x06 \x01(\bR\n" +
+	"cashIncome\"\x9a\x01\n" +
 	"\x1aBookCashDifferenceResponse\x124\n" +
 	"\x03key\x18\x01 \x01(\v2\".openfief.ledger.v1.TransactionKeyR\x03key\x12\x12\n" +
 	"\x04kind\x18\x02 \x01(\tR\x04kind\x12\x16\n" +

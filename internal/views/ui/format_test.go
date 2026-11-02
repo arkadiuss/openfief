@@ -89,6 +89,7 @@ func TestLabels(t *testing.T) {
 		{name: "cash balance", got: plainFormat().balance(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "USD"}, "1234.50"), want: "1\u202f234.50 USD"},
 		{name: "holding balance is a quantity", got: separators(" ", ",").balance(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_HOLDING, Instrument: syntheticInstrument()}, "12"), want: "12"},
 		{name: "enum", got: enumLabel(viewsv1.TransactionKind_TRANSACTION_KIND_OPENING_LOT.String(), "TRANSACTION_KIND_"), want: "opening lot"},
+		{name: "cash income kind", got: enumLabel(viewsv1.TransactionKind_TRANSACTION_KIND_CASH_INCOME.String(), "TRANSACTION_KIND_"), want: "cash income"},
 		{name: "scope", got: scopeLabel(identityv1.SessionScope_SESSION_SCOPE_OWNER), want: "owner"},
 	}
 	for _, tt := range tests {

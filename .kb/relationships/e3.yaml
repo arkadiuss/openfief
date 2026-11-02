@@ -699,3 +699,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5776040e644
+  - type: implements
+    from: SYM-ledger-new-cash-income
+    to: REQ-ledger-cash-income-kind
+    created_at: 2026-11-02T05:53:43.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7710bd232db7
+  - type: implements
+    from: SYM-ledger-new-cash-income
+    to: REQ-ledger-cash-income-tax-withheld
+    created_at: 2026-11-02T05:53:43.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8da22dac59a5
+  - type: covered_by
+    from: SYM-ledger-new-cash-income
+    to: TEST-ledger-events
+    created_at: 2026-11-02T05:53:43.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90a015af660b

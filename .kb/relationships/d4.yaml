@@ -685,3 +685,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-241d99873891
+  - type: implements
+    from: SYM-ledger-difference-transaction
+    to: REQ-ledger-owner-cash-difference-booked
+    created_at: 2026-11-02T05:54:05.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0497f1082fee
+  - type: implements
+    from: SYM-ledger-difference-transaction
+    to: REQ-ledger-owner-cash-difference-default-deposit
+    created_at: 2026-11-02T05:54:05.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22ef04565928
+  - type: covered_by
+    from: SYM-ledger-difference-transaction
+    to: TEST-ledger-cash-checkpoint
+    created_at: 2026-11-02T05:54:05.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f08162f17215

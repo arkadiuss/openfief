@@ -116,11 +116,12 @@ func TestProject(t *testing.T) {
 			wantAssets: []ghostfolio.AssetProfile{{Symbol: feePLN, Name: "OpenFief fees (PLN)", Currency: cur(t, "PLN")}},
 		},
 		{
-			name: "cash movements have no activity",
+			name: "cash movements and cash income have no activity",
 			txs: []ledger.Transaction{
 				must(ledger.NewDeposit(header(t, "a1", "c1", "2025-01-02"), money(t, "1000", "USD"))),
 				must(ledger.NewWithdrawal(header(t, "a1", "c2", "2025-01-03"), money(t, "10", "USD"))),
 				must(ledger.NewFXConversion(header(t, "a1", "c3", "2025-01-04"), money(t, "10", "USD"), money(t, "9", "EUR"), zero)),
+				must(ledger.NewCashIncome(header(t, "a1", "c4", "2025-01-05"), money(t, "1.23", "USD"), money(t, "0.23", "USD"))),
 			},
 		},
 		{

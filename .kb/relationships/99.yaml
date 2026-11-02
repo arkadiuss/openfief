@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4d441fdf2c4
+  - type: validates
+    from: TEST-views-ghostfolio-project
+    to: REQ-ledger-cash-income-kind
+    created_at: 2026-11-02T05:50:59.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6568f38aae27

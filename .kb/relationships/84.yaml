@@ -596,13 +596,6 @@ relationships:
     id: rel-d51f3541f873
   - type: implements
     from: SYM-ingest-xtb-mapping-position-ref
-    to: REQ-ingest-xtb-cfd-flagged
-    created_at: 2026-10-31T13:31:01.173Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0b5bd8a2a38d
-  - type: implements
-    from: SYM-ingest-xtb-mapping-position-ref
     to: REQ-AUTO-A5EE8BC2AE68372A
     created_at: 2026-10-31T13:31:01.215Z
     created_by: kibi/upsert
@@ -706,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d28b66d85f88
+  - type: implements
+    from: SYM-ingest-xtb-mapping-position-ref
+    to: REQ-ingest-xtb-cfd-closed-cash-income
+    created_at: 2026-11-02T05:52:44.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3045a39c3487
