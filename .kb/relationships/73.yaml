@@ -629,3 +629,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f7580830e2a
+  - type: implements
+    from: SYM-ingest-trading-currency-choice-error-error
+    to: REQ-ingest-ticker-currency-pick-required
+    created_at: 2026-11-01T23:57:26.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f8a15c471ba
+  - type: covered_by
+    from: SYM-ingest-trading-currency-choice-error-error
+    to: TEST-ingest-listing
+    created_at: 2026-11-01T23:57:26.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a1eef97c6d9

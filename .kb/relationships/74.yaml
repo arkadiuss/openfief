@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5818bfd53ea3
+  - type: implements
+    from: SYM-ingest-listing-of
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:24.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad8d03fc258c

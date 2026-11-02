@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b9d0f23f5fd
+  - type: implements
+    from: SYM-ingest-currency-places
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:03.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66e836ffe1a4

@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba4c46b097dd
+  - type: implements
+    from: SYM-ingest-minor-unit-of
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:45.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e962fc34b218

@@ -44,7 +44,7 @@ On the account's page, under **Upload statement**, **How the account starts** of
 - **From the holdings of a current statement (opening).** The connector reads `Open Positions` and makes one opening lot per position: its volume, first acquired on its open date, at a cost of its volume times its open price. The account goes live on the date the report was generated, in UTC, as soon as you upload, even while every position still waits for its ticker (D-160): every later upload is in transactions mode. Enter the account's cash on that date under **Cash at the start**, in the account's currency (the export holds no cash balance), with this upload. You enter the cash once: a later upload with cash is refused. Leave it empty if the account held no cash.
 - **From a statement of its whole history (transactions).** Every deposit, buy, sale and dividend from the first deposit on is booked, so cash and holdings add up without any cash entered.
 
-The export gives each open price in the instrument's trading currency without naming it, so an opening lot's cost is booked in the currency of the listing you confirm for its ticker, or, when the listing names none, of the exchange its market suffix names, such as PLN for `.PL` and EUR for `.DE` (D-159). A London price is in pence, so a `.UK` position's cost is booked in pounds, the price divided by 100. A position on a market OpenFief knows no exchange of is listed as a problem.
+The export gives each open price in the instrument's trading currency without naming it, so an opening lot's cost is booked in the currency of the listing you confirm for its ticker, or, when the listing names none, of the exchange its market suffix names, such as PLN for `.PL` and EUR for `.DE` (D-159). London quotes in pence, pounds and dollars, so for a `.UK` ticker whose listing names no currency you pick it when you confirm the ticker, and its positions wait until you do; none is assumed (D-170). A price in pence (`GBX`) is booked in pounds, divided by 100. A position on a market OpenFief knows no exchange of is listed as a problem.
 
 The first upload names the XTB account it found. If it says the broker account isn't mapped, pick it for this account on the **Accounts** page (D-72) and upload the file again. The XTB account number is kept only for that mapping; the read API never serves it (D-121).
 
@@ -54,6 +54,7 @@ The upload's result lists the rows left out. Rows that wait for a ticker's ISIN 
 
 - Check the proposal against the instrument's documents or the exchange's site, then press **Confirm**.
 - When no proposal is shown, type the ISIN and press **Save**. A US listing never gets a proposal: the market-data connector covers European exchanges only (D-51).
+- A `.UK` ticker also shows a **Trading currency** choice: `GBX` (pence), `GBP` or `USD`. Pick the currency its prices are in at XTB when no proposal names one, or when you type another ISIN than the proposal's; otherwise leave it on the listing's. Without a pick the confirmation is refused, naming the choices, and the rows keep waiting.
 
 Each confirmation books that ticker's waiting rows at once, opening lots too, which join the account's start on its go-live date, and holds for every later upload. It can't be changed afterwards, so check it first.
 

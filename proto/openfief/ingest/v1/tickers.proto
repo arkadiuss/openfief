@@ -21,7 +21,14 @@
 //   PERMISSION_DENIED.
 // - An ISIN without a valid check digit fails with INVALID_ARGUMENT; a
 //   ticker no connector instance reported with NOT_FOUND; a ticker already
-//   confirmed with another ISIN with FAILED_PRECONDITION.
+//   confirmed with another ISIN, or another trading currency, with
+//   FAILED_PRECONDITION.
+// - When the confirmed ISIN's listing names no trading currency and the
+//   exchange the ticker's market suffix names quotes in more than one, as
+//   London does in pence (GBX), pounds and dollars, the owner picks one
+//   (D-170): a confirmation without one of them, or with one where there is
+//   nothing to pick, fails with INVALID_ARGUMENT naming the choices, and the
+//   ticker's rows keep waiting.
 syntax = "proto3";
 
 package openfief.ingest.v1;
@@ -62,6 +69,14 @@ message PendingTicker {
   string proposed_name = 6;
   // How many statement rows wait for it.
   int32 waiting = 7;
+  // The trading currency the proposed listing quotes in, such as "GBX" for
+  // pence, or empty when it names none.
+  string proposed_currency = 8;
+  // The trading currencies the exchange its market names quotes in, when
+  // it quotes in more than one, such as "GBX", "GBP" and "USD" for London;
+  // empty otherwise. The owner picks one of them when the listing of the
+  // ISIN confirmed names no currency (D-170).
+  repeated string currency_choices = 9;
 }
 
 message ListPendingTickersResponse {
@@ -76,6 +91,10 @@ message ConfirmTickerRequest {
   string symbol = 4;
   // The ISIN, with a valid check digit.
   string isin = 5;
+  // The trading currency the owner picked, one of the ticker's
+  // currency_choices, when the listing of isin names none (D-170); empty
+  // otherwise.
+  string currency = 6;
 }
 
 message ConfirmTickerResponse {

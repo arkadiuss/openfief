@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e1c8ea15c9d
+  - type: verified_by
+    from: SCEN-ui-ticker-currency-choice
+    to: TEST-ui-tickers
+    created_at: 2026-11-01T23:37:59.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52d8bdcea90e

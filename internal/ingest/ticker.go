@@ -212,10 +212,14 @@ func (e *TickerEntry) build(in ledger.Instrument) (ledger.Transaction, error) {
 
 // TickerConfirmation is the ISIN the owner confirmed for a ticker of one
 // connector instance (D-116): every entry of the ticker is booked with it.
+// Currency is the trading currency code the owner picked, such as "GBX",
+// when the listing names none and the ticker's exchange quotes in more
+// than one (CurrencyChoices, D-170), and "" otherwise.
 type TickerConfirmation struct {
 	Instance string
 	Symbol   string
 	ISIN     ledger.ISIN
+	Currency string
 }
 
 // ISINProposal is the ISIN a market-data connector found for a ticker's
@@ -232,11 +236,24 @@ type ISINProposal struct {
 // PendingTicker is a ticker of a connector instance whose ISIN the owner
 // hasn't confirmed yet, with the market-data connector's proposal, if it
 // found one (Proposal.ISIN not zero), and how many entries wait for it.
+// Proposal.Currency is the proposed listing's trading currency, if it
+// names one.
 type PendingTicker struct {
 	Instance string
 	Ticker   Ticker
 	Proposal ISINProposal
 	Waiting  int
+}
+
+// CurrencyChoices returns the trading currency codes the owner picks one
+// of when confirming p with an ISIN whose listing names no currency
+// (D-170): its exchange's, when that exchange quotes in more than one, and
+// none otherwise.
+func (p *PendingTicker) CurrencyChoices() []string {
+	if codes := ExchangeCurrencies(p.Ticker.Country); len(codes) > 1 {
+		return codes
+	}
+	return nil
 }
 
 // BookTickerEntries returns m with each ticker entry whose symbol confirmed

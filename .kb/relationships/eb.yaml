@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a7992cb6e1e
+  - type: implements
+    from: SYM-ingest-parse-trading-currency
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:39:56.641Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c95ab8ead89
+  - type: implements
+    from: SYM-ingest-pg-listing-row-listing
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:40:27.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-344b5cfd782b

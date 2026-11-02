@@ -685,13 +685,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2a8e5fce250
-  - type: covered_by
-    from: SYM-ingest-exchange-currency
-    to: TEST-ingest-listing
-    created_at: 2026-11-01T17:24:15.552Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f2c18e71d8a3
   - type: implements
     from: SYM-protobreak-verdict
     to: REQ-tooling-breaking-before-first-beta
@@ -706,13 +699,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58cb798eafa5
-  - type: implements
-    from: SYM-ingest-exchange-currency
-    to: REQ-ingest-trading-currency-listing-or-exchange
-    created_at: 2026-11-02T01:01:48.495Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3b664376b188
   - type: implements
     from: SYM-ingestv1-bond-payout-enum-descriptor
     to: REQ-ledger-payout-change-from-owner-date

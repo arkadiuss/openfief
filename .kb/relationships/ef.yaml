@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f01455bc142e
+  - type: implements
+    from: SYM-connectorv1-instrument-proposal-get-currency
+    to: REQ-ingest-ticker-currency-picked
+    created_at: 2026-11-01T23:38:52.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c2b90bab527
