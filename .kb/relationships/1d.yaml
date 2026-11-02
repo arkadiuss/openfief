@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-caa9135aeabd
+  - type: executable_for
+    from: SYM-views-app-test-authz-test-views-refuse-an-account-the-caller-may-not-view
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:53:01.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07366abfd210

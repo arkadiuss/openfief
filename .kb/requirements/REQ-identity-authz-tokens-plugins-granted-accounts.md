@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-164#4
-  recorded_at: '2026-11-02T00:57:32.439Z'
+  recorded_at: '2026-11-01T22:45:47.352Z'
 id: REQ-identity-authz-tokens-plugins-granted-accounts
 type: req
 ---
@@ -37,7 +37,7 @@ From the second alpha, script tokens and view plugins must be granted accounts a
 
 ## Context
 
-The author recorded it on 2026-11-01, when planning viewers for the second alpha. Reason not stated. D-65's viewers are granted the accounts they may view; script tokens (D-27) and view plugins get the same grants then. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). D-65's viewers are granted the accounts they may view; script tokens (D-27) and view plugins get the same grants then. Not built: until then they view every account (D-163). No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

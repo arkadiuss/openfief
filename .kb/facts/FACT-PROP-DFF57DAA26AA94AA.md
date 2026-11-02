@@ -20,7 +20,7 @@ claim_key: CLAIM-83AA735081C06821
 claim_text: CI must check the authorization schema's assertions.
 origin:
   kind: agent
-  recorded_at: '2026-11-02T00:57:18.597Z'
+  recorded_at: '2026-11-01T22:45:32.841Z'
 id: FACT-PROP-DFF57DAA26AA94AA
 type: fact
 ---

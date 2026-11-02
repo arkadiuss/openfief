@@ -20,7 +20,7 @@ claim_key: CLAIM-8B2354CE4495E70C
 claim_text: Totals, the allocation and performance must be computed over the accounts the caller may view.
 origin:
   kind: agent
-  recorded_at: '2026-11-02T00:56:53.661Z'
+  recorded_at: '2026-11-01T22:45:06.347Z'
 id: FACT-PROP-CE0517C89341E2C2
 type: fact
 ---

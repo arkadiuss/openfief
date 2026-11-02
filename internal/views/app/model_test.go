@@ -92,7 +92,7 @@ func TestModelPortfolio(t *testing.T) {
 			t.Parallel()
 			f := map[bool]func(*testing.T) *fixture{false: newFixture, true: newPerformanceFixture}[tt.recorded](t)
 			models := newFakeModels(t, true)
-			got, err := modelViews(t, f, models).ModelPortfolio(t.Context(), optionalDate(t, tt.from), optionalDate(t, tt.to))
+			got, err := modelViews(t, f, models).ModelPortfolio(reader(t), optionalDate(t, tt.from), optionalDate(t, tt.to))
 			if err != nil {
 				t.Fatalf("ModelPortfolio: %v", err)
 			}
@@ -137,7 +137,7 @@ func TestModelPortfolioRefusals(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := tt.views.ModelPortfolio(t.Context(), optionalDate(t, tt.from), optionalDate(t, tt.to))
+			_, err := tt.views.ModelPortfolio(reader(t), optionalDate(t, tt.from), optionalDate(t, tt.to))
 			if !cmp.Equal(tt.want, err, cmpopts.EquateErrors()) {
 				t.Errorf("ModelPortfolio = %v, want %v", err, tt.want)
 			}

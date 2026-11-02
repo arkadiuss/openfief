@@ -702,14 +702,14 @@ relationships:
   - type: constrains
     from: REQ-identity-authz-spicedb-schema
     to: FACT-SUBJECT-8DF4E7F7B032E3AB
-    created_at: 2026-11-02T00:57:15.305Z
+    created_at: 2026-11-01T22:45:29.572Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5c46bc18763
   - type: requires_property
     from: REQ-identity-authz-spicedb-schema
     to: FACT-PROP-24081E04090D1AB0
-    created_at: 2026-11-02T00:57:15.368Z
+    created_at: 2026-11-01T22:45:29.633Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd6f08dd2981

@@ -17,7 +17,7 @@ claim_key: CLAIM-5021B0234869E5FB
 claim_text: Authorization must be decided per account and be relationship-based.
 origin:
   kind: agent
-  recorded_at: '2026-11-02T00:56:40.605Z'
+  recorded_at: '2026-11-01T22:44:51.805Z'
 id: FACT-SUBJECT-D9B8F3ECCEFE14B1
 type: fact
 ---

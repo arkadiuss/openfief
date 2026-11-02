@@ -699,6 +699,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-350bbbce9dec
+  - type: implements
+    from: SYM-views-app-views-may-view
+    to: REQ-views-authz-hidden-account-not-found
+    created_at: 2026-11-01T22:49:40.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97b940ff5c95
+  - type: covered_by
+    from: SYM-views-app-views-may-view
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:49:40.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3be8bcbf662b
   - type: executable_for
     from: SYM-protobreak-test-parse-exceptions
     to: TEST-tooling-protobreak

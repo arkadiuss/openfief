@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -22,6 +23,9 @@ const bondsAccount ledger.AccountID = "acc-bonds"
 // fakeOwners accepts the session "owner" and refuses any other with err.
 type fakeOwners struct {
 	err error
+	// denied are the accounts the authorizer refuses the owner to change,
+	// as one that denies some accounts would (D-163).
+	denied []ledger.AccountID
 }
 
 func (f fakeOwners) CheckOwner(_ context.Context, _, session string) error {
@@ -29,6 +33,13 @@ func (f fakeOwners) CheckOwner(_ context.Context, _, session string) error {
 		return nil
 	}
 	return f.err
+}
+
+func (f fakeOwners) Changeable(ctx context.Context, origin, session string, accounts []ledger.AccountID) ([]ledger.AccountID, error) {
+	if err := f.CheckOwner(ctx, origin, session); err != nil {
+		return nil, err
+	}
+	return slices.DeleteFunc(slices.Clone(accounts), func(a ledger.AccountID) bool { return slices.Contains(f.denied, a) }), nil
 }
 
 // fakeAccountBindings binds instances to every account, or fails with err.

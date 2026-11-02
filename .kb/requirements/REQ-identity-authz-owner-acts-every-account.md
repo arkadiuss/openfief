@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-163#4
-  recorded_at: '2026-11-02T00:57:01.696Z'
+  recorded_at: '2026-11-01T22:45:15.062Z'
 id: REQ-identity-authz-owner-acts-every-account
 type: req
 ---
@@ -37,7 +37,7 @@ Until SpiceDB answers the authorization interface, its only implementation must 
 
 ## Context
 
-The author recorded it on 2026-11-01, when planning viewers for the second alpha. Reason not stated. D-65 has the owner hold every account and alone change anything. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). D-65 has the owner hold every account and alone change anything. identityapp.Policy, over the pure identity.MayAct, is that implementation. No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

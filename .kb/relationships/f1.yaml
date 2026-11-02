@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70076a665de2
+  - type: validates
+    from: TEST-identity-authz-schema
+    to: REQ-identity-authz-spicedb-schema
+    created_at: 2026-11-01T22:46:08.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-178d929b790e
+  - type: validates
+    from: TEST-identity-authz-schema
+    to: REQ-identity-authz-schema-assertions-ci
+    created_at: 2026-11-01T22:46:08.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b368ab3e4b2d

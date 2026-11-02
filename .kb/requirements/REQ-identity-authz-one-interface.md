@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-163#2
-  recorded_at: '2026-11-02T00:56:50.401Z'
+  recorded_at: '2026-11-01T22:45:02.739Z'
 id: REQ-identity-authz-one-interface
 type: req
 ---
@@ -37,7 +37,7 @@ Every read path and owner service of the core must ask one authorization interfa
 
 ## Context
 
-The author recorded it on 2026-11-01, when planning viewers for the second alpha. Reason not stated. The read API (D-50) and the owner services (D-79) are the core's read paths and owner services. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). One interface means swapping today's rule for SpiceDB (D-164) changes one implementation, not every caller. It is identityapp.Authorizer; the read API passes the caller its bearer token stands for, and cmd/core's ownerSessions asks it for the owner services of the ingest and ledger contexts. No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

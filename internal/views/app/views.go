@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -50,6 +51,7 @@ type Views struct {
 	pack        jurisdiction.Pack
 	terms       Terms
 	attention   AttentionItems
+	authz       identityapp.Authorizer
 }
 
 // New returns the queries over the given ports, with totals, valuations and
@@ -60,7 +62,7 @@ func New(l Ledger, v Valuations, s ValuationStatuses, r FXRates, reporting kerne
 	if !reporting.Equal(valuation.PLN()) {
 		return nil, &UnsupportedReportingCurrencyError{Currency: reporting}
 	}
-	out := &Views{ledger: l, valuations: v, statuses: s, rates: r, reporting: reporting}
+	out := &Views{ledger: l, valuations: v, statuses: s, rates: r, reporting: reporting, authz: identityapp.Policy{}}
 	for _, o := range opts {
 		o(out)
 	}
@@ -80,17 +82,23 @@ func (v *Views) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
 	return s, nil
 }
 
-// Accounts returns every account, in ID order.
+// Accounts returns every account the caller may view (D-163), in ID order.
+// Every total, the allocation, performance, transfers and yearly taxes are
+// computed over these accounts.
 func (v *Views) Accounts(ctx context.Context) ([]ledger.Account, error) {
 	a, err := v.ledger.Accounts(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("loading accounts: %w", err)
 	}
-	return a, nil
+	return v.viewable(ctx, a)
 }
 
-// Account returns the account id, or an error wrapping ErrUnknownAccount.
+// Account returns the account id, or an error wrapping ErrUnknownAccount
+// when it is not stored or the caller may not view it (D-163).
 func (v *Views) Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error) {
+	if err := v.mayView(ctx, id); err != nil {
+		return ledger.Account{}, accountErr("loading account", err)
+	}
 	a, err := v.ledger.Account(ctx, id)
 	if err != nil {
 		return ledger.Account{}, accountErr("loading account", err)
@@ -103,6 +111,9 @@ func (v *Views) Account(ctx context.Context, id ledger.AccountID) (ledger.Accoun
 // from the first when after is nil, each with its origin: the connector
 // instance that brought it in and whether that instance is removed (D-58).
 func (v *Views) Transactions(ctx context.Context, account ledger.AccountID, after *views.TransactionCursor, size int) (views.TransactionPage, error) {
+	if err := v.mayView(ctx, account); err != nil {
+		return views.TransactionPage{}, accountErr("loading transactions", err)
+	}
 	txs, err := v.ledger.CurrentTransactions(ctx, account)
 	if err != nil {
 		return views.TransactionPage{}, accountErr("loading transactions", err)
@@ -118,6 +129,9 @@ func (v *Views) Transactions(ctx context.Context, account ledger.AccountID, afte
 // Holdings returns account's non-zero holdings at the end of on, each with
 // the removed connector instances behind it (D-91).
 func (v *Views) Holdings(ctx context.Context, account ledger.AccountID, on kernel.Date) (MarkedHoldings, error) {
+	if err := v.mayView(ctx, account); err != nil {
+		return MarkedHoldings{}, accountErr("loading holdings", err)
+	}
 	h, err := v.ledger.HoldingsOn(ctx, account, on)
 	if err != nil {
 		return MarkedHoldings{}, accountErr("loading holdings", err)
@@ -128,6 +142,9 @@ func (v *Views) Holdings(ctx context.Context, account ledger.AccountID, on kerne
 // Lots returns account's open lots at the end of on, each with the removed
 // connector instances behind it (D-91).
 func (v *Views) Lots(ctx context.Context, account ledger.AccountID, on kernel.Date) (MarkedLots, error) {
+	if err := v.mayView(ctx, account); err != nil {
+		return MarkedLots{}, accountErr("loading lots", err)
+	}
 	l, err := v.ledger.LotsOn(ctx, account, on)
 	if err != nil {
 		return MarkedLots{}, accountErr("loading lots", err)
@@ -138,6 +155,9 @@ func (v *Views) Lots(ctx context.Context, account ledger.AccountID, on kernel.Da
 // Cash returns account's non-zero cash at the end of on, one balance per
 // currency.
 func (v *Views) Cash(ctx context.Context, account ledger.AccountID, on kernel.Date) ([]kernel.Money, error) {
+	if err := v.mayView(ctx, account); err != nil {
+		return nil, accountErr("loading cash", err)
+	}
 	c, err := v.ledger.CashOn(ctx, account, on)
 	if err != nil {
 		return nil, accountErr("loading cash", err)
@@ -148,6 +168,9 @@ func (v *Views) Cash(ctx context.Context, account ledger.AccountID, on kernel.Da
 // AssertionChecks returns account's balance assertion checks, only those
 // with status when status is not zero.
 func (v *Views) AssertionChecks(ctx context.Context, account ledger.AccountID, status ledgerapp.AssertionStatus) ([]ledgerapp.AssertionCheck, error) {
+	if err := v.mayView(ctx, account); err != nil {
+		return nil, accountErr("loading balance assertions", err)
+	}
 	checks, err := v.ledger.AssertionChecks(ctx, account)
 	if err != nil {
 		return nil, accountErr("loading balance assertions", err)

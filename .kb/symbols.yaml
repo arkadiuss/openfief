@@ -48546,10 +48546,11 @@ symbols:
     title: Principal
     sourceFile: internal/identity/app/auth.go
     status: active
-    symbol_role: behavioral
+    symbol_role: type-shape
     origin:
       kind: agent
       recorded_at: 2026-10-28T19:32:09.243Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-identity-auth-app
@@ -125729,3 +125730,750 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-tickers
+  - id: SYM-core-sessions
+    title: sessions
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:10.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-sessions
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-core-owner-sessions-changeable
+    title: ownerSessions.Changeable
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:17.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-sessions
+      - type: implements
+        target: REQ-core-authz-change-refused
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-core-owner-sessions-session
+    title: ownerSessions.session
+    sourceFile: cmd/core/model.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:23.683Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-owner-sessions
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-action
+    title: Action
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:29.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-action-string
+    title: Action.String
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:36.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-holder
+    title: Holder
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:42.152Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-holder-string
+    title: Holder.String
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:48.447Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-caller
+    title: Caller
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:47:54.916Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-may-act
+    title: MayAct
+    sourceFile: internal/identity/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:01.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-app-authorizer
+    title: Authorizer
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:08.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-app-policy
+    title: Policy
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:13.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-app-policy-may-act
+    title: Policy.MayAct
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:19.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-owner-acts-every-account
+      - type: implements
+        target: REQ-identity-authz-readers-view-every-account
+  - id: SYM-identity-app-caller-key
+    title: callerKey
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:26.649Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-app-with-caller
+    title: WithCaller
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:33.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-app-caller-from
+    title: CallerFrom
+    sourceFile: internal/identity/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:40.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-identity-app-principal-caller
+    title: Principal.Caller
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:47.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-app-access
+      - type: implements
+        target: REQ-identity-authz-one-interface
+  - id: SYM-ingest-app-may-change
+    title: mayChange
+    sourceFile: internal/ingest/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:53.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ingest-app-uploads-changeable
+    title: Uploads.changeable
+    sourceFile: internal/ingest/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:48:59.313Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ingest-app-accounts-authorize-remap
+    title: Accounts.authorizeRemap
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:05.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ingest-app-accounts-mapped-to
+    title: Accounts.mappedTo
+    sourceFile: internal/ingest/app/accountchanges.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:12.003Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ledger-app-may-change
+    title: mayChange
+    sourceFile: internal/ledger/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:17.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-ledger-app-ledger-transfer-accounts
+    title: Ledger.TransferAccounts
+    sourceFile: internal/ledger/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:24.351Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-authz
+      - type: implements
+        target: REQ-core-authz-change-refused
+  - id: SYM-views-app-with-authorizer
+    title: WithAuthorizer
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:31.337Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-hidden-account-not-found
+  - id: SYM-views-app-views-may-view
+    title: Views.mayView
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:37.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-hidden-account-not-found
+  - id: SYM-views-app-views-viewable
+    title: Views.viewable
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:43.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-totals-over-viewable
+  - id: SYM-views-app-views-viewable-bindings
+    title: Views.viewableBindings
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:49.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-totals-over-viewable
+  - id: SYM-views-app-shown-links
+    title: shownLinks
+    sourceFile: internal/views/app/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:49:57.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-authz
+      - type: implements
+        target: REQ-views-authz-totals-over-viewable
+  - id: SYM-core-test-fake-sessions
+    title: fakeSessions
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:03.714Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-fake-sessions-session
+    title: fakeSessions.Session
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:10.193Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-recording-authorizer
+    title: recordingAuthorizer
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:16.231Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-recording-authorizer-may-act
+    title: recordingAuthorizer.MayAct
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:22.877Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-test-owner-sessions-changeable
+    title: TestOwnerSessionsChangeable
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:29.568Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-core-test-check-asked-owner
+    title: checkAskedOwner
+    sourceFile: cmd/core/owners_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:37.220Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-owner-sessions
+  - id: SYM-identity-test-test-may-act
+    title: TestMayAct
+    sourceFile: internal/identity/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:43.618Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access
+  - id: SYM-identity-test-test-action-and-holder-names
+    title: TestActionAndHolderNames
+    sourceFile: internal/identity/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:49.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-access
+  - id: SYM-identity-app-test-test-policy-may-act
+    title: TestPolicyMayAct
+    sourceFile: internal/identity/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:50:55.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-access
+  - id: SYM-identity-app-test-test-caller-in-context
+    title: TestCallerInContext
+    sourceFile: internal/identity/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:00.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-access
+  - id: SYM-identity-app-test-test-principal-caller
+    title: TestPrincipalCaller
+    sourceFile: internal/identity/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:06.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-app-access
+  - id: SYM-ingest-app-test-test-owner-services-need-the-change
+    title: TestOwnerServicesNeedTheChange
+    sourceFile: internal/ingest/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:12.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-authz
+  - id: SYM-ingest-app-test-test-file-accounts-only-changeable
+    title: TestFileAccountsOnlyChangeable
+    sourceFile: internal/ingest/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:17.950Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-authz
+  - id: SYM-ingest-app-test-helper-fake-owners-changeable
+    title: fakeOwners.Changeable
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:24.789Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-authz
+  - id: SYM-ingest-connectapi-test-helper-owners-changeable
+    title: owners.Changeable
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:31.816Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ledger-app-test-fake-owners-changeable
+    title: fakeOwners.Changeable
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:38.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-authz
+  - id: SYM-ledger-app-test-test-transfers-need-the-change-of-both-accounts
+    title: TestTransfersNeedTheChangeOfBothAccounts
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:45.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-authz
+  - id: SYM-ledger-app-test-test-transfer-accounts
+    title: TestTransferAccounts
+    sourceFile: internal/ledger/app/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:52.474Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-authz
+  - id: SYM-ledger-connectapi-test-helper-owners-changeable
+    title: owners.Changeable
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:51:59.137Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-ledger-connectapi-test-helper-decider-transfer-accounts
+    title: decider.TransferAccounts
+    sourceFile: internal/ledger/connectapi/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:05.524Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-transfers
+  - id: SYM-views-app-test-authz-denying-authorizer
+    title: denyingAuthorizer
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:12.002Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-denying-authorizer-may-act
+    title: denyingAuthorizer.MayAct
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:18.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-with-authorizer
+    title: withAuthorizer
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:24.896Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-two-bindings
+    title: twoBindings
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:31.628Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-two-bindings-bindings
+    title: twoBindings.Bindings
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:38.650Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-without-acc2
+    title: withoutAcc2
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:45.083Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-views-compute-over-viewable-accounts
+    title: TestViewsComputeOverViewableAccounts
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:51.577Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-views-refuse-an-account-the-caller-may-not-view
+    title: TestViewsRefuseAnAccountTheCallerMayNotView
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:52:58.323Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-err-of
+    title: errOf
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:05.644Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-views-when-the-authorizer-fails
+    title: TestViewsWhenTheAuthorizerFails
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:12.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-views-without-a-caller
+    title: TestViewsWithoutACaller
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:19.052Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-authz-test-transfers-over-viewable-accounts
+    title: TestTransfersOverViewableAccounts
+    sourceFile: internal/views/app/access_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:25.538Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-app-test-helper-reader
+    title: reader
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:32.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-authz
+  - id: SYM-views-connectapi-test-authz-acc1-only
+    title: acc1Only
+    sourceFile: internal/views/connectapi/authz_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:38.770Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz
+  - id: SYM-views-connectapi-test-authz-acc1-only-may-act
+    title: acc1Only.MayAct
+    sourceFile: internal/views/connectapi/authz_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:45.447Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz
+  - id: SYM-views-connectapi-test-authz-test-rest-serves-only-viewable-accounts
+    title: TestRESTServesOnlyViewableAccounts
+    sourceFile: internal/views/connectapi/authz_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:52.236Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz
+  - id: SYM-views-connectapi-test-authz-check-hidden
+    title: checkHidden
+    sourceFile: internal/views/connectapi/authz_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T22:53:59.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-authz

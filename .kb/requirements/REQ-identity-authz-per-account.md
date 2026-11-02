@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-163#1
-  recorded_at: '2026-11-02T00:56:44.717Z'
+  recorded_at: '2026-11-01T22:44:56.700Z'
 id: REQ-identity-authz-per-account
 type: req
 ---
@@ -37,7 +37,7 @@ Authorization must be decided per account and be relationship-based.
 
 ## Context
 
-The author recorded it on 2026-11-01, when planning viewers for the second alpha. Reason not stated. D-65 lets the owner enroll viewers from the second alpha and grant each the accounts they may view, so what a caller may do depends on its relationship to each account. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). D-65 lets the owner enroll viewers from the second alpha and grant each the accounts they may view, so what a caller may do depends on its relationship to each account, not on a role. The read API answers per account (internal/views/app/access.go). No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

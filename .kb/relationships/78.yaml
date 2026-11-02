@@ -826,6 +826,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-2c010bd030eb
   - type: validates
+    from: TEST-identity-access
+    to: REQ-identity-authz-owner-acts-every-account
+    created_at: 2026-11-01T22:45:52.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d0d538a55e5
+  - type: validates
+    from: TEST-identity-access
+    to: REQ-identity-authz-readers-view-every-account
+    created_at: 2026-11-01T22:45:52.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a165209ad2f8
+  - type: executable_for
+    from: SYM-core-test-fake-sessions-session
+    to: TEST-core-owner-sessions
+    created_at: 2026-11-01T22:50:12.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caf606e580d6
+  - type: validates
     from: TEST-plugins-untrusted-signer
     to: REQ-plugins-untrusted-signer-named
     created_at: 2026-11-01T21:51:25.245Z

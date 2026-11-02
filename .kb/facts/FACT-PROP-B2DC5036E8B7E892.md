@@ -20,7 +20,7 @@ claim_key: CLAIM-1D71B76D17469795
 claim_text: From the second alpha, script tokens and view plugins must be granted accounts as viewers are.
 origin:
   kind: agent
-  recorded_at: '2026-11-02T00:57:30.008Z'
+  recorded_at: '2026-11-01T22:45:44.937Z'
 id: FACT-PROP-B2DC5036E8B7E892
 type: fact
 ---

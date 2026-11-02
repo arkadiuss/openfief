@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-164#1
-  recorded_at: '2026-11-02T00:57:15.297Z'
+  recorded_at: '2026-11-01T22:45:29.564Z'
 id: REQ-identity-authz-spicedb-schema
 type: req
 ---
@@ -37,7 +37,7 @@ The authorization model must be written as a SpiceDB schema.
 
 ## Context
 
-The author recorded it on 2026-11-01, when planning viewers for the second alpha. Reason not stated. SpiceDB, by Authzed, is an open-source authorization database modeled on Google's Zanzibar. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). SpiceDB, by Authzed, is an open-source authorization database modeled on Google's Zanzibar. The schema is authz/schema.zed; it declares the second alpha's per-account viewers already, as D-65 describes them. No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

@@ -632,14 +632,14 @@ relationships:
   - type: constrains
     from: REQ-views-authz-totals-over-viewable
     to: FACT-SUBJECT-5D5273B6E7DF2D96
-    created_at: 2026-11-02T00:56:56.044Z
+    created_at: 2026-11-01T22:45:08.814Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d647f0f0a13
   - type: requires_property
     from: REQ-views-authz-totals-over-viewable
     to: FACT-PROP-CE0517C89341E2C2
-    created_at: 2026-11-02T00:56:56.099Z
+    created_at: 2026-11-01T22:45:08.885Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cafe865d3d8

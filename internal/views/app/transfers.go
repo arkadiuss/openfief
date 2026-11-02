@@ -25,33 +25,72 @@ type Transfers struct {
 }
 
 // Transfers returns the suggested, confirmed, rejected and broken transfers
-// among the current deposits and withdrawals of every account. Only the
-// confirmed ones that still match are left out of the time-weighted
-// return's cash flows (Performance).
+// among the current deposits and withdrawals of the accounts the caller may
+// view (D-163). Only the confirmed ones that still match are left out of
+// the time-weighted return's cash flows (Performance). Whether a confirmed
+// pair is broken is judged over every account's transactions, so a leg in
+// an account the caller may not view doesn't look deleted; such a pair is
+// left out.
 func (v *Views) Transfers(ctx context.Context) (Transfers, error) {
-	accounts, err := v.Accounts(ctx)
+	all, err := v.ledger.Accounts(ctx)
+	if err != nil {
+		return Transfers{}, fmt.Errorf("loading accounts: %w", err)
+	}
+	accounts, err := v.viewable(ctx, all)
 	if err != nil {
 		return Transfers{}, err
 	}
-	var txs []ledger.Transaction
+	shown := make(map[ledger.AccountID]bool, len(accounts))
 	for i := range accounts {
-		got, loadErr := v.ledger.CurrentTransactions(ctx, accounts[i].ID)
+		shown[accounts[i].ID] = true
+	}
+	var txs, allTxs []ledger.Transaction
+	for i := range all {
+		got, loadErr := v.ledger.CurrentTransactions(ctx, all[i].ID)
 		if loadErr != nil {
 			return Transfers{}, fmt.Errorf("loading transactions: %w", loadErr)
 		}
-		txs = append(txs, got...)
+		allTxs = append(allTxs, got...)
+		if shown[all[i].ID] {
+			txs = append(txs, got...)
+		}
 	}
 	links, err := v.ledger.TransferLinks(ctx)
 	if err != nil {
 		return Transfers{}, fmt.Errorf("loading transfer links: %w", err)
 	}
 	flows := views.ExternalFlows(txs)
+	broken := shownLinks(ledger.BrokenTransferLinks(links, allTxs), allTxs, shown)
 	return Transfers{
 		Suggested: views.SuggestTransfers(flows, links),
 		Confirmed: views.LinkedTransfers(flows, links, ledger.TransferConfirmed),
 		Rejected:  views.LinkedTransfers(flows, links, ledger.TransferRejected),
-		Broken:    brokenTransfers(flows, txs, ledger.BrokenTransferLinks(links, txs)),
+		Broken:    brokenTransfers(flows, txs, broken),
 	}, nil
+}
+
+// shownLinks returns those of links with a leg among txs, the current
+// transactions of every account, and every such leg in an account in
+// shown, in their order.
+func shownLinks(links []ledger.TransferLink, txs []ledger.Transaction, shown map[ledger.AccountID]bool) []ledger.TransferLink {
+	accountOf := make(map[ledger.TransactionKey]ledger.AccountID, len(txs))
+	for i := range txs {
+		accountOf[txs[i].Key] = txs[i].Account
+	}
+	out := make([]ledger.TransferLink, 0, len(links))
+	for _, l := range links {
+		current, hidden := 0, false
+		for _, k := range []ledger.TransactionKey{l.Pair.Withdrawal, l.Pair.Deposit} {
+			if a, ok := accountOf[k]; ok {
+				current++
+				hidden = hidden || !shown[a]
+			}
+		}
+		if current > 0 && !hidden {
+			out = append(out, l)
+		}
+	}
+	return out
 }
 
 // brokenTransfers returns broken's pairs with their legs: the cash flow of

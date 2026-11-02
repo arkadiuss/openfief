@@ -3,6 +3,7 @@ package app_test
 import (
 	"context"
 	"errors"
+	"slices"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -15,14 +16,25 @@ import (
 // errOwnerCheck is what fakeOwners answers for any token but "owner".
 var errOwnerCheck = app.ErrNotOwner
 
-// fakeOwners accepts the session token "owner" only.
-type fakeOwners struct{}
+// fakeOwners accepts the session token "owner" only, and refuses it a
+// change to the accounts in denied, as an authorizer that denies some
+// accounts would (D-163).
+type fakeOwners struct {
+	denied []ledger.AccountID
+}
 
 func (fakeOwners) CheckOwner(_ context.Context, _, token string) error {
 	if token != "owner" {
 		return errOwnerCheck
 	}
 	return nil
+}
+
+func (f fakeOwners) Changeable(ctx context.Context, origin, token string, accounts []ledger.AccountID) ([]ledger.AccountID, error) {
+	if err := f.CheckOwner(ctx, origin, token); err != nil {
+		return nil, err
+	}
+	return slices.DeleteFunc(slices.Clone(accounts), func(a ledger.AccountID) bool { return slices.Contains(f.denied, a) }), nil
 }
 
 // transferLedger returns the use cases over a memStore holding, in acc-1,
@@ -156,6 +168,66 @@ func TestTransfersNeedTheOwner(t *testing.T) {
 	}
 	got, err := tr.Decide(t.Context(), "https://ui.example.com", "owner", tpair("w", "d1"), ledger.TransferConfirmed)
 	checkResult(t, "Decide", ledger.TransferLink{Pair: tpair("w", "d1"), Decision: ledger.TransferConfirmed, Version: 1}, got, err)
+}
+
+func TestTransfersNeedTheChangeOfBothAccounts(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name    string
+		denied  []ledger.AccountID
+		pair    ledger.TransferPair
+		wantErr error
+	}{
+		{name: "both accounts changeable", pair: tpair("w", "d1")},
+		{name: "the withdrawal's account denied", denied: []ledger.AccountID{acc1}, pair: tpair("w", "d1"), wantErr: app.ErrNotOwner},
+		{name: "the deposit's account denied", denied: []ledger.AccountID{acc2}, pair: tpair("w", "d1"), wantErr: app.ErrNotOwner},
+		{name: "an unstored leg asks only for the stored one", denied: []ledger.AccountID{acc2}, pair: tpair("w", "nope"), wantErr: app.ErrUnknownTransaction},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			l, _ := transferLedger(t)
+			tr := &app.Transfers{Owners: fakeOwners{denied: tt.denied}, Ledger: l}
+			_, err := tr.Decide(t.Context(), "https://ui.example.com", "owner", tt.pair, ledger.TransferConfirmed)
+			if !errors.Is(err, tt.wantErr) || (tt.wantErr == nil && err != nil) {
+				t.Fatalf("Decide error = %v, want %v", err, tt.wantErr)
+			}
+			links, err := l.TransferLinks(t.Context())
+			if err != nil {
+				t.Fatalf("TransferLinks: %v", err)
+			}
+			if stored := len(links) == 1; stored != (tt.wantErr == nil) {
+				t.Errorf("links = %v after error %v", links, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestTransferAccounts(t *testing.T) {
+	t.Parallel()
+	l, _ := transferLedger(t)
+	tests := []struct {
+		name string
+		pair ledger.TransferPair
+		want []ledger.AccountID
+	}{
+		{name: "both legs", pair: tpair("w", "d1"), want: []ledger.AccountID{acc1, acc2}},
+		{name: "one leg stored", pair: tpair("w", "nope"), want: []ledger.AccountID{acc1}},
+		{name: "both legs in one account", pair: tpair("w", "w2"), want: []ledger.AccountID{acc1}},
+		{name: "none stored", pair: tpair("x", "y")},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := l.TransferAccounts(t.Context(), tt.pair)
+			if err != nil {
+				t.Fatalf("TransferAccounts: %v", err)
+			}
+			if diff := cmp.Diff(tt.want, got); diff != "" {
+				t.Errorf("TransferAccounts mismatch (-want +got):\n%s", diff)
+			}
+		})
+	}
 }
 
 func TestConcurrentConfirmationsTakeALegOnce(t *testing.T) {

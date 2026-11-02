@@ -17,7 +17,7 @@ claim_key: CLAIM-60D98FFF2E6E0236
 claim_text: The authorization model must be written as a SpiceDB schema.
 origin:
   kind: agent
-  recorded_at: '2026-11-02T00:57:10.994Z'
+  recorded_at: '2026-11-01T22:45:24.786Z'
 id: FACT-SUBJECT-8DF4E7F7B032E3AB
 type: fact
 ---

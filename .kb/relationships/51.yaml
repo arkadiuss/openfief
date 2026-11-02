@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13836800ef50
+  - type: executable_for
+    from: SYM-views-app-test-authz-test-views-compute-over-viewable-accounts
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:52:53.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17926d551ea8

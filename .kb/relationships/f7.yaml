@@ -573,6 +573,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7347c0cb68d
+  - type: executable_for
+    from: SYM-identity-app-test-test-principal-caller
+    to: TEST-identity-app-access
+    created_at: 2026-11-01T22:51:08.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98425fa14b96
   - type: implements
     from: SYM-plugins-untrusted-signer-error-is
     to: REQ-plugins-untrusted-signer-named

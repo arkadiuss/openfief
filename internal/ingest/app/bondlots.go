@@ -27,13 +27,18 @@ var (
 var ErrNoConnector = errors.New("no single connector instance is bound to the account")
 
 // Owners checks that a session is the owner's, with owner scope, on the
-// origin the browser uses (author decision, auth split). cmd/core
+// origin the browser uses (author decision, auth split), and which accounts
+// it may change, as the core's authorizer answers (D-163). cmd/core
 // implements it over the identity context.
 type Owners interface {
 	// CheckOwner returns nil for an owner-scoped session token valid on
 	// origin, an error wrapping ErrNoSession or ErrNotOwner when it is not,
 	// and any other error when it can't tell.
 	CheckOwner(ctx context.Context, origin, sessionToken string) error
+	// Changeable returns those of accounts the owner-scoped session token
+	// valid on origin may change, in their order; it fails as CheckOwner
+	// does.
+	Changeable(ctx context.Context, origin, sessionToken string, accounts []ledger.AccountID) ([]ledger.AccountID, error)
 }
 
 // AccountBindings finds the connector instances bound to an account.
@@ -78,7 +83,7 @@ type BondLots struct {
 // ingest.ErrAccountNotBound for a delivery into another account.
 // Entering the same lot again imports nothing new.
 func (b *BondLots) Add(ctx context.Context, origin, sessionToken string, account ledger.AccountID, lot *ingest.BondLot) (ingest.Batch, error) {
-	if err := b.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
+	if err := mayChange(ctx, b.Owners, origin, sessionToken, account); err != nil {
 		return ingest.Batch{}, fmt.Errorf("adding a bond lot: %w", err)
 	}
 	if err := lot.Validate(b.Today()); err != nil {
@@ -107,7 +112,7 @@ func (b *BondLots) Add(ctx context.Context, origin, sessionToken string, account
 // a series or date wraps ingest.ErrInvalidBondLot, and a lot never entered
 // wraps ledger.ErrNothingToDelete; otherwise Delete fails as Add does.
 func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, account ledger.AccountID, key ingest.BondLotKey) (ingest.Batch, error) {
-	if err := b.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
+	if err := mayChange(ctx, b.Owners, origin, sessionToken, account); err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}
 	if err := key.Validate(); err != nil {

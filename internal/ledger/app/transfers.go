@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 
 	"github.com/arkadiuss/openfief/internal/ledger"
 )
@@ -21,12 +22,17 @@ var (
 	ErrUnknownTransaction = errors.New("unknown transaction")
 )
 
-// Owners checks that a caller is the owner (D-79).
+// Owners checks that a caller is the owner (D-79), and which accounts it
+// may change, as the core's authorizer answers (D-163).
 type Owners interface {
 	// CheckOwner returns nil for an owner-scoped session token valid on
 	// origin, an error wrapping ErrNoSession or ErrNotOwner when it is not,
 	// and any other error when it can't tell.
 	CheckOwner(ctx context.Context, origin, sessionToken string) error
+	// Changeable returns those of accounts the owner-scoped session token
+	// valid on origin may change, in their order; it fails as CheckOwner
+	// does.
+	Changeable(ctx context.Context, origin, sessionToken string, accounts []ledger.AccountID) ([]ledger.AccountID, error)
 }
 
 // TransferLinks returns the current link of each pair the owner decided on
@@ -69,16 +75,48 @@ type TransferDecider interface {
 	// DecideTransfer records decision on pair and returns the pair's
 	// current link (Ledger.DecideTransfer).
 	DecideTransfer(ctx context.Context, pair ledger.TransferPair, decision ledger.TransferDecision) (ledger.TransferLink, error)
+	// TransferAccounts returns the accounts of pair's stored legs
+	// (Ledger.TransferAccounts).
+	TransferAccounts(ctx context.Context, pair ledger.TransferPair) ([]ledger.AccountID, error)
+}
+
+// TransferAccounts returns the accounts of pair's legs that are stored,
+// withdrawal first: whom a decision on pair changes. A leg that is not
+// stored, or whose transaction was deleted, has none.
+func (l *Ledger) TransferAccounts(ctx context.Context, pair ledger.TransferPair) ([]ledger.AccountID, error) {
+	var out []ledger.AccountID
+	for _, k := range []ledger.TransactionKey{pair.Withdrawal, pair.Deposit} {
+		tx, err := currentByKey(ctx, l.store, k)
+		if errors.Is(err, ErrUnknownTransaction) {
+			continue
+		}
+		if err != nil {
+			return nil, err
+		}
+		if !slices.Contains(out, tx.Account) {
+			out = append(out, tx.Account)
+		}
+	}
+	return out, nil
 }
 
 // Decide records the owner's decision on pair: confirmed, the two legs are
 // one transfer between the owner's own accounts and leave the
 // time-weighted return's cash flows; rejected, they stay cash flows and the
 // pair is not suggested again. Either supersedes an earlier decision on the
-// pair. It returns the pair's current link.
+// pair. It returns the pair's current link. The caller must be the owner,
+// and may change the accounts of both legs (D-163); a leg in an account it
+// may not change refuses the decision with ErrNotOwner.
 func (t *Transfers) Decide(ctx context.Context, origin, sessionToken string, pair ledger.TransferPair, decision ledger.TransferDecision) (ledger.TransferLink, error) {
 	if err := t.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return ledger.TransferLink{}, fmt.Errorf("deciding a transfer: %w", err)
+	}
+	accounts, err := t.Ledger.TransferAccounts(ctx, pair)
+	if err != nil {
+		return ledger.TransferLink{}, fmt.Errorf("deciding a transfer: %w", err)
+	}
+	if authErr := mayChange(ctx, t.Owners, origin, sessionToken, accounts); authErr != nil {
+		return ledger.TransferLink{}, fmt.Errorf("deciding a transfer: %w", authErr)
 	}
 	link, err := t.Ledger.DecideTransfer(ctx, pair, decision)
 	if err != nil {

@@ -608,6 +608,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-acd2aa964a0c
+  - type: executable_for
+    from: SYM-views-app-test-helper-reader
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:53:34.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de4d0c0e1ff6
   - type: implements
     from: SYM-cosign-fn-untrusted-keyless
     to: REQ-plugins-untrusted-signer-named

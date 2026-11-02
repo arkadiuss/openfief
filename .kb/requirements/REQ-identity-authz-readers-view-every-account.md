@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-163#5
-  recorded_at: '2026-11-02T00:57:07.694Z'
+  recorded_at: '2026-11-01T22:45:20.974Z'
 id: REQ-identity-authz-readers-view-every-account
 type: req
 ---
@@ -37,7 +37,7 @@ Until SpiceDB answers the authorization interface, its only implementation must 
 
 ## Context
 
-The author recorded it on 2026-11-01, when planning viewers for the second alpha. Reason not stated. The other holders of read access are script tokens, view plugins and demo sessions (D-137). No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). The other holders of read access are script tokens, view plugins and demo sessions (D-137); none of them changes anything. Per-account grants for them come with SpiceDB (D-164). No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

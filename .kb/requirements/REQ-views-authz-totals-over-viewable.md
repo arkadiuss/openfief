@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-163#3
-  recorded_at: '2026-11-02T00:56:56.036Z'
+  recorded_at: '2026-11-01T22:45:08.805Z'
 id: REQ-views-authz-totals-over-viewable
 type: req
 ---
@@ -37,7 +37,7 @@ Totals, the allocation and performance must be computed over the accounts the ca
 
 ## Context
 
-The author recorded it on 2026-11-01, when planning viewers for the second alpha. Reason not stated. A viewer granted some accounts (D-65) would otherwise see the others through a total. D-106 makes valuation totals include cash, D-30 lists the allocation, and D-61 measures performance as a time-weighted return. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). A viewer granted some accounts (D-65) must not see the others through a total. D-106 makes valuation totals include cash, D-30 lists the allocation, and D-61 measures performance as a time-weighted return. No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

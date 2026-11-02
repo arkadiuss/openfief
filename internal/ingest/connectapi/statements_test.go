@@ -289,6 +289,7 @@ func TestUploadStatementRefusals(t *testing.T) {
 		{name: "a file over the limit", file: bytes.Repeat([]byte("x"), 300001), want: connect.CodeResourceExhausted, wantText: "too large"},
 		{name: "a message over 1 MiB", parts: []*ingestv1.UploadStatementRequest{headerPart(header()), chunkPart(bytes.Repeat([]byte("x"), 2<<20))}, want: connect.CodeResourceExhausted},
 		{name: "an account without a connector", parts: edit(func(h *ingestv1.StatementHeader) { h.AccountId = "acc-other" }), want: connect.CodeFailedPrecondition, wantText: "acc-other"},
+		{name: "an account the owner may not change", parts: edit(func(h *ingestv1.StatementHeader) { h.AccountId = deniedAccount }), want: connect.CodePermissionDenied},
 		{name: "the connector refuses the file", callErr: fmt.Errorf("%w: synthetic: not a Flex statement", app.ErrEntryRefused), want: connect.CodeInvalidArgument, wantText: "not a Flex statement"},
 		{name: "the connector takes no files", callErr: app.ErrNoEntries, want: connect.CodeFailedPrecondition},
 		{name: "the connector can't be reached", callErr: app.ErrConnectorUnavailable, want: connect.CodeUnavailable},

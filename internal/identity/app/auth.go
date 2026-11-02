@@ -192,6 +192,23 @@ type Principal struct {
 	Session identity.SessionID
 	// ScriptToken is the script token's ID; empty for a session.
 	ScriptToken identity.ScriptTokenID
+	// Demo is whether the session came from the demo authenticator.
+	Demo bool
+}
+
+// Caller returns who p is to the authorizer (D-163): a session from the
+// demo authenticator is a demo session, any other session the owner, and a
+// script token itself.
+func (p Principal) Caller() identity.Caller {
+	switch {
+	case p.Session != "" && p.Demo:
+		return identity.Caller{Holder: identity.HolderDemoSession, ID: string(p.Session)}
+	case p.Session != "":
+		return identity.Caller{Holder: identity.HolderOwner, ID: string(p.Session)}
+	case p.ScriptToken != "":
+		return identity.Caller{Holder: identity.HolderScriptToken, ID: string(p.ScriptToken)}
+	}
+	return identity.Caller{}
 }
 
 // Authenticate checks a read API bearer token: a session of any scope (read
@@ -207,7 +224,7 @@ func (a *Auth) Authenticate(ctx context.Context, token string) (Principal, error
 		if err != nil {
 			return Principal{}, err
 		}
-		return Principal{Session: s.ID}, nil
+		return Principal{Session: s.ID, Demo: s.Authenticator == identity.AuthenticatorDemo}, nil
 	}
 	if err := a.tokens.Verify(ctx, token, identity.ScopeRead); err != nil {
 		return Principal{}, err

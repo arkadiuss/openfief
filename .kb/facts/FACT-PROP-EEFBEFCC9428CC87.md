@@ -20,7 +20,7 @@ claim_key: CLAIM-D9719380F847E2D1
 claim_text: Until SpiceDB answers the authorization interface, its only implementation must let the owner act on every account.
 origin:
   kind: agent
-  recorded_at: '2026-11-02T00:56:59.351Z'
+  recorded_at: '2026-11-01T22:45:12.550Z'
 id: FACT-PROP-EEFBEFCC9428CC87
 type: fact
 ---

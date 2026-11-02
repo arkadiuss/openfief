@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-554d8457712c
+  - type: executable_for
+    from: SYM-core-test-recording-authorizer-may-act
+    to: TEST-core-owner-sessions
+    created_at: 2026-11-01T22:50:25.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-919f0439f7f8

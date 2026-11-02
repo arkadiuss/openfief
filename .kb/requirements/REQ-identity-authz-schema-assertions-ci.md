@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-164#2
-  recorded_at: '2026-11-02T00:57:21.005Z'
+  recorded_at: '2026-11-01T22:45:35.335Z'
 id: REQ-identity-authz-schema-assertions-ci
 type: req
 ---
@@ -37,7 +37,7 @@ CI must check the authorization schema's assertions.
 
 ## Context
 
-The author recorded it on 2026-11-01, when planning viewers for the second alpha. Reason not stated. zed, SpiceDB's command-line tool, validates a schema against relationships and assertions offline. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). zed, SpiceDB's command-line tool, validates a schema against relationships and assertions written next to it (authz/validation.yaml), offline. task authz:validate runs it as part of task check, which CI runs. No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

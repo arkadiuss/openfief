@@ -29,7 +29,7 @@ required_evidence: asserted
 origin:
   kind: import
   ref: design-decisions:D-164#3
-  recorded_at: '2026-11-02T00:57:26.624Z'
+  recorded_at: '2026-11-01T22:45:41.372Z'
 id: REQ-identity-authz-spicedb-answers
 type: req
 ---
@@ -37,7 +37,7 @@ From the second alpha, SpiceDB must answer the authorization interface, with its
 
 ## Context
 
-The author recorded it on 2026-11-01, when planning viewers for the second alpha. Reason not stated. D-14 runs the core's PostgreSQL cluster with CloudNativePG. The first alpha uses the rule D-163 states instead. No end-to-end test proves it yet, so its evidence floor is asserted.
+The author decided it on 2026-11-01, when planning viewers for the second alpha (D-65). D-14 runs the core's PostgreSQL cluster with CloudNativePG. Not built: the first alpha ships the rule D-163 states instead. No end-to-end test proves it yet, so its evidence floor is asserted.
 
 ## Source
 

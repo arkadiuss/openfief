@@ -29,7 +29,7 @@ func TestConnections(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx := t.Context()
+	ctx := reader(t)
 	kinds, err := v.SleeveKinds(ctx)
 	if diff := cmp.Diff(portfolio.DefaultKinds(), kinds); err != nil || diff != "" {
 		t.Errorf("SleeveKinds = %v (-want +got):\n%s", err, diff)
@@ -41,7 +41,7 @@ func TestConnections(t *testing.T) {
 // fakeConnections.
 func checkConnections(t *testing.T, v *app.Views) {
 	t.Helper()
-	ctx := t.Context()
+	ctx := reader(t)
 	bindings, err := v.ConnectorBindings(ctx)
 	if diff := cmp.Diff([]ingest.Binding{{Instance: "ibkr-main", Account: "acc-1"}}, bindings); err != nil || diff != "" {
 		t.Errorf("ConnectorBindings = %v (-want +got):\n%s", err, diff)
@@ -51,7 +51,7 @@ func checkConnections(t *testing.T, v *app.Views) {
 func TestConnectionsWithoutThePortOrFailing(t *testing.T) {
 	t.Parallel()
 	f := newFixture(t)
-	ctx := t.Context()
+	ctx := reader(t)
 	none := f.views(t)
 	if b, err := none.ConnectorBindings(ctx); err != nil || len(b) != 0 {
 		t.Errorf("ConnectorBindings without the port = %v, %v; want none", b, err)

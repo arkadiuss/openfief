@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddc5c7f1ea01
+  - type: implements
+    from: SYM-identity-app-principal-caller
+    to: REQ-identity-authz-one-interface
+    created_at: 2026-11-01T22:48:50.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b2fad5667e1
+  - type: covered_by
+    from: SYM-identity-app-principal-caller
+    to: TEST-identity-app-access
+    created_at: 2026-11-01T22:48:50.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f9a0e6b8aa6

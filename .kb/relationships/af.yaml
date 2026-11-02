@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9a4f849d883
+  - type: executable_for
+    from: SYM-views-connectapi-test-authz-acc1-only
+    to: TEST-views-connectapi-authz
+    created_at: 2026-11-01T22:53:41.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca3880242b7f
