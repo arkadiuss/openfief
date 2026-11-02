@@ -223,6 +223,7 @@ Don't create code for these before their milestone.
 | KNF | Komisja Nadzoru Finansowego, the Polish Financial Supervision Authority. |
 | KV | Key-value store. |
 | Limit order | An order that executes only at a stated price or better. |
+| LimitRange | A Kubernetes resource that sets default and maximum CPU and memory for the pods in a namespace, so a pod that declares none still gets limits. |
 | Linked account | An IBKR account linked under one user, with its own cash, positions and buying power. |
 | LLM | Large language model. |
 | MCP | Model Context Protocol: an open protocol, introduced by Anthropic in 2024, through which a model or agent calls tools and reads resources. |
