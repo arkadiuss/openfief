@@ -748,3 +748,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3428d96c5819
+  - type: constrains
+    from: REQ-ingest-ticker-currency-picked
+    to: FACT-SUBJECT-8A8B03F40D5773D9
+    created_at: 2026-11-01T23:38:05.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-969fab3a432d
+  - type: requires_property
+    from: REQ-ingest-ticker-currency-picked
+    to: FACT-PROP-7379A9968E3B60AB
+    created_at: 2026-11-01T23:38:06.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7c54e2f4ff2
+  - type: specified_by
+    from: REQ-ingest-ticker-currency-picked
+    to: SCEN-ingest-ticker-trading-currency
+    created_at: 2026-11-01T23:38:06.076Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9a28173ce49
+  - type: supersedes
+    from: REQ-ingest-ticker-currency-picked
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-01T23:38:06.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9ef294a2f86

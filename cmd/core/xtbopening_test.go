@@ -59,13 +59,13 @@ func (xtbListingConnector) LookupInstruments(_ context.Context, req *connect.Req
 	return connect.NewResponse(out), nil
 }
 
-// TestXTBOpeningUpload checks D-159 and D-160 through the real core and
-// Postgres: an opening upload whose positions all wait for their tickers'
-// ISINs starts the account at once, so the next upload is a transactions
-// batch; each confirmation adds its position to the opening on the
-// report's date, its cost in the trading currency of the confirmed
-// listing, or of the exchange its market names, London's pence converted
-// to pounds.
+// TestXTBOpeningUpload checks D-159, D-160 and D-170 through the real
+// core and Postgres: an opening upload whose positions all wait for their
+// tickers' ISINs starts the account at once, so the next upload is a
+// transactions batch; each confirmation adds its position to the opening on
+// the report's date, its cost in the trading currency of the confirmed
+// listing, or the one the owner picks for London, whose exchange quotes in
+// more than one and is refused without a pick, pence converted to pounds.
 func TestXTBOpeningUpload(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
@@ -85,8 +85,11 @@ func TestXTBOpeningUpload(t *testing.T) {
 	api := statementAPI{ingestv1connect.NewStatementServiceClient(srv.Client(), srv.URL)}
 	tickers := tickerAPI{ingestv1connect.NewTickerServiceClient(srv.Client(), srv.URL)}
 	checkOpeningStartsAccount(t, api, pool, session)
-	for symbol, isin := range map[string]string{"TESTA.PL": "PLTESTA00002", "TESTB.UK": "GBTESTB00000"} {
-		if _, confirmErr := confirm(t, tickers, session, symbol, isin); confirmErr != nil {
+	if _, confirmErr := confirm(t, tickers, session, "TESTB.UK", "GBTESTB00000"); connect.CodeOf(confirmErr) != connect.CodeInvalidArgument {
+		t.Fatalf("ConfirmTicker(TESTB.UK) picking no trading currency = %v, want InvalidArgument (D-170)", confirmErr)
+	}
+	for symbol, pick := range map[string][2]string{"TESTA.PL": {"PLTESTA00002", ""}, "TESTB.UK": {"GBTESTB00000", "GBX"}} {
+		if _, confirmErr := confirmPicking(t, tickers, session, symbol, pick[0], pick[1]); confirmErr != nil {
 			t.Fatalf("ConfirmTicker(%s): %v", symbol, confirmErr)
 		}
 	}
@@ -118,7 +121,7 @@ func checkOpeningStartsAccount(t *testing.T, api statementAPI, pool *pgxpool.Poo
 // checkOpeningLotCosts checks through the read API that the XTB account's
 // opening lots are dated on the report's date and cost 864.15 PLN for
 // TESTA.PL, on its PLN listing, and 20.63 GBP for TESTB.UK, 5 times 412.55
-// pence on the London exchange, rounded half to even; the rows of the
+// pence, the trading currency the owner picked, rounded half to even; the rows of the
 // later upload, all dated before go-live, are not booked.
 func checkOpeningLotCosts(t *testing.T, srv *httptest.Server, session string) {
 	t.Helper()

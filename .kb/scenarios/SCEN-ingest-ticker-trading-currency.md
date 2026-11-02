@@ -7,4 +7,4 @@ origin:
 id: SCEN-ingest-ticker-trading-currency
 type: scenario
 ---
-Given an opening lot named by ticker with its open price and no cost, when the owner confirms its ticker's ISIN, then its cost is its quantity times the price in the currency of the confirmed listing, or of the exchange its market names when the listing names none, a price in pence converted to pounds, rounded half to even to the currency's minor unit; the market-data connector's proposal carries the listing's currency.
+Given an opening lot named by ticker with its open price and no cost, when the owner confirms its ticker's ISIN, then its cost is its quantity times the price in the currency of the confirmed listing, or of the exchange its market names when the listing names none and that exchange quotes in only one, or else the one the owner picked, never an assumed one, a price in pence converted to pounds, rounded half to even to the currency's minor unit; the market-data connector's proposal carries the listing's currency.

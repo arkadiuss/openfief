@@ -117,15 +117,16 @@ func (m *mapping) openingCash(cash kernel.Money) error {
 // doesn't name (R-24), so the lot carries the price and no cost: the core
 // books its cost, volume times price, in the trading currency of the
 // listing the owner confirms for the ticker, or of the exchange its market
-// suffix names (D-159). A position on a market with no exchange the core
-// knows can't be priced and is unsupported. seen counts the positions
+// suffix names (D-159), or the one the owner picks when that exchange
+// quotes in more than one (D-170). A position on a market with no exchange
+// the core knows can't be priced and is unsupported. seen counts the positions
 // keyed so far, for positionKey.
 func (m *mapping) openingLot(rec record, seen map[string]int) (ingest.TickerEntry, error) {
 	symbol := rec.text(colTicker)
 	if symbol == "" {
 		return ingest.TickerEntry{}, unsupported("an open position without a ticker is not supported")
 	}
-	if _, _, ok := ingest.ExchangeCurrency(splitSymbol(symbol).Country); !ok {
+	if len(ingest.ExchangeCurrencies(splitSymbol(symbol).Country)) == 0 {
 		return ingest.TickerEntry{}, unsupported("an open position on a market of unknown currency is not supported")
 	}
 	volume, err := boughtVolume(rec)

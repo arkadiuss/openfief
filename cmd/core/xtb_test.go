@@ -171,7 +171,9 @@ func checkFirstXTBUploads(t *testing.T, api statementAPI, pool *pgxpool.Pool, se
 func slicesEqual(a, b []string) bool { return strings.Join(a, "\n") == strings.Join(b, "\n") }
 
 // checkPendingTickers checks the tickers waiting for the owner: TESTA.PL
-// with the market-data connector's proposal, TESTB.UK with none.
+// with the market-data connector's proposal, TESTB.UK with none, on
+// London's exchange, whose trading currencies the owner picks from
+// (D-170).
 func checkPendingTickers(t *testing.T, tickers tickerAPI, session string) {
 	t.Helper()
 	req := connect.NewRequest(&ingestv1.ListPendingTickersRequest{Origin: localUI, SessionToken: session})
@@ -182,18 +184,26 @@ func checkPendingTickers(t *testing.T, tickers tickerAPI, session string) {
 	}
 	want := []*ingestv1.PendingTicker{
 		{Instance: "xtb-main", Symbol: "TESTA.PL", Country: "PL", Name: "Test Alpha SA", ProposedIsin: "PLTESTA00002", ProposedName: "TEST ALPHA", Waiting: 2},
-		{Instance: "xtb-main", Symbol: "TESTB.UK", Country: "GB", Name: "Test Beta PLC", Waiting: 2},
+		{Instance: "xtb-main", Symbol: "TESTB.UK", Country: "GB", Name: "Test Beta PLC", Waiting: 2, CurrencyChoices: []string{"GBX", "GBP", "USD"}},
 	}
 	if diff := cmp.Diff(want, got.Msg.GetTickers(), protocmp.Transform()); diff != "" {
 		t.Errorf("pending tickers (-want +got):\n%s", diff)
 	}
 }
 
-// confirm confirms isin for symbol of xtb-main as the owner's UI.
+// confirm confirms isin for symbol of xtb-main as the owner's UI, picking
+// no trading currency.
 func confirm(t *testing.T, tickers tickerAPI, session, symbol, isin string) (*ingestv1.ConfirmTickerResponse, error) {
 	t.Helper()
+	return confirmPicking(t, tickers, session, symbol, isin, "")
+}
+
+// confirmPicking confirms isin for symbol of xtb-main as the owner's UI,
+// picking the trading currency code currency, "" for none (D-170).
+func confirmPicking(t *testing.T, tickers tickerAPI, session, symbol, isin, currency string) (*ingestv1.ConfirmTickerResponse, error) {
+	t.Helper()
 	req := connect.NewRequest(&ingestv1.ConfirmTickerRequest{
-		Origin: localUI, SessionToken: session, Instance: "xtb-main", Symbol: symbol, Isin: isin,
+		Origin: localUI, SessionToken: session, Instance: "xtb-main", Symbol: symbol, Isin: isin, Currency: currency,
 	})
 	req.Header().Set("Authorization", "Bearer "+uiCaller)
 	resp, err := tickers.ConfirmTicker(t.Context(), req)
@@ -204,27 +214,33 @@ func confirm(t *testing.T, tickers tickerAPI, session, symbol, isin string) (*in
 }
 
 // checkConfirmTickers confirms the proposal for TESTA.PL and a typed ISIN
-// for TESTB.UK, each booking its two waiting rows, and checks the
-// refusals.
+// for TESTB.UK, whose London listing names no trading currency, so it is
+// refused, naming the choices, until the owner picks one (D-170), each
+// booking its two waiting rows, and checks the refusals.
 func checkConfirmTickers(t *testing.T, tickers tickerAPI, session string) {
 	t.Helper()
-	for symbol, isin := range map[string]string{"TESTA.PL": "PLTESTA00002", "TESTB.UK": "GBTESTB00000"} {
-		got, err := confirm(t, tickers, session, symbol, isin)
+	_, err := confirm(t, tickers, session, "TESTB.UK", "GBTESTB00000")
+	if connect.CodeOf(err) != connect.CodeInvalidArgument || !strings.Contains(err.Error(), "GBX, GBP, USD") {
+		t.Errorf("ConfirmTicker(TESTB.UK) picking no currency = %v, want InvalidArgument naming GBX, GBP, USD", err)
+	}
+	for symbol, pick := range map[string][2]string{"TESTA.PL": {"PLTESTA00002", ""}, "TESTB.UK": {"GBTESTB00000", "GBX"}} {
+		got, err := confirmPicking(t, tickers, session, symbol, pick[0], pick[1])
 		if err != nil || got.GetBooked() != 2 {
 			t.Errorf("ConfirmTicker(%s) = %v, %v; want its 2 rows booked", symbol, got, err)
 		}
 	}
 	refusals := []struct {
-		symbol, isin string
-		want         connect.Code
+		symbol, isin, currency string
+		want                   connect.Code
 	}{
 		{symbol: "TESTB.UK", isin: "PLTESTC00008", want: connect.CodeFailedPrecondition},
+		{symbol: "TESTB.UK", isin: "GBTESTB00000", currency: "USD", want: connect.CodeFailedPrecondition},
 		{symbol: "TESTZ.PL", isin: "PLTESTC00008", want: connect.CodeNotFound},
 		{symbol: "TESTA.PL", isin: "PLTESTA00001", want: connect.CodeInvalidArgument},
 	}
 	for _, r := range refusals {
-		if _, err := confirm(t, tickers, session, r.symbol, r.isin); connect.CodeOf(err) != r.want {
-			t.Errorf("ConfirmTicker(%s, %s) = %v, want %v", r.symbol, r.isin, err, r.want)
+		if _, err := confirmPicking(t, tickers, session, r.symbol, r.isin, r.currency); connect.CodeOf(err) != r.want {
+			t.Errorf("ConfirmTicker(%s, %s, %q) = %v, want %v", r.symbol, r.isin, r.currency, err, r.want)
 		}
 	}
 	if _, err := confirm(t, tickers, "ofsess_nope_nope", "TESTA.PL", "PLTESTA00002"); connect.CodeOf(err) != connect.CodeUnauthenticated {

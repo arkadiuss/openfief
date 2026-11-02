@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-379aebbdf58e
+  - type: implements
+    from: SYM-ingest-connectapi-tickers-fail
+    to: REQ-ingest-ticker-currency-pick-required
+    created_at: 2026-11-01T23:59:48.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d4d3eedbb19
