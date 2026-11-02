@@ -13,7 +13,7 @@ The kernel, `internal/kernel`, holds the few value types that every bounded cont
 
 **Exact decimals.** Binary floating point can't represent most decimal fractions: in `float64`, 0.1 + 0.2 is 0.30000000000000004. That is fine for physics and wrong for money. `Decimal` wraps [shopspring/decimal](https://github.com/shopspring/decimal), an arbitrary-precision base-10 number, so adding, subtracting and multiplying never lose a digit. Only two operations drop digits, rounding and division, and both make the caller say how.
 
-**Bounded parsing.** Arbitrary precision has a price: `1E+2000000000` is thirteen bytes of text but a two-billion-digit number, which `String`, `Round` and every sum after them would have to write out. `ParseDecimal`, which every number from outside goes through (statements, NBP, EODHD and GUS answers, what the owner types), refuses text longer than `MaxDecimalBytes` (256) and an exponent beyond ±`MaxDecimalExponent` (100), so a spreadsheet's `1.5E-7` still parses. Its errors never quote the text, which can be an amount (GR-12).
+**Bounded parsing (D-184).** Arbitrary precision has a price: `1E+2000000000` is thirteen bytes of text but a two-billion-digit number, which `String`, `Round` and every sum after them would have to write out. `ParseDecimal`, which every number from outside goes through (statements, NBP, EODHD and GUS answers, what the owner types), refuses text longer than `MaxDecimalBytes` (256) and an exponent beyond ±`MaxDecimalExponent` (100), so a spreadsheet's `1.5E-7` still parses. Its errors never quote the text, which can be an amount (GR-12).
 
 **Rounding modes.** A rounding mode says what happens to the digits that are dropped. The kernel has three:
 

@@ -116,7 +116,7 @@ flowchart TD
   rs -- "any error" --> tce["toConnectError"]
 ```
 
-Nothing is decoded before its size is known to be bounded, and the token is checked only after the message is read, so the bounds come first. `withBoundedBody` refuses a compressed request, by `Content-Encoding`, `Connect-Content-Encoding` or `Grpc-Encoding` (`Compressed`), with 415 before reading it, since Vanguard would inflate a REST body without a limit; it answers 413 to a declared length over `MaxRequestBytes` (1 MiB) plus room for the envelope, and caps the body it reads there. The Connect handler reads a message of at most `MaxRequestBytes` and answers `resource exhausted` past it.
+Nothing is decoded before its size is known to be bounded (D-184), and the token is checked only after the message is read, so the bounds come first. `withBoundedBody` refuses a compressed request, by `Content-Encoding`, `Connect-Content-Encoding` or `Grpc-Encoding` (`Compressed`), with 415 before reading it, since Vanguard would inflate a REST body without a limit; it answers 413 to a declared length over `MaxRequestBytes` (1 MiB) plus room for the envelope, and caps the body it reads there. The Connect handler reads a message of at most `MaxRequestBytes` and answers `resource exhausted` past it.
 
 The handler parses each request field: dates with `kernel.ParseDate`, the page token with `views.ParseTransactionCursor`, and enums against the domain's constants. An unspecified allocation dimension or an unknown assertion status is an invalid argument. `TestEnumsMatch` checks that every domain enum and its protobuf twin share their numbers.
 
