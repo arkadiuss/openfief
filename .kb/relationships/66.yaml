@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9edea7c9819c
+  - type: executable_for
+    from: SYM-ui-test-cash-checkpoints-on-the-account-page
+    to: TEST-ui-cash-checkpoints
+    created_at: 2026-11-02T03:58:22.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e0611870835

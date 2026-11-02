@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7128bfb9258
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-account-id
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:43:19.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d83d683f15b7
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-account-id
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:43:19.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6979f72549e4

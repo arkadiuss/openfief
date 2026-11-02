@@ -45,12 +45,18 @@ type accountData struct {
 	Status  *viewsv1.ValuationStatus
 	// Total is the account's gross, net and liquidation values with cash
 	// on Date (D-77, D-106); nil when nothing is valued.
-	Total        *viewsv1.DateTotal
-	Holdings     []holdingRow
-	Lots         []*viewsv1.Lot
-	Cash         []*viewsv1.Money
-	Checks       []*viewsv1.AssertionCheck
-	Transactions transactionsView
+	Total    *viewsv1.DateTotal
+	Holdings []holdingRow
+	Lots     []*viewsv1.Lot
+	Cash     []*viewsv1.Money
+	Checks   []*viewsv1.AssertionCheck
+	// Checkpoints are the cash checkpoints the owner entered among Checks,
+	// with their differences (D-158).
+	Checkpoints []checkpointRow
+	// CheckpointForm is the owner's "Enter cash checkpoint" form; nil for
+	// a read session.
+	CheckpointForm *checkpointForm
+	Transactions   transactionsView
 	// Charts are the account's value over time and performance from the
 	// charts' start (D-138).
 	Charts *accountCharts
@@ -71,9 +77,10 @@ type accountData struct {
 // accountForm is what the owner posted to an account's page and why it was
 // refused, to show again; the zero value is a fresh page.
 type accountForm struct {
-	Lot    *bondLotForm
-	Upload *ingestv1.UploadStatementResponse
-	Error  string
+	Lot        *bondLotForm
+	Checkpoint *checkpointForm
+	Upload     *ingestv1.UploadStatementResponse
+	Error      string
 }
 
 // instrumentKey identifies an instrument by ISIN and venue symbol.
@@ -94,9 +101,11 @@ func joinValuations(holdings []*viewsv1.Holding, valuations []*viewsv1.Valuation
 }
 
 // accountPage shows one account on a date: its valuation status, holdings
-// with their values, open lots, cash, balance assertion checks, and a page
-// of its transactions; to the owner, it also offers the "Upload statement"
-// form, and a bond account's page the "Add bond lot" form.
+// with their values, open lots, cash, the cash checkpoints the owner
+// entered (D-158), balance assertion checks, and a page of its
+// transactions; to the owner, it also offers the "Enter cash checkpoint"
+// and "Upload statement" forms, and a bond account's page the "Add bond
+// lot" form.
 func (s *server) accountPage(w http.ResponseWriter, r *http.Request, sess session) {
 	s.renderAccount(w, r, sess, http.StatusOK, accountForm{})
 }
@@ -140,6 +149,10 @@ func (s *server) renderAccount(w http.ResponseWriter, r *http.Request, sess sess
 	if method, posErr := s.positions(r, sess, &data); posErr != nil {
 		s.coreFailed(w, r, method, posErr)
 		return
+	}
+	data.Checkpoints = checkpointRows(data.Checks)
+	if sess.Owner() {
+		data.CheckpointForm = checkpointFormFor(form.Checkpoint, s.today(), data.Cash)
 	}
 	if data.Transactions, err = s.transactions(r, sess, id, r.URL.Query().Get("page_token")); err != nil {
 		s.coreFailed(w, r, "ListTransactions", err)

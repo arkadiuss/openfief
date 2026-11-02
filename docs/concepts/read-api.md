@@ -27,7 +27,7 @@ The [read API](../glossary.md) is how anything outside the core reads the record
 | `ListHoldings` | `GET /v1/accounts/{account_id}/holdings` | `date` |
 | `ListLots` | `GET /v1/accounts/{account_id}/lots` | `date` |
 | `ListCash` | `GET /v1/accounts/{account_id}/cash` | `date` |
-| `ListAssertionChecks` | `GET /v1/accounts/{account_id}/balance-assertions` | `status`, such as `ASSERTION_STATUS_FLAGGED`; none for all |
+| `ListAssertionChecks` | `GET /v1/accounts/{account_id}/balance-assertions` | `status`, such as `ASSERTION_STATUS_FLAGGED`; none for all. Each check's `entered` marks a cash checkpoint the owner entered (D-158) |
 | `ListAccountValuations` | `GET /v1/accounts/{account_id}/valuations` | `from`, `to` |
 | `GetValuationStatus` | `GET /v1/accounts/{account_id}/valuation-status` | |
 | `ListValuationTotals` | `GET /v1/valuations` | `from`, `to` |

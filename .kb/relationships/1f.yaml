@@ -685,3 +685,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f38805c9ae6a
+  - type: implements
+    from: SYM-core-with-cash-checkpoint-service
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T03:53:12.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8717d443522c
+  - type: covered_by
+    from: SYM-core-with-cash-checkpoint-service
+    to: TEST-core-cash-checkpoints
+    created_at: 2026-11-02T03:53:12.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae2a62c386d9
+  - type: implements
+    from: SYM-core-ledger-attention
+    to: REQ-ledger-owner-cash-mismatch-attention-item
+    created_at: 2026-11-02T03:53:19.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8eb933de56a7
+  - type: covered_by
+    from: SYM-core-ledger-attention
+    to: TEST-core-cash-checkpoints
+    created_at: 2026-11-02T03:53:19.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08cba5752204
+  - type: implements
+    from: SYM-ui-checkpoint-form-for
+    to: REQ-ui-cash-checkpoints
+    created_at: 2026-11-02T03:54:01.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bfccbcd90c2
+  - type: covered_by
+    from: SYM-ui-checkpoint-form-for
+    to: TEST-ui-cash-checkpoints
+    created_at: 2026-11-02T03:54:01.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6a92987e1b9
+  - type: executable_for
+    from: SYM-core-test-ledger-attention
+    to: TEST-core-cash-checkpoints
+    created_at: 2026-11-02T03:57:28.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea5808335c27

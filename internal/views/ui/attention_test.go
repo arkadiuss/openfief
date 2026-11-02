@@ -197,25 +197,27 @@ func TestBrokenTransfer(t *testing.T) {
 func TestAttentionKindOf(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
-		kind string
-		want attentionKind
+		kind, subject string
+		want          attentionKind
 	}{
-		{"balance-assertion-flagged", attentionKind{"Flagged balance assertion", "/assertions"}},
-		{"price-check-flagged", attentionKind{"Flagged price check", "/price-checks"}},
-		{"import-problems", attentionKind{"Rows an import left out", "/accounts"}},
-		{"broker-account-unmapped", attentionKind{"Unmapped broker account", "/accounts"}},
-		{"ticker-unconfirmed", attentionKind{"Ticker to confirm", "/tickers"}},
-		{"setting-missing", attentionKind{"Missing setting", "/settings"}},
-		{"transfer-broken", attentionKind{"Transfer broken by a correction", "/transfers"}},
-		{"instrument-unclassified", attentionKind{"Instrument to classify", "/settings"}},
-		{"market-data-gap", attentionKind{"Market data stopped arriving", "/settings#series-sources-title"}},
-		{"some-later-check", attentionKind{Label: "some-later-check"}},
+		{"cash-checkpoint-mismatch", "acc/1/2026-03-31/PLN", attentionKind{"Cash checkpoint differs", "/accounts/acc%2F1#cash-checkpoints"}},
+		{"cash-checkpoint-mismatch", "malformed", attentionKind{Label: "Cash checkpoint differs"}},
+		{"balance-assertion-flagged", "", attentionKind{"Flagged balance assertion", "/assertions"}},
+		{"price-check-flagged", "", attentionKind{"Flagged price check", "/price-checks"}},
+		{"import-problems", "", attentionKind{"Rows an import left out", "/accounts"}},
+		{"broker-account-unmapped", "", attentionKind{"Unmapped broker account", "/accounts"}},
+		{"ticker-unconfirmed", "", attentionKind{"Ticker to confirm", "/tickers"}},
+		{"setting-missing", "", attentionKind{"Missing setting", "/settings"}},
+		{"transfer-broken", "", attentionKind{"Transfer broken by a correction", "/transfers"}},
+		{"instrument-unclassified", "", attentionKind{"Instrument to classify", "/settings"}},
+		{"market-data-gap", "", attentionKind{"Market data stopped arriving", "/settings#series-sources-title"}},
+		{"some-later-check", "", attentionKind{Label: "some-later-check"}},
 	}
 	for _, tt := range tests {
-		t.Run(tt.kind, func(t *testing.T) {
+		t.Run(tt.kind+" "+tt.subject, func(t *testing.T) {
 			t.Parallel()
-			if diff := cmp.Diff(tt.want, attentionKindOf(tt.kind)); diff != "" {
-				t.Errorf("attentionKindOf(%q) (-want +got):\n%s", tt.kind, diff)
+			if diff := cmp.Diff(tt.want, attentionKindOf(tt.kind, tt.subject)); diff != "" {
+				t.Errorf("attentionKindOf(%q, %q) (-want +got):\n%s", tt.kind, tt.subject, diff)
 			}
 		})
 	}

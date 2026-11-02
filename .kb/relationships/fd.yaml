@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd696162f670
+  - type: validates
+    from: TEST-ui-cash-checkpoints
+    to: REQ-ledger-owner-enters-institution-cash
+    created_at: 2026-11-02T03:49:57.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7287212a3874
+  - type: validates
+    from: TEST-ui-cash-checkpoints
+    to: REQ-ledger-owner-cash-difference-booked
+    created_at: 2026-11-02T03:49:57.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1d296912cec

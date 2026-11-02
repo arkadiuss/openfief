@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-480b88613fc7
+  - type: executable_for
+    from: SYM-ledger-pg-test-cash-checkpoint-round-trip
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-02T03:57:21.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63ea9811a567

@@ -111,6 +111,41 @@
   {{else}}<p class="muted">No cash.</p>{{end}}
 </section>
 
+<section class="card" id="cash-checkpoints" aria-labelledby="cash-checkpoints-title">
+  <h2 id="cash-checkpoints-title">Cash checkpoints</h2>
+  <p class="muted">The cash your bank, broker or the bond registry shows for this account on a date. It is checked against the cash derived from the transactions, and neither changes the other: a difference raises an attention item, and you book it here as an ordinary transaction, a deposit when the institution shows more and a withdrawal when it shows less, so it never counts as return.</p>
+  {{if .Checkpoints}}
+  <div class="table"><table>
+    <thead><tr><th scope="col">Date</th><th scope="col" class="num">Shown</th><th scope="col" class="num">Derived</th><th scope="col" class="num">Difference</th><th scope="col">Result</th>{{if $.Data.CheckpointForm}}<th scope="col">Book</th>{{end}}</tr></thead>
+    <tbody>
+    {{range .Checkpoints}}
+    <tr><td class="mono">{{.Check.Date}}</td><td class="num">{{balance .Check.Book .Check.Reported}}</td><td class="num">{{balance .Check.Book .Check.Derived}}</td><td class="num">{{money .Difference}}</td>
+      <td>{{if .Booking}}<span class="pill pill-danger">differs</span>{{else}}<span class="pill pill-ok">matches</span>{{end}}</td>
+      {{if $.Data.CheckpointForm}}<td>{{if .Booking}}<form method="post" action="/accounts/{{$.Data.Account.Id}}/cash-checkpoints/book" class="inline">
+        <input type="hidden" name="date" value="{{.Check.Date}}"><input type="hidden" name="currency" value="{{.Check.Book.Currency}}">
+        <button type="submit" aria-label="Book the difference of {{.Check.Date}} as a {{.Booking}}">Book as a {{.Booking}}</button></form>{{else}}<span class="muted">nothing to book</span>{{end}}</td>{{end}}</tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  {{else}}<p class="muted">No cash checkpoints yet.</p>{{end}}
+  {{with .CheckpointForm}}
+  <form method="post" action="/accounts/{{$.Data.Account.Id}}/cash-checkpoints">
+    <div class="fields">
+      <div class="field">
+        <label for="checkpoint-date">On</label>
+        <input id="checkpoint-date" name="date" value="{{.Date}}" required type="date">
+      </div>
+      <div class="field">
+        <label for="checkpoint-amount">Cash the institution shows</label>
+        <div class="unit"><input id="checkpoint-amount" name="amount" value="{{.Amount}}" required inputmode="decimal" size="12" autocomplete="off" aria-describedby="checkpoint-amount-help"><input id="checkpoint-currency" name="currency" value="{{.Currency}}" required aria-label="Currency" maxlength="3" size="4" autocomplete="off" pattern="[A-Za-z]{3}" placeholder="PLN"></div>
+        <p class="help" id="checkpoint-amount-help">The balance at the end of that day, as 1250.00. Entering another for the same day and currency replaces it.</p>
+      </div>
+    </div>
+    <div class="actions"><button type="submit">Enter cash checkpoint</button></div>
+  </form>
+  {{end}}
+</section>
+
 <section class="card" aria-labelledby="lots-title">
   <h2 id="lots-title">Open lots</h2>
   {{if .BondLot}}<p class="muted">Delete a lot entered by mistake. The ledger keeps it as a superseded version, and entering it again brings it back.</p>{{end}}

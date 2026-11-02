@@ -4,7 +4,7 @@
   <tbody>
   {{range .}}
   <tr>
-    <td class="mono">{{.Date}}</td><td>{{book .Book}}</td><td class="num">{{balance .Book .Reported}}</td><td class="num">{{balance .Book .Derived}}</td>
+    <td class="mono">{{.Date}}</td><td>{{book .Book}}{{if .Entered}} <span class="pill pill-neutral">cash checkpoint</span>{{end}}</td><td class="num">{{balance .Book .Reported}}</td><td class="num">{{balance .Book .Derived}}</td>
     <td>{{if eq .Status.String "ASSERTION_STATUS_FLAGGED"}}<span class="pill pill-danger">flagged</span>{{else}}<span class="pill pill-ok">{{enum .Status.String "ASSERTION_STATUS_"}}</span>{{end}}</td>
   </tr>
   {{else}}

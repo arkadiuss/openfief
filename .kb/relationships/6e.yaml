@@ -636,3 +636,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e85044cc7dc1
+  - type: implements
+    from: SYM-ui-server-book-cash-difference
+    to: REQ-ui-cash-checkpoints
+    created_at: 2026-11-02T03:54:15.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94affede66d2
+  - type: implements
+    from: SYM-ui-server-book-cash-difference
+    to: REQ-ledger-owner-cash-difference-booked
+    created_at: 2026-11-02T03:54:15.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b410e802926f
+  - type: covered_by
+    from: SYM-ui-server-book-cash-difference
+    to: TEST-ui-cash-checkpoints
+    created_at: 2026-11-02T03:54:15.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f07812992607
+  - type: implements
+    from: SYM-ledgerv1connect-cash-checkpoints-unimplemented-cash-checkpoint-service-handler-record-cash-checkpoint
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:45:57.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a474ce431c4
+  - type: covered_by
+    from: SYM-ledgerv1connect-cash-checkpoints-unimplemented-cash-checkpoint-service-handler-record-cash-checkpoint
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:45:57.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-514c625ae524

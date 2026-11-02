@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-919f0439f7f8
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-fake-attention-raise
+    to: TEST-ledger-app-cash-checkpoints
+    created_at: 2026-11-02T03:55:22.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a68ba641d9b7

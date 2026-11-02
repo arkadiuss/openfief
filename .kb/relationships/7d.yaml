@@ -699,3 +699,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6c7604bc3ed3
+  - type: implements
+    from: SYM-ledger-connectapi-checkpoint-service-record-cash-checkpoint
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T03:52:32.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8228bd079a4
+  - type: implements
+    from: SYM-ledger-connectapi-checkpoint-service-record-cash-checkpoint
+    to: REQ-ledger-owner-enters-institution-cash
+    created_at: 2026-11-02T03:52:32.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1996c111693d
+  - type: covered_by
+    from: SYM-ledger-connectapi-checkpoint-service-record-cash-checkpoint
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T03:52:32.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af46eaff84ba

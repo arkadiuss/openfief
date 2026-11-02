@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc28347a0517
+  - type: executable_for
+    from: SYM-ledger-test-helper-check-booked
+    to: TEST-ledger-cash-checkpoint
+    created_at: 2026-11-02T03:54:49.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4d5aa27fd5c

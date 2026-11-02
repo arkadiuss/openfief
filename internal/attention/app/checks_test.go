@@ -147,12 +147,34 @@ func TestChecks(t *testing.T) {
 				}
 				matched := flagged
 				matched.Status = ledgerapp.AssertionMatched
+				entered := flagged
+				entered.Assertion = ledger.CashCheckpoint(a1, day(t, "2026-03-03"), pln(t, "100"))
 				return app.FlaggedAssertions(&fakeLedger{
 					accounts: []ledger.Account{{ID: a1}},
-					checks:   map[ledger.AccountID][]ledgerapp.AssertionCheck{a1: {flagged, matched}},
+					checks:   map[ledger.AccountID][]ledgerapp.AssertionCheck{a1: {flagged, matched, entered}},
 				})
 			},
 			want: []attention.Condition{{Kind: attention.KindAssertionFlagged, Subject: "acc-1/2026-03-02/cash:PLN", Detail: "derived 90, reported 100"}},
+		},
+		{
+			name: "cash checkpoints: only the owner's, flagged",
+			check: func(t *testing.T) app.Check {
+				t.Helper()
+				entered := ledgerapp.AssertionCheck{
+					Assertion: ledger.CashCheckpoint(a1, day(t, "2026-03-31"), pln(t, "105")), Status: ledgerapp.AssertionFlagged,
+					Derived: pln(t, "100").Amount(),
+				}
+				matched := entered
+				matched.Assertion.Date, matched.Status = day(t, "2026-04-30"), ledgerapp.AssertionMatched
+				reported := entered
+				reported.Assertion.Entered = false
+				reported.Assertion.Date = day(t, "2026-03-02")
+				return app.CashCheckpoints(&fakeLedger{
+					accounts: []ledger.Account{{ID: a1}},
+					checks:   map[ledger.AccountID][]ledgerapp.AssertionCheck{a1: {reported, entered, matched}},
+				})
+			},
+			want: []attention.Condition{{Kind: attention.KindCashCheckpointMismatch, Subject: "acc-1/2026-03-31/PLN", Detail: "shown 105 PLN, derived 100 PLN, difference 5 PLN"}},
 		},
 		{
 			name: "broken transfers",

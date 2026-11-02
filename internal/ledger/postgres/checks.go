@@ -11,7 +11,8 @@ import (
 )
 
 // SaveAssertionCheck creates c or replaces the stored check of the same
-// account, date and ledger account.
+// account, date and ledger account, with whether the owner entered it
+// (D-158).
 func (s *Store) SaveAssertionCheck(ctx context.Context, c *app.AssertionCheck) error {
 	a := &c.Assertion
 	var currency *string
@@ -22,12 +23,13 @@ func (s *Store) SaveAssertionCheck(ctx context.Context, c *app.AssertionCheck) e
 	in := columnsOf(a.Book)
 	_, err := s.db.Exec(ctx, `
 		INSERT INTO ledger.assertion_checks
-		    (account_id, date, book, book_kind, currency, isin, symbol, balance, status, derived)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+		    (account_id, date, book, book_kind, currency, isin, symbol, balance, status, derived, entered)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
 		ON CONFLICT (account_id, date, book) DO UPDATE SET
-		    balance = EXCLUDED.balance, status = EXCLUDED.status, derived = EXCLUDED.derived, checked_at = now()`,
+		    balance = EXCLUDED.balance, status = EXCLUDED.status, derived = EXCLUDED.derived,
+		    entered = EXCLUDED.entered, checked_at = now()`,
 		string(a.Account), a.Date.String(), a.Book.String(), a.Book.Kind.String(), currency, in.isin, in.symbol,
-		a.Balance.String(), c.Status.String(), c.Derived.String())
+		a.Balance.String(), c.Status.String(), c.Derived.String(), a.Entered)
 	if err != nil {
 		return fmt.Errorf("saving the balance assertion check of %s on %s: %w", a.Account, a.Date, err)
 	}
@@ -39,7 +41,7 @@ func (s *Store) SaveAssertionCheck(ctx context.Context, c *app.AssertionCheck) e
 func (s *Store) AssertionChecks(ctx context.Context, account ledger.AccountID) ([]app.AssertionCheck, error) {
 	rows, err := s.db.Query(ctx, `
 		SELECT to_char(date, 'YYYY-MM-DD'), book_kind, coalesce(currency, ''), coalesce(isin, ''), coalesce(symbol, ''),
-		       balance::text, status, derived::text
+		       balance::text, status, derived::text, entered
 		FROM ledger.assertion_checks
 		WHERE account_id = $1
 		ORDER BY date, book COLLATE "C"`, string(account))
@@ -58,10 +60,11 @@ func (s *Store) AssertionChecks(ctx context.Context, account ledger.AccountID) (
 // scanCheck reads one row of AssertionChecks' query.
 func scanCheck(row pgx.CollectableRow, account ledger.AccountID) (app.AssertionCheck, error) {
 	var date, kind, currency, isin, symbol, balance, status, derived string
-	if err := row.Scan(&date, &kind, &currency, &isin, &symbol, &balance, &status, &derived); err != nil {
+	var entered bool
+	if err := row.Scan(&date, &kind, &currency, &isin, &symbol, &balance, &status, &derived, &entered); err != nil {
 		return app.AssertionCheck{}, fmt.Errorf("reading a check: %w", err)
 	}
-	c := app.AssertionCheck{Assertion: ledger.BalanceAssertion{Account: account}}
+	c := app.AssertionCheck{Assertion: ledger.BalanceAssertion{Account: account, Entered: entered}}
 	var err error
 	if c.Assertion.Date, err = parseDate(date); err != nil {
 		return app.AssertionCheck{}, err

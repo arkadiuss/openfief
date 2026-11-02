@@ -457,10 +457,22 @@ func (f *fakeRead) ListAssertionChecks(_ context.Context, r *connect.Request[vie
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
 	}
-	return connect.NewResponse(&viewsv1.ListAssertionChecksResponse{AccountId: accountID, Checks: []*viewsv1.AssertionCheck{{
+	checks := []*viewsv1.AssertionCheck{{
 		Date: "2026-03-15", Book: &viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "EUR"},
 		Reported: "100.00", Derived: "90.00", Status: viewsv1.AssertionStatus_ASSERTION_STATUS_FLAGGED,
-	}}}), nil
+	}}
+	if r.Msg.GetStatus() == viewsv1.AssertionStatus_ASSERTION_STATUS_UNSPECIFIED {
+		// The account page lists every check: the owner's cash checkpoints
+		// too (D-158), one that differs and one that matches.
+		checks = append(checks, &viewsv1.AssertionCheck{
+			Date: "2026-03-31", Book: &viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "EUR"},
+			Reported: "120.50", Derived: "100.00", Status: viewsv1.AssertionStatus_ASSERTION_STATUS_FLAGGED, Entered: true,
+		}, &viewsv1.AssertionCheck{
+			Date: "2026-02-28", Book: &viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "EUR"},
+			Reported: "50", Derived: "50", Status: viewsv1.AssertionStatus_ASSERTION_STATUS_MATCHED, Entered: true,
+		})
+	}
+	return connect.NewResponse(&viewsv1.ListAssertionChecksResponse{AccountId: accountID, Checks: checks}), nil
 }
 
 func (f *fakeRead) ListHoldings(_ context.Context, r *connect.Request[viewsv1.ListHoldingsRequest]) (*connect.Response[viewsv1.ListHoldingsResponse], error) {
@@ -585,21 +597,22 @@ func (f *fakeRead) status() *viewsv1.ValuationStatus {
 // servers, and the plugin token file the AuthService,
 // ModelPortfolioService, BondLotService and StatementService clients read.
 type harness struct {
-	auth       *fakeAuth
-	model      *fakeModel
-	bondLots   *fakeBondLots
-	statements *fakeStatements
-	sleeves    *fakeSleeves
-	accounts   *fakeAccounts
-	marketData *fakeMarketData
-	checks     *fakePriceChecks
-	settings   *fakeSettings
-	transfers  *fakeTransfers
-	attention  *fakeAttention
-	tickers    *fakeTickers
-	read       *fakeRead
-	handler    http.Handler
-	tokenFile  string
+	auth        *fakeAuth
+	model       *fakeModel
+	bondLots    *fakeBondLots
+	statements  *fakeStatements
+	sleeves     *fakeSleeves
+	accounts    *fakeAccounts
+	marketData  *fakeMarketData
+	checks      *fakePriceChecks
+	settings    *fakeSettings
+	transfers   *fakeTransfers
+	checkpoints *fakeCheckpoints
+	attention   *fakeAttention
+	tickers     *fakeTickers
+	read        *fakeRead
+	handler     http.Handler
+	tokenFile   string
 }
 
 // newHarness starts both fakes and the UI. The UI's AuthService client is
@@ -612,6 +625,7 @@ func newHarness(t *testing.T) *harness {
 	}
 	h.settings = &fakeSettings{read: h.read}
 	h.transfers = &fakeTransfers{}
+	h.checkpoints = &fakeCheckpoints{}
 	h.attention = newFakeAttention()
 	h.read.attention = h.attention
 	h.tickers = &fakeTickers{}
@@ -627,6 +641,7 @@ func newHarness(t *testing.T) *harness {
 	mux.Handle(valuationv1connect.NewPriceCheckServiceHandler(h.checks))
 	mux.Handle(valuationv1connect.NewSettingsServiceHandler(h.settings))
 	mux.Handle(ledgerv1connect.NewTransferServiceHandler(h.transfers))
+	mux.Handle(ledgerv1connect.NewCashCheckpointServiceHandler(h.checkpoints))
 	mux.Handle(attentionv1connect.NewAttentionServiceHandler(h.attention))
 	mux.Handle(ingestv1connect.NewTickerServiceHandler(h.tickers))
 	mux.Handle(viewsv1connect.NewReadServiceHandler(h.read))
@@ -635,20 +650,21 @@ func newHarness(t *testing.T) *harness {
 	h.tokenFile = filepath.Join(t.TempDir(), "token")
 	h.writeToken(t, pluginToken)
 	handler, err := New(&Config{
-		Auth:        identityv1connect.NewAuthServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Model:       portfoliov1connect.NewModelPortfolioServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		BondLots:    ingestv1connect.NewBondLotServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Statements:  ingestv1connect.NewStatementServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Sleeves:     portfoliov1connect.NewSleeveServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Accounts:    ingestv1connect.NewAccountServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		MarketData:  valuationv1connect.NewMarketDataServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		PriceChecks: valuationv1connect.NewPriceCheckServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Read:        viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
-		Today:       func() kernel.Date { return mustDate(t, "2026-04-01") },
-		Settings:    valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Transfers:   ledgerv1connect.NewTransferServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Tickers:     ingestv1connect.NewTickerServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
-		Attention:   attentionv1connect.NewAttentionServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Auth:            identityv1connect.NewAuthServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Model:           portfoliov1connect.NewModelPortfolioServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		BondLots:        ingestv1connect.NewBondLotServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Statements:      ingestv1connect.NewStatementServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Sleeves:         portfoliov1connect.NewSleeveServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Accounts:        ingestv1connect.NewAccountServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		MarketData:      valuationv1connect.NewMarketDataServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		PriceChecks:     valuationv1connect.NewPriceCheckServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Read:            viewsv1connect.NewReadServiceClient(core.Client(), core.URL),
+		Today:           func() kernel.Date { return mustDate(t, "2026-04-01") },
+		Settings:        valuationv1connect.NewSettingsServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Transfers:       ledgerv1connect.NewTransferServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		CashCheckpoints: ledgerv1connect.NewCashCheckpointServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Tickers:         ingestv1connect.NewTickerServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Attention:       attentionv1connect.NewAttentionServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 	})
 	if err != nil {
 		t.Fatalf("New: %v", err)

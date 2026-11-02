@@ -35,7 +35,7 @@ const staticCacheControl = "public, max-age=3600"
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService, TickerService, AttentionService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService, CashCheckpointService, TickerService, AttentionService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -73,6 +73,10 @@ type Config struct {
 	// Transfers calls the core's TransferService (D-105, D-79) like Auth:
 	// the owner's decisions on suggested transfers.
 	Transfers ledgerv1connect.TransferServiceClient
+	// CashCheckpoints calls the core's CashCheckpointService (D-158, D-79)
+	// like Auth: the cash the owner saw at an institution, and the
+	// differences the owner books from it.
+	CashCheckpoints ledgerv1connect.CashCheckpointServiceClient
 	// Attention calls the core's AttentionService (D-130, D-79) like Auth:
 	// the owner's acknowledgements and resolutions of attention items.
 	Attention attentionv1connect.AttentionServiceClient
@@ -91,7 +95,7 @@ type Config struct {
 func (cfg *Config) missingClient() bool {
 	clients := []any{
 		cfg.Auth, cfg.Model, cfg.BondLots, cfg.Statements, cfg.Read, cfg.Sleeves, cfg.Accounts, cfg.MarketData,
-		cfg.PriceChecks, cfg.Settings, cfg.Transfers, cfg.Tickers, cfg.Attention,
+		cfg.PriceChecks, cfg.Settings, cfg.Transfers, cfg.Tickers, cfg.Attention, cfg.CashCheckpoints,
 	}
 	return slices.Contains(clients, nil)
 }
@@ -116,6 +120,7 @@ type server struct {
 	log         *slog.Logger
 	settings    valuationv1connect.SettingsServiceClient
 	transfers   ledgerv1connect.TransferServiceClient
+	checkpoints ledgerv1connect.CashCheckpointServiceClient
 	attention   attentionv1connect.AttentionServiceClient
 }
 
@@ -142,7 +147,8 @@ func New(cfg *Config) (http.Handler, error) {
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
 		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
 		settings: cfg.Settings, transfers: cfg.Transfers, tickers: cfg.Tickers, attention: cfg.Attention,
-		pages: p, pwa: app, today: cfg.Today, log: cfg.Log,
+		checkpoints: cfg.CashCheckpoints,
+		pages:       p, pwa: app, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
 		s.today = utcToday
@@ -190,6 +196,8 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots/delete", s.withOwner(s.deleteBondLot))
+	mux.HandleFunc("POST /accounts/{id}/cash-checkpoints", s.withOwner(s.recordCashCheckpoint))
+	mux.HandleFunc("POST /accounts/{id}/cash-checkpoints/book", s.withOwner(s.bookCashDifference))
 	s.checkRoutes(mux)
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	s.settingsRoutes(mux)

@@ -18,8 +18,20 @@ type attentionKind struct {
 }
 
 // attentionKindOf names kind, one of the core's kinds of attention items
-// (D-130, D-131, D-132, D-94); a kind it doesn't know shows its own name and no page.
-func attentionKindOf(kind string) attentionKind {
+// (D-130, D-131, D-132, D-94, D-158), and the page where the owner acts on
+// the item with subject; a kind it doesn't know shows its own name and no
+// page. A mismatched cash checkpoint links to its account's checkpoints,
+// where the owner books the difference.
+func attentionKindOf(kind, subject string) attentionKind {
+	if kind == "cash-checkpoint-mismatch" {
+		return attentionKind{"Cash checkpoint differs", checkpointPage(subject)}
+	}
+	return checkKindOf(kind)
+}
+
+// checkKindOf names kind, one of the kinds whose items all act on one
+// page, whatever their subject.
+func checkKindOf(kind string) attentionKind {
 	switch kind {
 	case "balance-assertion-flagged":
 		return attentionKind{"Flagged balance assertion", "/assertions"}
@@ -78,7 +90,7 @@ func (s *server) renderAttention(w http.ResponseWriter, r *http.Request, sess se
 	view := attentionView{Error: refusal}
 	owner := sess.Owner()
 	for _, it := range resp.Msg.GetItems() {
-		row := attentionRow{Item: it, Kind: attentionKindOf(it.GetKind())}
+		row := attentionRow{Item: it, Kind: attentionKindOf(it.GetKind(), it.GetSubject())}
 		switch it.GetState() {
 		case viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN:
 			row.Acknowledge, row.Resolve = owner, owner && it.GetOwnerResolves()

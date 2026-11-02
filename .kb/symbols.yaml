@@ -126477,3 +126477,1712 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-authz
+  - id: SYM-ledger-cash-checkpoint
+    title: CashCheckpoint
+    sourceFile: internal/ledger/cashcheckpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:50:33.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-cash-checkpoint
+      - type: implements
+        target: REQ-ledger-owner-cash-stored-as-assertion
+      - type: implements
+        target: REQ-ledger-owner-enters-institution-cash
+  - id: SYM-ledger-cash-difference
+    title: CashDifference
+    sourceFile: internal/ledger/cashcheckpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:50:40.867Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-cash-checkpoint
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-default-deposit
+  - id: SYM-ledger-checkpoint-subject
+    title: CheckpointSubject
+    sourceFile: internal/ledger/cashcheckpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:50:48.111Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-cash-checkpoint
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-ledger-checkpoint-detail
+    title: CheckpointDetail
+    sourceFile: internal/ledger/cashcheckpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:50:55.132Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-cash-checkpoint
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-ledger-app-attention-raiser
+    title: AttentionRaiser
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:51:02.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-ledger-app-ledger-with-attention
+    title: Ledger.WithAttention
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:51:09.327Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-ledger-app-ledger-record-cash-checkpoint
+    title: Ledger.RecordCashCheckpoint
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:51:16.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-stored-as-assertion
+      - type: implements
+        target: REQ-ledger-owner-enters-institution-cash
+  - id: SYM-ledger-app-ledger-book-cash-difference
+    title: Ledger.BookCashDifference
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:51:22.738Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-derived-cash-never-overwritten
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+  - id: SYM-ledger-app-ledger-checkpoint
+    title: Ledger.checkpoint
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:51:29.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+  - id: SYM-ledger-app-ledger-after-checkpoint
+    title: Ledger.afterCheckpoint
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:51:36.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-ledger-app-ledger-notify-checkpoint
+    title: Ledger.notifyCheckpoint
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:51:43.640Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-ledger-app-cash-checkpoints
+    title: CashCheckpoints
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:51:49.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-enters-institution-cash
+  - id: SYM-ledger-app-cash-checkpoint-book
+    title: CashCheckpointBook
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:51:56.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-enters-institution-cash
+  - id: SYM-ledger-app-cash-checkpoints-record
+    title: CashCheckpoints.Record
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:52:03.164Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-enters-institution-cash
+  - id: SYM-ledger-app-cash-checkpoints-book-difference
+    title: CashCheckpoints.BookDifference
+    sourceFile: internal/ledger/app/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:52:09.891Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+  - id: SYM-ledger-connectapi-new-cash-checkpoints
+    title: NewCashCheckpoints
+    sourceFile: internal/ledger/connectapi/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:52:17.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledger-connectapi-checkpoint-service
+    title: checkpointService
+    sourceFile: internal/ledger/connectapi/cashcheckpoints.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:52:22.990Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledger-connectapi-checkpoint-service-record-cash-checkpoint
+    title: checkpointService.RecordCashCheckpoint
+    sourceFile: internal/ledger/connectapi/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:52:29.801Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+      - type: implements
+        target: REQ-ledger-owner-enters-institution-cash
+  - id: SYM-ledger-connectapi-checkpoint-service-book-cash-difference
+    title: checkpointService.BookCashDifference
+    sourceFile: internal/ledger/connectapi/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:52:36.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+  - id: SYM-ledger-connectapi-date-and-currency
+    title: dateAndCurrency
+    sourceFile: internal/ledger/connectapi/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:52:43.599Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledger-connectapi-checkpoint-service-fail
+    title: checkpointService.fail
+    sourceFile: internal/ledger/connectapi/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:52:50.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-attention-app-cash-checkpoints
+    title: CashCheckpoints
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:52:57.199Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-core-new-cash-checkpoints
+    title: newCashCheckpoints
+    sourceFile: cmd/core/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:53:03.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-core-with-cash-checkpoint-service
+    title: withCashCheckpointService
+    sourceFile: cmd/core/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:53:10.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-core-ledger-attention
+    title: ledgerAttention
+    sourceFile: cmd/core/cashcheckpoints.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:53:16.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-core-ledger-attention-raise
+    title: ledgerAttention.Raise
+    sourceFile: cmd/core/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:53:23.657Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-core-ledger-attention-clear
+    title: ledgerAttention.Clear
+    sourceFile: cmd/core/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:53:30.785Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-mismatch-attention-item
+  - id: SYM-ui-checkpoint-row
+    title: checkpointRow
+    sourceFile: internal/views/ui/cashcheckpoints.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:53:37.614Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-cash-checkpoints
+      - type: implements
+        target: REQ-ui-cash-checkpoints
+  - id: SYM-ui-checkpoint-form
+    title: checkpointForm
+    sourceFile: internal/views/ui/cashcheckpoints.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:53:44.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-cash-checkpoints
+      - type: implements
+        target: REQ-ui-cash-checkpoints
+  - id: SYM-ui-checkpoint-rows
+    title: checkpointRows
+    sourceFile: internal/views/ui/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:53:51.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-cash-checkpoints
+      - type: implements
+        target: REQ-ui-cash-checkpoints
+  - id: SYM-ui-checkpoint-form-for
+    title: checkpointFormFor
+    sourceFile: internal/views/ui/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:53:59.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-cash-checkpoints
+      - type: implements
+        target: REQ-ui-cash-checkpoints
+  - id: SYM-ui-server-record-cash-checkpoint
+    title: server.recordCashCheckpoint
+    sourceFile: internal/views/ui/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:54:05.989Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-enters-institution-cash
+      - type: implements
+        target: REQ-ui-cash-checkpoints
+  - id: SYM-ui-server-book-cash-difference
+    title: server.bookCashDifference
+    sourceFile: internal/views/ui/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:54:12.905Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-owner-cash-difference-booked
+      - type: implements
+        target: REQ-ui-cash-checkpoints
+  - id: SYM-ui-server-after-checkpoint
+    title: server.afterCheckpoint
+    sourceFile: internal/views/ui/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:54:20.031Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-cash-checkpoints
+      - type: implements
+        target: REQ-ui-cash-checkpoints
+  - id: SYM-ui-checkpoint-page
+    title: checkpointPage
+    sourceFile: internal/views/ui/cashcheckpoints.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:54:26.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-cash-checkpoints
+  - id: SYM-ui-check-kind-of
+    title: checkKindOf
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:54:33.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-attention-page
+  - id: SYM-ledger-test-cash-difference
+    title: TestCashDifference
+    sourceFile: internal/ledger/cashcheckpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:54:40.312Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-cash-checkpoint
+  - id: SYM-ledger-test-helper-check-booked
+    title: checkBooked
+    sourceFile: internal/ledger/cashcheckpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:54:46.602Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-cash-checkpoint
+  - id: SYM-ledger-test-checkpoint-item
+    title: TestCheckpointItem
+    sourceFile: internal/ledger/cashcheckpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:54:53.367Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-cash-checkpoint
+  - id: SYM-ledger-test-cash-checkpoint-is-entered-cash
+    title: TestCashCheckpointIsEnteredCash
+    sourceFile: internal/ledger/cashcheckpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:54:59.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-cash-checkpoint
+  - id: SYM-ledger-app-test-helper-attention-call
+    title: attentionCall
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:55:07.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-helper-fake-attention
+    title: fakeAttention
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:55:12.716Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-helper-fake-attention-raise
+    title: fakeAttention.Raise
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:55:19.806Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-helper-fake-attention-clear
+    title: fakeAttention.Clear
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:55:27.179Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-cash-checkpoints
+    title: TestCashCheckpoints
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:55:34.358Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-helper-check-booking
+    title: checkBooking
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:55:41.653Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-helper-check-cash
+    title: checkCash
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:55:48.645Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-cash-checkpoint-refusals
+    title: TestCashCheckpointRefusals
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:55:55.866Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-helper-fake-book
+    title: fakeBook
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:56:02.047Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-helper-fake-book-record-cash-checkpoint
+    title: fakeBook.RecordCashCheckpoint
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:56:08.991Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-helper-fake-book-book-cash-difference
+    title: fakeBook.BookCashDifference
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:56:15.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-app-test-cash-checkpoints-need-the-owner
+    title: TestCashCheckpointsNeedTheOwner
+    sourceFile: internal/ledger/app/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:56:22.995Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-cash-checkpoints
+  - id: SYM-ledger-connectapi-test-helper-checkpoint-book
+    title: checkpointBook
+    sourceFile: internal/ledger/connectapi/cashcheckpoints_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:56:28.924Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-cash-checkpoints
+  - id: SYM-ledger-connectapi-test-helper-checkpoint-book-record
+    title: checkpointBook.RecordCashCheckpoint
+    sourceFile: internal/ledger/connectapi/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:56:35.906Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-cash-checkpoints
+  - id: SYM-ledger-connectapi-test-helper-checkpoint-book-book
+    title: checkpointBook.BookCashDifference
+    sourceFile: internal/ledger/connectapi/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:56:42.566Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-cash-checkpoints
+  - id: SYM-ledger-connectapi-test-helper-checkpoint-api
+    title: checkpointAPI
+    sourceFile: internal/ledger/connectapi/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:56:49.627Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-cash-checkpoints
+  - id: SYM-ledger-connectapi-test-helper-checkpoint-client
+    title: checkpointClient
+    sourceFile: internal/ledger/connectapi/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:56:56.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-cash-checkpoints
+  - id: SYM-ledger-connectapi-test-cash-checkpoint-service
+    title: TestCashCheckpointService
+    sourceFile: internal/ledger/connectapi/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:57:03.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-cash-checkpoints
+  - id: SYM-ledger-connectapi-test-cash-checkpoint-service-refusals
+    title: TestCashCheckpointServiceRefusals
+    sourceFile: internal/ledger/connectapi/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:57:10.979Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-cash-checkpoints
+  - id: SYM-ledger-pg-test-cash-checkpoint-round-trip
+    title: TestCashCheckpointRoundTrip
+    sourceFile: internal/ledger/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:57:18.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-store
+  - id: SYM-core-test-ledger-attention
+    title: TestLedgerAttention
+    sourceFile: cmd/core/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:57:25.283Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cash-checkpoints
+  - id: SYM-core-test-cash-checkpoint-service
+    title: TestCashCheckpointService
+    sourceFile: cmd/core/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:57:32.088Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cash-checkpoints
+  - id: SYM-core-test-helper-check-checkpoint-refusals
+    title: checkCheckpointRefusals
+    sourceFile: cmd/core/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:57:38.398Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cash-checkpoints
+  - id: SYM-core-test-helper-check-checkpoint-item
+    title: checkCheckpointItem
+    sourceFile: cmd/core/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:57:44.882Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-cash-checkpoints
+  - id: SYM-ui-test-helper-fake-checkpoints
+    title: fakeCheckpoints
+    sourceFile: internal/views/ui/cashcheckpoints_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:57:51.123Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-cash-checkpoints
+  - id: SYM-ui-test-helper-fake-checkpoints-record
+    title: fakeCheckpoints.RecordCashCheckpoint
+    sourceFile: internal/views/ui/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:57:58.212Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-cash-checkpoints
+  - id: SYM-ui-test-helper-fake-checkpoints-book
+    title: fakeCheckpoints.BookCashDifference
+    sourceFile: internal/views/ui/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:58:05.590Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-cash-checkpoints
+  - id: SYM-ui-test-helper-form-post
+    title: formPost
+    sourceFile: internal/views/ui/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:58:12.689Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-cash-checkpoints
+  - id: SYM-ui-test-cash-checkpoints-on-the-account-page
+    title: TestCashCheckpointsOnTheAccountPage
+    sourceFile: internal/views/ui/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:58:19.819Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-cash-checkpoints
+  - id: SYM-ui-test-cash-checkpoint-forms
+    title: TestCashCheckpointForms
+    sourceFile: internal/views/ui/cashcheckpoints_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:58:26.694Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-cash-checkpoints
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint
+    title: CashCheckpoint
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:39:08.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-reset
+    title: CashCheckpoint.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:39:15.217Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-string
+    title: CashCheckpoint.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:39:21.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-proto-message
+    title: CashCheckpoint.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:39:28.425Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-proto-reflect
+    title: CashCheckpoint.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:39:35.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-descriptor
+    title: CashCheckpoint.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:39:41.292Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-account-id
+    title: CashCheckpoint.GetAccountId
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:39:47.784Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-date
+    title: CashCheckpoint.GetDate
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:39:54.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-currency
+    title: CashCheckpoint.GetCurrency
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:00.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-shown
+    title: CashCheckpoint.GetShown
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:06.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-derived
+    title: CashCheckpoint.GetDerived
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:13.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-matched
+    title: CashCheckpoint.GetMatched
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:19.566Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request
+    title: RecordCashCheckpointRequest
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:24.877Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-reset
+    title: RecordCashCheckpointRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:31.308Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-string
+    title: RecordCashCheckpointRequest.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:38.235Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-proto-message
+    title: RecordCashCheckpointRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:44.870Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-proto-reflect
+    title: RecordCashCheckpointRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:51.087Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-descriptor
+    title: RecordCashCheckpointRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:40:57.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-origin
+    title: RecordCashCheckpointRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:41:03.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-session-token
+    title: RecordCashCheckpointRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:41:10.646Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-account-id
+    title: RecordCashCheckpointRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:41:17.142Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-date
+    title: RecordCashCheckpointRequest.GetDate
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:41:23.632Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-currency
+    title: RecordCashCheckpointRequest.GetCurrency
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:41:30.137Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-amount
+    title: RecordCashCheckpointRequest.GetAmount
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:41:36.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response
+    title: RecordCashCheckpointResponse
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:41:42.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-reset
+    title: RecordCashCheckpointResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:41:48.339Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-string
+    title: RecordCashCheckpointResponse.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:41:54.557Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-proto-message
+    title: RecordCashCheckpointResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:00.714Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-proto-reflect
+    title: RecordCashCheckpointResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:06.980Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-descriptor
+    title: RecordCashCheckpointResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:13.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-get-checkpoint
+    title: RecordCashCheckpointResponse.GetCheckpoint
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:20.117Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request
+    title: BookCashDifferenceRequest
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:25.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-reset
+    title: BookCashDifferenceRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:32.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-string
+    title: BookCashDifferenceRequest.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:38.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-proto-message
+    title: BookCashDifferenceRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:44.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-proto-reflect
+    title: BookCashDifferenceRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:51.504Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-descriptor
+    title: BookCashDifferenceRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:42:58.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-origin
+    title: BookCashDifferenceRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:43:04.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-session-token
+    title: BookCashDifferenceRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:43:10.629Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-account-id
+    title: BookCashDifferenceRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:43:16.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-date
+    title: BookCashDifferenceRequest.GetDate
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:43:23.237Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-currency
+    title: BookCashDifferenceRequest.GetCurrency
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:43:29.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response
+    title: BookCashDifferenceResponse
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:43:35.439Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-reset
+    title: BookCashDifferenceResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:43:42.007Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-string
+    title: BookCashDifferenceResponse.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:43:48.422Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-proto-message
+    title: BookCashDifferenceResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:43:55.001Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-proto-reflect
+    title: BookCashDifferenceResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:02.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-descriptor
+    title: BookCashDifferenceResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:08.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-get-key
+    title: BookCashDifferenceResponse.GetKey
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:14.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-get-kind
+    title: BookCashDifferenceResponse.GetKind
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:21.185Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-get-amount
+    title: BookCashDifferenceResponse.GetAmount
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:27.698Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-get-currency
+    title: BookCashDifferenceResponse.GetCurrency
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:33.934Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-file-openfief-ledger-v1-cash-checkpoints-proto-raw-desc-gzip
+    title: file_openfief_ledger_v1_cash_checkpoints_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:40.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:46.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-file-openfief-ledger-v1-cash-checkpoints-proto-init
+    title: file_openfief_ledger_v1_cash_checkpoints_proto_init
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:53.535Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1-cash-checkpoints-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/ledger/v1/cash_checkpoints.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:44:59.959Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-cash-checkpoint-service-client
+    title: CashCheckpointServiceClient
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:45:06.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-new-cash-checkpoint-service-client
+    title: NewCashCheckpointServiceClient
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:45:12.786Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-cash-checkpoint-service-client-unexported
+    title: cashCheckpointServiceClient
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:45:18.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-cash-checkpoint-service-client-record-cash-checkpoint-unexported
+    title: cashCheckpointServiceClient.RecordCashCheckpoint
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:45:24.133Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-cash-checkpoint-service-client-book-cash-difference-unexported
+    title: cashCheckpointServiceClient.BookCashDifference
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:45:30.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-cash-checkpoint-service-handler
+    title: CashCheckpointServiceHandler
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:45:37.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-new-cash-checkpoint-service-handler
+    title: NewCashCheckpointServiceHandler
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:45:43.578Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-unimplemented-cash-checkpoint-service-handler
+    title: UnimplementedCashCheckpointServiceHandler
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:45:49.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-unimplemented-cash-checkpoint-service-handler-record-cash-checkpoint
+    title: UnimplementedCashCheckpointServiceHandler.RecordCashCheckpoint
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:45:55.269Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-ledgerv1connect-cash-checkpoints-unimplemented-cash-checkpoint-service-handler-book-cash-difference
+    title: UnimplementedCashCheckpointServiceHandler.BookCashDifference
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/cash_checkpoints.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:46:02.066Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-cash-checkpoints
+      - type: implements
+        target: REQ-ledger-cash-checkpoint-service
+  - id: SYM-views-pb-assertion-check-get-entered
+    title: AssertionCheck.GetEntered
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:46:08.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract

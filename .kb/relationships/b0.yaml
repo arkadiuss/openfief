@@ -629,3 +629,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-289470c25256
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-currency
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:43:32.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84c5363164ee
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-currency
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:43:32.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-800a4ceb8930

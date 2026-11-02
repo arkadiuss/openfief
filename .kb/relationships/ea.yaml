@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78f2a49e04cc
+  - type: executable_for
+    from: SYM-ledger-test-cash-difference
+    to: TEST-ledger-cash-checkpoint
+    created_at: 2026-11-02T03:54:43.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3d72615fb95

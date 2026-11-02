@@ -22,6 +22,10 @@ type BalanceAssertion struct {
 	// Balance is the reported amount in the cash currency, or the reported
 	// number of units of the instrument.
 	Balance kernel.Decimal
+	// Entered is true for a cash checkpoint: the cash the institution
+	// showed, entered by the owner (D-158). It is false for a balance a
+	// connector's import reported.
+	Entered bool
 }
 
 // CashAssertion returns the assertion that account holds cash at the end of
@@ -46,6 +50,8 @@ func (a *BalanceAssertion) Validate() error {
 		return fmt.Errorf("%w %s: no date", ErrInvalidAssertion, a.Account)
 	case a.Book.Kind != BookCash && a.Book.Kind != BookHolding:
 		return fmt.Errorf("%w %s: only cash and holdings are asserted, not %s", ErrInvalidAssertion, a.Account, a.Book)
+	case a.Entered && a.Book.Kind != BookCash:
+		return fmt.Errorf("%w %s: the owner enters cash only, not %s", ErrInvalidAssertion, a.Account, a.Book)
 	}
 	if err := a.Book.Validate(); err != nil {
 		return fmt.Errorf("%w %s: %w", ErrInvalidAssertion, a.Account, err)

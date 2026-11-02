@@ -580,3 +580,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4ac4a026271
+  - type: validates
+    from: TEST-ledger-connectapi-cash-checkpoints
+    to: REQ-ledger-owner-enters-institution-cash
+    created_at: 2026-11-02T03:49:52.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d25bb1f7e2a9
+  - type: validates
+    from: TEST-ledger-connectapi-cash-checkpoints
+    to: REQ-ledger-owner-cash-difference-booked
+    created_at: 2026-11-02T03:49:52.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e64e49ea3a2
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-descriptor
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:42:15.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54aac4a0e41f
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-descriptor
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:42:15.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c1e6ddd5548

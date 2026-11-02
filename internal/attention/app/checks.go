@@ -65,8 +65,10 @@ type Values interface {
 }
 
 // FlaggedAssertions is the check of balance assertions (D-18): each
-// flagged one is a condition, its subject the account, date and ledger
-// account, its detail the derived and the reported balance.
+// flagged one a connector reported is a condition, its subject the
+// account, date and ledger account, its detail the derived and the
+// reported balance. A cash checkpoint the owner entered has its own check,
+// CashCheckpoints.
 func FlaggedAssertions(l Ledger) Check {
 	return Check{Kind: attention.KindAssertionFlagged, Find: func(ctx context.Context) ([]attention.Condition, error) {
 		accounts, err := l.Accounts(ctx)
@@ -80,12 +82,42 @@ func FlaggedAssertions(l Ledger) Check {
 				return nil, fmt.Errorf("loading balance assertions of %s: %w", accounts[i].ID, err)
 			}
 			for j := range checks {
-				if c := &checks[j]; c.Flagged() {
+				if c := &checks[j]; c.Flagged() && !c.Assertion.Entered {
 					a := &c.Assertion
 					out = append(out, attention.Condition{
 						Kind:    attention.KindAssertionFlagged,
 						Subject: string(a.Account) + "/" + a.Date.String() + "/" + bookName(a.Book),
 						Detail:  "derived " + c.Derived.String() + ", reported " + a.Balance.String(),
+					})
+				}
+			}
+		}
+		return out, nil
+	}}
+}
+
+// CashCheckpoints is the check of the owner's cash checkpoints (D-158):
+// each one the derived cash doesn't match is a condition, with the subject
+// and detail ledger.CheckpointSubject and CheckpointDetail give, the same the ledger raises
+// when the owner enters it. So a later import that changes the derived
+// cash raises or clears the item too.
+func CashCheckpoints(l Ledger) Check {
+	return Check{Kind: attention.KindCashCheckpointMismatch, Find: func(ctx context.Context) ([]attention.Condition, error) {
+		accounts, err := l.Accounts(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("loading accounts: %w", err)
+		}
+		var out []attention.Condition
+		for i := range accounts {
+			checks, err := l.AssertionChecks(ctx, accounts[i].ID)
+			if err != nil {
+				return nil, fmt.Errorf("loading balance assertions of %s: %w", accounts[i].ID, err)
+			}
+			for j := range checks {
+				if c := &checks[j]; c.Flagged() && c.Assertion.Entered {
+					out = append(out, attention.Condition{
+						Kind: attention.KindCashCheckpointMismatch, Subject: ledger.CheckpointSubject(&c.Assertion),
+						Detail: ledger.CheckpointDetail(&c.Assertion, c.Derived),
 					})
 				}
 			}

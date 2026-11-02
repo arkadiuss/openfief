@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff985705b0c6
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-session-token
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:41:12.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98a218ce9d87
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-session-token
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:41:13.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b9993d0afad

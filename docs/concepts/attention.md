@@ -59,6 +59,7 @@ flowchart LR
 | `ticker-unconfirmed` | a ticker's ISIN isn't confirmed, so its rows wait (D-116) | instance/ticker | the owner confirms it |
 | `setting-missing` | some account's tax wrapper can't have a liquidation value without the owner's marginal income tax rate (D-78) | `marginal-rate` | the owner sets it |
 | `transfer-broken` | a confirmed transfer's legs no longer match after a correction (D-131) | the pair | a correction makes them match, or the owner rejects the pair |
+| `cash-checkpoint-mismatch` | a cash checkpoint the owner entered doesn't match the derived cash (D-158); `balance-assertion-flagged` leaves these out | account/date/currency | the owner books the difference, or enters a checkpoint that matches |
 
 `Items.Sweep` runs every check and reconciles its kind's items with what it found (`attention.Reconcile`), each kind in its own database transaction under an advisory lock, so a sweep, a push and an owner's action never interleave. One failing check doesn't stop the others. The core sweeps at start and then every minute, and publishes the outbox after each sweep ([attention.go](../../cmd/core/attention.go)).
 
@@ -98,6 +99,7 @@ type AttentionItems interface {
 - **D-131**: a confirmed transfer whose legs no longer match after a correction stops counting and raises an item ([Ledger](ledger.md)).
 - **D-79, D-115**: the owner's actions go through one owner-only service on the plugin port.
 - **D-112**: an owner-resolved item stays resolved while the condition's detail is unchanged, as a price check's acknowledgement does.
+- **D-158**: a mismatched cash checkpoint raises an item, which the ledger raises at once through its port and this context's check keeps in step ([Ledger](ledger.md)).
 
 The rest is this context's reading of D-130, listed in [implementation questions](../implementation-questions.md#attention-items): an item is reopened rather than a new one raised when its condition returns; the owner resolves by hand only flagged balance assertions and import problems; import problems count only rows OpenFief can't book yet, per batch; checks run every minute rather than inside each check's own transaction; the publisher only logs.
 

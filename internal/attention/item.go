@@ -63,6 +63,11 @@ const (
 	// KindTransferBroken is a confirmed transfer whose legs no longer
 	// match after a correction (D-131). Subject: the pair.
 	KindTransferBroken Kind = "transfer-broken"
+	// KindCashCheckpointMismatch is a cash checkpoint the owner entered
+	// that the derived cash doesn't match (D-158): it resolves when the
+	// owner books the difference or enters a checkpoint that matches.
+	// Subject: the account, date and currency (ledger.CheckpointSubject).
+	KindCashCheckpointMismatch Kind = "cash-checkpoint-mismatch"
 )
 
 // OwnerResolves reports whether the owner may resolve an item of kind k by

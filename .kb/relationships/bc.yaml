@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6dda5e6c9345
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-attention-call
+    to: TEST-ledger-app-cash-checkpoints
+    created_at: 2026-11-02T03:55:09.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63a2238ab09e

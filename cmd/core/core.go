@@ -134,7 +134,8 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 // BondLotService (D-9, D-49), the StatementService (D-7, D-49), the
 // MarketDataService (D-94), the PriceCheckService (D-110, D-112), the
 // onboarding services, the SettingsService (D-78, D-113), the
-// TransferService (D-105) and the AttentionService (D-130), to the view
+// TransferService (D-105), the AttentionService (D-130) and the
+// CashCheckpointService (D-158), to the view
 // plugins callers accepts (D-69, D-79, D-115). The read API
 // lists the installed plugins from installed, and without it, outside a
 // cluster, answers that they are unknown. Start the River client to run
@@ -159,6 +160,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, err
 	}
 	attn := newAttention(pool, l, vstore, checks, attentionOwners(auth, cfg.Auth.Origins), now, log)
+	l.WithAttention(ledgerAttention{items: attn.items})
 	client, err := revaluationClient(pool, vstore, cfg, valuationAttention{items: attn.items}, now, log)
 	if err != nil {
 		return nil, err
@@ -196,6 +198,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
 	plugin = withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins, authz)), callers, log), attn.items, callers, log)
+	plugin = withCashCheckpointService(plugin, newCashCheckpoints(l, ledgerOwners(auth, cfg.Auth.Origins, authz)), callers, log)
 	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil
 }
 

@@ -40,7 +40,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql", "0008_cash_checkpoints.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `
@@ -186,6 +186,34 @@ func TestAssertionChecksRoundTrip(t *testing.T) {
 	}
 	got, err := store.AssertionChecks(ctx, acc1)
 	checkResult(t, "AssertionChecks", []app.AssertionCheck{checks[1], checks[2], checks[3]}, got, err)
+}
+
+// TestCashCheckpointRoundTrip checks that a cash checkpoint the owner
+// entered keeps its mark through the store (D-158), that a reported
+// assertion for the same date and currency replaces it and drops the mark,
+// and that the database refuses an entered holding.
+func TestCashCheckpointRoundTrip(t *testing.T) {
+	t.Parallel()
+	store, pool := seededStore(t)
+	ctx := t.Context()
+	on := date(t, "2026-03-31")
+	entered := app.AssertionCheck{Assertion: ledger.CashCheckpoint(acc1, on, money(t, "105", "PLN")), Status: app.AssertionFlagged, Derived: dec(t, "100")}
+	if err := store.SaveAssertionCheck(ctx, &entered); err != nil {
+		t.Fatalf("SaveAssertionCheck: %v", err)
+	}
+	got, err := store.AssertionChecks(ctx, acc1)
+	checkResult(t, "AssertionChecks", []app.AssertionCheck{entered}, got, err)
+	reported := app.AssertionCheck{Assertion: ledger.CashAssertion(acc1, on, money(t, "100", "PLN")), Status: app.AssertionMatched, Derived: dec(t, "100")}
+	if saveErr := store.SaveAssertionCheck(ctx, &reported); saveErr != nil {
+		t.Fatalf("SaveAssertionCheck: %v", saveErr)
+	}
+	got, err = store.AssertionChecks(ctx, acc1)
+	checkResult(t, "AssertionChecks after a report", []app.AssertionCheck{reported}, got, err)
+	_, err = pool.Exec(ctx, `UPDATE ledger.assertion_checks
+		SET entered = true, book = 'holding:PLTEST000010/X', book_kind = 'holding', currency = NULL, isin = 'PLTEST000010', symbol = 'X'`)
+	if err == nil {
+		t.Error("the database stored an entered holding")
+	}
 }
 
 // checkResult fails t on err, or unless got is want; empty and nil slices
