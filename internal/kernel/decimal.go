@@ -3,6 +3,8 @@ package kernel
 import (
 	"errors"
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/shopspring/decimal"
 )
@@ -31,11 +33,35 @@ type Decimal struct {
 	v decimal.Decimal
 }
 
-// ParseDecimal parses a decimal number such as "-12.345".
+// Bounds of the text ParseDecimal takes (D-184). An exponent like "1E+2000000000"
+// parses in a moment but makes the number a two-billion-digit one that
+// String, Round and every sum after them would have to write out.
+const (
+	// MaxDecimalBytes caps the text of a decimal: far more digits than any
+	// amount, rate or quantity has.
+	MaxDecimalBytes = 256
+	// MaxDecimalExponent caps the exponent of a decimal written in
+	// scientific notation, such as a spreadsheet's 1.5E-7, either way.
+	MaxDecimalExponent = 100
+)
+
+// ParseDecimal parses a decimal number such as "-12.345" or "1.5E-7". Text
+// longer than MaxDecimalBytes, or with an exponent beyond
+// ±MaxDecimalExponent, is refused. The error never quotes the text, which
+// can be an amount (GR-12).
 func ParseDecimal(s string) (Decimal, error) {
+	if len(s) > MaxDecimalBytes {
+		return Decimal{}, fmt.Errorf("%w: longer than %d bytes", ErrInvalidDecimal, MaxDecimalBytes)
+	}
+	if i := strings.IndexAny(s, "eE"); i >= 0 {
+		exp, err := strconv.Atoi(s[i+1:])
+		if err != nil || exp < -MaxDecimalExponent || exp > MaxDecimalExponent {
+			return Decimal{}, fmt.Errorf("%w: exponent not within ±%d", ErrInvalidDecimal, MaxDecimalExponent)
+		}
+	}
 	v, err := decimal.NewFromString(s)
 	if err != nil {
-		return Decimal{}, fmt.Errorf("%w: %q: %w", ErrInvalidDecimal, s, err)
+		return Decimal{}, fmt.Errorf("%w: not a decimal number", ErrInvalidDecimal)
 	}
 	return Decimal{v: v}, nil
 }

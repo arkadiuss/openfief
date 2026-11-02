@@ -1,6 +1,7 @@
 package kernel_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -37,6 +38,51 @@ func TestParseDecimal(t *testing.T) {
 			}
 			if diff := cmp.Diff(tt.want, got.String()); diff != "" {
 				t.Errorf("ParseDecimal(%q) (-want +got):\n%s", tt.in, diff)
+			}
+		})
+	}
+}
+
+// TestParseDecimalBounds: text up to MaxDecimalBytes with an exponent within
+// ±MaxDecimalExponent parses; longer text or a larger exponent is refused at
+// once, without the number being built (D-184), and the error quotes none
+// of the text (GR-12).
+func TestParseDecimalBounds(t *testing.T) {
+	t.Parallel()
+	longest := "9" + strings.Repeat("0", kernel.MaxDecimalBytes-1)
+	tests := []struct {
+		name    string
+		in      string
+		want    string
+		wantErr error
+	}{
+		{name: "spreadsheet exponent", in: "1.5E-7", want: "0.00000015"},
+		{name: "float residue", in: "4.4408920985006262E-16", want: "0.00000000000000044408920985006262"},
+		{name: "largest exponent", in: "1E+100", want: "1" + strings.Repeat("0", 100)},
+		{name: "smallest exponent", in: "1e-100", want: "0." + strings.Repeat("0", 99) + "1"},
+		{name: "longest text", in: longest, want: longest},
+		{name: "exponent over", in: "1E+101", wantErr: kernel.ErrInvalidDecimal},
+		{name: "exponent under", in: "1E-101", wantErr: kernel.ErrInvalidDecimal},
+		{name: "huge exponent", in: "1E+2000000000", wantErr: kernel.ErrInvalidDecimal},
+		{name: "exponent past int", in: "1e99999999999999999999", wantErr: kernel.ErrInvalidDecimal},
+		{name: "empty exponent", in: "1E", wantErr: kernel.ErrInvalidDecimal},
+		{name: "text too long", in: longest + "1", wantErr: kernel.ErrInvalidDecimal},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := kernel.ParseDecimal(tt.in)
+			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
+				t.Fatalf("ParseDecimal error (-want +got):\n%s", diff)
+			}
+			if err != nil {
+				if strings.Contains(err.Error(), tt.in) {
+					t.Errorf("error %q quotes the text", err)
+				}
+				return
+			}
+			if diff := cmp.Diff(tt.want, got.String()); diff != "" {
+				t.Errorf("ParseDecimal (-want +got):\n%s", diff)
 			}
 		})
 	}

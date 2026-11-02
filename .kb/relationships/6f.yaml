@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c421d5dc90f0
+  - type: verified_by
+    from: SCEN-sdk-go-connector-server-bounds
+    to: TEST-sdk-go-serve
+    created_at: 2026-11-02T19:45:19.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8754b355cae9
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-zeros-read
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-11-02T19:49:43.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82638eef7901

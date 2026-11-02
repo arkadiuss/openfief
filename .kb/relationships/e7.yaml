@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d3c8f06fcf1
+  - type: executable_for
+    from: SYM-core-test-helper-lazy-body-close
+    to: TEST-core-request-limits
+    created_at: 2026-11-02T19:48:50.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffc97f17b1a6

@@ -43,7 +43,7 @@ func percent() kernel.Decimal { return kernel.NewDecimal(1, -2) }
 // callers in front of every call to admit view plugins only, logging to
 // log.
 func New(lots *app.BondLots, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
-	return ingestv1connect.NewBondLotServiceHandler(&service{lots: lots, log: log}, connect.WithInterceptors(callers))
+	return ingestv1connect.NewBondLotServiceHandler(&service{lots: lots, log: log}, connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxMessageBytes))
 }
 
 // service implements ingestv1connect.BondLotServiceHandler.

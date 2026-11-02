@@ -23,6 +23,10 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 )
 
+// maxRequestBytes caps one request message before the caller is checked
+// (D-184): the owner services take a few fields, never a file.
+const maxRequestBytes = 1 << 20
+
 // ErrCallerRefused reports a caller that is not a view plugin, or whose
 // token does not verify. Callers implementations return it wrapped.
 var ErrCallerRefused = errors.New("caller refused")
@@ -41,7 +45,7 @@ type Callers interface {
 // only the callers the Callers port accepts and logging to log.
 func New(auth *app.Auth, callers Callers, log *slog.Logger) (string, http.Handler) {
 	return identityv1connect.NewAuthServiceHandler(&authService{auth: auth, log: log},
-		connect.WithInterceptors(NewCallerInterceptor(callers, log)))
+		connect.WithInterceptors(NewCallerInterceptor(callers, log)), connect.WithReadMaxBytes(maxRequestBytes))
 }
 
 // CallerInterceptor admits only verified view plugins.

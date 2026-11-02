@@ -19,9 +19,10 @@ import (
 )
 
 const (
-	// maxMessageBytes caps one message of an upload stream: a header or one
-	// chunk. The built-in UI sends 64 KiB chunks; the whole file is capped by
-	// the use case.
+	// maxMessageBytes caps one request message of every ingest service,
+	// before the caller is checked (D-184), and so one message of an upload
+	// stream: a header or one chunk. The built-in UI sends 64 KiB chunks;
+	// the whole file is capped by the use case as it is read.
 	maxMessageBytes = 1 << 20
 	// maxProblems is how many ingest problems an answer lists; the rest are
 	// only counted.

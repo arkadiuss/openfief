@@ -25,6 +25,10 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1/ledgerv1connect"
 )
 
+// maxRequestBytes caps one request message before the caller is checked
+// (D-184): the owner services take a few fields, never a file.
+const maxRequestBytes = 1 << 20
+
 // errInternal is what a caller sees of an internal failure.
 var errInternal = errors.New("internal error")
 
@@ -33,7 +37,7 @@ var errInternal = errors.New("internal error")
 // only, logging to log.
 func NewTransfers(transfers *app.Transfers, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
 	return ledgerv1connect.NewTransferServiceHandler(&transferService{transfers: transfers, log: log},
-		connect.WithInterceptors(callers))
+		connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxRequestBytes))
 }
 
 // transferService implements ledgerv1connect.TransferServiceHandler.

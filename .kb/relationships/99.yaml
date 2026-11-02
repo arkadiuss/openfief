@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4d441fdf2c4
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-counting-body-count
+    to: TEST-views-connectapi-request-limits
+    created_at: 2026-11-02T19:57:07.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e6462bcdd66
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-kept-cells
+    to: TEST-ingest-xtb-xlsx
+    created_at: 2026-11-02T21:07:38.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63aa7593cd75

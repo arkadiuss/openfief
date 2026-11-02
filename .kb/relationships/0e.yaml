@@ -552,3 +552,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee1010c5a06b
+  - type: constrains
+    from: REQ-core-ports-bound-bodies
+    to: FACT-SUBJECT-377E7BAFECB96D53
+    created_at: 2026-11-02T19:45:56.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0bb0e8b91d8
+  - type: requires_property
+    from: REQ-core-ports-bound-bodies
+    to: FACT-PROP-2609113EE1C0B6CC
+    created_at: 2026-11-02T19:45:56.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54b2384d329e
+  - type: specified_by
+    from: REQ-core-ports-bound-bodies
+    to: SCEN-core-ports-bound-bodies
+    created_at: 2026-11-02T19:45:56.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b883805e2e6e

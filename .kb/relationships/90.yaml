@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6709428a511
+  - type: executable_for
+    from: SYM-views-connectapi-test-read-api-bounds-bodies
+    to: TEST-views-connectapi-request-limits
+    created_at: 2026-11-02T19:48:15.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa40c10b3e22

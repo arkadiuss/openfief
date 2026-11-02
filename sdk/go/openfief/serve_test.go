@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"sync"
 	"testing"
 
@@ -179,5 +180,27 @@ func TestInstanceAudience(t *testing.T) {
 	t.Parallel()
 	if got, want := openfief.InstanceAudience("ibkr-main"), "openfief-plugin:ibkr-main"; got != want {
 		t.Errorf("InstanceAudience = %q, want %q", got, want)
+	}
+}
+
+// TestConnectorServerLimits: a message over MaxMessageBytes, even from the
+// core, is refused with RESOURCE_EXHAUSTED without reaching the connector,
+// and the server bounds how long a request may take to arrive and how
+// long a connection may idle (D-184).
+func TestConnectorServerLimits(t *testing.T) {
+	t.Parallel()
+	conn := startConnector(t, 1)
+	req := connect.NewRequest(&connectorv1.SyncRequest{BatchId: strings.Repeat("b", openfief.MaxMessageBytes)})
+	req.Header().Set("Authorization", "Bearer "+coreToken)
+	_, err := conn.client.Sync(t.Context(), req)
+	if got := connect.CodeOf(err); got != connect.CodeResourceExhausted {
+		t.Errorf("Sync of an oversized message: code %v, want %v", got, connect.CodeResourceExhausted)
+	}
+	if conn.callCount() != 0 {
+		t.Error("the oversized message reached the connector")
+	}
+	srv := openfief.NewConnectorServer("", conn, fakeVerifier{})
+	if srv.ReadTimeout <= 0 || srv.IdleTimeout <= 0 || srv.ReadHeaderTimeout <= 0 {
+		t.Errorf("server timeouts = %v, %v, %v; want all set", srv.ReadHeaderTimeout, srv.ReadTimeout, srv.IdleTimeout)
 	}
 }

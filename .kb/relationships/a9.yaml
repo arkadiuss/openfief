@@ -594,3 +594,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32317ceec1d5
+  - type: implements
+    from: SYM-ingest-xtb-sheet
+    to: REQ-ingest-xtb-reader-bounded
+    created_at: 2026-11-02T21:05:15.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c856cead61af
+  - type: covered_by
+    from: SYM-ingest-xtb-sheet
+    to: TEST-ingest-xtb-xlsx
+    created_at: 2026-11-02T21:05:15.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45c187d5c7aa

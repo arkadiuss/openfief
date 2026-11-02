@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff70b37e7ef9
+  - type: executable_for
+    from: SYM-kernel-test-parse-decimal-bounds
+    to: TEST-kernel-decimal
+    created_at: 2026-11-02T21:04:07.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18c84ea322d0

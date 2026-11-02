@@ -24,6 +24,10 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1/attentionv1connect"
 )
 
+// maxRequestBytes caps one request message before the caller is checked
+// (D-184): the owner services take a few fields, never a file.
+const maxRequestBytes = 1 << 20
+
 // errInternal is what a caller sees of an internal failure.
 var errInternal = errors.New("internal error")
 
@@ -32,7 +36,7 @@ var errInternal = errors.New("internal error")
 // logging to log.
 func NewAttention(items *app.Items, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
 	return attentionv1connect.NewAttentionServiceHandler(&attentionService{items: items, log: log},
-		connect.WithInterceptors(callers))
+		connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxRequestBytes))
 }
 
 // attentionService implements attentionv1connect.AttentionServiceHandler.

@@ -21,8 +21,15 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1/connectorv1connect"
 )
 
-// ChunkSize is how many bytes of a file one ImportFile message carries.
-const ChunkSize = 64 << 10
+const (
+	// ChunkSize is how many bytes of a file one ImportFile message carries.
+	ChunkSize = 64 << 10
+	// MaxDeliveryBytes caps a connector's answer (D-184): a delivery from a
+	// statement of 64 MiB, the largest the core takes, or a market-data
+	// backfill of MaxDeliveryItems prices, fits well within it. A larger
+	// answer fails the call with RESOURCE_EXHAUSTED before it is decoded.
+	MaxDeliveryBytes = 32 << 20
+)
 
 // Client is app.ConnectorCaller over Connect RPC.
 type Client struct {
@@ -218,5 +225,8 @@ func (c *Client) service(ctx context.Context, instance string) (call, error) {
 	if err != nil {
 		return call{}, fmt.Errorf("core token for %s: %w", instance, err)
 	}
-	return call{svc: connectorv1connect.NewConnectorServiceClient(c.http, url), auth: "Bearer " + token}, nil
+	// The answer is read up to MaxDeliveryBytes, after decompression, so a
+	// connector can't make the core hold more (D-184).
+	svc := connectorv1connect.NewConnectorServiceClient(c.http, url, connect.WithReadMaxBytes(MaxDeliveryBytes))
+	return call{svc: svc, auth: "Bearer " + token}, nil
 }

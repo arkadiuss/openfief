@@ -12,12 +12,29 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/internal/views/connectapi"
 	viewskube "github.com/arkadiuss/openfief/internal/views/kube"
+	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
 )
 
 const (
 	// readHeaderTimeout bounds how long a client may take to send headers.
 	readHeaderTimeout = 10 * time.Second
+	// readTimeout bounds how long a client may take to send a whole
+	// request: the built-in UI gives a statement upload of 64 MiB five
+	// minutes.
+	readTimeout = 5 * time.Minute
+	// idleTimeout closes keep-alive connections idle this long.
+	idleTimeout = 2 * time.Minute
+	// maxAPIBodyBytes caps the body of a request to the core's own APIs:
+	// one message of at most 1 MiB, its envelope and room to spare (D-184).
+	maxAPIBodyBytes = 2 << 20
+	// maxUploadBodyBytes caps the body of a statement upload: on the
+	// browser port the form the front door passes to the view plugin, 64
+	// MiB of file plus its fields, and on the plugin port the stream of
+	// 64 KiB chunks the view plugin sends on, with their envelopes.
+	maxUploadBodyBytes = 65 << 20
 	// pingTimeout bounds the readiness check's database ping.
 	pingTimeout = 2 * time.Second
 	// retryEvery is how often start retries a database that is not reachable
@@ -58,13 +75,53 @@ func (s *server) browserHandler() http.Handler {
 	mux.HandleFunc("GET /healthz", s.healthz)
 	mux.HandleFunc("GET /readyz", s.readyz)
 	mux.Handle("/", serveWhenReady(&s.browser))
-	return mux
+	return boundBodies(mux, browserBodyLimit)
 }
 
 // pluginHandler returns the plugin port's handler: the read API and the
 // services only plugins call, with no health endpoint and no front door.
 func (s *server) pluginHandler() http.Handler {
-	return serveWhenReady(&s.plugin)
+	return boundBodies(serveWhenReady(&s.plugin), pluginBodyLimit)
+}
+
+// boundBodies refuses a compressed request body with 415 and caps every
+// other at the bytes limit returns for its path, answering 413 at once when
+// the declared length is over it, before next authenticates or decodes
+// anything (D-184).
+func boundBodies(next http.Handler, limit func(path string) int64) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if connectapi.Compressed(r.Header) {
+			plain(w, http.StatusUnsupportedMediaType, "compressed requests are not accepted")
+			return
+		}
+		n := limit(r.URL.Path)
+		if r.ContentLength > n {
+			plain(w, http.StatusRequestEntityTooLarge, "request body too large")
+			return
+		}
+		r.Body = http.MaxBytesReader(w, r.Body, n)
+		next.ServeHTTP(w, r)
+	})
+}
+
+// browserBodyLimit is the browser port's cap for path: the core's own
+// paths, the read API among them, take maxAPIBodyBytes, and the paths the
+// front door proxies to the view plugin maxUploadBodyBytes, for the
+// statement upload form.
+func browserBodyLimit(path string) int64 {
+	if plugins.CoreServesPath(path) {
+		return maxAPIBodyBytes
+	}
+	return maxUploadBodyBytes
+}
+
+// pluginBodyLimit is the plugin port's cap for path: the statement upload
+// stream takes maxUploadBodyBytes, every other call maxAPIBodyBytes.
+func pluginBodyLimit(path string) int64 {
+	if path == ingestv1connect.StatementServiceUploadStatementProcedure {
+		return maxUploadBodyBytes
+	}
+	return maxAPIBodyBytes
 }
 
 // healthz reports that the process serves HTTP: liveness.
@@ -176,7 +233,10 @@ func listen(ctx context.Context, s *server, cfg *serveConfig, served chan<- erro
 		if err != nil {
 			return nil, errors.Join(fmt.Errorf("listening on %s: %w", port.address, err), closeAll(servers))
 		}
-		httpSrv := &http.Server{Handler: port.handler, ReadHeaderTimeout: readHeaderTimeout}
+		httpSrv := &http.Server{
+			Handler: port.handler, ReadHeaderTimeout: readHeaderTimeout,
+			ReadTimeout: readTimeout, IdleTimeout: idleTimeout,
+		}
 		servers = append(servers, httpSrv)
 		go func() { served <- httpSrv.Serve(ln) }()
 		log.Info("listening", "port", port.name, "address", ln.Addr().String())

@@ -18,7 +18,7 @@ import (
 // (D-71, D-79), with callers in front of every call to admit view plugins
 // only, logging to log.
 func NewSleeves(sleeves *app.Sleeves, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
-	return portfoliov1connect.NewSleeveServiceHandler(&sleeveService{sleeves: sleeves, log: log}, connect.WithInterceptors(callers))
+	return portfoliov1connect.NewSleeveServiceHandler(&sleeveService{sleeves: sleeves, log: log}, connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxRequestBytes))
 }
 
 // sleeveService implements portfoliov1connect.SleeveServiceHandler.

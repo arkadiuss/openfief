@@ -346,6 +346,44 @@ func TestDeliveryFromMissing(t *testing.T) {
 	}
 }
 
+// TestDeliveryItemCap: a delivery of more than MaxDeliveryItems items,
+// postings counted like any other, is refused whole with
+// ErrDeliveryTooLarge before any item is translated (D-184). The items
+// share one message, so the test holds only slices of pointers.
+func TestDeliveryItemCap(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		edit func(d *connectorv1.Delivery)
+	}{
+		{name: "problems", edit: func(d *connectorv1.Delivery) {
+			problems := make([]*connectorv1.Problem, MaxDeliveryItems)
+			for i := range problems {
+				problems[i] = d.GetProblems()[0]
+			}
+			d.Problems = problems
+		}},
+		{name: "postings", edit: func(d *connectorv1.Delivery) {
+			tx := d.GetTransactions()[0]
+			postings := make([]*connectorv1.Posting, MaxDeliveryItems)
+			for i := range postings {
+				postings[i] = tx.GetPostings()[0]
+			}
+			tx.Postings = postings
+		}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			d := testDelivery()
+			tt.edit(d)
+			if _, err := deliveryFrom(d, "b-1", ""); !errors.Is(err, ErrDeliveryTooLarge) {
+				t.Errorf("deliveryFrom error = %v, want %v", err, ErrDeliveryTooLarge)
+			}
+		})
+	}
+}
+
 func TestModeTo(t *testing.T) {
 	t.Parallel()
 	tests := []struct {

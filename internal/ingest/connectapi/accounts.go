@@ -23,7 +23,7 @@ import (
 // accounts (D-72, D-79), with callers in front of every call to admit view
 // plugins only, logging to log.
 func NewAccounts(accounts *app.Accounts, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
-	return ingestv1connect.NewAccountServiceHandler(&accountService{accounts: accounts, log: log}, connect.WithInterceptors(callers))
+	return ingestv1connect.NewAccountServiceHandler(&accountService{accounts: accounts, log: log}, connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxMessageBytes))
 }
 
 // accountService implements ingestv1connect.AccountServiceHandler.

@@ -426,6 +426,8 @@ symbols:
         target: TEST-kernel-decimal
       - type: implements
         target: REQ-kernel-decimal-exact
+      - type: implements
+        target: REQ-kernel-decimal-parse-bounded
   - id: SYM-kernel-new-decimal
     title: NewDecimal
     sourceFile: internal/kernel/decimal.go
@@ -17538,6 +17540,8 @@ symbols:
       - type: implements
         target: REQ-ingest-core-calls-connectors
       - type: implements
+        target: REQ-sdk-go-connector-server-bounds
+      - type: implements
         target: REQ-sdk-go-core-only
   - id: SYM-sdk-go-receive-file
     title: ReceiveFile
@@ -21782,6 +21786,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-connector-answer-bounded
       - type: implements
         target: REQ-ingest-core-authenticates-to-connector
       - type: implements
@@ -29231,6 +29237,8 @@ symbols:
         target: REQ-AUTO-A04740EC43D6F6BA
       - type: implements
         target: REQ-views-api-contract
+      - type: implements
+        target: REQ-views-read-api-bounded-bodies
   - id: SYM-views-connectapi-random-request-id
     title: randomRequestID
     sourceFile: internal/views/connectapi/handler.go
@@ -87968,6 +87976,8 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
+        target: REQ-core-ports-bound-bodies
+      - type: implements
         target: REQ-core-serve-flags
   - id: SYM-exp-core-close-all
     title: closeAll
@@ -109249,8 +109259,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-xtb-mapper
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
       - type: implements
         target: REQ-ingest-xtb-export-mapping
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
   - id: SYM-ingest-xtb-sheet-row
     title: sheet.row
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109289,8 +109303,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-xtb-mapper
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
       - type: implements
         target: REQ-ingest-xtb-export-mapping
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
   - id: SYM-ingest-xtb-open-zip
     title: openZip
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109302,87 +109320,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-xtb-mapper
-      - type: implements
-        target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-zip-parts-part
-    title: zipParts.part
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:34:05.705Z
-    relationships:
       - type: covered_by
-        target: TEST-ingest-xtb-mapper
+        target: TEST-ingest-xtb-xlsx
       - type: implements
         target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-x-workbook
-    title: xWorkbook
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:34:11.847Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-mapper
       - type: implements
-        target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-x-rels
-    title: xRels
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:34:20.097Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-mapper
-      - type: implements
-        target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-x-text
-    title: xText
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:34:26.594Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-mapper
-      - type: implements
-        target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-x-text-string
-    title: xText.String
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:34:33.969Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-mapper
-      - type: implements
-        target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-x-shared
-    title: xShared
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:34:44.852Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-mapper
-      - type: implements
-        target: REQ-ingest-xtb-export-mapping
+        target: REQ-ingest-xtb-reader-bounded
   - id: SYM-ingest-xtb-x-cell
     title: xCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109391,32 +109334,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-31T13:34:51.193Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-mapper
-      - type: implements
-        target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-x-row
-    title: xRow
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:34:57.001Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-mapper
-      - type: implements
-        target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-x-sheet
-    title: xSheet
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:35:02.967Z
     relationships:
       - type: covered_by
         target: TEST-ingest-xtb-mapper
@@ -109433,8 +109350,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-xtb-mapper
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
       - type: implements
         target: REQ-ingest-xtb-export-mapping
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
   - id: SYM-ingest-xtb-zip-parts-targets
     title: zipParts.targets
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109459,8 +109380,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-xtb-mapper
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
       - type: implements
         target: REQ-ingest-xtb-export-mapping
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
   - id: SYM-ingest-xtb-part-name
     title: partName
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109469,19 +109394,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-31T13:35:32.769Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-xtb-mapper
-      - type: implements
-        target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-zip-parts-decode
-    title: zipParts.decode
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:35:41.588Z
     relationships:
       - type: covered_by
         target: TEST-ingest-xtb-mapper
@@ -109498,21 +109410,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-xtb-mapper
-      - type: implements
-        target: REQ-ingest-xtb-export-mapping
-  - id: SYM-ingest-xtb-row-cells
-    title: rowCells
-    sourceFile: internal/ingest/xtb/xlsx.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:35:58.063Z
-    relationships:
       - type: covered_by
-        target: TEST-ingest-xtb-mapper
+        target: TEST-ingest-xtb-xlsx
       - type: implements
         target: REQ-ingest-xtb-export-mapping
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
   - id: SYM-ingest-xtb-cell-value
     title: cellValue
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126503,3 +126406,729 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-affected-plan
+  - id: SYM-views-connectapi-with-bounded-body
+    title: withBoundedBody
+    sourceFile: internal/views/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:46:24.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-request-limits
+      - type: implements
+        target: REQ-views-read-api-bounded-bodies
+  - id: SYM-views-connectapi-compressed
+    title: Compressed
+    sourceFile: internal/views/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:46:36.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-request-limits
+      - type: implements
+        target: REQ-core-ports-bound-bodies
+      - type: implements
+        target: REQ-views-read-api-bounded-bodies
+  - id: SYM-core-bound-bodies
+    title: boundBodies
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:46:46.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-request-limits
+      - type: implements
+        target: REQ-core-ports-bound-bodies
+  - id: SYM-core-browser-body-limit
+    title: browserBodyLimit
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:46:57.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-request-limits
+      - type: implements
+        target: REQ-core-ports-bound-bodies
+  - id: SYM-core-plugin-body-limit
+    title: pluginBodyLimit
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:08.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-request-limits
+      - type: implements
+        target: REQ-core-ports-bound-bodies
+  - id: SYM-ingest-conn-rpc-delivery-items
+    title: deliveryItems
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:19.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-answer-bounded
+  - id: SYM-views-connectapi-test-helper-counting-body
+    title: countingBody
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:29.756Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-helper-counting-body-read
+    title: countingBody.Read
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:41.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-helper-counting-body-close
+    title: countingBody.Close
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:51.757Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-helper-gzip-bomb
+    title: gzipBomb
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:02.681Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-read-api-bounds-bodies
+    title: TestReadAPIBoundsBodies
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:13.058Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-core-test-helper-lazy-body
+    title: lazyBody
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:24.201Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-helper-lazy-body-read
+    title: lazyBody.Read
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:35.605Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-helper-lazy-body-close
+    title: lazyBody.Close
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:47.500Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-helper-drain
+    title: drain
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:58.306Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-ports-bound-bodies
+    title: TestPortsBoundBodies
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:08.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-listen-timeouts
+    title: TestListenTimeouts
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:19.298Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-ingest-conn-rpc-test-helper-zeros
+    title: zeros
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:29.672Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-zeros-read
+    title: zeros.Read
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:40.840Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-client-refuses-oversized-answer
+    title: TestClientRefusesOversizedAnswer
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:52.017Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-delivery-item-cap
+    title: TestDeliveryItemCap
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:50:02.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-sdk-go-test-connector-server-limits
+    title: TestConnectorServerLimits
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:50:12.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-ingest-conn-rpc-check-delivery
+    title: checkDelivery
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:56:43.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-answer-bounded
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-views-connectapi-test-helper-check-refused
+    title: checkRefused
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:56:54.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-helper-counting-body-count
+    title: countingBody.count
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:57:05.319Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-ingest-xtb-entry
+    title: entry
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:57:56.288Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-row
+    title: row
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:58:06.531Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-row-at
+    title: row.at
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:58:18.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-limits
+    title: limits
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:58:29.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-default-limits
+    title: defaultLimits
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:58:43.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-zip-parts-keep-text
+    title: zipParts.keepText
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:58:57.109Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-zip-parts-keep-cell
+    title: zipParts.keepCell
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:59:09.569Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-part-reader
+    title: partReader
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:59:20.200Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-part-reader-read
+    title: partReader.Read
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:59:31.621Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-walker
+    title: walker
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:59:42.061Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-walker-next
+    title: walker.next
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:59:54.437Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-walker-in
+    title: walker.in
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:00:06.025Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-walker-each
+    title: walker.each
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:00:17.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-zip-parts-walk
+    title: zipParts.walk
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:00:29.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-attr
+    title: attr
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:00:41.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-ref
+    title: sheetRef
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:00:53.136Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-read-workbook-within
+    title: readWorkbookWithin
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:01:04.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-zip-parts-workbook-part
+    title: zipParts.workbookPart
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:01:14.949Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-shared-reader
+    title: sharedReader
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:01:24.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-shared-reader-token
+    title: sharedReader.token
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:01:35.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-shared-reader-text
+    title: sharedReader.text
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:01:47.047Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-shared-reader-end-item
+    title: sharedReader.endItem
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:01:57.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-reader
+    title: sheetReader
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:02:06.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-reader-token
+    title: sheetReader.token
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:02:18.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-reader-start
+    title: sheetReader.start
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:02:29.310Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-reader-char-data
+    title: sheetReader.charData
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:02:40.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-reader-end
+    title: sheetReader.end
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:02:51.365Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-reader-text
+    title: sheetReader.text
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:03:02.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-reader-start-row
+    title: sheetReader.startRow
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:03:13.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-reader-end-cell
+    title: sheetReader.endCell
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:03:24.254Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-sheet-reader-end-row
+    title: sheetReader.endRow
+    sourceFile: internal/ingest/xtb/xlsx.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:03:35.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-xtb-xlsx
+      - type: implements
+        target: REQ-ingest-xtb-reader-bounded
+  - id: SYM-ingest-xtb-test-helper-workbook-of
+    title: workbookOf
+    sourceFile: internal/ingest/xtb/xlsx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:03:44.907Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-xlsx
+  - id: SYM-ingest-xtb-test-read-workbook-bounds
+    title: TestReadWorkbookBounds
+    sourceFile: internal/ingest/xtb/xlsx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:03:54.454Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-xlsx
+  - id: SYM-kernel-test-parse-decimal-bounds
+    title: TestParseDecimalBounds
+    sourceFile: internal/kernel/decimal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:04:04.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-decimal
+  - id: SYM-ingest-xtb-test-helper-kept-cells
+    title: keptCells
+    sourceFile: internal/ingest/xtb/xlsx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T21:07:36.103Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-xlsx

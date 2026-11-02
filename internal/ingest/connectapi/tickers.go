@@ -19,7 +19,7 @@ import (
 // owner's ticker confirmations (D-116), with callers in front of every call
 // to admit view plugins only, logging to log.
 func NewTickers(t *app.Tickers, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
-	return ingestv1connect.NewTickerServiceHandler(&tickers{uc: t, log: log}, connect.WithInterceptors(callers))
+	return ingestv1connect.NewTickerServiceHandler(&tickers{uc: t, log: log}, connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxMessageBytes))
 }
 
 // tickers implements ingestv1connect.TickerServiceHandler.

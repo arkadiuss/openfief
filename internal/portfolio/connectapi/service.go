@@ -25,6 +25,10 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1/portfoliov1connect"
 )
 
+// maxRequestBytes caps one request message before the caller is checked
+// (D-184): the owner services take a few fields, never a file.
+const maxRequestBytes = 1 << 20
+
 var (
 	// errInternal is what a caller sees of an internal failure.
 	errInternal = errors.New("internal error")
@@ -37,7 +41,7 @@ var (
 // logging to log.
 func New(models *app.Models, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
 	return portfoliov1connect.NewModelPortfolioServiceHandler(&service{models: models, log: log},
-		connect.WithInterceptors(callers))
+		connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxRequestBytes))
 }
 
 // service implements portfoliov1connect.ModelPortfolioServiceHandler.

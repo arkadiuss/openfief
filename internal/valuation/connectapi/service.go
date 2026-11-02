@@ -27,6 +27,10 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 )
 
+// maxRequestBytes caps one request message before the caller is checked
+// (D-184): the owner services take a few fields, never a file.
+const maxRequestBytes = 1 << 20
+
 var (
 	// errInternal is what a caller sees of an internal failure.
 	errInternal = errors.New("internal error")
@@ -39,7 +43,7 @@ var (
 // to log.
 func New(rankings *app.Rankings, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
 	return valuationv1connect.NewMarketDataServiceHandler(&service{rankings: rankings, log: log},
-		connect.WithInterceptors(callers))
+		connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxRequestBytes))
 }
 
 // service implements valuationv1connect.MarketDataServiceHandler.
