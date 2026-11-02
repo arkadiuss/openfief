@@ -13,7 +13,7 @@ An alpha is a GitHub pre-release, so the releases page lists it, but `latest` ne
 
 | Asset | What it is |
 |---|---|
-| `openfief-crds-<version>.yaml` | The `openfief` namespace and the `Plugin` and `PluginGrant` custom resource definitions, the part a cluster admin applies (D-15) |
+| `openfief-crds-<version>.yaml` | The `openfief` namespace with its default compute resources (a LimitRange) and the `Plugin` and `PluginGrant` custom resource definitions, the part a cluster admin applies (D-15) |
 | `openfief-install-<version>.yaml` | The operator, the egress proxy and the core, each image pinned to the digest the release signed (D-17) |
 | `openfief-db-<version>.yaml` | The database: a minimal [CloudNativePG](https://cloudnative-pg.io) cluster `openfief-db`, for you to edit (D-14) |
 | `cnpg-1.30.1.yaml` | CloudNativePG's own release manifest, byte for byte, at the version the end-to-end tests run |

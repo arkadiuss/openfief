@@ -126754,3 +126754,26 @@ symbols:
         target: TEST-plugins-trust
       - type: implements
         target: REQ-plugins-signer-identity-match
+  - id: SYM-operator-plugin-resources
+    title: pluginResources
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:55:58.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-operator-plugin-resources
+  - id: SYM-operator-test-namespace-limit-range
+    title: TestNamespaceLimitRange
+    sourceFile: internal/plugins/operator/manifests_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:56:10.146Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-manifests

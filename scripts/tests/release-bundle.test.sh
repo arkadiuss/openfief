@@ -53,7 +53,7 @@ registry.example.org:5000/e2e/core@$da"
   got="$(images "a/openfief-install-$version.yaml")"
   [ "$got" = "$want" ] || fail_case "the install's images: want $want, got $got"
   kinds="$(gojq -r --yaml-input -s '[.[] | .kind] | unique | join(" ")' "a/openfief-crds-$version.yaml")"
-  [ "$kinds" = "CustomResourceDefinition Namespace" ] || fail_case "the CRDs file holds $kinds"
+  [ "$kinds" = "CustomResourceDefinition LimitRange Namespace" ] || fail_case "the CRDs file holds $kinds"
   [ -z "$(images "a/openfief-crds-$version.yaml")" ] || fail_case "the CRDs file runs an image"
   gojq -e --yaml-input -s 'any(.[]; .kind == "Deployment" and .metadata.name == "openfief-core")' \
     "a/openfief-install-$version.yaml" >/dev/null || fail_case "the install has no core Deployment"

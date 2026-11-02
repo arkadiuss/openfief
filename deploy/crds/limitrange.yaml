@@ -1,0 +1,21 @@
+# Default compute resources for every container in the openfief namespace that doesn't set its own (D-182).
+# OpenFief runs on one small node next to its PostgreSQL, so nothing in the namespace may grow without a bound and
+# take the node down. The operator gives every plugin container its own requests and limits
+# (internal/plugins/operator/objects.go: 50m CPU and 64Mi requested, 500m CPU and 256Mi at most); the operator, the
+# egress proxy and the core set theirs in their Deployments. This is the backstop for anything else: a pod applied
+# into the namespace some other way, and CloudNativePG's database pods unless the Cluster in deploy/database sets
+# resources. A container that sets no memory limit gets 1Gi, so the database keeps room; there is no default CPU
+# limit, because CPU is only throttled, never fatal, and the requests already share it fairly.
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: openfief-defaults
+  namespace: openfief
+spec:
+  limits:
+    - type: Container
+      defaultRequest:
+        cpu: 50m
+        memory: 64Mi
+      default:
+        memory: 1Gi
