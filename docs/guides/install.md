@@ -58,7 +58,7 @@ Without `gh`, each asset is at `https://github.com/arkadiuss/openfief/releases/d
 
 ## 2. Verify the CLI
 
-The release workflow, `release.yml`, signs every CLI file keylessly in the run that published the release, and only the repository owner can publish one, only from `main`. So a CLI file is genuine when its signature's certificate names exactly that workflow on `main`, issued to GitHub Actions, in a run of `arkadiuss/openfief` on `refs/heads/main`. Check the binary and the checksums file, then the checksum:
+The release workflow, `release.yml`, signs every CLI file keylessly in the run that published the release, and only the repository owner can publish one, only from `main`. So a CLI file is genuine when its signature's certificate names exactly that workflow on `main`, issued to GitHub Actions, in a run of `arkadiuss/openfief` on `refs/heads/main` (D-181). Check the binary and the checksums file, then the checksum:
 
 ```bash
 for f in "openfief-$VERSION-$OS-$ARCH" "openfief-$VERSION-SHA256SUMS"; do
