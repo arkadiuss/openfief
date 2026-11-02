@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85c4e54b2e70
+  - type: implements
+    from: SYM-valuation-postgres-store-save-price-check-threshold
+    to: REQ-valuation-price-check-threshold-clear-restores-default
+    created_at: 2026-11-02T13:21:06.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3dc2b0bf72f

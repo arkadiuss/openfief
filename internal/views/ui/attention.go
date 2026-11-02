@@ -18,7 +18,7 @@ type attentionKind struct {
 }
 
 // attentionKindOf names kind, one of the core's kinds of attention items
-// (D-130, D-131, D-132, D-94, D-158), and the page where the owner acts on
+// (D-130, D-131, D-132, D-94, D-158, D-141), and the page where the owner acts on
 // the item with subject; a kind it doesn't know shows its own name and no
 // page. A mismatched cash checkpoint links to its account's checkpoints,
 // where the owner books the difference.
@@ -32,25 +32,20 @@ func attentionKindOf(kind, subject string) attentionKind {
 // checkKindOf names kind, one of the kinds whose items all act on one
 // page, whatever their subject.
 func checkKindOf(kind string) attentionKind {
-	switch kind {
-	case "balance-assertion-flagged":
-		return attentionKind{"Flagged balance assertion", "/assertions"}
-	case "price-check-flagged":
-		return attentionKind{"Flagged price check", "/price-checks"}
-	case "import-problems":
-		return attentionKind{"Rows an import left out", "/accounts"}
-	case "broker-account-unmapped":
-		return attentionKind{"Unmapped broker account", "/accounts"}
-	case "ticker-unconfirmed":
-		return attentionKind{"Ticker to confirm", "/tickers"}
-	case "setting-missing":
-		return attentionKind{"Missing setting", "/settings"}
-	case "transfer-broken":
-		return attentionKind{"Transfer broken by a correction", "/transfers"}
-	case "instrument-unclassified":
-		return attentionKind{"Instrument to classify", "/settings"}
-	case "market-data-gap":
-		return attentionKind{"Market data stopped arriving", "/settings#series-sources-title"}
+	kinds := map[string]attentionKind{
+		"balance-assertion-flagged":     {"Flagged balance assertion", "/assertions"},
+		"price-check-flagged":           {"Flagged price check", "/price-checks"},
+		"import-problems":               {"Rows an import left out", "/accounts"},
+		"broker-account-unmapped":       {"Unmapped broker account", "/accounts"},
+		"ticker-unconfirmed":            {"Ticker to confirm", "/tickers"},
+		"setting-missing":               {"Missing setting", "/settings"},
+		"transfer-broken":               {"Transfer broken by a correction", "/transfers"},
+		"instrument-unclassified":       {"Instrument to classify", "/settings"},
+		"market-data-gap":               {"Market data stopped arriving", "/settings#series-sources-title"},
+		"cross-check-prices-undeclared": {"Undeclared cross-check prices dropped", "/plugins"},
+	}
+	if k, ok := kinds[kind]; ok {
+		return k
 	}
 	return attentionKind{Label: kind}
 }

@@ -643,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2f1690c4f5a
+  - type: implements
+    from: SYM-core-conn-with-connector-deps
+    to: REQ-ingest-undeclared-cross-check-prices-attention-item
+    created_at: 2026-11-02T13:19:56.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80e23eb97bda
+  - type: covered_by
+    from: SYM-core-conn-with-connector-deps
+    to: TEST-core-undeclared-cross-check-prices
+    created_at: 2026-11-02T13:19:56.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2afc3fee278

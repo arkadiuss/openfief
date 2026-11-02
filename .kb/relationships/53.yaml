@@ -510,3 +510,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a62fbc303c2
+  - type: verified_by
+    from: SCEN-ingest-keeps-from-go-live-opening-uploads
+    to: TEST-core-xtb-start
+    created_at: 2026-11-02T13:17:37.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5c470974837
+  - type: verified_by
+    from: SCEN-ingest-keeps-from-go-live-opening-uploads
+    to: TEST-ingest-app-connectors
+    created_at: 2026-11-02T13:17:37.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b77336c8405d
+  - type: verified_by
+    from: SCEN-ingest-keeps-from-go-live-opening-uploads
+    to: TEST-ingest-golive
+    created_at: 2026-11-02T13:17:37.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c380c8739f4
+  - type: verified_by
+    from: SCEN-ingest-keeps-from-go-live-opening-uploads
+    to: TEST-ingest-app-uploads
+    created_at: 2026-11-02T13:17:37.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10574565471c

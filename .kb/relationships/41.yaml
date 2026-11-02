@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b315a4c59102
+  - type: validates
+    from: TEST-ingest-kube
+    to: REQ-plugins-statement-files-declared-in-manifest
+    created_at: 2026-11-02T13:17:18.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-200fbadba858

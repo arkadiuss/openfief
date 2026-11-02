@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-774e94f64f22
+  - type: implements
+    from: SYM-valuation-app-cross-checks-acknowledge
+    to: REQ-valuation-acknowledgement-covers-one-check
+    created_at: 2026-11-02T13:20:38.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-851d0e9b9823

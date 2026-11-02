@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f955adb7956d
+  - type: implements
+    from: SYM-valuation-acknowledge
+    to: REQ-valuation-acknowledgement-covers-one-check
+    created_at: 2026-11-02T13:20:24.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7913f53fd8d

@@ -762,3 +762,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee5148d3c9f9
+  - type: constrains
+    from: REQ-ingest-undeclared-cross-check-prices-item-per-instance
+    to: FACT-SUBJECT-4022BDCF8FBBCB20
+    created_at: 2026-11-02T13:17:49.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c24f205d04ad
+  - type: requires_property
+    from: REQ-ingest-undeclared-cross-check-prices-item-per-instance
+    to: FACT-PROP-70C1C2C187E58F3E
+    created_at: 2026-11-02T13:17:49.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24aa64122612
+  - type: specified_by
+    from: REQ-ingest-undeclared-cross-check-prices-item-per-instance
+    to: SCEN-ingest-undeclared-cross-check-prices-item-per-instance
+    created_at: 2026-11-02T13:17:49.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-113a017f2232

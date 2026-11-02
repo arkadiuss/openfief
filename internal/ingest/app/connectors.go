@@ -175,6 +175,18 @@ type AccountStarts interface {
 	Start(ctx context.Context, account ledger.AccountID) (kernel.Date, bool, error)
 }
 
+// AttentionRaiser raises and clears attention items (D-130), such as a
+// connector instance's undeclared cross-check prices (D-141). The ingest
+// context declares it with plain strings, so it doesn't import the
+// attention context; cmd/core implements it over the attention items.
+type AttentionRaiser interface {
+	// Raise raises the item of kind and subject with detail, or opens it
+	// again when its detail changed.
+	Raise(ctx context.Context, kind, subject, detail string) error
+	// Clear resolves the open or acknowledged item of kind and subject.
+	Clear(ctx context.Context, kind, subject string) error
+}
+
 // ConnectorDeclarations tells what the running version of each connector
 // instance declares in its signed manifest (D-112, D-109).
 // ingest/kube.Discovery implements it from the Plugin resources.
@@ -225,6 +237,10 @@ type Connectors struct {
 	// manifest: only theirs are stored (D-112); and which are market-data
 	// connectors (D-123). Without it, none declares.
 	Declarations ConnectorDeclarations
+	// Attention raises an attention item for an instance whose delivery
+	// carried cross-check prices its manifest doesn't declare, and clears
+	// it on a delivery that carries none (D-141); nil raises nothing.
+	Attention AttentionRaiser
 	// Brokers keeps the broker accounts instances report and the OpenFief
 	// accounts they are mapped to (D-72); a delivery that names broker
 	// accounts fails without it.
@@ -264,7 +280,7 @@ func (c *Connectors) Sync(ctx context.Context, instance string, call *SyncCall) 
 	if err != nil {
 		return SyncResult{}, fmt.Errorf("sync %s batch %s: %w", instance, call.ID, err)
 	}
-	batch, err := c.deliver(ctx, instance, call.ID, SourceSync, call.Mode, &d, nil)
+	batch, err := c.deliver(ctx, instance, call.ID, SourceSync, call.Mode, &d, deliveryScope{})
 	if err != nil {
 		return SyncResult{}, err
 	}
@@ -299,13 +315,16 @@ func (c *Connectors) GoLiveDates(ctx context.Context, accounts []ledger.AccountI
 // several accounts, such as an IBKR Flex statement of linked accounts,
 // books every mapped account bound to instance, and the batch lists the
 // broker accounts that aren't mapped (D-109); a transaction or balance
-// assertion in an account not bound to instance refuses it whole.
-func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, file NamedFile) (ingest.Batch, error) {
+// assertion in an account not bound to instance refuses it whole. In an
+// opening upload, started holds the other accounts that have already
+// started, by their go-live: their seeding is left out, each row a skipped
+// problem, so the upload seeds only the accounts not seeded yet (D-140).
+func (c *Connectors) ImportFile(ctx context.Context, instance string, id ingest.BatchID, mode ingest.Mode, file NamedFile, started map[ledger.AccountID]kernel.Date) (ingest.Batch, error) {
 	d, err := c.Caller.ImportFile(ctx, instance, id, mode, file)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("import file into %s batch %s: %w", instance, id, err)
 	}
-	b, err := c.deliver(ctx, instance, id, SourceUpload, mode, &d, nil)
+	b, err := c.deliver(ctx, instance, id, SourceUpload, mode, &d, deliveryScope{started: started})
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("import file into %s: %w", instance, err)
 	}
@@ -336,17 +355,28 @@ func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ing
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("import bond lots into %s batch %s: %w", instance, id, err)
 	}
-	b, err := c.deliver(ctx, instance, id, SourceEntry, ingest.ModeTransactions, &d, []ledger.AccountID{account})
+	b, err := c.deliver(ctx, instance, id, SourceEntry, ingest.ModeTransactions, &d, deliveryScope{only: []ledger.AccountID{account}})
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("import bond lots into %s: %w", instance, err)
 	}
 	return b, nil
 }
 
+// deliveryScope limits what a delivery books. only, when set, are the
+// accounts it may name at all; started, in an opening upload, are the
+// accounts other than the one it was uploaded for that have already
+// started, whose seeding it leaves out (D-140).
+type deliveryScope struct {
+	only    []ledger.AccountID
+	started map[ledger.AccountID]kernel.Date
+}
+
 // deliver imports a delivery as one import batch: entries named by broker
 // account resolved into the accounts they are mapped to (D-72), in a sync,
 // or an upload in transactions mode, what accounts' seeding already holds
-// left out (D-95, D-136), ticker entries booked with their confirmed ISIN
+// left out (D-95, D-136), in an opening upload the seeding of the other
+// accounts already started left out (D-140), ticker entries booked with
+// their confirmed ISIN
 // or held for the owner (D-116), the transactions
 // scoped to the instance into the ledger, seeded in an
 // opening batch (D-23), then prices, FX rates, index readings, index
@@ -354,8 +384,9 @@ func (c *Connectors) ImportBondLots(ctx context.Context, instance string, id ing
 // instance recorded as a source of each kind of market data, then
 // treasury bond series terms. Every index reading must be valid and every
 // transaction and balance assertion must be in an account the instance is
-// bound to, and with only in one of only, or nothing is imported.
-func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.BatchID, source string, mode ingest.Mode, d *Delivery, only []ledger.AccountID) (ingest.Batch, error) {
+// bound to, and in one of scope.only when it is set, or nothing is
+// imported.
+func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.BatchID, source string, mode ingest.Mode, d *Delivery, scope deliveryScope) (ingest.Batch, error) {
 	batch, err := ingest.NewBatch(id, d.Institution, source, mode, c.Today())
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s: %w", instance, err)
@@ -364,7 +395,7 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
-	r, starts, err := c.admit(ctx, instance, source, mode, d, only)
+	r, starts, err := c.admit(ctx, instance, source, mode, d, scope)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
@@ -393,10 +424,12 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 
 // declaredCrossChecks returns d as it is when it carries no cross-check
 // prices or instance's manifest declares them, and otherwise without them,
-// adding to m the ingest problem that says none was stored (D-112).
+// adding to m the ingest problem that says none was stored (D-112) and
+// raising the instance's attention item (D-141); a delivery without
+// undeclared ones clears that item. The rest of d is imported either way.
 func (c *Connectors) declaredCrossChecks(ctx context.Context, instance string, d *Delivery, m *ingest.Mapping) (*Delivery, error) {
 	if len(d.CrossCheckPrices) == 0 {
-		return d, nil
+		return d, c.clearUndeclared(ctx, instance)
 	}
 	var declared ingest.Declarations
 	if c.Declarations != nil {
@@ -406,20 +439,44 @@ func (c *Connectors) declaredCrossChecks(ctx context.Context, instance string, d
 		}
 	}
 	if declared.CrossCheckPrices {
-		return d, nil
+		return d, c.clearUndeclared(ctx, instance)
 	}
 	out := *d
 	out.CrossCheckPrices = nil
 	m.Problems = append(slices.Clone(m.Problems), ingest.UndeclaredCrossCheckPrices(len(d.CrossCheckPrices)))
+	if c.Attention != nil {
+		if err := c.Attention.Raise(ctx, ingest.KindUndeclaredCrossCheckPrices, instance, ingest.UndeclaredCrossCheckPricesDetail); err != nil {
+			return nil, fmt.Errorf("raising undeclared cross-check prices: %w", err)
+		}
+	}
 	return &out, nil
+}
+
+// clearUndeclared resolves instance's attention item for undeclared
+// cross-check prices, if it has one (D-141); without Attention it does
+// nothing.
+func (c *Connectors) clearUndeclared(ctx context.Context, instance string) error {
+	if c.Attention == nil {
+		return nil
+	}
+	if err := c.Attention.Clear(ctx, ingest.KindUndeclaredCrossCheckPrices, instance); err != nil {
+		return fmt.Errorf("clearing undeclared cross-check prices: %w", err)
+	}
+	return nil
 }
 
 // keepFromGoLive returns m without what its accounts' seeding already holds
 // (ingest.KeepFromGoLive), when it comes from source in mode: a sync, or a
 // statement uploaded in transactions mode, which may reach back before the
-// account's go-live (D-136). An opening upload is kept whole: the ledger
-// decides whether it seeds the account again (D-23).
-func (c *Connectors) keepFromGoLive(ctx context.Context, source string, mode ingest.Mode, m *ingest.Mapping) (ingest.Mapping, error) {
+// account's go-live (D-136). An opening upload leaves out only the seeding
+// of started, the other accounts that have already started, so it seeds
+// only the accounts not seeded yet (D-140); the account it was uploaded
+// for is kept whole, and the ledger decides whether it seeds that one
+// again (D-23).
+func (c *Connectors) keepFromGoLive(ctx context.Context, source string, mode ingest.Mode, m *ingest.Mapping, started map[ledger.AccountID]kernel.Date) (ingest.Mapping, error) {
+	if source == SourceUpload && mode == ingest.ModeOpening {
+		return ingest.KeepFromGoLive(m, mode, started), nil
+	}
 	if source != SourceSync && (source != SourceUpload || mode != ingest.ModeTransactions) {
 		return *m, nil
 	}
@@ -441,24 +498,24 @@ func (c *Connectors) keepFromGoLive(ctx context.Context, source string, mode ing
 // accounts resolved, the broker accounts left unmapped and those an
 // opening batch of it seeds, what its accounts' go-live keeps out left out
 // (keepFromGoLive), and its ticker entries booked or held (bookTickers),
-// after checking that every account it names is in only, when only is
-// set, and bound to instance. It also returns the mapping to import before
-// its ticker entries were booked or held, from which an opening upload
-// records the accounts it starts (recordStarts).
-func (c *Connectors) admit(ctx context.Context, instance, source string, mode ingest.Mode, d *Delivery, only []ledger.AccountID) (ingest.Resolution, *ingest.Mapping, error) {
+// after checking that every account it names is in scope.only, when that
+// is set, and bound to instance. It also returns the mapping to import
+// before its ticker entries were booked or held, from which an opening
+// upload records the accounts it starts (recordStarts).
+func (c *Connectors) admit(ctx context.Context, instance, source string, mode ingest.Mode, d *Delivery, scope deliveryScope) (ingest.Resolution, *ingest.Mapping, error) {
 	r, err := c.resolveBrokerAccounts(ctx, instance, mode, d)
 	if err != nil {
 		return ingest.Resolution{}, nil, err
 	}
-	if only != nil {
-		if boundErr := ingest.CheckBound(instance, only, &r.Mapping); boundErr != nil {
+	if scope.only != nil {
+		if boundErr := ingest.CheckBound(instance, scope.only, &r.Mapping); boundErr != nil {
 			return ingest.Resolution{}, nil, fmt.Errorf("refused: %w", boundErr)
 		}
 	}
 	if boundErr := c.checkBound(ctx, instance, &r.Mapping); boundErr != nil {
 		return ingest.Resolution{}, nil, boundErr
 	}
-	kept, err := c.keepFromGoLive(ctx, source, mode, &r.Mapping)
+	kept, err := c.keepFromGoLive(ctx, source, mode, &r.Mapping, scope.started)
 	if err != nil {
 		return ingest.Resolution{}, nil, err
 	}

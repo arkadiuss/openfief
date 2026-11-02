@@ -211,6 +211,7 @@ func TestAttentionKindOf(t *testing.T) {
 		{"transfer-broken", "", attentionKind{"Transfer broken by a correction", "/transfers"}},
 		{"instrument-unclassified", "", attentionKind{"Instrument to classify", "/settings"}},
 		{"market-data-gap", "", attentionKind{"Market data stopped arriving", "/settings#series-sources-title"}},
+		{"cross-check-prices-undeclared", "flex-main", attentionKind{"Undeclared cross-check prices dropped", "/plugins"}},
 		{"some-later-check", "", attentionKind{Label: "some-later-check"}},
 	}
 	for _, tt := range tests {

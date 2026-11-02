@@ -1,9 +1,11 @@
 package app_test
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io"
+	"slices"
 	"strings"
 	"testing"
 
@@ -12,6 +14,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
@@ -214,5 +217,87 @@ func TestUploadsUploadRefuses(t *testing.T) {
 				t.Errorf("ledger imported = %v (want %v), recorded %v (want none)", got, tt.imported, rec.batches)
 			}
 		})
+	}
+}
+
+// historyOf answers HasTransactionsFrom from a fixed set of accounts that
+// hold transactions, as accounts started from their whole history do
+// (D-136).
+type historyOf []ledger.AccountID
+
+func (h historyOf) HasTransactionsFrom(_ context.Context, account ledger.AccountID, _ string) (bool, error) {
+	return slices.Contains(h, account), nil
+}
+
+// openingCash is broker account id's seeding: its opening cash of 100 USD
+// on day, keyed as a connector keys it.
+func openingCash(t *testing.T, id ingest.BrokerAccountID, day kernel.Date) ingest.BrokerEntries {
+	t.Helper()
+	usd, err := kernel.ParseMoney("100", mustCurrency(t, "USD"))
+	if err != nil {
+		t.Fatalf("ParseMoney: %v", err)
+	}
+	h := ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "flex", ExternalID: ledger.OpeningCashPrefix + string(id)}, Account: "named-by-broker-account", Date: day}
+	dep, err := ledger.NewDeposit(h, usd)
+	if err != nil {
+		t.Fatalf("NewDeposit: %v", err)
+	}
+	dep.Account = ""
+	return ingest.BrokerEntries{Account: id, Transactions: []ledger.Transaction{dep}}
+}
+
+// TestUploadsMultiAccountOpening checks D-140 on a statement of four
+// linked broker accounts uploaded for acc-1, which hasn't started: the
+// upload runs in acc-1's mode, opening, and seeds only the accounts not
+// seeded yet. acc-2, started by an earlier opening upload (D-160), and
+// acc-3, started from its whole history (D-136), keep their start: their
+// seeding is left out as skipped problems, not refused. The broker account
+// that isn't mapped is reported. The owner must be allowed to change every
+// account the statement may book (D-163).
+func TestUploadsMultiAccountOpening(t *testing.T) {
+	t.Parallel()
+	day := march2(t)
+	d := app.Delivery{Institution: "ibkr", Mapping: ingest.Mapping{
+		BrokerAccounts: []ingest.BrokerAccountID{"U0000001", "U0000002", "U0000003", "U0000004"},
+		ByBrokerAccount: []ingest.BrokerEntries{
+			openingCash(t, "U0000001", day), openingCash(t, "U0000002", day), openingCash(t, "U0000003", day),
+			openingCash(t, "U0000004", day),
+		},
+	}}
+	l := &fakeLedger{}
+	u := uploads(t, &fakeCaller{delivery: d}, l, &fakeRecorder{})
+	u.Owners, u.History = fakeOwners{}, historyOf{"acc-3"}
+	u.Connectors.Bindings = &fakeBindings{accounts: []ledger.AccountID{"acc-1", "acc-2", "acc-3"}}
+	u.Connectors.Starts = &memStarts{starts: map[ledger.AccountID]kernel.Date{"acc-2": day}}
+	u.Connectors.Brokers = &fakeBrokers{accounts: []ingest.BrokerAccount{
+		{Instance: "flex-main", ID: "U0000001", Account: "acc-1"},
+		{Instance: "flex-main", ID: "U0000002", Account: "acc-2"},
+		{Instance: "flex-main", ID: "U0000003", Account: "acc-3"},
+		{Instance: "flex-main", ID: "U0000004"},
+	}}
+	b, err := u.Upload(t.Context(), "https://ui.example.com", "owner", "acc-1", 0, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("flex")})
+	if err != nil {
+		t.Fatalf("Upload: %v", err)
+	}
+	booked := make([]ledger.AccountID, 0, len(l.txs))
+	for i := range l.txs {
+		booked = append(booked, l.txs[i].Account)
+	}
+	got := []any{b.Mode, booked, l.seeds, b.Unmapped}
+	want := []any{ingest.ModeOpening, []ledger.AccountID{"acc-1"}, 1, []ingest.BrokerAccountID{"U0000004"}}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("mode, seeded accounts, seeds, unmapped (-want +got):\n%s", diff)
+	}
+	wantSkipped := []ingest.Problem{
+		ingest.Skipped("flex:acc-2/"+ledger.OpeningCashPrefix+"U0000002", "the account is already seeded"),
+		ingest.Skipped("flex:acc-3/"+ledger.OpeningCashPrefix+"U0000003", "the account is already seeded"),
+	}
+	if diff := cmp.Diff(wantSkipped, b.Problems); diff != "" {
+		t.Errorf("problems (-want +got):\n%s", diff)
+	}
+
+	u.Owners = fakeOwners{denied: []ledger.AccountID{"acc-3"}}
+	if _, err := u.Upload(t.Context(), "https://ui.example.com", "owner", "acc-1", 0, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("flex")}); !errors.Is(err, app.ErrNotOwner) {
+		t.Errorf("Upload of a statement that may book an account the owner may not change = %v, want ErrNotOwner", err)
 	}
 }

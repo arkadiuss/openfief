@@ -594,13 +594,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94f18dad686c
-  - type: implements
-    from: SYM-ingest-app-connectors-keep-from-go-live
-    to: REQ-ingest-keeps-from-go-live-uploads
-    created_at: 2026-11-01T08:09:12.941Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6f580492c70a
   - type: constrains
     from: REQ-valuation-market-data-series-service
     to: FACT-SUBJECT-39E6C7397E8CD407
@@ -671,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ae870b668d3
+  - type: implements
+    from: SYM-ingest-app-connectors-keep-from-go-live
+    to: REQ-ingest-keeps-from-go-live-opening-uploads
+    created_at: 2026-11-02T13:18:38.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8220ae113385
+  - type: implements
+    from: SYM-ingest-app-connectors-keep-from-go-live
+    to: REQ-ingest-multi-account-opening-seeds-unseeded-only
+    created_at: 2026-11-02T13:18:39.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6702fc148351
+  - type: covered_by
+    from: SYM-ingest-app-connectors-keep-from-go-live
+    to: TEST-ingest-app-uploads
+    created_at: 2026-11-02T13:18:39.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e95e9939c824

@@ -21491,8 +21491,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-uploads
       - type: implements
         target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-multi-account-transactions-books-every-mapped
       - type: implements
         target: REQ-ingest-uploads-through-core
   - id: SYM-ingest-conn-app-connectors-deliver
@@ -21510,6 +21514,8 @@ symbols:
         target: REQ-ingest-connector-batches
       - type: implements
         target: REQ-ingest-instance-scoped-keys
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-rest-imported
   - id: SYM-ingest-conn-app-connectors-store-inputs
     title: Connectors.storeInputs
     sourceFile: internal/ingest/app/connectors.go
@@ -40065,8 +40071,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-connectors
+      - type: covered_by
+        target: TEST-core-undeclared-cross-check-prices
       - type: implements
         target: REQ-core-connector-commands
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
   - id: SYM-core-conn-new-scheduler
     title: newScheduler
     sourceFile: cmd/core/connectors.go
@@ -40078,10 +40088,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-connectors
+      - type: covered_by
+        target: TEST-core-undeclared-cross-check-prices
       - type: implements
         target: REQ-core-connector-commands
       - type: implements
         target: REQ-ingest-core-owns-schedules
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
   - id: SYM-core-conn-run-connectors
     title: runConnectors
     sourceFile: cmd/core/connectors.go
@@ -71103,8 +71117,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-statements
+      - type: covered_by
+        target: TEST-core-undeclared-cross-check-prices
       - type: implements
         target: REQ-ingest-statement-upload-bound-instance
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
   - id: SYM-core-new-uploads
     title: newUploads
     sourceFile: cmd/core/uploads.go
@@ -71320,6 +71338,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-upload-changes-every-bound
+      - type: implements
+        target: REQ-ingest-multi-account-upload-mode-of-uploaded-account
       - type: implements
         target: REQ-ingest-statement-mode-chosen-by-core
       - type: implements
@@ -74389,6 +74411,8 @@ symbols:
         target: TEST-valuation-crosscheck
       - type: implements
         target: REQ-valuation-price-check-instrument-threshold
+      - type: implements
+        target: REQ-valuation-price-check-threshold-fraction-range
   - id: SYM-valuation-price-check-status
     title: PriceCheckStatus
     sourceFile: internal/valuation/crosscheck.go
@@ -78784,8 +78808,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-brokers
+      - type: covered_by
+        target: TEST-ingest-app-uploads
       - type: implements
         target: REQ-ingest-broker-account-resolve
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
   - id: SYM-ingest-broker-account-id
     title: BrokerAccountID
     sourceFile: internal/ingest/brokeraccount.go
@@ -85371,9 +85399,11 @@ symbols:
       recorded_at: 2026-10-29T17:12:26.957Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
   - id: SYM-ingest-app-connectors-go-live-dates
@@ -85387,10 +85417,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-scheduler
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
-      - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
   - id: SYM-ingest-app-connectors-keep-from-go-live
     title: Connectors.keepFromGoLive
     sourceFile: internal/ingest/app/connectors.go
@@ -85402,8 +85434,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-uploads
       - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
   - id: SYM-ingest-app-test-helper-fixed-seeding
     title: fixedSeeding
     sourceFile: internal/ingest/app/connectors_test.go
@@ -85834,7 +85870,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-golive
       - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
   - id: SYM-ingest-test-helper-go-live-date
     title: goLiveDate
     sourceFile: internal/ingest/golive_test.go
@@ -88833,6 +88869,10 @@ symbols:
         target: TEST-valuation-app-crosscheck
       - type: implements
         target: REQ-valuation-price-check-instrument-threshold
+      - type: implements
+        target: REQ-valuation-price-check-threshold-clear-restores-default
+      - type: implements
+        target: REQ-valuation-price-check-threshold-fraction-range
   - id: SYM-valuation-app-cross-checks-acknowledge
     title: CrossChecks.Acknowledge
     sourceFile: internal/valuation/app/crosscheck.go
@@ -88844,6 +88884,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-acknowledgement-covers-one-check
       - type: implements
         target: REQ-valuation-price-check-acknowledge
       - type: implements
@@ -89073,6 +89115,8 @@ symbols:
         target: REQ-valuation-price-check-instrument-threshold
       - type: implements
         target: REQ-valuation-price-check-one-percent
+      - type: implements
+        target: REQ-valuation-price-check-threshold-clear-restores-default
   - id: SYM-valuation-latest-on-or-before
     title: latestOnOrBefore
     sourceFile: internal/valuation/crosscheck.go
@@ -89099,6 +89143,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-crosscheck
       - type: implements
+        target: REQ-valuation-acknowledgement-covers-one-check
+      - type: implements
         target: REQ-valuation-price-check-acknowledge
       - type: implements
         target: REQ-valuation-price-check-acknowledgement-lapses
@@ -89114,6 +89160,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-crosscheck
       - type: implements
+        target: REQ-valuation-acknowledgement-covers-one-check
+      - type: implements
         target: REQ-valuation-price-check-acknowledge
       - type: implements
         target: REQ-valuation-price-check-acknowledgement-lapses
@@ -89128,6 +89176,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-acknowledgement-covers-one-check
       - type: implements
         target: REQ-valuation-price-check-acknowledge
       - type: implements
@@ -89178,6 +89228,8 @@ symbols:
         target: TEST-valuation-postgres-price-check-settings
       - type: implements
         target: REQ-valuation-price-check-instrument-threshold
+      - type: implements
+        target: REQ-valuation-price-check-threshold-clear-restores-default
   - id: SYM-valuation-postgres-store-price-check-acknowledgements
     title: Store.PriceCheckAcknowledgements
     sourceFile: internal/valuation/postgres/crosscheck.go
@@ -90059,6 +90111,12 @@ symbols:
         target: TEST-ingest-app-connectors
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-item-per-instance
   - id: SYM-ingest-app-test-conn-fake-declarations
     title: fakeDeclarations
     sourceFile: internal/ingest/app/connectors_test.go
@@ -90209,6 +90267,8 @@ symbols:
       - type: implements
         target: REQ-ingest-statement-mode-chosen-by-core
       - type: implements
+        target: REQ-plugins-statement-files-declared-in-manifest
+      - type: implements
         target: REQ-ui-statement-upload-file-connectors-only
   - id: SYM-ingest-mapped-accounts
     title: MappedAccounts
@@ -90327,6 +90387,8 @@ symbols:
         target: TEST-ingest-declarations
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-dropped
   - id: SYM-ingest-upload-mode
     title: UploadMode
     sourceFile: internal/ingest/declarations.go
@@ -90392,6 +90454,8 @@ symbols:
         target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-plugins-manifest-declarations
+      - type: implements
+        target: REQ-plugins-statement-files-declared-in-manifest
   - id: SYM-ingest-kube-test-test-deployed-declarations
     title: TestDeployedDeclarations
     sourceFile: internal/ingest/kube/discovery_test.go
@@ -90827,6 +90891,8 @@ symbols:
         target: REQ-plugins-install-shows-market-data-list
       - type: implements
         target: REQ-plugins-manifest-declarations
+      - type: implements
+        target: REQ-plugins-statement-files-capability-not-permission
   - id: SYM-demo-cross-check-prices
     title: crossCheckPrices
     sourceFile: internal/demo/crosscheck.go
@@ -114657,7 +114723,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-golive
       - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
   - id: SYM-ingest-test-keep-from-go-live-ticker-entries
     title: TestKeepFromGoLiveTickerEntries
     sourceFile: internal/ingest/golive_test.go
@@ -119367,6 +119433,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-unclassified
+      - type: covered_by
+        target: TEST-core-undeclared-cross-check-prices
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
       - type: implements
         target: REQ-valuation-unclassified-attention
   - id: SYM-core-valuation-attention-raise
@@ -126909,6 +126979,8 @@ symbols:
       - type: covered_by
         target: TEST-ui-attention
       - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-item-per-instance
+      - type: implements
         target: REQ-ui-attention-page
   - id: SYM-ledger-test-cash-difference
     title: TestCashDifference
@@ -131132,3 +131204,226 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-bond-lot-sync-race
+  - id: SYM-ingest-app-attention-raiser
+    status: active
+    title: AttentionRaiser
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:11.029Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-item-per-instance
+  - id: SYM-ingest-app-connectors-clear-undeclared
+    status: active
+    title: Connectors.clearUndeclared
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:18.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-item-per-instance
+  - id: SYM-ingest-app-delivery-scope
+    status: active
+    title: deliveryScope
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:25.475Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
+  - id: SYM-ingest-app-uploads-plan
+    status: active
+    title: Uploads.plan
+    sourceFile: internal/ingest/app/uploads.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:32.424Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-upload-changes-every-bound
+      - type: implements
+        target: REQ-ingest-multi-account-upload-mode-of-uploaded-account
+  - id: SYM-ingest-app-upload-plan
+    status: active
+    title: uploadPlan
+    sourceFile: internal/ingest/app/uploads.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:39.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
+      - type: implements
+        target: REQ-ingest-multi-account-upload-mode-of-uploaded-account
+  - id: SYM-ingest-app-uploads-started-others
+    status: active
+    title: Uploads.startedOthers
+    sourceFile: internal/ingest/app/uploads.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:46.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
+  - id: SYM-ingest-app-test-helper-history-of
+    title: historyOf
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:51.936Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-history-of-has-transactions-from
+    title: historyOf.HasTransactionsFrom
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:58.220Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-opening-cash
+    title: openingCash
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:04.548Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-uploads-multi-account-opening
+    title: TestUploadsMultiAccountOpening
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:10.783Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-fake-attention
+    title: fakeAttention
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:15.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-helper-fake-attention-raise
+    title: fakeAttention.Raise
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:22.481Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-helper-fake-attention-clear
+    title: fakeAttention.Clear
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:29.074Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-connectors-undeclared-cross-check-prices-raise-attention
+    title: TestConnectorsUndeclaredCrossCheckPricesRaiseAttention
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:35.674Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-core-test-helper-undeclared-connector
+    title: undeclaredConnector
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:41.366Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices
+  - id: SYM-core-test-helper-undeclared-connector-sync
+    title: undeclaredConnector.Sync
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:47.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices
+  - id: SYM-core-test-helper-stored-attention-items
+    title: storedAttentionItems
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:54.154Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices
+  - id: SYM-core-test-helper-check-undeclared-item
+    title: checkUndeclaredItem
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:23:00.721Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices
+  - id: SYM-core-test-undeclared-cross-check-prices-raise-attention
+    title: TestUndeclaredCrossCheckPricesRaiseAttention
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:23:07.247Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices

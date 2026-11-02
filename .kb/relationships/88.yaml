@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cce6aef15c46
+  - type: implements
+    from: SYM-core-conn-new-scheduler
+    to: REQ-ingest-undeclared-cross-check-prices-attention-item
+    created_at: 2026-11-02T13:19:49.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ff3389304e5
+  - type: covered_by
+    from: SYM-core-conn-new-scheduler
+    to: TEST-core-undeclared-cross-check-prices
+    created_at: 2026-11-02T13:19:49.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1d14ca6c629

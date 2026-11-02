@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db01315039f8
+  - type: implements
+    from: SYM-plugins-cli-write-declarations
+    to: REQ-plugins-statement-files-capability-not-permission
+    created_at: 2026-11-02T13:18:16.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e21c92f64ef

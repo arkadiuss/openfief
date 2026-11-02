@@ -331,7 +331,7 @@ func TestConnectorsUploadKeepsFromGoLive(t *testing.T) {
 	l := &fakeLedger{}
 	c := connectors(t, &fakeCaller{delivery: d}, l, &fakeStores{})
 	c.Seeding = fixedSeeding{goLive: march2(t)}
-	upload, err := c.ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeTransactions, app.NamedFile{Contents: strings.NewReader("x")})
+	upload, err := c.ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeTransactions, app.NamedFile{Contents: strings.NewReader("x")}, nil)
 	if err != nil {
 		t.Fatalf("ImportFile: %v", err)
 	}
@@ -342,7 +342,7 @@ func TestConnectorsUploadKeepsFromGoLive(t *testing.T) {
 	if diff := cmp.Diff(wantProblems, upload.Problems); diff != "" || len(l.txs) != 0 {
 		t.Errorf("a transactions upload booked %d transactions with problems (-want +got):\n%s", len(l.txs), diff)
 	}
-	if _, err := c.ImportFile(t.Context(), "xtb-main", "b-4", ingest.ModeOpening, app.NamedFile{Contents: strings.NewReader("x")}); err != nil {
+	if _, err := c.ImportFile(t.Context(), "xtb-main", "b-4", ingest.ModeOpening, app.NamedFile{Contents: strings.NewReader("x")}, nil); err != nil {
 		t.Fatalf("ImportFile: %v", err)
 	}
 	if len(l.txs) != 1 || l.seeds != 1 {
@@ -358,7 +358,7 @@ func TestConnectorsImportFile(t *testing.T) {
 	stores := &fakeStores{}
 	file := app.NamedFile{Name: "statement.csv", Contents: strings.NewReader("synthetic")}
 	l := &fakeLedger{}
-	got, err := connectors(t, caller, l, stores).ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeOpening, file)
+	got, err := connectors(t, caller, l, stores).ImportFile(t.Context(), "xtb-main", "b-2", ingest.ModeOpening, file, nil)
 	if err != nil {
 		t.Fatalf("ImportFile: %v", err)
 	}
@@ -414,10 +414,80 @@ func TestConnectorsFailures(t *testing.T) {
 			if got := l.calls == 1; got != tt.wantImport {
 				t.Errorf("ledger imported = %v, want %v", got, tt.wantImport)
 			}
-			_, err = c.ImportFile(t.Context(), "xtb-main", "b-1", tt.mode, app.NamedFile{Contents: strings.NewReader("")})
+			_, err = c.ImportFile(t.Context(), "xtb-main", "b-1", tt.mode, app.NamedFile{Contents: strings.NewReader("")}, nil)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("ImportFile error (-want +got):\n%s", diff)
 			}
 		})
+	}
+}
+
+// fakeAttention records the attention items raised and cleared, as
+// "raise <kind> <subject>" and "clear <kind> <subject>", or fails with err.
+type fakeAttention struct {
+	calls  []string
+	detail string
+	err    error
+}
+
+func (f *fakeAttention) Raise(_ context.Context, kind, subject, detail string) error {
+	f.calls = append(f.calls, "raise "+kind+" "+subject)
+	f.detail = detail
+	return f.err
+}
+
+func (f *fakeAttention) Clear(_ context.Context, kind, subject string) error {
+	f.calls = append(f.calls, "clear "+kind+" "+subject)
+	return f.err
+}
+
+// TestConnectorsUndeclaredCrossCheckPricesRaiseAttention checks D-141: a
+// delivery whose cross-check prices the instance's manifest doesn't declare
+// has them dropped, raises the instance's attention item, and is imported
+// otherwise; the instance's next delivery without undeclared ones, none or
+// declared, clears it; and a failing attention store fails the sync rather
+// than drop prices silently.
+func TestConnectorsUndeclaredCrossCheckPricesRaiseAttention(t *testing.T) {
+	t.Parallel()
+	d, _ := crossCheckDelivery(t)
+	caller := &fakeCaller{delivery: d}
+	stores := &fakeStores{}
+	l := &fakeLedger{}
+	c := connectors(t, caller, l, stores)
+	attn := &fakeAttention{}
+	decl := fakeDeclarations{byInstance: map[string]ingest.Declarations{}}
+	c.Declarations, c.Attention = decl, attn
+	got, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions})
+	if err != nil {
+		t.Fatalf("Sync: %v", err)
+	}
+	if len(stores.checks) != 0 || got.Batch.Transactions != len(d.Mapping.Transactions) || len(l.txs) != len(d.Mapping.Transactions) {
+		t.Errorf("an undeclared delivery stored %v and imported %d transactions; want none stored and the rest imported", stores.checks, len(l.txs))
+	}
+	if attn.detail != ingest.UndeclaredCrossCheckPricesDetail {
+		t.Errorf("raised with detail %q, want %q", attn.detail, ingest.UndeclaredCrossCheckPricesDetail)
+	}
+
+	none := d
+	none.CrossCheckPrices = nil
+	caller.delivery = none
+	if _, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-2", Mode: ingest.ModeTransactions}); err != nil {
+		t.Fatalf("Sync without cross-check prices: %v", err)
+	}
+	caller.delivery = d
+	decl.byInstance["ibkr-main"] = ingest.Declarations{CrossCheckPrices: true}
+	if _, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-3", Mode: ingest.ModeTransactions}); err != nil {
+		t.Fatalf("Sync with declared cross-check prices: %v", err)
+	}
+	kind := ingest.KindUndeclaredCrossCheckPrices
+	want := []string{"raise " + kind + " ibkr-main", "clear " + kind + " ibkr-main", "clear " + kind + " ibkr-main"}
+	if diff := cmp.Diff(want, attn.calls); diff != "" {
+		t.Errorf("attention calls (-want +got):\n%s", diff)
+	}
+
+	delete(decl.byInstance, "ibkr-main")
+	attn.err = errStore
+	if _, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-4", Mode: ingest.ModeTransactions}); !errors.Is(err, errStore) {
+		t.Errorf("Sync with the attention store failing = %v, want %v", err, errStore)
 	}
 }

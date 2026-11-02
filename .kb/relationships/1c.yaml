@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32c34945755a
+  - type: validates
+    from: TEST-plugins-cli-render
+    to: REQ-plugins-statement-files-capability-not-permission
+    created_at: 2026-11-02T13:17:21.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-533272756b97

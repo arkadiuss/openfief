@@ -860,3 +860,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec2c213241cc
+  - type: implements
+    from: SYM-ingest-app-connectors-clear-undeclared
+    to: REQ-ingest-undeclared-cross-check-prices-attention-item
+    created_at: 2026-11-02T13:21:20.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-062211ac5ba6
+  - type: implements
+    from: SYM-ingest-app-connectors-clear-undeclared
+    to: REQ-ingest-undeclared-cross-check-prices-item-per-instance
+    created_at: 2026-11-02T13:21:20.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed9d6d099ad8
+  - type: covered_by
+    from: SYM-ingest-app-connectors-clear-undeclared
+    to: TEST-ingest-app-connectors
+    created_at: 2026-11-02T13:21:20.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-510eea4c171e
