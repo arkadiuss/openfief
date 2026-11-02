@@ -37,6 +37,10 @@ Rules without a marker are the author's; **(P)** marks a Claude Code proposal aw
 - End-to-end tests log in with a real passkey ceremony: they drive the browser at `http://localhost` through a port-forward and use the browser's virtual authenticator. No flag weakens the product's origin check for tests.
 - Plugin images reach the operator from a throwaway registry on the cluster's Docker network, read over plain HTTP: go-containerregistry allows HTTP to a private address, and the nodes pull with `ctr --plain-http`. The image's digest and its signature (D-56), from a key made for the run and trusted through `openfief-trusted-signers` (D-45), are what make it trustworthy, not TLS. No operator flag or setting exists for the tests.
 
+## Browser checks
+
+- The built-in UI's browser check (`task ui:browser`) runs in CI on every change that can affect the UI: phone and desktop widths, light and dark themes, no sideways scroll, installability and the service worker. A release needs it green.
+
 ## Stability
 
 - No sleeps: wait on conditions, with a deadline.
