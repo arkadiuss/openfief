@@ -608,3 +608,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85353d4a011c
+  - type: verified_by
+    from: SCEN-ingest-undeclared-deliveries-item-per-instance
+    to: TEST-ingest-app-undeclared-deliveries
+    created_at: 2026-11-02T22:24:56.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d7ed2753089
+  - type: verified_by
+    from: SCEN-ingest-undeclared-deliveries-item-per-instance
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-02T22:24:56.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dd491ca8d0d
+  - type: verified_by
+    from: SCEN-ingest-undeclared-deliveries-item-per-instance
+    to: TEST-ingest-declarations
+    created_at: 2026-11-02T22:24:56.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19b5fbbc8054

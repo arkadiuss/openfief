@@ -196,6 +196,7 @@ func TestDeliveryFromRejects(t *testing.T) {
 		{name: "no problem kind", edit: func(r *connectorv1.Delivery) { r.Problems[0].Kind = 0 }},
 		{name: "bond terms of no series", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Instrument.Symbol = "TST" }},
 		{name: "bond terms with a bad ISIN", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Instrument.Isin = "PLEDO0536001" }},
+		{name: "bond terms of a non-Polish ISIN (D-179)", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Instrument.Isin = "IETEST000026" }},
 		{name: "bond terms with an exponent rate", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].FirstPeriodRate = "6e-2" }},
 		{name: "bond terms without a margin", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Margin = "" }},
 		{name: "bond terms without a fee", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].EarlyRedemptionFee = nil }},

@@ -186,3 +186,27 @@ waiting  registry.example.com/w@sha256:00  SignedByTrustedSigner  False (NoGrant
 		t.Errorf("table (-want +got):\n%s", diff)
 	}
 }
+
+// TestRenderProposalDeliveries checks that the install shows the owner a
+// connector that declares bond terms or index levels, which the core
+// stores only once the grant approves them (D-179), and that a connector
+// that declares neither says nothing of them.
+func TestRenderProposalDeliveries(t *testing.T) {
+	t.Parallel()
+	const (
+		terms  = "  Declares:     it delivers treasury bond series terms, which the core stores once approved (D-179)\n"
+		levels = "  Declares:     it delivers market index levels, which the core stores once approved (D-179)\n"
+	)
+	for _, declared := range []bool{true, false} {
+		p := &app.Proposal{
+			Plugin: plugins.Plugin{Name: "bonds", Image: sampleImage, Manifest: plugins.Manifest{
+				Capabilities: []plugins.Capability{plugins.CapabilityConnector}, BondTerms: declared, IndexLevels: declared,
+			}},
+			Decision: plugins.TrustDecision{Trust: plugins.Unverified, Signer: plugins.OpenFiefCI()},
+		}
+		got := cli.RenderProposal(p)
+		if strings.Contains(got, terms) != declared || strings.Contains(got, levels) != declared {
+			t.Errorf("declared %v: summary\n%s", declared, got)
+		}
+	}
+}

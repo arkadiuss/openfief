@@ -34,13 +34,15 @@ type manifestDoc struct {
 	CrossCheckPrices bool `json:"crossCheckPrices,omitempty"`
 	StatementFiles   bool `json:"statementFiles,omitempty"`
 	MarketData       bool `json:"marketData,omitempty"`
+	BondTerms        bool `json:"bondTerms,omitempty"`
+	IndexLevels      bool `json:"indexLevels,omitempty"`
 }
 
 // ParseManifestLabel reads a manifest from the value of an image's
 // ManifestLabel: a JSON object with the fields of spec.manifest
 // (capabilities, egress, secrets, dataTiers, configSchema, browserPath,
 // egressFromConfig, clusterService, crossCheckPrices, statementFiles,
-// marketData).
+// marketData, bondTerms, indexLevels).
 // Unknown fields are refused, so a
 // manifest is never half-read. The manifest is validated.
 func ParseManifestLabel(value string) (Manifest, error) {
@@ -51,7 +53,7 @@ func ParseManifestLabel(value string) (Manifest, error) {
 	m := Manifest{
 		Capabilities: doc.Capabilities, DataTiers: doc.DataTiers, BrowserPath: doc.BrowserPath,
 		EgressFromConfig: doc.EgressFromConfig, CrossCheckPrices: doc.CrossCheckPrices, StatementFiles: doc.StatementFiles,
-		MarketData: doc.MarketData,
+		MarketData: doc.MarketData, BondTerms: doc.BondTerms, IndexLevels: doc.IndexLevels,
 	}
 	if doc.ClusterService != nil {
 		m.ClusterService = &ClusterServiceRequest{Description: doc.ClusterService.Description}
@@ -97,9 +99,10 @@ func (m *Manifest) Equal(o *Manifest) bool {
 }
 
 // sameDeclarations reports whether m and o make the same connector
-// declarations (D-112, D-109, D-123).
+// declarations (D-112, D-109, D-123, D-179).
 func (m *Manifest) sameDeclarations(o *Manifest) bool {
-	return m.CrossCheckPrices == o.CrossCheckPrices && m.StatementFiles == o.StatementFiles && m.MarketData == o.MarketData
+	return m.CrossCheckPrices == o.CrossCheckPrices && m.StatementFiles == o.StatementFiles && m.MarketData == o.MarketData &&
+		m.BondTerms == o.BondTerms && m.IndexLevels == o.IndexLevels
 }
 
 // sortedMounts returns the mounts sorted by role, then mount path.

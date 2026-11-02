@@ -54,6 +54,25 @@ func TestPluginsPageMarketData(t *testing.T) {
 	}
 }
 
+// TestPluginsPageDeliveries checks that the plugins page shows the owner
+// which bond terms and index levels a connector delivers are stored, as
+// its grant approves, and which are dropped for want of approval (D-179).
+func TestPluginsPageDeliveries(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	rec := h.serve(t, withSession(request(http.MethodGet, "/plugins", ""), ownerSession))
+	wantStatus(t, rec, http.StatusOK)
+	body := rec.Body.String()
+	_, after, found := strings.Cut(body, "prices-main")
+	row, _, _ := strings.Cut(after, "</tr>")
+	if !found || !strings.Contains(row, ">Index levels<") || !strings.Contains(row, "Delivers treasury bond series terms; not approved, so they are dropped.") {
+		t.Errorf("prices-main's row doesn't show its index levels stored and its bond terms dropped:\n%s", row)
+	}
+	if n := strings.Count(body, ">Bond terms<"); n != 0 {
+		t.Errorf("%d plugins marked as delivering bond terms, want none approved", n)
+	}
+}
+
 // TestPluginsPageUnavailable checks that a core that can't read its
 // cluster leaves a sentence on the plugins and settings pages instead of
 // failing them.

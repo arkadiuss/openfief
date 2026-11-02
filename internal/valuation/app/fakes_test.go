@@ -212,7 +212,7 @@ func (f *fakeRecorder) SaveIndexLevels(context.Context, []valuation.IndexLevel) 
 	return f.record("levels", nil)
 }
 
-func (f *fakeRecorder) SaveBondTerms(_ context.Context, _ ledger.ISIN, _ *pl.Terms, revals []valuation.Revaluation) error {
+func (f *fakeRecorder) SaveBondTerms(_ context.Context, _ ledger.ISIN, _ *pl.Terms, _ string, revals []valuation.Revaluation) error {
 	return f.record("terms", revals)
 }
 

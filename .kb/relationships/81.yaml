@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-982aa626d9af
+  - type: executable_for
+    from: SYM-core-test-helper-sync-undeclared
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-02T22:50:17.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d12bcfcc4cec

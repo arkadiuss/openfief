@@ -685,3 +685,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ce9e3157c2c
+  - type: constrains
+    from: REQ-ingest-index-levels-allowed-instances
+    to: FACT-SUBJECT-34E18BC161541BC9
+    created_at: 2026-11-02T22:25:11.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2417eca316d
+  - type: requires_property
+    from: REQ-ingest-index-levels-allowed-instances
+    to: FACT-PROP-F9368E2EBD87AD1B
+    created_at: 2026-11-02T22:25:11.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f51d35de45a
+  - type: specified_by
+    from: REQ-ingest-index-levels-allowed-instances
+    to: SCEN-ingest-index-levels-allowed-instances
+    created_at: 2026-11-02T22:25:11.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a0b0d3a3bf
+  - type: supersedes
+    from: REQ-ingest-index-levels-allowed-instances
+    to: REQ-ingest-index-levels
+    created_at: 2026-11-02T22:25:11.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ed4d96839e1

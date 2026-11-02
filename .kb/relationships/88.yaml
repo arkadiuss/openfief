@@ -552,3 +552,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-480b88613fc7
+  - type: implements
+    from: SYM-core-valuation-inputs-store-bond-terms
+    to: REQ-valuation-terms-levels-record-instance
+    created_at: 2026-11-02T22:28:03.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bebadeeca1df
+  - type: covered_by
+    from: SYM-core-valuation-inputs-store-bond-terms
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-02T22:28:03.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8aaf82e49e7e
+  - type: implements
+    from: SYM-core-conn-new-scheduler
+    to: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+    created_at: 2026-11-02T22:28:11.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04f4d26c9a89
+  - type: covered_by
+    from: SYM-core-conn-new-scheduler
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-02T22:28:11.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e49bf56f1db5

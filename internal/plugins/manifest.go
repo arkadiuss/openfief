@@ -97,6 +97,13 @@ type Manifest struct {
 	// targets (D-93). It is a permission the grant approves, so the owner
 	// sees at install that the plugin will learn what they hold (D-123).
 	MarketData bool
+	// BondTerms declares that a connector delivers treasury bond series
+	// terms, and IndexLevels that it delivers market index levels. Each is a
+	// permission the grant approves: the core stores them only from a
+	// connector whose manifest declares them and whose grant approves that
+	// (D-179).
+	BondTerms   bool
+	IndexLevels bool
 }
 
 // Validate returns every problem in m, each a *FieldError, joined; or nil.
@@ -115,6 +122,7 @@ func (m *Manifest) Validate() error {
 	if m.MarketData && !slices.Contains(m.Capabilities, CapabilityConnector) {
 		errs = append(errs, &FieldError{Field: "marketData", Err: ErrMarketDataNeedsConnector})
 	}
+	errs = append(errs, m.validateDeliveries()...)
 	if len(m.ConfigSchema) > 0 && !json.Valid(m.ConfigSchema) {
 		errs = append(errs, &FieldError{Field: "configSchema", Err: ErrInvalidJSON})
 	}
@@ -250,4 +258,21 @@ func sortedCopy[T any](xs []T, compare func(a, b T) int) []T {
 	out := slices.Clone(xs)
 	slices.SortFunc(out, compare)
 	return out
+}
+
+// validateDeliveries refuses bond terms or index levels declared by a
+// plugin that can't act as a connector: only a connector delivers them
+// (D-179).
+func (m *Manifest) validateDeliveries() []error {
+	if slices.Contains(m.Capabilities, CapabilityConnector) {
+		return nil
+	}
+	var errs []error
+	if m.BondTerms {
+		errs = append(errs, &FieldError{Field: "bondTerms", Err: ErrDeliveryNeedsConnector})
+	}
+	if m.IndexLevels {
+		errs = append(errs, &FieldError{Field: "indexLevels", Err: ErrDeliveryNeedsConnector})
+	}
+	return errs
 }

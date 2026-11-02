@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc4e8b940a69
+  - type: implements
+    from: SYM-plugins-effective-permissions-index-levels
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:26:00.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01d191e403a0
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-index-levels
+    to: TEST-plugins-deliveries
+    created_at: 2026-11-02T22:26:00.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1933fb72ff2b

@@ -226,7 +226,7 @@ func recordInputs(t *testing.T, r *valuationapp.InputRecorder, ds *demo.Dataset)
 		t.Fatalf("RecordTaxWrapper: %v", err)
 	}
 	for i := range ds.Bonds {
-		if err := r.RecordBondTerms(ctx, ds.Bonds[i].Instrument.ISIN, &ds.Bonds[i].Terms); err != nil {
+		if err := r.RecordBondTerms(ctx, ds.Bonds[i].Instrument.ISIN, &ds.Bonds[i].Terms, demo.BondsInstitution); err != nil {
 			t.Fatalf("RecordBondTerms: %v", err)
 		}
 	}

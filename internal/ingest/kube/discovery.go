@@ -150,7 +150,9 @@ func (d *Discovery) Declarations(_ context.Context, instance string) (ingest.Dec
 // running version from status.deployed.manifest, and whether it is a
 // market-data connector from status.effective.marketData, which is true
 // only when the manifest declares it and the PluginGrant approves it
-// (D-123); a field that is missing or not a boolean declares nothing.
+// (D-123), and so whether it may deliver bond terms and index levels from
+// status.effective.bondTerms and indexLevels (D-179); a field that is
+// missing or not a boolean declares nothing.
 func DeployedDeclarations(u *unstructured.Unstructured) ingest.Declarations {
 	flag := func(fields ...string) bool {
 		v, found, err := unstructured.NestedBool(u.Object, append([]string{"status"}, fields...)...)
@@ -160,6 +162,8 @@ func DeployedDeclarations(u *unstructured.Unstructured) ingest.Declarations {
 		CrossCheckPrices: flag("deployed", "manifest", "crossCheckPrices"),
 		StatementFiles:   flag("deployed", "manifest", "statementFiles"),
 		MarketData:       flag("effective", "marketData"),
+		BondTerms:        flag("effective", "bondTerms"),
+		IndexLevels:      flag("effective", "indexLevels"),
 	}
 }
 

@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bfa6ff64a763
+  - type: implements
+    from: SYM-core-entry-connectors
+    to: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+    created_at: 2026-11-02T22:28:26.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7a413f55410
+  - type: covered_by
+    from: SYM-core-entry-connectors
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-02T22:28:26.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e256d66b69c2

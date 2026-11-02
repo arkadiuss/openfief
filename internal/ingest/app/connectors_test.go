@@ -152,14 +152,16 @@ func (f *fakeBindings) BoundAccounts(context.Context, string) ([]ledger.AccountI
 }
 
 // connectors returns Connectors over the fakes, with the instance bound to
-// acc-1, the account of mapping(t).
+// acc-1, the account of mapping(t), and allowed to deliver bond terms and
+// index levels (D-179).
 func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, stores *fakeStores) *app.Connectors {
 	t.Helper()
 	day := march2(t)
 	return &app.Connectors{
 		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores, Levels: stores, Terms: stores,
 		CrossChecks: stores, Sources: stores, Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
-		Today: func() kernel.Date { return day },
+		Declarations: fakeDeclarations{deliveries: true},
+		Today:        func() kernel.Date { return day },
 	}
 }
 
@@ -204,14 +206,18 @@ func TestConnectorsSync(t *testing.T) {
 }
 
 // fakeDeclarations answers each instance's manifest declarations, or fails
-// with err.
+// with err. With deliveries, every instance may also deliver bond terms
+// and index levels (D-179).
 type fakeDeclarations struct {
 	byInstance map[string]ingest.Declarations
+	deliveries bool
 	err        error
 }
 
 func (f fakeDeclarations) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
-	return f.byInstance[instance], f.err
+	d := f.byInstance[instance]
+	d.BondTerms, d.IndexLevels = d.BondTerms || f.deliveries, d.IndexLevels || f.deliveries
+	return d, f.err
 }
 
 // crossCheckDelivery is a delivery of one cross-check price, a spoofed

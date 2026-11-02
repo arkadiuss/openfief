@@ -3,6 +3,7 @@ package pl
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 )
@@ -10,6 +11,23 @@ import (
 // ErrInvalidTerms reports series terms that cannot be used, such as a
 // negative or non-PLN early-redemption fee.
 var ErrInvalidTerms = errors.New("invalid series terms")
+
+// ErrNotPolishISIN reports bond series terms for an instrument whose ISIN
+// isn't Polish: Polish retail treasury bonds have a PL ISIN (D-179).
+var ErrNotPolishISIN = errors.New("bond series terms need a Polish (PL) ISIN")
+
+// polishISINPrefix is the country code a Polish ISIN starts with.
+const polishISINPrefix = "PL"
+
+// CheckBondISIN returns nil when isin, a valid ISIN, is Polish, and an
+// error wrapping ErrNotPolishISIN otherwise: only a PL ISIN takes bond
+// series terms (D-179).
+func CheckBondISIN(isin string) error {
+	if !strings.HasPrefix(isin, polishISINPrefix) {
+		return fmt.Errorf("%w: %q", ErrNotPolishISIN, isin)
+	}
+	return nil
+}
 
 // Nominal returns the face value of one retail treasury bond: 100 PLN.
 func Nominal() kernel.Money {

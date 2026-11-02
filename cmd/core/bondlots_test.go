@@ -11,6 +11,7 @@ import (
 	"connectrpc.com/connect"
 
 	"github.com/arkadiuss/openfief/internal/demo"
+	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/connectrpc"
 	"github.com/arkadiuss/openfief/internal/ingest/delivery"
 	"github.com/arkadiuss/openfief/internal/ingest/treasurybonds"
@@ -86,6 +87,18 @@ func edoRequest(session, account string) *connect.Request[ingestv1.AddBondLotReq
 	})
 }
 
+// bondsDiscovery is a cluster whose one connector instance, bonds-main,
+// may deliver bond series terms (D-179).
+type bondsDiscovery struct{}
+
+func (bondsDiscovery) ConnectorInstances(context.Context) ([]string, error) {
+	return []string{"bonds-main"}, nil
+}
+
+func (bondsDiscovery) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
+	return ingest.Declarations{BondTerms: instance == "bonds-main"}, nil
+}
+
 func TestBondLotService(t *testing.T) {
 	t.Parallel()
 	dsn := emptyDatabase(t)
@@ -106,6 +119,7 @@ func TestBondLotService(t *testing.T) {
 	c.deps.entries.set(connectrpc.NewClient(connectrpc.H2CClient(), func(string) (string, error) {
 		return fmt.Sprintf("http://127.0.0.1:%d", port), nil
 	}, staticTokens{}))
+	c.deps.entries.setDiscovery(bondsDiscovery{})
 
 	// The lot is booked on its real purchase date as a deposit of its cost
 	// and a buy (D-98).

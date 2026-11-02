@@ -381,6 +381,9 @@ func bondTermsFrom(field string, b *connectorv1.BondTerms) (ingest.BondTerms, er
 	if err != nil {
 		return ingest.BondTerms{}, err
 	}
+	if isinErr := pl.CheckBondISIN(in.ISIN.String()); isinErr != nil {
+		return ingest.BondTerms{}, invalid(field+".instrument.isin", isinErr)
+	}
 	series, err := pl.ParseSeries(in.Symbol)
 	if err != nil {
 		return ingest.BondTerms{}, invalid(field+".instrument.symbol", err)

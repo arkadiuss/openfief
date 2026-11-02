@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbb6066e731e
+  - type: executable_for
+    from: SYM-plugins-test-deliveries-diff
+    to: TEST-plugins-deliveries
+    created_at: 2026-11-02T22:50:30.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21cc36c7b1dd

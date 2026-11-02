@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-18c84ea322d0
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-bond-terms
+    to: REQ-valuation-bond-terms-polish-isin
+    created_at: 2026-11-02T22:27:21.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ce4cbcee218
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-bond-terms
+    to: REQ-valuation-terms-levels-record-instance
+    created_at: 2026-11-02T22:27:21.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fffca203495
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-delivery-attention
+    to: TEST-ingest-app-undeclared-deliveries
+    created_at: 2026-11-02T22:29:09.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a357656b1bf2

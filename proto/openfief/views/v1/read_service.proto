@@ -1137,6 +1137,18 @@ message Plugin {
   // "<subject> (issuer <issuer>)", a key as "public key sha256:<hex>".
   // Empty otherwise.
   repeated string untrusted_signers = 13;
+  // Whether the core stores the treasury bond series terms it delivers: its
+  // signed manifest declares them and its PluginGrant approves that
+  // (D-179).
+  bool bond_terms = 14;
+  // Whether its signed manifest declares bond series terms, approved or not.
+  bool requested_bond_terms = 15;
+  // Whether the core stores the market index levels it delivers: its signed
+  // manifest declares them and its PluginGrant approves that (D-179).
+  bool index_levels = 16;
+  // Whether its signed manifest declares market index levels, approved or
+  // not.
+  bool requested_index_levels = 17;
 }
 
 // AttentionItemState is where an attention item stands (D-130).

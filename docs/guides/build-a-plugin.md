@@ -219,6 +219,8 @@ The label holds one JSON object. [ParseManifestLabel](../../internal/plugins/man
 | `crossCheckPrices` | A connector that sends [cross-check prices](../glossary.md) in its deliveries declares it; the core stores none from one that doesn't (D-112). | `true` (ibkr-flex) |
 | `statementFiles` | A connector that takes statement files the owner uploads declares it; the UI offers the upload form only on accounts bound to one (D-109). | `true` (ibkr-flex) |
 | `marketData` | A connector that prices instruments declares it: each sync then tells it every instrument the owner holds and the model portfolio's targets (D-93). It is a permission the grant approves, and the install shows the owner that the plugin will learn what they hold; a connector that doesn't declare it, or whose grant doesn't approve it, is told nothing (D-123). Only a connector may declare it. | `true` (eodhd) |
+| `bondTerms` | A connector that delivers treasury bond series terms declares it. It is a permission the grant approves; the core stores terms only from a connector that declares it and whose grant approves it, needs a Polish (`PL`) ISIN, and drops any other with an attention item (D-179). Only a connector may declare it. | `true` (treasury-bonds) |
+| `indexLevels` | A connector that delivers market index levels declares it, approved by the grant like `bondTerms`; the core drops levels from any other connector with an attention item (D-179). Only a connector may declare it. | `true` (eodhd) |
 
 Because the manifest names a role and each instance mounts `<instance>-<role>`, two instances of one image, such as one per IBKR account, never share a Secret: `ibkr-joint` mounts `ibkr-joint-flex-token`.
 

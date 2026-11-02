@@ -93,3 +93,26 @@ func TestExchangePrice(t *testing.T) {
 		})
 	}
 }
+
+// TestCheckBondISIN checks that only a Polish (PL) ISIN takes bond series
+// terms (D-179).
+func TestCheckBondISIN(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name string
+		isin string
+		want error
+	}{
+		{name: "a Polish treasury bond", isin: "PL0000000014"},
+		{name: "an Irish fund", isin: "IETEST000026", want: pl.ErrNotPolishISIN},
+		{name: "no ISIN", isin: "", want: pl.ErrNotPolishISIN},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if got := pl.CheckBondISIN(tt.isin); !errors.Is(got, tt.want) || (tt.want == nil) != (got == nil) {
+				t.Errorf("CheckBondISIN(%q) = %v, want %v", tt.isin, got, tt.want)
+			}
+		})
+	}
+}

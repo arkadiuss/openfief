@@ -553,6 +553,7 @@ func (f *fakeRead) ListPlugins(_ context.Context, r *connect.Request[viewsv1.Lis
 			Capabilities: []string{"connector"}, RequestedCapabilities: []string{"connector"},
 			Trust: viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI, Signer: "openfief-ci", TrustReason: "SignedByTrustedSigner",
 			Phase: "Running", Ready: true, MarketData: true, RequestedMarketData: true,
+			IndexLevels: true, RequestedIndexLevels: true, RequestedBondTerms: true,
 		},
 	}}), nil
 }

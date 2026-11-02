@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70ceea9dcd46
+  - type: executable_for
+    from: SYM-core-test-helper-delivery-items
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-02T22:28:56.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaa12b9f4d1c

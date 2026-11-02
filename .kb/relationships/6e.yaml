@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bb8b4b07019
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-undeclared-deliveries-item
+    to: TEST-ingest-app-undeclared-deliveries
+    created_at: 2026-11-02T22:29:36.447Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72f8a4fc354d

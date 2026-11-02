@@ -66,6 +66,17 @@ func signedRecord(name string) views.PluginRecord {
 	}
 }
 
+// withFlags returns u with true at each of paths.
+func withFlags(t *testing.T, u *unstructured.Unstructured, paths ...[]string) *unstructured.Unstructured {
+	t.Helper()
+	for _, path := range paths {
+		if err := unstructured.SetNestedField(u.Object, true, path...); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return u
+}
+
 func TestRecordOf(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
@@ -102,6 +113,15 @@ func TestRecordOf(t *testing.T) {
 		}, func() views.PluginRecord {
 			r := signedRecord("prices")
 			r.RequestsMarketData = true
+			return r
+		}()},
+		{"bond terms approved, index levels waiting for approval (D-179)", func(t *testing.T) *unstructured.Unstructured {
+			t.Helper()
+			return withFlags(t, operatorPlugin(t, "bonds"),
+				[]string{"spec", "manifest", "bondTerms"}, []string{"spec", "manifest", "indexLevels"}, []string{"status", "effective", "bondTerms"})
+		}, func() views.PluginRecord {
+			r := signedRecord("bonds")
+			r.RequestsBondTerms, r.BondTerms, r.RequestsIndexLevels = true, true, true
 			return r
 		}()},
 		{"refused as signed by an untrusted signer (D-169)", func(t *testing.T) *unstructured.Unstructured {

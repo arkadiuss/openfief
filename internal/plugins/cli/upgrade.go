@@ -99,4 +99,10 @@ func writePermissions(b *strings.Builder, prefix string, p *plugins.Permissions)
 	if p.MarketData {
 		line("market data", "each sync tells it every instrument you hold and the model's targets (D-123)")
 	}
+	if p.BondTerms {
+		line("bond terms", "the core stores the treasury bond series terms it delivers, which value your bonds (D-179)")
+	}
+	if p.IndexLevels {
+		line("index levels", "the core stores the market index levels it delivers (D-179)")
+	}
 }

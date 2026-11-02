@@ -214,6 +214,8 @@ func describe(p *plugins.Permissions) string {
 		{"browserPaths", api.BrowserPaths},
 		{"clusterServices", clusterServiceNames(api.ClusterServices)},
 		{"marketData", marketDataItems(api.MarketData)},
+		{"bondTerms", marketDataItems(api.BondTerms)},
+		{"indexLevels", marketDataItems(api.IndexLevels)},
 	} {
 		if len(f.items) > 0 {
 			parts = append(parts, f.name+": "+strings.Join(f.items, ", "))
@@ -222,8 +224,9 @@ func describe(p *plugins.Permissions) string {
 	return strings.Join(parts, "; ")
 }
 
-// marketDataItems writes the market-data permission (D-123) as one item,
-// "true", or none.
+// marketDataItems writes a yes-or-no permission, the market-data one
+// (D-123), bond terms or index levels (D-179), as one item, "true", or
+// none.
 func marketDataItems(on bool) []string {
 	if on {
 		return []string{"true"}

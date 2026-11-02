@@ -166,14 +166,14 @@ func TestRecordInputs(t *testing.T) {
 		{
 			name: "index levels revalue nothing",
 			record: func(r *app.InputRecorder) error {
-				return r.RecordIndexLevels(t.Context(), []valuation.IndexLevel{{Index: "FAKE20", Date: date(t, "2026-03-02"), Level: dec(t, "1522.6")}})
+				return r.RecordIndexLevels(t.Context(), []valuation.IndexLevel{{Index: "FAKE20", Date: date(t, "2026-03-02"), Level: dec(t, "1522.6"), Source: "prices"}})
 			},
 			want: recorded{what: "levels"},
 		},
 		{
 			name: "bond terms revalue its holders from the start",
 			record: func(r *app.InputRecorder) error {
-				return r.RecordBondTerms(t.Context(), bond, &pl.Terms{Series: series, EarlyRedemptionFee: money(t, "2", "PLN")})
+				return r.RecordBondTerms(t.Context(), bond, &pl.Terms{Series: series, EarlyRedemptionFee: money(t, "2", "PLN")}, "bonds")
 			},
 			want: recorded{what: "terms", revals: revals(t, "acc-1", "2026-03-02")},
 		},
@@ -228,6 +228,15 @@ func TestRecordRejectsInvalidInputs(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// foreign is a valid ISIN that isn't Polish: no bond terms for it (D-179).
+	foreign, err := ledger.ParseISIN("IETEST000026")
+	if err != nil {
+		t.Fatal(err)
+	}
+	series, err := pl.ParseSeries("EDO0336")
+	if err != nil {
+		t.Fatal(err)
+	}
 	tests := []struct {
 		name   string
 		record func(r *app.InputRecorder) error
@@ -256,11 +265,20 @@ func TestRecordRejectsInvalidInputs(t *testing.T) {
 		{name: "a zero index level", record: func(r *app.InputRecorder) error {
 			return r.RecordIndexLevels(t.Context(), []valuation.IndexLevel{{Index: "FAKE20", Date: date(t, "2026-03-02")}})
 		}},
+		{name: "an index level without a source", record: func(r *app.InputRecorder) error {
+			return r.RecordIndexLevels(t.Context(), []valuation.IndexLevel{{Index: "FAKE20", Date: date(t, "2026-03-02"), Level: dec(t, "1")}})
+		}},
 		{name: "bond terms without an ISIN", record: func(r *app.InputRecorder) error {
-			return r.RecordBondTerms(t.Context(), ledger.ISIN{}, &pl.Terms{})
+			return r.RecordBondTerms(t.Context(), ledger.ISIN{}, &pl.Terms{}, "bonds")
 		}},
 		{name: "bond terms without a series", record: func(r *app.InputRecorder) error {
-			return r.RecordBondTerms(t.Context(), bond, &pl.Terms{})
+			return r.RecordBondTerms(t.Context(), bond, &pl.Terms{}, "bonds")
+		}},
+		{name: "bond terms without a source", record: func(r *app.InputRecorder) error {
+			return r.RecordBondTerms(t.Context(), bond, &pl.Terms{Series: series, EarlyRedemptionFee: money(t, "2", "PLN")}, "")
+		}},
+		{name: "bond terms of a non-Polish ISIN", record: func(r *app.InputRecorder) error {
+			return r.RecordBondTerms(t.Context(), foreign, &pl.Terms{Series: series, EarlyRedemptionFee: money(t, "2", "PLN")}, "bonds")
 		}},
 		{name: "an unknown tax wrapper", record: func(r *app.InputRecorder) error {
 			return r.RecordTaxWrapper(t.Context(), acc1, "ppk")

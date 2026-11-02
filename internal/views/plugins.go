@@ -84,6 +84,11 @@ type PluginRecord struct {
 	RequestsMarketData bool
 	// MarketData: the running version is one the grant approves.
 	MarketData bool
+	// RequestsBondTerms and RequestsIndexLevels: the manifest declares that
+	// it delivers them; BondTerms and IndexLevels: the grant approves that
+	// for the running version (spec.manifest and status.effective, D-179).
+	RequestsBondTerms, BondTerms     bool
+	RequestsIndexLevels, IndexLevels bool
 }
 
 // Plugin is an installed plugin instance as the read API shows it (D-46,
@@ -111,6 +116,12 @@ type Plugin struct {
 	RequestsMarketData bool
 	// MarketData: it is one, as the grant approves (D-123).
 	MarketData bool
+	// BondTerms and IndexLevels: the core stores the treasury bond series
+	// terms and market index levels it delivers, as the grant approves;
+	// RequestsBondTerms and RequestsIndexLevels: its manifest declares them
+	// (D-179).
+	RequestsBondTerms, BondTerms     bool
+	RequestsIndexLevels, IndexLevels bool
 }
 
 // PluginOf returns the Plugin r describes. The signer is named only when a
@@ -132,6 +143,9 @@ func PluginOf(r *PluginRecord) Plugin {
 
 		RequestsMarketData: r.RequestsMarketData,
 		MarketData:         r.MarketData,
+
+		RequestsBondTerms: r.RequestsBondTerms, BondTerms: r.BondTerms,
+		RequestsIndexLevels: r.RequestsIndexLevels, IndexLevels: r.IndexLevels,
 	}
 	if p.Trust.Signed() {
 		p.Signer = r.Signer

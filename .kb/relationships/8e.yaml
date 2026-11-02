@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2a2cbf1607b
+  - type: implements
+    from: SYM-pl-check-bond-isin
+    to: REQ-valuation-bond-terms-polish-isin
+    created_at: 2026-11-02T22:25:45.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5f05b90d3c0
+  - type: covered_by
+    from: SYM-pl-check-bond-isin
+    to: TEST-pl-terms
+    created_at: 2026-11-02T22:25:45.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d2f10a09a9f

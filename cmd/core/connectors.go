@@ -16,6 +16,8 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 
+	attentionapp "github.com/arkadiuss/openfief/internal/attention/app"
+	attentionpg "github.com/arkadiuss/openfief/internal/attention/postgres"
 	identitykube "github.com/arkadiuss/openfief/internal/identity/kube"
 	"github.com/arkadiuss/openfief/internal/ingest"
 	ingestapp "github.com/arkadiuss/openfief/internal/ingest/app"
@@ -109,6 +111,9 @@ type connectorDeps struct {
 	// entries is the client the owner's manual entries go through; the
 	// scheduler sets it once it has found the instances.
 	entries *entryCaller
+	// attention raises an attention item for a connector instance that
+	// delivers bond terms or index levels it may not deliver (D-179).
+	attention attentionItems
 }
 
 // withConnectorDeps connects to dsn, migrates, and runs fn with what the
@@ -130,10 +135,13 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 		if err != nil {
 			return fmt.Errorf("model portfolio: %w", err)
 		}
+		// The connector commands raise attention items for no owner; the
+		// core's checks run in the core.
 		return fn(&connectorDeps{
 			pool: p.pool, ledger: l, recorder: recorder, crossChecks: checks, now: time.Now, log: log,
 			today: valuationpg.TodayIn(time.UTC, time.Now), bonds: vstore, model: models, wrappers: vstore,
-			rankings: newRankings(p.pool, l, vstore, nil),
+			rankings:  newRankings(p.pool, l, vstore, nil),
+			attention: attentionapp.New(attentionpg.New(p.pool), nil, time.Now),
 		})
 	})
 }
@@ -144,8 +152,10 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 // (D-72) from the ingest schema, each account's seeding from the ledger
 // (D-95), what market-data connectors price from the holdings, the bond
 // terms and the model portfolio (D-93), what each instance's bound accounts
-// hold (D-117), and which instances may send
-// cross-check prices from their manifests (D-112).
+// hold (D-117), which instances may send
+// cross-check prices from their manifests (D-112), and which may deliver
+// bond terms and index levels, raising an attention item for those that
+// deliver them undeclared (D-179).
 func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery, cfg *syncConfig) *ingestapp.Scheduler {
 	tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
 	store := ingestpg.New(d.pool)
@@ -157,7 +167,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 			Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
 			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
 			Seeding: d.ledger, Starts: store, Sources: sourceInputs{rankings: d.rankings}, Declarations: discovery,
-			Tickers: store, Lookup: caller, Instances: discovery,
+			Tickers: store, Lookup: caller, Instances: discovery, Attention: valuationAttention{items: d.attention},
 		},
 		Instances: discovery,
 		Store:     store,
@@ -379,10 +389,11 @@ func (v valuationInputs) StoreIndexLevels(ctx context.Context, _ ingest.BatchID,
 }
 
 // StoreBondTerms records treasury bond series terms (D-9), each for its
-// instrument's ISIN; holdings of it are then valued as bonds.
+// instrument's ISIN with the instance that delivered them (D-179);
+// holdings of it are then valued as bonds.
 func (v valuationInputs) StoreBondTerms(ctx context.Context, _ ingest.BatchID, terms []ingest.BondTerms) error {
 	for i := range terms {
-		if err := v.recorder.RecordBondTerms(ctx, terms[i].Instrument.ISIN, &terms[i].Terms); err != nil {
+		if err := v.recorder.RecordBondTerms(ctx, terms[i].Instrument.ISIN, &terms[i].Terms, terms[i].Source); err != nil {
 			return fmt.Errorf("valuation: %w", err)
 		}
 	}

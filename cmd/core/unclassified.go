@@ -46,7 +46,9 @@ type attentionItems interface {
 
 // valuationAttention adapts the attention items to valuation's
 // AttentionRaiser, so the items a revaluation raises and clears, such as
-// an instrument to classify (D-132), land in the attention store. The
+// an instrument to classify (D-132), land in the attention store; ingest's
+// port, ingest/app.AttentionRaiser, has the same shape, so it serves
+// ingest's undeclared bond terms and index levels too (D-179). The
 // valuation context declares its port with plain strings and the
 // attention context its own condition, so neither imports the other.
 type valuationAttention struct {

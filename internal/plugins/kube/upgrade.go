@@ -93,6 +93,8 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 			CrossCheckPrices: m.CrossCheckPrices,
 			StatementFiles:   m.StatementFiles,
 			MarketData:       m.MarketData,
+			BondTerms:        m.BondTerms,
+			IndexLevels:      m.IndexLevels,
 		},
 		Config: rawOf(r.Spec.Config),
 	}
@@ -131,6 +133,7 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 func grantOf(r *v1alpha1.PluginGrant) plugins.Grant {
 	g := plugins.Grant{Plugin: r.Name, Permissions: plugins.Permissions{
 		Secrets: r.Spec.Secrets, BrowserPaths: r.Spec.BrowserPaths, MarketData: r.Spec.MarketData,
+		BondTerms: r.Spec.BondTerms, IndexLevels: r.Spec.IndexLevels,
 	}}
 	for _, c := range r.Spec.Capabilities {
 		g.Permissions.Capabilities = append(g.Permissions.Capabilities, plugins.Capability(c))

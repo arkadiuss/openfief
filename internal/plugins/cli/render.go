@@ -246,8 +246,8 @@ func yesNo(b bool) string {
 
 // writeDeclarations writes what a connector's manifest declares: that it
 // is a market-data connector, which learns what the owner holds (D-123),
-// and what it sends and takes (D-112, D-109); nothing when it declares
-// none of them.
+// and what it sends and takes (D-112, D-109, D-179); nothing when it
+// declares none of them.
 func writeDeclarations(b *strings.Builder, m *plugins.Manifest) {
 	if m.MarketData {
 		b.WriteString(marketDataText)
@@ -257,5 +257,11 @@ func writeDeclarations(b *strings.Builder, m *plugins.Manifest) {
 	}
 	if m.StatementFiles {
 		b.WriteString("  Declares:     it takes statement files the owner uploads (D-109)\n")
+	}
+	if m.BondTerms {
+		b.WriteString("  Declares:     it delivers treasury bond series terms, which the core stores once approved (D-179)\n")
+	}
+	if m.IndexLevels {
+		b.WriteString("  Declares:     it delivers market index levels, which the core stores once approved (D-179)\n")
 	}
 }

@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-31a10bb4f924
+  - type: implements
+    from: SYM-plugins-manifest-validate-deliveries
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:26:07.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd481de2cccc
+  - type: covered_by
+    from: SYM-plugins-manifest-validate-deliveries
+    to: TEST-plugins-deliveries
+    created_at: 2026-11-02T22:26:07.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91ecec0dbcc3

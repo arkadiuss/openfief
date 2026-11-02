@@ -14447,9 +14447,13 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-plan
       - type: implements
+        target: REQ-valuation-bond-terms-polish-isin
+      - type: implements
         target: REQ-valuation-input-validation
       - type: implements
         target: REQ-valuation-revaluation-triggers
+      - type: implements
+        target: REQ-valuation-terms-levels-record-instance
   - id: SYM-valuation-app-input-recorder-record-tax-wrapper
     title: InputRecorder.RecordTaxWrapper
     sourceFile: internal/valuation/app/record.go
@@ -15306,9 +15310,13 @@ symbols:
       recorded_at: 2026-10-28T08:01:55.960Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-delivered-by
+      - type: covered_by
         target: TEST-valuation-postgres-queue
       - type: implements
         target: REQ-valuation-enqueue-same-transaction
+      - type: implements
+        target: REQ-valuation-terms-levels-record-instance
   - id: SYM-valuation-postgres-store-save-tax-wrapper
     title: Store.SaveTaxWrapper
     sourceFile: internal/valuation/postgres/terms.go
@@ -40085,8 +40093,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-connectors
+      - type: covered_by
+        target: TEST-core-undeclared-deliveries
       - type: implements
         target: REQ-core-connector-commands
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
   - id: SYM-core-conn-new-scheduler
     title: newScheduler
     sourceFile: cmd/core/connectors.go
@@ -40098,10 +40110,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-connectors
+      - type: covered_by
+        target: TEST-core-undeclared-deliveries
       - type: implements
         target: REQ-core-connector-commands
       - type: implements
         target: REQ-ingest-core-owns-schedules
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
   - id: SYM-core-conn-run-connectors
     title: runConnectors
     sourceFile: cmd/core/connectors.go
@@ -60184,8 +60200,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-undeclared-deliveries
       - type: implements
         target: REQ-ingest-index-levels
+      - type: implements
+        target: REQ-ingest-index-levels-allowed-instances
+      - type: implements
+        target: REQ-valuation-terms-levels-record-instance
   - id: SYM-ingest-app-test-helper-fake-stores-store-index-levels
     title: fakeStores.StoreIndexLevels
     sourceFile: internal/ingest/app/connectors_test.go
@@ -60232,6 +60254,8 @@ symbols:
         target: TEST-valuation-app-plan
       - type: implements
         target: REQ-valuation-index-levels
+      - type: implements
+        target: REQ-valuation-terms-levels-record-instance
   - id: SYM-valuation-index-level-type
     title: IndexLevel
     sourceFile: internal/valuation/level.go
@@ -66848,8 +66872,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-bondlots
+      - type: covered_by
+        target: TEST-ingest-app-undeclared-deliveries
       - type: implements
         target: REQ-ingest-bond-lot-handoff
+      - type: implements
+        target: REQ-valuation-terms-levels-record-instance
   - id: SYM-ingest-app-test-helper-fake-caller-import-bond-lots
     title: fakeCaller.ImportBondLots
     sourceFile: internal/ingest/app/connectors_test.go
@@ -67438,6 +67466,8 @@ symbols:
         target: TEST-ingest-connectrpc-mapping
       - type: implements
         target: REQ-ingest-bond-lot-messages
+      - type: implements
+        target: REQ-valuation-bond-terms-polish-isin
   - id: SYM-ingest-connectrpc-bond-lots-to
     title: bondLotsTo
     sourceFile: internal/ingest/connectrpc/mapping.go
@@ -69368,8 +69398,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-bond-lots
+      - type: covered_by
+        target: TEST-core-undeclared-deliveries
       - type: implements
         target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-valuation-terms-levels-record-instance
   - id: SYM-core-portfolio-owners
     title: portfolioOwners
     sourceFile: cmd/core/model.go
@@ -71111,8 +71145,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-statements
+      - type: covered_by
+        target: TEST-core-undeclared-deliveries
       - type: implements
         target: REQ-ingest-statement-upload-bound-instance
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
   - id: SYM-core-new-uploads
     title: newUploads
     sourceFile: cmd/core/uploads.go
@@ -90393,6 +90431,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-kube
       - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+      - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
       - type: implements
         target: REQ-ingest-market-data-list-declared-granted
@@ -90829,6 +90869,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-cli-render
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
       - type: implements
         target: REQ-plugins-install-shows-market-data-list
       - type: implements
@@ -123026,9 +123068,13 @@ symbols:
       recorded_at: 2026-11-01T10:10:55.854Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-deliveries
+      - type: covered_by
         target: TEST-plugins-effective
       - type: covered_by
         target: TEST-plugins-market-data
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
       - type: implements
         target: REQ-ingest-market-data-list-declared-granted
       - type: implements
@@ -127406,3 +127452,435 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-manifests
+  - id: SYM-ingest-app-attention-raiser
+    status: active
+    title: AttentionRaiser
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:19.254Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-undeclared-deliveries
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-ingest-app-connectors-declared-deliveries
+    status: active
+    title: Connectors.declaredDeliveries
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:27.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-undeclared-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-ingest-undeclared-deliveries
+    status: active
+    title: UndeclaredDeliveries
+    sourceFile: internal/ingest/declarations.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:34.809Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-pl-check-bond-isin
+    status: active
+    title: CheckBondISIN
+    sourceFile: internal/jurisdiction/pl/terms.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:42.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-valuation-bond-terms-polish-isin
+  - id: SYM-plugins-effective-permissions-bond-terms
+    status: active
+    title: EffectivePermissions.BondTerms
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:50.006Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-plugins-effective-permissions-index-levels
+    status: active
+    title: EffectivePermissions.IndexLevels
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:57.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-plugins-manifest-validate-deliveries
+    status: active
+    title: Manifest.validateDeliveries
+    sourceFile: internal/plugins/manifest.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:04.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-viewsv1-plugin-get-bond-terms
+    status: active
+    title: Plugin.GetBondTerms
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:12.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-viewsv1-plugin-get-requested-bond-terms
+    status: active
+    title: Plugin.GetRequestedBondTerms
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:20.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-viewsv1-plugin-get-index-levels
+    status: active
+    title: Plugin.GetIndexLevels
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:28.839Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-viewsv1-plugin-get-requested-index-levels
+    status: active
+    title: Plugin.GetRequestedIndexLevels
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:36.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-core-test-helper-terms-connector
+    title: termsConnector
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:29.470Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-terms-connector-sync
+    title: termsConnector.Sync
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:35.615Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-approve-bond-terms
+    title: approveBondTerms
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:41.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-stored-term-sources
+    title: storedTermSources
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:47.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-delivery-items
+    title: deliveryItems
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:54.177Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-undeclared-deliveries-raise-attention
+    title: TestUndeclaredDeliveriesRaiseAttention
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:01.356Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-ingest-app-test-helper-delivery-attention
+    title: deliveryAttention
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:07.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-app-test-helper-delivery-attention-raise
+    title: deliveryAttention.Raise
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:14.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-app-test-helper-delivery-attention-clear
+    title: deliveryAttention.Clear
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:20.535Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-app-test-connectors-undeclared-deliveries
+    title: TestConnectorsUndeclaredDeliveries
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:26.959Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-app-test-connectors-undeclared-deliveries-item
+    title: TestConnectorsUndeclaredDeliveriesItem
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:33.972Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-test-decl-test-undeclared-deliveries
+    title: TestUndeclaredDeliveries
+    sourceFile: internal/ingest/declarations_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:39.690Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-declarations
+  - id: SYM-pl-test-check-bond-isin
+    title: TestCheckBondISIN
+    sourceFile: internal/jurisdiction/pl/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:45.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-terms
+  - id: SYM-plugins-cli-test-render-proposal-deliveries
+    title: TestRenderProposalDeliveries
+    sourceFile: internal/plugins/cli/render_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:52.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-render
+  - id: SYM-plugins-test-deliveries-outcome
+    title: deliveriesOutcome
+    sourceFile: internal/plugins/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:30:01.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-deliveries
+  - id: SYM-plugins-test-deliveries
+    title: TestDeliveries
+    sourceFile: internal/plugins/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:30:09.166Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-deliveries
+  - id: SYM-valuation-postgres-test-stored-terms-and-levels-name-their-instance
+    title: TestStoredTermsAndLevelsNameTheirInstance
+    sourceFile: internal/valuation/postgres/deliveredby_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:30:23.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-delivered-by
+  - id: SYM-ui-test-plugins-page-deliveries
+    title: TestPluginsPageDeliveries
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:30:30.658Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-core-test-helper-bonds-discovery
+    title: bondsDiscovery
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:44:44.154Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-bonds-discovery-connector-instances
+    title: bondsDiscovery.ConnectorInstances
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:44:50.617Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-bonds-discovery-declarations
+    title: bondsDiscovery.Declarations
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:44:57.098Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-ingest-undeclared-drop
+    status: active
+    title: UndeclaredDrop
+    sourceFile: internal/ingest/declarations.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:49:54.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-plugins-effective-permissions-grant-deliveries
+    status: active
+    title: EffectivePermissions.grantDeliveries
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:01.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-views-kube-test-helper-with-flags
+    title: withFlags
+    sourceFile: internal/views/kube/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:08.695Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-core-test-helper-sync-undeclared
+    title: syncUndeclared
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:15.125Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-plugins-test-deliveries-label
+    title: TestDeliveriesLabel
+    sourceFile: internal/plugins/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:21.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-deliveries
+  - id: SYM-plugins-test-deliveries-diff
+    title: TestDeliveriesDiff
+    sourceFile: internal/plugins/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:27.861Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-deliveries

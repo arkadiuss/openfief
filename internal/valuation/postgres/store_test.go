@@ -64,7 +64,7 @@ func saveInputs(t *testing.T, store *postgres.Store, in *inputs) {
 		err = store.SaveIndexReadings(ctx, in.readings, nil)
 	}
 	if err == nil {
-		err = store.SaveBondTerms(ctx, in.bond, &in.terms, nil)
+		err = store.SaveBondTerms(ctx, in.bond, &in.terms, "treasury-bonds", nil)
 	}
 	if err == nil {
 		err = store.SaveTaxWrapper(ctx, acc2, "oki", nil)

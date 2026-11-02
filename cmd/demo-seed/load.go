@@ -248,7 +248,7 @@ func (l *loader) inputs(ctx context.Context, rates []valuation.FXRate) error {
 	}
 	for i := range l.ds.Bonds {
 		b := &l.ds.Bonds[i]
-		if err := l.recorder.RecordBondTerms(ctx, b.Instrument.ISIN, &b.Terms); err != nil {
+		if err := l.recorder.RecordBondTerms(ctx, b.Instrument.ISIN, &b.Terms, demo.BondsInstitution); err != nil {
 			return fmt.Errorf("demo inputs: %w", err)
 		}
 	}

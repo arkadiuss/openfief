@@ -102,8 +102,9 @@ type Recorder interface {
 	// SaveIndexLevels upserts market index levels, keyed by index and date.
 	// No holding is valued from them, so they cause no revaluation.
 	SaveIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error
-	// SaveBondTerms upserts the series terms of the bond with isin.
-	SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, revals []valuation.Revaluation) error
+	// SaveBondTerms upserts the series terms of the bond with isin, with
+	// the connector instance that delivered them (D-179).
+	SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, source string, revals []valuation.Revaluation) error
 	// Enqueue enqueues revals.
 	Enqueue(ctx context.Context, revals []valuation.Revaluation) error
 	TermsRecorder

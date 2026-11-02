@@ -138,6 +138,9 @@ func (l *BondLot) Validate(today kernel.Date) error {
 type BondTerms struct {
 	Instrument ledger.Instrument
 	Terms      pl.Terms
+	// Source is the connector instance that delivered them, which is
+	// stored with them (D-179); the core sets it.
+	Source string
 }
 
 // Validate reports whether k names a lot: a known bond type and a purchase

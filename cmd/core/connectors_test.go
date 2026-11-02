@@ -110,7 +110,10 @@ func fakeCluster(t *testing.T, port int32, names ...string) *cluster {
 			"metadata": map[string]any{"name": name, "namespace": "openfief"},
 			"status": map[string]any{
 				"conditions": []any{map[string]any{"type": "Ready", "status": "True"}},
-				"effective":  map[string]any{"capabilities": []any{"connector"}},
+				// Every fake connector may deliver bond terms and index
+				// levels (D-179); TestUndeclaredDeliveriesRaiseAttention
+				// takes that away from one.
+				"effective": map[string]any{"capabilities": []any{"connector"}, "bondTerms": true, "indexLevels": true},
 			},
 		}})
 		svc := &corev1.Service{

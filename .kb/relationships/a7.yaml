@@ -587,3 +587,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac5e4184f900
+  - type: validates
+    from: TEST-pl-terms
+    to: REQ-valuation-bond-terms-polish-isin
+    created_at: 2026-11-02T22:24:41.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35f31a50dc07

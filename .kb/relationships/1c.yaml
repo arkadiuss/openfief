@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa99beaa77ad
+  - type: validates
+    from: TEST-plugins-cli-render
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:24:48.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc2034b05449

@@ -203,17 +203,18 @@ func (s *Store) SaveIndexReadings(ctx context.Context, readings []valuation.Inde
 	return nil
 }
 
-// SaveBondTerms upserts the series terms of the bond with isin and enqueues
+// SaveBondTerms upserts the series terms of the bond with isin, with the
+// connector instance source that delivered them (D-179), and enqueues
 // revals in one transaction.
-func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, revals []valuation.Revaluation) error {
+func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, source string, revals []valuation.Revaluation) error {
 	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {
 		_, err := tx.Exec(ctx, `
-			INSERT INTO valuation.bond_terms (isin, series, first_period_rate, margin, early_redemption_fee)
-			VALUES ($1, $2, $3, $4, $5)
+			INSERT INTO valuation.bond_terms (isin, series, first_period_rate, margin, early_redemption_fee, source)
+			VALUES ($1, $2, $3, $4, $5, $6)
 			ON CONFLICT (isin) DO UPDATE SET series = EXCLUDED.series, first_period_rate = EXCLUDED.first_period_rate,
-			    margin = EXCLUDED.margin, early_redemption_fee = EXCLUDED.early_redemption_fee`,
+			    margin = EXCLUDED.margin, early_redemption_fee = EXCLUDED.early_redemption_fee, source = EXCLUDED.source`,
 			isin.String(), terms.Series.String(), terms.FirstPeriodRate.String(), terms.Margin.String(),
-			terms.EarlyRedemptionFee.Amount().String())
+			terms.EarlyRedemptionFee.Amount().String(), source)
 		if err != nil {
 			return fmt.Errorf("upserting: %w", err)
 		}

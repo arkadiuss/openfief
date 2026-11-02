@@ -38,3 +38,45 @@ func TestUndeclaredCrossCheckPrices(t *testing.T) {
 		t.Errorf("UndeclaredCrossCheckPrices(3) = %v", p)
 	}
 }
+
+// TestUndeclaredDeliveries checks D-179's drop in the domain: bond terms
+// or index levels a connector may not deliver become one skipped problem
+// per kind and an attention detail naming the kinds, never a count; what
+// it may deliver, or a delivery of none, gives neither.
+func TestUndeclaredDeliveries(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name         string
+		decl         ingest.Declarations
+		terms        int
+		levels       int
+		wantRefs     []string
+		detailNames  string
+		wantNoDetail bool
+	}{
+		{name: "neither declared", terms: 2, levels: 3, wantRefs: []string{"bond_terms", "index_levels"}, detailNames: "bond series terms and market index levels"},
+		{name: "only levels undeclared", decl: ingest.Declarations{BondTerms: true}, terms: 2, levels: 3, wantRefs: []string{"index_levels"}, detailNames: "market index levels"},
+		{name: "both declared", decl: ingest.Declarations{BondTerms: true, IndexLevels: true}, terms: 2, levels: 3, wantNoDetail: true},
+		{name: "nothing delivered", wantNoDetail: true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			drop := ingest.UndeclaredDeliveries(tt.decl, tt.terms, tt.levels)
+			problems, detail := drop.Problems, drop.Detail
+			var refs []string
+			for _, p := range problems {
+				if p.Kind != ingest.ProblemSkipped {
+					t.Errorf("problem %v is not skipped", p)
+				}
+				refs = append(refs, p.Ref)
+			}
+			if strings.Join(refs, ",") != strings.Join(tt.wantRefs, ",") {
+				t.Errorf("problem refs = %v, want %v", refs, tt.wantRefs)
+			}
+			if tt.wantNoDetail != (detail == "") || !strings.Contains(detail, tt.detailNames) || strings.ContainsAny(detail, "0123456789") {
+				t.Errorf("detail = %q; want one naming %q and no count", detail, tt.detailNames)
+			}
+		})
+	}
+}

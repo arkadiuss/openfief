@@ -208,6 +208,8 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 				CrossCheckPrices: m.CrossCheckPrices,
 				StatementFiles:   m.StatementFiles,
 				MarketData:       m.MarketData,
+				BondTerms:        m.BondTerms,
+				IndexLevels:      m.IndexLevels,
 			},
 			Config: raw(p.Config),
 		},
@@ -232,6 +234,8 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 			DataTiers:    strs(g.Permissions.DataTiers),
 			BrowserPaths: slices.Clone(g.Permissions.BrowserPaths),
 			MarketData:   g.Permissions.MarketData,
+			BondTerms:    g.Permissions.BondTerms,
+			IndexLevels:  g.Permissions.IndexLevels,
 		},
 	}
 	for _, cs := range g.Permissions.ClusterServices {

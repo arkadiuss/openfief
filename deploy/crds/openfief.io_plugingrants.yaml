@@ -50,6 +50,11 @@ spec:
           spec:
             description: Spec is the approved permissions.
             properties:
+              bondTerms:
+                description: |-
+                  BondTerms lets a connector deliver treasury bond series terms, which
+                  the core stores only when this approves it (D-179).
+                type: boolean
               browserPaths:
                 description: |-
                   BrowserPaths lists path prefixes a view plugin serves to browsers
@@ -118,6 +123,11 @@ spec:
                 maxItems: 64
                 type: array
                 x-kubernetes-list-type: set
+              indexLevels:
+                description: |-
+                  IndexLevels lets a connector deliver market index levels, which the
+                  core stores only when this approves it (D-179).
+                type: boolean
               marketData:
                 description: |-
                   MarketData lets a market-data connector receive, on each sync, the

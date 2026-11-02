@@ -93,7 +93,7 @@ Inside OKI no Belka tax is due; instead, the act on OKI, in force from 2027-01-0
 | File | Contents |
 |---|---|
 | [series.go](../../internal/jurisdiction/pl/series.go) | `BondType` and its `Structure` (term, period, `Indexation`, `Payout`); `Series` and `ParseSeries` |
-| [terms.go](../../internal/jurisdiction/pl/terms.go) | `Nominal`, `ExchangePrice`, `Terms`, `Indices`, `Terms.PeriodRate`, `MissingIndexError` |
+| [terms.go](../../internal/jurisdiction/pl/terms.go) | `Nominal`, `ExchangePrice`, `Terms`, `Indices`, `Terms.PeriodRate`, `MissingIndexError`, `CheckBondISIN` (series terms need a Polish ISIN, D-179) |
 | [calendar.go](../../internal/jurisdiction/pl/calendar.go) | `Maturity`, `PeriodStart`, `CPIMonth` |
 | [businessday.go](../../internal/jurisdiction/pl/businessday.go) | `IsBusinessDay`, `ReferenceRateDay`, `RateChange`, `RateInForce`, `FirstCalendarYear`, `ErrOutsideCalendar` |
 | [value.go](../../internal/jurisdiction/pl/value.go) | `Purchase`, `LotValue`, `ValueLot` |
@@ -206,6 +206,7 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 - **D-101**, **D-117**: coupons of COI, ROR and DOR lots are booked as interest from `CouponDates` and `Terms.Coupon`.
 - **D-135**: a lot that reached maturity is booked as a redemption at its `ValueLot` value on its maturity date, with Belka tax on its interest and discount; the last period's interest comes with it.
 - **D-100**: an entered lot is bought for cash at `Nominal` or by exchange at `ExchangePrice`; its 0.10 PLN discount per bond is the `LotValue.Discount` the pack taxes with the interest at the planned exit and on redemption today. OTS keeps its letter's 100.00 PLN exchange price, so an OTS exchange has no discount.
+- **D-179**: series terms are only for a Polish (`PL`) ISIN (`CheckBondISIN`); ingest refuses a connector's terms for any other, and valuation refuses to record them. Only a connector whose signed manifest declares `bondTerms` and whose grant approves it delivers them; the treasury-bonds plugin does.
 - **D-37**: issuer tables and examples over the letter. Implemented as decided: the TOS base isn't rounded between years, and Belka tax rounds half up.
 - **D-62**, **D-113**: the pack's defaults are PLN and the space-comma number format. The Polish pack may assume PLN for tax; `Nominal()`, all bond amounts and every value the pack computes are PLN, and it refuses another currency (`ErrNotPLN`).
 

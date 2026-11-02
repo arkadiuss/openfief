@@ -776,3 +776,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d2207cd09a7
+  - type: validates
+    from: TEST-core-undeclared-deliveries
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:24:36.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63b4ebcb8752
+  - type: validates
+    from: TEST-core-undeclared-deliveries
+    to: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+    created_at: 2026-11-02T22:24:36.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b9e6c2123c7
+  - type: validates
+    from: TEST-core-undeclared-deliveries
+    to: REQ-valuation-terms-levels-record-instance
+    created_at: 2026-11-02T22:24:36.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0924c248831f

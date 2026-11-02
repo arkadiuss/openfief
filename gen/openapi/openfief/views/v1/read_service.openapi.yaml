@@ -1417,6 +1417,29 @@ components:
              owner can trust one or recognise a forgery (D-169): a keyless signer as
              "<subject> (issuer <issuer>)", a key as "public key sha256:<hex>".
              Empty otherwise.
+        bondTerms:
+          type: boolean
+          title: bond_terms
+          description: |-
+            Whether the core stores the treasury bond series terms it delivers: its
+             signed manifest declares them and its PluginGrant approves that
+             (D-179).
+        requestedBondTerms:
+          type: boolean
+          title: requested_bond_terms
+          description: Whether its signed manifest declares bond series terms, approved or not.
+        indexLevels:
+          type: boolean
+          title: index_levels
+          description: |-
+            Whether the core stores the market index levels it delivers: its signed
+             manifest declares them and its PluginGrant approves that (D-179).
+        requestedIndexLevels:
+          type: boolean
+          title: requested_index_levels
+          description: |-
+            Whether its signed manifest declares market index levels, approved or
+             not.
       title: Plugin
       additionalProperties: false
       description: Plugin is one installed plugin instance.
