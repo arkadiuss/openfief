@@ -545,7 +545,8 @@ func (f *fakeRead) ListPlugins(_ context.Context, r *connect.Request[viewsv1.Lis
 			Instance: "ui-local", Image: "registry.example.com/owner/ui@sha256:b2b2", ImageDigest: "sha256:b2b2",
 			RequestedCapabilities: []string{"view"},
 			Trust:                 viewsv1.SignatureTrust_SIGNATURE_TRUST_REFUSED, TrustReason: "UntrustedSigner",
-			Phase: "SignatureNotVerified",
+			UntrustedSigners: []string{"https://example.com/stranger/.github/workflows/sign.yml@refs/heads/main (issuer https://token.actions.githubusercontent.com)"},
+			Phase:            "SignatureNotVerified",
 		},
 		{
 			Instance: "prices-main", Image: "registry.example.com/openfief/eodhd@sha256:c3c3", ImageDigest: "sha256:c3c3",

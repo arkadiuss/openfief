@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-328aaea6a41e
+  - type: implements
+    from: SYM-tooling-proto-breaking-stage
+    to: REQ-tooling-breaking-before-first-beta
+    created_at: 2026-11-01T20:55:37.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e623011544a
+  - type: covered_by
+    from: SYM-tooling-proto-breaking-stage
+    to: TEST-tooling-proto-breaking
+    created_at: 2026-11-01T20:55:37.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df8bf8d937fb

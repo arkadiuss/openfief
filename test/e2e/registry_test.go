@@ -125,37 +125,43 @@ func (r suiteRegistry) image(ctx context.Context, image string) (registryImage, 
 	return registryImage{local: local, cluster: cluster}, nil
 }
 
+// suiteSigner is the key trustSigner made and trusted: its public half in
+// PEM form, and the SHA-256 of the trusted signers it was added to.
+type suiteSigner struct {
+	publicKey, signersHash string
+}
+
 // trustSigner signs every plugin image in the registry with a key made for
 // this run, the way an owner signs a plugin with a local key (D-45, D-57),
 // and adds the key's public half to the owner's trusted signers. The private
-// key never leaves this process. It returns the trusted signers' SHA-256.
-func trustSigner(ctx context.Context, k *kube, reg suiteRegistry, logf func(string, ...any)) (string, error) {
+// key never leaves this process.
+func trustSigner(ctx context.Context, k *kube, reg suiteRegistry, logf func(string, ...any)) (suiteSigner, error) {
 	key, err := cosigntest.NewKey()
 	if err != nil {
-		return "", fmt.Errorf("signing key: %w", err)
+		return suiteSigner{}, fmt.Errorf("signing key: %w", err)
 	}
 	for _, image := range pluginImages() {
 		img, imageErr := reg.image(ctx, image)
 		if imageErr != nil {
-			return "", imageErr
+			return suiteSigner{}, imageErr
 		}
 		logf("e2e: signing %s with this run's key", img.local)
 		if signErr := key.Sign(img.local, remote.WithContext(ctx)); signErr != nil {
-			return "", fmt.Errorf("signing %s: %w", img.local, signErr)
+			return suiteSigner{}, fmt.Errorf("signing %s: %w", img.local, signErr)
 		}
 	}
 	pub, err := key.PublicKeyPEM()
 	if err != nil {
-		return "", fmt.Errorf("signing key: %w", err)
+		return suiteSigner{}, fmt.Errorf("signing key: %w", err)
 	}
 	signers, err := json.Marshal(map[string]any{
 		"signers": []map[string]string{{"name": signerName, "publicKey": pub}},
 	})
 	if err != nil {
-		return "", fmt.Errorf("trusted signers: %w", err)
+		return suiteSigner{}, fmt.Errorf("trusted signers: %w", err)
 	}
 	if _, parseErr := plugins.ParseOwnerSigners(signers); parseErr != nil {
-		return "", fmt.Errorf("trusted signers: %w", parseErr)
+		return suiteSigner{}, fmt.Errorf("trusted signers: %w", parseErr)
 	}
 	logf("e2e: adding the key as trusted signer %s (ConfigMap %s)", signerName, trustedSignersConfigMap)
 	cm := &unstructured.Unstructured{Object: map[string]any{
@@ -164,10 +170,10 @@ func trustSigner(ctx context.Context, k *kube, reg suiteRegistry, logf func(stri
 		"data":     map[string]any{trustedSignersKey: string(signers)},
 	}}
 	if err := k.applyOne(ctx, cm); err != nil {
-		return "", err
+		return suiteSigner{}, err
 	}
 	sum := sha256.Sum256(signers)
-	return hex.EncodeToString(sum[:]), nil
+	return suiteSigner{publicKey: pub, signersHash: hex.EncodeToString(sum[:])}, nil
 }
 
 // editApp returns the changes the suite makes to the demo's application

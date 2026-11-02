@@ -622,3 +622,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cafe865d3d8
+  - type: constrains
+    from: REQ-tooling-breaking-before-first-beta
+    to: FACT-SUBJECT-C87F01A26ABBB0C2
+    created_at: 2026-11-01T20:54:41.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffea9e5d80d7
+  - type: requires_property
+    from: REQ-tooling-breaking-before-first-beta
+    to: FACT-PROP-C900AEA8F9FFA5CE
+    created_at: 2026-11-01T20:54:41.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-381f3d85f495
+  - type: specified_by
+    from: REQ-tooling-breaking-before-first-beta
+    to: SCEN-tooling-breaking-before-first-beta
+    created_at: 2026-11-01T20:54:41.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a89dc39ef743

@@ -615,3 +615,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de4d0c0e1ff6
+  - type: implements
+    from: SYM-cosign-fn-untrusted-keyless
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T22:09:03.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dd6fb5d7c0b
+  - type: implements
+    from: SYM-cosign-fn-untrusted-keyless
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-11-01T22:09:03.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-468ef2fb485e
+  - type: covered_by
+    from: SYM-cosign-fn-untrusted-keyless
+    to: TEST-plugins-cosign
+    created_at: 2026-11-01T22:09:03.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a8c635c831f
+  - type: implements
+    from: SYM-protobreak-check-fresh
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:25:46.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fd505b981e0
+  - type: covered_by
+    from: SYM-protobreak-check-fresh
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:25:46.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ff7f07f4f55
+  - type: executable_for
+    from: SYM-protobreak-test-pre-beta
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T20:55:44.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2274b7a5fef

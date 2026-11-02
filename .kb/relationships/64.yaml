@@ -790,3 +790,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a2651ad9804
+  - type: implements
+    from: SYM-protobreak-parse-entry
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:23:26.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a1723cb6eb7
+  - type: covered_by
+    from: SYM-protobreak-parse-entry
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:23:26.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1c05b13cbc0
+  - type: implements
+    from: SYM-protobreak-judge
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:25:31.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b2dca28d4c8
+  - type: covered_by
+    from: SYM-protobreak-judge
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:25:31.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd957f9eda17
+  - type: implements
+    from: SYM-protobreak-judge
+    to: REQ-tooling-breaking-before-first-beta
+    created_at: 2026-11-01T20:55:14.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2d85491dae8

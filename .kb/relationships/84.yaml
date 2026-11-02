@@ -706,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95506b4bb2cf
+  - type: implements
+    from: SYM-protobreak-verdict
+    to: REQ-tooling-breaking-before-first-beta
+    created_at: 2026-11-01T20:54:52.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c455fcf1e53
+  - type: covered_by
+    from: SYM-protobreak-verdict
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T20:54:53.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58cb798eafa5

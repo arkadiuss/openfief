@@ -133,8 +133,8 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 		},
 		func() error { return installDatabase(ctx, k, logf) },
 		func() error {
-			hash, trustErr := trustSigner(ctx, k, reg, logf)
-			signers = hash
+			signer, trustErr := trustSigner(ctx, k, reg, logf)
+			signers = signer.signersHash
 			if trustErr != nil {
 				return trustErr
 			}
@@ -154,7 +154,7 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 }
 
 // installCNPG installs CloudNativePG from the release manifest that task e2e
-// checked, and waits for its operator.
+// checked, and waits for its operator and the demo's storage class.
 func installCNPG(ctx context.Context, k *kube, logf func(string, ...any)) error {
 	manifestPath := os.Getenv(cnpgManifestEnv)
 	if manifestPath == "" {
@@ -172,28 +172,44 @@ func installCNPG(ctx context.Context, k *kube, logf func(string, ...any)) error 
 	if err != nil {
 		return fmt.Errorf("reading the CloudNativePG manifest: %w", err)
 	}
-	if applyErr := k.apply(ctx, manifest); applyErr != nil {
+	if applyErr := applyCNPG(ctx, k, manifest); applyErr != nil {
 		return applyErr
 	}
-	if waitErr := waitFor(ctx, rolloutTimeout, k.deploymentAvailable("cnpg-system", "cnpg-controller-manager")); waitErr != nil {
-		return fmt.Errorf("waiting for the CloudNativePG operator: %w", waitErr)
-	}
 	return k.ensureLocalPath(ctx, logf)
+}
+
+// applyCNPG applies CloudNativePG's release manifest and waits for its
+// operator.
+func applyCNPG(ctx context.Context, k *kube, manifest []byte) error {
+	if err := k.apply(ctx, manifest); err != nil {
+		return err
+	}
+	if err := waitFor(ctx, rolloutTimeout, k.deploymentAvailable("cnpg-system", "cnpg-controller-manager")); err != nil {
+		return fmt.Errorf("waiting for the CloudNativePG operator: %w", err)
+	}
+	return nil
 }
 
 // installDatabase applies the demo's database, after the CRDs made OpenFief's
 // namespace, and waits until the database is ready.
 func installDatabase(ctx context.Context, k *kube, logf func(string, ...any)) error {
-	logf("e2e: applying deploy/demo/database")
 	database, err := build(exec.CommandContext(ctx, "kustomize", "build", databaseDir))
 	if err != nil {
 		return err
 	}
-	if err = retry(ctx, webhookTimeout, func() error { return k.apply(ctx, database) }); err != nil {
+	return applyDatabase(ctx, k, logf, databaseDir, database)
+}
+
+// applyDatabase applies database, the manifests of the openfief-db cluster
+// that source names, retrying while CloudNativePG's webhook starts, and
+// waits until the cluster is ready.
+func applyDatabase(ctx context.Context, k *kube, logf func(string, ...any), source string, database []byte) error {
+	logf("e2e: applying %s", source)
+	if err := retry(ctx, webhookTimeout, func() error { return k.apply(ctx, database) }); err != nil {
 		return fmt.Errorf("applying the database: %w", err)
 	}
 	logf("e2e: waiting for the openfief-db cluster")
-	err = waitFor(ctx, databaseTimeout, func(ctx context.Context) (string, bool, error) {
+	err := waitFor(ctx, databaseTimeout, func(ctx context.Context) (string, bool, error) {
 		ready, condErr := k.conditionTrue(ctx, cnpgCluster(), namespace, "openfief-db", "Ready")
 		return "not ready", ready, condErr
 	})

@@ -33,6 +33,9 @@ func strangerSignature() plugins.SignerIdentity {
 	return plugins.SignerIdentity{Issuer: "https://issuer.example.com", Subject: "https://example.com/stranger"}
 }
 
+// strangerKeySHA256 is the synthetic fingerprint of a key nobody trusts.
+const strangerKeySHA256 = "0a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f9"
+
 // errUnreachable stands in for a registry that cannot be read.
 var errUnreachable = errors.New("registry unreachable")
 
@@ -95,6 +98,7 @@ func TestPolicyVerifier(t *testing.T) {
 		name      string
 		image     string
 		sigs      []plugins.SignerIdentity
+		untrusted []plugins.UntrustedSigner
 		sourceErr error
 		declared  *plugins.Manifest
 		want      operator.Verification
@@ -129,7 +133,24 @@ func TestPolicyVerifier(t *testing.T) {
 		},
 		{
 			name: "untrusted signer", image: imageB, sigs: []plugins.SignerIdentity{strangerSignature()},
-			want: operator.Verification{Status: metav1.ConditionFalse, Reason: operator.ReasonUntrustedSigner},
+			want: operator.Verification{
+				Status: metav1.ConditionFalse, Reason: operator.ReasonUntrustedSigner,
+				Message:          plugins.ErrUntrustedSigner.Error() + ": " + imageB + " is signed by https://example.com/stranger (issuer https://issuer.example.com)",
+				UntrustedSigners: []string{"https://example.com/stranger (issuer https://issuer.example.com)"},
+			},
+		},
+		{
+			name: "only signatures by signers nobody trusts (D-169)", image: imageB,
+			untrusted: []plugins.UntrustedSigner{
+				{Issuer: "https://issuer.example.com", Subject: "https://example.com/stranger"},
+				{KeySHA256: strangerKeySHA256},
+			},
+			want: operator.Verification{
+				Status: metav1.ConditionFalse, Reason: operator.ReasonUntrustedSigner,
+				Message: plugins.ErrUntrustedSigner.Error() + ": " + imageB + " is signed by https://example.com/stranger (issuer https://issuer.example.com), " +
+					"public key sha256:" + strangerKeySHA256,
+				UntrustedSigners: []string{"https://example.com/stranger (issuer https://issuer.example.com)", "public key sha256:" + strangerKeySHA256},
+			},
 		},
 		{
 			name: "declared manifest differs from the signed label", image: imageA, sigs: []plugins.SignerIdentity{publisherSignature()},
@@ -150,7 +171,7 @@ func TestPolicyVerifier(t *testing.T) {
 			t.Parallel()
 			img := mustImage(t, tt.image)
 			src := &fakeSource{
-				images: map[string]plugins.SignedImage{tt.image: {Image: img, Signatures: tt.sigs, Manifest: viewManifest()}},
+				images: map[string]plugins.SignedImage{tt.image: {Image: img, Signatures: tt.sigs, Untrusted: tt.untrusted, Manifest: viewManifest()}},
 				errs:   map[string]error{},
 			}
 			if tt.sourceErr != nil {

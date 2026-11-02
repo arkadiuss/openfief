@@ -104,6 +104,29 @@ func TestRecordOf(t *testing.T) {
 			r.RequestsMarketData = true
 			return r
 		}()},
+		{"refused as signed by an untrusted signer (D-169)", func(t *testing.T) *unstructured.Unstructured {
+			t.Helper()
+			p := v1alpha1.Plugin{
+				TypeMeta:   metav1.TypeMeta{APIVersion: "openfief.io/v1alpha1", Kind: "Plugin"},
+				ObjectMeta: metav1.ObjectMeta{Name: "stranger", Namespace: "openfief"},
+				Spec:       v1alpha1.PluginSpec{Image: testImage, Manifest: v1alpha1.Manifest{Capabilities: []string{"view"}}},
+				Status: v1alpha1.PluginStatus{
+					Conditions: []metav1.Condition{
+						{Type: v1alpha1.ConditionSignatureVerified, Status: metav1.ConditionFalse, Reason: operator.ReasonUntrustedSigner},
+					},
+					UntrustedSigners: []string{"public key sha256:0a0a"},
+				},
+			}
+			obj, err := runtime.DefaultUnstructuredConverter.ToUnstructured(&p)
+			if err != nil {
+				t.Fatalf("to unstructured: %v", err)
+			}
+			return &unstructured.Unstructured{Object: obj}
+		}, views.PluginRecord{
+			Instance: "stranger", Image: testImage, Requested: []string{"view"},
+			Signature:        views.Condition{Status: "False", Reason: "UntrustedSigner"},
+			UntrustedSigners: []string{"public key sha256:0a0a"},
+		}},
 		{"not reconciled yet", func(t *testing.T) *unstructured.Unstructured {
 			t.Helper()
 			u := operatorPlugin(t, "fresh")

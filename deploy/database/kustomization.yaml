@@ -1,0 +1,7 @@
+# The bootstrap install's database (docs/dev/sdlc.md#releases): a minimal CloudNativePG cluster openfief-db, which the
+# release bundle ships as openfief-db-<version>.yaml for the owner to edit and apply (scripts/release-bundle.sh). The
+# demo runs its own, sized for its machine (deploy/demo/database).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - openfief-db.yaml

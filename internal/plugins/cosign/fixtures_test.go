@@ -2,7 +2,10 @@ package cosign
 
 import (
 	"bytes"
+	"crypto/sha256"
+	"crypto/x509"
 	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
 	"maps"
 	"net/http"
@@ -303,20 +306,42 @@ func dsseProto(t *testing.T, env *bundle.Envelope) *protodsse.Envelope {
 	return out
 }
 
-// keySigned is a bundle signed with a key, and the key in PEM form.
+// keySigned is a bundle signed with a key, the key in PEM form, the key
+// hint the bundle carries, and the key's fingerprint (hex SHA-256 of its
+// DER form), which the hint encodes.
 type keySigned struct {
-	bundle    []byte
-	publicKey string
+	bundle      []byte
+	publicKey   string
+	hint        []byte
+	fingerprint string
 }
 
 // keyBundle signs stmt with a fresh key, as `cosign sign --key` does
 // without a transparency log.
 func keyBundle(t *testing.T, stmt []byte) keySigned {
 	t.Helper()
-	kp, err := sign.NewEphemeralKeypair(nil)
+	return signWithKey(t, stmt, nil)
+}
+
+// keyBundleWithHint signs stmt with a fresh key under the given key hint,
+// as a forger claiming someone else's key would.
+func keyBundleWithHint(t *testing.T, stmt, hint []byte) []byte {
+	t.Helper()
+	return signWithKey(t, stmt, &sign.EphemeralKeypairOptions{Hint: hint}).bundle
+}
+
+// signWithKey signs stmt with a fresh key made with opts.
+func signWithKey(t *testing.T, stmt []byte, opts *sign.EphemeralKeypairOptions) keySigned {
+	t.Helper()
+	kp, err := sign.NewEphemeralKeypair(opts)
 	if err != nil {
 		t.Fatalf("keypair: %v", err)
 	}
+	der, err := x509.MarshalPKIXPublicKey(kp.GetPublicKey())
+	if err != nil {
+		t.Fatalf("public key: %v", err)
+	}
+	sum := sha256.Sum256(der)
 	pb, err := sign.Bundle(&sign.DSSEData{Data: stmt, PayloadType: "application/vnd.in-toto+json"}, kp, sign.BundleOptions{})
 	if err != nil {
 		t.Fatalf("sign: %v", err)
@@ -325,7 +350,7 @@ func keyBundle(t *testing.T, stmt []byte) keySigned {
 	if err != nil {
 		t.Fatalf("public key: %v", err)
 	}
-	return keySigned{bundle: marshalBundle(t, pb), publicKey: pemKey}
+	return keySigned{bundle: marshalBundle(t, pb), publicKey: pemKey, hint: kp.GetHint(), fingerprint: hex.EncodeToString(sum[:])}
 }
 
 func marshalBundle(t *testing.T, pb *protobundle.Bundle) []byte {

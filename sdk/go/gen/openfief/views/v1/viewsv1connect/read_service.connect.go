@@ -66,9 +66,6 @@ const (
 	// ReadServiceListConnectorBindingsProcedure is the fully-qualified name of the ReadService's
 	// ListConnectorBindings RPC.
 	ReadServiceListConnectorBindingsProcedure = "/openfief.views.v1.ReadService/ListConnectorBindings"
-	// ReadServiceListBrokerAccountsProcedure is the fully-qualified name of the ReadService's
-	// ListBrokerAccounts RPC.
-	ReadServiceListBrokerAccountsProcedure = "/openfief.views.v1.ReadService/ListBrokerAccounts"
 	// ReadServiceGetAccountProcedure is the fully-qualified name of the ReadService's GetAccount RPC.
 	ReadServiceGetAccountProcedure = "/openfief.views.v1.ReadService/GetAccount"
 	// ReadServiceListTransactionsProcedure is the fully-qualified name of the ReadService's
@@ -138,14 +135,6 @@ type ReadServiceClient interface {
 	// ListConnectorBindings returns every connector binding: which connector
 	// instance may write to which account, in instance then account order.
 	ListConnectorBindings(context.Context, *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error)
-	// ListBrokerAccounts is deprecated and always fails with UNIMPLEMENTED:
-	// broker account numbers are listed only through the owner's
-	// AccountService.ListBrokerAccounts (proto/openfief/ingest/v1/accounts.proto),
-	// so read sessions, script tokens and plugins never see one (D-121). It
-	// stays in the contract so that the read API changes only by addition.
-	//
-	// Deprecated: do not use.
-	ListBrokerAccounts(context.Context, *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error)
 	// GetAccount returns one account.
 	GetAccount(context.Context, *connect.Request[v1.GetAccountRequest]) (*connect.Response[v1.GetAccountResponse], error)
 	// ListTransactions returns one page of the current version of each of an
@@ -287,13 +276,6 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
-		listBrokerAccounts: connect.NewClient[v1.ListBrokerAccountsRequest, v1.ListBrokerAccountsResponse](
-			httpClient,
-			baseURL+ReadServiceListBrokerAccountsProcedure,
-			connect.WithSchema(readServiceMethods.ByName("ListBrokerAccounts")),
-			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
-			connect.WithClientOptions(opts...),
-		),
 		getAccount: connect.NewClient[v1.GetAccountRequest, v1.GetAccountResponse](
 			httpClient,
 			baseURL+ReadServiceGetAccountProcedure,
@@ -424,7 +406,6 @@ type readServiceClient struct {
 	listYearlyTaxes       *connect.Client[v1.ListYearlyTaxesRequest, v1.ListYearlyTaxesResponse]
 	listAccounts          *connect.Client[v1.ListAccountsRequest, v1.ListAccountsResponse]
 	listConnectorBindings *connect.Client[v1.ListConnectorBindingsRequest, v1.ListConnectorBindingsResponse]
-	listBrokerAccounts    *connect.Client[v1.ListBrokerAccountsRequest, v1.ListBrokerAccountsResponse]
 	getAccount            *connect.Client[v1.GetAccountRequest, v1.GetAccountResponse]
 	listTransactions      *connect.Client[v1.ListTransactionsRequest, v1.ListTransactionsResponse]
 	listHoldings          *connect.Client[v1.ListHoldingsRequest, v1.ListHoldingsResponse]
@@ -472,13 +453,6 @@ func (c *readServiceClient) ListAccounts(ctx context.Context, req *connect.Reque
 // ListConnectorBindings calls openfief.views.v1.ReadService.ListConnectorBindings.
 func (c *readServiceClient) ListConnectorBindings(ctx context.Context, req *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error) {
 	return c.listConnectorBindings.CallUnary(ctx, req)
-}
-
-// ListBrokerAccounts calls openfief.views.v1.ReadService.ListBrokerAccounts.
-//
-// Deprecated: do not use.
-func (c *readServiceClient) ListBrokerAccounts(ctx context.Context, req *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error) {
-	return c.listBrokerAccounts.CallUnary(ctx, req)
 }
 
 // GetAccount calls openfief.views.v1.ReadService.GetAccount.
@@ -586,14 +560,6 @@ type ReadServiceHandler interface {
 	// ListConnectorBindings returns every connector binding: which connector
 	// instance may write to which account, in instance then account order.
 	ListConnectorBindings(context.Context, *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error)
-	// ListBrokerAccounts is deprecated and always fails with UNIMPLEMENTED:
-	// broker account numbers are listed only through the owner's
-	// AccountService.ListBrokerAccounts (proto/openfief/ingest/v1/accounts.proto),
-	// so read sessions, script tokens and plugins never see one (D-121). It
-	// stays in the contract so that the read API changes only by addition.
-	//
-	// Deprecated: do not use.
-	ListBrokerAccounts(context.Context, *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error)
 	// GetAccount returns one account.
 	GetAccount(context.Context, *connect.Request[v1.GetAccountRequest]) (*connect.Response[v1.GetAccountResponse], error)
 	// ListTransactions returns one page of the current version of each of an
@@ -731,13 +697,6 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
-	readServiceListBrokerAccountsHandler := connect.NewUnaryHandler(
-		ReadServiceListBrokerAccountsProcedure,
-		svc.ListBrokerAccounts,
-		connect.WithSchema(readServiceMethods.ByName("ListBrokerAccounts")),
-		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
-		connect.WithHandlerOptions(opts...),
-	)
 	readServiceGetAccountHandler := connect.NewUnaryHandler(
 		ReadServiceGetAccountProcedure,
 		svc.GetAccount,
@@ -871,8 +830,6 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 			readServiceListAccountsHandler.ServeHTTP(w, r)
 		case ReadServiceListConnectorBindingsProcedure:
 			readServiceListConnectorBindingsHandler.ServeHTTP(w, r)
-		case ReadServiceListBrokerAccountsProcedure:
-			readServiceListBrokerAccountsHandler.ServeHTTP(w, r)
 		case ReadServiceGetAccountProcedure:
 			readServiceGetAccountHandler.ServeHTTP(w, r)
 		case ReadServiceListTransactionsProcedure:
@@ -938,10 +895,6 @@ func (UnimplementedReadServiceHandler) ListAccounts(context.Context, *connect.Re
 
 func (UnimplementedReadServiceHandler) ListConnectorBindings(context.Context, *connect.Request[v1.ListConnectorBindingsRequest]) (*connect.Response[v1.ListConnectorBindingsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListConnectorBindings is not implemented"))
-}
-
-func (UnimplementedReadServiceHandler) ListBrokerAccounts(context.Context, *connect.Request[v1.ListBrokerAccountsRequest]) (*connect.Response[v1.ListBrokerAccountsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListBrokerAccounts is not implemented"))
 }
 
 func (UnimplementedReadServiceHandler) GetAccount(context.Context, *connect.Request[v1.GetAccountRequest]) (*connect.Response[v1.GetAccountResponse], error) {

@@ -378,20 +378,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ac39ce93d5fb
   - type: implements
-    from: SYM-viewsv1-list-broker-accounts-response-proto-reflect
-    to: REQ-views-onboarding-lists
-    created_at: 2026-10-29T13:51:14.715Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b8b06657224f
-  - type: covered_by
-    from: SYM-viewsv1-list-broker-accounts-response-proto-reflect
-    to: TEST-views-connectapi-connections
-    created_at: 2026-10-29T13:51:14.749Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-75b280d3b0e8
-  - type: implements
     from: SYM-fd-views-app-browser-views
     to: REQ-core-reverse-proxies-view-plugins
     created_at: 2026-10-29T12:05:16.110Z

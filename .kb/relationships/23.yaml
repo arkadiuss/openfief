@@ -580,3 +580,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f56d4556360f
+  - type: executable_for
+    from: SYM-cosign-test-helper-check-inspect-case
+    to: TEST-plugins-cosign
+    created_at: 2026-11-01T22:10:14.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27e8c406f685
+  - type: implements
+    from: SYM-protobreak-parse-findings
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:24:15.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d64850354e4a
+  - type: covered_by
+    from: SYM-protobreak-parse-findings
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:24:15.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4381f9e1846b
+  - type: implements
+    from: SYM-tooling-proto-breaking-protobreak
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:27:46.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ea6d3ea1868
+  - type: covered_by
+    from: SYM-tooling-proto-breaking-protobreak
+    to: TEST-tooling-proto-breaking
+    created_at: 2026-11-01T19:27:46.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a6ef8f916b0

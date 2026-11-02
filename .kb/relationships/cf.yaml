@@ -468,27 +468,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94b1a6c0f608
-  - type: implements
-    from: SYM-valuation-app-input-recorder-record-exemption-class
-    to: REQ-valuation-owner-exemption-class
-    created_at: 2026-10-31T19:08:00.051Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2b1d76633cda
-  - type: covered_by
-    from: SYM-valuation-app-input-recorder-record-exemption-class
-    to: TEST-valuation-app-exemption-class
-    created_at: 2026-10-31T19:08:00.089Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e48c1c325d3e
-  - type: executable_for
-    from: SYM-treasurybonds-test-payout-withdrawal
-    to: TEST-treasurybonds-maturities
-    created_at: 2026-11-01T07:50:37.159Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fd235f50989d
   - type: constrains
     from: REQ-attention-owner-actions
     to: FACT-SUBJECT-EC94F23537692AE0
@@ -553,33 +532,19 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-07802a66740f
   - type: implements
-    from: SYM-valuation-prices-by-source
-    to: REQ-valuation-market-data-never-other-source
-    created_at: 2026-11-01T09:03:26.987Z
+    from: SYM-valuation-app-input-recorder-record-exemption-class
+    to: REQ-valuation-owner-exemption-class
+    created_at: 2026-10-31T19:08:00.051Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-8d94aa4db653
-  - type: implements
-    from: SYM-valuation-prices-by-source
-    to: REQ-valuation-market-data-other-sources-cross-checks
-    created_at: 2026-11-01T09:03:27.018Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9b2c3d53e8fb
+    id: rel-2b1d76633cda
   - type: covered_by
-    from: SYM-valuation-prices-by-source
-    to: TEST-valuation-series
-    created_at: 2026-11-01T09:03:27.039Z
+    from: SYM-valuation-app-input-recorder-record-exemption-class
+    to: TEST-valuation-app-exemption-class
+    created_at: 2026-10-31T19:08:00.089Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-61184b183dc4
-  - type: executable_for
-    from: SYM-ledger-test-payout-setting-validate
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T17:27:24.467Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6db6c8ed1693
+    id: rel-e48c1c325d3e
   - type: implements
     from: SYM-ingest-app-scheduler-told
     to: REQ-ingest-market-data-list-declared-granted
@@ -629,3 +594,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a7a79e569441
+  - type: executable_for
+    from: SYM-treasurybonds-test-payout-withdrawal
+    to: TEST-treasurybonds-maturities
+    created_at: 2026-11-01T07:50:37.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd235f50989d
+  - type: implements
+    from: SYM-valuation-prices-by-source
+    to: REQ-valuation-market-data-never-other-source
+    created_at: 2026-11-01T09:03:26.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d94aa4db653
+  - type: implements
+    from: SYM-valuation-prices-by-source
+    to: REQ-valuation-market-data-other-sources-cross-checks
+    created_at: 2026-11-01T09:03:27.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b2c3d53e8fb
+  - type: covered_by
+    from: SYM-valuation-prices-by-source
+    to: TEST-valuation-series
+    created_at: 2026-11-01T09:03:27.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61184b183dc4
+  - type: implements
+    from: SYM-protobreak-entry-string
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:23:10.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a6c29581481
+  - type: covered_by
+    from: SYM-protobreak-entry-string
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:23:10.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83a90b49f835
+  - type: executable_for
+    from: SYM-ledger-test-payout-setting-validate
+    to: TEST-ledger-payout
+    created_at: 2026-11-01T17:27:24.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6db6c8ed1693

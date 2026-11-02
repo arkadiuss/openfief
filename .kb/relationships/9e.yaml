@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63412d00a448
+  - type: implements
+    from: SYM-cosign-fn-untrusted-key
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T22:09:11.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b6f6a1ceed7
+  - type: implements
+    from: SYM-cosign-fn-untrusted-key
+    to: REQ-plugins-cosign-bundle-verification
+    created_at: 2026-11-01T22:09:11.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84cda13d7147
+  - type: covered_by
+    from: SYM-cosign-fn-untrusted-key
+    to: TEST-plugins-cosign
+    created_at: 2026-11-01T22:09:11.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9810a18c24ce

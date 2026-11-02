@@ -615,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-61fece200fd1
+  - type: constrains
+    from: REQ-tooling-breaking-exception-commit-marked
+    to: FACT-SUBJECT-C87F01A26ABBB0C2
+    created_at: 2026-11-01T19:21:43.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9fa6ecc5abcf
+  - type: requires_property
+    from: REQ-tooling-breaking-exception-commit-marked
+    to: FACT-PROP-B844DBAF5AA11D54
+    created_at: 2026-11-01T19:21:43.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7fa83cd625f
+  - type: specified_by
+    from: REQ-tooling-breaking-exception-commit-marked
+    to: SCEN-tooling-breaking-exception-commit-marked
+    created_at: 2026-11-01T19:21:43.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ee0185df0b4

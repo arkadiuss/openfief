@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-caf606e580d6
+  - type: validates
+    from: TEST-plugins-untrusted-signer
+    to: REQ-plugins-untrusted-signer-named
+    created_at: 2026-11-01T21:51:25.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-343facfa8dda

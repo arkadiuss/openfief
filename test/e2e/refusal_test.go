@@ -58,13 +58,15 @@ var errVerifiedAnyway = errors.New("signature verified, want refused")
 // with a PluginGrant that approves everything the manifest requests, for two
 // images the operator must never deploy (D-57): one nobody signed, and one
 // signed by a key the owner does not trust, whose signature the suite first
-// checks is valid and covers the image's manifest label. For both the
-// operator records SignatureVerified False with reason Unsigned, since it
-// counts only signatures that verify as a trusted signer's (D-45, D-56),
-// and Ready False with reason SignatureNotVerified; it creates no
+// checks is valid and covers the image's manifest label. The operator
+// records SignatureVerified False with reason Unsigned for the first and,
+// apart from it, UntrustedSigner for the second, whose message and
+// status.untrustedSigners name the key by its fingerprint (D-169); for both
+// Ready is False with reason SignatureNotVerified, and it creates no
 // Deployment and no pod, publishes no allow-list entry, records nothing as
-// deployed, and records the refusal as a Warning event on the Plugin
-// (SCEN-e2e-plugin-unsigned-refused, SCEN-e2e-plugin-untrusted-signer-refused).
+// deployed, and records the refusal as a Warning event on the Plugin with
+// the condition's reason (SCEN-e2e-plugin-unsigned-refused,
+// SCEN-e2e-plugin-untrusted-signer-refused).
 // TestOperatorDeploysSignedPlugin checks that the same operator deploys an
 // image the trusted signer signed.
 func TestOperatorRefusesUntrustedImages(t *testing.T) {
@@ -78,13 +80,15 @@ func TestOperatorRefusesUntrustedImages(t *testing.T) {
 	t.Run("unsigned image", func(t *testing.T) {
 		t.Parallel()
 		img := pushUnsignedImage(t, reg, refusedUnsigned)
-		checkRefused(t, k, refusedUnsigned, img.cluster)
+		checkRefused(t, k, refusedUnsigned, img.cluster, refusedAs{reason: operator.ReasonUnsigned, err: plugins.ErrUnsigned})
 	})
 	t.Run("image signed by an untrusted key", func(t *testing.T) {
 		t.Parallel()
 		img := pushUnsignedImage(t, reg, refusedUntrusted)
-		signUntrusted(t, img.local)
-		checkRefused(t, k, refusedUntrusted, img.cluster)
+		signer := signUntrusted(t, img.local)
+		checkRefused(t, k, refusedUntrusted, img.cluster, refusedAs{
+			reason: operator.ReasonUntrustedSigner, err: plugins.ErrUntrustedSigner, signers: []string{signer},
+		})
 	})
 }
 
@@ -134,9 +138,10 @@ func pushUnsignedImage(t *testing.T, reg suiteRegistry, repo string) registryIma
 
 // signUntrusted signs image with a key made for this test only, which the
 // owner's trusted signers don't hold, and checks that the signature is
-// valid, so the operator must refuse the image for its signer alone. The
-// private key never leaves this process.
-func signUntrusted(t *testing.T, image plugins.ImageRef) {
+// valid, so the operator must refuse the image for its signer alone. It
+// returns the key as the operator names it: "public key sha256:" and its
+// fingerprint. The private key never leaves this process.
+func signUntrusted(t *testing.T, image plugins.ImageRef) string {
 	t.Helper()
 	key, err := cosigntest.NewKey()
 	if err != nil {
@@ -151,6 +156,7 @@ func signUntrusted(t *testing.T, image plugins.ImageRef) {
 		t.Fatalf("untrusted key: %v", err)
 	}
 	checkSignedBy(t, image, pub)
+	return plugins.SignerIdentity{PublicKey: pub}.String()
 }
 
 // checkSignedBy checks, with the operator's own signature check trusting
@@ -196,8 +202,10 @@ type refusal struct {
 	// "<status>/<reason>".
 	Ready, Approval, Signature string
 	// SignatureMessageNamesRefusal is whether the SignatureVerified
-	// message says the image has no valid signature.
+	// message gives the refusal and names every untrusted signer.
 	SignatureMessageNamesRefusal bool
+	// UntrustedSigners is status.untrustedSigners (D-169).
+	UntrustedSigners []string
 	// Deployed, Effective and Signer are whether the status records a
 	// deployed version, effective permissions and a signer.
 	Deployed, Effective, Signer bool
@@ -208,24 +216,34 @@ type refusal struct {
 	AllowList  bool
 }
 
+// refusedAs is how the operator must refuse an image: the
+// SignatureVerified reason, the refusal its message gives, and the
+// untrusted signers it names (D-169).
+type refusedAs struct {
+	reason  string
+	err     error
+	signers []string
+}
+
 // checkRefused applies instance running image with a grant that
 // approves everything it requests, waits until the operator has decided its
 // signature for the current generation, checks that it refused the image
-// and runs nothing, waits for the refusal's Warning event, and removes the
-// instance again.
-func checkRefused(t *testing.T, k *kube, instance string, image plugins.ImageRef) {
+// as want says and runs nothing, waits for the refusal's Warning event, and
+// removes the instance again.
+func checkRefused(t *testing.T, k *kube, instance string, image plugins.ImageRef, want refusedAs) {
 	t.Helper()
 	installFX(t, k, instance, image)
 	p := waitSignatureDecided(t, k, instance)
-	want := refusal{
+	wantState := refusal{
 		Ready:     string(metav1.ConditionFalse) + "/" + operator.ReasonSignatureNotVerified,
 		Approval:  string(metav1.ConditionFalse) + "/" + operator.ReasonApproved,
-		Signature: string(metav1.ConditionFalse) + "/" + operator.ReasonUnsigned, SignatureMessageNamesRefusal: true,
+		Signature: string(metav1.ConditionFalse) + "/" + want.reason, SignatureMessageNamesRefusal: true,
+		UntrustedSigners: want.signers,
 	}
-	if diff := cmp.Diff(want, refusalOf(t, k, p)); diff != "" {
+	if diff := cmp.Diff(wantState, refusalOf(t, k, p, want)); diff != "" {
 		t.Errorf("plugin %s (-want +got):\n%s", instance, diff)
 	}
-	waitRefusalEvent(t, k, instance)
+	waitRefusalEvent(t, k, instance, want)
 	removeInstance(t, k, instance)
 }
 
@@ -263,8 +281,8 @@ func waitSignatureDecided(t *testing.T, k *kube, instance string) *v1alpha1.Plug
 // refusalOf reads what checkRefused compares: the Plugin's status, its
 // Deployment, its pods and its allow-list entry. The operator writes the
 // status after it created or removed the plugin's objects, so they are
-// what that decision left.
-func refusalOf(t *testing.T, k *kube, p *v1alpha1.Plugin) refusal {
+// what that decision left. want gives what the message must name.
+func refusalOf(t *testing.T, k *kube, p *v1alpha1.Plugin, want refusedAs) refusal {
 	t.Helper()
 	ctx := t.Context()
 	state := func(cond string) string {
@@ -277,9 +295,10 @@ func refusalOf(t *testing.T, k *kube, p *v1alpha1.Plugin) refusal {
 		Ready: state(v1alpha1.ConditionReady), Approval: state(v1alpha1.ConditionApprovalRequired),
 		Signature: state(v1alpha1.ConditionSignatureVerified),
 		Deployed:  p.Status.Deployed != nil, Effective: p.Status.Effective != nil, Signer: p.Status.Signature != nil,
+		UntrustedSigners: p.Status.UntrustedSigners,
 	}
 	if sig := meta.FindStatusCondition(p.Status.Conditions, v1alpha1.ConditionSignatureVerified); sig != nil {
-		r.SignatureMessageNamesRefusal = strings.Contains(sig.Message, plugins.ErrUnsigned.Error())
+		r.SignatureMessageNamesRefusal = namesRefusal(sig.Message, want)
 	}
 	_, err := k.clients.AppsV1().Deployments(namespace).Get(ctx, plugins.ServiceAccountName(p.Name), metav1.GetOptions{})
 	switch {
@@ -301,13 +320,27 @@ func refusalOf(t *testing.T, k *kube, p *v1alpha1.Plugin) refusal {
 	return r
 }
 
+// namesRefusal reports whether message gives want's refusal and names
+// each of its untrusted signers.
+func namesRefusal(message string, want refusedAs) bool {
+	if !strings.Contains(message, want.err.Error()) {
+		return false
+	}
+	for _, s := range want.signers {
+		if !strings.Contains(message, s) {
+			return false
+		}
+	}
+	return true
+}
+
 // waitRefusalEvent waits for the Warning event the operator records on
-// Plugin instance when it refuses its signature.
-func waitRefusalEvent(t *testing.T, k *kube, instance string) {
+// Plugin instance when it refuses its signature as want says.
+func waitRefusalEvent(t *testing.T, k *kube, instance string, want refusedAs) {
 	t.Helper()
 	selector := fields.Set{
 		"involvedObject.kind": "Plugin", "involvedObject.name": instance,
-		"type": corev1.EventTypeWarning, "reason": operator.ReasonUnsigned,
+		"type": corev1.EventTypeWarning, "reason": want.reason,
 	}.String()
 	err := waitFor(t.Context(), refusalTimeout, func(ctx context.Context) (string, bool, error) {
 		events, err := k.clients.CoreV1().Events(namespace).List(ctx, metav1.ListOptions{FieldSelector: selector})
@@ -315,7 +348,7 @@ func waitRefusalEvent(t *testing.T, k *kube, instance string) {
 			return "", false, fmt.Errorf("%w: listing events: %w", errRetry, err)
 		}
 		for i := range events.Items {
-			if strings.Contains(events.Items[i].Message, plugins.ErrUnsigned.Error()) {
+			if namesRefusal(events.Items[i].Message, want) {
 				return events.Items[i].Message, true, nil
 			}
 		}

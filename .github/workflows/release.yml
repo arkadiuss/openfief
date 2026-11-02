@@ -12,7 +12,8 @@
 # artifacts. Start one with
 #   gh workflow run release.yml --ref main -f channel=alpha -f version=2026.11.0-alpha.1 -f dry_run=true
 # Every channel ships signed images, the signed openfief CLI, the docs, and the bundle: the CRDs and the bootstrap
-# install, each image pinned to the digest this run signed (task release:bundle).
+# install, each image pinned to the digest this run signed, the openfief-db database cluster, and CloudNativePG's
+# release manifest, checked against the sha256 the Taskfile pins (task release:bundle).
 # Order (D-88): the plugin images are built and signed first; the catalog job adds each to the catalog with the
 # digest it signed, on a release commit; the other images and the CLI, which embed the catalog, are built from that
 # commit, which the tag points at, and the bundle job pins the images' signed digests. A pull request brings the
@@ -157,7 +158,8 @@ jobs:
 
   bundle:
     # The CRDs and the bootstrap install (docs/dev/sdlc.md#releases), every image pinned to the digest images.yml
-    # pushed and signed in this run: the digest-<name> artifacts of both image jobs. task release:bundle checks each
+    # pushed and signed in this run: the digest-<name> artifacts of both image jobs; with the database it brings by
+    # default, openfief-db, and CloudNativePG's release manifest, downloaded and checked against its pinned sha256. task release:bundle checks each
     # digest's keyless signature before it pins it. A dry run pushes nothing, so it pins all-zeros placeholders
     # instead and checks the rest of the bundle. Either way, task release:images:verify then checks the install's
     # images with the guide's identity (docs/guides/install.md): on a real run the pinned digests, on a dry run the

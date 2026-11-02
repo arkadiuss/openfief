@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d89133519b3
+  - type: implements
+    from: SYM-protobreak-parse-exceptions
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:23:18.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f02c64ea74e
+  - type: covered_by
+    from: SYM-protobreak-parse-exceptions
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:23:18.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e90055b1a2e7

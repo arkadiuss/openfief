@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8cedb6bf0656
+  - type: implements
+    from: SYM-tooling-proto-breaking-show
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:27:54.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17a60e4d6eb8
+  - type: covered_by
+    from: SYM-tooling-proto-breaking-show
+    to: TEST-tooling-proto-breaking
+    created_at: 2026-11-01T19:27:54.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bd68b0566a3

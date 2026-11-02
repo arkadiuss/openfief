@@ -50,6 +50,20 @@ func (s signedImages) VerifyImage(_ context.Context, image plugins.ImageRef, _ *
 	return operator.Verification{Status: metav1.ConditionFalse, Reason: "Unsigned", Message: "no test signature"}
 }
 
+// untrustedSigner is the synthetic signer untrustedImages names.
+const untrustedSigner = "https://example.com/stranger (issuer https://issuer.example.com)"
+
+// untrustedImages is a test ImageVerifier that refuses every image as
+// signed by untrustedSigner only (D-169).
+type untrustedImages struct{}
+
+func (untrustedImages) VerifyImage(context.Context, plugins.ImageRef, *plugins.Manifest) operator.Verification {
+	return operator.Verification{
+		Status: metav1.ConditionFalse, Reason: operator.ReasonUntrustedSigner,
+		Message: "signed by " + untrustedSigner, UntrustedSigners: []string{untrustedSigner},
+	}
+}
+
 // cluster is one envtest API server shared by the subtests of TestReconcile.
 type testCluster struct {
 	client client.Client
@@ -170,6 +184,8 @@ type state struct {
 	EffectiveEgress []string
 	Pending         *v1alpha1.Permissions
 	Signature       *v1alpha1.SignatureStatus
+	// UntrustedSigners is status.untrustedSigners (D-169).
+	UntrustedSigners []string
 }
 
 func (tc *testCluster) state(ctx context.Context, t *testing.T, name string) state {
@@ -196,6 +212,7 @@ func (tc *testCluster) state(ctx context.Context, t *testing.T, name string) sta
 	}
 	s.Pending = p.Status.PendingApproval
 	s.Signature = p.Status.Signature
+	s.UntrustedSigners = p.Status.UntrustedSigners
 	return s
 }
 
@@ -278,6 +295,10 @@ func TestReconcile(t *testing.T) {
 		if diff := cmp.Diff(want, tc.state(ctx, t, "nogrant"), cmpopts.EquateEmpty()); diff != "" {
 			t.Errorf("state mismatch (-want +got):\n%s", diff)
 		}
+	})
+	t.Run("an image signed by an untrusted signer names it in the status", func(t *testing.T) {
+		t.Parallel()
+		testUntrustedSigner(t, tc, signed)
 	})
 	t.Run("granted plugin runs, and an upgrade waits for approval", func(t *testing.T) {
 		t.Parallel()
@@ -417,6 +438,29 @@ func testUpgrade(t *testing.T, tc *testCluster, r *operator.PluginReconciler) {
 // testRefusalEvents checks that a refused signature becomes one Warning
 // event naming the refusal, however often the Plugin is reconciled, that a
 // verified image records none, and that a later refusal records another.
+// testUntrustedSigner checks that an image refused for its untrusted
+// signer names that signer in status.untrustedSigners, and that the list
+// goes once a trusted signer's signature verifies (D-169).
+func testUntrustedSigner(t *testing.T, tc *testCluster, signed *operator.PluginReconciler) {
+	t.Helper()
+	ctx := t.Context()
+	create(ctx, t, tc.client, samplePlugin("stranger", imageA))
+	create(ctx, t, tc.client, sampleGrant("stranger"))
+	tc.reconcile(ctx, t, tc.reconciler(untrustedImages{}), "stranger")
+	want := state{
+		DenyAll:          true,
+		Conditions:       conditions("False/SignatureNotVerified", "False/Approved", "False/UntrustedSigner"),
+		UntrustedSigners: []string{untrustedSigner},
+	}
+	if diff := cmp.Diff(want, tc.state(ctx, t, "stranger"), cmpopts.EquateEmpty()); diff != "" {
+		t.Errorf("state mismatch (-want +got):\n%s", diff)
+	}
+	tc.reconcile(ctx, t, signed, "stranger")
+	if got := tc.state(ctx, t, "stranger"); got.UntrustedSigners != nil {
+		t.Errorf("signed by a trusted signer, untrusted signers still %v", got.UntrustedSigners)
+	}
+}
+
 func testRefusalEvents(t *testing.T, tc *testCluster) {
 	t.Helper()
 	ctx := t.Context()

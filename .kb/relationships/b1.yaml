@@ -531,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a737dd35292
+  - type: executable_for
+    from: SYM-operator-test-helper-untrusted-images
+    to: TEST-operator-reconcile
+    created_at: 2026-11-01T22:10:42.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4865787dd45

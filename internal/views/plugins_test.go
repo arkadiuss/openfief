@@ -101,6 +101,34 @@ func TestPluginOf(t *testing.T) {
 			},
 		},
 		{
+			name: "refused for an untrusted signer, who is named (D-169)",
+			record: func() views.PluginRecord {
+				r := signed("", "", "")
+				r.Signature = views.Condition{Status: "False", Reason: "UntrustedSigner"}
+				r.Ready = views.Condition{Status: "False", Reason: "SignatureNotVerified"}
+				r.UntrustedSigners = []string{"public key sha256:0a0a"}
+				r.Effective = nil
+				return r
+			},
+			want: func() views.Plugin {
+				p := running(views.TrustRefused, "")
+				p.TrustReason, p.Phase, p.Ready, p.Capabilities = "UntrustedSigner", "SignatureNotVerified", false, nil
+				p.UntrustedSigners = []string{"public key sha256:0a0a"}
+				return p
+			},
+		},
+		{
+			name: "untrusted signers left from an earlier refusal are not shown",
+			record: func() views.PluginRecord {
+				r := signed("Unverified", "Owner", "owner-laptop")
+				r.UntrustedSigners = []string{"public key sha256:0a0a"}
+				return r
+			},
+			want: func() views.Plugin {
+				return running(views.TrustOwner, "owner-laptop")
+			},
+		},
+		{
 			name: "registry unreadable",
 			record: func() views.PluginRecord {
 				r := signed("", "", "")

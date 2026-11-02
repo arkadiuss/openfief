@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e0bff8b1ab06
+  - type: executable_for
+    from: SYM-cosign-test-helper-sign-with-key
+    to: TEST-plugins-cosign
+    created_at: 2026-11-01T22:10:35.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057fd94b7680
+  - type: implements
+    from: SYM-protobreak-finding
+    to: REQ-tooling-breaking-check-one-exception
+    created_at: 2026-11-01T19:24:00.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51296f93ae4e
+  - type: covered_by
+    from: SYM-protobreak-finding
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:24:00.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9f1c0c13bc3

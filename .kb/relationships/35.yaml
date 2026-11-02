@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3be8bcbf662b
+  - type: executable_for
+    from: SYM-protobreak-test-parse-exceptions
+    to: TEST-tooling-protobreak
+    created_at: 2026-11-01T19:26:49.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52454862d069
