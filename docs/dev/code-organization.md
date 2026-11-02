@@ -17,7 +17,7 @@ Organized by domain, following DDD (domain-driven design). Names come from [the 
 | `jurisdiction/pl` | Polish rules: bond terms, tax wrappers; later PIT-38 | M0 (bonds) |
 | `fiefs`, `execution`, `orchestration`, `models`, `audit` | Leases, intents/orders/policy, agents and wakes, model routing, audit log | M1+ |
 
-**Context map (P).** `ingest` writes to `ledger` and `valuation` through their app APIs. `valuation` reads `ledger`. `portfolio` reads `valuation` for prices and FX rates. `views` reads `ledger`, `valuation`, `portfolio` and `attention`. `attention` reads `ledger`, `valuation`, `ingest` and the jurisdiction pack through ports in `attention/app` for its checks; a context that raises items itself, such as `valuation` for an instrument to classify (D-132), declares its own port, which `cmd` wires to `attention`'s items. `jurisdiction/pl` is pure rules used by `valuation`. `plugins` and `identity` are independent. Dependencies never point the other way. A tiny shared kernel `internal/kernel` holds money, currency, quantity and date types.
+**Context map.** `ingest` writes to `ledger` and `valuation` through their app APIs, and reads `plugins` for what a connector's signed manifest declares. `valuation` reads `ledger`. `portfolio` owns sleeves and which account is in which sleeve, and reads `ledger` and `valuation`; `ledger` knows nothing of sleeves. `views` reads `ledger`, `valuation`, `portfolio`, `attention`, `ingest` (accounts' connectors and statement uploads), `plugins` (the installed plugins) and `identity` (the authorizer, D-163). `attention` reads `ledger`, `valuation`, `ingest` and the jurisdiction pack through ports in `attention/app` for its checks; a context that raises items itself, such as `valuation` for an instrument to classify (D-132), declares its own port, which `cmd` wires to `attention`'s items. `jurisdiction/pl` is pure rules, used by `valuation`, `ingest`, `views` and `attention`. `plugins` and `identity` depend on no other context. Dependencies never point the other way. A tiny shared kernel `internal/kernel` holds money, currency, quantity and date types. A test in `task check` builds the import graph with `go list` and fails on any dependency between contexts that this map doesn't name.
 
 ## Layout (P)
 
@@ -50,7 +50,9 @@ site/                    the docs site: Hugo config, theme, site-only pages (doc
 - Adapters import `app` and domain packages.
 - Only `cmd` imports adapters.
 - A context never imports another context's adapters or reads its tables: each context owns its schema **(P)**.
-- Enforced by lint (`.golangci.yml`).
+- Enforced by lint (`.golangci.yml`) and by the context map's import test.
+
+**Plugins.** A plugin, first-party ones included, imports only `sdk/go`, never `internal/`. What a connector needs to build a delivery lives in the SDK, so our own plugins prove the SDK is enough. The import test enforces this too.
 
 **Interfaces.** Declare an interface where it's consumed (in `app`), keep it small, and return concrete types.
 
