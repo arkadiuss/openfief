@@ -825,3 +825,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44f8221aef54
+  - type: constrains
+    from: REQ-sdk-go-connector-server-bounds
+    to: FACT-SUBJECT-8986F598EDB94BD6
+    created_at: 2026-11-02T19:46:13.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-775122e983bb
+  - type: requires_property
+    from: REQ-sdk-go-connector-server-bounds
+    to: FACT-PROP-2766179AA77F7967
+    created_at: 2026-11-02T19:46:13.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6995cd05ccab
+  - type: specified_by
+    from: REQ-sdk-go-connector-server-bounds
+    to: SCEN-sdk-go-connector-server-bounds
+    created_at: 2026-11-02T19:46:13.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91f104da5231

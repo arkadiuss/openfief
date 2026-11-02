@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"slices"
@@ -272,4 +273,32 @@ func scopedInstrument(t *testing.T) ledger.Instrument {
 		t.Fatalf("ParseISIN: %v", err)
 	}
 	return ledger.Instrument{ISIN: isin, Symbol: "TST"}
+}
+
+// zeros reads as an endless run of zero bytes without holding them.
+type zeros struct{}
+
+func (zeros) Read(p []byte) (int, error) {
+	clear(p)
+	return len(p), nil
+}
+
+// TestClientRefusesOversizedAnswer: a connector whose answer is longer than
+// MaxDeliveryBytes fails the call with RESOURCE_EXHAUSTED before the answer
+// is decoded (D-184). The answer is streamed, never held by the test.
+func TestClientRefusesOversizedAnswer(t *testing.T) {
+	t.Parallel()
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/proto")
+		w.WriteHeader(http.StatusOK)
+		if _, err := io.CopyN(w, zeros{}, connectrpc.MaxDeliveryBytes+1<<20); err != nil {
+			return // the client stopped reading
+		}
+	}))
+	t.Cleanup(srv.Close)
+	c := connectrpc.NewClient(srv.Client(), func(string) (string, error) { return srv.URL, nil }, fakeTokens{})
+	_, err := c.Sync(t.Context(), "xtb-main", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions})
+	if got := connect.CodeOf(err); got != connect.CodeResourceExhausted {
+		t.Fatalf("Sync of an oversized answer: code %v (%v), want %v", got, err, connect.CodeResourceExhausted)
+	}
 }

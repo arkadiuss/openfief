@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a633a4cab59
+  - type: executable_for
+    from: SYM-core-test-helper-drain
+    to: TEST-core-request-limits
+    created_at: 2026-11-02T19:49:00.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b58e6134ae4

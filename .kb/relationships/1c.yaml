@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f591bd94613
+  - type: implements
+    from: SYM-core-browser-body-limit
+    to: REQ-core-ports-bound-bodies
+    created_at: 2026-11-02T19:46:59.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4f92330570a
+  - type: covered_by
+    from: SYM-core-browser-body-limit
+    to: TEST-core-request-limits
+    created_at: 2026-11-02T19:46:59.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa99beaa77ad

@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddc76ea04ab5
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-client-refuses-oversized-answer
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-11-02T19:49:54.157Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36e85aef8719

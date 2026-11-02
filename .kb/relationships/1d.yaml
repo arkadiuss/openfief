@@ -832,3 +832,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07366abfd210
+  - type: implements
+    from: SYM-views-connectapi-new
+    to: REQ-views-read-api-bounded-bodies
+    created_at: 2026-11-02T19:51:01.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-146ef79011f7

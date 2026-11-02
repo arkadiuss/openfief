@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"strings"
 
 	"connectrpc.com/connect"
 	"connectrpc.com/vanguard"
@@ -15,8 +16,15 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 )
 
-// requestIDBytes is the number of random bytes in a request ID.
-const requestIDBytes = 8
+const (
+	// requestIDBytes is the number of random bytes in a request ID.
+	requestIDBytes = 8
+	// MaxRequestBytes caps one request message: the read API's requests
+	// carry only a few IDs, dates and a page token (D-184).
+	MaxRequestBytes = 1 << 20
+	// maxBodyBytes caps a request's body: one message and its envelope.
+	maxBodyBytes = MaxRequestBytes + 1<<10
+)
 
 // Option configures New.
 type Option func(*config)
@@ -40,19 +48,55 @@ func WithRequestIDs(ids func() string) Option {
 // New returns the read API's HTTP handler over v: the Connect, gRPC and
 // gRPC-Web protocols at /openfief.views.v1.ReadService/ and, transcoded by
 // Vanguard from the same handlers, REST under /v1/ (D-50).
-// Every call needs a bearer token that verifier accepts.
+// Every call needs a bearer token that verifier accepts. Before any token is
+// checked or any message decoded, a compressed request is refused with 415
+// and a body or message over MaxRequestBytes with RESOURCE_EXHAUSTED or 413
+// (D-184): the token is checked only once the message is read.
 func New(v *app.Views, verifier app.TokenVerifier, opts ...Option) (http.Handler, error) {
 	c := config{log: slog.Default(), requestIDs: randomRequestID}
 	for _, o := range opts {
 		o(&c)
 	}
 	path, handler := viewsv1connect.NewReadServiceHandler(&readService{views: v, log: c.log},
-		connect.WithInterceptors(&authInterceptor{verifier: verifier, log: c.log}))
+		connect.WithInterceptors(&authInterceptor{verifier: verifier, log: c.log}),
+		connect.WithReadMaxBytes(MaxRequestBytes))
 	transcoder, err := vanguard.NewTranscoder([]*vanguard.Service{vanguard.NewService(path, handler)})
 	if err != nil {
 		return nil, fmt.Errorf("transcoding the read API: %w", err)
 	}
-	return withRequestLog(c, withSecurityHeaders(transcoder)), nil
+	return withRequestLog(c, withSecurityHeaders(withBoundedBody(transcoder))), nil
+}
+
+// withBoundedBody refuses a request whose body is compressed, with 415, and
+// caps the rest at maxBodyBytes, before next decodes anything (D-184).
+// Vanguard would decompress a REST body without a limit, and a small gzip
+// body can inflate to gigabytes.
+func withBoundedBody(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if Compressed(r.Header) {
+			http.Error(w, "compressed requests are not accepted", http.StatusUnsupportedMediaType)
+			return
+		}
+		if r.ContentLength > maxBodyBytes {
+			http.Error(w, "request body too large", http.StatusRequestEntityTooLarge)
+			return
+		}
+		r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
+		next.ServeHTTP(w, r)
+	})
+}
+
+// Compressed reports whether h declares a compressed request body in any
+// protocol the core serves: Content-Encoding (HTTP and Connect unary),
+// Connect-Content-Encoding (Connect streams) or Grpc-Encoding (gRPC and
+// gRPC-Web). "identity" is not compression.
+func Compressed(h http.Header) bool {
+	for _, name := range []string{"Content-Encoding", "Connect-Content-Encoding", "Grpc-Encoding"} {
+		if v := h.Get(name); v != "" && !strings.EqualFold(v, "identity") {
+			return true
+		}
+	}
+	return false
 }
 
 // randomRequestID returns a new random request ID.

@@ -27,7 +27,7 @@ var errUnknownFormat = errors.New("not one of the number formats offered")
 // admit view plugins only, logging to log.
 func NewSettings(settings *app.Settings, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
 	return valuationv1connect.NewSettingsServiceHandler(&settingsService{settings: settings, log: log},
-		connect.WithInterceptors(callers))
+		connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxRequestBytes))
 }
 
 // settingsService implements valuationv1connect.SettingsServiceHandler.

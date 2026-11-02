@@ -636,3 +636,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70a77453b93a
+  - type: constrains
+    from: REQ-ingest-connector-answer-bounded
+    to: FACT-SUBJECT-48574C3BDC2B27C0
+    created_at: 2026-11-02T19:46:05.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a39849395c26
+  - type: requires_property
+    from: REQ-ingest-connector-answer-bounded
+    to: FACT-PROP-DABD8BFAFA543775
+    created_at: 2026-11-02T19:46:05.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c6fde7c313
+  - type: specified_by
+    from: REQ-ingest-connector-answer-bounded
+    to: SCEN-ingest-connector-answer-bounded
+    created_at: 2026-11-02T19:46:05.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68d306940270
+  - type: implements
+    from: SYM-views-connectapi-compressed
+    to: REQ-views-read-api-bounded-bodies
+    created_at: 2026-11-02T19:46:38.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8280b1729e2c
+  - type: implements
+    from: SYM-views-connectapi-compressed
+    to: REQ-core-ports-bound-bodies
+    created_at: 2026-11-02T19:46:38.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7bf94c11894
+  - type: covered_by
+    from: SYM-views-connectapi-compressed
+    to: TEST-views-connectapi-request-limits
+    created_at: 2026-11-02T19:46:38.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d938b857bc4

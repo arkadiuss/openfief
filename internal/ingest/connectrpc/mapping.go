@@ -19,6 +19,18 @@ import (
 // missing required field. The error names the field.
 var ErrInvalidMessage = errors.New("invalid message")
 
+// ErrDeliveryTooLarge reports a delivery with more than MaxDeliveryItems
+// items.
+var ErrDeliveryTooLarge = errors.New("delivery too large")
+
+// MaxDeliveryItems caps the items of one delivery (D-184): its
+// transactions and their postings, balance assertions, problems, prices,
+// FX rates, index readings and levels, bond terms, cross-check prices,
+// broker accounts, tickers and ticker transactions together. A statement
+// of 64 MiB or a backfill of 2,000 instrument-years of daily prices stays
+// below it.
+const MaxDeliveryItems = 500_000
+
 // invalid returns an ErrInvalidMessage for field, wrapping cause when given.
 func invalid(field string, cause error) error {
 	if cause == nil {
@@ -64,7 +76,7 @@ func translate[P, T any](field string, in []P, from func(string, P) (T, error)) 
 // decimalFrom parses a contract decimal.
 func decimalFrom(field, s string) (kernel.Decimal, error) {
 	if !plainDecimal(s) {
-		return kernel.Decimal{}, invalid(fmt.Sprintf("%s %q is not a plain decimal", field, s), nil)
+		return kernel.Decimal{}, invalid(field+" is not a plain decimal", nil)
 	}
 	d, err := kernel.ParseDecimal(s)
 	if err != nil {
@@ -285,11 +297,8 @@ func modeTo(m ingest.Mode) (connectorv1.Mode, error) {
 // deliveryFrom translates a connector's delivery for batch id, with the
 // watermark of a sync. A delivery that echoes another batch ID is refused.
 func deliveryFrom(d *connectorv1.Delivery, id ingest.BatchID, watermark string) (app.Delivery, error) {
-	if d == nil {
-		return app.Delivery{}, invalid("delivery is missing", nil)
-	}
-	if d.GetBatchId() != string(id) {
-		return app.Delivery{}, invalid(fmt.Sprintf("delivery.batch_id %q is not %q", d.GetBatchId(), id), nil)
+	if err := checkDelivery(d, id); err != nil {
+		return app.Delivery{}, err
 	}
 	m, err := mappingFrom(d)
 	if err != nil {
@@ -324,6 +333,33 @@ func deliveryFrom(d *connectorv1.Delivery, id ingest.BatchID, watermark string) 
 		Prices: prices, FXRates: rates, IndexReadings: readings, IndexLevels: levels, BondTerms: terms,
 		CrossCheckPrices: crossChecks, Watermark: watermark,
 	}, nil
+}
+
+// checkDelivery refuses a missing delivery, one for another batch than id
+// and one of more than MaxDeliveryItems items.
+func checkDelivery(d *connectorv1.Delivery, id ingest.BatchID) error {
+	if d == nil {
+		return invalid("delivery is missing", nil)
+	}
+	if d.GetBatchId() != string(id) {
+		return invalid(fmt.Sprintf("delivery.batch_id %q is not %q", d.GetBatchId(), id), nil)
+	}
+	if n := deliveryItems(d); n > MaxDeliveryItems {
+		return fmt.Errorf("%w: %d items, more than %d", ErrDeliveryTooLarge, n, MaxDeliveryItems)
+	}
+	return nil
+}
+
+// deliveryItems counts d's items as MaxDeliveryItems does.
+func deliveryItems(d *connectorv1.Delivery) int {
+	n := len(d.GetTransactions()) + len(d.GetBalanceAssertions()) + len(d.GetProblems()) +
+		len(d.GetPrices()) + len(d.GetFxRates()) + len(d.GetIndexReadings()) + len(d.GetIndexLevels()) +
+		len(d.GetBondTerms()) + len(d.GetCrossCheckPrices()) + len(d.GetBrokerAccounts()) +
+		len(d.GetTickers()) + len(d.GetTickerTransactions())
+	for _, t := range d.GetTransactions() {
+		n += len(t.GetPostings())
+	}
+	return n
 }
 
 // crossCheckPriceFrom translates one cross-check price: the same message

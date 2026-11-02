@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-261ab28df6ea
+  - type: implements
+    from: SYM-exp-core-listen
+    to: REQ-core-ports-bound-bodies
+    created_at: 2026-11-02T19:50:49.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68b7ee89035f

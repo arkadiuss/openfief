@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-deb8e032313e
+  - type: executable_for
+    from: SYM-core-test-listen-timeouts
+    to: TEST-core-request-limits
+    created_at: 2026-11-02T19:49:21.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-622a3d9060f9

@@ -24,7 +24,7 @@ var errNoInstrument = errors.New("an instrument needs an ISIN and a symbol")
 // view plugins only, logging to log.
 func NewPriceChecks(checks *app.CrossChecks, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
 	return valuationv1connect.NewPriceCheckServiceHandler(&priceChecks{checks: checks, log: log},
-		connect.WithInterceptors(callers))
+		connect.WithInterceptors(callers), connect.WithReadMaxBytes(maxRequestBytes))
 }
 
 // priceChecks implements valuationv1connect.PriceCheckServiceHandler.

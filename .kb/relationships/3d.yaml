@@ -433,3 +433,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ada6bc7e748c
+  - type: implements
+    from: SYM-core-bound-bodies
+    to: REQ-core-ports-bound-bodies
+    created_at: 2026-11-02T19:46:49.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1c370e193ec
+  - type: covered_by
+    from: SYM-core-bound-bodies
+    to: TEST-core-request-limits
+    created_at: 2026-11-02T19:46:49.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91c0f979b4ec

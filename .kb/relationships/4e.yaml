@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba8de7b47f91
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-zeros
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-11-02T19:49:32.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebd6dcf951bc

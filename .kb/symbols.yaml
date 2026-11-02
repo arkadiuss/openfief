@@ -17538,6 +17538,8 @@ symbols:
       - type: implements
         target: REQ-ingest-core-calls-connectors
       - type: implements
+        target: REQ-sdk-go-connector-server-bounds
+      - type: implements
         target: REQ-sdk-go-core-only
   - id: SYM-sdk-go-receive-file
     title: ReceiveFile
@@ -21782,6 +21784,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-connectrpc-client
+      - type: implements
+        target: REQ-ingest-connector-answer-bounded
       - type: implements
         target: REQ-ingest-core-authenticates-to-connector
       - type: implements
@@ -29231,6 +29235,8 @@ symbols:
         target: REQ-AUTO-A04740EC43D6F6BA
       - type: implements
         target: REQ-views-api-contract
+      - type: implements
+        target: REQ-views-read-api-bounded-bodies
   - id: SYM-views-connectapi-random-request-id
     title: randomRequestID
     sourceFile: internal/views/connectapi/handler.go
@@ -87968,6 +87974,8 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
+        target: REQ-core-ports-bound-bodies
+      - type: implements
         target: REQ-core-serve-flags
   - id: SYM-exp-core-close-all
     title: closeAll
@@ -126503,3 +126511,281 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-affected-plan
+  - id: SYM-views-connectapi-with-bounded-body
+    title: withBoundedBody
+    sourceFile: internal/views/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:46:24.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-request-limits
+      - type: implements
+        target: REQ-views-read-api-bounded-bodies
+  - id: SYM-views-connectapi-compressed
+    title: Compressed
+    sourceFile: internal/views/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:46:36.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-request-limits
+      - type: implements
+        target: REQ-core-ports-bound-bodies
+      - type: implements
+        target: REQ-views-read-api-bounded-bodies
+  - id: SYM-core-bound-bodies
+    title: boundBodies
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:46:46.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-request-limits
+      - type: implements
+        target: REQ-core-ports-bound-bodies
+  - id: SYM-core-browser-body-limit
+    title: browserBodyLimit
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:46:57.287Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-request-limits
+      - type: implements
+        target: REQ-core-ports-bound-bodies
+  - id: SYM-core-plugin-body-limit
+    title: pluginBodyLimit
+    sourceFile: cmd/core/serve.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:08.183Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-request-limits
+      - type: implements
+        target: REQ-core-ports-bound-bodies
+  - id: SYM-ingest-conn-rpc-delivery-items
+    title: deliveryItems
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:19.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-answer-bounded
+  - id: SYM-views-connectapi-test-helper-counting-body
+    title: countingBody
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:29.756Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-helper-counting-body-read
+    title: countingBody.Read
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:41.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-helper-counting-body-close
+    title: countingBody.Close
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:47:51.757Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-helper-gzip-bomb
+    title: gzipBomb
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:02.681Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-read-api-bounds-bodies
+    title: TestReadAPIBoundsBodies
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:13.058Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-core-test-helper-lazy-body
+    title: lazyBody
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:24.201Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-helper-lazy-body-read
+    title: lazyBody.Read
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:35.605Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-helper-lazy-body-close
+    title: lazyBody.Close
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:47.500Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-helper-drain
+    title: drain
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:48:58.306Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-ports-bound-bodies
+    title: TestPortsBoundBodies
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:08.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-core-test-listen-timeouts
+    title: TestListenTimeouts
+    sourceFile: cmd/core/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:19.298Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-request-limits
+  - id: SYM-ingest-conn-rpc-test-helper-zeros
+    title: zeros
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:29.672Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-helper-zeros-read
+    title: zeros.Read
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:40.840Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-client-refuses-oversized-answer
+    title: TestClientRefusesOversizedAnswer
+    sourceFile: internal/ingest/connectrpc/client_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:49:52.017Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-client
+  - id: SYM-ingest-conn-rpc-test-delivery-item-cap
+    title: TestDeliveryItemCap
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:50:02.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-sdk-go-test-connector-server-limits
+    title: TestConnectorServerLimits
+    sourceFile: sdk/go/openfief/serve_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:50:12.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-serve
+  - id: SYM-ingest-conn-rpc-check-delivery
+    title: checkDelivery
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:56:43.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-answer-bounded
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-views-connectapi-test-helper-check-refused
+    title: checkRefused
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:56:54.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits
+  - id: SYM-views-connectapi-test-helper-counting-body-count
+    title: countingBody.count
+    sourceFile: internal/views/connectapi/limits_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T19:57:05.319Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-request-limits

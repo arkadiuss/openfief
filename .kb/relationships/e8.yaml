@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ff39f314d70
+  - type: executable_for
+    from: SYM-sdk-go-test-connector-server-limits
+    to: TEST-sdk-go-serve
+    created_at: 2026-11-02T19:50:14.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39efc8fb179d

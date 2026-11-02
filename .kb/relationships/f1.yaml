@@ -629,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b368ab3e4b2d
+  - type: implements
+    from: SYM-sdk-go-new-connector-server
+    to: REQ-sdk-go-connector-server-bounds
+    created_at: 2026-11-02T19:50:37.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0d79b2f9079
