@@ -30,6 +30,12 @@ type Terms interface {
 	// ExemptionClasses returns the owner's class of each instrument they
 	// classified for a yearly tax (D-132), by ISIN.
 	ExemptionClasses(ctx context.Context) (map[string]jurisdiction.ExemptionClass, error)
+	// AccountForm returns account's form (D-147), and false when none was
+	// recorded.
+	AccountForm(ctx context.Context, account ledger.AccountID) (jurisdiction.AccountForm, bool, error)
+	// EarlierPayments returns what was paid into account before its
+	// history is known (D-149), and false when the owner hasn't entered it.
+	EarlierPayments(ctx context.Context, account ledger.AccountID) (kernel.Money, bool, error)
 }
 
 // WithJurisdiction values cash and computes yearly taxes with pack (D-70),
@@ -45,10 +51,15 @@ func WithJurisdiction(pack jurisdiction.Pack, terms Terms) Option {
 type AccountTerms struct {
 	Wrapper jurisdiction.Wrapper
 	Fee     jurisdiction.FeeRule
+	// Form is the account's form (D-147); empty when none was recorded.
+	Form jurisdiction.AccountForm
+	// EarlierPayments are what was paid in before the account's history
+	// is known (D-149); nil until the owner enters them.
+	EarlierPayments *kernel.Money
 }
 
-// AccountTerms returns account's tax wrapper and fee rule; both are zero
-// without a jurisdiction (WithJurisdiction).
+// AccountTerms returns account's tax wrapper, fee rule, form and earlier
+// payments; all are zero without a jurisdiction (WithJurisdiction).
 func (v *Views) AccountTerms(ctx context.Context, account ledger.AccountID) (AccountTerms, error) {
 	if v.pack == nil {
 		return AccountTerms{}, nil
@@ -64,17 +75,36 @@ func (v *Views) AccountTerms(ctx context.Context, account ledger.AccountID) (Acc
 	if err != nil {
 		return AccountTerms{}, fmt.Errorf("loading the fee rule of %s: %w", account, err)
 	}
-	return AccountTerms{Wrapper: w, Fee: fee}, nil
+	form, _, err := v.terms.AccountForm(ctx, account)
+	if err != nil {
+		return AccountTerms{}, fmt.Errorf("loading the form of %s: %w", account, err)
+	}
+	out := AccountTerms{Wrapper: w, Fee: fee, Form: form}
+	paid, entered, err := v.terms.EarlierPayments(ctx, account)
+	if err != nil {
+		return AccountTerms{}, fmt.Errorf("loading the earlier payments of %s: %w", account, err)
+	}
+	if entered {
+		out.EarlierPayments = &paid
+	}
+	return out, nil
 }
 
 // Settings are what every reader writes the record with: the reporting
 // currency (D-62), the number format (D-113), whether it is the pack's
-// default, and the tax wrappers an account can have (D-76).
+// default, the tax wrappers an account can have (D-76), the forms of each
+// wrapper that has them (D-147) and the wrappers that take earlier payments
+// (D-149).
 type Settings struct {
 	ReportingCurrency   kernel.Currency
 	NumberFormat        jurisdiction.NumberFormat
 	NumberFormatDefault bool
 	Wrappers            []jurisdiction.Wrapper
+	// Forms are the forms an account of each wrapper that has them can
+	// take, such as OKI's (D-147); EarlierPayments the wrappers whose
+	// accounts take earlier payments (D-149).
+	Forms           map[jurisdiction.Wrapper][]jurisdiction.AccountForm
+	EarlierPayments []jurisdiction.Wrapper
 }
 
 // defaultNumberFormat is the number format without a jurisdiction: grouped
@@ -91,6 +121,15 @@ func (v *Views) Settings(ctx context.Context) (Settings, error) {
 		return out, nil
 	}
 	out.NumberFormat, out.Wrappers = v.pack.NumberFormat(), v.pack.Wrappers()
+	out.Forms = map[jurisdiction.Wrapper][]jurisdiction.AccountForm{}
+	for _, w := range out.Wrappers {
+		if forms := v.pack.AccountForms(w); len(forms) > 0 {
+			out.Forms[w] = forms
+		}
+		if v.pack.TaxesAbovePaidIn(w) {
+			out.EarlierPayments = append(out.EarlierPayments, w)
+		}
+	}
 	f, chosen, err := v.terms.NumberFormat(ctx)
 	if err != nil {
 		return Settings{}, fmt.Errorf("loading the number format: %w", err)

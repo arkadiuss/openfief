@@ -461,13 +461,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3c42ab0b877
-  - type: implements
-    from: SYM-jurisdiction-asset
-    to: REQ-pl-oki-exemption-class
-    created_at: 2026-10-31T19:06:19.806Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-377b75046275
   - type: covered_by
     from: SYM-jurisdiction-asset
     to: TEST-pl-oki
@@ -489,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98128e549b89
+  - type: implements
+    from: SYM-jurisdiction-asset
+    to: REQ-pl-oki-cash-class-by-form
+    created_at: 2026-11-01T20:20:49.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddbb47cfb428
+  - type: implements
+    from: SYM-views-app-views-settings
+    to: REQ-views-yearly-tax-estimate-and-terms
+    created_at: 2026-11-01T20:30:53.123Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e49e0a06c79f

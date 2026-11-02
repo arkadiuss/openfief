@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-15825567757d
+  - type: implements
+    from: SYM-pl-averaged
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:21:53.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee9d35297ebc
+  - type: implements
+    from: SYM-pl-averaged
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:21:53.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce0cda27fd0a
+  - type: covered_by
+    from: SYM-pl-averaged
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:21:53.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-821eb8aa3ce2

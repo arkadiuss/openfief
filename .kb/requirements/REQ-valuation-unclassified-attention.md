@@ -1,6 +1,6 @@
 ---
 title: A revaluation of an account in a wrapper with a yearly tax must raise an attention item for each holding the pack can't classify and the owner hasn't, through the attention port.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-132
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ A revaluation of an account in a wrapper with a yearly tax must raise an attenti
 
 ## Context
 
-D-132 asks the owner once through an attention item (D-130). Valuation declares the port (`valuation/app.AttentionRaiser`) and the core adapts it to the attention context's items (`valuationAttention` in cmd/core), so the item lands in the attention store; until the attention context merged, the core only logged it. The open points are in docs/implementation-questions.md (Taxes). Modeled by Claude Code for the taxes work package; the author has not reviewed it yet.
-
-## Source
-
-> **[D-132]** When the pack can't tell whether an instrument is a savings asset, an investment asset or neither for D-127's exemptions, such as a fund whose policy it can't read, the instrument counts as neither, so the estimate errs high, and an attention item (D-130) asks the owner to classify it once; the owner's choice stays with the instrument.
-
-docs/DESIGN.md#D-132
+Closed: superseded by REQ-attention-unclassified-instrument-check. D-148 makes the unclassified instrument's item a check the attention store runs, so it resolves itself, instead of an item a revaluation raised and cleared through the attention port. Modeled by Claude Code for the taxes package D-144..D-150; the author has not reviewed it yet.

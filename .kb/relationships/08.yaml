@@ -608,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-698727df4297
+  - type: validates
+    from: TEST-attention-app-checks
+    to: REQ-pl-ike-unknown-history-payments-entered
+    created_at: 2026-11-01T20:10:52.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c32be1358295
+  - type: implements
+    from: SYM-views-app-views-account-terms
+    to: REQ-views-yearly-tax-estimate-and-terms
+    created_at: 2026-11-01T20:31:14.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4ab5443a51f

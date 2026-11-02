@@ -1,6 +1,6 @@
 ---
 title: Valuation must count each sale's gain for tax as its proceeds less its fees at the NBP rate of the day before the sale less its consumed lots' costs at the rate of the day before each was opened, and sum a tax year's gains through a day.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-128
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ Valuation must count each sale's gain for tax as its proceeds less its fees at t
 
 ## Context
 
-D-128 offsets the tax year's realized gains; D-20 converts tax amounts at the NBP rate of the day before. Buy fees stay out of the cost as D-34 has it. Modeled by Claude Code for the taxes work package; the author has not reviewed it yet.
-
-## Source
-
-> **[D-128]** A holding's net and liquidation values carry its own tax as if it alone were sold. Account and portfolio totals count the tax as PIT-38 does: the tax year's realized and unrealized gains and losses of every taxable account offset each other, and the base and the tax are rounded to whole złoty; a losses-offset line reconciles the rows with the total. Losses carried from earlier years are not counted. IKE and IKZE follow their own rules: an IKE's early return is taxed on what is withdrawn above what was paid in.
-
-docs/DESIGN.md#D-128
+Closed: superseded by REQ-valuation-realized-gains-buy-fees. D-150 puts the buy fees in the tax cost of a sale, in each row's tax and in the totals alike, replacing the narrow reading that counted the lots' cost without them. Modeled by Claude Code for the taxes package D-144..D-150; the author has not reviewed it yet.

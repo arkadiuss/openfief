@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4821ae08ee2
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-form
+    to: TEST-valuation-postgres-account-forms
+    created_at: 2026-11-02T04:26:09.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2602710ea13

@@ -143,6 +143,15 @@ type Account struct {
 	// The day bond_payout took effect, YYYY-MM-DD; empty when it never
 	// changed.
 	BondPayoutSince string `protobuf:"bytes,8,opt,name=bond_payout_since,json=bondPayoutSince,proto3" json:"bond_payout_since,omitempty"`
+	// The account's form, a key of the jurisdiction pack, set when the
+	// account is created, such as an OKI account's "bank-account",
+	// "treasury-bond-account", "brokerage-account" or "fund-register"
+	// (D-147); empty for a wrapper without forms.
+	AccountForm string `protobuf:"bytes,9,opt,name=account_form,json=accountForm,proto3" json:"account_form,omitempty"`
+	// What was paid into an IKE before its history is known, as a decimal
+	// amount in the pack's currency, PLN for Poland (D-149); empty when the
+	// owner hasn't entered it.
+	EarlierPayments string `protobuf:"bytes,10,opt,name=earlier_payments,json=earlierPayments,proto3" json:"earlier_payments,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -229,6 +238,20 @@ func (x *Account) GetBondPayout() BondPayout {
 func (x *Account) GetBondPayoutSince() string {
 	if x != nil {
 		return x.BondPayoutSince
+	}
+	return ""
+}
+
+func (x *Account) GetAccountForm() string {
+	if x != nil {
+		return x.AccountForm
+	}
+	return ""
+}
+
+func (x *Account) GetEarlierPayments() string {
+	if x != nil {
+		return x.EarlierPayments
 	}
 	return ""
 }
@@ -329,9 +352,17 @@ type CreateAccountRequest struct {
 	// The fee rule (D-78); unset for the zero rule.
 	FeeRule *FeeRule `protobuf:"bytes,9,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
 	// The payout setting (D-135); unspecified for BOND_PAYOUT_CASH.
-	BondPayout    BondPayout `protobuf:"varint,10,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	BondPayout BondPayout `protobuf:"varint,10,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
+	// The account's form (D-147): required for a wrapper that has forms,
+	// such as OKI, and refused for any other with INVALID_ARGUMENT.
+	AccountForm string `protobuf:"bytes,11,opt,name=account_form,json=accountForm,proto3" json:"account_form,omitempty"`
+	// What was paid into the account before its history is known, as a
+	// decimal amount in the pack's currency (D-149); empty for none. Only a
+	// wrapper that taxes what is withdrawn above what was paid in, IKE for
+	// Poland, takes it.
+	EarlierPayments string `protobuf:"bytes,12,opt,name=earlier_payments,json=earlierPayments,proto3" json:"earlier_payments,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *CreateAccountRequest) Reset() {
@@ -434,6 +465,20 @@ func (x *CreateAccountRequest) GetBondPayout() BondPayout {
 	return BondPayout_BOND_PAYOUT_UNSPECIFIED
 }
 
+func (x *CreateAccountRequest) GetAccountForm() string {
+	if x != nil {
+		return x.AccountForm
+	}
+	return ""
+}
+
+func (x *CreateAccountRequest) GetEarlierPayments() string {
+	if x != nil {
+		return x.EarlierPayments
+	}
+	return ""
+}
+
 type CreateAccountResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Account       *Account               `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
@@ -490,9 +535,17 @@ type UpdateAccountRequest struct {
 	// The new fee rule; unset keeps the account's.
 	FeeRule *FeeRule `protobuf:"bytes,7,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
 	// The new payout setting (D-135); unspecified keeps the account's.
-	BondPayout    BondPayout `protobuf:"varint,8,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	BondPayout BondPayout `protobuf:"varint,8,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
+	// The account's form (D-147); empty keeps the account's. A form, once
+	// set, never changes; an account moved into a wrapper with forms takes
+	// one here.
+	AccountForm string `protobuf:"bytes,9,opt,name=account_form,json=accountForm,proto3" json:"account_form,omitempty"`
+	// What was paid into the account before its history is known, as a
+	// decimal amount in the pack's currency (D-149); empty keeps the
+	// account's.
+	EarlierPayments string `protobuf:"bytes,10,opt,name=earlier_payments,json=earlierPayments,proto3" json:"earlier_payments,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *UpdateAccountRequest) Reset() {
@@ -579,6 +632,20 @@ func (x *UpdateAccountRequest) GetBondPayout() BondPayout {
 		return x.BondPayout
 	}
 	return BondPayout_BOND_PAYOUT_UNSPECIFIED
+}
+
+func (x *UpdateAccountRequest) GetAccountForm() string {
+	if x != nil {
+		return x.AccountForm
+	}
+	return ""
+}
+
+func (x *UpdateAccountRequest) GetEarlierPayments() string {
+	if x != nil {
+		return x.EarlierPayments
+	}
+	return ""
 }
 
 type UpdateAccountResponse struct {
@@ -1149,7 +1216,7 @@ var File_openfief_ingest_v1_accounts_proto protoreflect.FileDescriptor
 
 const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\n" +
-	"!openfief/ingest/v1/accounts.proto\x12\x12openfief.ingest.v1\"\xad\x02\n" +
+	"!openfief/ingest/v1/accounts.proto\x12\x12openfief.ingest.v1\"\xfb\x02\n" +
 	"\aAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12\x12\n" +
@@ -1160,12 +1227,15 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\bfee_rule\x18\x06 \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
 	"\vbond_payout\x18\a \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
 	"bondPayout\x12*\n" +
-	"\x11bond_payout_since\x18\b \x01(\tR\x0fbondPayoutSince\"\x8b\x01\n" +
+	"\x11bond_payout_since\x18\b \x01(\tR\x0fbondPayoutSince\x12!\n" +
+	"\faccount_form\x18\t \x01(\tR\vaccountForm\x12)\n" +
+	"\x10earlier_payments\x18\n" +
+	" \x01(\tR\x0fearlierPayments\"\x8b\x01\n" +
 	"\aFeeRule\x12\x12\n" +
 	"\x04rate\x18\x01 \x01(\tR\x04rate\x12\x18\n" +
 	"\aminimum\x18\x02 \x01(\tR\aminimum\x12)\n" +
 	"\x10minimum_currency\x18\x03 \x01(\tR\x0fminimumCurrency\x12'\n" +
-	"\x0fconversion_rate\x18\x04 \x01(\tR\x0econversionRate\"\x91\x03\n" +
+	"\x0fconversion_rate\x18\x04 \x01(\tR\x0econversionRate\"\xdf\x03\n" +
 	"\x14CreateAccountRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
@@ -1179,9 +1249,11 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\bfee_rule\x18\t \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
 	"\vbond_payout\x18\n" +
 	" \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
-	"bondPayout\"N\n" +
+	"bondPayout\x12!\n" +
+	"\faccount_form\x18\v \x01(\tR\vaccountForm\x12)\n" +
+	"\x10earlier_payments\x18\f \x01(\tR\x0fearlierPayments\"N\n" +
 	"\x15CreateAccountResponse\x125\n" +
-	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xb8\x02\n" +
+	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\x86\x03\n" +
 	"\x14UpdateAccountRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1d\n" +
@@ -1193,7 +1265,10 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"taxWrapper\x126\n" +
 	"\bfee_rule\x18\a \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
 	"\vbond_payout\x18\b \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
-	"bondPayout\"N\n" +
+	"bondPayout\x12!\n" +
+	"\faccount_form\x18\t \x01(\tR\vaccountForm\x12)\n" +
+	"\x10earlier_payments\x18\n" +
+	" \x01(\tR\x0fearlierPayments\"N\n" +
 	"\x15UpdateAccountResponse\x125\n" +
 	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xc6\x01\n" +
 	"\x12BindAccountRequest\x12\x16\n" +

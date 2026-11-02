@@ -3,6 +3,7 @@ package ui
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"connectrpc.com/connect"
 
@@ -43,6 +44,17 @@ func attentionKindOf(kind string) attentionKind {
 	return attentionKind{Label: kind}
 }
 
+// attentionItemKind names an item of kind about subject: as its kind does
+// (attentionKindOf), but an IKE's missing earlier payments, whose subject
+// starts with "earlier-payments/", are entered on the accounts page
+// (D-149).
+func attentionItemKind(kind, subject string) attentionKind {
+	if kind == "setting-missing" && strings.HasPrefix(subject, "earlier-payments/") {
+		return attentionKind{"Missing earlier payments into an IKE", accountsPath}
+	}
+	return attentionKindOf(kind)
+}
+
 // attentionRow is one item as the attention page shows it, with the
 // owner's actions it offers.
 type attentionRow struct {
@@ -78,7 +90,7 @@ func (s *server) renderAttention(w http.ResponseWriter, r *http.Request, sess se
 	view := attentionView{Error: refusal}
 	owner := sess.Owner()
 	for _, it := range resp.Msg.GetItems() {
-		row := attentionRow{Item: it, Kind: attentionKindOf(it.GetKind())}
+		row := attentionRow{Item: it, Kind: attentionItemKind(it.GetKind(), it.GetSubject())}
 		switch it.GetState() {
 		case viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN:
 			row.Acknowledge, row.Resolve = owner, owner && it.GetOwnerResolves()

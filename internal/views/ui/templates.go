@@ -49,6 +49,7 @@ func templateFuncs(f numberFormat) template.FuncMap {
 		"balance":      f.balance,
 		"missing":      missingLabel,
 		"wrapper":      wrapperLabel,
+		"formLabel":    formLabel,
 		"className":    classLabel,
 		"feeRule":      f.feeRule,
 		"trust":        trustLabel,

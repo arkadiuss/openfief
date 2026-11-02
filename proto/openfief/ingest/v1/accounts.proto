@@ -97,6 +97,15 @@ message Account {
   // The day bond_payout took effect, YYYY-MM-DD; empty when it never
   // changed.
   string bond_payout_since = 8;
+  // The account's form, a key of the jurisdiction pack, set when the
+  // account is created, such as an OKI account's "bank-account",
+  // "treasury-bond-account", "brokerage-account" or "fund-register"
+  // (D-147); empty for a wrapper without forms.
+  string account_form = 9;
+  // What was paid into an IKE before its history is known, as a decimal
+  // amount in the pack's currency, PLN for Poland (D-149); empty when the
+  // owner hasn't entered it.
+  string earlier_payments = 10;
 }
 
 // BondPayout is the payout setting of a hand-entered bond account
@@ -152,6 +161,14 @@ message CreateAccountRequest {
   FeeRule fee_rule = 9;
   // The payout setting (D-135); unspecified for BOND_PAYOUT_CASH.
   BondPayout bond_payout = 10;
+  // The account's form (D-147): required for a wrapper that has forms,
+  // such as OKI, and refused for any other with INVALID_ARGUMENT.
+  string account_form = 11;
+  // What was paid into the account before its history is known, as a
+  // decimal amount in the pack's currency (D-149); empty for none. Only a
+  // wrapper that taxes what is withdrawn above what was paid in, IKE for
+  // Poland, takes it.
+  string earlier_payments = 12;
 }
 
 message CreateAccountResponse {
@@ -170,6 +187,14 @@ message UpdateAccountRequest {
   FeeRule fee_rule = 7;
   // The new payout setting (D-135); unspecified keeps the account's.
   BondPayout bond_payout = 8;
+  // The account's form (D-147); empty keeps the account's. A form, once
+  // set, never changes; an account moved into a wrapper with forms takes
+  // one here.
+  string account_form = 9;
+  // What was paid into the account before its history is known, as a
+  // decimal amount in the pack's currency (D-149); empty keeps the
+  // account's.
+  string earlier_payments = 10;
 }
 
 message UpdateAccountResponse {

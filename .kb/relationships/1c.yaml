@@ -573,13 +573,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0bb5d3d1182
-  - type: implements
-    from: SYM-pl-sum-averages
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:01:58.500Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cadb6ea3ad1e
   - type: covered_by
     from: SYM-pl-sum-averages
     to: TEST-pl-oki
@@ -664,3 +657,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f057460a04b1
+  - type: implements
+    from: SYM-pl-sum-averages
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:25:47.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d339651fe12
+  - type: implements
+    from: SYM-pl-ratio-cmp
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:23:26.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a323c71c988c
+  - type: implements
+    from: SYM-pl-ratio-cmp
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:23:26.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8da82153775
+  - type: covered_by
+    from: SYM-pl-ratio-cmp
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:23:26.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d8e8446f417

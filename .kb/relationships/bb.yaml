@@ -575,8 +575,29 @@ relationships:
     id: rel-2236196113ee
   - type: executable_for
     from: SYM-core-test-valuation-attention
-    to: TEST-core-unclassified
-    created_at: 2026-11-01T06:41:27.924Z
+    to: TEST-core-valuation-attention
+    created_at: 2026-11-01T20:18:05.069Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-7f6f68c0b341
+    id: rel-c2638dfa1ef7
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-terms-account-form
+    to: TEST-ingest-app-accounts
+    created_at: 2026-11-02T04:20:05.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f00971c8017c
+  - type: implements
+    from: SYM-viewsv1-wrapper-terms-proto-message
+    to: REQ-views-yearly-tax-estimate-and-terms
+    created_at: 2026-11-02T04:30:14.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd52f6ff9ecf
+  - type: covered_by
+    from: SYM-viewsv1-wrapper-terms-proto-message
+    to: TEST-views-connectapi-values
+    created_at: 2026-11-02T04:30:14.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63f8e78e9c4b

@@ -189,7 +189,7 @@ The dataset also carries synthetic cross-check prices, one of them beyond the th
 
 **The dataset.** `demo.Generate(seed, today)` is a pure function: the same seed and date always give the same dataset, and prices come from integer arithmetic, so every value is exact. It contains:
 
-- two [sleeves](../glossary.md#m0), `demo-offensive` and `demo-defensive`, and three accounts: `demo-ibkr` and `demo-xtb` in the offensive sleeve, and `demo-bonds-ike`, treasury bonds in an [IKE](../glossary.md#other-terms-and-abbreviations), in the defensive one;
+- two [sleeves](../glossary.md#m0), `demo-offensive` and `demo-defensive`, and three accounts: `demo-ibkr` and `demo-xtb` in the offensive sleeve, and `demo-bonds-ike`, treasury bonds in an [IKE](../glossary.md#other-terms-and-abbreviations), in the defensive one, seeded at go-live, with its [earlier payments](../glossary.md) entered as its bonds' cost plus its opening cash (`demo.BondsEarlierPayments`, D-149), so its liquidation value is taxed above them;
 - six market-priced instruments and three treasury bond series, all with synthetic ISINs: the check digit is valid, and `TESTD` follows the country code, so no one can take them for real securities;
 - seeded random-walk prices on business days, from a week before go-live (365 days before today) up to today;
 - IBKR's synthetic mark prices as [cross-check prices](../glossary.md#m0) from the `ibkr` source: each instrument held at the end of each monthly statement, at the latest demo close on or before that day, and the latest statement's first instrument 3% above it, so the price checks page shows one flagged check (D-110, D-111). `demo-seed` records them through valuation's `CrossChecks`;
@@ -206,7 +206,7 @@ flowchart LR
   guard -->|"no"| refuse["Refuse before writing anything"]
   guard -->|"yes"| flex["IBKR Flex statements"]
   guard -->|"yes"| batches["XTB and bond transactions"]
-  guard -->|"yes"| inputs["Prices, NBP rates, CPI, bond terms, IKE wrapper"]
+  guard -->|"yes"| inputs["Prices, NBP rates, CPI, bond terms, IKE wrapper and earlier payments"]
   flex --> ingest["ibkrflex connector and ingest service"] --> ledger["Ledger"]
   batches --> ledger
   inputs --> recorder["Valuation input recorder"]

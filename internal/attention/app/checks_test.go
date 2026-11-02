@@ -64,10 +64,17 @@ type fakePriceChecks []valuation.PriceCheck
 
 func (f fakePriceChecks) PriceChecks(context.Context) ([]valuation.PriceCheck, error) { return f, nil }
 
-// fakeValues is app.Values with one wrapper per account.
+// fakeValues is app.Values with one wrapper per account and the earlier
+// payments entered for some.
 type fakeValues struct {
 	wrappers map[ledger.AccountID]jurisdiction.Wrapper
 	settings jurisdiction.Settings
+	paid     map[ledger.AccountID]kernel.Money
+}
+
+func (f *fakeValues) EarlierPayments(_ context.Context, a ledger.AccountID) (kernel.Money, bool, error) {
+	p, ok := f.paid[a]
+	return p, ok, nil
 }
 
 func (f *fakeValues) TaxWrapper(_ context.Context, a ledger.AccountID) (jurisdiction.Wrapper, bool, error) {
@@ -234,6 +241,31 @@ func TestChecks(t *testing.T) {
 						settings: jurisdiction.Settings{MarginalRate: pln(t, "0.32").Amount(), HasMarginalRate: true},
 					}, pl.NewPack())
 			},
+		},
+		{
+			name: "an IKE seeded from a starting balance without its earlier payments",
+			check: func(t *testing.T) app.Check {
+				t.Helper()
+				ike1, ike2, ike3 := ledger.AccountID("ike-1"), ledger.AccountID("ike-2"), ledger.AccountID("ike-3")
+				opening := func(account, id string) ledger.Transaction {
+					tx := cash(t, account, id, "2026-03-02", "100")
+					tx.Key.ExternalID = ledger.OpeningCashPrefix + id
+					return tx
+				}
+				return app.MissingSettings(&fakeLedger{
+					accounts: []ledger.Account{{ID: ike1}, {ID: ike2}, {ID: ike3}},
+					txs: map[ledger.AccountID][]ledger.Transaction{
+						ike1: {opening("ike-1", "o1")}, ike2: {opening("ike-2", "o2")}, ike3: {cash(t, "ike-3", "d3", "2026-03-02", "100")},
+					},
+				}, &fakeValues{
+					wrappers: map[ledger.AccountID]jurisdiction.Wrapper{ike1: "ike", ike2: "ike", ike3: "ike"},
+					paid:     map[ledger.AccountID]kernel.Money{ike2: pln(t, "1000")},
+				}, pl.NewPack())
+			},
+			want: []attention.Condition{{
+				Kind: attention.KindSettingMissing, Subject: app.EarlierPaymentsSetting + "/ike-1",
+				Detail: "its record starts from a starting balance, so an early return's tax needs the total paid in before",
+			}},
 		},
 		{
 			name: "no IKZE account, no missing setting",

@@ -16,9 +16,11 @@ type RealizedGain struct {
 
 // RealizedGains returns each sale's gain for tax (D-128): its proceeds less
 // its fees, each converted at the rate the pack takes for the sale's date,
-// less the cost of the lots it consumed, each converted at the rate the pack
-// takes for its open date (TaxCost); every conversion is rounded with
-// ValueRounding. It returns MissingFXRate when a currency has no such rate.
+// less the cost of the lots it consumed with their buy fees (D-150), each
+// converted at the rate the pack takes for its open date (TaxCost); every
+// conversion is rounded with ValueRounding. It returns MissingFXRate when a
+// currency has no such rate. Only sales count: a dividend is a separate
+// source of income that capital losses don't offset (D-150).
 func (a *AccountTerms) RealizedGains(sales []ledger.Sale, rates []FXRate) ([]RealizedGain, MissingReason, error) {
 	out := make([]RealizedGain, 0, len(sales))
 	for i := range sales {

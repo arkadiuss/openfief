@@ -4,6 +4,7 @@ import (
 	"cmp"
 	"context"
 	"fmt"
+	"slices"
 	"strconv"
 
 	"github.com/arkadiuss/openfief/internal/attention"
@@ -18,6 +19,10 @@ import (
 // MarginalRateSetting is the subject of the missing-setting item for the
 // owner's marginal income tax rate (D-78).
 const MarginalRateSetting = "marginal-rate"
+
+// EarlierPaymentsSetting starts the subject of the missing-setting item for
+// an account's earlier payments (D-149), followed by "/" and the account.
+const EarlierPaymentsSetting = "earlier-payments"
 
 // Ledger is what the ledger's checks read; *ledger/app.Ledger implements
 // it.
@@ -62,6 +67,9 @@ type Values interface {
 	TaxWrapper(ctx context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error)
 	// ValueSettings returns the owner's settings the values need.
 	ValueSettings(ctx context.Context) (jurisdiction.Settings, error)
+	// EarlierPayments returns what was paid into account before its
+	// history is known (D-149); ok is false until the owner enters it.
+	EarlierPayments(ctx context.Context, account ledger.AccountID) (kernel.Money, bool, error)
 }
 
 // FlaggedAssertions is the check of balance assertions (D-18): each
@@ -243,11 +251,14 @@ func ImportProblems(im Imports) Check {
 	}}
 }
 
-// MissingSettings is the check of the owner's settings (D-78): while some
-// account's tax wrapper can't have a liquidation value without a setting
-// the owner hasn't set, such as the marginal income tax rate for IKZE,
-// the setting is a condition, its subject MarginalRateSetting. pack values
-// the accounts' cash.
+// MissingSettings is the check of the owner's settings (D-78, D-149): while
+// some account's tax wrapper can't have a liquidation value without a
+// setting the owner hasn't set, such as the marginal income tax rate for
+// IKZE, the setting is a condition, its subject MarginalRateSetting; and
+// each account seeded from a starting balance (D-23) in a wrapper that
+// taxes what is withdrawn above what was paid in, such as IKE, whose
+// earlier payments the owner hasn't entered is one, its subject
+// EarlierPaymentsSetting and the account. pack values the accounts' cash.
 func MissingSettings(l Ledger, v Values, pack jurisdiction.Pack) Check {
 	return Check{Kind: attention.KindSettingMissing, Find: func(ctx context.Context) ([]attention.Condition, error) {
 		settings, err := v.ValueSettings(ctx)
@@ -258,20 +269,76 @@ func MissingSettings(l Ledger, v Values, pack jurisdiction.Pack) Check {
 		if err != nil {
 			return nil, fmt.Errorf("loading accounts: %w", err)
 		}
+		var out []attention.Condition
 		for i := range accounts {
-			unknown, valueErr := liquidationUnknown(ctx, v, pack, accounts[i].ID, &settings)
-			if valueErr != nil {
-				return nil, valueErr
+			cond, missing, paidErr := earlierPaymentsMissing(ctx, l, v, pack, accounts[i].ID)
+			if paidErr != nil {
+				return nil, paidErr
 			}
-			if unknown {
-				return []attention.Condition{{
-					Kind: attention.KindSettingMissing, Subject: MarginalRateSetting,
-					Detail: "the liquidation value of an account's tax wrapper needs it",
-				}}, nil
+			if missing {
+				out = append(out, cond)
 			}
 		}
-		return nil, nil
+		rateMissing, err := anyLiquidationUnknown(ctx, v, pack, accounts, &settings)
+		if err != nil || !rateMissing {
+			return out, err
+		}
+		return append(out, attention.Condition{
+			Kind: attention.KindSettingMissing, Subject: MarginalRateSetting,
+			Detail: "the liquidation value of an account's tax wrapper needs it",
+		}), nil
 	}}
+}
+
+// anyLiquidationUnknown reports whether some account's cash can't have a
+// liquidation value under settings (liquidationUnknown).
+func anyLiquidationUnknown(ctx context.Context, v Values, pack jurisdiction.Pack, accounts []ledger.Account, settings *jurisdiction.Settings) (bool, error) {
+	for i := range accounts {
+		unknown, err := liquidationUnknown(ctx, v, pack, accounts[i].ID, settings)
+		if err != nil || unknown {
+			return unknown, err
+		}
+	}
+	return false, nil
+}
+
+// earlierPaymentsMissing returns the condition of account's earlier
+// payments, and true when its wrapper, or the pack's default when none is
+// set, taxes what is withdrawn above what was paid in, it was seeded from a
+// starting balance and the owner hasn't entered them (D-149).
+func earlierPaymentsMissing(ctx context.Context, l Ledger, v Values, pack jurisdiction.Pack, account ledger.AccountID) (attention.Condition, bool, error) {
+	w, recorded, err := v.TaxWrapper(ctx, account)
+	if err != nil {
+		return attention.Condition{}, false, fmt.Errorf("loading the tax wrapper of %s: %w", account, err)
+	}
+	if !recorded {
+		w = jurisdiction.DefaultWrapper(pack)
+	}
+	if !pack.TaxesAbovePaidIn(w) {
+		return attention.Condition{}, false, nil
+	}
+	if _, entered, paidErr := v.EarlierPayments(ctx, account); paidErr != nil || entered {
+		return attention.Condition{}, false, wrapLoad(paidErr, "the earlier payments", account)
+	}
+	txs, err := l.CurrentTransactions(ctx, account)
+	if err != nil {
+		return attention.Condition{}, false, fmt.Errorf("loading transactions of %s: %w", account, err)
+	}
+	if !slices.ContainsFunc(txs, func(t ledger.Transaction) bool { return ledger.IsSeeding(&t) }) {
+		return attention.Condition{}, false, nil
+	}
+	return attention.Condition{
+		Kind: attention.KindSettingMissing, Subject: EarlierPaymentsSetting + "/" + string(account),
+		Detail: "its record starts from a starting balance, so an early return's tax needs the total paid in before",
+	}, true, nil
+}
+
+// wrapLoad wraps err, when it is not nil, as loading what of account.
+func wrapLoad(err error, what string, account ledger.AccountID) error {
+	if err == nil {
+		return nil
+	}
+	return fmt.Errorf("loading %s of %s: %w", what, account, err)
 }
 
 // liquidationUnknown reports whether pack can't give account's cash a

@@ -803,51 +803,6 @@ relationships:
       },
     {
         type: implements,
-        from: SYM-pl-oki-act-tax,
-        to: REQ-pl-oki-tax-computation,
-        created_at: 2026-10-31T19:01:46.075Z,
-        created_by: kibi/upsert,
-        source: mcp://kibi/upsert,
-        id: rel-c268b2a648c2
-      },
-    {
-        type: implements,
-        from: SYM-pl-oki-act-tax,
-        to: REQ-pl-oki-tax-rate,
-        created_at: 2026-10-31T19:01:46.113Z,
-        created_by: kibi/upsert,
-        source: mcp://kibi/upsert,
-        id: rel-be8312f1b7a6
-      },
-    {
-        type: covered_by,
-        from: SYM-pl-oki-act-tax,
-        to: TEST-pl-oki,
-        created_at: 2026-10-31T19:01:46.151Z,
-        created_by: kibi/upsert,
-        source: mcp://kibi/upsert,
-        id: rel-39765b92090a
-      },
-    {
-        type: implements,
-        from: SYM-valuation-app-revaluer-with-attention,
-        to: REQ-valuation-unclassified-attention,
-        created_at: 2026-10-31T19:07:41.829Z,
-        created_by: kibi/upsert,
-        source: mcp://kibi/upsert,
-        id: rel-664907ab4deb
-      },
-    {
-        type: covered_by,
-        from: SYM-valuation-app-revaluer-with-attention,
-        to: TEST-valuation-app-exemption-class,
-        created_at: 2026-10-31T19:07:41.885Z,
-        created_by: kibi/upsert,
-        source: mcp://kibi/upsert,
-        id: rel-fc38a48e4a9a
-      },
-    {
-        type: implements,
         from: SYM-ui-server-delete-sleeve,
         to: REQ-portfolio-delete-unused,
         created_at: 2026-10-31T18:14:55.696Z,
@@ -890,5 +845,32 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-4e77ef54084d
+      },
+    {
+        type: implements,
+        from: SYM-valuation-app-revaluer-with-attention,
+        to: REQ-valuation-market-data-gap-attention-item,
+        created_at: 2026-11-01T20:18:54.309Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-3c6ef4b2bd38
+      },
+    {
+        type: covered_by,
+        from: SYM-valuation-app-revaluer-with-attention,
+        to: TEST-valuation-app-series,
+        created_at: 2026-11-01T20:18:54.366Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-1b247781b6ae
+      },
+    {
+        type: executable_for,
+        from: SYM-views-test-helper-check-whole-history,
+        to: TEST-views-taxes,
+        created_at: 2026-11-02T04:27:24.158Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-775576540743
       }
   ]

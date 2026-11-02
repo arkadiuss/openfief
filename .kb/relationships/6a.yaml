@@ -482,3 +482,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a325e9eb46d6
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-account-form
+    to: REQ-ingest-account-form-checks
+    created_at: 2026-11-02T04:24:57.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e838b857a80
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-account-form
+    to: REQ-ingest-oki-account-form-set-at-creation
+    created_at: 2026-11-02T04:24:57.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70fc139e84a6
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder-record-account-form
+    to: TEST-valuation-app-account-forms
+    created_at: 2026-11-02T04:24:57.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baee15c17adc

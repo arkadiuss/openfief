@@ -496,13 +496,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-692d2659d28c
-  - type: implements
-    from: SYM-jurisdiction-tax-account
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:06:39.636Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4602936ebf8b
   - type: covered_by
     from: SYM-jurisdiction-tax-account
     to: TEST-pl-oki
@@ -552,3 +545,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd2d95371dd8
+  - type: implements
+    from: SYM-jurisdiction-tax-account
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:21:33.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-732e41d32465
+  - type: implements
+    from: SYM-pl-ratio-add
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:23:11.701Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b475b087b288
+  - type: implements
+    from: SYM-pl-ratio-add
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:23:11.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2fb87ad9e510
+  - type: covered_by
+    from: SYM-pl-ratio-add
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:23:11.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f880dffa377

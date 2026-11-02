@@ -545,3 +545,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-922064bc077c
+  - type: implements
+    from: SYM-ingestv1-account-get-account-form
+    to: REQ-ingest-account-form-checks
+    created_at: 2026-11-02T04:28:25.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-311c9a2c0eef
+  - type: implements
+    from: SYM-ingestv1-account-get-account-form
+    to: REQ-ingest-oki-account-form-set-at-creation
+    created_at: 2026-11-02T04:28:25.947Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1ac29a66cd9
+  - type: covered_by
+    from: SYM-ingestv1-account-get-account-form
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-02T04:28:25.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31369c6bd465

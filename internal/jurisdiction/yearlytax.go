@@ -7,6 +7,12 @@ import "github.com/arkadiuss/openfief/internal/kernel"
 // (D-127). Packs define their own; the zero value is none.
 type ExemptionClass string
 
+// AccountForm is what kind of account an account is, for a wrapper whose
+// rules tell forms apart, such as an OKI account's form, which decides
+// whether its cash is a savings or an investment asset (D-147). Packs
+// define their own; the zero value is none set.
+type AccountForm string
+
 // AssetKind is how an asset is valued: at market, at its accrued value, or
 // as cash.
 type AssetKind int
@@ -29,10 +35,9 @@ type Asset struct {
 	Instrument string
 	// Currency is cash's currency, or the currency a holding is priced in.
 	Currency kernel.Currency
-	// AccountHoldsAccrued reports that the asset's account held an
-	// AssetAccrued holding in the tax year, such as a treasury bond
-	// account's cash.
-	AccountHoldsAccrued bool
+	// Form is the form of the asset's account (D-147), which decides the
+	// class of its cash; empty when none is set.
+	Form AccountForm
 }
 
 // ClassValue is an amount of one exemption class.
@@ -72,12 +77,19 @@ type YearlyTax struct {
 	// Through, the last day counted; zero when none was.
 	Days    int
 	Through kernel.Date
+	// Estimate reports a year counted through a day before its last, such
+	// as the current year: the tax is an estimate over the days so far
+	// (D-146).
+	Estimate bool
 	// Average is the base before exemptions: the sum over the accounts of
-	// each one's average value. Averages splits it by exemption class.
+	// each one's average value. Averages splits it by exemption class. A
+	// pack may keep them exact and show them rounded, as the Polish pack
+	// does (D-144).
 	Average  kernel.Money
 	Averages []ClassValue
 	// Exempt is the exempt part of each class's average, and Taxed the
-	// part of Average left to tax. ExemptionsKnown is false when the law's
+	// part of Average left to tax, the tax base, which the Polish pack
+	// rounds to whole złoty (D-144). ExemptionsKnown is false when the law's
 	// exempt amounts for the year are not known: Exempt, Taxed and Tax are
 	// then unset.
 	Exempt          []ClassValue

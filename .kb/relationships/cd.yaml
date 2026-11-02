@@ -678,13 +678,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3cc41f6808ae
-  - type: implements
-    from: SYM-pl-class-sums
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:02:40.061Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e7096ecc009b
   - type: covered_by
     from: SYM-pl-class-sums
     to: TEST-pl-oki
@@ -713,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c8f121b6a54
+  - type: implements
+    from: SYM-pl-class-sums
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:22:55.603Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b6ade8e5d70

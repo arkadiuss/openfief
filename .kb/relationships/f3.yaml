@@ -475,3 +475,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ed1dc58d559
+  - type: implements
+    from: SYM-pl-zero-ratio
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:22:48.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c99f0c8cc97
+  - type: implements
+    from: SYM-pl-zero-ratio
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:22:48.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3be2fc7f6f33
+  - type: covered_by
+    from: SYM-pl-zero-ratio
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:22:48.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9caefd6e450a

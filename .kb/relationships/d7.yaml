@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5eaebb76de70
+  - type: implements
+    from: SYM-views-connectapi-pb-yearly-tax
+    to: REQ-views-yearly-tax-estimate-and-terms
+    created_at: 2026-11-01T20:30:12.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ec8f1d26513

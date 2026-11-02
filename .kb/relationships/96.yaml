@@ -461,3 +461,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4035c07f2334
+  - type: constrains
+    from: REQ-valuation-realized-gains-buy-fees
+    to: FACT-SUBJECT-CF36AD8B532474E9
+    created_at: 2026-11-01T20:12:26.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c87d113680e
+  - type: requires_property
+    from: REQ-valuation-realized-gains-buy-fees
+    to: FACT-PROP-885E49272CD255C8
+    created_at: 2026-11-01T20:12:26.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daf11f3c66a6
+  - type: specified_by
+    from: REQ-valuation-realized-gains-buy-fees
+    to: SCEN-valuation-realized-gains-buy-fees
+    created_at: 2026-11-01T20:12:26.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdec03a1205b
+  - type: supersedes
+    from: REQ-valuation-realized-gains-buy-fees
+    to: REQ-valuation-realized-gains
+    created_at: 2026-11-01T20:12:26.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8341033e0691

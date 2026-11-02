@@ -581,20 +581,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-bca94903238e
   - type: implements
-    from: SYM-valuation-app-attention-raiser
-    to: REQ-valuation-unclassified-attention
-    created_at: 2026-10-31T19:07:35.728Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2216913b5a5d
-  - type: covered_by
-    from: SYM-valuation-app-attention-raiser
-    to: TEST-valuation-app-exemption-class
-    created_at: 2026-10-31T19:07:35.789Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-00c0a410f006
-  - type: implements
     from: SYM-ingest-connectapi-tickers-fail
     to: REQ-ingest-xtb-isin-owner-confirms
     created_at: 2026-10-31T18:04:02.028Z
@@ -657,3 +643,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e26bf636d10
+  - type: validates
+    from: TEST-pl-oki
+    to: REQ-pl-oki-base-and-tax-whole-zloty
+    created_at: 2026-11-01T20:10:36.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-046b838ae033
+  - type: validates
+    from: TEST-pl-oki
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-01T20:10:36.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19b21bbc623e
+  - type: validates
+    from: TEST-pl-oki
+    to: REQ-pl-oki-rate-from-announcements
+    created_at: 2026-11-01T20:10:36.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d1db26b296b
+  - type: validates
+    from: TEST-pl-oki
+    to: REQ-pl-oki-exempt-amounts-from-announcements
+    created_at: 2026-11-01T20:10:36.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c3d5d61877a
+  - type: validates
+    from: TEST-pl-oki
+    to: REQ-pl-oki-announced-figures-never-computed
+    created_at: 2026-11-01T20:10:36.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7a8e92b2cd0
+  - type: validates
+    from: TEST-pl-oki
+    to: REQ-pl-oki-exempt-amounts-never-fall
+    created_at: 2026-11-01T20:10:36.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-199198e4c95b
+  - type: validates
+    from: TEST-pl-oki
+    to: REQ-pl-oki-current-year-estimate
+    created_at: 2026-11-01T20:10:36.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ca912d4e0db
+  - type: validates
+    from: TEST-pl-oki
+    to: REQ-pl-oki-form-decides-cash-class
+    created_at: 2026-11-01T20:10:36.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48ef8c67d433
+  - type: implements
+    from: SYM-valuation-app-attention-raiser
+    to: REQ-valuation-market-data-gap-attention-item
+    created_at: 2026-11-01T20:18:30.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36de94117081
+  - type: covered_by
+    from: SYM-valuation-app-attention-raiser
+    to: TEST-valuation-app-series
+    created_at: 2026-11-01T20:18:30.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-535f1bdab3ec
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-terms-earlier-payments
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-02T04:21:08.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64adc965a951

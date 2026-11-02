@@ -13,7 +13,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/views"
 )
 
-// taxYearAccount is an OKI account on 2027-03-01 and 2027-03-02 holding a
+// taxYearAccount is an OKI treasury bond account (D-147) on 2027-03-01 and
+// 2027-03-02 holding a
 // treasury bond, a fund priced in USD that no one classified, a fund in
 // PLN the owner classified as an investment asset, 200 PLN of cash and, on
 // the second day, 10 USD; 300 PLN paid in and 100 PLN withdrawn that day.
@@ -28,7 +29,7 @@ func taxYearAccount(t *testing.T) views.TaxYearAccount {
 	bond := "PLEDO0536000"
 	usd := money(t, "0", "USD").Currency()
 	return views.TaxYearAccount{
-		Account: "acc-1", Wrapper: "oki", From: date(t, "2027-03-01"), To: date(t, "2027-03-02"),
+		Account: "acc-1", Wrapper: "oki", Form: pl.FormTreasuryBonds, From: date(t, "2027-03-01"), To: date(t, "2027-03-02"),
 		Vals: []valuation.HoldingValuation{
 			row(bond, "2027-03-01", "1000.00", "PLN", valuation.GrossAccrued),
 			row(isinPL, "2027-03-01", "100", "USD", valuation.Market),
@@ -60,8 +61,8 @@ func taxYearAccount(t *testing.T) views.TaxYearAccount {
 // foreign amounts convert at the rate of the day before: on 2027-03-01 the
 // last rate on or before 2027-02-28 (4.00), so the USD fund is 400.00; on
 // 2027-03-02 the rate of 2027-03-01 (4.10), not that day's 4.50: 451.00 and
-// 41.00 of cash. The bond and the PLN cash of an account holding bonds are
-// savings assets; the owner's fund is an investment asset; the USD fund,
+// 41.00 of cash. The bond and the PLN cash of a treasury bond account are
+// savings assets, as the account's form says (D-147); the owner's fund is an investment asset; the USD fund,
 // which no one classified, and USD cash count as other. Opening cash is no
 // payment.
 func TestTaxDays(t *testing.T) {

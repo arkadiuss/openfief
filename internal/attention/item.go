@@ -63,6 +63,11 @@ const (
 	// KindTransferBroken is a confirmed transfer whose legs no longer
 	// match after a correction (D-131). Subject: the pair.
 	KindTransferBroken Kind = "transfer-broken"
+	// KindInstrumentUnclassified is an instrument held in a wrapper with a
+	// yearly tax that the jurisdiction pack can't classify for its
+	// exemptions and the owner hasn't (D-132, D-148). It resolves once the
+	// owner classifies it. Subject: the ISIN.
+	KindInstrumentUnclassified Kind = "instrument-unclassified"
 )
 
 // OwnerResolves reports whether the owner may resolve an item of kind k by

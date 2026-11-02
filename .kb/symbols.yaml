@@ -5615,21 +5615,6 @@ symbols:
         target: REQ-ledger-fifo
       - type: implements
         target: REQ-ledger-oversell
-  - id: SYM-ledger-consumed-cost
-    title: consumedCost
-    sourceFile: internal/ledger/lot.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:39:59.321Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-lot
-      - type: implements
-        target: REQ-decision-d34-1-consumed-cost-rounding
-      - type: implements
-        target: REQ-ledger-lot-cost-split
   - id: SYM-ledger-sorted-lots
     title: sortedLots
     sourceFile: internal/ledger/lot.go
@@ -91927,7 +91912,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-jurisdiction-pack
     title: Pack
     sourceFile: internal/jurisdiction/pack.go
@@ -92263,7 +92248,7 @@ symbols:
       - type: implements
         target: REQ-pl-oki-act-in-force-2027
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-current-oki-act
     title: CurrentOKIAct
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -92278,7 +92263,11 @@ symbols:
       - type: implements
         target: REQ-pl-oki-act-in-force-2027
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-exempt-amounts-from-announcements
+      - type: implements
+        target: REQ-pl-oki-rate-from-announcements
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-pack-yearly-tax
     title: Pack.YearlyTax
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -92293,7 +92282,7 @@ symbols:
       - type: implements
         target: REQ-pl-oki-tax-base-average-value
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-test-pack-defaults
     title: TestPackDefaults
     sourceFile: internal/jurisdiction/pl/pack_test.go
@@ -93228,6 +93217,8 @@ symbols:
         target: TEST-valuation-revaluation
       - type: implements
         target: REQ-AUTO-C17116F5350E97D6
+      - type: implements
+        target: REQ-pl-sale-tax-cost-includes-buy-fees
       - type: implements
         target: REQ-valuation-holding-three-values
   - id: SYM-valuation-account-terms-minimum
@@ -95097,6 +95088,8 @@ symbols:
         target: REQ-ledger-account-tax-wrapper
       - type: implements
         target: REQ-views-three-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
   - id: SYM-views-app-settings
     title: Settings
     sourceFile: internal/views/app/values.go
@@ -95140,6 +95133,8 @@ symbols:
         target: REQ-ui-number-format-setting
       - type: implements
         target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
   - id: SYM-views-app-views-cash-days
     title: Views.cashDays
     sourceFile: internal/views/app/values.go
@@ -95523,6 +95518,8 @@ symbols:
         target: REQ-views-oki-tax-days
       - type: implements
         target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
   - id: SYM-views-connectapi-read-service-list-yearly-taxes
     title: readService.ListYearlyTaxes
     sourceFile: internal/views/connectapi/values.go
@@ -95568,6 +95565,8 @@ symbols:
         target: REQ-views-oki-tax-days
       - type: implements
         target: REQ-views-settings
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
   - id: SYM-views-connectapi-clamp-int32
     title: clampInt32
     sourceFile: internal/views/connectapi/values.go
@@ -112290,7 +112289,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-totals
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
       - type: implements
         target: REQ-pl-totals-per-wrapper
   - id: SYM-pl-oki-classes
@@ -112305,7 +112304,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-exemption-class
+        target: REQ-pl-oki-cash-class-by-form
   - id: SYM-pl-oki-exemptions
     title: OKIExemptions
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112318,35 +112317,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
-  - id: SYM-pl-oki-rate
-    title: OKIRate
-    sourceFile: internal/jurisdiction/pl/oki.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:01:04.309Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-oki
-      - type: implements
-        target: REQ-pl-oki-tax-computation
-      - type: implements
-        target: REQ-pl-oki-tax-rate
-  - id: SYM-pl-index-oki-exemption
-    title: IndexOKIExemption
-    sourceFile: internal/jurisdiction/pl/oki.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:01:10.805Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-oki
-      - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-oki-act-rate
     title: OKIAct.rate
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112359,9 +112330,11 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-rate-from-announcements
       - type: implements
         target: REQ-pl-oki-tax-rate
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-oki-act-exemptions
     title: OKIAct.exemptions
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112374,7 +112347,9 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-exempt-amounts-from-announcements
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-pack-exemption-classes
     title: Pack.ExemptionClasses
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112387,7 +112362,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-exemption-class
+        target: REQ-pl-oki-cash-class-by-form
   - id: SYM-pl-pack-exemption-class
     title: Pack.ExemptionClass
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112400,37 +112375,11 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-exemption-class
+        target: REQ-pl-oki-cash-class-by-form
+      - type: implements
+        target: REQ-pl-oki-form-decides-cash-class
       - type: implements
         target: REQ-valuation-unclassifiable-instrument-counts-as-neither
-  - id: SYM-pl-oki-act-tax
-    title: OKIAct.tax
-    sourceFile: internal/jurisdiction/pl/oki.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:01:43.764Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-oki
-      - type: implements
-        target: REQ-pl-oki-tax-computation
-      - type: implements
-        target: REQ-pl-oki-tax-rate
-  - id: SYM-pl-pack-exempt
-    title: Pack.exempt
-    sourceFile: internal/jurisdiction/pl/oki.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:01:50.044Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-oki
-      - type: implements
-        target: REQ-pl-oki-tax-computation
   - id: SYM-pl-sum-averages
     title: sumAverages
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112443,7 +112392,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-account-averages
     title: accountAverages
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112456,7 +112405,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-day-added
     title: dayAdded
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112469,7 +112418,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-add-day
     title: addDay
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112482,7 +112431,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-averages
     title: averages
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112495,7 +112444,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-counted-payments
     title: countedPayments
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112508,7 +112457,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-class-sums
     title: classSums
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112521,7 +112470,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-class-value
     title: classValue
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112534,20 +112483,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
-  - id: SYM-pl-clamp
-    title: clamp
-    sourceFile: internal/jurisdiction/pl/oki.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:02:50.746Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-oki
-      - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-min-decimal
     title: minDecimal
     sourceFile: internal/jurisdiction/pl/oki.go
@@ -112560,7 +112496,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-pl-test-helper-span
     title: span
     sourceFile: internal/jurisdiction/pl/oki_test.go
@@ -112659,26 +112595,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-31T19:04:03.037Z
-    relationships:
-      - type: executable_for
-        target: TEST-pl-oki
-  - id: SYM-pl-test-oki-rate
-    title: TestOKIRate
-    sourceFile: internal/jurisdiction/pl/oki_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:04:09.974Z
-    relationships:
-      - type: executable_for
-        target: TEST-pl-oki
-  - id: SYM-pl-test-index-oki-exemption
-    title: TestIndexOKIExemption
-    sourceFile: internal/jurisdiction/pl/oki_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:04:16.615Z
     relationships:
       - type: executable_for
         target: TEST-pl-oki
@@ -112892,7 +112808,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-exemption-class
+        target: REQ-pl-oki-cash-class-by-form
   - id: SYM-jurisdiction-asset-kind
     title: AssetKind
     sourceFile: internal/jurisdiction/yearlytax.go
@@ -112905,7 +112821,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-exemption-class
+        target: REQ-pl-oki-cash-class-by-form
   - id: SYM-jurisdiction-asset
     title: Asset
     sourceFile: internal/jurisdiction/yearlytax.go
@@ -112918,7 +112834,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-exemption-class
+        target: REQ-pl-oki-cash-class-by-form
   - id: SYM-jurisdiction-class-value
     title: ClassValue
     sourceFile: internal/jurisdiction/yearlytax.go
@@ -112931,7 +112847,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-jurisdiction-tax-day
     title: TaxDay
     sourceFile: internal/jurisdiction/yearlytax.go
@@ -112944,7 +112860,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-jurisdiction-tax-account
     title: TaxAccount
     sourceFile: internal/jurisdiction/yearlytax.go
@@ -112957,7 +112873,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-oki
       - type: implements
-        target: REQ-pl-oki-tax-computation
+        target: REQ-pl-oki-yearly-tax-exact
   - id: SYM-jurisdiction-account-rows
     title: AccountRows
     sourceFile: internal/jurisdiction/yearlytax.go
@@ -113071,7 +112987,7 @@ symbols:
         target: TEST-ledger-sale
   - id: SYM-valuation-app-attention-raiser
     title: AttentionRaiser
-    sourceFile: internal/valuation/app/exemptionclass.go
+    sourceFile: internal/valuation/app/gaps.go
     status: active
     symbol_role: type-shape
     origin:
@@ -113079,12 +112995,12 @@ symbols:
       recorded_at: 2026-10-31T19:07:33.455Z
     relationships:
       - type: covered_by
-        target: TEST-valuation-app-exemption-class
+        target: TEST-valuation-app-series
       - type: implements
-        target: REQ-valuation-unclassified-attention
+        target: REQ-valuation-market-data-gap-attention-item
   - id: SYM-valuation-app-revaluer-with-attention
     title: Revaluer.WithAttention
-    sourceFile: internal/valuation/app/exemptionclass.go
+    sourceFile: internal/valuation/app/gaps.go
     status: active
     symbol_role: behavioral
     origin:
@@ -113092,39 +113008,9 @@ symbols:
       recorded_at: 2026-10-31T19:07:39.629Z
     relationships:
       - type: covered_by
-        target: TEST-valuation-app-exemption-class
+        target: TEST-valuation-app-series
       - type: implements
-        target: REQ-valuation-unclassified-attention
-  - id: SYM-valuation-app-revaluer-raise-unclassified
-    title: Revaluer.raiseUnclassified
-    sourceFile: internal/valuation/app/exemptionclass.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:07:45.654Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-app-exemption-class
-      - type: implements
-        target: REQ-valuation-unclassifiable-instrument-attention-item
-      - type: implements
-        target: REQ-valuation-unclassified-attention
-  - id: SYM-valuation-app-unclassified
-    title: Unclassified
-    sourceFile: internal/valuation/app/exemptionclass.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:07:51.904Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-app-exemption-class
-      - type: implements
-        target: REQ-valuation-unclassifiable-instrument-attention-item
-      - type: implements
-        target: REQ-valuation-unclassified-attention
+        target: REQ-valuation-market-data-gap-attention-item
   - id: SYM-valuation-app-input-recorder-record-exemption-class
     title: InputRecorder.RecordExemptionClass
     sourceFile: internal/valuation/app/exemptionclass.go
@@ -113174,16 +113060,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-31T19:08:14.690Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-app-exemption-class
-  - id: SYM-valuation-app-test-revalue-raises-unclassified
-    title: TestRevalueRaisesUnclassified
-    sourceFile: internal/valuation/app/exemptionclass_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:08:26.165Z
     relationships:
       - type: executable_for
         target: TEST-valuation-app-exemption-class
@@ -113290,7 +113166,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-realized
       - type: implements
-        target: REQ-valuation-realized-gains
+        target: REQ-valuation-realized-gains-buy-fees
   - id: SYM-valuation-account-terms-realized-gains
     title: AccountTerms.RealizedGains
     sourceFile: internal/valuation/realized.go
@@ -113303,7 +113179,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-realized
       - type: implements
-        target: REQ-valuation-realized-gains
+        target: REQ-valuation-realized-gains-buy-fees
   - id: SYM-valuation-account-terms-sale-gain
     title: AccountTerms.saleGain
     sourceFile: internal/valuation/realized.go
@@ -113316,7 +113192,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-realized
       - type: implements
-        target: REQ-valuation-realized-gains
+        target: REQ-valuation-realized-gains-buy-fees
   - id: SYM-valuation-realized-in-year
     title: RealizedInYear
     sourceFile: internal/valuation/realized.go
@@ -113329,7 +113205,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-realized
       - type: implements
-        target: REQ-valuation-realized-gains
+        target: REQ-valuation-realized-gains-buy-fees
   - id: SYM-valuation-test-realized-gains
     title: TestRealizedGains
     sourceFile: internal/valuation/realized_test.go
@@ -113377,6 +113253,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-app-values
+      - type: implements
+        target: REQ-pl-oki-account-held-from-first-transaction
       - type: implements
         target: REQ-views-oki-tax-days
   - id: SYM-views-app-views-tax-rates
@@ -113471,19 +113349,6 @@ symbols:
         target: TEST-views-taxes
       - type: implements
         target: REQ-views-totals-losses-offset
-  - id: SYM-views-payment
-    title: payment
-    sourceFile: internal/views/taxtotals.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:10:55.850Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-taxes
-      - type: implements
-        target: REQ-views-totals-losses-offset
   - id: SYM-views-paid-in
     title: PaidIn
     sourceFile: internal/views/taxtotals.go
@@ -113496,18 +113361,9 @@ symbols:
       - type: covered_by
         target: TEST-views-taxes
       - type: implements
-        target: REQ-views-totals-losses-offset
-  - id: SYM-views-payments
-    title: payments
-    sourceFile: internal/views/taxtotals.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:11:14.787Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-taxes
+        target: REQ-pl-ike-early-return-above-entered-payments
+      - type: implements
+        target: REQ-views-ike-paid-in-earlier-payments
       - type: implements
         target: REQ-views-totals-losses-offset
   - id: SYM-views-tax-totals
@@ -113862,6 +113718,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-pl-oki-form-decides-cash-class
       - type: implements
         target: REQ-views-oki-tax-days
   - id: SYM-views-tax-year-account-class-of
@@ -114505,7 +114363,7 @@ symbols:
         target: REQ-views-totals-losses-offset
   - id: SYM-core-revaluation-client
     title: revaluationClient
-    sourceFile: cmd/core/unclassified.go
+    sourceFile: cmd/core/valuationattention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -114513,26 +114371,9 @@ symbols:
       recorded_at: 2026-10-31T20:08:08.817Z
     relationships:
       - type: covered_by
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
       - type: implements
-        target: REQ-valuation-unclassifiable-instrument-attention-item
-      - type: implements
-        target: REQ-valuation-unclassified-attention
-  - id: SYM-valuation-app-revaluer-sync-unclassified
-    title: Revaluer.syncUnclassified
-    sourceFile: internal/valuation/app/exemptionclass.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T20:08:35.526Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-app-exemption-class
-      - type: implements
-        target: REQ-valuation-unclassifiable-instrument-attention-item
-      - type: implements
-        target: REQ-valuation-unclassified-attention
+        target: REQ-valuation-market-data-gap-attention-item
   - id: SYM-valuation-app-test-helper-fake-attention-raise
     title: fakeAttention.Raise
     sourceFile: internal/valuation/app/exemptionclass_test.go
@@ -115860,6 +115701,8 @@ symbols:
         target: TEST-attention-app-checks
       - type: implements
         target: REQ-attention-checks
+      - type: implements
+        target: REQ-attention-earlier-payments-missing
   - id: SYM-attention-app-liquidation-unknown
     title: liquidationUnknown
     sourceFile: internal/attention/app/checks.go
@@ -119700,7 +119543,7 @@ symbols:
         target: TEST-attention-connectapi
   - id: SYM-core-attention-items
     title: attentionItems
-    sourceFile: cmd/core/unclassified.go
+    sourceFile: cmd/core/valuationattention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -119708,12 +119551,12 @@ symbols:
       recorded_at: 2026-11-01T06:40:49.837Z
     relationships:
       - type: covered_by
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
       - type: implements
-        target: REQ-valuation-unclassified-attention
+        target: REQ-valuation-market-data-gap-attention-item
   - id: SYM-core-valuation-attention
     title: valuationAttention
-    sourceFile: cmd/core/unclassified.go
+    sourceFile: cmd/core/valuationattention.go
     status: active
     symbol_role: type-shape
     granularity_reason: module-level-behavior
@@ -119722,12 +119565,12 @@ symbols:
       recorded_at: 2026-11-01T06:40:57.484Z
     relationships:
       - type: covered_by
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
       - type: implements
-        target: REQ-valuation-unclassified-attention
+        target: REQ-valuation-market-data-gap-attention-item
   - id: SYM-core-valuation-attention-raise
     title: valuationAttention.Raise
-    sourceFile: cmd/core/unclassified.go
+    sourceFile: cmd/core/valuationattention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -119735,14 +119578,12 @@ symbols:
       recorded_at: 2026-11-01T06:41:07.078Z
     relationships:
       - type: covered_by
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
       - type: implements
-        target: REQ-valuation-unclassifiable-instrument-attention-item
-      - type: implements
-        target: REQ-valuation-unclassified-attention
+        target: REQ-valuation-market-data-gap-attention-item
   - id: SYM-core-valuation-attention-clear
     title: valuationAttention.Clear
-    sourceFile: cmd/core/unclassified.go
+    sourceFile: cmd/core/valuationattention.go
     status: active
     symbol_role: behavioral
     origin:
@@ -119750,32 +119591,32 @@ symbols:
       recorded_at: 2026-11-01T06:41:16.375Z
     relationships:
       - type: covered_by
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
       - type: implements
-        target: REQ-valuation-unclassified-attention
+        target: REQ-valuation-market-data-gap-attention-item
   - id: SYM-core-test-valuation-attention
     title: TestValuationAttention
-    sourceFile: cmd/core/unclassified_test.go
+    sourceFile: cmd/core/valuationattention_test.go
     status: active
     origin:
       kind: agent
       recorded_at: 2026-11-01T06:41:25.912Z
     relationships:
       - type: executable_for
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
   - id: SYM-core-test-helper-attention-call
     title: attentionCall
-    sourceFile: cmd/core/unclassified_test.go
+    sourceFile: cmd/core/valuationattention_test.go
     status: active
     origin:
       kind: agent
       recorded_at: 2026-11-01T06:41:35.086Z
     relationships:
       - type: executable_for
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
   - id: SYM-core-test-helper-fake-attention-items
     title: fakeAttentionItems
-    sourceFile: cmd/core/unclassified_test.go
+    sourceFile: cmd/core/valuationattention_test.go
     status: active
     origin:
       kind: agent
@@ -119783,27 +119624,27 @@ symbols:
     granularity_reason: module-level-behavior
     relationships:
       - type: executable_for
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
   - id: SYM-core-test-helper-fake-attention-items-raise
     title: fakeAttentionItems.Raise
-    sourceFile: cmd/core/unclassified_test.go
+    sourceFile: cmd/core/valuationattention_test.go
     status: active
     origin:
       kind: agent
       recorded_at: 2026-11-01T06:41:53.730Z
     relationships:
       - type: executable_for
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
   - id: SYM-core-test-helper-fake-attention-items-clear
     title: fakeAttentionItems.Clear
-    sourceFile: cmd/core/unclassified_test.go
+    sourceFile: cmd/core/valuationattention_test.go
     status: active
     origin:
       kind: agent
       recorded_at: 2026-11-01T06:42:03.214Z
     relationships:
       - type: executable_for
-        target: TEST-core-unclassified
+        target: TEST-core-valuation-attention
   - id: SYM-ui-test-attention-kind-of
     title: TestAttentionKindOf
     sourceFile: internal/views/ui/attention_test.go
@@ -121227,19 +121068,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-series
-  - id: SYM-valuation-app-revaluer-raise-items
-    title: Revaluer.raiseItems
-    sourceFile: internal/valuation/app/gaps.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T09:05:57.352Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-app-series
-      - type: implements
-        target: REQ-valuation-gap-item-per-account
   - id: SYM-valuation-app-input-cache-indexation
     title: inputCache.indexation
     sourceFile: internal/valuation/app/gaps.go
@@ -123879,3 +123707,1438 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-e2e-plugin-refusals
+  - id: SYM-attention-app-any-liquidation-unknown
+    title: anyLiquidationUnknown
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:32:17.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-earlier-payments-missing
+  - id: SYM-attention-app-earlier-payments-missing
+    title: earlierPaymentsMissing
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:32:26.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-earlier-payments-missing
+  - id: SYM-attention-app-wrap-load
+    title: wrapLoad
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:32:35.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-earlier-payments-missing
+  - id: SYM-attention-app-test-helper-fake-values-earlier-payments
+    title: fakeValues.EarlierPayments
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:32:44.390Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-holdings
+    title: Holdings
+    sourceFile: internal/attention/app/unclassified.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:32:53.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-unclassified
+      - type: implements
+        target: REQ-attention-unclassified-instrument-check
+      - type: implements
+        target: REQ-attention-unclassified-instrument-is-check
+  - id: SYM-attention-app-unclassified-instruments
+    title: UnclassifiedInstruments
+    sourceFile: internal/attention/app/unclassified.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:33:02.551Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-unclassified
+      - type: implements
+        target: REQ-attention-unclassified-instrument-check
+      - type: implements
+        target: REQ-attention-unclassified-instrument-is-check
+  - id: SYM-attention-app-unclassified-in
+    title: unclassifiedIn
+    sourceFile: internal/attention/app/unclassified.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:33:10.760Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-unclassified
+      - type: implements
+        target: REQ-attention-unclassified-instrument-check
+      - type: implements
+        target: REQ-attention-unclassified-instrument-is-check
+  - id: SYM-attention-app-test-helper-fake-holdings
+    title: fakeHoldings
+    sourceFile: internal/attention/app/unclassified_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:33:18.690Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-unclassified
+  - id: SYM-attention-app-test-helper-fake-holdings-valued-through
+    title: fakeHoldings.ValuedThrough
+    sourceFile: internal/attention/app/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:33:27.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-unclassified
+  - id: SYM-attention-app-test-helper-fake-holdings-valuations
+    title: fakeHoldings.Valuations
+    sourceFile: internal/attention/app/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:33:36.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-unclassified
+  - id: SYM-attention-app-test-helper-fake-holdings-exemption-classes
+    title: fakeHoldings.ExemptionClasses
+    sourceFile: internal/attention/app/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-01T20:33:44.337Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-unclassified
+  - id: SYM-attention-app-test-helper-held
+    title: held
+    sourceFile: internal/attention/app/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:18:23.238Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-unclassified
+  - id: SYM-attention-app-test-unclassified-instruments
+    title: TestUnclassifiedInstruments
+    sourceFile: internal/attention/app/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:18:31.103Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-unclassified
+  - id: SYM-attention-app-test-unclassified-resolves-itself
+    title: TestUnclassifiedResolvesItself
+    sourceFile: internal/attention/app/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:18:38.924Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-unclassified
+  - id: SYM-ingest-app-accounts-change-terms
+    title: Accounts.changeTerms
+    sourceFile: internal/ingest/app/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:18:47.036Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-forms
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-ingest-app-accounts-check-form
+    title: Accounts.checkForm
+    sourceFile: internal/ingest/app/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:18:56.195Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-forms
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-ingest-app-accounts-changed-form
+    title: Accounts.changedForm
+    sourceFile: internal/ingest/app/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:19:04.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-forms
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-ingest-app-accounts-check-earlier-payments
+    title: Accounts.checkEarlierPayments
+    sourceFile: internal/ingest/app/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:19:12.384Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-forms
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-ingest-app-accounts-record-tax-details
+    title: Accounts.recordTaxDetails
+    sourceFile: internal/ingest/app/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:19:19.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-account-forms
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-ingest-app-test-helper-pln-amount
+    title: plnAmount
+    sourceFile: internal/ingest/app/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:19:26.862Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-forms
+  - id: SYM-ingest-app-test-create-account-form-and-earlier-payments
+    title: TestCreateAccountFormAndEarlierPayments
+    sourceFile: internal/ingest/app/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:19:33.979Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-forms
+  - id: SYM-ingest-app-test-helper-check-tax-details
+    title: checkTaxDetails
+    sourceFile: internal/ingest/app/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:19:40.466Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-forms
+  - id: SYM-ingest-app-test-update-account-form
+    title: TestUpdateAccountForm
+    sourceFile: internal/ingest/app/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:19:47.323Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-account-forms
+  - id: SYM-ingest-app-test-helper-mem-terms-record-account-form
+    title: memTerms.RecordAccountForm
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:19:55.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-terms-account-form
+    title: memTerms.AccountForm
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:20:02.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-terms-record-earlier-payments
+    title: memTerms.RecordEarlierPayments
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:20:10.902Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-terms-earlier-payments
+    title: memTerms.EarlierPayments
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:20:18.630Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-connectapi-account-service-earlier-payments-from
+    title: accountService.earlierPaymentsFrom
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:20:26.330Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-ingest-connectapi-first
+    title: first
+    sourceFile: internal/ingest/connectapi/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:20:34.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-ingest-connectapi-test-helper-mem-terms-record-account-form
+    title: memTerms.RecordAccountForm
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:20:41.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-terms-account-form
+    title: memTerms.AccountForm
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:20:49.938Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-terms-record-earlier-payments
+    title: memTerms.RecordEarlierPayments
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:20:57.881Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-terms-earlier-payments
+    title: memTerms.EarlierPayments
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:21:05.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-pl-oki-forms
+    title: OKIForms
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:21:12.997Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-cash-class-by-form
+      - type: implements
+        target: REQ-pl-oki-form-decides-cash-class
+  - id: SYM-pl-oki-act-check
+    title: OKIAct.Check
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:21:20.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-exempt-amounts-never-fall
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-pack-account-forms
+    title: Pack.AccountForms
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:21:28.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-cash-class-by-form
+      - type: implements
+        target: REQ-pl-oki-form-decides-cash-class
+  - id: SYM-pl-cash-class
+    title: cashClass
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:21:35.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-cash-class-by-form
+      - type: implements
+        target: REQ-pl-oki-form-decides-cash-class
+  - id: SYM-pl-oki-act-yearly-tax
+    title: OKIAct.yearlyTax
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:21:42.666Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-base-and-tax-whole-zloty
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-averaged
+    title: averaged
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:21:50.811Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-estimate
+    title: estimate
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:21:59.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-current-year-estimate
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-tax-whole
+    title: taxWhole
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:22:07.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-base-and-tax-whole-zloty
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-exempt
+    title: exempt
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:22:15.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-base-and-tax-whole-zloty
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-class-ratios
+    title: classRatios
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:22:23.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-shown
+    title: shown
+    sourceFile: internal/jurisdiction/pl/oki.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:22:31.833Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio
+    title: ratio
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:22:38.361Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-zero-ratio
+    title: zeroRatio
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:22:45.911Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio-of
+    title: ratioOf
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:22:53.648Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio-normal
+    title: ratio.normal
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:23:00.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio-add
+    title: ratio.add
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:23:08.872Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio-sub
+    title: ratio.sub
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:23:16.297Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio-cmp
+    title: ratio.cmp
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:23:23.838Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio-sign
+    title: ratio.sign
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:23:31.171Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio-min
+    title: ratio.min
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:23:38.710Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio-clamp
+    title: ratio.clamp
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:23:46.547Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-ratio-round
+    title: ratio.round
+    sourceFile: internal/jurisdiction/pl/okiratio.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:23:54.678Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-average-value-exact
+      - type: implements
+        target: REQ-pl-oki-yearly-tax-exact
+  - id: SYM-pl-pack-taxes-above-paid-in
+    title: Pack.TaxesAbovePaidIn
+    sourceFile: internal/jurisdiction/pl/totals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:24:02.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-account-forms
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+  - id: SYM-jurisdiction-account-form
+    title: AccountForm
+    sourceFile: internal/jurisdiction/yearlytax.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:24:09.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-oki
+      - type: implements
+        target: REQ-pl-oki-cash-class-by-form
+  - id: SYM-ledger-split-lot
+    title: splitLot
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:24:17.369Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-lot-buy-fees
+  - id: SYM-ledger-units-share
+    title: unitsShare
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:24:25.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-lot-buy-fees
+  - id: SYM-ledger-buy-fees
+    title: buyFees
+    sourceFile: internal/ledger/lot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:24:33.557Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-lot
+      - type: implements
+        target: REQ-ledger-lot-buy-fees
+  - id: SYM-ledger-test-consume-fifo-fee-split-adds-up
+    title: TestConsumeFIFOFeeSplitAddsUp
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:24:40.774Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-ledger-test-helper-fee-lot
+    title: feeLot
+    sourceFile: internal/ledger/lot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:24:47.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-lot
+  - id: SYM-valuation-app-input-recorder-record-account-form
+    title: InputRecorder.RecordAccountForm
+    sourceFile: internal/valuation/app/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:24:54.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-account-forms
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-valuation-app-input-recorder-record-earlier-payments
+    title: InputRecorder.RecordEarlierPayments
+    sourceFile: internal/valuation/app/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:25:01.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-account-forms
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-valuation-app-test-record-account-terms
+    title: TestRecordAccountTerms
+    sourceFile: internal/valuation/app/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:25:09.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-account-forms
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-account-form
+    title: fakeRecorder.SaveAccountForm
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:25:17.676Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-app-test-helper-fake-recorder-save-earlier-payments
+    title: fakeRecorder.SaveEarlierPayments
+    sourceFile: internal/valuation/app/terms_fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:25:25.238Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-plan
+  - id: SYM-valuation-postgres-store-account-form
+    title: Store.AccountForm
+    sourceFile: internal/valuation/postgres/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:25:31.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-account-forms
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-valuation-postgres-store-save-account-form
+    title: Store.SaveAccountForm
+    sourceFile: internal/valuation/postgres/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:25:38.923Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-account-forms
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-valuation-postgres-store-earlier-payments
+    title: Store.EarlierPayments
+    sourceFile: internal/valuation/postgres/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:25:45.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-account-forms
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-valuation-postgres-store-save-earlier-payments
+    title: Store.SaveEarlierPayments
+    sourceFile: internal/valuation/postgres/accountforms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:25:52.807Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-account-forms
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-valuation-postgres-test-account-forms-and-earlier-payments
+    title: TestAccountFormsAndEarlierPayments
+    sourceFile: internal/valuation/postgres/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:25:59.435Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-account-forms
+  - id: SYM-valuation-postgres-test-helper-form
+    title: form
+    sourceFile: internal/valuation/postgres/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:26:06.782Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-account-forms
+  - id: SYM-valuation-postgres-test-helper-paid
+    title: paid
+    sourceFile: internal/valuation/postgres/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:26:13.789Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-account-forms
+  - id: SYM-valuation-test-helper-fee-lot
+    title: feeLot
+    sourceFile: internal/valuation/revaluation_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:26:21.439Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-revaluation
+  - id: SYM-valuation-unclassified
+    title: Unclassified
+    sourceFile: internal/valuation/unclassified.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:26:27.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-unclassified
+      - type: implements
+        target: REQ-attention-unclassified-instrument-check
+  - id: SYM-valuation-test-unclassified
+    title: TestUnclassified
+    sourceFile: internal/valuation/unclassified_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:26:34.736Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-unclassified
+  - id: SYM-views-app-test-helper-fake-terms-account-form
+    title: fakeTerms.AccountForm
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:26:42.540Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-app-test-helper-fake-terms-earlier-payments
+    title: fakeTerms.EarlierPayments
+    sourceFile: internal/views/app/values_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:26:50.285Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-values
+  - id: SYM-views-connectapi-test-helper-fake-terms-account-form
+    title: fakeTerms.AccountForm
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:26:58.321Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-connectapi-test-helper-fake-terms-earlier-payments
+    title: fakeTerms.EarlierPayments
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:27:06.247Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-values
+  - id: SYM-views-go-live-of
+    title: goLiveOf
+    sourceFile: internal/views/taxtotals.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:27:14.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-taxes
+      - type: implements
+        target: REQ-pl-ike-early-return-above-entered-payments
+      - type: implements
+        target: REQ-views-ike-paid-in-earlier-payments
+  - id: SYM-views-test-helper-check-whole-history
+    title: checkWholeHistory
+    sourceFile: internal/views/taxtotals_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:27:21.450Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-taxes
+  - id: SYM-ui-test-oki-account-form
+    title: TestOKIAccountForm
+    sourceFile: internal/views/ui/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:27:28.603Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-account-forms
+  - id: SYM-ui-test-ike-earlier-payments
+    title: TestIKEEarlierPayments
+    sourceFile: internal/views/ui/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:27:35.670Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-account-forms
+  - id: SYM-ui-test-earlier-payments-item-page
+    title: TestEarlierPaymentsItemPage
+    sourceFile: internal/views/ui/accountforms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:27:42.473Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-account-forms
+  - id: SYM-ui-wrapper-terms
+    title: wrapperTerms
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:27:50.441Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-forms
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-ui-posted-amount
+    title: postedAmount
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:27:58.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-forms
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-ui-attention-item-kind
+    title: attentionItemKind
+    sourceFile: internal/views/ui/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:28:06.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-forms
+      - type: implements
+        target: REQ-attention-earlier-payments-missing
+  - id: SYM-ui-form-label
+    title: formLabel
+    sourceFile: internal/views/ui/values.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:28:14.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-forms
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-ingestv1-account-get-account-form
+    title: Account.GetAccountForm
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:28:22.992Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-ingestv1-account-get-earlier-payments
+    title: Account.GetEarlierPayments
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:28:31.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-ingestv1-create-account-request-get-account-form
+    title: CreateAccountRequest.GetAccountForm
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:28:39.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-ingestv1-create-account-request-get-earlier-payments
+    title: CreateAccountRequest.GetEarlierPayments
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:28:47.773Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-ingestv1-update-account-request-get-account-form
+    title: UpdateAccountRequest.GetAccountForm
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:28:56.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-account-form-checks
+      - type: implements
+        target: REQ-ingest-oki-account-form-set-at-creation
+  - id: SYM-ingestv1-update-account-request-get-earlier-payments
+    title: UpdateAccountRequest.GetEarlierPayments
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:29:03.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ingest-earlier-payments-checks
+      - type: implements
+        target: REQ-pl-ike-unknown-history-payments-entered
+  - id: SYM-viewsv1-account-get-account-form
+    title: Account.GetAccountForm
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:29:11.990Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-account-get-earlier-payments
+    title: Account.GetEarlierPayments
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:29:20.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-yearly-tax-get-estimate
+    title: YearlyTax.GetEstimate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:29:29.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-get-settings-response-get-wrapper-terms
+    title: GetSettingsResponse.GetWrapperTerms
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:29:38.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-wrapper-terms
+    title: WrapperTerms
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:29:46.526Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-wrapper-terms-reset
+    title: WrapperTerms.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:29:55.157Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-wrapper-terms-string
+    title: WrapperTerms.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:30:03.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-wrapper-terms-proto-message
+    title: WrapperTerms.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:30:12.066Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-wrapper-terms-proto-reflect
+    title: WrapperTerms.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:30:20.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-wrapper-terms-descriptor
+    title: WrapperTerms.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:30:28.683Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-wrapper-terms-get-tax-wrapper
+    title: WrapperTerms.GetTaxWrapper
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:30:37.297Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-wrapper-terms-get-account-forms
+    title: WrapperTerms.GetAccountForms
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:30:45.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-viewsv1-wrapper-terms-get-earlier-payments
+    title: WrapperTerms.GetEarlierPayments
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:30:53.805Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-values
+      - type: implements
+        target: REQ-views-yearly-tax-estimate-and-terms
+  - id: SYM-demo-bonds-earlier-payments
+    title: BondsEarlierPayments
+    sourceFile: internal/demo/bondsaccount.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:51:38.410Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-earlier-payments
+      - type: implements
+        target: REQ-demo-ike-earlier-payments
+  - id: SYM-demo-test-bonds-earlier-payments
+    title: TestBondsEarlierPayments
+    sourceFile: internal/demo/earlierpayments_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:51:45.236Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-earlier-payments
+  - id: SYM-ingest-connectapi-test-account-service-form-and-earlier-payments
+    title: TestAccountServiceFormAndEarlierPayments
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T04:51:51.939Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts

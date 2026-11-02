@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"slices"
 	"strings"
+	"unicode"
 
 	"connectrpc.com/connect"
 
@@ -32,10 +33,20 @@ type accountsData struct {
 	InstancesUnknown bool
 	Brokers          []*ingestv1.BrokerAccount
 	// Wrappers are the tax wrappers an account can have, the pack's
-	// default first (D-76).
+	// default first (D-76), and Terms what each asks of an account: its
+	// forms (D-147) and whether it takes earlier payments (D-149), in the
+	// reporting currency Currency.
 	Wrappers []string
+	Terms    wrapperTerms
 	Next     string
 	Error    string
+}
+
+// wrapperTerms is what the tax wrappers ask of an account beyond their key
+// (GetSettings' wrapper_terms), with the currency earlier payments are in.
+type wrapperTerms struct {
+	Terms    []*viewsv1.WrapperTerms
+	Currency string
 }
 
 // accountEntry is one account with the connector instances bound to it.
@@ -78,6 +89,7 @@ func (s *server) loadAccounts(r *http.Request, sess session, next string) (*acco
 	data := &accountsData{
 		Owner: sess.Owner(), Sleeves: sleeves.Msg.GetSleeves(), Brokers: brokers, Next: next,
 		Wrappers: sess.Settings.GetTaxWrappers(),
+		Terms:    wrapperTerms{Terms: sess.Settings.GetWrapperTerms(), Currency: sess.Settings.GetReportingCurrency()},
 	}
 	for _, a := range accounts.Msg.GetAccounts() {
 		e := accountEntry{Account: a}
@@ -172,9 +184,10 @@ func brokerChoice(v string) brokerPick {
 }
 
 // createAccount hands a new account to the core (CreateAccount): its name,
-// institution, sleeve, tax wrapper (D-76), sale fee rule (D-78), and the connector instance that feeds it, or a
-// broker account that instance reported, picked from a list so the owner
-// never types an account number (D-72).
+// institution, sleeve, tax wrapper (D-76), its form for an OKI account
+// (D-147), sale fee rule (D-78), and the connector instance that feeds it,
+// or a broker account that instance reported, picked from a list so the
+// owner never types an account number (D-72).
 func (s *server) createAccount(w http.ResponseWriter, r *http.Request, sess session) {
 	instance := r.PostFormValue("instance")
 	broker := ""
@@ -186,18 +199,20 @@ func (s *server) createAccount(w http.ResponseWriter, r *http.Request, sess sess
 		Origin: sess.Origin, SessionToken: sess.Token, Name: strings.TrimSpace(r.PostFormValue("name")),
 		Institution: strings.TrimSpace(r.PostFormValue("institution")), Sleeve: r.PostFormValue("sleeve"),
 		ConnectorInstance: instance, BrokerAccount: broker,
-		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r),
+		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r), AccountForm: r.PostFormValue("account_form"),
 	}))
 	s.accountEntryDone(w, r, sess, "CreateAccount", err)
 }
 
 // updateAccount hands an account's new name, sleeve, tax wrapper, sale
-// fee rule or payout setting (D-135) to the core (UpdateAccount).
+// fee rule, payout setting (D-135), form when it has none yet (D-147) or
+// earlier payments (D-149) to the core (UpdateAccount).
 func (s *server) updateAccount(w http.ResponseWriter, r *http.Request, sess session) {
 	_, err := s.accounts.UpdateAccount(r.Context(), connect.NewRequest(&ingestv1.UpdateAccountRequest{
 		Origin: sess.Origin, SessionToken: sess.Token, AccountId: r.PathValue("id"),
 		Name: strings.TrimSpace(r.PostFormValue("name")), Sleeve: r.PostFormValue("sleeve"),
 		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r), BondPayout: postedPayout(r),
+		AccountForm: r.PostFormValue("account_form"), EarlierPayments: postedAmount(r.PostFormValue("earlier_payments")),
 	}))
 	s.accountEntryDone(w, r, sess, "UpdateAccount", err)
 }
@@ -309,6 +324,14 @@ func postedFeeRule(r *http.Request) *ingestv1.FeeRule {
 	return rule
 }
 
+// postedAmount reads an amount the owner typed, such as "30 000,00": its
+// spaces dropped and a decimal comma read as a point. Text that isn't a
+// decimal goes to the core as typed, which refuses it with its reason.
+func postedAmount(typed string) string {
+	typed = strings.Join(strings.FieldsFunc(typed, unicode.IsSpace), "")
+	return strings.ReplaceAll(typed, ",", ".")
+}
+
 // postedPayout reads an account form's payout setting (D-135): "cash" or
 // "paid-out"; anything else, such as a form without the field, keeps the
 // account's.
@@ -338,16 +361,36 @@ type termsForm struct {
 	// payout setting (D-135); PaidOut says its payouts are paid out.
 	Bond    bool
 	PaidOut bool
+	// Forms are the forms to pick from while the account has none, such as
+	// OKI's (D-147); Form is the account's, set once.
+	Forms []string
+	Form  string
+	// EarlierPayments says the account's wrapper takes earlier payments
+	// (D-149); Paid is what the owner entered, in PaidCurrency.
+	EarlierPayments bool
+	Paid            string
+	PaidCurrency    string
 }
 
 // termsFields returns the tax wrapper and fee rule fields with IDs under
 // prefix over wrappers, filled with acc's terms; nil acc is a new account.
-func termsFields(prefix string, wrappers []string, acc *viewsv1.Account) termsForm {
+// The form fields come from terms: a choice of form while acc has none
+// (D-147), and its earlier payments when its wrapper takes them (D-149).
+func termsFields(prefix string, wrappers []string, acc *viewsv1.Account, terms wrapperTerms) termsForm {
 	rule := acc.GetFeeRule()
 	f := termsForm{
 		Prefix: prefix, Wrappers: wrappers, Wrapper: acc.GetTaxWrapper(),
 		Rate: toPercent(rule.GetRate()), Conversion: toPercent(rule.GetConversionRate()),
 		Bond: acc.GetInstitution() == bondInstitution, PaidOut: acc.GetBondPayout() == viewsv1.BondPayout_BOND_PAYOUT_PAID_OUT,
+		Form: acc.GetAccountForm(), PaidCurrency: terms.Currency,
+	}
+	for _, t := range terms.Terms {
+		if f.Form == "" {
+			f.Forms = append(f.Forms, t.GetAccountForms()...)
+		}
+		if acc != nil && t.GetTaxWrapper() == acc.GetTaxWrapper() && t.GetEarlierPayments() {
+			f.EarlierPayments, f.Paid = true, acc.GetEarlierPayments().GetAmount()
+		}
 	}
 	if !isZero(rule.GetMinimum().GetAmount()) {
 		f.Minimum, f.Currency = rule.GetMinimum().GetAmount(), rule.GetMinimum().GetCurrency()

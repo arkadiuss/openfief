@@ -12,14 +12,20 @@ import (
 	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
-// raiseItems raises and clears the attention items a revaluation of
-// account finds among rows: instruments to classify (raiseUnclassified)
-// and gaps in market data (raiseGaps).
-func (r *Revaluer) raiseItems(ctx context.Context, in *inputCache, account ledger.AccountID, rows []valuation.HoldingValuation, today kernel.Date) error {
-	if err := r.raiseUnclassified(ctx, account, rows); err != nil {
-		return err
-	}
-	return r.raiseGaps(ctx, in, account, rows, today)
+// AttentionRaiser raises and clears attention items for the owner (D-130),
+// the shape of the attention store's port, such as a gap in a series'
+// market data (raiseGaps). Both are idempotent: raising an item that is
+// open, or clearing one that isn't, changes nothing.
+type AttentionRaiser interface {
+	Raise(ctx context.Context, kind, subject, detail string) error
+	Clear(ctx context.Context, kind, subject string) error
+}
+
+// WithAttention makes r raise and clear the attention items its
+// revaluations find through a, and returns r.
+func (r *Revaluer) WithAttention(a AttentionRaiser) *Revaluer {
+	r.attention = a
+	return r
 }
 
 // raiseGaps raises an attention item for each series a holding of account

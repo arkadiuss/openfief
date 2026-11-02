@@ -552,13 +552,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66c6586d70c2
-  - type: implements
-    from: SYM-jurisdiction-exemption-class
-    to: REQ-pl-oki-exemption-class
-    created_at: 2026-10-31T19:06:07.325Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c7a355a3f7a1
   - type: covered_by
     from: SYM-jurisdiction-exemption-class
     to: TEST-pl-oki
@@ -622,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16a9eabb46d1
+  - type: implements
+    from: SYM-jurisdiction-exemption-class
+    to: REQ-pl-oki-cash-class-by-form
+    created_at: 2026-11-01T20:21:22.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-698bf5ff6e99

@@ -517,13 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e898dbc9a8ca
-  - type: implements
-    from: SYM-pl-counted-payments
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:02:32.951Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ddb383fc5fb0
   - type: covered_by
     from: SYM-pl-counted-payments
     to: TEST-pl-oki
@@ -531,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6709428a511
+  - type: implements
+    from: SYM-pl-counted-payments
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:23:20.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-273aa8ec0e55

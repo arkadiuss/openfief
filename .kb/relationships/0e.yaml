@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1864a39f340
+  - type: implements
+    from: SYM-attention-app-unclassified-instruments
+    to: REQ-attention-unclassified-instrument-is-check
+    created_at: 2026-11-01T20:33:05.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6fbd8ca2cfe
+  - type: implements
+    from: SYM-attention-app-unclassified-instruments
+    to: REQ-attention-unclassified-instrument-check
+    created_at: 2026-11-01T20:33:05.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f401972125a
+  - type: covered_by
+    from: SYM-attention-app-unclassified-instruments
+    to: TEST-attention-app-unclassified
+    created_at: 2026-11-01T20:33:05.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a68afc2fe01

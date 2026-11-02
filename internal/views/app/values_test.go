@@ -24,6 +24,18 @@ type fakeTerms struct {
 	settings jurisdiction.Settings
 	format   *jurisdiction.NumberFormat
 	classes  map[string]jurisdiction.ExemptionClass
+	forms    map[ledger.AccountID]jurisdiction.AccountForm
+	paid     map[ledger.AccountID]kernel.Money
+}
+
+func (f *fakeTerms) AccountForm(_ context.Context, account ledger.AccountID) (jurisdiction.AccountForm, bool, error) {
+	form, ok := f.forms[account]
+	return form, ok, nil
+}
+
+func (f *fakeTerms) EarlierPayments(_ context.Context, account ledger.AccountID) (kernel.Money, bool, error) {
+	paid, ok := f.paid[account]
+	return paid, ok, nil
 }
 
 func (f *fakeTerms) ExemptionClasses(context.Context) (map[string]jurisdiction.ExemptionClass, error) {
@@ -170,7 +182,8 @@ func TestAllocationOfAKind(t *testing.T) {
 // under the real act; under the act moved to 2026 at 1%, acc-2 in OKI,
 // opened on 2026-03-01 with 100 EUR and valued through 2026-03-02, holds
 // foreign cash, which no exemption covers, worth 430.00 PLN at the rate of
-// the day before each of its two days: 430.00 averaged and taxed, 4.30.
+// the day before each of its two days: 430.00 averaged and taxed, 4.30,
+// rounded to 4 złoty (D-144), an estimate through 2026-03-02 (D-146).
 // acc-1, in OKI too and holding a USD fund, has no USD rate before
 // 2026-03-02, so its tax can't be converted.
 func TestYearlyTaxes(t *testing.T) {
@@ -188,8 +201,8 @@ func TestYearlyTaxes(t *testing.T) {
 		t.Fatalf("YearlyTaxes = %+v, %v", got, err)
 	}
 	g := got[0]
-	summary := []any{g.Days, g.Through.String(), g.Average.String(), g.Taxed.String(), g.Tax.String(), len(g.Unclassified)}
-	if diff := cmp.Diff([]any{2, "2026-03-02", "430 PLN", "430 PLN", "4.3 PLN", 0}, summary); diff != "" {
+	summary := []any{g.Days, g.Through.String(), g.Estimate, g.Average.String(), g.Taxed.String(), g.Tax.String(), len(g.Unclassified)}
+	if diff := cmp.Diff([]any{2, "2026-03-02", true, "430 PLN", "430 PLN", "4 PLN", 0}, summary); diff != "" {
 		t.Errorf("YearlyTaxes under the act (-want +got):\n%s", diff)
 	}
 }

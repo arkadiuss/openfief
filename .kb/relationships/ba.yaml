@@ -637,20 +637,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-eae34808367d
   - type: implements
-    from: SYM-pl-index-oki-exemption
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:01:12.999Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-96cfafdc442a
-  - type: covered_by
-    from: SYM-pl-index-oki-exemption
-    to: TEST-pl-oki
-    created_at: 2026-10-31T19:01:13.050Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2589a0666dc4
-  - type: implements
     from: SYM-ledger-dispose-of
     to: REQ-ledger-sales
     created_at: 2026-10-31T19:07:14.057Z
@@ -762,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5af6b5fa1e15
+  - type: implements
+    from: SYM-ingestv1-account-get-earlier-payments
+    to: REQ-ingest-earlier-payments-checks
+    created_at: 2026-11-02T04:28:34.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84e5a24d3a26
+  - type: implements
+    from: SYM-ingestv1-account-get-earlier-payments
+    to: REQ-pl-ike-unknown-history-payments-entered
+    created_at: 2026-11-02T04:28:34.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b7a6dcf167f
+  - type: covered_by
+    from: SYM-ingestv1-account-get-earlier-payments
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-02T04:28:34.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a16cd5bc2a3

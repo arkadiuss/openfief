@@ -650,13 +650,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa4a771d2f19
-  - type: implements
-    from: SYM-pl-pack-exemption-classes
-    to: REQ-pl-oki-exemption-class
-    created_at: 2026-10-31T19:01:32.674Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1b75a0481f3c
   - type: covered_by
     from: SYM-pl-pack-exemption-classes
     to: TEST-pl-oki
@@ -664,3 +657,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-118c903797c2
+  - type: implements
+    from: SYM-pl-pack-exemption-classes
+    to: REQ-pl-oki-cash-class-by-form
+    created_at: 2026-11-01T20:25:19.176Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-014b0f7687aa
+  - type: implements
+    from: SYM-pl-pack-taxes-above-paid-in
+    to: REQ-ingest-earlier-payments-checks
+    created_at: 2026-11-02T04:24:04.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-beb3def015fd
+  - type: covered_by
+    from: SYM-pl-pack-taxes-above-paid-in
+    to: TEST-valuation-app-account-forms
+    created_at: 2026-11-02T04:24:04.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a078edd54511
+  - type: implements
+    from: SYM-valuation-postgres-store-save-account-form
+    to: REQ-ingest-account-form-checks
+    created_at: 2026-11-02T04:25:41.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c791816764e2
+  - type: implements
+    from: SYM-valuation-postgres-store-save-account-form
+    to: REQ-ingest-oki-account-form-set-at-creation
+    created_at: 2026-11-02T04:25:41.374Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a78912b3041e
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-account-form
+    to: TEST-valuation-postgres-account-forms
+    created_at: 2026-11-02T04:25:41.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22a482a8f3ed

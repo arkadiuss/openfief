@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-659ec11d3bee
+  - type: implements
+    from: SYM-ledger-units-share
+    to: REQ-ledger-lot-buy-fees
+    created_at: 2026-11-02T04:24:28.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2471f700d66c
+  - type: covered_by
+    from: SYM-ledger-units-share
+    to: TEST-ledger-lot
+    created_at: 2026-11-02T04:24:28.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2391ac2a183d

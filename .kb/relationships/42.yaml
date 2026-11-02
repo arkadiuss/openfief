@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8cedb6bf0656
+  - type: implements
+    from: SYM-attention-app-any-liquidation-unknown
+    to: REQ-attention-earlier-payments-missing
+    created_at: 2026-11-01T20:32:20.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f1ecec3dda5
+  - type: covered_by
+    from: SYM-attention-app-any-liquidation-unknown
+    to: TEST-attention-app-checks
+    created_at: 2026-11-01T20:32:20.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3b25cfa492d

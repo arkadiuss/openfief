@@ -99,8 +99,8 @@ func (v *Views) yearlyTax(ctx context.Context, w jurisdiction.Wrapper, year int)
 }
 
 // taxAccount returns one account's days in the year from first through to,
-// from its first transaction on, and the instruments it holds that no one
-// classified.
+// from its first transaction on (D-146), with its form (D-147), and the
+// instruments it holds that no one classified.
 func (v *Views) taxAccount(ctx context.Context, acc *ledger.Account, w jurisdiction.Wrapper, first, to kernel.Date, classes map[string]jurisdiction.ExemptionClass) (jurisdiction.TaxAccount, []string, error) {
 	txs, err := v.ledger.CurrentTransactions(ctx, acc.ID)
 	if err != nil {
@@ -124,8 +124,12 @@ func (v *Views) taxAccount(ctx context.Context, acc *ledger.Account, w jurisdict
 	if err != nil {
 		return jurisdiction.TaxAccount{}, nil, err
 	}
+	terms, err := v.AccountTerms(ctx, acc.ID)
+	if err != nil {
+		return jurisdiction.TaxAccount{}, nil, err
+	}
 	in := views.TaxYearAccount{
-		Account: acc.ID, Wrapper: w, From: from, To: to, Vals: vals, Cash: views.CashOnDays(txs, from, to),
+		Account: acc.ID, Wrapper: w, Form: terms.Form, From: from, To: to, Vals: vals, Cash: views.CashOnDays(txs, from, to),
 		Flows: views.ExternalFlows(txs), Rates: rates, Classes: classes,
 	}
 	a, missing, err := views.TaxDays(&in, v.pack)
@@ -226,7 +230,9 @@ func (v *Views) totals(ctx context.Context, accounts []ledger.Account, from, to 
 
 // taxedAccount returns account's rows with what its total's tax needs: its
 // wrapper, its sales' gains and, for a wrapper that taxes what is
-// withdrawn above what was paid in, its payments.
+// withdrawn above what was paid in (Pack.TaxesAbovePaidIn), its payments,
+// with the earlier payments the owner entered for an account whose earlier
+// history is unknown (D-149).
 func (v *Views) taxedAccount(ctx context.Context, account ledger.AccountID, to kernel.Date, stored []valuation.HoldingValuation, cash []views.DayCash) (views.TaxedAccount, error) {
 	terms, err := v.AccountTerms(ctx, account)
 	if err != nil {
@@ -250,7 +256,10 @@ func (v *Views) taxedAccount(ctx context.Context, account ledger.AccountID, to k
 		return views.TaxedAccount{}, fmt.Errorf("realized gains of %s: %w", account, err)
 	}
 	out := views.TaxedAccount{Wrapper: terms.Wrapper, Vals: stored, Cash: cash, Realized: gains, RealizedMissing: missing != 0}
-	paid, paidMissing, err := views.PaidIn(txs, rates, v.pack)
+	if !v.pack.TaxesAbovePaidIn(terms.Wrapper) {
+		return out, nil
+	}
+	paid, paidMissing, err := views.PaidIn(txs, rates, v.pack, terms.EarlierPayments)
 	if err != nil {
 		return views.TaxedAccount{}, fmt.Errorf("payments into %s: %w", account, err)
 	}

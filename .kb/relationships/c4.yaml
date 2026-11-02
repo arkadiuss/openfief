@@ -706,3 +706,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ba912b7c349
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-account-form
+    to: TEST-valuation-app-plan
+    created_at: 2026-11-02T04:25:20.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40650716eb25
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-terms-earlier-payments
+    to: TEST-views-connectapi-values
+    created_at: 2026-11-02T04:27:08.992Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cb796900b3c
+  - type: implements
+    from: SYM-viewsv1-wrapper-terms-reset
+    to: REQ-views-yearly-tax-estimate-and-terms
+    created_at: 2026-11-02T04:29:57.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7130be85fcb5
+  - type: covered_by
+    from: SYM-viewsv1-wrapper-terms-reset
+    to: TEST-views-connectapi-values
+    created_at: 2026-11-02T04:29:57.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a53e0c313e56

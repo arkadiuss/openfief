@@ -475,3 +475,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-990d13c00699
+  - type: implements
+    from: SYM-attention-app-missing-settings
+    to: REQ-attention-earlier-payments-missing
+    created_at: 2026-11-01T20:29:50.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57aa44b9a4a5
+  - type: implements
+    from: SYM-pl-ratio-min
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:23:41.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efcf2066205f
+  - type: implements
+    from: SYM-pl-ratio-min
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:23:41.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97f14321b654
+  - type: covered_by
+    from: SYM-pl-ratio-min
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:23:41.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5475e823a8d8

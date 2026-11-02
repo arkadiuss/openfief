@@ -587,3 +587,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b02a1990e268
+  - type: validates
+    from: TEST-ui-account-forms
+    to: REQ-ingest-oki-account-form-set-at-creation
+    created_at: 2026-11-01T20:10:27.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-499b9233616a
+  - type: validates
+    from: TEST-ui-account-forms
+    to: REQ-pl-ike-unknown-history-payments-entered
+    created_at: 2026-11-01T20:10:27.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cf8f583d5c3
+  - type: verified_by
+    from: SCEN-ledger-lot-buy-fees
+    to: TEST-ledger-lot
+    created_at: 2026-11-01T20:11:12.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e585720bc920
+  - type: verified_by
+    from: SCEN-ledger-lot-buy-fees
+    to: TEST-ledger-sale
+    created_at: 2026-11-01T20:11:12.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49d0017f8b2f

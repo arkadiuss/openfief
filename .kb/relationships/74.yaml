@@ -832,3 +832,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e31f355d4bfc
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-terms-account-form
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-02T04:20:52.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9d8ace1b28d

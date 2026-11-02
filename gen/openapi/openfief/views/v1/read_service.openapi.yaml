@@ -56,6 +56,20 @@ components:
           description: |-
             The day bond_payout took effect, YYYY-MM-DD; empty when it never
              changed.
+        accountForm:
+          type: string
+          title: account_form
+          description: |-
+            The account's form, set when it was created, such as an OKI account's
+             "brokerage-account" (D-147); empty for a wrapper without forms, or an
+             account created before its form was asked for.
+        earlierPayments:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: earlier_payments
+          description: |-
+            What was paid into the account before its history is known, as the
+             owner entered it (D-149); unset until entered.
       title: Account
       additionalProperties: false
       description: Account is one account at an institution. It belongs to one sleeve.
@@ -685,6 +699,15 @@ components:
             type: string
           title: tax_wrappers
           description: The tax wrappers an account can have, the default first.
+        wrapperTerms:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.WrapperTerms'
+          title: wrapper_terms
+          description: |-
+            What each wrapper asks of an account beyond its key, in the order of
+             tax_wrappers: the forms it can have (D-147) and whether it takes
+             earlier payments (D-149).
       title: GetSettingsResponse
       additionalProperties: false
     openfief.views.v1.GetValuationStatusRequest:
@@ -1853,6 +1876,32 @@ components:
         - VALUE_KIND_NET
         - VALUE_KIND_LIQUIDATION
       description: ValueKind is one of the three values of D-77.
+    openfief.views.v1.WrapperTerms:
+      type: object
+      properties:
+        taxWrapper:
+          type: string
+          title: tax_wrapper
+        accountForms:
+          type: array
+          items:
+            type: string
+          title: account_forms
+          description: |-
+            The forms an account in it can have, a key of the jurisdiction pack's
+             each, which the owner sets when creating the account, such as OKI's
+             "bank-account", "treasury-bond-account", "brokerage-account" and
+             "fund-register" (D-147); empty when it has none.
+        earlierPayments:
+          type: boolean
+          title: earlier_payments
+          description: |-
+            Whether it taxes an early return above what was paid in, so an account
+             in it whose earlier history is unknown takes the total of its earlier
+             payments in, IKE for Poland (D-149).
+      title: WrapperTerms
+      additionalProperties: false
+      description: WrapperTerms is what a tax wrapper asks of an account beyond its key.
     openfief.views.v1.YearlyTax:
       type: object
       properties:
@@ -1929,8 +1978,9 @@ components:
             - $ref: '#/components/schemas/openfief.views.v1.Money'
           title: taxed
           description: |-
-            The part of average left to tax; unset when the exempt amounts are not
-             known.
+            The part of average left to tax, the tax base, which the Polish pack
+             rounds to whole złoty as it does the tax (D-144); unset when the
+             exempt amounts are not known.
         unclassifiedInstruments:
           type: array
           items:
@@ -1939,6 +1989,12 @@ components:
           description: |-
             The ISINs counted in a class without being classified (D-132): the
              owner classifies them once.
+        estimate:
+          type: boolean
+          title: estimate
+          description: |-
+            Whether the tax is an estimate over the days so far (D-146): the year
+             is counted through a day before its last, such as the current year.
       title: YearlyTax
       additionalProperties: false
       description: |-

@@ -630,20 +630,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b78b336c7b98
   - type: implements
-    from: SYM-core-valuation-attention
-    to: REQ-valuation-unclassified-attention
-    created_at: 2026-11-01T06:40:59.553Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-243aab04f013
-  - type: covered_by
-    from: SYM-core-valuation-attention
-    to: TEST-core-unclassified
-    created_at: 2026-11-01T06:40:59.587Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3c02571198d2
-  - type: implements
     from: SYM-viewsv1-plugin-get-requested-market-data
     to: REQ-plugins-install-shows-market-data-list
     created_at: 2026-11-01T11:48:28.756Z
@@ -699,3 +685,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec84673d6bb8
+  - type: implements
+    from: SYM-core-valuation-attention
+    to: REQ-valuation-market-data-gap-attention-item
+    created_at: 2026-11-01T20:15:11.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f15cc194f598
+  - type: covered_by
+    from: SYM-core-valuation-attention
+    to: TEST-core-valuation-attention
+    created_at: 2026-11-01T20:15:11.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8544dede30a6
+  - type: executable_for
+    from: SYM-attention-app-test-unclassified-resolves-itself
+    to: TEST-attention-app-unclassified
+    created_at: 2026-11-02T04:18:41.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57121c585802
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-terms-account-form
+    to: TEST-views-app-values
+    created_at: 2026-11-02T04:26:45.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99d93d5728d5

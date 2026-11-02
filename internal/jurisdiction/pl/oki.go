@@ -15,6 +15,11 @@ import (
 // pack doesn't have or a day given twice.
 var ErrTaxDay = errors.New("invalid OKI tax day")
 
+// ErrOKIAct reports OKI act data the pack refuses: exempt amounts announced
+// for a year before the act announces any, not in PLN, or lower than the
+// year before's, since they never fall (D-145).
+var ErrOKIAct = errors.New("invalid OKI act data")
+
 // The exemption classes of OKI's yearly tax (D-127): the exemptions of art. 26
 // ust. 1 of the act on OKI (Dz.U. 2026 poz. 1098) count savings assets
 // (pkt 1) and investment assets (pkt 2) apart, and other assets get none.
@@ -33,9 +38,31 @@ const (
 	Other jurisdiction.ExemptionClass = "other"
 )
 
+// The forms of an OKI account the owner sets when creating it (D-147). The
+// form decides the class of its PLN cash (art. 26 ust. 1).
+const (
+	// FormBank is a bank account: its PLN cash is a savings asset.
+	FormBank jurisdiction.AccountForm = "bank-account"
+	// FormTreasuryBonds is a treasury savings bond account: the PLN cash
+	// on its cash account is a savings asset.
+	FormTreasuryBonds jurisdiction.AccountForm = "treasury-bond-account"
+	// FormBrokerage is a brokerage account: its PLN cash is an investment
+	// asset.
+	FormBrokerage jurisdiction.AccountForm = "brokerage-account"
+	// FormFundRegister is a fund register: the PLN cash on its cash
+	// account is an investment asset.
+	FormFundRegister jurisdiction.AccountForm = "fund-register"
+)
+
 // OKIClasses returns OKI's exemption classes, savings first.
 func OKIClasses() []jurisdiction.ExemptionClass {
 	return []jurisdiction.ExemptionClass{Savings, Investment, Other}
+}
+
+// OKIForms returns the forms of an OKI account (D-147), in the order the
+// act names them.
+func OKIForms() []jurisdiction.AccountForm {
+	return []jurisdiction.AccountForm{FormBank, FormTreasuryBonds, FormBrokerage, FormFundRegister}
 }
 
 // OKIExemptions are the exempt amounts of one tax year (art. 26 ust. 1 and
@@ -49,51 +76,48 @@ type OKIExemptions struct {
 }
 
 // OKIAct is what the act on OKI fixes for its yearly tax on asset value
-// (D-127), held as data: the day it is in force from, the rate and the
-// exempt amounts of each tax year, and the readings that set later years'.
-// The zero act is not in force: no tax is computed under it.
+// (D-127), held as data: the day it is in force from, and the rate and the
+// exempt amounts of each tax year. The rates from 2028 and the exempt
+// amounts from 2030 are the finance minister's announcements, added to this
+// data with each release: OpenFief never computes them (D-145). The zero
+// act is not in force: no tax is computed under it.
 type OKIAct struct {
 	InForceFrom kernel.Date
-	// Rates are the rates the act fixes or the minister announced, by tax
-	// year, as fractions: 0.85% for 2027 (art. 43) is 0.0085.
+	// Rates are the rates by tax year, as fractions: 2027's fixed by the
+	// act (art. 43), 0.85% is 0.0085, and each later year's as the
+	// minister announced it (art. 25 ust. 2). A year without one has no
+	// tax yet.
 	Rates map[int]kernel.Decimal
-	// ReferenceRates are the NBP reference rate's changes: a year with no
-	// rate in Rates takes OKIRate of the reference rate in force on
-	// 31 October of the year before (art. 25 ust. 1).
-	ReferenceRates []RateChange
-	// Exemptions are the exempt amounts of every year before IndexedFrom.
+	// Exemptions are the act's exempt amounts (art. 26 ust. 1 and 2), for
+	// every year before AnnouncedFrom.
 	Exemptions OKIExemptions
-	// IndexedFrom is the first tax year whose exempt amounts rise with CPI
-	// (art. 26 ust. 5, art. 44); CPI holds the index for each year from it:
-	// the price index of the first three quarters of the year before over
-	// the same quarters a year earlier, as a factor (103.5 is 1.035).
-	IndexedFrom int
-	CPI         map[int]kernel.Decimal
+	// AnnouncedFrom is the first tax year whose exempt amounts rise with
+	// CPI (art. 26 ust. 5, art. 44), which the minister announces;
+	// Announced holds each such year's as announced. A year from
+	// AnnouncedFrom without them has no exemptions yet.
+	AnnouncedFrom int
+	Announced     map[int]OKIExemptions
 }
 
 // The act's numbers: in force from 2027-01-01 (art. 46), 0.85% for 2027
-// (art. 43), exempt amounts in PLN (art. 26 ust. 1 and 2) rising with CPI
-// from the 2030 tax year (art. 44).
+// (art. 43), exempt amounts in PLN (art. 26 ust. 1 and 2), announced raised
+// with CPI from the 2030 tax year (art. 44).
 const (
-	okiInForceYear = 2027
-	okiFirstRate   = 85 // in ten-thousandths: 0.0085 is 0.85%
-	okiIndexedFrom = 2030
-	okiSavings     = 25000
-	okiInvestment  = 100000
-	// rateDay is the day of October whose reference rate sets the next
-	// year's rate (art. 25 ust. 1).
-	rateDay = 31
-	// hundredsExponent rounds exempt amounts to whole hundreds of złoty.
-	hundredsExponent = 2
+	okiInForceYear   = 2027
+	okiFirstRate     = 85 // in ten-thousandths: 0.0085 is 0.85%
+	okiAnnouncedFrom = 2030
+	okiSavings       = 25000
+	okiInvestment    = 100000
 )
 
 // CurrentOKIAct returns the act on OKI (ustawa z dnia 3 lipca 2026 r. o
-// osobistych kontach inwestycyjnych, Dz.U. 2026 poz. 1098) as this code
-// knows it: in force from 2027-01-01, 0.85% for 2027, 25,000 PLN of savings
-// assets and 100,000 PLN of investment assets exempt, at most 100,000 PLN
-// together, rising with CPI from 2030. No later rate, reference rate or CPI
-// index is known to it yet, so a later year's tax waits for them
-// (docs/implementation-questions.md).
+// osobistych kontach inwestycyjnych, Dz.U. 2026 poz. 1098) with the
+// minister's announcements as this release knows them: in force from
+// 2027-01-01, 0.85% for 2027, 25,000 PLN of savings assets and 100,000 PLN
+// of investment assets exempt, at most 100,000 PLN together, announced from
+// 2030. No rate for 2028 or later and no exempt amounts for 2030 or later
+// are announced yet, so such a year's tax waits for a release that adds
+// them (D-145).
 func CurrentOKIAct() OKIAct {
 	from, err := kernel.NewDate(okiInForceYear, time.January, 1)
 	if err != nil { // a constant valid date
@@ -107,79 +131,52 @@ func CurrentOKIAct() OKIAct {
 			Investment: kernel.NewMoney(kernel.NewDecimal(okiInvestment, 0), pln()),
 			Total:      kernel.NewMoney(kernel.NewDecimal(okiInvestment, 0), pln()),
 		},
-		IndexedFrom: okiIndexedFrom,
+		AnnouncedFrom: okiAnnouncedFrom,
 	}
 }
 
-// OKIRate returns the rate of a tax year from the NBP reference rate in
-// force on 31 October of the year before (art. 25 ust. 1): 19% of it, at
-// least 0.1%, rounded down to two decimal places of a percent. With a
-// reference rate of 5.75%, 19% is 1.0925%, so the rate is 1.09% (0.0109).
-func OKIRate(reference kernel.Decimal) (kernel.Decimal, error) {
-	const percentPlaces = 4 // two decimal places of a percent, as a fraction
-	r, err := reference.Mul(BelkaRate()).Round(percentPlaces, kernel.RoundDown)
-	if err != nil {
-		return kernel.Decimal{}, fmt.Errorf("OKI rate: %w", err)
+// Check returns an error wrapping ErrOKIAct unless a's announced exempt
+// amounts are for years from AnnouncedFrom, in PLN, and never lower than
+// those of the latest year before them, the act's own amounts first: the
+// exempt amounts never fall (D-145).
+func (a *OKIAct) Check() error {
+	years := make([]int, 0, len(a.Announced))
+	for y := range a.Announced {
+		years = append(years, y)
 	}
-	if floor := kernel.NewDecimal(1, -3); r.Cmp(floor) < 0 {
-		return floor, nil
+	slices.Sort(years)
+	prev := a.Exemptions
+	for _, y := range years {
+		e := a.Announced[y]
+		if y < a.AnnouncedFrom {
+			return fmt.Errorf("%w: exempt amounts announced for %d, before %d", ErrOKIAct, y, a.AnnouncedFrom)
+		}
+		if err := allPLN(e.Savings, e.Investment, e.Total); err != nil {
+			return fmt.Errorf("%w: %d: %w", ErrOKIAct, y, err)
+		}
+		if e.Savings.Amount().Cmp(prev.Savings.Amount()) < 0 || e.Investment.Amount().Cmp(prev.Investment.Amount()) < 0 ||
+			e.Total.Amount().Cmp(prev.Total.Amount()) < 0 {
+			return fmt.Errorf("%w: the exempt amounts of %d fall below the year before's", ErrOKIAct, y)
+		}
+		prev = e
 	}
-	return r, nil
-}
-
-// IndexOKIExemption returns an exempt amount raised by a CPI factor and
-// rounded down to whole hundreds of złoty (art. 26 ust. 5): 25,000 PLN
-// raised by 1.035 is 25,875, so 25,800 PLN.
-func IndexOKIExemption(amount kernel.Money, cpi kernel.Decimal) (kernel.Money, error) {
-	// Round takes no negative places with RoundDown: count in hundreds.
-	hundreds, err := amount.Amount().Mul(cpi).Mul(kernel.NewDecimal(1, -hundredsExponent)).Round(0, kernel.RoundDown)
-	if err != nil {
-		return kernel.Money{}, fmt.Errorf("OKI exemption: %w", err)
-	}
-	return kernel.NewMoney(hundreds.Mul(kernel.NewDecimal(1, hundredsExponent)), amount.Currency()), nil
+	return nil
 }
 
 // rate returns the rate of year, and false when it is not known.
-func (a *OKIAct) rate(year int) (kernel.Decimal, bool, error) {
-	if r, ok := a.Rates[year]; ok {
-		return r, true, nil
-	}
-	if year <= a.InForceFrom.Year() {
-		return kernel.Decimal{}, false, nil
-	}
-	day, err := kernel.NewDate(year-1, time.October, rateDay)
-	if err != nil {
-		return kernel.Decimal{}, false, fmt.Errorf("OKI rate of %d: %w", year, err)
-	}
-	ref, ok := RateInForce(a.ReferenceRates, day)
-	if !ok {
-		return kernel.Decimal{}, false, nil
-	}
-	r, err := OKIRate(ref)
-	return r, err == nil, err
+func (a *OKIAct) rate(year int) (kernel.Decimal, bool) {
+	r, ok := a.Rates[year]
+	return r, ok
 }
 
-// exemptions returns the exempt amounts of year, and false when a CPI
-// index it needs is not known.
-func (a *OKIAct) exemptions(year int) (OKIExemptions, bool, error) {
-	e := a.Exemptions
-	if a.IndexedFrom == 0 {
-		return e, true, nil
+// exemptions returns the exempt amounts of year, and false when the
+// minister's announcement for it is not known.
+func (a *OKIAct) exemptions(year int) (OKIExemptions, bool) {
+	if a.AnnouncedFrom == 0 || year < a.AnnouncedFrom {
+		return a.Exemptions, true
 	}
-	for y := a.IndexedFrom; y <= year; y++ {
-		cpi, ok := a.CPI[y]
-		if !ok {
-			return OKIExemptions{}, false, nil
-		}
-		s, err1 := IndexOKIExemption(e.Savings, cpi)
-		i, err2 := IndexOKIExemption(e.Investment, cpi)
-		t, err3 := IndexOKIExemption(e.Total, cpi)
-		if err := errors.Join(err1, err2, err3); err != nil {
-			return OKIExemptions{}, false, err
-		}
-		e = OKIExemptions{Savings: s, Investment: i, Total: t}
-	}
-	return e, true, nil
+	e, ok := a.Announced[year]
+	return e, ok
 }
 
 // ExemptionClasses returns OKIClasses for OKI and none for the other wrappers,
@@ -191,12 +188,22 @@ func (*Pack) ExemptionClasses(w jurisdiction.Wrapper) []jurisdiction.ExemptionCl
 	return OKIClasses()
 }
 
+// AccountForms returns OKIForms for OKI and none for the other wrappers,
+// whose rules don't tell forms apart.
+func (*Pack) AccountForms(w jurisdiction.Wrapper) []jurisdiction.AccountForm {
+	if w != jurisdiction.Wrapper(OKI.String()) {
+		return nil
+	}
+	return OKIForms()
+}
+
 // ExemptionClass returns the class of a in OKI (art. 26 ust. 1): a treasury
 // savings bond, the only holding valued at its accrued value, is a savings
-// asset; PLN cash is a savings asset on an account that held such bonds in
-// the year, the cash account of a bond account, and an investment asset on
-// any other, a brokerage account's; cash in another currency is Other. The
-// pack holds no data on what a holding priced at market is (a company's
+// asset; the account's form decides its PLN cash (D-147): a savings asset on
+// a bank account or a treasury bond account, an investment asset on a
+// brokerage account or a fund register, and Other on an account whose form
+// isn't set, so the estimate errs high; cash in another currency is Other.
+// The pack holds no data on what a holding priced at market is (a company's
 // share capital, a fund's investment policy), so it can't tell for any of
 // them: it counts as Other, so the estimate errs high, and ExemptionClass
 // reports false (D-132). In the other wrappers no class is needed: the
@@ -209,18 +216,25 @@ func (*Pack) ExemptionClass(w jurisdiction.Wrapper, a *jurisdiction.Asset) (juri
 	case jurisdiction.AssetAccrued:
 		return Savings, true
 	case jurisdiction.AssetCash:
-		switch {
-		case !a.Currency.Equal(pln()):
+		if !a.Currency.Equal(pln()) {
 			return Other, true
-		case a.AccountHoldsAccrued:
-			return Savings, true
-		default:
-			return Investment, true
 		}
+		return cashClass(a.Form), true
 	case jurisdiction.AssetListed:
 		return Other, false
 	}
 	return Other, false
+}
+
+// cashClass returns the class of PLN cash on an OKI account of form f.
+func cashClass(f jurisdiction.AccountForm) jurisdiction.ExemptionClass {
+	switch f {
+	case FormBank, FormTreasuryBonds:
+		return Savings
+	case FormBrokerage, FormFundRegister:
+		return Investment
+	}
+	return Other
 }
 
 // YearlyTax returns OKI's tax on asset value for year (D-127) under p.OKI,
@@ -233,15 +247,23 @@ func (*Pack) ExemptionClass(w jurisdiction.Wrapper, a *jurisdiction.Asset) (juri
 //     class (art. 26 ust. 3), each class's average is its own values' sum
 //     plus the payments in the proportion of that sum to the account's,
 //     over the same days; an account with no value all year puts its
-//     payments in Other. Each class's average is rounded half up to grosze.
+//     payments in Other. Every average is kept exact (D-144).
 //   - The base is the sum of the accounts' averages. Savings assets are
 //     exempt up to the year's savings amount, then investment assets up to
 //     their amount and to what is left of the total (art. 26 ust. 2); the
-//     rest is taxed at the year's rate, rounded half up to grosze.
+//     rest is the tax base, rounded to whole złoty, and the tax is the
+//     year's rate of it, rounded to whole złoty too, both under 50 groszy
+//     down and from 50 groszy up, as the tax ordinance rounds bases and
+//     taxes (art. 63 § 1, D-144).
 //
-// A year the act isn't in force in gets no tax and InForce false; a year
-// whose exempt amounts or rate are not known yet gets the averages only.
-// Any wrapper but OKI is an error wrapping jurisdiction.ErrNoYearlyTax.
+// The averages and exempt parts it reports are the exact ones shown to the
+// grosz, rounded half up; Taxed is the whole-złoty base. A year counted
+// through a day before its last, such as the current year, is an estimate
+// over the days so far (Estimate, D-146). A year the act isn't in force in
+// gets no tax and InForce false; a year whose exempt amounts or rate the
+// minister hasn't announced yet gets the averages only (D-145). Act data
+// that breaks OKIAct.Check is an error wrapping ErrOKIAct, and any wrapper
+// but OKI an error wrapping jurisdiction.ErrNoYearlyTax.
 func (p *Pack) YearlyTax(w jurisdiction.Wrapper, year int, accounts []jurisdiction.TaxAccount) (jurisdiction.YearlyTax, error) {
 	if w != jurisdiction.Wrapper(OKI.String()) {
 		return jurisdiction.YearlyTax{}, fmt.Errorf("%w: %q", jurisdiction.ErrNoYearlyTax, w)
@@ -251,80 +273,141 @@ func (p *Pack) YearlyTax(w jurisdiction.Wrapper, year int, accounts []jurisdicti
 	if act.InForceFrom.IsZero() || act.InForceFrom.Year() > year {
 		return out, nil
 	}
-	out.InForce = true
-	sums, err := sumAverages(year, act.InForceFrom, accounts, &out)
-	if err != nil {
+	if err := act.Check(); err != nil {
 		return jurisdiction.YearlyTax{}, err
 	}
-	total := kernel.Decimal{}
-	for _, c := range OKIClasses() {
-		out.Averages = append(out.Averages, classValue(c, sums[c]))
-		total = total.Add(sums[c])
-	}
-	out.Average = kernel.NewMoney(total, pln())
-	if exemptErr := p.exempt(year, sums, total, &out); exemptErr != nil || !out.ExemptionsKnown {
-		return out, exemptErr
-	}
-	if taxErr := act.tax(year, &out); taxErr != nil {
-		return jurisdiction.YearlyTax{}, taxErr
+	out.InForce = true
+	if err := act.yearlyTax(year, accounts, &out); err != nil {
+		return jurisdiction.YearlyTax{}, err
 	}
 	return out, nil
 }
 
-// tax sets out's rate and tax on its taxed part when year's rate is known.
-func (a *OKIAct) tax(year int, out *jurisdiction.YearlyTax) error {
-	r, known, err := a.rate(year)
-	if err != nil || !known {
-		return err
-	}
-	tax, err := taxAt(out.Taxed.Amount(), r)
+// yearlyTax sets out's days, averages, exempt parts, base, rate and tax for
+// year under a, as far as a knows the year's exempt amounts and rate.
+func (a *OKIAct) yearlyTax(year int, accounts []jurisdiction.TaxAccount, out *jurisdiction.YearlyTax) error {
+	sums, err := sumAverages(year, a.InForceFrom, accounts, out)
 	if err != nil {
 		return err
 	}
-	out.Rate, out.RateKnown, out.Tax = r, true, kernel.NewMoney(tax, pln())
-	return nil
-}
-
-// exempt sets out's exempt part of each class's average and the part of
-// total left to tax, under year's exempt amounts when they are known.
-func (p *Pack) exempt(year int, sums map[jurisdiction.ExemptionClass]kernel.Decimal, total kernel.Decimal, out *jurisdiction.YearlyTax) error {
-	e, known, err := p.OKI.exemptions(year)
-	if err != nil || !known {
+	if out.Estimate, err = estimate(year, out); err != nil {
 		return err
 	}
-	savings := clamp(sums[Savings], e.Savings.Amount())
-	investment := clamp(sums[Investment], minDecimal(e.Investment.Amount(), e.Total.Amount().Sub(savings)))
-	taxed := total.Sub(savings).Sub(investment)
-	if taxed.Sign() < 0 {
-		taxed = kernel.Decimal{}
+	total, err := averaged(sums, out)
+	if err != nil {
+		return err
 	}
-	out.ExemptionsKnown = true
-	out.Exempt = []jurisdiction.ClassValue{
-		classValue(Savings, savings), classValue(Investment, investment), classValue(Other, kernel.Decimal{}),
+	e, known := a.exemptions(year)
+	if !known {
+		return nil
 	}
-	out.Taxed = kernel.NewMoney(taxed, pln())
+	base, err := exempt(&e, sums, total, out)
+	if err != nil {
+		return err
+	}
+	if r, rateKnown := a.rate(year); rateKnown {
+		return taxWhole(base, r, out)
+	}
 	return nil
 }
 
-// sumAverages returns the sum over accounts of each one's average value
-// per class.
-func sumAverages(year int, from kernel.Date, accounts []jurisdiction.TaxAccount, out *jurisdiction.YearlyTax) (map[jurisdiction.ExemptionClass]kernel.Decimal, error) {
-	sums := classSums()
+// averaged sets out's averages per class and their sum from sums, shown to
+// the grosz, and returns the exact sum.
+func averaged(sums map[jurisdiction.ExemptionClass]ratio, out *jurisdiction.YearlyTax) (ratio, error) {
+	total := zeroRatio()
+	for _, c := range OKIClasses() {
+		cv, err := classValue(c, sums[c])
+		if err != nil {
+			return ratio{}, err
+		}
+		out.Averages = append(out.Averages, cv)
+		total = total.add(sums[c])
+	}
+	avg, err := shown(total)
+	if err != nil {
+		return ratio{}, err
+	}
+	out.Average = avg
+	return total, nil
+}
+
+// estimate reports whether out, counted through out.Through, ends before
+// year's last day: the tax of a year counted over its days so far (D-146).
+func estimate(year int, out *jurisdiction.YearlyTax) (bool, error) {
+	if out.Days == 0 {
+		return false, nil
+	}
+	last, err := kernel.NewDate(year, time.December, lastDayOfDecember)
+	if err != nil {
+		return false, fmt.Errorf("the last day of %d: %w", year, err)
+	}
+	return out.Through.Before(last), nil
+}
+
+// lastDayOfDecember is the day of the year's last day.
+const lastDayOfDecember = 31
+
+// taxWhole sets out's rate and tax: rate of base, both whole złoty,
+// rounded under 50 groszy down and from 50 up (D-144).
+func taxWhole(base, rate kernel.Decimal, out *jurisdiction.YearlyTax) error {
+	tax := kernel.Decimal{}
+	if base.Sign() > 0 {
+		var err error
+		if tax, err = base.Mul(rate).Round(0, kernel.RoundHalfUp); err != nil {
+			return fmt.Errorf("OKI tax: %w", err)
+		}
+	}
+	out.Rate, out.RateKnown, out.Tax = rate, true, kernel.NewMoney(tax, pln())
+	return nil
+}
+
+// exempt sets out's exempt part of each class's average and its tax base,
+// the part of total left to tax rounded to whole złoty (D-144), under the
+// year's exempt amounts e, and returns the base.
+func exempt(e *OKIExemptions, sums map[jurisdiction.ExemptionClass]ratio, total ratio, out *jurisdiction.YearlyTax) (kernel.Decimal, error) {
+	savings := sums[Savings].clamp(ratioOf(e.Savings.Amount()))
+	investmentLimit := ratioOf(e.Investment.Amount()).min(ratioOf(e.Total.Amount()).sub(savings))
+	investment := sums[Investment].clamp(investmentLimit)
+	taxed := total.sub(savings).sub(investment)
+	if taxed.sign() < 0 {
+		taxed = zeroRatio()
+	}
+	base, err := taxed.round(0, kernel.RoundHalfUp)
+	if err != nil {
+		return kernel.Decimal{}, fmt.Errorf("OKI tax base: %w", err)
+	}
+	s, err1 := classValue(Savings, savings)
+	i, err2 := classValue(Investment, investment)
+	o, err3 := classValue(Other, zeroRatio())
+	if err := errors.Join(err1, err2, err3); err != nil {
+		return kernel.Decimal{}, err
+	}
+	out.ExemptionsKnown = true
+	out.Exempt = []jurisdiction.ClassValue{s, i, o}
+	out.Taxed = kernel.NewMoney(base, pln())
+	return base, nil
+}
+
+// sumAverages returns the sum over accounts of each one's exact average
+// value per class.
+func sumAverages(year int, from kernel.Date, accounts []jurisdiction.TaxAccount, out *jurisdiction.YearlyTax) (map[jurisdiction.ExemptionClass]ratio, error) {
+	sums := classRatios()
 	for i := range accounts {
 		avg, err := accountAverages(year, from, &accounts[i], out)
 		if err != nil {
 			return nil, err
 		}
 		for c, v := range avg {
-			sums[c] = sums[c].Add(v)
+			sums[c] = sums[c].add(v)
 		}
 	}
 	return sums, nil
 }
 
-// accountAverages returns one account's average value per class over its
-// days in year on or after from, and counts its days and last day in out.
-func accountAverages(year int, from kernel.Date, a *jurisdiction.TaxAccount, out *jurisdiction.YearlyTax) (map[jurisdiction.ExemptionClass]kernel.Decimal, error) {
+// accountAverages returns one account's exact average value per class over
+// its days in year on or after from, and counts its days and last day in
+// out.
+func accountAverages(year int, from kernel.Date, a *jurisdiction.TaxAccount, out *jurisdiction.YearlyTax) (map[jurisdiction.ExemptionClass]ratio, error) {
 	sums := classSums()
 	total, paid, days := kernel.Decimal{}, kernel.Decimal{}, 0
 	seen := map[kernel.Date]bool{}
@@ -348,9 +431,9 @@ func accountAverages(year int, from kernel.Date, a *jurisdiction.TaxAccount, out
 	}
 	out.Days = max(out.Days, days)
 	if days == 0 {
-		return sums, nil
+		return classRatios(), nil
 	}
-	return averages(sums, total, paid, days)
+	return averages(sums, total, paid, days), nil
 }
 
 // dayAdded is what one day adds to an account's average: its counted
@@ -380,11 +463,11 @@ func addDay(sums map[jurisdiction.ExemptionClass]kernel.Decimal, d *jurisdiction
 }
 
 // averages divides each class's sum, plus its share of the payments, by
-// days: the payments go to the classes in proportion to their sums, or all
-// to Other when the sums add up to zero.
-func averages(sums map[jurisdiction.ExemptionClass]kernel.Decimal, total, paid kernel.Decimal, days int) (map[jurisdiction.ExemptionClass]kernel.Decimal, error) {
+// days, exactly: the payments go to the classes in proportion to their
+// sums, or all to Other when the sums add up to zero.
+func averages(sums map[jurisdiction.ExemptionClass]kernel.Decimal, total, paid kernel.Decimal, days int) map[jurisdiction.ExemptionClass]ratio {
 	n := kernel.NewDecimal(int64(days), 0)
-	out := classSums()
+	out := classRatios()
 	for c, s := range sums {
 		num, den := s.Mul(total.Add(paid)), total.Mul(n)
 		if total.IsZero() {
@@ -393,13 +476,9 @@ func averages(sums map[jurisdiction.ExemptionClass]kernel.Decimal, total, paid k
 				num = s.Add(paid)
 			}
 		}
-		avg, err := num.Quo(den, grosze, kernel.RoundHalfUp)
-		if err != nil {
-			return nil, fmt.Errorf("OKI average of %s: %w", c, err)
-		}
-		out[c] = avg
+		out[c] = ratio{num: num, den: den}.normal()
 	}
-	return out, nil
+	return out
 }
 
 // countedPayments returns the payments of d that count (art. 23 ust. 4):
@@ -424,17 +503,33 @@ func classSums() map[jurisdiction.ExemptionClass]kernel.Decimal {
 	return out
 }
 
-// classValue returns amount of class c in PLN.
-func classValue(c jurisdiction.ExemptionClass, amount kernel.Decimal) jurisdiction.ClassValue {
-	return jurisdiction.ClassValue{Class: c, Value: kernel.NewMoney(amount, pln())}
+// classRatios returns an exact zero for each of OKI's classes.
+func classRatios() map[jurisdiction.ExemptionClass]ratio {
+	out := map[jurisdiction.ExemptionClass]ratio{}
+	for _, c := range OKIClasses() {
+		out[c] = zeroRatio()
+	}
+	return out
 }
 
-// clamp returns v limited to 0..limit.
-func clamp(v, limit kernel.Decimal) kernel.Decimal {
-	if v.Sign() <= 0 || limit.Sign() <= 0 {
-		return kernel.Decimal{}
+// classValue returns the exact amount r of class c in PLN, shown to the
+// grosz.
+func classValue(c jurisdiction.ExemptionClass, r ratio) (jurisdiction.ClassValue, error) {
+	v, err := shown(r)
+	if err != nil {
+		return jurisdiction.ClassValue{}, fmt.Errorf("OKI %s: %w", c, err)
 	}
-	return minDecimal(v, limit)
+	return jurisdiction.ClassValue{Class: c, Value: v}, nil
+}
+
+// shown returns the exact amount r in PLN rounded half up to the grosz, as
+// the yearly tax reports it.
+func shown(r ratio) (kernel.Money, error) {
+	d, err := r.round(grosze, kernel.RoundHalfUp)
+	if err != nil {
+		return kernel.Money{}, err
+	}
+	return kernel.NewMoney(d, pln()), nil
 }
 
 // minDecimal returns the smaller of a and b.

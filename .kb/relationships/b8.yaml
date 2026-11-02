@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-261d209e05ab
+  - type: executable_for
+    from: SYM-valuation-test-helper-fee-lot
+    to: TEST-valuation-revaluation
+    created_at: 2026-11-02T04:26:23.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-975785436f67

@@ -629,13 +629,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ff13011b67f
-  - type: implements
-    from: SYM-pl-averages
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:02:26.200Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-54dd9234f670
   - type: covered_by
     from: SYM-pl-averages
     to: TEST-pl-oki
@@ -713,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff3c2f12fa6f
+  - type: implements
+    from: SYM-pl-averages
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:22:43.337Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-006125154d90

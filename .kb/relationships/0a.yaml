@@ -608,3 +608,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f809e1a18e44
+  - type: validates
+    from: TEST-attention-app-unclassified
+    to: REQ-attention-unclassified-instrument-is-check
+    created_at: 2026-11-01T20:10:00.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-300625376f18
+  - type: validates
+    from: TEST-attention-app-unclassified
+    to: REQ-attention-unclassified-instrument-resolves-itself
+    created_at: 2026-11-01T20:10:00.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3733ef2db699
+  - type: validates
+    from: TEST-attention-app-unclassified
+    to: REQ-valuation-unclassifiable-instrument-attention-item
+    created_at: 2026-11-01T20:10:01.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-958aaaccf62b

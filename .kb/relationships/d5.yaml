@@ -461,13 +461,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94d04f8354ef
-  - type: implements
-    from: SYM-jurisdiction-tax-rules
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:00:46.227Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4d5f4819b77a
   - type: covered_by
     from: SYM-jurisdiction-tax-rules
     to: TEST-pl-totals
@@ -517,3 +510,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad6251e500ab
+  - type: validates
+    from: TEST-valuation-revaluation
+    to: REQ-pl-sale-tax-cost-includes-buy-fees
+    created_at: 2026-11-01T20:10:48.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a11dfe7e253
+  - type: constrains
+    from: REQ-pl-oki-yearly-tax-exact
+    to: FACT-SUBJECT-D256A25BDCDCE899
+    created_at: 2026-11-01T20:11:49.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1e6c1e9baaa
+  - type: requires_property
+    from: REQ-pl-oki-yearly-tax-exact
+    to: FACT-PROP-3C35D4EE9A982B68
+    created_at: 2026-11-01T20:11:49.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4c416a5cb5f
+  - type: specified_by
+    from: REQ-pl-oki-yearly-tax-exact
+    to: SCEN-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:11:49.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6a64bc39f59
+  - type: supersedes
+    from: REQ-pl-oki-yearly-tax-exact
+    to: REQ-pl-oki-tax-computation
+    created_at: 2026-11-01T20:11:49.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06d3f6eb38f9
+  - type: implements
+    from: SYM-jurisdiction-tax-rules
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:21:56.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bd8fcfefdb5

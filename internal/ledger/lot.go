@@ -32,6 +32,11 @@ type Lot struct {
 	Opening bool
 	// Origin is the transaction that acquired the lot.
 	Origin TransactionKey
+	// Fees are the buy fees of the units still in the lot, one per
+	// currency: a buy's fees go to the lot it opens, and split with its
+	// units as Cost does. They stay out of Cost (D-34); the tax cost of a
+	// sale includes them (D-150). Lots opened any other way have none.
+	Fees []kernel.Money
 }
 
 // OversellError reports a disposal of more units than the account holds.
@@ -88,29 +93,52 @@ func ConsumeFIFO(lots []Lot, qty kernel.Quantity) (LotConsumption, error) {
 			remaining = remaining[1:]
 			continue
 		}
-		share, err := consumedCost(lot, left)
+		part, err := splitLot(lot, left)
 		if err != nil {
 			return LotConsumption{}, err
 		}
-		part := *lot
-		part.Quantity, part.Cost = left, share
 		consumed = append(consumed, part)
-		lot.Quantity = lot.Quantity.Sub(left)
-		lot.Cost = kernel.NewMoney(lot.Cost.Amount().Sub(share.Amount()), lot.Cost.Currency())
 		left = kernel.Quantity{}
 	}
 	return LotConsumption{Consumed: consumed, Remaining: remaining}, nil
 }
 
-// consumedCost returns the cost of units taken from lot, which holds more
-// than units, rounded as LotCostPlaces describes. The caller leaves the exact
-// rest in the lot.
-func consumedCost(lot *Lot, units kernel.Quantity) (kernel.Money, error) {
-	share, err := lot.Cost.Amount().Mul(units.Decimal()).Quo(lot.Quantity.Decimal(), LotCostPlaces, kernel.RoundHalfEven)
+// splitLot takes units from lot, which holds more than units, and returns
+// the part taken: its cost and each of its fees are lot's times the share of
+// units, rounded as LotCostPlaces describes, and lot keeps the exact rest.
+func splitLot(lot *Lot, units kernel.Quantity) (Lot, error) {
+	part := *lot
+	part.Quantity = units
+	cost, err := unitsShare(lot, lot.Cost, units)
+	if err != nil {
+		return Lot{}, err
+	}
+	part.Cost, part.Fees = cost, nil
+	fees := make([]kernel.Money, 0, len(lot.Fees))
+	for _, f := range lot.Fees {
+		share, shareErr := unitsShare(lot, f, units)
+		if shareErr != nil {
+			return Lot{}, shareErr
+		}
+		part.Fees = append(part.Fees, share)
+		fees = append(fees, kernel.NewMoney(f.Amount().Sub(share.Amount()), f.Currency()))
+	}
+	lot.Quantity = lot.Quantity.Sub(units)
+	lot.Cost = kernel.NewMoney(lot.Cost.Amount().Sub(cost.Amount()), lot.Cost.Currency())
+	if len(lot.Fees) > 0 {
+		lot.Fees = fees
+	}
+	return part, nil
+}
+
+// unitsShare returns the part of amount, lot's cost or one of its fees, that
+// units of lot's units carry, rounded as LotCostPlaces describes.
+func unitsShare(lot *Lot, amount kernel.Money, units kernel.Quantity) (kernel.Money, error) {
+	share, err := amount.Amount().Mul(units.Decimal()).Quo(lot.Quantity.Decimal(), LotCostPlaces, kernel.RoundHalfEven)
 	if err != nil {
 		return kernel.Money{}, fmt.Errorf("splitting lot %s: %w", lot.Origin, err)
 	}
-	return kernel.NewMoney(share, lot.Cost.Currency()), nil
+	return kernel.NewMoney(share, amount.Currency()), nil
 }
 
 // sortedLots returns a copy of lots, oldest first by open date, then by
@@ -167,11 +195,30 @@ func acquisitions(txs []Transaction, in Instrument) []Lot {
 				if t.Kind == KindOpeningLot {
 					lot.Opened, lot.Opening = t.LotOpened, true
 				}
+				if t.Kind == KindBuy {
+					lot.Fees = buyFees(t)
+				}
 				lots = append(lots, lot)
 			}
 		}
 	}
 	return lots
+}
+
+// buyFees returns t's fees for the lot it opens: all of them when it
+// acquires one holding, none when it acquires several, since nothing says
+// how to split them.
+func buyFees(t *Transaction) []kernel.Money {
+	acquired := 0
+	for j := range t.Postings {
+		if p := &t.Postings[j]; p.Book.Kind == BookHolding && p.Quantity.Sign() > 0 {
+			acquired++
+		}
+	}
+	if acquired != 1 {
+		return nil
+	}
+	return fees(t)
 }
 
 // applyDisposals consumes lots FIFO for every posting in txs that removes

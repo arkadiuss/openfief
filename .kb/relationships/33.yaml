@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d7f75ae92f0
+  - type: validates
+    from: TEST-views-taxes
+    to: REQ-pl-ike-early-return-above-entered-payments
+    created_at: 2026-11-01T20:10:50.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-169b9d062ed7
+  - type: verified_by
+    from: SCEN-pl-oki-cash-class-by-form
+    to: TEST-pl-oki
+    created_at: 2026-11-01T20:11:01.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b7e6650ead1
+  - type: verified_by
+    from: SCEN-pl-oki-cash-class-by-form
+    to: TEST-views-yearly-tax
+    created_at: 2026-11-01T20:11:01.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd21d38a3293

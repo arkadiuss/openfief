@@ -86,7 +86,7 @@ The issuer's worked examples count interest to the fifth business day after the 
 
 ### OKI's yearly tax
 
-Inside OKI no Belka tax is due; instead, the act on OKI, in force from 2027-01-01, levies a yearly tax on asset value, summed across all of the owner's OKI accounts (D-76, D-127). `OKIAct` holds the act as data: its in-force date, its rates and exempt amounts. A treasury savings bond is a savings asset for its exemptions, as is PLN cash on an account that held such bonds in the year. [Valuation](valuation.md#okis-yearly-tax) describes the tax ([oki.go](../../internal/jurisdiction/pl/oki.go)) and how totals count each wrapper's tax on the whole ([totals.go](../../internal/jurisdiction/pl/totals.go), D-128).
+Inside OKI no Belka tax is due; instead, the act on OKI, in force from 2027-01-01, levies a yearly tax on asset value, summed across all of the owner's OKI accounts (D-76, D-127). `OKIAct` holds the act as data: its in-force date, its rates and exempt amounts, later years' as the finance minister announced them (D-145). A treasury savings bond is a savings asset for its exemptions, as is PLN cash on an OKI treasury bond account or bank account; the owner sets the account's form when creating it (D-147). [Valuation](valuation.md#okis-yearly-tax) describes the tax ([oki.go](../../internal/jurisdiction/pl/oki.go)) and how totals count each wrapper's tax on the whole ([totals.go](../../internal/jurisdiction/pl/totals.go), D-128).
 
 ## How it works
 
@@ -100,7 +100,7 @@ Inside OKI no Belka tax is due; instead, the act on OKI, in force from 2027-01-0
 | [coupon.go](../../internal/jurisdiction/pl/coupon.go) | `CouponDates`, `Terms.Coupon`, `CouponPayment` |
 | [tax.go](../../internal/jurisdiction/pl/tax.go) | `TaxWrapper`, `TaxWrappers`, `ParseTaxWrapper`, `BelkaRate`, `BelkaTax`, `TaxRateCutoff` |
 | [pack.go](../../internal/jurisdiction/pl/pack.go) | `Pack` (the `jurisdiction.Pack`), `NewPack`, `RulesVersion`, `IKZEExitRate` |
-| [oki.go](../../internal/jurisdiction/pl/oki.go), [totals.go](../../internal/jurisdiction/pl/totals.go) | `OKIAct`, `CurrentOKIAct`, `OKIRate`, `IndexOKIExemption`, the exemption classes and `YearlyTax` (D-127, D-132); `Totals` and `PIT38Tax` (D-128) |
+| [oki.go](../../internal/jurisdiction/pl/oki.go), [okiratio.go](../../internal/jurisdiction/pl/okiratio.go), [totals.go](../../internal/jurisdiction/pl/totals.go) | `OKIAct` with the minister's announcements and `OKIAct.Check`, `CurrentOKIAct`, the exemption classes, the account forms and `YearlyTax` with its exact averages (D-127, D-132, D-144..D-147); `Totals`, `TaxesAbovePaidIn` and `PIT38Tax` (D-128, D-149) |
 
 The package imports nothing from OpenFief but `kernel` and the pack contract in `internal/jurisdiction` ([Valuation](valuation.md#the-jurisdiction-pack)), does no I/O and reads no clock; lint enforces that for domain packages. [doc.go](../../internal/jurisdiction/pl/doc.go) lists the issue letters, interest tables and statute articles the doc comments cite.
 
@@ -167,7 +167,7 @@ D-117 has the treasury-bonds connector book each coupon of an entered lot with t
 
 ### The pack's values
 
-`Pack` implements `jurisdiction.Pack` for Poland: `ReportingCurrency` PLN (D-62), `NumberFormat` space-comma, `5 000,00 PLN` (D-113), `Wrappers` the four keys with `taxable` first, `TaxRateDate` is `TaxRateCutoff` (D-20), and `Version` is `pl/` with `RulesVersion`, which valuation records to revalue everything when the rules change. Three functions compute the values, every amount in PLN, every tax rounded half up to whole grosze and zero on a base that is not positive (`taxAt`, D-37's rounding):
+`Pack` implements `jurisdiction.Pack` for Poland: `ReportingCurrency` PLN (D-62), `NumberFormat` space-comma, `5 000,00 PLN` (D-113), `Wrappers` the four keys with `taxable` first, `TaxRateDate` is `TaxRateCutoff` (D-20), and `Version` is `pl/` with `RulesVersion` (3 since D-150 put buy fees in the tax cost), which valuation records to revalue everything when the rules change. Three functions compute the values, every amount in PLN, every tax rounded half up to whole grosze and zero on a base that is not positive (`taxAt`, D-37's rounding):
 
 ```mermaid
 flowchart TD
@@ -236,4 +236,4 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 ## Not built yet
 
 - **D-9**, **D-97**: anything that fetches series terms (the owner types each series' terms with its lots; D-97 waits on OQ-30); and an import of the bond service's export, if one exists (OQ-22).
-- **D-127**: the rates of 2028 on and the exempt amounts of 2030 on need the NBP reference rate and the CPI index the core doesn't store yet ([Implementation questions](../implementation-questions.md)).
+- **D-145**: OKI's rate for 2028 on and its exempt amounts for 2030 on come from the finance minister's announcements, added with each release; none is announced yet, so those years' taxes wait for the release that adds them.

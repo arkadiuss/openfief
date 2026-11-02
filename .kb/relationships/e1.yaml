@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-deb8e032313e
+  - type: implements
+    from: SYM-viewsv1-wrapper-terms-string
+    to: REQ-views-yearly-tax-estimate-and-terms
+    created_at: 2026-11-02T04:30:06.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8ad8bd2cf42
+  - type: covered_by
+    from: SYM-viewsv1-wrapper-terms-string
+    to: TEST-views-connectapi-values
+    created_at: 2026-11-02T04:30:06.296Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af0924f391dd

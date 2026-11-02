@@ -50,6 +50,13 @@ func (*Pack) Totals(accounts []jurisdiction.AccountRows, s *jurisdiction.Setting
 	return out, nil
 }
 
+// TaxesAbovePaidIn reports true for IKE only: its early return is taxed on
+// what is withdrawn above what was paid in (D-128), so an IKE whose earlier
+// history is unknown needs its earlier payments in entered (D-149).
+func (*Pack) TaxesAbovePaidIn(w jurisdiction.Wrapper) bool {
+	return w == jurisdiction.Wrapper(IKE.String())
+}
+
 // PIT38Tax returns the tax PIT-38 counts on base, the year's gains less
 // losses: the base and the tax are rounded to whole złoty, under 50 groszy
 // down and from 50 groszy up (art. 63 § 1 of the tax ordinance), and a base

@@ -16,12 +16,14 @@ import (
 var ErrTaxConversion = errors.New("no FX rate for the yearly tax")
 
 // TaxYearAccount is one account's record for a yearly tax (D-127): the
-// days of the year it was held that are counted, From through To, and
-// its stored valuations, cash, cash flows and the FX rates of their
-// currencies, with the owner's classes of instruments (D-132).
+// days of the year it was held that are counted, From through To, its
+// form (D-147), and its stored valuations, cash, cash flows and the FX
+// rates of their currencies, with the owner's classes of instruments
+// (D-132).
 type TaxYearAccount struct {
 	Account  ledger.AccountID
 	Wrapper  jurisdiction.Wrapper
+	Form     jurisdiction.AccountForm
 	From, To kernel.Date
 	Vals     []valuation.HoldingValuation
 	Cash     []CashBalance
@@ -41,12 +43,9 @@ type TaxYearAccount struct {
 // amount with no rate is an error wrapping ErrTaxConversion.
 func TaxDays(a *TaxYearAccount, pack jurisdiction.Pack) (jurisdiction.TaxAccount, []string, error) {
 	out := jurisdiction.TaxAccount{Account: string(a.Account)}
-	holdsAccrued := slices.ContainsFunc(a.Vals, func(v valuation.HoldingValuation) bool {
-		return v.Basis == valuation.GrossAccrued && !v.Date.Before(a.From) && !v.Date.After(a.To)
-	})
 	unclassified := map[string]bool{}
 	for day := a.From; !day.After(a.To); day = day.AddDays(1) {
-		td, err := a.taxDay(pack, day, holdsAccrued, unclassified)
+		td, err := a.taxDay(pack, day, unclassified)
 		if err != nil {
 			return jurisdiction.TaxAccount{}, nil, err
 		}
@@ -61,10 +60,10 @@ func TaxDays(a *TaxYearAccount, pack jurisdiction.Pack) (jurisdiction.TaxAccount
 }
 
 // taxDay returns a's day for the yearly tax.
-func (a *TaxYearAccount) taxDay(pack jurisdiction.Pack, day kernel.Date, holdsAccrued bool, unclassified map[string]bool) (jurisdiction.TaxDay, error) {
+func (a *TaxYearAccount) taxDay(pack jurisdiction.Pack, day kernel.Date, unclassified map[string]bool) (jurisdiction.TaxDay, error) {
 	cutoff := pack.TaxRateDate(day)
 	sums := map[jurisdiction.ExemptionClass]kernel.Decimal{}
-	for _, held := range a.assetsOn(day, holdsAccrued) {
+	for _, held := range a.assetsOn(day) {
 		pln, err := a.toPLN(held.amount, cutoff)
 		if err != nil {
 			return jurisdiction.TaxDay{}, err
@@ -90,8 +89,9 @@ type heldAsset struct {
 	amount kernel.Money
 }
 
-// assetsOn returns a's valued holdings and cash on day.
-func (a *TaxYearAccount) assetsOn(day kernel.Date, holdsAccrued bool) []heldAsset {
+// assetsOn returns a's valued holdings and cash on day, its cash with the
+// account's form.
+func (a *TaxYearAccount) assetsOn(day kernel.Date) []heldAsset {
 	var out []heldAsset
 	for i := range a.Vals {
 		v := &a.Vals[i]
@@ -106,7 +106,7 @@ func (a *TaxYearAccount) assetsOn(day kernel.Date, holdsAccrued bool) []heldAsse
 	}
 	for i := range a.Cash {
 		if c := &a.Cash[i]; c.Date.Equal(day) {
-			asset := jurisdiction.Asset{Kind: jurisdiction.AssetCash, Currency: c.Amount.Currency(), AccountHoldsAccrued: holdsAccrued}
+			asset := jurisdiction.Asset{Kind: jurisdiction.AssetCash, Currency: c.Amount.Currency(), Form: a.Form}
 			out = append(out, heldAsset{asset: asset, amount: c.Amount})
 		}
 	}

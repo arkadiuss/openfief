@@ -846,3 +846,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-773bac894a3b
+  - type: validates
+    from: TEST-ui-taxes
+    to: REQ-pl-oki-current-year-estimate
+    created_at: 2026-11-01T20:10:41.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db766a0791b7
+  - type: verified_by
+    from: SCEN-pl-oki-yearly-tax-exact
+    to: TEST-pl-oki
+    created_at: 2026-11-01T20:10:57.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efd0605d1890
+  - type: constrains
+    from: REQ-pl-oki-cash-class-by-form
+    to: FACT-SUBJECT-133341B6069876D9
+    created_at: 2026-11-01T20:12:02.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef56c11cea1c
+  - type: requires_property
+    from: REQ-pl-oki-cash-class-by-form
+    to: FACT-PROP-4F890C931FB7436B
+    created_at: 2026-11-01T20:12:02.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97af5a597fca
+  - type: specified_by
+    from: REQ-pl-oki-cash-class-by-form
+    to: SCEN-pl-oki-cash-class-by-form
+    created_at: 2026-11-01T20:12:02.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83edc910ec51
+  - type: supersedes
+    from: REQ-pl-oki-cash-class-by-form
+    to: REQ-pl-oki-exemption-class
+    created_at: 2026-11-01T20:12:02.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df7ebc3c3ff2
+  - type: implements
+    from: SYM-demo-bonds-earlier-payments
+    to: REQ-demo-ike-earlier-payments
+    created_at: 2026-11-02T04:51:40.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3f52572a104
+  - type: covered_by
+    from: SYM-demo-bonds-earlier-payments
+    to: TEST-demo-earlier-payments
+    created_at: 2026-11-02T04:51:40.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5e58145e5d9

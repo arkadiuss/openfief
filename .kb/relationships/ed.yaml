@@ -559,3 +559,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbc889818a8e
+  - type: implements
+    from: SYM-ingest-connectapi-account-service-earlier-payments-from
+    to: REQ-ingest-earlier-payments-checks
+    created_at: 2026-11-02T04:20:28.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68f0e0aef1d3
+  - type: implements
+    from: SYM-ingest-connectapi-account-service-earlier-payments-from
+    to: REQ-pl-ike-unknown-history-payments-entered
+    created_at: 2026-11-02T04:20:28.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-432976e115ff
+  - type: covered_by
+    from: SYM-ingest-connectapi-account-service-earlier-payments-from
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-02T04:20:28.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4011947fc250
+  - type: implements
+    from: SYM-pl-ratio-of
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:22:55.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d22550d581c7
+  - type: implements
+    from: SYM-pl-ratio-of
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:22:55.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b01db6ca712
+  - type: covered_by
+    from: SYM-pl-ratio-of
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:22:55.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1a7698cb73d

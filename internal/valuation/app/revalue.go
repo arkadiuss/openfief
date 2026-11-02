@@ -78,7 +78,7 @@ func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from k
 	if err := r.store.ReplaceValuations(ctx, account, from, rows, through); err != nil {
 		return RevalueResult{}, fmt.Errorf("revaluing %s: storing: %w", account, err)
 	}
-	if err := r.raiseItems(ctx, in, account, rows, today); err != nil {
+	if err := r.raiseGaps(ctx, in, account, rows, today); err != nil {
 		return RevalueResult{}, fmt.Errorf("revaluing %s: %w", account, err)
 	}
 	res := RevalueResult{Start: start, ValuedThrough: through, Rows: len(rows)}

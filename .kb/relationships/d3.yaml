@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a78ec836d51a
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-check-tax-details
+    to: TEST-ingest-app-account-forms
+    created_at: 2026-11-02T04:19:43.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbfdf4d94d1d

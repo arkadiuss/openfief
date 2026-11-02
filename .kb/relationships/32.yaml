@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1538d4f5370a
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-pl-oki-account-held-from-first-transaction
+    created_at: 2026-11-01T20:10:38.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf3bc1141c8c
+  - type: validates
+    from: TEST-views-app-values
+    to: REQ-pl-oki-current-year-estimate
+    created_at: 2026-11-01T20:10:38.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b93ecbd23b26

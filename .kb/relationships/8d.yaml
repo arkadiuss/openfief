@@ -608,3 +608,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8b21b9505ee6
+  - type: verified_by
+    from: SCEN-views-yearly-tax-estimate-and-terms
+    to: TEST-views-app-values
+    created_at: 2026-11-01T20:11:32.609Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a73b9ccc235f
+  - type: verified_by
+    from: SCEN-views-yearly-tax-estimate-and-terms
+    to: TEST-ui-taxes
+    created_at: 2026-11-01T20:11:32.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-100dbccdac38
+  - type: verified_by
+    from: SCEN-views-yearly-tax-estimate-and-terms
+    to: TEST-ui-account-forms
+    created_at: 2026-11-01T20:11:32.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ba585afd387
+  - type: verified_by
+    from: SCEN-views-yearly-tax-estimate-and-terms
+    to: TEST-views-connectapi-values
+    created_at: 2026-11-01T20:11:32.809Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ce07b4a8b4a

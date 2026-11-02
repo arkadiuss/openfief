@@ -531,3 +531,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff240b117a52
+  - type: implements
+    from: SYM-views-tax-year-account-assets-on
+    to: REQ-pl-oki-form-decides-cash-class
+    created_at: 2026-11-01T20:31:59.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8641121593d4
+  - type: implements
+    from: SYM-pl-ratio-normal
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:23:03.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37a0233126e6
+  - type: implements
+    from: SYM-pl-ratio-normal
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:23:03.742Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e948c22ff1a5
+  - type: covered_by
+    from: SYM-pl-ratio-normal
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:23:03.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-041659169860

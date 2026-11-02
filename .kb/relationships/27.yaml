@@ -419,3 +419,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0a89b6653866
+  - type: implements
+    from: SYM-valuation-unclassified
+    to: REQ-attention-unclassified-instrument-check
+    created_at: 2026-11-02T04:26:30.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac2440fb68f8
+  - type: covered_by
+    from: SYM-valuation-unclassified
+    to: TEST-valuation-unclassified
+    created_at: 2026-11-02T04:26:30.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78037d6057ac

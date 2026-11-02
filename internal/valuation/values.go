@@ -21,25 +21,29 @@ type AccountTerms struct {
 }
 
 // TaxCost returns the cost basis of lots in PLN for tax: each lot's cost
-// converted at the latest rate on or before the date the pack takes for an
-// event on its open date (Pack.TaxRateDate), rounded with ValueRounding.
-// It returns MissingLots when lotsUnknown, and MissingFXRate when a lot's
-// currency has no such rate.
+// and its buy fees (D-150), each converted at the latest rate on or before
+// the date the pack takes for an event on the lot's open date
+// (Pack.TaxRateDate), rounded with ValueRounding. It returns MissingLots
+// when lotsUnknown, and MissingFXRate when a lot's cost or fee currency has
+// no such rate.
 func (a *AccountTerms) TaxCost(lots []ledger.Lot, lotsUnknown bool, rates []FXRate) (kernel.Money, MissingReason, error) {
 	total := kernel.NewMoney(kernel.Decimal{}, PLN())
 	if lotsUnknown {
 		return kernel.Money{}, MissingLots, nil
 	}
 	for i := range lots {
-		c, err := ConvertToPLN(lots[i].Cost, rates, a.Pack.TaxRateDate(lots[i].Opened), ValueRounding)
-		if errors.Is(err, ErrNoRate) {
-			return kernel.Money{}, MissingFXRate, nil
-		}
-		if err != nil {
-			return kernel.Money{}, 0, fmt.Errorf("lot %s: %w", lots[i].Origin, err)
-		}
-		if total, err = total.Add(c); err != nil {
-			return kernel.Money{}, 0, fmt.Errorf("lot %s: %w", lots[i].Origin, err)
+		day := a.Pack.TaxRateDate(lots[i].Opened)
+		for _, m := range append([]kernel.Money{lots[i].Cost}, lots[i].Fees...) {
+			c, err := ConvertToPLN(m, rates, day, ValueRounding)
+			if errors.Is(err, ErrNoRate) {
+				return kernel.Money{}, MissingFXRate, nil
+			}
+			if err != nil {
+				return kernel.Money{}, 0, fmt.Errorf("lot %s: %w", lots[i].Origin, err)
+			}
+			if total, err = total.Add(c); err != nil {
+				return kernel.Money{}, 0, fmt.Errorf("lot %s: %w", lots[i].Origin, err)
+			}
 		}
 	}
 	return total, 0, nil

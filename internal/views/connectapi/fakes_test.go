@@ -245,6 +245,20 @@ func (fakeTerms) ExemptionClasses(context.Context) (map[string]jurisdiction.Exem
 	return map[string]jurisdiction.ExemptionClass{}, nil
 }
 
+// AccountForm gives acc-1 a form (D-147), which the read API serves as it
+// is: the core stores one only for OKI, and the fake keeps acc-1's wrapper.
+func (fakeTerms) AccountForm(_ context.Context, account ledger.AccountID) (jurisdiction.AccountForm, bool, error) {
+	if account == "acc-1" {
+		return "brokerage-account", true, nil
+	}
+	return "", false, nil
+}
+
+// EarlierPayments gives no account any (D-149).
+func (fakeTerms) EarlierPayments(context.Context, ledger.AccountID) (kernel.Money, bool, error) {
+	return kernel.Money{}, false, nil
+}
+
 // newViews returns the views over l with a bond and an ETF valued on
 // 2026-03-02 and USD at 4.00 PLN, configured by opts.
 func newViews(t *testing.T, l *fakeLedger, opts ...app.Option) *app.Views {

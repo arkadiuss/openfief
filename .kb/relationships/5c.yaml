@@ -609,20 +609,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-51bf3159421e
   - type: implements
-    from: SYM-views-payment
-    to: REQ-views-totals-losses-offset
-    created_at: 2026-10-31T19:10:57.834Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b12c9dd97b3d
-  - type: covered_by
-    from: SYM-views-payment
-    to: TEST-views-taxes
-    created_at: 2026-10-31T19:10:57.908Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4604a1ec5aa6
-  - type: implements
     from: SYM-views-plus
     to: REQ-views-totals-losses-offset
     created_at: 2026-10-31T19:12:05.027Z
@@ -671,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa5fb3619224
+  - type: implements
+    from: SYM-viewsv1-wrapper-terms
+    to: REQ-views-yearly-tax-estimate-and-terms
+    created_at: 2026-11-02T04:29:49.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce31adf22522
+  - type: covered_by
+    from: SYM-viewsv1-wrapper-terms
+    to: TEST-views-connectapi-values
+    created_at: 2026-11-02T04:29:49.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e780e94e67ef

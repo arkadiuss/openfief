@@ -545,3 +545,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-251556ac2dc5
+  - type: implements
+    from: SYM-pl-tax-whole
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:22:10.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26edf9eb2242
+  - type: implements
+    from: SYM-pl-tax-whole
+    to: REQ-pl-oki-base-and-tax-whole-zloty
+    created_at: 2026-11-02T04:22:10.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edd6a8f43128
+  - type: covered_by
+    from: SYM-pl-tax-whole
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:22:10.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb7c8485c3c8
