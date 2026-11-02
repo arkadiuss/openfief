@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a6ef8f916b0
+  - type: executable_for
+    from: SYM-cosign-test-fixtures-run-certificate-get-certificate
+    to: TEST-plugins-cosign
+    created_at: 2026-11-02T20:05:34.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c8e9744581a

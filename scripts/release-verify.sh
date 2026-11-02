@@ -5,7 +5,10 @@
 #     release.yml at the ref the run started from, refs/heads/main for a published release;
 #   - the images are signed in images.yml's build job (task image:sign), a reusable workflow release.yml calls, and
 #     Fulcio names the reusable workflow, so their certificate names images.yml at refs/heads/main.
-# Both come from GitHub Actions' OIDC issuer.
+# Both come from GitHub Actions' OIDC issuer. Every check also pins the repository and ref of the run that signed
+# (cosign's --certificate-github-workflow-repository and --certificate-github-workflow-ref, D-181): images.yml is a
+# reusable workflow in a public repository, so another repository's workflow can call it and get a certificate
+# with the very same identity; only the run's repository and ref tell OpenFief's own run apart.
 #
 # Usage:
 #   release-verify.sh identity <cli|images> <owner/repo> [ref]
@@ -58,7 +61,9 @@ verify_cli() {
     case "$name" in *.sigstore.json) continue ;; esac
     [ -f "$file.sigstore.json" ] || fail "$name has no signature bundle $name.sigstore.json"
     cosign verify-blob --bundle "$file.sigstore.json" \
-      --certificate-identity "$id" --certificate-oidc-issuer "$issuer" "$file" >/dev/null 2>&1 ||
+      --certificate-identity "$id" --certificate-oidc-issuer "$issuer" \
+      --certificate-github-workflow-repository "$2" --certificate-github-workflow-ref "${3:-refs/heads/main}" \
+      "$file" >/dev/null 2>&1 ||
       fail "$name: its signature doesn't verify as $id"
     echo "release-verify: $name signed by $id" >&2
     count=$((count + 1))

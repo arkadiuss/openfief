@@ -9,6 +9,11 @@ import (
 	"slices"
 	"strings"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
+	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
+	"sigs.k8s.io/yaml"
 )
 
 // kinds lists the kind of every YAML document under dir.
@@ -81,5 +86,46 @@ func TestManifests(t *testing.T) {
 	role := "operator/role.yaml"
 	if got := all[role]; !slices.Equal(got, []string{"Role"}) {
 		t.Errorf("%s kinds = %v, want [Role]", role, got)
+	}
+}
+
+// TestNamespaceLimitRange checks the openfief namespace's LimitRange (D-182):
+// the install's cluster-admin base applies it, and it gives every container
+// without its own resources a request and a memory limit, so nothing in the
+// namespace can grow without a bound.
+func TestNamespaceLimitRange(t *testing.T) {
+	t.Parallel()
+	crds := os.DirFS(filepath.Join("..", "..", "..", "deploy", "crds"))
+	kustomization, err := fs.ReadFile(crds, "kustomization.yaml")
+	if err != nil {
+		t.Fatalf("read kustomization: %v", err)
+	}
+	var k struct {
+		Resources []string `json:"resources"`
+	}
+	if parseErr := yaml.Unmarshal(kustomization, &k); parseErr != nil {
+		t.Fatalf("parse kustomization: %v", parseErr)
+	}
+	if !slices.Contains(k.Resources, "limitrange.yaml") {
+		t.Errorf("deploy/crds resources = %v, want limitrange.yaml among them", k.Resources)
+	}
+	data, err := fs.ReadFile(crds, "limitrange.yaml")
+	if err != nil {
+		t.Fatalf("read LimitRange: %v", err)
+	}
+	var got corev1.LimitRange
+	if parseErr := yaml.UnmarshalStrict(data, &got); parseErr != nil {
+		t.Fatalf("parse LimitRange: %v", parseErr)
+	}
+	if got.Kind != "LimitRange" || got.Namespace != "openfief" {
+		t.Errorf("LimitRange is %s in namespace %q, want a LimitRange in openfief", got.Kind, got.Namespace)
+	}
+	want := []corev1.LimitRangeItem{{
+		Type:           corev1.LimitTypeContainer,
+		DefaultRequest: corev1.ResourceList{corev1.ResourceCPU: resource.MustParse("50m"), corev1.ResourceMemory: resource.MustParse("64Mi")},
+		Default:        corev1.ResourceList{corev1.ResourceMemory: resource.MustParse("1Gi")},
+	}}
+	if diff := cmp.Diff(want, got.Spec.Limits); diff != "" {
+		t.Errorf("LimitRange limits (-want +got):\n%s", diff)
 	}
 }

@@ -2,14 +2,23 @@ package cosign
 
 import (
 	"bytes"
+	"context"
+	"crypto/ecdsa"
+	"crypto/rand"
 	"crypto/sha256"
 	"crypto/x509"
+	"crypto/x509/pkix"
+	"encoding/asn1"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"maps"
+	"math/big"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -27,6 +36,8 @@ import (
 	protodsse "github.com/sigstore/protobuf-specs/gen/pb-go/dsse"
 	protorekor "github.com/sigstore/protobuf-specs/gen/pb-go/rekor/v1"
 	"github.com/sigstore/sigstore-go/pkg/bundle"
+	"github.com/sigstore/sigstore-go/pkg/fulcio/certificate"
+	"github.com/sigstore/sigstore-go/pkg/root"
 	"github.com/sigstore/sigstore-go/pkg/sign"
 	"github.com/sigstore/sigstore-go/pkg/testing/ca"
 	"github.com/sigstore/sigstore-go/pkg/tlog"
@@ -386,4 +397,145 @@ func tamperConfig(from, to string) func(http.Handler) http.Handler {
 			}
 		})
 	}
+}
+
+// githubCA is a test Fulcio CA whose certificates carry what Fulcio writes
+// for a GitHub Actions run: the OIDC issuer and the source repository and
+// ref of the run, which the virtual Sigstore's own CA can't add.
+type githubCA struct {
+	authority *root.FulcioCertificateAuthority
+	key       *ecdsa.PrivateKey
+}
+
+func newGitHubCA(t *testing.T) *githubCA {
+	t.Helper()
+	rootCert, rootKey, err := ca.GenerateRootCa()
+	if err != nil {
+		t.Fatalf("root CA: %v", err)
+	}
+	intermediate, key, err := ca.GenerateFulcioIntermediate(rootCert, rootKey)
+	if err != nil {
+		t.Fatalf("intermediate CA: %v", err)
+	}
+	return &githubCA{authority: &root.FulcioCertificateAuthority{Root: rootCert, Intermediates: []*x509.Certificate{intermediate}}, key: key}
+}
+
+// withCA trusts what its TrustedMaterial trusts plus one more Fulcio CA.
+type withCA struct {
+	root.TrustedMaterial
+
+	extra root.CertificateAuthority
+}
+
+func (w withCA) FulcioCertificateAuthorities() []root.CertificateAuthority {
+	return append(slices.Clone(w.TrustedMaterial.FulcioCertificateAuthorities()), w.extra)
+}
+
+// githubRun is what a GitHub Actions run's certificate names: the subject
+// (the workflow that ran, the called one for a reusable workflow), the
+// issuer, and the repository and ref of the run (empty: no extension).
+type githubRun struct {
+	subject, issuer, repository, ref string
+}
+
+// openFiefCIRun is OpenFief's CI: its images workflow, run from its own
+// repository's main branch.
+func openFiefCIRun() githubRun {
+	return githubRun{
+		subject: plugins.OpenFiefCISubject, issuer: plugins.GitHubActionsIssuer,
+		repository: plugins.OpenFiefCISourceRepository, ref: plugins.OpenFiefCISourceRef,
+	}
+}
+
+// runCertificate is a sign.CertificateProvider that certifies a keypair as
+// run, from gh.
+type runCertificate struct {
+	gh  *githubCA
+	run githubRun
+}
+
+func (c runCertificate) GetCertificate(_ context.Context, kp sign.Keypair, _ *sign.CertificateProviderOptions) ([]byte, error) {
+	san, err := url.Parse(c.run.subject)
+	if err != nil {
+		return nil, fmt.Errorf("subject: %w", err)
+	}
+	exts := []pkix.Extension{}
+	for _, e := range []struct {
+		oid   asn1.ObjectIdentifier
+		value string
+	}{
+		{certificate.OIDIssuerV2, c.run.issuer},
+		{certificate.OIDSourceRepositoryURI, c.run.repository},
+		{certificate.OIDSourceRepositoryRef, c.run.ref},
+	} {
+		if e.value == "" {
+			continue
+		}
+		value, marshalErr := asn1.MarshalWithParams(e.value, "utf8")
+		if marshalErr != nil {
+			return nil, fmt.Errorf("extension %s: %w", e.oid, marshalErr)
+		}
+		exts = append(exts, pkix.Extension{Id: e.oid, Value: value})
+	}
+	now := time.Now()
+	template := &x509.Certificate{
+		SerialNumber:    big.NewInt(1),
+		URIs:            []*url.URL{san},
+		NotBefore:       now.Add(-time.Minute),
+		NotAfter:        now.Add(10 * time.Minute),
+		KeyUsage:        x509.KeyUsageDigitalSignature,
+		ExtKeyUsage:     []x509.ExtKeyUsage{x509.ExtKeyUsageCodeSigning},
+		ExtraExtensions: exts,
+	}
+	der, err := x509.CreateCertificate(rand.Reader, template, c.gh.authority.Intermediates[0], kp.GetPublicKey(), c.gh.key)
+	if err != nil {
+		return nil, fmt.Errorf("leaf certificate: %w", err)
+	}
+	return der, nil
+}
+
+// githubBundle signs stmt as cosign does in the GitHub Actions run run,
+// with a certificate from gh, logged and timestamped in vs at
+// integratedTime, and returns the v0.3 bundle cosign would store.
+func githubBundle(t *testing.T, vs *ca.VirtualSigstore, gh *githubCA, run githubRun, stmt []byte, integratedTime time.Time) []byte {
+	t.Helper()
+	kp, err := sign.NewEphemeralKeypair(nil)
+	if err != nil {
+		t.Fatalf("keypair: %v", err)
+	}
+	pb, err := sign.Bundle(&sign.DSSEData{Data: stmt, PayloadType: "application/vnd.in-toto+json"}, kp,
+		sign.BundleOptions{CertificateProvider: runCertificate{gh: gh, run: run}})
+	if err != nil {
+		t.Fatalf("sign: %v", err)
+	}
+	b, err := bundle.NewBundle(pb)
+	if err != nil {
+		t.Fatalf("bundle: %v", err)
+	}
+	env, err := b.Envelope()
+	if err != nil {
+		t.Fatalf("envelope: %v", err)
+	}
+	raw := env.RawEnvelope()
+	sig, err := base64.StdEncoding.DecodeString(raw.Signatures[0].Sig)
+	if err != nil {
+		t.Fatalf("signature: %v", err)
+	}
+	leaf, err := x509.ParseCertificate(pb.GetVerificationMaterial().GetCertificate().GetRawBytes())
+	if err != nil {
+		t.Fatalf("leaf certificate: %v", err)
+	}
+	entry, err := vs.GenerateTlogEntry(leaf, raw, sig, integratedTime.Unix(), true)
+	if err != nil {
+		t.Fatalf("log entry: %v", err)
+	}
+	tsr, err := vs.TimestampResponse(sig)
+	if err != nil {
+		t.Fatalf("timestamp: %v", err)
+	}
+	pb.VerificationMaterial.TlogEntries = []*protorekor.TransparencyLogEntry{loggedEntry(t, vs, entry)}
+	pb.VerificationMaterial.TimestampVerificationData = &protobundle.TimestampVerificationData{
+		Rfc3161Timestamps: []*protocommon.RFC3161SignedTimestamp{{SignedTimestamp: tsr}},
+	}
+	return marshalBundle(t, pb)
 }

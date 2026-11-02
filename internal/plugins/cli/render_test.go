@@ -80,7 +80,7 @@ Config given: {"accounts":[]}
 			name: "unverified, no schema", p: proposal("second", "", plugins.Unverified),
 			want: `Instance:     second
 Image:        ` + sampleImage + `
-Trust:        unverified: signed by trusted signer openfief-ci (OpenFiefCI, ` + plugins.OpenFiefCISubject + ` (issuer https://token.actions.githubusercontent.com)); the catalog does not pin this image
+Trust:        unverified: signed by trusted signer openfief-ci (OpenFiefCI, ` + plugins.OpenFiefCISubject + ` (issuer https://token.actions.githubusercontent.com, source https://github.com/arkadiuss/openfief, ref refs/heads/main)); the catalog does not pin this image
 
 It requests, and the PluginGrant will approve, exactly:
   Capabilities: connector

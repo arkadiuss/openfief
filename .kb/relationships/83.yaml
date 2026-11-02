@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3232b6fc7851
+  - type: implements
+    from: SYM-plugins-signer-validate
+    to: REQ-plugins-signer-source-pinned
+    created_at: 2026-11-02T20:02:07.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf9a11884841

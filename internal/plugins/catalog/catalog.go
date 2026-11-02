@@ -13,10 +13,14 @@
 //	   "image": "ghcr.io/example/sample-connector@sha256:<64 hex digits>",
 //	   "publisher": {"name": "example",
 //	                 "issuer": "https://token.actions.githubusercontent.com",
-//	                 "subject": "https://github.com/example/sample-connector/.github/workflows/release.yml@refs/heads/main"}}]}
+//	                 "subject": "https://github.com/example/sample-connector/.github/workflows/release.yml@refs/heads/main",
+//	                 "sourceRepository": "https://github.com/example/sample-connector",
+//	                 "sourceRef": "refs/heads/main"}}]}
 //
-// A publisher gives an issuer and exact subject (a keyless signature) or a
-// PEM "publicKey". The catalog holds only what the operator's trust check
+// A publisher gives an issuer and exact subject (a keyless signature),
+// optionally with the source repository and ref of the signing run, or a
+// PEM "publicKey". OpenFief's own entries pin the source repository and ref
+// (D-181). The catalog holds only what the operator's trust check
 // needs; the CLI's install flow (D-46) may add fields later.
 package catalog
 

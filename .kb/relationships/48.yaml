@@ -790,3 +790,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7d82dcb6c9c
+  - type: constrains
+    from: REQ-tooling-verify-pins-source-repository
+    to: FACT-SUBJECT-70A4C0FB72C69EB0
+    created_at: 2026-11-02T20:00:27.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1b79ae38eaf
+  - type: requires_property
+    from: REQ-tooling-verify-pins-source-repository
+    to: FACT-PROP-A8AFB1DC41A7B891
+    created_at: 2026-11-02T20:00:27.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8dc88ef6c266
+  - type: specified_by
+    from: REQ-tooling-verify-pins-source-repository
+    to: SCEN-tooling-verify-pins-source-repository
+    created_at: 2026-11-02T20:00:27.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e439379e524b

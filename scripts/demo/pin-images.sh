@@ -14,12 +14,13 @@ image_names() {
 }
 
 # verified_digest prints the digest of <image>:<tag> whose cosign signature comes from the repository's images
-# workflow on main; it fails when nothing verifies.
+# workflow on main, run from the repository itself at refs/heads/main (D-181); it fails when nothing verifies.
 verified_digest() {
   local image="$1" tag="$2" repo="$3" digest
   digest="$(cosign verify "$image:$tag" \
     --certificate-identity "https://github.com/$repo/.github/workflows/images.yml@refs/heads/main" \
     --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+    --certificate-github-workflow-repository "$repo" --certificate-github-workflow-ref refs/heads/main \
     --output json 2>/dev/null | gojq -r '[.[].critical.image["docker-manifest-digest"]] | unique | .[]')" || true
   if [[ ! "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]; then
     echo "pin-images: no verified signature for $image:$tag from $repo's images workflow" >&2

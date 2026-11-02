@@ -622,3 +622,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dfb455242a03
+  - type: constrains
+    from: REQ-operator-plugin-resources
+    to: FACT-SUBJECT-B8AF2A954C333973
+    created_at: 2026-11-02T20:55:42.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b54702daa33f
+  - type: requires_property
+    from: REQ-operator-plugin-resources
+    to: FACT-PROP-5E419945B88F1B94
+    created_at: 2026-11-02T20:55:42.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37f39c20026d
+  - type: specified_by
+    from: REQ-operator-plugin-resources
+    to: SCEN-operator-plugin-resources
+    created_at: 2026-11-02T20:55:42.938Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c9b413e6f24

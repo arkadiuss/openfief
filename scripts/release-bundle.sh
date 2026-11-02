@@ -2,8 +2,9 @@
 # Renders a release's bundle (docs/dev/sdlc.md#releases): the CRDs and the bootstrap install, with every image the
 # install names pinned to the digest the release signed (D-17), and the database the install brings by default (D-14),
 # as plain manifests:
-#   <out dir>/openfief-crds-<version>.yaml     deploy/crds: the openfief namespace and the Plugin and PluginGrant CRDs,
-#                                              the part that needs a cluster admin (D-15)
+#   <out dir>/openfief-crds-<version>.yaml     deploy/crds: the openfief namespace with its LimitRange (D-182) and
+#                                              the Plugin and PluginGrant CRDs, the part that needs a cluster admin
+#                                              (D-15)
 #   <out dir>/openfief-install-<version>.yaml  deploy/operator, deploy/egress-proxy and deploy/core
 #   <out dir>/openfief-db-<version>.yaml       deploy/database: a minimal CloudNativePG cluster openfief-db, for the
 #                                              owner to edit

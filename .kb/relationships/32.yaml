@@ -587,3 +587,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d72f3b116d2
+  - type: executable_for
+    from: SYM-operator-test-namespace-limit-range
+    to: TEST-operator-manifests
+    created_at: 2026-11-02T20:56:12.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da8ca3fe2926

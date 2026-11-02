@@ -77,6 +77,7 @@ check "the ui Plugin runs the pinned plugin image" "$(yes_if gojq --yaml-input -
 check "comments survive" "$(yes_if grep -q '^# OpenFief on the demo machine' "$work/demo/openfief/kustomization.yaml")"
 check "no placeholder is left" "$(yes_if bash -c "! grep -q sha256:0000 '$work/demo/openfief/kustomization.yaml'")"
 check "only the images workflow on main is trusted" "$(yes_if grep -q -- '--certificate-identity https://github.com/example/openfief/.github/workflows/images.yml@refs/heads/main --certificate-oidc-issuer https://token.actions.githubusercontent.com' "$work/log")"
+check "only a run of the repository on main is trusted (D-181)" "$(yes_if grep -q -- '--certificate-github-workflow-repository example/openfief --certificate-github-workflow-ref refs/heads/main' "$work/log")"
 check "the tag is what gets verified" "$(yes_if grep -q '^verify ghcr.io/arkadiuss/openfief/operator:sha-1a2b3c4 ' "$work/log")"
 
 if pin "ghcr.io/arkadiuss/openfief/operator:2026.11.0-beta.1=$op" 2026.11.0-beta.1; then r=no; else r=yes; fi

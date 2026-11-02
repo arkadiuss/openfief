@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed6f145f8e03
+  - type: executable_for
+    from: SYM-cosign-test-fixtures-new-github-ca
+    to: TEST-plugins-cosign
+    created_at: 2026-11-02T20:04:25.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-affd959f1088

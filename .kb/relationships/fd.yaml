@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d12c02294f6
+  - type: implements
+    from: SYM-cosign-verifier-verify-keyless
+    to: REQ-plugins-signer-source-pinned
+    created_at: 2026-11-02T20:03:07.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f99b43777bd7

@@ -706,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a1bc98107c0
+  - type: implements
+    from: SYM-plugins-signer-identity-validate-keyless
+    to: REQ-plugins-signer-source-pinned
+    created_at: 2026-11-02T20:01:56.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05428c6a3bc5

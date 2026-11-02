@@ -23327,6 +23327,8 @@ symbols:
       - type: implements
         target: REQ-plugins-catalog-format
       - type: implements
+        target: REQ-plugins-signer-source-pinned
+      - type: implements
         target: REQ-plugins-verified-entry-pins
   - id: SYM-plugins-parse-catalog
     title: ParseCatalog
@@ -23558,6 +23560,8 @@ symbols:
       - type: implements
         target: REQ-plugins-signer-identity-match
       - type: implements
+        target: REQ-plugins-signer-source-pinned
+      - type: implements
         target: REQ-plugins-trusted-signers-only
   - id: SYM-plugins-signer-identity-is-key
     title: SignerIdentity.IsKey
@@ -23588,6 +23592,8 @@ symbols:
       - type: implements
         target: REQ-plugins-signer-identity-match
       - type: implements
+        target: REQ-plugins-signer-source-pinned
+      - type: implements
         target: REQ-plugins-trusted-signers-only
   - id: SYM-plugins-signer-identity-string
     title: SignerIdentity.String
@@ -23603,6 +23609,8 @@ symbols:
       - type: implements
         target: REQ-plugins-signer-identity-match
       - type: implements
+        target: REQ-plugins-signer-source-pinned
+      - type: implements
         target: REQ-plugins-trusted-signers-only
   - id: SYM-plugins-signer-identity-validate-keyless
     title: SignerIdentity.validateKeyless
@@ -23617,6 +23625,8 @@ symbols:
         target: TEST-plugins-trust
       - type: implements
         target: REQ-plugins-signer-identity-match
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
       - type: implements
         target: REQ-plugins-trusted-signers-only
   - id: SYM-plugins-fn-anchored
@@ -23679,6 +23689,8 @@ symbols:
       - type: implements
         target: REQ-plugins-signer-identity-match
       - type: implements
+        target: REQ-plugins-signer-source-pinned
+      - type: implements
         target: REQ-plugins-trusted-signers-only
   - id: SYM-plugins-open-fief-ci
     title: OpenFiefCI
@@ -23693,6 +23705,8 @@ symbols:
         target: TEST-plugins-trust
       - type: implements
         target: REQ-plugins-signer-identity-match
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
       - type: implements
         target: REQ-plugins-trusted-signers-only
   - id: SYM-plugins-trust
@@ -24388,6 +24402,8 @@ symbols:
         target: REQ-AUTO-AC7E986366466A6A
       - type: implements
         target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
   - id: SYM-cosign-fn-new-key-verifier
     title: newKeyVerifier
     sourceFile: internal/plugins/cosign/verifier.go
@@ -24448,6 +24464,8 @@ symbols:
         target: REQ-AUTO-AC7E986366466A6A
       - type: implements
         target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
   - id: SYM-cosign-fn-is-signature
     title: isSignature
     sourceFile: internal/plugins/cosign/verifier.go
@@ -122600,6 +122618,8 @@ symbols:
         target: TEST-tooling-release-verify
       - type: implements
         target: REQ-tooling-release-verify-signatures
+      - type: implements
+        target: REQ-tooling-verify-pins-source-repository
   - id: SYM-release-verify-verify-images
     title: verify_images
     sourceFile: scripts/release-verify.sh
@@ -124460,6 +124480,8 @@ symbols:
         target: TEST-plugins-cosign
       - type: implements
         target: REQ-plugins-cosign-bundle-verification
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
       - type: implements
         target: REQ-plugins-untrusted-signer-named
   - id: SYM-cosign-fn-untrusted-key
@@ -127132,3 +127154,255 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-xtb-xlsx
+  - id: SYM-plugins-fn-keyless-name
+    title: keylessName
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:03:38.789Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
+  - id: SYM-plugins-test-trust-from-source
+    title: fromSource
+    sourceFile: internal/plugins/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:03:49.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-trust
+  - id: SYM-plugins-test-trust-open-fief-ci-signed
+    title: openFiefCISigned
+    sourceFile: internal/plugins/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:04:01.488Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-trust
+  - id: SYM-cosign-test-fixtures-github-ca
+    title: githubCA
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:04:12.669Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-fixtures-new-github-ca
+    title: newGitHubCA
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:04:23.386Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-fixtures-with-ca
+    title: withCA
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:04:34.211Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-fixtures-with-ca-fulcio-certificate-authorities
+    title: withCA.FulcioCertificateAuthorities
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:04:45.452Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-fixtures-github-run
+    title: githubRun
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:04:56.308Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-fixtures-open-fief-ci-run
+    title: openFiefCIRun
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:05:08.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-fixtures-run-certificate
+    title: runCertificate
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:05:19.863Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-fixtures-run-certificate-get-certificate
+    title: runCertificate.GetCertificate
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:05:31.688Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-fixtures-github-bundle
+    title: githubBundle
+    sourceFile: internal/plugins/cosign/fixtures_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:05:42.961Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-cosign-test-verifier-world-sign-run
+    title: world.signRun
+    sourceFile: internal/plugins/cosign/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:05:53.857Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-plugins-signer-source
+    title: SignerSource
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:27:29.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
+  - id: SYM-plugins-signer-source-validate
+    title: SignerSource.validate
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:27:40.239Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
+  - id: SYM-plugins-signer-source-admits
+    title: SignerSource.admits
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:27:51.041Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
+  - id: SYM-plugins-signer-source-pins-both
+    title: SignerSource.pinsBoth
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:28:02.381Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
+  - id: SYM-plugins-fn-is-https-url
+    title: isHTTPSURL
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:28:14.012Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
+  - id: SYM-cosign-fn-source-of
+    title: sourceOf
+    sourceFile: internal/plugins/cosign/verifier.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:28:25.365Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cosign
+      - type: implements
+        target: REQ-plugins-signer-source-pinned
+  - id: SYM-plugins-fn-same-public-key
+    title: samePublicKey
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:28:37.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-signer-identity-match
+  - id: SYM-operator-plugin-resources
+    title: pluginResources
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:55:58.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-operator-plugin-resources
+  - id: SYM-operator-test-namespace-limit-range
+    title: TestNamespaceLimitRange
+    sourceFile: internal/plugins/operator/manifests_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T20:56:10.146Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-manifests

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Prints the digest of <ref> (image:tag or image@digest) whose keyless cosign signature comes from <owner/repo>'s
-# images workflow on main, the identity scripts/demo/pin-images.sh trusts. Fails, printing nothing, when nothing
+# images workflow on main, run from <owner/repo> at refs/heads/main (D-181: images.yml is a reusable workflow, so
+# the certificate's identity alone would accept another repository's run that calls it), the identity
+# scripts/demo/pin-images.sh trusts. Fails, printing nothing, when nothing
 # verifies or the signatures name several digests. Used by image-carry.sh and ci-images-select.sh; needs cosign
 # and gojq on PATH.
 # Usage: verified-digest.sh <ref> <owner/repo>
@@ -11,6 +13,7 @@ verified_digest() {
   digest="$(cosign verify "$ref" \
     --certificate-identity "https://github.com/$repo/.github/workflows/images.yml@refs/heads/main" \
     --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+    --certificate-github-workflow-repository "$repo" --certificate-github-workflow-ref refs/heads/main \
     --output json 2>/dev/null | gojq -r '[.[].critical.image["docker-manifest-digest"]] | unique | .[]')" || true
   [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]] || return 1
   echo "$digest"

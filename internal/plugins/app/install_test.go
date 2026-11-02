@@ -60,7 +60,7 @@ func (fakeImages) Inspect(_ context.Context, image plugins.ImageRef) (plugins.Si
 	case "registry.example.com/example/unreachable":
 		return plugins.SignedImage{}, errRegistryDown
 	default:
-		out.Signatures = []plugins.SignerIdentity{{Issuer: plugins.GitHubActionsIssuer, Subject: plugins.OpenFiefCISubject}}
+		out.Signatures = []plugins.SignerIdentity{plugins.OpenFiefCI().Identity}
 	}
 	return out, nil
 }

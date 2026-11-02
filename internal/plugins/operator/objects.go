@@ -15,6 +15,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	networkingv1 "k8s.io/api/networking/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
@@ -69,6 +70,46 @@ const (
 	// Service name.
 	MaxPluginNameLen = 56
 )
+
+// The compute resources of every plugin container (D-182). OpenFief runs on
+// one small node next to its PostgreSQL, so a plugin that leaks memory or
+// spins must hit its own limit, never take the node or the database down.
+// The requests let the scheduler place a plugin and give it a fair CPU
+// share; the limits cap it: past its memory limit the kernel kills the
+// plugin's container alone, and past its CPU limit it is throttled. A
+// connector syncs on a schedule and a view serves one owner, so these fit
+// the first-party plugins with room to spare.
+const (
+	// PluginCPURequestMilli is the CPU a plugin container requests, in
+	// millicores.
+	PluginCPURequestMilli = 50
+	// PluginCPULimitMilli is the most CPU a plugin container may use, in
+	// millicores.
+	PluginCPULimitMilli = 500
+	// PluginMemoryRequestMiB is the memory a plugin container requests, in
+	// MiB.
+	PluginMemoryRequestMiB = 64
+	// PluginMemoryLimitMiB is the most memory a plugin container may use,
+	// in MiB.
+	PluginMemoryLimitMiB = 256
+	// mebibyte is the bytes in one MiB.
+	mebibyte = 1 << 20
+)
+
+// pluginResources is what every plugin container requests and is limited
+// to (D-182).
+func pluginResources() corev1.ResourceRequirements {
+	return corev1.ResourceRequirements{
+		Requests: corev1.ResourceList{
+			corev1.ResourceCPU:    *resource.NewMilliQuantity(PluginCPURequestMilli, resource.DecimalSI),
+			corev1.ResourceMemory: *resource.NewQuantity(PluginMemoryRequestMiB*mebibyte, resource.BinarySI),
+		},
+		Limits: corev1.ResourceList{
+			corev1.ResourceCPU:    *resource.NewMilliQuantity(PluginCPULimitMilli, resource.DecimalSI),
+			corev1.ResourceMemory: *resource.NewQuantity(PluginMemoryLimitMiB*mebibyte, resource.BinarySI),
+		},
+	}
+}
 
 // namespaceNameLabel is the label Kubernetes sets on every namespace to its
 // name, which a NetworkPolicy's namespace selector matches.
@@ -303,6 +344,7 @@ func container(w *plugins.Workload, c *Cluster) corev1.Container {
 		}},
 		Env:          env,
 		VolumeMounts: mounts,
+		Resources:    pluginResources(),
 		SecurityContext: &corev1.SecurityContext{
 			AllowPrivilegeEscalation: &no,
 			Privileged:               &no,

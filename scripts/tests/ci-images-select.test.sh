@@ -37,7 +37,7 @@ EOF
 cat >"$work/bin/cosign" <<'EOF'
 #!/usr/bin/env bash
 echo "cosign $2" >>"$FAKE_LOG"
-case "$*" in *"--certificate-identity https://github.com/example/openfief/.github/workflows/images.yml@refs/heads/main"*) ;; *) exit 1 ;; esac
+case "$*" in *"--certificate-identity https://github.com/example/openfief/.github/workflows/images.yml@refs/heads/main"*"--certificate-github-workflow-repository example/openfief --certificate-github-workflow-ref refs/heads/main"*) ;; *) exit 1 ;; esac
 for entry in $FAKE_SIGNED; do
   if [ "${entry%%=*}" = "$2" ]; then
     printf '[{"critical":{"image":{"docker-manifest-digest":"%s"}}}]\n' "${entry#*=}"

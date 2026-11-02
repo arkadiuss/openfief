@@ -13,7 +13,7 @@ An alpha is a GitHub pre-release, so the releases page lists it, but `latest` ne
 
 | Asset | What it is |
 |---|---|
-| `openfief-crds-<version>.yaml` | The `openfief` namespace and the `Plugin` and `PluginGrant` custom resource definitions, the part a cluster admin applies (D-15) |
+| `openfief-crds-<version>.yaml` | The `openfief` namespace with its default compute resources (a LimitRange) and the `Plugin` and `PluginGrant` custom resource definitions, the part a cluster admin applies (D-15) |
 | `openfief-install-<version>.yaml` | The operator, the egress proxy and the core, each image pinned to the digest the release signed (D-17) |
 | `openfief-db-<version>.yaml` | The database: a minimal [CloudNativePG](https://cloudnative-pg.io) cluster `openfief-db`, for you to edit (D-14) |
 | `cnpg-1.30.1.yaml` | CloudNativePG's own release manifest, byte for byte, at the version the end-to-end tests run |
@@ -58,13 +58,15 @@ Without `gh`, each asset is at `https://github.com/arkadiuss/openfief/releases/d
 
 ## 2. Verify the CLI
 
-The release workflow, `release.yml`, signs every CLI file keylessly in the run that published the release, and only the repository owner can publish one, only from `main`. So a CLI file is genuine when its signature's certificate names exactly that workflow on `main`, issued to GitHub Actions. Check the binary and the checksums file, then the checksum:
+The release workflow, `release.yml`, signs every CLI file keylessly in the run that published the release, and only the repository owner can publish one, only from `main`. So a CLI file is genuine when its signature's certificate names exactly that workflow on `main`, issued to GitHub Actions, in a run of `arkadiuss/openfief` on `refs/heads/main`. Check the binary and the checksums file, then the checksum:
 
 ```bash
 for f in "openfief-$VERSION-$OS-$ARCH" "openfief-$VERSION-SHA256SUMS"; do
   cosign verify-blob --bundle "$f.sigstore.json" \
     --certificate-identity https://github.com/arkadiuss/openfief/.github/workflows/release.yml@refs/heads/main \
     --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+    --certificate-github-workflow-repository arkadiuss/openfief \
+    --certificate-github-workflow-ref refs/heads/main \
     "$f"
 done
 sha256sum --check --ignore-missing "openfief-$VERSION-SHA256SUMS"   # macOS: shasum -a 256 --check --ignore-missing
@@ -78,14 +80,16 @@ install -m 0755 "openfief-$VERSION-$OS-$ARCH" ~/.local/bin/openfief
 
 ## 3. Verify the images
 
-The install file names each image by the digest the release signed, so what you verify is exactly what the cluster will run. The images are signed by a different workflow from the CLI: `images.yml`, which the release workflow calls to build them, and the certificate names the workflow that signed, so this identity is `images.yml` on `main`. It is the same identity the operator trusts for first-party plugins:
+The install file names each image by the digest the release signed, so what you verify is exactly what the cluster will run. The images are signed by a different workflow from the CLI: `images.yml`, which the release workflow calls to build them, and the certificate names the workflow that signed, so this identity is `images.yml` on `main`. Because `images.yml` is a reusable workflow, any other repository could call it and get a certificate with that same identity for its own build; the last two flags pin the repository and ref of the run that signed, which only OpenFief's own run on `main` has. It is the same identity the operator trusts for first-party plugins:
 
 ```bash
 sed -n 's/^ *image: *//p' "openfief-install-$VERSION.yaml" | sort -u |
   while read -r image; do
     cosign verify "$image" \
       --certificate-identity https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main \
-      --certificate-oidc-issuer https://token.actions.githubusercontent.com >/dev/null &&
+      --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+      --certificate-github-workflow-repository arkadiuss/openfief \
+      --certificate-github-workflow-ref refs/heads/main >/dev/null &&
       echo "verified $image"
   done
 ```

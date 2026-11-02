@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4df69f58b027
+  - type: implements
+    from: SYM-plugins-fn-keyless-name
+    to: REQ-plugins-signer-source-pinned
+    created_at: 2026-11-02T20:03:41.301Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7de2b4a33237
+  - type: covered_by
+    from: SYM-plugins-fn-keyless-name
+    to: TEST-plugins-trust
+    created_at: 2026-11-02T20:03:41.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-962b7790b32a

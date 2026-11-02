@@ -9,6 +9,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	networkingv1 "k8s.io/api/networking/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
@@ -188,6 +189,11 @@ func deployment(withProxy bool) *appsv1.Deployment {
 						Ports:        []corev1.ContainerPort{{Name: "connect", ContainerPort: 9090, Protocol: corev1.ProtocolTCP}},
 						Env:          env(withProxy),
 						VolumeMounts: mounts,
+						// D-182: every plugin container is capped, so one plugin can't take the node down.
+						Resources: corev1.ResourceRequirements{
+							Requests: corev1.ResourceList{corev1.ResourceCPU: resource.MustParse("50m"), corev1.ResourceMemory: resource.MustParse("64Mi")},
+							Limits:   corev1.ResourceList{corev1.ResourceCPU: resource.MustParse("500m"), corev1.ResourceMemory: resource.MustParse("256Mi")},
+						},
 						SecurityContext: &corev1.SecurityContext{
 							AllowPrivilegeEscalation: ptrTo(false), Privileged: ptrTo(false), ReadOnlyRootFilesystem: ptrTo(true),
 							RunAsNonRoot: ptrTo(true), Capabilities: &corev1.Capabilities{Drop: []corev1.Capability{"ALL"}},

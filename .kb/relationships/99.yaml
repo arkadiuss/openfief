@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63aa7593cd75
+  - type: implements
+    from: SYM-plugins-signer-source
+    to: REQ-plugins-signer-source-pinned
+    created_at: 2026-11-02T20:27:31.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec352e03c57c
+  - type: covered_by
+    from: SYM-plugins-signer-source
+    to: TEST-plugins-trust
+    created_at: 2026-11-02T20:27:31.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-999b29a086b9

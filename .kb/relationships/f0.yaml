@@ -692,3 +692,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b58e6134ae4
+  - type: verified_by
+    from: SCEN-tooling-verify-pins-source-repository
+    to: TEST-tooling-release-verify
+    created_at: 2026-11-02T20:00:09.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88ad07551b5c
+  - type: verified_by
+    from: SCEN-tooling-verify-pins-source-repository
+    to: TEST-tooling-release-catalog
+    created_at: 2026-11-02T20:00:09.327Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d16b5fba45f
+  - type: verified_by
+    from: SCEN-tooling-verify-pins-source-repository
+    to: TEST-tooling-demo-pin-images
+    created_at: 2026-11-02T20:00:09.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76e71c1e29d8
+  - type: verified_by
+    from: SCEN-tooling-verify-pins-source-repository
+    to: TEST-tooling-image-carry
+    created_at: 2026-11-02T20:00:09.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c27cec50e89b
+  - type: verified_by
+    from: SCEN-tooling-verify-pins-source-repository
+    to: TEST-tooling-ci-images-select
+    created_at: 2026-11-02T20:00:09.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a852e5fac14

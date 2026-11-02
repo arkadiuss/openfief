@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6cf1aaab299
+  - type: implements
+    from: SYM-release-verify-verify-cli
+    to: REQ-tooling-verify-pins-source-repository
+    created_at: 2026-11-02T20:03:29.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfa6ff64a763
