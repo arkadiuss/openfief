@@ -167,8 +167,8 @@ func (l *loader) registry(ctx context.Context) error {
 			return fmt.Errorf("demo registry: %w", err)
 		}
 	}
-	for _, a := range l.ds.Accounts {
-		if err := l.ledger.SaveAccount(ctx, a); err != nil {
+	for i := range l.ds.Accounts {
+		if err := l.ledger.SaveAccount(ctx, &l.ds.Accounts[i]); err != nil {
 			return fmt.Errorf("demo registry: %w", err)
 		}
 	}

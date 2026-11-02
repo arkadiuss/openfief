@@ -194,7 +194,7 @@ const missingNoValuation = "valuation"
 // value in the reporting currency (its original-currency value stays the
 // gross one, for grouping by currency); one without, or whose valuation
 // lacks that value, is returned as unvalued with the reason.
-func ValueHoldings(account ledger.Account, holdings []ledger.Holding, vals []valuation.HoldingValuation, on kernel.Date, k ValueKind) ([]AllocationItem, []Unvalued, error) {
+func ValueHoldings(account *ledger.Account, holdings []ledger.Holding, vals []valuation.HoldingValuation, on kernel.Date, k ValueKind) ([]AllocationItem, []Unvalued, error) {
 	var items []AllocationItem
 	var unvalued []Unvalued
 	for i := range holdings {
@@ -212,7 +212,7 @@ func ValueHoldings(account ledger.Account, holdings []ledger.Holding, vals []val
 			unvalued = append(unvalued, Unvalued{Account: account.ID, Holding: *h, Missing: missing.String()})
 			continue
 		}
-		items = append(items, AllocationItem{Account: account, AssetClass: AssetClassOf(h.Instrument), Value: v.Value, Reporting: value})
+		items = append(items, AllocationItem{Account: *account, AssetClass: AssetClassOf(h.Instrument), Value: v.Value, Reporting: value})
 	}
 	return items, unvalued, nil
 }

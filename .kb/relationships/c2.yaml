@@ -552,3 +552,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db01315039f8
+  - type: implements
+    from: SYM-valuation-app-new-chart-starts
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:23:06.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbc00e142671
+  - type: covered_by
+    from: SYM-valuation-app-new-chart-starts
+    to: TEST-valuation-app-chart-start
+    created_at: 2026-11-02T08:23:06.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0e99b61add6
+  - type: implements
+    from: SYM-ui-server-set-chart-start
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:24:35.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-757685907a58
+  - type: implements
+    from: SYM-ui-server-set-chart-start
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:24:35.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef2060100bc2
+  - type: covered_by
+    from: SYM-ui-server-set-chart-start
+    to: TEST-ui-chart-start-setting
+    created_at: 2026-11-02T08:24:35.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5615831cdd70
+  - type: executable_for
+    from: SYM-core-test-helper-set-chart-start
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:25:59.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de64ed32be42

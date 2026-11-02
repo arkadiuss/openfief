@@ -210,8 +210,8 @@ func saveRegistry(t *testing.T, l *ledgerapp.Ledger, ds *demo.Dataset) {
 			t.Fatalf("SaveSleeve: %v", err)
 		}
 	}
-	for _, a := range ds.Accounts {
-		if err := l.SaveAccount(t.Context(), a); err != nil {
+	for i := range ds.Accounts {
+		if err := l.SaveAccount(t.Context(), &ds.Accounts[i]); err != nil {
 			t.Fatalf("SaveAccount: %v", err)
 		}
 	}

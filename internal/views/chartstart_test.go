@@ -59,8 +59,11 @@ func TestHistoryOf(t *testing.T) {
 }
 
 // history is an account's history as day offsets; seeded -1 means not
-// seeded.
-type history struct{ first, seeded int }
+// seeded. opened marks it as opened on its seeding day (D-168).
+type history struct {
+	first, seeded int
+	opened        bool
+}
 
 func TestChartStart(t *testing.T) {
 	t.Parallel()
@@ -93,13 +96,28 @@ func TestChartStart(t *testing.T) {
 			accounts: []history{{first: 9, seeded: -1}, {first: 1, seeded: -1}},
 			want:     1, found: true,
 		},
+		{
+			name:     "an account opened on its seeding day doesn't move it",
+			accounts: []history{{first: 3, seeded: 3}, {first: 20, seeded: 20, opened: true}},
+			want:     3, found: true,
+		},
+		{
+			name:     "an unmarked seeded account moves it past a marked one",
+			accounts: []history{{first: 30, seeded: 30, opened: true}, {first: 12, seeded: 12}},
+			want:     12, found: true,
+		},
+		{
+			name:     "every seeded account marked: the first day of any",
+			accounts: []history{{first: 6, seeded: 6, opened: true}, {first: 2, seeded: -1}, {first: 15, seeded: 15, opened: true}},
+			want:     2, found: true,
+		},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
 			accounts := make([]views.AccountHistory, len(tc.accounts))
 			for i, h := range tc.accounts {
-				accounts[i] = views.AccountHistory{First: perfDay(t, h.first)}
+				accounts[i] = views.AccountHistory{First: perfDay(t, h.first), OpenedOnSeedingDay: h.opened}
 				if h.seeded >= 0 {
 					accounts[i].Seeded, accounts[i].SeededOn = true, perfDay(t, h.seeded)
 				}

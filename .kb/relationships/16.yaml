@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91d76d4a899f
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-check-stored-mark
+    to: TEST-ingest-app-opened
+    created_at: 2026-11-02T08:25:53.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-922bc83cb6b7

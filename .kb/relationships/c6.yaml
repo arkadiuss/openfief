@@ -706,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-84aecafd4602
+  - type: implements
+    from: SYM-views-chart-start
+    to: REQ-ui-opened-account-keeps-default-start
+    created_at: 2026-11-02T08:30:36.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe96b82203a7
+  - type: implements
+    from: SYM-views-chart-start
+    to: REQ-ui-unmarked-seeded-account-moves-start
+    created_at: 2026-11-02T08:30:37.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55fba35c74ad

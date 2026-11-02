@@ -143,8 +143,12 @@ type Account struct {
 	// The day bond_payout took effect, YYYY-MM-DD; empty for the account's
 	// first setting, which covers its whole history (D-162).
 	BondPayoutSince string `protobuf:"bytes,8,opt,name=bond_payout_since,json=bondPayoutSince,proto3" json:"bond_payout_since,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Whether the owner marked the account as opened on its seeding day
+	// (D-168): its seeding from a starting balance then doesn't move the
+	// portfolio's charts' default start (D-138).
+	OpenedOnSeedingDay bool `protobuf:"varint,9,opt,name=opened_on_seeding_day,json=openedOnSeedingDay,proto3" json:"opened_on_seeding_day,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *Account) Reset() {
@@ -231,6 +235,13 @@ func (x *Account) GetBondPayoutSince() string {
 		return x.BondPayoutSince
 	}
 	return ""
+}
+
+func (x *Account) GetOpenedOnSeedingDay() bool {
+	if x != nil {
+		return x.OpenedOnSeedingDay
+	}
+	return false
 }
 
 // FeeRule is how an account's broker charges a sale (D-78): rate of the
@@ -329,9 +340,12 @@ type CreateAccountRequest struct {
 	// The fee rule (D-78); unset for the zero rule.
 	FeeRule *FeeRule `protobuf:"bytes,9,opt,name=fee_rule,json=feeRule,proto3" json:"fee_rule,omitempty"`
 	// The payout setting (D-135); unspecified for BOND_PAYOUT_CASH.
-	BondPayout    BondPayout `protobuf:"varint,10,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	BondPayout BondPayout `protobuf:"varint,10,opt,name=bond_payout,json=bondPayout,proto3,enum=openfief.ingest.v1.BondPayout" json:"bond_payout,omitempty"`
+	// Marks the account as opened on its seeding day (D-168), so that its
+	// seeding doesn't move the portfolio's charts' default start (D-138).
+	OpenedOnSeedingDay bool `protobuf:"varint,11,opt,name=opened_on_seeding_day,json=openedOnSeedingDay,proto3" json:"opened_on_seeding_day,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *CreateAccountRequest) Reset() {
@@ -434,6 +448,13 @@ func (x *CreateAccountRequest) GetBondPayout() BondPayout {
 	return BondPayout_BOND_PAYOUT_UNSPECIFIED
 }
 
+func (x *CreateAccountRequest) GetOpenedOnSeedingDay() bool {
+	if x != nil {
+		return x.OpenedOnSeedingDay
+	}
+	return false
+}
+
 type CreateAccountResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Account       *Account               `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
@@ -496,8 +517,11 @@ type UpdateAccountRequest struct {
 	// from that day on are booked anew under it on the next sync, superseding
 	// those booked before. A day after today fails with INVALID_ARGUMENT.
 	BondPayoutFrom string `protobuf:"bytes,9,opt,name=bond_payout_from,json=bondPayoutFrom,proto3" json:"bond_payout_from,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Marks or unmarks the account as opened on its seeding day (D-168);
+	// unset keeps the account's mark.
+	OpenedOnSeedingDay *bool `protobuf:"varint,10,opt,name=opened_on_seeding_day,json=openedOnSeedingDay,proto3,oneof" json:"opened_on_seeding_day,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *UpdateAccountRequest) Reset() {
@@ -591,6 +615,13 @@ func (x *UpdateAccountRequest) GetBondPayoutFrom() string {
 		return x.BondPayoutFrom
 	}
 	return ""
+}
+
+func (x *UpdateAccountRequest) GetOpenedOnSeedingDay() bool {
+	if x != nil && x.OpenedOnSeedingDay != nil {
+		return *x.OpenedOnSeedingDay
+	}
+	return false
 }
 
 type UpdateAccountResponse struct {
@@ -1161,7 +1192,7 @@ var File_openfief_ingest_v1_accounts_proto protoreflect.FileDescriptor
 
 const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\n" +
-	"!openfief/ingest/v1/accounts.proto\x12\x12openfief.ingest.v1\"\xad\x02\n" +
+	"!openfief/ingest/v1/accounts.proto\x12\x12openfief.ingest.v1\"\xe0\x02\n" +
 	"\aAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12\x12\n" +
@@ -1172,12 +1203,13 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\bfee_rule\x18\x06 \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
 	"\vbond_payout\x18\a \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
 	"bondPayout\x12*\n" +
-	"\x11bond_payout_since\x18\b \x01(\tR\x0fbondPayoutSince\"\x8b\x01\n" +
+	"\x11bond_payout_since\x18\b \x01(\tR\x0fbondPayoutSince\x121\n" +
+	"\x15opened_on_seeding_day\x18\t \x01(\bR\x12openedOnSeedingDay\"\x8b\x01\n" +
 	"\aFeeRule\x12\x12\n" +
 	"\x04rate\x18\x01 \x01(\tR\x04rate\x12\x18\n" +
 	"\aminimum\x18\x02 \x01(\tR\aminimum\x12)\n" +
 	"\x10minimum_currency\x18\x03 \x01(\tR\x0fminimumCurrency\x12'\n" +
-	"\x0fconversion_rate\x18\x04 \x01(\tR\x0econversionRate\"\x91\x03\n" +
+	"\x0fconversion_rate\x18\x04 \x01(\tR\x0econversionRate\"\xc4\x03\n" +
 	"\x14CreateAccountRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
@@ -1191,9 +1223,10 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\bfee_rule\x18\t \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
 	"\vbond_payout\x18\n" +
 	" \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
-	"bondPayout\"N\n" +
+	"bondPayout\x121\n" +
+	"\x15opened_on_seeding_day\x18\v \x01(\bR\x12openedOnSeedingDay\"N\n" +
 	"\x15CreateAccountResponse\x125\n" +
-	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xe2\x02\n" +
+	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xb4\x03\n" +
 	"\x14UpdateAccountRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
 	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1d\n" +
@@ -1206,7 +1239,10 @@ const file_openfief_ingest_v1_accounts_proto_rawDesc = "" +
 	"\bfee_rule\x18\a \x01(\v2\x1b.openfief.ingest.v1.FeeRuleR\afeeRule\x12?\n" +
 	"\vbond_payout\x18\b \x01(\x0e2\x1e.openfief.ingest.v1.BondPayoutR\n" +
 	"bondPayout\x12(\n" +
-	"\x10bond_payout_from\x18\t \x01(\tR\x0ebondPayoutFrom\"N\n" +
+	"\x10bond_payout_from\x18\t \x01(\tR\x0ebondPayoutFrom\x126\n" +
+	"\x15opened_on_seeding_day\x18\n" +
+	" \x01(\bH\x00R\x12openedOnSeedingDay\x88\x01\x01B\x18\n" +
+	"\x16_opened_on_seeding_day\"N\n" +
 	"\x15UpdateAccountResponse\x125\n" +
 	"\aaccount\x18\x01 \x01(\v2\x1b.openfief.ingest.v1.AccountR\aaccount\"\xc6\x01\n" +
 	"\x12BindAccountRequest\x12\x16\n" +
@@ -1325,6 +1361,7 @@ func file_openfief_ingest_v1_accounts_proto_init() {
 	if File_openfief_ingest_v1_accounts_proto != nil {
 		return
 	}
+	file_openfief_ingest_v1_accounts_proto_msgTypes[4].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

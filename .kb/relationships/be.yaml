@@ -755,3 +755,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63b774167ff4
+  - type: implements
+    from: SYM-valuation-postgres-chart-start-key-of
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:23:29.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f68caf3436e4
+  - type: covered_by
+    from: SYM-valuation-postgres-chart-start-key-of
+    to: TEST-valuation-pg-chart-start
+    created_at: 2026-11-02T08:23:29.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f8eca4b521c
+  - type: implements
+    from: SYM-ingest-app-new-account
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:29:09.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a3a3d6e9baf
+  - type: covered_by
+    from: SYM-ingest-app-new-account
+    to: TEST-ingest-app-opened
+    created_at: 2026-11-02T08:29:09.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ead0f4bd6c0

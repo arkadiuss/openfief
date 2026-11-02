@@ -40,7 +40,7 @@ type Registry interface {
 	// Sleeves returns every sleeve, in ID order.
 	Sleeves(ctx context.Context) ([]portfolio.Sleeve, error)
 	// SaveAccount creates a or replaces the stored account with its ID.
-	SaveAccount(ctx context.Context, a ledger.Account) error
+	SaveAccount(ctx context.Context, a *ledger.Account) error
 	// Account returns the account with id, or an error wrapping ErrNotFound.
 	Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error)
 	// Accounts returns every account, in ID order.

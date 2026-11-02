@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-26d9d39579dc
+  - type: executable_for
+    from: SYM-views-app-test-chart-start-fake-starts
+    to: TEST-views-app-chart-start
+    created_at: 2026-11-02T08:24:57.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7652044c9b6c

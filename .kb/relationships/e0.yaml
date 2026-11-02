@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-761cd13688b0
+  - type: implements
+    from: SYM-views-app-views-account-performance
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:31:01.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eeb923bc5a1b
+  - type: covered_by
+    from: SYM-views-app-views-account-performance
+    to: TEST-views-app-chart-start
+    created_at: 2026-11-02T08:31:01.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d652d49f97e0

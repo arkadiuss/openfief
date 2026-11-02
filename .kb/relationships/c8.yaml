@@ -461,3 +461,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de1d81d9631f
+  - type: implements
+    from: SYM-ingest-app-account-change
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:29:17.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef0b98d72ab2
+  - type: covered_by
+    from: SYM-ingest-app-account-change
+    to: TEST-ingest-app-opened
+    created_at: 2026-11-02T08:29:17.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-167911b26c9c
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-request-get-session-token
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:34:27.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93fa4e708d4d
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-request-get-session-token
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:34:27.427Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef817ccbfed1
+  - type: covered_by
+    from: SYM-valuationv1-set-chart-start-request-get-session-token
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:34:27.450Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56a41dd9a08c
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-opened-on-seeding-day
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:36:04.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07637ffa40e3
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-get-opened-on-seeding-day
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:36:04.380Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfe9f8aeb81f
+  - type: covered_by
+    from: SYM-ingestv1-update-account-request-get-opened-on-seeding-day
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-02T08:36:04.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-579f4187e8db

@@ -102,8 +102,8 @@ type AccountServiceClient interface {
 	CreateAccount(context.Context, *connect.Request[v1.CreateAccountRequest]) (*connect.Response[v1.CreateAccountResponse], error)
 	// UpdateAccount renames an account, moves it to another sleeve, or
 	// changes its tax wrapper or fee rule, which revalues it (D-36), or the
-	// payout setting of a hand-entered bond account (D-135); its ID and
-	// institution stay.
+	// payout setting of a hand-entered bond account (D-135), or marks it as
+	// opened on its seeding day (D-168); its ID and institution stay.
 	UpdateAccount(context.Context, *connect.Request[v1.UpdateAccountRequest]) (*connect.Response[v1.UpdateAccountResponse], error)
 	// BindAccount binds a connector instance to a stored account, as
 	// `core connector bind` does, and maps the broker account to it when one
@@ -222,8 +222,8 @@ type AccountServiceHandler interface {
 	CreateAccount(context.Context, *connect.Request[v1.CreateAccountRequest]) (*connect.Response[v1.CreateAccountResponse], error)
 	// UpdateAccount renames an account, moves it to another sleeve, or
 	// changes its tax wrapper or fee rule, which revalues it (D-36), or the
-	// payout setting of a hand-entered bond account (D-135); its ID and
-	// institution stay.
+	// payout setting of a hand-entered bond account (D-135), or marks it as
+	// opened on its seeding day (D-168); its ID and institution stay.
 	UpdateAccount(context.Context, *connect.Request[v1.UpdateAccountRequest]) (*connect.Response[v1.UpdateAccountResponse], error)
 	// BindAccount binds a connector instance to a stored account, as
 	// `core connector bind` does, and maps the broker account to it when one

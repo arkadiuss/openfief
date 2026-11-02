@@ -727,3 +727,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a1bc98107c0
+  - type: implements
+    from: SYM-ui-posted-opened
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:24:42.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d17da2ceef0
+  - type: covered_by
+    from: SYM-ui-posted-opened
+    to: TEST-ui-chart-start-setting
+    created_at: 2026-11-02T08:24:42.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22e7d4b1c941
+  - type: implements
+    from: SYM-ledger-account
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:28:44.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a751771299a
+  - type: covered_by
+    from: SYM-ledger-account
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-02T08:28:44.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eaa7b90aaa3

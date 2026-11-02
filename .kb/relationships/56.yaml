@@ -510,3 +510,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2519164e1fda
+  - type: implements
+    from: SYM-valuation-app-chart-starts-set
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:23:13.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-783e942ea370
+  - type: implements
+    from: SYM-valuation-app-chart-starts-set
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:23:13.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c82c6af29bee
+  - type: covered_by
+    from: SYM-valuation-app-chart-starts-set
+    to: TEST-valuation-app-chart-start
+    created_at: 2026-11-02T08:23:13.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47986d23121a

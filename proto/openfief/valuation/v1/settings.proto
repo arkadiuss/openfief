@@ -1,13 +1,15 @@
 // OpenFief's owner settings contract (docs/DESIGN.md D-62, D-78, D-79,
-// D-113).
+// D-113, D-167).
 //
-// The owner's settings that are not an account's: the number format the
-// built-in UI writes amounts in (D-113), shown next to the reporting
-// currency (D-62), and the owner's marginal personal income tax rate,
-// which taxes an early withdrawal from IKZE (D-78). The read API serves
-// the reporting currency and the number format to any reader
-// (ReadService.GetSettings); this service is the owner's entry service
-// for changing them (D-79).
+// The owner's settings that are not an account's terms: the number format
+// the built-in UI writes amounts in (D-113), shown next to the reporting
+// currency (D-62), the owner's marginal personal income tax rate, which
+// taxes an early withdrawal from IKZE (D-78), and the charts' start the
+// owner chose (D-138), the portfolio's and each account's (D-167). The
+// read API serves the reporting currency and the number format to any
+// reader (ReadService.GetSettings), and the charts' start the owner chose
+// with the performance (ReadService.GetPerformance); this service is the
+// owner's entry service for changing them (D-79).
 //
 // The core serves SettingsService to VIEW plugins only, next to the
 // AuthService. Calling conventions are the AuthService's
@@ -20,9 +22,12 @@
 //   unknown, expired or revoked session fails with UNAUTHENTICATED; a
 //   read-scoped session, or an origin off the core's allow-list, fails with
 //   PERMISSION_DENIED.
-// - A number format key that is not one of number_formats, or a marginal rate that is not
-//   a decimal above 0 and below 1, fails with INVALID_ARGUMENT and nothing
-//   changes.
+// - A number format key that is not one of number_formats, a marginal rate
+//   that is not a decimal above 0 and below 1, or a charts' start that is
+//   not a YYYY-MM-DD date, fails with INVALID_ARGUMENT and nothing changes.
+// - A charts' start of an account the owner may not change (D-163) fails
+//   with PERMISSION_DENIED, whether it is stored or not; one of an account
+//   that is not stored, with NOT_FOUND.
 syntax = "proto3";
 
 package openfief.valuation.v1;
@@ -48,6 +53,12 @@ service SettingsService {
   // it can't read. The choice stays with the instrument; setting it again
   // replaces it. It revalues nothing: the yearly tax is computed when read.
   rpc SetExemptionClass(SetExemptionClassRequest) returns (SetExemptionClassResponse);
+
+  // SetChartStart stores the day the time charts start on (D-138) as the
+  // owner's setting (D-167): the portfolio's, or one account's. An empty
+  // start clears the setting, so the charts start on their default again.
+  // It revalues nothing.
+  rpc SetChartStart(SetChartStartRequest) returns (SetChartStartResponse);
 }
 
 // NumberFormat is how amounts are written (D-113): only the separators.
@@ -125,3 +136,16 @@ message SetMarginalRateRequest {
 }
 
 message SetMarginalRateResponse {}
+
+message SetChartStartRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The account whose charts start on start, by its ID; empty for the
+  // portfolio's charts.
+  string account_id = 3;
+  // The day the charts start on, YYYY-MM-DD; empty goes back to the
+  // default (D-138) and clears the setting.
+  string start = 4;
+}
+
+message SetChartStartResponse {}

@@ -52,6 +52,7 @@ type Views struct {
 	terms       Terms
 	attention   AttentionItems
 	authz       identityapp.Authorizer
+	starts      ChartStarts
 }
 
 // New returns the queries over the given ports, with totals, valuations and
@@ -334,7 +335,7 @@ func (v *Views) allocationItems(ctx context.Context, a *ledger.Account, on kerne
 	if err != nil {
 		return nil, nil, fmt.Errorf("loading valuations: %w", err)
 	}
-	items, unvalued, err := views.ValueHoldings(*a, holdings, vals, on, k)
+	items, unvalued, err := views.ValueHoldings(a, holdings, vals, on, k)
 	if err != nil {
 		return nil, nil, fmt.Errorf("valuing holdings: %w", err)
 	}

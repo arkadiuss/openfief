@@ -31,10 +31,15 @@ type Account struct {
 	// Payout is what happens to the coupons and maturities of a
 	// hand-entered bond account (D-135); nil is the default, as cash.
 	Payout *PayoutSetting
+	// OpenedOnSeedingDay is the owner's mark that the account was opened
+	// on the day it was seeded (D-168): no history is unknown before its
+	// seeding, so it doesn't move the portfolio's charts' default start
+	// (D-138).
+	OpenedOnSeedingDay bool
 }
 
 // PayoutSetting returns a's payout setting, the default for none.
-func (a Account) PayoutSetting() PayoutSetting {
+func (a *Account) PayoutSetting() PayoutSetting {
 	if a.Payout == nil {
 		return PayoutSetting{}
 	}
@@ -43,7 +48,7 @@ func (a Account) PayoutSetting() PayoutSetting {
 
 // Validate reports whether a has an ID, an institution, a name and a
 // sleeve, and a valid payout setting.
-func (a Account) Validate() error {
+func (a *Account) Validate() error {
 	switch {
 	case a.ID == "":
 		return fmt.Errorf("%w: empty ID", ErrInvalidAccount)

@@ -433,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58f3b582c10b
+  - type: executable_for
+    from: SYM-ui-test-account-opened-on-seeding-day-form
+    to: TEST-ui-chart-start-setting
+    created_at: 2026-11-02T08:28:37.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8c783780305

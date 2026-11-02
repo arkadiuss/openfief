@@ -116,7 +116,7 @@ func TestSaveAccount(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			l, _ := seeded(t)
-			err := l.SaveAccount(t.Context(), tt.account)
+			err := l.SaveAccount(t.Context(), &tt.account)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Fatalf("SaveAccount error (-want +got):\n%s", diff)
 			}

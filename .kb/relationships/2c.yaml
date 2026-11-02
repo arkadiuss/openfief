@@ -930,3 +930,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9393a3ac2e1c
+  - type: implements
+    from: SYM-valuation-app-account-owners
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:22:45.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7528e25d8d2b
+  - type: covered_by
+    from: SYM-valuation-app-account-owners
+    to: TEST-valuation-app-chart-start
+    created_at: 2026-11-02T08:22:45.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-679700c322a5

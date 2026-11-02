@@ -50,8 +50,8 @@ func (m *memRegistry) Sleeves(context.Context) ([]portfolio.Sleeve, error) {
 	return portfolio.DefaultSleeves(), m.err
 }
 
-func (m *memRegistry) SaveAccount(_ context.Context, a ledger.Account) error {
-	m.accounts = append(slices.DeleteFunc(m.accounts, func(o ledger.Account) bool { return o.ID == a.ID }), a)
+func (m *memRegistry) SaveAccount(_ context.Context, a *ledger.Account) error {
+	m.accounts = append(slices.DeleteFunc(m.accounts, func(o ledger.Account) bool { return o.ID == a.ID }), *a)
 	return nil
 }
 
@@ -151,11 +151,12 @@ func TestAccountServiceRoundTrip(t *testing.T) {
 	ctx := t.Context()
 	created, err := c.CreateAccount(ctx, connect.NewRequest(&ingestv1.CreateAccountRequest{
 		Origin: local, SessionToken: ownerSession, Name: "IBKR main", Sleeve: "satellite",
-		ConnectorInstance: "ibkr-main", BrokerAccount: "U0000001",
+		ConnectorInstance: "ibkr-main", BrokerAccount: "U0000001", OpenedOnSeedingDay: true,
 	}))
 	want := &ingestv1.Account{
 		Id: "ibkr-main", Institution: "ibkr", Name: "IBKR main", Sleeve: "satellite", TaxWrapper: "taxable",
 		FeeRule: &ingestv1.FeeRule{Rate: "0", Minimum: "0", ConversionRate: "0"}, BondPayout: ingestv1.BondPayout_BOND_PAYOUT_CASH,
+		OpenedOnSeedingDay: true,
 	}
 	if err != nil || !gocmp.Equal(want, created.Msg.GetAccount(), protocmp.Transform()) {
 		t.Fatalf("CreateAccount = %v, %v; want %v", created, err, want)
@@ -165,12 +166,21 @@ func TestAccountServiceRoundTrip(t *testing.T) {
 		Origin: local, SessionToken: ownerSession, AccountId: "ibkr-main", Name: "IBKR", Sleeve: "core",
 		TaxWrapper: "ikze", FeeRule: fee,
 	}))
+	// An update that doesn't name the mark of an account opened on its
+	// seeding day keeps it (D-168); one that does changes it.
 	want = &ingestv1.Account{
 		Id: "ibkr-main", Institution: "ibkr", Name: "IBKR", Sleeve: "core", TaxWrapper: "ikze", FeeRule: fee,
-		BondPayout: ingestv1.BondPayout_BOND_PAYOUT_CASH,
+		BondPayout: ingestv1.BondPayout_BOND_PAYOUT_CASH, OpenedOnSeedingDay: true,
 	}
 	if err != nil || !gocmp.Equal(want, updated.Msg.GetAccount(), protocmp.Transform()) {
 		t.Errorf("UpdateAccount = %v, %v; want %v", updated, err, want)
+	}
+	unmark := false
+	updated, err = c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
+		Origin: local, SessionToken: ownerSession, AccountId: "ibkr-main", Name: "IBKR", Sleeve: "core", OpenedOnSeedingDay: &unmark,
+	}))
+	if err != nil || updated.Msg.GetAccount().GetOpenedOnSeedingDay() {
+		t.Errorf("UpdateAccount unmarking = %v, %v; want the mark cleared", updated, err)
 	}
 	if _, err := c.BindAccount(ctx, connect.NewRequest(&ingestv1.BindAccountRequest{
 		Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, ConnectorInstance: "bonds-main",

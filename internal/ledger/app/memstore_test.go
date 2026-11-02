@@ -226,10 +226,10 @@ func (s *memStore) Sleeves(_ context.Context) ([]portfolio.Sleeve, error) {
 	return out, nil
 }
 
-func (s *memStore) SaveAccount(_ context.Context, a ledger.Account) error {
+func (s *memStore) SaveAccount(_ context.Context, a *ledger.Account) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	s.accounts[a.ID] = a
+	s.accounts[a.ID] = *a
 	return nil
 }
 

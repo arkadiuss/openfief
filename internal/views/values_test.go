@@ -142,11 +142,11 @@ func TestValueHoldingsOfAKind(t *testing.T) {
 	acc := ledger.Account{ID: "acc-1", Institution: "broker-a", Name: "Synthetic", Sleeve: "core"}
 	row := ikzeRow(t)
 	holdings := []ledger.Holding{{Account: acc.ID, Instrument: row.Instrument, Date: row.Date, Quantity: kernel.NewQuantity(kernel.NewDecimal(1, 0))}}
-	items, unvalued, err := views.ValueHoldings(acc, holdings, []valuation.HoldingValuation{row}, row.Date, views.Net)
+	items, unvalued, err := views.ValueHoldings(&acc, holdings, []valuation.HoldingValuation{row}, row.Date, views.Net)
 	if err != nil || len(unvalued) != 0 || len(items) != 1 || !items[0].Reporting.Equal(money(t, "900", "PLN")) || !items[0].Value.Equal(row.Value) {
 		t.Errorf("net: items %v, unvalued %v, %v", items, unvalued, err)
 	}
-	items, unvalued, err = views.ValueHoldings(acc, holdings, []valuation.HoldingValuation{row}, row.Date, views.Liquidation)
+	items, unvalued, err = views.ValueHoldings(&acc, holdings, []valuation.HoldingValuation{row}, row.Date, views.Liquidation)
 	want := []views.Unvalued{{Account: acc.ID, Holding: holdings[0], Missing: "marginal_rate"}}
 	if diff := cmp.Diff(want, unvalued); err != nil || len(items) != 0 || diff != "" {
 		t.Errorf("liquidation: items %v, %v (-want +got):\n%s", items, err, diff)

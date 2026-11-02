@@ -186,7 +186,7 @@ func TestValueHoldings(t *testing.T) {
 	moved.Account = "acc-2"
 	stored = append(stored, moved)
 
-	items, unvalued, err := views.ValueHoldings(acc, holdings, stored, on, views.Gross)
+	items, unvalued, err := views.ValueHoldings(&acc, holdings, stored, on, views.Gross)
 	if err != nil {
 		t.Fatalf("ValueHoldings: %v", err)
 	}

@@ -340,6 +340,9 @@ type fakeRead struct {
 	// GetModelPortfolio ones.
 	performance []*viewsv1.GetPerformanceRequest
 	model       []*viewsv1.GetModelPortfolioRequest
+	// chartStarts are the charts' starts the owner saved through the fake
+	// SettingsService (D-167), by account, the portfolio's under "".
+	chartStarts map[string]string
 }
 
 func (f *fakeRead) GetSettings(_ context.Context, r *connect.Request[viewsv1.GetSettingsRequest]) (*connect.Response[viewsv1.GetSettingsResponse], error) {

@@ -99,7 +99,7 @@ func seeded(t *testing.T) (*app.Ledger, *memStore) {
 		t.Fatalf("SaveSleeve: %v", err)
 	}
 	for _, id := range []ledger.AccountID{acc1, acc2} {
-		if err := l.SaveAccount(t.Context(), ledger.Account{ID: id, Institution: "test-broker", Name: string(id), Sleeve: core}); err != nil {
+		if err := l.SaveAccount(t.Context(), &ledger.Account{ID: id, Institution: "test-broker", Name: string(id), Sleeve: core}); err != nil {
 			t.Fatalf("SaveAccount(%s): %v", id, err)
 		}
 	}

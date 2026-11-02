@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f38805c9ae6a
+  - type: implements
+    from: SYM-valuation-pg-store-forget-account
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:31:24.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23a5e2a64a02
+  - type: covered_by
+    from: SYM-valuation-pg-store-forget-account
+    to: TEST-valuation-pg-chart-start
+    created_at: 2026-11-02T08:31:24.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a48cbf60363f

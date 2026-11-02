@@ -36,7 +36,7 @@ type AccountLedger interface {
 	// Sleeves returns every sleeve, in ID order.
 	Sleeves(ctx context.Context) ([]portfolio.Sleeve, error)
 	// SaveAccount creates a or replaces the account with its ID.
-	SaveAccount(ctx context.Context, a ledger.Account) error
+	SaveAccount(ctx context.Context, a *ledger.Account) error
 }
 
 // AccountTerms keep an account's tax wrapper and fee rule (D-76, D-78),
@@ -77,6 +77,9 @@ type AccountChange struct {
 	// PayoutFrom is the day Payout takes effect from (D-162): today or an
 	// earlier day; zero is today.
 	PayoutFrom kernel.Date
+	// OpenedOnSeedingDay marks or unmarks the account as opened on its
+	// seeding day (D-168); nil keeps the account's mark.
+	OpenedOnSeedingDay *bool
 }
 
 // PayoutLedger is what a change of an account's payout setting reads from
@@ -110,6 +113,10 @@ type NewAccount struct {
 	// Payout is the account's payout setting (D-135); nil keeps its
 	// payouts as cash.
 	Payout *ledger.Payout
+	// OpenedOnSeedingDay marks the account as opened on its seeding day
+	// (D-168), so its seeding doesn't move the portfolio's charts' default
+	// start (D-138).
+	OpenedOnSeedingDay bool
 }
 
 // Accounts are the owner's account entries (D-72, D-73): creating and
@@ -169,7 +176,10 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 	if institution == "" {
 		institution = broker.Institution
 	}
-	entry.Account = ledger.Account{ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name, Sleeve: n.Sleeve}
+	entry.Account = ledger.Account{
+		ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name, Sleeve: n.Sleeve,
+		OpenedOnSeedingDay: n.OpenedOnSeedingDay,
+	}
 	if entry.Payout, err = a.firstPayout(&entry.Account, n.Payout); err != nil {
 		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
 	}
@@ -179,7 +189,8 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 	return entry, nil
 }
 
-// Update renames the stored account id and moves it to a sleeve, and
+// Update renames the stored account id and moves it to a sleeve, marks or
+// unmarks it as opened on its seeding day when c says (D-168), and
 // records its tax wrapper and fee rule when c changes them, and its payout
 // setting (D-135), in force from the day c gives, today or earlier, today
 // when it gives none (D-162). The payout withdrawals booked from that day on
@@ -195,11 +206,11 @@ func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id l
 	if err != nil {
 		return AccountEntry{}, err
 	}
-	entry, from, err := a.changed(ctx, acc, c)
+	entry, from, err := a.changed(ctx, &acc, c)
 	if err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
-	if err := a.save(ctx, entry.Account); err != nil {
+	if err := a.save(ctx, &entry.Account); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
 	if err := a.recordTerms(ctx, id, c.Wrapper, c.Fee); err != nil {
@@ -238,7 +249,7 @@ func (a *Accounts) Bind(ctx context.Context, origin, sessionToken string, id led
 // storeNew saves the new account entry, records its terms, and binds n's
 // instance to it with its broker account.
 func (a *Accounts) storeNew(ctx context.Context, entry *AccountEntry, n *NewAccount) error {
-	if err := a.save(ctx, entry.Account); err != nil {
+	if err := a.save(ctx, &entry.Account); err != nil {
 		return err
 	}
 	if err := a.recordTerms(ctx, entry.ID, entry.Wrapper, n.Fee); err != nil {
@@ -252,7 +263,7 @@ func (a *Accounts) storeNew(ctx context.Context, entry *AccountEntry, n *NewAcco
 
 // entry returns account acc with its tax wrapper, the pack's
 // default unless one was recorded, and its fee rule.
-func (a *Accounts) entry(ctx context.Context, acc ledger.Account) (AccountEntry, error) {
+func (a *Accounts) entry(ctx context.Context, acc *ledger.Account) (AccountEntry, error) {
 	w, recorded, err := a.Terms.TaxWrapper(ctx, acc.ID)
 	if err != nil {
 		return AccountEntry{}, fmt.Errorf("loading the tax wrapper of %s: %w", acc.ID, err)
@@ -264,7 +275,7 @@ func (a *Accounts) entry(ctx context.Context, acc ledger.Account) (AccountEntry,
 	if err != nil {
 		return AccountEntry{}, fmt.Errorf("loading the fee rule of %s: %w", acc.ID, err)
 	}
-	return AccountEntry{Account: acc, Wrapper: w, Fee: fee}, nil
+	return AccountEntry{Account: *acc, Wrapper: w, Fee: fee}, nil
 }
 
 // newEntry returns the terms n gives a new account, checked: its wrapper,
@@ -371,7 +382,7 @@ func (a *Accounts) stored(ctx context.Context, id ledger.AccountID) (ledger.Acco
 }
 
 // save checks acc and its sleeve, then stores it.
-func (a *Accounts) save(ctx context.Context, acc ledger.Account) error {
+func (a *Accounts) save(ctx context.Context, acc *ledger.Account) error {
 	if err := acc.Validate(); err != nil {
 		return fmt.Errorf("checking the account: %w", err)
 	}
@@ -464,8 +475,9 @@ func (a *Accounts) supersedePayouts(ctx context.Context, acc *ledger.Account, fr
 
 // changed returns account acc as c changes it, checked, with the day a
 // payout change takes effect from: its name and sleeve, its tax wrapper
-// and fee rule when c gives them, and its payout setting (payout).
-func (a *Accounts) changed(ctx context.Context, acc ledger.Account, c *AccountChange) (AccountEntry, kernel.Date, error) {
+// and fee rule when c gives them, its mark of being opened on its seeding
+// day when c gives one (D-168), and its payout setting (payout).
+func (a *Accounts) changed(ctx context.Context, acc *ledger.Account, c *AccountChange) (AccountEntry, kernel.Date, error) {
 	entry, entryErr := a.entry(ctx, acc)
 	if entryErr != nil {
 		return AccountEntry{}, kernel.Date{}, entryErr
@@ -480,6 +492,9 @@ func (a *Accounts) changed(ctx context.Context, acc ledger.Account, c *AccountCh
 		return AccountEntry{}, kernel.Date{}, err
 	}
 	entry.Name, entry.Sleeve = c.Name, c.Sleeve
+	if c.OpenedOnSeedingDay != nil {
+		entry.OpenedOnSeedingDay = *c.OpenedOnSeedingDay
+	}
 	from, err := a.payoutFrom(c.PayoutFrom)
 	if err != nil {
 		return AccountEntry{}, kernel.Date{}, err

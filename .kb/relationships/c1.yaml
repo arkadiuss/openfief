@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91bdb377d2a0
+  - type: validates
+    from: TEST-ingest-connectapi-accounts
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:22:30.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d009f3959c94

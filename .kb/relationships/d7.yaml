@@ -643,3 +643,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1be09bcc25ca
+  - type: executable_for
+    from: SYM-ui-test-chart-start-save-refused
+    to: TEST-ui-chart-start-setting
+    created_at: 2026-11-02T08:28:30.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fc61266920d

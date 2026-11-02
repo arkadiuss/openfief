@@ -1247,8 +1247,12 @@ type Account struct {
 	// The day bond_payout took effect, YYYY-MM-DD; empty for the account's
 	// first setting, which covers its whole history (D-162).
 	BondPayoutSince string `protobuf:"bytes,8,opt,name=bond_payout_since,json=bondPayoutSince,proto3" json:"bond_payout_since,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Whether the owner marked the account as opened on its seeding day
+	// (D-168): its seeding then doesn't move the portfolio's charts' default
+	// start (D-138).
+	OpenedOnSeedingDay bool `protobuf:"varint,9,opt,name=opened_on_seeding_day,json=openedOnSeedingDay,proto3" json:"opened_on_seeding_day,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *Account) Reset() {
@@ -1335,6 +1339,13 @@ func (x *Account) GetBondPayoutSince() string {
 		return x.BondPayoutSince
 	}
 	return ""
+}
+
+func (x *Account) GetOpenedOnSeedingDay() bool {
+	if x != nil {
+		return x.OpenedOnSeedingDay
+	}
+	return false
 }
 
 // FeeRule is how an account's broker charges a sale (D-78): rate of the
@@ -5000,9 +5011,10 @@ func (x *ListTransfersResponse) GetBroken() []*Transfer {
 type GetPerformanceRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The first date, the charts' start the owner chose (D-138), YYYY-MM-DD;
-	// empty means the default start (the response's default_from), and a
-	// date before the first transaction means that transaction's date. The
-	// index is 100 on it.
+	// empty means the start the owner stored as a setting (D-167, the
+	// response's chosen_from) or, without one, the default start (the
+	// response's default_from). A date before the first transaction means
+	// that transaction's date. The index is 100 on it.
 	From string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
 	// The last date, inclusive, YYYY-MM-DD, at most 3700 days after from;
 	// empty means the latest date any account is valued through.
@@ -5088,9 +5100,15 @@ type GetPerformanceResponse struct {
 	// tracking began, which the charts mark. The portfolio's is the latest
 	// day an account was seeded from a starting balance (D-23), or its first
 	// transaction's date when none was: an account with its whole history,
-	// or opened later, doesn't move it. An account's is its own first day.
-	// Empty when nothing is recorded yet.
-	DefaultFrom   string `protobuf:"bytes,8,opt,name=default_from,json=defaultFrom,proto3" json:"default_from,omitempty"`
+	// opened later, or marked as opened on its seeding day (D-168) doesn't
+	// move it. An account's is its own first day. Empty when nothing is
+	// recorded yet.
+	DefaultFrom string `protobuf:"bytes,8,opt,name=default_from,json=defaultFrom,proto3" json:"default_from,omitempty"`
+	// The charts' start the owner stored as a setting (D-167) for the
+	// portfolio or for the account asked for, YYYY-MM-DD; empty when none
+	// is stored, and the charts start on default_from unless the request
+	// named from.
+	ChosenFrom    string `protobuf:"bytes,9,opt,name=chosen_from,json=chosenFrom,proto3" json:"chosen_from,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -5177,6 +5195,13 @@ func (x *GetPerformanceResponse) GetReportingCurrency() string {
 func (x *GetPerformanceResponse) GetDefaultFrom() string {
 	if x != nil {
 		return x.DefaultFrom
+	}
+	return ""
+}
+
+func (x *GetPerformanceResponse) GetChosenFrom() string {
+	if x != nil {
+		return x.ChosenFrom
 	}
 	return ""
 }
@@ -6207,7 +6232,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x10ConnectorBinding\x12-\n" +
 	"\x12connector_instance\x18\x01 \x01(\tR\x11connectorInstance\x12\x1d\n" +
 	"\n" +
-	"account_id\x18\x02 \x01(\tR\taccountId\"\xab\x02\n" +
+	"account_id\x18\x02 \x01(\tR\taccountId\"\xde\x02\n" +
 	"\aAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12\x12\n" +
@@ -6218,7 +6243,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\bfee_rule\x18\x06 \x01(\v2\x1a.openfief.views.v1.FeeRuleR\afeeRule\x12>\n" +
 	"\vbond_payout\x18\a \x01(\x0e2\x1d.openfief.views.v1.BondPayoutR\n" +
 	"bondPayout\x12*\n" +
-	"\x11bond_payout_since\x18\b \x01(\tR\x0fbondPayoutSince\"z\n" +
+	"\x11bond_payout_since\x18\b \x01(\tR\x0fbondPayoutSince\x121\n" +
+	"\x15opened_on_seeding_day\x18\t \x01(\bR\x12openedOnSeedingDay\"z\n" +
 	"\aFeeRule\x12\x12\n" +
 	"\x04rate\x18\x01 \x01(\tR\x04rate\x122\n" +
 	"\aminimum\x18\x02 \x01(\v2\x18.openfief.views.v1.MoneyR\aminimum\x12'\n" +
@@ -6502,7 +6528,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
 	"\x02to\x18\x02 \x01(\tR\x02to\x12\x1d\n" +
 	"\n" +
-	"account_id\x18\x03 \x01(\tR\taccountId\"\xe6\x02\n" +
+	"account_id\x18\x03 \x01(\tR\taccountId\"\x87\x03\n" +
 	"\x16GetPerformanceResponse\x12\x12\n" +
 	"\x04from\x18\x01 \x01(\tR\x04from\x12\x0e\n" +
 	"\x02to\x18\x02 \x01(\tR\x02to\x125\n" +
@@ -6511,7 +6537,9 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x13revaluation_pending\x18\x05 \x01(\bR\x12revaluationPending\x129\n" +
 	"\ttransfers\x18\x06 \x03(\v2\x1b.openfief.views.v1.TransferR\ttransfers\x12-\n" +
 	"\x12reporting_currency\x18\a \x01(\tR\x11reportingCurrency\x12!\n" +
-	"\fdefault_from\x18\b \x01(\tR\vdefaultFrom\"\xdd\x01\n" +
+	"\fdefault_from\x18\b \x01(\tR\vdefaultFrom\x12\x1f\n" +
+	"\vchosen_from\x18\t \x01(\tR\n" +
+	"chosenFrom\"\xdd\x01\n" +
 	"\vModelTarget\x126\n" +
 	"\x04kind\x18\x01 \x01(\x0e2\".openfief.views.v1.ModelTargetKindR\x04kind\x12=\n" +
 	"\n" +

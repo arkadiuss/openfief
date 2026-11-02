@@ -186,6 +186,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /{$}", s.withSession(s.overview))
 	mux.HandleFunc("GET /allocation", s.withSession(s.allocationFragment))
 	mux.HandleFunc("GET /value-chart", s.withSession(s.valueChartFragment))
+	mux.HandleFunc("POST /chart-start", s.withOwner(s.setChartStart))
 	mux.HandleFunc("GET /accounts/{id}", s.withSession(s.accountPage))
 	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))

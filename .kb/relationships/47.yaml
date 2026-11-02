@@ -643,3 +643,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-401dcf0d95fe
+  - type: implements
+    from: SYM-valuation-app-chart-start-store
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:22:52.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9498f24ebd6
+  - type: implements
+    from: SYM-valuation-app-chart-start-store
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:22:52.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a82a2e0e2ae
+  - type: covered_by
+    from: SYM-valuation-app-chart-start-store
+    to: TEST-valuation-app-chart-start
+    created_at: 2026-11-02T08:22:52.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8534ab9b7007
+  - type: covered_by
+    from: SYM-valuation-app-chart-start-store
+    to: TEST-valuation-pg-chart-start
+    created_at: 2026-11-02T08:22:52.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-922a51c9dfba

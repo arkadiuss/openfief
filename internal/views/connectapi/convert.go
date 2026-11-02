@@ -71,12 +71,13 @@ func pbSleeve(s *portfolio.Sleeve) *viewsv1.Sleeve {
 	}
 }
 
-// pbAccount converts an account with its tax wrapper, fee rule and payout
-// setting (D-135).
+// pbAccount converts an account with its tax wrapper, fee rule, payout
+// setting (D-135) and mark of being opened on its seeding day (D-168).
 func pbAccount(a *ledger.Account, terms *app.AccountTerms) *viewsv1.Account {
 	out := &viewsv1.Account{
 		Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve),
 		TaxWrapper: string(terms.Wrapper), FeeRule: pbFeeRule(&terms.Fee), BondPayout: pbPayout(a.PayoutSetting().Payout),
+		OpenedOnSeedingDay: a.OpenedOnSeedingDay,
 	}
 	if since := a.PayoutSetting().Since; !since.IsZero() {
 		out.BondPayoutSince = since.String()
@@ -272,7 +273,7 @@ func parseOptionalDate(s string) (kernel.Date, error) {
 func pbPerformance(p *app.Performance, reporting kernel.Currency) *viewsv1.GetPerformanceResponse {
 	out := &viewsv1.GetPerformanceResponse{
 		From: pbDate(p.From), To: pbDate(p.To), Gap: viewsv1.PerformanceGap(enumNumber(int(p.Series.Gap))),
-		RevaluationPending: p.Pending, ReportingCurrency: reporting.String(), DefaultFrom: pbDate(p.Start),
+		RevaluationPending: p.Pending, ReportingCurrency: reporting.String(), DefaultFrom: pbDate(p.Start), ChosenFrom: pbDate(p.Chosen),
 		Days:      make([]*viewsv1.PerformanceDay, 0, len(p.Series.Days)),
 		Transfers: pbTransfers(p.Series.Transfers),
 	}

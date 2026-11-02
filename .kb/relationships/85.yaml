@@ -538,3 +538,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5fdad6f5cba6
+  - type: executable_for
+    from: SYM-core-test-chart-start-setting
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:27:51.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0653dc97481d

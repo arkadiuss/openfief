@@ -720,3 +720,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52454862d069
+  - type: implements
+    from: SYM-ui-server-account-charts
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:31:40.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-292ca0d5cf80
+  - type: covered_by
+    from: SYM-ui-server-account-charts
+    to: TEST-ui-chart-start-setting
+    created_at: 2026-11-02T08:31:40.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bc0470441d0
+  - type: implements
+    from: SYM-views-app-views-may-view
+    to: REQ-identity-read-access-viewable-accounts-only
+    created_at: 2026-11-02T08:31:56.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c0d77a765c4
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-response-string
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:35:04.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73d1a59b32b8
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-response-string
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:35:04.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd3fc31454cc
+  - type: covered_by
+    from: SYM-valuationv1-set-chart-start-response-string
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:35:04.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54e446e5028c

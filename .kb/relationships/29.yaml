@@ -713,3 +713,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcce24f8f70b
+  - type: implements
+    from: SYM-ui-terms-form
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:30:20.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57ce10b35e67
+  - type: covered_by
+    from: SYM-ui-terms-form
+    to: TEST-ui-chart-start-setting
+    created_at: 2026-11-02T08:30:20.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be65ce6f6697

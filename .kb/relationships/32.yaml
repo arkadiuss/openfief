@@ -587,3 +587,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d72f3b116d2
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-request-get-origin
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:34:20.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c87c5853579
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-request-get-origin
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:34:20.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-261c4a01d74c
+  - type: covered_by
+    from: SYM-valuationv1-set-chart-start-request-get-origin
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:34:20.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a36240b6a65

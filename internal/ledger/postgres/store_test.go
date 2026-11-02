@@ -40,7 +40,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql", "0008_opened_on_seeding_day.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `
@@ -74,12 +74,13 @@ func TestRegistryRoundTrip(t *testing.T) {
 	checkResult(t, "Sleeves", []portfolio.Sleeve{renamed, play}, sleeves, err)
 
 	// A hand-entered bond account paid out since a day keeps its payout setting (D-135) and the setting in force
-	// before it (D-162).
+	// before it (D-162), and the owner's mark that it was opened on its seeding day (D-168).
 	moved := ledger.Account{
 		ID: acc2, Institution: "treasury-bonds", Name: "Moved", Sleeve: "play",
-		Payout: &ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: date(t, "2026-03-02"), Earlier: []ledger.PayoutPeriod{{Payout: ledger.PayoutCash}}},
+		Payout:             &ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: date(t, "2026-03-02"), Earlier: []ledger.PayoutPeriod{{Payout: ledger.PayoutCash}}},
+		OpenedOnSeedingDay: true,
 	}
-	if saveErr := store.SaveAccount(ctx, moved); saveErr != nil {
+	if saveErr := store.SaveAccount(ctx, &moved); saveErr != nil {
 		t.Fatalf("SaveAccount: %v", saveErr)
 	}
 	accounts, err := store.Accounts(ctx)
@@ -91,7 +92,7 @@ func TestRegistryRoundTrip(t *testing.T) {
 	if diff := cmp.Diff(app.ErrNotFound, err, cmpopts.EquateErrors()); diff != "" {
 		t.Errorf("Account of an unknown ID (-want +got):\n%s", diff)
 	}
-	if err := store.SaveAccount(ctx, ledger.Account{ID: "acc-9", Institution: "x", Name: "x", Sleeve: "nowhere"}); err == nil {
+	if err := store.SaveAccount(ctx, &ledger.Account{ID: "acc-9", Institution: "x", Name: "x", Sleeve: "nowhere"}); err == nil {
 		t.Errorf("SaveAccount with an unknown sleeve succeeded, want a foreign key error")
 	}
 }

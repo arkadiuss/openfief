@@ -221,8 +221,9 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 
 // charts reads the overview's charts on date into data: the allocation by
 // the dimension and of the value the query picks, the performance from the
-// charts' start (D-138), the one the owner chose in start or else the
-// default, and the value over time over the same days with the
+// charts' start (D-138), the one start previews, or else the one the owner
+// saved (D-167), or else the default, and the value over time over the
+// same days with the
 // portfolio's total on date. It returns the method that failed with its
 // error.
 func (s *server) charts(r *http.Request, sess session, date, start kernel.Date, data *overviewData) (string, error) {
@@ -241,7 +242,7 @@ func (s *server) charts(r *http.Request, sess session, date, start kernel.Date, 
 	if data.Value, err = s.valueChart(r, sess, from, date, parseChartKind(q.Get(chartParam)), optionalString(start), data.History.Default); err != nil {
 		return "ListValuationTotals", err
 	}
-	data.Start = chartStartView{Action: "/", Date: date.String(), From: data.Value.From, Default: data.History.Default, Chosen: !start.IsZero()}
+	data.Start = newChartStart(sess, "/", date, data.Value.From, data.History.Default, data.History.Stored, start)
 	data.Total = data.Value.Last
 	return "", nil
 }

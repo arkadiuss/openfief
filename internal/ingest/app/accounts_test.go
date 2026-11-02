@@ -33,10 +33,10 @@ func (m *memAccounts) Sleeves(context.Context) ([]portfolio.Sleeve, error) {
 	return portfolio.DefaultSleeves(), m.err
 }
 
-func (m *memAccounts) SaveAccount(_ context.Context, a ledger.Account) error {
+func (m *memAccounts) SaveAccount(_ context.Context, a *ledger.Account) error {
 	m.saves++
 	m.accounts = slices.DeleteFunc(m.accounts, func(old ledger.Account) bool { return old.ID == a.ID })
-	m.accounts = append(m.accounts, a)
+	m.accounts = append(m.accounts, *a)
 	return nil
 }
 
@@ -98,24 +98,24 @@ func TestAccountsCreate(t *testing.T) {
 		{
 			name:      "a broker account the connector reported, its institution taken from it",
 			in:        app.NewAccount{Name: "IBKR main", Sleeve: "satellite", Instance: "ibkr-main", BrokerAccount: "U0000001"},
-			want:      entry(ledger.Account{ID: "ibkr-main", Institution: "ibkr", Name: "IBKR main", Sleeve: "satellite"}, "taxable", nil),
+			want:      entry(&ledger.Account{ID: "ibkr-main", Institution: "ibkr", Name: "IBKR main", Sleeve: "satellite"}, "taxable", nil),
 			wantBound: []ledger.AccountID{"ibkr-main"}, wantMapping: "ibkr-main",
 		},
 		{
 			name:      "an account of a connector that names its accounts itself",
 			in:        app.NewAccount{Name: "Obligacje skarbowe", Institution: "treasury-bonds", Sleeve: "bonds", Instance: "bonds-main"},
-			want:      entry(ledger.Account{ID: "obligacje-skarbowe", Institution: "treasury-bonds", Name: "Obligacje skarbowe", Sleeve: "bonds"}, "taxable", nil),
+			want:      entry(&ledger.Account{ID: "obligacje-skarbowe", Institution: "treasury-bonds", Name: "Obligacje skarbowe", Sleeve: "bonds"}, "taxable", nil),
 			wantBound: []ledger.AccountID{"obligacje-skarbowe"},
 		},
 		{
 			name: "an account with no connector yet",
 			in:   app.NewAccount{Name: "XTB", Institution: "xtb", Sleeve: "core"},
-			want: entry(ledger.Account{ID: "xtb", Institution: "xtb", Name: "XTB", Sleeve: "core"}, "taxable", nil),
+			want: entry(&ledger.Account{ID: "xtb", Institution: "xtb", Name: "XTB", Sleeve: "core"}, "taxable", nil),
 		},
 		{
 			name: "an IKZE with its broker's fee rule",
 			in:   app.NewAccount{Name: "XTB IKZE", Institution: "xtb", Sleeve: "core", Wrapper: "ikze", Fee: brokerFee()},
-			want: entry(ledger.Account{ID: "xtb-ikze", Institution: "xtb", Name: "XTB IKZE", Sleeve: "core"}, "ikze", brokerFee()),
+			want: entry(&ledger.Account{ID: "xtb-ikze", Institution: "xtb", Name: "XTB IKZE", Sleeve: "core"}, "ikze", brokerFee()),
 		},
 		{name: "a wrapper the pack doesn't have", in: app.NewAccount{Name: "PPK", Institution: "x", Sleeve: "core", Wrapper: "ppk"}, wantErr: ledger.ErrInvalidAccount},
 		{
@@ -158,8 +158,8 @@ func brokerFee() *jurisdiction.FeeRule {
 }
 
 // entry returns acc with wrapper and fee, the zero rule when fee is nil.
-func entry(acc ledger.Account, wrapper jurisdiction.Wrapper, fee *jurisdiction.FeeRule) app.AccountEntry {
-	e := app.AccountEntry{Account: acc, Wrapper: wrapper}
+func entry(acc *ledger.Account, wrapper jurisdiction.Wrapper, fee *jurisdiction.FeeRule) app.AccountEntry {
+	e := app.AccountEntry{Account: *acc, Wrapper: wrapper}
 	if fee != nil {
 		e.Fee = *fee
 	}
@@ -202,12 +202,12 @@ func TestAccountsUpdate(t *testing.T) {
 	a, l, _, _ := newAccounts()
 	ctx := t.Context()
 	got, err := a.Update(ctx, "https://ui.example.com", "owner", bondsAccount, &app.AccountChange{Name: "Treasury bonds", Sleeve: "core"})
-	want := entry(ledger.Account{ID: bondsAccount, Institution: "treasury-bonds", Name: "Treasury bonds", Sleeve: "core"}, "taxable", nil)
+	want := entry(&ledger.Account{ID: bondsAccount, Institution: "treasury-bonds", Name: "Treasury bonds", Sleeve: "core"}, "taxable", nil)
 	if diff := cmp.Diff(want, got); err != nil || diff != "" {
 		t.Errorf("Update = %v (-want +got):\n%s", err, diff)
 	}
 	got, err = a.Update(ctx, "https://ui.example.com", "owner", bondsAccount, &app.AccountChange{Name: "Treasury bonds", Sleeve: "core", Wrapper: "ike", Fee: brokerFee()})
-	want = entry(want.Account, "ike", brokerFee())
+	want = entry(&want.Account, "ike", brokerFee())
 	if diff := cmp.Diff(want, got); err != nil || diff != "" {
 		t.Errorf("Update of the terms = %v (-want +got):\n%s", err, diff)
 	}

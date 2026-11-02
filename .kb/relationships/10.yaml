@@ -706,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebdaef627acc
+  - type: implements
+    from: SYM-ingest-connectapi-account-service-update-account
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:29:41.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-986c0a34fe34

@@ -4234,6 +4234,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-account
+      - type: covered_by
+        target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
       - type: implements
         target: REQ-ledger-account-sleeve
   - id: SYM-ledger-account-validate
@@ -11196,6 +11200,8 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
+      - type: implements
         target: REQ-ledger-pg-store
   - id: SYM-ledger-pg-store-account
     title: Store.Account
@@ -11234,6 +11240,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-pg-store
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
       - type: implements
         target: REQ-ledger-pg-store
   - id: SYM-ledger-pg-test-migrate-is-idempotent-and-owns-the-ledger-schema
@@ -28759,7 +28767,11 @@ symbols:
       recorded_at: 2026-10-28T08:49:08.097Z
     relationships:
       - type: covered_by
+        target: TEST-core-chart-start
+      - type: covered_by
         target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
       - type: implements
         target: REQ-views-api-contract
   - id: SYM-views-connectapi-pb-book
@@ -54887,7 +54899,11 @@ symbols:
       recorded_at: 2026-10-28T20:59:52.945Z
     relationships:
       - type: covered_by
+        target: TEST-views-app-chart-start
+      - type: covered_by
         target: TEST-views-app-performance
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
       - type: implements
         target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-views-performance
@@ -54900,7 +54916,11 @@ symbols:
       recorded_at: 2026-10-28T20:59:57.954Z
     relationships:
       - type: covered_by
+        target: TEST-views-app-chart-start
+      - type: covered_by
         target: TEST-views-app-performance
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
       - type: implements
         target: REQ-ui-portfolio-chart-default-start
       - type: implements
@@ -54928,7 +54948,13 @@ symbols:
       recorded_at: 2026-10-28T21:00:07.979Z
     relationships:
       - type: covered_by
+        target: TEST-views-app-chart-start
+      - type: covered_by
         target: TEST-views-app-performance
+      - type: implements
+        target: REQ-ui-opened-account-keeps-default-start
+      - type: implements
+        target: REQ-ui-unmarked-seeded-account-moves-start
       - type: implements
         target: REQ-views-performance-query-charts-start
   - id: SYM-views-app-earlier
@@ -55133,7 +55159,11 @@ symbols:
       recorded_at: 2026-10-28T21:01:37.744Z
     relationships:
       - type: covered_by
+        target: TEST-core-chart-start
+      - type: covered_by
         target: TEST-views-connectapi-rest
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
       - type: implements
         target: REQ-views-api-contract
   - id: SYM-views-connectapi-test-helper-amount
@@ -62417,7 +62447,11 @@ symbols:
       recorded_at: 2026-10-28T23:38:28.278Z
     relationships:
       - type: covered_by
+        target: TEST-views-app-chart-start
+      - type: covered_by
         target: TEST-views-app-model
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
       - type: implements
         target: REQ-views-model-line-from-charts-start
       - type: implements
@@ -63928,9 +63962,13 @@ symbols:
       recorded_at: 2026-10-29T00:14:25.556Z
     relationships:
       - type: covered_by
+        target: TEST-ui-chart-start-setting
+      - type: covered_by
         target: TEST-ui-model
       - type: covered_by
         target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
       - type: implements
         target: REQ-ui-model-portfolio-performance-chart
       - type: implements
@@ -79628,8 +79666,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-accounts
+      - type: covered_by
+        target: TEST-ingest-app-opened
       - type: implements
         target: REQ-ingest-account-service
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
   - id: SYM-ingest-app-accounts
     title: Accounts
     sourceFile: internal/ingest/app/accounts.go
@@ -79904,6 +79946,8 @@ symbols:
         target: TEST-ingest-connectapi-accounts
       - type: implements
         target: REQ-ingest-account-service
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
   - id: SYM-ingest-connectapi-account-service-update-account
     title: accountService.UpdateAccount
     sourceFile: internal/ingest/connectapi/accounts.go
@@ -79917,6 +79961,8 @@ symbols:
         target: TEST-ingest-connectapi-accounts
       - type: implements
         target: REQ-ingest-account-service
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
   - id: SYM-ingest-connectapi-account-service-bind-account
     title: accountService.BindAccount
     sourceFile: internal/ingest/connectapi/accounts.go
@@ -79943,6 +79989,8 @@ symbols:
         target: TEST-ingest-connectapi-accounts
       - type: implements
         target: REQ-ingest-account-service
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
   - id: SYM-ingest-connectapi-account-service-fail
     title: accountService.fail
     sourceFile: internal/ingest/connectapi/accounts.go
@@ -93073,8 +93121,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-accounts
+      - type: covered_by
+        target: TEST-ingest-app-opened
       - type: implements
         target: REQ-ingest-account-terms
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
       - type: implements
         target: REQ-ledger-account-tax-wrapper
   - id: SYM-ingest-app-accounts-store-new
@@ -96970,7 +97022,11 @@ symbols:
       recorded_at: 2026-10-30T02:57:26.626Z
     relationships:
       - type: covered_by
+        target: TEST-ui-chart-start-setting
+      - type: covered_by
         target: TEST-ui-values
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
       - type: implements
         target: REQ-ui-value-settings-forms
   - id: SYM-ui-terms-fields
@@ -96983,7 +97039,11 @@ symbols:
       recorded_at: 2026-10-30T02:57:33.608Z
     relationships:
       - type: covered_by
+        target: TEST-ui-chart-start-setting
+      - type: covered_by
         target: TEST-ui-values
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
       - type: implements
         target: REQ-ui-value-settings-forms
   - id: SYM-ui-test-helper-fake-read-get-settings
@@ -97699,7 +97759,11 @@ symbols:
       recorded_at: 2026-10-30T03:10:09.628Z
     relationships:
       - type: covered_by
+        target: TEST-ui-chart-start-setting
+      - type: covered_by
         target: TEST-ui-values
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
       - type: implements
         target: REQ-ui-overview-values
       - type: implements
@@ -105733,8 +105797,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-removals
+      - type: covered_by
+        target: TEST-valuation-pg-chart-start
       - type: implements
         target: REQ-ingest-delete-unused-account
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
   - id: SYM-views-connectapi-test-read-api-serves-no-broker-accounts
     title: TestReadAPIServesNoBrokerAccounts
     sourceFile: internal/views/connectapi/connections_test.go
@@ -122780,6 +122848,8 @@ symbols:
       - type: covered_by
         target: TEST-views-chart-start
       - type: implements
+        target: REQ-ui-opened-account-keeps-default-start
+      - type: implements
         target: REQ-ui-portfolio-chart-default-start
   - id: SYM-views-history-of
     title: HistoryOf
@@ -122808,9 +122878,13 @@ symbols:
       - type: covered_by
         target: TEST-views-chart-start
       - type: implements
+        target: REQ-ui-opened-account-keeps-default-start
+      - type: implements
         target: REQ-ui-portfolio-chart-default-start
       - type: implements
         target: REQ-ui-portfolio-chart-start-ignores-full-history
+      - type: implements
+        target: REQ-ui-unmarked-seeded-account-moves-start
   - id: SYM-views-chosen-start
     title: ChosenStart
     sourceFile: internal/views/chartstart.go
@@ -122834,9 +122908,13 @@ symbols:
       recorded_at: 2026-11-01T13:10:19.443Z
     relationships:
       - type: covered_by
+        target: TEST-views-app-chart-start
+      - type: covered_by
         target: TEST-views-app-performance
       - type: implements
         target: REQ-ui-account-chart-default-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
       - type: implements
         target: REQ-views-account-performance
   - id: SYM-views-app-views-performance-of
@@ -122866,23 +122944,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-chart-start
+      - type: covered_by
+        target: TEST-ui-chart-start-setting
       - type: implements
-        target: REQ-ui-chart-start-view-parameter
+        target: REQ-ui-charts-start-stored-setting
       - type: implements
         target: REQ-ui-time-chart-start-owner-chosen
-  - id: SYM-ui-chart-start-view-default-link
-    title: chartStartView.DefaultLink
-    sourceFile: internal/views/ui/chartstart.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T13:10:47.993Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-chart-start
-      - type: implements
-        target: REQ-ui-chart-start-view-parameter
   - id: SYM-ui-parse-start
     title: parseStart
     sourceFile: internal/views/ui/chartstart.go
@@ -122933,8 +123000,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-chart-start
+      - type: covered_by
+        target: TEST-ui-chart-start-setting
       - type: implements
         target: REQ-ui-account-chart-default-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
       - type: implements
         target: REQ-ui-performance-chart-from-charts-start
   - id: SYM-ui-build-line
@@ -123669,7 +123740,11 @@ symbols:
       recorded_at: 2026-11-01T17:21:27.342Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-opened
+      - type: covered_by
         target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
       - type: implements
         target: REQ-ledger-payout-change-from-owner-date
   - id: SYM-ingest-app-account-starts
@@ -125876,6 +125951,8 @@ symbols:
         target: TEST-identity-app-access
       - type: implements
         target: REQ-identity-authz-one-interface
+      - type: implements
+        target: REQ-identity-read-access-viewable-accounts-only
   - id: SYM-identity-app-policy
     title: Policy
     sourceFile: internal/identity/app/access.go
@@ -125907,6 +125984,8 @@ symbols:
         target: REQ-identity-authz-owner-acts-every-account
       - type: implements
         target: REQ-identity-authz-readers-view-every-account
+      - type: implements
+        target: REQ-identity-read-access-viewable-accounts-only
   - id: SYM-identity-app-caller-key
     title: callerKey
     sourceFile: internal/identity/app/access.go
@@ -126049,6 +126128,8 @@ symbols:
       - type: covered_by
         target: TEST-views-app-authz
       - type: implements
+        target: REQ-identity-read-access-viewable-accounts-only
+      - type: implements
         target: REQ-views-authz-hidden-account-not-found
   - id: SYM-views-app-views-may-view
     title: Views.mayView
@@ -126061,6 +126142,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-app-authz
+      - type: implements
+        target: REQ-identity-read-access-viewable-accounts-only
       - type: implements
         target: REQ-views-authz-hidden-account-not-found
   - id: SYM-views-app-views-viewable
@@ -126075,6 +126158,8 @@ symbols:
       - type: covered_by
         target: TEST-views-app-authz
       - type: implements
+        target: REQ-identity-read-access-viewable-accounts-only
+      - type: implements
         target: REQ-views-authz-totals-over-viewable
   - id: SYM-views-app-views-viewable-bindings
     title: Views.viewableBindings
@@ -126087,6 +126172,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-app-authz
+      - type: implements
+        target: REQ-identity-read-access-viewable-accounts-only
       - type: implements
         target: REQ-views-authz-totals-over-viewable
   - id: SYM-views-app-shown-links
@@ -126477,3 +126564,910 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-authz
+  - id: SYM-valuation-app-account-owners
+    title: AccountOwners
+    sourceFile: internal/valuation/app/chartstart.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:22:42.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuation-app-chart-start-store
+    title: ChartStartStore
+    sourceFile: internal/valuation/app/chartstart.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:22:49.710Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-chart-start
+      - type: covered_by
+        target: TEST-valuation-pg-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuation-app-chart-starts
+    title: ChartStarts
+    sourceFile: internal/valuation/app/chartstart.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:22:56.051Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuation-app-new-chart-starts
+    title: NewChartStarts
+    sourceFile: internal/valuation/app/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:23:03.550Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuation-app-chart-starts-set
+    title: ChartStarts.Set
+    sourceFile: internal/valuation/app/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:23:11.134Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuation-app-chart-starts-may-change
+    title: ChartStarts.mayChange
+    sourceFile: internal/valuation/app/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:23:18.764Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuation-postgres-chart-start-key-of
+    title: chartStartKeyOf
+    sourceFile: internal/valuation/postgres/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:23:26.154Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-pg-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuation-postgres-store-chart-start
+    title: Store.ChartStart
+    sourceFile: internal/valuation/postgres/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:23:33.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-pg-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuation-postgres-store-save-chart-start
+    title: Store.SaveChartStart
+    sourceFile: internal/valuation/postgres/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:23:40.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-pg-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuation-connectapi-settings-service-set-chart-start
+    title: settingsService.SetChartStart
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:23:48.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-views-app-chart-starts
+    title: ChartStarts
+    sourceFile: internal/views/app/chartstart.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:23:55.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-views-app-with-chart-starts
+    title: WithChartStarts
+    sourceFile: internal/views/app/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:24:03.426Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-views-app-views-stored-start
+    title: Views.storedStart
+    sourceFile: internal/views/app/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:24:11.149Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-chart-start
+      - type: implements
+        target: REQ-identity-read-access-viewable-accounts-only
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-views-app-starts
+    title: starts
+    sourceFile: internal/views/app/performance.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:24:18.326Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-ui-new-chart-start
+    title: newChartStart
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:24:25.661Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-ui-server-set-chart-start
+    title: server.setChartStart
+    sourceFile: internal/views/ui/chartstart.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:24:32.968Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start-setting
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-ui-posted-opened
+    title: postedOpened
+    sourceFile: internal/views/ui/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:24:40.095Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-chart-start-setting
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
+  - id: SYM-core-new-chart-starts
+    title: newChartStarts
+    sourceFile: cmd/core/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:24:47.379Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-views-app-test-chart-start-fake-starts
+    title: fakeStarts
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:24:54.497Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-views-app-test-chart-start-fake-starts-chart-start
+    title: fakeStarts.ChartStart
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:25:01.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-views-app-test-chart-start-with-starts
+    title: withStarts
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:25:09.282Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-views-app-test-chart-start-mark-opened
+    title: markOpened
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:25:16.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-views-app-test-chart-start-stored-starts
+    title: storedStarts
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:25:23.361Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-views-app-test-chart-start-performance-of
+    title: performanceOf
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:25:30.800Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-views-app-test-chart-start-seeded-fixture
+    title: seededFixture
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:25:37.450Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-valuation-app-test-helper-dates
+    title: dates
+    sourceFile: internal/valuation/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:25:44.611Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-chart-start
+  - id: SYM-ingest-app-test-helper-check-stored-mark
+    title: checkStoredMark
+    sourceFile: internal/ingest/app/opened_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:25:51.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-opened
+  - id: SYM-core-test-helper-set-chart-start
+    title: setChartStart
+    sourceFile: cmd/core/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:25:57.225Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-chart-start
+  - id: SYM-core-test-helper-check-chart-start-refusals
+    title: checkChartStartRefusals
+    sourceFile: cmd/core/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:26:03.523Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-chart-start
+  - id: SYM-views-app-test-performance-chart-start
+    title: TestPerformanceChartStart
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:26:10.984Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-views-app-test-chart-start-read-access
+    title: TestChartStartReadAccess
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:26:18.821Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-views-app-test-model-portfolio-stored-start
+    title: TestModelPortfolioStoredStart
+    sourceFile: internal/views/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:26:26.585Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-chart-start
+  - id: SYM-valuation-app-test-helper-changing-owners
+    title: changingOwners
+    sourceFile: internal/valuation/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:26:34.430Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-chart-start
+  - id: SYM-valuation-app-test-helper-changing-owners-check-owner
+    title: changingOwners.CheckOwner
+    sourceFile: internal/valuation/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:26:43.008Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-chart-start
+  - id: SYM-valuation-app-test-helper-changing-owners-changeable
+    title: changingOwners.Changeable
+    sourceFile: internal/valuation/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:26:52.488Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-chart-start
+  - id: SYM-valuation-app-test-helper-mem-starts
+    title: memStarts
+    sourceFile: internal/valuation/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:26:59.955Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-chart-start
+  - id: SYM-valuation-app-test-helper-mem-starts-chart-start
+    title: memStarts.ChartStart
+    sourceFile: internal/valuation/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:27:07.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-chart-start
+  - id: SYM-valuation-app-test-helper-mem-starts-save-chart-start
+    title: memStarts.SaveChartStart
+    sourceFile: internal/valuation/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:27:15.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-chart-start
+  - id: SYM-valuation-app-test-set-chart-start
+    title: TestSetChartStart
+    sourceFile: internal/valuation/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:27:24.556Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-chart-start
+  - id: SYM-valuation-app-test-set-chart-start-asks-before-reading
+    title: TestSetChartStartAsksBeforeReading
+    sourceFile: internal/valuation/app/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:27:32.824Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-chart-start
+  - id: SYM-valuation-postgres-test-chart-start-round-trip
+    title: TestChartStartRoundTrip
+    sourceFile: internal/valuation/postgres/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:27:39.622Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pg-chart-start
+  - id: SYM-core-test-chart-start-setting
+    title: TestChartStartSetting
+    sourceFile: cmd/core/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:27:48.108Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-chart-start
+  - id: SYM-core-test-helper-check-chosen-from
+    title: checkChosenFrom
+    sourceFile: cmd/core/chartstart_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:27:55.097Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-chart-start
+  - id: SYM-ingest-app-test-account-opened-on-seeding-day
+    title: TestAccountOpenedOnSeedingDay
+    sourceFile: internal/ingest/app/opened_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:28:01.512Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-opened
+  - id: SYM-ui-test-helper-fake-settings-set-chart-start
+    title: fakeSettings.SetChartStart
+    sourceFile: internal/views/ui/chartsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:28:07.870Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-chart-start-setting
+  - id: SYM-ui-test-helper-harness-saved-start
+    title: harness.savedStart
+    sourceFile: internal/views/ui/chartsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:28:14.539Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-chart-start-setting
+  - id: SYM-ui-test-chart-start-saved
+    title: TestChartStartSaved
+    sourceFile: internal/views/ui/chartsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:28:21.083Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-chart-start-setting
+  - id: SYM-ui-test-chart-start-save-refused
+    title: TestChartStartSaveRefused
+    sourceFile: internal/views/ui/chartsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:28:27.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-chart-start-setting
+  - id: SYM-ui-test-account-opened-on-seeding-day-form
+    title: TestAccountOpenedOnSeedingDayForm
+    sourceFile: internal/views/ui/chartsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:28:34.591Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-chart-start-setting
+  - id: SYM-valuationv1-set-chart-start-request
+    title: SetChartStartRequest
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:33:31.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-request-reset
+    title: SetChartStartRequest.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:33:39.371Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-request-string
+    title: SetChartStartRequest.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:33:46.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-request-proto-message
+    title: SetChartStartRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:33:54.422Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-request-proto-reflect
+    title: SetChartStartRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:34:02.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-request-descriptor
+    title: SetChartStartRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:34:09.765Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-request-get-origin
+    title: SetChartStartRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:34:17.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-request-get-session-token
+    title: SetChartStartRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:34:24.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-request-get-account-id
+    title: SetChartStartRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:34:31.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-request-get-start
+    title: SetChartStartRequest.GetStart
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:34:39.745Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-response
+    title: SetChartStartResponse
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:34:46.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-response-reset
+    title: SetChartStartResponse.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:34:54.148Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-response-string
+    title: SetChartStartResponse.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:35:01.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-response-proto-message
+    title: SetChartStartResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:35:08.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-response-proto-reflect
+    title: SetChartStartResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:35:16.503Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1-set-chart-start-response-descriptor
+    title: SetChartStartResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:35:23.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1connect-settings-service-client-set-chart-start
+    title: settingsServiceClient.SetChartStart
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:35:31.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-valuationv1connect-unimplemented-settings-service-handler-set-chart-start
+    title: UnimplementedSettingsServiceHandler.SetChartStart
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:35:38.866Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-default-clears-setting
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting
+  - id: SYM-ingestv1-account-get-opened-on-seeding-day
+    title: Account.GetOpenedOnSeedingDay
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:35:46.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
+  - id: SYM-ingestv1-create-account-request-get-opened-on-seeding-day
+    title: CreateAccountRequest.GetOpenedOnSeedingDay
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:35:54.126Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
+  - id: SYM-ingestv1-update-account-request-get-opened-on-seeding-day
+    title: UpdateAccountRequest.GetOpenedOnSeedingDay
+    sourceFile: sdk/go/gen/openfief/ingest/v1/accounts.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:36:01.449Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: covered_by
+        target: TEST-ingest-connectapi-accounts
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
+  - id: SYM-views-gen-pb-account-get-opened-on-seeding-day
+    title: Account.GetOpenedOnSeedingDay
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:36:09.342Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ledger-account-opened-on-seeding-day
+  - id: SYM-views-gen-pb-get-performance-response-get-chosen-from
+    title: GetPerformanceResponse.GetChosenFrom
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T08:36:17.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-chart-start
+      - type: implements
+        target: REQ-ui-charts-start-stored-setting

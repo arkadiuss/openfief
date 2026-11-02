@@ -266,7 +266,7 @@
 {{end}}
 {{end}}
 
-{{/* An account's tax wrapper (D-76) and sale fee rule (D-78). */}}
+{{/* An account's tax wrapper (D-76), sale fee rule (D-78) and mark of being opened on its seeding day (D-168). */}}
 {{define "terms-fields"}}
 <div class="field"><label for="{{.Prefix}}-wrapper">Tax wrapper</label>
   <select id="{{.Prefix}}-wrapper" name="tax_wrapper">{{$cur := .Wrapper}}{{range $i, $w := .Wrappers}}<option value="{{$w}}"{{if or (eq $w $cur) (and (not $cur) (eq $i 0))}} selected{{end}}>{{wrapper $w}}</option>{{end}}</select></div>
@@ -277,6 +277,9 @@
   <div class="unit"><input id="{{.Prefix}}-fee-minimum" name="fee_minimum" value="{{.Minimum}}" inputmode="decimal" size="8" autocomplete="off"><input id="{{.Prefix}}-fee-currency" name="fee_minimum_currency" value="{{.Currency}}" aria-label="Minimum's currency" maxlength="3" size="4" autocomplete="off" pattern="[A-Za-z]{3}"></div></div>
 <div class="field"><label for="{{.Prefix}}-fee-conversion">Currency conversion</label>
   <div class="unit"><input id="{{.Prefix}}-fee-conversion" name="fee_conversion" value="{{.Conversion}}" inputmode="decimal" size="6" autocomplete="off"><span>%</span></div></div>
+<div class="field"><input type="hidden" name="opened_on_seeding_day_shown" value="1">
+  <label class="check"><input type="checkbox" name="opened_on_seeding_day" value="1"{{if .OpenedOnSeedingDay}} checked{{end}} aria-describedby="{{.Prefix}}-opened-help"> Opened on its seeding day</label>
+  <p class="help" id="{{.Prefix}}-opened-help">Mark it when the account was opened on the day its starting balance was entered, so nothing before is unknown: its seeding then doesn't move where the portfolio's charts start by default.</p></div>
 {{if .Bond}}<div class="field"><label for="{{.Prefix}}-payout">Coupons and maturities</label>
   <select id="{{.Prefix}}-payout" name="bond_payout" aria-describedby="{{.Prefix}}-payout-help"><option value="cash"{{if not .PaidOut}} selected{{end}}>Stay as the account's cash</option><option value="paid-out"{{if .PaidOut}} selected{{end}}>Paid out</option></select>
   <p class="help" id="{{.Prefix}}-payout-help">Pick what the bond registry does with them. Paid out, each is booked and then withdrawn on the same day, so it still counts as return.</p></div>

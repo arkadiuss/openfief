@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2d85491dae8
+  - type: executable_for
+    from: SYM-core-test-helper-check-chart-start-refusals
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:26:06.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44ba56162408

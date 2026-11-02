@@ -741,3 +741,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-529f4d666823
+  - type: implements
+    from: SYM-views-app-views-model-range
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:31:17.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c47eb4912ba
+  - type: covered_by
+    from: SYM-views-app-views-model-range
+    to: TEST-views-app-chart-start
+    created_at: 2026-11-02T08:31:17.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b98dd26d03c
+  - type: implements
+    from: SYM-views-gen-pb-get-performance-response-get-chosen-from
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:36:20.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46fdb6784027
+  - type: covered_by
+    from: SYM-views-gen-pb-get-performance-response-get-chosen-from
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:36:20.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d878fbfd7bb9

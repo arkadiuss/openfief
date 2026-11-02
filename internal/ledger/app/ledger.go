@@ -49,7 +49,7 @@ func (l *Ledger) SaveSleeve(ctx context.Context, s portfolio.Sleeve) error {
 
 // SaveAccount validates a, checks that its sleeve is stored, and stores it,
 // replacing an account with its ID.
-func (l *Ledger) SaveAccount(ctx context.Context, a ledger.Account) error {
+func (l *Ledger) SaveAccount(ctx context.Context, a *ledger.Account) error {
 	if err := a.Validate(); err != nil {
 		return fmt.Errorf("saving account: %w", err)
 	}

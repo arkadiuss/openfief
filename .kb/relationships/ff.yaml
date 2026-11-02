@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-763770f8aeff
+  - type: executable_for
+    from: SYM-views-app-test-chart-start-seeded-fixture
+    to: TEST-views-app-chart-start
+    created_at: 2026-11-02T08:25:40.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a50f378d367

@@ -1,5 +1,18 @@
 {{define "chart-start"}}
 {{if .Default}}
+{{if .Owner}}
+<form class="chart-start" method="post" action="/chart-start">
+  <input type="hidden" name="account" value="{{.AccountID}}">
+  <input type="hidden" name="date" value="{{.Date}}">
+  <div class="field">
+    <label for="chart-start">Charts start on</label>
+    <input id="chart-start" name="start" type="date" value="{{.From}}" max="{{.Date}}" required aria-describedby="chart-start-help">
+  </div>
+  <button type="submit">Save</button>
+  {{if .Stored}}<button type="submit" name="clear" value="1" class="quiet" formnovalidate>Back to the default, <span class="mono">{{.Default}}</span></button>{{end}}
+  {{if .Preview}}<a href="{{.SavedLink}}">{{if .Stored}}Back to your saved start, <span class="mono">{{.Stored}}</span>{{else}}Back to the default, <span class="mono">{{.Default}}</span>{{end}}</a>{{end}}
+</form>
+{{else}}
 <form class="chart-start" method="get" action="{{.Action}}">
   <input type="hidden" name="date" value="{{.Date}}">
   <div class="field">
@@ -9,6 +22,7 @@
   <button type="submit">Show</button>
   {{if .Chosen}}<a href="{{.DefaultLink}}">Back to the default, <span class="mono">{{.Default}}</span></a>{{end}}
 </form>
-<p class="help" id="chart-start-help">{{if .Account}}By default the charts start on the account's first day, <span class="mono">{{.Default}}</span>.{{else}}By default the charts start on <span class="mono">{{.Default}}</span>, where tracking began: from that day every account's history is known, since none was seeded from a starting balance later.{{end}} Choose any other day: the performance index is 100 on it, and a dashed line marks where tracking began.</p>
+{{end}}
+<p class="help" id="chart-start-help">{{if .Account}}By default the charts start on the account's first day, <span class="mono">{{.Default}}</span>.{{else}}By default the charts start on <span class="mono">{{.Default}}</span>, where tracking began: from that day every account's history is known, since no account was seeded from a starting balance later, other than one marked as opened on its seeding day.{{end}} {{if .Owner}}Save any other day and these charts keep starting on it until you go back to the default{{else}}Choose any other day{{end}}: the performance index is 100 on it, and a dashed line marks where tracking began.{{if and .Owner .Preview}} This page's link shows a start without saving it.{{end}}</p>
 {{end}}
 {{end}}

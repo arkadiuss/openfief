@@ -790,3 +790,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7d82dcb6c9c
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-response-reset
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:34:57.032Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce2d97765758
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-response-reset
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:34:57.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1cada3d51cf
+  - type: covered_by
+    from: SYM-valuationv1-set-chart-start-response-reset
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:34:57.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22863fbc4de2
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-response-descriptor
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:35:26.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79dbb245ed69
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-response-descriptor
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:35:26.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b145da2504a0
+  - type: covered_by
+    from: SYM-valuationv1-set-chart-start-response-descriptor
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:35:26.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c2bd7e08bc7

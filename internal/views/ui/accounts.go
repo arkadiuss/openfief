@@ -172,7 +172,9 @@ func brokerChoice(v string) brokerPick {
 }
 
 // createAccount hands a new account to the core (CreateAccount): its name,
-// institution, sleeve, tax wrapper (D-76), sale fee rule (D-78), and the connector instance that feeds it, or a
+// institution, sleeve, tax wrapper (D-76), sale fee rule (D-78), its mark
+// of being opened on its seeding day (D-168), and the connector instance
+// that feeds it, or a
 // broker account that instance reported, picked from a list so the owner
 // never types an account number (D-72).
 func (s *server) createAccount(w http.ResponseWriter, r *http.Request, sess session) {
@@ -187,21 +189,36 @@ func (s *server) createAccount(w http.ResponseWriter, r *http.Request, sess sess
 		Institution: strings.TrimSpace(r.PostFormValue("institution")), Sleeve: r.PostFormValue("sleeve"),
 		ConnectorInstance: instance, BrokerAccount: broker,
 		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r),
+		OpenedOnSeedingDay: r.PostFormValue("opened_on_seeding_day") != "",
 	}))
 	s.accountEntryDone(w, r, sess, "CreateAccount", err)
 }
 
 // updateAccount hands an account's new name, sleeve, tax wrapper, sale
 // fee rule or payout setting (D-135), with the day a payout change takes
-// effect from (D-162), to the core (UpdateAccount).
+// effect from (D-162), and its mark of being opened on its seeding day
+// (D-168), to the core (UpdateAccount).
 func (s *server) updateAccount(w http.ResponseWriter, r *http.Request, sess session) {
 	_, err := s.accounts.UpdateAccount(r.Context(), connect.NewRequest(&ingestv1.UpdateAccountRequest{
 		Origin: sess.Origin, SessionToken: sess.Token, AccountId: r.PathValue("id"),
 		Name: strings.TrimSpace(r.PostFormValue("name")), Sleeve: r.PostFormValue("sleeve"),
 		TaxWrapper: r.PostFormValue("tax_wrapper"), FeeRule: postedFeeRule(r), BondPayout: postedPayout(r),
-		BondPayoutFrom: strings.TrimSpace(r.PostFormValue("bond_payout_from")),
+		BondPayoutFrom:     strings.TrimSpace(r.PostFormValue("bond_payout_from")),
+		OpenedOnSeedingDay: postedOpened(r),
 	}))
 	s.accountEntryDone(w, r, sess, "UpdateAccount", err)
+}
+
+// postedOpened reads an account form's mark of being opened on its seeding
+// day (D-168): nil when the form didn't show the checkbox, which keeps the
+// account's mark, and otherwise whether it is checked, since an unchecked
+// box sends nothing.
+func postedOpened(r *http.Request) *bool {
+	if r.PostFormValue("opened_on_seeding_day_shown") == "" {
+		return nil
+	}
+	opened := r.PostFormValue("opened_on_seeding_day") != ""
+	return &opened
 }
 
 // bindAccount binds a connector instance to an account, or maps a broker
@@ -340,6 +357,9 @@ type termsForm struct {
 	// payout setting (D-135); PaidOut says its payouts are paid out.
 	Bond    bool
 	PaidOut bool
+	// OpenedOnSeedingDay says the owner marked the account as opened on
+	// its seeding day (D-168).
+	OpenedOnSeedingDay bool
 }
 
 // termsFields returns the tax wrapper and fee rule fields with IDs under
@@ -350,6 +370,7 @@ func termsFields(prefix string, wrappers []string, acc *viewsv1.Account) termsFo
 		Prefix: prefix, Wrappers: wrappers, Wrapper: acc.GetTaxWrapper(),
 		Rate: toPercent(rule.GetRate()), Conversion: toPercent(rule.GetConversionRate()),
 		Bond: acc.GetInstitution() == bondInstitution, PaidOut: acc.GetBondPayout() == viewsv1.BondPayout_BOND_PAYOUT_PAID_OUT,
+		OpenedOnSeedingDay: acc.GetOpenedOnSeedingDay(),
 	}
 	if !isZero(rule.GetMinimum().GetAmount()) {
 		f.Minimum, f.Currency = rule.GetMinimum().GetAmount(), rule.GetMinimum().GetCurrency()

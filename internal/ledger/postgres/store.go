@@ -113,9 +113,10 @@ func scanSleeve(row pgx.CollectableRow) (portfolio.Sleeve, error) {
 }
 
 // SaveAccount creates a or replaces the account with its ID, with its
-// payout setting (D-135) and the settings in force before it (D-162). Its
-// sleeve must be stored.
-func (s *Store) SaveAccount(ctx context.Context, a ledger.Account) error {
+// payout setting (D-135), the settings in force before it (D-162) and the
+// owner's mark that it was opened on its seeding day (D-168). Its sleeve
+// must be stored.
+func (s *Store) SaveAccount(ctx context.Context, a *ledger.Account) error {
 	payout, since := a.PayoutSetting(), ""
 	if !payout.Since.IsZero() {
 		since = payout.Since.String()
@@ -125,11 +126,12 @@ func (s *Store) SaveAccount(ctx context.Context, a ledger.Account) error {
 		return fmt.Errorf("saving account %s: %w", a.ID, err)
 	}
 	_, err = s.db.Exec(ctx, `
-		INSERT INTO ledger.accounts (id, institution, name, sleeve_id, payout, payout_since, payout_earlier)
-		VALUES ($1, $2, $3, $4, $5, nullif($6, '')::date, $7::jsonb)
+		INSERT INTO ledger.accounts (id, institution, name, sleeve_id, payout, payout_since, payout_earlier, opened_on_seeding_day)
+		VALUES ($1, $2, $3, $4, $5, nullif($6, '')::date, $7::jsonb, $8)
 		ON CONFLICT (id) DO UPDATE SET institution = EXCLUDED.institution, name = EXCLUDED.name, sleeve_id = EXCLUDED.sleeve_id,
-		    payout = EXCLUDED.payout, payout_since = EXCLUDED.payout_since, payout_earlier = EXCLUDED.payout_earlier`,
-		string(a.ID), a.Institution, a.Name, string(a.Sleeve), payout.Payout.String(), since, string(earlier))
+		    payout = EXCLUDED.payout, payout_since = EXCLUDED.payout_since, payout_earlier = EXCLUDED.payout_earlier,
+		    opened_on_seeding_day = EXCLUDED.opened_on_seeding_day`,
+		string(a.ID), a.Institution, a.Name, string(a.Sleeve), payout.Payout.String(), since, string(earlier), a.OpenedOnSeedingDay)
 	if err != nil {
 		return fmt.Errorf("saving account %s: %w", a.ID, err)
 	}
@@ -137,8 +139,8 @@ func (s *Store) SaveAccount(ctx context.Context, a ledger.Account) error {
 }
 
 // selectAccounts lists accounts; callers add WHERE and ORDER BY.
-const selectAccounts = `SELECT id, institution, name, sleeve_id, payout, coalesce(payout_since::text, ''), payout_earlier::text
-	FROM ledger.accounts`
+const selectAccounts = `SELECT id, institution, name, sleeve_id, payout, coalesce(payout_since::text, ''), payout_earlier::text,
+	opened_on_seeding_day FROM ledger.accounts`
 
 // Account returns the account with id, or an error wrapping app.ErrNotFound.
 func (s *Store) Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error) {
@@ -190,10 +192,14 @@ func (s *Store) Accounts(ctx context.Context) ([]ledger.Account, error) {
 // scanAccount reads one row of selectAccounts.
 func scanAccount(row pgx.CollectableRow) (ledger.Account, error) {
 	var id, institution, name, sleeve, payout, since, earlier string
-	if err := row.Scan(&id, &institution, &name, &sleeve, &payout, &since, &earlier); err != nil {
+	var opened bool
+	if err := row.Scan(&id, &institution, &name, &sleeve, &payout, &since, &earlier, &opened); err != nil {
 		return ledger.Account{}, fmt.Errorf("reading account: %w", err)
 	}
-	a := ledger.Account{ID: ledger.AccountID(id), Institution: institution, Name: name, Sleeve: portfolio.SleeveID(sleeve)}
+	a := ledger.Account{
+		ID: ledger.AccountID(id), Institution: institution, Name: name, Sleeve: portfolio.SleeveID(sleeve),
+		OpenedOnSeedingDay: opened,
+	}
 	p, err := ledger.ParsePayout(payout)
 	if err != nil {
 		return ledger.Account{}, fmt.Errorf("%w: account %s: %w", ErrCorruptLog, id, err)

@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4d441fdf2c4
+  - type: executable_for
+    from: SYM-views-app-test-model-portfolio-stored-start
+    to: TEST-views-app-chart-start
+    created_at: 2026-11-02T08:26:29.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86b892609660
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-changing-owners-changeable
+    to: TEST-valuation-app-chart-start
+    created_at: 2026-11-02T08:26:55.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5aa54857edc1

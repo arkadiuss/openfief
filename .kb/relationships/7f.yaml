@@ -440,3 +440,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d604d77ffacd
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-dates
+    to: TEST-valuation-app-chart-start
+    created_at: 2026-11-02T08:25:47.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23c436427bb0

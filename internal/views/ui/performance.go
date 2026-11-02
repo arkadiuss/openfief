@@ -17,8 +17,10 @@ import (
 type performanceView struct {
 	From, To string
 	// Default is the charts' default start, where tracking began, which
-	// the chart marks (D-138).
+	// the chart marks (D-138); Stored is the start the owner saved
+	// (D-167), empty for none.
 	Default  string
+	Stored   string
 	Currency string
 	Points   int
 	// Value is the portfolio's value with cash on To.
@@ -126,7 +128,10 @@ func buildLine(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPortfolioRe
 		Kind: "line", Label: label, Currency: "index", Group: f.Group, Decimal: f.Decimal,
 		Mark: p.GetDefaultFrom(),
 	}
-	v := performanceView{Currency: p.GetReportingCurrency(), Pending: p.GetRevaluationPending(), Default: p.GetDefaultFrom()}
+	v := performanceView{
+		Currency: p.GetReportingCurrency(), Pending: p.GetRevaluationPending(), Default: p.GetDefaultFrom(),
+		Stored: p.GetChosenFrom(),
+	}
 	for _, d := range p.GetDays() {
 		chart.Labels = append(chart.Labels, d.GetDate())
 		chart.Values = append(chart.Values, d.GetIndex())
@@ -155,8 +160,9 @@ func buildLine(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPortfolioRe
 	return v
 }
 
-// performance reads the time-weighted return from start, or from the
-// charts' default start when start is zero (D-138), up to date, while it
+// performance reads the time-weighted return from start, or, when start is
+// zero, from the start the owner saved (D-167) or else the charts' default
+// start (D-138), up to date, while it
 // is on the model portfolio over the same days, and how many suggested
 // transfers wait for the owner. A model portfolio that is off answers not
 // found: then the page shows none of it (D-52).

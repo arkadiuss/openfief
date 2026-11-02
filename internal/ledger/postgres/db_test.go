@@ -177,7 +177,7 @@ func seededStore(t *testing.T) (*postgres.Store, *pgxpool.Pool) {
 		t.Fatalf("SaveSleeve: %v", err)
 	}
 	for _, id := range []ledger.AccountID{acc1, acc2} {
-		if err := store.SaveAccount(t.Context(), ledger.Account{ID: id, Institution: "test-broker", Name: string(id), Sleeve: core}); err != nil {
+		if err := store.SaveAccount(t.Context(), &ledger.Account{ID: id, Institution: "test-broker", Name: string(id), Sleeve: core}); err != nil {
 			t.Fatalf("SaveAccount(%s): %v", id, err)
 		}
 	}

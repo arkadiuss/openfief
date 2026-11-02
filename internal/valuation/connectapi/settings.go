@@ -13,6 +13,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
@@ -23,16 +24,18 @@ import (
 var errUnknownFormat = errors.New("not one of the number formats offered")
 
 // NewSettings returns the SettingsService's path and HTTP handler over
-// settings (D-78, D-79, D-113), with callers in front of every call to
-// admit view plugins only, logging to log.
-func NewSettings(settings *app.Settings, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
-	return valuationv1connect.NewSettingsServiceHandler(&settingsService{settings: settings, log: log},
+// settings and the charts' start setting starts (D-78, D-79, D-113,
+// D-167), with callers in front of every call to admit view plugins only,
+// logging to log.
+func NewSettings(settings *app.Settings, starts *app.ChartStarts, callers connect.Interceptor, log *slog.Logger) (string, http.Handler) {
+	return valuationv1connect.NewSettingsServiceHandler(&settingsService{settings: settings, starts: starts, log: log},
 		connect.WithInterceptors(callers))
 }
 
 // settingsService implements valuationv1connect.SettingsServiceHandler.
 type settingsService struct {
 	settings *app.Settings
+	starts   *app.ChartStarts
 	log      *slog.Logger
 }
 
@@ -99,6 +102,23 @@ func (s *settingsService) SetMarginalRate(ctx context.Context, req *connect.Requ
 	return connect.NewResponse(&valuationv1.SetMarginalRateResponse{}), nil
 }
 
+// SetChartStart stores the charts' start the owner chose, the portfolio's
+// or an account's, or clears it for an empty start (D-167).
+func (s *settingsService) SetChartStart(ctx context.Context, req *connect.Request[valuationv1.SetChartStartRequest]) (*connect.Response[valuationv1.SetChartStartResponse], error) {
+	var start kernel.Date
+	if text := req.Msg.GetStart(); text != "" {
+		var err error
+		if start, err = kernel.ParseDate(text); err != nil {
+			return nil, s.fail(ctx, fmt.Errorf("%w: charts' start %q: %w", app.ErrInvalidInput, text, err))
+		}
+	}
+	err := s.starts.Set(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), ledger.AccountID(req.Msg.GetAccountId()), start)
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&valuationv1.SetChartStartResponse{}), nil
+}
+
 // fail maps err to its Connect error, as the MarketDataService does.
 func (s *settingsService) fail(ctx context.Context, err error) *connect.Error {
 	switch {
@@ -108,6 +128,8 @@ func (s *settingsService) fail(ctx context.Context, err error) *connect.Error {
 		return connect.NewError(connect.CodePermissionDenied, app.ErrNotOwner)
 	case errors.Is(err, app.ErrInvalidInput):
 		return connect.NewError(connect.CodeInvalidArgument, err)
+	case errors.Is(err, app.ErrUnknownAccount):
+		return connect.NewError(connect.CodeNotFound, app.ErrUnknownAccount)
 	}
 	s.log.LogAttrs(ctx, slog.LevelError, "settings call failed", slog.String("error", err.Error()))
 	return connect.NewError(connect.CodeInternal, errInternal)
