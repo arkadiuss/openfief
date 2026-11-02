@@ -85,8 +85,9 @@ type BondLotServiceClient interface {
 	// DeleteBondLot deletes the lot of a series bought on a day as a
 	// correction (D-100): through the same connector, a new version of each
 	// of its transactions deletes it and supersedes the old, which stays in
-	// the ledger (D-18). Deleting it again changes nothing; entering it again
-	// brings it back.
+	// the ledger (D-18). The coupons, redemption and payout withdrawals booked
+	// for it are deleted with it, and so is their cash (D-154). Deleting it
+	// again changes nothing; entering it again brings it back.
 	DeleteBondLot(context.Context, *connect.Request[v1.DeleteBondLotRequest]) (*connect.Response[v1.DeleteBondLotResponse], error)
 }
 
@@ -142,8 +143,9 @@ type BondLotServiceHandler interface {
 	// DeleteBondLot deletes the lot of a series bought on a day as a
 	// correction (D-100): through the same connector, a new version of each
 	// of its transactions deletes it and supersedes the old, which stays in
-	// the ledger (D-18). Deleting it again changes nothing; entering it again
-	// brings it back.
+	// the ledger (D-18). The coupons, redemption and payout withdrawals booked
+	// for it are deleted with it, and so is their cash (D-154). Deleting it
+	// again changes nothing; entering it again brings it back.
 	DeleteBondLot(context.Context, *connect.Request[v1.DeleteBondLotRequest]) (*connect.Response[v1.DeleteBondLotResponse], error)
 }
 

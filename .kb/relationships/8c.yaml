@@ -678,3 +678,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35895454a336
+  - type: implements
+    from: SYM-treasurybonds-mapper-booked-for
+    to: REQ-treasurybonds-lot-delete-deletes-booked
+    created_at: 2026-11-02T10:25:21.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b60a230f8da
+  - type: implements
+    from: SYM-treasurybonds-mapper-booked-for
+    to: REQ-ingest-bond-lot-delete-deletes-coupons
+    created_at: 2026-11-02T10:25:21.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15f7b8446cca
+  - type: covered_by
+    from: SYM-treasurybonds-mapper-booked-for
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-11-02T10:25:21.167Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22204f07b3d3

@@ -12,6 +12,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/demo"
 	"github.com/arkadiuss/openfief/internal/ingest"
+	"github.com/arkadiuss/openfief/internal/ingest/connectrpc"
 	"github.com/arkadiuss/openfief/internal/ingest/delivery"
 	"github.com/arkadiuss/openfief/internal/ingest/treasurybonds"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
@@ -58,6 +59,11 @@ func (c *couponConnector) Sync(_ context.Context, req *connect.Request[connector
 	return connect.NewResponse(&connectorv1.SyncResponse{Delivery: d, Watermark: "w"}), nil
 }
 
+// ImportBondLots maps a deleted lot as the treasury-bonds plugin does.
+func (c *couponConnector) ImportBondLots(ctx context.Context, req *connect.Request[connectorv1.ImportBondLotsRequest]) (*connect.Response[connectorv1.ImportBondLotsResponse], error) {
+	return bondsConnector{}.ImportBondLots(ctx, req)
+}
+
 // TestSyncBooksBondCoupons checks, through the real core and Postgres,
 // that a sync of the treasury-bonds instance carries what its bound bond
 // account holds, with the series terms (D-117), and that the coupons it
@@ -89,11 +95,59 @@ func TestSyncBooksBondCoupons(t *testing.T) {
 		t.Errorf("the sync told the connector %+v; want the bond account live since 2025-01-02 with its lot", held)
 	}
 	checkCoupons(t, dsn)
+	checkLotDeletedWithCoupons(t, dsn, port)
+}
+
+// everyAccountOwner lets every session change every account.
+type everyAccountOwner struct{}
+
+func (everyAccountOwner) CheckOwner(context.Context, string, string) error { return nil }
+
+func (everyAccountOwner) Changeable(_ context.Context, _, _ string, accounts []ledger.AccountID) ([]ledger.AccountID, error) {
+	return accounts, nil
+}
+
+// checkLotDeletedWithCoupons deletes the COI1028 lot through the core's
+// bond lot use case and the connector on port, and checks that its coupons
+// went with it, and their cash: the account holds no current transaction
+// and no cash (D-154).
+func checkLotDeletedWithCoupons(t *testing.T, dsn string, port int32) {
+	t.Helper()
+	err := withConnectorDeps(t.Context(), dsn, quiet(), func(d *connectorDeps) error {
+		d.entries = &entryCaller{}
+		d.entries.set(connectrpc.NewClient(connectrpc.H2CClient(), func(string) (string, error) {
+			return fmt.Sprintf("http://127.0.0.1:%d", port), nil
+		}, staticTokens{}))
+		purchased, err := kernel.ParseDate("2024-10-10")
+		if err != nil {
+			return fmt.Errorf("delete: %w", err)
+		}
+		key := ingest.BondLotKey{Series: coiTerms(t).Series, Purchased: purchased}
+		b, err := newBondLots(d, everyAccountOwner{}).Delete(t.Context(), localUI, "session", demo.BondsAccount, key)
+		if err != nil {
+			return fmt.Errorf("delete: %w", err)
+		}
+		if b.Imported.NewVersions != 3 {
+			t.Errorf("deleting the lot imported %+v; want the opening lot and its two coupons superseded", b.Imported)
+		}
+		txs, err := d.ledger.CurrentTransactions(t.Context(), demo.BondsAccount)
+		if err != nil {
+			return fmt.Errorf("check: %w", err)
+		}
+		for i := range txs {
+			t.Errorf("after deleting the lot, %s is still current", txs[i].Key)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatalf("deleting the lot: %v", err)
+	}
 }
 
 // seedBondLot books 10 COI1028 bonds bought on 2024-10-10 as an opening
 // lot of the demo bond account on 2025-01-02, with the series' terms
-// (first year 6.55%, margin 1.50%), as the treasury-bonds mapping does.
+// (first year 6.55%, margin 1.50%), as the treasury-bonds mapping does,
+// keyed under the bonds-main instance as its delivery would be.
 func seedBondLot(t *testing.T, dsn string) {
 	t.Helper()
 	err := withConnectorDeps(t.Context(), dsn, quiet(), func(d *connectorDeps) error {
@@ -110,7 +164,7 @@ func seedBondLot(t *testing.T, dsn string) {
 		if err != nil {
 			return fmt.Errorf("setup: %w", err)
 		}
-		if _, err := d.ledger.AddOpeningLots(t.Context(), m.Transactions, nil); err != nil {
+		if _, err := d.ledger.AddOpeningLots(t.Context(), ingest.ScopeToConnector("bonds-main", m.Transactions), nil); err != nil {
 			return fmt.Errorf("setup: %w", err)
 		}
 		if err := (valuationInputs{recorder: d.recorder}).StoreBondTerms(t.Context(), "setup", terms); err != nil {

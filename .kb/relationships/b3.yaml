@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48b8c1008987
+  - type: constrains
+    from: REQ-treasurybonds-lot-delete-deletes-booked
+    to: FACT-SUBJECT-BDB16DBA9CB82400
+    created_at: 2026-11-02T10:24:36.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-055de2d37e07
+  - type: requires_property
+    from: REQ-treasurybonds-lot-delete-deletes-booked
+    to: FACT-PROP-9E513523F582DE29
+    created_at: 2026-11-02T10:24:36.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01fbb55113b6
+  - type: specified_by
+    from: REQ-treasurybonds-lot-delete-deletes-booked
+    to: SCEN-treasurybonds-lot-delete-deletes-booked
+    created_at: 2026-11-02T10:24:36.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0abfdbfa41e

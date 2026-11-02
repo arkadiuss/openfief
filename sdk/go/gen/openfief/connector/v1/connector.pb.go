@@ -2946,12 +2946,20 @@ type ImportBondLotsRequest struct {
 	// later one is a deposit and a buy.
 	GoLive string `protobuf:"bytes,3,opt,name=go_live,json=goLive,proto3" json:"go_live,omitempty"`
 	// Lots the owner deletes as a correction (D-100): the connector delivers
-	// a deletion of each of their transactions.
+	// a deletion of each of their transactions, and of everything it booked
+	// for them since, among booked (D-154).
 	Deleted []*BondLotKey `protobuf:"bytes,4,rep,name=deleted,proto3" json:"deleted,omitempty"`
 	// The OpenFief account the owner entered the lots on (D-118): the
 	// connector books them there, so one instance serves every bond account
 	// bound to it and its config names none.
-	AccountId     string `protobuf:"bytes,5,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	AccountId string `protobuf:"bytes,5,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	// Only with deleted lots: the account's current transactions this
+	// instance delivered, each keyed as the connector keyed it (without the
+	// prefix the core adds) and dated. A connector that stores nothing picks
+	// from them what it booked for each deleted lot, such as its coupons, its
+	// redemption and their payout withdrawals, and delivers their deletions
+	// too, so their cash goes with the lot (D-154).
+	Booked        []*BookedTransaction `protobuf:"bytes,6,rep,name=booked,proto3" json:"booked,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3021,6 +3029,68 @@ func (x *ImportBondLotsRequest) GetAccountId() string {
 	return ""
 }
 
+func (x *ImportBondLotsRequest) GetBooked() []*BookedTransaction {
+	if x != nil {
+		return x.Booked
+	}
+	return nil
+}
+
+// BookedTransaction is a current transaction a connector instance
+// delivered into an account: its key as the connector gave it and its
+// date, "YYYY-MM-DD".
+type BookedTransaction struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Key           *TransactionKey        `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Date          string                 `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BookedTransaction) Reset() {
+	*x = BookedTransaction{}
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BookedTransaction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BookedTransaction) ProtoMessage() {}
+
+func (x *BookedTransaction) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BookedTransaction.ProtoReflect.Descriptor instead.
+func (*BookedTransaction) Descriptor() ([]byte, []int) {
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *BookedTransaction) GetKey() *TransactionKey {
+	if x != nil {
+		return x.Key
+	}
+	return nil
+}
+
+func (x *BookedTransaction) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
 type ImportBondLotsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Delivery      *Delivery              `protobuf:"bytes,1,opt,name=delivery,proto3" json:"delivery,omitempty"`
@@ -3030,7 +3100,7 @@ type ImportBondLotsResponse struct {
 
 func (x *ImportBondLotsResponse) Reset() {
 	*x = ImportBondLotsResponse{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[33]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3042,7 +3112,7 @@ func (x *ImportBondLotsResponse) String() string {
 func (*ImportBondLotsResponse) ProtoMessage() {}
 
 func (x *ImportBondLotsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[33]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3055,7 +3125,7 @@ func (x *ImportBondLotsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportBondLotsResponse.ProtoReflect.Descriptor instead.
 func (*ImportBondLotsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{33}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ImportBondLotsResponse) GetDelivery() *Delivery {
@@ -3265,14 +3335,18 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\n" +
 	"BondLotKey\x12\x16\n" +
 	"\x06series\x18\x01 \x01(\tR\x06series\x12#\n" +
-	"\rpurchase_date\x18\x02 \x01(\tR\fpurchaseDate\"\xdb\x01\n" +
+	"\rpurchase_date\x18\x02 \x01(\tR\fpurchaseDate\"\x9d\x02\n" +
 	"\x15ImportBondLotsRequest\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x122\n" +
 	"\x04lots\x18\x02 \x03(\v2\x1e.openfief.connector.v1.BondLotR\x04lots\x12\x17\n" +
 	"\ago_live\x18\x03 \x01(\tR\x06goLive\x12;\n" +
 	"\adeleted\x18\x04 \x03(\v2!.openfief.connector.v1.BondLotKeyR\adeleted\x12\x1d\n" +
 	"\n" +
-	"account_id\x18\x05 \x01(\tR\taccountId\"U\n" +
+	"account_id\x18\x05 \x01(\tR\taccountId\x12@\n" +
+	"\x06booked\x18\x06 \x03(\v2(.openfief.connector.v1.BookedTransactionR\x06booked\"`\n" +
+	"\x11BookedTransaction\x127\n" +
+	"\x03key\x18\x01 \x01(\v2%.openfief.connector.v1.TransactionKeyR\x03key\x12\x12\n" +
+	"\x04date\x18\x02 \x01(\tR\x04date\"U\n" +
 	"\x16ImportBondLotsResponse\x12;\n" +
 	"\bdelivery\x18\x01 \x01(\v2\x1f.openfief.connector.v1.DeliveryR\bdelivery*\xc0\x01\n" +
 	"\bBookKind\x12\x19\n" +
@@ -3341,7 +3415,7 @@ func file_openfief_connector_v1_connector_proto_rawDescGZIP() []byte {
 }
 
 var file_openfief_connector_v1_connector_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
-var file_openfief_connector_v1_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
+var file_openfief_connector_v1_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
 var file_openfief_connector_v1_connector_proto_goTypes = []any{
 	(BookKind)(0),                     // 0: openfief.connector.v1.BookKind
 	(TransactionKind)(0),              // 1: openfief.connector.v1.TransactionKind
@@ -3383,7 +3457,8 @@ var file_openfief_connector_v1_connector_proto_goTypes = []any{
 	(*BondLot)(nil),                   // 37: openfief.connector.v1.BondLot
 	(*BondLotKey)(nil),                // 38: openfief.connector.v1.BondLotKey
 	(*ImportBondLotsRequest)(nil),     // 39: openfief.connector.v1.ImportBondLotsRequest
-	(*ImportBondLotsResponse)(nil),    // 40: openfief.connector.v1.ImportBondLotsResponse
+	(*BookedTransaction)(nil),         // 40: openfief.connector.v1.BookedTransaction
+	(*ImportBondLotsResponse)(nil),    // 41: openfief.connector.v1.ImportBondLotsResponse
 }
 var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	0,  // 0: openfief.connector.v1.Book.kind:type_name -> openfief.connector.v1.BookKind
@@ -3440,20 +3515,22 @@ var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	6,  // 51: openfief.connector.v1.BondLot.purchase:type_name -> openfief.connector.v1.BondPurchase
 	37, // 52: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
 	38, // 53: openfief.connector.v1.ImportBondLotsRequest.deleted:type_name -> openfief.connector.v1.BondLotKey
-	21, // 54: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	28, // 55: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
-	35, // 56: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
-	39, // 57: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
-	25, // 58: openfief.connector.v1.ConnectorService.LookupInstruments:input_type -> openfief.connector.v1.LookupInstrumentsRequest
-	33, // 59: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
-	36, // 60: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
-	40, // 61: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
-	27, // 62: openfief.connector.v1.ConnectorService.LookupInstruments:output_type -> openfief.connector.v1.LookupInstrumentsResponse
-	59, // [59:63] is the sub-list for method output_type
-	55, // [55:59] is the sub-list for method input_type
-	55, // [55:55] is the sub-list for extension type_name
-	55, // [55:55] is the sub-list for extension extendee
-	0,  // [0:55] is the sub-list for field type_name
+	40, // 54: openfief.connector.v1.ImportBondLotsRequest.booked:type_name -> openfief.connector.v1.BookedTransaction
+	11, // 55: openfief.connector.v1.BookedTransaction.key:type_name -> openfief.connector.v1.TransactionKey
+	21, // 56: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	28, // 57: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
+	35, // 58: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
+	39, // 59: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
+	25, // 60: openfief.connector.v1.ConnectorService.LookupInstruments:input_type -> openfief.connector.v1.LookupInstrumentsRequest
+	33, // 61: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
+	36, // 62: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
+	41, // 63: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
+	27, // 64: openfief.connector.v1.ConnectorService.LookupInstruments:output_type -> openfief.connector.v1.LookupInstrumentsResponse
+	61, // [61:65] is the sub-list for method output_type
+	57, // [57:61] is the sub-list for method input_type
+	57, // [57:57] is the sub-list for extension type_name
+	57, // [57:57] is the sub-list for extension extendee
+	0,  // [0:57] is the sub-list for field type_name
 }
 
 func init() { file_openfief_connector_v1_connector_proto_init() }
@@ -3471,7 +3548,7 @@ func file_openfief_connector_v1_connector_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_connector_v1_connector_proto_rawDesc), len(file_openfief_connector_v1_connector_proto_rawDesc)),
 			NumEnums:      7,
-			NumMessages:   34,
+			NumMessages:   35,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

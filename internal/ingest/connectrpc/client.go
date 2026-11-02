@@ -126,6 +126,7 @@ func (c *Client) ImportBondLots(ctx context.Context, instance string, id ingest.
 	}
 	req := connect.NewRequest(&connectorv1.ImportBondLotsRequest{
 		BatchId: string(id), Lots: bondLotsTo(e.Lots), Deleted: bondLotKeysTo(e.Deleted), AccountId: string(e.Account),
+		Booked: bookedTo(e.Booked),
 	})
 	if !e.GoLive.IsZero() {
 		req.Msg.GoLive = e.GoLive.String()

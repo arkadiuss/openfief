@@ -454,3 +454,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-115673223476
+  - type: executable_for
+    from: SYM-treasurybonds-test-map-deletes-what-was-booked-for-the-lot
+    to: TEST-treasurybonds-mapper
+    created_at: 2026-11-02T10:26:44.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b5785596083

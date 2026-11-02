@@ -67386,6 +67386,8 @@ symbols:
         target: TEST-ingest-connectrpc-bonds
       - type: implements
         target: REQ-ingest-bond-lot-messages
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
   - id: SYM-ingest-connectrpc-entry-error
     title: entryError
     sourceFile: internal/ingest/connectrpc/client.go
@@ -69189,9 +69191,13 @@ symbols:
       recorded_at: 2026-10-29T01:55:31.274Z
     relationships:
       - type: covered_by
+        target: TEST-core-bond-coupons
+      - type: covered_by
         target: TEST-core-bond-lots
       - type: implements
         target: REQ-core-bond-lot-service
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-deletes-coupons
       - type: implements
         target: REQ-ingest-uploads-through-core
   - id: SYM-core-with-bond-lot-service
@@ -102690,6 +102696,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-bondlots
       - type: implements
+        target: REQ-ingest-bond-lot-delete-deletes-coupons
+      - type: implements
         target: REQ-ingest-bond-lot-delete-entry
       - type: implements
         target: REQ-ingest-bond-lot-delete-supersedes
@@ -102994,6 +103002,8 @@ symbols:
         target: TEST-ingest-delivery-bonds
       - type: implements
         target: REQ-ingest-bond-lot-messages
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
   - id: SYM-delivery-test-bond-lot-entries
     title: TestBondLotEntries
     sourceFile: internal/ingest/delivery/bonds_test.go
@@ -103085,6 +103095,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-deletes-coupons
       - type: implements
         target: REQ-treasurybonds-lot-booked-on-purchase-date
       - type: implements
@@ -130536,3 +130548,297 @@ symbols:
         target: TEST-treasurybonds-coupons
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
+  - id: SYM-ingest-conn-dom-booked-by
+    title: BookedBy
+    sourceFile: internal/ingest/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:24:39.397Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-scope
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-ingest-delivery-booked-from
+    title: bookedFrom
+    sourceFile: internal/ingest/delivery/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:24:47.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-ingest-conn-rpc-booked-to
+    title: bookedTo
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:24:54.914Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-ingest-app-account-transactions
+    title: AccountTransactions
+    sourceFile: internal/ingest/app/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:02.566Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-ingest-app-bond-lots-booked
+    title: BondLots.booked
+    sourceFile: internal/ingest/app/bondlots.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:10.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-deletes-coupons
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-treasurybonds-mapper-booked-for
+    title: Mapper.bookedFor
+    sourceFile: internal/ingest/treasurybonds/mapper.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:18.185Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-mapper
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-deletes-coupons
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-connectorv1-booked-transaction
+    title: BookedTransaction
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:24.742Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-connectorv1-booked-transaction-reset
+    title: BookedTransaction.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:32.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-connectorv1-booked-transaction-string
+    title: BookedTransaction.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:40.715Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-connectorv1-booked-transaction-proto-message
+    title: BookedTransaction.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:48.964Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-connectorv1-booked-transaction-proto-reflect
+    title: BookedTransaction.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:25:56.528Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-connectorv1-booked-transaction-descriptor
+    title: BookedTransaction.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:26:05.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-connectorv1-booked-transaction-get-key
+    title: BookedTransaction.GetKey
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:26:12.744Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-connectorv1-booked-transaction-get-date
+    title: BookedTransaction.GetDate
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:26:20.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-connectorv1-import-bond-lots-request-get-booked
+    title: ImportBondLotsRequest.GetBooked
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:26:27.886Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-bonds
+      - type: implements
+        target: REQ-treasurybonds-lot-delete-deletes-booked
+  - id: SYM-ingest-test-booked-by
+    title: TestBookedBy
+    sourceFile: internal/ingest/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:26:35.595Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-scope
+  - id: SYM-treasurybonds-test-map-deletes-what-was-booked-for-the-lot
+    title: TestMapDeletesWhatWasBookedForTheLot
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:26:42.302Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-ingest-app-test-helper-fake-transactions
+    title: fakeTransactions
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:26:49.160Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-fake-transactions-current-transactions
+    title: fakeTransactions.CurrentTransactions
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:26:56.486Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-core-test-helper-every-account-owner
+    title: everyAccountOwner
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:27:03.884Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-helper-every-account-owner-check-owner
+    title: everyAccountOwner.CheckOwner
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:27:11.236Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-helper-every-account-owner-changeable
+    title: everyAccountOwner.Changeable
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:27:18.648Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-helper-check-lot-deleted-with-coupons
+    title: checkLotDeletedWithCoupons
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:27:25.839Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons
+  - id: SYM-core-test-helper-coupon-connector-import-bond-lots
+    title: couponConnector.ImportBondLots
+    sourceFile: cmd/core/coupons_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T10:27:33.062Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-coupons

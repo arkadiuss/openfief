@@ -528,3 +528,16 @@ func bondLotKeysTo(keys []ingest.BondLotKey) []*connectorv1.BondLotKey {
 	}
 	return out
 }
+
+// bookedTo writes the transactions a connector booked, each its key as the
+// connector gave it and its date (D-154).
+func bookedTo(booked []ledger.TransactionHeader) []*connectorv1.BookedTransaction {
+	out := make([]*connectorv1.BookedTransaction, 0, len(booked))
+	for _, h := range booked {
+		out = append(out, &connectorv1.BookedTransaction{
+			Key:  &connectorv1.TransactionKey{Source: h.Key.Source, ExternalId: h.Key.ExternalID},
+			Date: h.Date.String(),
+		})
+	}
+	return out
+}

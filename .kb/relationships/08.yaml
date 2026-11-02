@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1e73dec8074
+  - type: executable_for
+    from: SYM-core-test-helper-every-account-owner-check-owner
+    to: TEST-core-bond-coupons
+    created_at: 2026-11-02T10:27:13.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80fcd3b66c41

@@ -237,6 +237,69 @@ func TestMap(t *testing.T) {
 	}
 }
 
+func TestMapDeletesWhatWasBookedForTheLot(t *testing.T) {
+	t.Parallel()
+	today := mustDate(t, "2026-10-29")
+	k := func(id string) ledger.TransactionKey {
+		return ledger.TransactionKey{Source: "treasury-bonds:acc-bonds", ExternalID: id}
+	}
+	booked := func(source, id, day string) ledger.TransactionHeader {
+		return ledger.TransactionHeader{Key: ledger.TransactionKey{Source: source, ExternalID: id}, Account: account, Date: mustDate(t, day)}
+	}
+	own := "treasury-bonds:acc-bonds"
+	e := ingest.BondLotEntries{
+		Account: account, Deleted: []ingest.BondLotKey{key(t, "COI1028", "2024-10-10")},
+		Booked: []ledger.TransactionHeader{
+			booked(own, "lot:COI1028:2024-10-10:deposit", "2024-10-10"),
+			booked(own, "lot:COI1028:2024-10-10:buy", "2024-10-10"),
+			booked(own, "lot:COI1028:2024-10-10:coupon:2025-10-10", "2025-10-10"),
+			booked(own, "lot:COI1028:2024-10-10:coupon:2025-10-10:payout", "2025-10-10"),
+			booked(own, "lot:COI1028:2024-10-11:coupon:2025-10-11", "2025-10-11"),                        // another lot of the series
+			booked("treasury-bonds:acc-other", "lot:COI1028:2024-10-10:coupon:2025-10-10", "2025-10-10"), // another account's source
+			booked(own, "lot:COI1028:2024-10-10:coupon:2026-10-10", "2026-10-10"),
+			booked(own, "lot:COI1028:2024-10-10:redemption", "2028-10-10"),
+		},
+	}
+	m, _, err := treasurybonds.Mapper{}.Map(&e, today)
+	if err != nil {
+		t.Fatalf("Map: %v", err)
+	}
+	deleted := func(id, day string) mapRow {
+		return mapRow{Key: k(id), Kind: ledger.KindDeletion, Date: day, Description: "Deleted treasury bonds COI1028"}
+	}
+	// D-154: the lot's deposit and buy, then its coupons, their payout withdrawal and its redemption, each as dated
+	// when booked; nothing of another lot or another account.
+	want := []mapRow{
+		deleted("lot:COI1028:2024-10-10:deposit", "2024-10-10"),
+		deleted("lot:COI1028:2024-10-10:buy", "2024-10-10"),
+		deleted("lot:COI1028:2024-10-10:coupon:2025-10-10", "2025-10-10"),
+		deleted("lot:COI1028:2024-10-10:coupon:2025-10-10:payout", "2025-10-10"),
+		deleted("lot:COI1028:2024-10-10:coupon:2026-10-10", "2026-10-10"),
+		deleted("lot:COI1028:2024-10-10:redemption", "2028-10-10"),
+	}
+	if diff := cmp.Diff(want, rows(t, &m)); diff != "" {
+		t.Errorf("Map deletions (-want +got):\n%s", diff)
+	}
+
+	// An opening lot in an account seeded before D-98 was rewritten: its own key and its coupons after go-live.
+	e.GoLive = mustDate(t, "2025-01-02")
+	e.Booked = []ledger.TransactionHeader{
+		booked(own, "lot:COI1028:2024-10-10", "2025-01-02"),
+		booked(own, "lot:COI1028:2024-10-10:coupon:2025-10-10", "2025-10-10"),
+	}
+	opening, _, err := treasurybonds.Mapper{}.Map(&e, today)
+	if err != nil {
+		t.Fatalf("Map with go-live: %v", err)
+	}
+	wantOpening := []mapRow{
+		deleted("lot:COI1028:2024-10-10", "2025-01-02"),
+		deleted("lot:COI1028:2024-10-10:coupon:2025-10-10", "2025-10-10"),
+	}
+	if diff := cmp.Diff(wantOpening, rows(t, &opening)); diff != "" {
+		t.Errorf("Map deletions with go-live (-want +got):\n%s", diff)
+	}
+}
+
 // qty writes a holding posting's quantity, or nothing for any other.
 func qty(q kernel.Quantity) string {
 	if q.IsZero() {

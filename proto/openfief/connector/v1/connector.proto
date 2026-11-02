@@ -609,12 +609,28 @@ message ImportBondLotsRequest {
   // later one is a deposit and a buy.
   string go_live = 3;
   // Lots the owner deletes as a correction (D-100): the connector delivers
-  // a deletion of each of their transactions.
+  // a deletion of each of their transactions, and of everything it booked
+  // for them since, among booked (D-154).
   repeated BondLotKey deleted = 4;
   // The OpenFief account the owner entered the lots on (D-118): the
   // connector books them there, so one instance serves every bond account
   // bound to it and its config names none.
   string account_id = 5;
+  // Only with deleted lots: the account's current transactions this
+  // instance delivered, each keyed as the connector keyed it (without the
+  // prefix the core adds) and dated. A connector that stores nothing picks
+  // from them what it booked for each deleted lot, such as its coupons, its
+  // redemption and their payout withdrawals, and delivers their deletions
+  // too, so their cash goes with the lot (D-154).
+  repeated BookedTransaction booked = 6;
+}
+
+// BookedTransaction is a current transaction a connector instance
+// delivered into an account: its key as the connector gave it and its
+// date, "YYYY-MM-DD".
+message BookedTransaction {
+  TransactionKey key = 1;
+  string date = 2;
 }
 
 message ImportBondLotsResponse {

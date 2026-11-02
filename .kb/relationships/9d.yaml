@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44af878793b0
+  - type: implements
+    from: SYM-ingest-app-account-transactions
+    to: REQ-treasurybonds-lot-delete-deletes-booked
+    created_at: 2026-11-02T10:25:05.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e52bf335e158
+  - type: covered_by
+    from: SYM-ingest-app-account-transactions
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-11-02T10:25:05.392Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-093c1558508f
+  - type: implements
+    from: SYM-ingest-app-bond-lots-delete
+    to: REQ-ingest-bond-lot-delete-deletes-coupons
+    created_at: 2026-11-02T10:27:52.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f4c3906239f

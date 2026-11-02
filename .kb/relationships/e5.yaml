@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8b46b2dcaef
+  - type: implements
+    from: SYM-ingest-conn-rpc-booked-to
+    to: REQ-treasurybonds-lot-delete-deletes-booked
+    created_at: 2026-11-02T10:24:57.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee9297c066fa
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-booked-to
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-11-02T10:24:57.732Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-afb88f19a440
