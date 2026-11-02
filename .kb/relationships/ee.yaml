@@ -559,3 +559,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-013ad2b19a30
+  - type: implements
+    from: SYM-identity-action-string
+    to: REQ-identity-authz-owner-acts-every-account
+    created_at: 2026-11-01T22:47:39.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7277e3dec0e8
+  - type: implements
+    from: SYM-identity-action-string
+    to: REQ-identity-authz-readers-view-every-account
+    created_at: 2026-11-01T22:47:39.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1e51e24204e
+  - type: covered_by
+    from: SYM-identity-action-string
+    to: TEST-identity-access
+    created_at: 2026-11-01T22:47:39.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-114c88e1341d

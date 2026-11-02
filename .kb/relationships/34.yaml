@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4828d0440b7f
+  - type: implements
+    from: SYM-views-app-with-authorizer
+    to: REQ-views-authz-hidden-account-not-found
+    created_at: 2026-11-01T22:49:33.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb5899eeb35a
+  - type: covered_by
+    from: SYM-views-app-with-authorizer
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:49:33.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-563e6ba255e7

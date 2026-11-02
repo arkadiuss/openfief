@@ -35,8 +35,25 @@ var (
 )
 
 // owners accepts ownerSession, refuses readSession as not the owner's and
-// any other token as no session.
+// any other token as no session, and refuses every change to deniedAccount,
+// as an authorizer that denies some accounts would (D-163).
 type owners struct{}
+
+// deniedAccount is the account owners refuses to let the owner change.
+const deniedAccount = "acc-denied"
+
+func (o owners) Changeable(ctx context.Context, origin, token string, accounts []ledger.AccountID) ([]ledger.AccountID, error) {
+	if err := o.CheckOwner(ctx, origin, token); err != nil {
+		return nil, err
+	}
+	out := make([]ledger.AccountID, 0, len(accounts))
+	for _, a := range accounts {
+		if a != deniedAccount {
+			out = append(out, a)
+		}
+	}
+	return out, nil
+}
 
 func (owners) CheckOwner(_ context.Context, _, token string) error {
 	switch token {
@@ -226,6 +243,7 @@ func TestAddBondLotRefusals(t *testing.T) {
 		{name: "a fee that isn't a number", edit: func(l *ingestv1.BondLot) { l.EarlyRedemptionFeePln = "2 zł" }, want: connect.CodeInvalidArgument, wantText: "fee"},
 		{name: "a purchase date of another series", edit: func(l *ingestv1.BondLot) { l.PurchaseDate = "2026-06-04" }, want: connect.CodeInvalidArgument, wantText: "EDO0536"},
 		{name: "an account without a bond connector", account: "acc-ibkr", want: connect.CodeFailedPrecondition, wantText: "acc-ibkr"},
+		{name: "an account the owner may not change", account: deniedAccount, want: connect.CodePermissionDenied},
 		{name: "the connector refuses", callErr: fmt.Errorf("%w: lot 1: synthetic reason", app.ErrEntryRefused), want: connect.CodeInvalidArgument, wantText: "synthetic reason"},
 		{name: "the connector takes no bond lots", callErr: app.ErrNoEntries, want: connect.CodeFailedPrecondition},
 		{name: "the connector can't be reached", callErr: app.ErrConnectorUnavailable, want: connect.CodeUnavailable},

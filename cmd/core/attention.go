@@ -33,8 +33,8 @@ type attention struct {
 
 // attentionOwners is ownerSessions answering with the attention context's
 // errors.
-func attentionOwners(auth *identityapp.Auth, origins identity.Origins) ownerSessions {
-	return ownerSessions{auth: auth, origins: origins, noSession: attentionapp.ErrNoSession, notOwner: attentionapp.ErrNotOwner}
+func attentionOwners(auth *identityapp.Auth, origins identity.Origins) *ownerSessions {
+	return &ownerSessions{auth: auth, origins: origins, noSession: attentionapp.ErrNoSession, notOwner: attentionapp.ErrNotOwner}
 }
 
 // newAttention wires the attention items over pool (D-130, D-131) with the

@@ -62,7 +62,7 @@ func TestPlugins(t *testing.T) {
 	t.Parallel()
 	ui, ibkr := record("ui"), record("ibkr-main")
 	v := installedViews(t, fakePlugins{records: []views.PluginRecord{ui, ibkr}})
-	got, err := v.Plugins(context.Background())
+	got, err := v.Plugins(reader(t))
 	if err != nil {
 		t.Fatalf("Plugins: %v", err)
 	}
@@ -91,10 +91,10 @@ func TestPluginsUnknown(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			v := installedViews(t, tt.plugins)
-			if _, err := v.Plugins(context.Background()); !errors.Is(err, tt.want) {
+			if _, err := v.Plugins(reader(t)); !errors.Is(err, tt.want) {
 				t.Errorf("Plugins error = %v, want %v", err, tt.want)
 			}
-			page, err := v.Transactions(context.Background(), "acc-1", nil, views.DefaultPageSize)
+			page, err := v.Transactions(reader(t), "acc-1", nil, views.DefaultPageSize)
 			if err != nil {
 				t.Fatalf("Transactions: %v, want the page without removed marks", err)
 			}
@@ -109,7 +109,7 @@ func TestPluginsUnknown(t *testing.T) {
 func TestTransactionsMarkRemovedInstances(t *testing.T) {
 	t.Parallel()
 	v := installedViews(t, fakePlugins{records: []views.PluginRecord{record("ibkr-main"), record("ui")}})
-	page, err := v.Transactions(context.Background(), "acc-1", nil, views.DefaultPageSize)
+	page, err := v.Transactions(reader(t), "acc-1", nil, views.DefaultPageSize)
 	if err != nil {
 		t.Fatalf("Transactions: %v", err)
 	}

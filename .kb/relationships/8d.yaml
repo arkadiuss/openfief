@@ -608,6 +608,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8b21b9505ee6
+  - type: executable_for
+    from: SYM-identity-test-test-may-act
+    to: TEST-identity-access
+    created_at: 2026-11-01T22:50:45.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e57f3991beaa
   - type: validates
     from: TEST-views-connectapi-connections
     to: REQ-views-read-api-list-broker-accounts-removed

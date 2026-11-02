@@ -602,6 +602,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-a4821ae08ee2
   - type: constrains
+    from: REQ-identity-authz-spicedb-answers
+    to: FACT-SUBJECT-D9B8F3ECCEFE14B1
+    created_at: 2026-11-01T22:45:41.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae667512c551
+  - type: requires_property
+    from: REQ-identity-authz-spicedb-answers
+    to: FACT-PROP-F5F4A34401B1FC5F
+    created_at: 2026-11-01T22:45:41.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61fece200fd1
+  - type: constrains
     from: REQ-tooling-breaking-exception-commit-marked
     to: FACT-SUBJECT-C87F01A26ABBB0C2
     created_at: 2026-11-01T19:21:43.489Z

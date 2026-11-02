@@ -8,6 +8,8 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/identity"
+	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	"github.com/arkadiuss/openfief/internal/views/app"
 )
 
@@ -15,7 +17,8 @@ import (
 const bearerPrefix = "bearer "
 
 // authInterceptor checks every call, over any protocol, before its handler
-// runs (see authorize).
+// runs (see authorize), and hands the handler the caller the token stands
+// for, whom the views ask the authorizer about (D-163).
 type authInterceptor struct {
 	verifier app.TokenVerifier
 	log      *slog.Logger
@@ -24,10 +27,11 @@ type authInterceptor struct {
 // WrapUnary refuses a unary call that authorize refuses.
 func (a *authInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc {
 	return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
-		if err := a.authorize(ctx, req.Header().Get("Authorization")); err != nil {
+		caller, err := a.authorize(ctx, req.Header().Get("Authorization"))
+		if err != nil {
 			return nil, err
 		}
-		return next(ctx, req)
+		return next(identityapp.WithCaller(ctx, caller), req)
 	}
 }
 
@@ -40,34 +44,35 @@ func (*authInterceptor) WrapStreamingClient(next connect.StreamingClientFunc) co
 // read API has none, so this only keeps a future one from skipping the check.
 func (a *authInterceptor) WrapStreamingHandler(next connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
 	return func(ctx context.Context, conn connect.StreamingHandlerConn) error {
-		if err := a.authorize(ctx, conn.RequestHeader().Get("Authorization")); err != nil {
+		caller, err := a.authorize(ctx, conn.RequestHeader().Get("Authorization"))
+		if err != nil {
 			return err
 		}
-		return next(ctx, conn)
+		return next(identityapp.WithCaller(ctx, caller), conn)
 	}
 }
 
-// authorize returns nil when header carries a bearer token the verifier
+// authorize returns the caller of a bearer token in header the verifier
 // accepts; otherwise unauthenticated with a Bearer challenge, or internal
 // when the token cannot be checked.
-func (a *authInterceptor) authorize(ctx context.Context, header string) *connect.Error {
+func (a *authInterceptor) authorize(ctx context.Context, header string) (identity.Caller, *connect.Error) {
 	token, ok := bearerToken(header)
 	if !ok {
 		e := connect.NewError(connect.CodeUnauthenticated, errTokenRequired)
 		e.Meta().Set("WWW-Authenticate", "Bearer")
-		return e
+		return identity.Caller{}, e
 	}
-	err := a.verifier.VerifyToken(ctx, token)
+	caller, err := a.verifier.VerifyToken(ctx, token)
 	switch {
 	case err == nil:
-		return nil
+		return caller, nil
 	case errors.Is(err, app.ErrInvalidToken):
 		e := connect.NewError(connect.CodeUnauthenticated, errTokenNotValid)
 		e.Meta().Set("WWW-Authenticate", `Bearer error="invalid_token"`)
-		return e
+		return identity.Caller{}, e
 	}
 	logFailure(ctx, a.log, "verifying a token")
-	return internalError(ctx)
+	return identity.Caller{}, internalError(ctx)
 }
 
 // bearerToken returns the token of an Authorization header value of the

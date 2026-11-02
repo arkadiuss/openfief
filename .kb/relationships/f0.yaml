@@ -658,6 +658,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-c021d0e062b5
   - type: implements
+    from: SYM-views-app-shown-links
+    to: REQ-views-authz-totals-over-viewable
+    created_at: 2026-11-01T22:49:59.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a16f2a157a02
+  - type: covered_by
+    from: SYM-views-app-shown-links
+    to: TEST-views-app-authz
+    created_at: 2026-11-01T22:49:59.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1132b80e502a
+  - type: implements
     from: SYM-protobreak-contracts-index-message
     to: REQ-tooling-breaking-check-one-exception
     created_at: 2026-11-01T19:24:42.360Z

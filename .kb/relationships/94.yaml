@@ -650,6 +650,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89da3b8b71d4
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-render-ticker-entry
+    to: TEST-ingest-xtb-mapper
+    created_at: 2026-11-01T17:26:44.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9f0a60eaa22
+  - type: executable_for
+    from: SYM-views-connectapi-test-authz-acc1-only-may-act
+    to: TEST-views-connectapi-authz
+    created_at: 2026-11-01T22:53:47.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43281dace080
   - type: implements
     from: SYM-protobreak-read-files
     to: REQ-tooling-breaking-check-one-exception
@@ -664,10 +678,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4788cd074c97
-  - type: executable_for
-    from: SYM-ingest-xtb-test-helper-render-ticker-entry
-    to: TEST-ingest-xtb-mapper
-    created_at: 2026-11-01T17:26:44.502Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e9f0a60eaa22

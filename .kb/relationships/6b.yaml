@@ -692,6 +692,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1707c24a594
+  - type: implements
+    from: SYM-core-owner-sessions-changeable
+    to: REQ-identity-authz-one-interface
+    created_at: 2026-11-01T22:47:19.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dba228191c4
+  - type: implements
+    from: SYM-core-owner-sessions-changeable
+    to: REQ-core-authz-change-refused
+    created_at: 2026-11-01T22:47:19.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0eb3f1373a99
+  - type: covered_by
+    from: SYM-core-owner-sessions-changeable
+    to: TEST-core-owner-sessions
+    created_at: 2026-11-01T22:47:19.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-926d83941308
   - type: validates
     from: TEST-ui-plugins
     to: REQ-plugins-untrusted-signer-named

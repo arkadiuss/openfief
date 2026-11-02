@@ -1,7 +1,6 @@
 package app_test
 
 import (
-	"context"
 	"errors"
 	"testing"
 
@@ -32,7 +31,7 @@ func TestAllocation(t *testing.T) {
 		t.Run(tt.by.String(), func(t *testing.T) {
 			t.Parallel()
 			f := newFixture(t)
-			got, err := f.views(t).Allocation(context.Background(), f.on, tt.by, views.Gross)
+			got, err := f.views(t).Allocation(reader(t), f.on, tt.by, views.Gross)
 			if err != nil {
 				t.Fatalf("Allocation() error = %v", err)
 			}
@@ -57,7 +56,7 @@ func TestAllocationFailures(t *testing.T) {
 		t.Parallel()
 		f := newFixture(t)
 		f.rates = f.rates[:1] // no EUR rate
-		if _, err := f.views(t).Allocation(context.Background(), f.on, views.BySleeve, views.Gross); !errors.Is(err, valuation.ErrNoRate) {
+		if _, err := f.views(t).Allocation(reader(t), f.on, views.BySleeve, views.Gross); !errors.Is(err, valuation.ErrNoRate) {
 			t.Errorf("Allocation() error = %v, want %v", err, valuation.ErrNoRate)
 		}
 	})
@@ -65,7 +64,7 @@ func TestAllocationFailures(t *testing.T) {
 		t.Parallel()
 		f := newFixture(t)
 		f.valuations.fail = errStore
-		if _, err := f.views(t).Allocation(context.Background(), f.on, views.BySleeve, views.Gross); !errors.Is(err, errStore) {
+		if _, err := f.views(t).Allocation(reader(t), f.on, views.BySleeve, views.Gross); !errors.Is(err, errStore) {
 			t.Errorf("Allocation() error = %v, want %v", err, errStore)
 		}
 	})
@@ -88,7 +87,7 @@ func TestAccountValuations(t *testing.T) {
 	t.Parallel()
 	f := newFixture(t)
 	v := f.views(t)
-	ctx := context.Background()
+	ctx := reader(t)
 	got, err := v.AccountValuations(ctx, "acc-1", date(t, "2026-03-02"), date(t, "2026-03-31"))
 	if err != nil {
 		t.Fatalf("AccountValuations() error = %v", err)
@@ -115,7 +114,7 @@ func TestAccountValuations(t *testing.T) {
 func TestValuationTotals(t *testing.T) {
 	t.Parallel()
 	f := newFixture(t)
-	got, err := f.views(t).ValuationTotals(context.Background(), date(t, "2026-03-01"), f.on)
+	got, err := f.views(t).ValuationTotals(reader(t), date(t, "2026-03-01"), f.on)
 	if err != nil {
 		t.Fatalf("ValuationTotals() error = %v", err)
 	}
@@ -138,7 +137,7 @@ func TestValuationStatus(t *testing.T) {
 	t.Parallel()
 	f := newFixture(t)
 	v := f.views(t)
-	ctx := context.Background()
+	ctx := reader(t)
 	got, err := v.ValuationStatuses(ctx)
 	if err != nil {
 		t.Fatalf("ValuationStatuses() error = %v", err)
@@ -175,11 +174,11 @@ func TestAssertionChecks(t *testing.T) {
 	f := newFixture(t)
 	withLedgerRows(t, f)
 	v := f.views(t)
-	flagged, err := v.AssertionChecks(context.Background(), "acc-1", ledgerapp.AssertionFlagged)
+	flagged, err := v.AssertionChecks(reader(t), "acc-1", ledgerapp.AssertionFlagged)
 	if err != nil || len(flagged) != 1 || !flagged[0].Flagged() {
 		t.Errorf("AssertionChecks(flagged) = %v, %v, want the one flagged check", flagged, err)
 	}
-	all, err := v.AssertionChecks(context.Background(), "acc-1", 0)
+	all, err := v.AssertionChecks(reader(t), "acc-1", 0)
 	if err != nil || len(all) != 2 {
 		t.Errorf("AssertionChecks(all) = %v, %v, want both checks", all, err)
 	}
@@ -190,11 +189,11 @@ func TestTransactions(t *testing.T) {
 	f := newFixture(t)
 	withLedgerRows(t, f)
 	v := f.views(t)
-	page, err := v.Transactions(context.Background(), "acc-1", nil, 1)
+	page, err := v.Transactions(reader(t), "acc-1", nil, 1)
 	if err != nil || len(page.Transactions) != 1 || page.Next == nil {
 		t.Errorf("Transactions(size 1) = %+v, %v, want one and a cursor", page, err)
 	}
-	if _, err := v.Transactions(context.Background(), "acc-1", nil, 0); !errors.Is(err, views.ErrInvalidPageSize) {
+	if _, err := v.Transactions(reader(t), "acc-1", nil, 0); !errors.Is(err, views.ErrInvalidPageSize) {
 		t.Errorf("Transactions(size 0) error = %v, want %v", err, views.ErrInvalidPageSize)
 	}
 }
@@ -203,7 +202,7 @@ func TestUnknownAccount(t *testing.T) {
 	t.Parallel()
 	f := newFixture(t)
 	v := f.views(t)
-	ctx := context.Background()
+	ctx := reader(t)
 	_, errAccount := v.Account(ctx, "nope")
 	_, errTxs := v.Transactions(ctx, "nope", nil, 1)
 	_, errHoldings := v.Holdings(ctx, "nope", f.on)
@@ -222,8 +221,8 @@ func TestStoreFailure(t *testing.T) {
 	f := newFixture(t)
 	f.ledger.fail = errStore
 	v := f.views(t)
-	_, errSleeves := v.Sleeves(context.Background())
-	_, errHoldings := v.Holdings(context.Background(), "acc-1", f.on)
+	_, errSleeves := v.Sleeves(reader(t))
+	_, errHoldings := v.Holdings(reader(t), "acc-1", f.on)
 	for i, err := range []error{errSleeves, errHoldings} {
 		if !errors.Is(err, errStore) || errors.Is(err, app.ErrUnknownAccount) {
 			t.Errorf("query %d error = %v, want only %v", i, err, errStore)

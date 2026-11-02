@@ -75,7 +75,7 @@ func (a *Accounts) BrokerAccounts(ctx context.Context, origin, sessionToken stri
 // retry after a failure between the steps does, finishes the clean-up and
 // succeeds.
 func (a *Accounts) Delete(ctx context.Context, origin, sessionToken string, id ledger.AccountID) error {
-	if err := a.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
+	if err := mayChange(ctx, a.Owners, origin, sessionToken, id); err != nil {
 		return fmt.Errorf("deleting an account: %w", err)
 	}
 	if id == "" {
@@ -100,13 +100,11 @@ func (a *Accounts) Delete(ctx context.Context, origin, sessionToken string, id l
 // does fails with ErrBrokerAccountHasTransactions and changes nothing. The
 // instance is bound to the new account.
 func (a *Accounts) Remap(ctx context.Context, origin, sessionToken, instance string, broker ingest.BrokerAccountID, account ledger.AccountID) error {
-	if err := a.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
-		return fmt.Errorf("remapping a broker account: %w", err)
+	old, err := a.authorizeRemap(ctx, origin, sessionToken, instance, broker, account)
+	if err != nil {
+		return err
 	}
-	if err := ingest.ValidateInstanceName(instance); err != nil {
-		return fmt.Errorf("remapping a broker account: connector instance: %w", err)
-	}
-	if err := a.checkRemappable(ctx, instance, broker, account); err != nil {
+	if err := a.checkRemappable(ctx, instance, old, account); err != nil {
 		return err
 	}
 	if account != "" {
@@ -126,19 +124,51 @@ func (a *Accounts) Remap(ctx context.Context, origin, sessionToken, instance str
 	return nil
 }
 
-// checkRemappable checks that instance reported broker and that the
-// account it is mapped to, unless that is account, holds no transaction
-// from instance.
-func (a *Accounts) checkRemappable(ctx context.Context, instance string, broker ingest.BrokerAccountID, account ledger.AccountID) error {
+// authorizeRemap checks that the owner may change account, unless it is
+// empty, and then that instance's broker account broker exists and the
+// owner may change the account it is mapped to, which it returns (D-163).
+func (a *Accounts) authorizeRemap(ctx context.Context, origin, sessionToken, instance string, broker ingest.BrokerAccountID, account ledger.AccountID) (ledger.AccountID, error) {
+	var changed []ledger.AccountID
+	if account != "" {
+		changed = append(changed, account)
+	}
+	if err := mayChange(ctx, a.Owners, origin, sessionToken, changed...); err != nil {
+		return "", fmt.Errorf("remapping a broker account: %w", err)
+	}
+	if err := ingest.ValidateInstanceName(instance); err != nil {
+		return "", fmt.Errorf("remapping a broker account: connector instance: %w", err)
+	}
+	old, err := a.mappedTo(ctx, instance, broker)
+	if err != nil {
+		return "", err
+	}
+	if old != "" && old != account {
+		if err := mayChange(ctx, a.Owners, origin, sessionToken, old); err != nil {
+			return "", fmt.Errorf("remapping a broker account: %w", err)
+		}
+	}
+	return old, nil
+}
+
+// mappedTo returns the account instance's broker account broker is mapped
+// to, empty when none, or an error wrapping ErrUnknownBrokerAccount when
+// instance never reported it.
+func (a *Accounts) mappedTo(ctx context.Context, instance string, broker ingest.BrokerAccountID) (ledger.AccountID, error) {
 	known, err := a.Brokers.BrokerAccounts(ctx, instance)
 	if err != nil {
-		return fmt.Errorf("loading the broker accounts of %s: %w", instance, err)
+		return "", fmt.Errorf("loading the broker accounts of %s: %w", instance, err)
 	}
 	i := slices.IndexFunc(known, func(b ingest.BrokerAccount) bool { return b.ID == broker })
 	if i < 0 {
-		return fmt.Errorf("connector instance %s: %w", instance, ErrUnknownBrokerAccount)
+		return "", fmt.Errorf("connector instance %s: %w", instance, ErrUnknownBrokerAccount)
 	}
-	old := known[i].Account
+	return known[i].Account, nil
+}
+
+// checkRemappable checks that old, the account a broker account of
+// instance is mapped to, unless that is account, holds no transaction from
+// instance.
+func (a *Accounts) checkRemappable(ctx context.Context, instance string, old, account ledger.AccountID) error {
 	if old == "" || old == account {
 		return nil
 	}

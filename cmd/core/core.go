@@ -13,6 +13,7 @@ import (
 	"github.com/riverqueue/river"
 
 	attentionpg "github.com/arkadiuss/openfief/internal/attention/postgres"
+	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	identitypg "github.com/arkadiuss/openfief/internal/identity/postgres"
@@ -166,8 +167,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
+	// authz is the one authorizer every read path and owner service asks
+	// (D-163), until SpiceDB answers (D-164).
+	authz := identityapp.Policy{}
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)),
-		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items))
+		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
@@ -183,14 +187,15 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		rankings: newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
 	}
 	plugin := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
-	plugin = withBondLotService(plugin, newBondLots(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
-	plugin = withStatementService(plugin, newUploads(deps, ingestOwners(auth, cfg.Auth.Origins)), newTickers(deps, ingestOwners(auth, cfg.Auth.Origins)), callers, log)
+	owners := ingestOwners(auth, cfg.Auth.Origins, authz)
+	plugin = withBondLotService(plugin, newBondLots(deps, owners), callers, log)
+	plugin = withStatementService(plugin, newUploads(deps, owners), newTickers(deps, owners), callers, log)
 	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
 	plugin = withPriceCheckService(plugin, checks, callers, log)
 	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins),
-		newAccounts(deps, ingestOwners(auth, cfg.Auth.Origins), accountTerms{recorder, vstore}), callers, log)
+		newAccounts(deps, owners, accountTerms{recorder, vstore}), callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
-	plugin = withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins)), callers, log), attn.items, callers, log)
+	plugin = withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins, authz)), callers, log), attn.items, callers, log)
 	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil
 }
 
@@ -228,31 +233,33 @@ type tokenAuthenticator interface {
 // identityapp.Auth.Authenticate; otherwise a view plugin's projected
 // ServiceAccount token with audience openfief-core (D-27), the same callers
 // the AuthService serves. The read API only reads, so a view plugin can
-// only read.
+// only read. It returns the caller the token stands for, whom the views
+// ask the authorizer about (D-163).
 type readTokens struct {
 	auth    tokenAuthenticator
 	plugins identityconnect.Callers
 }
 
 // VerifyToken accepts a session, a read-scoped script token or a view
-// plugin's token; an invalid one fails with an error wrapping
+// plugin's token, returning its caller (identityapp.Principal.Caller, or the
+// view plugin by name); an invalid one fails with an error wrapping
 // viewsapp.ErrInvalidToken.
-func (r readTokens) VerifyToken(ctx context.Context, token string) error {
-	_, err := r.auth.Authenticate(ctx, token)
+func (r readTokens) VerifyToken(ctx context.Context, token string) (identity.Caller, error) {
+	p, err := r.auth.Authenticate(ctx, token)
 	switch {
 	case err == nil:
-		return nil
+		return p.Caller(), nil
 	case !errors.Is(err, identityapp.ErrInvalidToken):
-		return fmt.Errorf("verifying a token: %w", err)
+		return identity.Caller{}, fmt.Errorf("verifying a token: %w", err)
 	case r.plugins == nil:
-		return fmt.Errorf("%w: %w", viewsapp.ErrInvalidToken, err)
+		return identity.Caller{}, fmt.Errorf("%w: %w", viewsapp.ErrInvalidToken, err)
 	}
-	_, perr := r.plugins.VerifyCaller(ctx, token)
+	plugin, perr := r.plugins.VerifyCaller(ctx, token)
 	switch {
 	case perr == nil:
-		return nil
+		return identity.Caller{Holder: identity.HolderViewPlugin, ID: plugin}, nil
 	case errors.Is(perr, identityconnect.ErrCallerRefused):
-		return fmt.Errorf("%w: %w", viewsapp.ErrInvalidToken, err)
+		return identity.Caller{}, fmt.Errorf("%w: %w", viewsapp.ErrInvalidToken, err)
 	}
-	return fmt.Errorf("verifying a plugin token: %w", perr)
+	return identity.Caller{}, fmt.Errorf("verifying a plugin token: %w", perr)
 }
