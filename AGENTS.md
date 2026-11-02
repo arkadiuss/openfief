@@ -22,6 +22,7 @@ Proposals (P), research (R), tensions (T) and open questions (OQ) are undecided:
 | Touch anything people see: UI pages, site styling, logo, mascot, colors | docs/dev/design-system.md |
 | Record HTTP fixtures | `.claude/skills/hypert-recording/SKILL.md` |
 | Hit a lint failure | `.golangci.yml`: its comments give the reason for each choice |
+| Hit an architecture test failure | docs/dev/code-organization.md, "Architecture tests": fix the code, never the baseline |
 | Commit, open a PR, or work on CI, release or deploy | docs/dev/sdlc.md |
 | Need product context | docs/DESIGN.md (decided), docs/proposals/<area>.md (not decided); read sections by ID |
 
