@@ -79,7 +79,7 @@ func TestPriceChecks(t *testing.T) {
 			if tt.source != nil {
 				opts = append(opts, app.WithPriceChecks(tt.source))
 			}
-			v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), opts...)
+			v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), opts...)
 			if err != nil {
 				t.Fatalf("app.New: %v", err)
 			}

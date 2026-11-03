@@ -44,7 +44,7 @@ func testDelivery() *connectorv1.Delivery {
 		Prices: []*connectorv1.Price{{
 			Instrument: instrument, Date: "2026-03-02", Close: &connectorv1.Money{Amount: "50.25", Currency: "USD"},
 		}},
-		FxRates:       []*connectorv1.FxRate{{Currency: "USD", Date: "2026-03-02", Rate: "3.9876"}},
+		FxRates:       []*connectorv1.FxRate{{Currency: "USD", Date: "2026-03-02", Rate: "3.9876", Base: "PLN"}},
 		IndexReadings: []*connectorv1.IndexReading{{Index: connectorv1.Index_INDEX_CPI, Date: "2026-02-01", Value: "0.049"}},
 		IndexLevels:   []*connectorv1.IndexLevel{{Index: "FAKE20", Date: "2026-03-02", Level: "1522.60"}},
 		BondTerms: []*connectorv1.BondTerms{{
@@ -125,7 +125,7 @@ func TestDeliveryFrom(t *testing.T) {
 	want := app.Delivery{
 		Institution: "xtb", Watermark: "w-2",
 		Prices:  []valuation.Price{{Instrument: testInstrument(t).String(), Date: day, Close: mustMoney(t, "50.25", "USD")}},
-		FXRates: []valuation.FXRate{{Currency: usd.Currency(), Date: day, Rate: mustDecimal(t, "3.9876")}},
+		FXRates: []valuation.FXRate{{Currency: usd.Currency(), Base: mustMoney(t, "1", "PLN").Currency(), Date: day, Rate: mustDecimal(t, "3.9876")}},
 		IndexReadings: []ingest.IndexReading{{
 			Index: ingest.IndexCPI, Date: mustDate(t, "2026-02-01"), Value: mustDecimal(t, "0.049"),
 		}},
@@ -267,11 +267,11 @@ func TestValuationInputsFrom(t *testing.T) {
 	if diff := cmp.Diff(wantPrice, price); diff != "" {
 		t.Errorf("priceFrom (-want +got):\n%s", diff)
 	}
-	rate, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "3.9876"})
+	rate, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "3.9876", Base: "PLN"})
 	if err != nil {
 		t.Fatalf("fxRateFrom: %v", err)
 	}
-	wantRate := valuation.FXRate{Currency: mustMoney(t, "1", "USD").Currency(), Date: mustDate(t, "2026-03-02"), Rate: mustDecimal(t, "3.9876")}
+	wantRate := valuation.FXRate{Currency: mustMoney(t, "1", "USD").Currency(), Base: mustMoney(t, "1", "PLN").Currency(), Date: mustDate(t, "2026-03-02"), Rate: mustDecimal(t, "3.9876")}
 	if diff := cmp.Diff(wantRate, rate); diff != "" {
 		t.Errorf("fxRateFrom (-want +got):\n%s", diff)
 	}
@@ -306,15 +306,15 @@ func TestValuationInputsFromRejects(t *testing.T) {
 			return err
 		}},
 		{"negative rate", func() error {
-			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "-3.9"})
+			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "-3.9", Base: "PLN"})
 			return err
 		}},
 		{"rate without currency", func() error {
-			_, err := fxRateFrom("r", &connectorv1.FxRate{Date: "2026-03-02", Rate: "3.9"})
+			_, err := fxRateFrom("r", &connectorv1.FxRate{Date: "2026-03-02", Rate: "3.9", Base: "PLN"})
 			return err
 		}},
 		{"rate without date", func() error {
-			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Rate: "3.9"})
+			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Rate: "3.9", Base: "PLN"})
 			return err
 		}},
 		{"no index", func() error {

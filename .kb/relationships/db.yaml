@@ -21,13 +21,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d097495bce94
   - type: executable_for
-    from: SYM-valuation-test-convert-to-pln
-    to: TEST-valuation-fx
-    created_at: 2026-10-28T05:31:22.359Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-89b36da19052
-  - type: executable_for
     from: SYM-plugins-test-helper-sample-plugin
     to: TEST-plugins-manifest
     created_at: 2026-10-28T05:23:40.357Z

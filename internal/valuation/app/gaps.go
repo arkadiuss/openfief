@@ -32,7 +32,7 @@ func (r *Revaluer) raiseGaps(ctx context.Context, in *inputCache, account ledger
 	if r.attention == nil {
 		return nil
 	}
-	gaps, err := r.gaps(ctx, in, NeededSeries(rows, today, in.indexation), today)
+	gaps, err := r.gaps(ctx, in, NeededSeries(rows, today, in.reporting, in.indexation), today)
 	if err != nil {
 		return err
 	}
@@ -83,18 +83,19 @@ func (r *Revaluer) gaps(ctx context.Context, in *inputCache, needed []valuation.
 // NeededSeries returns the series the holdings among rows valued on day
 // take their values from, in order of first need without repeats: a
 // holding at market needs its instrument's prices and, unless its price is
-// in PLN, its currency's FX rates; a bond needs the period index its type
+// in reporting, the pack's currency its valuation is stored in (D-180),
+// its currency's FX rates; a bond needs the period index its type
 // is indexed to, which indexation returns for its ISIN (pl.Fixed for none).
 // A holding with no price yet needs no FX rate, since its currency is
 // unknown.
-func NeededSeries(rows []valuation.HoldingValuation, day kernel.Date, indexation func(ledger.ISIN) pl.Indexation) []valuation.Series {
+func NeededSeries(rows []valuation.HoldingValuation, day kernel.Date, reporting kernel.Currency, indexation func(ledger.ISIN) pl.Indexation) []valuation.Series {
 	var out []valuation.Series
 	for i := range rows {
 		v := &rows[i]
 		if !v.Date.Equal(day) {
 			continue
 		}
-		for _, s := range seriesOf(v, indexation) {
+		for _, s := range seriesOf(v, reporting, indexation) {
 			if !slices.Contains(out, s) {
 				out = append(out, s)
 			}
@@ -104,11 +105,11 @@ func NeededSeries(rows []valuation.HoldingValuation, day kernel.Date, indexation
 }
 
 // seriesOf returns the series the holding valued in v needs (NeededSeries).
-func seriesOf(v *valuation.HoldingValuation, indexation func(ledger.ISIN) pl.Indexation) []valuation.Series {
+func seriesOf(v *valuation.HoldingValuation, reporting kernel.Currency, indexation func(ledger.ISIN) pl.Indexation) []valuation.Series {
 	switch v.Basis {
 	case valuation.Market:
 		out := []valuation.Series{valuation.PriceSeries(v.Instrument.String())}
-		if c := v.Value.Currency(); !c.IsZero() && !c.Equal(valuation.PLN()) {
+		if c := v.Value.Currency(); !c.IsZero() && !c.Equal(reporting) {
 			out = append(out, valuation.FXSeries(c))
 		}
 		return out

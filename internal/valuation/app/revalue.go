@@ -43,7 +43,7 @@ type RevalueResult struct {
 
 // Revalue rebuilds account's valuations from the date from to today: for
 // each day it derives the holdings from the log and values each one, at
-// market price converted to PLN, or, for a bond with stored series terms,
+// market price converted to the pack's reporting currency (D-180), or, for a bond with stored series terms,
 // at its lots' statutory value, with its net and liquidation values in the
 // account's tax wrapper under its fee rule and the owner's settings. It
 // then replaces the stored valuations dated on or after from with the new
@@ -65,7 +65,7 @@ func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from k
 	if first, ok := firstDate(log); ok && first.After(start) {
 		start = first
 	}
-	in := newInputCache(r.store, account, today)
+	in := newInputCache(r.store, account, today, r.pack.ReportingCurrency())
 	rows, err := r.rows(ctx, in, log, account, start, today)
 	if err != nil {
 		return RevalueResult{}, err
@@ -192,11 +192,14 @@ type inputCache struct {
 	ratesOf    map[kernel.Currency][]valuation.FXRate
 	readings   []valuation.IndexReading
 	haveIndexR bool
+	// reporting is the jurisdiction pack's reporting currency, which every
+	// valuation is stored in and every FX rate converts into (D-180).
+	reporting kernel.Currency
 }
 
-func newInputCache(store Inputs, account ledger.AccountID, through kernel.Date) *inputCache {
+func newInputCache(store Inputs, account ledger.AccountID, through kernel.Date, reporting kernel.Currency) *inputCache {
 	return &inputCache{
-		store: store, account: account, through: through,
+		store: store, account: account, through: through, reporting: reporting,
 		terms: map[ledger.ISIN]*pl.Terms{}, pricesOf: map[string][]valuation.Price{}, ratesOf: map[kernel.Currency][]valuation.FXRate{},
 	}
 }
@@ -254,13 +257,13 @@ func (c *inputCache) prices(ctx context.Context, instrument string) ([]valuation
 	return prices, nil
 }
 
-// rates returns the FX rates of currencies, each once; PLN and a zero
-// currency need none.
+// rates returns the FX rates of currencies, each once; the pack's reporting
+// currency and a zero currency need none.
 func (c *inputCache) rates(ctx context.Context, currencies []kernel.Currency) ([]valuation.FXRate, error) {
 	var out []valuation.FXRate
 	seen := map[kernel.Currency]bool{}
 	for _, cur := range currencies {
-		if seen[cur] || cur.IsZero() || cur.Equal(valuation.PLN()) {
+		if seen[cur] || cur.IsZero() || cur.Equal(c.reporting) {
 			continue
 		}
 		seen[cur] = true

@@ -622,3 +622,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40697d1f90a4
+  - type: constrains
+    from: REQ-views-valuation-queries-named-currency
+    to: FACT-SUBJECT-45B51F70D4778563
+    created_at: 2026-11-02T23:55:37.019Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8453a80f614b
+  - type: requires_property
+    from: REQ-views-valuation-queries-named-currency
+    to: FACT-PROP-B7481567FA22B0B8
+    created_at: 2026-11-02T23:55:37.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95bf37a5fb37
+  - type: specified_by
+    from: REQ-views-valuation-queries-named-currency
+    to: SCEN-views-valuation-queries-named-currency
+    created_at: 2026-11-02T23:55:37.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4acfb97ce21
+  - type: supersedes
+    from: REQ-views-valuation-queries-named-currency
+    to: REQ-views-valuation-queries
+    created_at: 2026-11-02T23:55:37.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a327f7638c3f
+  - type: implements
+    from: SYM-views-app-new
+    to: REQ-views-unconvertible-reporting-currency-refused
+    created_at: 2026-11-02T23:59:16.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5e12fcae113

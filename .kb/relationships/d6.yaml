@@ -440,13 +440,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-636d8102f2f6
-  - type: implements
-    from: SYM-views-new-day-builder
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:03:36.017Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f3c6a61d4a23
   - type: covered_by
     from: SYM-views-new-day-builder
     to: TEST-views-performance
@@ -1042,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-319290ae8599
+  - type: implements
+    from: SYM-views-new-day-builder
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:07:47.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78b6e4661551

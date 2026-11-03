@@ -334,7 +334,7 @@ func TestPerformanceFailures(t *testing.T) {
 	t.Run("a failing status store", func(t *testing.T) {
 		t.Parallel()
 		f := newPerformanceFixture(t)
-		v, err := app.New(f.ledger, f.valuations, failingStatuses{}, f.rates, cur(t, "PLN"))
+		v, err := app.New(f.ledger, f.valuations, failingStatuses{}, f.rates, cur(t, "PLN"), cur(t, "PLN"))
 		if err != nil {
 			t.Fatalf("app.New: %v", err)
 		}
@@ -363,6 +363,6 @@ func (r *valRow) build(t *testing.T) valuation.HoldingValuation {
 	t.Helper()
 	return valuation.HoldingValuation{
 		Account: r.acc, Instrument: r.in, Date: date(t, r.day), Basis: valuation.Market, Source: "test",
-		Quantity: kernel.NewQuantity(dec(t, r.qty)), Value: money(t, r.pln, "PLN"), PLN: money(t, r.pln, "PLN"),
+		Quantity: kernel.NewQuantity(dec(t, r.qty)), Value: money(t, r.pln, "PLN"), Reporting: money(t, r.pln, "PLN"),
 	}
 }

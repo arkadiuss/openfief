@@ -8,19 +8,21 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/portfolio"
-	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
 // UnsupportedReportingCurrencyError reports a reporting currency (D-62) the
-// backtest cannot convert to: FX rates are quoted against PLN only (D-20),
-// and cross rates are undecided (T-12), as in the read API.
+// backtest cannot convert to: stored FX rates convert into the jurisdiction
+// pack's currency (D-180), and cross rates are undecided (T-12), as in the
+// read API.
 type UnsupportedReportingCurrencyError struct {
 	Currency kernel.Currency
+	// Supported is the one the pack converts to.
+	Supported kernel.Currency
 }
 
-// Error names the currency.
+// Error names both currencies.
 func (e *UnsupportedReportingCurrencyError) Error() string {
-	return fmt.Sprintf("reporting currency %s is not supported: only %s", e.Currency, valuation.PLN())
+	return fmt.Sprintf("reporting currency %s is not supported: only %s", e.Currency, e.Supported)
 }
 
 // Models runs the model portfolio's use cases: the owner's entry (D-52)
@@ -33,11 +35,12 @@ type Models struct {
 }
 
 // New returns the use cases over the ports, with the backtest in the
-// reporting currency reporting (D-62): PLN, or an
+// reporting currency reporting (D-62): stored, the currency the stored FX
+// rates convert into, the jurisdiction pack's (D-180), or an
 // *UnsupportedReportingCurrencyError.
-func New(store ModelStore, market MarketData, owners Owners, reporting kernel.Currency) (*Models, error) {
-	if !reporting.Equal(valuation.PLN()) {
-		return nil, &UnsupportedReportingCurrencyError{Currency: reporting}
+func New(store ModelStore, market MarketData, owners Owners, stored, reporting kernel.Currency) (*Models, error) {
+	if reporting.IsZero() || !reporting.Equal(stored) {
+		return nil, &UnsupportedReportingCurrencyError{Currency: reporting, Supported: stored}
 	}
 	return &Models{store: store, market: market, owners: owners, reporting: reporting}, nil
 }

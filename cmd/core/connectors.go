@@ -131,7 +131,8 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 		// The connector commands record cross-check prices for no owner.
 		checks := valuationapp.NewCrossChecks(vstore, nil)
 		// The model's targets need no owner: no session is checked.
-		models, err := portfolioapp.New(portfoliopg.New(p.pool), vstore, nil, valuation.PLN())
+		pack := jurisdictionPack().ReportingCurrency()
+		models, err := portfolioapp.New(portfoliopg.New(p.pool), vstore, nil, pack, pack)
 		if err != nil {
 			return fmt.Errorf("model portfolio: %w", err)
 		}

@@ -18,14 +18,15 @@ import (
 var ErrUnknownMissingReason = errors.New("unknown missing-input reason")
 
 // ErrBondLot reports a bond lot that cannot be valued, such as one whose
-// cost is not in PLN.
+// cost is not in the pack's currency.
 var ErrBondLot = errors.New("bond lot cannot be valued")
 
 // StatutorySource is the source of a bond's valuation: the issue letter's
 // formulas in internal/jurisdiction/pl, not a market price.
 const StatutorySource = "statutory"
 
-// ValueRounding rounds a holding's value in PLN to grosze. Nothing in
+// ValueRounding rounds a holding's value in the reporting currency to its
+// minor unit, such as grosze. Nothing in
 // docs/DESIGN.md fixes it; half up is what the bond tables use (D-37).
 const ValueRounding = kernel.RoundHalfUp
 
@@ -40,7 +41,8 @@ type MissingReason int
 const (
 	// MissingPrice is no price for the instrument on or before the date.
 	MissingPrice MissingReason = iota + 1
-	// MissingFXRate is no FX rate to PLN for the price's currency on or
+	// MissingFXRate is no FX rate into the pack's currency for the price's
+	// currency on or
 	// before the date.
 	MissingFXRate
 	// MissingIndexReading is no period index reading for an interest period
@@ -83,9 +85,10 @@ func ParseMissingReason(s string) (MissingReason, error) {
 }
 
 // HoldingValuation is the stored valuation of one holding on one day
-// (D-36): its gross value in the instrument's own currency and in PLN, on a
-// basis, with the inputs' source and dates, and its net and liquidation
-// values in PLN (D-77). When an input is missing, Missing says which and
+// (D-36): its gross value in the instrument's own currency and in the
+// jurisdiction pack's reporting currency, which Reporting names (D-180), on
+// a basis, with the inputs' source and dates, and its net and liquidation
+// values in that same currency (D-77). When an input is missing, Missing says which and
 // Detail why, and no value is set: the row records the gap instead of
 // failing the revaluation. A row with its gross value can still lack its
 // net or liquidation value, which NetMissing and LiquidationMissing name.
@@ -96,7 +99,7 @@ type HoldingValuation struct {
 	Basis      Basis
 	Quantity   kernel.Quantity
 	Value      kernel.Money
-	PLN        kernel.Money
+	Reporting  kernel.Money
 	Source     string
 	// PriceDate and RateDate are the dates of the price and FX rate used,
 	// on or before Date; zero when none was used.
@@ -105,14 +108,15 @@ type HoldingValuation struct {
 	Missing   MissingReason
 	Detail    string
 	// Net and Liquidation are the holding's net and liquidation values in
-	// PLN, set when the gross value is and nothing they need is missing.
+	// Reporting's currency, set when the gross value is and nothing they need is missing.
 	Net                kernel.Money
 	Liquidation        kernel.Money
 	NetMissing         MissingReason
 	LiquidationMissing MissingReason
 	// TaxCost and SaleCost are, for a holding priced at market whose net
 	// value is set, its cost basis for tax (AccountTerms.TaxCost) and what
-	// selling it today would cost (FeeRule.SaleCost), in PLN: what a total
+	// selling it today would cost (FeeRule.SaleCost), in Reporting's
+	// currency: what a total
 	// counts its gain from (D-128). SaleCost is zero while the fee rule's
 	// minimum lacks an FX rate.
 	TaxCost  kernel.Money
@@ -164,8 +168,8 @@ type MarketHolding struct {
 }
 
 // ValueMarketHolding values h on h.Date at the latest price of its
-// instrument on or before that date (D-21), converted to PLN at the latest
-// FX rate on or before it (D-20) and rounded with ValueRounding: its gross
+// instrument on or before that date (D-21), converted to the pack's
+// reporting currency (D-180) at the latest FX rate on or before it (D-20) and rounded with ValueRounding: its gross
 // value. Its net and liquidation values (D-77) follow from the account's
 // terms (AccountTerms.listed). A missing price or rate gives a row with
 // Missing set, not an error.
@@ -182,26 +186,27 @@ func ValueMarketHolding(h *ledger.Holding, m *MarketHolding) (HoldingValuation, 
 		return HoldingValuation{}, err
 	}
 	row.Source, row.PriceDate = p.Source, p.Date
-	if v.Value.Currency().Equal(PLN()) {
+	reporting := m.Terms.Pack.ReportingCurrency()
+	if v.Value.Currency().Equal(reporting) {
 		row.Value = v.Value
-		if row.PLN, err = roundPLN(v.Value.Amount(), ValueRounding); err != nil {
+		if row.Reporting, err = roundIn(v.Value.Amount(), reporting, ValueRounding); err != nil {
 			return HoldingValuation{}, err
 		}
 		err = m.Terms.listed(&row, m)
 		return row, err
 	}
-	rate, err := RateOnOrBefore(m.Rates, v.Value.Currency(), h.Date)
+	rate, err := RateOnOrBefore(m.Rates, v.Value.Currency(), reporting, h.Date)
 	if errors.Is(err, ErrNoRate) {
 		return missing(&row, MissingFXRate, err), nil
 	}
 	if err != nil {
 		return HoldingValuation{}, err
 	}
-	pln, err := ToPLN(v.Value, rate, ValueRounding)
+	converted, err := Convert(v.Value, &rate, ValueRounding)
 	if err != nil {
 		return HoldingValuation{}, err
 	}
-	row.Value, row.PLN, row.RateDate = v.Value, pln, rate.Date
+	row.Value, row.Reporting, row.RateDate = v.Value, converted, rate.Date
 	err = m.Terms.listed(&row, m)
 	return row, err
 }
@@ -221,7 +226,7 @@ type BondHolding struct {
 // value, and the net and liquidation values the pack computes from each
 // lot's interest, purchase discount and early-redemption fee (D-77). Each
 // lot's purchase date is its open date and its price per bond is its cost
-// over its quantity, which must be in PLN. A missing period index reading
+// over its quantity, which must be in the pack's currency. A missing period index reading
 // gives a row with Missing set, not an error.
 func ValueBondHolding(h *ledger.Holding, b *BondHolding) (HoldingValuation, error) {
 	wrapper, err := pl.ParseTaxWrapper(string(b.Account.Wrapper))
@@ -245,10 +250,10 @@ func ValueBondHolding(h *ledger.Holding, b *BondHolding) (HoldingValuation, erro
 			return HoldingValuation{}, fmt.Errorf("valuing %s: %w", h.Instrument, err)
 		}
 	}
-	zero := kernel.NewMoney(kernel.Decimal{}, PLN())
-	row.Value, row.PLN, row.Net, row.Liquidation = zero, zero, zero, zero
+	zero := kernel.NewMoney(kernel.Decimal{}, b.Account.Pack.ReportingCurrency())
+	row.Value, row.Reporting, row.Net, row.Liquidation = zero, zero, zero, zero
 	if len(b.Lots) > 0 {
-		row.Value, row.PLN, row.Net, row.Liquidation = sum.Gross, sum.Gross, sum.Net, sum.Liquidation
+		row.Value, row.Reporting, row.Net, row.Liquidation = sum.Gross, sum.Gross, sum.Net, sum.Liquidation
 	}
 	if sum.LiquidationUnknown {
 		row.Liquidation, row.LiquidationMissing = kernel.Money{}, MissingMarginalRate
@@ -259,7 +264,8 @@ func ValueBondHolding(h *ledger.Holding, b *BondHolding) (HoldingValuation, erro
 // valueBondLot values one lot of h with pl.ValueLot in wrapper, and its
 // three values with the account's pack.
 func valueBondLot(h *ledger.Holding, lot *ledger.Lot, b *BondHolding, wrapper pl.TaxWrapper) (jurisdiction.Values, error) {
-	if !lot.Cost.Currency().Equal(PLN()) || lot.Quantity.Sign() <= 0 {
+	currency := b.Account.Pack.ReportingCurrency()
+	if !lot.Cost.Currency().Equal(currency) || lot.Quantity.Sign() <= 0 {
 		return jurisdiction.Values{}, fmt.Errorf("%w: %s lot %s: cost %s for %s bonds", ErrBondLot, h.Instrument, lot.Origin, lot.Cost, lot.Quantity)
 	}
 	price, err := lot.Cost.Amount().Quo(lot.Quantity.Decimal(), purchasePricePlaces, kernel.RoundHalfEven)
@@ -270,7 +276,7 @@ func valueBondLot(h *ledger.Holding, lot *ledger.Lot, b *BondHolding, wrapper pl
 	if err != nil {
 		return jurisdiction.Values{}, err
 	}
-	purchase := pl.Purchase{Date: lot.Opened, Price: kernel.NewMoney(price, PLN())}
+	purchase := pl.Purchase{Date: lot.Opened, Price: kernel.NewMoney(price, currency)}
 	v, err := pl.ValueLot(b.Terms, idx, lot.Quantity, purchase, wrapper, h.Date)
 	if err != nil {
 		return jurisdiction.Values{}, fmt.Errorf("valuing %s lot %s: %w", h.Instrument, lot.Origin, err)

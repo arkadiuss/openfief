@@ -193,7 +193,7 @@ func newFixture(t *testing.T) *fixture {
 	units := func(n int64) kernel.Quantity { return kernel.NewQuantity(kernel.NewDecimal(n, 0)) }
 	value := func(in ledger.Instrument, day, v, c, pln string) valuation.HoldingValuation {
 		return valuation.HoldingValuation{
-			Account: "acc-1", Instrument: in, Date: date(t, day), Basis: valuation.Market, Source: "test", Value: money(t, v, c), PLN: money(t, pln, "PLN"),
+			Account: "acc-1", Instrument: in, Date: date(t, day), Basis: valuation.Market, Source: "test", Value: money(t, v, c), Reporting: money(t, pln, "PLN"),
 			Net: money(t, pln, "PLN"), Liquidation: money(t, pln, "PLN"),
 		}
 	}
@@ -225,15 +225,15 @@ func newFixture(t *testing.T) *fixture {
 		}},
 		statuses: fakeStatuses{"acc-1": {ValuedThrough: on, Pending: true}},
 		rates: fakeRates{
-			{Currency: cur(t, "USD"), Date: on, Rate: dec(t, "4.00"), Source: "test"},
-			{Currency: cur(t, "EUR"), Date: on.AddDays(-3), Rate: dec(t, "4.30"), Source: "test"},
+			{Currency: cur(t, "USD"), Base: cur(t, "PLN"), Date: on, Rate: dec(t, "4.00"), Source: "test"},
+			{Currency: cur(t, "EUR"), Base: cur(t, "PLN"), Date: on.AddDays(-3), Rate: dec(t, "4.30"), Source: "test"},
 		},
 	}
 }
 
 func (f *fixture) views(t *testing.T) *app.Views {
 	t.Helper()
-	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"))
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"))
 	if err != nil {
 		t.Fatalf("app.New(PLN): %v", err)
 	}

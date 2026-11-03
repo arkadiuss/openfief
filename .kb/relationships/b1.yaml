@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4865787dd45
+  - type: verified_by
+    from: SCEN-valuation-input-validation-named-base
+    to: TEST-valuation-app-plan
+    created_at: 2026-11-02T23:55:10.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94c01300ee62

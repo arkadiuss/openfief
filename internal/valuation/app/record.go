@@ -58,14 +58,15 @@ func (r *InputRecorder) RecordPrices(ctx context.Context, prices []valuation.Pri
 	return nil
 }
 
-// RecordFXRates stores FX rates to PLN (D-20) and enqueues a revaluation of
-// every account from the earliest rate's date.
+// RecordFXRates stores FX rates (D-20), each naming its base currency
+// (D-180), and enqueues a revaluation of every account from the earliest
+// rate's date. A rate without a base, or of its own base, is refused.
 func (r *InputRecorder) RecordFXRates(ctx context.Context, rates []valuation.FXRate) error {
 	var dates []kernel.Date
 	for i := range rates {
 		x := &rates[i]
-		if x.Rate.Sign() <= 0 || x.Currency.Equal(valuation.PLN()) || x.Date.IsZero() {
-			return fmt.Errorf("%w: %s rate on %s", ErrInvalidInput, x.Currency, x.Date)
+		if x.Rate.Sign() <= 0 || x.Currency.IsZero() || x.Base.IsZero() || x.Currency.Equal(x.Base) || x.Date.IsZero() {
+			return fmt.Errorf("%w: %s rate to %q on %s", ErrInvalidInput, x.Currency, x.Base.String(), x.Date)
 		}
 		dates = append(dates, x.Date)
 	}

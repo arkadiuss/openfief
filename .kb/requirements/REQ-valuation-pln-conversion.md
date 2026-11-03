@@ -1,6 +1,6 @@
 ---
 title: Converting an amount to PLN must multiply it exactly by the rate for its own currency and round the result once to grosze with a rounding mode the caller states, leaving the original amount unchanged.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-20
 tags:
   - strict-modeling

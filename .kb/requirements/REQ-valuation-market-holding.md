@@ -1,6 +1,6 @@
 ---
 title: A holding of an instrument without bond series terms must be valued at the latest end-of-day price of the instrument on or before the day times its quantity, in the price's currency, and converted to PLN at the latest FX rate on or before the day, rounded half up to grosze.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-21
 tags:
   - strict-modeling

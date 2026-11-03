@@ -156,6 +156,7 @@ The [built-in UI](ui.md) draws it as the second line of the value-over-time char
 
 ## Decisions
 
+- **D-180**: `New` takes the jurisdiction pack's currency, which the stored FX rates convert into, and refuses any other reporting currency, naming both (T-12); the backtest keeps only the rates whose base is the reporting currency.
 - **GR-6**, **D-71**: one fixed role per sleeve; any role other than the kind's needs the owner's explicit choice. The built-in kinds, their default roles and the three default sleeves are D-71's.
 - **D-120**: `SleeveService.DeleteSleeve` and `DeleteSleeveKind` (`Sleeves.DeleteSleeve`, `DeleteKind`, [deletions.go](../../internal/portfolio/app/deletions.go)) delete a sleeve with no accounts and a kind no sleeve has, built-in ones too, through the `SleeveDeletions` port the ledger implements; one in use is `FAILED_PRECONDITION` (`portfolio.ErrSleeveHasAccounts`, `ErrKindInUse`), an unknown one `NOT_FOUND`.
 - **D-30**: the read API's allocation and the built-in UI's chart group by sleeve, and `ListSleeves` gives each sleeve's kind ([Read API](read-api.md)). `KindBySleeve` would let the allocation group by kind, but nothing calls it.

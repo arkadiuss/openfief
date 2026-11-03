@@ -2087,19 +2087,6 @@ symbols:
         target: REQ-decision-d37-3-belka-half-up
       - type: implements
         target: REQ-pl-values-per-wrapper
-  - id: SYM-valuation-pln
-    title: PLN
-    sourceFile: internal/valuation/fx.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:30:33.227Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-fx
-      - type: implements
-        target: REQ-valuation-pln-conversion
   - id: SYM-valuation-fxrate
     title: FXRate
     sourceFile: internal/valuation/fx.go
@@ -2111,8 +2098,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-fx
+      - type: covered_by
+        target: TEST-valuation-pack-currency
       - type: implements
         target: REQ-valuation-fx-rate-lookup
+      - type: implements
+        target: REQ-valuation-stored-rates-name-base
   - id: SYM-valuation-rate-on-or-before
     title: RateOnOrBefore
     sourceFile: internal/valuation/fx.go
@@ -2124,49 +2115,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-fx
-      - type: implements
-        target: REQ-valuation-fx-rate-lookup
-  - id: SYM-valuation-to-pln
-    title: ToPLN
-    sourceFile: internal/valuation/fx.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:30:41.303Z
-    relationships:
       - type: covered_by
-        target: TEST-valuation-fx
-      - type: implements
-        target: REQ-valuation-pln-conversion
-  - id: SYM-valuation-convert-to-pln
-    title: ConvertToPLN
-    sourceFile: internal/valuation/fx.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:30:43.802Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-fx
+        target: TEST-valuation-pack-currency
       - type: implements
         target: REQ-valuation-fx-rate-lookup
       - type: implements
-        target: REQ-valuation-pln-conversion
-  - id: SYM-valuation-round-pln
-    title: roundPLN
-    sourceFile: internal/valuation/fx.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:30:46.488Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-fx
+        target: REQ-valuation-stored-currency-never-assumed-pln
       - type: implements
-        target: REQ-valuation-pln-conversion
+        target: REQ-valuation-stored-rates-name-base
   - id: SYM-valuation-price
     title: Price
     sourceFile: internal/valuation/valuation.go
@@ -2285,36 +2241,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T05:31:16.156Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-fx
-  - id: SYM-valuation-test-to-pln
-    title: TestToPLN
-    sourceFile: internal/valuation/fx_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:31:18.153Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-fx
-  - id: SYM-valuation-test-to-plnneeds-the-amounts-currency
-    title: TestToPLNNeedsTheAmountsCurrency
-    sourceFile: internal/valuation/fx_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:31:19.967Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-fx
-  - id: SYM-valuation-test-convert-to-pln
-    title: TestConvertToPLN
-    sourceFile: internal/valuation/fx_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:31:22.204Z
     relationships:
       - type: executable_for
         target: TEST-valuation-fx
@@ -6085,19 +6011,6 @@ symbols:
         target: TEST-valuation-app-rates
       - type: implements
         target: REQ-AUTO-D1568676DF81CAF7
-      - type: implements
-        target: REQ-valuation-fx-range-splitting
-  - id: SYM-valuation-app-compare-rates
-    title: compareRates
-    sourceFile: internal/valuation/app/rates.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T05:54:50.928Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-app-rates
       - type: implements
         target: REQ-valuation-fx-range-splitting
   - id: SYM-valuation-app-test-split-range
@@ -13740,7 +13653,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-A129ED289B2239A8
       - type: implements
-        target: REQ-valuation-market-holding
+        target: REQ-valuation-market-holding-pack-currency
   - id: SYM-valuation-value-market-holding
     title: ValueMarketHolding
     sourceFile: internal/valuation/revaluation.go
@@ -13751,9 +13664,15 @@ symbols:
       recorded_at: 2026-10-28T07:32:14.176Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-pack-currency
+      - type: covered_by
         target: TEST-valuation-revaluation
       - type: implements
-        target: REQ-valuation-market-holding
+        target: REQ-valuation-market-holding-pack-currency
+      - type: implements
+        target: REQ-valuation-stored-currency-never-assumed-pln
+      - type: implements
+        target: REQ-valuation-stored-valuations-name-currency
   - id: SYM-valuation-bond-holding
     title: BondHolding
     sourceFile: internal/valuation/revaluation.go
@@ -14161,7 +14080,7 @@ symbols:
       - type: implements
         target: REQ-valuation-bond-holding-values
       - type: implements
-        target: REQ-valuation-market-holding
+        target: REQ-valuation-market-holding-pack-currency
   - id: SYM-valuation-app-first-date
     title: firstDate
     sourceFile: internal/valuation/app/revalue.go
@@ -14402,7 +14321,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-plan
       - type: implements
-        target: REQ-valuation-input-validation
+        target: REQ-valuation-input-validation-named-base
       - type: implements
         target: REQ-valuation-revaluation-triggers
   - id: SYM-valuation-app-input-recorder-record-fxrates
@@ -14417,9 +14336,11 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-plan
       - type: implements
-        target: REQ-valuation-input-validation
+        target: REQ-valuation-input-validation-named-base
       - type: implements
         target: REQ-valuation-revaluation-triggers
+      - type: implements
+        target: REQ-valuation-stored-rates-name-base
   - id: SYM-valuation-app-input-recorder-record-index-readings
     title: InputRecorder.RecordIndexReadings
     sourceFile: internal/valuation/app/record.go
@@ -14432,7 +14353,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-plan
       - type: implements
-        target: REQ-valuation-input-validation
+        target: REQ-valuation-input-validation-named-base
       - type: implements
         target: REQ-valuation-revaluation-triggers
   - id: SYM-valuation-app-input-recorder-record-bond-terms
@@ -14449,7 +14370,7 @@ symbols:
       - type: implements
         target: REQ-valuation-bond-terms-polish-isin
       - type: implements
-        target: REQ-valuation-input-validation
+        target: REQ-valuation-input-validation-named-base
       - type: implements
         target: REQ-valuation-revaluation-triggers
       - type: implements
@@ -14466,7 +14387,7 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-plan
       - type: implements
-        target: REQ-valuation-input-validation
+        target: REQ-valuation-input-validation-named-base
       - type: implements
         target: REQ-valuation-revaluation-triggers
   - id: SYM-valuation-app-input-recorder-end-of-day
@@ -15074,9 +14995,15 @@ symbols:
       recorded_at: 2026-10-28T08:00:01.691Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-named-currencies
+      - type: covered_by
         target: TEST-valuation-postgres-store
       - type: implements
         target: REQ-valuation-schema
+      - type: implements
+        target: REQ-valuation-stored-currency-never-assumed-pln
+      - type: implements
+        target: REQ-valuation-stored-valuations-name-currency
   - id: SYM-valuation-postgres-migration
     title: migration
     sourceFile: internal/valuation/postgres/migrate.go
@@ -15284,9 +15211,13 @@ symbols:
       recorded_at: 2026-10-28T08:01:42.309Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-named-currencies
+      - type: covered_by
         target: TEST-valuation-postgres-queue
       - type: implements
         target: REQ-valuation-enqueue-same-transaction
+      - type: implements
+        target: REQ-valuation-stored-rates-name-base
   - id: SYM-valuation-postgres-store-save-index-readings
     title: Store.SaveIndexReadings
     sourceFile: internal/valuation/postgres/queue.go
@@ -15449,9 +15380,13 @@ symbols:
       recorded_at: 2026-10-28T08:03:16.461Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-named-currencies
+      - type: covered_by
         target: TEST-valuation-postgres-store
       - type: implements
         target: REQ-valuation-schema
+      - type: implements
+        target: REQ-valuation-stored-rates-name-base
   - id: SYM-valuation-postgres-store-index-readings
     title: Store.IndexReadings
     sourceFile: internal/valuation/postgres/store.go
@@ -15531,6 +15466,8 @@ symbols:
       recorded_at: 2026-10-28T08:03:59.632Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-named-currencies
+      - type: covered_by
         target: TEST-valuation-postgres-store
       - type: implements
         target: REQ-decision-d36-9-three-values-stored
@@ -15538,6 +15475,8 @@ symbols:
         target: REQ-valuation-holding-three-values
       - type: implements
         target: REQ-valuation-schema
+      - type: implements
+        target: REQ-valuation-stored-valuations-name-currency
   - id: SYM-valuation-postgres-store-valuations
     title: Store.Valuations
     sourceFile: internal/valuation/postgres/rows.go
@@ -22090,6 +22029,8 @@ symbols:
         target: TEST-ingest-connectrpc-mapping
       - type: implements
         target: REQ-ingest-connector-contract-translation
+      - type: implements
+        target: REQ-valuation-stored-rates-name-base
   - id: SYM-ingest-conn-rpc-index-from
     title: indexFrom
     sourceFile: internal/ingest/connectrpc/mapping.go
@@ -27982,7 +27923,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app
       - type: implements
-        target: REQ-views-valuation-queries
+        target: REQ-views-valuation-queries-named-currency
   - id: SYM-views-app-valuation-statuses
     title: ValuationStatuses
     sourceFile: internal/views/app/ports.go
@@ -28012,7 +27953,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-views-allocation-inputs
+        target: REQ-views-allocation-inputs-reporting
   - id: SYM-views-app-views
     title: Views
     sourceFile: internal/views/app/views.go
@@ -28040,6 +27981,8 @@ symbols:
         target: TEST-views-app
       - type: implements
         target: REQ-views-app-queries
+      - type: implements
+        target: REQ-views-unconvertible-reporting-currency-refused
   - id: SYM-views-app-views-sleeves
     title: Views.Sleeves
     sourceFile: internal/views/app/views.go
@@ -28169,7 +28112,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app
       - type: implements
-        target: REQ-views-valuation-queries
+        target: REQ-views-valuation-queries-named-currency
   - id: SYM-views-app-views-account-valuations-query
     title: Views.AccountValuations
     sourceFile: internal/views/app/views.go
@@ -28182,7 +28125,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app
       - type: implements
-        target: REQ-views-valuation-queries
+        target: REQ-views-valuation-queries-named-currency
   - id: SYM-views-app-views-valuation-totals
     title: Views.ValuationTotals
     sourceFile: internal/views/app/views.go
@@ -28195,7 +28138,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app
       - type: implements
-        target: REQ-views-valuation-queries
+        target: REQ-views-valuation-queries-named-currency
   - id: SYM-views-app-views-valuation-status-query
     title: Views.ValuationStatus
     sourceFile: internal/views/app/views.go
@@ -28240,7 +28183,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-views-allocation-inputs
+        target: REQ-views-allocation-inputs-reporting
   - id: SYM-views-app-views-allocation-query
     title: Views.Allocation
     sourceFile: internal/views/app/views.go
@@ -28255,7 +28198,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-views-allocation-inputs
+        target: REQ-views-allocation-inputs-reporting
   - id: SYM-views-app-views-allocation-items
     title: Views.allocationItems
     sourceFile: internal/views/app/views.go
@@ -28270,7 +28213,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-68636F42D98D4CF7
       - type: implements
-        target: REQ-views-allocation-inputs
+        target: REQ-views-allocation-inputs-reporting
   - id: SYM-views-app-test-allocation
     title: TestAllocation
     sourceFile: internal/views/app/views_test.go
@@ -28394,7 +28337,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app
       - type: implements
-        target: REQ-views-reporting-currency
+        target: REQ-views-reporting-currency-pack
   - id: SYM-views-app-unsupported-reporting-currency-error-error
     title: UnsupportedReportingCurrencyError.Error
     sourceFile: internal/views/app/views.go
@@ -28407,7 +28350,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app
       - type: implements
-        target: REQ-views-reporting-currency
+        target: REQ-views-reporting-currency-pack
   - id: SYM-views-app-views-reporting-currency
     title: Views.ReportingCurrency
     sourceFile: internal/views/app/views.go
@@ -28420,7 +28363,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app
       - type: implements
-        target: REQ-views-reporting-currency
+        target: REQ-views-reporting-currency-pack
   - id: SYM-views-app-test-reporting-currency
     title: TestReportingCurrency
     sourceFile: internal/views/app/views_test.go
@@ -35492,7 +35435,7 @@ symbols:
       - type: covered_by
         target: TEST-views-app
       - type: implements
-        target: REQ-views-valuation-queries
+        target: REQ-views-valuation-queries-named-currency
   - id: SYM-views-app-views-cash-in-reporting
     title: Views.cashInReporting
     sourceFile: internal/views/app/views.go
@@ -35505,9 +35448,9 @@ symbols:
       - type: covered_by
         target: TEST-views-app
       - type: implements
-        target: REQ-views-allocation-inputs
+        target: REQ-views-allocation-inputs-reporting
       - type: implements
-        target: REQ-views-reporting-currency
+        target: REQ-views-reporting-currency-pack
   - id: SYM-views-connectapi-test-helper-fake-valuations-valuations
     title: fakeValuations.Valuations
     sourceFile: internal/views/connectapi/fakes_test.go
@@ -55039,7 +54982,7 @@ symbols:
       - type: implements
         target: REQ-views-performance-query-charts-start
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-app-test-helper-new-performance-fixture
     title: newPerformanceFixture
     sourceFile: internal/views/app/performance_test.go
@@ -55272,7 +55215,7 @@ symbols:
       - type: implements
         target: REQ-views-performance-confirmed-transfers
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-external-flows
     title: ExternalFlows
     sourceFile: internal/views/flows.go
@@ -55368,7 +55311,7 @@ symbols:
       - type: implements
         target: REQ-views-performance-twr
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-performance-series
     title: PerformanceSeries
     sourceFile: internal/views/performance.go
@@ -55437,7 +55380,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-holding-key
     title: holdingKey
     sourceFile: internal/views/performance.go
@@ -55450,7 +55393,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-day-builder
     title: dayBuilder
     sourceFile: internal/views/performance.go
@@ -55464,7 +55407,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-new-day-builder
     title: newDayBuilder
     sourceFile: internal/views/performance.go
@@ -55477,7 +55420,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-day-builder-day
     title: dayBuilder.day
     sourceFile: internal/views/performance.go
@@ -55492,7 +55435,7 @@ symbols:
       - type: implements
         target: REQ-views-performance-gaps
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-day-builder-apply-through
     title: dayBuilder.applyThrough
     sourceFile: internal/views/performance.go
@@ -55505,7 +55448,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-day-builder-holdings
     title: dayBuilder.holdings
     sourceFile: internal/views/performance.go
@@ -55520,7 +55463,7 @@ symbols:
       - type: implements
         target: REQ-views-performance-gaps
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-day-builder-cash-on
     title: dayBuilder.cashOn
     sourceFile: internal/views/performance.go
@@ -55533,7 +55476,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-day-builder-in-transit
     title: dayBuilder.inTransit
     sourceFile: internal/views/performance.go
@@ -55548,7 +55491,7 @@ symbols:
       - type: implements
         target: REQ-views-performance-confirmed-transfers
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-day-builder-flows-on
     title: dayBuilder.flowsOn
     sourceFile: internal/views/performance.go
@@ -55563,7 +55506,7 @@ symbols:
       - type: implements
         target: REQ-views-performance-twr
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-day-builder-convert-all
     title: dayBuilder.convertAll
     sourceFile: internal/views/performance.go
@@ -55578,7 +55521,7 @@ symbols:
       - type: implements
         target: REQ-views-performance-gaps
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-sum-in
     title: sumIn
     sourceFile: internal/views/performance.go
@@ -55591,7 +55534,7 @@ symbols:
       - type: covered_by
         target: TEST-views-performance
       - type: implements
-        target: REQ-views-performance-value
+        target: REQ-views-performance-value-reporting
   - id: SYM-views-test-helper-rng
     title: rng
     sourceFile: internal/views/performance_property_test.go
@@ -60647,6 +60590,8 @@ symbols:
         target: TEST-portfolio-app-models
       - type: implements
         target: REQ-portfolio-model-entry
+      - type: implements
+        target: REQ-views-unconvertible-reporting-currency-refused
   - id: SYM-portfolio-app-models-settings
     title: Models.Settings
     sourceFile: internal/portfolio/app/models.go
@@ -92681,9 +92626,15 @@ symbols:
       recorded_at: 2026-10-29T22:13:39.325Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-named-currencies
+      - type: covered_by
         target: TEST-valuation-postgres-store
       - type: implements
         target: REQ-decision-d36-9-three-values-stored
+      - type: implements
+        target: REQ-valuation-stored-currency-never-assumed-pln
+      - type: implements
+        target: REQ-valuation-stored-valuations-name-currency
   - id: SYM-valuation-postgres-test-save-rules-version-revalues-only-on-a-change
     title: TestSaveRulesVersionRevaluesOnlyOnAChange
     sourceFile: internal/valuation/postgres/queue_test.go
@@ -113500,19 +113451,6 @@ symbols:
         target: TEST-views-yearly-tax
       - type: implements
         target: REQ-views-oki-tax-days
-  - id: SYM-views-tax-year-account-to-pln
-    title: TaxYearAccount.toPLN
-    sourceFile: internal/views/yearlytax.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T19:14:27.828Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-yearly-tax
-      - type: implements
-        target: REQ-views-oki-tax-days
   - id: SYM-views-test-helper-tax-year-account
     title: taxYearAccount
     sourceFile: internal/views/yearlytax_test.go
@@ -127884,3 +127822,199 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-deliveries
+  - id: SYM-valuation-convert-at
+    status: active
+    title: ConvertAt
+    sourceFile: internal/valuation/fx.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:57:37.327Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-conversion-named-currency
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+  - id: SYM-valuation-convert
+    status: active
+    title: Convert
+    sourceFile: internal/valuation/fx.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:57:44.128Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-conversion-named-currency
+  - id: SYM-valuation-round-in
+    status: active
+    title: roundIn
+    sourceFile: internal/valuation/fx.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:57:50.596Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-conversion-named-currency
+  - id: SYM-valuation-nbp-base
+    status: active
+    title: Base
+    sourceFile: internal/valuation/nbp/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:57:57.132Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-stored-rates-name-base
+  - id: SYM-valuation-test-helper-eur-pack
+    title: eurPack
+    sourceFile: internal/valuation/currency_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:27.535Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pack-currency
+  - id: SYM-valuation-test-convert
+    title: TestConvert
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:33.040Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-convert-at
+    title: TestConvertAt
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:38.726Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-convert-needs-the-amounts-currency
+    title: TestConvertNeedsTheAmountsCurrency
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:44.367Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-no-assumed-pln
+    title: TestNoAssumedPLN
+    sourceFile: internal/valuation/nopln_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:49.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-no-assumed-pln
+  - id: SYM-valuation-test-helper-eur-pack-reporting-currency
+    title: eurPack.ReportingCurrency
+    sourceFile: internal/valuation/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:56.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pack-currency
+  - id: SYM-valuation-test-value-market-holding-in-pack-currency
+    title: TestValueMarketHoldingInPackCurrency
+    sourceFile: internal/valuation/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:00:02.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pack-currency
+  - id: SYM-valuation-test-helper-reporting-of
+    title: reportingOf
+    sourceFile: internal/valuation/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:00:08.878Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pack-currency
+  - id: SYM-valuation-postgres-test-stored-currencies-are-named
+    title: TestStoredCurrenciesAreNamed
+    sourceFile: internal/valuation/postgres/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:00:14.412Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-named-currencies
+  - id: SYM-views-in-reporting
+    status: active
+    title: inReporting
+    sourceFile: internal/views/performance.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:13:18.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-valuation-stored-valuations-name-currency
+      - type: implements
+        target: REQ-views-performance-value-reporting
+  - id: SYM-valuation-test-helper-assumed-pln
+    title: assumedPLN
+    sourceFile: internal/valuation/nopln_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:13:25.283Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-no-assumed-pln
+  - id: SYM-views-tax-year-account-convert
+    title: TaxYearAccount.convert
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:24:13.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-connectorv1-fx-rate-get-base
+    status: active
+    title: FxRate.GetBase
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:01:49.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-stored-rates-name-base

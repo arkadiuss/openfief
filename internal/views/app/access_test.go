@@ -43,7 +43,7 @@ func (d *denyingAuthorizer) MayAct(_ context.Context, c identity.Caller, a ident
 // ibkr-main to acc-1 and acc-2.
 func withAuthorizer(t *testing.T, f *fixture, a *denyingAuthorizer) *app.Views {
 	t.Helper()
-	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"),
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"),
 		app.WithAuthorizer(a), app.WithConnections(twoBindings{}))
 	if err != nil {
 		t.Fatalf("app.New: %v", err)

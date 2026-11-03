@@ -47,7 +47,8 @@ type Ledger interface {
 type Valuations interface {
 	// Valuations returns account's holding valuations dated from to to, both
 	// inclusive, in date then instrument order, valued or lacking an input,
-	// each with its value in its original currency and in PLN. An account
+	// each with its value in its original currency and in the reporting
+	// currency it names (D-180). An account
 	// with none returns none.
 	Valuations(ctx context.Context, account ledger.AccountID, from, to kernel.Date) ([]valuation.HoldingValuation, error)
 }
@@ -61,7 +62,7 @@ type ValuationStatuses interface {
 	Status(ctx context.Context, account ledger.AccountID) (valuationapp.ValuationStatus, error)
 }
 
-// FXRates reads stored FX rates to PLN (D-20).
+// FXRates reads stored FX rates, each naming its base (D-20, D-180).
 // *valuation/postgres.Store implements it.
 type FXRates interface {
 	// FXRates returns every rate of currency dated on or before through, in

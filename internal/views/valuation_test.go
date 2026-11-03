@@ -87,7 +87,7 @@ func TestTotalsByDate(t *testing.T) {
 func TestTotalsByDateOtherCurrency(t *testing.T) {
 	t.Parallel()
 	in := vals(t, []val{{isinIE, "ETF1", "2026-03-02", "1", "USD", "1"}})
-	in[0].PLN = money(t, "1", "USD")
+	in[0].Reporting = money(t, "1", "USD")
 	if _, err := views.TotalsByDate(in, nil, pln(t)); !errors.Is(err, views.ErrNotReportingCurrency) {
 		t.Errorf("TotalsByDate() error = %v, want %v", err, views.ErrNotReportingCurrency)
 	}

@@ -127,13 +127,6 @@ relationships:
     id: rel-e65f64cecb5f
   - type: implements
     from: SYM-views-app-allocation-on
-    to: REQ-views-allocation-inputs
-    created_at: 2026-10-28T07:30:16.194Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e1c0013bccba
-  - type: implements
-    from: SYM-views-app-allocation-on
     to: REQ-AUTO-68636F42D98D4CF7
     created_at: 2026-10-28T07:30:16.216Z
     created_by: kibi/upsert
@@ -608,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad8b310fd662
+  - type: implements
+    from: SYM-views-app-allocation-on
+    to: REQ-views-allocation-inputs-reporting
+    created_at: 2026-11-03T00:04:41.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7800e994580d

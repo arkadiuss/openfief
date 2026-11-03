@@ -42,5 +42,5 @@ func date(t *testing.T, s string) kernel.Date {
 // rate builds a synthetic FX rate; source defaults to "nbp-a".
 func rate(t *testing.T, code, on, value string) valuation.FXRate {
 	t.Helper()
-	return valuation.FXRate{Currency: cur(t, code), Date: date(t, on), Rate: dec(t, value), Source: "nbp-a"}
+	return valuation.FXRate{Currency: cur(t, code), Base: cur(t, "PLN"), Date: date(t, on), Rate: dec(t, value), Source: "nbp-a"}
 }

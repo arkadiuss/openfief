@@ -190,7 +190,7 @@ func pbPriceCheck(c *valuation.PriceCheck) *viewsv1.PriceCheck {
 func pbValuation(v *valuation.HoldingValuation) *viewsv1.Valuation {
 	out := &viewsv1.Valuation{
 		Date: pbDate(v.Date), Instrument: pbInstrument(v.Instrument), Basis: viewsv1.ValuationBasis(enumNumber(int(v.Basis))),
-		Source: v.Source, Value: pbMoney(v.Value), ValueReporting: pbMoney(v.PLN),
+		Source: v.Source, Value: pbMoney(v.Value), ValueReporting: pbMoney(v.Reporting),
 	}
 	if v.NetValued() {
 		out.NetReporting = pbMoney(v.Net)

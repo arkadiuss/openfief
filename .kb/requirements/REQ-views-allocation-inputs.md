@@ -1,6 +1,6 @@
 ---
 title: The allocation must count each holding at its stored valuation on the date, list a holding without one as unvalued, and convert each cash balance to PLN at the latest FX rate dated on or before the date, rounded half up to grosze as holding values are, failing when a cash currency has no rate.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-30
 tags:
   - strict-modeling

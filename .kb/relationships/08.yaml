@@ -118,13 +118,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d5fa5559806
-  - type: implements
-    from: SYM-views-app-views-account-valuations-query
-    to: REQ-views-valuation-queries
-    created_at: 2026-10-28T07:29:51.005Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-34621e44beef
   - type: covered_by
     from: SYM-views-app-views-account-valuations-query
     to: TEST-views-app
@@ -636,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5cf7d33b8768
+  - type: implements
+    from: SYM-views-app-views-account-valuations-query
+    to: REQ-views-valuation-queries-named-currency
+    created_at: 2026-11-03T00:03:57.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b770d797853

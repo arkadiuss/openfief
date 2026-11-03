@@ -240,7 +240,7 @@ func recordInputs(t *testing.T, r *valuationapp.InputRecorder, ds *demo.Dataset)
 		if err != nil {
 			t.Fatalf("ParseDecimal: %v", err)
 		}
-		rates = append(rates, valuation.FXRate{Currency: c, Date: ds.GoLive.AddDays(-14), Rate: rate, Source: "synthetic"})
+		rates = append(rates, valuation.FXRate{Currency: c, Base: jurisdictionPack().ReportingCurrency(), Date: ds.GoLive.AddDays(-14), Rate: rate, Source: "synthetic"})
 	}
 	if err := errors.Join(
 		r.RecordIndexReadings(ctx, ds.CPI), r.RecordPrices(ctx, ds.Prices), r.RecordFXRates(ctx, rates),

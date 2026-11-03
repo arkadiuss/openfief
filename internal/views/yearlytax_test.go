@@ -22,7 +22,7 @@ func taxYearAccount(t *testing.T) views.TaxYearAccount {
 	row := func(isin, day, value, currency string, basis valuation.Basis) valuation.HoldingValuation {
 		return valuation.HoldingValuation{
 			Account: "acc-1", Instrument: instrument(t, isin, "T"), Date: date(t, day), Basis: basis,
-			Value: money(t, value, currency), PLN: money(t, "1", "PLN"), Net: money(t, "1", "PLN"), Liquidation: money(t, "1", "PLN"),
+			Value: money(t, value, currency), Reporting: money(t, "1", "PLN"), Net: money(t, "1", "PLN"), Liquidation: money(t, "1", "PLN"),
 		}
 	}
 	bond := "PLEDO0536000"
@@ -48,9 +48,9 @@ func taxYearAccount(t *testing.T) views.TaxYearAccount {
 			{Account: "acc-1", Date: date(t, "2027-03-02"), Amount: money(t, "-100", "PLN")},
 		},
 		Rates: []valuation.FXRate{
-			{Currency: usd, Date: date(t, "2027-02-26"), Rate: kernel.NewDecimal(400, -2), Source: "test"},
-			{Currency: usd, Date: date(t, "2027-03-01"), Rate: kernel.NewDecimal(410, -2), Source: "test"},
-			{Currency: usd, Date: date(t, "2027-03-02"), Rate: kernel.NewDecimal(450, -2), Source: "test"},
+			{Currency: usd, Base: money(t, "0", "PLN").Currency(), Date: date(t, "2027-02-26"), Rate: kernel.NewDecimal(400, -2), Source: "test"},
+			{Currency: usd, Base: money(t, "0", "PLN").Currency(), Date: date(t, "2027-03-01"), Rate: kernel.NewDecimal(410, -2), Source: "test"},
+			{Currency: usd, Base: money(t, "0", "PLN").Currency(), Date: date(t, "2027-03-02"), Rate: kernel.NewDecimal(450, -2), Source: "test"},
 		},
 		Classes: map[string]jurisdiction.ExemptionClass{isinIE: pl.Investment},
 	}

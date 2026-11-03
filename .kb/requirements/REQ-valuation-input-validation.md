@@ -1,6 +1,6 @@
 ---
 title: Recording a price that is not positive or names no instrument, an FX rate that is not positive or is for PLN, an index reading of an unknown kind or month, bond terms without an ISIN or series, or an unknown tax wrapper must fail and store nothing.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-36
 tags:
   - strict-modeling

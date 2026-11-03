@@ -63,7 +63,7 @@ func valuesViews(t *testing.T, terms *fakeTerms, pack jurisdiction.Pack) *app.Vi
 	}
 	f.ledger.txs = map[ledger.AccountID][]ledger.Transaction{"acc-2": {deposit}}
 	f.statuses["acc-2"] = f.statuses["acc-1"]
-	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), app.WithJurisdiction(pack, terms))
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithJurisdiction(pack, terms))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -210,7 +210,7 @@ func TestYearlyTaxesWithoutARate(t *testing.T) {
 	}
 	f.ledger.txs = map[ledger.AccountID][]ledger.Transaction{"acc-1": {deposit}}
 	oki := &fakeTerms{wrappers: map[ledger.AccountID]jurisdiction.Wrapper{"acc-1": "oki"}}
-	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), app.WithJurisdiction(&pl.Pack{OKI: act}, oki))
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithJurisdiction(&pl.Pack{OKI: act}, oki))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -232,7 +232,7 @@ func TestHoldingsAndLotsMarkRemovedInstances(t *testing.T) {
 	}
 	f.ledger.txs = map[ledger.AccountID][]ledger.Transaction{"acc-1": {buy}}
 	f.ledger.lots = map[ledger.AccountID][]ledger.Lot{"acc-1": {{Instrument: etf1, Opened: f.on, Quantity: kernel.NewQuantity(kernel.NewDecimal(3, 0)), Cost: money(t, "90", "USD"), Origin: buy.Key}}}
-	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"),
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"),
 		app.WithPlugins(fakePlugins{records: []views.PluginRecord{record("ibkr-main")}}))
 	if err != nil {
 		t.Fatal(err)

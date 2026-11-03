@@ -128,5 +128,5 @@ func parseRate(line string) (valuation.FXRate, error) {
 	if rate.Sign() <= 0 {
 		return valuation.FXRate{}, fmt.Errorf("%w: rate not positive", errBadRates)
 	}
-	return valuation.FXRate{Currency: c, Date: d, Rate: rate, Source: nbp.Source}, nil
+	return valuation.FXRate{Currency: c, Base: nbp.Base(), Date: d, Rate: rate, Source: nbp.Source}, nil
 }

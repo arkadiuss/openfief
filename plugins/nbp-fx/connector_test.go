@@ -57,11 +57,12 @@ func (f *fakeRates) Rates(_ context.Context, from, to kernel.Date) ([]valuation.
 		if err != nil {
 			return nil, fmt.Errorf("fake rate: %w", err)
 		}
-		usd, err := kernel.ParseCurrency("USD")
-		if err != nil {
+		usd, err1 := kernel.ParseCurrency("USD")
+		pln, err2 := kernel.ParseCurrency("PLN")
+		if err := errors.Join(err1, err2); err != nil {
 			return nil, fmt.Errorf("fake currency: %w", err)
 		}
-		out = append(out, valuation.FXRate{Currency: usd, Date: d, Rate: r, Source: "nbp-a"})
+		out = append(out, valuation.FXRate{Currency: usd, Base: pln, Date: d, Rate: r, Source: "nbp-a"})
 	}
 	return out, nil
 }
@@ -83,15 +84,15 @@ func TestSync(t *testing.T) {
 			name: "first sync starts at the configured start", today: "2025-01-03",
 			wantAsked: [][2]string{{"2025-01-01", "2025-01-03"}},
 			wantRates: []*connectorv1.FxRate{
-				{Currency: "USD", Date: "2025-01-02", Rate: "4.1219"},
-				{Currency: "USD", Date: "2025-01-03", Rate: "4.1512"},
+				{Currency: "USD", Date: "2025-01-02", Base: "PLN", Rate: "4.1219"},
+				{Currency: "USD", Date: "2025-01-03", Base: "PLN", Rate: "4.1512"},
 			},
 			wantMark: "2025-01-03",
 		},
 		{
 			name: "a later sync continues after the watermark", watermark: "2025-01-03", today: "2025-01-08",
 			wantAsked: [][2]string{{"2025-01-04", "2025-01-08"}},
-			wantRates: []*connectorv1.FxRate{{Currency: "USD", Date: "2025-01-07", Rate: "4.0732"}},
+			wantRates: []*connectorv1.FxRate{{Currency: "USD", Date: "2025-01-07", Base: "PLN", Rate: "4.0732"}},
 			wantMark:  "2025-01-07",
 		},
 		{

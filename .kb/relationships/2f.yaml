@@ -566,3 +566,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1933fb72ff2b
+  - type: implements
+    from: SYM-valuation-round-in
+    to: REQ-valuation-conversion-named-currency
+    created_at: 2026-11-02T23:57:52.881Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98e0c917282c
+  - type: covered_by
+    from: SYM-valuation-round-in
+    to: TEST-valuation-fx
+    created_at: 2026-11-02T23:57:52.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51b5fbbdbea3

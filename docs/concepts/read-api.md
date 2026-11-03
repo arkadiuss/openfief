@@ -192,7 +192,7 @@ flowchart TD
   vh -- "no valuation, or it lacks the kind's value" --> unv["Unvalued, with what it lacks"]
   each --> cash["Ledger.CashOn(account, on)"]
   cash --> isrep{"cash in the<br/>reporting currency?"}
-  isrep -- "yes" --> conv["valuation.ConvertToPLN,<br/>ValueRounding"]
+  isrep -- "yes" --> conv["valuation.ConvertAt,<br/>ValueRounding"]
   isrep -- "no" --> rates["FXRates.FXRates(currency, on)"]
   rates --> conv
   conv -- "ErrNoRate" --> fail(["the call fails: internal"])
@@ -276,6 +276,7 @@ Each `Transfer` names its legs' accounts, dates and transaction keys, so the UI 
 - **D-130**: the attention items, served as `ListAttentionItems`, additions only to the contract.
 - **D-137**: read access is what this API serves. A test enumerates every method of the contract and places it against D-137's list, checks that each declares no side effects and is a `GET`, and walks every message a served method returns for a field named like a secret, credential, passkey, session or token, or a broker account (`readaccess_test.go`). Every method needs its place, a deprecated one too, and the same test checks that what D-157 removed, `ListBrokerAccounts` and its three messages, is absent and that no method left is deprecated. The settings, yearly taxes and balance assertion checks are served though D-137's list doesn't name them, and owner sessions read too, as D-83 says ([Implementation questions](../implementation-questions.md)).
 - **D-123**: `Plugin` says which plugin is a market-data connector, so the owner sees which one learns what they hold.
+- **D-180**: stored valuations name their currency and FX rates their base, from the jurisdiction pack; `New` refuses a reporting currency other than the pack's with `UnsupportedReportingCurrencyError`, which names both (T-12).
 - **D-179**: `Plugin` says whether the core stores the bond terms and index levels each plugin delivers (`bond_terms`, `index_levels`) and whether its manifest declares them (`requested_bond_terms`, `requested_index_levels`), additions only to the contract.
 - **D-52**: while the model portfolio is off, `GetModelPortfolio` answers `NOT_FOUND` and nothing else mentions it. The method itself is in the contract and the OpenAPI document either way; that it answers 404 rather than an empty response is this context's reading.
 - **D-53**: the model's backtest as a second line, both starting at 100 on `from`. Built as `GetModelPortfolio`'s `days`.

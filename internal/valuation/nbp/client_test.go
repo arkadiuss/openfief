@@ -212,5 +212,5 @@ func rate(t *testing.T, code, on, value string) valuation.FXRate {
 	if err != nil {
 		t.Fatalf("ParseDecimal(%q): %v", value, err)
 	}
-	return valuation.FXRate{Currency: c, Date: date(t, on), Rate: d, Source: nbp.Source}
+	return valuation.FXRate{Currency: c, Base: nbp.Base(), Date: date(t, on), Rate: d, Source: nbp.Source}
 }

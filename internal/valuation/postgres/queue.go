@@ -154,9 +154,9 @@ func (s *Store) SaveFXRates(ctx context.Context, rates []valuation.FXRate, reval
 		batch := &pgx.Batch{}
 		for _, r := range rates {
 			batch.Queue(`
-				INSERT INTO valuation.fx_rates (currency, date, rate, source) VALUES ($1, $2, $3, $4)
-				ON CONFLICT (currency, date, source) DO UPDATE SET rate = EXCLUDED.rate`,
-				r.Currency.String(), r.Date.String(), r.Rate.String(), r.Source)
+				INSERT INTO valuation.fx_rates (currency, base, date, rate, source) VALUES ($1, $2, $3, $4, $5)
+				ON CONFLICT (currency, base, date, source) DO UPDATE SET rate = EXCLUDED.rate`,
+				r.Currency.String(), r.Base.String(), r.Date.String(), r.Rate.String(), r.Source)
 		}
 		return tx.SendBatch(ctx, batch).Close()
 	})

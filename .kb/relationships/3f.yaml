@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d5211d9fc387
+  - type: validates
+    from: TEST-valuation-no-assumed-pln
+    to: REQ-valuation-stored-currency-never-assumed-pln
+    created_at: 2026-11-02T23:54:36.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ebc49292212
+  - type: executable_for
+    from: SYM-valuation-test-helper-reporting-of
+    to: TEST-valuation-pack-currency
+    created_at: 2026-11-03T00:00:11.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ec3eca5d8bf

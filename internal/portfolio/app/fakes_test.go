@@ -120,7 +120,7 @@ func mustCurrency(t *testing.T, code string) kernel.Currency {
 // owners refusing other tokens with ErrNoSession.
 func newModels(t *testing.T, store *fakeStore, market *fakeMarket) *app.Models {
 	t.Helper()
-	m, err := app.New(store, market, fakeOwners{err: app.ErrNoSession}, mustCurrency(t, "PLN"))
+	m, err := app.New(store, market, fakeOwners{err: app.ErrNoSession}, mustCurrency(t, "PLN"), mustCurrency(t, "PLN"))
 	if err != nil {
 		t.Fatal(err)
 	}

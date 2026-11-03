@@ -95,7 +95,7 @@ type Store interface {
 type Recorder interface {
 	// SavePrices upserts prices, keyed by instrument and date.
 	SavePrices(ctx context.Context, prices []valuation.Price, revals []valuation.Revaluation) error
-	// SaveFXRates upserts rates, keyed by currency and date.
+	// SaveFXRates upserts rates, keyed by currency, base, date and source.
 	SaveFXRates(ctx context.Context, rates []valuation.FXRate, revals []valuation.Revaluation) error
 	// SaveIndexReadings upserts readings, keyed by kind, year and month.
 	SaveIndexReadings(ctx context.Context, readings []valuation.IndexReading, revals []valuation.Revaluation) error

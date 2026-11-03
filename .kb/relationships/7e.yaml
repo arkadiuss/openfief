@@ -566,3 +566,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9d27f9f1ce9f
+  - type: implements
+    from: SYM-valuation-fxrate
+    to: REQ-valuation-stored-rates-name-base
+    created_at: 2026-11-02T23:58:06.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab967712f98e
+  - type: covered_by
+    from: SYM-valuation-fxrate
+    to: TEST-valuation-pack-currency
+    created_at: 2026-11-02T23:58:06.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4b8b445debf

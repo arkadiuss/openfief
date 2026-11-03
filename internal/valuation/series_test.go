@@ -27,7 +27,7 @@ func TestSeries(t *testing.T) {
 			name: "the NBP reference rate's readings", series: valuation.IndexSeries(valuation.ReferenceRate),
 			wantString: "index_readings/reference_rate",
 		},
-		{name: "PLN has no rate", series: valuation.FXSeries(valuation.PLN()), wantString: "fx_rates/PLN", wantErr: valuation.ErrInvalidSeries},
+		{name: "PLN's rates into another pack's currency (D-180)", series: valuation.FXSeries(cur(t, "PLN")), wantString: "fx_rates/PLN"},
 		{
 			name: "not a currency", series: valuation.Series{Kind: valuation.KindFXRates, Key: "dollars"},
 			wantString: "fx_rates/dollars", wantErr: valuation.ErrInvalidSeries,

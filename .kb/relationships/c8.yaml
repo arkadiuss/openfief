@@ -489,3 +489,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b519b8d56c31
+  - type: implements
+    from: SYM-views-in-reporting
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:13:21.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09b518affd26
+  - type: implements
+    from: SYM-views-in-reporting
+    to: REQ-valuation-stored-valuations-name-currency
+    created_at: 2026-11-03T00:13:21.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d911c1394dea
+  - type: covered_by
+    from: SYM-views-in-reporting
+    to: TEST-views-performance
+    created_at: 2026-11-03T00:13:21.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4330257e2c9c

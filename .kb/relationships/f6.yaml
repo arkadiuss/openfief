@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-295b6cfcacf8
+  - type: executable_for
+    from: SYM-valuation-test-convert-needs-the-amounts-currency
+    to: TEST-valuation-fx
+    created_at: 2026-11-02T23:59:46.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74d2c6600d3e

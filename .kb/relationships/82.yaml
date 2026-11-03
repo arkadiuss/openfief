@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d75c49042fb5
+  - type: verified_by
+    from: SCEN-views-performance-value-reporting
+    to: TEST-views-performance
+    created_at: 2026-11-02T23:56:02.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0185af4caf5e

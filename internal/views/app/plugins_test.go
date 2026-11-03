@@ -40,7 +40,7 @@ func installedViews(t *testing.T, plugins app.Plugins) *app.Views {
 	if plugins != nil {
 		opts = append(opts, app.WithPlugins(plugins))
 	}
-	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), opts...)
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), opts...)
 	if err != nil {
 		t.Fatalf("app.New: %v", err)
 	}

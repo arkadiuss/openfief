@@ -615,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64953e7d9105
+  - type: validates
+    from: TEST-valuation-pack-currency
+    to: REQ-valuation-stored-valuations-name-currency
+    created_at: 2026-11-02T23:54:39.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfdcc7b46c10
+  - type: validates
+    from: TEST-valuation-pack-currency
+    to: REQ-valuation-stored-rates-name-base
+    created_at: 2026-11-02T23:54:39.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e56590bbf405
+  - type: validates
+    from: TEST-valuation-pack-currency
+    to: REQ-valuation-stored-currency-never-assumed-pln
+    created_at: 2026-11-02T23:54:39.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab57e92f97d0

@@ -98,7 +98,7 @@ func TestOwnerOnly(t *testing.T) {
 	t.Parallel()
 	for _, refusal := range []error{app.ErrNoSession, app.ErrNotOwner, errStoreDown} {
 		store := &fakeStore{model: sixtyForty(t)}
-		m, err := app.New(store, &fakeMarket{}, fakeOwners{err: refusal}, mustCurrency(t, "PLN"))
+		m, err := app.New(store, &fakeMarket{}, fakeOwners{err: refusal}, mustCurrency(t, "PLN"), mustCurrency(t, "PLN"))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -158,7 +158,7 @@ func TestParseInstrument(t *testing.T) {
 
 func TestNewRefusesOtherReportingCurrencies(t *testing.T) {
 	t.Parallel()
-	_, err := app.New(&fakeStore{}, &fakeMarket{}, fakeOwners{}, mustCurrency(t, "EUR"))
+	_, err := app.New(&fakeStore{}, &fakeMarket{}, fakeOwners{}, mustCurrency(t, "PLN"), mustCurrency(t, "EUR"))
 	unsupported, ok := errors.AsType[*app.UnsupportedReportingCurrencyError](err)
 	if !ok || unsupported.Error() != "reporting currency EUR is not supported: only PLN" {
 		t.Errorf("New(EUR) = %v", err)
@@ -180,8 +180,8 @@ func reportMarket(t *testing.T) *fakeMarket {
 		prices: map[string][]valuation.Price{etfIE: {price("2025-01-02", "10"), price("2025-01-03", "12"), price("2025-01-04", "9"), price("2025-01-09", "20")}},
 		levels: map[string][]valuation.IndexLevel{"FAKE20": {level("2025-01-01", "1000"), level("2025-01-03", "1000"), level("2025-01-04", "1100")}},
 		rates: map[kernel.Currency][]valuation.FXRate{
-			usd: {{Currency: usd, Date: mustDate(t, "2025-01-01"), Rate: mustDec(t, "4")}},
-			pln: {{Currency: usd, Date: mustDate(t, "2025-01-01"), Rate: mustDec(t, "999")}}, // never asked for
+			usd: {{Currency: usd, Base: pln, Date: mustDate(t, "2025-01-01"), Rate: mustDec(t, "4")}},
+			pln: {{Currency: usd, Base: pln, Date: mustDate(t, "2025-01-01"), Rate: mustDec(t, "999")}}, // never asked for
 		},
 	}
 }

@@ -62,13 +62,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-677ac3e83c50
-  - type: implements
-    from: SYM-views-app-unsupported-reporting-currency-error-error
-    to: REQ-views-reporting-currency
-    created_at: 2026-10-28T08:09:15.755Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3e358f34db21
   - type: covered_by
     from: SYM-views-app-unsupported-reporting-currency-error-error
     to: TEST-views-app
@@ -517,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52d8bdcea90e
+  - type: implements
+    from: SYM-views-app-unsupported-reporting-currency-error-error
+    to: REQ-views-reporting-currency-pack
+    created_at: 2026-11-03T00:00:56.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d1751e1345e

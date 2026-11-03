@@ -30,7 +30,7 @@ type MarketDataKind int
 const (
 	// KindPrices are end-of-day prices of instruments (D-21).
 	KindPrices MarketDataKind = iota + 1
-	// KindFXRates are FX rates to PLN (D-20).
+	// KindFXRates are FX rates, each naming its base (D-20, D-180).
 	KindFXRates
 	// KindIndexReadings are period index readings: CPI and the NBP
 	// reference rate.

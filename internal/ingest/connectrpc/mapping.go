@@ -504,7 +504,14 @@ func fxRateFrom(field string, r *connectorv1.FxRate) (valuation.FXRate, error) {
 	if rate.Sign() <= 0 {
 		return valuation.FXRate{}, invalid(field+".rate is not positive", nil)
 	}
-	return valuation.FXRate{Currency: c, Date: date, Rate: rate}, nil
+	base, err := currencyFrom(field+".base", r.GetBase())
+	if err != nil {
+		return valuation.FXRate{}, err
+	}
+	if base.Equal(c) {
+		return valuation.FXRate{}, invalid(field+".base is the rate's own currency", nil)
+	}
+	return valuation.FXRate{Currency: c, Base: base, Date: date, Rate: rate}, nil
 }
 
 // indexFrom translates an index.

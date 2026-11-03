@@ -39,7 +39,7 @@ func syntheticInputs(t *testing.T) inputs {
 			{Instrument: etf, Date: date(t, "2026-03-02"), Close: money(t, "101.37", "USD"), Source: "vendor"},
 			{Instrument: etf, Date: date(t, "2026-03-03"), Close: money(t, "102.5", "USD"), Source: "vendor"},
 		},
-		rates:    []valuation.FXRate{{Currency: usd, Date: date(t, "2026-03-02"), Rate: dec(t, "4.0123"), Source: "nbp-a"}},
+		rates:    []valuation.FXRate{{Currency: usd, Base: money(t, "0", "PLN").Currency(), Date: date(t, "2026-03-02"), Rate: dec(t, "4.0123"), Source: "nbp-a"}},
 		readings: []valuation.IndexReading{{Kind: valuation.CPI, Year: 2026, Month: time.January, Value: dec(t, "0.029"), Source: "gus"}},
 		bond:     instrument(t, bondISIN, "EDO0336").ISIN,
 		terms:    pl.Terms{Series: series, FirstPeriodRate: dec(t, "0.0560"), Margin: dec(t, "0.02"), EarlyRedemptionFee: money(t, "3.00", "PLN")},
@@ -143,7 +143,7 @@ func TestReplaceValuations(t *testing.T) {
 	row := func(on string) valuation.HoldingValuation {
 		return valuation.HoldingValuation{
 			Account: acc1, Instrument: etf, Date: date(t, on), Basis: valuation.Market, Quantity: kernel.NewQuantity(dec(t, "12.5")),
-			Value: money(t, "1267.125", "USD"), PLN: money(t, "5084.09", "PLN"), Source: "vendor",
+			Value: money(t, "1267.125", "USD"), Reporting: money(t, "5084.09", "PLN"), Source: "vendor",
 			PriceDate: date(t, "2026-03-02"), RateDate: date(t, "2026-03-02"),
 			Net: money(t, "5030.11", "PLN"), Liquidation: money(t, "4997.58", "PLN"),
 			TaxCost: money(t, "4800.00", "PLN"), SaleCost: money(t, "40.16", "PLN"),

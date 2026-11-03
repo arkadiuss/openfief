@@ -1,6 +1,6 @@
 ---
 title: The read API must report totals, valuations and the allocation in the configured reporting currency next to each value's original currency, and must refuse to start with a reporting currency other than PLN with a typed unsupported reporting currency error until cross rates are decided.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-62
 tags:
   - strict-modeling

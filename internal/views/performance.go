@@ -57,7 +57,7 @@ func (g PerformanceGap) String() string {
 
 // PerformanceInput is what the portfolio's time-weighted return is computed
 // from: every account's current transactions, their stored holding
-// valuations and the FX rates to PLN.
+// valuations and the FX rates into the reporting currency.
 type PerformanceInput struct {
 	// From and To are the first and last day asked for, inclusive.
 	From, To kernel.Date
@@ -70,8 +70,8 @@ type PerformanceInput struct {
 	// Valuations are the holding valuations of every account dated From to
 	// To.
 	Valuations []valuation.HoldingValuation
-	// Rates are FX rates to PLN, any order, of every currency the accounts'
-	// cash is in.
+	// Rates are FX rates, any order, of every currency the accounts' cash is
+	// in; only those into Reporting count (D-180).
 	Rates     []valuation.FXRate
 	Reporting kernel.Currency
 	// Links are the owner's current transfer links (D-105): only the
@@ -113,14 +113,14 @@ type PerformanceSeries struct {
 // a transfer the owner confirmed (ConfirmedTransfers, D-105), and opening
 // lots, at their share of the holding's
 // valuation. The series stops before the first day that lacks an input,
-// naming the gap. Stored valuations are in PLN, so only PLN reporting adds
-// up; any other is an error wrapping ErrNotReportingCurrency.
+// naming the gap. Every valuation must be stored in the reporting currency
+// (D-180); one in another is an error wrapping ErrNotReportingCurrency.
 func Performance(in *PerformanceInput) (PerformanceSeries, error) {
 	if err := ValidateRange(in.From, in.To); err != nil {
 		return PerformanceSeries{}, fmt.Errorf("performance: %w", err)
 	}
-	if !in.Reporting.Equal(valuation.PLN()) {
-		return PerformanceSeries{}, fmt.Errorf("performance: %w %s: valuations are in %s", ErrNotReportingCurrency, in.Reporting, valuation.PLN())
+	if err := inReporting(in.Valuations, in.Reporting); err != nil {
+		return PerformanceSeries{}, fmt.Errorf("performance: %w", err)
 	}
 	transfers, external := ConfirmedTransfers(ExternalFlows(in.Transactions), in.Links)
 	b := newDayBuilder(in, external, transfers)
@@ -295,7 +295,7 @@ func (b *dayBuilder) holdings(day kernel.Date, pd *PerformanceDay) (map[holdingK
 			return nil, GapUnvalued, nil
 		}
 		rows[k] = v
-		parts = append(parts, v.PLN)
+		parts = append(parts, v.Reporting)
 	}
 	for k, q := range b.units {
 		if _, ok := rows[k]; !ok && !q.IsZero() {
@@ -367,26 +367,27 @@ func (b *dayBuilder) flowsOn(day kernel.Date, rows map[holdingKey]*valuation.Hol
 			if !ok {
 				return GapUnvalued, nil
 			}
-			share, shareErr := row.PLN.Amount().Mul(p.Quantity.Decimal()).Quo(row.Quantity.Decimal(), plnPlaces, valueRounding)
+			share, shareErr := row.Reporting.Amount().Mul(p.Quantity.Decimal()).Quo(row.Quantity.Decimal(), amountPlaces, valueRounding)
 			if shareErr != nil {
 				return 0, fmt.Errorf("opening lot %s: %w", lot.Key, shareErr)
 			}
-			parts = append(parts, kernel.NewMoney(share, row.PLN.Currency()))
+			parts = append(parts, kernel.NewMoney(share, row.Reporting.Currency()))
 		}
 	}
 	pd.Flow, err = sumIn(b.reporting, parts...)
 	return 0, err
 }
 
-// plnPlaces is the number of decimal places of a PLN amount (grosze).
-const plnPlaces = 2
+// amountPlaces is the number of decimal places of an amount in the
+// reporting currency, its minor unit, such as grosze.
+const amountPlaces = 2
 
 // convertAll converts each of ms to the reporting currency at the FX rate
 // for day and sums them, or names the gap when a currency has no rate.
 func (b *dayBuilder) convertAll(day kernel.Date, ms []kernel.Money) (kernel.Money, PerformanceGap, error) {
 	converted := make([]kernel.Money, 0, len(ms))
 	for _, m := range ms {
-		c, err := valuation.ConvertToPLN(m, b.rates[m.Currency()], day, valueRounding)
+		c, err := valuation.ConvertAt(m, b.reporting, b.rates[m.Currency()], day, valueRounding)
 		if errors.Is(err, valuation.ErrNoRate) {
 			return kernel.Money{}, GapNoFXRate, nil
 		}
@@ -409,4 +410,16 @@ func sumIn(c kernel.Currency, ms ...kernel.Money) (kernel.Money, error) {
 		}
 	}
 	return sum, nil
+}
+
+// inReporting returns an error wrapping ErrNotReportingCurrency when a
+// valued one of vals is stored in another currency than reporting: each
+// names its own (D-180), and only those in reporting add up.
+func inReporting(vals []valuation.HoldingValuation, reporting kernel.Currency) error {
+	for i := range vals {
+		if v := &vals[i]; v.Valued() && !v.Reporting.Currency().Equal(reporting) {
+			return fmt.Errorf("%w %s: a valuation is in %s", ErrNotReportingCurrency, reporting, v.Reporting.Currency())
+		}
+	}
+	return nil
 }

@@ -68,7 +68,7 @@ func (c depositConnector) Sync(_ context.Context, req *connect.Request[connector
 					{Book: equity, Amount: &connectorv1.Money{Amount: "-100.00", Currency: "USD"}},
 				},
 			}},
-			FxRates: []*connectorv1.FxRate{{Currency: "USD", Date: "2026-10-27", Rate: "4.0000"}},
+			FxRates: []*connectorv1.FxRate{{Currency: "USD", Date: "2026-10-27", Rate: "4.0000", Base: "PLN"}},
 		},
 	}), nil
 }

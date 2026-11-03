@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2d85491dae8
+  - type: validates
+    from: TEST-portfolio-app-models
+    to: REQ-views-unconvertible-reporting-currency-refused
+    created_at: 2026-11-02T23:54:43.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11240b1c14c5

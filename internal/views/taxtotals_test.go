@@ -19,7 +19,7 @@ func listedRow(t *testing.T, account ledger.AccountID, isin, gross, net, cost st
 	t.Helper()
 	return valuation.HoldingValuation{
 		Account: account, Instrument: instrument(t, isin, "T"), Date: date(t, "2026-03-02"), Basis: valuation.Market,
-		Value: money(t, gross, "PLN"), PLN: money(t, gross, "PLN"), Net: money(t, net, "PLN"), Liquidation: money(t, net, "PLN"),
+		Value: money(t, gross, "PLN"), Reporting: money(t, gross, "PLN"), Net: money(t, net, "PLN"), Liquidation: money(t, net, "PLN"),
 		TaxCost: money(t, cost, "PLN"), SaleCost: money(t, "0", "PLN"),
 	}
 }
@@ -119,7 +119,7 @@ func TestPaidIn(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	rates := []valuation.FXRate{{Currency: money(t, "0", "USD").Currency(), Date: date(t, "2025-12-29"), Rate: kernel.NewDecimal(4, 0), Source: "test"}}
+	rates := []valuation.FXRate{{Currency: money(t, "0", "USD").Currency(), Base: money(t, "0", "PLN").Currency(), Date: date(t, "2025-12-29"), Rate: kernel.NewDecimal(4, 0), Source: "test"}}
 	got, missing, err := views.PaidIn([]ledger.Transaction{withdrawal, deposit, opening}, rates, pl.NewPack())
 	if err != nil || missing {
 		t.Fatalf("PaidIn: %v, %v", missing, err)
