@@ -517,13 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a0c01818346
-  - type: implements
-    from: SYM-ingest-xtb-shared-reader-end-item
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:02:00.261Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e7507cbb847e
   - type: covered_by
     from: SYM-ingest-xtb-shared-reader-end-item
     to: TEST-ingest-xtb-xlsx
@@ -552,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6de50c243062
+  - type: implements
+    from: SYM-ingest-xtb-shared-reader-end-item
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:21:19.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d5ce15f785

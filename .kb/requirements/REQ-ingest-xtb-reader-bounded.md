@@ -1,6 +1,6 @@
 ---
 title: The XTB workbook reader must stream every part and keep only cells with a value, and must refuse with ErrTooLarge a workbook with more than 1,000,000 such cells, 1,000,000 shared strings, 32 MiB of their text, 100 sheets or 200,000 rows a sheet, a run of more than 256 KiB between markup characters, or elements nested deeper than 32.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-184
 tags:
   - strict-modeling

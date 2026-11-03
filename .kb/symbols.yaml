@@ -109412,7 +109412,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-row
     title: sheet.row
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109456,7 +109456,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-open-zip
     title: openZip
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109473,7 +109473,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-x-cell
     title: xCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109503,7 +109503,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-targets
     title: zipParts.targets
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109533,7 +109533,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-part-name
     title: partName
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109563,7 +109563,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-cell-value
     title: cellValue
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126855,7 +126855,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-row
     title: row
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126869,7 +126869,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-row-at
     title: row.at
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126882,7 +126882,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-limits
     title: limits
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126895,7 +126895,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-default-limits
     title: defaultLimits
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126908,7 +126908,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-keep-text
     title: zipParts.keepText
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126921,7 +126921,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-keep-cell
     title: zipParts.keepCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126934,7 +126934,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-part-reader
     title: partReader
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126948,7 +126948,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-part-reader-read
     title: partReader.Read
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126961,7 +126961,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker
     title: walker
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126975,7 +126975,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker-next
     title: walker.next
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126988,7 +126988,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker-in
     title: walker.in
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127001,7 +127001,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker-each
     title: walker.each
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127014,7 +127014,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-walk
     title: zipParts.walk
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127027,7 +127027,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-attr
     title: attr
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127040,7 +127040,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-ref
     title: sheetRef
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127053,7 +127053,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-read-workbook-within
     title: readWorkbookWithin
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127066,7 +127066,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-workbook-part
     title: zipParts.workbookPart
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127079,7 +127079,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader
     title: sharedReader
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127093,7 +127093,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader-token
     title: sharedReader.token
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127106,7 +127106,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader-text
     title: sharedReader.text
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127119,7 +127119,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader-end-item
     title: sharedReader.endItem
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127132,7 +127132,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader
     title: sheetReader
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127146,7 +127146,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-token
     title: sheetReader.token
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127159,7 +127159,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-start
     title: sheetReader.start
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127172,7 +127172,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-char-data
     title: sheetReader.charData
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127185,7 +127185,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-end
     title: sheetReader.end
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127198,7 +127198,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-text
     title: sheetReader.text
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127211,7 +127211,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-start-row
     title: sheetReader.startRow
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127224,7 +127224,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-end-cell
     title: sheetReader.endCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127237,7 +127237,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-end-row
     title: sheetReader.endRow
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127250,7 +127250,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-test-helper-workbook-of
     title: workbookOf
     sourceFile: internal/ingest/xtb/xlsx_test.go
@@ -129411,3 +129411,115 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-xtb-test-workbook-heap
+    title: TestWorkbookHeap
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:27:42.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-TestWorkbookHeapChild
+    title: TestWorkbookHeapChild
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:27:52.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-childHeapGrowth
+    title: childHeapGrowth
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:04.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-workbookHeapCases
+    title: workbookHeapCases
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:15.342Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-workbookHeapCase
+    title: workbookHeapCase
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:25.707Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-heapGrowth
+    title: heapGrowth
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:35.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-zipOf
+    title: zipOf
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:44.296Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-writePart
+    title: writePart
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:54.726Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-repeated
+    title: repeated
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:29:05.470Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-repeated-Read
+    title: repeated.Read
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:29:16.259Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-manyEntries
+    title: manyEntries
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:29:26.739Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap

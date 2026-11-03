@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80ba3f1ef846
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-heap-TestWorkbookHeapChild
+    to: TEST-ingest-xtb-workbook-heap
+    created_at: 2026-11-03T07:27:56.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05a67d0df14c
