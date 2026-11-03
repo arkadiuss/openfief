@@ -68,7 +68,7 @@ func (c depositConnector) Sync(_ context.Context, req *connect.Request[connector
 					{Book: equity, Amount: &connectorv1.Money{Amount: "-100.00", Currency: "USD"}},
 				},
 			}},
-			FxRates: []*connectorv1.FxRate{{Currency: "USD", Date: "2026-10-27", Rate: "4.0000"}},
+			FxRates: []*connectorv1.FxRate{{Currency: "USD", Date: "2026-10-27", Rate: "4.0000", Base: "PLN"}},
 		},
 	}), nil
 }
@@ -97,8 +97,8 @@ func serveConnector(t *testing.T, conn connectorv1connect.ConnectorServiceHandle
 	return int32(n)
 }
 
-// fakeCluster is a cluster where each named plugin is a Ready connector
-// whose Service points at 127.0.0.1:port, and the API server issues
+// fakeCluster is a cluster where each named plugin is a Ready connector,
+// declaring the tests' institutions, whose Service points at 127.0.0.1:port, and the API server issues
 // coreToken for the core's ServiceAccount.
 func fakeCluster(t *testing.T, port int32, names ...string) *cluster {
 	t.Helper()
@@ -110,7 +110,14 @@ func fakeCluster(t *testing.T, port int32, names ...string) *cluster {
 			"metadata": map[string]any{"name": name, "namespace": "openfief"},
 			"status": map[string]any{
 				"conditions": []any{map[string]any{"type": "Ready", "status": "True"}},
-				"effective":  map[string]any{"capabilities": []any{"connector"}},
+				// Every fake connector may deliver bond terms and index
+				// levels (D-179); TestUndeclaredDeliveriesRaiseAttention
+				// takes that away from one.
+				"effective": map[string]any{"capabilities": []any{"connector"}, "bondTerms": true, "indexLevels": true},
+				// Each test connector books for the institutions the tests' deliveries name (D-182).
+				"deployed": map[string]any{"manifest": map[string]any{
+					"institutions": []any{"ibkr", "xtb", "treasury-bonds", "eodhd", "nbp"},
+				}},
 			},
 		}})
 		svc := &corev1.Service{

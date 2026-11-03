@@ -15,6 +15,7 @@ import (
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
 	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
@@ -59,13 +60,14 @@ func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.S
 }
 
 // tick runs every check once and publishes what the outbox holds; a
-// failure is logged and the next tick tries again.
+// failure is logged by its kind only, never its text, which may name an
+// ISIN or an amount (GR-12), and the next tick tries again.
 func (a *attention) tick(ctx context.Context, log *slog.Logger) {
 	if err := a.items.Sweep(ctx); err != nil {
-		log.Warn("an attention check failed", "error", err)
+		log.Warn("an attention check failed", "error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded))
 	}
 	if _, err := a.relay.Publish(ctx); err != nil {
-		log.Warn("publishing attention events failed", "error", err)
+		log.Warn("publishing attention events failed", "error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded))
 	}
 }
 

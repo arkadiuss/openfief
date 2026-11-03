@@ -114,7 +114,7 @@ func newClient(t *testing.T, store *memStore, caller string) client {
 	if err != nil {
 		t.Fatal(err)
 	}
-	models, err := app.New(store, noMarket{}, owners{}, pln)
+	models, err := app.New(store, noMarket{}, owners{}, pln, pln)
 	if err != nil {
 		t.Fatal(err)
 	}

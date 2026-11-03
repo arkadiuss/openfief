@@ -48,7 +48,7 @@ func TestRealizedGains(t *testing.T) {
 	for _, tt := range []struct{ day, want string }{
 		{"2026-03-09", "0"}, {"2026-12-31", "1709.00"}, {"2027-01-09", "0"}, {"2027-01-10", "-100.00"},
 	} {
-		sum, sumErr := valuation.RealizedInYear(got, date(t, tt.day))
+		sum, sumErr := valuation.RealizedInYear(got, date(t, tt.day), cur(t, "PLN"))
 		if sumErr != nil || !sum.Equal(money(t, tt.want, "PLN")) {
 			t.Errorf("RealizedInYear(%s) = %s, %v; want %s", tt.day, sum, sumErr, tt.want)
 		}

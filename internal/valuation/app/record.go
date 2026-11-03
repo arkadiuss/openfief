@@ -58,14 +58,15 @@ func (r *InputRecorder) RecordPrices(ctx context.Context, prices []valuation.Pri
 	return nil
 }
 
-// RecordFXRates stores FX rates to PLN (D-20) and enqueues a revaluation of
-// every account from the earliest rate's date.
+// RecordFXRates stores FX rates (D-20), each naming its base currency
+// (D-180), and enqueues a revaluation of every account from the earliest
+// rate's date. A rate without a base, or of its own base, is refused.
 func (r *InputRecorder) RecordFXRates(ctx context.Context, rates []valuation.FXRate) error {
 	var dates []kernel.Date
 	for i := range rates {
 		x := &rates[i]
-		if x.Rate.Sign() <= 0 || x.Currency.Equal(valuation.PLN()) || x.Date.IsZero() {
-			return fmt.Errorf("%w: %s rate on %s", ErrInvalidInput, x.Currency, x.Date)
+		if x.Rate.Sign() <= 0 || x.Currency.IsZero() || x.Base.IsZero() || x.Currency.Equal(x.Base) || x.Date.IsZero() {
+			return fmt.Errorf("%w: %s rate to %q on %s", ErrInvalidInput, x.Currency, x.Base.String(), x.Date)
 		}
 		dates = append(dates, x.Date)
 	}
@@ -109,12 +110,16 @@ func (r *InputRecorder) RecordIndexReadings(ctx context.Context, readings []valu
 
 // RecordIndexLevels stores market index levels (D-51) for the model
 // portfolio's index targets (D-53). No holding is valued from an index
-// level, so they enqueue no revaluation. Every level must be valid, or
-// nothing is stored.
+// level, so they enqueue no revaluation. Every level must be valid and
+// name the connector instance that delivered it, which is stored with it
+// (D-179), or nothing is stored.
 func (r *InputRecorder) RecordIndexLevels(ctx context.Context, levels []valuation.IndexLevel) error {
 	for i := range levels {
 		if err := levels[i].Validate(); err != nil {
 			return fmt.Errorf("%w: %w", ErrInvalidInput, err)
+		}
+		if levels[i].Source == "" {
+			return fmt.Errorf("%w: %s level on %s names no source", ErrInvalidInput, levels[i].Index, levels[i].Date)
 		}
 	}
 	if err := r.recorder.SaveIndexLevels(ctx, levels); err != nil {
@@ -124,13 +129,21 @@ func (r *InputRecorder) RecordIndexLevels(ctx context.Context, levels []valuatio
 }
 
 // RecordBondTerms stores the series terms of the retail treasury bond with
-// isin, which makes holdings of it valued as bonds, and enqueues a
+// isin, delivered by the connector instance source, which is stored with
+// them (D-179); that makes holdings of it valued as bonds, and enqueues a
 // revaluation of every account that held it, from its first transaction.
 // Polish retail treasury bonds have an ISIN per series (PL0000...), and the
-// instrument's venue symbol is the series code, such as EDO0536.
-func (r *InputRecorder) RecordBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms) error {
+// instrument's venue symbol is the series code, such as EDO0536: terms for
+// any other ISIN are refused (D-179).
+func (r *InputRecorder) RecordBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, source string) error {
 	if isin.IsZero() {
 		return fmt.Errorf("%w: bond terms without an ISIN", ErrInvalidInput)
+	}
+	if err := pl.CheckBondISIN(isin.String()); err != nil {
+		return fmt.Errorf("%w: %w", ErrInvalidInput, err)
+	}
+	if source == "" {
+		return fmt.Errorf("%w: terms of %s name no source", ErrInvalidInput, isin)
 	}
 	if _, err := terms.Series.Type.Structure(); err != nil {
 		return fmt.Errorf("%w: terms of %s: %w", ErrInvalidInput, isin, err)
@@ -139,7 +152,7 @@ func (r *InputRecorder) RecordBondTerms(ctx context.Context, isin ledger.ISIN, t
 	if err != nil {
 		return fmt.Errorf("recording bond terms: %w", err)
 	}
-	if err := r.recorder.SaveBondTerms(ctx, isin, terms, revals); err != nil {
+	if err := r.recorder.SaveBondTerms(ctx, isin, terms, source, revals); err != nil {
 		return fmt.Errorf("recording bond terms of %s: %w", isin, err)
 	}
 	return nil

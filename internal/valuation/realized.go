@@ -8,7 +8,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
-// RealizedGain is one sale's gain, or loss when negative, in PLN for tax.
+// RealizedGain is one sale's gain, or loss when negative, in the pack's
+// currency for tax.
 type RealizedGain struct {
 	Date kernel.Date
 	Gain kernel.Money
@@ -32,7 +33,7 @@ func (a *AccountTerms) RealizedGains(sales []ledger.Sale, rates []FXRate) ([]Rea
 	return out, 0, nil
 }
 
-// saleGain returns one sale's gain in PLN.
+// saleGain returns one sale's gain in the pack's currency.
 func (a *AccountTerms) saleGain(s *ledger.Sale, rates []FXRate) (kernel.Money, MissingReason, error) {
 	cost, missing, err := a.TaxCost(s.Consumed, false, rates)
 	if err != nil || missing != 0 {
@@ -43,7 +44,7 @@ func (a *AccountTerms) saleGain(s *ledger.Sale, rates []FXRate) (kernel.Money, M
 	amounts := append([]kernel.Money{s.Proceeds}, s.Fees...)
 	gain := cost.Neg()
 	for i, m := range amounts {
-		pln, err := ConvertToPLN(m, rates, day, ValueRounding)
+		pln, err := ConvertAt(m, a.Pack.ReportingCurrency(), rates, day, ValueRounding)
 		if errors.Is(err, ErrNoRate) {
 			return kernel.Money{}, MissingFXRate, nil
 		}
@@ -60,10 +61,11 @@ func (a *AccountTerms) saleGain(s *ledger.Sale, rates []FXRate) (kernel.Money, M
 	return gain, 0, nil
 }
 
-// RealizedInYear returns the sum of gains dated in day's year on or before
-// day: the tax year's realized gains and losses through day (D-128).
-func RealizedInYear(gains []RealizedGain, day kernel.Date) (kernel.Money, error) {
-	sum := kernel.NewMoney(kernel.Decimal{}, PLN())
+// RealizedInYear returns the sum, in currency in, of gains dated in day's
+// year on or before day: the tax year's realized gains and losses through
+// day (D-128).
+func RealizedInYear(gains []RealizedGain, day kernel.Date, in kernel.Currency) (kernel.Money, error) {
+	sum := kernel.NewMoney(kernel.Decimal{}, in)
 	for i := range gains {
 		g := &gains[i]
 		if g.Date.Year() != day.Year() || g.Date.After(day) {

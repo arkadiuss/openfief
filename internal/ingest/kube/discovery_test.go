@@ -111,7 +111,7 @@ func checkDeclarations(t *testing.T, d *kube.Discovery) {
 	if decl, err := d.Declarations(t.Context(), "ibkr-main"); err != nil || !decl.CrossCheckPrices || decl.StatementFiles {
 		t.Errorf("Declarations(ibkr-main) = %+v, %v; want cross-check prices only", decl, err)
 	}
-	if decl, err := d.Declarations(t.Context(), "absent"); err != nil || decl != (ingest.Declarations{}) {
+	if decl, err := d.Declarations(t.Context(), "absent"); err != nil || !cmp.Equal(decl, ingest.Declarations{}) {
 		t.Errorf("Declarations of no Plugin = %+v, %v; want none", decl, err)
 	}
 }
@@ -124,17 +124,28 @@ func checkDeclarations(t *testing.T, d *kube.Discovery) {
 func TestDeployedDeclarations(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
-		name      string
-		manifest  map[string]any
-		effective any
-		want      ingest.Declarations
+		name     string
+		manifest map[string]any
+		// granted are fields of status.effective, such as marketData.
+		granted map[string]any
+		want    ingest.Declarations
 	}{
-		{name: "market data approved", manifest: map[string]any{"marketData": true}, effective: true, want: ingest.Declarations{MarketData: true}},
+		{
+			name: "bond terms and index levels approved (D-179)", manifest: map[string]any{"bondTerms": true, "indexLevels": true},
+			granted: map[string]any{"bondTerms": true, "indexLevels": true}, want: ingest.Declarations{BondTerms: true, IndexLevels: true},
+		},
+		{name: "bond terms declared, not approved", manifest: map[string]any{"bondTerms": true, "indexLevels": true}, granted: map[string]any{"indexLevels": true}, want: ingest.Declarations{IndexLevels: true}},
+		{name: "market data approved", manifest: map[string]any{"marketData": true}, granted: map[string]any{"marketData": true}, want: ingest.Declarations{MarketData: true}},
 		{name: "market data declared, not approved", manifest: map[string]any{"marketData": true}},
-		{name: "market data not a boolean", manifest: map[string]any{"marketData": true}, effective: "true"},
+		{name: "market data not a boolean", manifest: map[string]any{"marketData": true}, granted: map[string]any{"marketData": "true"}},
 		{name: "both declared", manifest: map[string]any{"crossCheckPrices": true, "statementFiles": true}, want: ingest.Declarations{CrossCheckPrices: true, StatementFiles: true}},
 		{name: "statement files only", manifest: map[string]any{"statementFiles": true}, want: ingest.Declarations{StatementFiles: true}},
 		{name: "not a boolean", manifest: map[string]any{"crossCheckPrices": "yes"}},
+		{
+			name: "institutions (D-182)", manifest: map[string]any{"institutions": []any{"ibkr", "ibkr-ie"}},
+			want: ingest.Declarations{Institutions: []ingest.InstitutionID{"ibkr", "ibkr-ie"}},
+		},
+		{name: "institutions not strings", manifest: map[string]any{"institutions": []any{int64(1)}}},
 		{name: "nothing running"},
 	}
 	for _, tt := range tests {
@@ -144,13 +155,13 @@ func TestDeployedDeclarations(t *testing.T) {
 			if tt.manifest != nil {
 				u = deployed(t, u, tt.manifest)
 			}
-			if tt.effective != nil {
-				if err := unstructured.SetNestedField(u.Object, tt.effective, "status", "effective", "marketData"); err != nil {
-					t.Fatalf("setting status.effective.marketData: %v", err)
+			for field, v := range tt.granted {
+				if err := unstructured.SetNestedField(u.Object, v, "status", "effective", field); err != nil {
+					t.Fatalf("setting status.effective.%s: %v", field, err)
 				}
 			}
-			if got := kube.DeployedDeclarations(u); got != tt.want {
-				t.Errorf("DeployedDeclarations() = %+v, want %+v", got, tt.want)
+			if diff := cmp.Diff(tt.want, kube.DeployedDeclarations(u)); diff != "" {
+				t.Errorf("DeployedDeclarations() (-want +got):\n%s", diff)
 			}
 		})
 	}

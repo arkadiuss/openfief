@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9069e8840bb6
+  - type: implements
+    from: SYM-plugins-uninstall-secrets
+    to: REQ-plugins-secrets-never-platform
+    created_at: 2026-11-02T22:21:55.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccfaa9a66435

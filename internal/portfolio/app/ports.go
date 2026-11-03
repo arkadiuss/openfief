@@ -40,7 +40,8 @@ type MarketData interface {
 	// IndexLevels returns every level of the market index named index dated
 	// on or before through, in date order.
 	IndexLevels(ctx context.Context, index string, through kernel.Date) ([]valuation.IndexLevel, error)
-	// FXRates returns every rate to PLN of currency dated on or before
+	// FXRates returns every rate of currency, each naming its base (D-180),
+	// dated on or before
 	// through, in date order.
 	FXRates(ctx context.Context, currency kernel.Currency, through kernel.Date) ([]valuation.FXRate, error)
 }

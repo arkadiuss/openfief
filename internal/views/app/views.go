@@ -25,16 +25,19 @@ var ErrUnknownAccount = errors.New("unknown account")
 const cashRounding = valuation.ValueRounding
 
 // UnsupportedReportingCurrencyError reports a reporting currency (D-62) the
-// views cannot convert to. FX rates are quoted against PLN only (D-20), and
-// cross rates for any other reporting currency are undecided (T-12), so PLN is
-// the only one supported.
+// views cannot convert to. Stored valuations and FX rates are in the
+// jurisdiction pack's currency (D-180), and cross rates into any other
+// reporting currency are undecided (T-12), so the pack's is the only one
+// supported.
 type UnsupportedReportingCurrencyError struct {
 	Currency kernel.Currency
+	// Supported is the one the pack converts to.
+	Supported kernel.Currency
 }
 
-// Error names the currency.
+// Error names both currencies.
 func (e *UnsupportedReportingCurrencyError) Error() string {
-	return fmt.Sprintf("reporting currency %s is not supported: only %s", e.Currency, valuation.PLN())
+	return fmt.Sprintf("reporting currency %s is not supported: only %s", e.Currency, e.Supported)
 }
 
 // Views runs the read API's queries.
@@ -56,11 +59,12 @@ type Views struct {
 
 // New returns the queries over the given ports, with totals, valuations and
 // the allocation in the reporting currency reporting (D-62), configured by
-// opts. A reporting currency other than PLN is an
-// *UnsupportedReportingCurrencyError.
-func New(l Ledger, v Valuations, s ValuationStatuses, r FXRates, reporting kernel.Currency, opts ...Option) (*Views, error) {
-	if !reporting.Equal(valuation.PLN()) {
-		return nil, &UnsupportedReportingCurrencyError{Currency: reporting}
+// opts. stored is the currency stored valuations and FX rates are in: the
+// jurisdiction pack's reporting currency (D-180). A reporting currency
+// other than it is an *UnsupportedReportingCurrencyError (T-12).
+func New(l Ledger, v Valuations, s ValuationStatuses, r FXRates, stored, reporting kernel.Currency, opts ...Option) (*Views, error) {
+	if reporting.IsZero() || !reporting.Equal(stored) {
+		return nil, &UnsupportedReportingCurrencyError{Currency: reporting, Supported: stored}
 	}
 	out := &Views{ledger: l, valuations: v, statuses: s, rates: r, reporting: reporting, authz: identityapp.Policy{}}
 	for _, o := range opts {
@@ -381,8 +385,8 @@ func (v *Views) cashItems(ctx context.Context, a *ledger.Account, on kernel.Date
 }
 
 // cashInReporting converts cash c to the reporting currency at the FX rate
-// for on. New admits only PLN as the reporting currency, so the stored rates
-// to PLN convert; PLN cash needs no rate.
+// for on. New admits only the currency the stored rates convert into (D-180),
+// so they convert; cash already in it needs no rate.
 func (v *Views) cashInReporting(ctx context.Context, c kernel.Money, on kernel.Date) (kernel.Money, error) {
 	var rates []valuation.FXRate
 	if !c.Currency().Equal(v.reporting) {
@@ -391,7 +395,7 @@ func (v *Views) cashInReporting(ctx context.Context, c kernel.Money, on kernel.D
 			return kernel.Money{}, fmt.Errorf("loading FX rates: %w", err)
 		}
 	}
-	converted, err := valuation.ConvertToPLN(c, rates, on, cashRounding)
+	converted, err := valuation.ConvertAt(c, v.reporting, rates, on, cashRounding)
 	if err != nil {
 		return kernel.Money{}, fmt.Errorf("converting cash: %w", err)
 	}

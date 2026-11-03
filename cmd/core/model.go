@@ -111,7 +111,7 @@ func (o *ownerSessions) session(ctx context.Context, origin, sessionToken string
 // with the owner's sessions checked by auth on origins, in the reporting
 // currency reporting.
 func newModels(pool *pgxpool.Pool, vstore *valuationpg.Store, auth *identityapp.Auth, origins identity.Origins, reporting kernel.Currency) (*portfolioapp.Models, error) {
-	models, err := portfolioapp.New(portfoliopg.New(pool), vstore, portfolioOwners(auth, origins), reporting)
+	models, err := portfolioapp.New(portfoliopg.New(pool), vstore, portfolioOwners(auth, origins), jurisdictionPack().ReportingCurrency(), reporting)
 	if err != nil {
 		return nil, fmt.Errorf("model portfolio: %w", err)
 	}

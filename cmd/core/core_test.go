@@ -226,7 +226,7 @@ func recordInputs(t *testing.T, r *valuationapp.InputRecorder, ds *demo.Dataset)
 		t.Fatalf("RecordTaxWrapper: %v", err)
 	}
 	for i := range ds.Bonds {
-		if err := r.RecordBondTerms(ctx, ds.Bonds[i].Instrument.ISIN, &ds.Bonds[i].Terms); err != nil {
+		if err := r.RecordBondTerms(ctx, ds.Bonds[i].Instrument.ISIN, &ds.Bonds[i].Terms, demo.BondsInstitution); err != nil {
 			t.Fatalf("RecordBondTerms: %v", err)
 		}
 	}
@@ -240,7 +240,7 @@ func recordInputs(t *testing.T, r *valuationapp.InputRecorder, ds *demo.Dataset)
 		if err != nil {
 			t.Fatalf("ParseDecimal: %v", err)
 		}
-		rates = append(rates, valuation.FXRate{Currency: c, Date: ds.GoLive.AddDays(-14), Rate: rate, Source: "synthetic"})
+		rates = append(rates, valuation.FXRate{Currency: c, Base: jurisdictionPack().ReportingCurrency(), Date: ds.GoLive.AddDays(-14), Rate: rate, Source: "synthetic"})
 	}
 	if err := errors.Join(
 		r.RecordIndexReadings(ctx, ds.CPI), r.RecordPrices(ctx, ds.Prices), r.RecordFXRates(ctx, rates),

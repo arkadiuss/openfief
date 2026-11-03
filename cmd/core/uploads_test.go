@@ -129,7 +129,7 @@ func (flexDiscovery) ConnectorInstances(context.Context) ([]string, error) {
 }
 
 func (flexDiscovery) Declarations(context.Context, string) (ingest.Declarations, error) {
-	return ingest.Declarations{StatementFiles: true, CrossCheckPrices: true}, nil
+	return ingest.Declarations{StatementFiles: true, CrossCheckPrices: true, Institutions: []ingest.InstitutionID{"ibkr"}}, nil
 }
 
 // statementAccounts lists the accounts that take files, as the UI asks.

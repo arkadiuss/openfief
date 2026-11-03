@@ -109,7 +109,7 @@ func (s *settingsService) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, app.ErrInvalidInput):
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "settings call failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "settings call failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }
 

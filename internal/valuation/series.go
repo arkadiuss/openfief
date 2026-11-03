@@ -11,7 +11,7 @@ import (
 // Errors of market-data series, their sources and their gaps.
 var (
 	// ErrInvalidSeries reports a series whose key names no instrument, no
-	// currency other than PLN, or no index kind.
+	// currency, or no index kind.
 	ErrInvalidSeries = errors.New("invalid market-data series")
 	// ErrInvalidGapThreshold reports a gap threshold outside 1 to 3660
 	// days.
@@ -30,7 +30,7 @@ const SourceRulesVersion = "2"
 const maxSeriesKey = 200
 
 // Series is one market-data series: one instrument's prices, one
-// currency's FX rates to PLN, or one period index's readings, which take
+// currency's FX rates, or one period index's readings, which take
 // every value from exactly one source (D-94). Key is the instrument
 // (ledger.Instrument.String()), the currency's code, or the index kind's
 // name (IndexKind.String). Market index levels are no series: they have no
@@ -44,7 +44,7 @@ type Series struct {
 // PriceSeries is the series of instrument's prices.
 func PriceSeries(instrument string) Series { return Series{Kind: KindPrices, Key: instrument} }
 
-// FXSeries is the series of currency's FX rates to PLN.
+// FXSeries is the series of currency's FX rates.
 func FXSeries(currency kernel.Currency) Series {
 	return Series{Kind: KindFXRates, Key: currency.String()}
 }
@@ -57,8 +57,9 @@ func IndexSeries(kind IndexKind) Series { return Series{Kind: KindIndexReadings,
 func (s Series) String() string { return s.Kind.String() + "/" + s.Key }
 
 // Validate reports whether s names a series: a known kind and a key of 1
-// to 200 characters that, for FX rates, is a currency
-// other than PLN and, for index readings, an index kind.
+// to 200 characters that, for FX rates, is a currency and, for index
+// readings, an index kind. Which currency an FX series converts into is
+// the pack's (D-180), so no currency is refused here.
 func (s Series) Validate() error {
 	if s.Key == "" || len(s.Key) > maxSeriesKey {
 		return fmt.Errorf("%w: %s key must have 1 to %d characters: %q", ErrInvalidSeries, s.Kind, maxSeriesKey, s.Key)
@@ -67,12 +68,8 @@ func (s Series) Validate() error {
 	case KindPrices:
 		return nil
 	case KindFXRates:
-		c, err := kernel.ParseCurrency(s.Key)
-		if err != nil {
+		if _, err := kernel.ParseCurrency(s.Key); err != nil {
 			return fmt.Errorf("%w: %w", ErrInvalidSeries, err)
-		}
-		if c.Equal(PLN()) {
-			return fmt.Errorf("%w: PLN has no FX rate to PLN", ErrInvalidSeries)
 		}
 		return nil
 	case KindIndexReadings:

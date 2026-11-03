@@ -40,7 +40,7 @@ func TestSetSeriesSource(t *testing.T) {
 		{name: "the same source again revalues nothing", token: ownerToken, series: etf, source: "eodhd"},
 		{name: "a source without a value of the series", token: ownerToken, series: etf, source: "nbp-a", wantErr: app.ErrInvalidInput},
 		{
-			name: "not a series", token: ownerToken, series: valuation.Series{Kind: valuation.KindFXRates, Key: "PLN"}, source: "nbp-a",
+			name: "not a series", token: ownerToken, series: valuation.Series{Kind: valuation.KindFXRates, Key: "pln"}, source: "nbp-a",
 			wantErr: valuation.ErrInvalidSeries,
 		},
 		{name: "not the owner", token: "ofsess_read", series: etf, source: "vendor-b", wantErr: app.ErrNotOwner},
@@ -200,7 +200,7 @@ func TestNeededSeries(t *testing.T) {
 		valuation.PriceSeries(instrument(t, otherISIN, "NOPRICE").String()),
 		valuation.IndexSeries(valuation.CPI),
 	}
-	if diff := cmp.Diff(want, app.NeededSeries(rows, day, indexation)); diff != "" {
+	if diff := cmp.Diff(want, app.NeededSeries(rows, day, money(t, "0", "PLN").Currency(), indexation)); diff != "" {
 		t.Errorf("NeededSeries (-want +got):\n%s", diff)
 	}
 }

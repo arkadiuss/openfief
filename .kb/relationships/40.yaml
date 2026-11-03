@@ -13,27 +13,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-041a34842e1e
-  - type: implements
-    from: SYM-valuation-convert-to-pln
-    to: REQ-valuation-pln-conversion
-    created_at: 2026-10-28T05:30:44.014Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-62cde554fbc4
-  - type: implements
-    from: SYM-valuation-convert-to-pln
-    to: REQ-valuation-fx-rate-lookup
-    created_at: 2026-10-28T05:30:44.027Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-be94f61de7fd
-  - type: covered_by
-    from: SYM-valuation-convert-to-pln
-    to: TEST-valuation-fx
-    created_at: 2026-10-28T05:30:44.032Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-03b203908396
   - type: executable_for
     from: SYM-ledger-test-property-postings-sum-to-zero-per-currency
     to: TEST-ledger-properties
@@ -559,3 +538,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72e7a4e7ea4b
+  - type: constrains
+    from: REQ-ingest-delivery-declared-institution
+    to: FACT-SUBJECT-CAD68A36D51B31B5
+    created_at: 2026-11-02T22:20:04.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c850eb401c14
+  - type: requires_property
+    from: REQ-ingest-delivery-declared-institution
+    to: FACT-PROP-7FB3AA71B980DFAC
+    created_at: 2026-11-02T22:20:04.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a165d3057d8
+  - type: specified_by
+    from: REQ-ingest-delivery-declared-institution
+    to: SCEN-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:20:05.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88cc722bbdfb
+  - type: implements
+    from: SYM-fd-browserproxy-new
+    to: REQ-views-proxied-pages-security-headers
+    created_at: 2026-11-03T00:15:04.733Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00d578b631cb
+  - type: implements
+    from: SYM-ui-server-write-json
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:30:02.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b3b75cc0c7e
+  - type: covered_by
+    from: SYM-ui-server-write-json
+    to: TEST-kernel-logsafe
+    created_at: 2026-11-03T03:30:02.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c528d5a17313

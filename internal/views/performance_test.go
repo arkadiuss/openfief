@@ -92,8 +92,8 @@ func (r *row) build(t *testing.T) valuation.HoldingValuation {
 		v.Missing = valuation.MissingPrice
 		return v
 	}
-	v.PLN = money(t, r.pln, "PLN")
-	v.Value = v.PLN
+	v.Reporting = money(t, r.pln, "PLN")
+	v.Value = v.Reporting
 	return v
 }
 
@@ -126,7 +126,7 @@ func (c *perfCase) input(t *testing.T) *views.PerformanceInput {
 		in.Valuations = append(in.Valuations, c.rows[i].build(t))
 	}
 	for _, r := range c.rates {
-		in.Rates = append(in.Rates, valuation.FXRate{Currency: money(t, "0", r.cur).Currency(), Date: perfDay(t, r.day), Rate: dec(t, r.rate), Source: "test"})
+		in.Rates = append(in.Rates, valuation.FXRate{Currency: money(t, "0", r.cur).Currency(), Base: money(t, "0", "PLN").Currency(), Date: perfDay(t, r.day), Rate: dec(t, r.rate), Source: "test"})
 	}
 	in.Links = links(in.Transactions, c.confirmed, ledger.TransferConfirmed)
 	return in

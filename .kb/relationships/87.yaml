@@ -120,13 +120,6 @@ relationships:
     id: rel-19100c90daf8
   - type: implements
     from: SYM-views-app-fx-rates
-    to: REQ-views-allocation-inputs
-    created_at: 2026-10-28T07:28:33.441Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-59658f90e75b
-  - type: implements
-    from: SYM-views-app-fx-rates
     to: REQ-AUTO-68636F42D98D4CF7
     created_at: 2026-10-28T07:28:33.449Z
     created_by: kibi/upsert
@@ -664,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7dfd8c16810
+  - type: implements
+    from: SYM-views-app-fx-rates
+    to: REQ-views-allocation-inputs-reporting
+    created_at: 2026-11-03T00:04:52.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af5e26e08a13
+  - type: executable_for
+    from: SYM-valuation-test-helper-assumed-pln
+    to: TEST-valuation-no-assumed-pln
+    created_at: 2026-11-03T00:13:27.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f93ebe8c7ef

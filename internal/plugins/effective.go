@@ -24,6 +24,9 @@ type EffectivePermissions struct {
 	clusterService *ClusterService
 	// marketData: the plugin is a market-data connector (D-123).
 	marketData bool
+	// bondTerms and indexLevels: the connector may deliver treasury bond
+	// series terms and market index levels (D-179).
+	bondTerms, indexLevels bool
 }
 
 // Effective returns the intersection of what p requests and what g approves.
@@ -109,6 +112,16 @@ func (e *EffectivePermissions) BrowserPath() string { return e.browserPath }
 // instruments the owner holds and the model portfolio's targets (D-93).
 func (e *EffectivePermissions) MarketData() bool { return e.marketData }
 
+// BondTerms reports whether the plugin may deliver treasury bond series
+// terms: its manifest declares them, the grant approves that and it may
+// act as a connector (D-179).
+func (e *EffectivePermissions) BondTerms() bool { return e.bondTerms }
+
+// IndexLevels reports whether the plugin may deliver market index levels:
+// its manifest declares them, the grant approves that and it may act as a
+// connector (D-179).
+func (e *EffectivePermissions) IndexLevels() bool { return e.indexLevels }
+
 // Config returns the plugin's config document.
 func (e *EffectivePermissions) Config() []byte { return bytes.Clone(e.config) }
 
@@ -135,7 +148,8 @@ func (e *EffectivePermissions) Equal(o *EffectivePermissions) bool {
 func (e *EffectivePermissions) samePermissions(o *EffectivePermissions) bool {
 	return slices.Equal(e.capabilities, o.capabilities) && slices.Equal(e.egress, o.egress) &&
 		slices.Equal(e.secrets, o.secrets) && slices.Equal(e.dataTiers, o.dataTiers) &&
-		e.browserPath == o.browserPath && equalPtr(e.clusterService, o.clusterService) && e.marketData == o.marketData
+		e.browserPath == o.browserPath && equalPtr(e.clusterService, o.clusterService) && e.marketData == o.marketData &&
+		e.bondTerms == o.bondTerms && e.indexLevels == o.indexLevels
 }
 
 // equalPtr reports whether a and b are both nil or point to equal values.
@@ -150,7 +164,7 @@ func equalPtr[T comparable](a, b *T) bool {
 // browser path, when the grant approves it and the plugin may act as a
 // view (D-81); the in-cluster service (D-74); and market data, when the
 // manifest declares it, the grant approves it and the plugin may act as a
-// connector (D-123).
+// connector (D-123), and so bond terms and index levels (grantDeliveries).
 func (e *EffectivePermissions) grantSingles(p *Plugin, g *Grant, req *Permissions) {
 	if bp := p.Manifest.BrowserPath; bp != "" && slices.Contains(g.Permissions.BrowserPaths, bp) &&
 		slices.Contains(e.capabilities, CapabilityView) {
@@ -160,4 +174,14 @@ func (e *EffectivePermissions) grantSingles(p *Plugin, g *Grant, req *Permission
 		e.clusterService = &cs[0]
 	}
 	e.marketData = req.MarketData && g.Permissions.MarketData && slices.Contains(e.capabilities, CapabilityConnector)
+	e.grantDeliveries(g, req)
+}
+
+// grantDeliveries sets whether the plugin may deliver bond terms and index
+// levels: each when the manifest declares it, the grant approves it and
+// the plugin may act as a connector (D-179).
+func (e *EffectivePermissions) grantDeliveries(g *Grant, req *Permissions) {
+	connector := slices.Contains(e.capabilities, CapabilityConnector)
+	e.bondTerms = req.BondTerms && g.Permissions.BondTerms && connector
+	e.indexLevels = req.IndexLevels && g.Permissions.IndexLevels && connector
 }

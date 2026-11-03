@@ -21,6 +21,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	"github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1"
@@ -130,7 +131,7 @@ func (s *service) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, app.ErrInvalidInput):
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "market data call failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "market data call failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }
 

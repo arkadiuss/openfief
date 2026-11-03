@@ -328,13 +328,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec9dc583b2d9
-  - type: implements
-    from: SYM-views-day-builder-apply-through
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:03:45.934Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1753948eb85f
   - type: covered_by
     from: SYM-views-day-builder-apply-through
     to: TEST-views-performance
@@ -531,3 +524,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-41903ee4fe35
+  - type: implements
+    from: SYM-views-day-builder-apply-through
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:06:23.709Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-752b86baa6ef
+  - type: implements
+    from: SYM-valuation-connectapi-pc-price-checks-fail
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:29:06.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa6ea84096e8
+  - type: covered_by
+    from: SYM-valuation-connectapi-pc-price-checks-fail
+    to: TEST-valuation-connectapi-logsafe
+    created_at: 2026-11-03T03:29:06.854Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30f147e3fd76

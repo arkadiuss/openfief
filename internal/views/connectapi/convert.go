@@ -145,6 +145,9 @@ func pbPlugin(p *views.Plugin) *viewsv1.Plugin {
 		Trust: viewsv1.SignatureTrust(enumNumber(int(p.Trust))), Signer: p.Signer, TrustReason: p.TrustReason,
 		UntrustedSigners: p.UntrustedSigners,
 		Phase:            p.Phase, Ready: p.Ready, MarketData: p.MarketData, RequestedMarketData: p.RequestsMarketData,
+		BondTerms: p.BondTerms, RequestedBondTerms: p.RequestsBondTerms,
+		IndexLevels: p.IndexLevels, RequestedIndexLevels: p.RequestsIndexLevels,
+		Institutions: p.Institutions,
 	}
 }
 
@@ -188,7 +191,7 @@ func pbPriceCheck(c *valuation.PriceCheck) *viewsv1.PriceCheck {
 func pbValuation(v *valuation.HoldingValuation) *viewsv1.Valuation {
 	out := &viewsv1.Valuation{
 		Date: pbDate(v.Date), Instrument: pbInstrument(v.Instrument), Basis: viewsv1.ValuationBasis(enumNumber(int(v.Basis))),
-		Source: v.Source, Value: pbMoney(v.Value), ValueReporting: pbMoney(v.PLN),
+		Source: v.Source, Value: pbMoney(v.Value), ValueReporting: pbMoney(v.Reporting),
 	}
 	if v.NetValued() {
 		out.NetReporting = pbMoney(v.Net)

@@ -113,6 +113,9 @@ func seedBondLot(t *testing.T, dsn string) {
 		if _, err := d.ledger.AddOpeningLots(t.Context(), m.Transactions, nil); err != nil {
 			return fmt.Errorf("setup: %w", err)
 		}
+		for i := range terms {
+			terms[i].Source = "bonds-main" // the instance that delivered them (D-179)
+		}
 		if err := (valuationInputs{recorder: d.recorder}).StoreBondTerms(t.Context(), "setup", terms); err != nil {
 			return fmt.Errorf("setup: %w", err)
 		}

@@ -42,7 +42,8 @@ func (k ValueKind) String() string {
 	return fmt.Sprintf("ValueKind(%d)", int(k))
 }
 
-// HoldingValue returns v's value of kind k in PLN, and the reason it is
+// HoldingValue returns v's value of kind k in the reporting currency it
+// names (D-180), and the reason it is
 // missing when it has none: the row's missing input for any kind, or the
 // net or liquidation value's own reason.
 func HoldingValue(v *valuation.HoldingValuation, k ValueKind) (kernel.Money, valuation.MissingReason, error) {
@@ -51,7 +52,7 @@ func HoldingValue(v *valuation.HoldingValuation, k ValueKind) (kernel.Money, val
 	}
 	switch k {
 	case Gross:
-		return v.PLN, 0, nil
+		return v.Reporting, 0, nil
 	case Net:
 		if v.NetMissing != 0 {
 			return kernel.Money{}, v.NetMissing, nil

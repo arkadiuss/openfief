@@ -101,7 +101,10 @@ func (xtbDiscovery) ConnectorInstances(context.Context) ([]string, error) {
 }
 
 func (xtbDiscovery) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
-	return ingest.Declarations{StatementFiles: instance == "xtb-main", MarketData: instance == "eodhd-main"}, nil
+	return ingest.Declarations{
+		StatementFiles: instance == "xtb-main", MarketData: instance == "eodhd-main",
+		Institutions: []ingest.InstitutionID{"xtb", "eodhd"},
+	}, nil
 }
 
 // tickerAPI is a generated TickerService client.

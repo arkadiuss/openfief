@@ -225,13 +225,6 @@ relationships:
     id: rel-91c9f68d624b
   - type: implements
     from: SYM-views-day-builder-flows-on
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:04:05.655Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-333410065bc4
-  - type: implements
-    from: SYM-views-day-builder-flows-on
     to: REQ-views-performance-twr
     created_at: 2026-10-28T21:04:05.675Z
     created_by: kibi/upsert
@@ -559,3 +552,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4b2e1786104
+  - type: executable_for
+    from: SYM-valuation-test-value-market-holding-in-pack-currency
+    to: TEST-valuation-pack-currency
+    created_at: 2026-11-03T00:00:05.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0fc2da5d448
+  - type: implements
+    from: SYM-views-day-builder-flows-on
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:07:05.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6de185047631
+  - type: executable_for
+    from: SYM-ingest-test-check-institution
+    to: TEST-ingest-declarations
+    created_at: 2026-11-02T22:27:42.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc55836dd8c1
+  - type: implements
+    from: SYM-plugins-kube-describe-plugin
+    to: REQ-plugins-cli-list
+    created_at: 2026-11-02T22:33:55.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-789892b88e25
+  - type: covered_by
+    from: SYM-plugins-kube-describe-plugin
+    to: TEST-plugins-kube-instances
+    created_at: 2026-11-02T22:33:55.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e9ee1b920b5

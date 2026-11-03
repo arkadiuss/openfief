@@ -720,3 +720,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c0225813e05a
+  - type: implements
+    from: SYM-valuation-rate-on-or-before
+    to: REQ-valuation-stored-rates-name-base
+    created_at: 2026-11-02T23:58:12.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f7ef3241e70
+  - type: implements
+    from: SYM-valuation-rate-on-or-before
+    to: REQ-valuation-stored-currency-never-assumed-pln
+    created_at: 2026-11-02T23:58:12.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ce9d2505cbf
+  - type: covered_by
+    from: SYM-valuation-rate-on-or-before
+    to: TEST-valuation-pack-currency
+    created_at: 2026-11-02T23:58:13.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d29b2050a2e
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-st-locked-log-write
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-03T01:08:54.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b3e01953464

@@ -168,6 +168,14 @@ type client struct {
 	ingestv1connect.BondLotServiceClient
 }
 
+// bondsInstance declares the treasury bonds institution for every
+// instance (D-182).
+type bondsInstance struct{}
+
+func (bondsInstance) Declarations(context.Context, string) (ingest.Declarations, error) {
+	return ingest.Declarations{Institutions: []ingest.InstitutionID{"treasury-bonds"}}, nil
+}
+
 // newClient serves the service over c and l, today 2026-10-29, and
 // returns a client calling it with the caller token.
 func newClient(t *testing.T, c *caller, l importer, callerToken string) client {
@@ -178,7 +186,9 @@ func newClient(t *testing.T, c *caller, l importer, callerToken string) client {
 	}
 	lots := &app.BondLots{
 		Owners: owners{}, Bindings: bindings{}, Batches: recorder{},
-		Connectors: &app.Connectors{Caller: c, Bindings: bindings{}, Ledger: l, Today: func() kernel.Date { return today }},
+		Connectors: &app.Connectors{
+			Caller: c, Bindings: bindings{}, Ledger: l, Declarations: bondsInstance{}, Today: func() kernel.Date { return today },
+		},
 		Today:      func() kernel.Date { return today },
 		NewBatchID: func() ingest.BatchID { return "b-1" },
 	}

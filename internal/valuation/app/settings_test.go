@@ -9,7 +9,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
-	"github.com/arkadiuss/openfief/internal/valuation"
 	"github.com/arkadiuss/openfief/internal/valuation/app"
 )
 
@@ -19,7 +18,7 @@ func newSettings(t *testing.T, store *fakeStore, rec *fakeRecorder) *app.Setting
 	t.Helper()
 	l := twoAccounts(t)
 	pack := pl.NewPack()
-	return app.NewSettings(app.NewInputRecorder(app.NewPlanner(l, l), rec, pack), store, fakeOwners{err: app.ErrNotOwner}, pack, valuation.PLN())
+	return app.NewSettings(app.NewInputRecorder(app.NewPlanner(l, l), rec, pack), store, fakeOwners{err: app.ErrNotOwner}, pack, pl.NewPack().ReportingCurrency())
 }
 
 func TestSettingsDisplay(t *testing.T) {
@@ -27,7 +26,7 @@ func TestSettingsDisplay(t *testing.T) {
 	store := newFakeStore()
 	s := newSettings(t, store, &fakeRecorder{})
 	got, err := s.Display(t.Context())
-	want := app.DisplaySettings{ReportingCurrency: valuation.PLN(), NumberFormat: pl.NewPack().NumberFormat(), NumberFormatDefault: true}
+	want := app.DisplaySettings{ReportingCurrency: pl.NewPack().ReportingCurrency(), NumberFormat: pl.NewPack().NumberFormat(), NumberFormatDefault: true}
 	if err != nil {
 		t.Fatalf("Display: %v", err)
 	}
@@ -40,7 +39,7 @@ func TestSettingsDisplay(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Display: %v", err)
 	}
-	if diff := cmp.Diff(app.DisplaySettings{ReportingCurrency: valuation.PLN(), NumberFormat: chosen}, got); diff != "" {
+	if diff := cmp.Diff(app.DisplaySettings{ReportingCurrency: pl.NewPack().ReportingCurrency(), NumberFormat: chosen}, got); diff != "" {
 		t.Errorf("the owner's choice (-want +got):\n%s", diff)
 	}
 }
@@ -56,7 +55,7 @@ func TestOwnerSettings(t *testing.T) {
 		t.Fatalf("Owner: %v", err)
 	}
 	want := app.OwnerSettings{
-		DisplaySettings: app.DisplaySettings{ReportingCurrency: valuation.PLN(), NumberFormat: pl.NewPack().NumberFormat(), NumberFormatDefault: true},
+		DisplaySettings: app.DisplaySettings{ReportingCurrency: pl.NewPack().ReportingCurrency(), NumberFormat: pl.NewPack().NumberFormat(), NumberFormatDefault: true},
 		Wrappers:        []jurisdiction.Wrapper{"taxable", "ike", "ikze", "oki"},
 		Values:          store.settings,
 		// OKI's classes (D-127), and the owner's classification (D-132).

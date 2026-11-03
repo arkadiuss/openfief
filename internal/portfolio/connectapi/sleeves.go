@@ -8,6 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/portfolio"
 	"github.com/arkadiuss/openfief/internal/portfolio/app"
 	portfoliov1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/portfolio/v1"
@@ -146,6 +147,6 @@ func (s *sleeveService) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, portfolio.ErrSleeveHasAccounts), errors.Is(err, portfolio.ErrKindInUse):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "sleeve call failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "sleeve call failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }

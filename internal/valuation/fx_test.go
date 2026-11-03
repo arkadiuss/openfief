@@ -12,13 +12,17 @@ import (
 	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
-// Synthetic table: Friday 2026-03-06 and Monday 2026-03-09.
+// Synthetic table: Friday 2026-03-06 and Monday 2026-03-09, into PLN, and
+// one rate of USD into EUR on Monday, which no conversion into PLN uses.
 func table(t *testing.T) []valuation.FXRate {
 	t.Helper()
+	intoEUR := rate(t, "USD", "2026-03-09", "0.9000")
+	intoEUR.Base = cur(t, "EUR")
 	return []valuation.FXRate{
 		rate(t, "USD", "2026-03-06", "4.0000"),
 		rate(t, "EUR", "2026-03-09", "4.3000"),
 		rate(t, "USD", "2026-03-09", "4.0100"),
+		intoEUR,
 	}
 }
 
@@ -42,7 +46,7 @@ func TestRateOnOrBefore(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := valuation.RateOnOrBefore(table(t), cur(t, tt.currency), date(t, tt.cutoff))
+			got, err := valuation.RateOnOrBefore(table(t), cur(t, tt.currency), cur(t, "PLN"), date(t, tt.cutoff))
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Fatalf("error (-want +got):\n%s", diff)
 			}
@@ -61,13 +65,13 @@ func TestRateOnOrBeforeConflicts(t *testing.T) {
 	t.Parallel()
 	other := rate(t, "USD", "2026-03-09", "4.0200")
 	other.Source = "other"
-	_, err := valuation.RateOnOrBefore(append(table(t), other), cur(t, "USD"), date(t, "2026-03-09"))
+	_, err := valuation.RateOnOrBefore(append(table(t), other), cur(t, "USD"), cur(t, "PLN"), date(t, "2026-03-09"))
 	if !errors.Is(err, valuation.ErrConflictingRates) {
 		t.Errorf("error = %v, want ErrConflictingRates", err)
 	}
 	same := rate(t, "USD", "2026-03-09", "4.01")
 	same.Source = "copy"
-	got, err := valuation.RateOnOrBefore(append(table(t), same), cur(t, "USD"), date(t, "2026-03-09"))
+	got, err := valuation.RateOnOrBefore(append(table(t), same), cur(t, "USD"), cur(t, "PLN"), date(t, "2026-03-09"))
 	if err != nil {
 		t.Fatalf("equal duplicate rates: %v", err)
 	}
@@ -80,7 +84,7 @@ func TestRateOnOrBeforeConflicts(t *testing.T) {
 // income on Monday 2026-03-09 converts at Friday's 4.0000, not Monday's 4.0100.
 func TestTaxRateUsesTheTableBeforeTheEvent(t *testing.T) {
 	t.Parallel()
-	got, err := valuation.RateOnOrBefore(table(t), cur(t, "USD"), pl.TaxRateCutoff(date(t, "2026-03-09")))
+	got, err := valuation.RateOnOrBefore(table(t), cur(t, "USD"), cur(t, "PLN"), pl.TaxRateCutoff(date(t, "2026-03-09")))
 	if err != nil {
 		t.Fatalf("RateOnOrBefore: %v", err)
 	}
@@ -89,7 +93,7 @@ func TestTaxRateUsesTheTableBeforeTheEvent(t *testing.T) {
 	}
 }
 
-func TestToPLN(t *testing.T) {
+func TestConvert(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name    string
@@ -111,7 +115,8 @@ func TestToPLN(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := valuation.ToPLN(money(t, tt.amount, tt.code), rate(t, tt.code, "2026-03-09", tt.rate), tt.mode)
+			r := rate(t, tt.code, "2026-03-09", tt.rate)
+			got, err := valuation.Convert(money(t, tt.amount, tt.code), &r, tt.mode)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Fatalf("error (-want +got):\n%s", diff)
 			}
@@ -125,9 +130,10 @@ func TestToPLN(t *testing.T) {
 	}
 }
 
-func TestToPLNNeedsTheAmountsCurrency(t *testing.T) {
+func TestConvertNeedsTheAmountsCurrency(t *testing.T) {
 	t.Parallel()
-	_, err := valuation.ToPLN(money(t, "1", "EUR"), rate(t, "USD", "2026-03-09", "4"), kernel.RoundHalfUp)
+	r := rate(t, "USD", "2026-03-09", "4")
+	_, err := valuation.Convert(money(t, "1", "EUR"), &r, kernel.RoundHalfUp)
 	var mismatch *kernel.CurrencyMismatchError
 	if !errors.As(err, &mismatch) {
 		t.Fatalf("error = %v, want *CurrencyMismatchError", err)
@@ -137,32 +143,39 @@ func TestToPLNNeedsTheAmountsCurrency(t *testing.T) {
 	}
 }
 
-func TestConvertToPLN(t *testing.T) {
+// TestConvertAt checks that an amount converts into the currency asked for,
+// named by the caller from its pack, with the rate into that currency only
+// (D-180).
+func TestConvertAt(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name    string
 		amount  string
 		code    string
+		to      string
 		cutoff  string
 		want    string
 		wantErr error
 	}{
-		{name: "PLN needs no rate, only grosze: 10.005 -> 10.01", amount: "10.005", code: "PLN", cutoff: "2026-01-01", want: "10.01"},
-		{name: "USD on Sunday uses Friday: 100 x 4.0000", amount: "100", code: "USD", cutoff: "2026-03-08", want: "400"},
-		{name: "EUR on Monday: 2.50 x 4.3000 = 10.75", amount: "2.50", code: "EUR", cutoff: "2026-03-09", want: "10.75"},
-		{name: "no rate yet", amount: "1", code: "EUR", cutoff: "2026-03-08", wantErr: valuation.ErrNoRate},
+		{name: "PLN needs no rate, only grosze: 10.005 -> 10.01", amount: "10.005", code: "PLN", to: "PLN", cutoff: "2026-01-01", want: "10.01"},
+		{name: "USD on Sunday uses Friday: 100 x 4.0000", amount: "100", code: "USD", to: "PLN", cutoff: "2026-03-08", want: "400"},
+		{name: "EUR on Monday: 2.50 x 4.3000 = 10.75", amount: "2.50", code: "EUR", to: "PLN", cutoff: "2026-03-09", want: "10.75"},
+		{name: "no rate yet", amount: "1", code: "EUR", to: "PLN", cutoff: "2026-03-08", wantErr: valuation.ErrNoRate},
+		{name: "into EUR with the rate into EUR: 100 x 0.9", amount: "100", code: "USD", to: "EUR", cutoff: "2026-03-09", want: "90"},
+		{name: "into EUR before its rate: rates into PLN don't serve", amount: "100", code: "USD", to: "EUR", cutoff: "2026-03-08", wantErr: valuation.ErrNoRate},
+		{name: "EUR needs no rate into EUR", amount: "2.505", code: "EUR", to: "EUR", cutoff: "2026-01-01", want: "2.51"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := valuation.ConvertToPLN(money(t, tt.amount, tt.code), table(t), date(t, tt.cutoff), kernel.RoundHalfUp)
+			got, err := valuation.ConvertAt(money(t, tt.amount, tt.code), cur(t, tt.to), table(t), date(t, tt.cutoff), kernel.RoundHalfUp)
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Fatalf("error (-want +got):\n%s", diff)
 			}
 			if err != nil {
 				return
 			}
-			if diff := cmp.Diff(money(t, tt.want, "PLN"), got); diff != "" {
+			if diff := cmp.Diff(money(t, tt.want, tt.to), got); diff != "" {
 				t.Errorf("(-want +got):\n%s", diff)
 			}
 		})

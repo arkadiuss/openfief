@@ -16,8 +16,20 @@ import (
 
 // ErrInvalidMessage reports a connector's message that does not translate
 // into the domain: a malformed decimal, date, currency, ISIN or enum value, or a
-// missing required field. The error names the field.
-var ErrInvalidMessage = errors.New("invalid message")
+// missing required field. The error names the field. It is also
+// app.ErrInvalidDelivery, which the services that hand entries to a
+// connector know.
+var ErrInvalidMessage error = invalidMessageError{}
+
+// invalidMessageError is ErrInvalidMessage's type: errors.Is finds it as
+// app.ErrInvalidDelivery too.
+type invalidMessageError struct{}
+
+// Error returns "invalid message".
+func (invalidMessageError) Error() string { return "invalid message" }
+
+// Is reports whether target is app.ErrInvalidDelivery.
+func (invalidMessageError) Is(target error) bool { return target == app.ErrInvalidDelivery }
 
 // ErrDeliveryTooLarge reports a delivery with more than MaxDeliveryItems
 // items.
@@ -381,6 +393,9 @@ func bondTermsFrom(field string, b *connectorv1.BondTerms) (ingest.BondTerms, er
 	if err != nil {
 		return ingest.BondTerms{}, err
 	}
+	if isinErr := pl.CheckBondISIN(in.ISIN.String()); isinErr != nil {
+		return ingest.BondTerms{}, invalid(field+".instrument.isin", isinErr)
+	}
 	series, err := pl.ParseSeries(in.Symbol)
 	if err != nil {
 		return ingest.BondTerms{}, invalid(field+".instrument.symbol", err)
@@ -501,7 +516,14 @@ func fxRateFrom(field string, r *connectorv1.FxRate) (valuation.FXRate, error) {
 	if rate.Sign() <= 0 {
 		return valuation.FXRate{}, invalid(field+".rate is not positive", nil)
 	}
-	return valuation.FXRate{Currency: c, Date: date, Rate: rate}, nil
+	base, err := currencyFrom(field+".base", r.GetBase())
+	if err != nil {
+		return valuation.FXRate{}, err
+	}
+	if base.Equal(c) {
+		return valuation.FXRate{}, invalid(field+".base is the rate's own currency", nil)
+	}
+	return valuation.FXRate{Currency: c, Base: base, Date: date, Rate: rate}, nil
 }
 
 // indexFrom translates an index.

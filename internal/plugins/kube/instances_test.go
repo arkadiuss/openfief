@@ -95,6 +95,13 @@ func secret(name string) *corev1.Secret {
 	return &corev1.Secret{ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: name}}
 }
 
+// ownedSecret is a Secret labelled as instance's (D-182).
+func ownedSecret(name, instance string) *corev1.Secret {
+	s := secret(name)
+	s.Labels = map[string]string{plugins.OwnerInstanceLabel: instance}
+	return s
+}
+
 func TestResourcesYAML(t *testing.T) {
 	t.Parallel()
 	p, g := samplePlan(t, "sample")
@@ -136,7 +143,7 @@ func TestInstancesCreateAndList(t *testing.T) {
 		ObjectMeta: metav1.ObjectMeta{Namespace: plugins.Namespace, Name: "orphan"},
 		Spec:       v1alpha1.Permissions{Secrets: []string{"orphan-key"}},
 	}
-	store := fakeCluster(t, running, stranger, orphan)
+	store := fakeCluster(t, running, stranger, orphan, ownedSecret("sample-credentials", "sample"), secret("orphan-key"))
 	p, g := samplePlan(t, "sample")
 	if err := store.Create(ctx, &p, &g); err != nil {
 		t.Fatalf("create: %v", err)
@@ -152,9 +159,12 @@ func TestInstancesCreateAndList(t *testing.T) {
 		t.Fatalf("list: %v", err)
 	}
 	want := []app.Instance{
-		{Name: "orphan", HasGrant: true, Secrets: []string{"orphan-key"}},
+		{Name: "orphan", HasGrant: true, Secrets: []string{"orphan-key"}, SecretOwners: map[string]string{"orphan-key": ""}},
 		{Name: "running", Image: sampleImage, HasPlugin: true, Signature: "SignedByTrustedSigner", Ready: "False (NoGrant)", Pending: true},
-		{Name: "sample", Image: sampleImage, HasPlugin: true, HasGrant: true, Secrets: []string{"sample-credentials"}},
+		{
+			Name: "sample", Image: sampleImage, HasPlugin: true, HasGrant: true, Secrets: []string{"sample-credentials"},
+			SecretOwners: map[string]string{"sample-credentials": "sample"},
+		},
 		{
 			Name: "stranger", Image: sampleImage, HasPlugin: true, Ready: "False (SignatureNotVerified)",
 			Signature: "UntrustedSigner (https://example.com/stranger (issuer https://issuer.example.com))",
@@ -170,11 +180,17 @@ func TestInstancesDelete(t *testing.T) {
 	ctx := context.Background()
 	p, g := samplePlan(t, "sample")
 	plugin, grant := kube.Resources(&p, &g)
-	store := fakeCluster(t, plugin, grant, secret("sample-credentials"), secret("shared"), secret("unrelated"))
+	store := fakeCluster(t, plugin, grant, ownedSecret("sample-credentials", "sample"), secret("shared"), secret("unrelated"),
+		secret("openfief-db-app"), ownedSecret("sample-other", "other"))
 	c := store.Client
 	// "missing" was deleted by hand already: that is not an error.
 	if err := store.Delete(ctx, "sample", []string{"sample-credentials", "missing"}); err != nil {
 		t.Fatalf("delete: %v", err)
+	}
+	// Secrets not labelled as the instance's are left alone and reported (D-182).
+	err := store.Delete(ctx, "sample", []string{"openfief-db-app", "sample-other"})
+	if !errors.Is(err, app.ErrSecretNotOwned) {
+		t.Errorf("deleting Secrets not labelled as the instance's: error = %v, want ErrSecretNotOwned", err)
 	}
 	gone := []client.Object{&v1alpha1.Plugin{}, &v1alpha1.PluginGrant{}, &corev1.Secret{}}
 	for i, name := range []string{"sample", "sample", "sample-credentials"} {
@@ -182,7 +198,7 @@ func TestInstancesDelete(t *testing.T) {
 			t.Errorf("%T %s: get error = %v, want not found", gone[i], name, err)
 		}
 	}
-	for _, name := range []string{"shared", "unrelated"} {
+	for _, name := range []string{"shared", "unrelated", "openfief-db-app", "sample-other"} {
 		if err := c.Get(ctx, client.ObjectKey{Namespace: plugins.Namespace, Name: name}, &corev1.Secret{}); err != nil {
 			t.Errorf("Secret %s was not to be deleted: %v", name, err)
 		}

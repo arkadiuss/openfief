@@ -79,12 +79,12 @@ func investedCase(t *testing.T, path []int64, units, k, more int64) *views.Perfo
 	for day, p := range path {
 		in.Valuations = append(in.Valuations, valuation.HoldingValuation{
 			Account: "acc-1", Instrument: etf, Date: perfDay(t, day), Basis: valuation.Market,
-			Quantity: kernel.NewQuantity(kernel.NewDecimal(units, 0)), Value: grosze(units * p), PLN: grosze(units * p),
+			Quantity: kernel.NewQuantity(kernel.NewDecimal(units, 0)), Value: grosze(units * p), Reporting: grosze(units * p),
 		})
 		if more > 0 && int64(day) >= k {
 			in.Valuations = append(in.Valuations, valuation.HoldingValuation{
 				Account: "acc-2", Instrument: etf, Date: perfDay(t, day), Basis: valuation.Market,
-				Quantity: kernel.NewQuantity(kernel.NewDecimal(more, 0)), Value: grosze(more * p), PLN: grosze(more * p),
+				Quantity: kernel.NewQuantity(kernel.NewDecimal(more, 0)), Value: grosze(more * p), Reporting: grosze(more * p),
 			})
 		}
 	}

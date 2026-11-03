@@ -804,3 +804,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-330bc2424287
+  - type: constrains
+    from: REQ-deploy-network-policies
+    to: FACT-SUBJECT-4522ACD5B07992A2
+    created_at: 2026-11-03T00:10:47.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dca86a41d95f
+  - type: requires_property
+    from: REQ-deploy-network-policies
+    to: FACT-PROP-4465795179CC6782
+    created_at: 2026-11-03T00:10:48.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a90e1a46286f
+  - type: specified_by
+    from: REQ-deploy-network-policies
+    to: SCEN-deploy-network-policies
+    created_at: 2026-11-03T00:10:48.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9a26f81ef18
+  - type: implements
+    from: SYM-plugins-app-caching-token-reviewer-store
+    to: REQ-plugins-token-review-not-amplified
+    created_at: 2026-11-03T00:13:42.705Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdefa8e12879

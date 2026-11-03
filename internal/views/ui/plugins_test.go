@@ -49,8 +49,30 @@ func TestPluginsPageMarketData(t *testing.T) {
 	if !found || !strings.Contains(row, "Market data") || !strings.Contains(row, "every instrument you hold") {
 		t.Errorf("prices-main's row doesn't say it learns what the owner holds:\n%s", row)
 	}
+	if !strings.Contains(row, `Books for <span class="mono ident">eodhd</span> only.`) {
+		t.Errorf("the market-data connector's row doesn't name the institution it books for (D-182):\n%s", row)
+	}
 	if n := strings.Count(body, ">Market data<"); n != 1 {
 		t.Errorf("%d plugins marked as market data, want 1", n)
+	}
+}
+
+// TestPluginsPageDeliveries checks that the plugins page shows the owner
+// which bond terms and index levels a connector delivers are stored, as
+// its grant approves, and which are dropped for want of approval (D-179).
+func TestPluginsPageDeliveries(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	rec := h.serve(t, withSession(request(http.MethodGet, "/plugins", ""), ownerSession))
+	wantStatus(t, rec, http.StatusOK)
+	body := rec.Body.String()
+	_, after, found := strings.Cut(body, "prices-main")
+	row, _, _ := strings.Cut(after, "</tr>")
+	if !found || !strings.Contains(row, ">Index levels<") || !strings.Contains(row, "Delivers treasury bond series terms; not approved, so they are dropped.") {
+		t.Errorf("prices-main's row doesn't show its index levels stored and its bond terms dropped:\n%s", row)
+	}
+	if n := strings.Count(body, ">Bond terms<"); n != 0 {
+		t.Errorf("%d plugins marked as delivering bond terms, want none approved", n)
 	}
 }
 

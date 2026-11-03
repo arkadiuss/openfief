@@ -76,7 +76,7 @@ func TestReportingCurrency(t *testing.T) {
 	if got := f.views(t).ReportingCurrency(); !got.Equal(cur(t, "PLN")) {
 		t.Errorf("ReportingCurrency() = %s, want PLN", got)
 	}
-	_, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "EUR"))
+	_, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "EUR"))
 	unsupported, ok := errors.AsType[*app.UnsupportedReportingCurrencyError](err)
 	if !ok || !unsupported.Currency.Equal(cur(t, "EUR")) {
 		t.Errorf("app.New(EUR) error = %v, want *UnsupportedReportingCurrencyError for EUR", err)

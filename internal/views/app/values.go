@@ -122,7 +122,7 @@ func (v *Views) cashDays(ctx context.Context, a ledger.AccountID, from, to kerne
 	out := make([]views.DayCash, 0, len(balances))
 	for _, b := range balances {
 		day := views.DayCash{Date: b.Date, Amount: b.Amount}
-		converted, convErr := valuation.ConvertToPLN(b.Amount, rates, b.Date, cashRounding)
+		converted, convErr := valuation.ConvertAt(b.Amount, v.reporting, rates, b.Date, cashRounding)
 		if errors.Is(convErr, valuation.ErrNoRate) {
 			day.Unconverted = true
 			out = append(out, day)

@@ -1,15 +1,20 @@
 package ingest
 
 import (
+	"errors"
+	"fmt"
+	"slices"
 	"strconv"
+	"strings"
 )
 
 // Declarations are what a connector's manifest declares about what it
 // sends and takes, beyond its capabilities: whether it may send cross-check
 // prices (D-112), whether it takes statement files the owner uploads
-// (D-109), and whether it is a market-data connector that its grant
-// approves as one (D-123). The manifest is signed with the plugin's image
-// (D-42).
+// (D-109), whether it is a market-data connector that its grant approves
+// as one (D-123), the institutions it books for (D-182), and whether it
+// may deliver bond terms and index levels (D-179). The manifest is signed
+// with the plugin's image (D-42).
 type Declarations struct {
 	CrossCheckPrices bool
 	StatementFiles   bool
@@ -17,6 +22,70 @@ type Declarations struct {
 	// grant approves it, so each sync tells it the instruments the owner
 	// holds and the model portfolio's targets (D-93, D-123).
 	MarketData bool
+	// BondTerms and IndexLevels: the manifest declares that the connector
+	// delivers treasury bond series terms, or market index levels, and the
+	// grant approves that, so the core stores them (D-179).
+	BondTerms   bool
+	IndexLevels bool
+	// Institutions are the institutions the connector books for (D-182).
+	Institutions []InstitutionID
+}
+
+// ErrUndeclaredInstitution reports a delivery that names an institution its
+// connector's manifest doesn't declare (D-182): nothing of it is imported.
+var ErrUndeclaredInstitution = errors.New("the connector's manifest doesn't declare the institution its delivery names")
+
+// CheckInstitution refuses a delivery naming institution unless d declares
+// it (D-182), so a connector can't book, or rank its market data, as
+// another institution's.
+func (d *Declarations) CheckInstitution(institution InstitutionID) error {
+	if slices.Contains(d.Institutions, institution) {
+		return nil
+	}
+	return fmt.Errorf("%w: %q", ErrUndeclaredInstitution, institution)
+}
+
+// KindUndeclaredDeliveries is the kind of the attention item (D-130) a
+// connector instance raises when it delivers bond terms or index levels
+// it may not deliver, so they are dropped (D-179), as cross-check prices
+// are (D-141). Its subject is the instance: one item per instance, open
+// while it keeps happening, resolved by the instance's next delivery that
+// carries none it may not deliver.
+const KindUndeclaredDeliveries = "bond-terms-or-index-levels-undeclared"
+
+// UndeclaredDrop is what dropping a delivery's undeclared bond terms and
+// index levels (D-179) leaves: the ingest problems, one per kind dropped,
+// and the detail of the instance's attention item, empty when nothing is
+// dropped.
+type UndeclaredDrop struct {
+	Problems []Problem
+	Detail   string
+}
+
+// UndeclaredDeliveries returns what dropping a delivery's terms bond terms
+// and levels index levels that its connector may not deliver (D-179), as
+// decl says, leaves. The detail names the kinds, never a count or a batch,
+// so a later delivery that drops the same kinds doesn't reopen an item the
+// owner acknowledged.
+func UndeclaredDeliveries(decl Declarations, terms, levels int) UndeclaredDrop {
+	var problems []Problem
+	var kinds []string
+	if terms > 0 && !decl.BondTerms {
+		problems = append(problems, Skipped("bond_terms", strconv.Itoa(terms)+
+			" bond series terms not stored: the connector's signed manifest doesn't declare them or its grant doesn't approve them"))
+		kinds = append(kinds, "bond series terms")
+	}
+	if levels > 0 && !decl.IndexLevels {
+		problems = append(problems, Skipped("index_levels", strconv.Itoa(levels)+
+			" index levels not stored: the connector's signed manifest doesn't declare them or its grant doesn't approve them"))
+		kinds = append(kinds, "market index levels")
+	}
+	if len(kinds) == 0 {
+		return UndeclaredDrop{}
+	}
+	return UndeclaredDrop{Problems: problems, Detail: "the connector delivers " + strings.Join(kinds, " and ") +
+		" that its signed manifest doesn't declare or its grant doesn't approve, so they are dropped and the rest of " +
+		"its deliveries is imported; install a version that declares them, and approve it"}
 }
 
 // UndeclaredCrossCheckPrices is the ingest problem a delivery's n

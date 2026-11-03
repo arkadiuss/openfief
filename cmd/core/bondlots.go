@@ -148,7 +148,8 @@ func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots 
 // and broker accounts (D-72), its tickers without an ISIN, looked up by
 // the market-data connectors through d.entries (D-116),
 // and the delivery imported into the ledger and valuation like a sync's,
-// cross-check prices included (D-22).
+// cross-check prices included (D-22), with an attention item for bond
+// terms or index levels the instance may not deliver (D-179).
 func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connectors {
 	inputs := valuationInputs{recorder: d.recorder}
 	return &ingestapp.Connectors{
@@ -156,7 +157,7 @@ func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connect
 		Prices: inputs, FXRates: inputs, Indices: inputs, Levels: inputs, Terms: inputs,
 		CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
 		Sources: sourceInputs{rankings: d.rankings}, Declarations: d.entries,
-		Tickers: store, Lookup: d.entries, Instances: d.entries,
+		Tickers: store, Lookup: d.entries, Instances: d.entries, Attention: valuationAttention{items: d.attention},
 	}
 }
 

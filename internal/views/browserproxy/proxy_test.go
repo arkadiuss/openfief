@@ -189,6 +189,80 @@ func TestProxyRefuses(t *testing.T) {
 	}
 }
 
+// TestProxySecurityHeaders checks that every answer through the proxy
+// carries the security headers D-184 requires: the core's content security
+// policy added next to a view's own, so a view's stricter policy, as the
+// built-in UI sends, stays whole and a looser one is held to the core's;
+// framing denied, no sniffing and no referrer, whatever the view said; and
+// the same on the core's own refusals.
+func TestProxySecurityHeaders(t *testing.T) {
+	t.Parallel()
+	const strict = "default-src 'none'; script-src 'self'; frame-ancestors 'none'; base-uri 'none'"
+	tests := []struct {
+		name    string
+		view    map[string]string
+		wantCSP []string
+	}{
+		{name: "a view that sends none", wantCSP: []string{browserproxy.ViewContentSecurityPolicy}},
+		{
+			name:    "a view with its own stricter policy",
+			view:    map[string]string{"Content-Security-Policy": strict},
+			wantCSP: []string{strict, browserproxy.ViewContentSecurityPolicy},
+		},
+		{
+			name: "a view that would allow framing, sniffing and referrers",
+			view: map[string]string{
+				"Content-Security-Policy": "default-src *; frame-ancestors *", "X-Frame-Options": "SAMEORIGIN",
+				"Referrer-Policy": "unsafe-url", "X-Content-Type-Options": "",
+			},
+			wantCSP: []string{"default-src *; frame-ancestors *", browserproxy.ViewContentSecurityPolicy},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			plugin := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+				for k, v := range tt.view {
+					w.Header().Set(k, v)
+				}
+				if _, err := io.WriteString(w, "<!doctype html><title>view</title>"); err != nil {
+					t.Errorf("writing: %v", err)
+				}
+			}))
+			t.Cleanup(plugin.Close)
+			door := &app.FrontDoor{
+				Views:  fakeViews{routes: []views.BrowserRoute{{Instance: "view", Prefix: "/"}}, urls: map[string]string{"view": plugin.URL}},
+				Tokens: fakeTokens{},
+			}
+			req := httptest.NewRequestWithContext(t.Context(), http.MethodGet, "http://localhost:8080/", http.NoBody)
+			rec := httptest.NewRecorder()
+			browserproxy.New(door, nil).ServeHTTP(rec, req)
+			checkSecurityHeaders(t, rec.Header(), tt.wantCSP)
+		})
+	}
+	req := httptest.NewRequestWithContext(t.Context(), http.MethodGet, "http://localhost:8080/", http.NoBody)
+	rec := httptest.NewRecorder()
+	browserproxy.New(&app.FrontDoor{Views: fakeViews{}, Tokens: fakeTokens{}}, nil).ServeHTTP(rec, req)
+	checkSecurityHeaders(t, rec.Header(), []string{browserproxy.ViewContentSecurityPolicy})
+}
+
+// checkSecurityHeaders checks h's security headers against D-184's, with
+// the content security policies wantCSP.
+func checkSecurityHeaders(t *testing.T, h http.Header, wantCSP []string) {
+	t.Helper()
+	if diff := cmp.Diff(wantCSP, h.Values("Content-Security-Policy")); diff != "" {
+		t.Errorf("Content-Security-Policy (-want +got):\n%s", diff)
+	}
+	want := map[string][]string{
+		"X-Frame-Options": {"DENY"}, "X-Content-Type-Options": {"nosniff"}, "Referrer-Policy": {"no-referrer"},
+	}
+	for k, v := range want {
+		if diff := cmp.Diff(v, h.Values(k)); diff != "" {
+			t.Errorf("%s (-want +got):\n%s", k, diff)
+		}
+	}
+}
+
 func TestBrowserScheme(t *testing.T) {
 	t.Parallel()
 	tests := []struct {

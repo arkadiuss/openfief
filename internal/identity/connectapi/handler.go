@@ -22,6 +22,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/identity/app"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 )
@@ -117,7 +118,7 @@ func (c *CallerInterceptor) verify(ctx context.Context, header string) (string, 
 	case errors.Is(err, ErrCallerRefused):
 		return "", connect.NewError(connect.CodePermissionDenied, ErrCallerRefused)
 	}
-	c.log.LogAttrs(ctx, slog.LevelError, "verifying an auth caller failed", slog.String("error", err.Error()))
+	c.log.LogAttrs(ctx, slog.LevelError, "verifying an auth caller failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return "", connect.NewError(connect.CodeInternal, errInternal)
 }
 
@@ -151,7 +152,7 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 	}
 	for _, c := range classes {
 		if errors.Is(err, c.class) {
-			log.LogAttrs(ctx, slog.LevelInfo, "auth call denied", slog.String("reason", err.Error()))
+			log.LogAttrs(ctx, slog.LevelInfo, "auth call denied", slog.String("reason", c.class.Error()))
 			out := connect.NewError(c.code, c.class)
 			if errors.Is(c.class, app.ErrPasskeyCheckRequired) {
 				addPasskeyCheckDetail(ctx, log, out)
@@ -159,7 +160,7 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 			return out
 		}
 	}
-	log.LogAttrs(ctx, slog.LevelError, "auth call failed", slog.String("error", err.Error()))
+	log.LogAttrs(ctx, slog.LevelError, "auth call failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }
 
@@ -169,7 +170,7 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 func addPasskeyCheckDetail(ctx context.Context, log *slog.Logger, out *connect.Error) {
 	detail, err := connect.NewErrorDetail(&identityv1.PasskeyCheckRequired{Window: durationpb.New(identity.PasskeyCheckWindow)})
 	if err != nil {
-		log.LogAttrs(ctx, slog.LevelError, "adding an error detail failed", slog.String("error", err.Error()))
+		log.LogAttrs(ctx, slog.LevelError, "adding an error detail failed", slog.String("error", kernel.LogSafe(err)))
 		return
 	}
 	out.AddDetail(detail)

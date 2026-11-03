@@ -30,7 +30,7 @@ type TaxedAccount struct {
 }
 
 // Payment is an amount paid into an account, or withdrawn when negative,
-// in PLN for tax.
+// in the pack's currency for tax.
 type Payment struct {
 	Date   kernel.Date
 	Amount kernel.Money
@@ -46,7 +46,7 @@ type Payment struct {
 func PaidIn(txs []ledger.Transaction, rates []valuation.FXRate, pack jurisdiction.Pack) ([]Payment, bool, error) {
 	var out []Payment
 	for _, p := range payments(txs) {
-		pln, err := valuation.ConvertToPLN(p.amount, rates, pack.TaxRateDate(p.rateDay), valuation.ValueRounding)
+		pln, err := valuation.ConvertAt(p.amount, pack.ReportingCurrency(), rates, pack.TaxRateDate(p.rateDay), valuation.ValueRounding)
 		if errors.Is(err, valuation.ErrNoRate) {
 			return nil, true, nil
 		}
@@ -98,7 +98,7 @@ func TaxTotals(totals []DateTotal, accounts []TaxedAccount, pack jurisdiction.Pa
 		t := &totals[i]
 		rows := make([]jurisdiction.AccountRows, 0, len(accounts))
 		for j := range accounts {
-			r, err := accountRows(&accounts[j], t.Date)
+			r, err := accountRows(&accounts[j], t.Date, pack.ReportingCurrency())
 			if err != nil {
 				return fmt.Errorf("total on %s: %w", t.Date, err)
 			}
@@ -156,8 +156,8 @@ func rowSum(rows []jurisdiction.AccountRows) jurisdiction.Values {
 // accountRows returns a's rows on day for its total: the sums of its valued
 // holdings' and its converted cash's values, of its holdings priced at
 // market apart with their cost basis and sale cost, its realized gains in
-// day's year and what was paid in through day.
-func accountRows(a *TaxedAccount, day kernel.Date) (jurisdiction.AccountRows, error) {
+// day's year, in currency in, and what was paid in through day.
+func accountRows(a *TaxedAccount, day kernel.Date, in kernel.Currency) (jurisdiction.AccountRows, error) {
 	out := jurisdiction.AccountRows{Wrapper: a.Wrapper}
 	for i := range a.Vals {
 		if v := &a.Vals[i]; v.Date.Equal(day) && v.Valued() {
@@ -169,7 +169,7 @@ func accountRows(a *TaxedAccount, day kernel.Date) (jurisdiction.AccountRows, er
 			out.Rows = addTaxValues(&out.Rows, &c.Values)
 		}
 	}
-	realized, err := valuation.RealizedInYear(a.Realized, day)
+	realized, err := valuation.RealizedInYear(a.Realized, day, in)
 	if err != nil {
 		return jurisdiction.AccountRows{}, fmt.Errorf("account rows: %w", err)
 	}
@@ -184,7 +184,7 @@ func accountRows(a *TaxedAccount, day kernel.Date) (jurisdiction.AccountRows, er
 
 // rowsOf returns a valued holding's values as a row.
 func rowsOf(v *valuation.HoldingValuation) jurisdiction.Values {
-	return jurisdiction.Values{Gross: v.PLN, Net: v.Net, Liquidation: v.Liquidation, LiquidationUnknown: !v.LiquidationValued()}
+	return jurisdiction.Values{Gross: v.Reporting, Net: v.Net, Liquidation: v.Liquidation, LiquidationUnknown: !v.LiquidationValued()}
 }
 
 // addHolding adds a valued holding to out's rows and, priced at market with

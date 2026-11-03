@@ -12,16 +12,18 @@ import (
 )
 
 // valuationArgs returns the insertValuation arguments of r: its gross value
-// in its own currency and in PLN, or the missing input; its net and
-// liquidation values in PLN, or what each lacks.
+// in its own currency and in the reporting currency it names (D-180), or
+// the missing input; its net and liquidation values in that currency, or
+// what each lacks.
 func valuationArgs(r *valuation.HoldingValuation) []any {
-	var value, currency, pln, missing, net, liquidation, netMissing, liquidationMissing, taxCost, saleCost *string
+	var value, currency, reporting, reportingCurrency, missing, net, liquidation, netMissing, liquidationMissing, taxCost, saleCost *string
 	text := func(s string) *string { return &s }
 	switch {
 	case !r.Valued():
 		missing = text(r.Missing.String())
 	default:
-		value, currency, pln = text(r.Value.Amount().String()), text(r.Value.Currency().String()), text(r.PLN.Amount().String())
+		value, currency = text(r.Value.Amount().String()), text(r.Value.Currency().String())
+		reporting, reportingCurrency = text(r.Reporting.Amount().String()), text(r.Reporting.Currency().String())
 		if r.NetValued() {
 			net = text(r.Net.Amount().String())
 			if r.Basis == valuation.Market {
@@ -38,7 +40,7 @@ func valuationArgs(r *valuation.HoldingValuation) []any {
 	}
 	return []any{
 		string(r.Account), r.Instrument.ISIN.String(), r.Instrument.Symbol, r.Date.String(), r.Basis.String(),
-		r.Quantity.String(), value, currency, pln, r.Source, optionalDate(r.PriceDate), optionalDate(r.RateDate),
+		r.Quantity.String(), value, currency, reporting, reportingCurrency, r.Source, optionalDate(r.PriceDate), optionalDate(r.RateDate),
 		missing, r.Detail, net, liquidation, netMissing, liquidationMissing, taxCost, saleCost,
 	}
 }
@@ -48,7 +50,7 @@ func valuationArgs(r *valuation.HoldingValuation) []any {
 func (s *Store) Valuations(ctx context.Context, account ledger.AccountID, from, to kernel.Date) ([]valuation.HoldingValuation, error) {
 	rows, err := s.pool.Query(ctx, `
 		SELECT account_id, isin, symbol, date::text, basis, quantity::text, coalesce(value::text, ''),
-		       coalesce(value_currency, ''), coalesce(pln::text, ''), source, coalesce(price_date::text, ''),
+		       coalesce(value_currency, ''), coalesce(reporting::text, ''), coalesce(reporting_currency, ''), source, coalesce(price_date::text, ''),
 		       coalesce(rate_date::text, ''), coalesce(missing, ''), detail,
 		       coalesce(net::text, ''), coalesce(liquidation::text, ''), coalesce(net_missing, ''), coalesce(liquidation_missing, ''),
 		       coalesce(tax_cost::text, ''), coalesce(sale_cost::text, '')
@@ -69,7 +71,7 @@ func (s *Store) Valuations(ctx context.Context, account ledger.AccountID, from, 
 func scanValuation(row pgx.CollectableRow) (valuation.HoldingValuation, error) {
 	var account, source, detail string
 	var t valuationText
-	if err := row.Scan(&account, &t.isin, &t.symbol, &t.day, &t.basis, &t.quantity, &t.value, &t.currency, &t.pln,
+	if err := row.Scan(&account, &t.isin, &t.symbol, &t.day, &t.basis, &t.quantity, &t.value, &t.currency, &t.reporting, &t.reportingCurrency,
 		&source, &t.priceDate, &t.rateDate, &t.missing, &detail, &t.net, &t.liquidation, &t.netMissing, &t.liquidationMissing,
 		&t.taxCost, &t.saleCost); err != nil {
 		return valuation.HoldingValuation{}, fmt.Errorf("reading a valuation: %w", err)

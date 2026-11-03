@@ -531,3 +531,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1795396d4005
+  - type: executable_for
+    from: SYM-valuation-connectapi-test-logsafe-testfailureslognovalues
+    to: TEST-valuation-connectapi-logsafe
+    created_at: 2026-11-03T03:27:18.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85f7f0822e55
+  - type: implements
+    from: SYM-portfolio-connectapi-service-fail
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:28:48.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcb2b91d9b3b
+  - type: covered_by
+    from: SYM-portfolio-connectapi-service-fail
+    to: TEST-portfolio-connectapi-logsafe
+    created_at: 2026-11-03T03:28:48.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6de50c243062

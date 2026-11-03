@@ -93,7 +93,9 @@ func (m *Models) backtestInput(ctx context.Context, model *portfolio.Model, thro
 			return nil, fmt.Errorf("loading FX rates: %w", err)
 		}
 		for _, r := range rates {
-			in.Rates = append(in.Rates, portfolio.Rate{Currency: r.Currency, Date: r.Date, Rate: r.Rate})
+			if r.Base.Equal(m.reporting) {
+				in.Rates = append(in.Rates, portfolio.Rate{Currency: r.Currency, Date: r.Date, Rate: r.Rate})
+			}
 		}
 	}
 	return in, nil

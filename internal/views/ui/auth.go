@@ -8,6 +8,8 @@ import (
 	"connectrpc.com/connect"
 
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
+
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 // maxJSONBody bounds a WebAuthn request body: a credential's JSON is a few
@@ -244,7 +246,7 @@ func (s *server) writeJSON(w http.ResponseWriter, r *http.Request, status int, v
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	if err := json.NewEncoder(w).Encode(v); err != nil {
-		s.log.DebugContext(r.Context(), "write JSON response", "error", err.Error())
+		s.log.DebugContext(r.Context(), "write JSON response", "error", kernel.LogSafe(err))
 	}
 }
 

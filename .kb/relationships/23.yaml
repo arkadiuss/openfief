@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a640509ac02
+  - type: implements
+    from: SYM-plugins-parse-manifest-label
+    to: REQ-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:24:12.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77ce5e7c2e9c
+  - type: covered_by
+    from: SYM-plugins-parse-manifest-label
+    to: TEST-plugins-institutions
+    created_at: 2026-11-02T22:24:12.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f96b6dcb7beb
+  - type: verified_by
+    from: SCEN-deploy-network-policies
+    to: TEST-deploy-network-policies
+    created_at: 2026-11-03T00:10:32.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f5ad986e2cd

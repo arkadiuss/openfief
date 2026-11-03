@@ -169,6 +169,25 @@ type Manifest struct {
 	// (D-93). The PluginGrant approves it (D-123).
 	// +optional
 	MarketData bool `json:"marketData,omitempty"`
+
+	// BondTerms declares that a connector delivers treasury bond series
+	// terms. The PluginGrant approves it (D-179).
+	// +optional
+	BondTerms bool `json:"bondTerms,omitempty"`
+
+	// IndexLevels declares that a connector delivers market index levels.
+	// The PluginGrant approves it (D-179).
+	// +optional
+	IndexLevels bool `json:"indexLevels,omitempty"`
+
+	// Institutions are the institutions a connector books for, such as
+	// ibkr: the core refuses a delivery that names any other (D-182).
+	// +optional
+	// +kubebuilder:validation:MaxItems=16
+	// +kubebuilder:validation:items:MaxLength=63
+	// +kubebuilder:validation:items:Pattern=`^[a-z0-9]([-a-z0-9]*[a-z0-9])?$`
+	// +listType=set
+	Institutions []string `json:"institutions,omitempty"`
 }
 
 // SecretMount asks for the instance's Secret of one role to be mounted
@@ -231,6 +250,14 @@ type Permissions struct {
 	// (D-93, D-123).
 	// +optional
 	MarketData bool `json:"marketData,omitempty"`
+	// BondTerms lets a connector deliver treasury bond series terms, which
+	// the core stores only when this approves it (D-179).
+	// +optional
+	BondTerms bool `json:"bondTerms,omitempty"`
+	// IndexLevels lets a connector deliver market index levels, which the
+	// core stores only when this approves it (D-179).
+	// +optional
+	IndexLevels bool `json:"indexLevels,omitempty"`
 }
 
 // PluginStatus is what the operator observed and did.

@@ -1,6 +1,6 @@
 ---
 title: A stored valuation of a holding priced at market must keep, with its net value, its cost basis for tax and its sale cost in PLN.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-128
 tags:
   - strict-modeling

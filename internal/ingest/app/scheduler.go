@@ -127,7 +127,7 @@ type Scheduler struct {
 func (s *Scheduler) Run(ctx context.Context, ticks <-chan time.Time) {
 	for {
 		if err := s.Tick(ctx); err != nil {
-			s.logger().Warn("connector sync tick failed", "error", err)
+			s.logger().Warn("connector sync tick failed", "error", LogSafe(err))
 		}
 		select {
 		case <-ctx.Done():
@@ -161,7 +161,7 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 		s.wg.Go(func() {
 			defer s.end(name)
 			if _, err := s.attempt(ctx, name, 0); err != nil && !errors.Is(err, ErrSyncRunning) {
-				s.logger().Warn("connector sync failed", "instance", name, "error", err)
+				s.logger().Warn("connector sync failed", "instance", name, "error", LogSafe(err))
 			}
 		})
 	}

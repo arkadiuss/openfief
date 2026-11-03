@@ -272,13 +272,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e59ff1419a1b
-  - type: implements
-    from: SYM-views-day-builder-in-transit
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:04:00.980Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-50c4626fe113
   - type: covered_by
     from: SYM-views-day-builder-in-transit
     to: TEST-views-performance
@@ -608,3 +601,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8025ebdf3e3d
+  - type: implements
+    from: SYM-valuation-postgres-store-save-bond-terms
+    to: REQ-valuation-terms-levels-record-instance
+    created_at: 2026-11-02T22:27:37.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80236fc015bd
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-bond-terms
+    to: TEST-valuation-postgres-delivered-by
+    created_at: 2026-11-02T22:27:37.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e4b4bce6bb3
+  - type: implements
+    from: SYM-plugins-effective-permissions-grant-deliveries
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:50:04.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dae19e1a1f2b
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-grant-deliveries
+    to: TEST-plugins-deliveries
+    created_at: 2026-11-02T22:50:04.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bff146cdefdb
+  - type: implements
+    from: SYM-views-day-builder-in-transit
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:07:25.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47bbb6319f7f

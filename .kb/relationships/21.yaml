@@ -559,3 +559,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec9928996ea0
+  - type: constrains
+    from: REQ-plugins-secrets-never-platform
+    to: FACT-SUBJECT-2DC842323A135A4D
+    created_at: 2026-11-02T22:19:54.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-797ea6eb58bb
+  - type: requires_property
+    from: REQ-plugins-secrets-never-platform
+    to: FACT-PROP-36AC2995C554A43B
+    created_at: 2026-11-02T22:19:54.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eeeb01ae2bda
+  - type: specified_by
+    from: REQ-plugins-secrets-never-platform
+    to: SCEN-plugins-secrets-never-platform
+    created_at: 2026-11-02T22:19:54.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b74717b266cd

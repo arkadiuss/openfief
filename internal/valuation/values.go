@@ -20,18 +20,19 @@ type AccountTerms struct {
 	Settings jurisdiction.Settings
 }
 
-// TaxCost returns the cost basis of lots in PLN for tax: each lot's cost
+// TaxCost returns the cost basis of lots in the pack's reporting currency
+// for tax: each lot's cost
 // converted at the latest rate on or before the date the pack takes for an
 // event on its open date (Pack.TaxRateDate), rounded with ValueRounding.
 // It returns MissingLots when lotsUnknown, and MissingFXRate when a lot's
 // currency has no such rate.
 func (a *AccountTerms) TaxCost(lots []ledger.Lot, lotsUnknown bool, rates []FXRate) (kernel.Money, MissingReason, error) {
-	total := kernel.NewMoney(kernel.Decimal{}, PLN())
+	total := kernel.NewMoney(kernel.Decimal{}, a.Pack.ReportingCurrency())
 	if lotsUnknown {
 		return kernel.Money{}, MissingLots, nil
 	}
 	for i := range lots {
-		c, err := ConvertToPLN(lots[i].Cost, rates, a.Pack.TaxRateDate(lots[i].Opened), ValueRounding)
+		c, err := ConvertAt(lots[i].Cost, a.Pack.ReportingCurrency(), rates, a.Pack.TaxRateDate(lots[i].Opened), ValueRounding)
 		if errors.Is(err, ErrNoRate) {
 			return kernel.Money{}, MissingFXRate, nil
 		}
@@ -46,7 +47,7 @@ func (a *AccountTerms) TaxCost(lots []ledger.Lot, lotsUnknown bool, rates []FXRa
 }
 
 // listed sets the net and liquidation values of row, a holding priced at
-// market whose gross value in PLN is set, with the pack's ValueListed: its
+// market whose gross value in the pack's currency is set, with the pack's ValueListed: its
 // cost basis is its open lots' costs, each converted at the rate the pack
 // takes for tax (TaxCost), and selling it costs what the fee rule charges
 // (FeeRule.SaleCost), with its conversion fee when the price is in another
@@ -66,14 +67,14 @@ func (a *AccountTerms) listed(row *HoldingValuation, m *MarketHolding) error {
 		return err
 	}
 	foreign := !row.Value.Currency().Equal(a.Pack.ReportingCurrency())
-	saleCost, err := a.Fee.SaleCost(row.PLN, minimum, foreign)
+	saleCost, err := a.Fee.SaleCost(row.Reporting, minimum, foreign)
 	if err != nil {
 		return fmt.Errorf("sale cost of %s: %w", row.Instrument, err)
 	}
 	if minimumMissing != 0 {
-		saleCost = kernel.NewMoney(kernel.Decimal{}, PLN())
+		saleCost = kernel.NewMoney(kernel.Decimal{}, a.Pack.ReportingCurrency())
 	}
-	v, err := a.Pack.ValueListed(&jurisdiction.Listed{Wrapper: a.Wrapper, Gross: row.PLN, Cost: cost, SaleCost: saleCost}, &a.Settings)
+	v, err := a.Pack.ValueListed(&jurisdiction.Listed{Wrapper: a.Wrapper, Gross: row.Reporting, Cost: cost, SaleCost: saleCost}, &a.Settings)
 	if err != nil {
 		return fmt.Errorf("values of %s: %w", row.Instrument, err)
 	}
@@ -87,13 +88,14 @@ func (a *AccountTerms) listed(row *HoldingValuation, m *MarketHolding) error {
 	return nil
 }
 
-// minimum returns the fee rule's minimum in PLN on day, converted at the
+// minimum returns the fee rule's minimum in the pack's currency on day,
+// converted at the
 // latest rate on or before it, or MissingFXRate when there is none.
 func (a *AccountTerms) minimum(rates []FXRate, day kernel.Date) (kernel.Money, MissingReason, error) {
 	if a.Fee.Minimum.IsZero() {
-		return kernel.NewMoney(kernel.Decimal{}, PLN()), 0, nil
+		return kernel.NewMoney(kernel.Decimal{}, a.Pack.ReportingCurrency()), 0, nil
 	}
-	m, err := ConvertToPLN(a.Fee.Minimum, rates, day, ValueRounding)
+	m, err := ConvertAt(a.Fee.Minimum, a.Pack.ReportingCurrency(), rates, day, ValueRounding)
 	if errors.Is(err, ErrNoRate) {
 		return kernel.Money{}, MissingFXRate, nil
 	}

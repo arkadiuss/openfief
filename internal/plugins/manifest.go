@@ -97,6 +97,16 @@ type Manifest struct {
 	// targets (D-93). It is a permission the grant approves, so the owner
 	// sees at install that the plugin will learn what they hold (D-123).
 	MarketData bool
+	// BondTerms declares that a connector delivers treasury bond series
+	// terms, and IndexLevels that it delivers market index levels. Each is a
+	// permission the grant approves: the core stores them only from a
+	// connector whose manifest declares them and whose grant approves that
+	// (D-179).
+	BondTerms   bool
+	IndexLevels bool
+	// Institutions are the institutions a connector books for, such as
+	// "ibkr": the core refuses a delivery that names any other (D-182).
+	Institutions []string
 }
 
 // Validate returns every problem in m, each a *FieldError, joined; or nil.
@@ -115,10 +125,28 @@ func (m *Manifest) Validate() error {
 	if m.MarketData && !slices.Contains(m.Capabilities, CapabilityConnector) {
 		errs = append(errs, &FieldError{Field: "marketData", Err: ErrMarketDataNeedsConnector})
 	}
+	errs = append(errs, m.validateDeliveries()...)
+	errs = append(errs, validateInstitutions(m)...)
 	if len(m.ConfigSchema) > 0 && !json.Valid(m.ConfigSchema) {
 		errs = append(errs, &FieldError{Field: "configSchema", Err: ErrInvalidJSON})
 	}
 	return errors.Join(errs...)
+}
+
+// validateInstitutions checks a manifest's institutions (D-182): each a
+// lower-case DNS label, such as "ibkr", named once, and declared only by a
+// connector.
+func validateInstitutions(m *Manifest) []error {
+	var errs []error
+	if len(m.Institutions) > 0 && !slices.Contains(m.Capabilities, CapabilityConnector) {
+		errs = append(errs, &FieldError{Field: "institutions", Err: ErrInstitutionsNeedConnector})
+	}
+	for i, in := range m.Institutions {
+		if validateLabel(in) != nil {
+			errs = append(errs, fieldErr(indexed("institutions", i), ErrInvalidName, in))
+		}
+	}
+	return append(errs, duplicates("institutions", m.Institutions, func(s string) string { return s })...)
 }
 
 func validateCapabilities(cs []Capability) []error {
@@ -157,6 +185,7 @@ func validateSecretNames(field string, names []string) []error {
 		if !validSecretName(n) {
 			errs = append(errs, fieldErr(indexed(field, i), ErrInvalidName, n))
 		}
+		errs = append(errs, validateUnreserved(indexed(field, i), n)...)
 	}
 	return append(errs, duplicates(field, names, func(s string) string { return s })...)
 }
@@ -250,4 +279,21 @@ func sortedCopy[T any](xs []T, compare func(a, b T) int) []T {
 	out := slices.Clone(xs)
 	slices.SortFunc(out, compare)
 	return out
+}
+
+// validateDeliveries refuses bond terms or index levels declared by a
+// plugin that can't act as a connector: only a connector delivers them
+// (D-179).
+func (m *Manifest) validateDeliveries() []error {
+	if slices.Contains(m.Capabilities, CapabilityConnector) {
+		return nil
+	}
+	var errs []error
+	if m.BondTerms {
+		errs = append(errs, &FieldError{Field: "bondTerms", Err: ErrDeliveryNeedsConnector})
+	}
+	if m.IndexLevels {
+		errs = append(errs, &FieldError{Field: "indexLevels", Err: ErrDeliveryNeedsConnector})
+	}
+	return errs
 }

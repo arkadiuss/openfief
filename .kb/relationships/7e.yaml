@@ -573,3 +573,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28ed31cbad39
+  - type: implements
+    from: SYM-valuation-fxrate
+    to: REQ-valuation-stored-rates-name-base
+    created_at: 2026-11-02T23:58:06.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab967712f98e
+  - type: covered_by
+    from: SYM-valuation-fxrate
+    to: TEST-valuation-pack-currency
+    created_at: 2026-11-02T23:58:06.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4b8b445debf
+  - type: implements
+    from: SYM-plugins-app-jwt-shaped
+    to: REQ-plugins-token-review-not-amplified
+    created_at: 2026-11-03T00:11:45.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01874fe872a5
+  - type: covered_by
+    from: SYM-plugins-app-jwt-shaped
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-11-03T00:11:45.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b690ae7a486

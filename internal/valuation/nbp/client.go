@@ -150,5 +150,18 @@ func mapRate(on kernel.Date, r rate) (valuation.FXRate, error) {
 	if mid.Sign() <= 0 {
 		return valuation.FXRate{}, fmt.Errorf("%w: %s %s: rate %s is not positive", ErrMalformedTable, c, on, mid)
 	}
-	return valuation.FXRate{Currency: c, Date: on, Rate: mid, Source: Source}, nil
+	return valuation.FXRate{Currency: c, Base: Base(), Date: on, Rate: mid, Source: Source}, nil
 }
+
+// Base returns the currency NBP table A quotes every rate against: PLN.
+// It names the base each of its rates is stored with (D-180).
+func Base() kernel.Currency {
+	c, err := kernel.ParseCurrency(baseCode)
+	if err != nil {
+		return kernel.Currency{}
+	}
+	return c
+}
+
+// baseCode is table A's base currency.
+const baseCode = "PLN"

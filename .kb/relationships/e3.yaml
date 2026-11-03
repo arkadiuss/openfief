@@ -398,13 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-582d842f2123
-  - type: implements
-    from: SYM-views-performance-day
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:02:57.556Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b92d14efe716
   - type: covered_by
     from: SYM-views-performance-day
     to: TEST-views-performance
@@ -720,3 +713,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4da4bd9fa88c
+  - type: implements
+    from: SYM-views-performance-day
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:07:58.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d2229a1607e
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-checking-resolver-lookup-ip
+    to: REQ-plugins-egress-denies-node-and-cluster-ranges
+    created_at: 2026-11-03T00:14:17.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9cd6d820161

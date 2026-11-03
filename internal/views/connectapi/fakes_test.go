@@ -252,11 +252,11 @@ func newViews(t *testing.T, l *fakeLedger, opts ...app.Option) *app.Views {
 	t.Helper()
 	on := date(t, "2026-03-02")
 	vals := fakeValuations{
-		{Account: "acc-1", Instrument: instrument(t, isinPL, "EDO0334"), Date: on, Basis: valuation.GrossAccrued, Source: "statutory", Quantity: kernel.NewQuantity(dec(t, "10")), Value: money(t, "1043.21", "PLN"), PLN: money(t, "1043.21", "PLN"), Net: money(t, "1035.00", "PLN"), Liquidation: money(t, "1020.00", "PLN")},
-		{Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: on, Basis: valuation.Market, Source: "test-prices", Quantity: kernel.NewQuantity(dec(t, "3")), Value: money(t, "31.5", "USD"), PLN: money(t, "126.00", "PLN"), Net: money(t, "120.00", "PLN"), LiquidationMissing: valuation.MissingMarginalRate},
+		{Account: "acc-1", Instrument: instrument(t, isinPL, "EDO0334"), Date: on, Basis: valuation.GrossAccrued, Source: "statutory", Quantity: kernel.NewQuantity(dec(t, "10")), Value: money(t, "1043.21", "PLN"), Reporting: money(t, "1043.21", "PLN"), Net: money(t, "1035.00", "PLN"), Liquidation: money(t, "1020.00", "PLN")},
+		{Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: on, Basis: valuation.Market, Source: "test-prices", Quantity: kernel.NewQuantity(dec(t, "3")), Value: money(t, "31.5", "USD"), Reporting: money(t, "126.00", "PLN"), Net: money(t, "120.00", "PLN"), LiquidationMissing: valuation.MissingMarginalRate},
 	}
-	rates := fakeRates{{Currency: cur(t, "USD"), Date: on, Rate: dec(t, "4.00"), Source: "test"}}
-	v, err := app.New(l, vals, fakeStatuses{through: on}, rates, cur(t, "PLN"), opts...)
+	rates := fakeRates{{Currency: cur(t, "USD"), Base: cur(t, "PLN"), Date: on, Rate: dec(t, "4.00"), Source: "test"}}
+	v, err := app.New(l, vals, fakeStatuses{through: on}, rates, cur(t, "PLN"), cur(t, "PLN"), opts...)
 	if err != nil {
 		t.Fatalf("app.New(PLN): %v", err)
 	}

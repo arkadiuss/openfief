@@ -601,3 +601,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78dc24315fa8
+  - type: implements
+    from: SYM-plugins-effective-permissions-grant-singles
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:27:46.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd26a52ba567
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-grant-singles
+    to: TEST-plugins-deliveries
+    created_at: 2026-11-02T22:27:46.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d6676d639c0
+  - type: implements
+    from: SYM-ingest-conn-rpc-invalid-message-error-error
+    to: REQ-ingest-connector-contract-translation
+    created_at: 2026-11-03T01:06:08.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab7839a3e82d
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-invalid-message-error-error
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-03T01:06:08.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66015c8b94fc

@@ -237,13 +237,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-543393dc49ae
-  - type: implements
-    from: SYM-views-holding-key
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:03:26.753Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ff02a6846822
   - type: covered_by
     from: SYM-views-holding-key
     to: TEST-views-performance
@@ -622,3 +615,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f14d827af8b2
+  - type: constrains
+    from: REQ-valuation-terms-levels-record-instance
+    to: FACT-SUBJECT-6355D6EB525192A0
+    created_at: 2026-11-02T22:24:29.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56dec383750a
+  - type: requires_property
+    from: REQ-valuation-terms-levels-record-instance
+    to: FACT-PROP-93127D392FA0EFA6
+    created_at: 2026-11-02T22:24:29.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f90c39285dd
+  - type: implements
+    from: SYM-views-holding-key
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:07:36.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0e72b2ce4b0
+  - type: executable_for
+    from: SYM-ingest-app-test-logsafe-locked-buffer
+    to: TEST-ingest-app-logsafe
+    created_at: 2026-11-03T01:07:18.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be9659cb7002

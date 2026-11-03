@@ -60,6 +60,8 @@ flowchart LR
 | `setting-missing` | some account's tax wrapper can't have a liquidation value without the owner's marginal income tax rate (D-78) | `marginal-rate` | the owner sets it |
 | `transfer-broken` | a confirmed transfer's legs no longer match after a correction (D-131) | the pair | a correction makes them match, or the owner rejects the pair |
 
+Ingest raises one more kind itself, through its own port: `bond-terms-or-index-levels-undeclared`, for a connector instance that delivered bond terms or index levels its signed manifest doesn't declare or its grant doesn't approve, which were dropped (D-179). Its subject is the instance; it stays one item while it keeps happening and resolves on the instance's next delivery that drops nothing.
+
 `Items.Sweep` runs every check and reconciles its kind's items with what it found (`attention.Reconcile`), each kind in its own database transaction under an advisory lock, so a sweep, a push and an owner's action never interleave. One failing check doesn't stop the others. The core sweeps at start and then every minute, and publishes the outbox after each sweep ([attention.go](../../cmd/core/attention.go)).
 
 **The port for other checks.** A check that finds one condition at a time, rather than listing all of them, raises and clears items directly: `Items.Raise(ctx, attention.Condition{Kind, Subject, Detail})` and `Items.Clear(ctx, kind, subject)`. Both are idempotent and follow the same rules. A package declares the port where it consumes it:
@@ -94,6 +96,7 @@ type AttentionItems interface {
 
 ## Decisions
 
+- **GR-12**: its Connect services log a failure only through `kernel.LogSafe`: by the known errors in its chain, or else its innermost error's type, never its text, which may carry an amount, an ISIN or an account number; `TestFailuresLogNoValues` drives every sink with such failures against a deny-list. The core's attention sweep logs its failures the same way.
 - **D-130**: one append-only store of attention items with kind, subject, state and history; every check that needs the owner raises one; each change is published from the core's outbox.
 - **D-131**: a confirmed transfer whose legs no longer match after a correction stops counting and raises an item ([Ledger](ledger.md)).
 - **D-79, D-115**: the owner's actions go through one owner-only service on the plugin port.

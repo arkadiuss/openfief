@@ -254,12 +254,12 @@ func checkWritten(t *testing.T, m *ingest.Mapping, d *connectorv1.Delivery) {
 func TestFXRates(t *testing.T) {
 	t.Parallel()
 	rates := []valuation.FXRate{
-		{Currency: cur(t, "USD"), Date: date(t, "2025-01-02"), Rate: dec(t, "4.1219"), Source: "nbp-a"},
-		{Currency: cur(t, "HUF"), Date: date(t, "2025-01-02"), Rate: dec(t, "0.010350"), Source: "nbp-a"},
+		{Currency: cur(t, "USD"), Date: date(t, "2025-01-02"), Rate: dec(t, "4.1219"), Source: "nbp-a", Base: cur(t, "PLN")},
+		{Currency: cur(t, "HUF"), Date: date(t, "2025-01-02"), Rate: dec(t, "0.010350"), Source: "nbp-a", Base: cur(t, "PLN")},
 	}
 	want := []*connectorv1.FxRate{
-		{Currency: "USD", Date: "2025-01-02", Rate: "4.1219"},
-		{Currency: "HUF", Date: "2025-01-02", Rate: "0.01035"},
+		{Currency: "USD", Date: "2025-01-02", Rate: "4.1219", Base: "PLN"},
+		{Currency: "HUF", Date: "2025-01-02", Rate: "0.01035", Base: "PLN"},
 	}
 	if diff := cmp.Diff(want, delivery.FXRates(rates), protocmp.Transform()); diff != "" {
 		t.Errorf("FXRates (-want +got):\n%s", diff)

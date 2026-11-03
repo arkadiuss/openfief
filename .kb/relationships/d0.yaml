@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aac430f7c55a
+  - type: implements
+    from: SYM-ingest-app-connectors-store-terms
+    to: REQ-valuation-terms-levels-record-instance
+    created_at: 2026-11-02T22:26:47.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37844f48786f
+  - type: covered_by
+    from: SYM-ingest-app-connectors-store-terms
+    to: TEST-ingest-app-undeclared-deliveries
+    created_at: 2026-11-02T22:26:47.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-746a730467db

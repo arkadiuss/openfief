@@ -204,7 +204,7 @@ func byBrokerAccount(d *connectorv1.Delivery, m *ingest.Mapping) error {
 func FXRates(rates []valuation.FXRate) []*connectorv1.FxRate {
 	out := make([]*connectorv1.FxRate, 0, len(rates))
 	for _, r := range rates {
-		out = append(out, &connectorv1.FxRate{Currency: r.Currency.String(), Date: r.Date.String(), Rate: r.Rate.String()})
+		out = append(out, &connectorv1.FxRate{Currency: r.Currency.String(), Date: r.Date.String(), Rate: r.Rate.String(), Base: r.Base.String()})
 	}
 	return out
 }

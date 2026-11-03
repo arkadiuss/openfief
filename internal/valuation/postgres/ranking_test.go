@@ -125,7 +125,7 @@ func TestRatesAndReadingsOneSource(t *testing.T) {
 	saveSources(t, store)
 	usd := money(t, "1", "USD").Currency()
 	rate := func(source, on, value string) valuation.FXRate {
-		return valuation.FXRate{Currency: usd, Date: date(t, on), Rate: dec(t, value), Source: source}
+		return valuation.FXRate{Currency: usd, Base: money(t, "0", "PLN").Currency(), Date: date(t, on), Rate: dec(t, value), Source: source}
 	}
 	ecbOnly := rate("ecb-fx", "2026-03-03", "4.0200")
 	if err := store.SaveFXRates(ctx, []valuation.FXRate{rate("ecb-fx", "2026-03-02", "4.0100"), rate("nbp-fx", "2026-03-02", "4.0000"), ecbOnly}, nil); err != nil {

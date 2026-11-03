@@ -121,5 +121,7 @@ func subtract(p, q *Permissions) Permissions {
 		BrowserPaths:    missing(p.BrowserPaths, q.BrowserPaths),
 		ClusterServices: missing(p.ClusterServices, q.ClusterServices),
 		MarketData:      p.MarketData && !q.MarketData,
+		BondTerms:       p.BondTerms && !q.BondTerms,
+		IndexLevels:     p.IndexLevels && !q.IndexLevels,
 	}
 }

@@ -70,9 +70,8 @@ type dayTotal struct {
 // cash per date, in date order: one total per date that has either. A
 // holding valuation that lacks an input counts nowhere; one that lacks its
 // net or liquidation value leaves that total missing. Each value must be
-// in the reporting currency; stored valuations convert to PLN (D-20), so
-// only PLN reporting adds up, and any other is an error wrapping
-// ErrNotReportingCurrency.
+// in the reporting currency; a stored valuation names its currency (D-180),
+// and one in any other is an error wrapping ErrNotReportingCurrency.
 func TotalsByDate(vals []valuation.HoldingValuation, cash []DayCash, reporting kernel.Currency) ([]DateTotal, error) {
 	days := map[kernel.Date]*dayTotal{}
 	day := func(d kernel.Date) *dayTotal {
@@ -108,7 +107,7 @@ func TotalsByDate(vals []valuation.HoldingValuation, cash []DayCash, reporting k
 // addHolding adds a valued holding valuation.
 func (t *dayTotal) addHolding(v *valuation.HoldingValuation, reporting kernel.Currency) error {
 	t.originals = append(t.originals, v.Value)
-	return t.add(reporting, v.PLN, v.Net, v.Liquidation, !v.NetValued(), !v.LiquidationValued())
+	return t.add(reporting, v.Reporting, v.Net, v.Liquidation, !v.NetValued(), !v.LiquidationValued())
 }
 
 // addCash adds one account's cash in one currency.

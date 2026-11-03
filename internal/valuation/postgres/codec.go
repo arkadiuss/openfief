@@ -45,9 +45,12 @@ func parseOptionalDate(s string) (kernel.Date, error) {
 
 // valuationText is one stored valuation's columns as text; NULL is "".
 type valuationText struct {
-	isin, symbol, day, basis, quantity, value, currency, pln, priceDate, rateDate, missing string
-	net, liquidation, netMissing, liquidationMissing                                       string
-	taxCost, saleCost                                                                      string
+	isin, symbol, day, basis, quantity, value, currency, priceDate, rateDate, missing string
+	// reporting is the value in the reporting currency reportingCurrency
+	// names, which net, liquidation, taxCost and saleCost are in too (D-180).
+	reporting, reportingCurrency                     string
+	net, liquidation, netMissing, liquidationMissing string
+	taxCost, saleCost                                string
 }
 
 // decodeValuation decodes the columns of a stored valuation, all but its
@@ -75,17 +78,17 @@ func decodeValuation(t *valuationText) (valuation.HoldingValuation, error) {
 		return v, nil
 	}
 	value, err1 := parseMoney(t.value, t.currency)
-	pln, err2 := parseMoney(t.pln, "PLN")
-	net, netMissing, err3 := optionalValue(t.net, t.netMissing)
-	liquidation, liquidationMissing, err4 := optionalValue(t.liquidation, t.liquidationMissing)
+	reporting, err2 := parseMoney(t.reporting, t.reportingCurrency)
+	net, netMissing, err3 := optionalValue(t.net, t.netMissing, t.reportingCurrency)
+	liquidation, liquidationMissing, err4 := optionalValue(t.liquidation, t.liquidationMissing, t.reportingCurrency)
 	if err := errors.Join(err1, err2, err3, err4); err != nil {
 		return valuation.HoldingValuation{}, err
 	}
-	v.Value, v.PLN = value, pln
+	v.Value, v.Reporting = value, reporting
 	v.Net, v.NetMissing, v.Liquidation, v.LiquidationMissing = net, netMissing, liquidation, liquidationMissing
 	if t.taxCost != "" {
-		taxCost, err1 := parseMoney(t.taxCost, "PLN")
-		saleCost, err2 := parseMoney(t.saleCost, "PLN")
+		taxCost, err1 := parseMoney(t.taxCost, t.reportingCurrency)
+		saleCost, err2 := parseMoney(t.saleCost, t.reportingCurrency)
 		if err := errors.Join(err1, err2); err != nil {
 			return valuation.HoldingValuation{}, err
 		}
@@ -94,9 +97,9 @@ func decodeValuation(t *valuationText) (valuation.HoldingValuation, error) {
 	return v, nil
 }
 
-// optionalValue decodes a net or liquidation value in PLN, or, when it is
-// NULL, the reason it is missing.
-func optionalValue(amount, missing string) (kernel.Money, valuation.MissingReason, error) {
+// optionalValue decodes a net or liquidation value in the row's reporting
+// currency, or, when it is NULL, the reason it is missing.
+func optionalValue(amount, missing, currency string) (kernel.Money, valuation.MissingReason, error) {
 	if missing != "" {
 		reason, err := valuation.ParseMissingReason(missing)
 		if err != nil {
@@ -104,7 +107,7 @@ func optionalValue(amount, missing string) (kernel.Money, valuation.MissingReaso
 		}
 		return kernel.Money{}, reason, nil
 	}
-	m, err := parseMoney(amount, "PLN")
+	m, err := parseMoney(amount, currency)
 	if err != nil {
 		return kernel.Money{}, 0, err
 	}

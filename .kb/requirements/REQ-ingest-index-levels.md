@@ -1,6 +1,6 @@
 ---
 title: The core must translate a connector delivery's index levels into index levels keyed by the index name the connector sends, refuse one without a name, a date or a positive level, and store them with the connector instance as their source.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-51
 tags:
   - strict-modeling

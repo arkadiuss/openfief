@@ -42,7 +42,7 @@ func (brokerConnector) Sync(_ context.Context, req *connect.Request[connectorv1.
 			},
 		}},
 		BrokerAccounts: []*connectorv1.BrokerAccount{{Id: "U0000001"}, {Id: "U0000002"}},
-		FxRates:        []*connectorv1.FxRate{{Currency: "USD", Date: "2026-10-27", Rate: "4.0000"}},
+		FxRates:        []*connectorv1.FxRate{{Currency: "USD", Date: "2026-10-27", Rate: "4.0000", Base: "PLN"}},
 	}}), nil
 }
 

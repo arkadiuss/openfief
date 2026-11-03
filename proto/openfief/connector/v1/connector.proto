@@ -207,13 +207,17 @@ message Price {
   Money close = 3;
 }
 
-// FxRate is the value in PLN of one unit of a currency on a date. A source
-// that quotes per 100 units is normalized to one unit by the connector.
+// FxRate is the value in its base currency of one unit of a currency on a
+// date. A source that quotes per 100 units is normalized to one unit by the
+// connector.
 message FxRate {
   string currency = 1;
   string date = 2;
-  // PLN per one unit of currency, as a positive decimal string.
+  // Base units per one unit of currency, as a positive decimal string.
   string rate = 3;
+  // The currency the rate is quoted in, such as "PLN" for NBP's table A.
+  // Required: the core never assumes one (D-180).
+  string base = 4;
 }
 
 // Index is a published index that sets treasury bond interest.

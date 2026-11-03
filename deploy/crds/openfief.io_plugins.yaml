@@ -101,6 +101,11 @@ spec:
               manifest:
                 description: Manifest is what the plugin requests.
                 properties:
+                  bondTerms:
+                    description: |-
+                      BondTerms declares that a connector delivers treasury bond series
+                      terms. The PluginGrant approves it (D-179).
+                    type: boolean
                   browserPath:
                     description: |-
                       BrowserPath is the path prefix a view plugin serves to browsers: the
@@ -169,6 +174,22 @@ spec:
                       maxLength: 64
                       type: string
                     maxItems: 8
+                    type: array
+                    x-kubernetes-list-type: set
+                  indexLevels:
+                    description: |-
+                      IndexLevels declares that a connector delivers market index levels.
+                      The PluginGrant approves it (D-179).
+                    type: boolean
+                  institutions:
+                    description: |-
+                      Institutions are the institutions a connector books for, such as
+                      ibkr: the core refuses a delivery that names any other (D-182).
+                    items:
+                      maxLength: 63
+                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                      type: string
+                    maxItems: 16
                     type: array
                     x-kubernetes-list-type: set
                   marketData:
@@ -334,6 +355,11 @@ spec:
                   manifest:
                     description: Manifest is what the plugin requests.
                     properties:
+                      bondTerms:
+                        description: |-
+                          BondTerms declares that a connector delivers treasury bond series
+                          terms. The PluginGrant approves it (D-179).
+                        type: boolean
                       browserPath:
                         description: |-
                           BrowserPath is the path prefix a view plugin serves to browsers: the
@@ -404,6 +430,22 @@ spec:
                         maxItems: 8
                         type: array
                         x-kubernetes-list-type: set
+                      indexLevels:
+                        description: |-
+                          IndexLevels declares that a connector delivers market index levels.
+                          The PluginGrant approves it (D-179).
+                        type: boolean
+                      institutions:
+                        description: |-
+                          Institutions are the institutions a connector books for, such as
+                          ibkr: the core refuses a delivery that names any other (D-182).
+                        items:
+                          maxLength: 63
+                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                          type: string
+                        maxItems: 16
+                        type: array
+                        x-kubernetes-list-type: set
                       marketData:
                         description: |-
                           MarketData declares a market-data connector, which each sync tells
@@ -461,6 +503,11 @@ spec:
                   requests and the PluginGrant approves (D-16). Its egress hosts are the
                   plugin's egress allow-list. Absent when nothing runs.
                 properties:
+                  bondTerms:
+                    description: |-
+                      BondTerms lets a connector deliver treasury bond series terms, which
+                      the core stores only when this approves it (D-179).
+                    type: boolean
                   browserPaths:
                     description: |-
                       BrowserPaths lists path prefixes a view plugin serves to browsers
@@ -530,6 +577,11 @@ spec:
                     maxItems: 64
                     type: array
                     x-kubernetes-list-type: set
+                  indexLevels:
+                    description: |-
+                      IndexLevels lets a connector deliver market index levels, which the
+                      core stores only when this approves it (D-179).
+                    type: boolean
                   marketData:
                     description: |-
                       MarketData lets a market-data connector receive, on each sync, the
@@ -557,6 +609,11 @@ spec:
                   PendingApproval is what spec requests and the PluginGrant does not
                   approve. The owner approves it by adding it to the PluginGrant.
                 properties:
+                  bondTerms:
+                    description: |-
+                      BondTerms lets a connector deliver treasury bond series terms, which
+                      the core stores only when this approves it (D-179).
+                    type: boolean
                   browserPaths:
                     description: |-
                       BrowserPaths lists path prefixes a view plugin serves to browsers
@@ -626,6 +683,11 @@ spec:
                     maxItems: 64
                     type: array
                     x-kubernetes-list-type: set
+                  indexLevels:
+                    description: |-
+                      IndexLevels lets a connector deliver market index levels, which the
+                      core stores only when this approves it (D-179).
+                    type: boolean
                   marketData:
                     description: |-
                       MarketData lets a market-data connector receive, on each sync, the

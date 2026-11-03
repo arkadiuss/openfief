@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-335ddb59d1df
+  - type: validates
+    from: TEST-ingest-kube
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:24:46.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c4ae5b4a186
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-logsafe-checknovalues
+    to: TEST-portfolio-connectapi-logsafe
+    created_at: 2026-11-03T03:26:36.071Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27ffb53f973c

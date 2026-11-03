@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2d85491dae8
+  - type: validates
+    from: TEST-portfolio-app-models
+    to: REQ-views-unconvertible-reporting-currency-refused
+    created_at: 2026-11-02T23:54:43.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11240b1c14c5
+  - type: implements
+    from: SYM-views-plugin-of
+    to: REQ-views-plugin-institutions
+    created_at: 2026-11-02T22:26:00.082Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83a8c95c4e94

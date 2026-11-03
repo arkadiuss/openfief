@@ -482,3 +482,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22156309a56b
+  - type: implements
+    from: SYM-viewsv1-plugin-get-requested-bond-terms
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:26:23.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5694f9bb3ff
+  - type: covered_by
+    from: SYM-viewsv1-plugin-get-requested-bond-terms
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-11-02T22:26:23.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf66e4ef4ef9

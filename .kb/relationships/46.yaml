@@ -664,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a34f78c2d7c9
+  - type: implements
+    from: SYM-ingest-kube-deployed-declarations
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:27:13.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ad416015f29
+  - type: executable_for
+    from: SYM-ingest-test-decl-test-undeclared-deliveries
+    to: TEST-ingest-declarations
+    created_at: 2026-11-02T22:29:41.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f88916cb948
+  - type: implements
+    from: SYM-ingest-kube-deployed-declarations
+    to: REQ-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:25:12.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32dab02c97ec

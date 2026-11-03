@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d76a9931d69
+  - type: verified_by
+    from: SCEN-valuation-input-validation-named-base
+    to: TEST-valuation-app-plan
+    created_at: 2026-11-02T23:55:10.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94c01300ee62
+  - type: executable_for
+    from: SYM-core-test-count-reviews
+    to: TEST-core-auth
+    created_at: 2026-11-03T00:12:57.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82b44381ce35

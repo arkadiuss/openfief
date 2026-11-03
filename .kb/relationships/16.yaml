@@ -608,3 +608,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56e6448b1288
+  - type: verified_by
+    from: SCEN-ingest-delivery-declared-institution
+    to: TEST-ingest-app-connectors
+    created_at: 2026-11-02T22:19:43.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7db7719f6a78
+  - type: verified_by
+    from: SCEN-ingest-delivery-declared-institution
+    to: TEST-ingest-declarations
+    created_at: 2026-11-02T22:19:43.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-783a1d7d5403
+  - type: verified_by
+    from: SCEN-ingest-delivery-declared-institution
+    to: TEST-ingest-kube
+    created_at: 2026-11-02T22:19:43.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66e6d0ee37c6
+  - type: verified_by
+    from: SCEN-ingest-delivery-declared-institution
+    to: TEST-plugins-institutions
+    created_at: 2026-11-02T22:19:43.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a8d7329051
+  - type: verified_by
+    from: SCEN-ingest-delivery-declared-institution
+    to: TEST-plugins-cli-render
+    created_at: 2026-11-02T22:19:43.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1c17503bda5
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:29:26.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faa6e0fe3efb
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: TEST-identity-connectapi-logsafe
+    created_at: 2026-11-03T03:29:26.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fad9b1ddc9c

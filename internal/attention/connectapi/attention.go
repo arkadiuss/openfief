@@ -20,6 +20,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/attention"
 	"github.com/arkadiuss/openfief/internal/attention/app"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	attentionv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/attention/v1/attentionv1connect"
 )
@@ -76,6 +77,6 @@ func (s *attentionService) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, attention.ErrInvalidTransition), errors.Is(err, attention.ErrNotOwnerResolvable):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "attention call failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "attention call failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }

@@ -1,6 +1,6 @@
 ---
 title: The read API must return an account's stored valuations dated in an inclusive date range, each with its basis, source, original-currency value and PLN value, with totals per date, and the whole portfolio's totals per date summed over every account.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-36
 tags:
   - strict-modeling

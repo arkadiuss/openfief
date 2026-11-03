@@ -874,3 +874,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95dbd5a5d7ea
+  - type: executable_for
+    from: SYM-attention-connectapi-test-logsafe-checknovalues
+    to: TEST-attention-connectapi-logsafe
+    created_at: 2026-11-03T03:26:01.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80921175c71b
+  - type: implements
+    from: SYM-ledger-connectapi-transfer-service-fail
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:28:29.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5ebea030e8c
+  - type: covered_by
+    from: SYM-ledger-connectapi-transfer-service-fail
+    to: TEST-ledger-connectapi-logsafe
+    created_at: 2026-11-03T03:28:29.575Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1309f5d222e0

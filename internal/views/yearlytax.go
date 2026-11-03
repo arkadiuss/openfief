@@ -11,7 +11,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
-// ErrTaxConversion reports an amount a yearly tax needs in PLN with no FX
+// ErrTaxConversion reports an amount a yearly tax needs in the pack's
+// currency with no FX
 // rate on or before the date the pack's tax rules take.
 var ErrTaxConversion = errors.New("no FX rate for the yearly tax")
 
@@ -31,7 +32,7 @@ type TaxYearAccount struct {
 }
 
 // TaxDays returns a's days for pack's yearly tax, every amount converted to
-// PLN at the latest FX rate on or before the date the pack takes
+// the pack's reporting currency at the latest FX rate on or before the date the pack takes
 // (Pack.TaxRateDate: for the Polish pack, the NBP rate of the last business
 // day before), rounded with valuation.ValueRounding, and the instruments
 // counted in the class pack gives them without knowing it because the
@@ -65,7 +66,7 @@ func (a *TaxYearAccount) taxDay(pack jurisdiction.Pack, day kernel.Date, holdsAc
 	cutoff := pack.TaxRateDate(day)
 	sums := map[jurisdiction.ExemptionClass]kernel.Decimal{}
 	for _, held := range a.assetsOn(day, holdsAccrued) {
-		pln, err := a.toPLN(held.amount, cutoff)
+		pln, err := a.convert(held.amount, pack.ReportingCurrency(), cutoff)
 		if err != nil {
 			return jurisdiction.TaxDay{}, err
 		}
@@ -75,10 +76,10 @@ func (a *TaxYearAccount) taxDay(pack jurisdiction.Pack, day kernel.Date, holdsAc
 	out := jurisdiction.TaxDay{Date: day}
 	for _, class := range pack.ExemptionClasses(a.Wrapper) {
 		if s, ok := sums[class]; ok {
-			out.Values = append(out.Values, jurisdiction.ClassValue{Class: class, Value: kernel.NewMoney(s, valuation.PLN())})
+			out.Values = append(out.Values, jurisdiction.ClassValue{Class: class, Value: kernel.NewMoney(s, pack.ReportingCurrency())})
 		}
 	}
-	inOut, err := a.payments(day, cutoff)
+	inOut, err := a.payments(day, cutoff, pack.ReportingCurrency())
 	out.In, out.Out = inOut[0], inOut[1]
 	return out, err
 }
@@ -128,16 +129,16 @@ func (a *TaxYearAccount) classOf(pack jurisdiction.Pack, asset *jurisdiction.Ass
 	return class
 }
 
-// payments returns a's deposits and withdrawals on day in PLN, in that
-// order, both not negative.
-func (a *TaxYearAccount) payments(day, cutoff kernel.Date) ([2]kernel.Money, error) {
+// payments returns a's deposits and withdrawals on day in currency in, in
+// that order, both not negative.
+func (a *TaxYearAccount) payments(day, cutoff kernel.Date, in kernel.Currency) ([2]kernel.Money, error) {
 	paid, withdrawn := kernel.Decimal{}, kernel.Decimal{}
 	for i := range a.Flows {
 		f := &a.Flows[i]
 		if !f.Date.Equal(day) || f.Seeding {
 			continue
 		}
-		pln, err := a.toPLN(f.Amount, cutoff)
+		pln, err := a.convert(f.Amount, in, cutoff)
 		if err != nil {
 			return [2]kernel.Money{}, err
 		}
@@ -147,12 +148,13 @@ func (a *TaxYearAccount) payments(day, cutoff kernel.Date) ([2]kernel.Money, err
 			withdrawn = withdrawn.Sub(pln.Amount())
 		}
 	}
-	return [2]kernel.Money{kernel.NewMoney(paid, valuation.PLN()), kernel.NewMoney(withdrawn, valuation.PLN())}, nil
+	return [2]kernel.Money{kernel.NewMoney(paid, in), kernel.NewMoney(withdrawn, in)}, nil
 }
 
-// toPLN converts m at the latest rate on or before cutoff.
-func (a *TaxYearAccount) toPLN(m kernel.Money, cutoff kernel.Date) (kernel.Money, error) {
-	pln, err := valuation.ConvertToPLN(m, a.Rates, cutoff, valuation.ValueRounding)
+// convert converts m into currency to at the latest rate on or before
+// cutoff.
+func (a *TaxYearAccount) convert(m kernel.Money, to kernel.Currency, cutoff kernel.Date) (kernel.Money, error) {
+	pln, err := valuation.ConvertAt(m, to, a.Rates, cutoff, valuation.ValueRounding)
 	if errors.Is(err, valuation.ErrNoRate) {
 		return kernel.Money{}, fmt.Errorf("%w: %s of %s on or before %s", ErrTaxConversion, m.Currency(), a.Account, cutoff)
 	}

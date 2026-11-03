@@ -218,13 +218,6 @@ relationships:
     id: rel-83f54854bd81
   - type: implements
     from: SYM-views-day-builder-day
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:03:41.033Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-43484e73dcac
-  - type: implements
-    from: SYM-views-day-builder-day
     to: REQ-views-performance-gaps
     created_at: 2026-10-28T21:03:41.064Z
     created_by: kibi/upsert
@@ -713,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51dcea362816
+  - type: implements
+    from: SYM-views-day-builder-day
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:06:55.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d26292a2217e

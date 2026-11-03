@@ -123,8 +123,8 @@ func (s *Store) FXRates(ctx context.Context, currency kernel.Currency, through k
 		return nil, err
 	}
 	rows, err := s.pool.Query(ctx, `
-		SELECT currency, date::text, rate::text, source FROM valuation.fx_rates
-		WHERE currency = $1 AND date <= $2 ORDER BY date, source`, currency.String(), through.String())
+		SELECT currency, base, date::text, rate::text, source FROM valuation.fx_rates
+		WHERE currency = $1 AND date <= $2 ORDER BY date, base, source`, currency.String(), through.String())
 	if err != nil {
 		return nil, fmt.Errorf("loading FX rates of %s: %w", currency, err)
 	}
@@ -135,19 +135,20 @@ func (s *Store) FXRates(ctx context.Context, currency kernel.Currency, through k
 	return valuation.FXRatesBySource(out, src.Source).Own, nil
 }
 
-// scanRate reads one FX rate row.
+// scanRate reads one FX rate row, with the base it names (D-180).
 func scanRate(row pgx.CollectableRow) (valuation.FXRate, error) {
-	var currency, day, rate, source string
-	if err := row.Scan(&currency, &day, &rate, &source); err != nil {
+	var currency, base, day, rate, source string
+	if err := row.Scan(&currency, &base, &day, &rate, &source); err != nil {
 		return valuation.FXRate{}, fmt.Errorf("reading an FX rate: %w", err)
 	}
 	c, err1 := kernel.ParseCurrency(currency)
+	b, err4 := kernel.ParseCurrency(base)
 	d, err2 := kernel.ParseDate(day)
 	r, err3 := kernel.ParseDecimal(rate)
-	if err := errors.Join(err1, err2, err3); err != nil {
+	if err := errors.Join(err1, err2, err3, err4); err != nil {
 		return valuation.FXRate{}, fmt.Errorf("%w: FX rate: %w", ErrCorrupt, err)
 	}
-	return valuation.FXRate{Currency: c, Date: d, Rate: r, Source: source}, nil
+	return valuation.FXRate{Currency: c, Base: b, Date: d, Rate: r, Source: source}, nil
 }
 
 // IndexReadings returns the readings of each index kind from its one
@@ -211,7 +212,7 @@ func (s *Store) BondTerms(ctx context.Context, isin ledger.ISIN) (pl.Terms, bool
 	sr, err1 := pl.ParseSeries(series)
 	f, err2 := kernel.ParseDecimal(first)
 	m, err3 := kernel.ParseDecimal(margin)
-	b, err4 := parseMoney(fee, "PLN")
+	b, err4 := parseMoney(fee, pl.Nominal().Currency().String())
 	if err := errors.Join(err1, err2, err3, err4); err != nil {
 		return pl.Terms{}, false, fmt.Errorf("%w: bond terms of %s: %w", ErrCorrupt, isin, err)
 	}
@@ -239,12 +240,12 @@ func (s *Store) ValuedThrough(ctx context.Context, account ledger.AccountID) (ke
 // insertValuation stores one row of valuation.holding_valuations.
 const insertValuation = `
 INSERT INTO valuation.holding_valuations
-    (account_id, isin, symbol, date, basis, quantity, value, value_currency, pln, source, price_date, rate_date, missing, detail,
-     net, liquidation, net_missing, liquidation_missing, tax_cost, sale_cost)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+    (account_id, isin, symbol, date, basis, quantity, value, value_currency, reporting, reporting_currency, source, price_date,
+     rate_date, missing, detail, net, liquidation, net_missing, liquidation_missing, tax_cost, sale_cost)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
 ON CONFLICT (account_id, isin, symbol, date, basis) DO UPDATE SET
     quantity = EXCLUDED.quantity, value = EXCLUDED.value, value_currency = EXCLUDED.value_currency,
-    pln = EXCLUDED.pln, source = EXCLUDED.source, price_date = EXCLUDED.price_date,
+    reporting = EXCLUDED.reporting, reporting_currency = EXCLUDED.reporting_currency, source = EXCLUDED.source, price_date = EXCLUDED.price_date,
     rate_date = EXCLUDED.rate_date, missing = EXCLUDED.missing, detail = EXCLUDED.detail,
     net = EXCLUDED.net, liquidation = EXCLUDED.liquidation, net_missing = EXCLUDED.net_missing,
     liquidation_missing = EXCLUDED.liquidation_missing, tax_cost = EXCLUDED.tax_cost, sale_cost = EXCLUDED.sale_cost`

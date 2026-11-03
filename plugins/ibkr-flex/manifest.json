@@ -1,5 +1,6 @@
 {
   "capabilities": ["connector"],
+  "institutions": ["ibkr"],
   "egress": ["ndcdyn.interactivebrokers.com"],
   "secrets": [{"role": "flex-token", "mountPath": "/etc/openfief/ibkr-flex"}],
   "crossCheckPrices": true,

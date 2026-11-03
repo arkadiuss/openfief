@@ -1,0 +1,52 @@
+# The database's NetworkPolicy (D-184): the CloudNativePG cluster openfief-db (D-14) admits only its callers. The core
+# on PostgreSQL's port; the cluster's own instances on PostgreSQL's port and the instance manager's 8000, for
+# replication when an owner runs more than one; and CloudNativePG's operator on 8000, the instance manager's status
+# and control port it polls. Nothing else in the cluster, plugins included, can open a connection to the database.
+# Probes come from the node, so they need no rule. Egress is not restricted here: backups go wherever the owner's
+# Cluster sends them.
+#
+# The operator rule assumes CloudNativePG's own release manifest, which runs the operator in the namespace
+# cnpg-system with the label app.kubernetes.io/name: cloudnative-pg. An owner who installed it elsewhere, such as
+# with Helm into another namespace, patches namespaceSelector with an overlay; without it the operator can't reach the
+# instance manager and reports the cluster unhealthy. Another job that must reach the database, such as the demo's
+# seeding job (deploy/demo-data), brings its own policy that admits it.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-db
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-db
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      cnpg.io/cluster: openfief-db
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: openfief-core
+      ports:
+        - protocol: TCP
+          port: 5432
+    - from:
+        - podSelector:
+            matchLabels:
+              cnpg.io/cluster: openfief-db
+      ports:
+        - protocol: TCP
+          port: 5432
+        - protocol: TCP
+          port: 8000
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: cnpg-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: cloudnative-pg
+      ports:
+        - protocol: TCP
+          port: 8000

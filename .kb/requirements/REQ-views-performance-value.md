@@ -1,6 +1,6 @@
 ---
 title: Each day's portfolio value in the performance series must be its holdings at their stored valuations plus every account's cash converted to PLN at the latest FX rate on or before the day and rounded half up to grosze, plus money in transit between its accounts, with each opening lot flowing in at its share of its holding's valuation.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-61
 tags:
   - strict-modeling

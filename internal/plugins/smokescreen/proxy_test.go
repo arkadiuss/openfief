@@ -13,6 +13,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"net/netip"
 	"net/url"
 	"os"
 	"strconv"
@@ -138,6 +139,13 @@ func sampleList(port uint16) plugins.EgressAllowList {
 // noSource, the egress use case has no AllowListSource at all.
 func startProxy(t *testing.T, noSource bool) *proxyFixture {
 	t.Helper()
+	return startProxyDenying(t, noSource, nil)
+}
+
+// startProxyDenying is startProxy with the extra ranges deny refused
+// (D-184).
+func startProxyDenying(t *testing.T, noSource bool, deny []netip.Prefix) *proxyFixture {
+	t.Helper()
 	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set(reachedHeader, "reached")
 		w.WriteHeader(http.StatusNoContent)
@@ -156,7 +164,7 @@ func startProxy(t *testing.T, noSource bool) *proxyFixture {
 	if noSource {
 		egressCase = app.NewEgress(fakeReviewer{}, nil)
 	}
-	r := serve(t, egressCase, smokescreen.Options{
+	r := serve(t, egressCase, &smokescreen.Options{
 		Resolver: fakeResolver{
 			"example.com":          {publicAddr},
 			"other.example.com":    {publicAddr},
@@ -167,6 +175,7 @@ func startProxy(t *testing.T, noSource bool) *proxyFixture {
 			f.dials.add(address)
 			return (&net.Dialer{}).DialContext(ctx, network, server.Listener.Addr().String())
 		},
+		Deny:         deny,
 		Healthcheck:  http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusTeapot) }),
 		DrainTimeout: 100 * time.Millisecond,
 	})
@@ -183,7 +192,7 @@ type running struct {
 
 // serve builds a proxy on a fresh local listener and serves it until the
 // test ends.
-func serve(t *testing.T, e *app.Egress, opts smokescreen.Options) running {
+func serve(t *testing.T, e *app.Egress, opts *smokescreen.Options) running {
 	t.Helper()
 	logger := logrus.New()
 	logger.SetOutput(io.Discard)
@@ -415,6 +424,21 @@ func TestProxyDialsOnlyCheckedAddresses(t *testing.T) {
 	}
 }
 
+// TestProxyDeniesExtraRanges checks that the proxy refuses a listed host
+// that resolves to the node's own address, given as an extra deny range,
+// as it refuses a private one: 502 and nothing dialed (D-184).
+func TestProxyDeniesExtraRanges(t *testing.T) {
+	t.Parallel()
+	f := startProxyDenying(t, false, []netip.Prefix{netip.MustParsePrefix(publicAddr + "/32")})
+	got := f.connect(t, http.MethodConnect, "example.com", basic("plugin", sampleToken), nil)
+	if got.status != http.StatusBadGateway {
+		t.Errorf("CONNECT example.com resolving to the node = %+v, want 502", got)
+	}
+	if dials := f.dials.all(); len(dials) != 0 {
+		t.Errorf("dialed %q, want nothing", dials)
+	}
+}
+
 // TestProxyWithoutAllowListSource checks that the proxy never falls back to
 // Smokescreen's allow-all: with no allow-lists at all, every destination is
 // refused (D-63).
@@ -513,7 +537,7 @@ func TestNewRefusesProxyEnvironment(t *testing.T) {
 	t.Setenv("HTTPS_PROXY", "http://proxy.example.net:3128")
 	listener := listen(t)
 	defer closeOrFail(t, listener)
-	_, err := smokescreen.New(app.NewEgress(fakeReviewer{}, nil), smokescreen.Options{Listener: listener})
+	_, err := smokescreen.New(app.NewEgress(fakeReviewer{}, nil), &smokescreen.Options{Listener: listener})
 	if !errors.Is(err, smokescreen.ErrProxyEnvironment) {
 		t.Errorf("New() error = %v, want %v", err, smokescreen.ErrProxyEnvironment)
 	}
@@ -535,7 +559,7 @@ func TestNewNeedsListenerAndEgress(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if _, err := smokescreen.New(tt.egress, tt.opts); !errors.Is(err, tt.wantErr) {
+			if _, err := smokescreen.New(tt.egress, &tt.opts); !errors.Is(err, tt.wantErr) {
 				t.Errorf("New() error = %v, want %v", err, tt.wantErr)
 			}
 		})

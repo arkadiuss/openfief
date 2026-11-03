@@ -720,3 +720,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3abb938d9ebd
+  - type: implements
+    from: SYM-valuation-postgres-optional-value
+    to: REQ-valuation-stored-valuations-name-currency
+    created_at: 2026-11-02T23:58:55.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6150bcff870
+  - type: implements
+    from: SYM-valuation-postgres-optional-value
+    to: REQ-valuation-stored-currency-never-assumed-pln
+    created_at: 2026-11-02T23:58:55.542Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f13f6a8abcb
+  - type: covered_by
+    from: SYM-valuation-postgres-optional-value
+    to: TEST-valuation-postgres-named-currencies
+    created_at: 2026-11-02T23:58:55.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-876fa78f748e

@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
 	"errors"
 	"net/http"
 	"net/http/httptest"
@@ -28,8 +29,10 @@ import (
 )
 
 // uiCaller is the synthetic projected token of the tests' view plugin ui,
-// which viewCluster's TokenReview accepts.
-const uiCaller = "synthetic-ui-caller"
+// which viewCluster's TokenReview accepts. It is shaped like a JWT, as a
+// projected token is, or the core wouldn't ask TokenReview (D-184); its
+// claims say only "synthetic-ui-caller" and its signature is no signature.
+const uiCaller = "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzeW50aGV0aWMtdWktY2FsbGVyIn0.c3ludGhldGlj"
 
 // viewCluster is a fake cluster with the view plugin ui installed and
 // ready: the TokenReview API accepts uiCaller as ui's ServiceAccount, so
@@ -283,8 +286,8 @@ func TestKubeCallers(t *testing.T) {
 		plugin("ui", "view"), plugin("ibkr-main", "connector"))
 	client := fake.NewClientset()
 	users := map[string]string{
-		"ui-token": "system:serviceaccount:openfief:plugin-ui", "ibkr-token": "system:serviceaccount:openfief:plugin-ibkr-main",
-		"ghost-token": "system:serviceaccount:openfief:plugin-ghost", "core-token": "system:serviceaccount:openfief:openfief-core",
+		jwtFor("ui"): "system:serviceaccount:openfief:plugin-ui", jwtFor("ibkr"): "system:serviceaccount:openfief:plugin-ibkr-main",
+		jwtFor("ghost"): "system:serviceaccount:openfief:plugin-ghost", jwtFor("core"): "system:serviceaccount:openfief:openfief-core",
 	}
 	client.PrependReactor("create", "tokenreviews", reviewTokens(users))
 	cl := &cluster{client: client, dynamic: dyn, namespace: "openfief"}
@@ -296,16 +299,43 @@ func TestKubeCallers(t *testing.T) {
 		token, want string
 		refused     bool
 	}{
-		{token: "ui-token", want: "ui"},
-		{token: "ibkr-token", refused: true},   // a connector, not a view
-		{token: "core-token", refused: true},   // not a plugin
-		{token: "stolen-token", refused: true}, // not authenticated
-		{token: "ghost-token", refused: true},  // no Plugin resource
+		{token: jwtFor("ui"), want: "ui"},
+		{token: jwtFor("ibkr"), refused: true},     // a connector, not a view
+		{token: jwtFor("core"), refused: true},     // not a plugin
+		{token: jwtFor("stolen"), refused: true},   // not authenticated
+		{token: jwtFor("ghost"), refused: true},    // no Plugin resource
+		{token: "ofsess_synthetic", refused: true}, // not a JWT: never reviewed (D-184)
 	}
 	for _, tt := range tests {
+		reviews := countReviews(client)
 		got, err := callers.VerifyCaller(t.Context(), tt.token)
 		if tt.refused != errors.Is(err, identityconnect.ErrCallerRefused) || got != tt.want {
 			t.Errorf("VerifyCaller(%s) = %q, %v; want %q, refused %v", tt.token, got, err, tt.want, tt.refused)
 		}
+		// A refusal is remembered: asking again makes no new review (D-184).
+		if _, err := callers.VerifyCaller(t.Context(), tt.token); tt.refused && countReviews(client) > reviews+1 {
+			t.Errorf("VerifyCaller(%s) twice: %d reviews, want at most one (%v)", tt.token, countReviews(client)-reviews, err)
+		}
 	}
+	if n := countReviews(client); n != 5 {
+		t.Errorf("%d TokenReviews in all, want 5: one per JWT-shaped token, none for the session token", n)
+	}
+}
+
+// jwtFor is a synthetic, unsigned token shaped like a projected
+// ServiceAccount token, whose subject is name.
+func jwtFor(name string) string {
+	enc := base64.RawURLEncoding.EncodeToString
+	return enc([]byte(`{"alg":"RS256"}`)) + "." + enc([]byte(`{"sub":"`+name+`"}`)) + ".c3ludGhldGlj"
+}
+
+// countReviews counts the TokenReviews client was asked to create.
+func countReviews(client *fake.Clientset) int {
+	n := 0
+	for _, a := range client.Actions() {
+		if a.GetVerb() == "create" && a.GetResource().Resource == "tokenreviews" {
+			n++
+		}
+	}
+	return n
 }

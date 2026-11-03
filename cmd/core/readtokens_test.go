@@ -68,6 +68,8 @@ func TestReadTokens(t *testing.T) {
 		{name: "a view plugin's token", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}, plugins: fakeViewCallers{view: "view"}}, token: "view", want: identity.Caller{Holder: identity.HolderViewPlugin, ID: "ghostfolio"}},
 		{name: "neither", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}, plugins: fakeViewCallers{view: "view"}}, token: "other", wantErr: viewsapp.ErrInvalidToken},
 		{name: "no plugin callers", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}}, token: "view", wantErr: viewsapp.ErrInvalidToken},
+		{name: "the browser port's owner token", tokens: browserReadTokens(fakeOwnerTokens{owner: "own"}), token: "own", want: identity.Caller{Holder: identity.HolderScriptToken, ID: "t1"}},
+		{name: "a view plugin's token on the browser port (D-184)", tokens: browserReadTokens(fakeOwnerTokens{owner: "own"}), token: "view", wantErr: viewsapp.ErrInvalidToken},
 		{name: "the owner's store is down", tokens: readTokens{auth: fakeOwnerTokens{down: true}, plugins: fakeViewCallers{view: "view"}}, token: "view", wantOther: true},
 		{name: "the plugin check fails", tokens: readTokens{auth: fakeOwnerTokens{owner: "own"}, plugins: fakeViewCallers{down: true}}, token: "view", wantOther: true},
 	}

@@ -97,13 +97,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5c25e2cc968
-  - type: implements
-    from: SYM-valuation-app-input-recorder-record-index-readings
-    to: REQ-valuation-input-validation
-    created_at: 2026-10-28T07:36:03.796Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3489372958cd
   - type: covered_by
     from: SYM-valuation-app-input-recorder-record-index-readings
     to: TEST-valuation-app-plan
@@ -685,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80bfffff9318
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-index-readings
+    to: REQ-valuation-input-validation-named-base
+    created_at: 2026-11-03T00:01:58.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b4a5d9ae6ab
+  - type: implements
+    from: SYM-plugins-validate-unreserved
+    to: REQ-plugins-secrets-never-platform
+    created_at: 2026-11-02T22:20:33.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf42f34195d2
+  - type: covered_by
+    from: SYM-plugins-validate-unreserved
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-11-02T22:20:33.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e172d9581ad
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-forbidden-ranges
+    to: REQ-plugins-egress-denies-node-and-cluster-ranges
+    created_at: 2026-11-03T00:14:28.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f963371b0bc4

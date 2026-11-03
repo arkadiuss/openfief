@@ -27,7 +27,7 @@ func ikzeRow(t *testing.T) valuation.HoldingValuation {
 	t.Helper()
 	return valuation.HoldingValuation{
 		Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: date(t, "2026-03-02"), Basis: valuation.Market,
-		Value: money(t, "250", "USD"), PLN: money(t, "1000", "PLN"), Net: money(t, "900", "PLN"),
+		Value: money(t, "250", "USD"), Reporting: money(t, "1000", "PLN"), Net: money(t, "900", "PLN"),
 		LiquidationMissing: valuation.MissingMarginalRate,
 	}
 }

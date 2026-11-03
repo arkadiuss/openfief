@@ -419,3 +419,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70a13fca30d6
+  - type: implements
+    from: SYM-ingest-conn-rpc-fx-rate-from
+    to: REQ-valuation-stored-rates-name-base
+    created_at: 2026-11-02T23:59:09.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f1125a705ab

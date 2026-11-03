@@ -930,3 +930,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5f99f5cf4fc
+  - type: implements
+    from: SYM-valuation-convert-at
+    to: REQ-valuation-fx-rate-lookup
+    created_at: 2026-11-02T23:57:39.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19ae61842e66
+  - type: implements
+    from: SYM-valuation-convert-at
+    to: REQ-valuation-conversion-named-currency
+    created_at: 2026-11-02T23:57:39.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e59f6ed6b889
+  - type: covered_by
+    from: SYM-valuation-convert-at
+    to: TEST-valuation-fx
+    created_at: 2026-11-02T23:57:39.632Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd606ae7747d

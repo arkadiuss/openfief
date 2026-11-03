@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4045a976c5db
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service-fail
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:28:57.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75df22379635
+  - type: covered_by
+    from: SYM-valuation-connectapi-settings-service-fail
+    to: TEST-valuation-connectapi-logsafe
+    created_at: 2026-11-03T03:28:57.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97edbde29b6b

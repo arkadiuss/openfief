@@ -123,7 +123,7 @@ func TestValueMarketHolding(t *testing.T) {
 			name: "Sunday uses Friday's close and rate: 12.5 x 101.37 USD x 4.0123 = 5084.0856375",
 			h:    holding(t, etf, "2026-03-08", "12.5"),
 			want: valuation.HoldingValuation{
-				Value: money(t, "1267.125", "USD"), PLN: money(t, "5084.09", "PLN"), Source: "vendor",
+				Value: money(t, "1267.125", "USD"), Reporting: money(t, "5084.09", "PLN"), Source: "vendor",
 				PriceDate: date(t, "2026-03-06"), RateDate: date(t, "2026-03-06"),
 				Net: money(t, "5030.11", "PLN"), Liquidation: money(t, "5030.11", "PLN"),
 				TaxCost: money(t, "4800.00", "PLN"), SaleCost: money(t, "0", "PLN"),
@@ -134,7 +134,7 @@ func TestValueMarketHolding(t *testing.T) {
 			name: "a PLN price needs no rate",
 			h:    holding(t, plnETF, "2026-03-06", "1"),
 			want: valuation.HoldingValuation{
-				Value: money(t, "10.005", "PLN"), PLN: money(t, "10.01", "PLN"), Source: "vendor", PriceDate: date(t, "2026-03-06"),
+				Value: money(t, "10.005", "PLN"), Reporting: money(t, "10.01", "PLN"), Source: "vendor", PriceDate: date(t, "2026-03-06"),
 				Net: money(t, "9.82", "PLN"), Liquidation: money(t, "9.82", "PLN"),
 				TaxCost: money(t, "9.00", "PLN"), SaleCost: money(t, "0", "PLN"),
 			},
@@ -241,7 +241,7 @@ func TestValueMarketHoldingValues(t *testing.T) {
 			if err != nil {
 				t.Fatalf("ValueMarketHolding: %v", err)
 			}
-			want := []any{got.PLN.String(), tt.netMissing, tt.liqMissing, got.NetValued(), got.LiquidationValued()}
+			want := []any{got.Reporting.String(), tt.netMissing, tt.liqMissing, got.NetValued(), got.LiquidationValued()}
 			gotParts := []any{"5084.09 PLN", got.NetMissing, got.LiquidationMissing, tt.netMissing == 0, tt.liqMissing == 0}
 			if diff := cmp.Diff(want, gotParts); diff != "" {
 				t.Errorf("gross and what is missing (-want +got):\n%s", diff)
@@ -327,7 +327,7 @@ func TestValueBondHolding(t *testing.T) {
 			}
 			if tt.idx != nil {
 				v := lotSum(t, tt.idx, tt.on, tt.wrapper)
-				want.Value, want.PLN, want.Net, want.Liquidation = v.Gross, v.Gross, v.Net, v.Liquidation
+				want.Value, want.Reporting, want.Net, want.Liquidation = v.Gross, v.Gross, v.Net, v.Liquidation
 				if v.LiquidationUnknown {
 					want.Liquidation, want.LiquidationMissing = kernel.Money{}, valuation.MissingMarginalRate
 				}

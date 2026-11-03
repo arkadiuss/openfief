@@ -5781,8 +5781,24 @@ type Plugin struct {
 	// "<subject> (issuer <issuer>)", a key as "public key sha256:<hex>".
 	// Empty otherwise.
 	UntrustedSigners []string `protobuf:"bytes,13,rep,name=untrusted_signers,json=untrustedSigners,proto3" json:"untrusted_signers,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// The institutions its signed manifest declares it books for, such as
+	// "ibkr": the core refuses a delivery of a connector that names any
+	// other (D-182). Empty for a view.
+	Institutions []string `protobuf:"bytes,14,rep,name=institutions,proto3" json:"institutions,omitempty"`
+	// Whether the core stores the treasury bond series terms it delivers: its
+	// signed manifest declares them and its PluginGrant approves that
+	// (D-179).
+	BondTerms bool `protobuf:"varint,15,opt,name=bond_terms,json=bondTerms,proto3" json:"bond_terms,omitempty"`
+	// Whether its signed manifest declares bond series terms, approved or not.
+	RequestedBondTerms bool `protobuf:"varint,16,opt,name=requested_bond_terms,json=requestedBondTerms,proto3" json:"requested_bond_terms,omitempty"`
+	// Whether the core stores the market index levels it delivers: its signed
+	// manifest declares them and its PluginGrant approves that (D-179).
+	IndexLevels bool `protobuf:"varint,17,opt,name=index_levels,json=indexLevels,proto3" json:"index_levels,omitempty"`
+	// Whether its signed manifest declares market index levels, approved or
+	// not.
+	RequestedIndexLevels bool `protobuf:"varint,18,opt,name=requested_index_levels,json=requestedIndexLevels,proto3" json:"requested_index_levels,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *Plugin) Reset() {
@@ -5904,6 +5920,41 @@ func (x *Plugin) GetUntrustedSigners() []string {
 		return x.UntrustedSigners
 	}
 	return nil
+}
+
+func (x *Plugin) GetInstitutions() []string {
+	if x != nil {
+		return x.Institutions
+	}
+	return nil
+}
+
+func (x *Plugin) GetBondTerms() bool {
+	if x != nil {
+		return x.BondTerms
+	}
+	return false
+}
+
+func (x *Plugin) GetRequestedBondTerms() bool {
+	if x != nil {
+		return x.RequestedBondTerms
+	}
+	return false
+}
+
+func (x *Plugin) GetIndexLevels() bool {
+	if x != nil {
+		return x.IndexLevels
+	}
+	return false
+}
+
+func (x *Plugin) GetRequestedIndexLevels() bool {
+	if x != nil {
+		return x.RequestedIndexLevels
+	}
+	return false
 }
 
 // AttentionItemChange is one entry of an attention item's history.
@@ -6553,7 +6604,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x12reporting_currency\x18\t \x01(\tR\x11reportingCurrency\"\x14\n" +
 	"\x12ListPluginsRequest\"J\n" +
 	"\x13ListPluginsResponse\x123\n" +
-	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xda\x03\n" +
+	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xa8\x05\n" +
 	"\x06Plugin\x12\x1a\n" +
 	"\binstance\x18\x01 \x01(\tR\binstance\x12\x14\n" +
 	"\x05image\x18\x02 \x01(\tR\x05image\x12!\n" +
@@ -6569,7 +6620,13 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\vmarket_data\x18\v \x01(\bR\n" +
 	"marketData\x122\n" +
 	"\x15requested_market_data\x18\f \x01(\bR\x13requestedMarketData\x12+\n" +
-	"\x11untrusted_signers\x18\r \x03(\tR\x10untrustedSigners\"\xcc\x01\n" +
+	"\x11untrusted_signers\x18\r \x03(\tR\x10untrustedSigners\x12\"\n" +
+	"\finstitutions\x18\x0e \x03(\tR\finstitutions\x12\x1d\n" +
+	"\n" +
+	"bond_terms\x18\x0f \x01(\bR\tbondTerms\x120\n" +
+	"\x14requested_bond_terms\x18\x10 \x01(\bR\x12requestedBondTerms\x12!\n" +
+	"\findex_levels\x18\x11 \x01(\bR\vindexLevels\x124\n" +
+	"\x16requested_index_levels\x18\x12 \x01(\bR\x14requestedIndexLevels\"\xcc\x01\n" +
 	"\x13AttentionItemChange\x12\x10\n" +
 	"\x03seq\x18\x01 \x01(\x05R\x03seq\x12;\n" +
 	"\x05state\x18\x02 \x01(\x0e2%.openfief.views.v1.AttentionItemStateR\x05state\x12>\n" +

@@ -139,13 +139,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82e487d1c85c
-  - type: implements
-    from: SYM-valuation-app-revaluer-value
-    to: REQ-valuation-market-holding
-    created_at: 2026-10-28T07:34:19.520Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-62cad02f5719
   - type: covered_by
     from: SYM-valuation-app-revaluer-value
     to: TEST-valuation-app-revalue
@@ -685,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3eba3b0e3591
+  - type: implements
+    from: SYM-valuation-app-revaluer-value
+    to: REQ-valuation-market-holding-pack-currency
+    created_at: 2026-11-03T00:02:41.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e03f2182ba1a
+  - type: constrains
+    from: REQ-ingest-logs-carry-no-values
+    to: FACT-SUBJECT-30FC87DCAAFC7CB1
+    created_at: 2026-11-03T01:05:26.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-804b9a5c8f51
+  - type: requires_property
+    from: REQ-ingest-logs-carry-no-values
+    to: FACT-PROP-F0426298E8F80DB8
+    created_at: 2026-11-03T01:05:26.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5f010dddf59
+  - type: specified_by
+    from: REQ-ingest-logs-carry-no-values
+    to: SCEN-ingest-logs-carry-no-values
+    created_at: 2026-11-03T01:05:26.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2712b42db86

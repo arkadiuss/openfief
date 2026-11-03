@@ -160,13 +160,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-426590d53d15
-  - type: implements
-    from: SYM-views-app-views-cash-rates
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:00:34.436Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eab05f4c8aea
   - type: covered_by
     from: SYM-views-app-views-cash-rates
     to: TEST-views-app-performance
@@ -573,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5dcf6c511276
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-delivery-attention-clear
+    to: TEST-ingest-app-undeclared-deliveries
+    created_at: 2026-11-02T22:29:22.780Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deb9cd93944f
+  - type: executable_for
+    from: SYM-views-kube-test-helper-with-flags
+    to: TEST-views-kube
+    created_at: 2026-11-02T22:50:11.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23802843bf0d
+  - type: implements
+    from: SYM-views-app-views-cash-rates
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:05:51.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ae1e068d7c2

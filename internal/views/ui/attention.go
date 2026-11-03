@@ -18,27 +18,22 @@ type attentionKind struct {
 }
 
 // attentionKindOf names kind, one of the core's kinds of attention items
-// (D-130, D-131, D-132, D-94); a kind it doesn't know shows its own name and no page.
+// (D-130, D-131, D-132, D-94, D-179); a kind it doesn't know shows its own name and no page.
 func attentionKindOf(kind string) attentionKind {
-	switch kind {
-	case "balance-assertion-flagged":
-		return attentionKind{"Flagged balance assertion", "/assertions"}
-	case "price-check-flagged":
-		return attentionKind{"Flagged price check", "/price-checks"}
-	case "import-problems":
-		return attentionKind{"Rows an import left out", "/accounts"}
-	case "broker-account-unmapped":
-		return attentionKind{"Unmapped broker account", "/accounts"}
-	case "ticker-unconfirmed":
-		return attentionKind{"Ticker to confirm", "/tickers"}
-	case "setting-missing":
-		return attentionKind{"Missing setting", "/settings"}
-	case "transfer-broken":
-		return attentionKind{"Transfer broken by a correction", "/transfers"}
-	case "instrument-unclassified":
-		return attentionKind{"Instrument to classify", "/settings"}
-	case "market-data-gap":
-		return attentionKind{"Market data stopped arriving", "/settings#series-sources-title"}
+	kinds := map[string]attentionKind{
+		"balance-assertion-flagged":             {"Flagged balance assertion", "/assertions"},
+		"price-check-flagged":                   {"Flagged price check", "/price-checks"},
+		"import-problems":                       {"Rows an import left out", "/accounts"},
+		"broker-account-unmapped":               {"Unmapped broker account", "/accounts"},
+		"ticker-unconfirmed":                    {"Ticker to confirm", "/tickers"},
+		"setting-missing":                       {"Missing setting", "/settings"},
+		"transfer-broken":                       {"Transfer broken by a correction", "/transfers"},
+		"instrument-unclassified":               {"Instrument to classify", "/settings"},
+		"market-data-gap":                       {"Market data stopped arriving", "/settings#series-sources-title"},
+		"bond-terms-or-index-levels-undeclared": {"Bond terms or index levels dropped", "/plugins"},
+	}
+	if k, ok := kinds[kind]; ok {
+		return k
 	}
 	return attentionKind{Label: kind}
 }
@@ -152,7 +147,7 @@ func (s *server) afterAttentionForm(w http.ResponseWriter, r *http.Request, sess
 func (s *server) openAttention(r *http.Request, sess session) int {
 	resp, err := s.read.ListAttentionItems(r.Context(), bearer(&viewsv1.ListAttentionItemsRequest{}, sess))
 	if err != nil {
-		s.log.WarnContext(r.Context(), "counting attention items", "error", err.Error())
+		s.log.WarnContext(r.Context(), "counting attention items", "code", connect.CodeOf(err).String())
 		return 0
 	}
 	return int(resp.Msg.GetOpen())

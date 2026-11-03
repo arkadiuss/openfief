@@ -104,7 +104,7 @@ func TestRevalueStoresMarketValues(t *testing.T) {
 	row := func(on, value, pln, priceDate, net string) valuation.HoldingValuation {
 		return valuation.HoldingValuation{
 			Account: acc1, Instrument: etf, Date: date(t, on), Basis: valuation.Market, Quantity: kernel.NewQuantity(dec(t, "10")),
-			Value: money(t, value, "USD"), PLN: money(t, pln, "PLN"), Source: "vendor",
+			Value: money(t, value, "USD"), Reporting: money(t, pln, "PLN"), Source: "vendor",
 			PriceDate: date(t, priceDate), RateDate: date(t, "2026-03-02"),
 			Net: money(t, net, "PLN"), Liquidation: money(t, net, "PLN"),
 			TaxCost: money(t, "3960.00", "PLN"), SaleCost: money(t, "0", "PLN"),
@@ -237,7 +237,7 @@ func TestRevalueBonds(t *testing.T) {
 // checkBondRow checks a stored bond row against the values the pack gives.
 func checkBondRow(t *testing.T, row *valuation.HoldingValuation, v *jurisdiction.Values) {
 	t.Helper()
-	if row.Basis != valuation.GrossAccrued || row.Source != valuation.StatutorySource || !row.PLN.Equal(v.Gross) || !row.Value.Equal(v.Gross) {
+	if row.Basis != valuation.GrossAccrued || row.Source != valuation.StatutorySource || !row.Reporting.Equal(v.Gross) || !row.Value.Equal(v.Gross) {
 		t.Errorf("row = %+v, want gross %s", row, v.Gross)
 	}
 	if !row.Net.Equal(v.Net) {

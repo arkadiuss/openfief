@@ -307,13 +307,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c1d5a496f0ba
-  - type: implements
-    from: SYM-views-sum-in
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:04:15.959Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-318098ac908e
   - type: covered_by
     from: SYM-views-sum-in
     to: TEST-views-performance
@@ -685,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b30f3f5a4139
+  - type: verified_by
+    from: SCEN-valuation-stored-cost-basis-named-currency
+    to: TEST-valuation-postgres-store
+    created_at: 2026-11-02T23:55:39.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0c0f70a23ed
+  - type: verified_by
+    from: SCEN-valuation-stored-cost-basis-named-currency
+    to: TEST-valuation-revaluation
+    created_at: 2026-11-02T23:55:39.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b19fa212052
+  - type: verified_by
+    from: SCEN-valuation-stored-cost-basis-named-currency
+    to: TEST-valuation-postgres-named-currencies
+    created_at: 2026-11-02T23:55:40.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-522d84a10205
+  - type: implements
+    from: SYM-views-sum-in
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:08:10.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ee4a2800f11

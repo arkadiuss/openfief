@@ -552,3 +552,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-29c3cf513968
+  - type: implements
+    from: SYM-ingest-undeclared-drop
+    to: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+    created_at: 2026-11-02T22:49:57.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3e62f95a95e
+  - type: implements
+    from: SYM-ingest-undeclared-drop
+    to: REQ-ingest-undeclared-deliveries-item-per-instance
+    created_at: 2026-11-02T22:49:57.299Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b598f42e6a9
+  - type: covered_by
+    from: SYM-ingest-undeclared-drop
+    to: TEST-ingest-declarations
+    created_at: 2026-11-02T22:49:57.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da37b65df7b4

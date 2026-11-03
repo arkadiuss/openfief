@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-919f0439f7f8
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-logsafe-testfailureslognovalues
+    to: TEST-portfolio-connectapi-logsafe
+    created_at: 2026-11-03T03:26:44.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b26bc87f5277

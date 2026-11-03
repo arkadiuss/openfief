@@ -114,7 +114,7 @@ func valuedDays(t *testing.T, store *postgres.Store) []string {
 	}
 	out := make([]string, 0, len(got))
 	for i := range got {
-		v := got[i].PLN.String()
+		v := got[i].Reporting.String()
 		if !got[i].Valued() {
 			v = "missing " + got[i].Missing.String()
 		}
@@ -150,7 +150,7 @@ func TestWorkerRevaluesEndToEnd(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = recorder.RecordFXRates(ctx, []valuation.FXRate{{Currency: usd, Date: date(t, "2026-03-02"), Rate: dec(t, "4"), Source: "nbp-a"}})
+	err = recorder.RecordFXRates(ctx, []valuation.FXRate{{Currency: usd, Base: money(t, "0", "PLN").Currency(), Date: date(t, "2026-03-02"), Rate: dec(t, "4"), Source: "nbp-a"}})
 	if err == nil {
 		err = recorder.RecordPrices(ctx, []valuation.Price{etfPrice(t, "2026-03-03", "100")})
 	}

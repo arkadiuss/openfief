@@ -254,8 +254,8 @@ func TestLoadTopsUpADemoLoadedEarlier(t *testing.T) {
 // value, and its net and liquidation values.
 func checkThreeValues(t *testing.T, row *valuation.HoldingValuation) {
 	t.Helper()
-	if !row.Valued() || row.PLN.Sign() <= 0 {
-		t.Errorf("%s: %s on %s: missing %s (%s), PLN %s", row.Account, row.Instrument, row.Date, row.Missing, row.Detail, row.PLN)
+	if !row.Valued() || row.Reporting.Sign() <= 0 {
+		t.Errorf("%s: %s on %s: missing %s (%s), PLN %s", row.Account, row.Instrument, row.Date, row.Missing, row.Detail, row.Reporting)
 	}
 	if row.NetMissing != 0 || row.LiquidationMissing != 0 {
 		t.Errorf("%s: %s on %s: net missing %s, liquidation missing %s; want both values", row.Account, row.Instrument, row.Date, row.NetMissing, row.LiquidationMissing)

@@ -300,13 +300,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3dbbe2b8026
-  - type: implements
-    from: SYM-views-transfer-in-transit-on
-    to: REQ-views-performance-value
-    created_at: 2026-10-28T21:02:18.853Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8e9e18a8ca25
   - type: covered_by
     from: SYM-views-transfer-in-transit-on
     to: TEST-views-performance
@@ -650,3 +643,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf674cac446c
+  - type: implements
+    from: SYM-views-transfer-in-transit-on
+    to: REQ-views-performance-value-reporting
+    created_at: 2026-11-03T00:08:21.179Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de76bff50bce
+  - type: implements
+    from: SYM-plugins-kube-instances-delete-owned-secret
+    to: REQ-plugins-secrets-never-platform
+    created_at: 2026-11-02T22:21:08.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71effa1848e8
+  - type: covered_by
+    from: SYM-plugins-kube-instances-delete-owned-secret
+    to: TEST-plugins-kube-instances
+    created_at: 2026-11-02T22:21:08.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-018a15afbbf4
+  - type: implements
+    from: SYM-ingest-conn-app-connectors-deliver
+    to: REQ-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:25:00.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82241f3108d2

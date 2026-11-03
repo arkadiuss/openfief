@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52d638dd6382
+  - type: executable_for
+    from: SYM-identity-connectapi-test-logsafe-checknovalues
+    to: TEST-identity-connectapi-logsafe
+    created_at: 2026-11-03T03:27:44.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67d1951d6e80

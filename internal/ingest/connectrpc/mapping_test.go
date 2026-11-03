@@ -2,6 +2,7 @@ package connectrpc
 
 import (
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -44,7 +45,7 @@ func testDelivery() *connectorv1.Delivery {
 		Prices: []*connectorv1.Price{{
 			Instrument: instrument, Date: "2026-03-02", Close: &connectorv1.Money{Amount: "50.25", Currency: "USD"},
 		}},
-		FxRates:       []*connectorv1.FxRate{{Currency: "USD", Date: "2026-03-02", Rate: "3.9876"}},
+		FxRates:       []*connectorv1.FxRate{{Currency: "USD", Date: "2026-03-02", Rate: "3.9876", Base: "PLN"}},
 		IndexReadings: []*connectorv1.IndexReading{{Index: connectorv1.Index_INDEX_CPI, Date: "2026-02-01", Value: "0.049"}},
 		IndexLevels:   []*connectorv1.IndexLevel{{Index: "FAKE20", Date: "2026-03-02", Level: "1522.60"}},
 		BondTerms: []*connectorv1.BondTerms{{
@@ -125,7 +126,7 @@ func TestDeliveryFrom(t *testing.T) {
 	want := app.Delivery{
 		Institution: "xtb", Watermark: "w-2",
 		Prices:  []valuation.Price{{Instrument: testInstrument(t).String(), Date: day, Close: mustMoney(t, "50.25", "USD")}},
-		FXRates: []valuation.FXRate{{Currency: usd.Currency(), Date: day, Rate: mustDecimal(t, "3.9876")}},
+		FXRates: []valuation.FXRate{{Currency: usd.Currency(), Base: mustMoney(t, "1", "PLN").Currency(), Date: day, Rate: mustDecimal(t, "3.9876")}},
 		IndexReadings: []ingest.IndexReading{{
 			Index: ingest.IndexCPI, Date: mustDate(t, "2026-02-01"), Value: mustDecimal(t, "0.049"),
 		}},
@@ -196,6 +197,7 @@ func TestDeliveryFromRejects(t *testing.T) {
 		{name: "no problem kind", edit: func(r *connectorv1.Delivery) { r.Problems[0].Kind = 0 }},
 		{name: "bond terms of no series", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Instrument.Symbol = "TST" }},
 		{name: "bond terms with a bad ISIN", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Instrument.Isin = "PLEDO0536001" }},
+		{name: "bond terms of a non-Polish ISIN (D-179)", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Instrument.Isin = "IETEST000026" }},
 		{name: "bond terms with an exponent rate", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].FirstPeriodRate = "6e-2" }},
 		{name: "bond terms without a margin", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].Margin = "" }},
 		{name: "bond terms without a fee", edit: func(r *connectorv1.Delivery) { r.BondTerms[0].EarlyRedemptionFee = nil }},
@@ -219,6 +221,23 @@ func TestDeliveryFromRejects(t *testing.T) {
 				t.Errorf("deliveryFrom error = %v, want %v", err, ErrInvalidMessage)
 			}
 		})
+	}
+}
+
+// TestInvalidMessageIsInvalidDelivery checks that a connector's message
+// that doesn't translate is app.ErrInvalidDelivery too, which the services
+// that hand entries to a connector know, keeping its own text.
+func TestInvalidMessageIsInvalidDelivery(t *testing.T) {
+	t.Parallel()
+	err := fmt.Errorf("sync: %w: delivery.prices[0].close", ErrInvalidMessage)
+	if !errors.Is(err, app.ErrInvalidDelivery) || !errors.Is(err, ErrInvalidMessage) {
+		t.Errorf("%v is not both ErrInvalidMessage and app.ErrInvalidDelivery", err)
+	}
+	if got := ErrInvalidMessage.Error(); got != "invalid message" {
+		t.Errorf("ErrInvalidMessage = %q", got)
+	}
+	if errors.Is(ErrDeliveryTooLarge, ErrInvalidMessage) {
+		t.Error("another error is ErrInvalidMessage")
 	}
 }
 
@@ -266,11 +285,11 @@ func TestValuationInputsFrom(t *testing.T) {
 	if diff := cmp.Diff(wantPrice, price); diff != "" {
 		t.Errorf("priceFrom (-want +got):\n%s", diff)
 	}
-	rate, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "3.9876"})
+	rate, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "3.9876", Base: "PLN"})
 	if err != nil {
 		t.Fatalf("fxRateFrom: %v", err)
 	}
-	wantRate := valuation.FXRate{Currency: mustMoney(t, "1", "USD").Currency(), Date: mustDate(t, "2026-03-02"), Rate: mustDecimal(t, "3.9876")}
+	wantRate := valuation.FXRate{Currency: mustMoney(t, "1", "USD").Currency(), Base: mustMoney(t, "1", "PLN").Currency(), Date: mustDate(t, "2026-03-02"), Rate: mustDecimal(t, "3.9876")}
 	if diff := cmp.Diff(wantRate, rate); diff != "" {
 		t.Errorf("fxRateFrom (-want +got):\n%s", diff)
 	}
@@ -305,15 +324,15 @@ func TestValuationInputsFromRejects(t *testing.T) {
 			return err
 		}},
 		{"negative rate", func() error {
-			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "-3.9"})
+			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Date: "2026-03-02", Rate: "-3.9", Base: "PLN"})
 			return err
 		}},
 		{"rate without currency", func() error {
-			_, err := fxRateFrom("r", &connectorv1.FxRate{Date: "2026-03-02", Rate: "3.9"})
+			_, err := fxRateFrom("r", &connectorv1.FxRate{Date: "2026-03-02", Rate: "3.9", Base: "PLN"})
 			return err
 		}},
 		{"rate without date", func() error {
-			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Rate: "3.9"})
+			_, err := fxRateFrom("r", &connectorv1.FxRate{Currency: "USD", Rate: "3.9", Base: "PLN"})
 			return err
 		}},
 		{"no index", func() error {

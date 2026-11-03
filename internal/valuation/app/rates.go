@@ -19,7 +19,7 @@ import (
 var ErrInvalidRange = errors.New("invalid date range")
 
 // RateProvider is the swappable FX rate provider (D-20): it returns the
-// rates to PLN it published for each business day in [from, to], both
+// rates, each naming its base, it published for each business day in [from, to], both
 // inclusive. NBP table A is the default. A range with no published table,
 // such as a weekend or a holiday, is an empty result, not an error. A
 // provider may cap how many days one call covers; FetchRates splits a longer
@@ -72,13 +72,11 @@ func FetchRates(ctx context.Context, p RateProvider, from, to kernel.Date, maxDa
 		}
 		rates = append(rates, got...)
 	}
-	slices.SortStableFunc(rates, compareRates)
+	slices.SortStableFunc(rates, func(a, b valuation.FXRate) int {
+		if c := a.Date.Compare(b.Date); c != 0 {
+			return c
+		}
+		return cmp.Compare(a.Currency.String(), b.Currency.String())
+	})
 	return rates, nil
-}
-
-func compareRates(a, b valuation.FXRate) int {
-	if c := a.Date.Compare(b.Date); c != 0 {
-		return c
-	}
-	return cmp.Compare(a.Currency.String(), b.Currency.String())
 }

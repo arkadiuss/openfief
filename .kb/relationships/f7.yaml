@@ -622,3 +622,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-264825f96927
+  - type: implements
+    from: SYM-ingest-declarations-check-institution
+    to: REQ-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:21:19.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d56ae22b2429
+  - type: covered_by
+    from: SYM-ingest-declarations-check-institution
+    to: TEST-ingest-declarations
+    created_at: 2026-11-02T22:21:19.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb8eac03c592

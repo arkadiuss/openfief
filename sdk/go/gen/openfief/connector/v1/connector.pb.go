@@ -1117,14 +1117,18 @@ func (x *Price) GetClose() *Money {
 	return nil
 }
 
-// FxRate is the value in PLN of one unit of a currency on a date. A source
-// that quotes per 100 units is normalized to one unit by the connector.
+// FxRate is the value in its base currency of one unit of a currency on a
+// date. A source that quotes per 100 units is normalized to one unit by the
+// connector.
 type FxRate struct {
 	state    protoimpl.MessageState `protogen:"open.v1"`
 	Currency string                 `protobuf:"bytes,1,opt,name=currency,proto3" json:"currency,omitempty"`
 	Date     string                 `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
-	// PLN per one unit of currency, as a positive decimal string.
-	Rate          string `protobuf:"bytes,3,opt,name=rate,proto3" json:"rate,omitempty"`
+	// Base units per one unit of currency, as a positive decimal string.
+	Rate string `protobuf:"bytes,3,opt,name=rate,proto3" json:"rate,omitempty"`
+	// The currency the rate is quoted in, such as "PLN" for NBP's table A.
+	// Required: the core never assumes one (D-180).
+	Base          string `protobuf:"bytes,4,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1176,6 +1180,13 @@ func (x *FxRate) GetDate() string {
 func (x *FxRate) GetRate() string {
 	if x != nil {
 		return x.Rate
+	}
+	return ""
+}
+
+func (x *FxRate) GetBase() string {
+	if x != nil {
+		return x.Base
 	}
 	return ""
 }
@@ -3001,11 +3012,12 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"instrument\x18\x01 \x01(\v2!.openfief.connector.v1.InstrumentR\n" +
 	"instrument\x12\x12\n" +
 	"\x04date\x18\x02 \x01(\tR\x04date\x122\n" +
-	"\x05close\x18\x03 \x01(\v2\x1c.openfief.connector.v1.MoneyR\x05close\"L\n" +
+	"\x05close\x18\x03 \x01(\v2\x1c.openfief.connector.v1.MoneyR\x05close\"`\n" +
 	"\x06FxRate\x12\x1a\n" +
 	"\bcurrency\x18\x01 \x01(\tR\bcurrency\x12\x12\n" +
 	"\x04date\x18\x02 \x01(\tR\x04date\x12\x12\n" +
-	"\x04rate\x18\x03 \x01(\tR\x04rate\"l\n" +
+	"\x04rate\x18\x03 \x01(\tR\x04rate\x12\x12\n" +
+	"\x04base\x18\x04 \x01(\tR\x04base\"l\n" +
 	"\fIndexReading\x122\n" +
 	"\x05index\x18\x01 \x01(\x0e2\x1c.openfief.connector.v1.IndexR\x05index\x12\x12\n" +
 	"\x04date\x18\x02 \x01(\tR\x04date\x12\x14\n" +
