@@ -587,3 +587,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ae1e068d7c2
+  - type: constrains
+    from: REQ-plugins-grant-without-institutions-approves-none
+    to: FACT-SUBJECT-37D5B01DB885F3A7
+    created_at: 2026-11-03T12:32:01.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c36e42a8763e
+  - type: requires_property
+    from: REQ-plugins-grant-without-institutions-approves-none
+    to: FACT-PROP-A380A019BFF393AE
+    created_at: 2026-11-03T12:32:01.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a57bdd62171b
+  - type: specified_by
+    from: REQ-plugins-grant-without-institutions-approves-none
+    to: SCEN-plugins-grant-without-institutions
+    created_at: 2026-11-03T12:32:01.837Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fdc3b29811e
+  - type: supersedes
+    from: REQ-plugins-grant-without-institutions-approves-none
+    to: REQ-plugins-legacy-grants-approve-declared-institutions
+    created_at: 2026-11-03T12:32:01.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3051315f7b3d

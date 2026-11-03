@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22cc0f316f63
+  - type: executable_for
+    from: SYM-operator-institutions-test-helper-pending-ibkr
+    to: TEST-operator-institutions
+    created_at: 2026-11-03T12:45:19.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99f0782a6792

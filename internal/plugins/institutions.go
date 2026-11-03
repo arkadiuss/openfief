@@ -41,21 +41,3 @@ func SharedInstitutions(instance string, institutions []string, holders []Instit
 	})
 	return out
 }
-
-// ApprovedInstitutions returns the institutions a PluginGrant approves.
-// approved is the list the grant names, nil when it names no list at all,
-// as every grant made before D-185 does: such a grant approves the
-// institutions its plugin already declares, those of deployed, the version
-// that runs under it, or none when nothing runs. Since a version that
-// declares another institution runs only once a grant approves it, this
-// never approves an institution the owner didn't. A grant that names an
-// empty list approves none.
-func ApprovedInstitutions(approved *[]string, deployed *Plugin) []string {
-	if approved != nil {
-		return slices.Clone(*approved)
-	}
-	if deployed == nil {
-		return nil
-	}
-	return slices.Clone(deployed.Manifest.Institutions)
-}

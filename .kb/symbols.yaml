@@ -12736,11 +12736,15 @@ symbols:
       recorded_at: 2026-10-28T07:01:53.567Z
     relationships:
       - type: covered_by
+        target: TEST-operator-institutions
+      - type: covered_by
         target: TEST-operator-reconcile
       - type: implements
         target: REQ-AUTO-12177128A788CEDC
       - type: implements
         target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-plugins-grant-without-institutions-approves-none
   - id: SYM-operator-plugin-reconciler-cluster
     title: PluginReconciler.cluster
     sourceFile: internal/plugins/operator/reconciler.go
@@ -130928,16 +130932,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-grant-institutions
-  - id: SYM-plugins-grant-institutions-test-test-approved-institutions
-    title: TestApprovedInstitutions
-    sourceFile: internal/plugins/grant_institutions_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T07:52:36.878Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-grant-institutions
   - id: SYM-plugins-grant-institutions-test-test-shared-institutions
     title: TestSharedInstitutions
     sourceFile: internal/plugins/grant_institutions_test.go
@@ -130987,19 +130981,6 @@ symbols:
         target: TEST-plugins-grant-institutions
       - type: implements
         target: REQ-plugins-install-warns-shared-institution
-  - id: SYM-plugins-approved-institutions
-    title: ApprovedInstitutions
-    sourceFile: internal/plugins/institutions.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T07:53:26.179Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-grant-institutions
-      - type: implements
-        target: REQ-plugins-legacy-grants-approve-declared-institutions
   - id: SYM-plugins-validate-institution-names
     title: validateInstitutionNames
     sourceFile: internal/plugins/manifest.go
@@ -131020,16 +131001,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-03T07:53:54.223Z
-    relationships:
-      - type: executable_for
-        target: TEST-operator-institutions
-  - id: SYM-operator-institutions-test-test-reconcile-legacy-grant-institutions
-    title: TestReconcileLegacyGrantInstitutions
-    sourceFile: internal/plugins/operator/institutions_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T07:54:05.028Z
     relationships:
       - type: executable_for
         target: TEST-operator-institutions
@@ -131293,3 +131264,23 @@ symbols:
         target: TEST-plugins-index-readings
       - type: implements
         target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-operator-institutions-test-test-reconcile-grant-without-institutions
+    title: TestReconcileGrantWithoutInstitutions
+    sourceFile: internal/plugins/operator/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:32:52.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-institutions
+  - id: SYM-operator-institutions-test-helper-pending-ibkr
+    title: pendingIbkr
+    sourceFile: internal/plugins/operator/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:45:16.505Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-institutions

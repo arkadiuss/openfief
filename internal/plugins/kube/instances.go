@@ -311,8 +311,8 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 			IndexReadings: g.Permissions.IndexReadings,
 		},
 	}
-	// A connector's grant always names its institutions, even none, so it
-	// never reads as one made before D-185 (plugins.ApprovedInstitutions).
+	// A connector's grant always names its institutions, even none, so
+	// what it approves is plain to read (D-185).
 	if slices.Contains(m.Capabilities, plugins.CapabilityConnector) {
 		institutions := slices.Clone(g.Permissions.Institutions)
 		if institutions == nil {

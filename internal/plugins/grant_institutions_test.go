@@ -80,33 +80,6 @@ func TestInstitutionsInGrantAndDiff(t *testing.T) {
 	}
 }
 
-// TestApprovedInstitutions checks how a PluginGrant approves institutions:
-// the list it names, even an empty one, or, for a grant made before D-185
-// that names none, those of the version that runs under it.
-func TestApprovedInstitutions(t *testing.T) {
-	t.Parallel()
-	running, _ := institutionPair([]string{"ibkr"}, nil)
-	tests := []struct {
-		name     string
-		approved *[]string
-		deployed *plugins.Plugin
-		want     []string
-	}{
-		{name: "named", approved: &[]string{"xtb"}, deployed: &running, want: []string{"xtb"}},
-		{name: "named empty approves none", approved: &[]string{}, deployed: &running, want: []string{}},
-		{name: "before D-185, a version runs", deployed: &running, want: []string{"ibkr"}},
-		{name: "before D-185, nothing runs"},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-			if diff := cmp.Diff(tt.want, plugins.ApprovedInstitutions(tt.approved, tt.deployed)); diff != "" {
-				t.Errorf("ApprovedInstitutions() (-want +got):\n%s", diff)
-			}
-		})
-	}
-}
-
 // TestSharedInstitutions checks the install's warning (D-185): each
 // institution another instance already books for, with that instance,
 // never the instance itself.

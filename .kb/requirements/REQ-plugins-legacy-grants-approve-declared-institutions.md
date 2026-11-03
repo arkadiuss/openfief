@@ -1,6 +1,6 @@
 ---
 title: Grants made before D-185 must approve the institutions their plugin already declares.
-status: open
+status: closed
 text_ref: design-decisions:D-185#3
 tags:
   - strict-modeling

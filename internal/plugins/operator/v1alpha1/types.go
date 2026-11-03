@@ -272,9 +272,7 @@ type Permissions struct {
 	// Institutions are the institutions a connector books for, such as
 	// ibkr; the core accepts a delivery only for an institution both the
 	// signed manifest and the PluginGrant name (D-185). A PluginGrant
-	// without this field, as every one made before D-185 is, approves the
-	// institutions of the version that runs under it; an empty list
-	// approves none.
+	// without this field, or with an empty list, approves none.
 	// +optional
 	// +kubebuilder:validation:MaxItems=16
 	// +kubebuilder:validation:items:MaxLength=63
