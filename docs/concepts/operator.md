@@ -56,7 +56,7 @@ classDiagram
   class Plugin {
     metadata.name : the instance name
     spec.image : repository@sha256 digest
-    spec.manifest : capabilities, egress, secrets, dataTiers, configSchema, browserPath, egressFromConfig, clusterService, crossCheckPrices, statementFiles, marketData, institutions, bondTerms, indexLevels
+    spec.manifest : capabilities, egress, secrets, dataTiers, configSchema, browserPath, egressFromConfig, clusterService, crossCheckPrices, statementFiles, marketData, institutions, bondTerms, indexLevels, indexReadings
     spec.config : JSON object
     spec.clusterService : namespace, service, port
     status.conditions : Ready, ApprovalRequired, SignatureVerified
@@ -67,7 +67,7 @@ classDiagram
   }
   class PluginGrant {
     metadata.name : same as its Plugin
-    spec : capabilities, egress, secrets, dataTiers, browserPaths, clusterServices, marketData, bondTerms, indexLevels, institutions
+    spec : capabilities, egress, secrets, dataTiers, browserPaths, clusterServices, marketData, bondTerms, indexLevels, indexReadings, institutions
     status.conditions : Valid
   }
   class ServiceAccount {

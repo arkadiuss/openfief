@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32dab02c97ec
+  - type: implements
+    from: SYM-ingest-kube-deployed-declarations
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:09:54.247Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb03f66d5664

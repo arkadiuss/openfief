@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b39ea7a763f5
+  - type: implements
+    from: SYM-viewsv1-plugin-get-requested-index-readings
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:09:13.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b7a6701b4e2
+  - type: covered_by
+    from: SYM-viewsv1-plugin-get-requested-index-readings
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-11-03T10:09:13.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa86d1242adc

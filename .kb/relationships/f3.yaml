@@ -489,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9035142a649a
+  - type: implements
+    from: SYM-plugins-permissions-no-deliveries
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:17:54.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96116ddbd557
+  - type: covered_by
+    from: SYM-plugins-permissions-no-deliveries
+    to: TEST-plugins-index-readings
+    created_at: 2026-11-03T10:17:54.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c6666d9df2a

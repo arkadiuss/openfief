@@ -13,8 +13,9 @@ import (
 // prices (D-112), whether it takes statement files the owner uploads
 // (D-109), whether it is a market-data connector that its grant approves
 // as one (D-123), the institutions it books for (D-182), and whether it
-// may deliver bond terms and index levels (D-179). The manifest is signed
-// with the plugin's image (D-42).
+// may deliver bond terms and index levels (D-179) and the index readings
+// bond terms depend on (D-186). The manifest is signed with the plugin's
+// image (D-42).
 type Declarations struct {
 	CrossCheckPrices bool
 	StatementFiles   bool
@@ -27,6 +28,10 @@ type Declarations struct {
 	// grant approves that, so the core stores them (D-179).
 	BondTerms   bool
 	IndexLevels bool
+	// IndexReadings: the manifest declares that the connector delivers
+	// index readings, such as CPI and the NBP reference rate, and the grant
+	// approves that, so the core stores them (D-186).
+	IndexReadings bool
 	// Institutions are the institutions the connector books for (D-182).
 	Institutions []InstitutionID
 }
@@ -47,14 +52,16 @@ func (d *Declarations) CheckInstitution(institution InstitutionID) error {
 
 // KindUndeclaredDeliveries is the kind of the attention item (D-130) a
 // connector instance raises when it delivers bond terms or index levels
-// it may not deliver, so they are dropped (D-179), as cross-check prices
-// are (D-141). Its subject is the instance: one item per instance, open
-// while it keeps happening, resolved by the instance's next delivery that
-// carries none it may not deliver.
+// (D-179), or index readings (D-186), it may not deliver, so they are
+// dropped, as cross-check prices are (D-141). Its subject is the instance:
+// one item per instance, open while it keeps happening, resolved by the
+// instance's next delivery that carries none it may not deliver. The kind
+// keeps the name it had before index readings joined it, so an item
+// raised earlier still resolves.
 const KindUndeclaredDeliveries = "bond-terms-or-index-levels-undeclared"
 
-// UndeclaredDrop is what dropping a delivery's undeclared bond terms and
-// index levels (D-179) leaves: the ingest problems, one per kind dropped,
+// UndeclaredDrop is what dropping a delivery's undeclared bond terms,
+// index levels (D-179) and index readings (D-186) leaves: the ingest problems, one per kind dropped,
 // and the detail of the instance's attention item, empty when nothing is
 // dropped.
 type UndeclaredDrop struct {
@@ -62,12 +69,12 @@ type UndeclaredDrop struct {
 	Detail   string
 }
 
-// UndeclaredDeliveries returns what dropping a delivery's terms bond terms
-// and levels index levels that its connector may not deliver (D-179), as
-// decl says, leaves. The detail names the kinds, never a count or a batch,
-// so a later delivery that drops the same kinds doesn't reopen an item the
-// owner acknowledged.
-func UndeclaredDeliveries(decl Declarations, terms, levels int) UndeclaredDrop {
+// UndeclaredDeliveries returns what dropping a delivery's terms bond terms,
+// levels index levels (D-179) and readings index readings (D-186) that its
+// connector may not deliver, as decl says, leaves. The detail names the
+// kinds, never a count or a batch, so a later delivery that drops the same
+// kinds doesn't reopen an item the owner acknowledged.
+func UndeclaredDeliveries(decl Declarations, terms, levels, readings int) UndeclaredDrop {
 	var problems []Problem
 	var kinds []string
 	if terms > 0 && !decl.BondTerms {
@@ -80,12 +87,27 @@ func UndeclaredDeliveries(decl Declarations, terms, levels int) UndeclaredDrop {
 			" index levels not stored: the connector's signed manifest doesn't declare them or its grant doesn't approve them"))
 		kinds = append(kinds, "market index levels")
 	}
+	if readings > 0 && !decl.IndexReadings {
+		problems = append(problems, Skipped("index_readings", strconv.Itoa(readings)+
+			" index readings not stored: the connector's signed manifest doesn't declare them or its grant doesn't approve them"))
+		kinds = append(kinds, "index readings")
+	}
 	if len(kinds) == 0 {
 		return UndeclaredDrop{}
 	}
-	return UndeclaredDrop{Problems: problems, Detail: "the connector delivers " + strings.Join(kinds, " and ") +
+	return UndeclaredDrop{Problems: problems, Detail: "the connector delivers " + joinKinds(kinds) +
 		" that its signed manifest doesn't declare or its grant doesn't approve, so they are dropped and the rest of " +
 		"its deliveries is imported; install a version that declares them, and approve it"}
+}
+
+// joinKinds names one or more kinds in a sentence: "a", "a and b",
+// "a, b and c".
+func joinKinds(kinds []string) string {
+	last := len(kinds) - 1
+	if last == 0 {
+		return kinds[0]
+	}
+	return strings.Join(kinds[:last], ", ") + " and " + kinds[last]
 }
 
 // UndeclaredCrossCheckPrices is the ingest problem a delivery's n

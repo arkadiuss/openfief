@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-636db4296910
+  - type: implements
+    from: SYM-ingest-undeclared-deliveries
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:09:41.297Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b4a2997727d
+  - type: executable_for
+    from: SYM-plugins-test-index-readings-permission
+    to: TEST-plugins-index-readings
+    created_at: 2026-11-03T10:11:11.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc1161118a39

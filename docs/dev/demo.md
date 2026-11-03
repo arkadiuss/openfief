@@ -195,7 +195,7 @@ The dataset also carries synthetic cross-check prices, one of them beyond the th
 - IBKR's synthetic mark prices as [cross-check prices](../glossary.md#m0) from the `ibkr` source: each instrument held at the end of each monthly statement, at the latest demo close on or before that day, and the latest statement's first instrument 3% above it, so the price checks page shows one flagged check (D-110, D-111). `demo-seed` records them through valuation's `CrossChecks`;
 - the IBKR history as synthetic [Flex Query](../glossary.md#other-terms-and-abbreviations) statements for the placeholder account `U0000000`: an opening statement, then one per month. XTB and the bond registry have no connector yet, so their history is ledger transactions.
 
-The only real figures are public ones: the published terms of the EDO1133, COI0128 and TOS0128 series, GUS consumer price index readings from January 2023 to September 2026, and NBP table A exchange rates. Every balance assertion in the history matches the balance its transactions give.
+The only real figures are public ones: the published terms of the EDO1133, COI0128 and TOS0128 series, GUS consumer price index readings from January 2023 to September 2026 (recorded, like the series' terms, with the `treasury-bonds` instance as their source, D-179, D-186), and NBP table A exchange rates. Every balance assertion in the history matches the balance its transactions give.
 
 **The loader.** `demo-seed` reads the database URL from `OPENFIEF_DEMO_DSN` and loads the dataset through the paths real data takes. It exits once every account is valued through today.
 

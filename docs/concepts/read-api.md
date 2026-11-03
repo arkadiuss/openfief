@@ -278,6 +278,7 @@ Each `Transfer` names its legs' accounts, dates and transaction keys, so the UI 
 - **D-123**: `Plugin` says which plugin is a market-data connector, so the owner sees which one learns what they hold.
 - **D-180**: stored valuations name their currency and FX rates their base, from the jurisdiction pack; `New` refuses a reporting currency other than the pack's with `UnsupportedReportingCurrencyError`, which names both (T-12).
 - **D-179**: `Plugin` says whether the core stores the bond terms and index levels each plugin delivers (`bond_terms`, `index_levels`) and whether its manifest declares them (`requested_bond_terms`, `requested_index_levels`), additions only to the contract.
+- **D-186**: the same of index readings (`index_readings`, `requested_index_readings`), also additions only.
 - **D-52**: while the model portfolio is off, `GetModelPortfolio` answers `NOT_FOUND` and nothing else mentions it. The method itself is in the contract and the OpenAPI document either way; that it answers 404 rather than an empty response is this context's reading.
 - **D-53**: the model's backtest as a second line, both starting at 100 on `from`. Built as `GetModelPortfolio`'s `days`.
 - **D-62** and **T-12**: totals, the allocation and the performance series are in the reporting currency, next to each original currency. `app.New` refuses any reporting currency but PLN with an `*UnsupportedReportingCurrencyError`, because stored valuations and FX rates are against PLN only (D-20) and T-12 (proposal P-49) is open.

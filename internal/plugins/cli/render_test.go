@@ -195,25 +195,33 @@ waiting  registry.example.com/w@sha256:00  SignedByTrustedSigner  False (NoGrant
 }
 
 // TestRenderProposalDeliveries checks that the install shows the owner a
-// connector that declares bond terms or index levels, which the core
-// stores only once the grant approves them (D-179), and that a connector
-// that declares neither says nothing of them.
+// connector that declares bond terms or index levels (D-179), or index
+// readings (D-186), which the core stores only once the grant approves
+// them, that a connector that declares none says nothing of them, and that
+// an upgrade adding index readings lists them.
 func TestRenderProposalDeliveries(t *testing.T) {
 	t.Parallel()
 	const (
-		terms  = "  Declares:     it delivers treasury bond series terms, which the core stores once approved (D-179)\n"
-		levels = "  Declares:     it delivers market index levels, which the core stores once approved (D-179)\n"
+		terms    = "  Declares:     it delivers treasury bond series terms, which the core stores once approved (D-179)\n"
+		levels   = "  Declares:     it delivers market index levels, which the core stores once approved (D-179)\n"
+		readings = "  Declares:     it delivers index readings such as CPI, which the core stores once approved (D-186)\n"
 	)
 	for _, declared := range []bool{true, false} {
 		p := &app.Proposal{
 			Plugin: plugins.Plugin{Name: "bonds", Image: sampleImage, Manifest: plugins.Manifest{
 				Capabilities: []plugins.Capability{plugins.CapabilityConnector}, BondTerms: declared, IndexLevels: declared,
+				IndexReadings: declared,
 			}},
 			Decision: plugins.TrustDecision{Trust: plugins.Unverified, Signer: plugins.OpenFiefCI()},
 		}
 		got := cli.RenderProposal(p)
-		if strings.Contains(got, terms) != declared || strings.Contains(got, levels) != declared {
+		if strings.Contains(got, terms) != declared || strings.Contains(got, levels) != declared || strings.Contains(got, readings) != declared {
 			t.Errorf("declared %v: summary\n%s", declared, got)
+		}
+		up := &app.UpgradeProposal{Proposal: *p, From: p.Plugin, Diff: plugins.PermissionsDiff{Added: plugins.Permissions{IndexReadings: declared}}}
+		const added = "  + readings      the core stores the index readings it delivers, such as CPI, which value your bonds (D-186)\n"
+		if got := cli.RenderUpgrade(up); strings.Contains(got, added) != declared {
+			t.Errorf("declared %v: upgrade summary\n%s", declared, got)
 		}
 	}
 }

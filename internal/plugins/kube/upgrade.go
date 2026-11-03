@@ -95,6 +95,7 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 			MarketData:       m.MarketData,
 			BondTerms:        m.BondTerms,
 			IndexLevels:      m.IndexLevels,
+			IndexReadings:    m.IndexReadings,
 			Institutions:     m.Institutions,
 		},
 		Config: rawOf(r.Spec.Config),
@@ -134,7 +135,7 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 func grantOf(r *v1alpha1.PluginGrant) plugins.Grant {
 	g := plugins.Grant{Plugin: r.Name, Permissions: plugins.Permissions{
 		Secrets: r.Spec.Secrets, BrowserPaths: r.Spec.BrowserPaths, MarketData: r.Spec.MarketData,
-		BondTerms: r.Spec.BondTerms, IndexLevels: r.Spec.IndexLevels,
+		BondTerms: r.Spec.BondTerms, IndexLevels: r.Spec.IndexLevels, IndexReadings: r.Spec.IndexReadings,
 	}}
 	if r.Spec.Institutions != nil && len(*r.Spec.Institutions) > 0 {
 		g.Permissions.Institutions = slices.Clone(*r.Spec.Institutions)

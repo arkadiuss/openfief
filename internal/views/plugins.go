@@ -89,6 +89,9 @@ type PluginRecord struct {
 	// for the running version (spec.manifest and status.effective, D-179).
 	RequestsBondTerms, BondTerms     bool
 	RequestsIndexLevels, IndexLevels bool
+	// RequestsIndexReadings and IndexReadings: the same of the index
+	// readings bond terms depend on (D-186).
+	RequestsIndexReadings, IndexReadings bool
 	// Institutions are the institutions its manifest declares it books
 	// for (D-182); ApprovedInstitutions those of them its grant approves,
 	// the ones it books for (status.effective, D-185).
@@ -128,6 +131,10 @@ type Plugin struct {
 	// (D-179).
 	RequestsBondTerms, BondTerms     bool
 	RequestsIndexLevels, IndexLevels bool
+	// IndexReadings: the core stores the index readings it delivers, such
+	// as CPI and the NBP reference rate, as the grant approves;
+	// RequestsIndexReadings: its manifest declares them (D-186).
+	RequestsIndexReadings, IndexReadings bool
 	// Institutions are the institutions its manifest declares it books
 	// for (D-182); ApprovedInstitutions those of them its grant approves.
 	// The core refuses a delivery naming any but the approved ones (D-185).
@@ -160,6 +167,8 @@ func PluginOf(r *PluginRecord) Plugin {
 
 		RequestsBondTerms: r.RequestsBondTerms, BondTerms: r.BondTerms,
 		RequestsIndexLevels: r.RequestsIndexLevels, IndexLevels: r.IndexLevels,
+
+		RequestsIndexReadings: r.RequestsIndexReadings, IndexReadings: r.IndexReadings,
 	}
 	if p.Trust.Signed() {
 		p.Signer = r.Signer

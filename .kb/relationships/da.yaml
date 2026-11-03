@@ -706,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ee4a2800f11
+  - type: executable_for
+    from: SYM-core-test-helper-stored-reading-sources
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-03T10:12:01.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ff49da9fb3e

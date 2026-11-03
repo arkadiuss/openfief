@@ -180,6 +180,12 @@ type Manifest struct {
 	// +optional
 	IndexLevels bool `json:"indexLevels,omitempty"`
 
+	// IndexReadings declares that a connector delivers the index readings
+	// bond terms depend on, such as CPI and the NBP reference rate. The
+	// PluginGrant approves it (D-186).
+	// +optional
+	IndexReadings bool `json:"indexReadings,omitempty"`
+
 	// Institutions are the institutions a connector books for, such as
 	// ibkr: the core refuses a delivery that names any other (D-182).
 	// +optional
@@ -258,6 +264,11 @@ type Permissions struct {
 	// core stores only when this approves it (D-179).
 	// +optional
 	IndexLevels bool `json:"indexLevels,omitempty"`
+	// IndexReadings lets a connector deliver the index readings bond terms
+	// depend on, such as CPI and the NBP reference rate, which the core
+	// stores only when this approves it (D-186).
+	// +optional
+	IndexReadings bool `json:"indexReadings,omitempty"`
 	// Institutions are the institutions a connector books for, such as
 	// ibkr; the core accepts a delivery only for an institution both the
 	// signed manifest and the PluginGrant name (D-185). A PluginGrant

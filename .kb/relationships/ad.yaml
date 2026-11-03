@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34a003c66f9e
+  - type: executable_for
+    from: SYM-core-test-helper-readings-connector-sync
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-03T10:11:49.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8191de8e560a

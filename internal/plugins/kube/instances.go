@@ -279,6 +279,7 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 				MarketData:       m.MarketData,
 				BondTerms:        m.BondTerms,
 				IndexLevels:      m.IndexLevels,
+				IndexReadings:    m.IndexReadings,
 				Institutions:     slices.Clone(m.Institutions),
 			},
 			Config: raw(p.Config),
@@ -306,6 +307,8 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 			MarketData:   g.Permissions.MarketData,
 			BondTerms:    g.Permissions.BondTerms,
 			IndexLevels:  g.Permissions.IndexLevels,
+			// The index readings bond terms depend on (D-186).
+			IndexReadings: g.Permissions.IndexReadings,
 		},
 	}
 	// A connector's grant always names its institutions, even none, so it

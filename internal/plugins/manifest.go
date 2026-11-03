@@ -104,6 +104,10 @@ type Manifest struct {
 	// (D-179).
 	BondTerms   bool
 	IndexLevels bool
+	// IndexReadings declares that a connector delivers the index readings
+	// bond terms depend on, such as CPI and the NBP reference rate. Like
+	// BondTerms, the grant approves it (D-186).
+	IndexReadings bool
 	// Institutions are the institutions a connector books for, such as
 	// "ibkr": the core refuses a delivery that names any other (D-182).
 	Institutions []string
@@ -288,9 +292,9 @@ func sortedCopy[T any](xs []T, compare func(a, b T) int) []T {
 	return out
 }
 
-// validateDeliveries refuses bond terms or index levels declared by a
-// plugin that can't act as a connector: only a connector delivers them
-// (D-179).
+// validateDeliveries refuses bond terms, index levels or index readings
+// declared by a plugin that can't act as a connector: only a connector
+// delivers them (D-179, D-186).
 func (m *Manifest) validateDeliveries() []error {
 	if slices.Contains(m.Capabilities, CapabilityConnector) {
 		return nil
@@ -301,6 +305,9 @@ func (m *Manifest) validateDeliveries() []error {
 	}
 	if m.IndexLevels {
 		errs = append(errs, &FieldError{Field: "indexLevels", Err: ErrDeliveryNeedsConnector})
+	}
+	if m.IndexReadings {
+		errs = append(errs, &FieldError{Field: "indexReadings", Err: ErrDeliveryNeedsConnector})
 	}
 	return errs
 }

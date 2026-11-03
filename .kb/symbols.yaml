@@ -14381,6 +14381,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-plan
       - type: implements
+        target: REQ-valuation-index-readings-record-instance
+      - type: implements
         target: REQ-valuation-input-validation-named-base
       - type: implements
         target: REQ-valuation-revaluation-triggers
@@ -15256,9 +15258,13 @@ symbols:
       recorded_at: 2026-10-28T08:01:49.961Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-delivered-by
+      - type: covered_by
         target: TEST-valuation-postgres-queue
       - type: implements
         target: REQ-valuation-enqueue-same-transaction
+      - type: implements
+        target: REQ-valuation-index-readings-record-instance
   - id: SYM-valuation-postgres-store-save-bond-terms
     title: Store.SaveBondTerms
     sourceFile: internal/valuation/postgres/queue.go
@@ -90501,11 +90507,13 @@ symbols:
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
       - type: implements
+        target: REQ-ingest-delivery-declared-institution
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+      - type: implements
         target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-plugins-manifest-declarations
-      - type: implements
-        target: REQ-ingest-delivery-declared-institution
   - id: SYM-ingest-kube-test-test-deployed-declarations
     title: TestDeployedDeclarations
     sourceFile: internal/ingest/kube/discovery_test.go
@@ -90940,11 +90948,13 @@ symbols:
       - type: implements
         target: REQ-ingest-bond-terms-index-levels-declared-approved
       - type: implements
+        target: REQ-ingest-delivery-declared-institution
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+      - type: implements
         target: REQ-plugins-install-shows-market-data-list
       - type: implements
         target: REQ-plugins-manifest-declarations
-      - type: implements
-        target: REQ-ingest-delivery-declared-institution
   - id: SYM-demo-cross-check-prices
     title: crossCheckPrices
     sourceFile: internal/demo/crosscheck.go
@@ -129224,6 +129234,8 @@ symbols:
       - type: implements
         target: REQ-ingest-bond-terms-index-levels-declared-approved
       - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+      - type: implements
         target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
       - type: implements
         target: REQ-ingest-undeclared-deliveries-item-per-instance
@@ -129238,6 +129250,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
       - type: implements
         target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
       - type: implements
@@ -129575,8 +129589,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-deliveries
+      - type: covered_by
+        target: TEST-plugins-index-readings
       - type: implements
         target: REQ-ingest-bond-terms-index-levels-declared-approved
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
   - id: SYM-views-kube-test-helper-with-flags
     title: withFlags
     sourceFile: internal/views/kube/plugins_test.go
@@ -131084,3 +131102,194 @@ symbols:
         target: TEST-views-connectapi-plugins
       - type: implements
         target: REQ-views-plugin-approved-institutions
+  - id: SYM-plugins-effective-permissions-index-readings
+    status: active
+    title: EffectivePermissions.IndexReadings
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:08:29.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-index-readings
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-ingest-join-kinds
+    status: active
+    title: joinKinds
+    sourceFile: internal/ingest/declarations.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:08:42.226Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-viewsv1-plugin-get-index-readings
+    status: active
+    title: Plugin.GetIndexReadings
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:08:55.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-viewsv1-plugin-get-requested-index-readings
+    status: active
+    title: Plugin.GetRequestedIndexReadings
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:09:09.312Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-plugins-test-readings-outcome
+    title: readingsOutcome
+    sourceFile: internal/plugins/readings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:10:56.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-index-readings
+  - id: SYM-plugins-test-index-readings-permission
+    title: TestIndexReadingsPermission
+    sourceFile: internal/plugins/readings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:11:07.541Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-index-readings
+  - id: SYM-core-test-helper-readings-connector
+    title: readingsConnector
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:11:32.323Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-readings-connector-sync
+    title: readingsConnector.Sync
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:11:45.169Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-stored-reading-sources
+    title: storedReadingSources
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:11:56.840Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-approve-delivery
+    title: approveDelivery
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:12:10.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-undeclared-readings-dropped
+    title: TestUndeclaredReadingsDropped
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:12:23.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-valuation-postgres-test-stored-readings-name-their-instance
+    title: TestStoredReadingsNameTheirInstance
+    sourceFile: internal/valuation/postgres/deliveredby_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:12:33.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-delivered-by
+  - id: SYM-plugins-test-index-readings-label
+    title: TestIndexReadingsLabel
+    sourceFile: internal/plugins/readings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:02.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-index-readings
+  - id: SYM-plugins-test-index-readings-diff
+    title: TestIndexReadingsDiff
+    sourceFile: internal/plugins/readings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:14.503Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-index-readings
+  - id: SYM-core-test-helper-sync-undeclared-readings
+    title: syncUndeclaredReadings
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:25.947Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-plugins-effective-permissions-same-deliveries
+    status: active
+    title: EffectivePermissions.sameDeliveries
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:38.152Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-index-readings
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-plugins-permissions-no-deliveries
+    status: active
+    title: Permissions.noDeliveries
+    sourceFile: internal/plugins/permissions.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:50.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-index-readings
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved

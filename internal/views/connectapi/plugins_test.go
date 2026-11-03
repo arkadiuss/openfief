@@ -55,6 +55,7 @@ func installed() fakePlugins {
 			Trust:     "Unverified", SignerKind: "OpenFiefCI", Signer: "openfief-ci",
 			RequestsMarketData: true, MarketData: true, Institutions: []string{"eodhd"}, ApprovedInstitutions: []string{"eodhd"},
 			RequestsIndexLevels: true, IndexLevels: true, RequestsBondTerms: true,
+			RequestsIndexReadings: true, IndexReadings: true,
 		},
 	}
 }
@@ -113,6 +114,7 @@ func TestConnectListPlugins(t *testing.T) {
 			TrustReason: "SignedByTrustedSigner", Phase: "Running", Ready: true,
 			MarketData: true, RequestedMarketData: true, Institutions: []string{"eodhd"}, ApprovedInstitutions: []string{"eodhd"},
 			IndexLevels: true, RequestedIndexLevels: true, RequestedBondTerms: true,
+			IndexReadings: true, RequestedIndexReadings: true,
 		},
 		{
 			Instance: "ui", Image: pluginImage, ImageDigest: views.ImageDigest(pluginImage),

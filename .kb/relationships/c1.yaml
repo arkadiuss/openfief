@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-988aa0e7cceb
+  - type: validates
+    from: TEST-valuation-app-plan
+    to: REQ-valuation-index-readings-record-instance
+    created_at: 2026-11-03T10:08:11.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65a6928a2e38

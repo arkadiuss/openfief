@@ -102,7 +102,8 @@ func writePermissions(b *strings.Builder, prefix string, p *plugins.Permissions)
 
 // writeDeliveries writes, with line, what a connector is told and what of
 // its deliveries the core accepts: market data (D-123), bond terms and
-// index levels (D-179) and the institutions it books for (D-185).
+// index levels (D-179), index readings (D-186) and the institutions it
+// books for (D-185).
 func writeDeliveries(line func(kind, value string), p *plugins.Permissions) {
 	if p.MarketData {
 		line("market data", "each sync tells it every instrument you hold and the model's targets (D-123)")
@@ -112,6 +113,9 @@ func writeDeliveries(line func(kind, value string), p *plugins.Permissions) {
 	}
 	if p.IndexLevels {
 		line("index levels", "the core stores the market index levels it delivers (D-179)")
+	}
+	if p.IndexReadings {
+		line("readings", "the core stores the index readings it delivers, such as CPI, which value your bonds (D-186)")
 	}
 	for _, in := range p.Institutions {
 		line("institution", in+", which the core accepts its deliveries for (D-185)")

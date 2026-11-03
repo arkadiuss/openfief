@@ -28,9 +28,9 @@ var (
 	// ErrMarketDataNeedsConnector: only a connector can be a market-data
 	// connector (D-123).
 	ErrMarketDataNeedsConnector = errors.New("only a connector may declare itself a market-data connector")
-	// ErrDeliveryNeedsConnector: only a connector delivers bond terms or
-	// index levels (D-179).
-	ErrDeliveryNeedsConnector = errors.New("only a connector may declare that it delivers bond terms or index levels")
+	// ErrDeliveryNeedsConnector: only a connector delivers bond terms,
+	// index levels (D-179) or index readings (D-186).
+	ErrDeliveryNeedsConnector = errors.New("only a connector may declare that it delivers bond terms, index levels or index readings")
 	// ErrInstitutionsNeedConnector: only a connector books for
 	// institutions (D-182).
 	ErrInstitutionsNeedConnector = errors.New("only a connector may declare institutions")

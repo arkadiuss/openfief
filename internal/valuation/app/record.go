@@ -82,7 +82,8 @@ func (r *InputRecorder) RecordFXRates(ctx context.Context, rates []valuation.FXR
 
 // RecordIndexReadings stores period index readings and enqueues a
 // revaluation of every account from the first day of the earliest
-// reading's month.
+// reading's month. Every reading must name the connector instance that
+// delivered it, which is stored with it (D-186), or nothing is stored.
 func (r *InputRecorder) RecordIndexReadings(ctx context.Context, readings []valuation.IndexReading) error {
 	var dates []kernel.Date
 	for i := range readings {
@@ -91,6 +92,9 @@ func (r *InputRecorder) RecordIndexReadings(ctx context.Context, readings []valu
 		case valuation.CPI, valuation.ReferenceRate:
 		default:
 			return fmt.Errorf("%w: %w: %s", ErrInvalidInput, valuation.ErrUnknownIndexKind, x.Kind)
+		}
+		if x.Source == "" {
+			return fmt.Errorf("%w: %s reading for %d-%02d names no source", ErrInvalidInput, x.Kind, x.Year, int(x.Month))
 		}
 		first, err := kernel.NewDate(x.Year, x.Month, 1)
 		if err != nil {

@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6fd23ed6db3
+  - type: validates
+    from: TEST-plugins-index-readings
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:08:02.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc53b8e424a9

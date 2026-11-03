@@ -128,6 +128,12 @@ spec:
                   IndexLevels lets a connector deliver market index levels, which the
                   core stores only when this approves it (D-179).
                 type: boolean
+              indexReadings:
+                description: |-
+                  IndexReadings lets a connector deliver the index readings bond terms
+                  depend on, such as CPI and the NBP reference rate, which the core
+                  stores only when this approves it (D-186).
+                type: boolean
               institutions:
                 description: |-
                   Institutions are the institutions a connector books for, such as

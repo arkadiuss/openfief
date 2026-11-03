@@ -41,3 +41,24 @@ func TestStoredTermsAndLevelsNameTheirInstance(t *testing.T) {
 		t.Error("SaveIndexLevels without a source: no error")
 	}
 }
+
+// TestStoredReadingsNameTheirInstance checks D-186's record in the store:
+// each index reading is stored with the connector instance that delivered
+// it, and none can be stored without one.
+func TestStoredReadingsNameTheirInstance(t *testing.T) {
+	t.Parallel()
+	store, pool := newStore(t)
+	ctx := t.Context()
+	reading := valuation.IndexReading{Kind: valuation.CPI, Year: 2026, Month: 2, Value: dec(t, "0.049"), Source: "bonds-a"}
+	if err := store.SaveIndexReadings(ctx, []valuation.IndexReading{reading}, nil); err != nil {
+		t.Fatalf("SaveIndexReadings: %v", err)
+	}
+	got := textRows(t, pool, `SELECT kind || ' ' || year || '-' || month || ' ' || source FROM valuation.index_readings`)
+	if diff := cmp.Diff([]string{"cpi 2026-2 bonds-a"}, got); diff != "" {
+		t.Errorf("index readings' sources (-want +got):\n%s", diff)
+	}
+	reading.Source = ""
+	if err := store.SaveIndexReadings(ctx, []valuation.IndexReading{reading}, nil); err == nil {
+		t.Error("SaveIndexReadings without a source: no error")
+	}
+}

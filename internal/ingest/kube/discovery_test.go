@@ -134,6 +134,11 @@ func TestDeployedDeclarations(t *testing.T) {
 			name: "bond terms and index levels approved (D-179)", manifest: map[string]any{"bondTerms": true, "indexLevels": true},
 			granted: map[string]any{"bondTerms": true, "indexLevels": true}, want: ingest.Declarations{BondTerms: true, IndexLevels: true},
 		},
+		{
+			name: "index readings approved (D-186)", manifest: map[string]any{"indexReadings": true},
+			granted: map[string]any{"indexReadings": true}, want: ingest.Declarations{IndexReadings: true},
+		},
+		{name: "index readings declared, not approved", manifest: map[string]any{"indexReadings": true}},
 		{name: "bond terms declared, not approved", manifest: map[string]any{"bondTerms": true, "indexLevels": true}, granted: map[string]any{"indexLevels": true}, want: ingest.Declarations{IndexLevels: true}},
 		{name: "market data approved", manifest: map[string]any{"marketData": true}, granted: map[string]any{"marketData": true}, want: ingest.Declarations{MarketData: true}},
 		{name: "market data declared, not approved", manifest: map[string]any{"marketData": true}},

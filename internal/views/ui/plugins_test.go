@@ -61,8 +61,9 @@ func TestPluginsPageMarketData(t *testing.T) {
 }
 
 // TestPluginsPageDeliveries checks that the plugins page shows the owner
-// which bond terms and index levels a connector delivers are stored, as
-// its grant approves, and which are dropped for want of approval (D-179).
+// which bond terms and index levels (D-179) and index readings (D-186) a
+// connector delivers are stored, as its grant approves, and which are
+// dropped for want of approval.
 func TestPluginsPageDeliveries(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
@@ -74,7 +75,10 @@ func TestPluginsPageDeliveries(t *testing.T) {
 	if !found || !strings.Contains(row, ">Index levels<") || !strings.Contains(row, "Delivers treasury bond series terms; not approved, so they are dropped.") {
 		t.Errorf("prices-main's row doesn't show its index levels stored and its bond terms dropped:\n%s", row)
 	}
-	if n := strings.Count(body, ">Bond terms<"); n != 0 {
+	if !strings.Contains(row, "Delivers index readings such as CPI; not approved, so they are dropped.") {
+		t.Errorf("prices-main's row doesn't show its index readings dropped:\n%s", row)
+	}
+	if n := strings.Count(body, ">Bond terms<") + strings.Count(body, ">Index readings<"); n != 0 {
 		t.Errorf("%d plugins marked as delivering bond terms, want none approved", n)
 	}
 }

@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc6cfcedb253
+  - type: executable_for
+    from: SYM-core-test-undeclared-readings-dropped
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-03T10:12:27.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59f36c7cda5d

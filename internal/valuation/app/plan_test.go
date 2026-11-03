@@ -159,7 +159,7 @@ func TestRecordInputs(t *testing.T) {
 		{
 			name: "index readings revalue every account from the month's first day",
 			record: func(r *app.InputRecorder) error {
-				return r.RecordIndexReadings(t.Context(), []valuation.IndexReading{{Kind: valuation.CPI, Year: 2026, Month: time.February, Value: dec(t, "0.03")}})
+				return r.RecordIndexReadings(t.Context(), []valuation.IndexReading{{Kind: valuation.CPI, Year: 2026, Month: time.February, Value: dec(t, "0.03"), Source: "bonds"}})
 			},
 			want: recorded{what: "index", revals: revals(t, "acc-1", "2026-02-01", "acc-2", "2026-02-01")},
 		},
@@ -257,7 +257,10 @@ func TestRecordRejectsInvalidInputs(t *testing.T) {
 			return r.RecordIndexReadings(t.Context(), []valuation.IndexReading{{Year: 2026, Month: time.March}})
 		}},
 		{name: "a reading for month 13", record: func(r *app.InputRecorder) error {
-			return r.RecordIndexReadings(t.Context(), []valuation.IndexReading{{Kind: valuation.CPI, Year: 2026, Month: 13}})
+			return r.RecordIndexReadings(t.Context(), []valuation.IndexReading{{Kind: valuation.CPI, Year: 2026, Month: 13, Source: "bonds"}})
+		}},
+		{name: "an index reading without a source", record: func(r *app.InputRecorder) error {
+			return r.RecordIndexReadings(t.Context(), []valuation.IndexReading{{Kind: valuation.CPI, Year: 2026, Month: time.March, Value: dec(t, "0.03")}})
 		}},
 		{name: "an index level without a name", record: func(r *app.InputRecorder) error {
 			return r.RecordIndexLevels(t.Context(), []valuation.IndexLevel{{Date: date(t, "2026-03-02"), Level: dec(t, "1")}})
