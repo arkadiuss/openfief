@@ -3,11 +3,13 @@
 // TestServeForBrowser (go test) on ADDR, default localhost:8099, and stops them when done: a screenshot of every main page at 390 px in light and dark and at desktop width; no page
 // scrolls sideways at 360 or 390 px; the menu folds the navigation away on a phone; the manifest makes the UI
 // installable; the service worker caches only static files, serves the offline page instead of a page when the
-// network is gone, and empties its cache on sign-out.
+// network is gone, and empties its cache on sign-out; an action the fake core refuses for want of a recent passkey
+// check (D-183) asks to confirm with a passkey, runs the check with Chromium's virtual authenticator, and goes ahead.
 // Usage: node scripts/ui-browser.mjs <screenshot-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
 import { spawn } from 'node:child_process';
+import { generateKeyPairSync, randomBytes } from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
 import { chromium } from 'playwright-core';
@@ -138,6 +140,41 @@ async function phoneMenu(browser) {
 
 // app checks installability, the worker's cache, the offline page and sign-out, in a profile of its own: an
 // incognito context is never installable.
+// passkeyCheck creates a script token while the fake core wants a recent passkey check (D-183): the settings ask to
+// confirm with a passkey, the button runs an assertion with Chromium's virtual authenticator, which holds a synthetic
+// passkey for localhost, and the token is then created and its secret shown.
+async function passkeyCheck(browser) {
+  const ctx = await context(browser, { viewport: { width: 1280, height: 800 }, colorScheme: 'light' }, true);
+  const page = await ctx.newPage();
+  const cdp = await ctx.newCDPSession(page);
+  await cdp.send('WebAuthn.enable');
+  const { authenticatorId } = await cdp.send('WebAuthn.addVirtualAuthenticator', {
+    options: { protocol: 'ctap2', transport: 'internal', hasResidentKey: true, hasUserVerification: true, isUserVerified: true, automaticPresenceSimulation: true },
+  });
+  const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'P-256' });
+  await cdp.send('WebAuthn.addCredential', {
+    authenticatorId,
+    credential: {
+      credentialId: randomBytes(16).toString('base64'), isResidentCredential: true, rpId: 'localhost',
+      privateKey: privateKey.export({ type: 'pkcs8', format: 'der' }).toString('base64'),
+      userHandle: randomBytes(32).toString('base64'), signCount: 0,
+    },
+  });
+  await page.goto(base + '/settings', { waitUntil: 'networkidle' });
+  await page.fill('#token-name', 'nightly');
+  await Promise.all([page.waitForLoadState('networkidle'), page.click('form[action="/settings/tokens"] button[type="submit"]')]);
+  const confirm = page.locator('[data-webauthn="check"]');
+  check(await confirm.isVisible(), 'passkey check: no "Confirm with your passkey" after a refused action');
+  await page.screenshot({ path: path.join(out, 'desktop-light-passkey-check.png'), fullPage: true });
+  await Promise.all([page.waitForURL(base + '/settings/tokens'), confirm.click()]);
+  await page.waitForLoadState('networkidle');
+  const body = await page.textContent('body');
+  check(body.includes('Script token nightly created'), 'passkey check: the action did not go ahead after the check');
+  const { credentials } = await cdp.send('WebAuthn.getCredentials', { authenticatorId });
+  check(credentials.length === 1 && credentials[0].signCount > 0, 'passkey check: the virtual authenticator signed nothing');
+  await ctx.close();
+}
+
 async function app() {
   const profile = mkdtempSync(path.join(os.tmpdir(), 'openfief-ui-'));
   const ctx = await chromium.launchPersistentContext(profile, { ...browserOptions(), viewport: { width: 1280, height: 800 } });
@@ -189,6 +226,7 @@ try {
   await shoot(browser, 'desktop-light', { viewport: { width: 1280, height: 800 }, colorScheme: 'light' });
   await phoneMenu(browser);
   await phoneRows(browser);
+  await passkeyCheck(browser);
   await app();
 } finally {
   await browser.close();

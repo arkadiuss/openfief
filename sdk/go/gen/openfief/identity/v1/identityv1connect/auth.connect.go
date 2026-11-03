@@ -32,6 +32,13 @@
 //   UNAUTHENTICATED: the view plugin drops its cookie and shows the login.
 //   A read-scoped session calling an owner-only method fails with
 //   PERMISSION_DENIED.
+// - Enrolling or removing a passkey, issuing an enrollment link and
+//   creating a script token also need a passkey check made in the same
+//   session within the last five minutes (D-183): logging in with a passkey
+//   counts, and so does BeginPasskeyCheck then FinishPasskeyCheck. Without
+//   one they fail with FAILED_PRECONDITION and a PasskeyCheckRequired error
+//   detail: the view plugin asks the owner to confirm with their passkey,
+//   runs the check and asks again.
 // - WebAuthn options and credentials travel as JSON text in the WebAuthn
 //   Level 3 JSON forms, so the browser uses
 //   PublicKeyCredential.parseCreationOptionsFromJSON,
@@ -110,6 +117,15 @@ const (
 	// AuthServiceCreateEnrollmentLinkProcedure is the fully-qualified name of the AuthService's
 	// CreateEnrollmentLink RPC.
 	AuthServiceCreateEnrollmentLinkProcedure = "/openfief.identity.v1.AuthService/CreateEnrollmentLink"
+	// AuthServiceBeginPasskeyCheckProcedure is the fully-qualified name of the AuthService's
+	// BeginPasskeyCheck RPC.
+	AuthServiceBeginPasskeyCheckProcedure = "/openfief.identity.v1.AuthService/BeginPasskeyCheck"
+	// AuthServiceFinishPasskeyCheckProcedure is the fully-qualified name of the AuthService's
+	// FinishPasskeyCheck RPC.
+	AuthServiceFinishPasskeyCheckProcedure = "/openfief.identity.v1.AuthService/FinishPasskeyCheck"
+	// AuthServiceSignOutEverywhereProcedure is the fully-qualified name of the AuthService's
+	// SignOutEverywhere RPC.
+	AuthServiceSignOutEverywhereProcedure = "/openfief.identity.v1.AuthService/SignOutEverywhere"
 )
 
 // AuthServiceClient is a client for the openfief.identity.v1.AuthService service.
@@ -119,7 +135,8 @@ type AuthServiceClient interface {
 	GetLoginMethods(context.Context, *connect.Request[v1.GetLoginMethodsRequest]) (*connect.Response[v1.GetLoginMethodsResponse], error)
 	// BeginRegistration starts creating a passkey on origin's host. It needs
 	// either a valid one-time enrollment code issued for origin (D-60) or an
-	// owner-scoped session issued on origin's host.
+	// owner-scoped session issued on origin's host with a recent passkey
+	// check (D-183).
 	BeginRegistration(context.Context, *connect.Request[v1.BeginRegistrationRequest]) (*connect.Response[v1.BeginRegistrationResponse], error)
 	// FinishRegistration verifies the new credential and stores the passkey.
 	// A registration begun with an enrollment code uses the code up and also
@@ -141,11 +158,13 @@ type AuthServiceClient interface {
 	WhoAmI(context.Context, *connect.Request[v1.WhoAmIRequest]) (*connect.Response[v1.WhoAmIResponse], error)
 	// ListPasskeys returns every passkey, on every host. Owner scope.
 	ListPasskeys(context.Context, *connect.Request[v1.ListPasskeysRequest]) (*connect.Response[v1.ListPasskeysResponse], error)
-	// RemovePasskey removes a passkey. The last passkey can't be removed
-	// (FAILED_PRECONDITION). Owner scope.
+	// RemovePasskey removes a passkey and revokes every session it signed in.
+	// The last passkey can't be removed (FAILED_PRECONDITION). Owner scope,
+	// with a recent passkey check (D-183).
 	RemovePasskey(context.Context, *connect.Request[v1.RemovePasskeyRequest]) (*connect.Response[v1.RemovePasskeyResponse], error)
 	// CreateScriptToken issues a read-only script token (D-27) and returns its
-	// secret, the only time it is shown. Owner scope.
+	// secret, the only time it is shown. Owner scope, with a recent passkey
+	// check (D-183).
 	CreateScriptToken(context.Context, *connect.Request[v1.CreateScriptTokenRequest]) (*connect.Response[v1.CreateScriptTokenResponse], error)
 	// ListScriptTokens returns every script token, expired and revoked ones
 	// included, in creation order. Owner scope.
@@ -154,8 +173,19 @@ type AuthServiceClient interface {
 	RevokeScriptToken(context.Context, *connect.Request[v1.RevokeScriptTokenRequest]) (*connect.Response[v1.RevokeScriptTokenResponse], error)
 	// CreateEnrollmentLink issues a one-time link for creating a passkey on
 	// another allowed origin, such as the owner's own Ingress host (D-60).
-	// Owner scope.
+	// Owner scope, with a recent passkey check (D-183).
 	CreateEnrollmentLink(context.Context, *connect.Request[v1.CreateEnrollmentLinkRequest]) (*connect.Response[v1.CreateEnrollmentLinkResponse], error)
+	// BeginPasskeyCheck starts a passkey check in the session: an assertion
+	// like a login's, against the passkeys of origin's host (D-183). Owner
+	// scope.
+	BeginPasskeyCheck(context.Context, *connect.Request[v1.BeginPasskeyCheckRequest]) (*connect.Response[v1.BeginPasskeyCheckResponse], error)
+	// FinishPasskeyCheck verifies the assertion and records the check on the
+	// session, which may then enroll or remove a passkey, issue an enrollment
+	// link and create a script token for five minutes. Owner scope.
+	FinishPasskeyCheck(context.Context, *connect.Request[v1.FinishPasskeyCheckRequest]) (*connect.Response[v1.FinishPasskeyCheckResponse], error)
+	// SignOutEverywhere revokes every session, on every host and of either
+	// scope, the caller's own included (D-183). Owner scope.
+	SignOutEverywhere(context.Context, *connect.Request[v1.SignOutEverywhereRequest]) (*connect.Response[v1.SignOutEverywhereResponse], error)
 }
 
 // NewAuthServiceClient constructs a client for the openfief.identity.v1.AuthService service. By
@@ -253,6 +283,24 @@ func NewAuthServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(authServiceMethods.ByName("CreateEnrollmentLink")),
 			connect.WithClientOptions(opts...),
 		),
+		beginPasskeyCheck: connect.NewClient[v1.BeginPasskeyCheckRequest, v1.BeginPasskeyCheckResponse](
+			httpClient,
+			baseURL+AuthServiceBeginPasskeyCheckProcedure,
+			connect.WithSchema(authServiceMethods.ByName("BeginPasskeyCheck")),
+			connect.WithClientOptions(opts...),
+		),
+		finishPasskeyCheck: connect.NewClient[v1.FinishPasskeyCheckRequest, v1.FinishPasskeyCheckResponse](
+			httpClient,
+			baseURL+AuthServiceFinishPasskeyCheckProcedure,
+			connect.WithSchema(authServiceMethods.ByName("FinishPasskeyCheck")),
+			connect.WithClientOptions(opts...),
+		),
+		signOutEverywhere: connect.NewClient[v1.SignOutEverywhereRequest, v1.SignOutEverywhereResponse](
+			httpClient,
+			baseURL+AuthServiceSignOutEverywhereProcedure,
+			connect.WithSchema(authServiceMethods.ByName("SignOutEverywhere")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -272,6 +320,9 @@ type authServiceClient struct {
 	listScriptTokens     *connect.Client[v1.ListScriptTokensRequest, v1.ListScriptTokensResponse]
 	revokeScriptToken    *connect.Client[v1.RevokeScriptTokenRequest, v1.RevokeScriptTokenResponse]
 	createEnrollmentLink *connect.Client[v1.CreateEnrollmentLinkRequest, v1.CreateEnrollmentLinkResponse]
+	beginPasskeyCheck    *connect.Client[v1.BeginPasskeyCheckRequest, v1.BeginPasskeyCheckResponse]
+	finishPasskeyCheck   *connect.Client[v1.FinishPasskeyCheckRequest, v1.FinishPasskeyCheckResponse]
+	signOutEverywhere    *connect.Client[v1.SignOutEverywhereRequest, v1.SignOutEverywhereResponse]
 }
 
 // GetLoginMethods calls openfief.identity.v1.AuthService.GetLoginMethods.
@@ -344,6 +395,21 @@ func (c *authServiceClient) CreateEnrollmentLink(ctx context.Context, req *conne
 	return c.createEnrollmentLink.CallUnary(ctx, req)
 }
 
+// BeginPasskeyCheck calls openfief.identity.v1.AuthService.BeginPasskeyCheck.
+func (c *authServiceClient) BeginPasskeyCheck(ctx context.Context, req *connect.Request[v1.BeginPasskeyCheckRequest]) (*connect.Response[v1.BeginPasskeyCheckResponse], error) {
+	return c.beginPasskeyCheck.CallUnary(ctx, req)
+}
+
+// FinishPasskeyCheck calls openfief.identity.v1.AuthService.FinishPasskeyCheck.
+func (c *authServiceClient) FinishPasskeyCheck(ctx context.Context, req *connect.Request[v1.FinishPasskeyCheckRequest]) (*connect.Response[v1.FinishPasskeyCheckResponse], error) {
+	return c.finishPasskeyCheck.CallUnary(ctx, req)
+}
+
+// SignOutEverywhere calls openfief.identity.v1.AuthService.SignOutEverywhere.
+func (c *authServiceClient) SignOutEverywhere(ctx context.Context, req *connect.Request[v1.SignOutEverywhereRequest]) (*connect.Response[v1.SignOutEverywhereResponse], error) {
+	return c.signOutEverywhere.CallUnary(ctx, req)
+}
+
 // AuthServiceHandler is an implementation of the openfief.identity.v1.AuthService service.
 type AuthServiceHandler interface {
 	// GetLoginMethods says which ways in the login page can offer at origin.
@@ -351,7 +417,8 @@ type AuthServiceHandler interface {
 	GetLoginMethods(context.Context, *connect.Request[v1.GetLoginMethodsRequest]) (*connect.Response[v1.GetLoginMethodsResponse], error)
 	// BeginRegistration starts creating a passkey on origin's host. It needs
 	// either a valid one-time enrollment code issued for origin (D-60) or an
-	// owner-scoped session issued on origin's host.
+	// owner-scoped session issued on origin's host with a recent passkey
+	// check (D-183).
 	BeginRegistration(context.Context, *connect.Request[v1.BeginRegistrationRequest]) (*connect.Response[v1.BeginRegistrationResponse], error)
 	// FinishRegistration verifies the new credential and stores the passkey.
 	// A registration begun with an enrollment code uses the code up and also
@@ -373,11 +440,13 @@ type AuthServiceHandler interface {
 	WhoAmI(context.Context, *connect.Request[v1.WhoAmIRequest]) (*connect.Response[v1.WhoAmIResponse], error)
 	// ListPasskeys returns every passkey, on every host. Owner scope.
 	ListPasskeys(context.Context, *connect.Request[v1.ListPasskeysRequest]) (*connect.Response[v1.ListPasskeysResponse], error)
-	// RemovePasskey removes a passkey. The last passkey can't be removed
-	// (FAILED_PRECONDITION). Owner scope.
+	// RemovePasskey removes a passkey and revokes every session it signed in.
+	// The last passkey can't be removed (FAILED_PRECONDITION). Owner scope,
+	// with a recent passkey check (D-183).
 	RemovePasskey(context.Context, *connect.Request[v1.RemovePasskeyRequest]) (*connect.Response[v1.RemovePasskeyResponse], error)
 	// CreateScriptToken issues a read-only script token (D-27) and returns its
-	// secret, the only time it is shown. Owner scope.
+	// secret, the only time it is shown. Owner scope, with a recent passkey
+	// check (D-183).
 	CreateScriptToken(context.Context, *connect.Request[v1.CreateScriptTokenRequest]) (*connect.Response[v1.CreateScriptTokenResponse], error)
 	// ListScriptTokens returns every script token, expired and revoked ones
 	// included, in creation order. Owner scope.
@@ -386,8 +455,19 @@ type AuthServiceHandler interface {
 	RevokeScriptToken(context.Context, *connect.Request[v1.RevokeScriptTokenRequest]) (*connect.Response[v1.RevokeScriptTokenResponse], error)
 	// CreateEnrollmentLink issues a one-time link for creating a passkey on
 	// another allowed origin, such as the owner's own Ingress host (D-60).
-	// Owner scope.
+	// Owner scope, with a recent passkey check (D-183).
 	CreateEnrollmentLink(context.Context, *connect.Request[v1.CreateEnrollmentLinkRequest]) (*connect.Response[v1.CreateEnrollmentLinkResponse], error)
+	// BeginPasskeyCheck starts a passkey check in the session: an assertion
+	// like a login's, against the passkeys of origin's host (D-183). Owner
+	// scope.
+	BeginPasskeyCheck(context.Context, *connect.Request[v1.BeginPasskeyCheckRequest]) (*connect.Response[v1.BeginPasskeyCheckResponse], error)
+	// FinishPasskeyCheck verifies the assertion and records the check on the
+	// session, which may then enroll or remove a passkey, issue an enrollment
+	// link and create a script token for five minutes. Owner scope.
+	FinishPasskeyCheck(context.Context, *connect.Request[v1.FinishPasskeyCheckRequest]) (*connect.Response[v1.FinishPasskeyCheckResponse], error)
+	// SignOutEverywhere revokes every session, on every host and of either
+	// scope, the caller's own included (D-183). Owner scope.
+	SignOutEverywhere(context.Context, *connect.Request[v1.SignOutEverywhereRequest]) (*connect.Response[v1.SignOutEverywhereResponse], error)
 }
 
 // NewAuthServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -481,6 +561,24 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(authServiceMethods.ByName("CreateEnrollmentLink")),
 		connect.WithHandlerOptions(opts...),
 	)
+	authServiceBeginPasskeyCheckHandler := connect.NewUnaryHandler(
+		AuthServiceBeginPasskeyCheckProcedure,
+		svc.BeginPasskeyCheck,
+		connect.WithSchema(authServiceMethods.ByName("BeginPasskeyCheck")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceFinishPasskeyCheckHandler := connect.NewUnaryHandler(
+		AuthServiceFinishPasskeyCheckProcedure,
+		svc.FinishPasskeyCheck,
+		connect.WithSchema(authServiceMethods.ByName("FinishPasskeyCheck")),
+		connect.WithHandlerOptions(opts...),
+	)
+	authServiceSignOutEverywhereHandler := connect.NewUnaryHandler(
+		AuthServiceSignOutEverywhereProcedure,
+		svc.SignOutEverywhere,
+		connect.WithSchema(authServiceMethods.ByName("SignOutEverywhere")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.identity.v1.AuthService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AuthServiceGetLoginMethodsProcedure:
@@ -511,6 +609,12 @@ func NewAuthServiceHandler(svc AuthServiceHandler, opts ...connect.HandlerOption
 			authServiceRevokeScriptTokenHandler.ServeHTTP(w, r)
 		case AuthServiceCreateEnrollmentLinkProcedure:
 			authServiceCreateEnrollmentLinkHandler.ServeHTTP(w, r)
+		case AuthServiceBeginPasskeyCheckProcedure:
+			authServiceBeginPasskeyCheckHandler.ServeHTTP(w, r)
+		case AuthServiceFinishPasskeyCheckProcedure:
+			authServiceFinishPasskeyCheckHandler.ServeHTTP(w, r)
+		case AuthServiceSignOutEverywhereProcedure:
+			authServiceSignOutEverywhereHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -574,4 +678,16 @@ func (UnimplementedAuthServiceHandler) RevokeScriptToken(context.Context, *conne
 
 func (UnimplementedAuthServiceHandler) CreateEnrollmentLink(context.Context, *connect.Request[v1.CreateEnrollmentLinkRequest]) (*connect.Response[v1.CreateEnrollmentLinkResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.CreateEnrollmentLink is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) BeginPasskeyCheck(context.Context, *connect.Request[v1.BeginPasskeyCheckRequest]) (*connect.Response[v1.BeginPasskeyCheckResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.BeginPasskeyCheck is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) FinishPasskeyCheck(context.Context, *connect.Request[v1.FinishPasskeyCheckRequest]) (*connect.Response[v1.FinishPasskeyCheckResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.FinishPasskeyCheck is not implemented"))
+}
+
+func (UnimplementedAuthServiceHandler) SignOutEverywhere(context.Context, *connect.Request[v1.SignOutEverywhereRequest]) (*connect.Response[v1.SignOutEverywhereResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.identity.v1.AuthService.SignOutEverywhere is not implemented"))
 }

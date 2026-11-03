@@ -121,8 +121,9 @@ func (s *Store) UpdatePasskeyUse(ctx context.Context, p *identity.Passkey) error
 }
 
 // DeletePasskey deletes the passkey id unless it is the last one, under a
-// lock on the table so two removals can't both pass the check.
-func (s *Store) DeletePasskey(ctx context.Context, id []byte) error {
+// lock on the table so two removals can't both pass the check, and revokes,
+// as of at, every session it signed in, in the same transaction.
+func (s *Store) DeletePasskey(ctx context.Context, id []byte, at time.Time) error {
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, `LOCK TABLE identity.passkeys IN SHARE ROW EXCLUSIVE MODE`); err != nil {
 			return fmt.Errorf("removing a passkey: %w", err)
@@ -141,6 +142,10 @@ func (s *Store) DeletePasskey(ctx context.Context, id []byte) error {
 		}
 		if _, err := tx.Exec(ctx, `DELETE FROM identity.passkeys WHERE credential_id = $1`, id); err != nil {
 			return fmt.Errorf("removing a passkey: %w", err)
+		}
+		if _, err := tx.Exec(ctx, `UPDATE identity.sessions SET revoked_at = GREATEST($2, created_at)
+			WHERE passkey_id = $1 AND revoked_at IS NULL`, id, at); err != nil {
+			return fmt.Errorf("revoking the sessions of a removed passkey: %w", err)
 		}
 		return nil
 	})
@@ -255,15 +260,21 @@ func (s *Store) UseEnrollmentCode(ctx context.Context, id identity.EnrollmentCod
 }
 
 // sessionColumns are the columns scanSession reads, in its order.
-const sessionColumns = `id, scope, authenticator, rp_id, created_at, last_seen_at, expires_at, idle_seconds, revoked_at`
+const sessionColumns = `id, scope, authenticator, rp_id, created_at, last_seen_at, expires_at, idle_seconds, revoked_at,
+	passkey_id, passkey_checked_at`
 
 // SaveSession stores a new session with its key's hash.
 func (s *Store) SaveSession(ctx context.Context, ss *identity.Session, keyHash []byte) error {
+	var checked *time.Time
+	if !ss.PasskeyCheckedAt.IsZero() {
+		checked = &ss.PasskeyCheckedAt
+	}
 	_, err := s.pool.Exec(ctx, `INSERT INTO identity.sessions
-		(id, scope, authenticator, rp_id, key_sha256, created_at, last_seen_at, expires_at, idle_seconds)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+		(id, scope, authenticator, rp_id, key_sha256, created_at, last_seen_at, expires_at, idle_seconds,
+		 passkey_id, passkey_checked_at)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
 		string(ss.ID), ss.Scope.String(), ss.Authenticator.String(), ss.RPID, keyHash,
-		ss.CreatedAt, ss.LastSeenAt, ss.ExpiresAt, int64(ss.IdleTimeout/time.Second))
+		ss.CreatedAt, ss.LastSeenAt, ss.ExpiresAt, int64(ss.IdleTimeout/time.Second), ss.PasskeyID, checked)
 	if err != nil {
 		return fmt.Errorf("storing session %s: %w", ss.ID, err)
 	}
@@ -297,10 +308,10 @@ func scanSession(row pgx.CollectableRow, extra ...any) (identity.Session, error)
 		ss                         identity.Session
 		id, scope, auth            string
 		idle                       int64
-		revoked                    *time.Time
+		revoked, checked           *time.Time
 		created, lastSeen, expires time.Time
 	)
-	dest := append([]any{&id, &scope, &auth, &ss.RPID, &created, &lastSeen, &expires, &idle, &revoked}, extra...)
+	dest := append([]any{&id, &scope, &auth, &ss.RPID, &created, &lastSeen, &expires, &idle, &revoked, &ss.PasskeyID, &checked}, extra...)
 	if err := row.Scan(dest...); err != nil {
 		return identity.Session{}, fmt.Errorf("scanning a session: %w", err)
 	}
@@ -316,6 +327,9 @@ func scanSession(row pgx.CollectableRow, extra ...any) (identity.Session, error)
 	ss.IdleTimeout = time.Duration(idle) * time.Second
 	if revoked != nil {
 		ss.RevokedAt = revoked.UTC()
+	}
+	if checked != nil {
+		ss.PasskeyCheckedAt = checked.UTC()
 	}
 	return ss, nil
 }
@@ -336,6 +350,30 @@ func (s *Store) RevokeSession(ctx context.Context, id identity.SessionID, at tim
 		WHERE id = $1`, string(id), at)
 	if err != nil {
 		return fmt.Errorf("revoking session %s: %w", id, err)
+	}
+	if tag.RowsAffected() == 0 {
+		return fmt.Errorf("%w: %s", app.ErrUnknownSession, id)
+	}
+	return nil
+}
+
+// RevokeSessions revokes, as of at, every session not revoked yet, and
+// returns how many it revoked.
+func (s *Store) RevokeSessions(ctx context.Context, at time.Time) (int, error) {
+	tag, err := s.pool.Exec(ctx, `UPDATE identity.sessions SET revoked_at = GREATEST($1, created_at) WHERE revoked_at IS NULL`, at)
+	if err != nil {
+		return 0, fmt.Errorf("revoking every session: %w", err)
+	}
+	return int(tag.RowsAffected()), nil
+}
+
+// PasskeyCheckSession stores at as the session's last passkey check, never
+// moving it back, or fails with an error wrapping app.ErrUnknownSession.
+func (s *Store) PasskeyCheckSession(ctx context.Context, id identity.SessionID, at time.Time) error {
+	tag, err := s.pool.Exec(ctx, `UPDATE identity.sessions
+		SET passkey_checked_at = GREATEST(COALESCE(passkey_checked_at, $2), $2) WHERE id = $1`, string(id), at)
+	if err != nil {
+		return fmt.Errorf("recording a passkey check of session %s: %w", id, err)
 	}
 	if tag.RowsAffected() == 0 {
 		return fmt.Errorf("%w: %s", app.ErrUnknownSession, id)

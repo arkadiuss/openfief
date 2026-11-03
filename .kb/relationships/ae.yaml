@@ -622,3 +622,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5bf152ee1926
+  - type: implements
+    from: SYM-ui-auth-server-passkey-check-begin
+    to: REQ-ui-passkey-check-prompt
+    created_at: 2026-11-03T04:44:01.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-428b91e22c38
+  - type: covered_by
+    from: SYM-ui-auth-server-passkey-check-begin
+    to: TEST-ui-passkey-check
+    created_at: 2026-11-03T04:44:01.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fe9ed9adfbd
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:49:05.064Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03e5ae8015c6
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:49:05.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64255c164e28
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-response
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:49:05.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9069e8840bb6

@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0b512576c6a5
+  - type: verified_by
+    from: SCEN-ui-sign-out-everywhere
+    to: TEST-ui-passkey-check
+    created_at: 2026-11-03T02:41:16.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7dfd8c16810

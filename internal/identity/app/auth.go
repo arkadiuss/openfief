@@ -37,6 +37,11 @@ var (
 	ErrInvalidRequest = errors.New("invalid request")
 	// ErrNotFound reports a passkey or script token that does not exist.
 	ErrNotFound = errors.New("not found")
+	// ErrPasskeyCheckRequired reports an action D-183 protects, asked in a
+	// session without a passkey check in the last five minutes: the owner
+	// confirms with their passkey (BeginPasskeyCheck, FinishPasskeyCheck)
+	// and asks again.
+	ErrPasskeyCheckRequired = errors.New("passkey check required")
 )
 
 // AuthConfig is what the auth use cases are configured with.
@@ -86,6 +91,9 @@ type Authenticated struct {
 	Owner         identity.Owner
 	Scope         identity.SessionScope
 	Authenticator identity.Authenticator
+	// Passkey is the credential ID of the passkey that proved it; nil for
+	// another authenticator.
+	Passkey []byte
 }
 
 // Proof is what the browser sends to finish an authentication: the
@@ -118,7 +126,7 @@ func (a *Auth) Login(ctx context.Context, authenticator Authenticator, origin st
 	if err != nil {
 		return NewSession{}, fmt.Errorf("authenticating: %w", err)
 	}
-	return a.issueSession(ctx, got, o)
+	return a.issueSession(ctx, &got, o)
 }
 
 // Session returns the session of token when it may be used now on origin's
@@ -183,6 +191,21 @@ func (a *Auth) WhoAmI(ctx context.Context, origin, token string) (identity.Owner
 		return identity.Owner{}, identity.Session{}, fmt.Errorf("loading the owner: %w", err)
 	}
 	return owner, s, nil
+}
+
+// SignOutEverywhere revokes every session, on every host and of either
+// scope, the owner session of token among them (D-183), and returns how
+// many it revoked. It needs an owner session but no recent passkey check:
+// it only takes ways in away.
+func (a *Auth) SignOutEverywhere(ctx context.Context, origin, token string) (int, error) {
+	if _, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner); err != nil {
+		return 0, err
+	}
+	n, err := a.store.RevokeSessions(ctx, a.now().UTC())
+	if err != nil {
+		return 0, fmt.Errorf("signing out everywhere: %w", err)
+	}
+	return n, nil
 }
 
 // Principal is who a read API bearer token stands for: always the owner,
@@ -294,7 +317,7 @@ func (d DemoAuthenticator) Authenticate(ctx context.Context, _ identity.Origin, 
 }
 
 // issueSession stores a new session for got on o's host.
-func (a *Auth) issueSession(ctx context.Context, got Authenticated, o identity.Origin) (NewSession, error) {
+func (a *Auth) issueSession(ctx context.Context, got *Authenticated, o identity.Origin) (NewSession, error) {
 	id, err := a.randomHex(identity.IDBytes)
 	if err != nil {
 		return NewSession{}, fmt.Errorf("issuing a session: %w", err)
@@ -307,10 +330,31 @@ func (a *Auth) issueSession(ctx context.Context, got Authenticated, o identity.O
 	if err != nil {
 		return NewSession{}, fmt.Errorf("issuing a session: %w", err)
 	}
+	if got.Passkey != nil {
+		// A passkey signing the session in is its first passkey check (D-183).
+		if s, err = s.SignedInWithPasskey(got.Passkey); err != nil {
+			return NewSession{}, fmt.Errorf("issuing a session: %w", err)
+		}
+	}
 	if err := a.store.SaveSession(ctx, &s, identity.HashKey(key)); err != nil {
 		return NewSession{}, fmt.Errorf("issuing a session: %w", err)
 	}
 	return NewSession{Session: s, Token: identity.FormatSessionToken(s.ID, key)}, nil
+}
+
+// recentOwner checks the allowed origin text and the owner session of
+// token on it, which must have had a passkey check within
+// identity.PasskeyCheckWindow (D-183); otherwise the error wraps
+// ErrPasskeyCheckRequired.
+func (a *Auth) recentOwner(ctx context.Context, origin, token string) (identity.Origin, identity.Session, error) {
+	o, s, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner)
+	if err != nil {
+		return identity.Origin{}, identity.Session{}, err
+	}
+	if err := s.CheckRecentPasskey(a.now().UTC()); err != nil {
+		return identity.Origin{}, identity.Session{}, fmt.Errorf("%w: %w", ErrPasskeyCheckRequired, err)
+	}
+	return o, s, nil
 }
 
 // sessionOn checks the allowed origin text and the session of token on it

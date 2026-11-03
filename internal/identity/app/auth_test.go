@@ -571,17 +571,47 @@ func TestRemovePasskey(t *testing.T) {
 	f := newAuthFixture(t, demoConfig{})
 	_, ns := f.enroll(t)
 	first := f.store.passkeys[0].ID()
-	if err := f.auth.RemovePasskey(t.Context(), local, ns.Token, first); !errors.Is(err, app.ErrLastPasskey) {
+	if _, err := f.auth.RemovePasskey(t.Context(), local, ns.Token, first); !errors.Is(err, app.ErrLastPasskey) {
 		t.Errorf("removing the last passkey = %v, want %v", err, app.ErrLastPasskey)
 	}
-	if _, _, err := f.register(t, local, app.RegistrationGrant{SessionToken: ns.Token}); err != nil {
-		t.Fatalf("adding a passkey with a session: %v", err)
+	second, _, regErr := f.register(t, local, app.RegistrationGrant{SessionToken: ns.Token})
+	if regErr != nil {
+		t.Fatalf("adding a passkey with a session: %v", regErr)
 	}
-	if err := f.auth.RemovePasskey(t.Context(), local, ns.Token, first); err != nil {
-		t.Errorf("removing one of two passkeys: %v", err)
+	nb, loginErr := f.login(t, second, local)
+	if loginErr != nil {
+		t.Fatalf("login with the second passkey: %v", loginErr)
 	}
-	if err := f.auth.RemovePasskey(t.Context(), local, ns.Token, first); !errors.Is(err, app.ErrNotFound) {
+	// Removing the first passkey revokes the session it signed in (D-183),
+	// not the second passkey's.
+	if signedOut, err := f.auth.RemovePasskey(t.Context(), local, nb.Token, first); err != nil || signedOut {
+		t.Errorf("removing one of two passkeys = %v, signed out %v; want nil, false", err, signedOut)
+	}
+	if _, _, err := f.auth.WhoAmI(t.Context(), local, ns.Token); !errors.Is(err, identity.ErrSessionRevoked) {
+		t.Errorf("WhoAmI in the removed passkey's session = %v, want %v", err, identity.ErrSessionRevoked)
+	}
+	if _, _, err := f.auth.WhoAmI(t.Context(), local, nb.Token); err != nil {
+		t.Errorf("WhoAmI in the other passkey's session: %v", err)
+	}
+	if _, err := f.auth.RemovePasskey(t.Context(), local, nb.Token, first); !errors.Is(err, app.ErrNotFound) {
 		t.Errorf("removing it again = %v, want %v", err, app.ErrNotFound)
+	}
+}
+
+// TestRemoveOwnPasskey checks that removing the passkey that signed in the
+// caller's own session signs the caller out too, and says so (D-183).
+func TestRemoveOwnPasskey(t *testing.T) {
+	t.Parallel()
+	f := newAuthFixture(t, demoConfig{})
+	_, ns := f.enroll(t)
+	if _, _, err := f.register(t, local, app.RegistrationGrant{SessionToken: ns.Token}); err != nil {
+		t.Fatalf("adding a second passkey: %v", err)
+	}
+	if signedOut, err := f.auth.RemovePasskey(t.Context(), local, ns.Token, f.store.passkeys[0].ID()); err != nil || !signedOut {
+		t.Errorf("removing the caller's own passkey = %v, signed out %v; want nil, true", err, signedOut)
+	}
+	if _, _, err := f.auth.WhoAmI(t.Context(), local, ns.Token); !errors.Is(err, identity.ErrSessionRevoked) {
+		t.Errorf("WhoAmI after removing its own passkey = %v, want %v", err, identity.ErrSessionRevoked)
 	}
 }
 

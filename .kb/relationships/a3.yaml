@@ -923,3 +923,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-affd959f1088
+  - type: implements
+    from: SYM-identity-gen-pb-passkey-check-required-get-window
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:47:36.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-261b72af10b9
+  - type: implements
+    from: SYM-identity-gen-pb-passkey-check-required-get-window
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:47:36.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78917c2de747
+  - type: covered_by
+    from: SYM-identity-gen-pb-passkey-check-required-get-window
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:47:36.161Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4555789d615

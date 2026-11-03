@@ -538,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-54a74eae17d3
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:54:17.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87c1629ef6e0
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:54:17.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ece4afbb9b37
+  - type: covered_by
+    from: SYM-identity-gen-pb-sign-out-everywhere-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:54:17.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dabd3a449daf

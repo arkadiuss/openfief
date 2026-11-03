@@ -692,3 +692,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78a39953780f
+  - type: executable_for
+    from: SYM-identity-app-passkeycheck-test-test-passkey-check-guards-removal
+    to: TEST-identity-passkey-check-app
+    created_at: 2026-11-03T04:38:39.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd5d2031efeb
+  - type: implements
+    from: SYM-identity-postgres-auth-store-revoke-sessions
+    to: REQ-identity-sign-out-everywhere
+    created_at: 2026-11-03T04:41:48.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d03875700ce
+  - type: covered_by
+    from: SYM-identity-postgres-auth-store-revoke-sessions
+    to: TEST-identity-auth-postgres
+    created_at: 2026-11-03T04:41:48.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4b8566254d9

@@ -18,8 +18,11 @@ import (
 	"strings"
 
 	"connectrpc.com/connect"
+	"google.golang.org/protobuf/types/known/durationpb"
 
+	"github.com/arkadiuss/openfief/internal/identity"
 	"github.com/arkadiuss/openfief/internal/identity/app"
+	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1/identityv1connect"
 )
 
@@ -142,15 +145,32 @@ func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.E
 		{app.ErrRegistrationFailed, connect.CodeInvalidArgument},
 		{app.ErrInvalidRequest, connect.CodeInvalidArgument},
 		{app.ErrCeremony, connect.CodeFailedPrecondition},
+		{app.ErrPasskeyCheckRequired, connect.CodeFailedPrecondition},
 		{app.ErrLastPasskey, connect.CodeFailedPrecondition},
 		{app.ErrNotFound, connect.CodeNotFound},
 	}
 	for _, c := range classes {
 		if errors.Is(err, c.class) {
 			log.LogAttrs(ctx, slog.LevelInfo, "auth call denied", slog.String("reason", err.Error()))
-			return connect.NewError(c.code, c.class)
+			out := connect.NewError(c.code, c.class)
+			if errors.Is(c.class, app.ErrPasskeyCheckRequired) {
+				addPasskeyCheckDetail(ctx, log, out)
+			}
+			return out
 		}
 	}
 	log.LogAttrs(ctx, slog.LevelError, "auth call failed", slog.String("error", err.Error()))
 	return connect.NewError(connect.CodeInternal, errInternal)
+}
+
+// addPasskeyCheckDetail marks out as a refusal for want of a recent passkey
+// check (D-183), with the PasskeyCheckRequired detail a view plugin tells
+// apart from other failed preconditions.
+func addPasskeyCheckDetail(ctx context.Context, log *slog.Logger, out *connect.Error) {
+	detail, err := connect.NewErrorDetail(&identityv1.PasskeyCheckRequired{Window: durationpb.New(identity.PasskeyCheckWindow)})
+	if err != nil {
+		log.LogAttrs(ctx, slog.LevelError, "adding an error detail failed", slog.String("error", err.Error()))
+		return
+	}
+	out.AddDetail(detail)
 }

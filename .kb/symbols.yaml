@@ -127436,3 +127436,1629 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-reusable-signing-guard
+  - id: SYM-identity-app-auth-auth-sign-out-everywhere
+    title: Auth.SignOutEverywhere
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:37:08.139Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-app
+      - type: implements
+        target: REQ-identity-sign-out-everywhere
+  - id: SYM-identity-app-auth-auth-recent-owner
+    title: Auth.recentOwner
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:37:18.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-app
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-app-auth-test-test-remove-own-passkey
+    title: TestRemoveOwnPasskey
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:37:27.524Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-revoke-sessions
+    title: memAuthStore.RevokeSessions
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:37:36.632Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-authstore-test-mem-auth-store-passkey-check-session
+    title: memAuthStore.PasskeyCheckSession
+    sourceFile: internal/identity/app/authstore_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:37:46.327Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-passkeycheck-test-protected-actions
+    title: protectedActions
+    sourceFile: internal/identity/app/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:37:55.100Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-app
+  - id: SYM-identity-app-passkeycheck-test-auth-fixture-passkey-check
+    title: authFixture.passkeyCheck
+    sourceFile: internal/identity/app/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:38:03.479Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-app
+  - id: SYM-identity-app-passkeycheck-test-auth-fixture-want-protected
+    title: authFixture.wantProtected
+    sourceFile: internal/identity/app/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:38:11.300Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-app
+  - id: SYM-identity-app-passkeycheck-test-test-passkey-check-window
+    title: TestPasskeyCheckWindow
+    sourceFile: internal/identity/app/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:38:19.703Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-app
+  - id: SYM-identity-app-passkeycheck-test-test-login-counts-as-passkey-check
+    title: TestLoginCountsAsPasskeyCheck
+    sourceFile: internal/identity/app/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:38:28.132Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-app
+  - id: SYM-identity-app-passkeycheck-test-test-passkey-check-guards-removal
+    title: TestPasskeyCheckGuardsRemoval
+    sourceFile: internal/identity/app/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:38:36.177Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-app
+  - id: SYM-identity-app-passkeycheck-test-test-passkey-check-needs-owner-session
+    title: TestPasskeyCheckNeedsOwnerSession
+    sourceFile: internal/identity/app/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:38:44.050Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-app
+  - id: SYM-identity-app-passkeycheck-test-test-passkey-check-ceremony-refused
+    title: TestPasskeyCheckCeremonyRefused
+    sourceFile: internal/identity/app/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:38:52.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-app
+  - id: SYM-identity-app-passkeycheck-test-test-sign-out-everywhere
+    title: TestSignOutEverywhere
+    sourceFile: internal/identity/app/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:39:00.882Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-app
+  - id: SYM-identity-app-passkeys-auth-assert-passkey
+    title: Auth.assertPasskey
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:39:09.362Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-app
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-app-passkeys-auth-begin-passkey-check
+    title: Auth.BeginPasskeyCheck
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:39:17.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-app
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-app-passkeys-auth-finish-passkey-check
+    title: Auth.FinishPasskeyCheck
+    sourceFile: internal/identity/app/passkeys.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:39:27.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-app
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-connectapi-handler-add-passkey-check-detail
+    title: addPasskeyCheckDetail
+    sourceFile: internal/identity/connectapi/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:39:36.756Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-connectapi
+      - type: implements
+        target: REQ-identity-passkey-check-required-error
+  - id: SYM-identity-connectapi-handler-test-new-served
+    title: newServed
+    sourceFile: internal/identity/connectapi/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:39:45.888Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-connectapi
+  - id: SYM-identity-connectapi-passkeycheck-test-session-store-save-ceremony
+    title: sessionStore.SaveCeremony
+    sourceFile: internal/identity/connectapi/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:39:53.627Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-connectapi
+  - id: SYM-identity-connectapi-passkeycheck-test-session-store-revoke-sessions
+    title: sessionStore.RevokeSessions
+    sourceFile: internal/identity/connectapi/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:40:02.576Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-connectapi
+  - id: SYM-identity-connectapi-passkeycheck-test-stale-owner-session
+    title: staleOwnerSession
+    sourceFile: internal/identity/connectapi/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:40:11.102Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-connectapi
+  - id: SYM-identity-connectapi-passkeycheck-test-want-passkey-check
+    title: wantPasskeyCheck
+    sourceFile: internal/identity/connectapi/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:40:19.551Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-connectapi
+  - id: SYM-identity-connectapi-passkeycheck-test-test-passkey-check-over-connect
+    title: TestPasskeyCheckOverConnect
+    sourceFile: internal/identity/connectapi/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:40:28.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-connectapi
+  - id: SYM-identity-connectapi-service-auth-service-begin-passkey-check
+    title: authService.BeginPasskeyCheck
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:40:37.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-connectapi
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-connectapi-service-auth-service-finish-passkey-check
+    title: authService.FinishPasskeyCheck
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:40:47.219Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-connectapi
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-connectapi-service-auth-service-sign-out-everywhere
+    title: authService.SignOutEverywhere
+    sourceFile: internal/identity/connectapi/service.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:40:57.931Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-connectapi
+      - type: implements
+        target: REQ-identity-sign-out-everywhere
+  - id: SYM-identity-passkeycheck-test-passkey-session
+    title: passkeySession
+    sourceFile: internal/identity/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:41:07.381Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-domain
+  - id: SYM-identity-passkeycheck-test-test-check-recent-passkey
+    title: TestCheckRecentPasskey
+    sourceFile: internal/identity/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:41:16.618Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-domain
+  - id: SYM-identity-passkeycheck-test-test-session-passkey
+    title: TestSessionPasskey
+    sourceFile: internal/identity/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:41:25.833Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-domain
+  - id: SYM-identity-passkeycheck-test-test-demo-session-has-no-passkey
+    title: TestDemoSessionHasNoPasskey
+    sourceFile: internal/identity/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:41:34.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-passkey-check-domain
+  - id: SYM-identity-postgres-auth-store-revoke-sessions
+    title: Store.RevokeSessions
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:41:44.467Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-sign-out-everywhere
+  - id: SYM-identity-postgres-auth-store-passkey-check-session
+    title: Store.PasskeyCheckSession
+    sourceFile: internal/identity/postgres/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:41:54.174Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-postgres
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-postgres-auth-test-passkey-for
+    title: passkeyFor
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:42:03.676Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-saved-session
+    title: savedSession
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:42:12.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-want-revoked-everywhere
+    title: wantRevokedEverywhere
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:42:23.742Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-test-session-passkey-checks
+    title: TestSessionPasskeyChecks
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:42:35.579Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-want-stored
+    title: wantStored
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:42:46.820Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-postgres-auth-test-test-session-store-refuses-demo-passkey
+    title: TestSessionStoreRefusesDemoPasskey
+    sourceFile: internal/identity/postgres/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:42:56.901Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-postgres
+  - id: SYM-identity-session-session-signed-in-with-passkey
+    title: Session.SignedInWithPasskey
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:43:07.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-domain
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-session-session-passkey-checked
+    title: Session.PasskeyChecked
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:43:17.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-domain
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-session-session-check-recent-passkey
+    title: Session.CheckRecentPasskey
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:43:28.289Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-passkey-check-domain
+      - type: implements
+        target: REQ-identity-protected-actions-recent-passkey-check
+  - id: SYM-identity-session-session-signed-in-by
+    title: Session.SignedInBy
+    sourceFile: internal/identity/session.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:43:37.820Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-remove-passkey-revokes-sessions
+  - id: SYM-ui-auth-passkey-check-answer
+    title: passkeyCheckAnswer
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:43:48.002Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-passkey-check
+      - type: implements
+        target: REQ-ui-passkey-check-prompt
+  - id: SYM-ui-auth-server-passkey-check-begin
+    title: server.passkeyCheckBegin
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:43:57.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-passkey-check
+      - type: implements
+        target: REQ-ui-passkey-check-prompt
+  - id: SYM-ui-auth-server-passkey-check-finish
+    title: server.passkeyCheckFinish
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:44:08.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-passkey-check
+      - type: implements
+        target: REQ-ui-passkey-check-prompt
+  - id: SYM-ui-auth-server-sign-out-everywhere
+    title: server.signOutEverywhere
+    sourceFile: internal/views/ui/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:44:18.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-passkey-check
+      - type: implements
+        target: REQ-identity-sign-out-everywhere
+  - id: SYM-ui-passkeycheck-test-fake-auth-needs-check
+    title: fakeAuth.needsCheck
+    sourceFile: internal/views/ui/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:44:28.003Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-passkey-check
+  - id: SYM-ui-passkeycheck-test-fake-auth-begin-passkey-check
+    title: fakeAuth.BeginPasskeyCheck
+    sourceFile: internal/views/ui/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:44:37.968Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-passkey-check
+  - id: SYM-ui-passkeycheck-test-fake-auth-finish-passkey-check
+    title: fakeAuth.FinishPasskeyCheck
+    sourceFile: internal/views/ui/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:44:48.321Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-passkey-check
+  - id: SYM-ui-passkeycheck-test-fake-auth-sign-out-everywhere
+    title: fakeAuth.SignOutEverywhere
+    sourceFile: internal/views/ui/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:44:58.082Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-passkey-check
+  - id: SYM-ui-passkeycheck-test-test-passkey-check-prompt
+    title: TestPasskeyCheckPrompt
+    sourceFile: internal/views/ui/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:45:08.312Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-passkey-check
+  - id: SYM-ui-passkeycheck-test-test-passkey-check-refusals
+    title: TestPasskeyCheckRefusals
+    sourceFile: internal/views/ui/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:45:19.290Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-passkey-check
+  - id: SYM-ui-passkeycheck-test-test-remove-passkey-signs-out
+    title: TestRemovePasskeySignsOut
+    sourceFile: internal/views/ui/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:45:29.932Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-passkey-check
+  - id: SYM-ui-passkeycheck-test-test-sign-out-everywhere
+    title: TestSignOutEverywhere
+    sourceFile: internal/views/ui/passkeycheck_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:45:39.284Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-passkey-check
+  - id: SYM-ui-settings-pending-action
+    title: pendingAction
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:45:48.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-passkey-check
+      - type: implements
+        target: REQ-ui-passkey-check-prompt
+  - id: SYM-ui-settings-form-field
+    title: formField
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:45:59.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-passkey-check
+      - type: implements
+        target: REQ-ui-passkey-check-prompt
+  - id: SYM-ui-settings-passkey-check-required
+    title: passkeyCheckRequired
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:46:10.107Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-passkey-check
+      - type: implements
+        target: REQ-ui-passkey-check-prompt
+  - id: SYM-ui-settings-server-protected-failed
+    title: server.protectedFailed
+    sourceFile: internal/views/ui/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:46:19.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-passkey-check
+      - type: implements
+        target: REQ-ui-passkey-check-prompt
+  - id: SYM-identity-gen-pb-session-get-passkey-checked-at
+    title: Session.GetPasskeyCheckedAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:46:29.622Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-check-required
+    title: PasskeyCheckRequired
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:46:38.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-check-required-reset
+    title: PasskeyCheckRequired.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:46:47.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-check-required-string
+    title: PasskeyCheckRequired.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:46:56.239Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-check-required-proto-message
+    title: PasskeyCheckRequired.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:47:05.440Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-check-required-proto-reflect
+    title: PasskeyCheckRequired.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:47:14.714Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-check-required-descriptor
+    title: PasskeyCheckRequired.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:47:23.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-passkey-check-required-get-window
+    title: PasskeyCheckRequired.GetWindow
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:47:33.008Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-remove-passkey-response-get-signed-out
+    title: RemovePasskeyResponse.GetSignedOut
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:47:42.326Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-request
+    title: BeginPasskeyCheckRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:47:50.340Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-request-reset
+    title: BeginPasskeyCheckRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:47:59.265Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-request-string
+    title: BeginPasskeyCheckRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:48:08.201Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-request-proto-message
+    title: BeginPasskeyCheckRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:48:17.264Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
+    title: BeginPasskeyCheckRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:48:26.779Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-request-descriptor
+    title: BeginPasskeyCheckRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:48:36.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-request-get-origin
+    title: BeginPasskeyCheckRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:48:45.754Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-request-get-session-token
+    title: BeginPasskeyCheckRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:48:54.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-response
+    title: BeginPasskeyCheckResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:49:02.332Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-response-reset
+    title: BeginPasskeyCheckResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:49:11.291Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-response-string
+    title: BeginPasskeyCheckResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:49:20.394Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-response-proto-message
+    title: BeginPasskeyCheckResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:49:30.490Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-response-proto-reflect
+    title: BeginPasskeyCheckResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:49:40.623Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-response-descriptor
+    title: BeginPasskeyCheckResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:49:49.703Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-response-get-ceremony-id
+    title: BeginPasskeyCheckResponse.GetCeremonyId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:50:00.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-response-get-options-json
+    title: BeginPasskeyCheckResponse.GetOptionsJson
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:50:12.962Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-begin-passkey-check-response-get-expires-at
+    title: BeginPasskeyCheckResponse.GetExpiresAt
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:50:25.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request
+    title: FinishPasskeyCheckRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:50:33.123Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request-reset
+    title: FinishPasskeyCheckRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:50:41.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request-string
+    title: FinishPasskeyCheckRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:50:50.390Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request-proto-message
+    title: FinishPasskeyCheckRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:50:58.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request-proto-reflect
+    title: FinishPasskeyCheckRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:51:07.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request-descriptor
+    title: FinishPasskeyCheckRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:51:15.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request-get-origin
+    title: FinishPasskeyCheckRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:51:24.406Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request-get-session-token
+    title: FinishPasskeyCheckRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:51:33.057Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request-get-ceremony-id
+    title: FinishPasskeyCheckRequest.GetCeremonyId
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:51:41.623Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-request-get-credential-json
+    title: FinishPasskeyCheckRequest.GetCredentialJson
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:51:49.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-response
+    title: FinishPasskeyCheckResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:51:57.019Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-response-reset
+    title: FinishPasskeyCheckResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:52:05.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-response-string
+    title: FinishPasskeyCheckResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:52:13.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-response-proto-message
+    title: FinishPasskeyCheckResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:52:22.293Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-response-proto-reflect
+    title: FinishPasskeyCheckResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:52:30.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-response-descriptor
+    title: FinishPasskeyCheckResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:52:39.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-finish-passkey-check-response-get-session
+    title: FinishPasskeyCheckResponse.GetSession
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:52:48.366Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-request
+    title: SignOutEverywhereRequest
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:52:55.653Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-request-reset
+    title: SignOutEverywhereRequest.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:53:04.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-request-string
+    title: SignOutEverywhereRequest.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:53:13.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
+    title: SignOutEverywhereRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:53:23.117Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-request-proto-reflect
+    title: SignOutEverywhereRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:53:32.625Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-request-descriptor
+    title: SignOutEverywhereRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:53:41.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-request-get-origin
+    title: SignOutEverywhereRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:53:50.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-request-get-session-token
+    title: SignOutEverywhereRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:53:59.055Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-response
+    title: SignOutEverywhereResponse
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:54:06.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-response-reset
+    title: SignOutEverywhereResponse.Reset
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:54:14.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-response-string
+    title: SignOutEverywhereResponse.String
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:54:23.538Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-response-proto-message
+    title: SignOutEverywhereResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:54:32.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-response-proto-reflect
+    title: SignOutEverywhereResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:54:41.816Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-response-descriptor
+    title: SignOutEverywhereResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:54:51.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-pb-sign-out-everywhere-response-get-revoked-sessions
+    title: SignOutEverywhereResponse.GetRevokedSessions
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:54:59.910Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-begin-passkey-check
+    title: authServiceClient.BeginPasskeyCheck
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:55:09.261Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-finish-passkey-check
+    title: authServiceClient.FinishPasskeyCheck
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:55:18.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-auth-service-client-sign-out-everywhere
+    title: authServiceClient.SignOutEverywhere
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:55:26.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-begin-passkey-check
+    title: UnimplementedAuthServiceHandler.BeginPasskeyCheck
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:55:35.422Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-finish-passkey-check
+    title: UnimplementedAuthServiceHandler.FinishPasskeyCheck
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:55:43.903Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract
+  - id: SYM-identity-gen-connect-unimplemented-auth-service-handler-sign-out-everywhere
+    title: UnimplementedAuthServiceHandler.SignOutEverywhere
+    sourceFile: sdk/go/gen/openfief/identity/v1/identityv1connect/auth.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T04:55:52.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-contract
+      - type: implements
+        target: REQ-AUTO-BC327C2200FC820F
+      - type: implements
+        target: REQ-identity-auth-contract

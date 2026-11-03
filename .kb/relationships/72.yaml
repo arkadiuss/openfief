@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7e536fc794a
+  - type: executable_for
+    from: SYM-identity-connectapi-passkeycheck-test-session-store-save-ceremony
+    to: TEST-identity-passkey-check-connectapi
+    created_at: 2026-11-03T04:39:56.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1acb82343892

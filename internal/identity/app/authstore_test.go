@@ -91,7 +91,7 @@ func (m *memAuthStore) UpdatePasskeyUse(_ context.Context, p *identity.Passkey) 
 	return app.ErrUnknownPasskey
 }
 
-func (m *memAuthStore) DeletePasskey(_ context.Context, id []byte) error {
+func (m *memAuthStore) DeletePasskey(_ context.Context, id []byte, at time.Time) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	i := slices.IndexFunc(m.passkeys, func(p identity.Passkey) bool { return bytes.Equal(p.CredentialID, id) })
@@ -102,6 +102,13 @@ func (m *memAuthStore) DeletePasskey(_ context.Context, id []byte) error {
 		return app.ErrLastPasskey
 	}
 	m.passkeys = slices.Delete(m.passkeys, i, i+1)
+	for sid := range m.sessions {
+		s := m.sessions[sid]
+		if s.session.SignedInBy(id) && s.session.RevokedAt.IsZero() {
+			s.session.RevokedAt = at
+			m.sessions[sid] = s
+		}
+	}
 	return nil
 }
 
@@ -187,6 +194,35 @@ func (m *memAuthStore) RevokeSession(_ context.Context, id identity.SessionID, a
 	}
 	if s.session.RevokedAt.IsZero() {
 		s.session.RevokedAt = at
+	}
+	m.sessions[id] = s
+	return nil
+}
+
+func (m *memAuthStore) RevokeSessions(_ context.Context, at time.Time) (int, error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	n := 0
+	for id := range m.sessions {
+		s := m.sessions[id]
+		if s.session.RevokedAt.IsZero() {
+			s.session.RevokedAt = at
+			m.sessions[id] = s
+			n++
+		}
+	}
+	return n, nil
+}
+
+func (m *memAuthStore) PasskeyCheckSession(_ context.Context, id identity.SessionID, at time.Time) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	s, ok := m.sessions[id]
+	if !ok {
+		return app.ErrUnknownSession
+	}
+	if at.After(s.session.PasskeyCheckedAt) {
+		s.session.PasskeyCheckedAt = at
 	}
 	m.sessions[id] = s
 	return nil

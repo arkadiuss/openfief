@@ -1,6 +1,7 @@
 package identity
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"time"
@@ -27,6 +28,13 @@ var (
 	// ErrInvalidSessionPolicy reports session lifetimes that are not
 	// positive, or an idle timeout longer than the absolute lifetime.
 	ErrInvalidSessionPolicy = errors.New("invalid session lifetimes")
+	// ErrPasskeyCheckRequired reports an action D-183 protects in a session
+	// whose last passkey check is older than PasskeyCheckWindow, or that
+	// has none: the owner confirms with their passkey and tries again.
+	ErrPasskeyCheckRequired = errors.New("confirm with your passkey first")
+	// ErrNotPasskeySession reports a passkey recorded on a session that
+	// another authenticator issued.
+	ErrNotPasskeySession = errors.New("not a passkey session")
 )
 
 const (
@@ -40,6 +48,10 @@ const (
 	// sessionTouchEvery is how stale a session's last use may get before
 	// it is stored again, so that every request does not write.
 	sessionTouchEvery = time.Minute
+	// PasskeyCheckWindow is how recent a session's last passkey check must
+	// be for enrolling or removing a passkey, issuing an enrollment link or
+	// creating a script token (D-183).
+	PasskeyCheckWindow = 5 * time.Minute
 )
 
 // SessionScope is what a session may do (author decision, demo read-only
@@ -175,6 +187,14 @@ type Session struct {
 	IdleTimeout time.Duration
 	// RevokedAt is when the owner logged out; zero while they did not.
 	RevokedAt time.Time
+	// PasskeyID is the credential ID of the passkey that signed the session
+	// in; nil for a session another authenticator issued. Removing that
+	// passkey revokes the session.
+	PasskeyID []byte
+	// PasskeyCheckedAt is the session's last passkey check (D-183): when a
+	// passkey signed it in, or last confirmed an action in it. Zero when
+	// none did.
+	PasskeyCheckedAt time.Time
 }
 
 // NewSession returns a session with id and scope, from authenticator a, on
@@ -201,6 +221,50 @@ func NewSession(id SessionID, a Authenticator, scope SessionScope, rpID string, 
 		ID: id, Scope: scope, Authenticator: a, RPID: rpID,
 		CreatedAt: now, LastSeenAt: now, ExpiresAt: now.Add(policy.Max), IdleTimeout: policy.Idle,
 	}, nil
+}
+
+// SignedInWithPasskey returns s as signed in by the passkey with
+// credential ID id, which counts as its first passkey check. Only a
+// passkey session can have one; another fails with ErrNotPasskeySession.
+func (s *Session) SignedInWithPasskey(id []byte) (Session, error) {
+	if s.Authenticator != AuthenticatorPasskey || len(id) == 0 {
+		return Session{}, fmt.Errorf("%w: a %s session", ErrNotPasskeySession, s.Authenticator)
+	}
+	t := *s
+	t.PasskeyID = append([]byte(nil), id...)
+	t.PasskeyCheckedAt = s.CreatedAt
+	return t, nil
+}
+
+// PasskeyChecked returns s after a passkey check at at, never moving the
+// last check back. Only a passkey session can be checked; another fails
+// with ErrNotPasskeySession.
+func (s *Session) PasskeyChecked(at time.Time) (Session, error) {
+	if s.Authenticator != AuthenticatorPasskey {
+		return Session{}, fmt.Errorf("%w: a %s session", ErrNotPasskeySession, s.Authenticator)
+	}
+	t := *s
+	if at.After(t.PasskeyCheckedAt) {
+		t.PasskeyCheckedAt = at
+	}
+	return t, nil
+}
+
+// CheckRecentPasskey returns nil when s had a passkey check within
+// PasskeyCheckWindow before now, as D-183 asks of enrolling or removing a
+// passkey, issuing an enrollment link and creating a script token;
+// otherwise ErrPasskeyCheckRequired. It checks nothing else: Check comes
+// first.
+func (s *Session) CheckRecentPasskey(now time.Time) error {
+	if s.PasskeyCheckedAt.IsZero() || !now.Before(s.PasskeyCheckedAt.Add(PasskeyCheckWindow)) {
+		return ErrPasskeyCheckRequired
+	}
+	return nil
+}
+
+// SignedInBy reports whether the passkey with credential ID id signed s in.
+func (s *Session) SignedInBy(id []byte) bool {
+	return len(s.PasskeyID) > 0 && bytes.Equal(s.PasskeyID, id)
 }
 
 // IdleExpiresAt returns when the session expires if it is not used again:

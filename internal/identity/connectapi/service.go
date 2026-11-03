@@ -122,10 +122,11 @@ func (s *authService) ListPasskeys(ctx context.Context, req *connect.Request[ide
 
 // RemovePasskey removes a passkey.
 func (s *authService) RemovePasskey(ctx context.Context, req *connect.Request[identityv1.RemovePasskeyRequest]) (*connect.Response[identityv1.RemovePasskeyResponse], error) {
-	if err := s.auth.RemovePasskey(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetPasskeyId()); err != nil {
+	signedOut, err := s.auth.RemovePasskey(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken(), req.Msg.GetPasskeyId())
+	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
-	return connect.NewResponse(&identityv1.RemovePasskeyResponse{}), nil
+	return connect.NewResponse(&identityv1.RemovePasskeyResponse{SignedOut: signedOut}), nil
 }
 
 // CreateScriptToken issues a script token.
@@ -170,6 +171,36 @@ func (s *authService) CreateEnrollmentLink(ctx context.Context, req *connect.Req
 	return connect.NewResponse(&identityv1.CreateEnrollmentLinkResponse{Url: link.URL, ExpiresAt: timestamppb.New(link.ExpiresAt)}), nil
 }
 
+// BeginPasskeyCheck starts a passkey check in the session (D-183).
+func (s *authService) BeginPasskeyCheck(ctx context.Context, req *connect.Request[identityv1.BeginPasskeyCheckRequest]) (*connect.Response[identityv1.BeginPasskeyCheckResponse], error) {
+	st, err := s.auth.BeginPasskeyCheck(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&identityv1.BeginPasskeyCheckResponse{
+		CeremonyId: st.CeremonyID, OptionsJson: string(st.Options), ExpiresAt: timestamppb.New(st.ExpiresAt),
+	}), nil
+}
+
+// FinishPasskeyCheck records a passkey check on the session (D-183).
+func (s *authService) FinishPasskeyCheck(ctx context.Context, req *connect.Request[identityv1.FinishPasskeyCheckRequest]) (*connect.Response[identityv1.FinishPasskeyCheckResponse], error) {
+	m := req.Msg
+	ss, err := s.auth.FinishPasskeyCheck(ctx, m.GetOrigin(), m.GetSessionToken(), m.GetCeremonyId(), []byte(m.GetCredentialJson()))
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&identityv1.FinishPasskeyCheckResponse{Session: pbSession(&ss)}), nil
+}
+
+// SignOutEverywhere revokes every session (D-183).
+func (s *authService) SignOutEverywhere(ctx context.Context, req *connect.Request[identityv1.SignOutEverywhereRequest]) (*connect.Response[identityv1.SignOutEverywhereResponse], error) {
+	n, err := s.auth.SignOutEverywhere(ctx, req.Msg.GetOrigin(), req.Msg.GetSessionToken())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
+	return connect.NewResponse(&identityv1.SignOutEverywhereResponse{RevokedSessions: int64(n)}), nil
+}
+
 // pbSession converts a session; it never carries the token.
 func pbSession(s *identity.Session) *identityv1.Session {
 	scope := identityv1.SessionScope_SESSION_SCOPE_UNSPECIFIED
@@ -186,11 +217,15 @@ func pbSession(s *identity.Session) *identityv1.Session {
 	case identity.AuthenticatorDemo:
 		auth = identityv1.Authenticator_AUTHENTICATOR_DEMO
 	}
-	return &identityv1.Session{
+	out := &identityv1.Session{
 		Id: string(s.ID), Scope: scope, Authenticator: auth, RpId: s.RPID,
 		CreatedAt: timestamppb.New(s.CreatedAt), LastSeenAt: timestamppb.New(s.LastSeenAt),
 		IdleExpiresAt: timestamppb.New(s.IdleExpiresAt()), ExpiresAt: timestamppb.New(s.ExpiresAt),
 	}
+	if !s.PasskeyCheckedAt.IsZero() {
+		out.PasskeyCheckedAt = timestamppb.New(s.PasskeyCheckedAt)
+	}
+	return out
 }
 
 // pbPasskey converts a passkey; it never carries the public key.

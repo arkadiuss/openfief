@@ -19,10 +19,11 @@ const DefaultScriptTokenTTL = 30 * 24 * time.Hour
 
 // CreateScriptToken issues a read-only script token (D-27) for an owner
 // session (author decision, auth split: script tokens come from a logged-in
-// session), lasting ttl, or DefaultScriptTokenTTL when ttl is zero. It
-// returns the token and its secret, shown only here.
+// session) with a passkey check in the last five minutes (D-183), lasting
+// ttl, or DefaultScriptTokenTTL when ttl is zero. It returns the token and
+// its secret, shown only here.
 func (a *Auth) CreateScriptToken(ctx context.Context, origin, token, name string, ttl time.Duration) (identity.ScriptToken, string, error) {
-	if _, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner); err != nil {
+	if _, _, err := a.recentOwner(ctx, origin, token); err != nil {
 		return identity.ScriptToken{}, "", err
 	}
 	if ttl == 0 {
@@ -69,11 +70,11 @@ type EnrollmentLink struct {
 }
 
 // CreateEnrollmentLink issues, for an owner session on the allowed origin
-// text, a one-time link for creating a passkey on target, another allowed
+// text with a passkey check in the last five minutes (D-183), a one-time link for creating a passkey on target, another allowed
 // origin or, when empty, origin itself (D-60). It lasts ttl, or
 // identity.DefaultEnrollmentTTL when ttl is zero.
 func (a *Auth) CreateEnrollmentLink(ctx context.Context, origin, token, target string, ttl time.Duration) (EnrollmentLink, error) {
-	o, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner)
+	o, _, err := a.recentOwner(ctx, origin, token)
 	if err != nil {
 		return EnrollmentLink{}, err
 	}

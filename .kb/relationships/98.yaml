@@ -601,3 +601,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6ed53a84957
+  - type: verified_by
+    from: SCEN-identity-protected-actions-need-recent-check
+    to: TEST-identity-passkey-check-app
+    created_at: 2026-11-03T02:41:02.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-54f7a9fee9a1
+  - type: verified_by
+    from: SCEN-identity-protected-actions-need-recent-check
+    to: TEST-identity-passkey-check-domain
+    created_at: 2026-11-03T02:41:02.279Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e86e5bcbc0ca
+  - type: verified_by
+    from: SCEN-identity-protected-actions-need-recent-check
+    to: TEST-identity-passkey-check-connectapi
+    created_at: 2026-11-03T02:41:02.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45e9275c4eee
+  - type: constrains
+    from: REQ-identity-remove-passkey-revokes-sessions
+    to: FACT-SUBJECT-03A283693BC1A392
+    created_at: 2026-11-03T02:41:54.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-986554db7782
+  - type: requires_property
+    from: REQ-identity-remove-passkey-revokes-sessions
+    to: FACT-PROP-2C14A41403E5BA0C
+    created_at: 2026-11-03T02:41:54.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9245489e7594
+  - type: specified_by
+    from: REQ-identity-remove-passkey-revokes-sessions
+    to: SCEN-identity-remove-passkey-revokes-sessions
+    created_at: 2026-11-03T02:41:55.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ebf07158fd6
+  - type: executable_for
+    from: SYM-identity-passkeycheck-test-test-demo-session-has-no-passkey
+    to: TEST-identity-passkey-check-domain
+    created_at: 2026-11-03T04:41:38.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5fe4056336a

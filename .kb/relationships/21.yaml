@@ -538,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69074b16820a
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:52:07.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4adc1fde48ac
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:52:07.914Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb4dd4010b50
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-passkey-check-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:52:07.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec9928996ea0

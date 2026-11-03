@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45c187d5c7aa
+  - type: executable_for
+    from: SYM-ui-passkeycheck-test-fake-auth-finish-passkey-check
+    to: TEST-ui-passkey-check
+    created_at: 2026-11-03T04:44:51.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84827b221ff4

@@ -391,3 +391,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa62edc9fd92
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-test-session-store-refuses-demo-passkey
+    to: TEST-identity-auth-postgres
+    created_at: 2026-11-03T04:43:00.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d56eefe84b87
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-request-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:51:18.846Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-621b1957a1bf
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-request-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:51:18.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bac2be006151
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-passkey-check-request-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:51:18.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70a13fca30d6

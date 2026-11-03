@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b55fe3f22d3
+  - type: implements
+    from: SYM-identity-session-session-passkey-checked
+    to: REQ-identity-protected-actions-recent-passkey-check
+    created_at: 2026-11-03T04:43:21.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cdf380e17c9
+  - type: covered_by
+    from: SYM-identity-session-session-passkey-checked
+    to: TEST-identity-passkey-check-domain
+    created_at: 2026-11-03T04:43:21.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95dbd5a5d7ea

@@ -545,3 +545,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f316dfb88ad
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-begin-passkey-check
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:55:38.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-287e45343dd6
+  - type: implements
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-begin-passkey-check
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:55:38.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3467e5e7a3db
+  - type: covered_by
+    from: SYM-identity-gen-connect-unimplemented-auth-service-handler-begin-passkey-check
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:55:38.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0299c661fd75

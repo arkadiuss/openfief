@@ -122,22 +122,27 @@ const (
 	CeremonyRegistration CeremonyKind = iota + 1
 	// CeremonyLogin logs in with one.
 	CeremonyLogin
+	// CeremonyPasskeyCheck asserts a passkey again in a session that is
+	// signed in already, before an action D-183 protects.
+	CeremonyPasskeyCheck
 )
 
-// String returns "registration" or "login".
+// String returns "registration", "login" or "passkey-check".
 func (k CeremonyKind) String() string {
 	switch k {
 	case CeremonyRegistration:
 		return "registration"
 	case CeremonyLogin:
 		return "login"
+	case CeremonyPasskeyCheck:
+		return "passkey-check"
 	}
 	return fmt.Sprintf("CeremonyKind(%d)", int(k))
 }
 
 // ParseCeremonyKind parses a kind as String writes it.
 func ParseCeremonyKind(s string) (CeremonyKind, error) {
-	for _, k := range []CeremonyKind{CeremonyRegistration, CeremonyLogin} {
+	for _, k := range []CeremonyKind{CeremonyRegistration, CeremonyLogin, CeremonyPasskeyCheck} {
 		if s == k.String() {
 			return k, nil
 		}

@@ -741,3 +741,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8866d521130
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:53:16.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d2fec088e34
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:53:16.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ced401e6fa45
+  - type: covered_by
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:53:16.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f25676a33298

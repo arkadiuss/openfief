@@ -755,3 +755,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99e6a6c5bd5b
+  - type: constrains
+    from: REQ-identity-protected-actions-recent-passkey-check
+    to: FACT-SUBJECT-49F24C821CC7BAB7
+    created_at: 2026-11-03T02:41:25.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-883550e250e0
+  - type: requires_property
+    from: REQ-identity-protected-actions-recent-passkey-check
+    to: FACT-PROP-6B91310B7E5A9FCF
+    created_at: 2026-11-03T02:41:25.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3caaecade52
+  - type: specified_by
+    from: REQ-identity-protected-actions-recent-passkey-check
+    to: SCEN-identity-protected-actions-need-recent-check
+    created_at: 2026-11-03T02:41:26.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b75b6bbd1dc2
+  - type: specified_by
+    from: REQ-identity-protected-actions-recent-passkey-check
+    to: SCEN-identity-passkey-check-ceremony
+    created_at: 2026-11-03T02:41:26.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83f7c4d86729
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-passkey-check-session
+    to: TEST-identity-auth-app
+    created_at: 2026-11-03T04:37:49.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0b9ae5dfb3f
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-saved-session
+    to: TEST-identity-auth-postgres
+    created_at: 2026-11-03T04:42:16.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f9c59a3559d
