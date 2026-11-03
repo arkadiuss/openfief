@@ -51,6 +51,9 @@ const (
 	EnvCoreAddress = "OPENFIEF_CORE_ADDRESS"
 	// EnvListenPort is the port the plugin serves Connect RPC on.
 	EnvListenPort = "OPENFIEF_LISTEN_PORT"
+	// EnvGoMemLimit is Go's soft memory limit, which the operator sets on
+	// every plugin container from its memory limit (GoMemLimit, D-189).
+	EnvGoMemLimit = "GOMEMLIMIT"
 	// AnnotationConfigHash on the pod template is the SHA-256 of the config,
 	// so a config change rolls the pod.
 	AnnotationConfigHash = "openfief.io/config-sha256"
@@ -62,7 +65,7 @@ const (
 	egressVolume      = "openfief-egress-token"
 	signingKeysVolume = "openfief-sa-jwks"
 	// operatorEnvVars counts the variables the operator may add to the Workload's.
-	operatorEnvVars = 5
+	operatorEnvVars = 6
 	// operatorVolumes is the most volumes a plugin pod gets besides its
 	// Secrets: two projected tokens and the signing keys.
 	operatorVolumes = 3
@@ -94,7 +97,27 @@ const (
 	PluginMemoryLimitMiB = 256
 	// mebibyte is the bytes in one MiB.
 	mebibyte = 1 << 20
+	// goMemLimitTenths is the share, in tenths, of a container's memory
+	// limit that GoMemLimit gives a Go plugin's runtime (D-189). The rest
+	// is headroom for what the kernel counts against the container but
+	// the Go runtime doesn't, such as the binary's mapped pages, and for
+	// the heap the collector hasn't reclaimed yet when it gets there.
+	goMemLimitTenths = 9
+	// tenths is the denominator of goMemLimitTenths.
+	tenths = 10
 )
+
+// GoMemLimit is the GOMEMLIMIT, in bytes, of a container whose memory
+// limit is limit bytes: nine tenths of it, rounded down, so a Go plugin
+// collects garbage harder as it nears its limit instead of being killed by
+// the kernel past it (D-189). It is zero, and the operator sets no
+// GOMEMLIMIT, when the container has no memory limit.
+func GoMemLimit(limit int64) int64 {
+	if limit <= 0 {
+		return 0
+	}
+	return limit / tenths * goMemLimitTenths
+}
 
 // pluginResources is what every plugin container requests and is limited
 // to (D-182).
@@ -331,6 +354,10 @@ func container(w *plugins.Workload, c *Cluster) corev1.Container {
 	for _, e := range w.Env {
 		env = append(env, corev1.EnvVar{Name: e.Name, Value: e.Value})
 	}
+	resources := pluginResources()
+	if limit := GoMemLimit(resources.Limits.Memory().Value()); limit > 0 {
+		env = append(env, corev1.EnvVar{Name: EnvGoMemLimit, Value: strconv.FormatInt(limit, 10)})
+	}
 	slices.SortFunc(env, func(a, b corev1.EnvVar) int { return cmp.Compare(a.Name, b.Name) })
 	for i, s := range w.Secrets {
 		mounts = append(mounts, corev1.VolumeMount{Name: secretVolume(i), MountPath: s.MountPath, ReadOnly: s.ReadOnly})
@@ -344,7 +371,7 @@ func container(w *plugins.Workload, c *Cluster) corev1.Container {
 		}},
 		Env:          env,
 		VolumeMounts: mounts,
-		Resources:    pluginResources(),
+		Resources:    resources,
 		SecurityContext: &corev1.SecurityContext{
 			AllowPrivilegeEscalation: &no,
 			Privileged:               &no,

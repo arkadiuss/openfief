@@ -34,6 +34,8 @@ func TestManifest(t *testing.T) {
 		// It books for the institution every delivery names (D-182).
 		Institutions: []string{"treasury-bonds"},
 		BondTerms:    true,
+		// It delivers CPI and NBP reference rate readings (D-186).
+		IndexReadings: true,
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty(), cmpopts.IgnoreFields(plugins.Manifest{}, "ConfigSchema")); diff != "" {
 		t.Errorf("manifest (-want +got):\n%s", diff)

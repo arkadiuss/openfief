@@ -552,6 +552,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ee46761633a
+  - type: executable_for
+    from: SYM-valuation-postgres-test-stored-readings-name-their-instance
+    to: TEST-valuation-postgres-delivered-by
+    created_at: 2026-11-03T10:12:37.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25b414ab31cc
   - type: implements
     from: SYM-ledger-pg-store-account
     to: REQ-ledger-pg-store-accounts

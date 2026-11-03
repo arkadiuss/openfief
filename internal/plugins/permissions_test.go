@@ -34,6 +34,11 @@ func TestPluginValidate(t *testing.T) {
 			want:   []fieldError{{"name", plugins.ErrInvalidName}},
 		},
 		{
+			name:   "name holds the Secret name separator (D-89)",
+			change: func(p *plugins.Plugin) { p.Name = "sample--a" },
+			want:   []fieldError{{"name", plugins.ErrSecretNameSeparator}},
+		},
+		{
 			name: "manifest errors keep their field",
 			change: func(p *plugins.Plugin) {
 				p.Manifest.Capabilities = nil
@@ -77,7 +82,7 @@ func TestGrantValidate(t *testing.T) {
 				g.Plugin = ""
 				g.Permissions.Capabilities = []plugins.Capability{"admin"}
 				g.Permissions.Egress = []plugins.EgressHost{host("10.0.0.1", 443)}
-				g.Permissions.Secrets = []string{"sample-cert", "sample-cert"}
+				g.Permissions.Secrets = []string{"sample--cert", "sample--cert"}
 				g.Permissions.DataTiers = []plugins.DataTier{"all tiers"}
 			},
 			want: []fieldError{
@@ -89,10 +94,15 @@ func TestGrantValidate(t *testing.T) {
 			},
 		},
 		{
+			name:   "plugin name holds the Secret name separator (D-89)",
+			change: func(g *plugins.Grant) { g.Plugin = "sample--a" },
+			want:   []fieldError{{"plugin", plugins.ErrSecretNameSeparator}},
+		},
+		{
 			name: "names reserved for the platform (D-182)",
 			change: func(g *plugins.Grant) {
 				g.Plugin = "openfief"
-				g.Permissions.Secrets = []string{"openfief-db-app", "sample-cert"}
+				g.Permissions.Secrets = []string{"openfief-db-app", "sample--cert"}
 			},
 			want: []fieldError{
 				{"plugin", plugins.ErrReservedName},
@@ -152,7 +162,7 @@ func TestNeedsApproval(t *testing.T) {
 			want: plugins.Permissions{
 				Capabilities: []plugins.Capability{plugins.CapabilityConnector, plugins.CapabilityView},
 				Egress:       []plugins.EgressHost{host("api.example.com", 443), host("data.example.org", 8443)},
-				Secrets:      []string{"sample-cert", "sample-token"},
+				Secrets:      []string{"sample--cert", "sample--token"},
 				DataTiers:    []plugins.DataTier{"T1"},
 			},
 		},
@@ -163,7 +173,7 @@ func TestNeedsApproval(t *testing.T) {
 				p.Manifest.Secrets = append(p.Manifest.Secrets, plugins.SecretMount{Role: "key", MountPath: "/etc/openfief/key"})
 				p.Manifest.DataTiers = append(p.Manifest.DataTiers, "T2")
 			},
-			want: plugins.Permissions{Secrets: []string{"sample-key"}, DataTiers: []plugins.DataTier{"T2"}},
+			want: plugins.Permissions{Secrets: []string{"sample--key"}, DataTiers: []plugins.DataTier{"T2"}},
 		},
 		{
 			name: "grant for another plugin", grant: func(g *plugins.Grant) { g.Plugin = "other" },

@@ -518,6 +518,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-84dfd7c58d44
   - type: implements
+    from: SYM-valuation-postgres-revalue-worker-revalue
+    to: REQ-valuation-river-jobs
+    created_at: 2026-11-03T15:16:51.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e962f4c3e74a
+  - type: covered_by
+    from: SYM-valuation-postgres-revalue-worker-revalue
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-11-03T15:16:51.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1a8d97a322a
+  - type: implements
     from: SYM-views-connectapi-pb-payout
     to: REQ-views-api-contract
     created_at: 2026-11-03T12:14:54.401Z

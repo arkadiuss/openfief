@@ -128,14 +128,18 @@ spec:
                   IndexLevels lets a connector deliver market index levels, which the
                   core stores only when this approves it (D-179).
                 type: boolean
+              indexReadings:
+                description: |-
+                  IndexReadings lets a connector deliver the index readings bond terms
+                  depend on, such as CPI and the NBP reference rate, which the core
+                  stores only when this approves it (D-186).
+                type: boolean
               institutions:
                 description: |-
                   Institutions are the institutions a connector books for, such as
                   ibkr; the core accepts a delivery only for an institution both the
                   signed manifest and the PluginGrant name (D-185). A PluginGrant
-                  without this field, as every one made before D-185 is, approves the
-                  institutions of the version that runs under it; an empty list
-                  approves none.
+                  without this field, or with an empty list, approves none.
                 items:
                   maxLength: 63
                   pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
@@ -151,7 +155,7 @@ spec:
                 type: boolean
               secrets:
                 description: |-
-                  Secrets lists Secret names: <instance>-<role> for each role the
+                  Secrets lists Secret names: <instance>--<role> for each role the
                   plugin's manifest names (D-89).
                 items:
                   maxLength: 253
@@ -234,7 +238,7 @@ spec:
         type: object
         x-kubernetes-validations:
         - message: name must be the plugin's name
-          rule: self.metadata.name.size() <= 56 && self.metadata.name.matches('^[a-z]([-a-z0-9]*[a-z0-9])?$')
+          rule: self.metadata.name.size() <= 56 && self.metadata.name.matches('^[a-z][a-z0-9]*(-[a-z0-9]+)*$')
     served: true
     storage: true
     subresources:

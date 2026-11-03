@@ -60,7 +60,7 @@ flowchart LR
 | `setting-missing` | some account's tax wrapper can't have a liquidation value without the owner's marginal income tax rate (D-78) | `marginal-rate` | the owner sets it |
 | `transfer-broken` | a confirmed transfer's legs no longer match after a correction (D-131) | the pair | a correction makes them match, or the owner rejects the pair |
 
-Ingest raises one more kind itself, through its own port: `bond-terms-or-index-levels-undeclared`, for a connector instance that delivered bond terms or index levels its signed manifest doesn't declare or its grant doesn't approve, which were dropped (D-179). Its subject is the instance; it stays one item while it keeps happening and resolves on the instance's next delivery that drops nothing.
+Ingest raises one more kind itself, through its own port: `bond-terms-or-index-levels-undeclared`, for a connector instance that delivered bond terms or index levels (D-179), or index readings (D-186), that its signed manifest doesn't declare or its grant doesn't approve, which were dropped. The kind keeps its name from before index readings joined it, so an earlier item still resolves. Its subject is the instance; it stays one item while it keeps happening and resolves on the instance's next delivery that drops nothing.
 
 `Items.Sweep` runs every check and reconciles its kind's items with what it found (`attention.Reconcile`), each kind in its own database transaction under an advisory lock, so a sweep, a push and an owner's action never interleave. One failing check doesn't stop the others. The core sweeps at start and then every minute, and publishes the outbox after each sweep ([attention.go](../../cmd/core/attention.go)).
 
@@ -83,7 +83,7 @@ type AttentionItems interface {
 |---|---|
 | `eventId` | Numbers the events from 1, in the order they were written; consumers deduplicate on it |
 | `itemId` | The item |
-| `kind`, `subject` | The check and what the item is about |
+| `kind`, `subject` | The check and what the item is about, as read access sees it (`attention.ReadSubject`): an unmapped broker account's event names only its connector instance, never the broker account number, which only the item keeps for the owner (D-121, D-165) |
 | `seq` | The change's number in the item's history |
 | `state` | `open`, `acknowledged` or `resolved` |
 | `reason` | `raised`, `changed`, `reopened` or `cleared` by a check, `acknowledged` or `resolved` by the owner |
@@ -113,6 +113,7 @@ The rest is this context's reading of D-130, listed in [implementation questions
 | Sweeps deduplicate and clear; pushes; the owner's actions need the owner; a failed append keeps nothing; the relay publishes in order and resumes; the log names no subject | [app/items_test.go](../../internal/attention/app/items_test.go) | REQ-attention-sweep, REQ-attention-relay |
 | Each check finds its conditions | `TestChecks` ([app/checks_test.go](../../internal/attention/app/checks_test.go)) | REQ-attention-checks |
 | The store keeps history, writes each event in the change's transaction, and is append-only | [postgres/store_test.go](../../internal/attention/postgres/store_test.go) (`task test:pg`) | REQ-attention-outbox-same-transaction |
+| No outbox row holds a broker account number: an unmapped broker account's event names only its instance, and the item keeps its full subject | `TestOutboxHoldsNoBrokerAccountNumber` in [postgres/outbox_test.go](../../internal/attention/postgres/outbox_test.go) (`task test:pg`) | REQ-attention-outbox-read-subject |
 | The AttentionService admits only the owner's view and maps errors | [connectapi/attention_test.go](../../internal/attention/connectapi/attention_test.go), `TestAttentionService` ([cmd/core](../../cmd/core/attention_test.go)) | REQ-attention-owner-service |
 | The core's checks raise items the read API lists, once | `TestAttentionChecksRaiseItems` ([cmd/core](../../cmd/core/attention_test.go)) | REQ-attention-checks |
 

@@ -545,6 +545,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6db7dcbef514
+  - type: constrains
+    from: REQ-valuation-index-readings-record-instance
+    to: FACT-SUBJECT-AAFEE79B3382B457
+    created_at: 2026-11-03T10:07:56.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4f1b9ebcd76
+  - type: requires_property
+    from: REQ-valuation-index-readings-record-instance
+    to: FACT-PROP-709D4F0E11E16A3E
+    created_at: 2026-11-03T10:07:56.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8268ca75332e
   - type: implements
     from: SYM-ingest-xtb-shared-reader-token
     to: REQ-ingest-xtb-reader-bounded-by-pod-memory

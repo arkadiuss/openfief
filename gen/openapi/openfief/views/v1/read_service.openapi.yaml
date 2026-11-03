@@ -1458,6 +1458,17 @@ components:
             The institutions it books for: those its signed manifest declares
              (institutions) and its PluginGrant approves. The core refuses a
              delivery that names any other (D-185).
+        indexReadings:
+          type: boolean
+          title: index_readings
+          description: |-
+            Whether the core stores the index readings it delivers, such as CPI
+             and the NBP reference rate, which bond terms depend on: its signed
+             manifest declares them and its PluginGrant approves that (D-186).
+        requestedIndexReadings:
+          type: boolean
+          title: requested_index_readings
+          description: Whether its signed manifest declares index readings, approved or not.
       title: Plugin
       additionalProperties: false
       description: Plugin is one installed plugin instance.

@@ -19,7 +19,9 @@
         {{- if .BondTerms}}<br><span class="pill pill-neutral">Bond terms</span><br><span class="muted">The treasury bond series terms it delivers value your bonds.</span>
         {{- else if .RequestedBondTerms}}<br><span class="muted">Delivers treasury bond series terms; not approved, so they are dropped.</span>{{end}}
         {{- if .IndexLevels}}<br><span class="pill pill-neutral">Index levels</span><br><span class="muted">The market index levels it delivers are stored.</span>
-        {{- else if .RequestedIndexLevels}}<br><span class="muted">Delivers market index levels; not approved, so they are dropped.</span>{{end}}</td>
+        {{- else if .RequestedIndexLevels}}<br><span class="muted">Delivers market index levels; not approved, so they are dropped.</span>{{end}}
+        {{- if .IndexReadings}}<br><span class="pill pill-neutral">Index readings</span><br><span class="muted">The CPI and NBP reference rate readings it delivers value your bonds.</span>
+        {{- else if .RequestedIndexReadings}}<br><span class="muted">Delivers index readings such as CPI; not approved, so they are dropped.</span>{{end}}</td>
       <td>{{template "trust-badge" .Trust}}<br><span class="muted">{{trust .Trust}}{{if .Signer}}: <span class="mono ident">{{.Signer}}</span>{{end}}</span>{{if .TrustReason}}<br><span class="muted">{{.TrustReason}}</span>{{end}}
         {{- if .UntrustedSigners}}<br><span class="muted">Signed only by a signer you don't trust:{{range $i, $s := .UntrustedSigners}}{{if $i}},{{end}} <span class="mono ident">{{$s}}</span>{{end}}. It runs once you add that signer to your trusted signers; if you don't know it, the image may be forged.</span>{{end}}</td>
       <td>{{.Phase}}</td>

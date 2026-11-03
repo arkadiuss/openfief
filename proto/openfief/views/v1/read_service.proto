@@ -1157,6 +1157,12 @@ message Plugin {
   // (institutions) and its PluginGrant approves. The core refuses a
   // delivery that names any other (D-185).
   repeated string approved_institutions = 19;
+  // Whether the core stores the index readings it delivers, such as CPI
+  // and the NBP reference rate, which bond terms depend on: its signed
+  // manifest declares them and its PluginGrant approves that (D-186).
+  bool index_readings = 20;
+  // Whether its signed manifest declares index readings, approved or not.
+  bool requested_index_readings = 21;
 }
 
 // AttentionItemState is where an attention item stands (D-130).

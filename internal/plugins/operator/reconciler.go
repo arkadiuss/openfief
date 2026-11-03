@@ -286,10 +286,7 @@ type grantResult struct {
 }
 
 // grant reads the PluginGrant of p's name; no grant is a nil grant. A grant
-// made before D-185, which names no institutions at all, approves those of
-// the version that runs under it (plugins.ApprovedInstitutions), so
-// existing installs keep booking while a new institution waits for the
-// owner.
+// that names no institutions approves none (D-185).
 func (r *PluginReconciler) grant(ctx context.Context, p *v1alpha1.Plugin) (grantResult, error) {
 	var g v1alpha1.PluginGrant
 	err := r.Client.Get(ctx, types.NamespacedName{Namespace: plugins.Namespace, Name: p.Name}, &g)
@@ -300,9 +297,6 @@ func (r *PluginReconciler) grant(ctx context.Context, p *v1alpha1.Plugin) (grant
 		return grantResult{}, fmt.Errorf("get plugin grant %s: %w", p.Name, err)
 	}
 	grant, err := grantFromResource(&g)
-	if grant != nil {
-		grant.Permissions.Institutions = plugins.ApprovedInstitutions(g.Spec.Institutions, previousVersion(p))
-	}
 	return grantResult{grant: grant, err: err}, nil
 }
 

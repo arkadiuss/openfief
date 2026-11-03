@@ -123,6 +123,7 @@ func subtract(p, q *Permissions) Permissions {
 		MarketData:      p.MarketData && !q.MarketData,
 		BondTerms:       p.BondTerms && !q.BondTerms,
 		IndexLevels:     p.IndexLevels && !q.IndexLevels,
+		IndexReadings:   p.IndexReadings && !q.IndexReadings,
 		Institutions:    missing(p.Institutions, q.Institutions),
 	}
 }

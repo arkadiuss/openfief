@@ -47,6 +47,7 @@ func defaultServe(t *testing.T) serveConfig {
 		Sync: syncConfig{
 			Policy:         ingest.SyncPolicy{Interval: 6 * time.Hour, Jitter: 30 * time.Minute, RetryFirst: 5 * time.Minute, RetryMax: time.Hour},
 			Timeout:        5 * time.Minute,
+			Workers:        1,
 			ServiceAccount: "openfief-core",
 		},
 		Auth: authConfig{Origins: mustOrigins(t, "http://localhost:8080"), Sessions: identity.DefaultSessionPolicy()},
@@ -85,7 +86,7 @@ func TestParseArgs(t *testing.T) {
 	tuned.Connectors = false
 	tuned.Sync = syncConfig{
 		Policy:  ingest.SyncPolicy{Interval: time.Hour, Jitter: 0, RetryFirst: time.Minute, RetryMax: 2 * time.Minute},
-		Timeout: time.Minute, ServiceAccount: "core-sa",
+		Timeout: time.Minute, Workers: 3, ServiceAccount: "core-sa",
 	}
 	authed := def
 	authed.Auth = authConfig{
@@ -118,7 +119,7 @@ func TestParseArgs(t *testing.T) {
 			name: "connector flags", pod: true, dsn: testDSN,
 			args: []string{
 				"--connectors=false", "--sync-every=1h", "--sync-jitter=0s",
-				"--sync-retry-first=1m", "--sync-retry-max=2m", "--sync-timeout=1m", "--service-account=core-sa",
+				"--sync-retry-first=1m", "--sync-retry-max=2m", "--sync-timeout=1m", "--sync-workers=3", "--service-account=core-sa",
 			},
 			want: command{Name: cmdServe, DSN: testDSN, Serve: tuned},
 		},
@@ -148,6 +149,7 @@ func TestParseArgs(t *testing.T) {
 		{name: "enroll-link with an argument", args: []string{"enroll-link", "now"}, dsn: testDSN, wantErr: errUsage},
 		{name: "retry max below first", args: []string{"--sync-retry-first=1h", "--sync-retry-max=1m"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
 		{name: "zero sync interval", args: []string{"--sync-every=0s"}, dsn: testDSN, wantErr: ingest.ErrInvalidSyncPolicy},
+		{name: "no sync worker", args: []string{"--sync-workers=0"}, dsn: testDSN, wantErr: errSyncWorkers},
 		// The threshold is 1% unless the owner sets one per instrument (D-110): no flag.
 		{name: "a price check threshold flag", args: []string{"--price-check-threshold=0.005"}, dsn: testDSN, fail: true},
 		{

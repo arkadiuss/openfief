@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1bd22f46373d
+  - type: executable_for
+    from: SYM-ui-test-htmx-keeps-no-history
+    to: TEST-ui-site-data
+    created_at: 2026-11-03T16:31:34.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e49f962c501e

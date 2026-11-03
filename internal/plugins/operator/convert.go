@@ -31,6 +31,7 @@ func pluginFromSpec(name string, spec *v1alpha1.PluginSpec) (*plugins.Plugin, er
 			MarketData:       spec.Manifest.MarketData,
 			BondTerms:        spec.Manifest.BondTerms,
 			IndexLevels:      spec.Manifest.IndexLevels,
+			IndexReadings:    spec.Manifest.IndexReadings,
 			Institutions:     spec.Manifest.Institutions,
 		},
 		Config: rawJSON(spec.Config),
@@ -73,6 +74,8 @@ func grantFromResource(g *v1alpha1.PluginGrant) (*plugins.Grant, error) {
 			MarketData:   g.Spec.MarketData,
 			BondTerms:    g.Spec.BondTerms,
 			IndexLevels:  g.Spec.IndexLevels,
+			// The index readings bond terms depend on (D-186).
+			IndexReadings: g.Spec.IndexReadings,
 		},
 	}
 	if g.Spec.Institutions != nil {
@@ -103,7 +106,7 @@ func permissionsToAPI(p *plugins.Permissions) *v1alpha1.Permissions {
 	}
 	out := &v1alpha1.Permissions{
 		Secrets: p.Secrets, BrowserPaths: p.BrowserPaths, MarketData: p.MarketData,
-		BondTerms: p.BondTerms, IndexLevels: p.IndexLevels,
+		BondTerms: p.BondTerms, IndexLevels: p.IndexLevels, IndexReadings: p.IndexReadings,
 	}
 	if len(p.Institutions) > 0 {
 		in := slices.Clone(p.Institutions)
@@ -153,6 +156,8 @@ func effectiveToAPI(e *plugins.EffectivePermissions) *v1alpha1.Permissions {
 		BondTerms:    e.BondTerms(),
 		IndexLevels:  e.IndexLevels(),
 		Institutions: e.Institutions(),
+		// The index readings bond terms depend on (D-186).
+		IndexReadings: e.IndexReadings(),
 	}
 	if bp := e.BrowserPath(); bp != "" {
 		p.BrowserPaths = []string{bp}

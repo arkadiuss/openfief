@@ -58,6 +58,29 @@ func TestParseCatalog(t *testing.T) {
 			}}},
 		},
 		{
+			name: "GitHub publisher pinned to its source repository and ref (D-187)",
+			in: `{"plugins":[{"name":"sample","image":"` + imageA + `","publisher":{"name":"example","issuer":"` + plugins.GitHubActionsIssuer +
+				`","subject":"` + subjectCI + `","sourceRepository":"https://github.com/example/sample-plugin","sourceRef":"refs/heads/main"}}]}`,
+			want: plugins.Catalog{Entries: []plugins.CatalogEntry{{
+				Name: "sample", Image: img,
+				Publisher: plugins.Signer{
+					Name: "example", Kind: plugins.SignerPublisher,
+					Identity: fromSource(plugins.GitHubActionsIssuer, subjectCI, "https://github.com/example/sample-plugin", "refs/heads/main"),
+				},
+			}}},
+		},
+		{
+			name:    "GitHub publisher without a source (D-187)",
+			in:      `{"plugins":[{"name":"sample","image":"` + imageA + `","publisher":{"name":"example","issuer":"` + plugins.GitHubActionsIssuer + `","subject":"` + subjectCI + `"}}]}`,
+			wantErr: plugins.ErrInvalidSigner,
+		},
+		{
+			name: "GitHub publisher pinned to a repository alone (D-187)",
+			in: `{"plugins":[{"name":"sample","image":"` + imageA + `","publisher":{"name":"example","issuer":"` + plugins.GitHubActionsIssuer +
+				`","subject":"` + subjectCI + `","sourceRepository":"https://github.com/example/sample-plugin"}}]}`,
+			wantErr: plugins.ErrInvalidSigner,
+		},
+		{
 			name: "publisher with a source ref that is not a ref",
 			in: `{"plugins":[{"name":"sample","image":"` + imageA + `","publisher":{"name":"example","issuer":"` + issuerExample + `","subject":"` + subjectCI +
 				`","sourceRef":"main"}}]}`,
@@ -178,6 +201,17 @@ func TestParseOwnerSigners(t *testing.T) {
 				Issuer: issuerExample, SubjectPattern: `https://example\.com/.*`,
 				Source: &plugins.SignerSource{Repository: "https://github.com/example/my-plugin", Ref: "refs/heads/main"},
 			}}},
+		},
+		{
+			name:    "GitHub signer without a source (D-187)",
+			in:      `{"signers":[{"name":"my-ci","issuer":"` + plugins.GitHubActionsIssuer + `","subject":"` + subjectCI + `"}]}`,
+			wantErr: plugins.ErrInvalidSigner,
+		},
+		{
+			name: "GitHub signer pinned to a ref alone (D-187)",
+			in: `{"signers":[{"name":"my-ci","issuer":"` + plugins.GitHubActionsIssuer + `","subjectPattern":"https://github\\.com/example/.*",` +
+				`"sourceRef":"refs/heads/main"}]}`,
+			wantErr: plugins.ErrInvalidSigner,
 		},
 		{
 			name:    "source repository that is not a URL",

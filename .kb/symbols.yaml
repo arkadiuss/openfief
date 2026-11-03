@@ -3034,6 +3034,8 @@ symbols:
         target: REQ-AUTO-761F6500ECFC0316
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
   - id: SYM-plugins-valid-secret-name
     title: validSecretName
     sourceFile: internal/plugins/manifest.go
@@ -3221,6 +3223,8 @@ symbols:
       - type: implements
         target: REQ-plugins-manifest-validation
       - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
+      - type: implements
         target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-grant
     title: Grant
@@ -3249,6 +3253,8 @@ symbols:
         target: TEST-plugins-plugin-grant
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
       - type: implements
         target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-valid-plugin-name
@@ -12134,6 +12140,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-761F6500ECFC0316
       - type: implements
+        target: REQ-operator-plugin-gomemlimit
+      - type: implements
         target: REQ-operator-workload-objects
       - type: implements
         target: REQ-plugins-egress-token-projected
@@ -12602,11 +12610,15 @@ symbols:
       recorded_at: 2026-10-28T07:01:53.567Z
     relationships:
       - type: covered_by
+        target: TEST-operator-institutions
+      - type: covered_by
         target: TEST-operator-reconcile
       - type: implements
         target: REQ-AUTO-12177128A788CEDC
       - type: implements
         target: REQ-operator-runs-only-granted
+      - type: implements
+        target: REQ-plugins-grant-without-institutions-approves-none
   - id: SYM-operator-plugin-reconciler-cluster
     title: PluginReconciler.cluster
     sourceFile: internal/plugins/operator/reconciler.go
@@ -14247,6 +14259,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-app-plan
       - type: implements
+        target: REQ-valuation-index-readings-record-instance
+      - type: implements
         target: REQ-valuation-input-validation-named-base
       - type: implements
         target: REQ-valuation-revaluation-triggers
@@ -15122,9 +15136,13 @@ symbols:
       recorded_at: 2026-10-28T08:01:49.961Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-delivered-by
+      - type: covered_by
         target: TEST-valuation-postgres-queue
       - type: implements
         target: REQ-valuation-enqueue-same-transaction
+      - type: implements
+        target: REQ-valuation-index-readings-record-instance
   - id: SYM-valuation-postgres-store-save-bond-terms
     title: Store.SaveBondTerms
     sourceFile: internal/valuation/postgres/queue.go
@@ -15543,7 +15561,11 @@ symbols:
       recorded_at: 2026-10-28T08:05:54.866Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-job-errors
+      - type: covered_by
         target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
       - type: implements
         target: REQ-valuation-river-jobs
   - id: SYM-valuation-postgres-store-claim
@@ -15636,7 +15658,11 @@ symbols:
       recorded_at: 2026-10-28T08:07:10.829Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: covered_by
         target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
       - type: implements
         target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-test-helper-new-pool
@@ -23220,6 +23246,8 @@ symbols:
       - type: covered_by
         target: TEST-plugins-trust
       - type: implements
+        target: REQ-plugins-github-signers-pinned
+      - type: implements
         target: REQ-plugins-signer-identity-match
       - type: implements
         target: REQ-plugins-signer-source-pinned
@@ -23285,6 +23313,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-github-signers-pinned
       - type: implements
         target: REQ-plugins-signer-identity-match
       - type: implements
@@ -37776,6 +37806,8 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
+        target: REQ-core-one-sync-worker-by-default
+      - type: implements
         target: REQ-core-serve-flags
       - type: implements
         target: REQ-decision-d36-8-revaluation-settings
@@ -38688,6 +38720,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
+        target: REQ-core-one-sync-worker-by-default
+      - type: implements
         target: REQ-ingest-scheduler-single-flight
   - id: SYM-ingest-sched-app-scheduler-end
     title: Scheduler.end
@@ -39213,6 +39247,8 @@ symbols:
         target: TEST-ingest-binding
       - type: implements
         target: REQ-ingest-connector-binding
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
   - id: SYM-ingest-sched-test-check-bound
     title: TestCheckBound
     sourceFile: internal/ingest/binding_test.go
@@ -52816,8 +52852,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-auth
+      - type: covered_by
+        target: TEST-ui-site-data
       - type: implements
         target: REQ-ui-session-cookie
+      - type: implements
+        target: REQ-ui-session-end-clears-site-data
   - id: SYM-ui-session-token
     title: sessionToken
     sourceFile: internal/views/ui/session.go
@@ -57542,6 +57582,8 @@ symbols:
         target: TEST-plugins-install
       - type: implements
         target: REQ-plugins-cli-install-source
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
       - type: implements
         target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-plan-install
@@ -64754,8 +64796,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-client
+      - type: covered_by
+        target: TEST-views-ghostfolio-version
       - type: implements
         target: REQ-views-ghostfolio-client
+      - type: implements
+        target: REQ-views-ghostfolio-follows-no-redirect
   - id: SYM-views-ghostfolio-user
     title: User
     sourceFile: internal/views/ghostfolio/client.go
@@ -65033,6 +65079,8 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
+        target: REQ-views-ghostfolio-checks-version-before-writes
+      - type: implements
         target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-syncer
     title: Syncer
@@ -65085,6 +65133,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
+      - type: implements
+        target: REQ-views-ghostfolio-checks-version-before-writes
       - type: implements
         target: REQ-views-ghostfolio-reconcile-cash
       - type: implements
@@ -77250,9 +77300,9 @@ symbols:
       - type: covered_by
         target: TEST-plugins-compile
       - type: implements
-        target: REQ-operator-instance-secret-names
+        target: REQ-operator-instance-secret-names-double-hyphen
       - type: implements
-        target: REQ-plugins-requested-secret-names
+        target: REQ-plugins-requested-secret-names-double-hyphen
   - id: SYM-pl-plugin-requested
     title: Plugin.Requested
     sourceFile: internal/plugins/permissions.go
@@ -77265,7 +77315,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-manifest
       - type: implements
-        target: REQ-plugins-requested-secret-names
+        target: REQ-plugins-requested-secret-names-double-hyphen
   - id: SYM-pl-effective-permissions-secret-names
     title: EffectivePermissions.SecretNames
     sourceFile: internal/plugins/effective.go
@@ -77278,7 +77328,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-compile
       - type: implements
-        target: REQ-plugins-requested-secret-names
+        target: REQ-plugins-requested-secret-names-double-hyphen
   - id: SYM-pl-test-plugin-requested
     title: TestPluginRequested
     sourceFile: internal/plugins/manifest_test.go
@@ -90144,11 +90194,13 @@ symbols:
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
       - type: implements
+        target: REQ-ingest-delivery-declared-institution
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+      - type: implements
         target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-plugins-manifest-declarations
-      - type: implements
-        target: REQ-ingest-delivery-declared-institution
   - id: SYM-ingest-kube-test-test-deployed-declarations
     title: TestDeployedDeclarations
     sourceFile: internal/ingest/kube/discovery_test.go
@@ -90583,11 +90635,13 @@ symbols:
       - type: implements
         target: REQ-ingest-bond-terms-index-levels-declared-approved
       - type: implements
+        target: REQ-ingest-delivery-declared-institution
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+      - type: implements
         target: REQ-plugins-install-shows-market-data-list
       - type: implements
         target: REQ-plugins-manifest-declarations
-      - type: implements
-        target: REQ-ingest-delivery-declared-institution
   - id: SYM-demo-cross-check-prices
     title: crossCheckPrices
     sourceFile: internal/demo/crosscheck.go
@@ -116471,7 +116525,11 @@ symbols:
       recorded_at: 2026-10-31T18:45:47.566Z
     relationships:
       - type: covered_by
+        target: TEST-attention-pg-outbox
+      - type: covered_by
         target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-read-subject
       - type: implements
         target: REQ-attention-outbox-same-transaction
   - id: SYM-attention-pg-store-unpublished
@@ -128515,6 +128573,8 @@ symbols:
       - type: implements
         target: REQ-ingest-bond-terms-index-levels-declared-approved
       - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+      - type: implements
         target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
       - type: implements
         target: REQ-ingest-undeclared-deliveries-item-per-instance
@@ -128529,6 +128589,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
       - type: implements
         target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
       - type: implements
@@ -128866,8 +128928,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-deliveries
+      - type: covered_by
+        target: TEST-plugins-index-readings
       - type: implements
         target: REQ-ingest-bond-terms-index-levels-declared-approved
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
   - id: SYM-views-kube-test-helper-with-flags
     title: withFlags
     sourceFile: internal/views/kube/plugins_test.go
@@ -130205,16 +130271,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-grant-institutions
-  - id: SYM-plugins-grant-institutions-test-test-approved-institutions
-    title: TestApprovedInstitutions
-    sourceFile: internal/plugins/grant_institutions_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T07:52:36.878Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-grant-institutions
   - id: SYM-plugins-grant-institutions-test-test-shared-institutions
     title: TestSharedInstitutions
     sourceFile: internal/plugins/grant_institutions_test.go
@@ -130264,19 +130320,6 @@ symbols:
         target: TEST-plugins-grant-institutions
       - type: implements
         target: REQ-plugins-install-warns-shared-institution
-  - id: SYM-plugins-approved-institutions
-    title: ApprovedInstitutions
-    sourceFile: internal/plugins/institutions.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T07:53:26.179Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-grant-institutions
-      - type: implements
-        target: REQ-plugins-legacy-grants-approve-declared-institutions
   - id: SYM-plugins-validate-institution-names
     title: validateInstitutionNames
     sourceFile: internal/plugins/manifest.go
@@ -130297,16 +130340,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-03T07:53:54.223Z
-    relationships:
-      - type: executable_for
-        target: TEST-operator-institutions
-  - id: SYM-operator-institutions-test-test-reconcile-legacy-grant-institutions
-    title: TestReconcileLegacyGrantInstitutions
-    sourceFile: internal/plugins/operator/institutions_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T07:54:05.028Z
     relationships:
       - type: executable_for
         target: TEST-operator-institutions
@@ -130379,6 +130412,595 @@ symbols:
         target: TEST-views-connectapi-plugins
       - type: implements
         target: REQ-views-plugin-approved-institutions
+  - id: SYM-plugins-effective-permissions-index-readings
+    status: active
+    title: EffectivePermissions.IndexReadings
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:08:29.377Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-index-readings
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-ingest-join-kinds
+    status: active
+    title: joinKinds
+    sourceFile: internal/ingest/declarations.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:08:42.226Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-viewsv1-plugin-get-index-readings
+    status: active
+    title: Plugin.GetIndexReadings
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:08:55.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-viewsv1-plugin-get-requested-index-readings
+    status: active
+    title: Plugin.GetRequestedIndexReadings
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:09:09.312Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-plugins-test-readings-outcome
+    title: readingsOutcome
+    sourceFile: internal/plugins/readings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:10:56.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-index-readings
+  - id: SYM-plugins-test-index-readings-permission
+    title: TestIndexReadingsPermission
+    sourceFile: internal/plugins/readings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:11:07.541Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-index-readings
+  - id: SYM-core-test-helper-readings-connector
+    title: readingsConnector
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:11:32.323Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-readings-connector-sync
+    title: readingsConnector.Sync
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:11:45.169Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-stored-reading-sources
+    title: storedReadingSources
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:11:56.840Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-approve-delivery
+    title: approveDelivery
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:12:10.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-undeclared-readings-dropped
+    title: TestUndeclaredReadingsDropped
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:12:23.569Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-valuation-postgres-test-stored-readings-name-their-instance
+    title: TestStoredReadingsNameTheirInstance
+    sourceFile: internal/valuation/postgres/deliveredby_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:12:33.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-delivered-by
+  - id: SYM-plugins-test-index-readings-label
+    title: TestIndexReadingsLabel
+    sourceFile: internal/plugins/readings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:02.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-index-readings
+  - id: SYM-plugins-test-index-readings-diff
+    title: TestIndexReadingsDiff
+    sourceFile: internal/plugins/readings_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:14.503Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-index-readings
+  - id: SYM-core-test-helper-sync-undeclared-readings
+    title: syncUndeclaredReadings
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:25.947Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-plugins-effective-permissions-same-deliveries
+    status: active
+    title: EffectivePermissions.sameDeliveries
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:38.152Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-index-readings
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-plugins-permissions-no-deliveries
+    status: active
+    title: Permissions.noDeliveries
+    sourceFile: internal/plugins/permissions.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:17:50.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-index-readings
+      - type: implements
+        target: REQ-ingest-index-readings-declared-approved
+  - id: SYM-operator-institutions-test-test-reconcile-grant-without-institutions
+    title: TestReconcileGrantWithoutInstitutions
+    sourceFile: internal/plugins/operator/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:32:52.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-institutions
+  - id: SYM-operator-institutions-test-helper-pending-ibkr
+    title: pendingIbkr
+    sourceFile: internal/plugins/operator/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:45:16.505Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-institutions
+  - id: SYM-plugins-cli-test-helper-owner-identity
+    title: ownerIdentity
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T13:51:59.840Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-app-test-helper-publisher-source
+    title: publisherSource
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T13:52:10.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-cosign-test-helper-world-sign-publisher
+    title: world.signPublisher
+    sourceFile: internal/plugins/cosign/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T13:52:20.713Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
+  - id: SYM-views-ghostfolio-client-version
+    status: active
+    title: Client.Version
+    sourceFile: internal/views/ghostfolio/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:31:59.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-version
+      - type: implements
+        target: REQ-views-ghostfolio-checks-version-before-writes
+  - id: SYM-views-ghostfolio-check-version
+    status: active
+    title: CheckVersion
+    sourceFile: internal/views/ghostfolio/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:32:11.853Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-version
+      - type: implements
+        target: REQ-views-ghostfolio-checks-version-before-writes
+  - id: SYM-views-ghostfolio-refuse-redirect
+    status: active
+    title: refuseRedirect
+    sourceFile: internal/views/ghostfolio/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:32:23.510Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-version
+      - type: implements
+        target: REQ-views-ghostfolio-follows-no-redirect
+  - id: SYM-views-ghostfolio-test-check-version
+    title: TestCheckVersion
+    sourceFile: internal/views/ghostfolio/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:11.144Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-version
+  - id: SYM-views-ghostfolio-test-client-version
+    title: TestClientVersion
+    sourceFile: internal/views/ghostfolio/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:20.937Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-version
+  - id: SYM-views-ghostfolio-test-client-follows-no-redirect
+    title: TestClientFollowsNoRedirect
+    sourceFile: internal/views/ghostfolio/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:31.508Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-version
+  - id: SYM-views-ghostfolio-test-sync-refuses-unsupported-version
+    title: TestSyncRefusesUnsupportedVersion
+    sourceFile: internal/views/ghostfolio/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:42.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-version
+  - id: SYM-views-ghostfolio-test-helper-fake-ghostfolio-version
+    title: fakeGhostfolio.Version
+    sourceFile: internal/views/ghostfolio/sync_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:53.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-helper-recorded-version-version
+    title: recordedVersion.Version
+    sourceFile: internal/views/ghostfolio/contract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:34:04.803Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-contract
+  - id: SYM-views-ghostfolio-test-helper-recorded-version
+    title: recordedVersion
+    sourceFile: internal/views/ghostfolio/contract_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:34:15.489Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-contract
+  - id: SYM-valuation-postgres-job-error-type
+    status: active
+    title: JobError
+    sourceFile: internal/valuation/postgres/joberror.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:00.771Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
+  - id: SYM-valuation-postgres-job-error-error
+    status: active
+    title: JobError.Error
+    sourceFile: internal/valuation/postgres/joberror.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:12.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
+  - id: SYM-valuation-postgres-job-errors
+    status: active
+    title: jobErrors
+    sourceFile: internal/valuation/postgres/joberror.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:25.737Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
+  - id: SYM-valuation-postgres-job-error
+    status: active
+    title: jobError
+    sourceFile: internal/valuation/postgres/joberror.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:38.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
+  - id: SYM-valuation-postgres-revalue-worker-revalue
+    status: active
+    title: RevalueWorker.revalue
+    sourceFile: internal/valuation/postgres/worker.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:48.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-test-job-error
+    title: TestJobError
+    sourceFile: internal/valuation/postgres/joberror_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:17:21.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-error
+  - id: SYM-valuation-postgres-test-failed-jobs-keep-no-values
+    title: TestFailedJobsKeepNoValues
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:17:32.887Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-check-failed-job-keeps-no-values
+    title: checkFailedJobKeepsNoValues
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:17:44.296Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-failing-ledger-log
+    title: failingLedger.Log
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:17:55.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-locked-buffer-write
+    title: lockedBuffer.Write
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:06.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-locked-buffer-string
+    title: lockedBuffer.String
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:18.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-valued-failures
+    title: valuedFailures
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:27.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-without-time
+    title: withoutTime
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:37.543Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-wait-for-failed
+    title: waitForFailed
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:47.109Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-error-lines
+    title: errorLines
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:56.187Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-failing-ledger
+    title: failingLedger
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:19:04.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-locked-buffer
+    title: lockedBuffer
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:19:14.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-attention-pg-test-outbox-holds-no-broker-account-number
+    title: TestOutboxHoldsNoBrokerAccountNumber
+    sourceFile: internal/attention/postgres/outbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:55:12.115Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-outbox
+  - id: SYM-attention-pg-test-helper-outbox-rows
+    title: outboxRows
+    sourceFile: internal/attention/postgres/outbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:55:21.855Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-outbox
+  - id: SYM-attention-pg-test-helper-outbox-row
+    title: outboxRow
+    sourceFile: internal/attention/postgres/outbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:55:31.874Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-outbox
+  - id: SYM-ui-test-session-end-clears-site-data
+    title: TestSessionEndClearsSiteData
+    sourceFile: internal/views/ui/sitedata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T16:31:20.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-site-data
+  - id: SYM-ui-test-htmx-keeps-no-history
+    title: TestHTMXKeepsNoHistory
+    sourceFile: internal/views/ui/sitedata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T16:31:30.611Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-site-data
   - id: SYM-demo-account-sleeves
     title: AccountSleeves
     sourceFile: internal/demo/catalog.go
@@ -132423,3 +133045,202 @@ symbols:
         target: TEST-plugins-app-upgrade
       - type: implements
         target: REQ-plugins-secret-names-never-shared
+  - id: SYM-valuation-postgres-migrate-river
+    title: migrateRiver
+    sourceFile: internal/valuation/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:18.444Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-decision-d36-4-river-job-queue
+      - type: implements
+        target: REQ-valuation-river-migrations-serialized
+  - id: SYM-demo-seed-wait-for-database
+    title: waitForDatabase
+    sourceFile: cmd/demo-seed/dbwait.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:29.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-db-wait
+      - type: implements
+        target: REQ-demo-seed-waits-for-database
+  - id: SYM-demo-seed-sleep-ctx
+    title: sleepCtx
+    sourceFile: cmd/demo-seed/dbwait.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:39.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-db-wait
+      - type: implements
+        target: REQ-demo-seed-waits-for-database
+  - id: SYM-valuation-postgres-test-concurrent-migrations
+    title: TestConcurrentMigrations
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:48.752Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-helper-new-database
+    title: newDatabase
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:58.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-demo-seed-test-helper-fake-db
+    title: fakeDB
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:08.145Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-helper-fake-db-ping
+    title: fakeDB.ping
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:18.675Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-helper-fake-db-sleep
+    title: fakeDB.sleep
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:29.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-wait-for-database
+    title: TestWaitForDatabase
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:39.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-wait-for-database-keeps-the-last-error
+    title: TestWaitForDatabaseKeepsTheLastError
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:51.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-sleep-ctx-stops-with-the-context
+    title: TestSleepCtxStopsWithTheContext
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:17:01.156Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-pl-validate-no-separator
+    title: validateNoSeparator
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:25:11.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
+  - id: SYM-ingest-sched-app-scheduler-workers
+    title: Scheduler.workers
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:25:25.205Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-core-one-sync-worker-by-default
+  - id: SYM-operator-go-mem-limit
+    title: GoMemLimit
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:25:40.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-operator-gomemlimit-nine-tenths
+      - type: implements
+        target: REQ-operator-plugin-gomemlimit
+  - id: SYM-ingest-sched-app-test-scheduler-workers
+    title: TestSchedulerWorkers
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:28:36.547Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-operator-test-go-mem-limit
+    title: TestGoMemLimit
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:28:50.725Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-ingest-sched-app-test-helper-syncs-per-instance
+    title: syncsPerInstance
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:31:33.621Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler

@@ -664,6 +664,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-27ffb53f973c
+  - type: validates
+    from: TEST-ingest-kube
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:08:13.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7dccac759e3
+  - type: implements
+    from: SYM-plugins-effective-permissions-index-readings
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:08:33.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99d4ffcea851
+  - type: covered_by
+    from: SYM-plugins-effective-permissions-index-readings
+    to: TEST-plugins-index-readings
+    created_at: 2026-11-03T10:08:33.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27d33415046a
   - type: verified_by
     from: SCEN-ledger-app-ensure-defaults
     to: TEST-portfolio-app-registry

@@ -672,6 +672,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-b39ea7a763f5
   - type: implements
+    from: SYM-viewsv1-plugin-get-requested-index-readings
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:09:13.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b7a6701b4e2
+  - type: covered_by
+    from: SYM-viewsv1-plugin-get-requested-index-readings
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-11-03T10:09:13.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa86d1242adc
+  - type: implements
     from: SYM-portfolio-pg-store-delete-sleeve
     to: REQ-portfolio-pg-sleeves
     created_at: 2026-11-03T12:30:45.462Z
@@ -713,3 +727,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-033ef7e95d15
+  - type: verified_by
+    from: SCEN-plugins-double-hyphen-refused
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-11-03T18:23:41.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96bd799a1976
+  - type: verified_by
+    from: SCEN-plugins-double-hyphen-refused
+    to: TEST-plugins-manifest
+    created_at: 2026-11-03T18:23:41.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f037dbbd9c5
+  - type: verified_by
+    from: SCEN-plugins-double-hyphen-refused
+    to: TEST-plugins-install
+    created_at: 2026-11-03T18:23:41.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3f4b38c5bc
+  - type: verified_by
+    from: SCEN-plugins-double-hyphen-refused
+    to: TEST-operator-shared-secret
+    created_at: 2026-11-03T18:23:41.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14958504dce8
+  - type: verified_by
+    from: SCEN-plugins-double-hyphen-refused
+    to: TEST-ingest-binding
+    created_at: 2026-11-03T18:23:41.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0df345d808d

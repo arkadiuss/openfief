@@ -61,11 +61,13 @@ func TestManifestValidate(t *testing.T) {
 					{Role: "b", MountPath: "/etc/a/nested"},
 					{Role: "g", MountPath: "/"},
 					{Role: "dotted.role", MountPath: "/etc/h"},
+					{Role: "flex--token", MountPath: "/etc/i"},
 				}
 			},
 			want: []fieldError{
 				{"secrets[0].role", plugins.ErrInvalidName},
 				{"secrets[7].role", plugins.ErrInvalidName},
+				{"secrets[8].role", plugins.ErrSecretNameSeparator},
 				{"secrets[5]", plugins.ErrDuplicate},
 				{"secrets[1].mountPath", plugins.ErrInvalidMountPath},
 				{"secrets[2].mountPath", plugins.ErrInvalidMountPath},
@@ -116,7 +118,7 @@ func TestPluginRequested(t *testing.T) {
 			want: plugins.Permissions{
 				Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 				Egress:       []plugins.EgressHost{host("api.example.com", 443), host("data.example.org", 8443)},
-				Secrets:      []string{"sample-cert", "sample-token"},
+				Secrets:      []string{"sample--cert", "sample--token"},
 				DataTiers:    []plugins.DataTier{"T1"},
 			},
 		},
@@ -128,7 +130,18 @@ func TestPluginRequested(t *testing.T) {
 			}},
 			want: plugins.Permissions{
 				Capabilities: []plugins.Capability{plugins.CapabilityConnector},
-				Secrets:      []string{"ibkr-joint-flex-token"},
+				Secrets:      []string{"ibkr-joint--flex-token"},
+			},
+		},
+		{
+			name: "an instance and a role never spell another pair's Secret (D-89)",
+			plugin: plugins.Plugin{Name: "ibkr-flex", Manifest: plugins.Manifest{
+				Capabilities: []plugins.Capability{plugins.CapabilityConnector},
+				Secrets:      []plugins.SecretMount{{Role: "token", MountPath: "/etc/openfief/ibkr-flex"}},
+			}},
+			want: plugins.Permissions{
+				Capabilities: []plugins.Capability{plugins.CapabilityConnector},
+				Secrets:      []string{"ibkr-flex--token"},
 			},
 		},
 		{

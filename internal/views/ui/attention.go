@@ -30,7 +30,7 @@ func attentionKindOf(kind string) attentionKind {
 		"transfer-broken":                       {"Transfer broken by a correction", "/transfers"},
 		"instrument-unclassified":               {"Instrument to classify", "/settings"},
 		"market-data-gap":                       {"Market data stopped arriving", "/settings#series-sources-title"},
-		"bond-terms-or-index-levels-undeclared": {"Bond terms or index levels dropped", "/plugins"},
+		"bond-terms-or-index-levels-undeclared": {"Bond terms, index levels or readings dropped", "/plugins"},
 	}
 	if k, ok := kinds[kind]; ok {
 		return k

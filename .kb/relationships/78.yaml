@@ -846,3 +846,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae918861ed0e
+  - type: implements
+    from: SYM-valuation-postgres-migrate-river
+    to: REQ-valuation-river-migrations-serialized
+    created_at: 2026-11-03T17:15:22.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36789b3b7f7b
+  - type: implements
+    from: SYM-valuation-postgres-migrate-river
+    to: REQ-decision-d36-4-river-job-queue
+    created_at: 2026-11-03T17:15:22.339Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd3e48b0937f
+  - type: covered_by
+    from: SYM-valuation-postgres-migrate-river
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-11-03T17:15:22.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d64dde2bd68b

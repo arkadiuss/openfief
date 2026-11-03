@@ -588,6 +588,13 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-5dba1cebe651
   - type: implements
+    from: SYM-plugins-cli-write-declarations
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:10:48.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3955ba6735b
+  - type: implements
     from: SYM-ingest-xtb-read-workbook-within
     to: REQ-ingest-xtb-reader-bounded-by-pod-memory
     created_at: 2026-11-03T07:20:24.750Z

@@ -644,6 +644,13 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-1a2aaa6fb673
   - type: executable_for
+    from: SYM-views-ghostfolio-test-client-follows-no-redirect
+    to: TEST-views-ghostfolio-version
+    created_at: 2026-11-03T14:33:35.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a6f57aabc81
+  - type: executable_for
     from: SYM-ingest-app-test-helper-held-ledger-payout-setting
     to: TEST-ingest-app-held
     created_at: 2026-11-03T12:34:50.947Z

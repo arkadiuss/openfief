@@ -77,7 +77,7 @@ func CPIReadings() []valuation.IndexReading {
 			}
 			out = append(out, valuation.IndexReading{
 				Kind: valuation.CPI, Year: cpiFirstYear + y, Month: time.Month(m + 1),
-				Value: kernel.NewDecimal(v-base, exp), Source: "gus-cpi-yoy",
+				Value: kernel.NewDecimal(v-base, exp), Source: BondsInstitution,
 			})
 		}
 	}

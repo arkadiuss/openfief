@@ -111,12 +111,13 @@ func fakeCluster(t *testing.T, port int32, names ...string) *cluster {
 			"status": map[string]any{
 				"conditions": []any{map[string]any{"type": "Ready", "status": "True"}},
 				// Every fake connector may deliver bond terms and index
-				// levels (D-179); TestUndeclaredDeliveriesRaiseAttention
-				// takes that away from one.
+				// levels (D-179) and index readings (D-186);
+				// TestUndeclaredDeliveriesRaiseAttention and
+				// TestUndeclaredReadingsDropped take that away from one.
 				// Each test connector books for the institutions the tests'
 				// deliveries name, which its grant approves (D-182, D-185).
 				"effective": map[string]any{
-					"capabilities": []any{"connector"}, "bondTerms": true, "indexLevels": true,
+					"capabilities": []any{"connector"}, "bondTerms": true, "indexLevels": true, "indexReadings": true,
 					"institutions": []any{"ibkr", "xtb", "treasury-bonds", "eodhd", "nbp"},
 				},
 				"deployed": map[string]any{"manifest": map[string]any{

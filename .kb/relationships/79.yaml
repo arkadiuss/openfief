@@ -902,3 +902,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1374fdbefbff
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-scheduler-workers
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-11-03T18:28:39.654Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b25c1d2dfd29

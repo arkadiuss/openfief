@@ -664,6 +664,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc928402ad32
+  - type: constrains
+    from: REQ-valuation-job-errors-carry-no-values
+    to: FACT-SUBJECT-FE1AE3727267F44C
+    created_at: 2026-11-03T15:15:58.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8592aeef9ffb
+  - type: requires_property
+    from: REQ-valuation-job-errors-carry-no-values
+    to: FACT-PROP-C526AD95246AAFD6
+    created_at: 2026-11-03T15:15:58.151Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae17adbeec69
+  - type: specified_by
+    from: REQ-valuation-job-errors-carry-no-values
+    to: SCEN-valuation-job-errors-carry-no-values
+    created_at: 2026-11-03T15:15:58.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-218108dbfa58
   - type: executable_for
     from: SYM-ingest-test-payout-setting-paid-out
     to: TEST-ingest-payout-setting

@@ -678,6 +678,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b5e12fcae113
+  - type: validates
+    from: TEST-valuation-postgres-delivered-by
+    to: REQ-valuation-index-readings-record-instance
+    created_at: 2026-11-03T10:08:09.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-864b51489b12
+  - type: executable_for
+    from: SYM-core-test-helper-approve-delivery
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-03T10:12:15.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b133fcafccc0
   - type: implements
     from: SYM-portfolio-app-registry-sleeves
     to: REQ-portfolio-registry-checks-sleeves

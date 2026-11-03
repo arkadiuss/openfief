@@ -41,46 +41,48 @@ func TestReconcileInstitutions(t *testing.T) {
 	}
 }
 
-// TestReconcileLegacyGrantInstitutions checks that a PluginGrant made before
-// D-185, which names no institutions at all, approves those of the version
-// that runs under it, so it keeps running, while a version that declares
-// another institution waits for the owner.
-func TestReconcileLegacyGrantInstitutions(t *testing.T) {
+// TestReconcileGrantWithoutInstitutions checks that a PluginGrant that
+// names no institutions at all approves none (D-185): a connector whose
+// manifest declares one waits for approval with it in
+// status.pendingApproval and doesn't start; and when the field is removed
+// from the grant of a running version, the institution waits for approval
+// again and status.effective, what the core accepts deliveries for, names
+// none.
+func TestReconcileGrantWithoutInstitutions(t *testing.T) {
 	t.Parallel()
 	tc := startCluster(t)
-	r := tc.reconciler(signedImages{imageA, imageB})
+	r := tc.reconciler(signedImages{imageA})
 	ctx := t.Context()
-	p := samplePlugin("legacy", imageA)
-	p.Spec.Manifest.Institutions = []string{"ibkr"}
-	create(ctx, t, tc.client, p)
-	g := sampleGrant("legacy")
-	g.Spec.Institutions = &[]string{"ibkr"}
-	create(ctx, t, tc.client, g)
-	tc.reconcile(ctx, t, r, "legacy")
-	// The grant as one made before D-185: no institutions field.
-	setGrantInstitutions(t, tc, "legacy", nil)
-	tc.reconcile(ctx, t, r, "legacy")
-	if got := tc.state(ctx, t, "legacy"); got.Pending != nil || got.DeployedImage != imageA {
-		t.Fatalf("legacy grant: pending %+v, deployed %q; want the running version kept", got.Pending, got.DeployedImage)
+	for _, name := range []string{"unnamed", "removed"} {
+		p := samplePlugin(name, imageA)
+		p.Spec.Manifest.Institutions = []string{"ibkr"}
+		create(ctx, t, tc.client, p)
+		g := sampleGrant(name)
+		if name == "removed" {
+			g.Spec.Institutions = &[]string{"ibkr"}
+		}
+		create(ctx, t, tc.client, g)
+		tc.reconcile(ctx, t, r, name)
 	}
-	if got := effectiveInstitutions(t, tc, "legacy"); !slices.Equal(got, []string{"ibkr"}) {
-		t.Errorf("legacy grant: status.effective.institutions = %v, want [ibkr]", got)
+	if got := tc.state(ctx, t, "unnamed"); !pendingIbkr(got.Pending) || got.DeployedImage != "" {
+		t.Errorf("grant without institutions: pending %+v, deployed %q; want ibkr pending and nothing running", got.Pending, got.DeployedImage)
 	}
-	var stored v1alpha1.Plugin
-	if err := tc.client.Get(ctx, types.NamespacedName{Namespace: "openfief", Name: "legacy"}, &stored); err != nil {
-		t.Fatalf("get plugin: %v", err)
+	if got := tc.state(ctx, t, "removed"); got.Pending != nil || got.DeployedImage != imageA {
+		t.Fatalf("approved institution: pending %+v, deployed %q; want the image running", got.Pending, got.DeployedImage)
 	}
-	stored.Spec.Image = imageB
-	stored.Spec.Manifest.Institutions = []string{"ibkr", "xtb"}
-	if err := tc.client.Update(ctx, &stored); err != nil {
-		t.Fatalf("upgrade the plugin: %v", err)
+	setGrantInstitutions(t, tc, "removed", nil)
+	tc.reconcile(ctx, t, r, "removed")
+	if got := tc.state(ctx, t, "removed"); !pendingIbkr(got.Pending) {
+		t.Errorf("grant whose institutions were removed: pending %+v; want ibkr pending", got.Pending)
 	}
-	tc.reconcile(ctx, t, r, "legacy")
-	got := tc.state(ctx, t, "legacy")
-	if got.Pending == nil || got.Pending.Institutions == nil || !slices.Equal(*got.Pending.Institutions, []string{"xtb"}) ||
-		got.DeployedImage != imageA {
-		t.Errorf("legacy grant, new institution: pending %+v, deployed %q; want xtb pending and the old version running", got.Pending, got.DeployedImage)
+	if got := effectiveInstitutions(t, tc, "removed"); len(got) != 0 {
+		t.Errorf("status.effective.institutions = %v, want none", got)
 	}
+}
+
+// pendingIbkr reports whether pending holds exactly the institution ibkr.
+func pendingIbkr(pending *v1alpha1.Permissions) bool {
+	return pending != nil && pending.Institutions != nil && slices.Equal(*pending.Institutions, []string{"ibkr"})
 }
 
 // setGrantInstitutions sets the named PluginGrant's institutions.

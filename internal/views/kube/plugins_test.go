@@ -115,6 +115,14 @@ func TestRecordOf(t *testing.T) {
 			r.RequestsBondTerms, r.BondTerms, r.RequestsIndexLevels = true, true, true
 			return r
 		}()},
+		{"index readings approved (D-186)", func(t *testing.T) *unstructured.Unstructured {
+			t.Helper()
+			return withFlags(t, operatorPlugin(t, "bonds"), []string{"spec", "manifest", "indexReadings"}, []string{"status", "effective", "indexReadings"})
+		}, func() views.PluginRecord {
+			r := signedRecord("bonds")
+			r.RequestsIndexReadings, r.IndexReadings = true, true
+			return r
+		}()},
 		{"refused as signed by an untrusted signer (D-169)", func(t *testing.T) *unstructured.Unstructured {
 			t.Helper()
 			p := v1alpha1.Plugin{

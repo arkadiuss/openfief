@@ -671,6 +671,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-653200ea2eaf
+  - type: validates
+    from: TEST-plugins-catalog
+    to: REQ-plugins-github-signers-pinned
+    created_at: 2026-11-03T13:51:26.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6793455e6975
+  - type: implements
+    from: SYM-views-ghostfolio-refuse-redirect
+    to: REQ-views-ghostfolio-follows-no-redirect
+    created_at: 2026-11-03T14:32:27.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c799685f562
+  - type: covered_by
+    from: SYM-views-ghostfolio-refuse-redirect
+    to: TEST-views-ghostfolio-version
+    created_at: 2026-11-03T14:32:27.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23ada0d63e9b
   - type: executable_for
     from: SYM-ingest-app-test-helper-mem-sleeves-sleeves
     to: TEST-ingest-app-accounts

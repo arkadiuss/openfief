@@ -693,6 +693,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-da829f48c0f0
   - type: implements
+    from: SYM-ingest-join-kinds
+    to: REQ-ingest-index-readings-declared-approved
+    created_at: 2026-11-03T10:08:46.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0586ebeb2c65
+  - type: implements
+    from: SYM-ingest-join-kinds
+    to: REQ-ingest-undeclared-deliveries-item-per-instance
+    created_at: 2026-11-03T10:08:46.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71cca26f9bb1
+  - type: covered_by
+    from: SYM-ingest-join-kinds
+    to: TEST-ingest-declarations
+    created_at: 2026-11-03T10:08:47.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fab5244a8c4
+  - type: implements
     from: SYM-ledger-pg-parse-kind
     to: REQ-ledger-pg-store-accounts
     created_at: 2026-11-03T12:10:34.628Z

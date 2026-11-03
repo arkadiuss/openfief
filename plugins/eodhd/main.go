@@ -6,7 +6,7 @@
 // the egress proxy (D-32), and has no ImportFile. The EODHD adapter is
 // internal/valuation/eodhd; this binary only wires it to the SDK.
 //
-// The API key comes from the instance's Secret <instance>-api-token (file api-token, D-89),
+// The API key comes from the instance's Secret <instance>--api-token (file api-token, D-89),
 // which the owner creates (D-29) and the manifest mounts at
 // /etc/openfief/eodhd. It is read on every sync and never logged.
 //

@@ -671,13 +671,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82638eef7901
-  - type: executable_for
-    from: SYM-plugins-grant-institutions-test-test-approved-institutions
-    to: TEST-plugins-grant-institutions
-    created_at: 2026-11-03T07:52:40.250Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9b4747f99990
   - type: constrains
     from: REQ-ingest-pg-payout-settings
     to: FACT-SUBJECT-49BF36EFB130CCC2

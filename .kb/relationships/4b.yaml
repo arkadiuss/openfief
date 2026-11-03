@@ -664,6 +664,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f77f00e747a
+  - type: executable_for
+    from: SYM-core-test-helper-readings-connector
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-03T10:11:36.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad9c87127165
   - type: implements
     from: SYM-portfolio-app-registry-save-kind
     to: REQ-portfolio-registry-checks-sleeves

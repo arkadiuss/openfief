@@ -452,19 +452,20 @@ func declaredCrossChecks(declared *ingest.Declarations, d *Delivery, m *ingest.M
 
 // keepDeclared returns d with only what instance's manifest declares, as
 // declared says: without undeclared cross-check prices (D-112, D-141) and
-// without bond terms and index levels it may not deliver (D-179).
+// without bond terms, index levels (D-179) and index readings (D-186) it
+// may not deliver.
 func (c *Connectors) keepDeclared(ctx context.Context, instance string, declared *ingest.Declarations, d *Delivery, m *ingest.Mapping) (*Delivery, error) {
 	return c.declaredDeliveries(ctx, instance, declared, declaredCrossChecks(declared, d, m), m)
 }
 
-// declaredDeliveries returns d without the bond terms and index levels
-// instance may not deliver: those its signed manifest doesn't declare or
-// its grant doesn't approve (D-179). Each kind dropped adds an ingest
+// declaredDeliveries returns d without the bond terms, index levels
+// (D-179) and index readings (D-186) instance may not deliver: those its
+// signed manifest doesn't declare or its grant doesn't approve. Each kind dropped adds an ingest
 // problem to m and raises the instance's one attention item, which a
 // delivery that drops nothing clears. The rest of d is imported either
 // way.
 func (c *Connectors) declaredDeliveries(ctx context.Context, instance string, declared *ingest.Declarations, d *Delivery, m *ingest.Mapping) (*Delivery, error) {
-	drop := ingest.UndeclaredDeliveries(*declared, len(d.BondTerms), len(d.IndexLevels))
+	drop := ingest.UndeclaredDeliveries(*declared, len(d.BondTerms), len(d.IndexLevels), len(d.IndexReadings))
 	problems, detail := drop.Problems, drop.Detail
 	if c.Attention != nil {
 		var err error
@@ -486,6 +487,9 @@ func (c *Connectors) declaredDeliveries(ctx context.Context, instance string, de
 	}
 	if !declared.IndexLevels {
 		out.IndexLevels = nil
+	}
+	if !declared.IndexReadings {
+		out.IndexReadings = nil
 	}
 	m.Problems = append(slices.Clone(m.Problems), problems...)
 	return &out, nil
@@ -564,8 +568,13 @@ func (c *Connectors) checkBound(ctx context.Context, instance string, m *ingest.
 
 // storeMarketData records the instance as a source of each kind of market
 // data d carries, then stores its valuation inputs and its treasury bond
-// series terms.
+// series terms. readings are d's index readings with their source; none is
+// stored when d no longer carries any, as when they were dropped as
+// undeclared (D-186).
 func (c *Connectors) storeMarketData(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) error {
+	if len(d.IndexReadings) == 0 {
+		readings = nil
+	}
 	if err := c.storeSources(ctx, instance, id, d); err != nil {
 		return err
 	}

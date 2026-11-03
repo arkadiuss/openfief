@@ -20,7 +20,14 @@ import (
 const (
 	ownerImage   = "registry.example.com/owner/mine@sha256:0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f"
 	ownerSubject = "https://github.com/owner/mine/.github/workflows/release.yml@refs/heads/main"
-	ownerSigners = `{"signers":[{"name":"my-ci","issuer":"https://token.actions.githubusercontent.com","subject":"` + ownerSubject + `"}]}`
+	// ownerRepository and ownerRef pin the owner's GitHub signer (D-187).
+	ownerRepository = "https://github.com/owner/mine"
+	ownerRef        = "refs/heads/main"
+	ownerSigners    = `{"signers":[{"name":"my-ci","issuer":"https://token.actions.githubusercontent.com","subject":"` + ownerSubject +
+		`","sourceRepository":"` + ownerRepository + `","sourceRef":"` + ownerRef + `"}]}`
+	// unpinnedSigners names the owner's GitHub signer by subject alone,
+	// which D-187 refuses.
+	unpinnedSigners = `{"signers":[{"name":"my-ci","issuer":"https://token.actions.githubusercontent.com","subject":"` + ownerSubject + `"}]}`
 	// gfImage is signed by OpenFief's CI; its manifest asks for the host of
 	// config field url (D-75) and an in-cluster service (D-74).
 	gfImage = "registry.example.com/example/gf@sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1"
@@ -123,12 +130,21 @@ func (fakeImages) Inspect(_ context.Context, image plugins.ImageRef) (plugins.Si
 		}}, nil
 	}
 	if image.String() == ownerImage {
-		id = plugins.SignerIdentity{Issuer: plugins.GitHubActionsIssuer, Subject: ownerSubject}
+		id = ownerIdentity()
 	}
 	return plugins.SignedImage{Image: image, Signatures: []plugins.SignerIdentity{id}, Manifest: plugins.Manifest{
 		Capabilities: []plugins.Capability{plugins.CapabilityView},
 		Secrets:      []plugins.SecretMount{{Role: "key", MountPath: "/etc/openfief/view"}},
 	}}, nil
+}
+
+// ownerIdentity is the owner's GitHub signer, pinned to the repository and
+// ref its signing run comes from (D-187); its signatures carry the same.
+func ownerIdentity() plugins.SignerIdentity {
+	return plugins.SignerIdentity{
+		Issuer: plugins.GitHubActionsIssuer, Subject: ownerSubject,
+		Source: &plugins.SignerSource{Repository: ownerRepository, Ref: ownerRef},
+	}
 }
 
 // runCase is one command line run.
@@ -150,6 +166,7 @@ type runCase struct {
 func env(c *fakeCluster, in string, out, errOut *bytes.Buffer) *cli.Env {
 	files := map[string]string{
 		"config.json": `{"theme":"dark"}`, "signers.json": ownerSigners, "gf.json": `{"url":"https://gf.example.com"}`,
+		"unpinned.json": unpinnedSigners,
 	}
 	return &cli.Env{
 		In: strings.NewReader(in), Out: out, Err: errOut,
@@ -176,24 +193,24 @@ func env(c *fakeCluster, in string, out, errOut *bytes.Buffer) *cli.Env {
 }
 
 // installed is a cluster with the named instances, each naming the Secret
-// view-key, which is labelled as the first one's (D-182).
+// view--key, which is labelled as the first one's (D-182).
 func installed(names ...string) *fakeCluster {
 	c := &fakeCluster{}
 	for _, n := range names {
-		owners := map[string]string{"view-key": names[0]}
-		c.instances = append(c.instances, app.Instance{Name: n, HasPlugin: true, HasGrant: true, Secrets: []string{"view-key"}, SecretOwners: owners})
+		owners := map[string]string{"view--key": names[0]}
+		c.instances = append(c.instances, app.Instance{Name: n, HasPlugin: true, HasGrant: true, Secrets: []string{"view--key"}, SecretOwners: owners})
 	}
 	return c
 }
 
 func TestRun(t *testing.T) {
 	t.Parallel()
-	owner := []plugins.Signer{{Name: "my-ci", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{Issuer: plugins.GitHubActionsIssuer, Subject: ownerSubject}}}
+	owner := []plugins.Signer{{Name: "my-ci", Kind: plugins.SignerOwner, Identity: ownerIdentity()}}
 	tests := []runCase{
 		{
 			name: "install confirmed", args: []string{"plugin", "install", sampleImage, "--config", "config.json"}, in: "y\n",
 			cluster: installed(), wantNames: []string{"sample"},
-			wantOut: []string{"Instance:     sample", "unverified: signed by trusted signer openfief-ci", "sample-key (role key) at /etc/openfief/view", `Config given: {"theme":"dark"}`, "Install sample? [y/N] ", "Installed sample."},
+			wantOut: []string{"Instance:     sample", "unverified: signed by trusted signer openfief-ci", "sample--key (role key) at /etc/openfief/view", `Config given: {"theme":"dark"}`, "Install sample? [y/N] ", "Installed sample."},
 		},
 		{
 			name: "install declined changes nothing", args: []string{"plugin", "install", sampleImage}, in: "n\n",
@@ -223,21 +240,25 @@ func TestRun(t *testing.T) {
 			name: "--print with the owner's signers file", args: []string{"plugin", "install", ownerImage, "--print", "--trusted-signers", "signers.json"},
 			wantOut: []string{"name: mine\n"}, wantErrOut: []string{"signed by trusted signer my-ci"},
 		},
+		{
+			name: "an owner's GitHub signer by subject alone is refused (D-187)",
+			args: []string{"plugin", "install", ownerImage, "--print", "--trusted-signers", "unpinned.json"}, wantErr: plugins.ErrInvalidSigner,
+		},
 		{name: "cluster unreachable", args: []string{"plugin", "install", sampleImage}, wantErr: errNoCluster},
 		{name: "missing config file", args: []string{"plugin", "install", sampleImage, "--config", "nope.json"}, cluster: installed(), wantErr: fs.ErrNotExist},
 		{
 			name: "uninstall confirmed", args: []string{"plugin", "uninstall", "sample"}, in: "yes\n",
 			cluster: installed("sample", "other"), wantNames: []string{"other"}, wantDeleted: []string{"sample"},
-			wantOut: []string{"Keeps Secrets another instance uses: view-key", "Uninstall sample? [y/N] ", "Uninstalled sample."},
+			wantOut: []string{"Keeps Secrets another instance uses: view--key", "Uninstall sample? [y/N] ", "Uninstalled sample."},
 		},
 		{
 			name: "uninstall the last user of a Secret", args: []string{"plugin", "uninstall", "sample", "--yes"},
-			cluster: installed("sample"), wantDeleted: []string{"sample", "view-key"}, wantOut: []string{"Secret view-key"},
+			cluster: installed("sample"), wantDeleted: []string{"sample", "view--key"}, wantOut: []string{"Secret view--key"},
 		},
 		{
 			name: "uninstall leaves a Secret not labelled as the instance's", args: []string{"plugin", "uninstall", "other", "--yes"},
 			cluster: installed("sample", "other"), wantNames: []string{"sample"}, wantDeleted: []string{"other"},
-			wantOut: []string{"Leaves Secrets not labelled openfief.io/instance=other: view-key"},
+			wantOut: []string{"Leaves Secrets not labelled openfief.io/instance=other: view--key"},
 		},
 		{name: "uninstall declined", args: []string{"plugin", "uninstall", "sample"}, in: "\n", cluster: installed("sample"), wantNames: []string{"sample"}, wantErr: cli.ErrAborted},
 		{name: "uninstall unknown", args: []string{"plugin", "uninstall", "nope", "--yes"}, cluster: installed(), wantErr: app.ErrNotInstalled},

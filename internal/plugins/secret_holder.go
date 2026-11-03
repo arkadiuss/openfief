@@ -9,10 +9,10 @@ import (
 
 // ErrSecretHeld reports a plugin instance that would mount a Secret
 // another instance mounts. Secret names join the instance and the role
-// with a hyphen (D-89), and both may hold hyphens, so two instances can
-// name one Secret, such as instance ibkr with role flex-token and instance
-// ibkr-flex with role token; the operator refuses the second (D-182), as
-// the CLI's app.ErrSecretInUse does at install and upgrade.
+// with "--", which neither may hold (D-89), so no two valid instances name
+// one Secret; this check stays as a second layer behind that rule: the
+// operator refuses the second (D-182), as the CLI's app.ErrSecretInUse
+// does at install and upgrade.
 var ErrSecretHeld = errors.New("another plugin instance names that Secret")
 
 // SecretHolder is a plugin instance and the Secrets it names, with when

@@ -8,10 +8,12 @@
 #
 # The core and the demo-seed Job start together (docs/dev/demo.md#demo-data). They don't clash because:
 #   - the Job runs without --reset-demo: it loads an empty database, or loads the same day again with the same build,
-#     which changes nothing; a reseed drops only the ledger and valuation schemas, never River's;
+#     which changes nothing; a reseed drops only the ledger, valuation and portfolio schemas, never River's;
 #   - the core runs with --ensure-defaults=false, so it writes no default sleeves that would make the loader take
 #     the database for a real one; the demo dataset brings its own sleeves;
-#   - both migrate under advisory locks, and both run River workers on the same queue, which River allows.
+#   - both migrate under advisory locks, River's migrations under one of their own (valuation/postgres migrateRiver),
+#     so neither fails on a version the other is applying; both run River workers on the same queue, which River allows;
+#   - the Job waits for PostgreSQL to accept connections (--db-wait, with backoff) before it counts an attempt.
 # Each deploy that changes the Job's image re-creates it (Flux's force annotation; a Job's template is immutable).
 # A new image is a new build of the loader, which reseeds the demo for today on its own, so the demo's data matches
 # the code deployed: nothing stored before the first release is migrated (D-161, docs/dev/demo.md#demo-data).

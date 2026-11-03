@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f44e4660eb5
+  - type: implements
+    from: SYM-demo-seed-sleep-ctx
+    to: REQ-demo-seed-waits-for-database
+    created_at: 2026-11-03T17:15:42.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9d4774f6efa
+  - type: covered_by
+    from: SYM-demo-seed-sleep-ctx
+    to: TEST-demo-seed-db-wait
+    created_at: 2026-11-03T17:15:42.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8061374da5b4

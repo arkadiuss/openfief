@@ -92,7 +92,7 @@ func (p *Plugins) InstalledPlugins(context.Context) ([]views.PluginRecord, error
 // spec.image, spec.manifest.capabilities, status.effective.capabilities,
 // spec.manifest.marketData and status.effective.marketData (D-123),
 // spec.manifest.institutions (D-182), the same of bondTerms and
-// indexLevels (D-179), its
+// indexLevels (D-179) and of indexReadings (D-186), its
 // Ready and SignatureVerified conditions, status.signature and
 // status.untrustedSigners (D-169). A field
 // that is missing or of another type reads as empty.
@@ -119,6 +119,9 @@ func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 		BondTerms:           nestedBool(u, "status", "effective", "bondTerms"),
 		RequestsIndexLevels: nestedBool(u, "spec", "manifest", "indexLevels"),
 		IndexLevels:         nestedBool(u, "status", "effective", "indexLevels"),
+
+		RequestsIndexReadings: nestedBool(u, "spec", "manifest", "indexReadings"),
+		IndexReadings:         nestedBool(u, "status", "effective", "indexReadings"),
 	}
 	conds, found, err := unstructured.NestedSlice(u.Object, "status", "conditions")
 	if err != nil || !found {

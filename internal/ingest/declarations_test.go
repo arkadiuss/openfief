@@ -65,8 +65,8 @@ func TestUndeclaredCrossCheckPrices(t *testing.T) {
 	}
 }
 
-// TestUndeclaredDeliveries checks D-179's drop in the domain: bond terms
-// or index levels a connector may not deliver become one skipped problem
+// TestUndeclaredDeliveries checks D-179's and D-186's drop in the domain:
+// bond terms, index levels or index readings a connector may not deliver become one skipped problem
 // per kind and an attention detail naming the kinds, never a count; what
 // it may deliver, or a delivery of none, gives neither.
 func TestUndeclaredDeliveries(t *testing.T) {
@@ -76,19 +76,32 @@ func TestUndeclaredDeliveries(t *testing.T) {
 		decl         ingest.Declarations
 		terms        int
 		levels       int
+		readings     int
 		wantRefs     []string
 		detailNames  string
 		wantNoDetail bool
 	}{
 		{name: "neither declared", terms: 2, levels: 3, wantRefs: []string{"bond_terms", "index_levels"}, detailNames: "bond series terms and market index levels"},
+		{
+			name: "none of three declared", terms: 2, levels: 3, readings: 4, wantRefs: []string{"bond_terms", "index_levels", "index_readings"},
+			detailNames: "bond series terms, market index levels and index readings",
+		},
 		{name: "only levels undeclared", decl: ingest.Declarations{BondTerms: true}, terms: 2, levels: 3, wantRefs: []string{"index_levels"}, detailNames: "market index levels"},
+		{
+			name: "only readings undeclared", decl: ingest.Declarations{BondTerms: true, IndexLevels: true}, terms: 2, levels: 3, readings: 4,
+			wantRefs: []string{"index_readings"}, detailNames: "delivers index readings that",
+		},
 		{name: "both declared", decl: ingest.Declarations{BondTerms: true, IndexLevels: true}, terms: 2, levels: 3, wantNoDetail: true},
+		{
+			name: "all three declared", decl: ingest.Declarations{BondTerms: true, IndexLevels: true, IndexReadings: true},
+			terms: 2, levels: 3, readings: 4, wantNoDetail: true,
+		},
 		{name: "nothing delivered", wantNoDetail: true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			drop := ingest.UndeclaredDeliveries(tt.decl, tt.terms, tt.levels)
+			drop := ingest.UndeclaredDeliveries(tt.decl, tt.terms, tt.levels, tt.readings)
 			problems, detail := drop.Problems, drop.Detail
 			var refs []string
 			for _, p := range problems {

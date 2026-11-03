@@ -16,19 +16,29 @@ import (
 )
 
 // fakeGhostfolio is Ghostfolio as ghostfolioModel models it, behind the
-// Ghostfolio port. It logs every call, and can turn the restricted view on
-// or answer every dry run with duplicates.
+// Ghostfolio port. It logs every call, can turn the restricted view on or
+// answer every dry run with duplicates, and names version as its version,
+// a supported one when empty.
 type fakeGhostfolio struct {
 	ghostfolioModel
 
 	restricted    bool
 	duplicateDrys bool
+	version       string
 	calls         []string
 }
 
 func (f *fakeGhostfolio) Login(context.Context) error {
 	f.calls = append(f.calls, "login")
 	return nil
+}
+
+func (f *fakeGhostfolio) Version(context.Context) (string, error) {
+	f.calls = append(f.calls, "version")
+	if f.version == "" {
+		return "3.93.0", nil
+	}
+	return f.version, nil
 }
 
 func (f *fakeGhostfolio) User(context.Context) (ghostfolio.User, error) {
@@ -137,11 +147,11 @@ func TestSync(t *testing.T) {
 	}{
 		{
 			name: "first sync", want: ghostfolio.Report{AccountsCreated: 2, Imported: 3, BalancesSet: 3},
-			wantCalls: "login user accounts create account create account dry run 3 import 3 set balance set balance set balance",
+			wantCalls: "login version user accounts create account create account dry run 3 import 3 set balance set balance set balance",
 		},
 		{
 			name: "nothing changed: only the prices are sent", want: ghostfolio.Report{},
-			wantCalls: "login user accounts activities read balances read balances dry run 0 import 0",
+			wantCalls: "login version user accounts activities read balances read balances dry run 0 import 0",
 		},
 		{
 			name: "a manual edit is reverted",
@@ -150,13 +160,13 @@ func TestSync(t *testing.T) {
 				g.activities[i].Quantity = g.activities[i].Quantity.Add(dec(t, "1"))
 			},
 			want:      ghostfolio.Report{Imported: 1, Deleted: 1},
-			wantCalls: "login user accounts activities read balances read balances dry run 1 import 1 delete",
+			wantCalls: "login version user accounts activities read balances read balances dry run 1 import 1 delete",
 		},
 		{
 			name:      "a removed transaction is deleted",
 			before:    func() { record.withoutBond("fee-1") },
 			want:      ghostfolio.Report{Deleted: 1, BalancesDeleted: 1},
-			wantCalls: "login user accounts activities read balances read balances dry run 0 import 0 delete drop balance",
+			wantCalls: "login version user accounts activities read balances read balances dry run 0 import 0 delete drop balance",
 		},
 		{
 			name: "an account left with nothing is emptied",
@@ -165,7 +175,7 @@ func TestSync(t *testing.T) {
 				record.withoutBond("buy-1")
 			},
 			want:      ghostfolio.Report{AccountsCleared: 1, BalancesDeleted: 1},
-			wantCalls: "login user accounts activities read balances read balances bulk delete drop balance",
+			wantCalls: "login version user accounts activities read balances read balances bulk delete drop balance",
 		},
 	}
 	for _, st := range steps {
@@ -196,8 +206,8 @@ func TestSyncRefuses(t *testing.T) {
 		wantErr   error
 		wantCalls string
 	}{
-		{"restricted view", fakeGhostfolio{restricted: true}, ghostfolio.ErrRestrictedView, "login user"},
-		{"a dry run with a duplicate", fakeGhostfolio{duplicateDrys: true}, ghostfolio.ErrPreviewMismatch, "login user accounts create account create account dry run 3"},
+		{"restricted view", fakeGhostfolio{restricted: true}, ghostfolio.ErrRestrictedView, "login version user"},
+		{"a dry run with a duplicate", fakeGhostfolio{duplicateDrys: true}, ghostfolio.ErrPreviewMismatch, "login version user accounts create account create account dry run 3"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -2,6 +2,7 @@ package ghostfolio_test
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -138,6 +139,18 @@ func (s *sessionSwap) RoundTrip(req *http.Request) (*http.Response, error) {
 	return resp, nil
 }
 
+// recordedVersion is the recorded client, naming the version the
+// recordings come from without a request: they were recorded before the
+// view checked Ghostfolio's version (D-188), so they hold no version
+// request. TestClientVersion checks that request, on Ghostfolio 3.93.0's
+// export format.
+type recordedVersion struct {
+	*ghostfolio.Client
+}
+
+// Version names the recordings' Ghostfolio version.
+func (recordedVersion) Version(context.Context) (string, error) { return "3.93.0", nil }
+
 // securityToken is the user's security token while recording, and the
 // placeholder while replaying.
 func securityToken() (string, error) {
@@ -168,7 +181,7 @@ func TestGhostfolioContract(t *testing.T) {
 	own, ownBalance := addOwnActivity(t, hc, c)
 	addLegacyBond(t, c)
 	record := syntheticRecord()
-	s := ghostfolio.NewSyncer(record, c, instance, nil)
+	s := ghostfolio.NewSyncer(record, recordedVersion{c}, instance, nil)
 	runSteps(t, s, []syncStep{
 		{name: "first sync", want: ghostfolio.Report{AccountsCreated: 1, Imported: 3, Deleted: 1, BalancesSet: 3}},
 		{name: "nothing changed", want: ghostfolio.Report{}},

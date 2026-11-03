@@ -587,3 +587,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78c9a8643a66
+  - type: verified_by
+    from: SCEN-ui-htmx-keeps-no-history
+    to: TEST-ui-site-data
+    created_at: 2026-11-03T16:30:43.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9377f9ac611b

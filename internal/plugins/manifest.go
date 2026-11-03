@@ -56,9 +56,23 @@ type SecretMount struct {
 	MountPath string
 }
 
+// SecretNameSeparator joins an instance and a role in the name of the
+// instance's Secret. Neither an instance name nor a role may hold it, so a
+// Secret's name reads only one way (D-89).
+const SecretNameSeparator = "--"
+
 // SecretName is the name of the Secret an instance mounts for a role:
-// "<instance>-<role>" (D-89).
-func SecretName(instance, role string) string { return instance + "-" + role }
+// "<instance>--<role>" (D-89).
+func SecretName(instance, role string) string { return instance + SecretNameSeparator + role }
+
+// validateNoSeparator returns ErrSecretNameSeparator for field when n, an
+// instance name or a Secret role, holds SecretNameSeparator (D-89).
+func validateNoSeparator(field, n string) []error {
+	if strings.Contains(n, SecretNameSeparator) {
+		return []error{fieldErr(field, ErrSecretNameSeparator, n)}
+	}
+	return nil
+}
 
 // ReservedMountPath is where Kubernetes and OpenFief put service account
 // tokens; no Secret may be mounted at, above or below it.
@@ -104,6 +118,10 @@ type Manifest struct {
 	// (D-179).
 	BondTerms   bool
 	IndexLevels bool
+	// IndexReadings declares that a connector delivers the index readings
+	// bond terms depend on, such as CPI and the NBP reference rate. Like
+	// BondTerms, the grant approves it (D-186).
+	IndexReadings bool
 	// Institutions are the institutions a connector books for, such as
 	// "ibkr": the core refuses a delivery that names any other (D-182).
 	Institutions []string
@@ -210,7 +228,9 @@ func validateSecretMounts(ms []SecretMount) []error {
 	for i, r := range roles {
 		if validateLabel(r) != nil {
 			errs = append(errs, fieldErr(indexed("secrets", i)+".role", ErrInvalidName, r))
+			continue
 		}
+		errs = append(errs, validateNoSeparator(indexed("secrets", i)+".role", r)...)
 	}
 	errs = append(errs, duplicates("secrets", roles, func(s string) string { return s })...)
 	for i, p := range paths {
@@ -290,9 +310,9 @@ func sortedCopy[T any](xs []T, compare func(a, b T) int) []T {
 	return out
 }
 
-// validateDeliveries refuses bond terms or index levels declared by a
-// plugin that can't act as a connector: only a connector delivers them
-// (D-179).
+// validateDeliveries refuses bond terms, index levels or index readings
+// declared by a plugin that can't act as a connector: only a connector
+// delivers them (D-179, D-186).
 func (m *Manifest) validateDeliveries() []error {
 	if slices.Contains(m.Capabilities, CapabilityConnector) {
 		return nil
@@ -303,6 +323,9 @@ func (m *Manifest) validateDeliveries() []error {
 	}
 	if m.IndexLevels {
 		errs = append(errs, &FieldError{Field: "indexLevels", Err: ErrDeliveryNeedsConnector})
+	}
+	if m.IndexReadings {
+		errs = append(errs, &FieldError{Field: "indexReadings", Err: ErrDeliveryNeedsConnector})
 	}
 	return errs
 }

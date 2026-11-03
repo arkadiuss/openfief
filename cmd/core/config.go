@@ -56,6 +56,7 @@ const (
 	defaultSyncEvery       = 6 * time.Hour
 	defaultSyncJitter      = 30 * time.Minute
 	defaultSyncTimeout     = 5 * time.Minute
+	defaultSyncWorkers     = 1
 	defaultRetryFirst      = 5 * time.Minute
 	defaultRetryMax        = time.Hour
 	defaultServiceAccount  = "openfief-core"
@@ -68,6 +69,8 @@ var (
 	errUsage = errors.New("usage: core [serve|migrate|token issue|token list|token revoke ID|connector bind|connector sync|enroll-link] [flags]")
 	// errNoDSN reports a missing connection string.
 	errNoDSN = errors.New(dsnEnv + " is not set")
+	// errSyncWorkers reports --sync-workers below one.
+	errSyncWorkers = errors.New("--sync-workers must be at least 1")
 	// errNoInstance reports a connector command without --instance.
 	errNoInstance = errors.New("--instance is required")
 	// errNoAccount reports connector bind without --account.
@@ -141,6 +144,8 @@ type syncConfig struct {
 	Policy ingest.SyncPolicy
 	// Timeout bounds one sync attempt.
 	Timeout time.Duration
+	// Workers is how many syncs run at once (D-189).
+	Workers int
 	// ServiceAccount is the core's own ServiceAccount, whose tokens it
 	// presents to plugins (D-59).
 	ServiceAccount string
@@ -223,6 +228,7 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	fs.DurationVar(&c.Sync.Policy.RetryFirst, "sync-retry-first", defaultRetryFirst, "the first retry delay after a failed sync; it doubles per failure")
 	fs.DurationVar(&c.Sync.Policy.RetryMax, "sync-retry-max", defaultRetryMax, "the longest retry delay")
 	fs.DurationVar(&c.Sync.Timeout, "sync-timeout", defaultSyncTimeout, "how long one sync, call and import, may take")
+	fs.IntVar(&c.Sync.Workers, "sync-workers", defaultSyncWorkers, "connector syncs that run at once (D-189); raise it only together with the core's memory limit")
 	fs.StringVar(&c.Sync.ServiceAccount, "service-account", defaultServiceAccount, "the core's own ServiceAccount, whose tokens it presents to plugins (D-59)")
 	authFlags(fs, &c.Auth)
 	if err := fs.Parse(args); err != nil {
@@ -236,6 +242,9 @@ func parseServe(args []string, getenv func(string) string) (serveConfig, error) 
 	}
 	if err := c.Sync.Policy.Validate(); err != nil {
 		return serveConfig{}, fmt.Errorf("sync flags: %w", err)
+	}
+	if c.Sync.Workers < 1 {
+		return serveConfig{}, fmt.Errorf("sync flags: %w", errSyncWorkers)
 	}
 	var err error
 	if c.Reporting, err = kernel.ParseCurrency(*reporting); err != nil {

@@ -182,6 +182,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 			Default: jurisdiction.DefaultWrapper(jurisdictionPack()), Today: d.today,
 		},
 		Policy:     cfg.Policy,
+		Workers:    cfg.Workers,
 		Timeout:    cfg.Timeout,
 		Now:        d.now,
 		NewBatchID: newBatchID,
@@ -250,6 +251,7 @@ func syncNow(ctx context.Context, d *connectorDeps, c *cluster, args *connectorA
 	cfg := syncConfig{
 		Policy:         ingest.SyncPolicy{Interval: defaultSyncEvery, Jitter: defaultSyncJitter, RetryFirst: defaultRetryFirst, RetryMax: defaultRetryMax},
 		Timeout:        defaultSyncTimeout,
+		Workers:        defaultSyncWorkers,
 		ServiceAccount: defaultServiceAccount,
 	}
 	res, err := newScheduler(d, c, discovery, &cfg).SyncNow(ctx, args.Instance, args.Mode)

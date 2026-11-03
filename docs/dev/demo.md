@@ -195,7 +195,7 @@ The dataset also carries synthetic cross-check prices, one of them beyond the th
 - IBKR's synthetic mark prices as [cross-check prices](../glossary.md#m0) from the `ibkr` source: each instrument held at the end of each monthly statement, at the latest demo close on or before that day, and the latest statement's first instrument 3% above it, so the price checks page shows one flagged check (D-110, D-111). `demo-seed` records them through valuation's `CrossChecks`;
 - the IBKR history as synthetic [Flex Query](../glossary.md#other-terms-and-abbreviations) statements for the placeholder account `U0000000`: an opening statement, then one per month. XTB and the bond registry have no connector yet, so their history is ledger transactions.
 
-The only real figures are public ones: the published terms of the EDO1133, COI0128 and TOS0128 series, GUS consumer price index readings from January 2023 to September 2026, and NBP table A exchange rates. Every balance assertion in the history matches the balance its transactions give.
+The only real figures are public ones: the published terms of the EDO1133, COI0128 and TOS0128 series, GUS consumer price index readings from January 2023 to September 2026 (recorded, like the series' terms, with the `treasury-bonds` instance as their source, D-179, D-186), and NBP table A exchange rates. Every balance assertion in the history matches the balance its transactions give.
 
 **The loader.** `demo-seed` reads the database URL from `OPENFIEF_DEMO_DSN` and loads the dataset through the paths real data takes. It exits once every account is valued through today.
 
@@ -225,6 +225,7 @@ Before it writes anything, the loader checks the database. It refuses a database
 | `--nbp-url` | NBP's Web API | Where to fetch NBP rates. If the fetch fails, the loader falls back to the committed rates. |
 | `--fx-source` | `nbp` | The NBP connector instance the rates are recorded as from: the demo's, so its syncs continue them (D-94). |
 | `--wait` | `10m` | How long to wait for the revaluations. |
+| `--db-wait` | `3m` | How long to wait for PostgreSQL to accept connections before loading, retrying with a backoff from 0.5 s doubling to 5 s, so a Job started with its database doesn't use up an attempt on a server still starting. |
 
 **The Job.** `deploy/demo-data` is a kustomize base with one Job, `demo-seed`, in the `openfief` namespace. The base runs the loader with `--reset-demo` (the demo drops it, below) and reads the URL from the key `uri` of `openfief-db-app`, the app secret CloudNativePG creates for the demo's `openfief-db` cluster. It retries up to six times while the database starts, gives up after 30 minutes, and runs as non-root with a read-only root filesystem and a 512 MiB memory limit. CI builds and signs its image, `ghcr.io/<owner>/<repo>/demo-seed`, like the others.
 

@@ -2,6 +2,7 @@
   "capabilities": ["connector"],
   "institutions": ["treasury-bonds"],
   "bondTerms": true,
+  "indexReadings": true,
   "egress": ["api-sdp.stat.gov.pl", "static.nbp.pl"],
   "configSchema": {
     "type": "object",

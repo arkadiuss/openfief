@@ -917,5 +917,14 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-10a7ddbbf366
+      },
+    {
+        type: executable_for,
+        from: SYM-operator-institutions-test-test-reconcile-grant-without-institutions,
+        to: TEST-operator-institutions,
+        created_at: 2026-11-03T12:32:56.318Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-ba03599b2834
       }
   ]

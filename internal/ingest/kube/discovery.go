@@ -153,7 +153,8 @@ func (d *Discovery) Declarations(_ context.Context, instance string) (ingest.Dec
 // status.effective.marketData, which is true only when the manifest
 // declares it and the PluginGrant approves it (D-123), and so whether it
 // may deliver bond terms and index levels from status.effective.bondTerms
-// and indexLevels (D-179); a field that is missing or of another type
+// and indexLevels (D-179), and index readings from
+// status.effective.indexReadings (D-186); a field that is missing or of another type
 // declares nothing.
 func DeployedDeclarations(u *unstructured.Unstructured) ingest.Declarations {
 	flag := func(fields ...string) bool {
@@ -166,6 +167,7 @@ func DeployedDeclarations(u *unstructured.Unstructured) ingest.Declarations {
 		MarketData:       flag("effective", "marketData"),
 		BondTerms:        flag("effective", "bondTerms"),
 		IndexLevels:      flag("effective", "indexLevels"),
+		IndexReadings:    flag("effective", "indexReadings"),
 	}
 	institutions, _, err := unstructured.NestedStringSlice(u.Object, "status", "effective", "institutions")
 	if err == nil {

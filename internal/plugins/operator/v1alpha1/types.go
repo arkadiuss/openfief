@@ -27,7 +27,7 @@ const (
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Namespaced,categories=openfief
-// +kubebuilder:validation:XValidation:rule="self.metadata.name.size() <= 56 && self.metadata.name.matches('^[a-z]([-a-z0-9]*[a-z0-9])?$')",message="name must be a lower-case DNS label of at most 56 characters that starts with a letter"
+// +kubebuilder:validation:XValidation:rule="self.metadata.name.size() <= 56 && self.metadata.name.matches('^[a-z][a-z0-9]*(-[a-z0-9]+)*$')",message="name must be a lower-case DNS label of at most 56 characters that starts with a letter and has no two hyphens in a row, which separate an instance from a Secret role (D-89)"
 // +kubebuilder:printcolumn:name="Ready",type=string,JSONPath=`.status.conditions[?(@.type=="Ready")].status`
 // +kubebuilder:printcolumn:name="Approval required",type=string,JSONPath=`.status.conditions[?(@.type=="ApprovalRequired")].status`
 // +kubebuilder:printcolumn:name="Signature",type=string,JSONPath=`.status.conditions[?(@.type=="SignatureVerified")].status`
@@ -111,7 +111,7 @@ type Manifest struct {
 
 	// Secrets lists, by role, the Kubernetes Secrets the plugin needs
 	// mounted read-only. Each instance mounts the Secret named
-	// <instance>-<role> in the openfief namespace, so two instances never
+	// <instance>--<role> in the openfief namespace, so two instances never
 	// share one (D-89). The owner creates them (D-29).
 	// +optional
 	// +kubebuilder:validation:MaxItems=32
@@ -180,6 +180,12 @@ type Manifest struct {
 	// +optional
 	IndexLevels bool `json:"indexLevels,omitempty"`
 
+	// IndexReadings declares that a connector delivers the index readings
+	// bond terms depend on, such as CPI and the NBP reference rate. The
+	// PluginGrant approves it (D-186).
+	// +optional
+	IndexReadings bool `json:"indexReadings,omitempty"`
+
 	// Institutions are the institutions a connector books for, such as
 	// ibkr: the core refuses a delivery that names any other (D-182).
 	// +optional
@@ -194,10 +200,11 @@ type Manifest struct {
 // read-only at MountPath.
 type SecretMount struct {
 	// Role names the Secret's purpose, such as flex-token; the instance's
-	// Secret is <instance>-<role>.
+	// Secret is <instance>--<role>, so a role has no two hyphens in a row
+	// (D-89).
 	// +kubebuilder:validation:MinLength=1
 	// +kubebuilder:validation:MaxLength=63
-	// +kubebuilder:validation:Pattern=`^[a-z0-9]([-a-z0-9]*[a-z0-9])?$`
+	// +kubebuilder:validation:Pattern=`^[a-z0-9]+(-[a-z0-9]+)*$`
 	Role string `json:"role"`
 	// MountPath is an absolute path outside /var/run/secrets.
 	// +kubebuilder:validation:MinLength=2
@@ -219,7 +226,7 @@ type Permissions struct {
 	// +kubebuilder:validation:items:MaxLength=259
 	// +listType=set
 	Egress []string `json:"egress,omitempty"`
-	// Secrets lists Secret names: <instance>-<role> for each role the
+	// Secrets lists Secret names: <instance>--<role> for each role the
 	// plugin's manifest names (D-89).
 	// +optional
 	// +kubebuilder:validation:MaxItems=32
@@ -258,12 +265,15 @@ type Permissions struct {
 	// core stores only when this approves it (D-179).
 	// +optional
 	IndexLevels bool `json:"indexLevels,omitempty"`
+	// IndexReadings lets a connector deliver the index readings bond terms
+	// depend on, such as CPI and the NBP reference rate, which the core
+	// stores only when this approves it (D-186).
+	// +optional
+	IndexReadings bool `json:"indexReadings,omitempty"`
 	// Institutions are the institutions a connector books for, such as
 	// ibkr; the core accepts a delivery only for an institution both the
 	// signed manifest and the PluginGrant name (D-185). A PluginGrant
-	// without this field, as every one made before D-185 is, approves the
-	// institutions of the version that runs under it; an empty list
-	// approves none.
+	// without this field, or with an empty list, approves none.
 	// +optional
 	// +kubebuilder:validation:MaxItems=16
 	// +kubebuilder:validation:items:MaxLength=63
@@ -350,7 +360,7 @@ type PluginList struct {
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Namespaced,categories=openfief
-// +kubebuilder:validation:XValidation:rule="self.metadata.name.size() <= 56 && self.metadata.name.matches('^[a-z]([-a-z0-9]*[a-z0-9])?$')",message="name must be the plugin's name"
+// +kubebuilder:validation:XValidation:rule="self.metadata.name.size() <= 56 && self.metadata.name.matches('^[a-z][a-z0-9]*(-[a-z0-9]+)*$')",message="name must be the plugin's name"
 // +kubebuilder:printcolumn:name="Valid",type=string,JSONPath=`.status.conditions[?(@.type=="Valid")].status`
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`
 type PluginGrant struct {

@@ -587,6 +587,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-563e6ba255e7
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-locked-buffer-write
+    to: TEST-valuation-postgres-job-errors
+    created_at: 2026-11-03T15:18:10.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80f6940e8e2d
   - type: implements
     from: SYM-ledger-pg-store
     to: REQ-ledger-pg-store-accounts

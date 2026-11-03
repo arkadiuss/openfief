@@ -221,6 +221,7 @@ func describe(p *plugins.Permissions) string {
 		{"marketData", marketDataItems(api.MarketData)},
 		{"bondTerms", marketDataItems(api.BondTerms)},
 		{"indexLevels", marketDataItems(api.IndexLevels)},
+		{"indexReadings", marketDataItems(api.IndexReadings)},
 		{"institutions", institutionItems(api.Institutions)},
 	} {
 		if len(f.items) > 0 {
@@ -231,8 +232,8 @@ func describe(p *plugins.Permissions) string {
 }
 
 // marketDataItems writes a yes-or-no permission, the market-data one
-// (D-123), bond terms or index levels (D-179), as one item, "true", or
-// none.
+// (D-123), bond terms or index levels (D-179) or index readings (D-186),
+// as one item, "true", or none.
 func marketDataItems(on bool) []string {
 	if on {
 		return []string{"true"}

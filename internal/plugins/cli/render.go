@@ -302,7 +302,7 @@ func yesNo(b bool) string {
 // writeDeclarations writes what a connector's manifest declares: the
 // institutions it books for (D-182), that it is a market-data connector,
 // which learns what the owner holds (D-123), and what it sends and takes
-// (D-112, D-109, D-179); nothing when it declares none of them.
+// (D-112, D-109, D-179, D-186); nothing when it declares none of them.
 func writeDeclarations(b *strings.Builder, m *plugins.Manifest) {
 	if slices.Contains(m.Capabilities, plugins.CapabilityConnector) {
 		fmt.Fprintf(b, "  Institutions: %s\n", joinOr(shownAll(m.Institutions), "none: the core refuses everything it delivers (D-182)"))
@@ -321,5 +321,8 @@ func writeDeclarations(b *strings.Builder, m *plugins.Manifest) {
 	}
 	if m.IndexLevels {
 		b.WriteString("  Declares:     it delivers market index levels, which the core stores once approved (D-179)\n")
+	}
+	if m.IndexReadings {
+		b.WriteString("  Declares:     it delivers index readings such as CPI, which the core stores once approved (D-186)\n")
 	}
 }

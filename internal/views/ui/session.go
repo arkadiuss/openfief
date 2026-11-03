@@ -107,9 +107,18 @@ func setSession(w http.ResponseWriter, token string, s *identityv1.Session) {
 	http.SetCookie(w, sessionCookie(token, s.GetExpiresAt().AsTime(), 0))
 }
 
-// clearSession removes the session cookie from the browser.
+// clearSiteData is the Clear-Site-Data value that ends a session: the
+// browser deletes this origin's storage, whatever the app kept of the
+// owner's record among it, and the service worker with its cache (D-151).
+// Cookies are not named: the session cookie goes with its own Set-Cookie.
+const clearSiteData = `"storage"`
+
+// clearSession removes the session cookie from the browser and has it wipe
+// what it keeps of the owner's record: on sign-out, and when the core no
+// longer accepts the session (D-151).
 func clearSession(w http.ResponseWriter) {
 	http.SetCookie(w, sessionCookie("", time.Unix(0, 0), -1))
+	w.Header().Set("Clear-Site-Data", clearSiteData)
 }
 
 // sessionToken returns the session token the browser sent, or "".

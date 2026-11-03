@@ -699,3 +699,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-988aa0e7cceb
+  - type: validates
+    from: TEST-valuation-app-plan
+    to: REQ-valuation-index-readings-record-instance
+    created_at: 2026-11-03T10:08:11.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65a6928a2e38
+  - type: validates
+    from: TEST-plugins-cosign
+    to: REQ-plugins-github-signers-pinned
+    created_at: 2026-11-03T13:51:32.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9175704080a2
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-error-lines
+    to: TEST-valuation-postgres-job-errors
+    created_at: 2026-11-03T15:18:59.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97e8504b14e5
+  - type: constrains
+    from: REQ-attention-outbox-read-subject
+    to: FACT-SUBJECT-8F14A580D2598A57
+    created_at: 2026-11-03T15:54:57.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d33fd1a7889f
+  - type: requires_property
+    from: REQ-attention-outbox-read-subject
+    to: FACT-PROP-4AE9543A77A4C6E3
+    created_at: 2026-11-03T15:54:57.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b348418de03a
+  - type: specified_by
+    from: REQ-attention-outbox-read-subject
+    to: SCEN-attention-outbox-read-subject
+    created_at: 2026-11-03T15:54:57.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85a0955f6116

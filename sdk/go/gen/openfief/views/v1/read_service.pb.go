@@ -5801,8 +5801,14 @@ type Plugin struct {
 	// (institutions) and its PluginGrant approves. The core refuses a
 	// delivery that names any other (D-185).
 	ApprovedInstitutions []string `protobuf:"bytes,19,rep,name=approved_institutions,json=approvedInstitutions,proto3" json:"approved_institutions,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	// Whether the core stores the index readings it delivers, such as CPI
+	// and the NBP reference rate, which bond terms depend on: its signed
+	// manifest declares them and its PluginGrant approves that (D-186).
+	IndexReadings bool `protobuf:"varint,20,opt,name=index_readings,json=indexReadings,proto3" json:"index_readings,omitempty"`
+	// Whether its signed manifest declares index readings, approved or not.
+	RequestedIndexReadings bool `protobuf:"varint,21,opt,name=requested_index_readings,json=requestedIndexReadings,proto3" json:"requested_index_readings,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *Plugin) Reset() {
@@ -5966,6 +5972,20 @@ func (x *Plugin) GetApprovedInstitutions() []string {
 		return x.ApprovedInstitutions
 	}
 	return nil
+}
+
+func (x *Plugin) GetIndexReadings() bool {
+	if x != nil {
+		return x.IndexReadings
+	}
+	return false
+}
+
+func (x *Plugin) GetRequestedIndexReadings() bool {
+	if x != nil {
+		return x.RequestedIndexReadings
+	}
+	return false
 }
 
 // AttentionItemChange is one entry of an attention item's history.
@@ -6615,7 +6635,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x12reporting_currency\x18\t \x01(\tR\x11reportingCurrency\"\x14\n" +
 	"\x12ListPluginsRequest\"J\n" +
 	"\x13ListPluginsResponse\x123\n" +
-	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xdd\x05\n" +
+	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xbe\x06\n" +
 	"\x06Plugin\x12\x1a\n" +
 	"\binstance\x18\x01 \x01(\tR\binstance\x12\x14\n" +
 	"\x05image\x18\x02 \x01(\tR\x05image\x12!\n" +
@@ -6638,7 +6658,9 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x14requested_bond_terms\x18\x10 \x01(\bR\x12requestedBondTerms\x12!\n" +
 	"\findex_levels\x18\x11 \x01(\bR\vindexLevels\x124\n" +
 	"\x16requested_index_levels\x18\x12 \x01(\bR\x14requestedIndexLevels\x123\n" +
-	"\x15approved_institutions\x18\x13 \x03(\tR\x14approvedInstitutions\"\xcc\x01\n" +
+	"\x15approved_institutions\x18\x13 \x03(\tR\x14approvedInstitutions\x12%\n" +
+	"\x0eindex_readings\x18\x14 \x01(\bR\rindexReadings\x128\n" +
+	"\x18requested_index_readings\x18\x15 \x01(\bR\x16requestedIndexReadings\"\xcc\x01\n" +
 	"\x13AttentionItemChange\x12\x10\n" +
 	"\x03seq\x18\x01 \x01(\x05R\x03seq\x12;\n" +
 	"\x05state\x18\x02 \x01(\x0e2%.openfief.views.v1.AttentionItemStateR\x05state\x12>\n" +

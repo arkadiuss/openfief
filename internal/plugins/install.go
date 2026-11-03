@@ -89,9 +89,11 @@ func DefaultInstanceName(src *InstallSource) string {
 }
 
 // validInstanceName reports whether n is a plugin name the Plugin CRD
-// accepts and not one the platform keeps for itself (D-182).
+// accepts: without SecretNameSeparator (D-89), and not one the platform
+// keeps for itself (D-182).
 func validInstanceName(n string) bool {
-	return n != "" && len(n) <= maxInstanceNameLen && validPluginName(n) && !ReservedName(n)
+	return n != "" && len(n) <= maxInstanceNameLen && validPluginName(n) &&
+		!strings.Contains(n, SecretNameSeparator) && !ReservedName(n)
 }
 
 // PlanInstall builds the Plugin and the Grant that installing a signed image

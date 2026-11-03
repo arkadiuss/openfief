@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-731a028a4aeb
+  - type: executable_for
+    from: SYM-ingest-sched-app-test-helper-syncs-per-instance
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-11-03T18:31:36.930Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7a226dda1e4

@@ -152,10 +152,9 @@ func checkInstalled(t *testing.T, store *kube.Instances, image, out string) {
 	if p.Spec.Image != image || string(p.Spec.Config.Raw) != `{"start":"2025-01-02"}` {
 		t.Errorf("plugin spec = %+v", p.Spec)
 	}
-	// A connector's grant names its institutions, none here, so it never
-	// reads as one made before D-185.
+	// A connector's grant names its institutions, none here (D-185).
 	want := v1alpha1.Permissions{
-		Capabilities: []string{"connector"}, Egress: []string{"api.example.com:443"}, Secrets: []string{"sample-credentials"},
+		Capabilities: []string{"connector"}, Egress: []string{"api.example.com:443"}, Secrets: []string{"sample--credentials"},
 		Institutions: &[]string{},
 	}
 	if diff := cmp.Diff(want, g.Spec); diff != "" {

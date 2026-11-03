@@ -6,6 +6,7 @@ import (
 	"io"
 	"slices"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -140,20 +141,24 @@ func delivery(t *testing.T) app.Delivery {
 }
 
 // fakeBindings binds every instance to its accounts, or fails with err.
+// Syncs of several instances look up their bindings at once.
 type fakeBindings struct {
 	accounts []ledger.AccountID
 	err      error
+	mu       sync.Mutex
 	calls    int
 }
 
 func (f *fakeBindings) BoundAccounts(context.Context, string) ([]ledger.AccountID, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
 	f.calls++
 	return f.accounts, f.err
 }
 
 // connectors returns Connectors over the fakes, with the instance bound to
-// acc-1, the account of mapping(t), and allowed to deliver bond terms and
-// index levels (D-179).
+// acc-1, the account of mapping(t), and allowed to deliver bond terms,
+// index levels (D-179) and index readings (D-186).
 func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, stores *fakeStores) *app.Connectors {
 	t.Helper()
 	day := march2(t)
@@ -207,8 +212,8 @@ func TestConnectorsSync(t *testing.T) {
 // fakeDeclarations answers each instance's manifest declarations, or fails
 // with err. An instance whose entry declares no institution declares those
 // the test deliveries name (testInstitutions), unless noInstitutions is set.
-// With deliveries, every instance may also deliver bond terms and index
-// levels (D-179).
+// With deliveries, every instance may also deliver bond terms, index
+// levels (D-179) and index readings (D-186).
 type fakeDeclarations struct {
 	byInstance     map[string]ingest.Declarations
 	noInstitutions bool
@@ -219,6 +224,7 @@ type fakeDeclarations struct {
 func (f fakeDeclarations) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
 	d := f.byInstance[instance]
 	d.BondTerms, d.IndexLevels = d.BondTerms || f.deliveries, d.IndexLevels || f.deliveries
+	d.IndexReadings = d.IndexReadings || f.deliveries
 	if d.Institutions == nil && !f.noInstitutions {
 		d.Institutions = testInstitutions()
 	}
