@@ -15687,7 +15687,11 @@ symbols:
       recorded_at: 2026-10-28T08:05:54.866Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-job-errors
+      - type: covered_by
         target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
       - type: implements
         target: REQ-valuation-river-jobs
   - id: SYM-valuation-postgres-store-claim
@@ -15780,7 +15784,11 @@ symbols:
       recorded_at: 2026-10-28T08:07:10.829Z
     relationships:
       - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: covered_by
         target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
       - type: implements
         target: REQ-valuation-revaluation-config
   - id: SYM-valuation-postgres-test-helper-new-pool
@@ -131436,3 +131444,191 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-ghostfolio-contract
+  - id: SYM-valuation-postgres-job-error-type
+    status: active
+    title: JobError
+    sourceFile: internal/valuation/postgres/joberror.go
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:00.771Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
+  - id: SYM-valuation-postgres-job-error-error
+    status: active
+    title: JobError.Error
+    sourceFile: internal/valuation/postgres/joberror.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:12.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
+  - id: SYM-valuation-postgres-job-errors
+    status: active
+    title: jobErrors
+    sourceFile: internal/valuation/postgres/joberror.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:25.737Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
+  - id: SYM-valuation-postgres-job-error
+    status: active
+    title: jobError
+    sourceFile: internal/valuation/postgres/joberror.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:38.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-job-error
+      - type: implements
+        target: REQ-valuation-job-errors-carry-no-values
+  - id: SYM-valuation-postgres-revalue-worker-revalue
+    status: active
+    title: RevalueWorker.revalue
+    sourceFile: internal/valuation/postgres/worker.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:16:48.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-worker
+      - type: implements
+        target: REQ-valuation-river-jobs
+  - id: SYM-valuation-postgres-test-job-error
+    title: TestJobError
+    sourceFile: internal/valuation/postgres/joberror_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:17:21.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-error
+  - id: SYM-valuation-postgres-test-failed-jobs-keep-no-values
+    title: TestFailedJobsKeepNoValues
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:17:32.887Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-check-failed-job-keeps-no-values
+    title: checkFailedJobKeepsNoValues
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:17:44.296Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-failing-ledger-log
+    title: failingLedger.Log
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:17:55.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-locked-buffer-write
+    title: lockedBuffer.Write
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:06.834Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-locked-buffer-string
+    title: lockedBuffer.String
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:18.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-valued-failures
+    title: valuedFailures
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:27.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-without-time
+    title: withoutTime
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:37.543Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-wait-for-failed
+    title: waitForFailed
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:47.109Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-error-lines
+    title: errorLines
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:18:56.187Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-failing-ledger
+    title: failingLedger
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:19:04.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors
+  - id: SYM-valuation-postgres-test-helper-locked-buffer
+    title: lockedBuffer
+    sourceFile: internal/valuation/postgres/joberror_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:19:14.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-job-errors

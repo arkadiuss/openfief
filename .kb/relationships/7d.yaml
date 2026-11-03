@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-536220103946
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-locked-buffer-string
+    to: TEST-valuation-postgres-job-errors
+    created_at: 2026-11-03T15:18:21.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cea8eaa32395

@@ -152,8 +152,14 @@ type RevalueWorker struct {
 	revaluer *app.Revaluer
 }
 
-// Work revalues job's account.
+// Work revalues job's account. A failure reaches River as a *JobError,
+// without the values it carried (GR-12).
 func (w *RevalueWorker) Work(ctx context.Context, job *river.Job[RevalueAccount]) error {
+	return jobError("revaluation job", w.revalue(ctx, job))
+}
+
+// revalue revalues job's account, round by round, until no change is left.
+func (w *RevalueWorker) revalue(ctx context.Context, job *river.Job[RevalueAccount]) error {
 	account := ledger.AccountID(job.Args.Account)
 	for range maxRounds {
 		from, ok, err := w.store.claim(ctx, account)
@@ -247,10 +253,8 @@ type EndOfDayWorker struct {
 	recorder *app.InputRecorder
 }
 
-// Work enqueues the end-of-day revaluations.
+// Work enqueues the end-of-day revaluations. A failure reaches River as a
+// *JobError, without the values it carried (GR-12).
 func (w *EndOfDayWorker) Work(ctx context.Context, _ *river.Job[EndOfDay]) error {
-	if err := w.recorder.EndOfDay(ctx, w.store); err != nil {
-		return fmt.Errorf("end-of-day job: %w", err)
-	}
-	return nil
+	return jobError("end-of-day job", w.recorder.EndOfDay(ctx, w.store))
 }

@@ -566,3 +566,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82b44381ce35
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-failing-ledger-log
+    to: TEST-valuation-postgres-job-errors
+    created_at: 2026-11-03T15:17:59.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5283472a52be

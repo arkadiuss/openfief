@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f579be46dc59
+  - type: executable_for
+    from: SYM-valuation-postgres-test-failed-jobs-keep-no-values
+    to: TEST-valuation-postgres-job-errors
+    created_at: 2026-11-03T15:17:36.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71c060ec5e3d

@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf66e4ef4ef9
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-wait-for-failed
+    to: TEST-valuation-postgres-job-errors
+    created_at: 2026-11-03T15:18:50.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9d93438dd0c

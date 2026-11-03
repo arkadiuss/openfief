@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17bf4595094a
+  - type: implements
+    from: SYM-valuation-postgres-job-errors
+    to: REQ-valuation-job-errors-carry-no-values
+    created_at: 2026-11-03T15:16:29.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-638422be9d4d
+  - type: covered_by
+    from: SYM-valuation-postgres-job-errors
+    to: TEST-valuation-postgres-job-error
+    created_at: 2026-11-03T15:16:29.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc7d59fd6fb9

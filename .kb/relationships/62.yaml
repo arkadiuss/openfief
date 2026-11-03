@@ -1014,3 +1014,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c774434d2d9
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-check-failed-job-keeps-no-values
+    to: TEST-valuation-postgres-job-errors
+    created_at: 2026-11-03T15:17:48.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53ffd73dc227

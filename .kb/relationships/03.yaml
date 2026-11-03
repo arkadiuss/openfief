@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd260f9d0fe0
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-valued-failures
+    to: TEST-valuation-postgres-job-errors
+    created_at: 2026-11-03T15:18:30.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44a41827b10e
