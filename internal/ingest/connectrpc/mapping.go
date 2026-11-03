@@ -16,8 +16,20 @@ import (
 
 // ErrInvalidMessage reports a connector's message that does not translate
 // into the domain: a malformed decimal, date, currency, ISIN or enum value, or a
-// missing required field. The error names the field.
-var ErrInvalidMessage = errors.New("invalid message")
+// missing required field. The error names the field. It is also
+// app.ErrInvalidDelivery, which the services that hand entries to a
+// connector know.
+var ErrInvalidMessage error = invalidMessageError{}
+
+// invalidMessageError is ErrInvalidMessage's type: errors.Is finds it as
+// app.ErrInvalidDelivery too.
+type invalidMessageError struct{}
+
+// Error returns "invalid message".
+func (invalidMessageError) Error() string { return "invalid message" }
+
+// Is reports whether target is app.ErrInvalidDelivery.
+func (invalidMessageError) Is(target error) bool { return target == app.ErrInvalidDelivery }
 
 // ErrDeliveryTooLarge reports a delivery with more than MaxDeliveryItems
 // items.

@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-99e6a6c5bd5b
+  - type: executable_for
+    from: SYM-ingest-app-test-log-safe
+    to: TEST-ingest-app-logsafe
+    created_at: 2026-11-03T01:07:57.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c5e5dd1d740

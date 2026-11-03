@@ -250,10 +250,11 @@ func feePostings(h TransactionHeader, fee kernel.Money) ([]Posting, error) {
 	}, nil
 }
 
-// needPositive fails unless d > 0.
+// needPositive fails unless d > 0. The error names what, never the value,
+// which may be an amount or a quantity (GR-12).
 func needPositive(h TransactionHeader, what string, d kernel.Decimal) error {
 	if d.Sign() <= 0 {
-		return fmt.Errorf("%w %s: %s must be positive, got %s", ErrInvalidTransaction, h.Key, what, d)
+		return fmt.Errorf("%w %s: %s must be positive", ErrInvalidTransaction, h.Key, what)
 	}
 	return nil
 }

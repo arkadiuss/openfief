@@ -242,6 +242,6 @@ func (s *accountService) fail(ctx context.Context, err error) *connect.Error {
 		errors.Is(err, ledger.ErrAccountHasTransactions), errors.Is(err, app.ErrBrokerAccountHasTransactions):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "account call failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "account call failed", slog.String("error", app.LogSafe(err)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }

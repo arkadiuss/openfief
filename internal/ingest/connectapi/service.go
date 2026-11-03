@@ -127,7 +127,7 @@ func (s *service) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, app.ErrConnectorUnavailable):
 		return connect.NewError(connect.CodeUnavailable, app.ErrConnectorUnavailable)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "bond lot call failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "bond lot call failed", slog.String("error", app.LogSafe(err)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }
 

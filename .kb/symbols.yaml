@@ -4658,6 +4658,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-8C3982CF80A9A4DF
       - type: implements
+        target: REQ-ingest-logs-carry-no-values
+      - type: implements
         target: REQ-ledger-event-postings
   - id: SYM-ledger-need-not-negative
     title: needNotNegative
@@ -5622,9 +5624,13 @@ symbols:
       recorded_at: 2026-10-28T05:39:56.804Z
     relationships:
       - type: covered_by
+        target: TEST-ledger-events
+      - type: covered_by
         target: TEST-ledger-lot
       - type: implements
         target: REQ-decision-d34-2-exact-remaining-cost
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
       - type: implements
         target: REQ-ledger-fifo
       - type: implements
@@ -39017,7 +39023,11 @@ symbols:
       recorded_at: 2026-10-28T16:52:00.038Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: covered_by
         target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
       - type: implements
         target: REQ-ingest-scheduler-single-flight
       - type: implements
@@ -71647,7 +71657,11 @@ symbols:
       recorded_at: 2026-10-29T05:12:10.988Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: covered_by
         target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
       - type: implements
         target: REQ-ingest-statement-service
       - type: implements
@@ -127995,3 +128009,226 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-deploy-network-policies
+  - id: SYM-ingest-app-log-safe
+    title: LogSafe
+    sourceFile: internal/ingest/app/logsafe.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:31.042Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-app-loggable-errors
+    title: loggableErrors
+    sourceFile: internal/ingest/app/logsafe.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:39.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-app-innermost
+    title: innermost
+    sourceFile: internal/ingest/app/logsafe.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:47.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-conn-rpc-invalid-message-error
+    title: invalidMessageError
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:55.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-conn-rpc-invalid-message-error-error
+    title: invalidMessageError.Error
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:06:05.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-invalid-message-error-is
+    title: invalidMessageError.Is
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:06:15.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-app-test-logsafe-valued
+    title: valued
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:06.422Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-locked-buffer
+    title: lockedBuffer
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:16.279Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-locked-buffer-write
+    title: lockedBuffer.Write
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:25.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-locked-buffer-string
+    title: lockedBuffer.String
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:35.714Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-text-logger
+    title: textLogger
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:45.421Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-log-safe
+    title: TestLogSafe
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:55.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-scheduler-logs-no-values
+    title: TestSchedulerLogsNoValues
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:04.902Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-connectapi-test-st-logging-client
+    title: newLoggingStatementsClient
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:22.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-logs-no-values
+    title: TestUploadStatementLogsNoValues
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:32.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-locked-log
+    title: lockedLog
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:42.366Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-locked-log-write
+    title: lockedLog.Write
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:52.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-locked-log-string
+    title: lockedLog.String
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:09:01.769Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ledger-test-refusals-name-no-values
+    title: TestRefusalsNameNoValues
+    sourceFile: internal/ledger/events_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:09:27.938Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-events
+  - id: SYM-ingest-conn-rpc-test-invalid-message-is-invalid-delivery
+    title: TestInvalidMessageIsInvalidDelivery
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:09:37.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping

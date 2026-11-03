@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d75c49042fb5
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-logs-no-values
+    to: TEST-ingest-app-logsafe
+    created_at: 2026-11-03T01:08:06.943Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29f29df14370

@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f139c8fd723b
+  - type: implements
+    from: SYM-ingest-sched-app-scheduler-tick
+    to: REQ-ingest-logs-carry-no-values
+    created_at: 2026-11-03T01:06:38.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddc630ec7aa6
+  - type: covered_by
+    from: SYM-ingest-sched-app-scheduler-tick
+    to: TEST-ingest-app-logsafe
+    created_at: 2026-11-03T01:06:38.536Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6db7dcbef514

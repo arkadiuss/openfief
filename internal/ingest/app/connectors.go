@@ -59,6 +59,10 @@ var (
 	// reached now, such as one that isn't running; the same entry may be
 	// sent again later.
 	ErrConnectorUnavailable = errors.New("the connector can't be reached")
+	// ErrInvalidDelivery reports a connector's answer that doesn't translate
+	// into a delivery, such as a malformed amount or ISIN; the error names
+	// the field.
+	ErrInvalidDelivery = errors.New("the connector's answer doesn't translate")
 )
 
 // ConnectorCaller calls connector plugins' connector contract (D-49). The

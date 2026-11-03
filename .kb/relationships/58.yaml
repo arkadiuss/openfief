@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef11eccdc3a5
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-st-logging-client
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-03T01:08:25.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3c80af174d5

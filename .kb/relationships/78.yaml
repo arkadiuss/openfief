@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-343facfa8dda
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-invalid-message-is-invalid-delivery
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-03T01:09:39.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae918861ed0e

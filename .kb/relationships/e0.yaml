@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-998b5efc8d71
+  - type: executable_for
+    from: SYM-ingest-app-test-logsafe-text-logger
+    to: TEST-ingest-app-logsafe
+    created_at: 2026-11-03T01:07:47.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9af09e5daf4b

@@ -3,11 +3,13 @@ package connectapi_test
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -147,6 +149,12 @@ type statementsClient struct {
 // limit and real content sniffing, and returns a client of it.
 func newStatementsClient(t *testing.T, c *fileCaller, l importer) statementsClient {
 	t.Helper()
+	return newLoggingStatementsClient(t, c, l, slog.New(slog.DiscardHandler))
+}
+
+// newLoggingStatementsClient is newStatementsClient logging to log.
+func newLoggingStatementsClient(t *testing.T, c *fileCaller, l importer, log *slog.Logger) statementsClient {
+	t.Helper()
 	day, err := kernel.ParseDate("2026-03-14")
 	if err != nil {
 		t.Fatalf("ParseDate: %v", err)
@@ -158,7 +166,7 @@ func newStatementsClient(t *testing.T, c *fileCaller, l importer) statementsClie
 		},
 		NewBatchID: func() ingest.BatchID { return "b-1" }, Instances: flexInstance{}, History: c,
 	}
-	_, handler := connectapi.NewStatements(uploads, viewStreams{}, slog.New(slog.DiscardHandler))
+	_, handler := connectapi.NewStatements(uploads, viewStreams{}, log)
 	srv := httptest.NewServer(handler)
 	t.Cleanup(srv.Close)
 	return statementsClient{ingestv1connect.NewStatementServiceClient(srv.Client(), srv.URL)}
@@ -229,6 +237,75 @@ func TestUploadStatement(t *testing.T) {
 	if diff := cmp.Diff([]string{"statement.xml", "text/xml; charset=utf-8", "transactions", "true"}, handed); diff != "" {
 		t.Errorf("handed to the connector: name, sniffed type, mode, every byte (-want +got):\n%s", diff)
 	}
+}
+
+// TestUploadStatementLogsNoValues checks that an upload failing with an
+// error that carries an amount, an ISIN and an account number answers
+// internal and logs the failure without any of them (GR-12), and that a
+// connector's untranslatable answer is the owner's to see, not a log line.
+func TestUploadStatementLogsNoValues(t *testing.T) {
+	t.Parallel()
+	leaked := regexp.MustCompile(`\d+[.,]\d+|[A-Z]{2}[A-Z0-9]{9}\d|U\d{7}`)
+	tests := []struct {
+		name     string
+		err      error
+		wantCode connect.Code
+		wantLog  bool
+	}{
+		{name: "a store failure", err: fmt.Errorf("%w: duplicate key (isin)=(PLTEST000010), amount 1234.56 in U1234567", errStoreFailed), wantCode: connect.CodeInternal, wantLog: true},
+		{name: "an invalid transaction", err: fmt.Errorf("%w: 1234.56 PLN", ledger.ErrInvalidTransaction), wantCode: connect.CodeInvalidArgument},
+		{name: "an untranslatable delivery", err: fmt.Errorf("%w: close %q", app.ErrInvalidDelivery, "1234.56"), wantCode: connect.CodeInvalidArgument},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			out := &lockedLog{}
+			log := slog.New(slog.NewTextHandler(out, &slog.HandlerOptions{ReplaceAttr: func(_ []string, a slog.Attr) slog.Attr {
+				if a.Key == slog.TimeKey {
+					return slog.Attr{}
+				}
+				return a
+			}}))
+			c := &fileCaller{account: flexAccount}
+			client := newLoggingStatementsClient(t, c, importer{err: tt.err}, log)
+			_, err := upload(t, client, viewCaller, []*ingestv1.UploadStatementRequest{headerPart(header())}, syntheticStatement())
+			if code := connect.CodeOf(err); code != tt.wantCode {
+				t.Fatalf("UploadStatement = %v, want %v", err, tt.wantCode)
+			}
+			logged := out.String()
+			if strings.Contains(logged, "statement upload failed") != tt.wantLog {
+				t.Errorf("logged %q; want a failure logged: %v", logged, tt.wantLog)
+			}
+			if m := leaked.FindAllString(logged, -1); len(m) > 0 {
+				t.Errorf("the log holds values %q:\n%s", m, logged)
+			}
+		})
+	}
+}
+
+// errStoreFailed is a synthetic failure of the ledger's store.
+var errStoreFailed = errors.New("synthetic: the store failed")
+
+// lockedLog is a log the server's goroutine writes and the test reads.
+type lockedLog struct {
+	mu  sync.Mutex
+	buf bytes.Buffer
+}
+
+func (l *lockedLog) Write(p []byte) (int, error) {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	n, err := l.buf.Write(p)
+	if err != nil {
+		return n, fmt.Errorf("log: %w", err)
+	}
+	return n, nil
+}
+
+func (l *lockedLog) String() string {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	return l.buf.String()
 }
 
 // TestListStatementAccounts checks that the owner learns which accounts

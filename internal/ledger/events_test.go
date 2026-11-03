@@ -1,6 +1,7 @@
 package ledger_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -260,6 +261,49 @@ func checkBuilt(t *testing.T, got *ledger.Transaction, wantKind ledger.Transacti
 	gotHeader := []any{got.Kind, got.Key.ExternalID, got.Account, got.Date.String()}
 	if diff := cmp.Diff([]any{wantKind, "e-1", testAccount, "2026-03-02"}, gotHeader); diff != "" {
 		t.Errorf("kind, key, account, date (-want +got):\n%s", diff)
+	}
+}
+
+// TestRefusalsNameNoValues checks that a refused transaction's error names
+// what is wrong but never the amount or quantity, which may reach a log
+// (GR-12).
+func TestRefusalsNameNoValues(t *testing.T) {
+	t.Parallel()
+	h := header(t, "e-1", "2026-03-02")
+	in := instrument(t, isinA, "TSTA")
+	m := func(amount, code string) kernel.Money { return money(t, amount, code) }
+	tests := []struct {
+		name  string
+		value string
+		build func() (ledger.Transaction, error)
+		// fifo, when set, is the quantity ConsumeFIFO takes instead.
+		fifo string
+	}{
+		{name: "buy of negative units", value: "7.25", build: func() (ledger.Transaction, error) {
+			return ledger.NewBuy(h, in, qty(t, "-7.25"), m("1", "USD"), kernel.Money{})
+		}},
+		{name: "negative dividend", value: "12.34", build: func() (ledger.Transaction, error) {
+			return ledger.NewDividend(h, in, m("-12.34", "USD"), kernel.Money{})
+		}},
+		{name: "negative deposit", value: "4321.09", build: func() (ledger.Transaction, error) { return ledger.NewDeposit(h, m("-4321.09", "PLN")) }},
+		{name: "disposal of negative units", value: "3.75", fifo: "-3.75"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			var err error
+			if tt.fifo != "" {
+				_, err = ledger.ConsumeFIFO(nil, qty(t, tt.fifo))
+			} else {
+				_, err = tt.build()
+			}
+			if err == nil {
+				t.Fatal("no error")
+			}
+			if strings.Contains(err.Error(), tt.value) {
+				t.Errorf("error %q names the value %s", err, tt.value)
+			}
+		})
 	}
 }
 

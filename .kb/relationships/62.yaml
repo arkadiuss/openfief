@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38a4d5a2f2d7
+  - type: implements
+    from: SYM-ingest-app-loggable-errors
+    to: REQ-ingest-logs-carry-no-values
+    created_at: 2026-11-03T01:05:41.485Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72a0391d8774
+  - type: covered_by
+    from: SYM-ingest-app-loggable-errors
+    to: TEST-ingest-app-logsafe
+    created_at: 2026-11-03T01:05:41.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3561c7b36ef
