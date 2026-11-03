@@ -26,8 +26,8 @@ func TestParseNameStatus(t *testing.T) {
 
 func TestScriptReads(t *testing.T) {
 	t.Parallel()
-	src := `cp -r "$root/deploy/demo" "$work"; bash "$root/scripts/x.sh"; cat $root/docs/DESIGN.md. "$root/deploy"`
-	want := []string{"deploy", "deploy/demo", "docs/DESIGN.md", "scripts/x.sh"}
+	src := `cp -r "$root/deploy/demo" "$work"; bash "$root/scripts/x.sh"; cat $root/docs/DESIGN.md. "$root/deploy" "$root/.github/workflows"/*.yml "$root/../x"`
+	want := []string{".github/workflows", "deploy", "deploy/demo", "docs/DESIGN.md", "scripts/x.sh"}
 	if diff := cmp.Diff(want, scriptReads(src)); diff != "" {
 		t.Errorf("scriptReads() mismatch (-want +got):\n%s", diff)
 	}

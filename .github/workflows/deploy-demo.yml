@@ -21,6 +21,10 @@ permissions: {}
 jobs:
   deploy:
     name: deploy to demo
+    # Signs keylessly, so it runs only in OpenFief's own repository (D-181): in a called workflow github.repository
+    # is the caller's, and Flux on the demo can't pin the signing run's repository, only this workflow's identity.
+    # Flux also pulls only from this repository's GHCR package, which other repositories can't push to.
+    if: github.repository == 'arkadiuss/openfief'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     environment:

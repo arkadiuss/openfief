@@ -127406,3 +127406,33 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-manifests
+  - id: SYM-tooling-test-reusable-signing-guard-unguarded
+    title: unguarded
+    sourceFile: scripts/tests/reusable-signing-guard.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:35:41.150Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-reusable-signing-guard
+  - id: SYM-tooling-test-reusable-signing-guard-check
+    title: check
+    sourceFile: scripts/tests/reusable-signing-guard.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:35:52.585Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-reusable-signing-guard
+  - id: SYM-tooling-test-reusable-signing-guard-write
+    title: write
+    sourceFile: scripts/tests/reusable-signing-guard.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:36:04.651Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-reusable-signing-guard

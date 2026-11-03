@@ -16,8 +16,9 @@ import (
 
 var errInput = errors.New("malformed input")
 
-// rootReadRe finds the repository paths a script test reads: "$root/<path>".
-var rootReadRe = regexp.MustCompile(`\$root/([A-Za-z0-9_][A-Za-z0-9_./-]*)`)
+// rootReadRe finds the repository paths a script test reads: "$root/<path>". A path may start with one dot, as
+// .github/workflows does.
+var rootReadRe = regexp.MustCompile(`\$root/(\.?[A-Za-z0-9_][A-Za-z0-9_./-]*)`)
 
 // loadGraph reads the package listings scripts/go-packages.sh wrote into the input directory: for module i,
 // go-list/<i>-tagged.json (with the e2e build tag, for imports and embeds, so the end-to-end suite is in the
