@@ -45,6 +45,9 @@ const (
 	defaultFXSource = "nbp"
 	// defaultWait bounds the revaluations unless --wait says otherwise.
 	defaultWait = 10 * time.Minute
+	// defaultDBWait bounds how long the loader waits for the database to
+	// accept connections, as when it starts together with it.
+	defaultDBWait = 3 * time.Minute
 	// exitUsage is the exit status for bad arguments.
 	exitUsage = 2
 )
@@ -71,6 +74,9 @@ type config struct {
 	// rates that instance syncs later are one series with one source
 	// (D-94).
 	FXSource string
+	// DBWait bounds how long the loader waits for the database to accept
+	// connections before it starts.
+	DBWait time.Duration
 	// Wait bounds how long the revaluations may take.
 	Wait time.Duration
 	// Loader names this build of the loader (loaderBuild): a marked
@@ -109,6 +115,7 @@ func parseConfig(args []string, dsn string, now time.Time) (config, error) {
 	nbpURL := fs.String("nbp-url", nbp.DefaultBaseURL, "NBP Web API base URL")
 	fxSource := fs.String("fx-source", defaultFXSource, "the NBP connector instance the FX rates are recorded as from")
 	wait := fs.Duration("wait", defaultWait, "how long to wait for the revaluations")
+	dbWait := fs.Duration("db-wait", defaultDBWait, "how long to wait for the database to accept connections")
 	if err := fs.Parse(args); err != nil {
 		return config{}, fmt.Errorf("parsing flags: %w", err)
 	}
@@ -118,7 +125,7 @@ func parseConfig(args []string, dsn string, now time.Time) (config, error) {
 	if *fxSource == "" {
 		return config{}, errNoFXSource
 	}
-	cfg := config{DSN: dsn, Seed: *seed, Reset: *reset, Offline: *offline, NBPURL: *nbpURL, FXSource: *fxSource, Wait: *wait}
+	cfg := config{DSN: dsn, Seed: *seed, Reset: *reset, Offline: *offline, NBPURL: *nbpURL, FXSource: *fxSource, Wait: *wait, DBWait: *dbWait}
 	if *today == "" {
 		loc, err := time.LoadLocation("Europe/Warsaw")
 		if err != nil {

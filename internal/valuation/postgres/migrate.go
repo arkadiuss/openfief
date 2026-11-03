@@ -57,7 +57,9 @@ type migration struct {
 // ledger store's runner (internal/ledger/postgres), copied so the contexts
 // share no adapter code, with its own version table and lock key. Then it
 // applies River's own migrations into RiverSchema with rivermigrate, which
-// runs each in a transaction of its own, as River requires.
+// runs each in a transaction of its own, as River requires, under an
+// advisory lock of their own (migrateRiver), so the core and the demo
+// loader can migrate one database at the same moment.
 func Migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	all, err := migrations()
 	if err != nil {
@@ -66,12 +68,49 @@ func Migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	if err = pgx.BeginFunc(ctx, pool, func(tx pgx.Tx) error { return migrateTx(ctx, tx, all) }); err != nil {
 		return fmt.Errorf("migrating the valuation schema: %w", err)
 	}
-	migrator, err := rivermigrate.New(riverpgxv5.New(pool), &rivermigrate.Config{Schema: RiverSchema})
-	if err != nil {
+	if err := migrateRiver(ctx, pool); err != nil {
 		return fmt.Errorf("migrating River: %w", err)
 	}
+	return nil
+}
+
+// riverMigrationLock is the advisory lock key that serializes River's
+// migrations across processes, such as the core and the demo loader
+// starting at once: "river" in ASCII. rivermigrate takes no lock of its own,
+// and two concurrent runs both apply the same version and one fails on a
+// duplicate key.
+const riverMigrationLock int64 = 0x7269766572
+
+// migrateRiver applies River's migrations into RiverSchema while holding
+// riverMigrationLock. rivermigrate runs each migration in a transaction of
+// its own on the pool, so the lock is a session lock on a connection of its
+// own, held until every migration ran and released before the connection
+// goes back to the pool. A run that waited for the lock finds the versions
+// applied and applies nothing.
+func migrateRiver(ctx context.Context, pool *pgxpool.Pool) (err error) {
+	conn, err := pool.Acquire(ctx)
+	if err != nil {
+		return fmt.Errorf("acquiring a connection for the lock: %w", err)
+	}
+	defer conn.Release()
+	if _, lockErr := conn.Exec(ctx, "SELECT pg_advisory_lock($1)", riverMigrationLock); lockErr != nil {
+		return fmt.Errorf("locking: %w", lockErr)
+	}
+	defer func() {
+		bg := context.WithoutCancel(ctx)
+		if _, unlockErr := conn.Exec(bg, "SELECT pg_advisory_unlock($1)", riverMigrationLock); unlockErr != nil {
+			// A session lock that can't be released must not go back to the
+			// pool held: closing the connection releases it.
+			closeErr := conn.Conn().Close(bg)
+			err = errors.Join(err, fmt.Errorf("unlocking: %w", unlockErr), closeErr)
+		}
+	}()
+	migrator, err := rivermigrate.New(riverpgxv5.New(pool), &rivermigrate.Config{Schema: RiverSchema})
+	if err != nil {
+		return fmt.Errorf("creating the migrator: %w", err)
+	}
 	if _, err = migrator.Migrate(ctx, rivermigrate.DirectionUp, nil); err != nil {
-		return fmt.Errorf("migrating River: %w", err)
+		return fmt.Errorf("applying migrations: %w", err)
 	}
 	return nil
 }

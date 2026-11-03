@@ -31,13 +31,17 @@ import (
 // demo database holds another day's or another seed's dataset.
 var errAlreadyLoaded = errors.New("the demo database holds a dataset of another day or seed: run with --reset-demo to replace it")
 
-// run connects to the database and loads the demo dataset into it.
+// run connects to the database, waits for it to accept connections, at most
+// cfg.DBWait, and loads the demo dataset into it.
 func run(ctx context.Context, cfg *config, log *slog.Logger) error {
 	pool, err := pgxpool.New(ctx, cfg.DSN)
 	if err != nil {
 		return fmt.Errorf("connecting: %w", err)
 	}
 	defer pool.Close()
+	if err := waitForDatabase(ctx, pool.Ping, sleepCtx, cfg.DBWait); err != nil {
+		return err
+	}
 	return load(ctx, pool, cfg, log)
 }
 

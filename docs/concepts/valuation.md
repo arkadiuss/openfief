@@ -225,7 +225,7 @@ The owner changes them through `PriceCheckService` ([price_checks.proto](../../p
 
 ### The revaluation queue and worker
 
-Revaluations run on [River](https://github.com/riverqueue/river), a job queue that keeps its jobs in PostgreSQL, so a job can be inserted in the same transaction as the change that causes it. River's tables live in the `river` schema, and `postgres.Migrate` creates both schemas. The sequence for a ledger import:
+Revaluations run on [River](https://github.com/riverqueue/river), a job queue that keeps its jobs in PostgreSQL, so a job can be inserted in the same transaction as the change that causes it. River's tables live in the `river` schema, and `postgres.Migrate` creates both schemas. River's migrator takes no lock of its own, so `Migrate` holds a session advisory lock of its own (`riverMigrationLock`) around it, on a connection it keeps for the purpose: the core and the demo loader migrating one database at once wait for each other instead of one failing on a duplicate key (`TestConcurrentMigrations`). The sequence for a ledger import:
 
 ```mermaid
 sequenceDiagram

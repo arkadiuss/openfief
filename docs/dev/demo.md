@@ -225,6 +225,7 @@ Before it writes anything, the loader checks the database. It refuses a database
 | `--nbp-url` | NBP's Web API | Where to fetch NBP rates. If the fetch fails, the loader falls back to the committed rates. |
 | `--fx-source` | `nbp` | The NBP connector instance the rates are recorded as from: the demo's, so its syncs continue them (D-94). |
 | `--wait` | `10m` | How long to wait for the revaluations. |
+| `--db-wait` | `3m` | How long to wait for PostgreSQL to accept connections before loading, retrying with a backoff from 0.5 s doubling to 5 s, so a Job started with its database doesn't use up an attempt on a server still starting. |
 
 **The Job.** `deploy/demo-data` is a kustomize base with one Job, `demo-seed`, in the `openfief` namespace. The base runs the loader with `--reset-demo` (the demo drops it, below) and reads the URL from the key `uri` of `openfief-db-app`, the app secret CloudNativePG creates for the demo's `openfief-db` cluster. It retries up to six times while the database starts, gives up after 30 minutes, and runs as non-root with a read-only root filesystem and a 512 MiB memory limit. CI builds and signs its image, `ghcr.io/<owner>/<repo>/demo-seed`, like the others.
 

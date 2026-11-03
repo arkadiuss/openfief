@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81348ac0b018
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-new-database
+    to: TEST-valuation-postgres-queue
+    created_at: 2026-11-03T17:16:02.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09fa069e4fd9
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-new-database
+    to: TEST-valuation-postgres-store
+    created_at: 2026-11-03T17:16:02.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cb91c4eeae1
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-new-database
+    to: TEST-valuation-postgres-worker
+    created_at: 2026-11-03T17:16:02.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c04afe7399c
