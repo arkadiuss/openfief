@@ -30,13 +30,14 @@ type ClusterServiceRequest struct {
 	Description string
 }
 
-// validate checks a request's description: at most 200 bytes on one line.
-// A nil request is valid.
+// validate checks a request's description: at most 200 bytes. A line
+// break or any other control character is refused with the manifest's
+// other text (validateManifestText). A nil request is valid.
 func (r *ClusterServiceRequest) validate() []error {
 	if r == nil {
 		return nil
 	}
-	if len(r.Description) > maxClusterServiceDescriptionLen || strings.ContainsAny(r.Description, "\r\n") {
+	if len(r.Description) > maxClusterServiceDescriptionLen {
 		return []error{fieldErr("clusterService.description", ErrInvalidName, r.Description)}
 	}
 	return nil

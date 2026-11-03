@@ -66,6 +66,10 @@ spec:
             # Overlays replace env/1, after testing its name.
             - name: OPENFIEF_AUTH_ORIGINS
               value: http://localhost:8080
+            # Go's GC aims below this, so a burst such as the largest connector answer the core takes (D-184) is
+            # collected before the container's 256Mi limit kills it. Keep it about 80% of limits.memory.
+            - name: GOMEMLIMIT
+              value: 200MiB
           ports:
             - name: http
               containerPort: 8080

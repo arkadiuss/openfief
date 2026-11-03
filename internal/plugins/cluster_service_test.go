@@ -88,7 +88,7 @@ func TestPluginClusterServiceValidate(t *testing.T) {
 		},
 		{
 			name: "description on two lines", plugin: twoLines,
-			want: []fieldError{{"manifest.clusterService.description", plugins.ErrInvalidName}},
+			want: []fieldError{{"manifest.clusterService.description", plugins.ErrUnsafeText}},
 		},
 	}
 	for _, tt := range tests {

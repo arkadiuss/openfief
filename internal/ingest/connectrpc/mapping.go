@@ -38,10 +38,11 @@ var ErrDeliveryTooLarge = errors.New("delivery too large")
 // MaxDeliveryItems caps the items of one delivery (D-184): its
 // transactions and their postings, balance assertions, problems, prices,
 // FX rates, index readings and levels, bond terms, cross-check prices,
-// broker accounts, tickers and ticker transactions together. A statement
-// of 64 MiB or a backfill of 2,000 instrument-years of daily prices stays
-// below it.
-const MaxDeliveryItems = 500_000
+// broker accounts, tickers and ticker transactions together. A backfill
+// of 800 instrument-years of daily prices stays below it; a larger history
+// must come in several syncs. Translating that many items costs at most
+// about 40 MiB.
+const MaxDeliveryItems = 200_000
 
 // invalid returns an ErrInvalidMessage for field, wrapping cause when given.
 func invalid(field string, cause error) error {

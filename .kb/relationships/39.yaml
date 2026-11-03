@@ -442,13 +442,6 @@ relationships:
     id: rel-00f90c00fd3a
   - type: implements
     from: SYM-ingest-conn-rpc-check-delivery
-    to: REQ-ingest-connector-answer-bounded
-    created_at: 2026-11-02T19:56:46.426Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6fb6f1fdaeb2
-  - type: implements
-    from: SYM-ingest-conn-rpc-check-delivery
     to: REQ-ingest-connector-contract-translation
     created_at: 2026-11-02T19:56:46.451Z
     created_by: kibi/upsert
@@ -503,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-805e157294a9
+  - type: implements
+    from: SYM-ingest-conn-rpc-check-delivery
+    to: REQ-ingest-connector-answer-counted-on-wire
+    created_at: 2026-11-03T06:18:27.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a3c3f0876b3

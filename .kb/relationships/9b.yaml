@@ -685,13 +685,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ea07fb5d9a8
-  - type: implements
-    from: SYM-ingest-xtb-zip-parts-sheet
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:04:53.202Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-155f487bbcde
   - type: covered_by
     from: SYM-ingest-xtb-zip-parts-sheet
     to: TEST-ingest-xtb-xlsx
@@ -783,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2bd2e92737fc
+  - type: implements
+    from: SYM-ingest-xtb-zip-parts-sheet
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:27:05.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ee22ec4a218

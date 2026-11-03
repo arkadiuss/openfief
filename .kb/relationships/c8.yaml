@@ -454,13 +454,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f419aacc6b34
-  - type: implements
-    from: SYM-ingest-xtb-walker-each
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:00:20.479Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fd1224f2b957
   - type: covered_by
     from: SYM-ingest-xtb-walker-each
     to: TEST-ingest-xtb-xlsx
@@ -566,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca37432d4262
+  - type: implements
+    from: SYM-ingest-xtb-walker-each
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:25:13.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76794301aa23

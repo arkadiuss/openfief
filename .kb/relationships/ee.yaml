@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c901ea3f94e3
+  - type: implements
+    from: SYM-plugins-app-check-upgrade
+    to: REQ-plugins-secret-names-never-shared
+    created_at: 2026-11-03T10:42:00.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d21ce08224e
+  - type: covered_by
+    from: SYM-plugins-app-check-upgrade
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-11-03T10:42:00.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a376113a4310

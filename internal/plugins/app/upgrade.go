@@ -32,7 +32,8 @@ type UpgradeProposal struct {
 // PrepareUpgrade resolves the version against the catalog and the
 // instance's current image, verifies the new image with the operator's
 // trust policy (D-56) and checks the config, without changing anything.
-// An instance that isn't installed fails with ErrNotInstalled.
+// An instance that isn't installed fails with ErrNotInstalled, and a
+// version that would name another instance's Secret with ErrSecretInUse.
 func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, req UpgradeRequest) (UpgradeProposal, error) {
 	current, _, err := store.Get(ctx, req.Instance)
 	if err != nil {
@@ -58,8 +59,8 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 	if err != nil {
 		return UpgradeProposal{}, fmt.Errorf("plan upgrade: %w", err)
 	}
-	if viewErr := CheckBrowserView(ctx, store, &p); viewErr != nil {
-		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, viewErr)
+	if checkErr := checkUpgrade(ctx, store, &p, &g); checkErr != nil {
+		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, checkErr)
 	}
 	from, to := current.Requested(), p.Requested()
 	out := UpgradeProposal{
@@ -76,6 +77,16 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 	return out, nil
 }
 
+// checkUpgrade refuses the version p, with its grant g, when it declares a
+// browser path while another instance declares one (D-114) or names a
+// Secret another instance names (D-89, D-182).
+func checkUpgrade(ctx context.Context, store InstanceStore, p *plugins.Plugin, g *plugins.Grant) error {
+	if err := CheckBrowserView(ctx, store, p); err != nil {
+		return err
+	}
+	return CheckSecrets(ctx, store, p, g)
+}
+
 // upgradeShared returns, for an upgrade that changes the institutions, those
 // of them another instance already books for, which it warns about as an
 // install does (D-90, D-185); nothing for one that doesn't change them.
@@ -88,9 +99,10 @@ func upgradeShared(ctx context.Context, store InstanceStore, up *UpgradeProposal
 
 // Upgrade applies a confirmed upgrade: the new Plugin and a grant of exactly
 // what it requests. Like PrepareUpgrade, it refuses a version that declares
-// a browser path while another instance declares one (D-114).
+// a browser path while another instance declares one (D-114), and one that
+// names a Secret another instance names (D-89, D-182).
 func Upgrade(ctx context.Context, store InstanceStore, up *UpgradeProposal) error {
-	if err := CheckBrowserView(ctx, store, &up.Plugin); err != nil {
+	if err := checkUpgrade(ctx, store, &up.Plugin, &up.Grant); err != nil {
 		return fmt.Errorf("upgrade %q: %w", up.Plugin.Name, err)
 	}
 	if err := store.Update(ctx, &up.Plugin, &up.Grant); err != nil {

@@ -99,16 +99,26 @@ func TestReadWorkbookBounds(t *testing.T) {
 			lim: tiny(func(l *limits) { l.rows = 5 }), wantErr: ErrTooLarge,
 		},
 		{
-			name: "run over the limit", sheets: one, data: `<row><c><v>` + strings.Repeat("9", 65) + `</v></c></row>`,
-			lim: tiny(func(l *limits) { l.runBytes = 64 }), wantErr: ErrTooLarge,
+			name: "text token over the limit", sheets: one, data: `<row><c><v>` + strings.Repeat("9", 5000) + `</v></c></row>`,
+			lim: tiny(func(l *limits) { l.tokenBytes = 64 }), wantErr: ErrTooLarge,
+		},
+		{
+			// '>' is legal in an attribute's value, so a token isn't bounded
+			// by the markup characters in it.
+			name: "attribute token over the limit", sheets: one, data: `<row><c r="A1" x="` + strings.Repeat(">", 5000) + `"/></row>`,
+			lim: tiny(func(l *limits) { l.tokenBytes = 64 }), wantErr: ErrTooLarge,
 		},
 		{
 			name: "nesting over the limit", sheets: one, data: strings.Repeat("<x>", 9) + strings.Repeat("</x>", 9),
 			lim: tiny(func(l *limits) { l.depth = 8 }), wantErr: ErrTooLarge,
 		},
 		{
-			name: "sheets over the limit", sheets: one + `<sheet name="T" r:id="rId1"/>`,
+			name: "sheets over the limit", sheets: one + `<sheet name="T" r:id="rId2"/>`,
 			lim: tiny(func(l *limits) { l.sheets = 1 }), wantErr: ErrTooLarge,
+		},
+		{
+			name: "two sheets on one part", sheets: one + `<sheet name="T" r:id="rId1"/>`,
+			lim: defaultLimits(), wantErr: ErrNotWorkbook,
 		},
 	}
 	for _, tt := range tests {

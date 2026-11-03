@@ -21640,7 +21640,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-client
       - type: implements
-        target: REQ-ingest-connector-answer-bounded
+        target: REQ-ingest-connector-answer-counted-on-wire
       - type: implements
         target: REQ-ingest-core-authenticates-to-connector
       - type: implements
@@ -67148,9 +67148,13 @@ symbols:
       recorded_at: 2026-10-29T01:20:55.661Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-connectrpc-answer-heap
+      - type: covered_by
         target: TEST-ingest-connectrpc-bonds
       - type: implements
         target: REQ-ingest-bond-lot-messages
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
   - id: SYM-ingest-connectrpc-bond-terms-from
     title: bondTermsFrom
     sourceFile: internal/ingest/connectrpc/mapping.go
@@ -87925,7 +87929,7 @@ symbols:
       - type: implements
         target: REQ-operator-refuses-second-browser-view
   - id: SYM-exp-operator-other-browser-views
-    title: PluginReconciler.otherBrowserViews
+    title: PluginReconciler.otherClaimants
     sourceFile: internal/plugins/operator/setup.go
     status: active
     symbol_role: behavioral
@@ -87935,10 +87939,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-operator-browser-view
+      - type: covered_by
+        target: TEST-operator-shared-secret
       - type: implements
         target: REQ-operator-contested-browser-path-stops
       - type: implements
         target: REQ-operator-refuses-second-browser-view
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
   - id: SYM-exp-plugins-test-refuse-second-browser-view
     title: TestRefuseSecondBrowserView
     sourceFile: internal/plugins/browser_view_test.go
@@ -108953,7 +108961,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-row
     title: sheet.row
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -108997,7 +109005,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-open-zip
     title: openZip
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109014,7 +109022,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-x-cell
     title: xCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109044,7 +109052,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-targets
     title: zipParts.targets
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109074,7 +109082,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-part-name
     title: partName
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109104,7 +109112,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-cell-value
     title: cellValue
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -125923,7 +125931,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-mapping
       - type: implements
-        target: REQ-ingest-connector-answer-bounded
+        target: REQ-ingest-connector-answer-counted-on-wire
   - id: SYM-views-connectapi-test-helper-counting-body
     title: countingBody
     sourceFile: internal/views/connectapi/limits_test.go
@@ -126099,7 +126107,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-mapping
       - type: implements
-        target: REQ-ingest-connector-answer-bounded
+        target: REQ-ingest-connector-answer-counted-on-wire
       - type: implements
         target: REQ-ingest-connector-contract-translation
   - id: SYM-views-connectapi-test-helper-check-refused
@@ -126134,7 +126142,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-row
     title: row
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126148,7 +126156,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-row-at
     title: row.at
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126161,7 +126169,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-limits
     title: limits
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126174,7 +126182,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-default-limits
     title: defaultLimits
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126187,7 +126195,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-keep-text
     title: zipParts.keepText
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126200,7 +126208,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-keep-cell
     title: zipParts.keepCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126213,7 +126221,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-part-reader
     title: partReader
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126227,7 +126235,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-part-reader-read
     title: partReader.Read
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126240,7 +126248,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker
     title: walker
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126254,7 +126262,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker-next
     title: walker.next
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126267,7 +126275,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker-in
     title: walker.in
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126280,7 +126288,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker-each
     title: walker.each
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126293,7 +126301,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-walk
     title: zipParts.walk
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126306,7 +126314,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-attr
     title: attr
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126319,7 +126327,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-ref
     title: sheetRef
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126332,7 +126340,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-read-workbook-within
     title: readWorkbookWithin
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126345,7 +126353,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-workbook-part
     title: zipParts.workbookPart
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126358,7 +126366,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader
     title: sharedReader
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126372,7 +126380,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader-token
     title: sharedReader.token
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126385,7 +126393,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader-text
     title: sharedReader.text
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126398,7 +126406,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader-end-item
     title: sharedReader.endItem
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126411,7 +126419,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader
     title: sheetReader
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126425,7 +126433,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-token
     title: sheetReader.token
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126438,7 +126446,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-start
     title: sheetReader.start
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126451,7 +126459,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-char-data
     title: sheetReader.charData
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126464,7 +126472,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-end
     title: sheetReader.end
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126477,7 +126485,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-text
     title: sheetReader.text
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126490,7 +126498,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-start-row
     title: sheetReader.startRow
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126503,7 +126511,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-end-cell
     title: sheetReader.endCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126516,7 +126524,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-end-row
     title: sheetReader.endRow
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126529,7 +126537,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-test-helper-workbook-of
     title: workbookOf
     sourceFile: internal/ingest/xtb/xlsx_test.go
@@ -130112,8 +130120,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-cli-institutions
+      - type: covered_by
+        target: TEST-plugins-cli-shared-secret
       - type: implements
         target: REQ-plugins-install-warns-shared-institution
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
   - id: SYM-plugins-cli-institutions-test-test-render-shared-institutions
     title: TestRenderSharedInstitutions
     sourceFile: internal/plugins/cli/institutions_test.go
@@ -131688,3 +131700,726 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-connect
+  - id: SYM-ingest-conn-rpc-bounded-codec
+    title: boundedCodec
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:26.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-bounded-codec-name
+    title: boundedCodec.Name
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:36.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-bounded-codec-marshal
+    title: boundedCodec.Marshal
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:47.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-bounded-codec-unmarshal
+    title: boundedCodec.Unmarshal
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:58.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-count-elements
+    title: countElements
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:10.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-count-field
+    title: countField
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:23.240Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-scalar-elements
+    title: scalarElements
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:34.958Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-packed-elements
+    title: packedElements
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:46.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-protowire-type
+    title: protowireType
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:58.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-too-many
+    title: tooMany
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:18:11.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-test-TestBoundedCodecCounts
+    title: TestBoundedCodecCounts
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:08.913Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-TestBoundedCodecRoundTrip
+    title: TestBoundedCodecRoundTrip
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:19.335Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-TestCountElementsRepeatedScalars
+    title: TestCountElementsRepeatedScalars
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:30.560Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-helper-wire-field
+    title: wireField
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:43.118Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-TestAnswerHeap
+    title: TestAnswerHeap
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:59.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-TestAnswerHeapChild
+    title: TestAnswerHeapChild
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:12.261Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-TestClientTooLargeIsNotRefusal
+    title: TestClientTooLargeIsNotRefusal
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:22.995Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-answerHeapCases
+    title: answerHeapCases
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:34.166Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-answerHeapCase
+    title: answerHeapCase
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:45.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-heapGrowth
+    title: heapGrowth
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:55.310Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-emptyPostings
+    title: emptyPostings
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:05.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-prices
+    title: prices
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:15.564Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-field
+    title: field
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:25.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-syncAnswer
+    title: syncAnswer
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:35.595Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-size
+    title: size
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:45.749Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-xtb-test-workbook-heap
+    title: TestWorkbookHeap
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:27:42.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-TestWorkbookHeapChild
+    title: TestWorkbookHeapChild
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:27:52.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-childHeapGrowth
+    title: childHeapGrowth
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:04.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-workbookHeapCases
+    title: workbookHeapCases
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:15.342Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-workbookHeapCase
+    title: workbookHeapCase
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:25.707Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-heapGrowth
+    title: heapGrowth
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:35.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-zipOf
+    title: zipOf
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:44.296Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-writePart
+    title: writePart
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:54.726Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-repeated
+    title: repeated
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:29:05.470Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-repeated-Read
+    title: repeated.Read
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:29:16.259Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-manyEntries
+    title: manyEntries
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:29:26.739Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-plugins-secret-holder
+    title: SecretHolder
+    sourceFile: internal/plugins/secret_holder.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:21.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-secret-holder
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-may-mount-secrets
+    title: MayMountSecrets
+    sourceFile: internal/plugins/secret_holder.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:31.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-secret-holder
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-secret-holder-senior
+    title: SecretHolder.senior
+    sourceFile: internal/plugins/secret_holder.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:42.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-secret-holder
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-app-check-secrets
+    title: CheckSecrets
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:54.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-app-check-secrets-all
+    title: checkSecrets
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:06.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-operator-own-secrets
+    title: PluginReconciler.ownSecrets
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:29.023Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-shared-secret
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-operator-held-secrets
+    title: heldSecrets
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:40.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-shared-secret
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-test-may-mount-secrets
+    title: TestMayMountSecrets
+    sourceFile: internal/plugins/secret_holder_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:49.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-secret-holder
+  - id: SYM-operator-test-shared-secret
+    title: testSharedSecret
+    sourceFile: internal/plugins/operator/shared_secret_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:58.517Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-shared-secret
+  - id: SYM-plugins-cli-test-run-refuses-shared-secret
+    title: TestRunRefusesSharedSecret
+    sourceFile: internal/plugins/cli/secrets_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:24:09.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-shared-secret
+  - id: SYM-plugins-app-test-upgrade-refuses-shared-secret
+    title: TestUpgradeRefusesSharedSecret
+    sourceFile: internal/plugins/app/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:24:30.857Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-upgrade
+  - id: SYM-plugins-unsafe-rune
+    title: UnsafeRune
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:30.407Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-safe-text
+    title: SafeText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:38.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-validate-manifest-text
+    title: validateManifestText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:48.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-manifest-text
+    title: manifestText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:57.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-unsafe-schema-text
+    title: unsafeSchemaText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:06.106Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-unsafe-json-text
+    title: unsafeJSONText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:15.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-text-field
+    title: textField
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:26.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-cli-shown
+    title: shown
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:36.802Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-escape
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-cli-shown-all
+    title: shownAll
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:48.392Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-escape
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-cli-terminal-text
+    title: terminalText
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:00.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-terminal
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-cli-unsafe-on-terminal
+    title: unsafeOnTerminal
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:12.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-terminal
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-test-manifest-refuses-unsafe-text
+    title: TestManifestRefusesUnsafeText
+    sourceFile: internal/plugins/text_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:22.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest-text
+  - id: SYM-plugins-test-safe-text
+    title: TestSafeText
+    sourceFile: internal/plugins/text_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:32.598Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest-text
+  - id: SYM-plugins-cli-test-render-escapes-vendor-text
+    title: TestRenderEscapesVendorText
+    sourceFile: internal/plugins/cli/escape_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:43.339Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-escape
+  - id: SYM-plugins-cli-test-say-escapes-controls
+    title: TestSayEscapesControls
+    sourceFile: internal/plugins/cli/terminal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:53.275Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-terminal
+  - id: SYM-plugins-app-check-upgrade
+    title: checkUpgrade
+    sourceFile: internal/plugins/app/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:41:57.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared

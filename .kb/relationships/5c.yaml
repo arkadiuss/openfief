@@ -671,13 +671,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa5fb3619224
-  - type: implements
-    from: SYM-ingest-xtb-zip-parts-keep-text
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T20:59:00.375Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2981f778dfe3
   - type: covered_by
     from: SYM-ingest-xtb-zip-parts-keep-text
     to: TEST-ingest-xtb-xlsx
@@ -720,3 +713,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe1dcf55f1e6
+  - type: implements
+    from: SYM-ingest-xtb-zip-parts-keep-text
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:26:35.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93323ad6f40c
+  - type: constrains
+    from: REQ-plugins-secret-names-never-shared
+    to: FACT-SUBJECT-2DC842323A135A4D
+    created_at: 2026-11-03T08:22:19.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c63b68011df
+  - type: requires_property
+    from: REQ-plugins-secret-names-never-shared
+    to: FACT-PROP-1FFFBC87388E7998
+    created_at: 2026-11-03T08:22:19.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-128aad08d4d0
+  - type: specified_by
+    from: REQ-plugins-secret-names-never-shared
+    to: SCEN-plugins-secret-name-collision-refused
+    created_at: 2026-11-03T08:22:19.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78f2a78398e6

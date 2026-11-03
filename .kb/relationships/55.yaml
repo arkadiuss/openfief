@@ -546,6 +546,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0f316dfb88ad
   - type: implements
+    from: SYM-plugins-cli-unsafe-on-terminal
+    to: REQ-plugins-cli-shows-vendor-text-escaped
+    created_at: 2026-11-03T09:20:15.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-143c14c0d09c
+  - type: covered_by
+    from: SYM-plugins-cli-unsafe-on-terminal
+    to: TEST-plugins-cli-terminal
+    created_at: 2026-11-03T09:20:15.891Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-598c3685324e
+  - type: executable_for
+    from: SYM-plugins-cli-test-say-escapes-controls
+    to: TEST-plugins-cli-terminal
+    created_at: 2026-11-03T09:20:57.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3212219d3e82
+  - type: implements
     from: SYM-identity-gen-connect-unimplemented-auth-service-handler-begin-passkey-check
     to: REQ-identity-auth-contract
     created_at: 2026-11-03T04:55:38.177Z
