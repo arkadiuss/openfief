@@ -706,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f9a0e6b8aa6
+  - type: verified_by
+    from: SCEN-plugins-install-warns-shared-institution
+    to: TEST-plugins-app-institutions
+    created_at: 2026-11-03T07:22:23.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1383d2d04730
+  - type: verified_by
+    from: SCEN-plugins-install-warns-shared-institution
+    to: TEST-plugins-cli-institutions
+    created_at: 2026-11-03T07:22:23.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f840904331f3
+  - type: verified_by
+    from: SCEN-plugins-install-warns-shared-institution
+    to: TEST-plugins-grant-institutions
+    created_at: 2026-11-03T07:22:23.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31374f35ebb3

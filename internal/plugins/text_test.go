@@ -49,6 +49,9 @@ func TestManifestRefusesUnsafeText(t *testing.T) {
 		{name: "an escape in a mount path", wantErr: plugins.ErrUnsafeText, change: func(m *plugins.Manifest) {
 			m.Secrets[0].MountPath = "/etc/openfief/\x1b[2Kx"
 		}},
+		{name: "an escape in an institution", wantErr: plugins.ErrUnsafeText, change: func(m *plugins.Manifest) {
+			m.Institutions = []string{"ibkr\x1b[2K"}
+		}},
 		{name: "a tab in a config field name", wantErr: plugins.ErrUnsafeText, change: func(m *plugins.Manifest) {
 			m.EgressFromConfig = []string{"base\turl"}
 		}},

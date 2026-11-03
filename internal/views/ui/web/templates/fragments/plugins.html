@@ -14,7 +14,8 @@
       <td>{{range $i, $c := .Capabilities}}{{if $i}}, {{end}}{{$c}}{{else}}none{{end}}{{if .RequestedCapabilities}}<br><span class="muted">requests {{range $i, $c := .RequestedCapabilities}}{{if $i}}, {{end}}{{$c}}{{end}}</span>{{end}}
         {{- if .MarketData}}<br><span class="pill pill-neutral">Market data</span><br><span class="muted">Each sync tells it every instrument you hold and the model portfolio's targets.</span>
         {{- else if .RequestedMarketData}}<br><span class="muted">Asks to be told every instrument you hold, as a market-data connector; not approved.</span>{{end}}
-        {{- if .Institutions}}<br><span class="muted">Books for {{range $i, $n := .Institutions}}{{if $i}}, {{end}}<span class="mono ident">{{$n}}</span>{{end}} only.</span>{{end}}
+        {{- if .ApprovedInstitutions}}<br><span class="muted">Books for {{range $i, $n := .ApprovedInstitutions}}{{if $i}}, {{end}}<span class="mono ident">{{$n}}</span>{{end}} only.</span>{{end}}
+        {{- with unapproved .Institutions .ApprovedInstitutions}}<br><span class="muted">Asks to book for {{range $i, $n := .}}{{if $i}}, {{end}}<span class="mono ident">{{$n}}</span>{{end}}; not approved, so the core refuses its deliveries for them.</span>{{end}}
         {{- if .BondTerms}}<br><span class="pill pill-neutral">Bond terms</span><br><span class="muted">The treasury bond series terms it delivers value your bonds.</span>
         {{- else if .RequestedBondTerms}}<br><span class="muted">Delivers treasury bond series terms; not approved, so they are dropped.</span>{{end}}
         {{- if .IndexLevels}}<br><span class="pill pill-neutral">Index levels</span><br><span class="muted">The market index levels it delivers are stored.</span>

@@ -1000,3 +1000,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36b7b60b8447
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:53:26.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b0f135ccb08
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:53:26.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-482ea119a8bc
+  - type: covered_by
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:53:26.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d19342e02ff

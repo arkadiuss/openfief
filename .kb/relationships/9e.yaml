@@ -832,3 +832,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9810a18c24ce
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-request-get-credential-json
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:51:52.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dda8457d67f
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-request-get-credential-json
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:51:52.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcf13fd79a32
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-passkey-check-request-get-credential-json
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:51:52.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86436deebf6b

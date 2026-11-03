@@ -951,6 +951,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d606ad448048
+  - type: executable_for
+    from: SYM-identity-app-authstore-test-mem-auth-store-revoke-sessions
+    to: TEST-identity-auth-app
+    created_at: 2026-11-03T04:37:40.100Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f74616139743
   - type: implements
     from: SYM-valuation-postgres-store-save-fxrates
     to: REQ-valuation-stored-rates-name-base

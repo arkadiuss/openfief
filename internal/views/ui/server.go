@@ -183,6 +183,8 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("POST /enroll/begin", s.registerBegin)
 	mux.HandleFunc("POST /enroll/finish", s.registerFinish)
 	mux.HandleFunc("POST /logout", s.logout)
+	mux.HandleFunc("POST /passkey-check/begin", s.passkeyCheckBegin)
+	mux.HandleFunc("POST /passkey-check/finish", s.passkeyCheckFinish)
 	mux.HandleFunc("GET /{$}", s.withSession(s.overview))
 	mux.HandleFunc("GET /allocation", s.withSession(s.allocationFragment))
 	mux.HandleFunc("GET /value-chart", s.withSession(s.valueChartFragment))

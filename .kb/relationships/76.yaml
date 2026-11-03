@@ -762,6 +762,69 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fbef2d5c67d
+  - type: implements
+    from: SYM-identity-app-auth-auth-recent-owner
+    to: REQ-identity-protected-actions-recent-passkey-check
+    created_at: 2026-11-03T04:37:21.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-648f70999829
+  - type: covered_by
+    from: SYM-identity-app-auth-auth-recent-owner
+    to: TEST-identity-passkey-check-app
+    created_at: 2026-11-03T04:37:21.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ce8cc6a5070
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-passkey-for
+    to: TEST-identity-auth-postgres
+    created_at: 2026-11-03T04:42:06.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5f4bfe4bacc
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request-get-origin
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:48:48.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5ac554bf15c
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request-get-origin
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:48:48.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6733e1126821
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-request-get-origin
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:48:48.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a136e8d25aa
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:52:58.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d19b85caa1bb
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:52:58.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d1ecf4e26ad
+  - type: covered_by
+    from: SYM-identity-gen-pb-sign-out-everywhere-request
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:52:58.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a65588ca508d
   - type: executable_for
     from: SYM-valuation-test-no-assumed-pln
     to: TEST-valuation-no-assumed-pln

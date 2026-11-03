@@ -678,3 +678,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a966f1999d7e
+  - type: verified_by
+    from: SCEN-plugins-institutions-approved-by-grant
+    to: TEST-plugins-grant-institutions
+    created_at: 2026-11-03T07:22:20.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ce537662b3d
+  - type: verified_by
+    from: SCEN-plugins-institutions-approved-by-grant
+    to: TEST-operator-institutions
+    created_at: 2026-11-03T07:22:20.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cca8e89025b
+  - type: verified_by
+    from: SCEN-plugins-institutions-approved-by-grant
+    to: TEST-ingest-kube
+    created_at: 2026-11-03T07:22:20.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f77f00e747a

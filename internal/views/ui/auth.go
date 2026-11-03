@@ -133,6 +133,14 @@ func (s *server) registerBegin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	resp, err := s.auth.BeginRegistration(r.Context(), connect.NewRequest(req))
+	if passkeyCheckRequired(err) {
+		// Adding a passkey with a session needs a recent passkey check
+		// (D-183): the page's script runs one and begins again.
+		s.writeJSON(w, r, http.StatusForbidden, passkeyCheckAnswer{
+			Error: "Confirm with your passkey first.", PasskeyCheck: true,
+		})
+		return
+	}
 	if err != nil {
 		s.jsonFailed(w, r, "BeginRegistration", err)
 		return
@@ -164,10 +172,54 @@ func (s *server) registerFinish(w http.ResponseWriter, r *http.Request) {
 	s.jsonRedirect(w, r, "/settings")
 }
 
+// passkeyCheckAnswer tells the page's script that the core wants a passkey
+// check before the action it asked for (D-183).
+type passkeyCheckAnswer struct {
+	Error        string `json:"error"`
+	PasskeyCheck bool   `json:"passkeyCheck"`
+}
+
+// passkeyCheckBegin starts a passkey check in the owner's session
+// (BeginPasskeyCheck, D-183).
+func (s *server) passkeyCheckBegin(w http.ResponseWriter, r *http.Request) {
+	resp, err := s.auth.BeginPasskeyCheck(r.Context(), connect.NewRequest(&identityv1.BeginPasskeyCheckRequest{
+		Origin: requestOrigin(r), SessionToken: sessionToken(r),
+	}))
+	if err != nil {
+		s.jsonFailed(w, r, "BeginPasskeyCheck", err)
+		return
+	}
+	s.writeJSON(w, r, http.StatusOK, ceremonyStart{CeremonyID: resp.Msg.GetCeremonyId(), Options: resp.Msg.GetOptionsJson()})
+}
+
+// passkeyCheckFinish records the passkey check on the owner's session
+// (FinishPasskeyCheck): the actions D-183 protects are allowed in it for
+// five minutes.
+func (s *server) passkeyCheckFinish(w http.ResponseWriter, r *http.Request) {
+	var in ceremonyEnd
+	if !s.readJSON(w, r, &in) {
+		return
+	}
+	_, err := s.auth.FinishPasskeyCheck(r.Context(), connect.NewRequest(&identityv1.FinishPasskeyCheckRequest{
+		Origin: requestOrigin(r), SessionToken: sessionToken(r), CeremonyId: in.CeremonyID, CredentialJson: in.Credential,
+	}))
+	if err != nil {
+		s.jsonFailed(w, r, "FinishPasskeyCheck", err)
+		return
+	}
+	s.writeJSON(w, r, http.StatusOK, map[string]bool{"checked": true})
+}
+
 // logout revokes the session at the core (Logout), drops the cookie and
 // opens the login page. The cookie goes even when the core can't be
-// reached, so the browser is logged out either way.
+// reached, so the browser is logged out either way. With the form field
+// everywhere=yes it signs out every session instead (signOutEverywhere);
+// both post to /logout, so the service worker empties its cache for either.
 func (s *server) logout(w http.ResponseWriter, r *http.Request) {
+	if r.PostFormValue("everywhere") == "yes" {
+		s.signOutEverywhere(w, r)
+		return
+	}
 	if token := sessionToken(r); token != "" {
 		_, err := s.auth.Logout(r.Context(), connect.NewRequest(&identityv1.LogoutRequest{Origin: requestOrigin(r), SessionToken: token}))
 		if err != nil && connect.CodeOf(err) != connect.CodeUnauthenticated {
@@ -224,4 +276,21 @@ func (s *server) jsonFailed(w http.ResponseWriter, r *http.Request, method strin
 	}
 	s.log.WarnContext(r.Context(), "call to the core failed", "method", method, "code", code.String())
 	s.jsonError(w, r, http.StatusBadGateway, "The OpenFief core could not answer. Try again in a moment.")
+}
+
+// signOutEverywhere revokes every session at the core (SignOutEverywhere,
+// D-183), on every host and of either scope, this one included, then drops
+// the cookie and opens the login page. Unlike a plain sign-out, a failure
+// is shown and the cookie kept, so the owner never believes other sessions
+// ended when they didn't; an invalid session goes to the login page.
+func (s *server) signOutEverywhere(w http.ResponseWriter, r *http.Request) {
+	_, err := s.auth.SignOutEverywhere(r.Context(), connect.NewRequest(&identityv1.SignOutEverywhereRequest{
+		Origin: requestOrigin(r), SessionToken: sessionToken(r),
+	}))
+	if err != nil {
+		s.coreFailed(w, r, "SignOutEverywhere", err)
+		return
+	}
+	clearSession(w)
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

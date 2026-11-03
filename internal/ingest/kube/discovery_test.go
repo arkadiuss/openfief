@@ -142,10 +142,16 @@ func TestDeployedDeclarations(t *testing.T) {
 		{name: "statement files only", manifest: map[string]any{"statementFiles": true}, want: ingest.Declarations{StatementFiles: true}},
 		{name: "not a boolean", manifest: map[string]any{"crossCheckPrices": "yes"}},
 		{
-			name: "institutions (D-182)", manifest: map[string]any{"institutions": []any{"ibkr", "ibkr-ie"}},
-			want: ingest.Declarations{Institutions: []ingest.InstitutionID{"ibkr", "ibkr-ie"}},
+			name: "institutions declared and approved (D-185)", manifest: map[string]any{"institutions": []any{"ibkr", "ibkr-ie"}},
+			granted: map[string]any{"institutions": []any{"ibkr", "ibkr-ie"}},
+			want:    ingest.Declarations{Institutions: []ingest.InstitutionID{"ibkr", "ibkr-ie"}},
 		},
-		{name: "institutions not strings", manifest: map[string]any{"institutions": []any{int64(1)}}},
+		{
+			name: "institutions declared, one approved", manifest: map[string]any{"institutions": []any{"ibkr", "ibkr-ie"}},
+			granted: map[string]any{"institutions": []any{"ibkr"}}, want: ingest.Declarations{Institutions: []ingest.InstitutionID{"ibkr"}},
+		},
+		{name: "institutions declared, none approved", manifest: map[string]any{"institutions": []any{"ibkr"}}},
+		{name: "institutions not strings", manifest: map[string]any{"institutions": []any{"ibkr"}}, granted: map[string]any{"institutions": []any{int64(1)}}},
 		{name: "nothing running"},
 	}
 	for _, tt := range tests {

@@ -524,6 +524,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4865787dd45
+  - type: executable_for
+    from: SYM-identity-connectapi-passkeycheck-test-session-store-revoke-sessions
+    to: TEST-identity-passkey-check-connectapi
+    created_at: 2026-11-03T04:40:06.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-910884a35dd2
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request-string
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:48:11.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffe77b09032a
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request-string
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:48:11.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-108ef8bd3c02
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-request-string
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:48:11.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d76a9931d69
   - type: verified_by
     from: SCEN-valuation-input-validation-named-base
     to: TEST-valuation-app-plan

@@ -113,6 +113,8 @@ func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 		MarketData:         nestedBool(u, "status", "effective", "marketData"),
 		Institutions:       nestedStrings(u, "spec", "manifest", "institutions"),
 
+		ApprovedInstitutions: nestedStrings(u, "status", "effective", "institutions"),
+
 		RequestsBondTerms:   nestedBool(u, "spec", "manifest", "bondTerms"),
 		BondTerms:           nestedBool(u, "status", "effective", "bondTerms"),
 		RequestsIndexLevels: nestedBool(u, "spec", "manifest", "indexLevels"),

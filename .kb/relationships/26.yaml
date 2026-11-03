@@ -608,6 +608,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85353d4a011c
+  - type: implements
+    from: SYM-identity-connectapi-service-auth-service-sign-out-everywhere
+    to: REQ-identity-sign-out-everywhere
+    created_at: 2026-11-03T04:41:01.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25532b63e1e2
+  - type: covered_by
+    from: SYM-identity-connectapi-service-auth-service-sign-out-everywhere
+    to: TEST-identity-passkey-check-connectapi
+    created_at: 2026-11-03T04:41:01.724Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a994bfa8176
   - type: verified_by
     from: SCEN-ingest-undeclared-deliveries-item-per-instance
     to: TEST-ingest-app-undeclared-deliveries

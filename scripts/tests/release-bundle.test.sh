@@ -61,6 +61,10 @@ registry.example.org:5000/e2e/core@$da"
   database="$(gojq -r --yaml-input -s '[.[] | select(. != null) | "\(.apiVersion) \(.kind) \(.metadata.namespace)/\(.metadata.name) \(.spec.bootstrap.initdb.database)/\(.spec.bootstrap.initdb.owner)"] | join(",")' \
     "a/openfief-db-$version.yaml")"
   [ "$database" = "postgresql.cnpg.io/v1 Cluster openfief/openfief-db openfief/openfief" ] || fail_case "the database file holds $database"
+  # Its own requests and memory limit (D-182), so the namespace's LimitRange defaults don't size it.
+  sized="$(gojq -r --yaml-input -s '[.[] | select(. != null) | .spec.resources | "\(.requests.cpu) \(.requests.memory) \(.limits.memory)"] | join(",")' \
+    "a/openfief-db-$version.yaml")"
+  [ "$sized" = "100m 256Mi 1Gi" ] || fail_case "the database's requests and memory limit are $sized, want 100m 256Mi 1Gi"
   grep -q "^#   kubectl apply --server-side -f openfief-db-$version.yaml" "a/openfief-db-$version.yaml" ||
     fail_case "the database file doesn't say how to apply it"
   cmp -s cnpg-1.2.3.yaml a/cnpg-1.2.3.yaml || fail_case "the CloudNativePG manifest isn't shipped byte for byte"

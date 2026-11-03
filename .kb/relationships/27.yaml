@@ -440,6 +440,41 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d428dd6925a7
+  - type: executable_for
+    from: SYM-identity-app-auth-test-test-remove-own-passkey
+    to: TEST-identity-auth-app
+    created_at: 2026-11-03T04:37:30.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-901e6d628f5b
+  - type: executable_for
+    from: SYM-identity-connectapi-handler-test-new-served
+    to: TEST-identity-auth-connectapi
+    created_at: 2026-11-03T04:39:48.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c02e071d7db
+  - type: implements
+    from: SYM-identity-gen-pb-passkey-check-required-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:47:08.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64daf4e5af36
+  - type: implements
+    from: SYM-identity-gen-pb-passkey-check-required-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:47:08.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bfe32604e66
+  - type: covered_by
+    from: SYM-identity-gen-pb-passkey-check-required-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:47:08.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a76f107d45f
   - type: implements
     from: SYM-identity-connectapi-handler-to-connect-error
     to: REQ-core-logs-carry-no-values

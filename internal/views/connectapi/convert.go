@@ -147,7 +147,7 @@ func pbPlugin(p *views.Plugin) *viewsv1.Plugin {
 		Phase:            p.Phase, Ready: p.Ready, MarketData: p.MarketData, RequestedMarketData: p.RequestsMarketData,
 		BondTerms: p.BondTerms, RequestedBondTerms: p.RequestsBondTerms,
 		IndexLevels: p.IndexLevels, RequestedIndexLevels: p.RequestsIndexLevels,
-		Institutions: p.Institutions,
+		Institutions: p.Institutions, ApprovedInstitutions: p.ApprovedInstitutions,
 	}
 }
 

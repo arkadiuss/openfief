@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c8d7d4e1f6b
+  - type: verified_by
+    from: SCEN-identity-passkey-check-required-detail
+    to: TEST-identity-passkey-check-connectapi
+    created_at: 2026-11-03T02:41:07.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d340bed46bec

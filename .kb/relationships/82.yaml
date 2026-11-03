@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9270fcaf6c39
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-test-session-passkey-checks
+    to: TEST-identity-auth-postgres
+    created_at: 2026-11-03T04:42:39.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaf0036cdee9

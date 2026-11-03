@@ -917,6 +917,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-3eb03ef52e04
   - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-response-descriptor
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:52:42.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5468120a29d
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-response-descriptor
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:52:42.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-486941bcc7bb
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-passkey-check-response-descriptor
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:52:42.793Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a700453a1e00
+  - type: implements
     from: SYM-plugins-app-new-caching-token-reviewer
     to: REQ-plugins-token-review-not-amplified
     created_at: 2026-11-03T00:13:53.964Z

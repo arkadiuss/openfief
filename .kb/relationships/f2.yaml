@@ -574,6 +574,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-31a10bb4f924
   - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-response-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:52:25.112Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a749465c6cfd
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-response-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:52:25.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cf68d1f1bb1
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-passkey-check-response-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:52:25.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b5cd1b3d93f
+  - type: implements
     from: SYM-plugins-manifest-validate-deliveries
     to: REQ-ingest-bond-terms-index-levels-declared-approved
     created_at: 2026-11-02T22:26:07.375Z

@@ -811,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-914165a28b7e
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-want-revoked-everywhere
+    to: TEST-identity-auth-postgres
+    created_at: 2026-11-03T04:42:28.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc6774581bdb

@@ -20,7 +20,8 @@ type Started struct {
 
 // RegistrationGrant is what allows creating a passkey: exactly one of a
 // one-time enrollment code issued for the origin, or an owner session on
-// the origin's host (D-60).
+// the origin's host (D-60) with a passkey check in the last five minutes
+// (D-183).
 type RegistrationGrant struct {
 	EnrollmentCode string
 	SessionToken   string
@@ -129,34 +130,90 @@ type PasskeyAuthenticator struct {
 // against the passkeys of origin's host only (D-60), refuses a signature
 // counter that went backwards, and records the passkey's use.
 func (p PasskeyAuthenticator) Authenticate(ctx context.Context, origin identity.Origin, proof Proof) (Authenticated, error) {
-	a := p.auth
-	c, err := a.takeCeremony(ctx, proof.CeremonyID, identity.CeremonyLogin, origin)
+	owner, used, err := p.auth.assertPasskey(ctx, origin, identity.CeremonyLogin, proof)
 	if err != nil {
 		return Authenticated{}, err
+	}
+	return Authenticated{
+		Owner: owner, Scope: identity.SessionScopeOwner, Authenticator: identity.AuthenticatorPasskey, Passkey: used.CredentialID,
+	}, nil
+}
+
+// assertPasskey finishes the ceremony of proof, of kind, on origin: it
+// verifies the assertion against the passkeys of origin's host only (D-60),
+// refuses a signature counter that went backwards, and records the
+// passkey's use. It returns the owner and the passkey used.
+func (a *Auth) assertPasskey(ctx context.Context, origin identity.Origin, kind identity.CeremonyKind, proof Proof) (identity.Owner, identity.Passkey, error) {
+	c, err := a.takeCeremony(ctx, proof.CeremonyID, kind, origin)
+	if err != nil {
+		return identity.Owner{}, identity.Passkey{}, err
 	}
 	owner, err := a.store.Owner(ctx)
 	if errors.Is(err, ErrNoOwner) {
-		return Authenticated{}, fmt.Errorf("%w: no passkey exists", ErrAuthenticationFailed)
+		return identity.Owner{}, identity.Passkey{}, fmt.Errorf("%w: no passkey exists", ErrAuthenticationFailed)
 	}
 	if err != nil {
-		return Authenticated{}, fmt.Errorf("loading the owner: %w", err)
+		return identity.Owner{}, identity.Passkey{}, fmt.Errorf("loading the owner: %w", err)
 	}
 	keys, err := a.hostPasskeys(ctx, origin)
 	if err != nil {
-		return Authenticated{}, err
+		return identity.Owner{}, identity.Passkey{}, err
 	}
 	got, err := a.ceremonies.FinishLogin(origin, &owner, keys, c.State, proof.Credential)
 	if err != nil {
-		return Authenticated{}, fmt.Errorf("%w: %w", ErrAuthenticationFailed, err)
+		return identity.Owner{}, identity.Passkey{}, fmt.Errorf("%w: %w", ErrAuthenticationFailed, err)
 	}
 	used, err := usedPasskey(keys, origin, &got, a.nowSecond())
 	if err != nil {
-		return Authenticated{}, err
+		return identity.Owner{}, identity.Passkey{}, err
 	}
 	if err := a.store.UpdatePasskeyUse(ctx, &used); err != nil {
-		return Authenticated{}, fmt.Errorf("recording a passkey's use: %w", err)
+		return identity.Owner{}, identity.Passkey{}, fmt.Errorf("recording a passkey's use: %w", err)
 	}
-	return Authenticated{Owner: owner, Scope: identity.SessionScopeOwner, Authenticator: identity.AuthenticatorPasskey}, nil
+	return owner, used, nil
+}
+
+// BeginPasskeyCheck starts a passkey check in the owner session of token on
+// the allowed origin text (D-183): an assertion like a login's, which
+// FinishPasskeyCheck records on the session. A read session, such as a demo
+// session, can't begin one.
+func (a *Auth) BeginPasskeyCheck(ctx context.Context, origin, token string) (Started, error) {
+	o, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner)
+	if err != nil {
+		return Started{}, err
+	}
+	begun, err := a.ceremonies.BeginLogin(o)
+	if err != nil {
+		return Started{}, fmt.Errorf("beginning a passkey check: %w", err)
+	}
+	c, err := a.saveCeremony(ctx, identity.CeremonyPasskeyCheck, o, begun.State, "")
+	if err != nil {
+		return Started{}, err
+	}
+	return Started{CeremonyID: c.ID, Options: begun.Options, ExpiresAt: c.ExpiresAt}, nil
+}
+
+// FinishPasskeyCheck verifies the assertion credential for the passkey
+// check ceremonyID in the owner session of token on the allowed origin
+// text, against the passkeys of its host, and records the check on the
+// session, so the actions D-183 protects are allowed in it for the next
+// identity.PasskeyCheckWindow. It returns the session after the check.
+func (a *Auth) FinishPasskeyCheck(ctx context.Context, origin, token, ceremonyID string, credential []byte) (identity.Session, error) {
+	o, s, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner)
+	if err != nil {
+		return identity.Session{}, err
+	}
+	if _, _, assertErr := a.assertPasskey(ctx, o, identity.CeremonyPasskeyCheck, Proof{CeremonyID: ceremonyID, Credential: credential}); assertErr != nil {
+		return identity.Session{}, assertErr
+	}
+	checked, err := s.PasskeyChecked(a.nowSecond())
+	if err != nil {
+		return identity.Session{}, fmt.Errorf("%w: %w", ErrForbidden, err)
+	}
+	if err := a.store.PasskeyCheckSession(ctx, s.ID, checked.PasskeyCheckedAt); err != nil {
+		return identity.Session{}, fmt.Errorf("recording a passkey check: %w", err)
+	}
+	return checked, nil
 }
 
 // usedPasskey returns the passkey among keys that got names, after its use
@@ -190,24 +247,28 @@ func (a *Auth) Passkeys(ctx context.Context, origin, token string) ([]identity.P
 	return keys, nil
 }
 
-// RemovePasskey removes the passkey id (Passkey.ID) for an owner session;
-// the last one can't be removed.
-func (a *Auth) RemovePasskey(ctx context.Context, origin, token, id string) error {
-	if _, _, err := a.sessionOn(ctx, origin, token, identity.SessionScopeOwner); err != nil {
-		return err
+// RemovePasskey removes the passkey id (Passkey.ID) for an owner session
+// with a passkey check in the last five minutes (D-183), and revokes every
+// session that passkey signed in, so a session opened with a lost or stolen
+// passkey ends with it. The last passkey can't be removed. It reports
+// whether the session of token was among those revoked.
+func (a *Auth) RemovePasskey(ctx context.Context, origin, token, id string) (bool, error) {
+	_, s, err := a.recentOwner(ctx, origin, token)
+	if err != nil {
+		return false, err
 	}
 	credID, err := identity.ParsePasskeyID(id)
 	if err != nil {
-		return fmt.Errorf("%w: %w", ErrInvalidRequest, err)
+		return false, fmt.Errorf("%w: %w", ErrInvalidRequest, err)
 	}
-	err = a.store.DeletePasskey(ctx, credID)
+	err = a.store.DeletePasskey(ctx, credID, a.now().UTC())
 	switch {
 	case errors.Is(err, ErrUnknownPasskey):
-		return fmt.Errorf("%w: %w", ErrNotFound, err)
+		return false, fmt.Errorf("%w: %w", ErrNotFound, err)
 	case err != nil:
-		return fmt.Errorf("removing a passkey: %w", err)
+		return false, fmt.Errorf("removing a passkey: %w", err)
 	}
-	return nil
+	return s.SignedInBy(credID), nil
 }
 
 // checkGrant checks that grant allows creating a passkey on o, and returns
@@ -223,8 +284,12 @@ func (a *Auth) checkGrant(ctx context.Context, o identity.Origin, grant Registra
 		}
 		return c.ID, nil
 	case grant.SessionToken != "":
-		if _, err := a.Session(ctx, o, grant.SessionToken, identity.SessionScopeOwner); err != nil {
+		s, err := a.Session(ctx, o, grant.SessionToken, identity.SessionScopeOwner)
+		if err != nil {
 			return "", err
+		}
+		if err := s.CheckRecentPasskey(a.now().UTC()); err != nil {
+			return "", fmt.Errorf("%w: %w", ErrPasskeyCheckRequired, err)
 		}
 		return "", nil
 	}
@@ -273,7 +338,11 @@ func (a *Auth) storeRegistration(ctx context.Context, c *identity.Ceremony, owne
 	if c.EnrollmentCode == "" {
 		return out, nil
 	}
-	s, err := a.issueSession(ctx, Authenticated{Owner: *owner, Scope: identity.SessionScopeOwner, Authenticator: identity.AuthenticatorPasskey}, c.Origin)
+	// Creating the passkey verified the owner on it, so it signs the session
+	// in and counts as its first passkey check (D-183).
+	s, err := a.issueSession(ctx, &Authenticated{
+		Owner: *owner, Scope: identity.SessionScopeOwner, Authenticator: identity.AuthenticatorPasskey, Passkey: p.CredentialID,
+	}, c.Origin)
 	if err != nil {
 		return Registered{}, err
 	}

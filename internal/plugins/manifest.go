@@ -143,12 +143,19 @@ func validateInstitutions(m *Manifest) []error {
 	if len(m.Institutions) > 0 && !slices.Contains(m.Capabilities, CapabilityConnector) {
 		errs = append(errs, &FieldError{Field: "institutions", Err: ErrInstitutionsNeedConnector})
 	}
-	for i, in := range m.Institutions {
+	return append(errs, validateInstitutionNames("institutions", m.Institutions)...)
+}
+
+// validateInstitutionNames checks the institutions of a manifest or a
+// grant, under field: each a lower-case label, none twice.
+func validateInstitutionNames(field string, institutions []string) []error {
+	var errs []error
+	for i, in := range institutions {
 		if validateLabel(in) != nil {
-			errs = append(errs, fieldErr(indexed("institutions", i), ErrInvalidName, in))
+			errs = append(errs, fieldErr(indexed(field, i), ErrInvalidName, in))
 		}
 	}
-	return append(errs, duplicates("institutions", m.Institutions, func(s string) string { return s })...)
+	return append(errs, duplicates(field, institutions, func(s string) string { return s })...)
 }
 
 func validateCapabilities(cs []Capability) []error {

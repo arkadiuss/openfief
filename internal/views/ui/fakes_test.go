@@ -70,6 +70,17 @@ type fakeAuth struct {
 	tokenTTL    time.Duration
 	linkTarget  string
 	lastPasskey bool
+	// stale makes the actions D-183 protects fail for want of a passkey
+	// check until a check finishes (checked).
+	stale   bool
+	checked bool
+	// checks are the credentials passkey checks finished with.
+	checks []string
+	// everywhere are the sessions that signed out everywhere.
+	everywhere []string
+	// ownPasskey makes RemovePasskey say the caller's own session was
+	// signed out with it.
+	ownPasskey bool
 }
 
 func (f *fakeAuth) GetLoginMethods(_ context.Context, r *connect.Request[identityv1.GetLoginMethodsRequest]) (*connect.Response[identityv1.GetLoginMethodsResponse], error) {
@@ -118,6 +129,9 @@ func (f *fakeAuth) BeginRegistration(_ context.Context, r *connect.Request[ident
 	f.mu.Unlock()
 	if r.Msg.GetEnrollmentCode() == "" {
 		if err := owner(r.Msg.GetSessionToken()); err != nil {
+			return nil, err
+		}
+		if err := f.needsCheck(); err != nil {
 			return nil, err
 		}
 	}
@@ -179,13 +193,16 @@ func (f *fakeAuth) RemovePasskey(_ context.Context, r *connect.Request[identityv
 	if err := owner(r.Msg.GetSessionToken()); err != nil {
 		return nil, err
 	}
+	if err := f.needsCheck(); err != nil {
+		return nil, err
+	}
 	if f.flag(&f.lastPasskey) {
 		return nil, codeErr(connect.CodeFailedPrecondition, errLastPasskey)
 	}
 	f.mu.Lock()
 	f.removed = append(f.removed, r.Msg.GetPasskeyId())
 	f.mu.Unlock()
-	return connect.NewResponse(&identityv1.RemovePasskeyResponse{}), nil
+	return connect.NewResponse(&identityv1.RemovePasskeyResponse{SignedOut: f.flag(&f.ownPasskey)}), nil
 }
 
 func (f *fakeAuth) CreateScriptToken(_ context.Context, r *connect.Request[identityv1.CreateScriptTokenRequest]) (*connect.Response[identityv1.CreateScriptTokenResponse], error) {
@@ -193,6 +210,9 @@ func (f *fakeAuth) CreateScriptToken(_ context.Context, r *connect.Request[ident
 		return nil, err
 	}
 	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	if err := f.needsCheck(); err != nil {
 		return nil, err
 	}
 	f.mu.Lock()
@@ -235,6 +255,9 @@ func (f *fakeAuth) CreateEnrollmentLink(_ context.Context, r *connect.Request[id
 		return nil, err
 	}
 	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	if err := f.needsCheck(); err != nil {
 		return nil, err
 	}
 	f.mu.Lock()
@@ -552,7 +575,7 @@ func (f *fakeRead) ListPlugins(_ context.Context, r *connect.Request[viewsv1.Lis
 			Instance: "prices-main", Image: "registry.example.com/openfief/eodhd@sha256:c3c3", ImageDigest: "sha256:c3c3",
 			Capabilities: []string{"connector"}, RequestedCapabilities: []string{"connector"},
 			Trust: viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI, Signer: "openfief-ci", TrustReason: "SignedByTrustedSigner",
-			Phase: "Running", Ready: true, MarketData: true, RequestedMarketData: true, Institutions: []string{"eodhd"},
+			Phase: "Running", Ready: true, MarketData: true, RequestedMarketData: true, Institutions: []string{"eodhd", "eodhd-eu"}, ApprovedInstitutions: []string{"eodhd"},
 			IndexLevels: true, RequestedIndexLevels: true, RequestedBondTerms: true,
 		},
 	}}), nil

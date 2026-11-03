@@ -511,6 +511,55 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-52d8bdcea90e
   - type: implements
+    from: SYM-ui-auth-server-sign-out-everywhere
+    to: REQ-identity-sign-out-everywhere
+    created_at: 2026-11-03T04:44:21.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f885754dbbc0
+  - type: covered_by
+    from: SYM-ui-auth-server-sign-out-everywhere
+    to: TEST-ui-passkey-check
+    created_at: 2026-11-03T04:44:21.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d1baa5c6a1d
+  - type: implements
+    from: SYM-ui-settings-server-protected-failed
+    to: REQ-ui-passkey-check-prompt
+    created_at: 2026-11-03T04:46:23.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2840859d5f3
+  - type: covered_by
+    from: SYM-ui-settings-server-protected-failed
+    to: TEST-ui-passkey-check
+    created_at: 2026-11-03T04:46:23.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89d197e8860e
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response-get-options-json
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:50:16.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-962f96500452
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response-get-options-json
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:50:16.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-906691045c42
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-response-get-options-json
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:50:17.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0591a3449b69
+  - type: implements
     from: SYM-views-app-unsupported-reporting-currency-error-error
     to: REQ-views-reporting-currency-pack
     created_at: 2026-11-03T00:00:56.629Z

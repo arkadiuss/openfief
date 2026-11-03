@@ -119,6 +119,13 @@ type apiClient struct {
 
 func newClient(t *testing.T, token string) apiClient {
 	t.Helper()
+	c, _ := newServed(t, token)
+	return c
+}
+
+// newServed is newClient, also returning the store behind the service.
+func newServed(t *testing.T, token string) (apiClient, *sessionStore) {
+	t.Helper()
 	origins, err := identity.NewOrigins([]string{local})
 	if err != nil {
 		t.Fatalf("NewOrigins: %v", err)
@@ -139,7 +146,7 @@ func newClient(t *testing.T, token string) apiClient {
 	if token != "" {
 		opts = append(opts, connect.WithInterceptors(bearer(token)))
 	}
-	return apiClient{identityv1connect.NewAuthServiceClient(srv.Client(), srv.URL, opts...)}
+	return apiClient{identityv1connect.NewAuthServiceClient(srv.Client(), srv.URL, opts...)}, store
 }
 
 // bearer sets the Authorization header of every call.

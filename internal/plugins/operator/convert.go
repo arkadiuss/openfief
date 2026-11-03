@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"slices"
 
 	"k8s.io/apimachinery/pkg/runtime"
 
@@ -74,6 +75,9 @@ func grantFromResource(g *v1alpha1.PluginGrant) (*plugins.Grant, error) {
 			IndexLevels:  g.Spec.IndexLevels,
 		},
 	}
+	if g.Spec.Institutions != nil {
+		grant.Permissions.Institutions = slices.Clone(*g.Spec.Institutions)
+	}
 	for i := range g.Spec.ClusterServices {
 		cs, err := ClusterServiceFromAPI(&g.Spec.ClusterServices[i])
 		if err != nil {
@@ -100,6 +104,10 @@ func permissionsToAPI(p *plugins.Permissions) *v1alpha1.Permissions {
 	out := &v1alpha1.Permissions{
 		Secrets: p.Secrets, BrowserPaths: p.BrowserPaths, MarketData: p.MarketData,
 		BondTerms: p.BondTerms, IndexLevels: p.IndexLevels,
+	}
+	if len(p.Institutions) > 0 {
+		in := slices.Clone(p.Institutions)
+		out.Institutions = &in
 	}
 	for _, c := range p.Capabilities {
 		out.Capabilities = append(out.Capabilities, string(c))
@@ -144,6 +152,7 @@ func effectiveToAPI(e *plugins.EffectivePermissions) *v1alpha1.Permissions {
 		MarketData:   e.MarketData(),
 		BondTerms:    e.BondTerms(),
 		IndexLevels:  e.IndexLevels(),
+		Institutions: e.Institutions(),
 	}
 	if bp := e.BrowserPath(); bp != "" {
 		p.BrowserPaths = []string{bp}

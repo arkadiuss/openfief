@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b26bc87f5277
+  - type: executable_for
+    from: SYM-plugins-grant-institutions-test-test-institutions-in-grant-and-diff
+    to: TEST-plugins-grant-institutions
+    created_at: 2026-11-03T07:52:30.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce1b6127a3a4

@@ -517,3 +517,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76794301aa23
+  - type: implements
+    from: SYM-identity-connectapi-service-auth-service-begin-passkey-check
+    to: REQ-identity-protected-actions-recent-passkey-check
+    created_at: 2026-11-03T04:40:40.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d76144d67b7a
+  - type: covered_by
+    from: SYM-identity-connectapi-service-auth-service-begin-passkey-check
+    to: TEST-identity-passkey-check-connectapi
+    created_at: 2026-11-03T04:40:40.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6f30df6baf7
+  - type: implements
+    from: SYM-ui-settings-form-field
+    to: REQ-ui-passkey-check-prompt
+    created_at: 2026-11-03T04:46:03.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca0b88f78b51
+  - type: covered_by
+    from: SYM-ui-settings-form-field
+    to: TEST-ui-passkey-check
+    created_at: 2026-11-03T04:46:03.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c066b6b10911
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:53:35.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76ab5de5b2b0
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:53:35.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48c645e335f6
+  - type: covered_by
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:53:35.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8b33aebe35d

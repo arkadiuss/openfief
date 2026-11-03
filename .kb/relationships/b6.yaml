@@ -440,6 +440,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f6cf36d75bb
+  - type: executable_for
+    from: SYM-tooling-test-reusable-signing-guard-check
+    to: TEST-tooling-reusable-signing-guard
+    created_at: 2026-11-03T03:35:55.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78d010f1ed62
   - type: implements
     from: SYM-ingest-app-connectors-declared-deliveries
     to: REQ-ingest-bond-terms-index-levels-declared-approved

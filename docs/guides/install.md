@@ -112,7 +112,7 @@ The checksum prints `OK`; anything else, stop. The manifest is the same file as 
 
 ## 5. Apply the CRDs, the database and the install
 
-`openfief-db-$VERSION.yaml` is the smallest database that works: a CloudNativePG cluster `openfief-db` with one instance on the cluster's default storage class and 10 GiB. Edit it before you apply it: size the storage, set a `storageClass`, add CloudNativePG's backups. Keep its name, its namespace, `openfief`, and its database and owner, both `openfief`: the install reads its connection string from the Secret `openfief-db-app` that CloudNativePG creates for that cluster.
+`openfief-db-$VERSION.yaml` is the smallest database that works: a CloudNativePG cluster `openfief-db` with one instance on the cluster's default storage class and 10 GiB, requesting 100m CPU and 256 MiB of memory and limited to 1 GiB of memory (D-182). Edit it before you apply it: you size it, so set the storage and the resources for your machine and your history, set a `storageClass`, add CloudNativePG's backups. The memory limit is the most PostgreSQL may use before Kubernetes restarts it; there is no CPU limit, since CPU is only throttled. Keep its name, its namespace, `openfief`, and its database and owner, both `openfief`: the install reads its connection string from the Secret `openfief-db-app` that CloudNativePG creates for that cluster.
 
 Then apply, in this order: the CRDs file creates the namespace the database and the install go into, and the core waits for its database.
 

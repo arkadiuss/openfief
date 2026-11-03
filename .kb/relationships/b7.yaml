@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7a73bc8c73d
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-want-stored
+    to: TEST-identity-auth-postgres
+    created_at: 2026-11-03T04:42:50.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf674cac446c

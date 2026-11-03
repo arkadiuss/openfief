@@ -9,6 +9,7 @@ import (
 	"io/fs"
 	"net/http"
 	"path"
+	"slices"
 	"strings"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -54,6 +55,7 @@ func templateFuncs(f numberFormat) template.FuncMap {
 		"className":    classLabel,
 		"feeRule":      f.feeRule,
 		"trust":        trustLabel,
+		"unapproved":   unapproved,
 		"badge":        badgeOf,
 		"roleFields":   roleFields,
 		"sleeveSelect": sleeveSelect,
@@ -144,4 +146,16 @@ func (s *server) showTemplate(w http.ResponseWriter, r *http.Request, status int
 // owner. It never names a token or an amount.
 func (s *server) errorPage(w http.ResponseWriter, r *http.Request, status int, message string) {
 	s.show(w, r, status, "error", page{Title: http.StatusText(status), Data: message})
+}
+
+// unapproved returns the institutions of declared that approved lacks: those
+// a connector's manifest declares and its grant doesn't approve (D-185).
+func unapproved(declared, approved []string) []string {
+	var out []string
+	for _, d := range declared {
+		if !slices.Contains(approved, d) {
+			out = append(out, d)
+		}
+	}
+	return out
 }

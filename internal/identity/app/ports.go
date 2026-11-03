@@ -55,10 +55,11 @@ type PasskeyStore interface {
 	Passkeys(ctx context.Context) ([]identity.Passkey, error)
 	// UpdatePasskeyUse stores p's sign count, backup state and last use.
 	UpdatePasskeyUse(ctx context.Context, p *identity.Passkey) error
-	// DeletePasskey deletes the passkey with credential ID id, failing with
+	// DeletePasskey deletes the passkey with credential ID id and revokes,
+	// as of at, every session it signed in (Session.PasskeyID), failing with
 	// an error wrapping ErrUnknownPasskey, or ErrLastPasskey when it is the
 	// only one, atomically.
-	DeletePasskey(ctx context.Context, id []byte) error
+	DeletePasskey(ctx context.Context, id []byte, at time.Time) error
 }
 
 // CeremonyStore keeps WebAuthn ceremonies between begin and finish.
@@ -95,6 +96,12 @@ type SessionStore interface {
 	// RevokeSession marks the session revoked at at, keeping an earlier
 	// revocation.
 	RevokeSession(ctx context.Context, id identity.SessionID, at time.Time) error
+	// RevokeSessions revokes, as of at, every session not revoked yet, and
+	// returns how many it revoked.
+	RevokeSessions(ctx context.Context, at time.Time) (int, error)
+	// PasskeyCheckSession stores at as the session's last passkey check
+	// (D-183), never moving it back.
+	PasskeyCheckSession(ctx context.Context, id identity.SessionID, at time.Time) error
 }
 
 // Ceremonies runs the WebAuthn side of passkey ceremonies for one origin at

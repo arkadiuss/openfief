@@ -127,6 +127,8 @@ func installFX(t *testing.T, k *kube, name string, image plugins.ImageRef) {
 		"spec": map[string]any{
 			"capabilities": []any{"connector"},
 			"egress":       []any{fxEgress, fxGrantOnly},
+			// The institutions it books for, as the manifest declares (D-185).
+			"institutions": []any{"nbp"},
 		},
 	}}
 	plugin := &unstructured.Unstructured{Object: map[string]any{

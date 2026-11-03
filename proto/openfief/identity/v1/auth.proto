@@ -32,6 +32,13 @@
 //   UNAUTHENTICATED: the view plugin drops its cookie and shows the login.
 //   A read-scoped session calling an owner-only method fails with
 //   PERMISSION_DENIED.
+// - Enrolling or removing a passkey, issuing an enrollment link and
+//   creating a script token also need a passkey check made in the same
+//   session within the last five minutes (D-183): logging in with a passkey
+//   counts, and so does BeginPasskeyCheck then FinishPasskeyCheck. Without
+//   one they fail with FAILED_PRECONDITION and a PasskeyCheckRequired error
+//   detail: the view plugin asks the owner to confirm with their passkey,
+//   runs the check and asks again.
 // - WebAuthn options and credentials travel as JSON text in the WebAuthn
 //   Level 3 JSON forms, so the browser uses
 //   PublicKeyCredential.parseCreationOptionsFromJSON,
@@ -52,7 +59,8 @@ service AuthService {
 
   // BeginRegistration starts creating a passkey on origin's host. It needs
   // either a valid one-time enrollment code issued for origin (D-60) or an
-  // owner-scoped session issued on origin's host.
+  // owner-scoped session issued on origin's host with a recent passkey
+  // check (D-183).
   rpc BeginRegistration(BeginRegistrationRequest) returns (BeginRegistrationResponse);
 
   // FinishRegistration verifies the new credential and stores the passkey.
@@ -82,12 +90,14 @@ service AuthService {
   // ListPasskeys returns every passkey, on every host. Owner scope.
   rpc ListPasskeys(ListPasskeysRequest) returns (ListPasskeysResponse);
 
-  // RemovePasskey removes a passkey. The last passkey can't be removed
-  // (FAILED_PRECONDITION). Owner scope.
+  // RemovePasskey removes a passkey and revokes every session it signed in.
+  // The last passkey can't be removed (FAILED_PRECONDITION). Owner scope,
+  // with a recent passkey check (D-183).
   rpc RemovePasskey(RemovePasskeyRequest) returns (RemovePasskeyResponse);
 
   // CreateScriptToken issues a read-only script token (D-27) and returns its
-  // secret, the only time it is shown. Owner scope.
+  // secret, the only time it is shown. Owner scope, with a recent passkey
+  // check (D-183).
   rpc CreateScriptToken(CreateScriptTokenRequest) returns (CreateScriptTokenResponse);
 
   // ListScriptTokens returns every script token, expired and revoked ones
@@ -99,8 +109,22 @@ service AuthService {
 
   // CreateEnrollmentLink issues a one-time link for creating a passkey on
   // another allowed origin, such as the owner's own Ingress host (D-60).
-  // Owner scope.
+  // Owner scope, with a recent passkey check (D-183).
   rpc CreateEnrollmentLink(CreateEnrollmentLinkRequest) returns (CreateEnrollmentLinkResponse);
+
+  // BeginPasskeyCheck starts a passkey check in the session: an assertion
+  // like a login's, against the passkeys of origin's host (D-183). Owner
+  // scope.
+  rpc BeginPasskeyCheck(BeginPasskeyCheckRequest) returns (BeginPasskeyCheckResponse);
+
+  // FinishPasskeyCheck verifies the assertion and records the check on the
+  // session, which may then enroll or remove a passkey, issue an enrollment
+  // link and create a script token for five minutes. Owner scope.
+  rpc FinishPasskeyCheck(FinishPasskeyCheckRequest) returns (FinishPasskeyCheckResponse);
+
+  // SignOutEverywhere revokes every session, on every host and of either
+  // scope, the caller's own included (D-183). Owner scope.
+  rpc SignOutEverywhere(SignOutEverywhereRequest) returns (SignOutEverywhereResponse);
 }
 
 // SessionScope is what a session may do.
@@ -137,6 +161,19 @@ message Session {
   google.protobuf.Timestamp idle_expires_at = 7;
   // When the session expires however much it is used.
   google.protobuf.Timestamp expires_at = 8;
+  // The session's last passkey check: its passkey sign-in or a later
+  // FinishPasskeyCheck. Unset when it has none, as a demo session never
+  // does (D-183).
+  google.protobuf.Timestamp passkey_checked_at = 9;
+}
+
+// PasskeyCheckRequired is the error detail of a FAILED_PRECONDITION from an
+// action that needs a passkey check made in the same session within the
+// last five minutes (D-183): enrolling or removing a passkey, issuing an
+// enrollment link or creating a script token.
+message PasskeyCheckRequired {
+  // How recent the check must be: five minutes.
+  google.protobuf.Duration window = 1;
 }
 
 // Owner is the one person an installation has (GR-2).
@@ -304,7 +341,11 @@ message RemovePasskeyRequest {
   string passkey_id = 3;
 }
 
-message RemovePasskeyResponse {}
+message RemovePasskeyResponse {
+  // Whether the removed passkey had signed in the caller's own session,
+  // which is now revoked with the others it signed in.
+  bool signed_out = 1;
+}
 
 message CreateScriptTokenRequest {
   string origin = 1;
@@ -355,4 +396,41 @@ message CreateEnrollmentLinkResponse {
   // page reads it and passes it to BeginRegistration.
   string url = 1;
   google.protobuf.Timestamp expires_at = 2;
+}
+
+message BeginPasskeyCheckRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message BeginPasskeyCheckResponse {
+  // Names the ceremony in FinishPasskeyCheck; single use.
+  string ceremony_id = 1;
+  // PublicKeyCredentialRequestOptionsJSON, for
+  // PublicKeyCredential.parseRequestOptionsFromJSON.
+  string options_json = 2;
+  google.protobuf.Timestamp expires_at = 3;
+}
+
+message FinishPasskeyCheckRequest {
+  string origin = 1;
+  string session_token = 2;
+  string ceremony_id = 3;
+  // AuthenticationResponseJSON: the assertion's toJSON().
+  string credential_json = 4;
+}
+
+message FinishPasskeyCheckResponse {
+  // The session after the check.
+  Session session = 1;
+}
+
+message SignOutEverywhereRequest {
+  string origin = 1;
+  string session_token = 2;
+}
+
+message SignOutEverywhereResponse {
+  // How many sessions were revoked, the caller's own included.
+  int64 revoked_sessions = 1;
 }

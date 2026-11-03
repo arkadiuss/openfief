@@ -466,7 +466,7 @@ func TestCeremony(t *testing.T) {
 			t.Errorf("%s: Check = %v, want %v", tt.name, err, tt.wantErr)
 		}
 	}
-	for _, k := range []identity.CeremonyKind{identity.CeremonyRegistration, identity.CeremonyLogin} {
+	for _, k := range []identity.CeremonyKind{identity.CeremonyRegistration, identity.CeremonyLogin, identity.CeremonyPasskeyCheck} {
 		got, err := identity.ParseCeremonyKind(k.String())
 		if err != nil || got != k {
 			t.Errorf("ParseCeremonyKind(%q) = %v, %v", k, got, err)

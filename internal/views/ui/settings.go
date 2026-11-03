@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 	"time"
@@ -35,6 +36,9 @@ type settingsData struct {
 	Enrollment  *identityv1.CreateEnrollmentLinkResponse
 	Error       string
 	DefaultDays int
+	// PasskeyCheck is an action the core refused for want of a recent
+	// passkey check (D-183), to post again once the owner confirms.
+	PasskeyCheck *pendingAction
 	// Model is the model portfolio form (D-52): as stored, or as posted
 	// when the core refused it.
 	Model *modelForm
@@ -114,14 +118,72 @@ func (s *server) actionFailed(w http.ResponseWriter, r *http.Request, sess sessi
 	s.coreFailed(w, r, method, err)
 }
 
+// pendingAction is a settings action the core refused for want of a
+// passkey check made in the last five minutes (D-183). The settings page
+// asks the owner to confirm with their passkey, runs the check, and posts
+// the action again as it was.
+type pendingAction struct {
+	// What names the action for the owner, such as "Creating a script
+	// token".
+	What string
+	// Action is the path the form posts to again.
+	Action string
+	// Fields are the form's fields, posted again unchanged.
+	Fields []formField
+}
+
+// formField is one field of a pendingAction's form.
+type formField struct {
+	Name  string
+	Value string
+}
+
+// passkeyCheckRequired reports whether err is the core's refusal of an
+// action D-183 protects: FAILED_PRECONDITION with the PasskeyCheckRequired
+// detail.
+func passkeyCheckRequired(err error) bool {
+	ce, ok := errors.AsType[*connect.Error](err)
+	if !ok || ce.Code() != connect.CodeFailedPrecondition {
+		return false
+	}
+	for _, d := range ce.Details() {
+		msg, valueErr := d.Value()
+		if valueErr != nil {
+			continue
+		}
+		if _, isCheck := msg.(*identityv1.PasskeyCheckRequired); isCheck {
+			return true
+		}
+	}
+	return false
+}
+
+// protectedFailed answers a refused action D-183 protects: for want of a
+// recent passkey check, the settings again with pending to confirm and
+// post again; anything else as actionFailed does.
+func (s *server) protectedFailed(w http.ResponseWriter, r *http.Request, sess session, method string, err error, pending *pendingAction) {
+	if passkeyCheckRequired(err) {
+		s.renderSettings(w, r, sess, http.StatusForbidden, &settingsData{PasskeyCheck: pending})
+		return
+	}
+	s.actionFailed(w, r, sess, method, err)
+}
+
 // removePasskey removes a passkey (RemovePasskey); the core refuses to
-// remove the last one.
+// remove the last one, and revokes every session the passkey signed in
+// (D-183). When that includes this one, the cookie goes and the login page
+// opens.
 func (s *server) removePasskey(w http.ResponseWriter, r *http.Request, sess session) {
-	_, err := s.auth.RemovePasskey(r.Context(), connect.NewRequest(&identityv1.RemovePasskeyRequest{
+	resp, err := s.auth.RemovePasskey(r.Context(), connect.NewRequest(&identityv1.RemovePasskeyRequest{
 		Origin: sess.Origin, SessionToken: sess.Token, PasskeyId: r.PathValue("id"),
 	}))
 	if err != nil {
-		s.actionFailed(w, r, sess, "RemovePasskey", err)
+		s.protectedFailed(w, r, sess, "RemovePasskey", err, &pendingAction{What: "Removing a passkey", Action: r.URL.Path})
+		return
+	}
+	if resp.Msg.GetSignedOut() {
+		clearSession(w)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
 	http.Redirect(w, r, "/settings", http.StatusSeeOther)
@@ -140,7 +202,10 @@ func (s *server) createToken(w http.ResponseWriter, r *http.Request, sess sessio
 		Ttl: durationpb.New(time.Duration(days) * hoursPerDay * time.Hour),
 	}))
 	if err != nil {
-		s.actionFailed(w, r, sess, "CreateScriptToken", err)
+		s.protectedFailed(w, r, sess, "CreateScriptToken", err, &pendingAction{
+			What: "Creating a script token", Action: r.URL.Path,
+			Fields: []formField{{Name: "name", Value: r.PostFormValue("name")}, {Name: "days", Value: r.PostFormValue("days")}},
+		})
 		return
 	}
 	s.renderSettings(w, r, sess, http.StatusOK, &settingsData{NewToken: resp.Msg.GetToken(), NewSecret: resp.Msg.GetSecret()})
@@ -179,7 +244,10 @@ func (s *server) createEnrollmentLink(w http.ResponseWriter, r *http.Request, se
 		Origin: sess.Origin, SessionToken: sess.Token, TargetOrigin: r.PostFormValue("target_origin"),
 	}))
 	if err != nil {
-		s.actionFailed(w, r, sess, "CreateEnrollmentLink", err)
+		s.protectedFailed(w, r, sess, "CreateEnrollmentLink", err, &pendingAction{
+			What: "Creating an enrollment link", Action: r.URL.Path,
+			Fields: []formField{{Name: "target_origin", Value: r.PostFormValue("target_origin")}},
+		})
 		return
 	}
 	s.renderSettings(w, r, sess, http.StatusOK, &settingsData{Enrollment: resp.Msg})

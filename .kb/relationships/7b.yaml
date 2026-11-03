@@ -643,6 +643,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee342910c685
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response-reset
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:49:14.369Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19bc0cb76242
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response-reset
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:49:14.421Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-907c88a7cca2
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-response-reset
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:49:14.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6063ce55614
   - type: validates
     from: TEST-ingest-declarations
     to: REQ-ingest-undeclared-bond-terms-index-levels-dropped

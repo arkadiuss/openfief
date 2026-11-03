@@ -196,19 +196,6 @@ func install(ctx context.Context, env *Env, o *options, arg string) error {
 	return say(env.Out, "Installed "+p.Plugin.Name+". The operator verifies the image again and deploys it once its Secrets exist.\n")
 }
 
-// checkInstall refuses, before the owner is asked, an install that would
-// hold a browser path another instance holds (D-114) or name a Secret
-// another instance names (D-89, D-182).
-func checkInstall(ctx context.Context, cluster Cluster, p *app.Proposal) error {
-	if err := app.CheckBrowserView(ctx, cluster, &p.Plugin); err != nil {
-		return fmt.Errorf("browser path: %w", err)
-	}
-	if err := app.CheckSecrets(ctx, cluster, &p.Plugin, &p.Grant); err != nil {
-		return fmt.Errorf("secrets: %w", err)
-	}
-	return nil
-}
-
 // prepare reads the config and the in-cluster service the owner named,
 // verifies the image and plans the install, asking for the in-cluster
 // service when the manifest wants one and no flag named it.
@@ -456,5 +443,23 @@ func say(w io.Writer, s string) error {
 	if _, err := io.WriteString(w, terminalText(s)); err != nil {
 		return fmt.Errorf("write: %w", err)
 	}
+	return nil
+}
+
+// checkInstall refuses a second browser view (D-114) and a Secret another
+// instance names (D-89, D-182), and finds the institutions another
+// instance already books for, which the summary warns about (D-185).
+func checkInstall(ctx context.Context, cluster Cluster, p *app.Proposal) error {
+	if err := app.CheckBrowserView(ctx, cluster, &p.Plugin); err != nil {
+		return fmt.Errorf("browser view: %w", err)
+	}
+	if err := app.CheckSecrets(ctx, cluster, &p.Plugin, &p.Grant); err != nil {
+		return fmt.Errorf("secrets: %w", err)
+	}
+	shared, err := app.SharedInstitutions(ctx, cluster, &p.Plugin)
+	if err != nil {
+		return fmt.Errorf("institutions: %w", err)
+	}
+	p.Shared = shared
 	return nil
 }

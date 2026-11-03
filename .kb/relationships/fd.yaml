@@ -622,3 +622,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fde5d1118ad4
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:48:29.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e89de17bac0
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:48:30.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca1c9d2202b3
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:48:30.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0288c88eccdd

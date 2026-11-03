@@ -587,6 +587,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac5e4184f900
+  - type: executable_for
+    from: SYM-ui-passkeycheck-test-test-passkey-check-prompt
+    to: TEST-ui-passkey-check
+    created_at: 2026-11-03T04:45:11.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa2dbe9afc5c
   - type: validates
     from: TEST-pl-terms
     to: REQ-valuation-bond-terms-polish-isin

@@ -5,6 +5,18 @@
 {{with .Data}}
 {{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
 
+{{with .PasskeyCheck}}
+<section class="card notice" aria-labelledby="check-title">
+  <h2 id="check-title">Confirm with your passkey</h2>
+  <p>{{.What}} needs a passkey check made in the last five minutes, so a stolen session can't add a way in. Confirm with your passkey and it goes ahead.</p>
+  <form method="post" action="{{.Action}}" id="passkey-check-retry">
+    {{range .Fields}}<input type="hidden" name="{{.Name}}" value="{{.Value}}">{{end}}
+    <div class="actions"><button type="button" data-webauthn="check" data-retry="passkey-check-retry">Confirm with your passkey</button></div>
+    <p class="alert alert-error" data-webauthn-error role="alert" hidden></p>
+  </form>
+</section>
+{{end}}
+
 {{if .NewSecret}}
 <section class="card notice" aria-labelledby="secret-title">
   <h2 id="secret-title">Script token {{.NewToken.Name}} created</h2>
@@ -24,7 +36,7 @@
 
 <section class="card" aria-labelledby="passkeys-title">
   <h2 id="passkeys-title">Passkeys</h2>
-  <p class="muted">A passkey works only on the host it was created on.</p>
+  <p class="muted">A passkey works only on the host it was created on. Adding or removing one asks you to confirm with a passkey first, and removing one also signs out every session it signed in.</p>
   <div class="table"><table>
     <thead><tr><th scope="col">Name</th><th scope="col">Host</th><th scope="col">Created</th><th scope="col">Last used</th><th scope="col">Synced</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
     <tbody>
@@ -87,6 +99,15 @@
       </div>
     </div>
     <div class="actions"><button type="submit">Create script token</button></div>
+  </form>
+</section>
+
+<section class="card" aria-labelledby="sessions-title">
+  <h2 id="sessions-title">Sessions</h2>
+  <p class="muted">Signs out every browser and device, on every host, this one included. Script tokens keep working: revoke them above.</p>
+  <form method="post" action="/logout">
+    <input type="hidden" name="everywhere" value="yes">
+    <div class="actions"><button type="submit" class="danger">Sign out everywhere</button></div>
   </form>
 </section>
 {{template "plugin-list" .Plugins}}

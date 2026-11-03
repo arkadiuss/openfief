@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0408b46900a
+  - type: implements
+    from: SYM-plugins-cli-write-deliveries
+    to: REQ-plugins-upgrade-warns-shared-institution
+    created_at: 2026-11-03T07:51:42.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f55c569d4cf
+  - type: covered_by
+    from: SYM-plugins-cli-write-deliveries
+    to: TEST-plugins-cli-institutions
+    created_at: 2026-11-03T07:51:42.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b09138b7eaf4

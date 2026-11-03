@@ -90,8 +90,10 @@ type PluginRecord struct {
 	RequestsBondTerms, BondTerms     bool
 	RequestsIndexLevels, IndexLevels bool
 	// Institutions are the institutions its manifest declares it books
-	// for (D-182).
-	Institutions []string
+	// for (D-182); ApprovedInstitutions those of them its grant approves,
+	// the ones it books for (status.effective, D-185).
+	Institutions         []string
+	ApprovedInstitutions []string
 }
 
 // Plugin is an installed plugin instance as the read API shows it (D-46,
@@ -127,8 +129,10 @@ type Plugin struct {
 	RequestsBondTerms, BondTerms     bool
 	RequestsIndexLevels, IndexLevels bool
 	// Institutions are the institutions its manifest declares it books
-	// for; the core refuses a delivery naming any other (D-182).
-	Institutions []string
+	// for (D-182); ApprovedInstitutions those of them its grant approves.
+	// The core refuses a delivery naming any but the approved ones (D-185).
+	Institutions         []string
+	ApprovedInstitutions []string
 }
 
 // PluginOf returns the Plugin r describes. The signer is named only when a
@@ -151,6 +155,8 @@ func PluginOf(r *PluginRecord) Plugin {
 		RequestsMarketData: r.RequestsMarketData,
 		MarketData:         r.MarketData,
 		Institutions:       slices.Clone(r.Institutions),
+
+		ApprovedInstitutions: slices.Clone(r.ApprovedInstitutions),
 
 		RequestsBondTerms: r.RequestsBondTerms, BondTerms: r.BondTerms,
 		RequestsIndexLevels: r.RequestsIndexLevels, IndexLevels: r.IndexLevels,

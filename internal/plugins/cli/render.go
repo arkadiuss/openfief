@@ -122,6 +122,7 @@ func RenderProposal(p *app.Proposal) string {
 		config = shown(string(p.Plugin.Config))
 	}
 	fmt.Fprintf(&b, "\nConfig given: %s\n", config)
+	writeShared(&b, p.Shared)
 	return b.String()
 }
 

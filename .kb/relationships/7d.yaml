@@ -727,3 +727,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43e58767ec26
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:49:43.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce5af8b96d44
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:49:43.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74db4cce8361
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-response-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:49:43.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd0c06953108

@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-568f55aa6937
+  - type: executable_for
+    from: SYM-identity-passkeycheck-test-test-check-recent-passkey
+    to: TEST-identity-passkey-check-domain
+    created_at: 2026-11-03T04:41:20.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e582cad0524

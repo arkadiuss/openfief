@@ -636,6 +636,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6ee0185df0b4
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client-finish-passkey-check
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:55:21.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-90f8792d885d
+  - type: implements
+    from: SYM-identity-gen-connect-auth-service-client-finish-passkey-check
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:55:21.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73670fcbc3c5
+  - type: covered_by
+    from: SYM-identity-gen-connect-auth-service-client-finish-passkey-check
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:55:21.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8db6ac7ab0fa
   - type: constrains
     from: REQ-ingest-undeclared-bond-terms-index-levels-dropped
     to: FACT-SUBJECT-4022BDCF8FBBCB20

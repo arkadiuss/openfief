@@ -5797,6 +5797,10 @@ type Plugin struct {
 	// Whether its signed manifest declares market index levels, approved or
 	// not.
 	RequestedIndexLevels bool `protobuf:"varint,18,opt,name=requested_index_levels,json=requestedIndexLevels,proto3" json:"requested_index_levels,omitempty"`
+	// The institutions it books for: those its signed manifest declares
+	// (institutions) and its PluginGrant approves. The core refuses a
+	// delivery that names any other (D-185).
+	ApprovedInstitutions []string `protobuf:"bytes,19,rep,name=approved_institutions,json=approvedInstitutions,proto3" json:"approved_institutions,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -5955,6 +5959,13 @@ func (x *Plugin) GetRequestedIndexLevels() bool {
 		return x.RequestedIndexLevels
 	}
 	return false
+}
+
+func (x *Plugin) GetApprovedInstitutions() []string {
+	if x != nil {
+		return x.ApprovedInstitutions
+	}
+	return nil
 }
 
 // AttentionItemChange is one entry of an attention item's history.
@@ -6604,7 +6615,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x12reporting_currency\x18\t \x01(\tR\x11reportingCurrency\"\x14\n" +
 	"\x12ListPluginsRequest\"J\n" +
 	"\x13ListPluginsResponse\x123\n" +
-	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xa8\x05\n" +
+	"\aplugins\x18\x01 \x03(\v2\x19.openfief.views.v1.PluginR\aplugins\"\xdd\x05\n" +
 	"\x06Plugin\x12\x1a\n" +
 	"\binstance\x18\x01 \x01(\tR\binstance\x12\x14\n" +
 	"\x05image\x18\x02 \x01(\tR\x05image\x12!\n" +
@@ -6626,7 +6637,8 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"bond_terms\x18\x0f \x01(\bR\tbondTerms\x120\n" +
 	"\x14requested_bond_terms\x18\x10 \x01(\bR\x12requestedBondTerms\x12!\n" +
 	"\findex_levels\x18\x11 \x01(\bR\vindexLevels\x124\n" +
-	"\x16requested_index_levels\x18\x12 \x01(\bR\x14requestedIndexLevels\"\xcc\x01\n" +
+	"\x16requested_index_levels\x18\x12 \x01(\bR\x14requestedIndexLevels\x123\n" +
+	"\x15approved_institutions\x18\x13 \x03(\tR\x14approvedInstitutions\"\xcc\x01\n" +
 	"\x13AttentionItemChange\x12\x10\n" +
 	"\x03seq\x18\x01 \x01(\x05R\x03seq\x12;\n" +
 	"\x05state\x18\x02 \x01(\x0e2%.openfief.views.v1.AttentionItemStateR\x05state\x12>\n" +

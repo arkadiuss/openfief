@@ -538,6 +538,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16707cd90b62
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:47:53.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4a38228352
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:47:53.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9821f6027428
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-request
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:47:53.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1eab32eee4c7
   - type: constrains
     from: REQ-valuation-bond-terms-polish-isin
     to: FACT-SUBJECT-B480A4255C7FAFC4

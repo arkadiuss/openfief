@@ -221,6 +221,7 @@ func describe(p *plugins.Permissions) string {
 		{"marketData", marketDataItems(api.MarketData)},
 		{"bondTerms", marketDataItems(api.BondTerms)},
 		{"indexLevels", marketDataItems(api.IndexLevels)},
+		{"institutions", institutionItems(api.Institutions)},
 	} {
 		if len(f.items) > 0 {
 			parts = append(parts, f.name+": "+strings.Join(f.items, ", "))
@@ -253,4 +254,13 @@ func truncate(s string) string {
 		return s
 	}
 	return s[:maxMessageLen-3] + "..."
+}
+
+// institutionItems lists the institutions of an API permission set, none
+// when it names none.
+func institutionItems(in *[]string) []string {
+	if in == nil {
+		return nil
+	}
+	return *in
 }

@@ -80,10 +80,10 @@ func TestPasskeyStore(t *testing.T) {
 	if diff := cmp.Diff([]identity.Passkey{p}, keys); diff != "" {
 		t.Errorf("Passkeys (-want +got):\n%s", diff)
 	}
-	if err := store.DeletePasskey(ctx, p.CredentialID); !errors.Is(err, app.ErrLastPasskey) {
+	if err := store.DeletePasskey(ctx, p.CredentialID, issuedAt()); !errors.Is(err, app.ErrLastPasskey) {
 		t.Errorf("DeletePasskey of the last one = %v, want %v", err, app.ErrLastPasskey)
 	}
-	if err := store.DeletePasskey(ctx, []byte{7}); !errors.Is(err, app.ErrUnknownPasskey) {
+	if err := store.DeletePasskey(ctx, []byte{7}, issuedAt()); !errors.Is(err, app.ErrUnknownPasskey) {
 		t.Errorf("DeletePasskey of an unknown one = %v, want %v", err, app.ErrUnknownPasskey)
 	}
 }
@@ -150,6 +150,122 @@ func TestSessionStore(t *testing.T) {
 	}
 	if !bytes.Equal(hash, identity.HashKey(sessionKey())) {
 		t.Errorf("stored hash = %x", hash)
+	}
+}
+
+// passkeyFor returns a synthetic passkey with credential ID id.
+func passkeyFor(id byte) identity.Passkey {
+	return identity.Passkey{
+		CredentialID: []byte{id, id}, Name: "key", RPID: "localhost", PublicKey: []byte{1, 2, 3},
+		AttestationType: "none", AttestationFormat: "none", AAGUID: make([]byte, 16), Transports: []string{"internal"},
+		UserVerified: true, CreatedAt: issuedAt(),
+	}
+}
+
+// savedSession stores a session with id from authenticator a, signed in by
+// passkey when it is not nil.
+func savedSession(t *testing.T, store *postgres.Store, id identity.SessionID, a identity.Authenticator, passkey []byte) identity.Session {
+	t.Helper()
+	scope, err := a.Scope()
+	if err != nil {
+		t.Fatalf("Scope: %v", err)
+	}
+	s, err := identity.NewSession(id, a, scope, "localhost", issuedAt(), identity.DefaultSessionPolicy())
+	if err != nil {
+		t.Fatalf("NewSession: %v", err)
+	}
+	if passkey != nil {
+		if s, err = s.SignedInWithPasskey(passkey); err != nil {
+			t.Fatalf("SignedInWithPasskey: %v", err)
+		}
+	}
+	if err := store.SaveSession(t.Context(), &s, identity.HashKey(sessionKey())); err != nil {
+		t.Fatalf("SaveSession: %v", err)
+	}
+	return s
+}
+
+// wantRevokedEverywhere signs out everywhere in store, where sessions
+// earlier and later are left of three, earlier revoked an hour after
+// issuedAt, and checks that every one is revoked and earlier keeps its time.
+func wantRevokedEverywhere(t *testing.T, store *postgres.Store, earlier, later identity.SessionID) {
+	t.Helper()
+	n, err := store.RevokeSessions(t.Context(), issuedAt().Add(2*time.Hour))
+	if err != nil || n != 2 {
+		t.Errorf("RevokeSessions = %d, %v; want the 2 sessions left", n, err)
+	}
+	revokedAt := map[identity.SessionID]time.Time{
+		earlier: issuedAt().Add(time.Hour), later: issuedAt().Add(2 * time.Hour), "c123456789abcdef": issuedAt().Add(2 * time.Hour),
+	}
+	for id, want := range revokedAt {
+		got, _, sessionErr := store.Session(t.Context(), id)
+		if sessionErr != nil || !got.RevokedAt.Equal(want) {
+			t.Errorf("session %s after signing out everywhere: revoked %v, %v; want %v", id, got.RevokedAt, sessionErr, want)
+		}
+	}
+}
+
+// TestSessionPasskeyChecks checks what D-183 stores: the passkey that signed
+// a session in and its last passkey check, which never moves back; removing
+// a passkey revokes only the sessions it signed in; signing out everywhere
+// revokes every session left.
+func TestSessionPasskeyChecks(t *testing.T) {
+	t.Parallel()
+	store := postgres.New(newPool(t))
+	ctx := t.Context()
+	first, second := passkeyFor(1), passkeyFor(2)
+	for _, p := range []*identity.Passkey{&first, &second} {
+		if err := store.SavePasskey(ctx, p); err != nil {
+			t.Fatalf("SavePasskey: %v", err)
+		}
+	}
+	a := savedSession(t, store, "a123456789abcdef", identity.AuthenticatorPasskey, first.CredentialID)
+	b := savedSession(t, store, "b123456789abcdef", identity.AuthenticatorPasskey, second.CredentialID)
+	savedSession(t, store, "c123456789abcdef", identity.AuthenticatorDemo, nil)
+	for _, at := range []time.Duration{10 * time.Minute, time.Minute} { // a check never moves back
+		if err := store.PasskeyCheckSession(ctx, b.ID, issuedAt().Add(at)); err != nil {
+			t.Fatalf("PasskeyCheckSession: %v", err)
+		}
+	}
+	if err := store.PasskeyCheckSession(ctx, "fedcba9876543210", issuedAt()); !errors.Is(err, app.ErrUnknownSession) {
+		t.Errorf("PasskeyCheckSession(unknown) = %v, want %v", err, app.ErrUnknownSession)
+	}
+	if err := store.DeletePasskey(ctx, first.CredentialID, issuedAt().Add(time.Hour)); err != nil {
+		t.Fatalf("DeletePasskey: %v", err)
+	}
+	wantA := a
+	wantA.RevokedAt = issuedAt().Add(time.Hour)
+	wantStored(t, store, "the removed passkey's session", &wantA)
+	wantB := b
+	wantB.PasskeyCheckedAt = issuedAt().Add(10 * time.Minute)
+	wantStored(t, store, "the other passkey's session", &wantB)
+	wantRevokedEverywhere(t, store, a.ID, b.ID)
+}
+
+// wantStored fails unless store holds want as it is.
+func wantStored(t *testing.T, store *postgres.Store, what string, want *identity.Session) {
+	t.Helper()
+	got, _, err := store.Session(t.Context(), want.ID)
+	if err != nil {
+		t.Fatalf("Session: %v", err)
+	}
+	if diff := cmp.Diff(*want, got); diff != "" {
+		t.Errorf("%s (-want +got):\n%s", what, diff)
+	}
+}
+
+// TestSessionStoreRefusesDemoPasskey checks that the table refuses a passkey
+// or a passkey check on a demo session.
+func TestSessionStoreRefusesDemoPasskey(t *testing.T) {
+	t.Parallel()
+	store := postgres.New(newPool(t))
+	demo, err := identity.NewSession("d123456789abcdef", identity.AuthenticatorDemo, identity.SessionScopeRead, "localhost", issuedAt(), identity.DefaultSessionPolicy())
+	if err != nil {
+		t.Fatalf("NewSession: %v", err)
+	}
+	demo.PasskeyID, demo.PasskeyCheckedAt = []byte{1, 1}, issuedAt()
+	if err := store.SaveSession(t.Context(), &demo, identity.HashKey(sessionKey())); err == nil {
+		t.Error("the table stored a demo session with a passkey")
 	}
 }
 

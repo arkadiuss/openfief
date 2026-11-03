@@ -59,11 +59,8 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 	if err != nil {
 		return UpgradeProposal{}, fmt.Errorf("plan upgrade: %w", err)
 	}
-	if err := CheckBrowserView(ctx, store, &p); err != nil {
-		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, err)
-	}
-	if err := CheckSecrets(ctx, store, &p, &g); err != nil {
-		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, err)
+	if checkErr := checkUpgrade(ctx, store, &p, &g); checkErr != nil {
+		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, checkErr)
 	}
 	from, to := current.Requested(), p.Requested()
 	out := UpgradeProposal{
@@ -74,7 +71,30 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 	if decision.Trust == plugins.Verified {
 		out.Entry = src.Entry
 	}
+	if out.Shared, err = upgradeShared(ctx, store, &out); err != nil {
+		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, err)
+	}
 	return out, nil
+}
+
+// checkUpgrade refuses the version p, with its grant g, when it declares a
+// browser path while another instance declares one (D-114) or names a
+// Secret another instance names (D-89, D-182).
+func checkUpgrade(ctx context.Context, store InstanceStore, p *plugins.Plugin, g *plugins.Grant) error {
+	if err := CheckBrowserView(ctx, store, p); err != nil {
+		return err
+	}
+	return CheckSecrets(ctx, store, p, g)
+}
+
+// upgradeShared returns, for an upgrade that changes the institutions, those
+// of them another instance already books for, which it warns about as an
+// install does (D-90, D-185); nothing for one that doesn't change them.
+func upgradeShared(ctx context.Context, store InstanceStore, up *UpgradeProposal) ([]plugins.SharedInstitution, error) {
+	if len(up.Diff.Added.Institutions) == 0 && len(up.Diff.Removed.Institutions) == 0 {
+		return nil, nil
+	}
+	return SharedInstitutions(ctx, store, &up.Plugin)
 }
 
 // Upgrade applies a confirmed upgrade: the new Plugin and a grant of exactly
@@ -82,10 +102,7 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 // a browser path while another instance declares one (D-114), and one that
 // names a Secret another instance names (D-89, D-182).
 func Upgrade(ctx context.Context, store InstanceStore, up *UpgradeProposal) error {
-	if err := CheckBrowserView(ctx, store, &up.Plugin); err != nil {
-		return fmt.Errorf("upgrade %q: %w", up.Plugin.Name, err)
-	}
-	if err := CheckSecrets(ctx, store, &up.Plugin, &up.Grant); err != nil {
+	if err := checkUpgrade(ctx, store, &up.Plugin, &up.Grant); err != nil {
 		return fmt.Errorf("upgrade %q: %w", up.Plugin.Name, err)
 	}
 	if err := store.Update(ctx, &up.Plugin, &up.Grant); err != nil {

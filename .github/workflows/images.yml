@@ -99,7 +99,11 @@ jobs:
   build:
     name: image (${{ matrix.name }})
     needs: discover
-    if: needs.discover.outputs.images != '[]'
+    # Signs keylessly, so it runs only in OpenFief's own repository (D-181). Any repository can call a reusable
+    # workflow, and in a called workflow github.repository is the caller's, so another repository's call is
+    # refused here, before a certificate naming this workflow could be issued for its build. The verifiers pin
+    # the repository and ref of the signing run as well (docs/dev/pipeline.md#verification).
+    if: github.repository == 'arkadiuss/openfief' && needs.discover.outputs.images != '[]'
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     permissions:

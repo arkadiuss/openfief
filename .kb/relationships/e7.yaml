@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-136158a7212d
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-response
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:51:59.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0628274a942
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-response
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:51:59.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5852f5985c98
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-passkey-check-response
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:51:59.788Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-834fbcc062a9

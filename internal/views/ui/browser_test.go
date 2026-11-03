@@ -31,6 +31,9 @@ func TestServeForBrowser(t *testing.T) {
 	}
 	h := newHarness(t)
 	h.read.locked(func() { h.read.modelOn = true })
+	// The actions D-183 protects ask for a passkey check first, which the
+	// browser checks run with a virtual authenticator.
+	h.auth.locked(func() { h.auth.stale = true })
 	mux := http.NewServeMux()
 	mux.Handle("/", h.handler)
 	// The browser signs in here instead of with a passkey: the cookie comes

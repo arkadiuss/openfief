@@ -77,6 +77,28 @@ type Instance struct {
 	// BrowserPath is the browser path the Plugin's manifest declares
 	// (D-81); empty when it declares none.
 	BrowserPath string
+	// Institutions are the institutions the Plugin's manifest declares it
+	// books for (D-182, D-185).
+	Institutions []string
+}
+
+// SharedInstitutions returns the institutions p books for that another
+// installed instance already books for, with that instance (D-185): the
+// install shows each as a warning, and so does an upgrade that changes the
+// institutions.
+func SharedInstitutions(ctx context.Context, store InstanceStore, p *plugins.Plugin) ([]plugins.SharedInstitution, error) {
+	if len(p.Manifest.Institutions) == 0 {
+		return nil, nil
+	}
+	all, err := store.List(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("list instances: %w", err)
+	}
+	holders := make([]plugins.InstitutionHolder, 0, len(all))
+	for i := range all {
+		holders = append(holders, plugins.InstitutionHolder{Instance: all[i].Name, Institutions: all[i].Institutions})
+	}
+	return plugins.SharedInstitutions(p.Name, p.Manifest.Institutions, holders), nil
 }
 
 // CheckBrowserView refuses p, about to be installed or to replace its
@@ -194,6 +216,9 @@ type Proposal struct {
 	Entry *plugins.CatalogEntry
 	// ConfigHosts are the egress hosts the config gives, by field (D-75).
 	ConfigHosts []plugins.ConfigHost
+	// Shared are the institutions it books for that another installed
+	// instance already books for (D-185), set by the CLI before it asks.
+	Shared []plugins.SharedInstitution
 }
 
 // PickClusterService sets the in-cluster service the owner picked after the

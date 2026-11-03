@@ -88,22 +88,10 @@ func TestRecordOf(t *testing.T) {
 			t.Helper()
 			return operatorPlugin(t, "ibkr-main")
 		}, signedRecord("ibkr-main")},
-		{"a market-data connector the grant approves (D-123)", func(t *testing.T) *unstructured.Unstructured {
-			t.Helper()
-			u := operatorPlugin(t, "prices")
-			if err := unstructured.SetNestedField(u.Object, true, "spec", "manifest", "marketData"); err != nil {
-				t.Fatal(err)
-			}
-			if err := unstructured.SetNestedField(u.Object, true, "status", "effective", "marketData"); err != nil {
-				t.Fatal(err)
-			}
-			if err := unstructured.SetNestedStringSlice(u.Object, []string{"eodhd"}, "spec", "manifest", "institutions"); err != nil {
-				t.Fatal(err)
-			}
-			return u
-		}, func() views.PluginRecord {
+		{"a market-data connector the grant approves (D-123)", approvedPrices, func() views.PluginRecord {
 			r := signedRecord("prices")
-			r.RequestsMarketData, r.MarketData, r.Institutions = true, true, []string{"eodhd"}
+			r.RequestsMarketData, r.MarketData, r.Institutions = true, true, []string{"eodhd", "eodhd-eu"}
+			r.ApprovedInstitutions = []string{"eodhd"}
 			return r
 		}()},
 		{"a market-data connector waiting for approval", func(t *testing.T) *unstructured.Unstructured {
@@ -232,4 +220,25 @@ func sorted(ctx context.Context, t *testing.T, p *kube.Plugins) []views.PluginRe
 	}
 	slices.SortFunc(got, func(a, b views.PluginRecord) int { return strings.Compare(a.Instance, b.Instance) })
 	return got
+}
+
+// approvedPrices is a market-data connector the grant approves (D-123)
+// whose manifest declares two institutions, one of which the grant
+// approves (D-185).
+func approvedPrices(t *testing.T) *unstructured.Unstructured {
+	t.Helper()
+	u := operatorPlugin(t, "prices")
+	if err := unstructured.SetNestedField(u.Object, true, "spec", "manifest", "marketData"); err != nil {
+		t.Fatal(err)
+	}
+	if err := unstructured.SetNestedField(u.Object, true, "status", "effective", "marketData"); err != nil {
+		t.Fatal(err)
+	}
+	if err := unstructured.SetNestedStringSlice(u.Object, []string{"eodhd", "eodhd-eu"}, "spec", "manifest", "institutions"); err != nil {
+		t.Fatal(err)
+	}
+	if err := unstructured.SetNestedStringSlice(u.Object, []string{"eodhd"}, "status", "effective", "institutions"); err != nil {
+		t.Fatal(err)
+	}
+	return u
 }

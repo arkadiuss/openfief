@@ -601,3 +601,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98ca67a1ebee
+  - type: verified_by
+    from: SCEN-identity-remove-passkey-revokes-sessions
+    to: TEST-identity-auth-app
+    created_at: 2026-11-03T02:41:09.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7a1715dd69a
+  - type: verified_by
+    from: SCEN-identity-remove-passkey-revokes-sessions
+    to: TEST-identity-auth-postgres
+    created_at: 2026-11-03T02:41:09.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-480c61900c58
+  - type: verified_by
+    from: SCEN-identity-remove-passkey-revokes-sessions
+    to: TEST-ui-passkey-check
+    created_at: 2026-11-03T02:41:09.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2808f5f90457
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-request-get-ceremony-id
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:51:44.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e69a6692a3ad
+  - type: implements
+    from: SYM-identity-gen-pb-finish-passkey-check-request-get-ceremony-id
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:51:44.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ba8f57527e3
+  - type: covered_by
+    from: SYM-identity-gen-pb-finish-passkey-check-request-get-ceremony-id
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:51:44.580Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02c61fe23e13

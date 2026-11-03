@@ -587,6 +587,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a69dc714706
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response-get-ceremony-id
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:50:03.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-680ad1c5906d
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-response-get-ceremony-id
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:50:03.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da30410a011d
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-response-get-ceremony-id
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:50:03.600Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca0bf34f0df1
   - type: executable_for
     from: SYM-ingest-app-test-connectors-undeclared-deliveries
     to: TEST-ingest-app-undeclared-deliveries
@@ -594,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a481697bfe92
+  - type: executable_for
+    from: SYM-plugins-app-institutions-test-test-shared-institutions
+    to: TEST-plugins-app-institutions
+    created_at: 2026-11-03T07:51:01.790Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2eb37b61a12

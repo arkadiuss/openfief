@@ -762,3 +762,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb596c26e0fe
+  - type: constrains
+    from: REQ-ui-passkey-check-prompt
+    to: FACT-SUBJECT-90104E84491E6BE9
+    created_at: 2026-11-03T02:42:01.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50e73af05048
+  - type: requires_property
+    from: REQ-ui-passkey-check-prompt
+    to: FACT-PROP-062434DB917C9F52
+    created_at: 2026-11-03T02:42:01.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faa05797c347
+  - type: specified_by
+    from: REQ-ui-passkey-check-prompt
+    to: SCEN-ui-passkey-check-prompt
+    created_at: 2026-11-03T02:42:01.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb8fd4e840f2
