@@ -587,3 +587,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ceb60b079b9
+  - type: executable_for
+    from: SYM-operator-test-shared-secret
+    to: TEST-operator-shared-secret
+    created_at: 2026-11-03T08:24:02.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04a776ca869b

@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-389b61c3ae56
+  - type: implements
+    from: SYM-plugins-cli-check-install
+    to: REQ-plugins-secret-names-never-shared
+    created_at: 2026-11-03T08:23:21.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a922807ac82
+  - type: covered_by
+    from: SYM-plugins-cli-check-install
+    to: TEST-plugins-cli-shared-secret
+    created_at: 2026-11-03T08:23:21.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f07119d16ff6
+  - type: executable_for
+    from: SYM-plugins-test-may-mount-secrets
+    to: TEST-plugins-secret-holder
+    created_at: 2026-11-03T08:23:52.647Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a555460f89d5

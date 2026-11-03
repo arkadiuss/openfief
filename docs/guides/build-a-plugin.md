@@ -223,7 +223,7 @@ The label holds one JSON object. [ParseManifestLabel](../../internal/plugins/man
 | `bondTerms` | A connector that delivers treasury bond series terms declares it. It is a permission the grant approves; the core stores terms only from a connector that declares it and whose grant approves it, needs a Polish (`PL`) ISIN, and drops any other with an attention item (D-179). Only a connector may declare it. | `true` (treasury-bonds) |
 | `indexLevels` | A connector that delivers market index levels declares it, approved by the grant like `bondTerms`; the core drops levels from any other connector with an attention item (D-179). Only a connector may declare it. | `true` (eodhd) |
 
-Because the manifest names a role and each instance mounts `<instance>-<role>`, two instances of one image, such as one per IBKR account, never share a Secret: `ibkr-joint` mounts `ibkr-joint-flex-token`. The owner labels it `openfief.io/instance: ibkr-joint`, so uninstalling the instance deletes it; an instance can't be named `openfief` or start with `openfief-`, the platform's own names (D-182).
+Because the manifest names a role and each instance mounts `<instance>-<role>`, two instances of one image, such as one per IBKR account, never share a Secret: `ibkr-joint` mounts `ibkr-joint-flex-token`. A role and an instance name may both hold hyphens, so another plugin's role could spell an existing instance's Secret, such as instance `ibkr-joint-flex` with role `token`; the CLI and the operator refuse an instance whose Secret another instance already names. The owner labels it `openfief.io/instance: ibkr-joint`, so uninstalling the instance deletes it; an instance can't be named `openfief` or start with `openfief-`, the platform's own names (D-182).
 
 ## Test it
 

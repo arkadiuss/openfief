@@ -177,7 +177,7 @@ func install(ctx context.Context, env *Env, o *options, arg string) error {
 	if o.print {
 		return printResources(env, &p)
 	}
-	if err = app.CheckBrowserView(ctx, cluster, &p.Plugin); err != nil {
+	if err = checkInstall(ctx, cluster, &p); err != nil {
 		return fmt.Errorf("install: %w", err)
 	}
 	rule, err := checkClusterService(ctx, env, cluster, &p.Plugin)
@@ -194,6 +194,19 @@ func install(ctx context.Context, env *Env, o *options, arg string) error {
 		return fmt.Errorf("install: %w", err)
 	}
 	return say(env.Out, "Installed "+p.Plugin.Name+". The operator verifies the image again and deploys it once its Secrets exist.\n")
+}
+
+// checkInstall refuses, before the owner is asked, an install that would
+// hold a browser path another instance holds (D-114) or name a Secret
+// another instance names (D-89, D-182).
+func checkInstall(ctx context.Context, cluster Cluster, p *app.Proposal) error {
+	if err := app.CheckBrowserView(ctx, cluster, &p.Plugin); err != nil {
+		return fmt.Errorf("browser path: %w", err)
+	}
+	if err := app.CheckSecrets(ctx, cluster, &p.Plugin, &p.Grant); err != nil {
+		return fmt.Errorf("secrets: %w", err)
+	}
+	return nil
 }
 
 // prepare reads the config and the in-cluster service the owner named,

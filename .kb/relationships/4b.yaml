@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0568039fe9ff
+  - type: executable_for
+    from: SYM-plugins-app-test-upgrade-refuses-shared-secret
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-11-03T08:24:34.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a966f1999d7e

@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb16549a5899
+  - type: implements
+    from: SYM-exp-operator-other-browser-views
+    to: REQ-plugins-secret-names-never-shared
+    created_at: 2026-11-03T08:24:24.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7b6d8f2686d
+  - type: covered_by
+    from: SYM-exp-operator-other-browser-views
+    to: TEST-operator-shared-secret
+    created_at: 2026-11-03T08:24:24.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-866fd38e4c69

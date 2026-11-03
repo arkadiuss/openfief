@@ -27,9 +27,11 @@ var (
 	ErrNotTrusted = errors.New("image refused by the trust policy")
 	// ErrConfig reports a config the manifest's config schema rejects.
 	ErrConfig = errors.New("config rejected")
-	// ErrSecretInUse reports an install whose instance would mount a
-	// Secret another installed instance already names: two instances never
-	// share a Secret (D-89).
+	// ErrSecretInUse reports an install or upgrade whose instance would
+	// mount a Secret another installed instance already names: two
+	// instances never share a Secret (D-89). Names join the instance and
+	// the role with a hyphen, and both may hold hyphens, so instance ibkr's
+	// role flex-token and instance ibkr-flex's role token name one Secret.
 	ErrSecretInUse = errors.New("another instance already names that Secret")
 	// ErrSecretNotOwned reports a Secret an uninstall left alone because it
 	// doesn't carry the instance's plugins.OwnerInstanceLabel (D-182).
@@ -90,6 +92,37 @@ func CheckBrowserView(ctx context.Context, store InstanceStore, p *plugins.Plugi
 		return fmt.Errorf("list instances: %w", err)
 	}
 	return checkBrowserView(all, p)
+}
+
+// CheckSecrets refuses the version p of an instance, with its grant g,
+// about to be installed or to replace the instance's version, when another
+// installed instance names a Secret g names (D-89, D-182). The error wraps
+// ErrSecretInUse.
+func CheckSecrets(ctx context.Context, store InstanceStore, p *plugins.Plugin, g *plugins.Grant) error {
+	if len(g.Permissions.Secrets) == 0 {
+		return nil
+	}
+	all, err := store.List(ctx)
+	if err != nil {
+		return fmt.Errorf("list instances: %w", err)
+	}
+	return checkSecrets(all, p.Name, g.Permissions.Secrets)
+}
+
+// checkSecrets refuses secrets, the Secrets instance would name, when an
+// installed instance in all other than instance names one of them.
+func checkSecrets(all []Instance, instance string, secrets []string) error {
+	for i := range all {
+		if all[i].Name == instance {
+			continue
+		}
+		for _, s := range secrets {
+			if slices.Contains(all[i].Secrets, s) {
+				return fmt.Errorf("%w: %s, named by %s", ErrSecretInUse, s, all[i].Name)
+			}
+		}
+	}
+	return nil
 }
 
 // checkBrowserView is CheckBrowserView over the installed instances all.
@@ -258,15 +291,9 @@ func Install(ctx context.Context, store InstanceStore, p *Proposal) error {
 	if err := checkBrowserView(all, &p.Plugin); err != nil {
 		return fmt.Errorf("install %q: %w", p.Plugin.Name, err)
 	}
-	for i := range all {
-		if all[i].Name == p.Plugin.Name {
-			continue // Create refuses it with ErrInstanceExists
-		}
-		for _, s := range p.Grant.Permissions.Secrets {
-			if slices.Contains(all[i].Secrets, s) {
-				return fmt.Errorf("install %q: %w: %s, named by %s", p.Plugin.Name, ErrSecretInUse, s, all[i].Name)
-			}
-		}
+	// The instance itself is skipped: Create refuses it with ErrInstanceExists.
+	if err := checkSecrets(all, p.Plugin.Name, p.Grant.Permissions.Secrets); err != nil {
+		return fmt.Errorf("install %q: %w", p.Plugin.Name, err)
 	}
 	if err := store.Create(ctx, &p.Plugin, &p.Grant); err != nil {
 		return fmt.Errorf("install %q: %w", p.Plugin.Name, err)

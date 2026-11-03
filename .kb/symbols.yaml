@@ -88294,7 +88294,7 @@ symbols:
       - type: implements
         target: REQ-operator-refuses-second-browser-view
   - id: SYM-exp-operator-other-browser-views
-    title: PluginReconciler.otherBrowserViews
+    title: PluginReconciler.otherClaimants
     sourceFile: internal/plugins/operator/setup.go
     status: active
     symbol_role: behavioral
@@ -88304,10 +88304,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-operator-browser-view
+      - type: covered_by
+        target: TEST-operator-shared-secret
       - type: implements
         target: REQ-operator-contested-browser-path-stops
       - type: implements
         target: REQ-operator-refuses-second-browser-view
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
   - id: SYM-exp-plugins-test-refuse-second-browser-view
     title: TestRefuseSecondBrowserView
     sourceFile: internal/plugins/browser_view_test.go
@@ -129523,3 +129527,150 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-plugins-secret-holder
+    title: SecretHolder
+    sourceFile: internal/plugins/secret_holder.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:21.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-secret-holder
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-may-mount-secrets
+    title: MayMountSecrets
+    sourceFile: internal/plugins/secret_holder.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:31.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-secret-holder
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-secret-holder-senior
+    title: SecretHolder.senior
+    sourceFile: internal/plugins/secret_holder.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:42.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-secret-holder
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-app-check-secrets
+    title: CheckSecrets
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:54.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-app-check-secrets-all
+    title: checkSecrets
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:06.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-cli-check-install
+    title: checkInstall
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:17.370Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-shared-secret
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-operator-own-secrets
+    title: PluginReconciler.ownSecrets
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:29.023Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-shared-secret
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-operator-held-secrets
+    title: heldSecrets
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:40.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-shared-secret
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-test-may-mount-secrets
+    title: TestMayMountSecrets
+    sourceFile: internal/plugins/secret_holder_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:49.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-secret-holder
+  - id: SYM-operator-test-shared-secret
+    title: testSharedSecret
+    sourceFile: internal/plugins/operator/shared_secret_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:58.517Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-shared-secret
+  - id: SYM-plugins-cli-test-run-refuses-shared-secret
+    title: TestRunRefusesSharedSecret
+    sourceFile: internal/plugins/cli/secrets_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:24:09.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-shared-secret
+  - id: SYM-plugins-app-test-upgrade-refuses-shared-secret
+    title: TestUpgradeRefusesSharedSecret
+    sourceFile: internal/plugins/app/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:24:30.857Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-upgrade
