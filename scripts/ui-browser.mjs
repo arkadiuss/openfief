@@ -166,8 +166,12 @@ async function passkeyCheck(browser) {
   const confirm = page.locator('[data-webauthn="check"]');
   check(await confirm.isVisible(), 'passkey check: no "Confirm with your passkey" after a refused action');
   await page.screenshot({ path: path.join(out, 'desktop-light-passkey-check.png'), fullPage: true });
-  await Promise.all([page.waitForURL(base + '/settings/tokens'), confirm.click()]);
+  // The page is already at /settings/tokens, the refused post's answer, so wait for the post again, not the URL.
+  const posted = page.waitForResponse((r) => r.url() === base + '/settings/tokens' && r.request().method() === 'POST', { timeout: 30_000 });
+  await confirm.click();
+  await posted;
   await page.waitForLoadState('networkidle');
+  await page.screenshot({ path: path.join(out, 'desktop-light-passkey-checked.png'), fullPage: true });
   const body = await page.textContent('body');
   check(body.includes('Script token nightly created'), 'passkey check: the action did not go ahead after the check');
   const { credentials } = await cdp.send('WebAuthn.getCredentials', { authenticatorId });
