@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0dce02e6125a
+  - type: implements
+    from: SYM-ingest-conn-rpc-bounded-codec-unmarshal
+    to: REQ-ingest-connector-answer-counted-on-wire
+    created_at: 2026-11-03T06:17:02.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057063ae77ee
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-bounded-codec-unmarshal
+    to: TEST-ingest-connectrpc-codec
+    created_at: 2026-11-03T06:17:02.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd340d8bcca0

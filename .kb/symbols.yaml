@@ -21774,7 +21774,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-client
       - type: implements
-        target: REQ-ingest-connector-answer-bounded
+        target: REQ-ingest-connector-answer-counted-on-wire
       - type: implements
         target: REQ-ingest-core-authenticates-to-connector
       - type: implements
@@ -67483,9 +67483,13 @@ symbols:
       recorded_at: 2026-10-29T01:20:55.661Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-connectrpc-answer-heap
+      - type: covered_by
         target: TEST-ingest-connectrpc-bonds
       - type: implements
         target: REQ-ingest-bond-lot-messages
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
   - id: SYM-ingest-connectrpc-bond-terms-from
     title: bondTermsFrom
     sourceFile: internal/ingest/connectrpc/mapping.go
@@ -126640,7 +126644,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-mapping
       - type: implements
-        target: REQ-ingest-connector-answer-bounded
+        target: REQ-ingest-connector-answer-counted-on-wire
   - id: SYM-views-connectapi-test-helper-counting-body
     title: countingBody
     sourceFile: internal/views/connectapi/limits_test.go
@@ -126816,7 +126820,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-mapping
       - type: implements
-        target: REQ-ingest-connector-answer-bounded
+        target: REQ-ingest-connector-answer-counted-on-wire
       - type: implements
         target: REQ-ingest-connector-contract-translation
   - id: SYM-views-connectapi-test-helper-check-refused
@@ -129126,3 +129130,284 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-connectapi-logsafe
+  - id: SYM-ingest-conn-rpc-bounded-codec
+    title: boundedCodec
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:26.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-bounded-codec-name
+    title: boundedCodec.Name
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:36.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-bounded-codec-marshal
+    title: boundedCodec.Marshal
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:47.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-bounded-codec-unmarshal
+    title: boundedCodec.Unmarshal
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:58.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-count-elements
+    title: countElements
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:10.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-count-field
+    title: countField
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:23.240Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-scalar-elements
+    title: scalarElements
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:34.958Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-packed-elements
+    title: packedElements
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:46.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-protowire-type
+    title: protowireType
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:58.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-too-many
+    title: tooMany
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:18:11.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-test-TestBoundedCodecCounts
+    title: TestBoundedCodecCounts
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:08.913Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-TestBoundedCodecRoundTrip
+    title: TestBoundedCodecRoundTrip
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:19.335Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-TestCountElementsRepeatedScalars
+    title: TestCountElementsRepeatedScalars
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:30.560Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-helper-wire-field
+    title: wireField
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:43.118Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-TestAnswerHeap
+    title: TestAnswerHeap
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:59.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-TestAnswerHeapChild
+    title: TestAnswerHeapChild
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:12.261Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-TestClientTooLargeIsNotRefusal
+    title: TestClientTooLargeIsNotRefusal
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:22.995Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-answerHeapCases
+    title: answerHeapCases
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:34.166Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-answerHeapCase
+    title: answerHeapCase
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:45.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-heapGrowth
+    title: heapGrowth
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:55.310Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-emptyPostings
+    title: emptyPostings
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:05.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-prices
+    title: prices
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:15.564Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-field
+    title: field
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:25.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-syncAnswer
+    title: syncAnswer
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:35.595Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-size
+    title: size
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:45.749Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
