@@ -208,7 +208,7 @@ spec:
                     description: |-
                       Secrets lists, by role, the Kubernetes Secrets the plugin needs
                       mounted read-only. Each instance mounts the Secret named
-                      <instance>-<role> in the openfief namespace, so two instances never
+                      <instance>--<role> in the openfief namespace, so two instances never
                       share one (D-89). The owner creates them (D-29).
                     items:
                       description: |-
@@ -223,10 +223,11 @@ spec:
                         role:
                           description: |-
                             Role names the Secret's purpose, such as flex-token; the instance's
-                            Secret is <instance>-<role>.
+                            Secret is <instance>--<role>, so a role has no two hyphens in a row
+                            (D-89).
                           maxLength: 63
                           minLength: 1
-                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                          pattern: ^[a-z0-9]+(-[a-z0-9]+)*$
                           type: string
                       required:
                       - mountPath
@@ -468,7 +469,7 @@ spec:
                         description: |-
                           Secrets lists, by role, the Kubernetes Secrets the plugin needs
                           mounted read-only. Each instance mounts the Secret named
-                          <instance>-<role> in the openfief namespace, so two instances never
+                          <instance>--<role> in the openfief namespace, so two instances never
                           share one (D-89). The owner creates them (D-29).
                         items:
                           description: |-
@@ -483,10 +484,11 @@ spec:
                             role:
                               description: |-
                                 Role names the Secret's purpose, such as flex-token; the instance's
-                                Secret is <instance>-<role>.
+                                Secret is <instance>--<role>, so a role has no two hyphens in a row
+                                (D-89).
                               maxLength: 63
                               minLength: 1
-                              pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                              pattern: ^[a-z0-9]+(-[a-z0-9]+)*$
                               type: string
                           required:
                           - mountPath
@@ -621,7 +623,7 @@ spec:
                     type: boolean
                   secrets:
                     description: |-
-                      Secrets lists Secret names: <instance>-<role> for each role the
+                      Secrets lists Secret names: <instance>--<role> for each role the
                       plugin's manifest names (D-89).
                     items:
                       maxLength: 253
@@ -746,7 +748,7 @@ spec:
                     type: boolean
                   secrets:
                     description: |-
-                      Secrets lists Secret names: <instance>-<role> for each role the
+                      Secrets lists Secret names: <instance>--<role> for each role the
                       plugin's manifest names (D-89).
                     items:
                       maxLength: 253
@@ -807,8 +809,9 @@ spec:
         type: object
         x-kubernetes-validations:
         - message: name must be a lower-case DNS label of at most 56 characters that
-            starts with a letter
-          rule: self.metadata.name.size() <= 56 && self.metadata.name.matches('^[a-z]([-a-z0-9]*[a-z0-9])?$')
+            starts with a letter and has no two hyphens in a row, which separate an
+            instance from a Secret role (D-89)
+          rule: self.metadata.name.size() <= 56 && self.metadata.name.matches('^[a-z][a-z0-9]*(-[a-z0-9]+)*$')
     served: true
     storage: true
     subresources:

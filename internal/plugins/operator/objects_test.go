@@ -62,7 +62,7 @@ func workload(t *testing.T, egress []plugins.EgressHost) plugins.Workload {
 	g := &plugins.Grant{Plugin: "sample", Permissions: plugins.Permissions{
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		Egress:       egress,
-		Secrets:      []string{"sample-token"},
+		Secrets:      []string{"sample--token"},
 	}}
 	e, err := plugins.Effective(p, g)
 	if err != nil {
@@ -112,7 +112,8 @@ func networkPolicy(egress ...networkingv1.NetworkPolicyEgressRule) *networkingv1
 }
 
 func env(withProxy bool) []corev1.EnvVar {
-	out := []corev1.EnvVar{}
+	// D-189: nine tenths of the 256Mi limit.
+	out := []corev1.EnvVar{{Name: "GOMEMLIMIT", Value: "241591905"}}
 	if withProxy {
 		out = append(out, corev1.EnvVar{Name: "HTTPS_PROXY", Value: "http://192.0.2.20:4750"}, corev1.EnvVar{Name: "NO_PROXY", Value: "192.0.2.10"})
 	}
@@ -161,7 +162,7 @@ func podVolumes(withProxy bool) ([]corev1.Volume, []corev1.VolumeMount) {
 		vols = append(vols, tokenVolume("openfief-egress-token", "openfief-egress"))
 		mounts = append(mounts, corev1.VolumeMount{Name: "openfief-egress-token", MountPath: "/var/run/secrets/openfief-egress", ReadOnly: true})
 	}
-	vols = append(vols, corev1.Volume{Name: "secret-0", VolumeSource: corev1.VolumeSource{Secret: &corev1.SecretVolumeSource{SecretName: "sample-token"}}})
+	vols = append(vols, corev1.Volume{Name: "secret-0", VolumeSource: corev1.VolumeSource{Secret: &corev1.SecretVolumeSource{SecretName: "sample--token"}}})
 	mounts = append(mounts, corev1.VolumeMount{Name: "secret-0", MountPath: "/etc/openfief/token", ReadOnly: true})
 	return vols, mounts
 }
@@ -336,5 +337,32 @@ func TestAllowListConfigMap(t *testing.T) {
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("AllowListConfigMap mismatch (-want +got):\n%s", diff)
+	}
+}
+
+// TestGoMemLimit: a plugin container's GOMEMLIMIT is nine tenths of its
+// memory limit, rounded down to a byte, and none without a limit (D-189).
+func TestGoMemLimit(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name  string
+		limit int64
+		want  int64
+	}{
+		{name: "the plugins' 256Mi limit", limit: operator.PluginMemoryLimitMiB << 20, want: 241591905},
+		{name: "1Gi", limit: 1 << 30, want: 966367638},
+		{name: "a limit of whole tenths", limit: 1000, want: 900},
+		{name: "rounded down", limit: 1009, want: 900},
+		{name: "below ten bytes", limit: 9, want: 0},
+		{name: "no limit", limit: 0, want: 0},
+		{name: "a negative limit", limit: -1, want: 0},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			if got := operator.GoMemLimit(tt.limit); got != tt.want {
+				t.Errorf("GoMemLimit(%d) = %d, want %d", tt.limit, got, tt.want)
+			}
+		})
 	}
 }

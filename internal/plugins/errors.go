@@ -34,6 +34,9 @@ var (
 	// ErrInstitutionsNeedConnector: only a connector books for
 	// institutions (D-182).
 	ErrInstitutionsNeedConnector = errors.New("only a connector may declare institutions")
+	// ErrSecretNameSeparator: an instance name or a Secret role holds
+	// SecretNameSeparator, so a Secret's name could read two ways (D-89).
+	ErrSecretNameSeparator = errors.New(`name holds "--", which only separates an instance from a Secret role`)
 )
 
 // Errors that are not about a single field.

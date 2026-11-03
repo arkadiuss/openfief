@@ -60,6 +60,10 @@ func TestResolveInstallSource(t *testing.T) {
 		{name: "image the catalog does not pin", arg: imageB, want: installOutcome{Image: imageB, Name: "sample-connector"}},
 		{name: "repository name is no instance name", arg: imageOther, want: installOutcome{Image: imageOther}},
 		{
+			name: "repository name holds the Secret name separator (D-89)", arg: "registry.example.com/someone/sample--plugin@" + digestB,
+			want: installOutcome{Image: "registry.example.com/someone/sample--plugin@" + digestB},
+		},
+		{
 			name: "repository name is reserved for the platform", arg: "registry.example.com/someone/openfief@" + digestB,
 			want: installOutcome{Image: "registry.example.com/someone/openfief@" + digestB},
 		},
@@ -214,19 +218,19 @@ func TestSecretsToDelete(t *testing.T) {
 		wantKept     []string
 		wantNotOwned []string
 	}{
-		{name: "nothing shared", named: []string{"a-token", "a-cert"}, owners: owned("a-token", "a-cert"), wantDel: []string{"a-cert", "a-token"}},
-		{name: "named by manifest and grant", named: []string{"a-cert", "a-cert"}, owners: owned("a-cert"), wantDel: []string{"a-cert"}},
+		{name: "nothing shared", named: []string{"a--token", "a--cert"}, owners: owned("a--token", "a--cert"), wantDel: []string{"a--cert", "a--token"}},
+		{name: "named by manifest and grant", named: []string{"a--cert", "a--cert"}, owners: owned("a--cert"), wantDel: []string{"a--cert"}},
 		{
-			name: "another instance of the image still names one", named: []string{"a-cert", "shared"},
-			others: []string{"shared", "unrelated"}, owners: owned("a-cert", "shared"), wantDel: []string{"a-cert"}, wantKept: []string{"shared"},
+			name: "another instance of the image still names one", named: []string{"a--cert", "shared"},
+			others: []string{"shared", "unrelated"}, owners: owned("a--cert", "shared"), wantDel: []string{"a--cert"}, wantKept: []string{"shared"},
 		},
-		{name: "a named Secret that doesn't exist", named: []string{"a-cert", "a-gone"}, owners: owned("a-cert"), wantDel: []string{"a-cert"}},
+		{name: "a named Secret that doesn't exist", named: []string{"a--cert", "a--gone"}, owners: owned("a--cert"), wantDel: []string{"a--cert"}},
 		{
-			name: "unlabelled and another instance's Secrets are left alone", named: []string{"a-cert", "a-key", "openfief-db-app"},
-			owners: map[string]string{"a-cert": "a", "a-key": "", "openfief-db-app": ""}, wantDel: []string{"a-cert"},
-			wantNotOwned: []string{"a-key", "openfief-db-app"},
+			name: "unlabelled and another instance's Secrets are left alone", named: []string{"a--cert", "a--key", "openfief-db-app"},
+			owners: map[string]string{"a--cert": "a", "a--key": "", "openfief-db-app": ""}, wantDel: []string{"a--cert"},
+			wantNotOwned: []string{"a--key", "openfief-db-app"},
 		},
-		{name: "labelled for another instance", named: []string{"a-b-c"}, owners: map[string]string{"a-b-c": "a-b"}, wantNotOwned: []string{"a-b-c"}},
+		{name: "labelled for another instance", named: []string{"a--c"}, owners: map[string]string{"a--c": "b"}, wantNotOwned: []string{"a--c"}},
 		{name: "no secrets"},
 	}
 	for _, tt := range tests {

@@ -580,3 +580,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38092f5f805d
+  - type: constrains
+    from: REQ-plugins-requested-secret-names-double-hyphen
+    to: FACT-SUBJECT-010DD798EAB0E3D4
+    created_at: 2026-11-03T18:24:28.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d087edc13e2f
+  - type: requires_property
+    from: REQ-plugins-requested-secret-names-double-hyphen
+    to: FACT-PROP-D241AF8BE6B678CB
+    created_at: 2026-11-03T18:24:28.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f6dd4dae5ec
+  - type: supersedes
+    from: REQ-plugins-requested-secret-names-double-hyphen
+    to: REQ-plugins-requested-secret-names
+    created_at: 2026-11-03T18:24:28.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6174b0510be0
+  - type: specified_by
+    from: REQ-plugins-requested-secret-names-double-hyphen
+    to: SCEN-plugins-requested-secret-names-double-hyphen
+    created_at: 2026-11-03T18:24:28.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04b83413d5b4

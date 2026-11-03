@@ -664,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-152a8d325988
+  - type: implements
+    from: SYM-operator-go-mem-limit
+    to: REQ-operator-plugin-gomemlimit
+    created_at: 2026-11-03T18:25:43.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7db35b4c073
+  - type: implements
+    from: SYM-operator-go-mem-limit
+    to: REQ-operator-gomemlimit-nine-tenths
+    created_at: 2026-11-03T18:25:43.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2f2f484e22b
+  - type: covered_by
+    from: SYM-operator-go-mem-limit
+    to: TEST-operator-objects
+    created_at: 2026-11-03T18:25:43.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-938c3da3ea45

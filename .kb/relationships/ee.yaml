@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a376113a4310
+  - type: verified_by
+    from: SCEN-core-one-sync-worker
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-11-03T18:23:46.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3abdfaf1b47c
+  - type: verified_by
+    from: SCEN-core-one-sync-worker
+    to: TEST-core-unit
+    created_at: 2026-11-03T18:23:46.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cccd289abd39

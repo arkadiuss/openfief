@@ -145,6 +145,8 @@ func (p *Plugin) Validate() error {
 	var errs []error
 	if !validPluginName(p.Name) {
 		errs = append(errs, fieldErr("name", ErrInvalidName, p.Name))
+	} else {
+		errs = append(errs, validateNoSeparator("name", p.Name)...)
 	}
 	errs = append(errs, validateUnreserved("name", p.Name)...)
 	if _, err := ParseImageRef(p.Image); err != nil {
@@ -175,6 +177,8 @@ func (g *Grant) Validate() error {
 	var errs []error
 	if !validPluginName(g.Plugin) {
 		errs = append(errs, fieldErr("plugin", ErrInvalidName, g.Plugin))
+	} else {
+		errs = append(errs, validateNoSeparator("plugin", g.Plugin)...)
 	}
 	errs = append(errs, validateUnreserved("plugin", g.Plugin)...)
 	if err := g.Permissions.validate(); err != nil {

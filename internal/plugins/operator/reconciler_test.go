@@ -165,7 +165,7 @@ func samplePlugin(name, image string, egress ...string) *v1alpha1.Plugin {
 func sampleGrant(name string, egress ...string) *v1alpha1.PluginGrant {
 	return &v1alpha1.PluginGrant{
 		ObjectMeta: metav1.ObjectMeta{Name: name, Namespace: "openfief"},
-		Spec:       v1alpha1.Permissions{Capabilities: []string{"connector"}, Egress: egress, Secrets: []string{name + "-token"}},
+		Spec:       v1alpha1.Permissions{Capabilities: []string{"connector"}, Egress: egress, Secrets: []string{name + "--token"}},
 	}
 }
 
@@ -289,7 +289,7 @@ func TestReconcile(t *testing.T) {
 			DenyAll:    true,
 			Conditions: conditions("False/NoGrant", "True/PermissionsPending", "True/Verified"),
 			Pending: &v1alpha1.Permissions{
-				Capabilities: []string{"connector"}, Egress: []string{"api.example.com:443"}, Secrets: []string{"nogrant-token"},
+				Capabilities: []string{"connector"}, Egress: []string{"api.example.com:443"}, Secrets: []string{"nogrant--token"},
 			},
 		}
 		if diff := cmp.Diff(want, tc.state(ctx, t, "nogrant"), cmpopts.EquateEmpty()); diff != "" {
@@ -324,7 +324,7 @@ func TestReconcile(t *testing.T) {
 		t.Parallel()
 		testOneBrowserView(t, tc, signed)
 	})
-	t.Run("an instance naming another's Secret does not run", func(t *testing.T) {
+	t.Run("an instance never mounts another's Secret", func(t *testing.T) {
 		t.Parallel()
 		testSharedSecret(t, tc, signed)
 	})
@@ -530,7 +530,7 @@ func testRevoke(t *testing.T, tc *testCluster, r *operator.PluginReconciler) {
 		DenyAll:    true,
 		Conditions: conditions("False/NoGrant", "True/PermissionsPending", "True/Verified"),
 		Pending: &v1alpha1.Permissions{
-			Capabilities: []string{"connector"}, Egress: []string{"api.example.com:443"}, Secrets: []string{"revoke-token"},
+			Capabilities: []string{"connector"}, Egress: []string{"api.example.com:443"}, Secrets: []string{"revoke--token"},
 		},
 	}
 	if diff := cmp.Diff(want, tc.state(ctx, t, "revoke"), cmpopts.EquateEmpty()); diff != "" {

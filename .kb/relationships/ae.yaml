@@ -426,13 +426,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d5a791f3f8d
-  - type: implements
-    from: SYM-pl-plugin-requested
-    to: REQ-plugins-requested-secret-names
-    created_at: 2026-10-29T15:14:11.791Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-43520bd20518
   - type: covered_by
     from: SYM-pl-plugin-requested
     to: TEST-plugins-manifest
@@ -664,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccfaa9a66435
+  - type: implements
+    from: SYM-pl-plugin-requested
+    to: REQ-plugins-requested-secret-names-double-hyphen
+    created_at: 2026-11-03T18:28:24.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bef534b9d577

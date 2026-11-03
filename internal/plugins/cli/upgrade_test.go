@@ -52,7 +52,7 @@ func TestRunUpgrade(t *testing.T) {
 	want := plugins.Permissions{
 		Capabilities: []plugins.Capability{plugins.CapabilityView},
 		Egress:       []plugins.EgressHost{{Host: "api.example.com", Port: 443}},
-		Secrets:      []string{"sample-key"},
+		Secrets:      []string{"sample--key"},
 	}
 	if diff := cmp.Diff(want, c.grants["sample"].Permissions); diff != "" || c.plugins["sample"].Image != sampleV2 {
 		t.Errorf("after the upgrade image %s, grant (-want +got):\n%s", c.plugins["sample"].Image, diff)

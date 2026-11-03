@@ -18,7 +18,7 @@
 // passes in OPENFIEF_CLUSTER_SERVICE_ADDRESS; interval is the time between syncs, an
 // hour by default and at least five minutes; listings say under which
 // Ghostfolio data source and symbol each listed instrument is known. The
-// instance's Secret <instance>-security-token (D-89) holds the Ghostfolio user's security token
+// instance's Secret <instance>--security-token (D-89) holds the Ghostfolio user's security token
 // in the file security-token.
 package main
 

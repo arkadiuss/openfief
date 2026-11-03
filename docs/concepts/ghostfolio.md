@@ -93,7 +93,7 @@ flowchart LR
   core@{ icon: "fief:gate", form: "square", label: "Core<br/>readTokens", pos: "b", h: 40 }
   proxy@{ icon: "fief:egress", form: "square", label: "Egress proxy", pos: "b", h: 40 }
   gf@{ icon: "fief:globe", form: "square", label: "Owner's Ghostfolio", pos: "b", h: 40 }
-  secret@{ icon: "fief:secret", form: "square", label: "Secret &lt;instance&gt;-security-token<br/>file security-token", pos: "b", h: 40 }
+  secret@{ icon: "fief:secret", form: "square", label: "Secret &lt;instance&gt;--security-token<br/>file security-token", pos: "b", h: 40 }
   loop -- "read API, Bearer:<br/>projected token (openfief-core)" --> core
   loop -- "CONNECT, projected token<br/>(openfief-egress)" --> proxy
   proxy -- "granted host only" --> gf
@@ -103,7 +103,7 @@ flowchart LR
 | Manifest | Value |
 |---|---|
 | Capabilities | `view` |
-| Secrets | role `security-token`, so the instance mounts `<instance>-security-token` (D-89), at `/etc/openfief/ghostfolio`, file `security-token`: the Ghostfolio user's security token, read on every login |
+| Secrets | role `security-token`, so the instance mounts `<instance>--security-token` (D-89), at `/etc/openfief/ghostfolio`, file `security-token`: the Ghostfolio user's security token, read on every login |
 | Egress | no fixed host: `egressFromConfig: ["url"]`, the host of the config's `url`, which the install shows and the grant approves (D-75) |
 | In-cluster service | `clusterService` ("a Ghostfolio running in this cluster"): the owner may pick one at install instead of a `url` (D-74) |
 | Config | `url`, the owner's Ghostfolio as an https origin such as `https://ghostfolio.example.com`, unless it runs in the cluster; `interval`, a Go duration of at least `5m`, `1h` by default; `listings`, each an `isin` with Ghostfolio's `dataSource` (not `MANUAL`) and `symbol` |

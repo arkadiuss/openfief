@@ -311,6 +311,7 @@ func TestSchedulerSyncsOnlyListedInstances(t *testing.T) {
 	t.Parallel()
 	caller, store := &scriptedCaller{}, newMemStore()
 	s, c := scheduler(t, caller, store, "nbp", "xtb-main")
+	s.Workers = 2 // one tick syncs both
 	tick(t, s)
 	// xtb-main is uninstalled: it is no longer listed, and its state stays.
 	s.Instances = listed{names: []string{"nbp"}}
@@ -347,6 +348,55 @@ func TestSchedulerSingleFlight(t *testing.T) {
 	s.Wait()
 	if n := len(caller.seen()); n != 1 {
 		t.Errorf("connector called %d times, want 1", n)
+	}
+}
+
+// syncsPerInstance counts the Sync calls caller saw, by instance.
+func syncsPerInstance(caller *scriptedCaller) map[string]int {
+	got := map[string]int{}
+	for _, call := range caller.seen() {
+		got[call.Instance]++
+	}
+	return got
+}
+
+// TestSchedulerWorkers: one tick starts at most Workers syncs, one when
+// Workers is not set (D-189); the due instances left over sync on a later
+// tick.
+func TestSchedulerWorkers(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name      string
+		workers   int
+		wantFirst int
+	}{
+		{name: "one by default", workers: 0, wantFirst: 1},
+		{name: "below one counts as one", workers: -1, wantFirst: 1},
+		{name: "one", workers: 1, wantFirst: 1},
+		{name: "two", workers: 2, wantFirst: 2},
+		{name: "more workers than due instances", workers: 5, wantFirst: 3},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			caller := &scriptedCaller{block: true, started: make(chan struct{}, 3), release: make(chan struct{})}
+			s, _ := scheduler(t, caller, newMemStore(), "eodhd", "nbp", "xtb-main")
+			s.Workers = tt.workers
+			if err := s.Tick(t.Context()); err != nil {
+				t.Fatalf("Tick: %v", err)
+			}
+			close(caller.release) // every started sync was started while the others still ran
+			s.Wait()
+			if got := len(caller.seen()); got != tt.wantFirst {
+				t.Errorf("syncs after the first tick = %d, want %d", got, tt.wantFirst)
+			}
+			for range 3 {
+				tick(t, s)
+			}
+			if diff := cmp.Diff(map[string]int{"eodhd": 1, "nbp": 1, "xtb-main": 1}, syncsPerInstance(caller)); diff != "" {
+				t.Errorf("syncs per instance after the later ticks (-want +got):\n%s", diff)
+			}
+		})
 	}
 }
 

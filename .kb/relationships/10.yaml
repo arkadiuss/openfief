@@ -713,3 +713,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4b8566254d9
+  - type: implements
+    from: SYM-pl-validate-no-separator
+    to: REQ-plugins-no-double-hyphen-in-instance-or-role
+    created_at: 2026-11-03T18:25:14.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d92a9febe8e
+  - type: covered_by
+    from: SYM-pl-validate-no-separator
+    to: TEST-plugins-plugin-grant
+    created_at: 2026-11-03T18:25:14.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa8d67887677
+  - type: covered_by
+    from: SYM-pl-validate-no-separator
+    to: TEST-plugins-manifest
+    created_at: 2026-11-03T18:25:14.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a52a9533dc1

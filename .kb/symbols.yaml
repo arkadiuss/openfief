@@ -3034,6 +3034,8 @@ symbols:
         target: REQ-AUTO-761F6500ECFC0316
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
   - id: SYM-plugins-valid-secret-name
     title: validSecretName
     sourceFile: internal/plugins/manifest.go
@@ -3221,6 +3223,8 @@ symbols:
       - type: implements
         target: REQ-plugins-manifest-validation
       - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
+      - type: implements
         target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-grant
     title: Grant
@@ -3249,6 +3253,8 @@ symbols:
         target: TEST-plugins-plugin-grant
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
       - type: implements
         target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-valid-plugin-name
@@ -12133,6 +12139,8 @@ symbols:
         target: TEST-operator-objects
       - type: implements
         target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-operator-plugin-gomemlimit
       - type: implements
         target: REQ-operator-workload-objects
       - type: implements
@@ -37798,6 +37806,8 @@ symbols:
       - type: covered_by
         target: TEST-core-unit
       - type: implements
+        target: REQ-core-one-sync-worker-by-default
+      - type: implements
         target: REQ-core-serve-flags
       - type: implements
         target: REQ-decision-d36-8-revaluation-settings
@@ -38710,6 +38720,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
+        target: REQ-core-one-sync-worker-by-default
+      - type: implements
         target: REQ-ingest-scheduler-single-flight
   - id: SYM-ingest-sched-app-scheduler-end
     title: Scheduler.end
@@ -39235,6 +39247,8 @@ symbols:
         target: TEST-ingest-binding
       - type: implements
         target: REQ-ingest-connector-binding
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
   - id: SYM-ingest-sched-test-check-bound
     title: TestCheckBound
     sourceFile: internal/ingest/binding_test.go
@@ -57568,6 +57582,8 @@ symbols:
         target: TEST-plugins-install
       - type: implements
         target: REQ-plugins-cli-install-source
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
       - type: implements
         target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-plan-install
@@ -77284,9 +77300,9 @@ symbols:
       - type: covered_by
         target: TEST-plugins-compile
       - type: implements
-        target: REQ-operator-instance-secret-names
+        target: REQ-operator-instance-secret-names-double-hyphen
       - type: implements
-        target: REQ-plugins-requested-secret-names
+        target: REQ-plugins-requested-secret-names-double-hyphen
   - id: SYM-pl-plugin-requested
     title: Plugin.Requested
     sourceFile: internal/plugins/permissions.go
@@ -77299,7 +77315,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-manifest
       - type: implements
-        target: REQ-plugins-requested-secret-names
+        target: REQ-plugins-requested-secret-names-double-hyphen
   - id: SYM-pl-effective-permissions-secret-names
     title: EffectivePermissions.SecretNames
     sourceFile: internal/plugins/effective.go
@@ -77312,7 +77328,7 @@ symbols:
       - type: covered_by
         target: TEST-plugins-compile
       - type: implements
-        target: REQ-plugins-requested-secret-names
+        target: REQ-plugins-requested-secret-names-double-hyphen
   - id: SYM-pl-test-plugin-requested
     title: TestPluginRequested
     sourceFile: internal/plugins/manifest_test.go
@@ -133155,3 +133171,76 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-demo-seed-db-wait
+  - id: SYM-pl-validate-no-separator
+    title: validateNoSeparator
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:25:11.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-no-double-hyphen-in-instance-or-role
+  - id: SYM-ingest-sched-app-scheduler-workers
+    title: Scheduler.workers
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:25:25.205Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-core-one-sync-worker-by-default
+  - id: SYM-operator-go-mem-limit
+    title: GoMemLimit
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:25:40.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-objects
+      - type: implements
+        target: REQ-operator-gomemlimit-nine-tenths
+      - type: implements
+        target: REQ-operator-plugin-gomemlimit
+  - id: SYM-ingest-sched-app-test-scheduler-workers
+    title: TestSchedulerWorkers
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:28:36.547Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-operator-test-go-mem-limit
+    title: TestGoMemLimit
+    sourceFile: internal/plugins/operator/objects_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:28:50.725Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-objects
+  - id: SYM-ingest-sched-app-test-helper-syncs-per-instance
+    title: syncsPerInstance
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T18:31:33.621Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler

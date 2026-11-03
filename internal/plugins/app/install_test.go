@@ -24,7 +24,8 @@ const (
 	brokenImage    = "registry.example.com/example/unreachable@" + unpinnedDigest
 	badNameImage   = "registry.example.com/example/bad_name@" + unpinnedDigest
 	// roleClashImage's manifest names the Secret role b-credentials, so
-	// as instance sample it would mount instance sample-b's Secret.
+	// as instance sample it mounts sample--b-credentials, which is not
+	// instance sample-b's sample-b--credentials (D-89).
 	roleClashImage = "registry.example.com/example/role-clash@" + unpinnedDigest
 	publisherSubj  = "https://github.com/example/sample-connector/.github/workflows/release.yml@refs/heads/main"
 	strangerSubj   = "https://github.com/stranger/plugin/.github/workflows/release.yml@refs/heads/main"
@@ -261,13 +262,12 @@ func TestInstall(t *testing.T) {
 	if installErr := app.Install(ctx, store, &again); !errors.Is(installErr, app.ErrInstanceExists) {
 		t.Errorf("installing over sample-a: error = %v, want ErrInstanceExists", installErr)
 	}
-	// A grant naming sample-b's Secret, as "sample" with a role
-	// "b-credentials" would spell it, is refused.
+	// A grant naming sample-b's Secret is refused (D-182).
 	clash, err := installer(t).Prepare(ctx, app.InstallRequest{Arg: "sample", Name: "sample"})
 	if err != nil {
 		t.Fatalf("prepare clash: %v", err)
 	}
-	clash.Grant.Permissions.Secrets = []string{"sample-b-credentials"}
+	clash.Grant.Permissions.Secrets = []string{"sample-b--credentials"}
 	if installErr := app.Install(ctx, store, &clash); !errors.Is(installErr, app.ErrSecretInUse) {
 		t.Errorf("installing with sample-b's Secret: error = %v, want ErrSecretInUse", installErr)
 	}
@@ -303,13 +303,13 @@ func TestUninstall(t *testing.T) {
 	store := installSamples(t)
 	// Each instance of one image mounts its own Secret (D-89), so each
 	// uninstall deletes exactly its own.
-	if diff := cmp.Diff(plugins.UninstallSecrets{Delete: []string{"sample-a-credentials"}}, uninstall(t, store, "sample-a")); diff != "" {
+	if diff := cmp.Diff(plugins.UninstallSecrets{Delete: []string{"sample-a--credentials"}}, uninstall(t, store, "sample-a")); diff != "" {
 		t.Errorf("first uninstall's Secrets (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff(plugins.UninstallSecrets{Delete: []string{"sample-b-credentials"}}, uninstall(t, store, "sample-b")); diff != "" {
+	if diff := cmp.Diff(plugins.UninstallSecrets{Delete: []string{"sample-b--credentials"}}, uninstall(t, store, "sample-b")); diff != "" {
 		t.Errorf("second uninstall's Secrets (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff(map[string][]string{"sample-a": {"sample-a-credentials"}, "sample-b": {"sample-b-credentials"}}, store.deleted); diff != "" {
+	if diff := cmp.Diff(map[string][]string{"sample-a": {"sample-a--credentials"}, "sample-b": {"sample-b--credentials"}}, store.deleted); diff != "" {
 		t.Errorf("deleted Secrets (-want +got):\n%s", diff)
 	}
 	if _, err := app.PlanUninstall(context.Background(), store, "sample-a"); !errors.Is(err, app.ErrNotInstalled) {
@@ -320,14 +320,14 @@ func TestUninstall(t *testing.T) {
 func TestUninstallLeavesSecretsNotOwned(t *testing.T) {
 	t.Parallel()
 	store := &fakeStore{instances: []app.Instance{{
-		Name: "sample", HasPlugin: true, HasGrant: true, Secrets: []string{"openfief-db-app", "sample-credentials"},
-		SecretOwners: map[string]string{"openfief-db-app": "", "sample-credentials": "sample"},
+		Name: "sample", HasPlugin: true, HasGrant: true, Secrets: []string{"openfief-db-app", "sample--credentials"},
+		SecretOwners: map[string]string{"openfief-db-app": "", "sample--credentials": "sample"},
 	}}}
-	want := plugins.UninstallSecrets{Delete: []string{"sample-credentials"}, NotOwned: []string{"openfief-db-app"}}
+	want := plugins.UninstallSecrets{Delete: []string{"sample--credentials"}, NotOwned: []string{"openfief-db-app"}}
 	if diff := cmp.Diff(want, uninstall(t, store, "sample")); diff != "" {
 		t.Errorf("Secrets (-want +got):\n%s", diff)
 	}
-	if diff := cmp.Diff(map[string][]string{"sample": {"sample-credentials"}}, store.deleted); diff != "" {
+	if diff := cmp.Diff(map[string][]string{"sample": {"sample--credentials"}}, store.deleted); diff != "" {
 		t.Errorf("deleted Secrets (-want +got):\n%s", diff)
 	}
 }

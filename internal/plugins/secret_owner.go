@@ -27,7 +27,7 @@ var ErrReservedName = errors.New("name reserved for OpenFief's own objects")
 
 // ReservedName reports whether n is "openfief" or starts with "openfief-",
 // the names the platform's own objects use. No instance may have such a
-// name, so no instance's Secret, "<instance>-<role>" (D-89), can be one of
+// name, so no instance's Secret, "<instance>--<role>" (D-89), can be one of
 // the platform's, and no grant may name such a Secret (D-182).
 func ReservedName(n string) bool {
 	return n == reservedName || strings.HasPrefix(n, reservedName+"-")
@@ -57,10 +57,9 @@ type UninstallSecrets struct {
 // another installed instance still names them, and those it leaves alone
 // because they aren't the instance's (D-182). owners maps each named Secret
 // that exists to the value of its OwnerInstanceLabel, empty when it has none.
-// Each instance mounts its own <instance>-<role> Secrets (D-89), so a Secret
-// is kept only when another instance's grant names it, or when two
-// instance-role pairs spell it alike, such as instance "a-b" with role "c"
-// and "a" with "b-c".
+// Each instance mounts its own <instance>--<role> Secrets, and no two
+// instance-role pairs spell one alike (D-89), so a Secret is kept only when
+// another instance's grant names it.
 func SecretsToDelete(instance string, named, others []string, owners map[string]string) UninstallSecrets {
 	var out UninstallSecrets
 	for _, s := range uniqueSorted(named) {

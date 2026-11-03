@@ -69,7 +69,7 @@ It requests, and the PluginGrant will approve, exactly:
   Egress hosts: api.example.com:443, data.example.org:8443
   Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself
                 and label it openfief.io/instance=sample, or uninstall leaves it in place (D-182)
-                sample-credentials (role credentials) at /etc/openfief/sample
+                sample--credentials (role credentials) at /etc/openfief/sample
   Data tiers:   T1
   Institutions: example-bank, example-broker
   Config:       accounts: array, required
@@ -93,7 +93,7 @@ It requests, and the PluginGrant will approve, exactly:
   Egress hosts: api.example.com:443, data.example.org:8443
   Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself
                 and label it openfief.io/instance=second, or uninstall leaves it in place (D-182)
-                second-credentials (role credentials) at /etc/openfief/sample
+                second--credentials (role credentials) at /etc/openfief/sample
   Data tiers:   T1
   Institutions: none: the core refuses everything it delivers (D-182)
   Config:       no config schema: any config
@@ -159,16 +159,16 @@ func TestRenderUninstallPlan(t *testing.T) {
 	t.Parallel()
 	plan := &app.UninstallPlan{
 		Instance: app.Instance{Name: "sample", HasPlugin: true, HasGrant: true},
-		Secrets:  plugins.UninstallSecrets{Delete: []string{"a-cert", "sample-credentials"}, Keep: []string{"shared"}, NotOwned: []string{"sample-key"}},
+		Secrets:  plugins.UninstallSecrets{Delete: []string{"a--cert", "sample--credentials"}, Keep: []string{"shared"}, NotOwned: []string{"sample--key"}},
 	}
 	want := `Instance:     sample
 Deletes:
   its PluginGrant
   its Plugin, and with it its workload and egress allow-list entry
-  Secret a-cert
-  Secret sample-credentials
+  Secret a--cert
+  Secret sample--credentials
 Keeps Secrets another instance uses: shared
-Leaves Secrets not labelled openfief.io/instance=sample: sample-key
+Leaves Secrets not labelled openfief.io/instance=sample: sample--key
 Keeps the data it brought into the ledger; reinstalling under the same name continues from it.
 `
 	if diff := cmp.Diff(want, cli.RenderUninstallPlan(plan)); diff != "" {

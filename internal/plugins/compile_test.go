@@ -52,8 +52,8 @@ func TestCompile(t *testing.T) {
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		DataTiers:    []plugins.DataTier{"T1"},
 		Secrets: []plugins.SecretVolume{
-			{SecretName: "sample-cert", MountPath: "/etc/openfief/cert", ReadOnly: true},
-			{SecretName: "sample-token", MountPath: "/etc/openfief/token", ReadOnly: true},
+			{SecretName: "sample--cert", MountPath: "/etc/openfief/cert", ReadOnly: true},
+			{SecretName: "sample--token", MountPath: "/etc/openfief/token", ReadOnly: true},
 		},
 		Env: []plugins.EnvVar{
 			{Name: "HTTPS_PROXY", Value: "http://192.0.2.20:4750"},

@@ -42,7 +42,7 @@ func fullGrant() plugins.Grant {
 	return plugins.Grant{Plugin: "sample", Permissions: plugins.Permissions{
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		Egress:       []plugins.EgressHost{host("data.example.org", 8443), host("api.example.com", 443)},
-		Secrets:      []string{"sample-cert", "sample-token"},
+		Secrets:      []string{"sample--cert", "sample--token"},
 		DataTiers:    []plugins.DataTier{"T1"},
 	}}
 }

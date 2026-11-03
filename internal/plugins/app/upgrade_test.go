@@ -3,6 +3,7 @@ package app_test
 import (
 	"context"
 	"errors"
+	"slices"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -59,10 +60,11 @@ func TestPrepareUpgradeRefuses(t *testing.T) {
 }
 
 // TestUpgradeRefusesSharedSecret: Secret names join the instance and the
-// role with a hyphen (D-89), so instance sample upgraded to a version whose
-// role is b-credentials would mount instance sample-b's Secret. Both
-// PrepareUpgrade and Upgrade refuse it with ErrSecretInUse (D-182), as
-// Install does.
+// role with "--", which neither holds (D-89), so instance sample upgraded
+// to a version whose role is b-credentials mounts sample--b-credentials,
+// not instance sample-b's sample-b--credentials, and is prepared. A grant
+// that names sample-b's Secret is still refused with ErrSecretInUse
+// (D-182), as Install refuses it.
 func TestUpgradeRefusesSharedSecret(t *testing.T) {
 	t.Parallel()
 	ctx := context.Background()
@@ -75,14 +77,18 @@ func TestUpgradeRefusesSharedSecret(t *testing.T) {
 	if installErr := app.Install(ctx, store, &p); installErr != nil {
 		t.Fatalf("install sample: %v", installErr)
 	}
-	if _, clashErr := in.PrepareUpgrade(ctx, store, app.UpgradeRequest{Instance: "sample", Version: roleClashImage}); !errors.Is(clashErr, app.ErrSecretInUse) {
-		t.Errorf("PrepareUpgrade to a role naming sample-b's Secret: error = %v, want ErrSecretInUse", clashErr)
+	role, err := in.PrepareUpgrade(ctx, store, app.UpgradeRequest{Instance: "sample", Version: roleClashImage})
+	if err != nil {
+		t.Fatalf("PrepareUpgrade to role b-credentials: %v", err)
+	}
+	if got, want := role.Grant.Permissions.Secrets, []string{"sample--b-credentials"}; !slices.Equal(got, want) {
+		t.Errorf("Secrets of the upgrade to role b-credentials = %v, want %v", got, want)
 	}
 	up, err := in.PrepareUpgrade(ctx, store, app.UpgradeRequest{Instance: "sample", Version: unpinnedImage})
 	if err != nil {
 		t.Fatalf("PrepareUpgrade: %v", err)
 	}
-	up.Grant.Permissions.Secrets = []string{"sample-b-credentials"}
+	up.Grant.Permissions.Secrets = []string{"sample-b--credentials"}
 	if err := app.Upgrade(ctx, store, &up); !errors.Is(err, app.ErrSecretInUse) {
 		t.Errorf("Upgrade with sample-b's Secret: error = %v, want ErrSecretInUse", err)
 	}

@@ -83,6 +83,7 @@ func TestValidateInstanceName(t *testing.T) {
 		{name: "ends with a hyphen", in: "nbp-", wantErr: true},
 		{name: "upper case", in: "nBp", wantErr: true},
 		{name: "dot", in: "nbp.main", wantErr: true},
+		{name: "two hyphens in a row", in: "ibkr--main", wantErr: true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
