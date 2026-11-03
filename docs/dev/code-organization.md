@@ -8,7 +8,7 @@ Organized by domain, following DDD (domain-driven design). Names come from [the 
 |---|---|---|
 | `ledger` | Accounts, ledger accounts, transactions, postings, instruments, holdings, lots, balance assertions | M0 |
 | `valuation` | Prices, index levels, FX rates, bond series and statutory valuation, valuations | M0 |
-| `ingest` | Institutions, connectors' ingest paths, import batches, mapping broker data to the ledger | M0 |
+| `ingest` | Institutions, connectors' ingest paths, import batches, mapping broker data to the ledger, and the account settings connectors read, such as the bond payout setting (D-135) | M0 |
 | `views` | The read API and view plugins (built-in UI, Ghostfolio) | M0 |
 | `plugins` | The operator: Plugin, Grant, manifests, egress allow-lists, image verification | M0 |
 | `identity` | Owner, passkeys, script tokens, plugin identity | M0 |
@@ -71,6 +71,8 @@ site/                    the docs site: Hugo config, theme, site-only pages (doc
 **New context.** Add it to the table above and its terms to the glossary, and get the author's OK. Contexts are design decisions, not refactors.
 
 ## Architecture tests
+
+Not built yet: they follow the alpha.1 tag, and until then lint enforces only the domain's purity.
 
 Lint checks what one file does; architecture tests check how the code fits together, from the whole module's packages, types and SQL. They run in `task check` with the other Go tests and fail on a new violation. Each rule they enforce is stated above or in [testing.md](testing.md):
 

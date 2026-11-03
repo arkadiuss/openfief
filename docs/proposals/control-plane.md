@@ -241,6 +241,7 @@ Only the broker wall survives a compromise of the OpenFief host; every other lay
 - **[OQ-3]** IBKR linked-account availability and behaviour for Polish residents (served by IB Ireland).
 - **[OQ-5]** Do short-term strategies need a dedicated execution engine (e.g. NautilusTrader)?
 - **[OQ-11]** How is "more of the portfolio than its lease" (GR-6) measured: committed cost, current market value, or both? What happens to gains and losses: swept back to the sleeve, or kept by the fief? (T-8, P-12)
+- **[OQ-33]** How does a fief appear in the ledger: as a dimension of the ledger accounts inside an account (a sub-book), or as an account of its own, as P-19 has for broker-wall-only agents? M0's ledger holds no fiefs, so either is added without migrating what's stored.
 - **[OQ-13]** What exactly are "Interactive Brokers' agents" in GR-10? (T-10)
 - **[OQ-16]** What does a kill do to open positions: freeze them, or liquidate? (P-17)
 - **[OQ-19]** Which IBKR path should execution use: TWS API / IB Gateway, or the Client Portal Web API? Flex Queries cover reporting only.
