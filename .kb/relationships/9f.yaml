@@ -489,3 +489,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17087fa62d24
+  - type: implements
+    from: SYM-plugins-text-field
+    to: REQ-plugins-manifest-text-safe
+    created_at: 2026-11-03T09:19:29.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a7001ec4e2f
+  - type: covered_by
+    from: SYM-plugins-text-field
+    to: TEST-plugins-manifest-text
+    created_at: 2026-11-03T09:19:29.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c076166d82af

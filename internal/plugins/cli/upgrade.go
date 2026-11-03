@@ -53,9 +53,9 @@ func upgrade(ctx context.Context, env *Env, o *options, instance, version string
 // exactly the new version's.
 func RenderUpgrade(up *app.UpgradeProposal) string {
 	var b strings.Builder
-	fmt.Fprintf(&b, "Instance:     %s\n", up.Plugin.Name)
-	fmt.Fprintf(&b, "From:         %s\n", up.From.Image)
-	fmt.Fprintf(&b, "To:           %s\n", up.Plugin.Image)
+	fmt.Fprintf(&b, "Instance:     %s\n", shown(up.Plugin.Name))
+	fmt.Fprintf(&b, "From:         %s\n", shown(up.From.Image))
+	fmt.Fprintf(&b, "To:           %s\n", shown(up.Plugin.Image))
 	fmt.Fprintf(&b, "Trust:        %s\n", trustText(&up.Proposal))
 	if up.Diff.IsEmpty() {
 		b.WriteString("\nIt requests the same permissions as the installed version.\n")
@@ -69,7 +69,7 @@ func RenderUpgrade(up *app.UpgradeProposal) string {
 	}
 	config := noneText
 	if len(up.Plugin.Config) > 0 {
-		config = string(up.Plugin.Config)
+		config = shown(string(up.Plugin.Config))
 	}
 	fmt.Fprintf(&b, "\nConfig:       %s\n", config)
 	return b.String()
@@ -77,7 +77,7 @@ func RenderUpgrade(up *app.UpgradeProposal) string {
 
 // writePermissions writes one line per permission in p, each after prefix.
 func writePermissions(b *strings.Builder, prefix string, p *plugins.Permissions) {
-	line := func(kind, value string) { fmt.Fprintf(b, "%s%-13s %s\n", prefix, kind, value) }
+	line := func(kind, value string) { fmt.Fprintf(b, "%s%-13s %s\n", prefix, kind, shown(value)) }
 	for _, c := range p.Capabilities {
 		line("capability", string(c))
 	}

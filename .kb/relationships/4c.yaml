@@ -678,3 +678,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2386dd613ff9
+  - type: constrains
+    from: REQ-plugins-manifest-text-safe
+    to: FACT-SUBJECT-777F1580F1EE5686
+    created_at: 2026-11-03T09:18:18.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-021620c824aa
+  - type: requires_property
+    from: REQ-plugins-manifest-text-safe
+    to: FACT-PROP-406E07FD8BB1D6C5
+    created_at: 2026-11-03T09:18:18.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f32fc378cf0
+  - type: specified_by
+    from: REQ-plugins-manifest-text-safe
+    to: SCEN-plugins-manifest-control-characters-refused
+    created_at: 2026-11-03T09:18:18.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87bfda225c12

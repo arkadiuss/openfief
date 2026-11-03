@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f250cc65381
+  - type: implements
+    from: SYM-plugins-manifest-text
+    to: REQ-plugins-manifest-text-safe
+    created_at: 2026-11-03T09:19:00.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32ec999752e8
+  - type: covered_by
+    from: SYM-plugins-manifest-text
+    to: TEST-plugins-manifest-text
+    created_at: 2026-11-03T09:19:00.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-033ef7e95d15

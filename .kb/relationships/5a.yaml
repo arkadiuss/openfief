@@ -706,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d202696bd3e1
+  - type: executable_for
+    from: SYM-plugins-test-safe-text
+    to: TEST-plugins-manifest-text
+    created_at: 2026-11-03T09:20:36.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81348ac0b018

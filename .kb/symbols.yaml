@@ -129674,3 +129674,186 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-app-upgrade
+  - id: SYM-plugins-unsafe-rune
+    title: UnsafeRune
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:30.407Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-safe-text
+    title: SafeText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:38.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-validate-manifest-text
+    title: validateManifestText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:48.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-manifest-text
+    title: manifestText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:57.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-unsafe-schema-text
+    title: unsafeSchemaText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:06.106Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-unsafe-json-text
+    title: unsafeJSONText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:15.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-text-field
+    title: textField
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:26.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-cli-shown
+    title: shown
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:36.802Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-escape
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-cli-shown-all
+    title: shownAll
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:48.392Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-escape
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-cli-terminal-text
+    title: terminalText
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:00.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-terminal
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-cli-unsafe-on-terminal
+    title: unsafeOnTerminal
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:12.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-terminal
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-test-manifest-refuses-unsafe-text
+    title: TestManifestRefusesUnsafeText
+    sourceFile: internal/plugins/text_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:22.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest-text
+  - id: SYM-plugins-test-safe-text
+    title: TestSafeText
+    sourceFile: internal/plugins/text_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:32.598Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest-text
+  - id: SYM-plugins-cli-test-render-escapes-vendor-text
+    title: TestRenderEscapesVendorText
+    sourceFile: internal/plugins/cli/escape_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:43.339Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-escape
+  - id: SYM-plugins-cli-test-say-escapes-controls
+    title: TestSayEscapesControls
+    sourceFile: internal/plugins/cli/terminal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:53.275Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-terminal

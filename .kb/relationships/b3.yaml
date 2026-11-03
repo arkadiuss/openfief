@@ -608,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28f5b496d1b4
+  - type: implements
+    from: SYM-plugins-validate-manifest-text
+    to: REQ-plugins-manifest-text-safe
+    created_at: 2026-11-03T09:18:51.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-416d8494d36a
+  - type: covered_by
+    from: SYM-plugins-validate-manifest-text
+    to: TEST-plugins-manifest-text
+    created_at: 2026-11-03T09:18:51.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c7af1341510

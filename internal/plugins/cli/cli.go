@@ -248,8 +248,8 @@ func askClusterService(env *Env, o *options, p *app.Proposal) error {
 	if r == nil || p.Plugin.ClusterService != nil || o.yes || o.print {
 		return nil
 	}
-	what := r.Description
-	if what == "" {
+	what := shown(r.Description)
+	if r.Description == "" {
 		what = "a service in this cluster"
 	}
 	if err := say(env.Out, "The plugin asks to reach "+what+" directly, outside the egress proxy.\n"); err != nil {
@@ -453,7 +453,7 @@ func ask(env *Env, o *options, prompt string) (string, error) {
 
 // say writes s to w.
 func say(w io.Writer, s string) error {
-	if _, err := io.WriteString(w, s); err != nil {
+	if _, err := io.WriteString(w, terminalText(s)); err != nil {
 		return fmt.Errorf("write: %w", err)
 	}
 	return nil
