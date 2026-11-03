@@ -258,6 +258,18 @@ type Permissions struct {
 	// core stores only when this approves it (D-179).
 	// +optional
 	IndexLevels bool `json:"indexLevels,omitempty"`
+	// Institutions are the institutions a connector books for, such as
+	// ibkr; the core accepts a delivery only for an institution both the
+	// signed manifest and the PluginGrant name (D-185). A PluginGrant
+	// without this field, as every one made before D-185 is, approves the
+	// institutions of the version that runs under it; an empty list
+	// approves none.
+	// +optional
+	// +kubebuilder:validation:MaxItems=16
+	// +kubebuilder:validation:items:MaxLength=63
+	// +kubebuilder:validation:items:Pattern=`^[a-z0-9]([-a-z0-9]*[a-z0-9])?$`
+	// +listType=set
+	Institutions *[]string `json:"institutions,omitempty"`
 }
 
 // PluginStatus is what the operator observed and did.

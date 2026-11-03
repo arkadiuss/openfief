@@ -58,8 +58,8 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 	if err != nil {
 		return UpgradeProposal{}, fmt.Errorf("plan upgrade: %w", err)
 	}
-	if err := CheckBrowserView(ctx, store, &p); err != nil {
-		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, err)
+	if viewErr := CheckBrowserView(ctx, store, &p); viewErr != nil {
+		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, viewErr)
 	}
 	from, to := current.Requested(), p.Requested()
 	out := UpgradeProposal{
@@ -70,7 +70,20 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 	if decision.Trust == plugins.Verified {
 		out.Entry = src.Entry
 	}
+	if out.Shared, err = upgradeShared(ctx, store, &out); err != nil {
+		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, err)
+	}
 	return out, nil
+}
+
+// upgradeShared returns, for an upgrade that changes the institutions, those
+// of them another instance already books for, which it warns about as an
+// install does (D-90, D-185); nothing for one that doesn't change them.
+func upgradeShared(ctx context.Context, store InstanceStore, up *UpgradeProposal) ([]plugins.SharedInstitution, error) {
+	if len(up.Diff.Added.Institutions) == 0 && len(up.Diff.Removed.Institutions) == 0 {
+		return nil, nil
+	}
+	return SharedInstitutions(ctx, store, &up.Plugin)
 }
 
 // Upgrade applies a confirmed upgrade: the new Plugin and a grant of exactly

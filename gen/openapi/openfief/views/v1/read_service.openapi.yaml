@@ -1449,6 +1449,15 @@ components:
           description: |-
             Whether its signed manifest declares market index levels, approved or
              not.
+        approvedInstitutions:
+          type: array
+          items:
+            type: string
+          title: approved_institutions
+          description: |-
+            The institutions it books for: those its signed manifest declares
+             (institutions) and its PluginGrant approves. The core refuses a
+             delivery that names any other (D-185).
       title: Plugin
       additionalProperties: false
       description: Plugin is one installed plugin instance.

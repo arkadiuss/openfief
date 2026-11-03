@@ -85,6 +85,7 @@ func (s *Instances) List(ctx context.Context) ([]app.Instance, error) {
 // what the operator reported.
 func describePlugin(in *app.Instance, p *v1alpha1.Plugin) {
 	in.HasPlugin, in.Image, in.BrowserPath = true, p.Spec.Image, p.Spec.Manifest.BrowserPath
+	in.Institutions = slices.Clone(p.Spec.Manifest.Institutions)
 	for _, sm := range p.Spec.Manifest.Secrets {
 		in.Secrets = append(in.Secrets, plugins.SecretName(p.Name, sm.Role))
 	}
@@ -306,6 +307,15 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 			BondTerms:    g.Permissions.BondTerms,
 			IndexLevels:  g.Permissions.IndexLevels,
 		},
+	}
+	// A connector's grant always names its institutions, even none, so it
+	// never reads as one made before D-185 (plugins.ApprovedInstitutions).
+	if slices.Contains(m.Capabilities, plugins.CapabilityConnector) {
+		institutions := slices.Clone(g.Permissions.Institutions)
+		if institutions == nil {
+			institutions = []string{}
+		}
+		grant.Spec.Institutions = &institutions
 	}
 	for _, cs := range g.Permissions.ClusterServices {
 		grant.Spec.ClusterServices = append(grant.Spec.ClusterServices, clusterServiceRef(cs))

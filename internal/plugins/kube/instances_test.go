@@ -55,6 +55,7 @@ spec:
   - connector
   egress:
   - api.example.com:443
+  institutions: []
   secrets:
   - sample-credentials
 `

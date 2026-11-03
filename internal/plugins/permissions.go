@@ -11,8 +11,10 @@ import (
 // Permissions is a set of plugin permissions: capabilities, egress hosts,
 // Secret names, data tiers, browser paths (D-81), in-cluster services
 // (D-74), whether a connector is told what the owner holds (D-123) and
-// whether it may deliver bond terms or index levels (D-179). It is what a
-// plugin requests (Plugin.Requested), what a Grant approves, and what NeedsApproval reports as still unapproved.
+// whether it may deliver bond terms or index levels (D-179), and the
+// institutions a connector books for (D-185). It is what a plugin requests
+// (Plugin.Requested), what a Grant approves, and what NeedsApproval reports
+// as still unapproved.
 type Permissions struct {
 	Capabilities    []Capability
 	Egress          []EgressHost
@@ -29,13 +31,18 @@ type Permissions struct {
 	// when the grant approves them (D-179).
 	BondTerms   bool
 	IndexLevels bool
+	// Institutions are the institutions a connector books for, such as
+	// ibkr: its signed manifest declares them, its grant approves them as
+	// it approves hostnames, and the core accepts only what both name
+	// (D-185).
+	Institutions []string
 }
 
 // IsEmpty reports whether p holds no permission at all.
 func (p *Permissions) IsEmpty() bool {
 	return len(p.Capabilities) == 0 && len(p.Egress) == 0 && len(p.Secrets) == 0 && len(p.DataTiers) == 0 &&
 		len(p.BrowserPaths) == 0 && len(p.ClusterServices) == 0 && !p.MarketData &&
-		!p.BondTerms && !p.IndexLevels
+		!p.BondTerms && !p.IndexLevels && len(p.Institutions) == 0
 }
 
 func (p *Permissions) validate() error {
@@ -46,6 +53,7 @@ func (p *Permissions) validate() error {
 	errs = append(errs, validateDataTiers(p.DataTiers)...)
 	errs = append(errs, validateBrowserPaths("browserPaths", p.BrowserPaths)...)
 	errs = append(errs, validateClusterServices("clusterServices", p.ClusterServices)...)
+	errs = append(errs, validateInstitutionNames("institutions", p.Institutions)...)
 	return errors.Join(errs...)
 }
 
@@ -62,6 +70,7 @@ func (p *Permissions) sorted() Permissions {
 			return cmp.Compare(a.String(), b.String())
 		}),
 		MarketData: p.MarketData, BondTerms: p.BondTerms, IndexLevels: p.IndexLevels,
+		Institutions: sortedCopy(p.Institutions, cmp.Compare[string]),
 	}
 }
 
@@ -82,8 +91,9 @@ type Plugin struct {
 // capabilities, egress hosts, data tiers and browser path, the Secret each
 // of its manifest's roles names for this instance (D-89), the host of each
 // config field its manifest names (D-75), its in-cluster service (D-74),
-// whether it is a market-data connector (D-123) and whether it delivers
-// bond terms or index levels (D-179).
+// whether it is a market-data connector (D-123), whether it delivers
+// bond terms or index levels (D-179) and the institutions it books for
+// (D-185).
 // A config host that can't be read is left out; Validate reports it.
 func (p *Plugin) Requested() Permissions {
 	m := &p.Manifest
@@ -99,6 +109,7 @@ func (p *Plugin) Requested() Permissions {
 		MarketData:   m.MarketData,
 		BondTerms:    m.BondTerms,
 		IndexLevels:  m.IndexLevels,
+		Institutions: slices.Clone(m.Institutions),
 	}
 	if hosts, err := ConfigHosts(m, p.Config); err == nil {
 		for _, h := range hosts {
@@ -230,6 +241,7 @@ func NeedsApproval(g *Grant, p *Plugin) (Permissions, error) {
 		MarketData:      req.MarketData && !granted.MarketData,
 		BondTerms:       req.BondTerms && !granted.BondTerms,
 		IndexLevels:     req.IndexLevels && !granted.IndexLevels,
+		Institutions:    missing(req.Institutions, granted.Institutions),
 	}, nil
 }
 

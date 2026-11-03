@@ -67,7 +67,7 @@ classDiagram
   }
   class PluginGrant {
     metadata.name : same as its Plugin
-    spec : capabilities, egress, secrets, dataTiers, browserPaths, clusterServices, marketData, bondTerms, indexLevels
+    spec : capabilities, egress, secrets, dataTiers, browserPaths, clusterServices, marketData, bondTerms, indexLevels, institutions
     status.conditions : Valid
   }
   class ServiceAccount {

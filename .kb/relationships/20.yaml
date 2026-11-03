@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9737598c1164
+  - type: executable_for
+    from: SYM-views-kube-plugins-test-approved-prices
+    to: TEST-views-kube
+    created_at: 2026-11-03T07:54:47.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03155c79a642

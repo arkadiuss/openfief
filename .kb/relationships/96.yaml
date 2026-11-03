@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f5a7950343f
+  - type: executable_for
+    from: SYM-plugins-grant-institutions-test-test-shared-institutions
+    to: TEST-plugins-grant-institutions
+    created_at: 2026-11-03T07:52:49.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18c38e436c88

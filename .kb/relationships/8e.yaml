@@ -846,3 +846,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ec1c081bfb5
+  - type: constrains
+    from: REQ-plugins-install-warns-shared-institution
+    to: FACT-SUBJECT-6C3AD15C63FE7B0C
+    created_at: 2026-11-03T07:22:48.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3b14f214c2a
+  - type: requires_property
+    from: REQ-plugins-install-warns-shared-institution
+    to: FACT-PROP-ADA55D53435611E3
+    created_at: 2026-11-03T07:22:49.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-975f45bfe97d
+  - type: specified_by
+    from: REQ-plugins-install-warns-shared-institution
+    to: SCEN-plugins-install-warns-shared-institution
+    created_at: 2026-11-03T07:22:49.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9125b069b19f

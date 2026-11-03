@@ -559,3 +559,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb718f651f96
+  - type: constrains
+    from: REQ-plugins-upgrade-warns-shared-institution
+    to: FACT-SUBJECT-6C3AD15C63FE7B0C
+    created_at: 2026-11-03T07:23:06.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d16182ff6b75
+  - type: requires_property
+    from: REQ-plugins-upgrade-warns-shared-institution
+    to: FACT-PROP-46D9A969D384433F
+    created_at: 2026-11-03T07:23:06.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af14559dc200
+  - type: specified_by
+    from: REQ-plugins-upgrade-warns-shared-institution
+    to: SCEN-plugins-install-warns-shared-institution
+    created_at: 2026-11-03T07:23:06.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d95ead8ef1f

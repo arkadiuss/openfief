@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19825239241d
+  - type: implements
+    from: SYM-plugins-app-upgrade-shared
+    to: REQ-plugins-upgrade-warns-shared-institution
+    created_at: 2026-11-03T07:51:11.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16174732a01f
+  - type: covered_by
+    from: SYM-plugins-app-upgrade-shared
+    to: TEST-plugins-app-institutions
+    created_at: 2026-11-03T07:51:11.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-508667c2225f

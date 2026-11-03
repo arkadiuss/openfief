@@ -1153,6 +1153,10 @@ message Plugin {
   // Whether its signed manifest declares market index levels, approved or
   // not.
   bool requested_index_levels = 18;
+  // The institutions it books for: those its signed manifest declares
+  // (institutions) and its PluginGrant approves. The core refuses a
+  // delivery that names any other (D-185).
+  repeated string approved_institutions = 19;
 }
 
 // AttentionItemState is where an attention item stands (D-130).

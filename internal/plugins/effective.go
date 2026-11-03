@@ -27,6 +27,9 @@ type EffectivePermissions struct {
 	// bondTerms and indexLevels: the connector may deliver treasury bond
 	// series terms and market index levels (D-179).
 	bondTerms, indexLevels bool
+	// institutions: those the connector books for, declared and approved
+	// (D-185), sorted.
+	institutions []string
 }
 
 // Effective returns the intersection of what p requests and what g approves.
@@ -122,6 +125,11 @@ func (e *EffectivePermissions) BondTerms() bool { return e.bondTerms }
 // connector (D-179).
 func (e *EffectivePermissions) IndexLevels() bool { return e.indexLevels }
 
+// Institutions returns the institutions the plugin books for, sorted: those
+// its manifest declares and its grant approves, when it may act as a
+// connector (D-185). The core refuses a delivery naming any other.
+func (e *EffectivePermissions) Institutions() []string { return slices.Clone(e.institutions) }
+
 // Config returns the plugin's config document.
 func (e *EffectivePermissions) Config() []byte { return bytes.Clone(e.config) }
 
@@ -149,7 +157,7 @@ func (e *EffectivePermissions) samePermissions(o *EffectivePermissions) bool {
 	return slices.Equal(e.capabilities, o.capabilities) && slices.Equal(e.egress, o.egress) &&
 		slices.Equal(e.secrets, o.secrets) && slices.Equal(e.dataTiers, o.dataTiers) &&
 		e.browserPath == o.browserPath && equalPtr(e.clusterService, o.clusterService) && e.marketData == o.marketData &&
-		e.bondTerms == o.bondTerms && e.indexLevels == o.indexLevels
+		e.bondTerms == o.bondTerms && e.indexLevels == o.indexLevels && slices.Equal(e.institutions, o.institutions)
 }
 
 // equalPtr reports whether a and b are both nil or point to equal values.
@@ -179,9 +187,13 @@ func (e *EffectivePermissions) grantSingles(p *Plugin, g *Grant, req *Permission
 
 // grantDeliveries sets whether the plugin may deliver bond terms and index
 // levels: each when the manifest declares it, the grant approves it and
-// the plugin may act as a connector (D-179).
+// the plugin may act as a connector (D-179); and so the institutions it
+// books for (D-185).
 func (e *EffectivePermissions) grantDeliveries(g *Grant, req *Permissions) {
 	connector := slices.Contains(e.capabilities, CapabilityConnector)
 	e.bondTerms = req.BondTerms && g.Permissions.BondTerms && connector
 	e.indexLevels = req.IndexLevels && g.Permissions.IndexLevels && connector
+	if connector {
+		e.institutions = both(req.Institutions, g.Permissions.Institutions)
+	}
 }

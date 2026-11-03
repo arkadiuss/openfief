@@ -136,6 +136,9 @@ func grantOf(r *v1alpha1.PluginGrant) plugins.Grant {
 		Secrets: r.Spec.Secrets, BrowserPaths: r.Spec.BrowserPaths, MarketData: r.Spec.MarketData,
 		BondTerms: r.Spec.BondTerms, IndexLevels: r.Spec.IndexLevels,
 	}}
+	if r.Spec.Institutions != nil && len(*r.Spec.Institutions) > 0 {
+		g.Permissions.Institutions = slices.Clone(*r.Spec.Institutions)
+	}
 	for _, c := range r.Spec.Capabilities {
 		g.Permissions.Capabilities = append(g.Permissions.Capabilities, plugins.Capability(c))
 	}

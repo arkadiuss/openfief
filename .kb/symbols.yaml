@@ -130782,3 +130782,305 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-connectapi-logsafe
+  - id: SYM-plugins-app-shared-institutions
+    title: SharedInstitutions
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:50:46.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-institutions
+      - type: implements
+        target: REQ-plugins-install-warns-shared-institution
+  - id: SYM-plugins-app-institutions-test-test-shared-institutions
+    title: TestSharedInstitutions
+    sourceFile: internal/plugins/app/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:50:57.527Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-institutions
+  - id: SYM-plugins-app-upgrade-shared
+    title: upgradeShared
+    sourceFile: internal/plugins/app/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:51:08.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-institutions
+      - type: implements
+        target: REQ-plugins-upgrade-warns-shared-institution
+  - id: SYM-plugins-cli-check-install
+    title: checkInstall
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:51:18.162Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-institutions
+      - type: implements
+        target: REQ-plugins-install-warns-shared-institution
+  - id: SYM-plugins-cli-institutions-test-test-render-shared-institutions
+    title: TestRenderSharedInstitutions
+    sourceFile: internal/plugins/cli/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:51:28.443Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-institutions
+  - id: SYM-plugins-cli-write-deliveries
+    title: writeDeliveries
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:51:38.901Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-institutions
+      - type: implements
+        target: REQ-plugins-upgrade-warns-shared-institution
+  - id: SYM-plugins-cli-write-shared
+    title: writeShared
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:51:48.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-institutions
+      - type: implements
+        target: REQ-plugins-install-warns-shared-institution
+  - id: SYM-plugins-effective-permissions-institutions
+    title: EffectivePermissions.Institutions
+    sourceFile: internal/plugins/effective.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:51:59.447Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-grant-institutions
+      - type: implements
+        target: REQ-plugins-institutions-grant-approved
+  - id: SYM-plugins-grant-institutions-test-institution-pair
+    title: institutionPair
+    sourceFile: internal/plugins/grant_institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:52:08.973Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-grant-institutions
+  - id: SYM-plugins-grant-institutions-test-test-institutions-need-approval
+    title: TestInstitutionsNeedApproval
+    sourceFile: internal/plugins/grant_institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:52:18.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-grant-institutions
+  - id: SYM-plugins-grant-institutions-test-test-institutions-in-grant-and-diff
+    title: TestInstitutionsInGrantAndDiff
+    sourceFile: internal/plugins/grant_institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:52:27.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-grant-institutions
+  - id: SYM-plugins-grant-institutions-test-test-approved-institutions
+    title: TestApprovedInstitutions
+    sourceFile: internal/plugins/grant_institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:52:36.878Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-grant-institutions
+  - id: SYM-plugins-grant-institutions-test-test-shared-institutions
+    title: TestSharedInstitutions
+    sourceFile: internal/plugins/grant_institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:52:45.954Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-grant-institutions
+  - id: SYM-plugins-institution-holder
+    title: InstitutionHolder
+    sourceFile: internal/plugins/institutions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:52:56.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-grant-institutions
+      - type: implements
+        target: REQ-plugins-install-warns-shared-institution
+  - id: SYM-plugins-shared-institution
+    title: SharedInstitution
+    sourceFile: internal/plugins/institutions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:53:07.246Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-grant-institutions
+      - type: implements
+        target: REQ-plugins-install-warns-shared-institution
+  - id: SYM-plugins-shared-institutions
+    title: SharedInstitutions
+    sourceFile: internal/plugins/institutions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:53:17.082Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-grant-institutions
+      - type: implements
+        target: REQ-plugins-install-warns-shared-institution
+  - id: SYM-plugins-approved-institutions
+    title: ApprovedInstitutions
+    sourceFile: internal/plugins/institutions.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:53:26.179Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-grant-institutions
+      - type: implements
+        target: REQ-plugins-legacy-grants-approve-declared-institutions
+  - id: SYM-plugins-validate-institution-names
+    title: validateInstitutionNames
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:53:42.943Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-grant-institutions
+      - type: implements
+        target: REQ-plugins-institutions-grant-approved
+  - id: SYM-operator-institutions-test-test-reconcile-institutions
+    title: TestReconcileInstitutions
+    sourceFile: internal/plugins/operator/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:53:54.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-institutions
+  - id: SYM-operator-institutions-test-test-reconcile-legacy-grant-institutions
+    title: TestReconcileLegacyGrantInstitutions
+    sourceFile: internal/plugins/operator/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:54:05.028Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-institutions
+  - id: SYM-operator-institutions-test-set-grant-institutions
+    title: setGrantInstitutions
+    sourceFile: internal/plugins/operator/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:54:14.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-institutions
+  - id: SYM-operator-institutions-test-effective-institutions
+    title: effectiveInstitutions
+    sourceFile: internal/plugins/operator/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:54:23.983Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-institutions
+  - id: SYM-operator-institution-items
+    title: institutionItems
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:54:34.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-institutions
+      - type: implements
+        target: REQ-plugins-institutions-grant-approved
+  - id: SYM-views-kube-plugins-test-approved-prices
+    title: approvedPrices
+    sourceFile: internal/views/kube/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:54:43.538Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-ui-templates-unapproved
+    title: unapproved
+    sourceFile: internal/views/ui/templates.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:54:54.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugins
+      - type: implements
+        target: REQ-views-plugin-approved-institutions
+  - id: SYM-views-pb-plugin-get-approved-institutions
+    title: Plugin.GetApprovedInstitutions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:55:05.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-plugin-approved-institutions

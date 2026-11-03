@@ -177,7 +177,7 @@ func install(ctx context.Context, env *Env, o *options, arg string) error {
 	if o.print {
 		return printResources(env, &p)
 	}
-	if err = app.CheckBrowserView(ctx, cluster, &p.Plugin); err != nil {
+	if err = checkInstall(ctx, cluster, &p); err != nil {
 		return fmt.Errorf("install: %w", err)
 	}
 	rule, err := checkClusterService(ctx, env, cluster, &p.Plugin)
@@ -443,5 +443,20 @@ func say(w io.Writer, s string) error {
 	if _, err := io.WriteString(w, s); err != nil {
 		return fmt.Errorf("write: %w", err)
 	}
+	return nil
+}
+
+// checkInstall refuses a second browser view (D-114) and finds the
+// institutions another instance already books for, which the summary
+// warns about (D-185).
+func checkInstall(ctx context.Context, cluster Cluster, p *app.Proposal) error {
+	if err := app.CheckBrowserView(ctx, cluster, &p.Plugin); err != nil {
+		return fmt.Errorf("browser view: %w", err)
+	}
+	shared, err := app.SharedInstitutions(ctx, cluster, &p.Plugin)
+	if err != nil {
+		return fmt.Errorf("institutions: %w", err)
+	}
+	p.Shared = shared
 	return nil
 }

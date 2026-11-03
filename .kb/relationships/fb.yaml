@@ -818,3 +818,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3014f6f0c187
+  - type: constrains
+    from: REQ-views-plugin-approved-institutions
+    to: FACT-SUBJECT-12FB7BFC966CEC95
+    created_at: 2026-11-03T07:23:17.961Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0215b568c394
+  - type: requires_property
+    from: REQ-views-plugin-approved-institutions
+    to: FACT-PROP-EB6F89358B5F60D5
+    created_at: 2026-11-03T07:23:18.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a61b725213f2
+  - type: specified_by
+    from: REQ-views-plugin-approved-institutions
+    to: SCEN-views-plugin-approved-institutions
+    created_at: 2026-11-03T07:23:18.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4809b3e63923

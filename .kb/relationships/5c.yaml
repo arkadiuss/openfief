@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7455ac79dc41
+  - type: executable_for
+    from: SYM-operator-institutions-test-test-reconcile-legacy-grant-institutions
+    to: TEST-operator-institutions
+    created_at: 2026-11-03T07:54:09.115Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-702c3981c22c

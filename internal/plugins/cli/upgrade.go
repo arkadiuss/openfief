@@ -64,6 +64,7 @@ func RenderUpgrade(up *app.UpgradeProposal) string {
 		writePermissions(&b, "  + ", &up.Diff.Added)
 		writePermissions(&b, "  - ", &up.Diff.Removed)
 	}
+	writeShared(&b, up.Shared)
 	if r := up.Plugin.Manifest.ClusterService; r != nil {
 		writeClusterService(&b, r, up.Plugin.ClusterService)
 	}
@@ -96,6 +97,13 @@ func writePermissions(b *strings.Builder, prefix string, p *plugins.Permissions)
 	for _, cs := range p.ClusterServices {
 		line("in-cluster", cs.String()+", outside the egress proxy")
 	}
+	writeDeliveries(line, p)
+}
+
+// writeDeliveries writes, with line, what a connector is told and what of
+// its deliveries the core accepts: market data (D-123), bond terms and
+// index levels (D-179) and the institutions it books for (D-185).
+func writeDeliveries(line func(kind, value string), p *plugins.Permissions) {
 	if p.MarketData {
 		line("market data", "each sync tells it every instrument you hold and the model's targets (D-123)")
 	}
@@ -104,5 +112,18 @@ func writePermissions(b *strings.Builder, prefix string, p *plugins.Permissions)
 	}
 	if p.IndexLevels {
 		line("index levels", "the core stores the market index levels it delivers (D-179)")
+	}
+	for _, in := range p.Institutions {
+		line("institution", in+", which the core accepts its deliveries for (D-185)")
+	}
+}
+
+// writeShared warns about each institution another installed instance
+// already books for, naming that instance (D-185). Both may book for it, as
+// two accounts at one broker do; the owner decides.
+func writeShared(b *strings.Builder, shared []plugins.SharedInstitution) {
+	for _, s := range shared {
+		fmt.Fprintf(b, "\nWarning: %s already books for %s. Both instances will book for it; make sure that is what you want (D-185).\n",
+			s.Instance, s.Institution)
 	}
 }

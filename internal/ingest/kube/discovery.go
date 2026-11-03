@@ -147,8 +147,9 @@ func (d *Discovery) Declarations(_ context.Context, instance string) (ingest.Dec
 }
 
 // DeployedDeclarations reads the declarations of a Plugin resource's
-// running version from status.deployed.manifest, with the institutions it
-// books for (D-182), and whether it is a market-data connector from
+// running version from status.deployed.manifest, the institutions it books
+// for from status.effective.institutions, those its signed manifest
+// declares and its PluginGrant approves (D-182, D-185), and whether it is a market-data connector from
 // status.effective.marketData, which is true only when the manifest
 // declares it and the PluginGrant approves it (D-123), and so whether it
 // may deliver bond terms and index levels from status.effective.bondTerms
@@ -166,7 +167,7 @@ func DeployedDeclarations(u *unstructured.Unstructured) ingest.Declarations {
 		BondTerms:        flag("effective", "bondTerms"),
 		IndexLevels:      flag("effective", "indexLevels"),
 	}
-	institutions, _, err := unstructured.NestedStringSlice(u.Object, "status", "deployed", "manifest", "institutions")
+	institutions, _, err := unstructured.NestedStringSlice(u.Object, "status", "effective", "institutions")
 	if err == nil {
 		for _, in := range institutions {
 			d.Institutions = append(d.Institutions, ingest.InstitutionID(in))

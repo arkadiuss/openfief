@@ -734,3 +734,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a9decbd64bd
+  - type: verified_by
+    from: SCEN-plugins-legacy-grant-institutions
+    to: TEST-operator-institutions
+    created_at: 2026-11-03T07:22:26.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3edaa39d3f9
+  - type: verified_by
+    from: SCEN-plugins-legacy-grant-institutions
+    to: TEST-plugins-grant-institutions
+    created_at: 2026-11-03T07:22:26.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b19a57d87c2

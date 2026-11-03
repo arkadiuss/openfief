@@ -545,3 +545,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30f147e3fd76
+  - type: executable_for
+    from: SYM-operator-institutions-test-set-grant-institutions
+    to: TEST-operator-institutions
+    created_at: 2026-11-03T07:54:18.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a302dac9cdf

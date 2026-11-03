@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb7dacc8f06a
+  - type: constrains
+    from: REQ-plugins-institutions-grant-approved
+    to: FACT-SUBJECT-6C3AD15C63FE7B0C
+    created_at: 2026-11-03T07:22:40.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02c34842e55f
+  - type: requires_property
+    from: REQ-plugins-institutions-grant-approved
+    to: FACT-PROP-A67A3526CFFDB052
+    created_at: 2026-11-03T07:22:40.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59d3b9f733e0
+  - type: specified_by
+    from: REQ-plugins-institutions-grant-approved
+    to: SCEN-plugins-institutions-approved-by-grant
+    created_at: 2026-11-03T07:22:40.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95abef90f4ab
