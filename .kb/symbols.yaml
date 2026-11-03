@@ -53173,8 +53173,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-auth
+      - type: covered_by
+        target: TEST-ui-site-data
       - type: implements
         target: REQ-ui-session-cookie
+      - type: implements
+        target: REQ-ui-session-end-clears-site-data
   - id: SYM-ui-session-token
     title: sessionToken
     sourceFile: internal/views/ui/session.go
@@ -131666,3 +131670,23 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-attention-pg-outbox
+  - id: SYM-ui-test-session-end-clears-site-data
+    title: TestSessionEndClearsSiteData
+    sourceFile: internal/views/ui/sitedata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T16:31:20.378Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-site-data
+  - id: SYM-ui-test-htmx-keeps-no-history
+    title: TestHTMXKeepsNoHistory
+    sourceFile: internal/views/ui/sitedata_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T16:31:30.611Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-site-data

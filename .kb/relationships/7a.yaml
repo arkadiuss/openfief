@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b16c553fb18f
+  - type: executable_for
+    from: SYM-ui-test-session-end-clears-site-data
+    to: TEST-ui-site-data
+    created_at: 2026-11-03T16:31:24.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4808bb35497
