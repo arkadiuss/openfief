@@ -64,7 +64,7 @@ type LotConsumption struct {
 // *OversellError and consumes nothing.
 func ConsumeFIFO(lots []Lot, qty kernel.Quantity) (LotConsumption, error) {
 	if qty.Sign() <= 0 {
-		return LotConsumption{}, fmt.Errorf("%w: disposal of %s units", ErrInvalidTransaction, qty)
+		return LotConsumption{}, fmt.Errorf("%w: a disposal must take more than zero units", ErrInvalidTransaction)
 	}
 	remaining := sortedLots(lots)
 	var available kernel.Quantity

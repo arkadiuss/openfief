@@ -951,3 +951,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4ce2f1d5ba9
+  - type: implements
+    from: SYM-plugins-manifest-validate
+    to: REQ-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:24:00.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0083afbff86
+  - type: covered_by
+    from: SYM-plugins-manifest-validate
+    to: TEST-plugins-institutions
+    created_at: 2026-11-02T22:24:00.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-537036721e22
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-checking-resolver
+    to: REQ-plugins-egress-denies-node-and-cluster-ranges
+    created_at: 2026-11-03T00:14:03.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ff87bc835dd

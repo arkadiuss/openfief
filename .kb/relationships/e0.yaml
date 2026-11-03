@@ -909,3 +909,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2f81f28e642
+  - type: executable_for
+    from: SYM-plugins-app-test-uninstall-leaves-secrets-not-owned
+    to: TEST-plugins-app-install
+    created_at: 2026-11-02T22:26:43.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3122831dd91
+  - type: executable_for
+    from: SYM-ingest-app-test-conn-test-institutions
+    to: TEST-ingest-app-connectors
+    created_at: 2026-11-02T22:27:31.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-998b5efc8d71
+  - type: executable_for
+    from: SYM-ingest-app-test-logsafe-text-logger
+    to: TEST-ingest-app-logsafe
+    created_at: 2026-11-03T01:07:47.581Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9af09e5daf4b

@@ -197,8 +197,13 @@ func (s *fakeStore) Create(_ context.Context, p *plugins.Plugin, g *plugins.Gran
 		s.plugins, s.grants = map[string]plugins.Plugin{}, map[string]plugins.Grant{}
 	}
 	s.plugins[p.Name], s.grants[p.Name] = *p, *g
+	// The owner creates each Secret labelled as the instance's (D-182).
+	owners := map[string]string{}
+	for _, sec := range g.Permissions.Secrets {
+		owners[sec] = p.Name
+	}
 	s.instances = append(s.instances, app.Instance{
-		Name: p.Name, Image: p.Image, HasPlugin: true, HasGrant: true, Secrets: g.Permissions.Secrets,
+		Name: p.Name, Image: p.Image, HasPlugin: true, HasGrant: true, Secrets: g.Permissions.Secrets, SecretOwners: owners,
 	})
 	return nil
 }
@@ -297,5 +302,28 @@ func TestUninstall(t *testing.T) {
 	}
 	if _, err := app.PlanUninstall(context.Background(), store, "sample-a"); !errors.Is(err, app.ErrNotInstalled) {
 		t.Errorf("uninstalling sample-a twice: error = %v, want ErrNotInstalled", err)
+	}
+}
+
+func TestUninstallLeavesSecretsNotOwned(t *testing.T) {
+	t.Parallel()
+	store := &fakeStore{instances: []app.Instance{{
+		Name: "sample", HasPlugin: true, HasGrant: true, Secrets: []string{"openfief-db-app", "sample-credentials"},
+		SecretOwners: map[string]string{"openfief-db-app": "", "sample-credentials": "sample"},
+	}}}
+	want := plugins.UninstallSecrets{Delete: []string{"sample-credentials"}, NotOwned: []string{"openfief-db-app"}}
+	if diff := cmp.Diff(want, uninstall(t, store, "sample")); diff != "" {
+		t.Errorf("Secrets (-want +got):\n%s", diff)
+	}
+	if diff := cmp.Diff(map[string][]string{"sample": {"sample-credentials"}}, store.deleted); diff != "" {
+		t.Errorf("deleted Secrets (-want +got):\n%s", diff)
+	}
+}
+
+func TestPrepareRefusesReservedName(t *testing.T) {
+	t.Parallel()
+	_, err := installer(t).Prepare(context.Background(), app.InstallRequest{Arg: "sample", Name: "openfief"})
+	if !errors.Is(err, plugins.ErrReservedName) {
+		t.Errorf("install as openfief: error = %v, want ErrReservedName", err)
 	}
 }

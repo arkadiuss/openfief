@@ -2946,9 +2946,13 @@ symbols:
       recorded_at: 2026-10-28T05:24:56.767Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-institutions
+      - type: covered_by
         target: TEST-plugins-manifest
       - type: implements
         target: REQ-AUTO-761F6500ECFC0316
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-plugins-manifest-validation
   - id: SYM-plugins-validate-capabilities
@@ -3007,10 +3011,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-manifest
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
       - type: implements
         target: REQ-AUTO-761F6500ECFC0316
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-validate-secret-mounts
     title: validateSecretMounts
     sourceFile: internal/plugins/manifest.go
@@ -3212,6 +3220,8 @@ symbols:
         target: TEST-plugins-plugin-grant
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-grant
     title: Grant
     sourceFile: internal/plugins/permissions.go
@@ -3239,6 +3249,8 @@ symbols:
         target: TEST-plugins-plugin-grant
       - type: implements
         target: REQ-plugins-manifest-validation
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-valid-plugin-name
     title: validPluginName
     sourceFile: internal/plugins/permissions.go
@@ -4572,6 +4584,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-8C3982CF80A9A4DF
       - type: implements
+        target: REQ-ingest-logs-carry-no-values
+      - type: implements
         target: REQ-ledger-event-postings
   - id: SYM-ledger-need-not-negative
     title: needNotNegative
@@ -5536,9 +5550,13 @@ symbols:
       recorded_at: 2026-10-28T05:39:56.804Z
     relationships:
       - type: covered_by
+        target: TEST-ledger-events
+      - type: covered_by
         target: TEST-ledger-lot
       - type: implements
         target: REQ-decision-d34-2-exact-remaining-cost
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
       - type: implements
         target: REQ-ledger-fifo
       - type: implements
@@ -6507,6 +6525,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-8CBFBD6A12E0865B
       - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+      - type: implements
         target: REQ-plugins-egress-proxy-connect-only-allow-list
   - id: SYM-egress-proxy-cmd-fn-run
     title: run
@@ -6521,6 +6541,8 @@ symbols:
         target: TEST-plugins-smokescreen-proxy
       - type: implements
         target: REQ-plugins-egress-allow-lists-fail-closed
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
       - type: implements
         target: REQ-plugins-egress-proxy-connect-only-allow-list
   - id: SYM-plugins-app-token-reviewer
@@ -7030,6 +7052,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-79189DB32149E23F
       - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+      - type: implements
         target: REQ-plugins-egress-proxy-checks-every-address
   - id: SYM-plugins-smokescreen-fn-checking-resolver
     title: checkingResolver
@@ -7045,6 +7069,8 @@ symbols:
         target: TEST-plugins-smokescreen-proxy
       - type: implements
         target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
       - type: implements
         target: REQ-plugins-egress-proxy-checks-every-address
   - id: SYM-plugins-smokescreen-fn-checking-resolver-lookup-port
@@ -7073,6 +7099,8 @@ symbols:
         target: TEST-plugins-smokescreen-proxy
       - type: implements
         target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
       - type: implements
         target: REQ-plugins-egress-proxy-checks-every-address
   - id: SYM-plugins-smokescreen-fn-forbidden-error
@@ -16780,6 +16808,8 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-fn-cached-review
     title: cachedReview
     sourceFile: internal/plugins/app/tokencache.go
@@ -16806,6 +16836,8 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-caching-token-reviewer-review-token
     title: CachingTokenReviewer.ReviewToken
     sourceFile: internal/plugins/app/tokencache.go
@@ -16819,8 +16851,10 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-caching-token-reviewer-lookup
-    title: CachingTokenReviewer.lookup
+    title: fresh
     sourceFile: internal/plugins/app/tokencache.go
     status: active
     symbol_role: behavioral
@@ -16832,6 +16866,8 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-caching-token-reviewer-store
     title: CachingTokenReviewer.store
     sourceFile: internal/plugins/app/tokencache.go
@@ -16845,6 +16881,8 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-fn-token-expiry
     title: tokenExpiry
     sourceFile: internal/plugins/app/tokencache.go
@@ -21460,6 +21498,8 @@ symbols:
       - type: implements
         target: REQ-ingest-connector-batches
       - type: implements
+        target: REQ-ingest-delivery-declared-institution
+      - type: implements
         target: REQ-ingest-instance-scoped-keys
   - id: SYM-ingest-conn-app-connectors-store-inputs
     title: Connectors.storeInputs
@@ -23364,7 +23404,11 @@ symbols:
       recorded_at: 2026-10-28T08:55:53.625Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-institutions
+      - type: covered_by
         target: TEST-plugins-manifest-label
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-plugins-manifest-in-image
       - type: implements
@@ -23379,7 +23423,11 @@ symbols:
       recorded_at: 2026-10-28T08:56:02.442Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-institutions
+      - type: covered_by
         target: TEST-plugins-manifest-label
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-plugins-manifest-in-image
       - type: implements
@@ -38926,7 +38974,11 @@ symbols:
       recorded_at: 2026-10-28T16:52:00.038Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: covered_by
         target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
       - type: implements
         target: REQ-ingest-scheduler-single-flight
       - type: implements
@@ -57794,6 +57846,8 @@ symbols:
         target: REQ-plugins-cli-install-source
       - type: implements
         target: REQ-plugins-instance-per-install
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-valid-instance-name
     title: validInstanceName
     sourceFile: internal/plugins/install.go
@@ -57807,6 +57861,8 @@ symbols:
         target: TEST-plugins-install
       - type: implements
         target: REQ-plugins-cli-install-source
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-plan-install
     title: PlanInstall
     sourceFile: internal/plugins/install.go
@@ -57824,7 +57880,7 @@ symbols:
         target: REQ-plugins-cli-install-plan
   - id: SYM-plugins-secrets-to-delete
     title: SecretsToDelete
-    sourceFile: internal/plugins/install.go
+    sourceFile: internal/plugins/secret_owner.go
     status: active
     symbol_role: behavioral
     origin:
@@ -57835,6 +57891,8 @@ symbols:
         target: TEST-plugins-install
       - type: implements
         target: REQ-plugins-cli-uninstall-secrets
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
       - type: implements
         target: REQ-plugins-uninstall-keeps-data
   - id: SYM-plugins-unique-sorted
@@ -57922,7 +57980,7 @@ symbols:
         target: TEST-plugins-install
   - id: SYM-plugins-uninstall-secrets
     title: UninstallSecrets
-    sourceFile: internal/plugins/install.go
+    sourceFile: internal/plugins/secret_owner.go
     status: active
     symbol_role: behavioral
     origin:
@@ -57933,6 +57991,8 @@ symbols:
         target: TEST-plugins-install
       - type: implements
         target: REQ-plugins-cli-uninstall-secrets
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-app-image-inspector
     title: ImageInspector
     sourceFile: internal/plugins/app/install.go
@@ -58073,6 +58133,8 @@ symbols:
         target: TEST-plugins-app-install
       - type: implements
         target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
       - type: implements
         target: REQ-plugins-uninstall-keeps-data
   - id: SYM-plugins-app-uninstall
@@ -58276,6 +58338,8 @@ symbols:
         target: TEST-plugins-kube-instances
       - type: implements
         target: REQ-plugins-cli-list
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-kube-describe-status
     title: describeStatus
     sourceFile: internal/plugins/kube/instances.go
@@ -58317,6 +58381,8 @@ symbols:
         target: TEST-plugins-kube-instances
       - type: implements
         target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
       - type: implements
         target: REQ-plugins-uninstall-keeps-data
   - id: SYM-plugins-kube-owner-signers
@@ -58551,6 +58617,8 @@ symbols:
         target: TEST-plugins-cli-render
       - type: implements
         target: REQ-plugins-cli-uninstall
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
   - id: SYM-plugins-cli-write-instances
     title: WriteInstances
     sourceFile: internal/plugins/cli/render.go
@@ -69763,6 +69831,8 @@ symbols:
       - type: implements
         target: REQ-views-installed-plugins
       - type: implements
+        target: REQ-views-plugin-institutions
+      - type: implements
         target: REQ-views-removed-instance-mark
   - id: SYM-views-connectapi-test-helper-fake-plugins
     title: fakePlugins
@@ -69973,6 +70043,8 @@ symbols:
         target: REQ-plugins-verified-status
       - type: implements
         target: REQ-views-installed-plugins
+      - type: implements
+        target: REQ-views-plugin-institutions
   - id: SYM-views-kube-nested-string
     title: nestedString
     sourceFile: internal/views/kube/plugins.go
@@ -70247,6 +70319,8 @@ symbols:
         target: REQ-plugins-install-shows-market-data-list
       - type: implements
         target: REQ-plugins-verified-status
+      - type: implements
+        target: REQ-views-plugin-institutions
       - type: implements
         target: REQ-views-plugin-trust-level
   - id: SYM-views-trust-of
@@ -71566,7 +71640,11 @@ symbols:
       recorded_at: 2026-10-29T05:12:10.988Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: covered_by
         target: TEST-ingest-connectapi-statements
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
       - type: implements
         target: REQ-ingest-statement-service
       - type: implements
@@ -76788,6 +76866,8 @@ symbols:
         target: TEST-views-browser-proxy
       - type: implements
         target: REQ-core-reverse-proxies-view-plugins
+      - type: implements
+        target: REQ-views-proxied-pages-security-headers
   - id: SYM-fd-browserproxy-proxy-serve-http
     title: Proxy.ServeHTTP
     sourceFile: internal/views/browserproxy/proxy.go
@@ -76816,6 +76896,8 @@ symbols:
         target: TEST-views-browser-proxy
       - type: implements
         target: REQ-views-browser-route-longest-prefix
+      - type: implements
+        target: REQ-views-proxied-pages-security-headers
   - id: SYM-fd-browserproxy-proxy-unreachable
     title: Proxy.unreachable
     sourceFile: internal/views/browserproxy/proxy.go
@@ -76829,6 +76911,8 @@ symbols:
         target: TEST-views-browser-proxy
       - type: implements
         target: REQ-core-reverse-proxies-view-plugins
+      - type: implements
+        target: REQ-views-proxied-pages-security-headers
   - id: SYM-fd-browserproxy-rewrite
     title: rewrite
     sourceFile: internal/views/browserproxy/proxy.go
@@ -86676,6 +86760,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-ranking
       - type: implements
+        target: REQ-ingest-delivery-declared-institution
+      - type: implements
         target: REQ-valuation-market-data-default-ranking
   - id: SYM-valuation-source
     title: Source
@@ -90036,7 +90122,7 @@ symbols:
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
   - id: SYM-ingest-app-connectors-declared-cross-checks
-    title: Connectors.declaredCrossChecks
+    title: declaredCrossChecks
     sourceFile: internal/ingest/app/connectors.go
     status: active
     symbol_role: behavioral
@@ -90288,10 +90374,11 @@ symbols:
     title: Declarations
     sourceFile: internal/ingest/declarations.go
     status: active
-    symbol_role: behavioral
+    symbol_role: type-shape
     origin:
       kind: agent
       recorded_at: 2026-10-30T04:30:10.837Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-ingest-app-scheduler
@@ -90299,6 +90386,8 @@ symbols:
         target: TEST-ingest-declarations
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-ingest-market-data-list-declared-granted
       - type: implements
@@ -90383,6 +90472,8 @@ symbols:
         target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-plugins-manifest-declarations
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
   - id: SYM-ingest-kube-test-test-deployed-declarations
     title: TestDeployedDeclarations
     sourceFile: internal/ingest/kube/discovery_test.go
@@ -90820,6 +90911,8 @@ symbols:
         target: REQ-plugins-install-shows-market-data-list
       - type: implements
         target: REQ-plugins-manifest-declarations
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
   - id: SYM-demo-cross-check-prices
     title: crossCheckPrices
     sourceFile: internal/demo/crosscheck.go
@@ -123027,7 +123120,11 @@ symbols:
       recorded_at: 2026-11-01T10:11:03.305Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-institutions
+      - type: covered_by
         target: TEST-plugins-market-data
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-ingest-market-data-list-declared-granted
   - id: SYM-operator-market-data-items
@@ -127730,17 +127827,7 @@ symbols:
     granularity_reason: module-level-behavior
     origin:
       kind: agent
-      recorded_at: 2026-11-02T22:44:44.154Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-bond-lots
-  - id: SYM-core-test-helper-bonds-discovery-connector-instances
-    title: bondsDiscovery.ConnectorInstances
-    sourceFile: cmd/core/bondlots_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:44:50.617Z
+      recorded_at: 2026-11-02T23:47:04.818Z
     relationships:
       - type: executable_for
         target: TEST-core-bond-lots
@@ -127750,7 +127837,7 @@ symbols:
     status: active
     origin:
       kind: agent
-      recorded_at: 2026-11-02T22:44:57.098Z
+      recorded_at: 2026-11-02T23:47:26.475Z
     relationships:
       - type: executable_for
         target: TEST-core-bond-lots
@@ -128018,3 +128105,726 @@ symbols:
         target: TEST-ingest-connectrpc-mapping
       - type: implements
         target: REQ-valuation-stored-rates-name-base
+  - id: SYM-plugins-reserved-name
+    title: ReservedName
+    sourceFile: internal/plugins/secret_owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:18.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-validate-unreserved
+    title: validateUnreserved
+    sourceFile: internal/plugins/secret_owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:30.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-validate-institutions
+    title: validateInstitutions
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:42.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-institutions
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
+  - id: SYM-plugins-kube-instances-secret-owners
+    title: Instances.secretOwners
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:53.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-kube-instances-delete-owned-secret
+    title: Instances.deleteOwnedSecret
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:21:05.749Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-ingest-declarations-check-institution
+    title: Declarations.CheckInstitution
+    sourceFile: internal/ingest/declarations.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:21:16.809Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
+  - id: SYM-ingest-app-connectors-declarations
+    title: Connectors.declarations
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:21:28.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
+  - id: SYM-plugins-test-reserved-name
+    title: TestReservedName
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:19.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-manifest-institutions
+    title: TestManifestInstitutions
+    sourceFile: internal/plugins/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:29.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-institutions
+  - id: SYM-plugins-app-test-uninstall-leaves-secrets-not-owned
+    title: TestUninstallLeavesSecretsNotOwned
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:41.271Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-prepare-refuses-reserved-name
+    title: TestPrepareRefusesReservedName
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:52.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-kube-test-instances-owned-secret
+    title: ownedSecret
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:04.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-ingest-app-test-conn-undeclared-institution
+    title: TestConnectorsUndeclaredInstitution
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:17.013Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-conn-test-institutions
+    title: testInstitutions
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:29.365Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-test-check-institution
+    title: TestCheckInstitution
+    sourceFile: internal/ingest/declarations_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:39.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-declarations
+  - id: SYM-ingest-connectapi-test-bonds-instance
+    title: bondsInstance
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:52.196Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-bonds-instance-declarations
+    title: bondsInstance.Declarations
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:04.846Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-plugins-kube-owners-of
+    title: ownersOf
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:33:43.035Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-kube-describe-plugin
+    title: describePlugin
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:33:53.427Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-views-pb-plugin-get-institutions
+    title: Plugin.GetInstitutions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:59:55.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-plugin-institutions
+  - id: SYM-core-test-helper-bonds-discovery-instances
+    title: bondsDiscovery.ConnectorInstances
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:47:15.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-plugins-egress-parse-deny-list
+    title: ParseDenyList
+    sourceFile: internal/plugins/egress/deny.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:22.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-deny
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+  - id: SYM-plugins-egress-check-address-denying
+    title: CheckAddressDenying
+    sourceFile: internal/plugins/egress/deny.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:32.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-deny
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+  - id: SYM-plugins-app-jwt-shaped
+    title: JWTShaped
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:42.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-fd-browserproxy-security-headers
+    title: SecurityHeaders
+    sourceFile: internal/views/browserproxy/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:54.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-browser-proxy
+      - type: implements
+        target: REQ-views-proxied-pages-security-headers
+  - id: SYM-core-browser-read-tokens
+    title: browserReadTokens
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:06.256Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-tokens
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-core-read-apis
+    title: readAPIs
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:17.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-tokens
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-core-port-apis
+    title: portAPIs
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:30.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-tokens
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-core-test-jwt-for
+    title: jwtFor
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:42.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-test-count-reviews
+    title: countReviews
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:54.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-plugins-egress-test-parse-deny-list
+    title: TestParseDenyList
+    sourceFile: internal/plugins/egress/deny_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:15:35.282Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-deny
+  - id: SYM-plugins-egress-test-check-address-denying
+    title: TestCheckAddressDenying
+    sourceFile: internal/plugins/egress/deny_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:15:44.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-deny
+  - id: SYM-plugins-smokescreen-test-start-proxy-denying
+    title: startProxyDenying
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:15:55.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-denies-extra-ranges
+    title: TestProxyDeniesExtraRanges
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:05.824Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-app-test-jwt-named
+    title: jwtNamed
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:16.824Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-refusals-bounded
+    title: TestCachingTokenReviewerRefusalsBounded
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:27.720Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-refusing-reviewer
+    title: refusingReviewer
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:38.258Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-refusing-reviewer-review-token
+    title: refusingReviewer.ReviewToken
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:48.677Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-jwt-shaped
+    title: TestJWTShaped
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:59.638Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-fd-browserproxy-test-security-headers
+    title: TestProxySecurityHeaders
+    sourceFile: internal/views/browserproxy/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:17:10.781Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browser-proxy
+  - id: SYM-fd-browserproxy-test-check-security-headers
+    title: checkSecurityHeaders
+    sourceFile: internal/views/browserproxy/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:17:21.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browser-proxy
+  - id: SYM-deploy-np-test-check
+    title: check
+    sourceFile: scripts/tests/network-policies.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:40:09.295Z
+    relationships:
+      - type: executable_for
+        target: TEST-deploy-network-policies
+  - id: SYM-deploy-np-test-policy
+    title: policy
+    sourceFile: scripts/tests/network-policies.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:40:20.752Z
+    relationships:
+      - type: executable_for
+        target: TEST-deploy-network-policies
+  - id: SYM-ingest-app-log-safe
+    title: LogSafe
+    sourceFile: internal/ingest/app/logsafe.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:31.042Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-app-loggable-errors
+    title: loggableErrors
+    sourceFile: internal/ingest/app/logsafe.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:39.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-app-innermost
+    title: innermost
+    sourceFile: internal/ingest/app/logsafe.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:47.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-conn-rpc-invalid-message-error
+    title: invalidMessageError
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:55.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-conn-rpc-invalid-message-error-error
+    title: invalidMessageError.Error
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:06:05.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-invalid-message-error-is
+    title: invalidMessageError.Is
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:06:15.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-app-test-logsafe-valued
+    title: valued
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:06.422Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-locked-buffer
+    title: lockedBuffer
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:16.279Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-locked-buffer-write
+    title: lockedBuffer.Write
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:25.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-locked-buffer-string
+    title: lockedBuffer.String
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:35.714Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-text-logger
+    title: textLogger
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:45.421Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-log-safe
+    title: TestLogSafe
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:55.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-scheduler-logs-no-values
+    title: TestSchedulerLogsNoValues
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:04.902Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-connectapi-test-st-logging-client
+    title: newLoggingStatementsClient
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:22.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-logs-no-values
+    title: TestUploadStatementLogsNoValues
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:32.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-locked-log
+    title: lockedLog
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:42.366Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-locked-log-write
+    title: lockedLog.Write
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:52.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-locked-log-string
+    title: lockedLog.String
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:09:01.769Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ledger-test-refusals-name-no-values
+    title: TestRefusalsNameNoValues
+    sourceFile: internal/ledger/events_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:09:27.938Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-events
+  - id: SYM-ingest-conn-rpc-test-invalid-message-is-invalid-delivery
+    title: TestInvalidMessageIsInvalidDelivery
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:09:37.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-app-connectors-keep-declared
+    status: active
+    title: Connectors.keepDeclared
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T02:19:38.420Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-undeclared-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+      - type: implements
+        target: REQ-ingest-cross-check-prices-declared-only

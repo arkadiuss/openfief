@@ -181,6 +181,17 @@ spec:
                       IndexLevels declares that a connector delivers market index levels.
                       The PluginGrant approves it (D-179).
                     type: boolean
+                  institutions:
+                    description: |-
+                      Institutions are the institutions a connector books for, such as
+                      ibkr: the core refuses a delivery that names any other (D-182).
+                    items:
+                      maxLength: 63
+                      pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                      type: string
+                    maxItems: 16
+                    type: array
+                    x-kubernetes-list-type: set
                   marketData:
                     description: |-
                       MarketData declares a market-data connector, which each sync tells
@@ -424,6 +435,17 @@ spec:
                           IndexLevels declares that a connector delivers market index levels.
                           The PluginGrant approves it (D-179).
                         type: boolean
+                      institutions:
+                        description: |-
+                          Institutions are the institutions a connector books for, such as
+                          ibkr: the core refuses a delivery that names any other (D-182).
+                        items:
+                          maxLength: 63
+                          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                          type: string
+                        maxItems: 16
+                        type: array
+                        x-kubernetes-list-type: set
                       marketData:
                         description: |-
                           MarketData declares a market-data connector, which each sync tells

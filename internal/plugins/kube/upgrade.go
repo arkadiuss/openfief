@@ -95,6 +95,7 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 			MarketData:       m.MarketData,
 			BondTerms:        m.BondTerms,
 			IndexLevels:      m.IndexLevels,
+			Institutions:     m.Institutions,
 		},
 		Config: rawOf(r.Spec.Config),
 	}

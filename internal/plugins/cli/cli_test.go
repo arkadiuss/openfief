@@ -175,10 +175,13 @@ func env(c *fakeCluster, in string, out, errOut *bytes.Buffer) *cli.Env {
 	}
 }
 
+// installed is a cluster with the named instances, each naming the Secret
+// view-key, which is labelled as the first one's (D-182).
 func installed(names ...string) *fakeCluster {
 	c := &fakeCluster{}
 	for _, n := range names {
-		c.instances = append(c.instances, app.Instance{Name: n, HasPlugin: true, HasGrant: true, Secrets: []string{"view-key"}})
+		owners := map[string]string{"view-key": names[0]}
+		c.instances = append(c.instances, app.Instance{Name: n, HasPlugin: true, HasGrant: true, Secrets: []string{"view-key"}, SecretOwners: owners})
 	}
 	return c
 }
@@ -230,6 +233,11 @@ func TestRun(t *testing.T) {
 		{
 			name: "uninstall the last user of a Secret", args: []string{"plugin", "uninstall", "sample", "--yes"},
 			cluster: installed("sample"), wantDeleted: []string{"sample", "view-key"}, wantOut: []string{"Secret view-key"},
+		},
+		{
+			name: "uninstall leaves a Secret not labelled as the instance's", args: []string{"plugin", "uninstall", "other", "--yes"},
+			cluster: installed("sample", "other"), wantNames: []string{"sample"}, wantDeleted: []string{"other"},
+			wantOut: []string{"Leaves Secrets not labelled openfief.io/instance=other: view-key"},
 		},
 		{name: "uninstall declined", args: []string{"plugin", "uninstall", "sample"}, in: "\n", cluster: installed("sample"), wantNames: []string{"sample"}, wantErr: cli.ErrAborted},
 		{name: "uninstall unknown", args: []string{"plugin", "uninstall", "nope", "--yes"}, cluster: installed(), wantErr: app.ErrNotInstalled},

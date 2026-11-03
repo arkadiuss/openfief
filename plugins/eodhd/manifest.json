@@ -1,5 +1,6 @@
 {
   "capabilities": ["connector"],
+  "institutions": ["eodhd"],
   "indexLevels": true,
   "egress": ["eodhd.com"],
   "secrets": [{"role": "api-token", "mountPath": "/etc/openfief/eodhd"}],

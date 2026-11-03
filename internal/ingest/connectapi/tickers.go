@@ -85,6 +85,6 @@ func (s *tickers) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, app.ErrTickerConfirmed):
 		return connect.NewError(connect.CodeFailedPrecondition, app.ErrTickerConfirmed)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "ticker confirmation failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "ticker confirmation failed", slog.String("error", app.LogSafe(err)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }

@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c1a1ca7a1f8
+  - type: implements
+    from: SYM-plugins-secrets-to-delete
+    to: REQ-plugins-secrets-never-platform
+    created_at: 2026-11-02T22:21:43.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7993dfbb8904

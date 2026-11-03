@@ -583,7 +583,7 @@ relationships:
   - type: executable_for
     from: SYM-core-test-helper-bonds-discovery
     to: TEST-core-bond-lots
-    created_at: 2026-11-02T22:44:46.417Z
+    created_at: 2026-11-02T23:47:06.952Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e45a3c3a752

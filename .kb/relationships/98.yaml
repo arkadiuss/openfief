@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6ed53a84957
+  - type: constrains
+    from: REQ-plugins-egress-denies-node-and-cluster-ranges
+    to: FACT-SUBJECT-A197B520E58C9AE3
+    created_at: 2026-11-03T00:10:54.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffb270ec1e8a
+  - type: requires_property
+    from: REQ-plugins-egress-denies-node-and-cluster-ranges
+    to: FACT-PROP-5CF6FE8CA0C87ECB
+    created_at: 2026-11-03T00:10:54.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c8d28f2b2b1
+  - type: specified_by
+    from: REQ-plugins-egress-denies-node-and-cluster-ranges
+    to: SCEN-plugins-egress-denies-node-and-cluster-ranges
+    created_at: 2026-11-03T00:10:54.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ade8f4b9c4f7

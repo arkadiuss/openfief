@@ -706,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58cb798eafa5
+  - type: implements
+    from: SYM-plugins-kube-owners-of
+    to: REQ-plugins-secrets-never-platform
+    created_at: 2026-11-02T22:33:45.405Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5550d8e66848
+  - type: covered_by
+    from: SYM-plugins-kube-owners-of
+    to: TEST-plugins-kube-instances
+    created_at: 2026-11-02T22:33:45.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4286d489ba68

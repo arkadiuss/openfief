@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96a3baf52797
+  - type: implements
+    from: SYM-plugins-cli-write-declarations
+    to: REQ-ingest-delivery-declared-institution
+    created_at: 2026-11-02T22:24:48.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dba1cebe651

@@ -176,10 +176,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
 	}
-	api, err := connectapi.New(views, readTokens{auth: auth, plugins: callers}, connectapi.WithLogger(log))
+	apis, err := readAPIs(views, auth, callers, log)
 	if err != nil {
-		return nil, fmt.Errorf("read API: %w", err)
+		return nil, err
 	}
+	api := apis.plugin
 	deps := &connectorDeps{
 		pool: pool, ledger: l, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
@@ -197,7 +198,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
 	plugin = withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins, authz)), callers, log), attn.items, callers, log)
-	return &core{browserPort: api, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil
+	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil
 }
 
 // ensureDefaults stores the built-in sleeve kinds and sleeves when cfg
@@ -239,6 +240,36 @@ type tokenAuthenticator interface {
 type readTokens struct {
 	auth    tokenAuthenticator
 	plugins identityconnect.Callers
+}
+
+// readAPIs returns the read API for each port. The browser port's takes
+// only sessions and script tokens; view plugins' tokens, the only ones a
+// TokenReview checks, are taken on the plugin port alone, which only plugin
+// pods reach (D-115, D-184).
+func readAPIs(views *viewsapp.Views, auth tokenAuthenticator, callers identityconnect.Callers, log *slog.Logger) (portAPIs, error) {
+	browser, err := connectapi.New(views, browserReadTokens(auth), connectapi.WithLogger(log))
+	if err != nil {
+		return portAPIs{}, fmt.Errorf("read API: %w", err)
+	}
+	plugin, err := connectapi.New(views, readTokens{auth: auth, plugins: callers}, connectapi.WithLogger(log))
+	if err != nil {
+		return portAPIs{}, fmt.Errorf("read API: %w", err)
+	}
+	return portAPIs{browser: browser, plugin: plugin}, nil
+}
+
+// portAPIs are the read API of the browser port and of the plugin port.
+type portAPIs struct {
+	browser, plugin http.Handler
+}
+
+// browserReadTokens is the browser port's read API verifier: the owner's
+// sessions and script tokens alone. A view plugin calls the read API on the
+// plugin port, so a token on the browser port never reaches a TokenReview,
+// and nothing that reaches the browser port can make the core ask the API
+// server (D-115, D-184).
+func browserReadTokens(auth tokenAuthenticator) readTokens {
+	return readTokens{auth: auth}
 }
 
 // VerifyToken accepts a session, a read-scoped script token or a view

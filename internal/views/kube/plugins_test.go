@@ -97,10 +97,13 @@ func TestRecordOf(t *testing.T) {
 			if err := unstructured.SetNestedField(u.Object, true, "status", "effective", "marketData"); err != nil {
 				t.Fatal(err)
 			}
+			if err := unstructured.SetNestedStringSlice(u.Object, []string{"eodhd"}, "spec", "manifest", "institutions"); err != nil {
+				t.Fatal(err)
+			}
 			return u
 		}, func() views.PluginRecord {
 			r := signedRecord("prices")
-			r.RequestsMarketData, r.MarketData = true, true
+			r.RequestsMarketData, r.MarketData, r.Institutions = true, true, []string{"eodhd"}
 			return r
 		}()},
 		{"a market-data connector waiting for approval", func(t *testing.T) *unstructured.Unstructured {

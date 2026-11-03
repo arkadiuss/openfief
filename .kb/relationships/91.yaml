@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-103e3af315be
+  - type: executable_for
+    from: SYM-plugins-app-test-jwt-named
+    to: TEST-plugins-app-token-cache
+    created_at: 2026-11-03T00:16:19.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e45c864da6e0

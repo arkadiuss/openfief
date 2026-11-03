@@ -37,3 +37,4 @@ resources:
   - role.yaml
   - rolebinding.yaml
   - deployment.yaml
+  - networkpolicy.yaml

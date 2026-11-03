@@ -160,8 +160,7 @@ func connectors(t *testing.T, caller app.ConnectorCaller, l app.LedgerImporter, 
 	return &app.Connectors{
 		Caller: caller, Ledger: l, Prices: stores, FXRates: stores, Indices: stores, Levels: stores, Terms: stores,
 		CrossChecks: stores, Sources: stores, Bindings: &fakeBindings{accounts: []ledger.AccountID{"acc-1"}},
-		Declarations: fakeDeclarations{deliveries: true},
-		Today:        func() kernel.Date { return day },
+		Declarations: fakeDeclarations{deliveries: true}, Today: func() kernel.Date { return day },
 	}
 }
 
@@ -206,18 +205,29 @@ func TestConnectorsSync(t *testing.T) {
 }
 
 // fakeDeclarations answers each instance's manifest declarations, or fails
-// with err. With deliveries, every instance may also deliver bond terms
-// and index levels (D-179).
+// with err. An instance whose entry declares no institution declares those
+// the test deliveries name (testInstitutions), unless noInstitutions is set.
+// With deliveries, every instance may also deliver bond terms and index
+// levels (D-179).
 type fakeDeclarations struct {
-	byInstance map[string]ingest.Declarations
-	deliveries bool
-	err        error
+	byInstance     map[string]ingest.Declarations
+	noInstitutions bool
+	deliveries     bool
+	err            error
 }
 
 func (f fakeDeclarations) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
 	d := f.byInstance[instance]
 	d.BondTerms, d.IndexLevels = d.BondTerms || f.deliveries, d.IndexLevels || f.deliveries
+	if d.Institutions == nil && !f.noInstitutions {
+		d.Institutions = testInstitutions()
+	}
 	return d, f.err
+}
+
+// testInstitutions are the institutions the tests' deliveries name.
+func testInstitutions() []ingest.InstitutionID {
+	return []ingest.InstitutionID{"xtb", "ibkr", "treasury-bonds", "eodhd", "nbp"}
 }
 
 // crossCheckDelivery is a delivery of one cross-check price, a spoofed
@@ -270,7 +280,7 @@ func TestConnectorsCrossCheckPrices(t *testing.T) {
 func TestConnectorsUndeclaredCrossCheckPrices(t *testing.T) {
 	t.Parallel()
 	d, _ := crossCheckDelivery(t)
-	for _, decl := range []app.ConnectorDeclarations{nil, fakeDeclarations{byInstance: map[string]ingest.Declarations{"ibkr-main": {StatementFiles: true}}}} {
+	for _, decl := range []app.ConnectorDeclarations{fakeDeclarations{}, fakeDeclarations{byInstance: map[string]ingest.Declarations{"ibkr-main": {StatementFiles: true}}}} {
 		stores := &fakeStores{}
 		c := connectors(t, &fakeCaller{delivery: d}, &fakeLedger{}, stores)
 		c.Declarations = decl
@@ -286,6 +296,41 @@ func TestConnectorsUndeclaredCrossCheckPrices(t *testing.T) {
 	c.Declarations = fakeDeclarations{err: errStore}
 	if _, err := c.Sync(t.Context(), "ibkr-main", &app.SyncCall{ID: "b-2", Mode: ingest.ModeTransactions}); !errors.Is(err, errStore) {
 		t.Errorf("Sync with the declarations failing = %v, want %v", err, errStore)
+	}
+}
+
+// TestConnectorsUndeclaredInstitution checks that a delivery naming an
+// institution its connector's manifest doesn't declare is refused whole,
+// with nothing imported or stored and no market-data source recorded, so a
+// connector can't book or rank as another institution (D-182); and that
+// without declarations every delivery is refused.
+func TestConnectorsUndeclaredInstitution(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name     string
+		declared app.ConnectorDeclarations
+	}{
+		{name: "another institution declared", declared: fakeDeclarations{byInstance: map[string]ingest.Declarations{
+			"aaa": {Institutions: []ingest.InstitutionID{"aaa-broker"}},
+		}}},
+		{name: "none declared", declared: fakeDeclarations{noInstitutions: true}},
+		{name: "no declarations", declared: nil},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			l, stores := &fakeLedger{}, &fakeStores{}
+			c := connectors(t, &fakeCaller{delivery: delivery(t)}, l, stores)
+			c.Declarations = tt.declared
+			_, err := c.Sync(t.Context(), "aaa", &app.SyncCall{ID: "b-1", Mode: ingest.ModeTransactions})
+			if !errors.Is(err, ingest.ErrUndeclaredInstitution) {
+				t.Fatalf("Sync error = %v, want ErrUndeclaredInstitution", err)
+			}
+			if len(l.txs) != 0 || len(stores.prices) != 0 || len(stores.sources) != 0 || stores.calls != 0 {
+				t.Errorf("a refused delivery imported %d transactions, stored %d prices and %d sources in %d calls; want none",
+					len(l.txs), len(stores.prices), len(stores.sources), stores.calls)
+			}
+		})
 	}
 }
 

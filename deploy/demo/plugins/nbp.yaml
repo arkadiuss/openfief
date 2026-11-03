@@ -11,6 +11,7 @@ spec:
   image: ghcr.io/arkadiuss/openfief/nbp-fx@sha256:0000000000000000000000000000000000000000000000000000000000000000
   manifest:
     capabilities: [connector]
+    institutions: [nbp]
     egress: [api.nbp.pl]
     configSchema:
       type: object

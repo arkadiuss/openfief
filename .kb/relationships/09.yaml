@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6645dda5ab7
+  - type: implements
+    from: SYM-fd-browserproxy-security-headers
+    to: REQ-views-proxied-pages-security-headers
+    created_at: 2026-11-03T00:11:57.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8949825c24aa
+  - type: covered_by
+    from: SYM-fd-browserproxy-security-headers
+    to: TEST-views-browser-proxy
+    created_at: 2026-11-03T00:11:57.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a06cda1be8c

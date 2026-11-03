@@ -1,0 +1,69 @@
+# The egress proxy's NetworkPolicy (D-184, D-32). Ingress: plugin pods on the proxy's port 4750 only; the operator
+# labels every plugin pod app.kubernetes.io/name: openfief-plugin. Probes come from the node and need no rule.
+#
+# Egress: DNS, the Kubernetes API server on 6443 (TokenReview and the allow-list ConfigMap, D-63; at any address for
+# the reason the core's policy gives, D-92), and the internet, with every private, shared, link-local and loopback
+# range left out: RFC 1918 (where k3s, kind and most clusters put pod and Service addresses, and where home networks
+# put nodes), 100.64.0.0/10 (CGNAT, which some CNIs and clouds use for pods), 169.254.0.0/16 (link-local, cloud
+# metadata), 127.0.0.0/8, and in IPv6 unique-local fc00::/7, link-local fe80::/10 and loopback. So even a proxy that a
+# plugin turned against its own allow-list can't open a connection to another pod, a Service or a node; the proxy
+# refuses those addresses itself as well (internal/plugins/egress). A cluster whose pods, Services or nodes use
+# public or global IPv6 addresses adds them to each `except` list with an overlay, and passes them to the proxy with
+# --deny-cidr so it refuses them too (docs/concepts/egress.md).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: egress-proxy
+  labels:
+    app.kubernetes.io/name: egress-proxy
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: egress-proxy
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: openfief-plugin
+      ports:
+        - protocol: TCP
+          port: 4750
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 100.64.0.0/10
+              - 127.0.0.0/8
+              - 169.254.0.0/16
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+        - ipBlock:
+            cidr: ::/0
+            except:
+              - ::1/128
+              - fc00::/7
+              - fe80::/10
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+        - ipBlock:
+            cidr: ::/0
+      ports:
+        - protocol: TCP
+          port: 6443
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53

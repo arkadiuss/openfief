@@ -40,3 +40,4 @@ resources:
   - deployment.yaml
   - service.yaml
   - networkpolicy.yaml
+  - networkpolicy-database.yaml

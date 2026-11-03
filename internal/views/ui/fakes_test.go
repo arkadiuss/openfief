@@ -552,7 +552,7 @@ func (f *fakeRead) ListPlugins(_ context.Context, r *connect.Request[viewsv1.Lis
 			Instance: "prices-main", Image: "registry.example.com/openfief/eodhd@sha256:c3c3", ImageDigest: "sha256:c3c3",
 			Capabilities: []string{"connector"}, RequestedCapabilities: []string{"connector"},
 			Trust: viewsv1.SignatureTrust_SIGNATURE_TRUST_OPENFIEF_CI, Signer: "openfief-ci", TrustReason: "SignedByTrustedSigner",
-			Phase: "Running", Ready: true, MarketData: true, RequestedMarketData: true,
+			Phase: "Running", Ready: true, MarketData: true, RequestedMarketData: true, Institutions: []string{"eodhd"},
 			IndexLevels: true, RequestedIndexLevels: true, RequestedBondTerms: true,
 		},
 	}}), nil

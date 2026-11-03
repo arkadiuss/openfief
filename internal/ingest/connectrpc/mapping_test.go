@@ -2,6 +2,7 @@ package connectrpc
 
 import (
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -220,6 +221,23 @@ func TestDeliveryFromRejects(t *testing.T) {
 				t.Errorf("deliveryFrom error = %v, want %v", err, ErrInvalidMessage)
 			}
 		})
+	}
+}
+
+// TestInvalidMessageIsInvalidDelivery checks that a connector's message
+// that doesn't translate is app.ErrInvalidDelivery too, which the services
+// that hand entries to a connector know, keeping its own text.
+func TestInvalidMessageIsInvalidDelivery(t *testing.T) {
+	t.Parallel()
+	err := fmt.Errorf("sync: %w: delivery.prices[0].close", ErrInvalidMessage)
+	if !errors.Is(err, app.ErrInvalidDelivery) || !errors.Is(err, ErrInvalidMessage) {
+		t.Errorf("%v is not both ErrInvalidMessage and app.ErrInvalidDelivery", err)
+	}
+	if got := ErrInvalidMessage.Error(); got != "invalid message" {
+		t.Errorf("ErrInvalidMessage = %q", got)
+	}
+	if errors.Is(ErrDeliveryTooLarge, ErrInvalidMessage) {
+		t.Error("another error is ErrInvalidMessage")
 	}
 }
 

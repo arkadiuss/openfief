@@ -101,7 +101,8 @@ func (s *statements) ListStatementAccounts(ctx context.Context, req *connect.Req
 
 // fail maps err to its Connect error. A refusal carries its text, which
 // names the rule, the account or the connector's reason, so the owner can
-// fix it; it never carries an amount.
+// fix it. Anything else is logged without the values it may carry
+// (app.LogSafe, GR-12).
 func (s *statements) fail(ctx context.Context, err error) *connect.Error {
 	switch {
 	case errors.Is(err, app.ErrNoSession):
@@ -115,15 +116,17 @@ func (s *statements) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, errNoHeader):
 		return connect.NewError(connect.CodeInvalidArgument, errNoHeader)
 	case errors.Is(err, app.ErrInvalidUpload), errors.Is(err, errSecondHeader), errors.Is(err, app.ErrEntryRefused),
-		errors.Is(err, app.ErrSeedingOutsideOpening), errors.Is(err, errOpeningCash), errors.Is(err, ingest.ErrOpeningCashOutsideOpening):
+		errors.Is(err, app.ErrSeedingOutsideOpening), errors.Is(err, errOpeningCash), errors.Is(err, ingest.ErrOpeningCashOutsideOpening),
+		errors.Is(err, app.ErrInvalidDelivery), errors.Is(err, ledger.ErrInvalidTransaction):
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	case errors.Is(err, app.ErrNoConnector), errors.Is(err, app.ErrNoEntries), errors.Is(err, ingest.ErrAccountNotBound),
-		errors.Is(err, ledger.ErrAlreadySeeded), errors.Is(err, ingest.ErrStartedFromHistory), errors.Is(err, ingest.ErrOpeningCashEntered):
+		errors.Is(err, ledger.ErrAlreadySeeded), errors.Is(err, ingest.ErrStartedFromHistory), errors.Is(err, ingest.ErrOpeningCashEntered),
+		errors.Is(err, ingest.ErrUndeclaredInstitution):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	case errors.Is(err, app.ErrConnectorUnavailable):
 		return connect.NewError(connect.CodeUnavailable, app.ErrConnectorUnavailable)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "statement upload failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "statement upload failed", slog.String("error", app.LogSafe(err)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }
 

@@ -49,6 +49,9 @@ func TestPluginsPageMarketData(t *testing.T) {
 	if !found || !strings.Contains(row, "Market data") || !strings.Contains(row, "every instrument you hold") {
 		t.Errorf("prices-main's row doesn't say it learns what the owner holds:\n%s", row)
 	}
+	if !strings.Contains(row, `Books for <span class="mono ident">eodhd</span> only.`) {
+		t.Errorf("the market-data connector's row doesn't name the institution it books for (D-182):\n%s", row)
+	}
 	if n := strings.Count(body, ">Market data<"); n != 1 {
 		t.Errorf("%d plugins marked as market data, want 1", n)
 	}

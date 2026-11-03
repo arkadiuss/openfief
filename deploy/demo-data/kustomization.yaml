@@ -13,3 +13,4 @@ kind: Kustomization
 namespace: openfief
 resources:
   - job.yaml
+  - networkpolicy.yaml

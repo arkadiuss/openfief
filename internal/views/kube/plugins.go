@@ -90,8 +90,9 @@ func (p *Plugins) InstalledPlugins(context.Context) ([]views.PluginRecord, error
 
 // RecordOf reads what the views show of a Plugin resource: its name,
 // spec.image, spec.manifest.capabilities, status.effective.capabilities,
-// spec.manifest.marketData and status.effective.marketData (D-123), the
-// same of bondTerms and indexLevels (D-179), its
+// spec.manifest.marketData and status.effective.marketData (D-123),
+// spec.manifest.institutions (D-182), the same of bondTerms and
+// indexLevels (D-179), its
 // Ready and SignatureVerified conditions, status.signature and
 // status.untrustedSigners (D-169). A field
 // that is missing or of another type reads as empty.
@@ -110,6 +111,7 @@ func RecordOf(u *unstructured.Unstructured) views.PluginRecord {
 
 		RequestsMarketData: nestedBool(u, "spec", "manifest", "marketData"),
 		MarketData:         nestedBool(u, "status", "effective", "marketData"),
+		Institutions:       nestedStrings(u, "spec", "manifest", "institutions"),
 
 		RequestsBondTerms:   nestedBool(u, "spec", "manifest", "bondTerms"),
 		BondTerms:           nestedBool(u, "status", "effective", "bondTerms"),

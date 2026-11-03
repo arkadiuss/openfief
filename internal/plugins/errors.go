@@ -31,6 +31,9 @@ var (
 	// ErrDeliveryNeedsConnector: only a connector delivers bond terms or
 	// index levels (D-179).
 	ErrDeliveryNeedsConnector = errors.New("only a connector may declare that it delivers bond terms or index levels")
+	// ErrInstitutionsNeedConnector: only a connector books for
+	// institutions (D-182).
+	ErrInstitutionsNeedConnector = errors.New("only a connector may declare institutions")
 )
 
 // Errors that are not about a single field.

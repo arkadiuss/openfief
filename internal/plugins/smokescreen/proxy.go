@@ -63,6 +63,10 @@ type Options struct {
 	// Dial connects to a checked destination address; nil means a plain
 	// net.Dialer. Tests use it to reach a local server.
 	Dial func(ctx context.Context, network, address string) (net.Conn, error)
+	// Deny are ranges refused beyond egress.ForbiddenPrefixes, such as the
+	// node's own address and a cluster's public pod, Service or node ranges
+	// (egress.ParseDenyList, D-184).
+	Deny []netip.Prefix
 	// Healthcheck, when set, answers GET /healthcheck.
 	Healthcheck http.Handler
 	// Log receives Smokescreen's request log; nil means its default logger.
@@ -89,11 +93,11 @@ type Proxy struct {
 // installs that check as Smokescreen's egress ACL: Smokescreen allows every
 // destination when it has none, so a proxy without one is never built, and
 // a plugin without an allow-list may reach nothing (D-63).
-func New(e *app.Egress, opts Options) (*Proxy, error) {
+func New(e *app.Egress, opts *Options) (*Proxy, error) {
 	switch {
 	case e == nil:
 		return nil, ErrNoEgress
-	case opts.Listener == nil:
+	case opts == nil || opts.Listener == nil:
 		return nil, ErrNoListener
 	}
 	cfg, tracker, err := newConfig(e, opts)
@@ -125,7 +129,7 @@ func New(e *app.Egress, opts Options) (*Proxy, error) {
 
 // newConfig builds and validates the Smokescreen configuration and its
 // connection tracker, doing the setup StartWithConfig would otherwise do.
-func newConfig(e *app.Egress, opts Options) (*ss.Config, *conntrack.Tracker, error) {
+func newConfig(e *app.Egress, opts *Options) (*ss.Config, *conntrack.Tracker, error) {
 	// Smokescreen's goproxy chains every CONNECT through HTTPS_PROXY when it
 	// is set, which would bypass the resolver check below.
 	if os.Getenv("HTTPS_PROXY") != "" || os.Getenv("https_proxy") != "" {
@@ -141,14 +145,14 @@ func newConfig(e *app.Egress, opts Options) (*ss.Config, *conntrack.Tracker, err
 	}
 	cfg.RoleFromRequest = func(req *http.Request) (string, error) { return identify(e, req) }
 	cfg.EgressACL = decider{egress: e}
-	if err := cfg.SetDenyRanges(forbiddenRanges()); err != nil {
+	if err := cfg.SetDenyRanges(forbiddenRanges(opts.Deny)); err != nil {
 		return nil, nil, fmt.Errorf("egress proxy deny ranges: %w", err)
 	}
 	base := opts.Resolver
 	if base == nil {
 		base = cfg.Resolver
 	}
-	cfg.Resolver = checkingResolver{base: base}
+	cfg.Resolver = checkingResolver{base: base, deny: opts.Deny}
 	cfg.ProxyDialTimeout = dialer(opts.Dial)
 	cfg.IdleTimeout = tunnelIdleTimeout
 	if err := cfg.Validate(); err != nil {
@@ -306,9 +310,10 @@ func connectPort(authority string) (uint16, error) {
 	return uint16(port), nil
 }
 
-// forbiddenRanges is egress.ForbiddenPrefixes as Smokescreen deny ranges.
-func forbiddenRanges() []string {
-	prefixes := egress.ForbiddenPrefixes()
+// forbiddenRanges is egress.ForbiddenPrefixes and the extra ranges deny as
+// Smokescreen deny ranges.
+func forbiddenRanges(deny []netip.Prefix) []string {
+	prefixes := append(egress.ForbiddenPrefixes(), deny...)
 	out := make([]string, len(prefixes))
 	for i, p := range prefixes {
 		out[i] = p.String()
@@ -317,9 +322,13 @@ func forbiddenRanges() []string {
 }
 
 // checkingResolver refuses a hostname when any address it resolves to fails
-// egress.CheckAddress, so a name that mixes public and private addresses is
-// refused outright rather than dialed at its public one.
-type checkingResolver struct{ base ss.Resolver }
+// egress.CheckAddressDenying with the extra ranges deny, so a name that
+// mixes public and private addresses is refused outright rather than dialed
+// at its public one.
+type checkingResolver struct {
+	base ss.Resolver
+	deny []netip.Prefix
+}
 
 // LookupPort implements smokescreen.Resolver.
 func (r checkingResolver) LookupPort(ctx context.Context, network, service string) (int, error) {
@@ -341,7 +350,7 @@ func (r checkingResolver) LookupIP(ctx context.Context, network, host string) ([
 		if !ok {
 			return nil, &forbiddenError{host: host, err: egress.ErrForbiddenAddress}
 		}
-		if err := egress.CheckAddress(addr.Unmap()); err != nil {
+		if err := egress.CheckAddressDenying(addr.Unmap(), r.deny); err != nil {
 			return nil, &forbiddenError{host: host, err: err}
 		}
 	}

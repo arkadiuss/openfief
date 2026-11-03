@@ -10,6 +10,10 @@
 // browser's Host, the scheme the browser used in X-Forwarded-Proto, and the
 // core's token in Authorization. Whatever a client sent in those headers,
 // or in any other X-Forwarded-* or Forwarded header, is dropped.
+//
+// Toward the browser it adds the security headers D-184 requires on every
+// answer, the plugin's and its own (SecurityHeaders): a content security
+// policy, framing denied, no content sniffing and no referrer.
 package browserproxy
 
 import (
@@ -36,6 +40,15 @@ const (
 	// idleConnTimeout closes an idle connection to a plugin.
 	idleConnTimeout = 90 * time.Second
 )
+
+// ViewContentSecurityPolicy is the content security policy the core adds to
+// every answer a view plugin gives through it (D-184): everything from the
+// core's own origin only, no plugins (object), no <base> elsewhere, forms
+// posted only to the origin, and no page anywhere may frame it. A browser
+// enforces every policy an answer carries, so a view's own stricter policy,
+// such as the built-in UI's, stays in force whole, and a looser one is held
+// to this.
+const ViewContentSecurityPolicy = "default-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
 // The schemes a browser may use.
 const (
@@ -68,9 +81,10 @@ func New(door *app.FrontDoor, log *slog.Logger) *Proxy {
 	}
 	p := &Proxy{door: door, log: log}
 	p.proxy = &httputil.ReverseProxy{
-		Rewrite:      rewrite,
-		Transport:    transport,
-		ErrorHandler: p.unreachable,
+		Rewrite:        rewrite,
+		Transport:      transport,
+		ModifyResponse: func(resp *http.Response) error { SecurityHeaders(resp.Header); return nil },
+		ErrorHandler:   p.unreachable,
 	}
 	return p
 }
@@ -90,6 +104,7 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 // refuse answers a request the front door can't route.
 func (p *Proxy) refuse(w http.ResponseWriter, r *http.Request, err error) {
+	SecurityHeaders(w.Header())
 	switch {
 	case errors.Is(err, views.ErrNoBrowserRoute):
 		plain(w, http.StatusNotFound, "not found")
@@ -110,6 +125,7 @@ func (p *Proxy) unreachable(w http.ResponseWriter, r *http.Request, err error) {
 		instance = t.Instance
 	}
 	p.log.Warn("view plugin did not answer", "instance", instance, "path", r.URL.Path, "error", err.Error())
+	SecurityHeaders(w.Header())
 	plain(w, http.StatusBadGateway, "the view plugin can't be reached")
 }
 
@@ -134,6 +150,20 @@ func rewrite(pr *httputil.ProxyRequest) {
 	h.Set("X-Forwarded-Proto", BrowserScheme(pr.In))
 	h.Set("X-Forwarded-Host", pr.In.Host)
 	h.Set("Authorization", "Bearer "+target.Token)
+}
+
+// SecurityHeaders sets on h, an answer to a browser, the headers D-184
+// requires on a page the core proxies from a view plugin. It adds
+// ViewContentSecurityPolicy next to any policy the view sent, which the
+// browser then enforces too, and replaces whatever the view said about
+// framing (X-Frame-Options DENY, with the policy's frame-ancestors 'none'),
+// content sniffing (X-Content-Type-Options nosniff) and the referrer
+// (Referrer-Policy no-referrer), each already the strictest value.
+func SecurityHeaders(h http.Header) {
+	h.Add("Content-Security-Policy", ViewContentSecurityPolicy)
+	h.Set("X-Frame-Options", "DENY")
+	h.Set("X-Content-Type-Options", "nosniff")
+	h.Set("Referrer-Policy", "no-referrer")
 }
 
 // BrowserScheme returns the scheme the browser used to reach the core:

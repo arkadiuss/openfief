@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45d648410dc5
+  - type: implements
+    from: SYM-ledger-need-positive
+    to: REQ-ingest-logs-carry-no-values
+    created_at: 2026-11-03T01:06:48.868Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19825239241d

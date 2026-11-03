@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d29b2050a2e
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-st-locked-log-write
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-03T01:08:54.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b3e01953464

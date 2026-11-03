@@ -87,8 +87,9 @@ func edoRequest(session, account string) *connect.Request[ingestv1.AddBondLotReq
 	})
 }
 
-// bondsDiscovery is a cluster whose one connector instance, bonds-main,
-// may deliver bond series terms (D-179).
+// bondsDiscovery is the cluster as discovery sees it: bonds-main runs,
+// books for the treasury bond registry (D-182) and may deliver bond
+// series terms (D-179).
 type bondsDiscovery struct{}
 
 func (bondsDiscovery) ConnectorInstances(context.Context) ([]string, error) {
@@ -96,7 +97,7 @@ func (bondsDiscovery) ConnectorInstances(context.Context) ([]string, error) {
 }
 
 func (bondsDiscovery) Declarations(_ context.Context, instance string) (ingest.Declarations, error) {
-	return ingest.Declarations{BondTerms: instance == "bonds-main"}, nil
+	return ingest.Declarations{Institutions: []ingest.InstitutionID{ingest.TreasuryBonds}, BondTerms: instance == "bonds-main"}, nil
 }
 
 func TestBondLotService(t *testing.T) {
@@ -116,6 +117,7 @@ func TestBondLotService(t *testing.T) {
 		t.Fatalf("AddBondLot before the core found any connector = %v, want Unavailable", err)
 	}
 	port := serveConnector(t, bondsConnector{})
+	c.deps.entries.setDiscovery(bondsDiscovery{})
 	c.deps.entries.set(connectrpc.NewClient(connectrpc.H2CClient(), func(string) (string, error) {
 		return fmt.Sprintf("http://127.0.0.1:%d", port), nil
 	}, staticTokens{}))

@@ -60,7 +60,9 @@ CREATE TABLE ledger.postings (
 -- The log is append-only (D-18). It is enforced with triggers, not REVOKE:
 -- in M0 the core connects as the role that owns the schema, and an owner
 -- keeps every privilege a REVOKE would take away, while a trigger binds every
--- role, the owner included. Only a superuser can switch it off.
+-- role, the owner included. A trigger guards against the core's own bugs,
+-- not against the roles that may switch it off: the table's owner, the role
+-- the core connects as (ALTER TABLE ... DISABLE TRIGGER), and a superuser.
 CREATE FUNCTION ledger.refuse_change() RETURNS trigger LANGUAGE plpgsql AS $$
 BEGIN
     RAISE EXCEPTION 'ledger.%: % refused, the transaction log is append-only', TG_TABLE_NAME, TG_OP

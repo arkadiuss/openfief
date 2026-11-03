@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-999b29a086b9
+  - type: implements
+    from: SYM-plugins-kube-instances-delete
+    to: REQ-plugins-secrets-never-platform
+    created_at: 2026-11-02T22:23:38.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16cee175f9d4

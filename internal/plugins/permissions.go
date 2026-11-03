@@ -122,6 +122,7 @@ func (p *Plugin) Validate() error {
 	if !validPluginName(p.Name) {
 		errs = append(errs, fieldErr("name", ErrInvalidName, p.Name))
 	}
+	errs = append(errs, validateUnreserved("name", p.Name)...)
 	if _, err := ParseImageRef(p.Image); err != nil {
 		errs = append(errs, &FieldError{Field: "image", Err: err})
 	}
@@ -151,6 +152,7 @@ func (g *Grant) Validate() error {
 	if !validPluginName(g.Plugin) {
 		errs = append(errs, fieldErr("plugin", ErrInvalidName, g.Plugin))
 	}
+	errs = append(errs, validateUnreserved("plugin", g.Plugin)...)
 	if err := g.Permissions.validate(); err != nil {
 		errs = append(errs, prefixed("permissions.", err)...)
 	}

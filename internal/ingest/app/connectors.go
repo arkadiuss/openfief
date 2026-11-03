@@ -59,6 +59,10 @@ var (
 	// reached now, such as one that isn't running; the same entry may be
 	// sent again later.
 	ErrConnectorUnavailable = errors.New("the connector can't be reached")
+	// ErrInvalidDelivery reports a connector's answer that doesn't translate
+	// into a delivery, such as a malformed amount or ISIN; the error names
+	// the field.
+	ErrInvalidDelivery = errors.New("the connector's answer doesn't translate")
 )
 
 // ConnectorCaller calls connector plugins' connector contract (D-49). The
@@ -377,6 +381,10 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s: %w", instance, err)
 	}
+	declared, err := c.declarations(ctx, instance, d.Institution)
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
+	}
 	readings, err := sourcedReadings(instance, d.IndexReadings)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
@@ -386,10 +394,7 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	m := r.Mapping
-	if d, err = c.declaredCrossChecks(ctx, instance, d, &m); err != nil {
-		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
-	}
-	if d, err = c.declaredDeliveries(ctx, instance, d, &m); err != nil {
+	if d, err = c.keepDeclared(ctx, instance, &declared, d, &m); err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
 	m.Transactions = ingest.ScopeToConnector(instance, m.Transactions)
@@ -411,27 +416,45 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	return batch, nil
 }
 
-// declaredCrossChecks returns d as it is when it carries no cross-check
-// prices or instance's manifest declares them, and otherwise without them,
-// adding to m the ingest problem that says none was stored (D-112).
-func (c *Connectors) declaredCrossChecks(ctx context.Context, instance string, d *Delivery, m *ingest.Mapping) (*Delivery, error) {
-	if len(d.CrossCheckPrices) == 0 {
-		return d, nil
-	}
-	var declared ingest.Declarations
-	if c.Declarations != nil {
-		var err error
-		if declared, err = c.Declarations.Declarations(ctx, instance); err != nil {
-			return nil, fmt.Errorf("manifest declarations: %w", err)
+// declarations returns what instance's manifest declares (D-112, D-182),
+// nothing without Declarations, after refusing a delivery naming an
+// institution it doesn't declare (D-182).
+func (c *Connectors) declarations(ctx context.Context, instance string, institution ingest.InstitutionID) (ingest.Declarations, error) {
+	var none ingest.Declarations
+	if c.Declarations == nil {
+		if err := none.CheckInstitution(institution); err != nil {
+			return none, fmt.Errorf("refused: %w", err)
 		}
+		return none, nil
 	}
-	if declared.CrossCheckPrices {
-		return d, nil
+	declared, err := c.Declarations.Declarations(ctx, instance)
+	if err != nil {
+		return ingest.Declarations{}, fmt.Errorf("manifest declarations: %w", err)
+	}
+	if err := declared.CheckInstitution(institution); err != nil {
+		return ingest.Declarations{}, fmt.Errorf("refused: %w", err)
+	}
+	return declared, nil
+}
+
+// declaredCrossChecks returns d as it is when it carries no cross-check
+// prices or its connector's manifest declares them, and otherwise without
+// them, adding to m the ingest problem that says none was stored (D-112).
+func declaredCrossChecks(declared *ingest.Declarations, d *Delivery, m *ingest.Mapping) *Delivery {
+	if len(d.CrossCheckPrices) == 0 || declared.CrossCheckPrices {
+		return d
 	}
 	out := *d
 	out.CrossCheckPrices = nil
 	m.Problems = append(slices.Clone(m.Problems), ingest.UndeclaredCrossCheckPrices(len(d.CrossCheckPrices)))
-	return &out, nil
+	return &out
+}
+
+// keepDeclared returns d with only what instance's manifest declares, as
+// declared says: without undeclared cross-check prices (D-112, D-141) and
+// without bond terms and index levels it may not deliver (D-179).
+func (c *Connectors) keepDeclared(ctx context.Context, instance string, declared *ingest.Declarations, d *Delivery, m *ingest.Mapping) (*Delivery, error) {
+	return c.declaredDeliveries(ctx, instance, declared, declaredCrossChecks(declared, d, m), m)
 }
 
 // declaredDeliveries returns d without the bond terms and index levels
@@ -440,15 +463,8 @@ func (c *Connectors) declaredCrossChecks(ctx context.Context, instance string, d
 // problem to m and raises the instance's one attention item, which a
 // delivery that drops nothing clears. The rest of d is imported either
 // way.
-func (c *Connectors) declaredDeliveries(ctx context.Context, instance string, d *Delivery, m *ingest.Mapping) (*Delivery, error) {
-	var declared ingest.Declarations
-	if c.Declarations != nil && len(d.BondTerms)+len(d.IndexLevels) > 0 {
-		var err error
-		if declared, err = c.Declarations.Declarations(ctx, instance); err != nil {
-			return nil, fmt.Errorf("manifest declarations: %w", err)
-		}
-	}
-	drop := ingest.UndeclaredDeliveries(declared, len(d.BondTerms), len(d.IndexLevels))
+func (c *Connectors) declaredDeliveries(ctx context.Context, instance string, declared *ingest.Declarations, d *Delivery, m *ingest.Mapping) (*Delivery, error) {
+	drop := ingest.UndeclaredDeliveries(*declared, len(d.BondTerms), len(d.IndexLevels))
 	problems, detail := drop.Problems, drop.Detail
 	if c.Attention != nil {
 		var err error

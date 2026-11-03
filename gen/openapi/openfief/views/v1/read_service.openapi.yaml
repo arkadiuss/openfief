@@ -1417,6 +1417,15 @@ components:
              owner can trust one or recognise a forgery (D-169): a keyless signer as
              "<subject> (issuer <issuer>)", a key as "public key sha256:<hex>".
              Empty otherwise.
+        institutions:
+          type: array
+          items:
+            type: string
+          title: institutions
+          description: |-
+            The institutions its signed manifest declares it books for, such as
+             "ibkr": the core refuses a delivery of a connector that names any
+             other (D-182). Empty for a view.
         bondTerms:
           type: boolean
           title: bond_terms

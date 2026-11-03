@@ -30,6 +30,7 @@ func pluginFromSpec(name string, spec *v1alpha1.PluginSpec) (*plugins.Plugin, er
 			MarketData:       spec.Manifest.MarketData,
 			BondTerms:        spec.Manifest.BondTerms,
 			IndexLevels:      spec.Manifest.IndexLevels,
+			Institutions:     spec.Manifest.Institutions,
 		},
 		Config: rawJSON(spec.Config),
 	}
