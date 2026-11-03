@@ -3,8 +3,8 @@
 # take the node down. The operator gives every plugin container its own requests and limits
 # (internal/plugins/operator/objects.go: 50m CPU and 64Mi requested, 500m CPU and 256Mi at most); the operator, the
 # egress proxy and the core set theirs in their Deployments. This is the backstop for anything else: a pod applied
-# into the namespace some other way, and CloudNativePG's database pods unless the Cluster in deploy/database sets
-# resources. A container that sets no memory limit gets 1Gi, so the database keeps room; there is no default CPU
+# into the namespace some other way. The database's Cluster (deploy/database) sets its own resources, since a
+# LimitRange applies to every container of the namespace and can't single out plugin pods. A container that sets no memory limit gets 1Gi, so the database keeps room; there is no default CPU
 # limit, because CPU is only throttled, never fatal, and the requests already share it fairly.
 apiVersion: v1
 kind: LimitRange

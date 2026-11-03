@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-103e3af315be
+  - type: verified_by
+    from: SCEN-tooling-release-bundle-database-resources
+    to: TEST-tooling-release-bundle
+    created_at: 2026-11-03T02:14:28.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98a657efec3b

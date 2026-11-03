@@ -1,5 +1,8 @@
 # OpenFief's database (D-14): the smallest CloudNativePG cluster that works, one instance on the cluster's default
-# storage class. Edit it before you apply it: size the storage, set a storageClass, add CloudNativePG's backups.
+# storage class. Edit it before you apply it: size the storage and the resources, set a storageClass, add
+# CloudNativePG's backups. The resources are its own (D-182), so the namespace's LimitRange defaults don't size it:
+# 100m CPU and 256Mi requested, at most 1Gi of memory. Raise the memory for a larger history; there is no CPU limit,
+# because CPU is only throttled, never fatal.
 # The install reads the connection string from the Secret openfief-db-app that CloudNativePG creates for it, so keep
 # the name, the namespace, the database and its owner.
 apiVersion: postgresql.cnpg.io/v1
@@ -9,6 +12,12 @@ metadata:
   namespace: openfief
 spec:
   instances: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
   storage:
     size: 10Gi
   bootstrap:

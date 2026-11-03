@@ -706,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-361bd2dda96e
+  - type: constrains
+    from: REQ-deploy-database-own-resources
+    to: FACT-SUBJECT-B2F8437E3C1B868A
+    created_at: 2026-11-03T02:14:48.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-166844e30f24
+  - type: requires_property
+    from: REQ-deploy-database-own-resources
+    to: FACT-PROP-4B0BA7D4DEC070F3
+    created_at: 2026-11-03T02:14:48.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae8de06e8054
+  - type: specified_by
+    from: REQ-deploy-database-own-resources
+    to: SCEN-tooling-release-bundle-database-resources
+    created_at: 2026-11-03T02:14:48.491Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cac66a13e754
