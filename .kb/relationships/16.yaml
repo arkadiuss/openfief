@@ -643,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1c17503bda5
+  - type: implements
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:29:26.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-faa6e0fe3efb
+  - type: covered_by
+    from: SYM-identity-connectapi-handler-caller-interceptor-verify
+    to: TEST-identity-connectapi-logsafe
+    created_at: 2026-11-03T03:29:26.318Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fad9b1ddc9c

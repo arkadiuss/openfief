@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-afeb42d764c2
+  - type: executable_for
+    from: SYM-valuation-connectapi-test-logsafe-checknovalues
+    to: TEST-valuation-connectapi-logsafe
+    created_at: 2026-11-03T03:27:10.006Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-101d7da4b564

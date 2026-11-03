@@ -475,3 +475,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc2acde5f101
+  - type: verified_by
+    from: SCEN-core-logs-carry-no-values
+    to: TEST-kernel-logsafe
+    created_at: 2026-11-03T03:24:19.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0be050e53d8a
+  - type: verified_by
+    from: SCEN-core-logs-carry-no-values
+    to: TEST-ledger-connectapi-logsafe
+    created_at: 2026-11-03T03:24:19.105Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a4aedc621c0
+  - type: verified_by
+    from: SCEN-core-logs-carry-no-values
+    to: TEST-attention-connectapi-logsafe
+    created_at: 2026-11-03T03:24:19.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6b62ea8fc2c
+  - type: verified_by
+    from: SCEN-core-logs-carry-no-values
+    to: TEST-portfolio-connectapi-logsafe
+    created_at: 2026-11-03T03:24:19.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfa8fde6fed9
+  - type: verified_by
+    from: SCEN-core-logs-carry-no-values
+    to: TEST-valuation-connectapi-logsafe
+    created_at: 2026-11-03T03:24:19.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5caf00d624e
+  - type: verified_by
+    from: SCEN-core-logs-carry-no-values
+    to: TEST-identity-connectapi-logsafe
+    created_at: 2026-11-03T03:24:19.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-363bf5281c57

@@ -574,6 +574,7 @@ DESIGN §3.7 lists malicious statement files as a threat. `decode` reads with `e
 
 ## Decisions
 
+- **GR-12**: `app.LogSafe` is `kernel.LogSafe` with ingest's known errors (`loggableErrors`), which the other contexts' sinks now share.
 - **D-7** Only connector ingest paths: `Service` (file, pull) and `Connectors` (sync, upload, entry).
 - **D-11** Connector contract in protobuf, called over Connect RPC.
 - **D-18** Keys from source plus institution IDs; reported balances become assertions.

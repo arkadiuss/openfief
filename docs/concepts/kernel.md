@@ -133,6 +133,7 @@ flowchart TD
 
 ## Decisions
 
+- **GR-12**: `LogSafe(err, known...)` describes an error for a log line by the known errors in its chain, which the caller vouches name a rule and never a value, or else only by its innermost error's Go type. Every context's log sinks use it with their own known errors; the kernel trusts none by itself.
 - **D-20**: amounts keep their original currency; money never converts.
 - **D-21**: end-of-day data, so dates carry no time of day.
 - **D-34**: the half-even mode the ledger's lot-cost split uses.

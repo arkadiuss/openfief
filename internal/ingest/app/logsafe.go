@@ -2,9 +2,6 @@ package app
 
 import (
 	"context"
-	"errors"
-	"fmt"
-	"strings"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -38,36 +35,5 @@ func loggableErrors() []error {
 // "; ", or else only the innermost error's Go type, such as
 // "*pgconn.PgError", whose text may quote a row. Nil is "".
 func LogSafe(err error) string {
-	if err == nil {
-		return ""
-	}
-	var known []string
-	for _, k := range loggableErrors() {
-		if errors.Is(err, k) {
-			known = append(known, k.Error())
-		}
-	}
-	if len(known) > 0 {
-		return strings.Join(known, "; ")
-	}
-	return fmt.Sprintf("unclassified error of type %T", innermost(err))
-}
-
-// innermost follows err's chain, the first of joined errors at each step,
-// to the error that wraps nothing.
-func innermost(err error) error {
-	for {
-		if next := errors.Unwrap(err); next != nil {
-			err = next
-			continue
-		}
-		var joined interface{ Unwrap() []error }
-		if errors.As(err, &joined) {
-			if errs := joined.Unwrap(); len(errs) > 0 && errs[0] != nil {
-				err = errs[0]
-				continue
-			}
-		}
-		return err
-	}
+	return kernel.LogSafe(err, loggableErrors()...)
 }

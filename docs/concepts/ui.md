@@ -206,6 +206,7 @@ The UI is also an app the owner can install, a progressive web app:
 
 ## Decisions
 
+- **GR-12**: a failed core call is logged by its Connect code, and a page that can't render or a response that can't be written by `kernel.LogSafe`, never by the error's text.
 - **D-3** makes the UI the default view; **D-6** says it reads through the public API like any view. `TestReadsOnlyThroughPublicAPI` keeps the package from importing anything of OpenFief's but the kernel and the SDK.
 - **D-26** and **D-60**: passkeys only, per host, the first through a one-time link. **D-27**: the UI authenticates as a plugin with its projected token.
 - **D-28**, **D-81**: the UI is a ClusterIP Service that only the core calls; a route, a port-forward or the demo's Ingress reaches the core, which proxies the UI's browser path. Which browser path the UI takes is the narrowest that works with the core's own paths: `/`, so the UI's pages keep their paths and enrollment links stay `<origin>/enroll#code=...`.

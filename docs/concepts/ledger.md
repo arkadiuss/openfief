@@ -243,6 +243,7 @@ Transfer links live in `ledger.transfer_links` ([0005_transfer_links.sql](../../
 
 ## Decisions
 
+- **GR-12**: its Connect services log a failure only through `kernel.LogSafe`: by the known errors in its chain, or else its innermost error's type, never its text, which may carry an amount, an ISIN or an account number; `TestFailuresLogNoValues` drives every sink with such failures against a deny-list.
 - **D-2**: the core is the system of record for transactions and lots.
 - **D-14, D-55**: the ledger lives in PostgreSQL, in its own schema.
 - **D-18**: append-only versioned log, idempotent re-imports, flagged balance assertions.

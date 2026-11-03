@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"path"
 	"strings"
+
+	"github.com/arkadiuss/openfief/internal/kernel"
 )
 
 // webFS holds the page templates and the static files the UI serves:
@@ -133,7 +135,7 @@ func (s *server) show(w http.ResponseWriter, r *http.Request, status int, name s
 // 500 when it fails.
 func (s *server) showTemplate(w http.ResponseWriter, r *http.Request, status int, name, tmpl string, data any) {
 	if err := s.pages.render(w, status, name, tmpl, data, requestFormat(r)); err != nil {
-		s.log.ErrorContext(r.Context(), "render page", "page", name, "error", err.Error())
+		s.log.ErrorContext(r.Context(), "render page", "page", name, "error", kernel.LogSafe(err))
 		http.Error(w, "the page could not be rendered", http.StatusInternalServerError)
 	}
 }

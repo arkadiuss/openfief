@@ -650,3 +650,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33e6dab1247f
+  - type: implements
+    from: SYM-kernel-log-safe
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:24:32.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e0c808397e2
+  - type: implements
+    from: SYM-kernel-log-safe
+    to: REQ-ingest-logs-carry-no-values
+    created_at: 2026-11-03T03:24:32.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f30fa1d7f676
+  - type: covered_by
+    from: SYM-kernel-log-safe
+    to: TEST-kernel-logsafe
+    created_at: 2026-11-03T03:24:32.982Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-102cf4d3b57f

@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-192ac45d98dc
+  - type: executable_for
+    from: SYM-identity-connectapi-test-logsafe-valuedfailures
+    to: TEST-identity-connectapi-logsafe
+    created_at: 2026-11-03T03:27:27.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87250b6d808b

@@ -510,3 +510,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70f7ab0b0c05
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-logsafe-valuedfailures
+    to: TEST-ledger-connectapi-logsafe
+    created_at: 2026-11-03T03:25:08.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84dfd7c58d44

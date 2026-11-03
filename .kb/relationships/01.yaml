@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f680e71396b
+  - type: implements
+    from: SYM-portfolio-connectapi-sleeve-service-fail
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:28:38.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3efceb6d211b
+  - type: covered_by
+    from: SYM-portfolio-connectapi-sleeve-service-fail
+    to: TEST-portfolio-connectapi-logsafe
+    created_at: 2026-11-03T03:28:39.038Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-696f58bc7ce6

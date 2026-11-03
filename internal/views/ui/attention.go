@@ -147,7 +147,7 @@ func (s *server) afterAttentionForm(w http.ResponseWriter, r *http.Request, sess
 func (s *server) openAttention(r *http.Request, sess session) int {
 	resp, err := s.read.ListAttentionItems(r.Context(), bearer(&viewsv1.ListAttentionItemsRequest{}, sess))
 	if err != nil {
-		s.log.WarnContext(r.Context(), "counting attention items", "error", err.Error())
+		s.log.WarnContext(r.Context(), "counting attention items", "code", connect.CodeOf(err).String())
 		return 0
 	}
 	return int(resp.Msg.GetOpen())

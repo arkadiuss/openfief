@@ -50022,6 +50022,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-identity-auth-connectapi
+      - type: covered_by
+        target: TEST-identity-connectapi-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-identity-auth-callers
       - type: implements
@@ -50052,6 +50056,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-identity-auth-connectapi
+      - type: covered_by
+        target: TEST-identity-connectapi-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-identity-auth-callers
       - type: implements
@@ -52538,7 +52546,11 @@ symbols:
       recorded_at: 2026-10-28T19:52:34.249Z
     relationships:
       - type: covered_by
+        target: TEST-kernel-logsafe
+      - type: covered_by
         target: TEST-ui-auth
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-ui-login-flows
   - id: SYM-ui-server-json-redirect
@@ -53492,7 +53504,11 @@ symbols:
       recorded_at: 2026-10-28T19:58:21.900Z
     relationships:
       - type: covered_by
+        target: TEST-kernel-logsafe
+      - type: covered_by
         target: TEST-ui-pages
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-ui-account-pages
   - id: SYM-ui-server-error-page
@@ -61005,6 +61021,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-portfolio-connectapi
+      - type: covered_by
+        target: TEST-portfolio-connectapi-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-portfolio-model-entry
   - id: SYM-portfolio-connectapi-pb-model
@@ -80606,7 +80626,11 @@ symbols:
       recorded_at: 2026-10-29T13:07:17.505Z
     relationships:
       - type: covered_by
+        target: TEST-portfolio-connectapi-logsafe
+      - type: covered_by
         target: TEST-portfolio-connectapi-sleeves
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-portfolio-sleeve-service
   - id: SYM-portfolio-connectapi-test-helper-mem-sleeves
@@ -86539,6 +86563,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-market-data
+      - type: covered_by
+        target: TEST-valuation-connectapi-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-valuation-market-data-service
   - id: SYM-valuation-connectapi-pb-ranking
@@ -89115,6 +89143,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-price-checks
+      - type: covered_by
+        target: TEST-valuation-connectapi-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-valuation-price-check-service
   - id: SYM-valuation-thresholds
@@ -93530,6 +93562,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-settings
+      - type: covered_by
+        target: TEST-valuation-connectapi-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-ui-number-format-setting
       - type: implements
@@ -100038,7 +100074,11 @@ symbols:
       recorded_at: 2026-10-30T06:39:31.950Z
     relationships:
       - type: covered_by
+        target: TEST-ledger-connectapi-logsafe
+      - type: covered_by
         target: TEST-ledger-connectapi-transfers
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-ledger-transfer-service
   - id: SYM-ledger-connectapi-pair-from
@@ -115218,10 +115258,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-attention
+      - type: covered_by
+        target: TEST-kernel-logsafe
       - type: implements
         target: REQ-attention-checks
       - type: implements
         target: REQ-attention-sweep
+      - type: implements
+        target: REQ-core-logs-carry-no-values
   - id: SYM-core-attention-run
     title: attention.run
     sourceFile: cmd/core/attention.go
@@ -116315,8 +116359,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-attention-connectapi
+      - type: covered_by
+        target: TEST-attention-connectapi-logsafe
       - type: implements
         target: REQ-attention-owner-service
+      - type: implements
+        target: REQ-core-logs-carry-no-values
   - id: SYM-attention-connectapi-test-helper-owners
     title: owners
     sourceFile: internal/attention/connectapi/attention_test.go
@@ -117670,7 +117718,11 @@ symbols:
       recorded_at: 2026-10-31T18:52:58.950Z
     relationships:
       - type: covered_by
+        target: TEST-kernel-logsafe
+      - type: covered_by
         target: TEST-ui-attention
+      - type: implements
+        target: REQ-core-logs-carry-no-values
       - type: implements
         target: REQ-ui-attention-items-one-place
       - type: implements
@@ -128616,19 +128668,6 @@ symbols:
         target: TEST-ingest-app-logsafe
       - type: implements
         target: REQ-ingest-logs-carry-no-values
-  - id: SYM-ingest-app-innermost
-    title: innermost
-    sourceFile: internal/ingest/app/logsafe.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:05:47.808Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-logsafe
-      - type: implements
-        target: REQ-ingest-logs-carry-no-values
   - id: SYM-ingest-conn-rpc-invalid-message-error
     title: invalidMessageError
     sourceFile: internal/ingest/connectrpc/mapping.go
@@ -128828,3 +128867,262 @@ symbols:
         target: REQ-ingest-bond-terms-index-levels-declared-approved
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+  - id: SYM-kernel-log-safe
+    status: active
+    title: LogSafe
+    sourceFile: internal/kernel/logsafe.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:24:29.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-kernel-innermost
+    status: active
+    title: innermost
+    sourceFile: internal/kernel/logsafe.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:24:38.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
+  - id: SYM-kernel-test-log-safe
+    title: TestLogSafe
+    sourceFile: internal/kernel/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:24:45.932Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-logsafe
+  - id: SYM-ledger-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:05.090Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-logsafe
+  - id: SYM-ledger-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:13.644Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-logsafe
+  - id: SYM-ledger-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:22.128Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-logsafe
+  - id: SYM-ledger-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:31.226Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-logsafe
+  - id: SYM-attention-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:39.928Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi-logsafe
+  - id: SYM-attention-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:48.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi-logsafe
+  - id: SYM-attention-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:57.975Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi-logsafe
+  - id: SYM-attention-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:06.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi-logsafe
+  - id: SYM-portfolio-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:15.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi-logsafe
+  - id: SYM-portfolio-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:24.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi-logsafe
+  - id: SYM-portfolio-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:32.976Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi-logsafe
+  - id: SYM-portfolio-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:41.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi-logsafe
+  - id: SYM-valuation-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:50.207Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-connectapi-logsafe
+  - id: SYM-valuation-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:58.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-connectapi-logsafe
+  - id: SYM-valuation-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:06.673Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-connectapi-logsafe
+  - id: SYM-valuation-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:15.620Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:24.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:32.989Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:41.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:49.721Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-valuedcallers
+    title: valuedCallers
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:58.177Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-valuedcallers-verifycaller
+    title: valuedCallers.VerifyCaller
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:28:06.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe

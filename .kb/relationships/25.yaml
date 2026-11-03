@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b1237cdf1f52
+  - type: executable_for
+    from: SYM-portfolio-connectapi-test-logsafe-textlog
+    to: TEST-portfolio-connectapi-logsafe
+    created_at: 2026-11-03T03:26:27.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4dfa83e61040

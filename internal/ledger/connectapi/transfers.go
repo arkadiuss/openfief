@@ -19,6 +19,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1"
@@ -81,7 +82,7 @@ func (s *transferService) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, ledger.ErrTransferTaken):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	}
-	s.log.LogAttrs(ctx, slog.LevelError, "transfer call failed", slog.String("error", err.Error()))
+	s.log.LogAttrs(ctx, slog.LevelError, "transfer call failed", slog.String("error", kernel.LogSafe(err, context.Canceled, context.DeadlineExceeded)))
 	return connect.NewError(connect.CodeInternal, errInternal)
 }
 

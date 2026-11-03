@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e82c8e36143f
+  - type: implements
+    from: SYM-core-attention-tick
+    to: REQ-core-logs-carry-no-values
+    created_at: 2026-11-03T03:30:11.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7413ad227a6
+  - type: covered_by
+    from: SYM-core-attention-tick
+    to: TEST-kernel-logsafe
+    created_at: 2026-11-03T03:30:11.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78c9a8643a66

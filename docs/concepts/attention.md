@@ -96,6 +96,7 @@ type AttentionItems interface {
 
 ## Decisions
 
+- **GR-12**: its Connect services log a failure only through `kernel.LogSafe`: by the known errors in its chain, or else its innermost error's type, never its text, which may carry an amount, an ISIN or an account number; `TestFailuresLogNoValues` drives every sink with such failures against a deny-list. The core's attention sweep logs its failures the same way.
 - **D-130**: one append-only store of attention items with kind, subject, state and history; every check that needs the owner raises one; each change is published from the core's outbox.
 - **D-131**: a confirmed transfer whose legs no longer match after a correction stops counting and raises an item ([Ledger](ledger.md)).
 - **D-79, D-115**: the owner's actions go through one owner-only service on the plugin port.
