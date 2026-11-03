@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9243726ff4a1
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-mem-registry-sleeves
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:38:06.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5917ae04d8c4
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-wire-field
+    to: TEST-ingest-connectrpc-codec
+    created_at: 2026-11-03T06:19:49.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a0015771698

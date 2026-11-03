@@ -1,6 +1,6 @@
 ---
 title: The ledger must check every sleeve kind and sleeve it saves against the stored kinds, store a sleeve with no role with its kind's default role, and refuse a sleeve with an unknown kind, a role its kind does not allow, or a change of a stored kind's default role.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#GR-6
 tags:
   - strict-modeling

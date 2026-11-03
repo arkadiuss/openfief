@@ -125,13 +125,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a6e7331bbe7
-  - type: implements
-    from: SYM-ledger-app-validate-import
-    to: REQ-ledger-app-registry
-    created_at: 2026-10-28T06:31:06.921Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ae1c67fe252d
   - type: covered_by
     from: SYM-ledger-app-validate-import
     to: TEST-ledger-app-registry
@@ -434,13 +427,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-7368a02b844e
   - type: executable_for
-    from: SYM-ingest-app-test-helper-held-ledger-account
-    to: TEST-ingest-app-held
-    created_at: 2026-11-01T07:47:31.565Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a3f2ba3ea48c
-  - type: executable_for
     from: SYM-attention-app-test-helper-recorder-publish
     to: TEST-attention-app-items
     created_at: 2026-10-31T18:38:55.758Z
@@ -524,13 +510,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-622a3d9060f9
-  - type: implements
-    from: SYM-ingest-xtb-row-at
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T20:58:20.631Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fe2815d39bcf
   - type: covered_by
     from: SYM-ingest-xtb-row-at
     to: TEST-ingest-xtb-xlsx
@@ -545,3 +524,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3a8a78545426
+  - type: implements
+    from: SYM-ledger-app-validate-import
+    to: REQ-ledger-app-accounts
+    created_at: 2026-11-03T12:05:50.769Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5885e06d7df
+  - type: implements
+    from: SYM-ingest-app-account-sleeves
+    to: REQ-ingest-account-service
+    created_at: 2026-11-03T12:23:32.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-470733d35da3
+  - type: implements
+    from: SYM-ingest-app-account-sleeves
+    to: REQ-portfolio-account-in-one-sleeve
+    created_at: 2026-11-03T12:23:32.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67207e9f7656
+  - type: covered_by
+    from: SYM-ingest-app-account-sleeves
+    to: TEST-ingest-app-accounts
+    created_at: 2026-11-03T12:23:32.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25b1b831d694
+  - type: implements
+    from: SYM-portfolio-pg-store-remove-account
+    to: REQ-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:31:25.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3db2e22bee69
+  - type: implements
+    from: SYM-portfolio-pg-store-remove-account
+    to: REQ-portfolio-account-in-one-sleeve
+    created_at: 2026-11-03T12:31:25.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb9cab7e5530
+  - type: covered_by
+    from: SYM-portfolio-pg-store-remove-account
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:31:25.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d40203a74bc
+  - type: implements
+    from: SYM-ingest-xtb-row-at
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:20:52.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6ff2b4c97af

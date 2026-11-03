@@ -324,6 +324,10 @@ func TestReconcile(t *testing.T) {
 		t.Parallel()
 		testOneBrowserView(t, tc, signed)
 	})
+	t.Run("an instance naming another's Secret does not run", func(t *testing.T) {
+		t.Parallel()
+		testSharedSecret(t, tc, signed)
+	})
 	t.Run("revoking the grant removes the plugin", func(t *testing.T) {
 		t.Parallel()
 		testRevoke(t, tc, signed)

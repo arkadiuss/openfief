@@ -1,6 +1,6 @@
 ---
 title: The ledger must store sleeves, accounts, transaction versions with their postings and balance assertion checks in PostgreSQL, in a ledger schema it owns and creates with embedded migrations, with amounts and quantities as exact numerics that read back unchanged.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-14
 tags:
   - strict-modeling

@@ -19,7 +19,7 @@ import (
 type DueCoupon struct {
 	Account   ledger.AccountID
 	Wrapper   string
-	Payout    ledger.PayoutSetting
+	Payout    ingest.PayoutSetting
 	Lot       ledger.Lot
 	Terms     pl.Terms
 	Period    int
@@ -152,7 +152,7 @@ func BookCoupons(due []DueCoupon, readings []valuation.IndexReading) (ingest.Map
 type payout struct {
 	tx      ledger.Transaction
 	err     error
-	setting ledger.PayoutSetting
+	setting ingest.PayoutSetting
 	ref     string
 	waiting string
 }

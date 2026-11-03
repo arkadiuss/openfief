@@ -23,17 +23,22 @@ var (
 
 // Limits of what the reader takes from one file, against hostile uploads
 // such as a zip bomb or a sheet of empty cells in its last column (D-184).
-// The parts are streamed through the XML decoder, never held whole, so what
-// the reader allocates is bounded by what it keeps: the cells and their
-// text.
+// The parts are streamed through the XML decoder, never held whole, and no
+// token may outgrow maxTokenBytes, so what the reader allocates is bounded
+// by what it keeps: the cells and their text. The limits are set so the
+// xtb plugin maps the largest file it takes within its pod's 256 MiB memory
+// limit (internal/plugins/operator/objects.go), file and delivery included.
 const (
-	// MaxFileBytes caps the uploaded file, as the core does (D-109).
-	MaxFileBytes = 64 << 20
+	// MaxFileBytes caps the uploaded file: an export of 50,000 operations
+	// is a few MiB. The core takes files up to 64 MiB (D-109); the xtb
+	// plugin refuses one over this cap.
+	MaxFileBytes = 16 << 20
 	// maxPartBytes caps one uncompressed part of the workbook.
 	maxPartBytes = 128 << 20
 	// maxTotalBytes caps all the parts read, uncompressed.
 	maxTotalBytes = 256 << 20
-	// maxParts caps the zip's entries.
+	// maxParts caps the zip's entries, counted before the zip is opened:
+	// opening it reads every entry of its directory.
 	maxParts = 1000
 	// maxSheets caps the sheets a workbook lists; an export has three.
 	maxSheets = 100
@@ -42,17 +47,24 @@ const (
 	// maxColumns caps the column of any cell (column XFD is 16384).
 	maxColumns = 16384
 	// maxCells caps the cells with a value the reader keeps, all sheets
-	// together: an export of 50,000 operations has under a million.
-	maxCells = 1_000_000
+	// together: an export of 50,000 operations, at ten columns a row, has
+	// half as many. Only rows with a cell are kept, so it caps the rows
+	// kept too. With maxTextBytes it bounds the workbook the reader keeps
+	// to about 70 MiB of heap.
+	maxCells = 500_000
 	// maxSharedStrings caps the shared strings.
-	maxSharedStrings = 1_000_000
+	maxSharedStrings = 500_000
 	// maxTextBytes caps the text the reader keeps: the shared strings and
 	// every cell's own value, all sheets together.
-	maxTextBytes = 32 << 20
-	// maxRunBytes caps a run of bytes between two markup characters, '<'
-	// or '>': any one name, attribute list or text the XML decoder holds.
-	// Excel's own limit for a cell is 32,767 characters.
-	maxRunBytes = 256 << 10
+	maxTextBytes = 16 << 20
+	// maxTokenBytes caps one XML token as written in the part: a start tag
+	// with all its attributes, a text, a comment. It is what the XML
+	// decoder holds at once. Excel's own limit for a cell is 32,767
+	// characters.
+	maxTokenBytes = 256 << 10
+	// readAhead is how far the XML decoder reads past the token it is on:
+	// the buffer it wraps a reader in.
+	readAhead = 4096
 	// maxDepth caps how deep elements nest; SpreadsheetML needs five.
 	maxDepth = 32
 	// letters is the number of column letters, A to Z.
@@ -62,16 +74,19 @@ const (
 // limits are the reader's bounds on what it keeps and how it parses; tests
 // shrink them to reach each one with a tiny workbook.
 type limits struct {
-	sheets, rows, cells, sharedStrings, textBytes, runBytes, depth int
+	sheets, rows, cells, sharedStrings, textBytes, tokenBytes, depth int
 }
 
 // defaultLimits are the limits of every upload.
 func defaultLimits() limits {
 	return limits{
 		sheets: maxSheets, rows: maxRows, cells: maxCells, sharedStrings: maxSharedStrings,
-		textBytes: maxTextBytes, runBytes: maxRunBytes, depth: maxDepth,
+		textBytes: maxTextBytes, tokenBytes: maxTokenBytes, depth: maxDepth,
 	}
 }
+
+// centralHeader is the signature of a zip central directory header.
+const centralHeader = "PK\x01\x02"
 
 // The namespace of a relationship ID attribute, r:id.
 const nsRelationships = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
@@ -150,6 +165,11 @@ func openZip(data []byte, lim limits) (*zipParts, error) {
 	if len(data) > MaxFileBytes {
 		return nil, fmt.Errorf("%w: more than %d bytes", ErrTooLarge, MaxFileBytes)
 	}
+	// Every entry zip.NewReader reads starts with the central directory
+	// header's signature, so counting them bounds what it allocates.
+	if bytes.Count(data, []byte(centralHeader)) > maxParts {
+		return nil, fmt.Errorf("%w: more than %d parts", ErrTooLarge, maxParts)
+	}
 	zr, err := zip.NewReader(bytes.NewReader(data), int64(len(data)))
 	if err != nil {
 		return nil, fmt.Errorf("%w: %w", ErrNotWorkbook, err)
@@ -183,14 +203,15 @@ func (z *zipParts) keepCell() error {
 }
 
 // partReader streams one part: it fails past maxPartBytes of the part,
-// past maxTotalBytes of all parts, and on a run of more than the limit's
-// runBytes between two markup characters.
+// past maxTotalBytes of all parts, and once the XML token being read is
+// longer than the limit's tokenBytes.
 type partReader struct {
 	r    io.Reader
 	z    *zipParts
 	name string
 	n    int64
-	run  int
+	// token is the offset in the part where the token being read starts.
+	token int64
 }
 
 // Read reads from the part within the limits.
@@ -204,15 +225,8 @@ func (p *partReader) Read(b []byte) (int, error) {
 	case p.z.read > maxTotalBytes:
 		return 0, fmt.Errorf("%w: beyond %d bytes uncompressed", ErrTooLarge, maxTotalBytes)
 	}
-	for _, c := range b[:n] {
-		if c == '<' || c == '>' {
-			p.run = 0
-			continue
-		}
-		p.run++
-		if p.run > p.z.lim.runBytes {
-			return 0, fmt.Errorf("%w: part %s has a run of more than %d bytes", ErrTooLarge, p.name, p.z.lim.runBytes)
-		}
+	if p.n-p.token > int64(p.z.lim.tokenBytes+readAhead) {
+		return 0, fmt.Errorf("%w: part %s has a token of more than %d bytes", ErrTooLarge, p.name, p.z.lim.tokenBytes)
 	}
 	switch {
 	case err == nil:
@@ -227,6 +241,7 @@ func (p *partReader) Read(b []byte) (int, error) {
 // at most depth deep.
 type walker struct {
 	d     *xml.Decoder
+	p     *partReader
 	path  []string
 	name  string
 	depth int
@@ -236,6 +251,7 @@ type walker struct {
 // element is on path when returned, an end element already off it.
 func (w *walker) next() (xml.Token, error) {
 	tok, err := w.d.Token()
+	w.p.token = w.d.InputOffset()
 	if errors.Is(err, io.EOF) {
 		return nil, io.EOF
 	}
@@ -280,7 +296,8 @@ func (z *zipParts) walk(name string, required bool, fn func(w *walker, tok xml.T
 	if err != nil {
 		return fmt.Errorf("%w: %s: %w", ErrNotWorkbook, name, err)
 	}
-	w := &walker{d: xml.NewDecoder(&partReader{r: rc, z: z, name: name}), name: name, depth: z.lim.depth}
+	p := &partReader{r: rc, z: z, name: name}
+	w := &walker{d: xml.NewDecoder(p), p: p, name: name, depth: z.lim.depth}
 	err = w.each(fn)
 	if closeErr := rc.Close(); closeErr != nil && err == nil {
 		err = fmt.Errorf("%w: %s: %w", ErrNotWorkbook, name, closeErr)
@@ -345,12 +362,20 @@ func readWorkbookWithin(data []byte, lim limits) (*workbook, error) {
 		return nil, err
 	}
 	out := &workbook{sheets: map[string]*sheet{}, date1904: date1904}
+	read := map[string]bool{}
 	for _, s := range refs {
 		target, ok := targets[s.rID]
 		if !ok {
 			return nil, fmt.Errorf("%w: sheet %q has no part", ErrNotWorkbook, s.name)
 		}
-		sh, err := z.sheet(s.name, partName(target), strs)
+		part := partName(target)
+		if _, dup := out.sheets[s.name]; dup || read[part] {
+			// Each sheet is read once: a part listed again would be read
+			// again, as often as the workbook lists it.
+			return nil, fmt.Errorf("%w: sheet %q or its part is listed twice", ErrNotWorkbook, s.name)
+		}
+		read[part] = true
+		sh, err := z.sheet(s.name, part, strs)
 		if err != nil {
 			return nil, err
 		}
@@ -601,9 +626,13 @@ func (r *sheetReader) endCell() error {
 }
 
 // endRow keeps the row just read, its cells in column order; when a column
-// repeats, the last cell read in it wins.
+// repeats, the last cell read in it wins. A row without a cell with a
+// value is not kept: it reads as missing, the same as empty.
 func (r *sheetReader) endRow() {
 	cells := r.cells
+	if len(cells) == 0 {
+		return
+	}
 	slices.SortStableFunc(cells, func(a, b entry) int { return a.col - b.col })
 	out := cells[:0]
 	for _, e := range cells {

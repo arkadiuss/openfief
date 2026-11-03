@@ -54,7 +54,7 @@ func newFakeModels(t *testing.T, on bool) *fakeModels {
 // modelViews returns f's views serving models.
 func modelViews(t *testing.T, f *fixture, models app.ModelReports) *app.Views {
 	t.Helper()
-	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithModel(models))
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithPortfolio(f.ledger), app.WithModel(models))
 	if err != nil {
 		t.Fatal(err)
 	}

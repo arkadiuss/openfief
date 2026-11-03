@@ -18,12 +18,17 @@ type HeldSource interface {
 	HeldAccounts(ctx context.Context, accounts []ledger.AccountID) ([]ingest.HeldAccount, []ingest.BondTerms, error)
 }
 
-// AccountHoldings reads an account, with its payout setting, and its
-// holdings and open lots on a day; ledger/app.Ledger implements it.
+// AccountHoldings reads an account's holdings and open lots on a day;
+// ledger/app.Ledger implements it.
 type AccountHoldings interface {
-	Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error)
 	HoldingsOn(ctx context.Context, account ledger.AccountID, on kernel.Date) ([]ledger.Holding, error)
 	LotsOn(ctx context.Context, account ledger.AccountID, on kernel.Date) ([]ledger.Lot, error)
+}
+
+// PayoutSettingReader reads an account's payout setting, the default, as
+// cash, when none is stored; ingest/postgres.Store implements it.
+type PayoutSettingReader interface {
+	PayoutSetting(ctx context.Context, account ledger.AccountID) (ingest.PayoutSetting, error)
 }
 
 // TaxWrappers reads an account's recorded tax wrapper (D-76), and false
@@ -46,6 +51,9 @@ type HoldingsScope struct {
 	// recorded has Default.
 	Wrappers TaxWrappers
 	Default  jurisdiction.Wrapper
+	// Payouts reads the accounts' payout settings (D-135, D-162), which
+	// the ingest context keeps.
+	Payouts PayoutSettingReader
 	// Today returns the day whose holdings count.
 	Today func() kernel.Date
 }
@@ -97,11 +105,9 @@ func (h *HoldingsScope) held(ctx context.Context, id ledger.AccountID, today ker
 	if recorded {
 		a.Wrapper = string(w)
 	}
-	acc, err := h.Ledger.Account(ctx, id)
-	if err != nil {
-		return ingest.HeldAccount{}, fmt.Errorf("account %s: %w", id, err)
+	if a.Payout, err = h.Payouts.PayoutSetting(ctx, id); err != nil {
+		return ingest.HeldAccount{}, fmt.Errorf("payout setting of %s: %w", id, err)
 	}
-	a.Payout = acc.PayoutSetting()
 	if a.Holdings, err = h.Ledger.HoldingsOn(ctx, id, today); err != nil {
 		return ingest.HeldAccount{}, fmt.Errorf("holdings of %s: %w", id, err)
 	}

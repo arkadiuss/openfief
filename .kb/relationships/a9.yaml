@@ -594,13 +594,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-32317ceec1d5
-  - type: implements
-    from: SYM-ingest-xtb-sheet
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:05:15.323Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c856cead61af
   - type: covered_by
     from: SYM-ingest-xtb-sheet
     to: TEST-ingest-xtb-xlsx
@@ -643,3 +636,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0d2e6a9b5f1d
+  - type: implements
+    from: SYM-views-connectapi-read-service-account
+    to: REQ-views-api-contract
+    created_at: 2026-11-03T12:33:13.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c45f4430637
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-account
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-03T12:33:13.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98f7101444ae
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-ledger-accounts-account
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:39:36.683Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eac4d10a3402
+  - type: implements
+    from: SYM-ingest-xtb-sheet
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:21:58.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fc20f5be29b

@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb8eac03c592
+  - type: executable_for
+    from: SYM-portfolio-pg-test-migrate-stores-the-default-kinds
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:42:47.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6e968bdee75

@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/arkadiuss/openfief/internal/ledger"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
 // DeleteAccount deletes account id in one statement unless a transaction
@@ -26,40 +25,6 @@ func (s *Store) DeleteAccount(ctx context.Context, id ledger.AccountID) error {
 	}
 	if used {
 		return fmt.Errorf("account %s: %w", id, ledger.ErrAccountHasTransactions)
-	}
-	return nil
-}
-
-// DeleteSleeve deletes sleeve id in one statement unless an account is in
-// it, which fails with portfolio.ErrSleeveHasAccounts.
-func (s *Store) DeleteSleeve(ctx context.Context, id portfolio.SleeveID) error {
-	var used bool
-	err := s.db.QueryRow(ctx, `
-		WITH used AS (SELECT EXISTS (SELECT 1 FROM ledger.accounts WHERE sleeve_id = $1) AS used),
-		gone AS (DELETE FROM ledger.sleeves WHERE id = $1 AND NOT (SELECT used FROM used) RETURNING id)
-		SELECT used FROM used`, string(id)).Scan(&used)
-	if err != nil {
-		return fmt.Errorf("deleting sleeve %s: %w", id, err)
-	}
-	if used {
-		return fmt.Errorf("sleeve %s: %w", id, portfolio.ErrSleeveHasAccounts)
-	}
-	return nil
-}
-
-// DeleteKind deletes sleeve kind key in one statement unless a sleeve has
-// it, which fails with portfolio.ErrKindInUse.
-func (s *Store) DeleteKind(ctx context.Context, key portfolio.KindKey) error {
-	var used bool
-	err := s.db.QueryRow(ctx, `
-		WITH used AS (SELECT EXISTS (SELECT 1 FROM ledger.sleeves WHERE kind = $1) AS used),
-		gone AS (DELETE FROM ledger.sleeve_kinds WHERE key = $1 AND NOT (SELECT used FROM used) RETURNING key)
-		SELECT used FROM used`, string(key)).Scan(&used)
-	if err != nil {
-		return fmt.Errorf("deleting sleeve kind %s: %w", key, err)
-	}
-	if used {
-		return fmt.Errorf("sleeve kind %s: %w", key, portfolio.ErrKindInUse)
 	}
 	return nil
 }

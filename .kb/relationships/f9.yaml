@@ -685,13 +685,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc28347a0517
-  - type: implements
-    from: SYM-ingest-xtb-sheet-reader-end-row
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:03:37.883Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-248539db3818
   - type: covered_by
     from: SYM-ingest-xtb-sheet-reader-end-row
     to: TEST-ingest-xtb-xlsx
@@ -699,3 +692,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-695ea425c79c
+  - type: implements
+    from: SYM-ingest-payout-setting-periods
+    to: REQ-ingest-payout-setting-history
+    created_at: 2026-11-03T12:25:41.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-582e907de11d
+  - type: covered_by
+    from: SYM-ingest-payout-setting-periods
+    to: TEST-ingest-payout-setting
+    created_at: 2026-11-03T12:25:41.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cae8229d25f
+  - type: implements
+    from: SYM-ingest-xtb-sheet-reader-end-row
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:23:20.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fea207d2617a

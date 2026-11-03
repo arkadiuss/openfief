@@ -35,13 +35,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-aca38db34fb1
   - type: executable_for
-    from: SYM-ledger-app-test-save-sleeve
-    to: TEST-ledger-app-registry
-    created_at: 2026-10-28T06:09:40.007Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eebd5ed4322b
-  - type: executable_for
     from: SYM-ledger-pg-test-helper-sql-state
     to: TEST-ledger-pg-store
     created_at: 2026-10-28T06:32:54.420Z
@@ -356,13 +349,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-399ad81046fe
-  - type: validates
-    from: TEST-ledger-app-kinds
-    to: REQ-portfolio-install-sleeves
-    created_at: 2026-10-29T11:35:23.377Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e369bfb1bbc0
   - type: implements
     from: SYM-viewsv1-connector-binding-get-connector-instance
     to: REQ-views-onboarding-lists
@@ -643,3 +629,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-360323d0e3d4
+  - type: implements
+    from: SYM-portfolio-app-registry-account-sleeves
+    to: REQ-portfolio-account-in-one-sleeve
+    created_at: 2026-11-03T12:29:06.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17acfad96b91
+  - type: covered_by
+    from: SYM-portfolio-app-registry-account-sleeves
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:29:06.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d3ac22839ce
+  - type: executable_for
+    from: SYM-portfolio-app-test-registry-save-kind
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:40:44.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70cd2e308206
+  - type: executable_for
+    from: SYM-portfolio-app-test-registry-ensure-defaults
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:41:01.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b0fc23961f
+  - type: implements
+    from: SYM-plugins-cli-shown
+    to: REQ-plugins-cli-shows-vendor-text-escaped
+    created_at: 2026-11-03T09:19:40.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45aa4ba77b19
+  - type: covered_by
+    from: SYM-plugins-cli-shown
+    to: TEST-plugins-cli-escape
+    created_at: 2026-11-03T09:19:40.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c52cba6f572

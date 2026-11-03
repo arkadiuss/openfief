@@ -657,13 +657,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d45b1aeafe76
-  - type: implements
-    from: SYM-ingest-xtb-entry
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T20:57:59.256Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e591d0104cc8
   - type: covered_by
     from: SYM-ingest-xtb-entry
     to: TEST-ingest-xtb-xlsx
@@ -685,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b78c9aed385b
+  - type: verified_by
+    from: SCEN-ledger-account-fields
+    to: TEST-ledger-account
+    created_at: 2026-11-03T11:49:09.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d935ed134107
+  - type: implements
+    from: SYM-ingest-xtb-entry
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:18:47.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f6092d93230

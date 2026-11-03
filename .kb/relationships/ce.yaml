@@ -650,13 +650,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-235b1a79baeb
-  - type: covered_by
-    from: SYM-ledger-payout-setting-validate
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T07:51:43.958Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-66da64215454
   - type: constrains
     from: REQ-treasurybonds-lot-idempotent-series-date
     to: FACT-SUBJECT-8422AA93FAB9FA88
@@ -713,20 +706,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40f50481d39d
-  - type: implements
-    from: SYM-ledger-payout-setting-validate
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:31:01.695Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dde75c88a2fb
-  - type: implements
-    from: SYM-ingest-xtb-sheet-reader
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:02:09.204Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-401c9eb5aff4
   - type: covered_by
     from: SYM-ingest-xtb-sheet-reader
     to: TEST-ingest-xtb-xlsx
@@ -755,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5403462a9a1
+  - type: implements
+    from: SYM-ingest-xtb-sheet-reader
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:22:13.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-028fd8b3ca44

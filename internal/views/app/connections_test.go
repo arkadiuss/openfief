@@ -25,7 +25,7 @@ func (f fakeConnections) Bindings(context.Context) ([]ingest.Binding, error) {
 func TestConnections(t *testing.T) {
 	t.Parallel()
 	f := newFixture(t)
-	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithConnections(fakeConnections{}))
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithPortfolio(f.ledger), app.WithConnections(fakeConnections{}))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -56,7 +56,7 @@ func TestConnectionsWithoutThePortOrFailing(t *testing.T) {
 	if b, err := none.ConnectorBindings(ctx); err != nil || len(b) != 0 {
 		t.Errorf("ConnectorBindings without the port = %v, %v; want none", b, err)
 	}
-	failing, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithConnections(fakeConnections{fail: errStore}))
+	failing, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithPortfolio(f.ledger), app.WithConnections(fakeConnections{fail: errStore}))
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -54,11 +54,11 @@ func dateTo(d kernel.Date) string {
 }
 
 // payoutTo writes a payout setting.
-func payoutTo(p ledger.Payout) connectorv1.BondPayout {
+func payoutTo(p ingest.Payout) connectorv1.BondPayout {
 	switch p {
-	case ledger.PayoutCash:
+	case ingest.PayoutCash:
 		return connectorv1.BondPayout_BOND_PAYOUT_CASH
-	case ledger.PayoutPaidOut:
+	case ingest.PayoutPaidOut:
 		return connectorv1.BondPayout_BOND_PAYOUT_PAID_OUT
 	}
 	return connectorv1.BondPayout_BOND_PAYOUT_UNSPECIFIED

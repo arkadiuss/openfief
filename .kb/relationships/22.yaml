@@ -692,3 +692,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b133fcafccc0
+  - type: implements
+    from: SYM-portfolio-app-registry-sleeves
+    to: REQ-portfolio-registry-checks-sleeves
+    created_at: 2026-11-03T12:28:16.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ecf00b23774
+  - type: covered_by
+    from: SYM-portfolio-app-registry-sleeves
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:28:16.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a01abc0f266
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-ledger-account-sleeves
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-03T12:44:24.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b41ba7d87c76

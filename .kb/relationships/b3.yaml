@@ -34,13 +34,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42f692b75a83
-  - type: implements
-    from: SYM-ledger-pg-store-save-account
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:35:06.683Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8580b584ec0e
   - type: covered_by
     from: SYM-ledger-pg-store-save-account
     to: TEST-ledger-pg-store
@@ -587,13 +580,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5d0f58a7490
-  - type: implements
-    from: SYM-ingest-xtb-sheet-ref
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:00:55.601Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a5d3436bf4ca
   - type: covered_by
     from: SYM-ingest-xtb-sheet-ref
     to: TEST-ingest-xtb-xlsx
@@ -608,3 +594,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7800e994580d
+  - type: implements
+    from: SYM-ledger-pg-store-save-account
+    to: REQ-ledger-pg-store-accounts
+    created_at: 2026-11-03T12:13:42.053Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6235c0f78619
+  - type: implements
+    from: SYM-ingest-xtb-sheet-ref
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:24:43.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28f5b496d1b4
+  - type: implements
+    from: SYM-plugins-validate-manifest-text
+    to: REQ-plugins-manifest-text-safe
+    created_at: 2026-11-03T09:18:51.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-416d8494d36a
+  - type: covered_by
+    from: SYM-plugins-validate-manifest-text
+    to: TEST-plugins-manifest-text
+    created_at: 2026-11-03T09:18:51.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c7af1341510

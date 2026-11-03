@@ -80,43 +80,43 @@ func heldAccount(a *connectorv1.AccountHoldings) (ingest.HeldAccount, error) {
 }
 
 // payoutFrom reads an account's payout setting with the settings in force
-// before it (D-162): unspecified is ledger.PayoutCash, and the settings
+// before it (D-162): unspecified is ingest.PayoutCash, and the settings
 // must have taken effect in order, the first one with no day.
-func payoutFrom(a *connectorv1.AccountHoldings) (ledger.PayoutSetting, error) {
+func payoutFrom(a *connectorv1.AccountHoldings) (ingest.PayoutSetting, error) {
 	current, err := payoutPeriodFrom(a.GetBondPayout(), a.GetBondPayoutSince())
 	if err != nil {
-		return ledger.PayoutSetting{}, err
+		return ingest.PayoutSetting{}, err
 	}
-	out := ledger.PayoutSetting{Payout: current.Payout, Since: current.Since}
+	out := ingest.PayoutSetting{Payout: current.Payout, Since: current.Since}
 	for i, e := range a.GetBondPayoutEarlier() {
 		p, err := payoutPeriodFrom(e.GetBondPayout(), e.GetSince())
 		if err != nil {
-			return ledger.PayoutSetting{}, fmt.Errorf("bond_payout_earlier[%d]: %w", i, err)
+			return ingest.PayoutSetting{}, fmt.Errorf("bond_payout_earlier[%d]: %w", i, err)
 		}
 		out.Earlier = append(out.Earlier, p)
 	}
 	if err := out.Validate(); err != nil {
-		return ledger.PayoutSetting{}, fmt.Errorf("bond_payout_since: %w", err)
+		return ingest.PayoutSetting{}, fmt.Errorf("bond_payout_since: %w", err)
 	}
 	return out, nil
 }
 
 // payoutPeriodFrom reads one payout setting and the day it took effect,
-// empty for none; unspecified is ledger.PayoutCash.
-func payoutPeriodFrom(p connectorv1.BondPayout, since string) (ledger.PayoutPeriod, error) {
-	var out ledger.PayoutPeriod
+// empty for none; unspecified is ingest.PayoutCash.
+func payoutPeriodFrom(p connectorv1.BondPayout, since string) (ingest.PayoutPeriod, error) {
+	var out ingest.PayoutPeriod
 	switch p {
 	case connectorv1.BondPayout_BOND_PAYOUT_UNSPECIFIED, connectorv1.BondPayout_BOND_PAYOUT_CASH:
-		out.Payout = ledger.PayoutCash
+		out.Payout = ingest.PayoutCash
 	case connectorv1.BondPayout_BOND_PAYOUT_PAID_OUT:
-		out.Payout = ledger.PayoutPaidOut
+		out.Payout = ingest.PayoutPaidOut
 	default:
-		return ledger.PayoutPeriod{}, fmt.Errorf("bond_payout: %w: %d", ledger.ErrUnknownPayout, int32(p))
+		return ingest.PayoutPeriod{}, fmt.Errorf("bond_payout: %w: %d", ingest.ErrUnknownPayout, int32(p))
 	}
 	if since != "" {
 		d, err := kernel.ParseDate(since)
 		if err != nil {
-			return ledger.PayoutPeriod{}, fmt.Errorf("bond_payout_since: %w", err)
+			return ingest.PayoutPeriod{}, fmt.Errorf("bond_payout_since: %w", err)
 		}
 		out.Since = d
 	}

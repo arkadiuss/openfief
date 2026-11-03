@@ -239,7 +239,11 @@ func checkSignature(t *testing.T, p *v1alpha1.Plugin) {
 	if diff := cmp.Diff(want, p.Status.Signature); diff != "" {
 		t.Errorf("status.signature (-want +got):\n%s", diff)
 	}
-	effective := &v1alpha1.Permissions{Capabilities: []string{"connector"}, Egress: []string{fxEgress + ":443"}}
+	effective := &v1alpha1.Permissions{
+		Capabilities: []string{"connector"},
+		Egress:       []string{fxEgress + ":443"},
+		Institutions: &[]string{"nbp"}, // D-185: the manifest declares nbp and the grant approves it
+	}
 	if diff := cmp.Diff(effective, p.Status.Effective); diff != "" {
 		t.Errorf("status.effective (-want +got):\n%s", diff)
 	}

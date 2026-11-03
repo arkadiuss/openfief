@@ -20,6 +20,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
+	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
+	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
@@ -44,6 +46,7 @@ type loader struct {
 	ds       *demo.Dataset
 	log      *slog.Logger
 	ledger   *ledgerapp.Ledger
+	sleeves  *portfolioapp.Registry
 	store    *ledgerpg.Store
 	vstore   *valuationpg.Store
 	recorder *valuationapp.InputRecorder
@@ -89,14 +92,14 @@ func load(ctx context.Context, pool *pgxpool.Pool, cfg *config, log *slog.Logger
 	return revalue(ctx, pool, l, cfg)
 }
 
-// migrate migrates the ledger and valuation schemas, after a reset with
+// migrate migrates the ledger, valuation and portfolio schemas, after a reset with
 // fresh connections: statements the pool's connections prepared on the
 // dropped tables would fail on the new ones.
 func migrate(ctx context.Context, pool *pgxpool.Pool, action demo.LoadAction) error {
 	if action == demo.ResetAndLoad {
 		pool.Reset()
 	}
-	if err := errors.Join(ledgerpg.Migrate(ctx, pool), valuationpg.Migrate(ctx, pool)); err != nil {
+	if err := errors.Join(ledgerpg.Migrate(ctx, pool), valuationpg.Migrate(ctx, pool), portfoliopg.Migrate(ctx, pool)); err != nil {
 		return fmt.Errorf("migrating: %w", err)
 	}
 	return nil
@@ -157,18 +160,23 @@ func newLoader(pool *pgxpool.Pool, ds *demo.Dataset, log *slog.Logger) (*loader,
 	store := ledgerpg.New(pool)
 	l := ledgerapp.New(store, vstore.ImportHook())
 	recorder := valuationapp.NewInputRecorder(valuationapp.NewPlanner(l, store), vstore, pl.NewPack())
-	return &loader{ds: ds, log: log, ledger: l, store: store, vstore: vstore, recorder: recorder}, nil
+	sleeves := portfolioapp.NewRegistry(portfoliopg.New(pool), l)
+	return &loader{ds: ds, log: log, ledger: l, sleeves: sleeves, store: store, vstore: vstore, recorder: recorder}, nil
 }
 
-// registry saves the demo's sleeves and accounts.
+// registry saves the demo's sleeves in the portfolio context, its accounts
+// in the ledger, and then which sleeve each account is in.
 func (l *loader) registry(ctx context.Context) error {
 	for _, s := range l.ds.Sleeves {
-		if err := l.ledger.SaveSleeve(ctx, s); err != nil {
+		if err := l.sleeves.SaveSleeve(ctx, s); err != nil {
 			return fmt.Errorf("demo registry: %w", err)
 		}
 	}
 	for _, a := range l.ds.Accounts {
 		if err := l.ledger.SaveAccount(ctx, a); err != nil {
+			return fmt.Errorf("demo registry: %w", err)
+		}
+		if err := l.sleeves.PlaceAccount(ctx, a.ID, l.ds.AccountSleeves[a.ID]); err != nil {
 			return fmt.Errorf("demo registry: %w", err)
 		}
 	}

@@ -92,8 +92,11 @@ func clusterOrNil(log *slog.Logger) *cluster {
 
 // connectorDeps are what the connector scheduler is built from.
 type connectorDeps struct {
-	pool     *pgxpool.Pool
-	ledger   *ledgerapp.Ledger
+	pool   *pgxpool.Pool
+	ledger *ledgerapp.Ledger
+	// sleeves keeps the sleeves and which account is in which, in the
+	// portfolio context.
+	sleeves  *portfolioapp.Registry
 	recorder *valuationapp.InputRecorder
 	// crossChecks records cross-check prices (D-22).
 	crossChecks *valuationapp.CrossChecks
@@ -139,7 +142,8 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 		// The connector commands raise attention items for no owner; the
 		// core's checks run in the core.
 		return fn(&connectorDeps{
-			pool: p.pool, ledger: l, recorder: recorder, crossChecks: checks, now: time.Now, log: log,
+			pool: p.pool, ledger: l, sleeves: portfolioapp.NewRegistry(portfoliopg.New(p.pool), l),
+			recorder: recorder, crossChecks: checks, now: time.Now, log: log,
 			today: valuationpg.TodayIn(time.UTC, time.Now), bonds: vstore, model: models, wrappers: vstore,
 			rankings:  newRankings(p.pool, l, vstore, nil),
 			attention: attentionapp.New(attentionpg.New(p.pool), nil, time.Now),
@@ -174,7 +178,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 		Store:     store,
 		Scope:     &ingestapp.PricingScope{Holdings: d.ledger, Bonds: d.bonds, Model: d.model, Today: d.today},
 		Held: &ingestapp.HoldingsScope{
-			Ledger: d.ledger, Seeding: d.ledger, Bonds: d.bonds, Wrappers: d.wrappers,
+			Ledger: d.ledger, Seeding: d.ledger, Bonds: d.bonds, Wrappers: d.wrappers, Payouts: store,
 			Default: jurisdiction.DefaultWrapper(jurisdictionPack()), Today: d.today,
 		},
 		Policy:     cfg.Policy,

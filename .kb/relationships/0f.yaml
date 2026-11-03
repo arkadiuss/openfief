@@ -797,3 +797,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97edbde29b6b
+  - type: implements
+    from: SYM-ingest-parse-payout
+    to: REQ-ingest-payout-setting-history
+    created_at: 2026-11-03T12:24:25.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7086de3c7058
+  - type: covered_by
+    from: SYM-ingest-parse-payout
+    to: TEST-ingest-payout-setting
+    created_at: 2026-11-03T12:24:25.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5b617302542
+  - type: executable_for
+    from: SYM-portfolio-app-test-registry-deletes
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:41:43.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2160d1f6705f
+  - type: implements
+    from: SYM-operator-own-secrets
+    to: REQ-plugins-secret-names-never-shared
+    created_at: 2026-11-03T08:23:32.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dac3cfd9121f
+  - type: covered_by
+    from: SYM-operator-own-secrets
+    to: TEST-operator-shared-secret
+    created_at: 2026-11-03T08:23:33.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bc132a12daf

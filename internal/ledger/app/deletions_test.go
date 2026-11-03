@@ -8,7 +8,6 @@ import (
 	"testing"
 
 	"github.com/arkadiuss/openfief/internal/ledger"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
 // DeleteAccount refuses an account with a transaction version or a check,
@@ -25,30 +24,6 @@ func (s *memStore) DeleteAccount(_ context.Context, id ledger.AccountID) error {
 		}
 	}
 	delete(s.accounts, id)
-	return nil
-}
-
-func (s *memStore) DeleteSleeve(_ context.Context, id portfolio.SleeveID) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	for _, a := range s.accounts {
-		if a.Sleeve == id {
-			return fmt.Errorf("sleeve %s: %w", id, portfolio.ErrSleeveHasAccounts)
-		}
-	}
-	delete(s.sleeves, id)
-	return nil
-}
-
-func (s *memStore) DeleteKind(_ context.Context, key portfolio.KindKey) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	for _, sl := range s.sleeves {
-		if sl.Kind == key {
-			return fmt.Errorf("kind %s: %w", key, portfolio.ErrKindInUse)
-		}
-	}
-	delete(s.kinds, key)
 	return nil
 }
 
@@ -79,18 +54,15 @@ func TestDeleteRegistered(t *testing.T) {
 	if _, err := l.Import(ctx, []ledger.Transaction{deposit}, nil); err != nil {
 		t.Fatalf("Import: %v", err)
 	}
-	// D-120: an account with transactions, a sleeve with accounts and a kind in use stay.
+	// D-120: an account with transactions stays.
 	steps := []struct {
 		name    string
 		del     func() error
 		wantErr error
 	}{
 		{"an account with a transaction", func() error { return l.DeleteAccount(ctx, acc1) }, ledger.ErrAccountHasTransactions},
-		{"a sleeve with accounts", func() error { return l.DeleteSleeve(ctx, core) }, portfolio.ErrSleeveHasAccounts},
-		{"a kind a sleeve has", func() error { return l.DeleteKind(ctx, portfolio.KindCore) }, portfolio.ErrKindInUse},
 		{"an account with none", func() error { return l.DeleteAccount(ctx, acc2) }, nil},
 		{"an account deleted already", func() error { return l.DeleteAccount(ctx, acc2) }, nil},
-		{"an unused built-in kind", func() error { return l.DeleteKind(ctx, portfolio.KindSatellite) }, nil},
 	}
 	for _, s := range steps {
 		if err := s.del(); !errors.Is(err, s.wantErr) {
@@ -102,9 +74,6 @@ func TestDeleteRegistered(t *testing.T) {
 	}
 	if _, ok := store.accounts[acc2]; ok {
 		t.Error("the account with no transactions is still stored")
-	}
-	if _, ok := store.kinds[portfolio.KindSatellite]; ok {
-		t.Error("the unused kind is still stored")
 	}
 	for _, tt := range []struct {
 		prefix string

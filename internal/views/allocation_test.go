@@ -24,7 +24,8 @@ type item struct {
 func (i *item) build(t *testing.T) views.AllocationItem {
 	t.Helper()
 	return views.AllocationItem{
-		Account:    ledger.Account{ID: "acc", Institution: i.institution, Name: "Synthetic", Sleeve: portfolio.SleeveID(i.sleeve)},
+		Account:    ledger.Account{ID: "acc", Institution: i.institution, Name: "Synthetic"},
+		Sleeve:     portfolio.SleeveID(i.sleeve),
 		AssetClass: i.class, Value: money(t, i.value, i.currency), Reporting: money(t, i.pln, "PLN"),
 	}
 }
@@ -167,7 +168,7 @@ func TestAssetClassOf(t *testing.T) {
 
 func TestValueHoldings(t *testing.T) {
 	t.Parallel()
-	acc := ledger.Account{ID: "acc-1", Institution: "broker-a", Name: "Synthetic", Sleeve: "core"}
+	acc := ledger.Account{ID: "acc-1", Institution: "broker-a", Name: "Synthetic"}
 	on := date(t, "2026-03-02")
 	bond, etf, other := instrument(t, isinPL, "EDO0334"), instrument(t, isinIE, "ETF1"), instrument(t, isinIE, "ETF2")
 	holdings := []ledger.Holding{

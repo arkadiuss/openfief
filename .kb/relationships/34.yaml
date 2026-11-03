@@ -97,13 +97,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8d0e5ce6f20
-  - type: implements
-    from: SYM-ledger-pg-store
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:34:39.631Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-63d14ef1297c
   - type: covered_by
     from: SYM-ledger-pg-store
     to: TEST-ledger-pg-store
@@ -524,20 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ec5f5b3c92d
-  - type: covered_by
-    from: SYM-ledger-payout-setting-paid-out
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T07:51:30.470Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e60fee5065b7
-  - type: implements
-    from: SYM-ledger-payout-setting-paid-out
-    to: REQ-treasurybonds-account-payout-setting
-    created_at: 2026-11-01T08:42:16.276Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6b582a96ac8e
   - type: implements
     from: SYM-ingest-app-uploads-next-mode
     to: REQ-ingest-start-from-whole-history
@@ -581,13 +560,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ce5a1b7fb77e
   - type: implements
-    from: SYM-ledger-payout-setting-paid-out
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:30:50.927Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cbb213f8472c
-  - type: implements
     from: SYM-ingest-exchange-currencies
     to: REQ-ingest-ticker-currency-picked
     created_at: 2026-11-01T23:57:37.230Z
@@ -622,3 +594,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80f6940e8e2d
+  - type: implements
+    from: SYM-ledger-pg-store
+    to: REQ-ledger-pg-store-accounts
+    created_at: 2026-11-03T12:11:56.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-660f5337f926
+  - type: implements
+    from: SYM-ingest-payout-setting-validate
+    to: REQ-ingest-payout-setting-history
+    created_at: 2026-11-03T12:25:29.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-639872604e94
+  - type: covered_by
+    from: SYM-ingest-payout-setting-validate
+    to: TEST-ingest-payout-setting
+    created_at: 2026-11-03T12:25:29.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68c9ee2c9d2f
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-check-result
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:40:07.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d7377aad7c3
+  - type: executable_for
+    from: SYM-ingest-xtb-test-helper-heap-repeated
+    to: TEST-ingest-xtb-workbook-heap
+    created_at: 2026-11-03T07:29:09.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1361af4ff57e

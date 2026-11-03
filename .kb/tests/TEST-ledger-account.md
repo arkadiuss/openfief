@@ -1,5 +1,5 @@
 ---
-title: Accounts belong to one sleeve and ledger accounts fit their kind
+title: Accounts have an ID, an institution and a name, and ledger accounts fit their kind
 status: active
 sourceFile: internal/ledger/account_test.go
 origin:

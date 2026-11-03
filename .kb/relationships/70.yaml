@@ -419,3 +419,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a0d56adcee4
+  - type: verified_by
+    from: SCEN-portfolio-pg-sleeves
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T11:49:29.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b7084c7086e
+  - type: implements
+    from: SYM-ingest-payout-string
+    to: REQ-ingest-payout-setting-history
+    created_at: 2026-11-03T12:24:14.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c78ed8ae9add
+  - type: covered_by
+    from: SYM-ingest-payout-string
+    to: TEST-ingest-payout-setting
+    created_at: 2026-11-03T12:24:14.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-998e99af29e5

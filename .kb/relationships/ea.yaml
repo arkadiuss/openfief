@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78f2a49e04cc
-  - type: implements
-    from: SYM-ingest-xtb-zip-parts-walk
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:00:32.148Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-86fe4726984f
   - type: covered_by
     from: SYM-ingest-xtb-zip-parts-walk
     to: TEST-ingest-xtb-xlsx
@@ -559,3 +552,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dabd3a449daf
+  - type: implements
+    from: SYM-portfolio-app-registry-remove-account
+    to: REQ-portfolio-account-in-one-sleeve
+    created_at: 2026-11-03T12:29:17.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb903956fcfe
+  - type: covered_by
+    from: SYM-portfolio-app-registry-remove-account
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:29:17.986Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a21c20c348bc
+  - type: executable_for
+    from: SYM-portfolio-pg-test-delete-sleeves
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:43:37.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2032a9c6d108
+  - type: implements
+    from: SYM-ingest-xtb-zip-parts-walk
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:27:20.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deabd87448db

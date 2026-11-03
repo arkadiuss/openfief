@@ -566,13 +566,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5011af254c80
-  - type: executable_for
-    from: SYM-ledger-test-helper-changed-setting
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T17:27:18.310Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9ee0abb39313
   - type: implements
     from: SYM-ingest-check-payout
     to: REQ-ingest-bond-payout-change-from-day
@@ -650,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f5ad986e2cd
+  - type: implements
+    from: SYM-portfolio-app-registry-save-sleeve
+    to: REQ-portfolio-registry-checks-sleeves
+    created_at: 2026-11-03T12:28:04.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a032dce98f7c
+  - type: covered_by
+    from: SYM-portfolio-app-registry-save-sleeve
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:28:04.573Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fdac91602de

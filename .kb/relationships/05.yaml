@@ -447,13 +447,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e571f4888a93
-  - type: covered_by
-    from: SYM-views-connectapi-pb-payout
-    to: TEST-ledger-pg-store
-    created_at: 2026-11-01T07:52:16.007Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0ab67ce5d1b9
   - type: executable_for
     from: SYM-ingest-app-test-helper-fake-ticker-store-booked-ticker-entries
     to: TEST-ingest-app-start
@@ -497,13 +490,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-fb5f3c39b5c8
   - type: implements
-    from: SYM-views-connectapi-pb-payout
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:31:22.056Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a6866cef83a5
-  - type: implements
     from: SYM-ui-settings-pending-action
     to: REQ-ui-passkey-check-prompt
     created_at: 2026-11-03T04:45:52.714Z
@@ -545,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1a8d97a322a
+  - type: implements
+    from: SYM-views-connectapi-pb-payout
+    to: REQ-views-api-contract
+    created_at: 2026-11-03T12:14:54.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f402902fa9d
+  - type: covered_by
+    from: SYM-views-connectapi-pb-payout
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-03T12:14:54.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ce718add15c

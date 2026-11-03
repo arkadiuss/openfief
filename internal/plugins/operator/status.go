@@ -30,6 +30,7 @@ const (
 	ReasonApproved             = "Approved"
 	ReasonInvalidImage         = "InvalidImage"
 	ReasonBrowserPathHeld      = "BrowserPathHeld"
+	ReasonSecretHeld           = "SecretHeld"
 )
 
 // maxMessageLen keeps condition messages short; the full error is logged by
@@ -44,6 +45,9 @@ type observation struct {
 	// browserErr says why a version that would run doesn't: another
 	// instance holds a browser path (D-114).
 	browserErr error
+	// secretErr says why a version that would run doesn't: another
+	// instance mounts a Secret it names (D-89, D-182).
+	secretErr error
 	// signature is the verification of spec.image.
 	signature Verification
 	// previousSignature is the verification of the kept previous version's
@@ -131,6 +135,7 @@ func readyCondition(o *observation) condition {
 		{o.grantErr, ReasonInvalidGrant},
 		{o.planErr, ReasonInvalidPrevious},
 		{o.browserErr, ReasonBrowserPathHeld},
+		{o.secretErr, ReasonSecretHeld},
 		{o.clusterErr, ReasonClusterUnavailable},
 	} {
 		if p.err != nil {

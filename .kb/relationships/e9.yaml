@@ -28,20 +28,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-cad846e81ffe
   - type: implements
-    from: SYM-ledger-pg-store-save-sleeve
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:34:56.364Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fc4249c0f3bd
-  - type: covered_by
-    from: SYM-ledger-pg-store-save-sleeve
-    to: TEST-ledger-pg-store
-    created_at: 2026-10-28T06:34:56.376Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6fc10a559cce
-  - type: implements
     from: SYM-valuation-postgres-store-prices
     to: REQ-valuation-schema
     created_at: 2026-10-28T08:02:52.089Z
@@ -111,20 +97,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-191f0b7b5b15
-  - type: implements
-    from: SYM-ledger-pg-store-save-sleeve
-    to: REQ-ledger-pg-sleeve-kinds
-    created_at: 2026-10-28T09:59:16.561Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-af9e245c4a86
-  - type: covered_by
-    from: SYM-ledger-pg-store-save-sleeve
-    to: TEST-ledger-pg-kinds
-    created_at: 2026-10-28T09:59:16.590Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5596e4a7b569
   - type: implements
     from: SYM-views-pb-list-valuation-totals-request-proto-reflect
     to: REQ-views-api-contract
@@ -371,20 +343,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e1ca6ee5979e
   - type: implements
-    from: SYM-ledger-app-ledger-delete-kind
-    to: REQ-portfolio-delete-unused-sleeves-and-kinds
-    created_at: 2026-10-31T14:51:29.081Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-401eaacec393
-  - type: covered_by
-    from: SYM-ledger-app-ledger-delete-kind
-    to: TEST-ledger-app-deletions
-    created_at: 2026-10-31T14:51:29.106Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-512306511fd3
-  - type: implements
     from: SYM-ingestv1-remap-broker-account-response-reset
     to: REQ-ingest-remap-unused-broker-account
     created_at: 2026-10-31T14:58:58.780Z
@@ -433,13 +391,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa350558bee6
-  - type: implements
-    from: SYM-ledger-app-ledger-delete-kind
-    to: REQ-portfolio-delete-unused
-    created_at: 2026-10-31T18:11:58.455Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fba5c5eefaf4
   - type: implements
     from: SYM-ingest-app-accounts-changed
     to: REQ-ingest-bond-payout-change-from-day

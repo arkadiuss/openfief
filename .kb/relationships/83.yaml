@@ -671,3 +671,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf9a11884841
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-mem-registry-in-tx
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:39:15.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a283b85ab487
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-size
+    to: TEST-ingest-connectrpc-answer-heap
+    created_at: 2026-11-03T06:21:49.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb539203e8c7

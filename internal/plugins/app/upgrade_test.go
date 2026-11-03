@@ -57,3 +57,36 @@ func TestPrepareUpgradeRefuses(t *testing.T) {
 		}
 	}
 }
+
+// TestUpgradeRefusesSharedSecret: Secret names join the instance and the
+// role with a hyphen (D-89), so instance sample upgraded to a version whose
+// role is b-credentials would mount instance sample-b's Secret. Both
+// PrepareUpgrade and Upgrade refuse it with ErrSecretInUse (D-182), as
+// Install does.
+func TestUpgradeRefusesSharedSecret(t *testing.T) {
+	t.Parallel()
+	ctx := context.Background()
+	store := installSamples(t)
+	in := installer(t)
+	p, err := in.Prepare(ctx, app.InstallRequest{Arg: "sample", Name: "sample"})
+	if err != nil {
+		t.Fatalf("prepare sample: %v", err)
+	}
+	if installErr := app.Install(ctx, store, &p); installErr != nil {
+		t.Fatalf("install sample: %v", installErr)
+	}
+	if _, clashErr := in.PrepareUpgrade(ctx, store, app.UpgradeRequest{Instance: "sample", Version: roleClashImage}); !errors.Is(clashErr, app.ErrSecretInUse) {
+		t.Errorf("PrepareUpgrade to a role naming sample-b's Secret: error = %v, want ErrSecretInUse", clashErr)
+	}
+	up, err := in.PrepareUpgrade(ctx, store, app.UpgradeRequest{Instance: "sample", Version: unpinnedImage})
+	if err != nil {
+		t.Fatalf("PrepareUpgrade: %v", err)
+	}
+	up.Grant.Permissions.Secrets = []string{"sample-b-credentials"}
+	if err := app.Upgrade(ctx, store, &up); !errors.Is(err, app.ErrSecretInUse) {
+		t.Errorf("Upgrade with sample-b's Secret: error = %v, want ErrSecretInUse", err)
+	}
+	if got := store.plugins["sample"].Image; got != pinnedImage {
+		t.Errorf("image after the refused upgrades = %s, want %s", got, pinnedImage)
+	}
+}

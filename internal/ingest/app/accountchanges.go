@@ -35,8 +35,8 @@ type AccountConnections interface {
 	// AllBrokerAccounts returns every instance's broker accounts, in
 	// instance then ID order.
 	AllBrokerAccounts(ctx context.Context) ([]ingest.BrokerAccount, error)
-	// ForgetAccount removes a deleted account's bindings and leaves the
-	// broker accounts mapped to it unmapped.
+	// ForgetAccount removes a deleted account's bindings and payout
+	// setting, and leaves the broker accounts mapped to it unmapped.
 	ForgetAccount(ctx context.Context, account ledger.AccountID) error
 	// RemapBrokerAccount maps instance's broker account id to account, or
 	// leaves it unmapped when account is empty, whatever it was mapped to.
@@ -69,8 +69,9 @@ func (a *Accounts) BrokerAccounts(ctx context.Context, origin, sessionToken stri
 
 // Delete deletes the account id when it holds no transactions (D-120): the
 // ledger deletes it first, refusing one that holds any with an error
-// wrapping ledger.ErrAccountHasTransactions, then its bindings and
-// broker account mappings go, then its terms and stored valuations. Nothing
+// wrapping ledger.ErrAccountHasTransactions, then its bindings, broker
+// account mappings and payout setting go, then its terms and stored
+// valuations, and then the portfolio takes it out of its sleeve. Nothing
 // the ledger holds is deleted (D-18). Deleting an account not stored, as a
 // retry after a failure between the steps does, finishes the clean-up and
 // succeeds.
@@ -88,6 +89,9 @@ func (a *Accounts) Delete(ctx context.Context, origin, sessionToken string, id l
 		return fmt.Errorf("deleting account %s: %w", id, err)
 	}
 	if err := a.Forget.ForgetAccount(ctx, id); err != nil {
+		return fmt.Errorf("deleting account %s: %w", id, err)
+	}
+	if err := a.Sleeves.RemoveAccount(ctx, id); err != nil {
 		return fmt.Errorf("deleting account %s: %w", id, err)
 	}
 	return nil

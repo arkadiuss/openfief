@@ -48,13 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-617b44a697c6
-  - type: implements
-    from: SYM-ledger-app-ledger-save-account
-    to: REQ-ledger-app-registry
-    created_at: 2026-10-28T06:09:28.752Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3e58889dc538
   - type: covered_by
     from: SYM-ledger-app-ledger-save-account
     to: TEST-ledger-app-registry
@@ -440,3 +433,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0048f4c8ef8b
+  - type: implements
+    from: SYM-ledger-app-ledger-save-account
+    to: REQ-ledger-app-accounts
+    created_at: 2026-11-03T12:04:44.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ba87175c633

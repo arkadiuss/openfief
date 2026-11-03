@@ -13,7 +13,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/ledger/app"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
 // errVersionGap reports an append that skips a version number.
@@ -27,8 +26,6 @@ var errNoTx = errors.New("not in a transaction")
 type memStore struct {
 	mu       sync.Mutex
 	versions map[ledger.TransactionKey][]ledger.VersionedTransaction
-	kinds    map[portfolio.KindKey]portfolio.Kind
-	sleeves  map[portfolio.SleeveID]portfolio.Sleeve
 	accounts map[ledger.AccountID]ledger.Account
 	checks   map[checkKey]*app.AssertionCheck
 	// beforeAppend, when set, runs at the start of every Append, standing in
@@ -66,8 +63,6 @@ type checkKey struct {
 func newMemStore() *memStore {
 	return &memStore{
 		versions: map[ledger.TransactionKey][]ledger.VersionedTransaction{},
-		kinds:    map[portfolio.KindKey]portfolio.Kind{},
-		sleeves:  map[portfolio.SleeveID]portfolio.Sleeve{},
 		accounts: map[ledger.AccountID]ledger.Account{},
 		checks:   map[checkKey]*app.AssertionCheck{},
 		locks:    map[ledger.AccountID]*sync.Mutex{},
@@ -181,48 +176,6 @@ func (s *memStore) Log(_ context.Context, account ledger.AccountID) ([]ledger.Ve
 	for _, key := range keys {
 		out = append(out, s.versions[key]...)
 	}
-	return out, nil
-}
-
-// SaveKind keeps a stored kind's default role, like the Postgres store.
-func (s *memStore) SaveKind(_ context.Context, k portfolio.Kind) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if old, ok := s.kinds[k.Key]; ok {
-		k.DefaultRole = old.DefaultRole
-	}
-	s.kinds[k.Key] = k
-	return nil
-}
-
-func (s *memStore) Kinds(_ context.Context) ([]portfolio.Kind, error) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	out := slices.Collect(maps.Values(s.kinds))
-	sort.Slice(out, func(i, j int) bool { return out[i].Key < out[j].Key })
-	return out, nil
-}
-
-// SaveSleeve refuses a sleeve whose kind is not stored, like the Postgres
-// store's foreign key.
-func (s *memStore) SaveSleeve(_ context.Context, sl portfolio.Sleeve) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if _, ok := s.kinds[sl.Kind]; !ok {
-		return fmt.Errorf("sleeve %s: kind %q: %w", sl.ID, sl.Kind, app.ErrNotFound)
-	}
-	s.sleeves[sl.ID] = sl
-	return nil
-}
-
-func (s *memStore) Sleeves(_ context.Context) ([]portfolio.Sleeve, error) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	out := make([]portfolio.Sleeve, 0, len(s.sleeves))
-	for _, sl := range s.sleeves {
-		out = append(out, sl)
-	}
-	sort.Slice(out, func(i, j int) bool { return out[i].ID < out[j].ID })
 	return out, nil
 }
 

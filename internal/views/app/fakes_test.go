@@ -36,6 +36,7 @@ func reader(t *testing.T) context.Context {
 // ledgerapp.Ledger: an unknown account is ledgerapp.ErrUnknownAccount.
 type fakeLedger struct {
 	sleeves  []portfolio.Sleeve
+	in       map[ledger.AccountID]portfolio.SleeveID
 	accounts []ledger.Account
 	txs      map[ledger.AccountID][]ledger.Transaction
 	holdings map[ledger.AccountID][]ledger.Holding
@@ -54,6 +55,10 @@ func (f *fakeLedger) Sleeves(context.Context) ([]portfolio.Sleeve, error) { retu
 
 func (f *fakeLedger) Kinds(context.Context) ([]portfolio.Kind, error) {
 	return portfolio.DefaultKinds(), f.fail
+}
+
+func (f *fakeLedger) AccountSleeves(context.Context) (map[ledger.AccountID]portfolio.SleeveID, error) {
+	return f.in, f.fail
 }
 
 func (f *fakeLedger) Accounts(context.Context) ([]ledger.Account, error) { return f.accounts, f.fail }
@@ -201,9 +206,10 @@ func newFixture(t *testing.T) *fixture {
 		on: on,
 		ledger: &fakeLedger{
 			sleeves: []portfolio.Sleeve{{ID: "core", Name: "Core", Role: portfolio.RoleDefensive}, {ID: "offense", Name: "Offense", Role: portfolio.RoleOffensive}},
+			in:      map[ledger.AccountID]portfolio.SleeveID{"acc-1": "core", "acc-2": "offense"},
 			accounts: []ledger.Account{
-				{ID: "acc-1", Institution: "broker-a", Name: "Synthetic A", Sleeve: "core"},
-				{ID: "acc-2", Institution: "broker-b", Name: "Synthetic B", Sleeve: "offense"},
+				{ID: "acc-1", Institution: "broker-a", Name: "Synthetic A"},
+				{ID: "acc-2", Institution: "broker-b", Name: "Synthetic B"},
 			},
 			holdings: map[ledger.AccountID][]ledger.Holding{"acc-1": {
 				{Account: "acc-1", Instrument: bond, Date: on, Quantity: units(10)},
@@ -233,7 +239,7 @@ func newFixture(t *testing.T) *fixture {
 
 func (f *fixture) views(t *testing.T) *app.Views {
 	t.Helper()
-	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"))
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithPortfolio(f.ledger))
 	if err != nil {
 		t.Fatalf("app.New(PLN): %v", err)
 	}

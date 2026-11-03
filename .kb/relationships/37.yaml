@@ -48,13 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-08029dfd5b62
-  - type: implements
-    from: SYM-ledger-pg-migration
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:34:23.273Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-23fc6994e1f3
   - type: covered_by
     from: SYM-ledger-pg-migration
     to: TEST-ledger-pg-store
@@ -118,13 +111,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7cf9c4ce1099
-  - type: executable_for
-    from: SYM-ledger-pg-test-kind-round-trip
-    to: TEST-ledger-pg-kinds
-    created_at: 2026-10-28T09:56:51.819Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-43cb4cc3085e
   - type: executable_for
     from: SYM-plugins-test-catalog-validate
     to: TEST-plugins-catalog
@@ -874,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac34695301e4
+  - type: implements
+    from: SYM-ledger-pg-migration
+    to: REQ-ledger-pg-store-accounts
+    created_at: 2026-11-03T12:08:52.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb4c811797ae

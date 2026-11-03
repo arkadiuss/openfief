@@ -741,3 +741,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52d1d60f2810
+  - type: constrains
+    from: REQ-ledger-app-accounts
+    to: FACT-SUBJECT-98A45BA643B7CFB3
+    created_at: 2026-11-03T11:50:06.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e725134a047
+  - type: requires_property
+    from: REQ-ledger-app-accounts
+    to: FACT-PROP-A1DBF270A9183DA6
+    created_at: 2026-11-03T11:50:06.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56f4930a6edb
+  - type: specified_by
+    from: REQ-ledger-app-accounts
+    to: SCEN-ledger-app-accounts
+    created_at: 2026-11-03T11:50:06.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b848ed421c9
+  - type: supersedes
+    from: REQ-ledger-app-accounts
+    to: REQ-ledger-app-registry
+    created_at: 2026-11-03T11:50:06.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3ab35c463b1
+  - type: executable_for
+    from: SYM-ingest-test-helper-changed-setting
+    to: TEST-ingest-payout-setting
+    created_at: 2026-11-03T12:36:40.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ffb1a54f9ff

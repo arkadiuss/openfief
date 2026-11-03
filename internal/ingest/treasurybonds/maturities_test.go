@@ -77,7 +77,7 @@ func TestBookMaturities(t *testing.T) {
 	ots, tos := termsOf(t, "OTS0426", "0.03"), termsOf(t, "TOS0526", "0.05")
 	exchanged := heldLot(t, "TOS0526", "10", "2023-05-10")
 	exchanged.Cost = pln(t, "999.00")
-	paidOut := ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: mustDate(t, "2026-01-01")}
+	paidOut := ingest.PayoutSetting{Payout: ingest.PayoutPaidOut, Since: mustDate(t, "2026-01-01")}
 	src := "treasury-bonds:" + string(account)
 	key := func(id string) ledger.TransactionKey { return ledger.TransactionKey{Source: src, ExternalID: id} }
 	tests := []struct {
@@ -198,18 +198,18 @@ func TestPayoutWithdrawal(t *testing.T) {
 	interest := "interest lot:COI1028:2024-10-10:coupon:2025-10-10 2025-10-10 53.05 PLN"
 	tests := []struct {
 		name   string
-		payout ledger.PayoutSetting
+		payout ingest.PayoutSetting
 		want   []string
 	}{
 		{name: "kept as cash: interest only", want: []string{interest}},
 		{
 			name:   "paid out: interest, then a withdrawal of the cash it brought on the same day",
-			payout: ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: mustDate(t, "2025-10-10")},
+			payout: ingest.PayoutSetting{Payout: ingest.PayoutPaidOut, Since: mustDate(t, "2025-10-10")},
 			want:   []string{interest, "withdrawal lot:COI1028:2024-10-10:coupon:2025-10-10:payout 2025-10-10 -53.05 PLN"},
 		},
 		{
 			name:   "paid out only from a later day: what fell due before follows the earlier setting",
-			payout: ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: mustDate(t, "2025-10-11"), Earlier: []ledger.PayoutPeriod{{Payout: ledger.PayoutCash}}},
+			payout: ingest.PayoutSetting{Payout: ingest.PayoutPaidOut, Since: mustDate(t, "2025-10-11"), Earlier: []ingest.PayoutPeriod{{Payout: ingest.PayoutCash}}},
 			want:   []string{interest},
 		},
 	}

@@ -482,13 +482,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5ee7b3742eb
-  - type: executable_for
-    from: SYM-ingest-app-test-helper-mem-accounts-sleeves
-    to: TEST-ingest-app-accounts
-    created_at: 2026-10-29T13:00:06.317Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f041a7eb4443
   - type: implements
     from: SYM-portfoliov1-add-sleeve-response-descriptor
     to: REQ-portfolio-sleeve-service
@@ -832,13 +825,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e90055b1a2e7
-  - type: implements
-    from: SYM-ingest-xtb-read-workbook
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:04:18.950Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5dd20c676ecb
   - type: covered_by
     from: SYM-ingest-xtb-read-workbook
     to: TEST-ingest-xtb-xlsx
@@ -860,3 +846,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0b3137f3ee3
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-ledger-accounts
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:39:26.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00410e0c79ff
+  - type: implements
+    from: SYM-ingest-xtb-read-workbook
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:20:10.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f96c80d69a7

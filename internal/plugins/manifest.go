@@ -114,6 +114,7 @@ type Manifest struct {
 }
 
 // Validate returns every problem in m, each a *FieldError, joined; or nil.
+// Every string of m must be SafeText (D-46, D-90).
 func (m *Manifest) Validate() error {
 	var errs []error
 	if len(m.Capabilities) == 0 {
@@ -134,6 +135,7 @@ func (m *Manifest) Validate() error {
 	if len(m.ConfigSchema) > 0 && !json.Valid(m.ConfigSchema) {
 		errs = append(errs, &FieldError{Field: "configSchema", Err: ErrInvalidJSON})
 	}
+	errs = append(errs, validateManifestText(m)...)
 	return errors.Join(errs...)
 }
 

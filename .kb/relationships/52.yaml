@@ -762,3 +762,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dfcf5a0f36d0
+  - type: implements
+    from: SYM-ingest-app-payout-setting-reader
+    to: REQ-ingest-sync-carries-holdings
+    created_at: 2026-11-03T12:23:55.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-914072eb1749
+  - type: covered_by
+    from: SYM-ingest-app-payout-setting-reader
+    to: TEST-ingest-app-held
+    created_at: 2026-11-03T12:23:55.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5d3c6dfcc3e
+  - type: implements
+    from: SYM-portfolio-pg-scan-kind
+    to: REQ-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:02.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-908d013dc079
+  - type: covered_by
+    from: SYM-portfolio-pg-scan-kind
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:02.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32f3579c5918
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-registry-account-sleeves
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-03T12:35:00.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e08eb5823149

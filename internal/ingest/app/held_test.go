@@ -19,7 +19,7 @@ import (
 // and counts the day it was asked about.
 type heldLedger struct {
 	lots    map[ledger.AccountID]ledger.Lot
-	payouts map[ledger.AccountID]ledger.PayoutSetting
+	payouts map[ledger.AccountID]ingest.PayoutSetting
 	asked   kernel.Date
 	err     error
 }
@@ -33,9 +33,8 @@ func (h *heldLedger) HoldingsOn(_ context.Context, account ledger.AccountID, on 
 	return []ledger.Holding{{Account: account, Instrument: l.Instrument, Date: on, Quantity: l.Quantity}}, h.err
 }
 
-func (h *heldLedger) Account(_ context.Context, id ledger.AccountID) (ledger.Account, error) {
-	p := h.payouts[id]
-	return ledger.Account{ID: id, Payout: &p}, h.err
+func (h *heldLedger) PayoutSetting(_ context.Context, id ledger.AccountID) (ingest.PayoutSetting, error) {
+	return h.payouts[id], h.err
 }
 
 func (h *heldLedger) LotsOn(_ context.Context, account ledger.AccountID, _ kernel.Date) ([]ledger.Lot, error) {
@@ -74,13 +73,13 @@ func TestHoldingsScope(t *testing.T) {
 	lot := func(in ledger.Instrument) ledger.Lot {
 		return ledger.Lot{Instrument: in, Opened: today, Quantity: kernel.NewQuantity(kernel.NewDecimal(4, 0)), Cost: kernel.NewMoney(kernel.NewDecimal(400, 0), plnCurrency)}
 	}
-	paidOut := ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: today}
+	paidOut := ingest.PayoutSetting{Payout: ingest.PayoutPaidOut, Since: today}
 	book := &heldLedger{
 		lots:    map[ledger.AccountID]ledger.Lot{"acc-bonds": lot(bond), "acc-ike": lot(bond), "acc-stocks": lot(stock)},
-		payouts: map[ledger.AccountID]ledger.PayoutSetting{"acc-bonds": paidOut},
+		payouts: map[ledger.AccountID]ingest.PayoutSetting{"acc-bonds": paidOut},
 	}
 	h := &app.HoldingsScope{
-		Ledger: book, Seeding: liveSince{"acc-bonds": today}, Bonds: bondISINs{"PLEDO0536000": true},
+		Ledger: book, Payouts: book, Seeding: liveSince{"acc-bonds": today}, Bonds: bondISINs{"PLEDO0536000": true},
 		Wrappers: wrappers{"acc-ike": "ike"}, Default: "taxable", Today: func() kernel.Date { return today },
 	}
 	held, terms, err := h.HeldAccounts(t.Context(), []ledger.AccountID{"acc-stocks", "acc-ike", "acc-bonds", "acc-ike"})
@@ -118,7 +117,7 @@ func TestHoldingsScope(t *testing.T) {
 	}
 
 	failing := &app.HoldingsScope{
-		Ledger: &heldLedger{err: errCaller}, Seeding: liveSince{}, Bonds: bondISINs{}, Wrappers: wrappers{},
+		Ledger: &heldLedger{err: errCaller}, Payouts: &heldLedger{}, Seeding: liveSince{}, Bonds: bondISINs{}, Wrappers: wrappers{},
 		Today: func() kernel.Date { return today },
 	}
 	if _, _, err := failing.HeldAccounts(t.Context(), []ledger.AccountID{"acc-x"}); !errors.Is(err, errCaller) {

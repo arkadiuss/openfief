@@ -22,17 +22,17 @@ var ErrPayoutNotBondAccount = errors.New("only a hand-entered bond account can p
 // (D-135): any account may keep its payouts as cash, and only a
 // hand-entered bond account, at TreasuryBonds, may pay them out, matching
 // the option the bond registry offers.
-func CheckPayout(institution InstitutionID, payout ledger.Payout) error {
+func CheckPayout(institution InstitutionID, payout Payout) error {
 	switch payout {
-	case ledger.PayoutCash:
+	case PayoutCash:
 		return nil
-	case ledger.PayoutPaidOut:
+	case PayoutPaidOut:
 		if institution != TreasuryBonds {
 			return fmt.Errorf("%w: %s is at %s", ErrPayoutNotBondAccount, payout, institution)
 		}
 		return nil
 	}
-	return fmt.Errorf("%w: %d", ledger.ErrUnknownPayout, int(payout))
+	return fmt.Errorf("%w: %d", ErrUnknownPayout, int(payout))
 }
 
 // PayoutSuffix ends the external ID of the withdrawal that pays out a
@@ -62,7 +62,7 @@ func CheckPayoutFrom(from, today kernel.Date) error {
 // out, so a change in either direction is complete once both happened.
 // Withdrawals dated before from were booked under the setting then in
 // force and stay.
-func StalePayouts(current []ledger.Transaction, s ledger.PayoutSetting, from kernel.Date) ([]ledger.Transaction, error) {
+func StalePayouts(current []ledger.Transaction, s PayoutSetting, from kernel.Date) ([]ledger.Transaction, error) {
 	var out []ledger.Transaction
 	for i := range current {
 		t := &current[i]

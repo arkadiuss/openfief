@@ -11,26 +11,16 @@ import (
 
 func TestAccountValidate(t *testing.T) {
 	t.Parallel()
-	valid := ledger.Account{ID: "acc-1", Institution: "broker-a", Name: "Main", Sleeve: "core"}
+	valid := ledger.Account{ID: "acc-1", Institution: "broker-a", Name: "Main"}
 	tests := []struct {
 		name    string
 		edit    func(a *ledger.Account)
 		wantErr error
 	}{
 		{name: "valid", edit: func(*ledger.Account) {}},
-		{name: "no sleeve", edit: func(a *ledger.Account) { a.Sleeve = "" }, wantErr: ledger.ErrInvalidAccount},
 		{name: "no ID", edit: func(a *ledger.Account) { a.ID = "" }, wantErr: ledger.ErrInvalidAccount},
 		{name: "no institution", edit: func(a *ledger.Account) { a.Institution = "" }, wantErr: ledger.ErrInvalidAccount},
 		{name: "no name", edit: func(a *ledger.Account) { a.Name = "" }, wantErr: ledger.ErrInvalidAccount},
-		{name: "a first paid-out setting covers the whole history", edit: func(a *ledger.Account) { a.Payout = &ledger.PayoutSetting{Payout: ledger.PayoutPaidOut} }},
-		{
-			name: "a later setting without the day it took effect",
-			edit: func(a *ledger.Account) {
-				a.Payout = &ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Earlier: []ledger.PayoutPeriod{{}}}
-			},
-			wantErr: ledger.ErrInvalidAccount,
-		},
-		{name: "an unknown payout", edit: func(a *ledger.Account) { a.Payout = &ledger.PayoutSetting{Payout: ledger.Payout(9)} }, wantErr: ledger.ErrInvalidAccount},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

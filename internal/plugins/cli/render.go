@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"io"
 	"slices"
+	"strconv"
 	"strings"
 	"text/tabwriter"
+	"unicode"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
 	"github.com/arkadiuss/openfief/internal/plugins/app"
@@ -23,42 +25,90 @@ const (
 		"                and the model portfolio's targets, so it learns what you hold (D-123)\n"
 )
 
+// shown is s as the CLI prints a string a plugin's vendor, its catalog or
+// its cluster wrote: unchanged when every character prints as itself, and
+// otherwise quoted with Go's escapes, so no control character, escape
+// sequence or bidirectional override can move the cursor, erase a line or
+// reorder what the owner reads before confirming (D-46, D-90).
+func shown(s string) string {
+	for _, r := range s {
+		if !unicode.IsPrint(r) {
+			return strconv.Quote(s)
+		}
+	}
+	return s
+}
+
+// shownAll is shown of each of xs.
+func shownAll(xs []string) []string {
+	out := make([]string, 0, len(xs))
+	for _, x := range xs {
+		out = append(out, shown(x))
+	}
+	return out
+}
+
+// terminalText is s with every control character other than a newline or
+// a tab, and every bidirectional override, written as a visible escape:
+// what say writes can't steer the terminal even when a string reached it
+// unescaped.
+func terminalText(s string) string {
+	if !strings.ContainsFunc(s, unsafeOnTerminal) {
+		return s
+	}
+	var b strings.Builder
+	for _, r := range s {
+		if unsafeOnTerminal(r) {
+			fmt.Fprintf(&b, "\\u%04x", r)
+			continue
+		}
+		b.WriteRune(r)
+	}
+	return b.String()
+}
+
+// unsafeOnTerminal reports whether r would act on a terminal rather than
+// print: plugins.UnsafeRune, but for a newline and a tab.
+func unsafeOnTerminal(r rune) bool {
+	return r != '\n' && r != '\t' && (plugins.UnsafeRune(r) || r == unicode.ReplacementChar)
+}
+
 // RenderProposal describes an install for the owner's confirmation (D-46):
 // the instance, the image and why it is trusted, and every permission its
 // manifest requests, which the grant will approve exactly.
 func RenderProposal(p *app.Proposal) string {
 	var b strings.Builder
 	m := &p.Plugin.Manifest
-	fmt.Fprintf(&b, "Instance:     %s\n", p.Plugin.Name)
-	fmt.Fprintf(&b, "Image:        %s\n", p.Plugin.Image)
+	fmt.Fprintf(&b, "Instance:     %s\n", shown(p.Plugin.Name))
+	fmt.Fprintf(&b, "Image:        %s\n", shown(p.Plugin.Image))
 	fmt.Fprintf(&b, "Trust:        %s\n", trustText(p))
 	b.WriteString("\nIt requests, and the PluginGrant will approve, exactly:\n")
 	fmt.Fprintf(&b, "  Capabilities: %s\n", joinOr(strsOf(m.Capabilities), noneText))
 	hosts := make([]string, 0, len(m.Egress)+len(p.ConfigHosts))
 	for _, h := range m.Egress {
-		hosts = append(hosts, h.String())
+		hosts = append(hosts, shown(h.String()))
 	}
 	for _, h := range p.ConfigHosts {
-		hosts = append(hosts, h.Host.String()+" (the host of config field "+h.Field+")")
+		hosts = append(hosts, shown(h.Host.String())+" (the host of config field "+shown(h.Field)+")")
 	}
 	fmt.Fprintf(&b, "  Egress hosts: %s\n", joinOr(hosts, "none: it cannot reach the internet"))
 	for _, f := range m.EgressFromConfig {
 		if !slices.ContainsFunc(p.ConfigHosts, func(h plugins.ConfigHost) bool { return h.Field == f }) {
-			fmt.Fprintf(&b, "                no host from config field %s: the config doesn't set it\n", f)
+			fmt.Fprintf(&b, "                no host from config field %s: the config doesn't set it\n", shown(f))
 		}
 	}
 	if len(m.Secrets) == 0 {
 		fmt.Fprintf(&b, "  Secrets:      %s\n", noneText)
 	} else {
 		b.WriteString("  Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself\n")
-		fmt.Fprintf(&b, "                and label it %s=%s, or uninstall leaves it in place (D-182)\n", plugins.OwnerInstanceLabel, p.Plugin.Name)
+		fmt.Fprintf(&b, "                and label it %s=%s, or uninstall leaves it in place (D-182)\n", plugins.OwnerInstanceLabel, shown(p.Plugin.Name))
 		for _, s := range m.Secrets {
-			fmt.Fprintf(&b, "                %s (role %s) at %s\n", plugins.SecretName(p.Plugin.Name, s.Role), s.Role, s.MountPath)
+			fmt.Fprintf(&b, "                %s (role %s) at %s\n", shown(plugins.SecretName(p.Plugin.Name, s.Role)), shown(s.Role), shown(s.MountPath))
 		}
 	}
-	fmt.Fprintf(&b, "  Data tiers:   %s\n", joinOr(strsOf(m.DataTiers), noneText))
+	fmt.Fprintf(&b, "  Data tiers:   %s\n", joinOr(shownAll(strsOf(m.DataTiers)), noneText))
 	if m.BrowserPath != "" {
-		fmt.Fprintf(&b, "  Browser path: %s, which the core proxies to it for browsers (D-81)\n", m.BrowserPath)
+		fmt.Fprintf(&b, "  Browser path: %s, which the core proxies to it for browsers (D-81)\n", shown(m.BrowserPath))
 	}
 	if r := m.ClusterService; r != nil {
 		writeClusterService(&b, r, p.Plugin.ClusterService)
@@ -69,7 +119,7 @@ func RenderProposal(p *app.Proposal) string {
 	b.WriteString("\n")
 	config := noneText
 	if len(p.Plugin.Config) > 0 {
-		config = string(p.Plugin.Config)
+		config = shown(string(p.Plugin.Config))
 	}
 	fmt.Fprintf(&b, "\nConfig given: %s\n", config)
 	writeShared(&b, p.Shared)
@@ -80,8 +130,8 @@ func RenderProposal(p *app.Proposal) string {
 // for and the owner picked, with D-74's warning: that traffic skips the
 // egress proxy and may be plain HTTP.
 func writeClusterService(b *strings.Builder, r *plugins.ClusterServiceRequest, cs *plugins.ClusterService) {
-	what := r.Description
-	if what == "" {
+	what := shown(r.Description)
+	if r.Description == "" {
 		what = "one service the owner picks"
 	}
 	if cs == nil {
@@ -106,14 +156,14 @@ func trustText(p *app.Proposal) string {
 	s := p.Decision.Signer
 	if p.Decision.Trust == plugins.Verified && p.Entry != nil {
 		return fmt.Sprintf("verified plugin %q: the catalog pins this image, signed by its publisher %s (%s)",
-			p.Entry.Name, s.Name, s.Identity)
+			p.Entry.Name, shown(s.Name), shown(s.Identity.String()))
 	}
 	return fmt.Sprintf("unverified: signed by trusted signer %s (%s, %s); the catalog does not pin this image",
-		s.Name, s.Kind, s.Identity)
+		shown(s.Name), shown(string(s.Kind)), shown(s.Identity.String()))
 }
 
 // describeSchema summarizes a config JSON Schema: each top-level property
-// with its type and whether it is required.
+// with its type and whether it is required, every name and value shown.
 func describeSchema(schema []byte) []string {
 	if len(schema) == 0 {
 		return []string{"no config schema: any config"}
@@ -133,7 +183,7 @@ func describeSchema(schema []byte) []string {
 	slices.Sort(names)
 	out := make([]string, 0, len(names)+1)
 	for _, n := range names {
-		line := n + ": " + propertyType(doc.Properties[n])
+		line := shown(n) + ": " + propertyType(doc.Properties[n])
 		if slices.Contains(doc.Required, n) {
 			line += ", required"
 		}
@@ -157,17 +207,17 @@ func propertyType(raw json.RawMessage) string {
 	if len(p.Enum) > 0 {
 		vals := make([]string, 0, len(p.Enum))
 		for _, v := range p.Enum {
-			vals = append(vals, fmt.Sprint(v))
+			vals = append(vals, shown(fmt.Sprint(v)))
 		}
 		return "one of " + strings.Join(vals, ", ")
 	}
 	switch t := p.Type.(type) {
 	case string:
-		return t
+		return shown(t)
 	case []any:
 		ts := make([]string, 0, len(t))
 		for _, x := range t {
-			ts = append(ts, fmt.Sprint(x))
+			ts = append(ts, shown(fmt.Sprint(x)))
 		}
 		return strings.Join(ts, " or ")
 	}
@@ -179,7 +229,7 @@ func propertyType(raw json.RawMessage) string {
 func RenderUninstallPlan(plan *app.UninstallPlan) string {
 	var b strings.Builder
 	in := &plan.Instance
-	fmt.Fprintf(&b, "Instance:     %s\n", in.Name)
+	fmt.Fprintf(&b, "Instance:     %s\n", shown(in.Name))
 	b.WriteString("Deletes:\n")
 	if in.HasGrant {
 		b.WriteString("  its PluginGrant\n")
@@ -188,13 +238,13 @@ func RenderUninstallPlan(plan *app.UninstallPlan) string {
 		b.WriteString("  its Plugin, and with it its workload and egress allow-list entry\n")
 	}
 	for _, s := range plan.Secrets.Delete {
-		fmt.Fprintf(&b, "  Secret %s\n", s)
+		fmt.Fprintf(&b, "  Secret %s\n", shown(s))
 	}
 	if len(plan.Secrets.Keep) > 0 {
-		fmt.Fprintf(&b, "Keeps Secrets another instance uses: %s\n", strings.Join(plan.Secrets.Keep, ", "))
+		fmt.Fprintf(&b, "Keeps Secrets another instance uses: %s\n", strings.Join(shownAll(plan.Secrets.Keep), ", "))
 	}
 	if len(plan.Secrets.NotOwned) > 0 {
-		fmt.Fprintf(&b, "Leaves Secrets not labelled %s=%s: %s\n", plugins.OwnerInstanceLabel, in.Name, strings.Join(plan.Secrets.NotOwned, ", "))
+		fmt.Fprintf(&b, "Leaves Secrets not labelled %s=%s: %s\n", plugins.OwnerInstanceLabel, shown(in.Name), strings.Join(shownAll(plan.Secrets.NotOwned), ", "))
 	}
 	b.WriteString("Keeps the data it brought into the ledger; reinstalling under the same name continues from it.\n")
 	return b.String()
@@ -206,9 +256,9 @@ func WriteInstances(w io.Writer, instances []app.Instance) error {
 	b.WriteString("NAME\tIMAGE\tSIGNATURE\tREADY\tGRANT\tPENDING APPROVAL\n")
 	for i := range instances {
 		in := &instances[i]
-		b.WriteString(strings.Join([]string{
+		b.WriteString(strings.Join(shownAll([]string{
 			in.Name, orDash(in.Image), orDash(in.Signature), orDash(in.Ready), yesNo(in.HasGrant), yesNo(in.Pending),
-		}, "\t") + "\n")
+		}), "\t") + "\n")
 	}
 	tw := tabwriter.NewWriter(w, 0, 0, tablePadding, ' ', 0)
 	if _, err := io.WriteString(tw, b.String()); err != nil {
@@ -255,7 +305,7 @@ func yesNo(b bool) string {
 // (D-112, D-109, D-179, D-186); nothing when it declares none of them.
 func writeDeclarations(b *strings.Builder, m *plugins.Manifest) {
 	if slices.Contains(m.Capabilities, plugins.CapabilityConnector) {
-		fmt.Fprintf(b, "  Institutions: %s\n", joinOr(m.Institutions, "none: the core refuses everything it delivers (D-182)"))
+		fmt.Fprintf(b, "  Institutions: %s\n", joinOr(shownAll(m.Institutions), "none: the core refuses everything it delivers (D-182)"))
 	}
 	if m.MarketData {
 		b.WriteString(marketDataText)

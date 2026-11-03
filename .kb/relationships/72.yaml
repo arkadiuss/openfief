@@ -524,3 +524,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1acb82343892
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-sleeves-remove-account
+    to: TEST-ingest-app-accounts
+    created_at: 2026-11-03T12:34:06.483Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49ef0b5970dc

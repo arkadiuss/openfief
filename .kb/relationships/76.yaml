@@ -62,13 +62,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a83316bc72b6
-  - type: implements
-    from: SYM-ledger-pg-parse-book-kind
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:32:16.092Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-268ca1e0c6e0
   - type: covered_by
     from: SYM-ledger-pg-parse-book-kind
     to: TEST-ledger-pg-store
@@ -839,3 +832,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23e30326398d
+  - type: implements
+    from: SYM-ledger-pg-parse-book-kind
+    to: REQ-ledger-pg-store-accounts
+    created_at: 2026-11-03T12:09:41.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec41a2df0c47

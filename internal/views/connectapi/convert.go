@@ -5,6 +5,7 @@ import (
 	"math"
 	"strings"
 
+	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
@@ -71,25 +72,25 @@ func pbSleeve(s *portfolio.Sleeve) *viewsv1.Sleeve {
 	}
 }
 
-// pbAccount converts an account with its tax wrapper, fee rule and payout
-// setting (D-135).
-func pbAccount(a *ledger.Account, terms *app.AccountTerms) *viewsv1.Account {
+// pbAccount converts an account with its tax wrapper and fee rule, its
+// sleeve and its payout setting (D-135).
+func pbAccount(a *ledger.Account, terms *app.AccountTerms, settings *app.AccountSettings) *viewsv1.Account {
 	out := &viewsv1.Account{
-		Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve),
-		TaxWrapper: string(terms.Wrapper), FeeRule: pbFeeRule(&terms.Fee), BondPayout: pbPayout(a.PayoutSetting().Payout),
+		Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(settings.Sleeve),
+		TaxWrapper: string(terms.Wrapper), FeeRule: pbFeeRule(&terms.Fee), BondPayout: pbPayout(settings.Payout.Payout),
 	}
-	if since := a.PayoutSetting().Since; !since.IsZero() {
+	if since := settings.Payout.Since; !since.IsZero() {
 		out.BondPayoutSince = since.String()
 	}
 	return out
 }
 
 // pbPayout converts a payout setting.
-func pbPayout(p ledger.Payout) viewsv1.BondPayout {
+func pbPayout(p ingest.Payout) viewsv1.BondPayout {
 	switch p {
-	case ledger.PayoutCash:
+	case ingest.PayoutCash:
 		return viewsv1.BondPayout_BOND_PAYOUT_CASH
-	case ledger.PayoutPaidOut:
+	case ingest.PayoutPaidOut:
 		return viewsv1.BondPayout_BOND_PAYOUT_PAID_OUT
 	}
 	return viewsv1.BondPayout_BOND_PAYOUT_UNSPECIFIED

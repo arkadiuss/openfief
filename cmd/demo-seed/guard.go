@@ -20,11 +20,11 @@ var errBadMarker = errors.New("malformed demo marker")
 // database: "demo" in ASCII.
 const guardLock int64 = 0x64656d6f
 
-// dataTables are the tables whose rows count as ledger or valuation data:
+// dataTables are the tables whose rows count as ledger, valuation or sleeve data:
 // a database with any of them is not empty.
 func dataTables() []string {
 	return []string{
-		"ledger.sleeves", "ledger.accounts", "ledger.transaction_versions",
+		"portfolio.sleeves", "ledger.accounts", "ledger.transaction_versions",
 		"valuation.prices", "valuation.fx_rates", "valuation.index_readings",
 		"valuation.bond_terms", "valuation.tax_wrappers",
 	}
@@ -42,12 +42,12 @@ CREATE TABLE IF NOT EXISTS demo.marker (
 );
 ALTER TABLE demo.marker ADD COLUMN IF NOT EXISTS loader text NOT NULL DEFAULT '';`
 
-// resetSQL drops everything the demo loaded, the ledger and valuation
+// resetSQL drops everything the demo loaded, the ledger, valuation and portfolio
 // schemas, which migrate creates again, and the revaluations still queued
 // for it. River's own schema stays, so a core running on the database
 // keeps its workers while the demo is reseeded under it (D-161); the loads
 // that follow enqueue the revaluations again.
-const resetSQL = `DROP SCHEMA IF EXISTS ledger, valuation CASCADE;
+const resetSQL = `DROP SCHEMA IF EXISTS ledger, valuation, portfolio CASCADE;
 DO $$ BEGIN
     IF to_regclass('river.river_job') IS NOT NULL THEN
         DELETE FROM river.river_job WHERE state::text IN ('available', 'scheduled', 'retryable');

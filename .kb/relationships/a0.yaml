@@ -720,3 +720,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17f4f89fb7e6
+  - type: implements
+    from: SYM-views-app-account-settings
+    to: REQ-views-app-queries
+    created_at: 2026-11-03T12:32:42.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef2723a658f7
+  - type: covered_by
+    from: SYM-views-app-account-settings
+    to: TEST-views-app
+    created_at: 2026-11-03T12:32:42.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a84cd6456baa
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-mem-registry-save-sleeve
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:37:57.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef8a8e64995e

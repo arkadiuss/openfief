@@ -1,6 +1,6 @@
 ---
 title: An account must be stored only if it is valid and its sleeve is stored, and transactions and balance assertions must be imported only into stored accounts.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-18
 tags:
   - strict-modeling

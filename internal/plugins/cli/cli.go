@@ -235,8 +235,8 @@ func askClusterService(env *Env, o *options, p *app.Proposal) error {
 	if r == nil || p.Plugin.ClusterService != nil || o.yes || o.print {
 		return nil
 	}
-	what := r.Description
-	if what == "" {
+	what := shown(r.Description)
+	if r.Description == "" {
 		what = "a service in this cluster"
 	}
 	if err := say(env.Out, "The plugin asks to reach "+what+" directly, outside the egress proxy.\n"); err != nil {
@@ -440,18 +440,21 @@ func ask(env *Env, o *options, prompt string) (string, error) {
 
 // say writes s to w.
 func say(w io.Writer, s string) error {
-	if _, err := io.WriteString(w, s); err != nil {
+	if _, err := io.WriteString(w, terminalText(s)); err != nil {
 		return fmt.Errorf("write: %w", err)
 	}
 	return nil
 }
 
-// checkInstall refuses a second browser view (D-114) and finds the
-// institutions another instance already books for, which the summary
-// warns about (D-185).
+// checkInstall refuses a second browser view (D-114) and a Secret another
+// instance names (D-89, D-182), and finds the institutions another
+// instance already books for, which the summary warns about (D-185).
 func checkInstall(ctx context.Context, cluster Cluster, p *app.Proposal) error {
 	if err := app.CheckBrowserView(ctx, cluster, &p.Plugin); err != nil {
 		return fmt.Errorf("browser view: %w", err)
+	}
+	if err := app.CheckSecrets(ctx, cluster, &p.Plugin, &p.Grant); err != nil {
+		return fmt.Errorf("secrets: %w", err)
 	}
 	shared, err := app.SharedInstitutions(ctx, cluster, &p.Plugin)
 	if err != nil {

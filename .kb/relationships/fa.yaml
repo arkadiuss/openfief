@@ -608,3 +608,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47beab6195f2
+  - type: constrains
+    from: REQ-ledger-pg-store-accounts
+    to: FACT-SUBJECT-7FAB96CB2ABE1905
+    created_at: 2026-11-03T11:50:21.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-154399073957
+  - type: requires_property
+    from: REQ-ledger-pg-store-accounts
+    to: FACT-PROP-FE77B1CFA9B2F577
+    created_at: 2026-11-03T11:50:21.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f451737be3de
+  - type: specified_by
+    from: REQ-ledger-pg-store-accounts
+    to: SCEN-ledger-pg-round-trip
+    created_at: 2026-11-03T11:50:21.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a51c608ffc6
+  - type: supersedes
+    from: REQ-ledger-pg-store-accounts
+    to: REQ-ledger-pg-store
+    created_at: 2026-11-03T11:50:21.355Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cda3de9a0dad

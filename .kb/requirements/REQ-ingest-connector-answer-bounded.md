@@ -1,6 +1,6 @@
 ---
 title: The core must read a connector's answer up to 32 MiB, failing the call with RESOURCE_EXHAUSTED past it, and must refuse a delivery of more than 500,000 items, postings counted, before translating any of it.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-184
 tags:
   - strict-modeling

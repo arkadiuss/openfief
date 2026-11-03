@@ -39,7 +39,7 @@ func newPerformanceFixture(t *testing.T) *fixture {
 	if err != nil {
 		t.Fatalf("NewDeposit: %v", err)
 	}
-	f.ledger.accounts = append(f.ledger.accounts, ledger.Account{ID: "acc-3", Institution: "broker-c", Name: "Synthetic C", Sleeve: "core"})
+	f.ledger.accounts = append(f.ledger.accounts, ledger.Account{ID: "acc-3", Institution: "broker-c", Name: "Synthetic C"})
 	f.ledger.txs = map[ledger.AccountID][]ledger.Transaction{"acc-1": {deposit, buy}, "acc-2": {usd}}
 	f.valuations.vals = nil
 	for day, pln := range map[string]string{"2026-03-01": "1000", "2026-03-02": "1100", "2026-03-03": "1050"} {
@@ -334,7 +334,7 @@ func TestPerformanceFailures(t *testing.T) {
 	t.Run("a failing status store", func(t *testing.T) {
 		t.Parallel()
 		f := newPerformanceFixture(t)
-		v, err := app.New(f.ledger, f.valuations, failingStatuses{}, f.rates, cur(t, "PLN"), cur(t, "PLN"))
+		v, err := app.New(f.ledger, f.valuations, failingStatuses{}, f.rates, cur(t, "PLN"), cur(t, "PLN"), app.WithPortfolio(f.ledger))
 		if err != nil {
 			t.Fatalf("app.New: %v", err)
 		}

@@ -636,13 +636,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53655328d40c
-  - type: implements
-    from: SYM-ingest-xtb-sheet-reader-start
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:02:31.775Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d0d048572036
   - type: covered_by
     from: SYM-ingest-xtb-sheet-reader-start
     to: TEST-ingest-xtb-xlsx
@@ -692,3 +685,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa86d1242adc
+  - type: implements
+    from: SYM-portfolio-pg-store-delete-sleeve
+    to: REQ-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:45.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0fbe5cebf50
+  - type: implements
+    from: SYM-portfolio-pg-store-delete-sleeve
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-11-03T12:30:45.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-295e3a14abff
+  - type: covered_by
+    from: SYM-portfolio-pg-store-delete-sleeve
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:45.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f061b416233
+  - type: implements
+    from: SYM-ingest-xtb-sheet-reader-start
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:23:36.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f250cc65381
+  - type: implements
+    from: SYM-plugins-manifest-text
+    to: REQ-plugins-manifest-text-safe
+    created_at: 2026-11-03T09:19:00.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32ec999752e8
+  - type: covered_by
+    from: SYM-plugins-manifest-text
+    to: TEST-plugins-manifest-text
+    created_at: 2026-11-03T09:19:00.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-033ef7e95d15

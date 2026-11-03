@@ -1,6 +1,6 @@
 ---
 title: The ledger's PostgreSQL schema must store sleeve kinds starting with the built-in ones, give every sleeve a stored kind, give sleeves stored before kinds existed the built-in kind whose default role is theirs, and refuse an offensive override on a sleeve that is not offensive and any change of a stored kind's default role.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-14
 tags:
   - strict-modeling

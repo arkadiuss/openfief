@@ -59,7 +59,7 @@ func TestClientSyncSendsHoldings(t *testing.T) {
 	held := []ingest.HeldAccount{
 		{
 			Account: "acc-bonds", GoLive: goLive(t), Wrapper: "taxable",
-			Payout:   ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: goLive(t), Earlier: []ledger.PayoutPeriod{{Payout: ledger.PayoutCash}}},
+			Payout:   ingest.PayoutSetting{Payout: ingest.PayoutPaidOut, Since: goLive(t), Earlier: []ingest.PayoutPeriod{{Payout: ingest.PayoutCash}}},
 			Holdings: []ledger.Holding{{Account: "acc-bonds", Instrument: in, Quantity: forty}},
 			Lots: []ledger.Lot{{
 				Instrument: in, Opened: goLive(t), Quantity: forty, Cost: kernel.NewMoney(kernel.NewDecimal(3996, 0), pln), Opening: true,

@@ -27,6 +27,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
+	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
+	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
@@ -187,7 +189,7 @@ func loadDemo(t *testing.T, pool *pgxpool.Pool) *demo.Dataset {
 	}
 	store := ledgerpg.New(pool)
 	l := ledgerapp.New(store, vstore.ImportHook())
-	saveRegistry(t, l, &ds)
+	saveRegistry(t, l, portfolioapp.NewRegistry(portfoliopg.New(pool), l), &ds)
 	for _, b := range []*demo.Batch{&ds.XTBOpening, &ds.BondsOpening} {
 		if _, err := l.Seed(ctx, b.Transactions, b.Assertions); err != nil {
 			t.Fatalf("Seed: %v", err)
@@ -202,17 +204,20 @@ func loadDemo(t *testing.T, pool *pgxpool.Pool) *demo.Dataset {
 	return &ds
 }
 
-// saveRegistry saves ds's sleeves and accounts.
-func saveRegistry(t *testing.T, l *ledgerapp.Ledger, ds *demo.Dataset) {
+// saveRegistry saves ds's sleeves, its accounts and which sleeve each is in.
+func saveRegistry(t *testing.T, l *ledgerapp.Ledger, sleeves *portfolioapp.Registry, ds *demo.Dataset) {
 	t.Helper()
 	for _, sl := range ds.Sleeves {
-		if err := l.SaveSleeve(t.Context(), sl); err != nil {
+		if err := sleeves.SaveSleeve(t.Context(), sl); err != nil {
 			t.Fatalf("SaveSleeve: %v", err)
 		}
 	}
 	for _, a := range ds.Accounts {
 		if err := l.SaveAccount(t.Context(), a); err != nil {
 			t.Fatalf("SaveAccount: %v", err)
+		}
+		if err := sleeves.PlaceAccount(t.Context(), a.ID, ds.AccountSleeves[a.ID]); err != nil {
+			t.Fatalf("PlaceAccount: %v", err)
 		}
 	}
 }

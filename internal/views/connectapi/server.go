@@ -50,11 +50,11 @@ func (s *readService) ListAccounts(ctx context.Context, _ *connect.Request[views
 	}
 	out := &viewsv1.ListAccountsResponse{Accounts: make([]*viewsv1.Account, 0, len(accounts))}
 	for i := range accounts {
-		terms, termsErr := s.views.AccountTerms(ctx, accounts[i].ID)
-		if termsErr != nil {
-			return nil, toConnectError(ctx, s.log, termsErr)
+		a, accountErr := s.account(ctx, &accounts[i])
+		if accountErr != nil {
+			return nil, toConnectError(ctx, s.log, accountErr)
 		}
-		out.Accounts = append(out.Accounts, pbAccount(&accounts[i], &terms))
+		out.Accounts = append(out.Accounts, a)
 	}
 	return connect.NewResponse(out), nil
 }
@@ -65,11 +65,11 @@ func (s *readService) GetAccount(ctx context.Context, req *connect.Request[views
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}
-	terms, err := s.views.AccountTerms(ctx, a.ID)
+	out, err := s.account(ctx, &a)
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}
-	return connect.NewResponse(&viewsv1.GetAccountResponse{Account: pbAccount(&a, &terms)}), nil
+	return connect.NewResponse(&viewsv1.GetAccountResponse{Account: out}), nil
 }
 
 // ListTransactions answers GET /v1/accounts/{account_id}/transactions.
@@ -379,4 +379,19 @@ func (s *readService) ListPlugins(ctx context.Context, _ *connect.Request[viewsv
 		out.Plugins = append(out.Plugins, pbPlugin(&plugins[i]))
 	}
 	return connect.NewResponse(out), nil
+}
+
+// account converts a with its terms, its sleeve and its payout setting,
+// which the views compose from the ledger, valuation, portfolio and
+// ingest contexts.
+func (s *readService) account(ctx context.Context, a *ledger.Account) (*viewsv1.Account, error) {
+	terms, err := s.views.AccountTerms(ctx, a.ID)
+	if err != nil {
+		return nil, fmt.Errorf("account %s: %w", a.ID, err)
+	}
+	settings, err := s.views.AccountSettings(ctx, a.ID)
+	if err != nil {
+		return nil, fmt.Errorf("account %s: %w", a.ID, err)
+	}
+	return pbAccount(a, &terms, &settings), nil
 }

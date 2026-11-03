@@ -755,3 +755,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8ab6c7212d55
+  - type: constrains
+    from: REQ-portfolio-pg-sleeves
+    to: FACT-SUBJECT-7557D0E9394C8AB2
+    created_at: 2026-11-03T11:51:06.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0525f7cdc9ca
+  - type: requires_property
+    from: REQ-portfolio-pg-sleeves
+    to: FACT-PROP-761400570516D0CB
+    created_at: 2026-11-03T11:51:06.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe3ea3e324ee
+  - type: specified_by
+    from: REQ-portfolio-pg-sleeves
+    to: SCEN-portfolio-pg-sleeves
+    created_at: 2026-11-03T11:51:06.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-778a439135f2
+  - type: supersedes
+    from: REQ-portfolio-pg-sleeves
+    to: REQ-ledger-pg-sleeve-kinds
+    created_at: 2026-11-03T11:51:06.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1034d0f4311a

@@ -643,20 +643,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-167f2a9ebb91
-  - type: verified_by
-    from: SCEN-portfolio-defaults-on-fresh-install
-    to: TEST-ledger-app-kinds
-    created_at: 2026-10-29T11:35:47.961Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5bb7f8d2d1c4
-  - type: verified_by
-    from: SCEN-portfolio-defaults-on-fresh-install
-    to: TEST-ledger-pg-kinds
-    created_at: 2026-10-29T11:35:48.084Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6d0c59f38687
   - type: implements
     from: SYM-portfoliov1-sleeve-proto-reflect
     to: REQ-portfolio-sleeve-service
@@ -888,3 +874,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-87250b6d808b
+  - type: verified_by
+    from: SCEN-portfolio-defaults-on-fresh-install
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T11:52:19.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5d4c4d5a0a0
+  - type: verified_by
+    from: SCEN-portfolio-defaults-on-fresh-install
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T11:52:19.512Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a10d67d7030f

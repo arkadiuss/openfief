@@ -17,7 +17,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/ledger/postgres"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
 // dsnVar names the server the tests create their databases on. task test:pg
@@ -95,9 +94,8 @@ const (
 	isinA = "PLTEST000010"
 	isinB = "IETEST000026"
 
-	acc1 ledger.AccountID   = "acc-1"
-	acc2 ledger.AccountID   = "acc-2"
-	core portfolio.SleeveID = "core"
+	acc1 ledger.AccountID = "acc-1"
+	acc2 ledger.AccountID = "acc-2"
 )
 
 func dec(t *testing.T, s string) kernel.Decimal {
@@ -167,17 +165,14 @@ func versioned(t *ledger.Transaction, version int) ledger.VersionedTransaction {
 	return ledger.VersionedTransaction{Transaction: *t, Version: version}
 }
 
-// seededStore returns a store on a fresh database with the sleeve core and
+// seededStore returns a store on a fresh database with
 // the accounts acc-1 and acc-2.
 func seededStore(t *testing.T) (*postgres.Store, *pgxpool.Pool) {
 	t.Helper()
 	pool := newPool(t)
 	store := postgres.New(pool)
-	if err := store.SaveSleeve(t.Context(), portfolio.Sleeve{ID: core, Name: "Core", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive}); err != nil {
-		t.Fatalf("SaveSleeve: %v", err)
-	}
 	for _, id := range []ledger.AccountID{acc1, acc2} {
-		if err := store.SaveAccount(t.Context(), ledger.Account{ID: id, Institution: "test-broker", Name: string(id), Sleeve: core}); err != nil {
+		if err := store.SaveAccount(t.Context(), ledger.Account{ID: id, Institution: "test-broker", Name: string(id)}); err != nil {
 			t.Fatalf("SaveAccount(%s): %v", id, err)
 		}
 	}

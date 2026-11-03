@@ -5,11 +5,10 @@ import (
 	"fmt"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
-// ErrInvalidAccount reports an account without an ID, an institution, a
-// name or a sleeve.
+// ErrInvalidAccount reports an account without an ID, an institution or a
+// name.
 var ErrInvalidAccount = errors.New("invalid account")
 
 // ErrInvalidBook reports a ledger account whose kind, currency and
@@ -20,29 +19,17 @@ var ErrInvalidBook = errors.New("invalid ledger account")
 type AccountID string
 
 // Account is one account at an institution, such as one IBKR linked account.
-// It belongs to exactly one sleeve.
+// Which sleeve it is in is the portfolio context's to keep, and its payout
+// setting the ingest context's: the ledger knows neither.
 type Account struct {
 	ID AccountID
 	// Institution is the ingest context's ID of the institution that holds the
 	// account.
 	Institution string
 	Name        string
-	Sleeve      portfolio.SleeveID
-	// Payout is what happens to the coupons and maturities of a
-	// hand-entered bond account (D-135); nil is the default, as cash.
-	Payout *PayoutSetting
 }
 
-// PayoutSetting returns a's payout setting, the default for none.
-func (a Account) PayoutSetting() PayoutSetting {
-	if a.Payout == nil {
-		return PayoutSetting{}
-	}
-	return *a.Payout
-}
-
-// Validate reports whether a has an ID, an institution, a name and a
-// sleeve, and a valid payout setting.
+// Validate reports whether a has an ID, an institution and a name.
 func (a Account) Validate() error {
 	switch {
 	case a.ID == "":
@@ -51,11 +38,6 @@ func (a Account) Validate() error {
 		return fmt.Errorf("%w %s: no institution", ErrInvalidAccount, a.ID)
 	case a.Name == "":
 		return fmt.Errorf("%w %s: empty name", ErrInvalidAccount, a.ID)
-	case a.Sleeve == "":
-		return fmt.Errorf("%w %s: no sleeve", ErrInvalidAccount, a.ID)
-	}
-	if err := a.PayoutSetting().Validate(); err != nil {
-		return fmt.Errorf("%w %s: %w", ErrInvalidAccount, a.ID, err)
 	}
 	return nil
 }
