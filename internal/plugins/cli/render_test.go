@@ -37,7 +37,10 @@ func proposal(name, schema string, trust plugins.Trust) *app.Proposal {
 		p.Plugin.Manifest.Institutions = []string{"example-bank", "example-broker"}
 		pub := plugins.Signer{
 			Name: "example", Kind: plugins.SignerPublisher,
-			Identity: plugins.SignerIdentity{Issuer: plugins.GitHubActionsIssuer, Subject: publisherSubj},
+			Identity: plugins.SignerIdentity{
+				Issuer: plugins.GitHubActionsIssuer, Subject: publisherSubj,
+				Source: &plugins.SignerSource{Repository: "https://github.com/example/sample", Ref: "refs/heads/main"},
+			},
 		}
 		p.Decision.Signer = pub
 		p.Entry = &plugins.CatalogEntry{Name: "sample", Publisher: pub}
@@ -59,7 +62,7 @@ func TestRenderProposal(t *testing.T) {
 			name: "verified, with a schema and a config", p: proposal("sample", schema, plugins.Verified), config: `{"accounts":[]}`,
 			want: `Instance:     sample
 Image:        ` + sampleImage + `
-Trust:        verified plugin "sample": the catalog pins this image, signed by its publisher example (` + publisherSubj + ` (issuer https://token.actions.githubusercontent.com))
+Trust:        verified plugin "sample": the catalog pins this image, signed by its publisher example (` + publisherSubj + ` (issuer https://token.actions.githubusercontent.com, source https://github.com/example/sample, ref refs/heads/main))
 
 It requests, and the PluginGrant will approve, exactly:
   Capabilities: connector

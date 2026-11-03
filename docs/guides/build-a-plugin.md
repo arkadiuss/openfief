@@ -302,7 +302,7 @@ There is no released `openfief` CLI yet, so build it from the repository with `g
 
 ### Trust your signer
 
-The owner lists their signers in `signers.json`, in the optional ConfigMap `openfief-trusted-signers` ([deploy/operator](../../deploy/operator/kustomization.yaml)). A keyless signer is an issuer plus an exact `subject`, or a `subjectPattern` that must match the whole subject, and optionally the `sourceRepository` and `sourceRef` of the run that signs; a key signer is its public key in PEM. Pin the source repository and ref when your signing workflow is a reusable one (`on: workflow_call`): Fulcio then certifies the called workflow as the subject, which any repository may call, and only the source fields name the repository and ref of the run that called it. Pinning them for any GitHub Actions signer costs nothing:
+The owner lists their signers in `signers.json`, in the optional ConfigMap `openfief-trusted-signers` ([deploy/operator](../../deploy/operator/kustomization.yaml)). A keyless signer is an issuer plus an exact `subject`, or a `subjectPattern` that must match the whole subject, and the `sourceRepository` and `sourceRef` of the run that signs; a key signer is its public key in PEM. A GitHub Actions signer must pin both source fields, or the operator refuses the file (D-187): a workflow can be a reusable one (`on: workflow_call`), which Fulcio certifies as the subject although any repository may call it, and only the source fields name the repository and ref of the run that called it.
 
 ```json
 {"signers": [

@@ -84,9 +84,20 @@ func newWorld(t *testing.T, referrersAPI bool, wrap func(http.Handler) http.Hand
 		reg: newTestRegistry(t, referrersAPI, wrap), vs: vs, gh: gh, trusted: withCA{TrustedMaterial: vs, extra: gh.authority},
 		publisher: plugins.Signer{
 			Name: "example-publisher", Kind: plugins.SignerPublisher,
-			Identity: plugins.SignerIdentity{Issuer: plugins.GitHubActionsIssuer, Subject: subjectPublisher},
+			Identity: plugins.SignerIdentity{
+				Issuer: plugins.GitHubActionsIssuer, Subject: subjectPublisher,
+				Source: &plugins.SignerSource{Repository: sourcePublisher, Ref: plugins.OpenFiefCISourceRef},
+			},
 		},
 	}
+}
+
+// signPublisher attaches a keyless signature of image by the publisher's
+// workflow, run from its own repository's main branch, to which its
+// identity is pinned (D-187).
+func (w *world) signPublisher(t *testing.T, image plugins.ImageRef) {
+	t.Helper()
+	w.signRun(t, image, githubRun{subject: subjectPublisher, issuer: plugins.GitHubActionsIssuer, repository: sourcePublisher, ref: plugins.OpenFiefCISourceRef})
 }
 
 // signCI attaches an OpenFief CI keyless signature of image.
@@ -168,8 +179,7 @@ func TestInspect(t *testing.T) {
 			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
 				t.Helper()
 				img := w.reg.push(t, labelledImage(t, labelView))
-				w.reg.attach(t, img, keylessBundle(t, w.vs, subjectPublisher, plugins.GitHubActionsIssuer,
-					statement(t, img, SignPredicateType), time.Now().Add(5*time.Minute)))
+				w.signPublisher(t, img)
 				return img, plugins.Catalog{Entries: []plugins.CatalogEntry{{Name: "sample", Image: img, Publisher: w.publisher}}}, nil
 			},
 			declared: labelView,
@@ -192,10 +202,10 @@ func TestInspect(t *testing.T) {
 			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
 				t.Helper()
 				img := w.reg.push(t, labelledImage(t, labelView))
-				w.reg.attach(t, img, keylessBundle(t, w.vs, subjectPublisher, plugins.GitHubActionsIssuer,
-					statement(t, img, SignPredicateType), time.Now().Add(5*time.Minute)))
+				w.signPublisher(t, img)
 				return img, plugins.Catalog{}, []plugins.Signer{{Name: "my-ci", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{
 					Issuer: plugins.GitHubActionsIssuer, SubjectPattern: `https://github\.com/example/.*`,
+					Source: &plugins.SignerSource{Repository: sourcePublisher, Ref: plugins.OpenFiefCISourceRef},
 				}}}
 			},
 			declared: labelView,
@@ -266,7 +276,7 @@ func TestInspect(t *testing.T) {
 			wantUntrusted: []plugins.UntrustedSigner{{Issuer: plugins.GitHubActionsIssuer, Subject: plugins.OpenFiefCISubject}},
 		},
 		{
-			name: "a broad owner pattern takes a caller's signature as the owner's, never as OpenFief CI's",
+			name: "a broad owner pattern pinned to the caller's repository takes its signature as the owner's, never as OpenFief CI's",
 			setup: func(t *testing.T, w *world) (plugins.ImageRef, plugins.Catalog, []plugins.Signer) {
 				t.Helper()
 				img := w.reg.push(t, labelledImage(t, labelView))
@@ -275,6 +285,7 @@ func TestInspect(t *testing.T) {
 				w.signRun(t, img, run)
 				return img, plugins.Catalog{}, []plugins.Signer{{Name: "my-ci", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{
 					Issuer: plugins.GitHubActionsIssuer, SubjectPattern: `https://github\.com/.*`,
+					Source: &plugins.SignerSource{Repository: sourceAttacker, Ref: plugins.OpenFiefCISourceRef},
 				}}}
 			},
 			declared: labelView,

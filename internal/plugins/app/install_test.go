@@ -44,6 +44,12 @@ func sampleManifest() plugins.Manifest {
 	}
 }
 
+// publisherSource is the repository and ref the publisher's signing run
+// comes from, to which its GitHub identity is pinned (D-187).
+func publisherSource() *plugins.SignerSource {
+	return &plugins.SignerSource{Repository: "https://github.com/example/sample-connector", Ref: "refs/heads/main"}
+}
+
 // fakeImages answers Inspect by image repository: signed by the publisher,
 // by OpenFief's CI, by a stranger, unsigned, or a registry failure.
 type fakeImages struct{}
@@ -52,7 +58,7 @@ func (fakeImages) Inspect(_ context.Context, image plugins.ImageRef) (plugins.Si
 	out := plugins.SignedImage{Image: image, Manifest: sampleManifest()}
 	switch image.Repository() {
 	case "registry.example.com/example/sample-connector":
-		out.Signatures = []plugins.SignerIdentity{{Issuer: plugins.GitHubActionsIssuer, Subject: publisherSubj}}
+		out.Signatures = []plugins.SignerIdentity{{Issuer: plugins.GitHubActionsIssuer, Subject: publisherSubj, Source: publisherSource()}}
 	case "registry.example.com/example/stranger":
 		out.Signatures = []plugins.SignerIdentity{{Issuer: plugins.GitHubActionsIssuer, Subject: strangerSubj}}
 	case "registry.example.com/example/unsigned":
@@ -75,7 +81,7 @@ func installer(t *testing.T) *app.Installer {
 	}
 	c := plugins.Catalog{Entries: []plugins.CatalogEntry{{Name: "sample", Image: img, Publisher: plugins.Signer{
 		Name: "example", Kind: plugins.SignerPublisher,
-		Identity: plugins.SignerIdentity{Issuer: plugins.GitHubActionsIssuer, Subject: publisherSubj},
+		Identity: plugins.SignerIdentity{Issuer: plugins.GitHubActionsIssuer, Subject: publisherSubj, Source: publisherSource()},
 	}}}}
 	policy, err := plugins.NewTrustPolicy(c, nil)
 	if err != nil {

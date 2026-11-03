@@ -748,3 +748,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a1249efeb99
+  - type: constrains
+    from: REQ-plugins-github-signers-pinned
+    to: FACT-SUBJECT-F68DEFF0C7AFE491
+    created_at: 2026-11-03T13:51:21.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-549d696f1b08
+  - type: requires_property
+    from: REQ-plugins-github-signers-pinned
+    to: FACT-PROP-5C7B070F1B895E9C
+    created_at: 2026-11-03T13:51:21.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfcf5a0f36d0

@@ -9,11 +9,10 @@
 #     {"name": "my-ci", "issuer": "https://token.actions.githubusercontent.com",
 #      "subject": "https://github.com/<you>/<plugin>/.github/workflows/release.yml@refs/heads/main",
 #      "sourceRepository": "https://github.com/<you>/<plugin>", "sourceRef": "refs/heads/main"},
-#     {"name": "my-ci-tags", "issuer": "https://token.actions.githubusercontent.com",
-#      "subjectPattern": "https://github\\.com/<you>/<plugin>/\\.github/workflows/release\\.yml@refs/tags/v.*"},
 #     {"name": "laptop", "publicKey": "-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----\n"}]}
-# sourceRepository and sourceRef (optional) pin the repository and ref of the signing run; pin them whenever the
-# subject names a reusable workflow, which any repository can call (D-181). OpenFief's own CI pins both.
+# sourceRepository and sourceRef pin the repository and ref of the signing run. Every GitHub Actions signer must pin
+# both, since its subject may name a reusable workflow any repository can call (D-181, D-187); an invalid file stops
+# the operator. OpenFief's own CI pins both.
 # The operator reads it at start: restart it after a change. An invalid file stops it. There is no flag or setting
 # that deploys an unsigned image. Verification is offline against a bundled Sigstore trust root; the operator only needs
 # HTTPS egress to the registries plugins come from (for GHCR: ghcr.io and pkg-containers.githubusercontent.com),

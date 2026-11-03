@@ -108,8 +108,9 @@ type SignerSource struct {
 // Validate reports a malformed identity: neither or both of a keyless
 // identity and a public key, a keyless identity without an https issuer, both
 // or neither of a subject and a subject pattern, a pattern that does not
-// compile, a malformed source, or a public key that is not one PEM
-// "PUBLIC KEY" block.
+// compile, a GitHub-issued identity that doesn't pin both its source
+// repository and ref (D-187), a malformed source, or a public key that is
+// not one PEM "PUBLIC KEY" block.
 func (id SignerIdentity) Validate() error {
 	keyless := id.Issuer != "" || id.Subject != "" || id.SubjectPattern != "" || id.Source != nil
 	switch {
@@ -180,7 +181,9 @@ func keylessName(subject, issuer string, source *SignerSource) string {
 }
 
 // validateKeyless checks the issuer, subject, pattern and source of a
-// keyless identity.
+// keyless identity. One GitHub issues names a workflow that any repository
+// may call, so it must pin the source repository and ref of the signing
+// run, as OpenFief's CI does (D-181, D-187).
 func (id SignerIdentity) validateKeyless() error {
 	if !isHTTPSURL(id.Issuer) {
 		return fmt.Errorf("%w: issuer %q is not an https URL", ErrInvalidSigner, id.Issuer)
@@ -192,6 +195,9 @@ func (id SignerIdentity) validateKeyless() error {
 		if _, err := regexp.Compile(anchored(id.SubjectPattern)); err != nil {
 			return fmt.Errorf("%w: subjectPattern %q: %w", ErrInvalidSigner, id.SubjectPattern, err)
 		}
+	}
+	if id.Issuer == GitHubActionsIssuer && !id.Source.pinsBoth() {
+		return fmt.Errorf("%w: a GitHub Actions identity needs sourceRepository and sourceRef (D-187)", ErrInvalidSigner)
 	}
 	if id.Source != nil {
 		return id.Source.validate()

@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5592d40dd97
+  - type: executable_for
+    from: SYM-plugins-cli-test-helper-owner-identity
+    to: TEST-plugins-cli-run
+    created_at: 2026-11-03T13:52:04.346Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd260f9d0fe0

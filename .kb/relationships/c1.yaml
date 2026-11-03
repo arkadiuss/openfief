@@ -706,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65a6928a2e38
+  - type: validates
+    from: TEST-plugins-cosign
+    to: REQ-plugins-github-signers-pinned
+    created_at: 2026-11-03T13:51:32.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9175704080a2

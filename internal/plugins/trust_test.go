@@ -36,6 +36,13 @@ func newPublicKeyPEM(t *testing.T) string {
 	return string(pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: der}))
 }
 
+// The owner's own CI in the policy fixture: the repository and tag its
+// signing run comes from, to which its identity is pinned (D-187).
+const (
+	ownerRepository = "https://github.com/owner-example/plugin"
+	ownerRef        = "refs/tags/v1.2.0"
+)
+
 func keyless(issuer, subject string) plugins.SignerIdentity {
 	return plugins.SignerIdentity{Issuer: issuer, Subject: subject}
 }
@@ -94,6 +101,16 @@ func TestSignerIdentityValidate(t *testing.T) {
 		{name: "not PEM", id: plugins.SignerIdentity{PublicKey: "not a key"}, wantErr: plugins.ErrInvalidSigner},
 		{name: "private key block", id: plugins.SignerIdentity{PublicKey: strings.ReplaceAll(keyPEM, "PUBLIC", "PRIVATE")}, wantErr: plugins.ErrInvalidSigner},
 		{name: "two PEM blocks", id: plugins.SignerIdentity{PublicKey: keyPEM + keyPEM}, wantErr: plugins.ErrInvalidSigner},
+		// D-187: a GitHub-issued identity names a workflow any repository
+		// may call, so it is pinned to its source repository and ref.
+		{name: "GitHub pinned to a repository and ref", id: fromSource(plugins.GitHubActionsIssuer, subjectCI, "https://github.com/example/sample-plugin", "refs/heads/main")},
+		{name: "GitHub by subject alone", id: keyless(plugins.GitHubActionsIssuer, subjectCI), wantErr: plugins.ErrInvalidSigner},
+		{name: "GitHub pinned to a repository alone", id: fromSource(plugins.GitHubActionsIssuer, subjectCI, "https://github.com/example/sample-plugin", ""), wantErr: plugins.ErrInvalidSigner},
+		{name: "GitHub pinned to a ref alone", id: fromSource(plugins.GitHubActionsIssuer, subjectCI, "", "refs/heads/main"), wantErr: plugins.ErrInvalidSigner},
+		{
+			name: "GitHub subject pattern without a source", id: plugins.SignerIdentity{Issuer: plugins.GitHubActionsIssuer, SubjectPattern: `https://github\.com/example/.*`},
+			wantErr: plugins.ErrInvalidSigner,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -225,6 +242,7 @@ func newPolicyFixture(t *testing.T) policyFixture {
 		publisher: plugins.Signer{Name: "example-publisher", Kind: plugins.SignerPublisher, Identity: keyless(issuerExample, subjectCI)},
 		ownerCI: plugins.Signer{Name: "owner-ci", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{
 			Issuer: plugins.GitHubActionsIssuer, SubjectPattern: `https://github\.com/owner-example/.*@refs/tags/v.*`,
+			Source: &plugins.SignerSource{Repository: ownerRepository, Ref: ownerRef},
 		}},
 		ownerKey: plugins.Signer{Name: "owner-laptop", Kind: plugins.SignerOwner, Identity: plugins.SignerIdentity{PublicKey: newPublicKeyPEM(t)}},
 	}
@@ -241,7 +259,8 @@ func TestTrustPolicyDecide(t *testing.T) {
 	f := newPolicyFixture(t)
 	ci := openFiefCISigned()
 	publisher := keyless(issuerExample, subjectCI)
-	ownerTag := keyless(plugins.GitHubActionsIssuer, "https://github.com/owner-example/plugin/.github/workflows/release.yml@refs/tags/v1.2.0")
+	ownerTag := fromSource(plugins.GitHubActionsIssuer, "https://github.com/owner-example/plugin/.github/workflows/release.yml@refs/tags/v1.2.0",
+		ownerRepository, ownerRef)
 	stranger := keyless(plugins.GitHubActionsIssuer, "https://github.com/stranger/plugin/.github/workflows/release.yml@refs/heads/main")
 	manifest := samplePlugin().Manifest
 	widened := samplePlugin().Manifest

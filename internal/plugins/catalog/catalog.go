@@ -18,9 +18,9 @@
 //	                 "sourceRef": "refs/heads/main"}}]}
 //
 // A publisher gives an issuer and exact subject (a keyless signature),
-// optionally with the source repository and ref of the signing run, or a
-// PEM "publicKey". OpenFief's own entries pin the source repository and ref
-// (D-181). The catalog holds only what the operator's trust check
+// with the source repository and ref of the signing run, or a PEM
+// "publicKey". A GitHub-issued identity must pin both the source repository
+// and ref (D-181, D-187); another issuer's may. The catalog holds only what the operator's trust check
 // needs; the CLI's install flow (D-46) may add fields later.
 package catalog
 

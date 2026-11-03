@@ -23565,6 +23565,8 @@ symbols:
       - type: covered_by
         target: TEST-plugins-trust
       - type: implements
+        target: REQ-plugins-github-signers-pinned
+      - type: implements
         target: REQ-plugins-signer-identity-match
       - type: implements
         target: REQ-plugins-signer-source-pinned
@@ -23630,6 +23632,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-github-signers-pinned
       - type: implements
         target: REQ-plugins-signer-identity-match
       - type: implements
@@ -131284,3 +131288,33 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-institutions
+  - id: SYM-plugins-cli-test-helper-owner-identity
+    title: ownerIdentity
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T13:51:59.840Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-app-test-helper-publisher-source
+    title: publisherSource
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T13:52:10.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-cosign-test-helper-world-sign-publisher
+    title: world.signPublisher
+    sourceFile: internal/plugins/cosign/verifier_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T13:52:20.713Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cosign
