@@ -846,13 +846,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad8d03fc258c
-  - type: implements
-    from: SYM-ingest-xtb-sheet-reader-start-row
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:03:15.405Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3880220385e9
   - type: covered_by
     from: SYM-ingest-xtb-sheet-reader-start-row
     to: TEST-ingest-xtb-xlsx
@@ -860,20 +853,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b55fe3f22d3
-  - type: implements
-    from: SYM-identity-session-session-passkey-checked
-    to: REQ-identity-protected-actions-recent-passkey-check
-    created_at: 2026-11-03T04:43:21.649Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8cdf380e17c9
-  - type: covered_by
-    from: SYM-identity-session-session-passkey-checked
-    to: TEST-identity-passkey-check-domain
-    created_at: 2026-11-03T04:43:21.711Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-95dbd5a5d7ea
   - type: executable_for
     from: SYM-attention-connectapi-test-logsafe-checknovalues
     to: TEST-attention-connectapi-logsafe
@@ -895,3 +874,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1309f5d222e0
+  - type: implements
+    from: SYM-ingest-xtb-sheet-reader-start-row
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:23:52.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f11e19dcfa2
+  - type: implements
+    from: SYM-identity-session-session-passkey-checked
+    to: REQ-identity-protected-actions-recent-passkey-check
+    created_at: 2026-11-03T04:43:21.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cdf380e17c9
+  - type: covered_by
+    from: SYM-identity-session-session-passkey-checked
+    to: TEST-identity-passkey-check-domain
+    created_at: 2026-11-03T04:43:21.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95dbd5a5d7ea

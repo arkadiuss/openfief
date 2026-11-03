@@ -713,6 +713,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9796d3685a9c
+  - type: validates
+    from: TEST-ingest-connectrpc-mapping
+    to: REQ-valuation-bond-terms-polish-isin
+    created_at: 2026-11-02T22:24:44.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-536220103946
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-answerHeapCases
+    to: TEST-ingest-connectrpc-answer-heap
+    created_at: 2026-11-03T06:20:38.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43e58767ec26
   - type: implements
     from: SYM-identity-gen-pb-begin-passkey-check-response-proto-reflect
     to: REQ-identity-auth-contract
@@ -734,10 +748,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd0c06953108
-  - type: validates
-    from: TEST-ingest-connectrpc-mapping
-    to: REQ-valuation-bond-terms-polish-isin
-    created_at: 2026-11-02T22:24:44.735Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-536220103946

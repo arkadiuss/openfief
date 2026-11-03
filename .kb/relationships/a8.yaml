@@ -875,6 +875,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-d9e659ba12c3
   - type: implements
+    from: SYM-plugins-secret-holder
+    to: REQ-plugins-secret-names-never-shared
+    created_at: 2026-11-03T08:22:25.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dece1c24e94
+  - type: covered_by
+    from: SYM-plugins-secret-holder
+    to: TEST-plugins-secret-holder
+    created_at: 2026-11-03T08:22:25.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23d4174a8ae2
+  - type: implements
     from: SYM-plugins-approved-institutions
     to: REQ-plugins-legacy-grants-approve-declared-institutions
     created_at: 2026-11-03T07:53:30.476Z

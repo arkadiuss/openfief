@@ -538,13 +538,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-563ddaa78232
-  - type: implements
-    from: SYM-ingest-xtb-zip-parts-shared-strings
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:05:05.436Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d8aaa7e70f79
   - type: covered_by
     from: SYM-ingest-xtb-zip-parts-shared-strings
     to: TEST-ingest-xtb-xlsx
@@ -559,27 +552,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f99b43777bd7
-  - type: implements
-    from: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
-    to: REQ-identity-auth-contract
-    created_at: 2026-11-03T04:48:29.997Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7e89de17bac0
-  - type: implements
-    from: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
-    to: REQ-AUTO-BC327C2200FC820F
-    created_at: 2026-11-03T04:48:30.066Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ca1c9d2202b3
-  - type: covered_by
-    from: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
-    to: TEST-identity-auth-contract
-    created_at: 2026-11-03T04:48:30.117Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0288c88eccdd
   - type: validates
     from: TEST-valuation-postgres-named-currencies
     to: REQ-valuation-stored-valuations-name-currency
@@ -629,3 +601,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c421fd24f98
+  - type: implements
+    from: SYM-ingest-xtb-zip-parts-shared-strings
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:26:50.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b3e3304a727
+  - type: implements
+    from: SYM-operator-held-secrets
+    to: REQ-plugins-secret-names-never-shared
+    created_at: 2026-11-03T08:23:43.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1e3648f8e65
+  - type: covered_by
+    from: SYM-operator-held-secrets
+    to: TEST-operator-shared-secret
+    created_at: 2026-11-03T08:23:43.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fde5d1118ad4
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:48:29.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e89de17bac0
+  - type: implements
+    from: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:48:30.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca1c9d2202b3
+  - type: covered_by
+    from: SYM-identity-gen-pb-begin-passkey-check-request-proto-reflect
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:48:30.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0288c88eccdd

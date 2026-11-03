@@ -622,13 +622,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-061fc13b3efb
-  - type: implements
-    from: SYM-ingest-xtb-walker-next
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T20:59:57.097Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a5302a86cb05
   - type: covered_by
     from: SYM-ingest-xtb-walker-next
     to: TEST-ingest-xtb-xlsx
@@ -636,13 +629,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fca4a88f258d
-  - type: executable_for
-    from: SYM-identity-postgres-auth-test-want-stored
-    to: TEST-identity-auth-postgres
-    created_at: 2026-11-03T04:42:50.400Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cf674cac446c
   - type: implements
     from: SYM-views-transfer-in-transit-on
     to: REQ-views-performance-value-reporting
@@ -671,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82241f3108d2
+  - type: implements
+    from: SYM-ingest-xtb-walker-next
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:25:51.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7a73bc8c73d
+  - type: executable_for
+    from: SYM-identity-postgres-auth-test-want-stored
+    to: TEST-identity-auth-postgres
+    created_at: 2026-11-03T04:42:50.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf674cac446c

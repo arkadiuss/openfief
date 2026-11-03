@@ -679,6 +679,27 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-84d7869c149d
   - type: implements
+    from: SYM-viewsv1-plugin-get-requested-index-levels
+    to: REQ-ingest-bond-terms-index-levels-declared-approved
+    created_at: 2026-11-02T22:26:39.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdf8c0f8347a
+  - type: covered_by
+    from: SYM-viewsv1-plugin-get-requested-index-levels
+    to: TEST-views-connectapi-plugins
+    created_at: 2026-11-02T22:26:39.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2136dbae424d
+  - type: verified_by
+    from: SCEN-plugins-manifest-control-characters-refused
+    to: TEST-plugins-manifest-text
+    created_at: 2026-11-03T09:18:08.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96169d4150f8
+  - type: implements
     from: SYM-identity-gen-pb-begin-passkey-check-request-proto-message
     to: REQ-identity-auth-contract
     created_at: 2026-11-03T04:48:20.624Z
@@ -699,17 +720,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad1a73823b2d
-  - type: implements
-    from: SYM-viewsv1-plugin-get-requested-index-levels
-    to: REQ-ingest-bond-terms-index-levels-declared-approved
-    created_at: 2026-11-02T22:26:39.558Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fdf8c0f8347a
-  - type: covered_by
-    from: SYM-viewsv1-plugin-get-requested-index-levels
-    to: TEST-views-connectapi-plugins
-    created_at: 2026-11-02T22:26:39.596Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2136dbae424d

@@ -21774,7 +21774,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-client
       - type: implements
-        target: REQ-ingest-connector-answer-bounded
+        target: REQ-ingest-connector-answer-counted-on-wire
       - type: implements
         target: REQ-ingest-core-authenticates-to-connector
       - type: implements
@@ -67483,9 +67483,13 @@ symbols:
       recorded_at: 2026-10-29T01:20:55.661Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-connectrpc-answer-heap
+      - type: covered_by
         target: TEST-ingest-connectrpc-bonds
       - type: implements
         target: REQ-ingest-bond-lot-messages
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
   - id: SYM-ingest-connectrpc-bond-terms-from
     title: bondTermsFrom
     sourceFile: internal/ingest/connectrpc/mapping.go
@@ -88290,7 +88294,7 @@ symbols:
       - type: implements
         target: REQ-operator-refuses-second-browser-view
   - id: SYM-exp-operator-other-browser-views
-    title: PluginReconciler.otherBrowserViews
+    title: PluginReconciler.otherClaimants
     sourceFile: internal/plugins/operator/setup.go
     status: active
     symbol_role: behavioral
@@ -88300,10 +88304,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-operator-browser-view
+      - type: covered_by
+        target: TEST-operator-shared-secret
       - type: implements
         target: REQ-operator-contested-browser-path-stops
       - type: implements
         target: REQ-operator-refuses-second-browser-view
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
   - id: SYM-exp-plugins-test-refuse-second-browser-view
     title: TestRefuseSecondBrowserView
     sourceFile: internal/plugins/browser_view_test.go
@@ -109408,7 +109416,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-row
     title: sheet.row
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109452,7 +109460,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-open-zip
     title: openZip
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109469,7 +109477,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-x-cell
     title: xCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109499,7 +109507,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-targets
     title: zipParts.targets
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109529,7 +109537,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-part-name
     title: partName
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -109559,7 +109567,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-export-mapping
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-cell-value
     title: cellValue
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126640,7 +126648,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-mapping
       - type: implements
-        target: REQ-ingest-connector-answer-bounded
+        target: REQ-ingest-connector-answer-counted-on-wire
   - id: SYM-views-connectapi-test-helper-counting-body
     title: countingBody
     sourceFile: internal/views/connectapi/limits_test.go
@@ -126816,7 +126824,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectrpc-mapping
       - type: implements
-        target: REQ-ingest-connector-answer-bounded
+        target: REQ-ingest-connector-answer-counted-on-wire
       - type: implements
         target: REQ-ingest-connector-contract-translation
   - id: SYM-views-connectapi-test-helper-check-refused
@@ -126851,7 +126859,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-row
     title: row
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126865,7 +126873,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-row-at
     title: row.at
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126878,7 +126886,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-limits
     title: limits
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126891,7 +126899,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-default-limits
     title: defaultLimits
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126904,7 +126912,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-keep-text
     title: zipParts.keepText
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126917,7 +126925,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-keep-cell
     title: zipParts.keepCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126930,7 +126938,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-part-reader
     title: partReader
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126944,7 +126952,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-part-reader-read
     title: partReader.Read
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126957,7 +126965,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker
     title: walker
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126971,7 +126979,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker-next
     title: walker.next
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126984,7 +126992,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker-in
     title: walker.in
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -126997,7 +127005,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-walker-each
     title: walker.each
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127010,7 +127018,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-walk
     title: zipParts.walk
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127023,7 +127031,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-attr
     title: attr
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127036,7 +127044,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-ref
     title: sheetRef
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127049,7 +127057,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-read-workbook-within
     title: readWorkbookWithin
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127062,7 +127070,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-zip-parts-workbook-part
     title: zipParts.workbookPart
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127075,7 +127083,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader
     title: sharedReader
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127089,7 +127097,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader-token
     title: sharedReader.token
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127102,7 +127110,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader-text
     title: sharedReader.text
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127115,7 +127123,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-shared-reader-end-item
     title: sharedReader.endItem
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127128,7 +127136,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader
     title: sheetReader
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127142,7 +127150,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-token
     title: sheetReader.token
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127155,7 +127163,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-start
     title: sheetReader.start
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127168,7 +127176,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-char-data
     title: sheetReader.charData
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127181,7 +127189,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-end
     title: sheetReader.end
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127194,7 +127202,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-text
     title: sheetReader.text
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127207,7 +127215,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-start-row
     title: sheetReader.startRow
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127220,7 +127228,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-end-cell
     title: sheetReader.endCell
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127233,7 +127241,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-sheet-reader-end-row
     title: sheetReader.endRow
     sourceFile: internal/ingest/xtb/xlsx.go
@@ -127246,7 +127254,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-xtb-xlsx
       - type: implements
-        target: REQ-ingest-xtb-reader-bounded
+        target: REQ-ingest-xtb-reader-bounded-by-pod-memory
   - id: SYM-ingest-xtb-test-helper-workbook-of
     title: workbookOf
     sourceFile: internal/ingest/xtb/xlsx_test.go
@@ -127539,6 +127547,2320 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-manifests
+  - id: SYM-ingest-app-attention-raiser
+    status: active
+    title: AttentionRaiser
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:19.254Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-undeclared-deliveries
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-ingest-app-connectors-declared-deliveries
+    status: active
+    title: Connectors.declaredDeliveries
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:27.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-undeclared-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-ingest-undeclared-deliveries
+    status: active
+    title: UndeclaredDeliveries
+    sourceFile: internal/ingest/declarations.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:34.809Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-pl-check-bond-isin
+    status: active
+    title: CheckBondISIN
+    sourceFile: internal/jurisdiction/pl/terms.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:42.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-terms
+      - type: implements
+        target: REQ-valuation-bond-terms-polish-isin
+  - id: SYM-plugins-effective-permissions-bond-terms
+    status: active
+    title: EffectivePermissions.BondTerms
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:50.006Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-plugins-effective-permissions-index-levels
+    status: active
+    title: EffectivePermissions.IndexLevels
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:25:57.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-plugins-manifest-validate-deliveries
+    status: active
+    title: Manifest.validateDeliveries
+    sourceFile: internal/plugins/manifest.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:04.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-viewsv1-plugin-get-bond-terms
+    status: active
+    title: Plugin.GetBondTerms
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:12.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-viewsv1-plugin-get-requested-bond-terms
+    status: active
+    title: Plugin.GetRequestedBondTerms
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:20.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-viewsv1-plugin-get-index-levels
+    status: active
+    title: Plugin.GetIndexLevels
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:28.839Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-viewsv1-plugin-get-requested-index-levels
+    status: active
+    title: Plugin.GetRequestedIndexLevels
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:36.999Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-core-test-helper-terms-connector
+    title: termsConnector
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:29.470Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-terms-connector-sync
+    title: termsConnector.Sync
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:35.615Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-approve-bond-terms
+    title: approveBondTerms
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:41.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-stored-term-sources
+    title: storedTermSources
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:47.992Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-helper-delivery-items
+    title: deliveryItems
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:54.177Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-core-test-undeclared-deliveries-raise-attention
+    title: TestUndeclaredDeliveriesRaiseAttention
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:01.356Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-ingest-app-test-helper-delivery-attention
+    title: deliveryAttention
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:07.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-app-test-helper-delivery-attention-raise
+    title: deliveryAttention.Raise
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:14.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-app-test-helper-delivery-attention-clear
+    title: deliveryAttention.Clear
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:20.535Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-app-test-connectors-undeclared-deliveries
+    title: TestConnectorsUndeclaredDeliveries
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:26.959Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-app-test-connectors-undeclared-deliveries-item
+    title: TestConnectorsUndeclaredDeliveriesItem
+    sourceFile: internal/ingest/app/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:33.972Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-undeclared-deliveries
+  - id: SYM-ingest-test-decl-test-undeclared-deliveries
+    title: TestUndeclaredDeliveries
+    sourceFile: internal/ingest/declarations_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:39.690Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-declarations
+  - id: SYM-pl-test-check-bond-isin
+    title: TestCheckBondISIN
+    sourceFile: internal/jurisdiction/pl/terms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:45.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-terms
+  - id: SYM-plugins-cli-test-render-proposal-deliveries
+    title: TestRenderProposalDeliveries
+    sourceFile: internal/plugins/cli/render_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:29:52.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-render
+  - id: SYM-plugins-test-deliveries-outcome
+    title: deliveriesOutcome
+    sourceFile: internal/plugins/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:30:01.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-deliveries
+  - id: SYM-plugins-test-deliveries
+    title: TestDeliveries
+    sourceFile: internal/plugins/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:30:09.166Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-deliveries
+  - id: SYM-valuation-postgres-test-stored-terms-and-levels-name-their-instance
+    title: TestStoredTermsAndLevelsNameTheirInstance
+    sourceFile: internal/valuation/postgres/deliveredby_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:30:23.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-delivered-by
+  - id: SYM-ui-test-plugins-page-deliveries
+    title: TestPluginsPageDeliveries
+    sourceFile: internal/views/ui/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:30:30.658Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-plugins
+  - id: SYM-core-test-helper-bonds-discovery
+    title: bondsDiscovery
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:47:04.818Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-core-test-helper-bonds-discovery-declarations
+    title: bondsDiscovery.Declarations
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:47:26.475Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-ingest-undeclared-drop
+    status: active
+    title: UndeclaredDrop
+    sourceFile: internal/ingest/declarations.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:49:54.955Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-plugins-effective-permissions-grant-deliveries
+    status: active
+    title: EffectivePermissions.grantDeliveries
+    sourceFile: internal/plugins/effective.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:01.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+  - id: SYM-views-kube-test-helper-with-flags
+    title: withFlags
+    sourceFile: internal/views/kube/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:08.695Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-kube
+  - id: SYM-core-test-helper-sync-undeclared
+    title: syncUndeclared
+    sourceFile: cmd/core/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:15.125Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-deliveries
+  - id: SYM-plugins-test-deliveries-label
+    title: TestDeliveriesLabel
+    sourceFile: internal/plugins/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:21.509Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-deliveries
+  - id: SYM-plugins-test-deliveries-diff
+    title: TestDeliveriesDiff
+    sourceFile: internal/plugins/deliveries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:50:27.861Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-deliveries
+  - id: SYM-valuation-convert-at
+    status: active
+    title: ConvertAt
+    sourceFile: internal/valuation/fx.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:57:37.327Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-conversion-named-currency
+      - type: implements
+        target: REQ-valuation-fx-rate-lookup
+  - id: SYM-valuation-convert
+    status: active
+    title: Convert
+    sourceFile: internal/valuation/fx.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:57:44.128Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-conversion-named-currency
+  - id: SYM-valuation-round-in
+    status: active
+    title: roundIn
+    sourceFile: internal/valuation/fx.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:57:50.596Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-fx
+      - type: implements
+        target: REQ-valuation-conversion-named-currency
+  - id: SYM-valuation-nbp-base
+    status: active
+    title: Base
+    sourceFile: internal/valuation/nbp/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:57:57.132Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-nbp-client
+      - type: implements
+        target: REQ-valuation-stored-rates-name-base
+  - id: SYM-valuation-test-helper-eur-pack
+    title: eurPack
+    sourceFile: internal/valuation/currency_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:27.535Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pack-currency
+  - id: SYM-valuation-test-convert
+    title: TestConvert
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:33.040Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-convert-at
+    title: TestConvertAt
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:38.726Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-convert-needs-the-amounts-currency
+    title: TestConvertNeedsTheAmountsCurrency
+    sourceFile: internal/valuation/fx_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:44.367Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-fx
+  - id: SYM-valuation-test-no-assumed-pln
+    title: TestNoAssumedPLN
+    sourceFile: internal/valuation/nopln_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:49.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-no-assumed-pln
+  - id: SYM-valuation-test-helper-eur-pack-reporting-currency
+    title: eurPack.ReportingCurrency
+    sourceFile: internal/valuation/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:59:56.272Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pack-currency
+  - id: SYM-valuation-test-value-market-holding-in-pack-currency
+    title: TestValueMarketHoldingInPackCurrency
+    sourceFile: internal/valuation/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:00:02.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pack-currency
+  - id: SYM-valuation-test-helper-reporting-of
+    title: reportingOf
+    sourceFile: internal/valuation/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:00:08.878Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pack-currency
+  - id: SYM-valuation-postgres-test-stored-currencies-are-named
+    title: TestStoredCurrenciesAreNamed
+    sourceFile: internal/valuation/postgres/currency_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:00:14.412Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-named-currencies
+  - id: SYM-views-in-reporting
+    status: active
+    title: inReporting
+    sourceFile: internal/views/performance.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:13:18.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-performance
+      - type: implements
+        target: REQ-valuation-stored-valuations-name-currency
+      - type: implements
+        target: REQ-views-performance-value-reporting
+  - id: SYM-valuation-test-helper-assumed-pln
+    title: assumedPLN
+    sourceFile: internal/valuation/nopln_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:13:25.283Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-no-assumed-pln
+  - id: SYM-views-tax-year-account-convert
+    title: TaxYearAccount.convert
+    sourceFile: internal/views/yearlytax.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:24:13.993Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-yearly-tax
+      - type: implements
+        target: REQ-views-oki-tax-days
+  - id: SYM-connectorv1-fx-rate-get-base
+    status: active
+    title: FxRate.GetBase
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:01:49.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-stored-rates-name-base
+  - id: SYM-plugins-reserved-name
+    title: ReservedName
+    sourceFile: internal/plugins/secret_owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:18.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-install
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-validate-unreserved
+    title: validateUnreserved
+    sourceFile: internal/plugins/secret_owner.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:30.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-plugin-grant
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-validate-institutions
+    title: validateInstitutions
+    sourceFile: internal/plugins/manifest.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:42.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-institutions
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
+  - id: SYM-plugins-kube-instances-secret-owners
+    title: Instances.secretOwners
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:20:53.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-kube-instances-delete-owned-secret
+    title: Instances.deleteOwnedSecret
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:21:05.749Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-ingest-declarations-check-institution
+    title: Declarations.CheckInstitution
+    sourceFile: internal/ingest/declarations.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:21:16.809Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-declarations
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
+  - id: SYM-ingest-app-connectors-declarations
+    title: Connectors.declarations
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:21:28.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-delivery-declared-institution
+  - id: SYM-plugins-test-reserved-name
+    title: TestReservedName
+    sourceFile: internal/plugins/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:19.837Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-install
+  - id: SYM-plugins-test-manifest-institutions
+    title: TestManifestInstitutions
+    sourceFile: internal/plugins/institutions_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:29.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-institutions
+  - id: SYM-plugins-app-test-uninstall-leaves-secrets-not-owned
+    title: TestUninstallLeavesSecretsNotOwned
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:41.271Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-app-test-prepare-refuses-reserved-name
+    title: TestPrepareRefusesReservedName
+    sourceFile: internal/plugins/app/install_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:26:52.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-install
+  - id: SYM-plugins-kube-test-instances-owned-secret
+    title: ownedSecret
+    sourceFile: internal/plugins/kube/instances_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:04.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-instances
+  - id: SYM-ingest-app-test-conn-undeclared-institution
+    title: TestConnectorsUndeclaredInstitution
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:17.013Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-conn-test-institutions
+    title: testInstitutions
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:29.365Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-test-check-institution
+    title: TestCheckInstitution
+    sourceFile: internal/ingest/declarations_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:39.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-declarations
+  - id: SYM-ingest-connectapi-test-bonds-instance
+    title: bondsInstance
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:27:52.196Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-ingest-connectapi-test-bonds-instance-declarations
+    title: bondsInstance.Declarations
+    sourceFile: internal/ingest/connectapi/service_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:28:04.846Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi
+  - id: SYM-plugins-kube-owners-of
+    title: ownersOf
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:33:43.035Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-secrets-never-platform
+  - id: SYM-plugins-kube-describe-plugin
+    title: describePlugin
+    sourceFile: internal/plugins/kube/instances.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:33:53.427Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-instances
+      - type: implements
+        target: REQ-plugins-cli-list
+  - id: SYM-views-pb-plugin-get-institutions
+    title: Plugin.GetInstitutions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T22:59:55.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-plugins
+      - type: implements
+        target: REQ-views-plugin-institutions
+  - id: SYM-core-test-helper-bonds-discovery-instances
+    title: bondsDiscovery.ConnectorInstances
+    sourceFile: cmd/core/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T23:47:15.737Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lots
+  - id: SYM-plugins-egress-parse-deny-list
+    title: ParseDenyList
+    sourceFile: internal/plugins/egress/deny.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:22.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-deny
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+  - id: SYM-plugins-egress-check-address-denying
+    title: CheckAddressDenying
+    sourceFile: internal/plugins/egress/deny.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:32.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-deny
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+  - id: SYM-plugins-app-jwt-shaped
+    title: JWTShaped
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:42.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-fd-browserproxy-security-headers
+    title: SecurityHeaders
+    sourceFile: internal/views/browserproxy/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:54.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-browser-proxy
+      - type: implements
+        target: REQ-views-proxied-pages-security-headers
+  - id: SYM-core-browser-read-tokens
+    title: browserReadTokens
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:06.256Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-tokens
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-core-read-apis
+    title: readAPIs
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:17.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-tokens
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-core-port-apis
+    title: portAPIs
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:30.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-tokens
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-core-test-jwt-for
+    title: jwtFor
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:42.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-test-count-reviews
+    title: countReviews
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:54.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-plugins-egress-test-parse-deny-list
+    title: TestParseDenyList
+    sourceFile: internal/plugins/egress/deny_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:15:35.282Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-deny
+  - id: SYM-plugins-egress-test-check-address-denying
+    title: TestCheckAddressDenying
+    sourceFile: internal/plugins/egress/deny_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:15:44.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-deny
+  - id: SYM-plugins-smokescreen-test-start-proxy-denying
+    title: startProxyDenying
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:15:55.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-denies-extra-ranges
+    title: TestProxyDeniesExtraRanges
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:05.824Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-app-test-jwt-named
+    title: jwtNamed
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:16.824Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-refusals-bounded
+    title: TestCachingTokenReviewerRefusalsBounded
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:27.720Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-refusing-reviewer
+    title: refusingReviewer
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:38.258Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-refusing-reviewer-review-token
+    title: refusingReviewer.ReviewToken
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:48.677Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-jwt-shaped
+    title: TestJWTShaped
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:59.638Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-fd-browserproxy-test-security-headers
+    title: TestProxySecurityHeaders
+    sourceFile: internal/views/browserproxy/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:17:10.781Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browser-proxy
+  - id: SYM-fd-browserproxy-test-check-security-headers
+    title: checkSecurityHeaders
+    sourceFile: internal/views/browserproxy/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:17:21.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browser-proxy
+  - id: SYM-deploy-np-test-check
+    title: check
+    sourceFile: scripts/tests/network-policies.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:40:09.295Z
+    relationships:
+      - type: executable_for
+        target: TEST-deploy-network-policies
+  - id: SYM-deploy-np-test-policy
+    title: policy
+    sourceFile: scripts/tests/network-policies.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:40:20.752Z
+    relationships:
+      - type: executable_for
+        target: TEST-deploy-network-policies
+  - id: SYM-ingest-app-log-safe
+    title: LogSafe
+    sourceFile: internal/ingest/app/logsafe.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:31.042Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-app-loggable-errors
+    title: loggableErrors
+    sourceFile: internal/ingest/app/logsafe.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:39.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-logsafe
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-conn-rpc-invalid-message-error
+    title: invalidMessageError
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:05:55.863Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-conn-rpc-invalid-message-error-error
+    title: invalidMessageError.Error
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:06:05.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-connector-contract-translation
+  - id: SYM-ingest-conn-rpc-invalid-message-error-is
+    title: invalidMessageError.Is
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:06:15.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-ingest-app-test-logsafe-valued
+    title: valued
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:06.422Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-locked-buffer
+    title: lockedBuffer
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:16.279Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-locked-buffer-write
+    title: lockedBuffer.Write
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:25.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-locked-buffer-string
+    title: lockedBuffer.String
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:35.714Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-logsafe-text-logger
+    title: textLogger
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:45.421Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-log-safe
+    title: TestLogSafe
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:07:55.163Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-app-test-scheduler-logs-no-values
+    title: TestSchedulerLogsNoValues
+    sourceFile: internal/ingest/app/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:04.902Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-logsafe
+  - id: SYM-ingest-connectapi-test-st-logging-client
+    title: newLoggingStatementsClient
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:22.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-logs-no-values
+    title: TestUploadStatementLogsNoValues
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:32.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-locked-log
+    title: lockedLog
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:42.366Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-locked-log-write
+    title: lockedLog.Write
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:08:52.029Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ingest-connectapi-test-st-locked-log-string
+    title: lockedLog.String
+    sourceFile: internal/ingest/connectapi/statements_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:09:01.769Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-statements
+  - id: SYM-ledger-test-refusals-name-no-values
+    title: TestRefusalsNameNoValues
+    sourceFile: internal/ledger/events_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:09:27.938Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-events
+  - id: SYM-ingest-conn-rpc-test-invalid-message-is-invalid-delivery
+    title: TestInvalidMessageIsInvalidDelivery
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T01:09:37.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-ingest-app-connectors-keep-declared
+    status: active
+    title: Connectors.keepDeclared
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T02:19:38.420Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-undeclared-deliveries
+      - type: implements
+        target: REQ-ingest-bond-terms-index-levels-declared-approved
+      - type: implements
+        target: REQ-ingest-cross-check-prices-declared-only
+  - id: SYM-kernel-log-safe
+    status: active
+    title: LogSafe
+    sourceFile: internal/kernel/logsafe.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:24:29.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
+      - type: implements
+        target: REQ-ingest-logs-carry-no-values
+  - id: SYM-kernel-innermost
+    status: active
+    title: innermost
+    sourceFile: internal/kernel/logsafe.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:24:38.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-kernel-logsafe
+      - type: implements
+        target: REQ-core-logs-carry-no-values
+  - id: SYM-kernel-test-log-safe
+    title: TestLogSafe
+    sourceFile: internal/kernel/logsafe_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:24:45.932Z
+    relationships:
+      - type: executable_for
+        target: TEST-kernel-logsafe
+  - id: SYM-ledger-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:05.090Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-logsafe
+  - id: SYM-ledger-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:13.644Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-logsafe
+  - id: SYM-ledger-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:22.128Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-logsafe
+  - id: SYM-ledger-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:31.226Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-logsafe
+  - id: SYM-attention-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:39.928Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi-logsafe
+  - id: SYM-attention-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:48.871Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi-logsafe
+  - id: SYM-attention-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:25:57.975Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi-logsafe
+  - id: SYM-attention-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:06.845Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-connectapi-logsafe
+  - id: SYM-portfolio-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:15.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi-logsafe
+  - id: SYM-portfolio-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:24.032Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi-logsafe
+  - id: SYM-portfolio-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:32.976Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi-logsafe
+  - id: SYM-portfolio-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:41.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-connectapi-logsafe
+  - id: SYM-valuation-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:50.207Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-connectapi-logsafe
+  - id: SYM-valuation-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:26:58.237Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-connectapi-logsafe
+  - id: SYM-valuation-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:06.673Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-connectapi-logsafe
+  - id: SYM-valuation-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:15.620Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-valuedfailures
+    title: valuedFailures
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:24.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-textlog
+    title: textLog
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:32.989Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-checknovalues
+    title: checkNoValues
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:41.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-testfailureslognovalues
+    title: TestFailuresLogNoValues
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:49.721Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-valuedcallers
+    title: valuedCallers
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:27:58.177Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-identity-connectapi-test-logsafe-valuedcallers-verifycaller
+    title: valuedCallers.VerifyCaller
+    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T03:28:06.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-connectapi-logsafe
+  - id: SYM-ingest-conn-rpc-bounded-codec
+    title: boundedCodec
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:26.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-bounded-codec-name
+    title: boundedCodec.Name
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:36.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-bounded-codec-marshal
+    title: boundedCodec.Marshal
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:47.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-bounded-codec-unmarshal
+    title: boundedCodec.Unmarshal
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:16:58.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-count-elements
+    title: countElements
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:10.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-count-field
+    title: countField
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:23.240Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-scalar-elements
+    title: scalarElements
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:34.958Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-packed-elements
+    title: packedElements
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:46.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-protowire-type
+    title: protowireType
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:17:58.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-too-many
+    title: tooMany
+    sourceFile: internal/ingest/connectrpc/codec.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:18:11.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-codec
+      - type: implements
+        target: REQ-ingest-connector-answer-counted-on-wire
+  - id: SYM-ingest-conn-rpc-test-TestBoundedCodecCounts
+    title: TestBoundedCodecCounts
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:08.913Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-TestBoundedCodecRoundTrip
+    title: TestBoundedCodecRoundTrip
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:19.335Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-TestCountElementsRepeatedScalars
+    title: TestCountElementsRepeatedScalars
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:30.560Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-helper-wire-field
+    title: wireField
+    sourceFile: internal/ingest/connectrpc/codec_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:43.118Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-codec
+  - id: SYM-ingest-conn-rpc-test-TestAnswerHeap
+    title: TestAnswerHeap
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:19:59.542Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-TestAnswerHeapChild
+    title: TestAnswerHeapChild
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:12.261Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-TestClientTooLargeIsNotRefusal
+    title: TestClientTooLargeIsNotRefusal
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:22.995Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-answerHeapCases
+    title: answerHeapCases
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:34.166Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-answerHeapCase
+    title: answerHeapCase
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:45.230Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-heapGrowth
+    title: heapGrowth
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:20:55.310Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-emptyPostings
+    title: emptyPostings
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:05.570Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-prices
+    title: prices
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:15.564Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-field
+    title: field
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:25.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-syncAnswer
+    title: syncAnswer
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:35.595Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-conn-rpc-test-helper-size
+    title: size
+    sourceFile: internal/ingest/connectrpc/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T06:21:45.749Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-answer-heap
+  - id: SYM-ingest-xtb-test-workbook-heap
+    title: TestWorkbookHeap
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:27:42.020Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-TestWorkbookHeapChild
+    title: TestWorkbookHeapChild
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:27:52.738Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-childHeapGrowth
+    title: childHeapGrowth
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:04.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-workbookHeapCases
+    title: workbookHeapCases
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:15.342Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-workbookHeapCase
+    title: workbookHeapCase
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:25.707Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-heapGrowth
+    title: heapGrowth
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:35.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-zipOf
+    title: zipOf
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:44.296Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-writePart
+    title: writePart
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:28:54.726Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-repeated
+    title: repeated
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:29:05.470Z
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-repeated-Read
+    title: repeated.Read
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:29:16.259Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-ingest-xtb-test-helper-heap-manyEntries
+    title: manyEntries
+    sourceFile: internal/ingest/xtb/heap_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:29:26.739Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-xtb-workbook-heap
+  - id: SYM-plugins-secret-holder
+    title: SecretHolder
+    sourceFile: internal/plugins/secret_holder.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:21.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-secret-holder
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-may-mount-secrets
+    title: MayMountSecrets
+    sourceFile: internal/plugins/secret_holder.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:31.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-secret-holder
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-secret-holder-senior
+    title: SecretHolder.senior
+    sourceFile: internal/plugins/secret_holder.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:42.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-secret-holder
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-app-check-secrets
+    title: CheckSecrets
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:22:54.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-app-check-secrets-all
+    title: checkSecrets
+    sourceFile: internal/plugins/app/install.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:06.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-install
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-cli-check-install
+    title: checkInstall
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T07:51:18.162Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-institutions
+      - type: covered_by
+        target: TEST-plugins-cli-shared-secret
+      - type: implements
+        target: REQ-plugins-install-warns-shared-institution
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-operator-own-secrets
+    title: PluginReconciler.ownSecrets
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:29.023Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-shared-secret
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-operator-held-secrets
+    title: heldSecrets
+    sourceFile: internal/plugins/operator/reconciler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:40.186Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-shared-secret
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared
+  - id: SYM-plugins-test-may-mount-secrets
+    title: TestMayMountSecrets
+    sourceFile: internal/plugins/secret_holder_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:49.073Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-secret-holder
+  - id: SYM-operator-test-shared-secret
+    title: testSharedSecret
+    sourceFile: internal/plugins/operator/shared_secret_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:23:58.517Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-shared-secret
+  - id: SYM-plugins-cli-test-run-refuses-shared-secret
+    title: TestRunRefusesSharedSecret
+    sourceFile: internal/plugins/cli/secrets_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:24:09.197Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-shared-secret
+  - id: SYM-plugins-app-test-upgrade-refuses-shared-secret
+    title: TestUpgradeRefusesSharedSecret
+    sourceFile: internal/plugins/app/upgrade_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T08:24:30.857Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-upgrade
+  - id: SYM-plugins-unsafe-rune
+    title: UnsafeRune
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:30.407Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-safe-text
+    title: SafeText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:38.893Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-validate-manifest-text
+    title: validateManifestText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:48.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-manifest-text
+    title: manifestText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:18:57.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-unsafe-schema-text
+    title: unsafeSchemaText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:06.106Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-unsafe-json-text
+    title: unsafeJSONText
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:15.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-text-field
+    title: textField
+    sourceFile: internal/plugins/text.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:26.170Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-manifest-text
+      - type: implements
+        target: REQ-plugins-manifest-text-safe
+  - id: SYM-plugins-cli-shown
+    title: shown
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:36.802Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-escape
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-cli-shown-all
+    title: shownAll
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:19:48.392Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-escape
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-cli-terminal-text
+    title: terminalText
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:00.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-terminal
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-cli-unsafe-on-terminal
+    title: unsafeOnTerminal
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:12.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-terminal
+      - type: implements
+        target: REQ-plugins-cli-shows-vendor-text-escaped
+  - id: SYM-plugins-test-manifest-refuses-unsafe-text
+    title: TestManifestRefusesUnsafeText
+    sourceFile: internal/plugins/text_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:22.067Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest-text
+  - id: SYM-plugins-test-safe-text
+    title: TestSafeText
+    sourceFile: internal/plugins/text_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:32.598Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-manifest-text
+  - id: SYM-plugins-cli-test-render-escapes-vendor-text
+    title: TestRenderEscapesVendorText
+    sourceFile: internal/plugins/cli/escape_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:43.339Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-escape
+  - id: SYM-plugins-cli-test-say-escapes-controls
+    title: TestSayEscapesControls
+    sourceFile: internal/plugins/cli/terminal_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T09:20:53.275Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-terminal
   - id: SYM-tooling-test-reusable-signing-guard-unguarded
     title: unguarded
     sourceFile: scripts/tests/reusable-signing-guard.test.sh
@@ -129195,1593 +131517,6 @@ symbols:
         target: REQ-AUTO-BC327C2200FC820F
       - type: implements
         target: REQ-identity-auth-contract
-  - id: SYM-ingest-app-attention-raiser
-    status: active
-    title: AttentionRaiser
-    sourceFile: internal/ingest/app/connectors.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:25:19.254Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-undeclared-deliveries
-      - type: implements
-        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
-      - type: implements
-        target: REQ-ingest-undeclared-deliveries-item-per-instance
-  - id: SYM-ingest-app-connectors-declared-deliveries
-    status: active
-    title: Connectors.declaredDeliveries
-    sourceFile: internal/ingest/app/connectors.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:25:27.322Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-undeclared-deliveries
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-      - type: implements
-        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
-      - type: implements
-        target: REQ-ingest-undeclared-deliveries-item-per-instance
-  - id: SYM-ingest-undeclared-deliveries
-    status: active
-    title: UndeclaredDeliveries
-    sourceFile: internal/ingest/declarations.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:25:34.809Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-declarations
-      - type: implements
-        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
-      - type: implements
-        target: REQ-ingest-undeclared-deliveries-item-per-instance
-  - id: SYM-pl-check-bond-isin
-    status: active
-    title: CheckBondISIN
-    sourceFile: internal/jurisdiction/pl/terms.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:25:42.530Z
-    relationships:
-      - type: covered_by
-        target: TEST-pl-terms
-      - type: implements
-        target: REQ-valuation-bond-terms-polish-isin
-  - id: SYM-plugins-effective-permissions-bond-terms
-    status: active
-    title: EffectivePermissions.BondTerms
-    sourceFile: internal/plugins/effective.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:25:50.006Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-deliveries
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-  - id: SYM-plugins-effective-permissions-index-levels
-    status: active
-    title: EffectivePermissions.IndexLevels
-    sourceFile: internal/plugins/effective.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:25:57.687Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-deliveries
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-  - id: SYM-plugins-manifest-validate-deliveries
-    status: active
-    title: Manifest.validateDeliveries
-    sourceFile: internal/plugins/manifest.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:26:04.906Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-deliveries
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-  - id: SYM-viewsv1-plugin-get-bond-terms
-    status: active
-    title: Plugin.GetBondTerms
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:26:12.428Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-plugins
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-  - id: SYM-viewsv1-plugin-get-requested-bond-terms
-    status: active
-    title: Plugin.GetRequestedBondTerms
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:26:20.893Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-plugins
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-  - id: SYM-viewsv1-plugin-get-index-levels
-    status: active
-    title: Plugin.GetIndexLevels
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:26:28.839Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-plugins
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-  - id: SYM-viewsv1-plugin-get-requested-index-levels
-    status: active
-    title: Plugin.GetRequestedIndexLevels
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:26:36.999Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-plugins
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-  - id: SYM-core-test-helper-terms-connector
-    title: termsConnector
-    sourceFile: cmd/core/deliveries_test.go
-    status: active
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:28:29.470Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-undeclared-deliveries
-  - id: SYM-core-test-helper-terms-connector-sync
-    title: termsConnector.Sync
-    sourceFile: cmd/core/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:28:35.615Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-undeclared-deliveries
-  - id: SYM-core-test-helper-approve-bond-terms
-    title: approveBondTerms
-    sourceFile: cmd/core/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:28:41.897Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-undeclared-deliveries
-  - id: SYM-core-test-helper-stored-term-sources
-    title: storedTermSources
-    sourceFile: cmd/core/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:28:47.992Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-undeclared-deliveries
-  - id: SYM-core-test-helper-delivery-items
-    title: deliveryItems
-    sourceFile: cmd/core/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:28:54.177Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-undeclared-deliveries
-  - id: SYM-core-test-undeclared-deliveries-raise-attention
-    title: TestUndeclaredDeliveriesRaiseAttention
-    sourceFile: cmd/core/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:29:01.356Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-undeclared-deliveries
-  - id: SYM-ingest-app-test-helper-delivery-attention
-    title: deliveryAttention
-    sourceFile: internal/ingest/app/undeclared_test.go
-    status: active
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:29:07.245Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-undeclared-deliveries
-  - id: SYM-ingest-app-test-helper-delivery-attention-raise
-    title: deliveryAttention.Raise
-    sourceFile: internal/ingest/app/undeclared_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:29:14.170Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-undeclared-deliveries
-  - id: SYM-ingest-app-test-helper-delivery-attention-clear
-    title: deliveryAttention.Clear
-    sourceFile: internal/ingest/app/undeclared_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:29:20.535Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-undeclared-deliveries
-  - id: SYM-ingest-app-test-connectors-undeclared-deliveries
-    title: TestConnectorsUndeclaredDeliveries
-    sourceFile: internal/ingest/app/undeclared_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:29:26.959Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-undeclared-deliveries
-  - id: SYM-ingest-app-test-connectors-undeclared-deliveries-item
-    title: TestConnectorsUndeclaredDeliveriesItem
-    sourceFile: internal/ingest/app/undeclared_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:29:33.972Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-undeclared-deliveries
-  - id: SYM-ingest-test-decl-test-undeclared-deliveries
-    title: TestUndeclaredDeliveries
-    sourceFile: internal/ingest/declarations_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:29:39.690Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-declarations
-  - id: SYM-pl-test-check-bond-isin
-    title: TestCheckBondISIN
-    sourceFile: internal/jurisdiction/pl/terms_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:29:45.107Z
-    relationships:
-      - type: executable_for
-        target: TEST-pl-terms
-  - id: SYM-plugins-cli-test-render-proposal-deliveries
-    title: TestRenderProposalDeliveries
-    sourceFile: internal/plugins/cli/render_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:29:52.845Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-cli-render
-  - id: SYM-plugins-test-deliveries-outcome
-    title: deliveriesOutcome
-    sourceFile: internal/plugins/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:30:01.060Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-deliveries
-  - id: SYM-plugins-test-deliveries
-    title: TestDeliveries
-    sourceFile: internal/plugins/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:30:09.166Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-deliveries
-  - id: SYM-valuation-postgres-test-stored-terms-and-levels-name-their-instance
-    title: TestStoredTermsAndLevelsNameTheirInstance
-    sourceFile: internal/valuation/postgres/deliveredby_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:30:23.795Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-postgres-delivered-by
-  - id: SYM-ui-test-plugins-page-deliveries
-    title: TestPluginsPageDeliveries
-    sourceFile: internal/views/ui/plugins_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:30:30.658Z
-    relationships:
-      - type: executable_for
-        target: TEST-ui-plugins
-  - id: SYM-core-test-helper-bonds-discovery
-    title: bondsDiscovery
-    sourceFile: cmd/core/bondlots_test.go
-    status: active
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:47:04.818Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-bond-lots
-  - id: SYM-core-test-helper-bonds-discovery-declarations
-    title: bondsDiscovery.Declarations
-    sourceFile: cmd/core/bondlots_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:47:26.475Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-bond-lots
-  - id: SYM-ingest-undeclared-drop
-    status: active
-    title: UndeclaredDrop
-    sourceFile: internal/ingest/declarations.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:49:54.955Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-declarations
-      - type: implements
-        target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
-      - type: implements
-        target: REQ-ingest-undeclared-deliveries-item-per-instance
-  - id: SYM-plugins-effective-permissions-grant-deliveries
-    status: active
-    title: EffectivePermissions.grantDeliveries
-    sourceFile: internal/plugins/effective.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:50:01.942Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-deliveries
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-  - id: SYM-views-kube-test-helper-with-flags
-    title: withFlags
-    sourceFile: internal/views/kube/plugins_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:50:08.695Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-kube
-  - id: SYM-core-test-helper-sync-undeclared
-    title: syncUndeclared
-    sourceFile: cmd/core/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:50:15.125Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-undeclared-deliveries
-  - id: SYM-plugins-test-deliveries-label
-    title: TestDeliveriesLabel
-    sourceFile: internal/plugins/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:50:21.509Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-deliveries
-  - id: SYM-plugins-test-deliveries-diff
-    title: TestDeliveriesDiff
-    sourceFile: internal/plugins/deliveries_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:50:27.861Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-deliveries
-  - id: SYM-valuation-convert-at
-    status: active
-    title: ConvertAt
-    sourceFile: internal/valuation/fx.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:57:37.327Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-fx
-      - type: implements
-        target: REQ-valuation-conversion-named-currency
-      - type: implements
-        target: REQ-valuation-fx-rate-lookup
-  - id: SYM-valuation-convert
-    status: active
-    title: Convert
-    sourceFile: internal/valuation/fx.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:57:44.128Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-fx
-      - type: implements
-        target: REQ-valuation-conversion-named-currency
-  - id: SYM-valuation-round-in
-    status: active
-    title: roundIn
-    sourceFile: internal/valuation/fx.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:57:50.596Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-fx
-      - type: implements
-        target: REQ-valuation-conversion-named-currency
-  - id: SYM-valuation-nbp-base
-    status: active
-    title: Base
-    sourceFile: internal/valuation/nbp/client.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:57:57.132Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-nbp-client
-      - type: implements
-        target: REQ-valuation-stored-rates-name-base
-  - id: SYM-valuation-test-helper-eur-pack
-    title: eurPack
-    sourceFile: internal/valuation/currency_test.go
-    status: active
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:59:27.535Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-pack-currency
-  - id: SYM-valuation-test-convert
-    title: TestConvert
-    sourceFile: internal/valuation/fx_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:59:33.040Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-fx
-  - id: SYM-valuation-test-convert-at
-    title: TestConvertAt
-    sourceFile: internal/valuation/fx_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:59:38.726Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-fx
-  - id: SYM-valuation-test-convert-needs-the-amounts-currency
-    title: TestConvertNeedsTheAmountsCurrency
-    sourceFile: internal/valuation/fx_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:59:44.367Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-fx
-  - id: SYM-valuation-test-no-assumed-pln
-    title: TestNoAssumedPLN
-    sourceFile: internal/valuation/nopln_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:59:49.998Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-no-assumed-pln
-  - id: SYM-valuation-test-helper-eur-pack-reporting-currency
-    title: eurPack.ReportingCurrency
-    sourceFile: internal/valuation/currency_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:59:56.272Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-pack-currency
-  - id: SYM-valuation-test-value-market-holding-in-pack-currency
-    title: TestValueMarketHoldingInPackCurrency
-    sourceFile: internal/valuation/currency_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:00:02.719Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-pack-currency
-  - id: SYM-valuation-test-helper-reporting-of
-    title: reportingOf
-    sourceFile: internal/valuation/currency_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:00:08.878Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-pack-currency
-  - id: SYM-valuation-postgres-test-stored-currencies-are-named
-    title: TestStoredCurrenciesAreNamed
-    sourceFile: internal/valuation/postgres/currency_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:00:14.412Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-postgres-named-currencies
-  - id: SYM-views-in-reporting
-    status: active
-    title: inReporting
-    sourceFile: internal/views/performance.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:13:18.692Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-performance
-      - type: implements
-        target: REQ-valuation-stored-valuations-name-currency
-      - type: implements
-        target: REQ-views-performance-value-reporting
-  - id: SYM-valuation-test-helper-assumed-pln
-    title: assumedPLN
-    sourceFile: internal/valuation/nopln_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:13:25.283Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-no-assumed-pln
-  - id: SYM-views-tax-year-account-convert
-    title: TaxYearAccount.convert
-    sourceFile: internal/views/yearlytax.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:24:13.993Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-yearly-tax
-      - type: implements
-        target: REQ-views-oki-tax-days
-  - id: SYM-connectorv1-fx-rate-get-base
-    status: active
-    title: FxRate.GetBase
-    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:01:49.530Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-connectrpc-mapping
-      - type: implements
-        target: REQ-valuation-stored-rates-name-base
-  - id: SYM-plugins-reserved-name
-    title: ReservedName
-    sourceFile: internal/plugins/secret_owner.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:20:18.895Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-install
-      - type: implements
-        target: REQ-plugins-secrets-never-platform
-  - id: SYM-plugins-validate-unreserved
-    title: validateUnreserved
-    sourceFile: internal/plugins/secret_owner.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:20:30.601Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-plugin-grant
-      - type: implements
-        target: REQ-plugins-secrets-never-platform
-  - id: SYM-plugins-validate-institutions
-    title: validateInstitutions
-    sourceFile: internal/plugins/manifest.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:20:42.080Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-institutions
-      - type: implements
-        target: REQ-ingest-delivery-declared-institution
-  - id: SYM-plugins-kube-instances-secret-owners
-    title: Instances.secretOwners
-    sourceFile: internal/plugins/kube/instances.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:20:53.743Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-kube-instances
-      - type: implements
-        target: REQ-plugins-secrets-never-platform
-  - id: SYM-plugins-kube-instances-delete-owned-secret
-    title: Instances.deleteOwnedSecret
-    sourceFile: internal/plugins/kube/instances.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:21:05.749Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-kube-instances
-      - type: implements
-        target: REQ-plugins-secrets-never-platform
-  - id: SYM-ingest-declarations-check-institution
-    title: Declarations.CheckInstitution
-    sourceFile: internal/ingest/declarations.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:21:16.809Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-declarations
-      - type: implements
-        target: REQ-ingest-delivery-declared-institution
-  - id: SYM-ingest-app-connectors-declarations
-    title: Connectors.declarations
-    sourceFile: internal/ingest/app/connectors.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:21:28.572Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-connectors
-      - type: implements
-        target: REQ-ingest-cross-check-prices-declared-only
-      - type: implements
-        target: REQ-ingest-delivery-declared-institution
-  - id: SYM-plugins-test-reserved-name
-    title: TestReservedName
-    sourceFile: internal/plugins/install_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:26:19.837Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-install
-  - id: SYM-plugins-test-manifest-institutions
-    title: TestManifestInstitutions
-    sourceFile: internal/plugins/institutions_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:26:29.998Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-institutions
-  - id: SYM-plugins-app-test-uninstall-leaves-secrets-not-owned
-    title: TestUninstallLeavesSecretsNotOwned
-    sourceFile: internal/plugins/app/install_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:26:41.271Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-app-install
-  - id: SYM-plugins-app-test-prepare-refuses-reserved-name
-    title: TestPrepareRefusesReservedName
-    sourceFile: internal/plugins/app/install_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:26:52.808Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-app-install
-  - id: SYM-plugins-kube-test-instances-owned-secret
-    title: ownedSecret
-    sourceFile: internal/plugins/kube/instances_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:27:04.750Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-kube-instances
-  - id: SYM-ingest-app-test-conn-undeclared-institution
-    title: TestConnectorsUndeclaredInstitution
-    sourceFile: internal/ingest/app/connectors_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:27:17.013Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-connectors
-  - id: SYM-ingest-app-test-conn-test-institutions
-    title: testInstitutions
-    sourceFile: internal/ingest/app/connectors_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:27:29.365Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-connectors
-  - id: SYM-ingest-test-check-institution
-    title: TestCheckInstitution
-    sourceFile: internal/ingest/declarations_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:27:39.787Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-declarations
-  - id: SYM-ingest-connectapi-test-bonds-instance
-    title: bondsInstance
-    sourceFile: internal/ingest/connectapi/service_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:27:52.196Z
-    granularity_reason: module-level-behavior
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-connectapi
-  - id: SYM-ingest-connectapi-test-bonds-instance-declarations
-    title: bondsInstance.Declarations
-    sourceFile: internal/ingest/connectapi/service_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:28:04.846Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-connectapi
-  - id: SYM-plugins-kube-owners-of
-    title: ownersOf
-    sourceFile: internal/plugins/kube/instances.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:33:43.035Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-kube-instances
-      - type: implements
-        target: REQ-plugins-secrets-never-platform
-  - id: SYM-plugins-kube-describe-plugin
-    title: describePlugin
-    sourceFile: internal/plugins/kube/instances.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:33:53.427Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-kube-instances
-      - type: implements
-        target: REQ-plugins-cli-list
-  - id: SYM-views-pb-plugin-get-institutions
-    title: Plugin.GetInstitutions
-    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T22:59:55.367Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-connectapi-plugins
-      - type: implements
-        target: REQ-views-plugin-institutions
-  - id: SYM-core-test-helper-bonds-discovery-instances
-    title: bondsDiscovery.ConnectorInstances
-    sourceFile: cmd/core/bondlots_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-02T23:47:15.737Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-bond-lots
-  - id: SYM-plugins-egress-parse-deny-list
-    title: ParseDenyList
-    sourceFile: internal/plugins/egress/deny.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:11:22.225Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-egress-deny
-      - type: implements
-        target: REQ-plugins-egress-denies-node-and-cluster-ranges
-  - id: SYM-plugins-egress-check-address-denying
-    title: CheckAddressDenying
-    sourceFile: internal/plugins/egress/deny.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:11:32.642Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-egress-deny
-      - type: implements
-        target: REQ-plugins-egress-denies-node-and-cluster-ranges
-  - id: SYM-plugins-app-jwt-shaped
-    title: JWTShaped
-    sourceFile: internal/plugins/app/tokencache.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:11:42.982Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-app-token-cache
-      - type: implements
-        target: REQ-plugins-token-review-not-amplified
-  - id: SYM-fd-browserproxy-security-headers
-    title: SecurityHeaders
-    sourceFile: internal/views/browserproxy/proxy.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:11:54.631Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-browser-proxy
-      - type: implements
-        target: REQ-views-proxied-pages-security-headers
-  - id: SYM-core-browser-read-tokens
-    title: browserReadTokens
-    sourceFile: cmd/core/core.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:12:06.256Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-read-tokens
-      - type: implements
-        target: REQ-plugins-token-review-not-amplified
-  - id: SYM-core-read-apis
-    title: readAPIs
-    sourceFile: cmd/core/core.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:12:17.241Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-read-tokens
-      - type: implements
-        target: REQ-plugins-token-review-not-amplified
-  - id: SYM-core-port-apis
-    title: portAPIs
-    sourceFile: cmd/core/core.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:12:30.572Z
-    relationships:
-      - type: covered_by
-        target: TEST-core-read-tokens
-      - type: implements
-        target: REQ-plugins-token-review-not-amplified
-  - id: SYM-core-test-jwt-for
-    title: jwtFor
-    sourceFile: cmd/core/auth_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:12:42.990Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-auth
-  - id: SYM-core-test-count-reviews
-    title: countReviews
-    sourceFile: cmd/core/auth_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:12:54.823Z
-    relationships:
-      - type: executable_for
-        target: TEST-core-auth
-  - id: SYM-plugins-egress-test-parse-deny-list
-    title: TestParseDenyList
-    sourceFile: internal/plugins/egress/deny_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:15:35.282Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-egress-deny
-  - id: SYM-plugins-egress-test-check-address-denying
-    title: TestCheckAddressDenying
-    sourceFile: internal/plugins/egress/deny_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:15:44.807Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-egress-deny
-  - id: SYM-plugins-smokescreen-test-start-proxy-denying
-    title: startProxyDenying
-    sourceFile: internal/plugins/smokescreen/proxy_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:15:55.393Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-smokescreen-proxy
-  - id: SYM-plugins-smokescreen-test-proxy-denies-extra-ranges
-    title: TestProxyDeniesExtraRanges
-    sourceFile: internal/plugins/smokescreen/proxy_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:16:05.824Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-smokescreen-proxy
-  - id: SYM-plugins-app-test-jwt-named
-    title: jwtNamed
-    sourceFile: internal/plugins/app/tokencache_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:16:16.824Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-app-token-cache
-  - id: SYM-plugins-app-test-refusals-bounded
-    title: TestCachingTokenReviewerRefusalsBounded
-    sourceFile: internal/plugins/app/tokencache_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:16:27.720Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-app-token-cache
-  - id: SYM-plugins-app-test-refusing-reviewer
-    title: refusingReviewer
-    sourceFile: internal/plugins/app/tokencache_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:16:38.258Z
-    granularity_reason: module-level-behavior
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-app-token-cache
-  - id: SYM-plugins-app-test-refusing-reviewer-review-token
-    title: refusingReviewer.ReviewToken
-    sourceFile: internal/plugins/app/tokencache_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:16:48.677Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-app-token-cache
-  - id: SYM-plugins-app-test-jwt-shaped
-    title: TestJWTShaped
-    sourceFile: internal/plugins/app/tokencache_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:16:59.638Z
-    relationships:
-      - type: executable_for
-        target: TEST-plugins-app-token-cache
-  - id: SYM-fd-browserproxy-test-security-headers
-    title: TestProxySecurityHeaders
-    sourceFile: internal/views/browserproxy/proxy_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:17:10.781Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-browser-proxy
-  - id: SYM-fd-browserproxy-test-check-security-headers
-    title: checkSecurityHeaders
-    sourceFile: internal/views/browserproxy/proxy_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:17:21.831Z
-    relationships:
-      - type: executable_for
-        target: TEST-views-browser-proxy
-  - id: SYM-deploy-np-test-check
-    title: check
-    sourceFile: scripts/tests/network-policies.test.sh
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:40:09.295Z
-    relationships:
-      - type: executable_for
-        target: TEST-deploy-network-policies
-  - id: SYM-deploy-np-test-policy
-    title: policy
-    sourceFile: scripts/tests/network-policies.test.sh
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T00:40:20.752Z
-    relationships:
-      - type: executable_for
-        target: TEST-deploy-network-policies
-  - id: SYM-ingest-app-log-safe
-    title: LogSafe
-    sourceFile: internal/ingest/app/logsafe.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:05:31.042Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-logsafe
-      - type: implements
-        target: REQ-ingest-logs-carry-no-values
-  - id: SYM-ingest-app-loggable-errors
-    title: loggableErrors
-    sourceFile: internal/ingest/app/logsafe.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:05:39.347Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-logsafe
-      - type: implements
-        target: REQ-ingest-logs-carry-no-values
-  - id: SYM-ingest-conn-rpc-invalid-message-error
-    title: invalidMessageError
-    sourceFile: internal/ingest/connectrpc/mapping.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:05:55.863Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-connectrpc-mapping
-      - type: implements
-        target: REQ-ingest-connector-contract-translation
-      - type: implements
-        target: REQ-ingest-logs-carry-no-values
-  - id: SYM-ingest-conn-rpc-invalid-message-error-error
-    title: invalidMessageError.Error
-    sourceFile: internal/ingest/connectrpc/mapping.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:06:05.753Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-connectrpc-mapping
-      - type: implements
-        target: REQ-ingest-connector-contract-translation
-  - id: SYM-ingest-conn-rpc-invalid-message-error-is
-    title: invalidMessageError.Is
-    sourceFile: internal/ingest/connectrpc/mapping.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:06:15.761Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-connectrpc-mapping
-      - type: implements
-        target: REQ-ingest-logs-carry-no-values
-  - id: SYM-ingest-app-test-logsafe-valued
-    title: valued
-    sourceFile: internal/ingest/app/logsafe_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:07:06.422Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-logsafe
-  - id: SYM-ingest-app-test-logsafe-locked-buffer
-    title: lockedBuffer
-    sourceFile: internal/ingest/app/logsafe_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:07:16.279Z
-    granularity_reason: module-level-behavior
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-logsafe
-  - id: SYM-ingest-app-test-logsafe-locked-buffer-write
-    title: lockedBuffer.Write
-    sourceFile: internal/ingest/app/logsafe_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:07:25.804Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-logsafe
-  - id: SYM-ingest-app-test-logsafe-locked-buffer-string
-    title: lockedBuffer.String
-    sourceFile: internal/ingest/app/logsafe_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:07:35.714Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-logsafe
-  - id: SYM-ingest-app-test-logsafe-text-logger
-    title: textLogger
-    sourceFile: internal/ingest/app/logsafe_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:07:45.421Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-logsafe
-  - id: SYM-ingest-app-test-log-safe
-    title: TestLogSafe
-    sourceFile: internal/ingest/app/logsafe_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:07:55.163Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-logsafe
-  - id: SYM-ingest-app-test-scheduler-logs-no-values
-    title: TestSchedulerLogsNoValues
-    sourceFile: internal/ingest/app/logsafe_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:08:04.902Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-logsafe
-  - id: SYM-ingest-connectapi-test-st-logging-client
-    title: newLoggingStatementsClient
-    sourceFile: internal/ingest/connectapi/statements_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:08:22.795Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-connectapi-statements
-  - id: SYM-ingest-connectapi-test-st-logs-no-values
-    title: TestUploadStatementLogsNoValues
-    sourceFile: internal/ingest/connectapi/statements_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:08:32.719Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-connectapi-statements
-  - id: SYM-ingest-connectapi-test-st-locked-log
-    title: lockedLog
-    sourceFile: internal/ingest/connectapi/statements_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:08:42.366Z
-    granularity_reason: module-level-behavior
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-connectapi-statements
-  - id: SYM-ingest-connectapi-test-st-locked-log-write
-    title: lockedLog.Write
-    sourceFile: internal/ingest/connectapi/statements_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:08:52.029Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-connectapi-statements
-  - id: SYM-ingest-connectapi-test-st-locked-log-string
-    title: lockedLog.String
-    sourceFile: internal/ingest/connectapi/statements_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:09:01.769Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-connectapi-statements
-  - id: SYM-ledger-test-refusals-name-no-values
-    title: TestRefusalsNameNoValues
-    sourceFile: internal/ledger/events_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:09:27.938Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-events
-  - id: SYM-ingest-conn-rpc-test-invalid-message-is-invalid-delivery
-    title: TestInvalidMessageIsInvalidDelivery
-    sourceFile: internal/ingest/connectrpc/mapping_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T01:09:37.546Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-connectrpc-mapping
-  - id: SYM-ingest-app-connectors-keep-declared
-    status: active
-    title: Connectors.keepDeclared
-    sourceFile: internal/ingest/app/connectors.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T02:19:38.420Z
-    relationships:
-      - type: covered_by
-        target: TEST-ingest-app-undeclared-deliveries
-      - type: implements
-        target: REQ-ingest-bond-terms-index-levels-declared-approved
-      - type: implements
-        target: REQ-ingest-cross-check-prices-declared-only
-  - id: SYM-kernel-log-safe
-    status: active
-    title: LogSafe
-    sourceFile: internal/kernel/logsafe.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:24:29.861Z
-    relationships:
-      - type: covered_by
-        target: TEST-kernel-logsafe
-      - type: implements
-        target: REQ-core-logs-carry-no-values
-      - type: implements
-        target: REQ-ingest-logs-carry-no-values
-  - id: SYM-kernel-innermost
-    status: active
-    title: innermost
-    sourceFile: internal/kernel/logsafe.go
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:24:38.216Z
-    relationships:
-      - type: covered_by
-        target: TEST-kernel-logsafe
-      - type: implements
-        target: REQ-core-logs-carry-no-values
-  - id: SYM-kernel-test-log-safe
-    title: TestLogSafe
-    sourceFile: internal/kernel/logsafe_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:24:45.932Z
-    relationships:
-      - type: executable_for
-        target: TEST-kernel-logsafe
-  - id: SYM-ledger-connectapi-test-logsafe-valuedfailures
-    title: valuedFailures
-    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:25:05.090Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-connectapi-logsafe
-  - id: SYM-ledger-connectapi-test-logsafe-textlog
-    title: textLog
-    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:25:13.644Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-connectapi-logsafe
-  - id: SYM-ledger-connectapi-test-logsafe-checknovalues
-    title: checkNoValues
-    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:25:22.128Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-connectapi-logsafe
-  - id: SYM-ledger-connectapi-test-logsafe-testfailureslognovalues
-    title: TestFailuresLogNoValues
-    sourceFile: internal/ledger/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:25:31.226Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-connectapi-logsafe
-  - id: SYM-attention-connectapi-test-logsafe-valuedfailures
-    title: valuedFailures
-    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:25:39.928Z
-    relationships:
-      - type: executable_for
-        target: TEST-attention-connectapi-logsafe
-  - id: SYM-attention-connectapi-test-logsafe-textlog
-    title: textLog
-    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:25:48.871Z
-    relationships:
-      - type: executable_for
-        target: TEST-attention-connectapi-logsafe
-  - id: SYM-attention-connectapi-test-logsafe-checknovalues
-    title: checkNoValues
-    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:25:57.975Z
-    relationships:
-      - type: executable_for
-        target: TEST-attention-connectapi-logsafe
-  - id: SYM-attention-connectapi-test-logsafe-testfailureslognovalues
-    title: TestFailuresLogNoValues
-    sourceFile: internal/attention/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:26:06.845Z
-    relationships:
-      - type: executable_for
-        target: TEST-attention-connectapi-logsafe
-  - id: SYM-portfolio-connectapi-test-logsafe-valuedfailures
-    title: valuedFailures
-    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:26:15.464Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-connectapi-logsafe
-  - id: SYM-portfolio-connectapi-test-logsafe-textlog
-    title: textLog
-    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:26:24.032Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-connectapi-logsafe
-  - id: SYM-portfolio-connectapi-test-logsafe-checknovalues
-    title: checkNoValues
-    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:26:32.976Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-connectapi-logsafe
-  - id: SYM-portfolio-connectapi-test-logsafe-testfailureslognovalues
-    title: TestFailuresLogNoValues
-    sourceFile: internal/portfolio/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:26:41.424Z
-    relationships:
-      - type: executable_for
-        target: TEST-portfolio-connectapi-logsafe
-  - id: SYM-valuation-connectapi-test-logsafe-valuedfailures
-    title: valuedFailures
-    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:26:50.207Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-connectapi-logsafe
-  - id: SYM-valuation-connectapi-test-logsafe-textlog
-    title: textLog
-    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:26:58.237Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-connectapi-logsafe
-  - id: SYM-valuation-connectapi-test-logsafe-checknovalues
-    title: checkNoValues
-    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:27:06.673Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-connectapi-logsafe
-  - id: SYM-valuation-connectapi-test-logsafe-testfailureslognovalues
-    title: TestFailuresLogNoValues
-    sourceFile: internal/valuation/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:27:15.620Z
-    relationships:
-      - type: executable_for
-        target: TEST-valuation-connectapi-logsafe
-  - id: SYM-identity-connectapi-test-logsafe-valuedfailures
-    title: valuedFailures
-    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:27:24.457Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-connectapi-logsafe
-  - id: SYM-identity-connectapi-test-logsafe-textlog
-    title: textLog
-    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:27:32.989Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-connectapi-logsafe
-  - id: SYM-identity-connectapi-test-logsafe-checknovalues
-    title: checkNoValues
-    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:27:41.393Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-connectapi-logsafe
-  - id: SYM-identity-connectapi-test-logsafe-testfailureslognovalues
-    title: TestFailuresLogNoValues
-    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:27:49.721Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-connectapi-logsafe
-  - id: SYM-identity-connectapi-test-logsafe-valuedcallers
-    title: valuedCallers
-    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:27:58.177Z
-    granularity_reason: module-level-behavior
-    relationships:
-      - type: executable_for
-        target: TEST-identity-connectapi-logsafe
-  - id: SYM-identity-connectapi-test-logsafe-valuedcallers-verifycaller
-    title: valuedCallers.VerifyCaller
-    sourceFile: internal/identity/connectapi/logsafe_internal_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T03:28:06.637Z
-    relationships:
-      - type: executable_for
-        target: TEST-identity-connectapi-logsafe
   - id: SYM-plugins-app-shared-institutions
     title: SharedInstitutions
     sourceFile: internal/plugins/app/install.go
@@ -130818,19 +131553,6 @@ symbols:
         target: TEST-plugins-app-institutions
       - type: implements
         target: REQ-plugins-upgrade-warns-shared-institution
-  - id: SYM-plugins-cli-check-install
-    title: checkInstall
-    sourceFile: internal/plugins/cli/cli.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-03T07:51:18.162Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-cli-institutions
-      - type: implements
-        target: REQ-plugins-install-warns-shared-institution
   - id: SYM-plugins-cli-institutions-test-test-render-shared-institutions
     title: TestRenderSharedInstitutions
     sourceFile: internal/plugins/cli/institutions_test.go
@@ -131084,3 +131806,16 @@ symbols:
         target: TEST-views-connectapi-plugins
       - type: implements
         target: REQ-views-plugin-approved-institutions
+  - id: SYM-plugins-app-check-upgrade
+    title: checkUpgrade
+    sourceFile: internal/plugins/app/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T10:41:57.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-upgrade
+      - type: implements
+        target: REQ-plugins-secret-names-never-shared

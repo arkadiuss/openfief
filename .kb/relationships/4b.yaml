@@ -644,6 +644,41 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0f5ae7e3ffad
   - type: verified_by
+    from: SCEN-ingest-connector-answer-counted-on-wire
+    to: TEST-ingest-connectrpc-codec
+    created_at: 2026-11-03T05:55:04.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d15ac31f3679
+  - type: verified_by
+    from: SCEN-ingest-connector-answer-counted-on-wire
+    to: TEST-ingest-connectrpc-answer-heap
+    created_at: 2026-11-03T05:55:04.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15270abb0875
+  - type: verified_by
+    from: SCEN-ingest-connector-answer-counted-on-wire
+    to: TEST-ingest-connectrpc-client
+    created_at: 2026-11-03T05:55:04.998Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19e258a13550
+  - type: verified_by
+    from: SCEN-ingest-connector-answer-counted-on-wire
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-03T05:55:05.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0568039fe9ff
+  - type: executable_for
+    from: SYM-plugins-app-test-upgrade-refuses-shared-secret
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-11-03T08:24:34.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a966f1999d7e
+  - type: verified_by
     from: SCEN-plugins-institutions-approved-by-grant
     to: TEST-plugins-grant-institutions
     created_at: 2026-11-03T07:22:20.260Z

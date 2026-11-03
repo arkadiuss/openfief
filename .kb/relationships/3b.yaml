@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0786d0125232
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-answerHeapCase
+    to: TEST-ingest-connectrpc-answer-heap
+    created_at: 2026-11-03T06:20:48.784Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b319a740476

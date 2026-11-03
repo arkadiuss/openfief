@@ -142,6 +142,9 @@ func (r *PluginReconciler) observe(ctx context.Context, p *v1alpha1.Plugin) (*ob
 		if err := r.oneBrowserView(ctx, p, o); err != nil {
 			return nil, err
 		}
+		if err := r.ownSecrets(ctx, p, o); err != nil {
+			return nil, err
+		}
 	}
 	return o, nil
 }
@@ -170,6 +173,44 @@ func (r *PluginReconciler) oneBrowserView(ctx context.Context, p *v1alpha1.Plugi
 		o.browserErr, o.runSpec = err, nil
 	}
 	return nil
+}
+
+// ownSecrets keeps the version that would run from running when it would
+// mount a Secret another instance mounts (D-89, D-182), and records why: a
+// plugin that doesn't mount it yet yields to any that does, and of two that
+// both mount it the older Plugin keeps it. Without this a Plugin applied
+// another way than the CLI, such as instance ibkr-flex with role token,
+// would mount instance ibkr's flex-token Secret.
+func (r *PluginReconciler) ownSecrets(ctx context.Context, p *v1alpha1.Plugin, o *observation) error {
+	if o.runSpec == nil || o.rollout.Run == nil || len(o.rollout.Run.SecretNames()) == 0 {
+		return nil
+	}
+	var list v1alpha1.PluginList
+	if err := r.Client.List(ctx, &list, client.InNamespace(plugins.Namespace)); err != nil {
+		return fmt.Errorf("list plugins: %w", err)
+	}
+	var held []plugins.SecretHolder
+	for i := range list.Items {
+		if h, ok := heldSecrets(&list.Items[i]); ok {
+			held = append(held, h)
+		}
+	}
+	mine, _ := heldSecrets(p)
+	self := plugins.SecretHolder{Instance: p.Name, Created: p.CreationTimestamp.Time, Secrets: o.rollout.Run.SecretNames()}
+	if err := plugins.MayMountSecrets(self, mine.Secrets, held); err != nil {
+		o.secretErr, o.runSpec = err, nil
+	}
+	return nil
+}
+
+// heldSecrets returns the Secrets a Plugin mounts: those its status records
+// as effective for the version that runs, while it is not being deleted.
+func heldSecrets(p *v1alpha1.Plugin) (plugins.SecretHolder, bool) {
+	e := p.Status.Effective
+	if p.DeletionTimestamp != nil || p.Status.Deployed == nil || e == nil || len(e.Secrets) == 0 {
+		return plugins.SecretHolder{}, false
+	}
+	return plugins.SecretHolder{Instance: p.Name, Created: p.CreationTimestamp.Time, Secrets: e.Secrets}, true
 }
 
 // heldBrowserView returns the browser path a Plugin holds: one its status

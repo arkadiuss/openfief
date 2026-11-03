@@ -24,11 +24,12 @@ import (
 const (
 	// ChunkSize is how many bytes of a file one ImportFile message carries.
 	ChunkSize = 64 << 10
-	// MaxDeliveryBytes caps a connector's answer (D-184): a delivery from a
-	// statement of 64 MiB, the largest the core takes, or a market-data
-	// backfill of MaxDeliveryItems prices, fits well within it. A larger
-	// answer fails the call with RESOURCE_EXHAUSTED before it is decoded.
-	MaxDeliveryBytes = 32 << 20
+	// MaxDeliveryBytes caps a connector's answer (D-184): a market-data
+	// backfill of MaxDeliveryItems prices, about 10 MiB, fits within it. A
+	// larger answer fails the call with RESOURCE_EXHAUSTED before it is
+	// decoded. With MaxDeliveryMessages it keeps the worst answer the core
+	// decodes and translates to about a third of its 256 MiB memory limit.
+	MaxDeliveryBytes = 16 << 20
 )
 
 // Client is app.ConnectorCaller over Connect RPC.
@@ -149,8 +150,12 @@ func (c *Client) ImportBondLots(ctx context.Context, instance string, id ingest.
 // own message, when the connector answered INVALID_ARGUMENT; wrapping
 // app.ErrNoEntries when it answered UNIMPLEMENTED; and wrapping
 // app.ErrConnectorUnavailable when it could not be reached or answered
-// UNAVAILABLE.
+// UNAVAILABLE. An answer the core refused to decode as too large stays
+// ErrDeliveryTooLarge.
 func entryError(err error) error {
+	if errors.Is(err, ErrDeliveryTooLarge) {
+		return err
+	}
 	code := connect.CodeOf(err)
 	if code == connect.CodeInvalidArgument {
 		if ce, ok := errors.AsType[*connect.Error](err); ok {
@@ -225,8 +230,10 @@ func (c *Client) service(ctx context.Context, instance string) (call, error) {
 	if err != nil {
 		return call{}, fmt.Errorf("core token for %s: %w", instance, err)
 	}
-	// The answer is read up to MaxDeliveryBytes, after decompression, so a
+	// The answer is read up to MaxDeliveryBytes, after decompression, and
+	// its elements are counted on the wire before it is decoded, so a
 	// connector can't make the core hold more (D-184).
-	svc := connectorv1connect.NewConnectorServiceClient(c.http, url, connect.WithReadMaxBytes(MaxDeliveryBytes))
+	svc := connectorv1connect.NewConnectorServiceClient(c.http, url,
+		connect.WithReadMaxBytes(MaxDeliveryBytes), connect.WithCodec(boundedCodec{}))
 	return call{svc: svc, auth: "Bearer " + token}, nil
 }

@@ -573,6 +573,34 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3238e1158fe1
+  - type: executable_for
+    from: SYM-deploy-np-test-policy
+    to: TEST-deploy-network-policies
+    created_at: 2026-11-03T00:40:23.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef11eccdc3a5
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-st-logging-client
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-03T01:08:25.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3c80af174d5
+  - type: implements
+    from: SYM-plugins-safe-text
+    to: REQ-plugins-manifest-text-safe
+    created_at: 2026-11-03T09:18:42.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08a60ee97e6a
+  - type: covered_by
+    from: SYM-plugins-safe-text
+    to: TEST-plugins-manifest-text
+    created_at: 2026-11-03T09:18:42.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98ca67a1ebee
   - type: verified_by
     from: SCEN-identity-remove-passkey-revokes-sessions
     to: TEST-identity-auth-app
@@ -615,17 +643,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02c61fe23e13
-  - type: executable_for
-    from: SYM-deploy-np-test-policy
-    to: TEST-deploy-network-policies
-    created_at: 2026-11-03T00:40:23.404Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ef11eccdc3a5
-  - type: executable_for
-    from: SYM-ingest-connectapi-test-st-logging-client
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-11-03T01:08:25.009Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f3c80af174d5

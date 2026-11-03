@@ -720,13 +720,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dde75c88a2fb
-  - type: implements
-    from: SYM-ingest-xtb-sheet-reader
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:02:09.204Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-401c9eb5aff4
   - type: covered_by
     from: SYM-ingest-xtb-sheet-reader
     to: TEST-ingest-xtb-xlsx
@@ -734,6 +727,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-765f6bc05071
+  - type: implements
+    from: SYM-ingest-xtb-sheet-reader
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:22:13.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-028fd8b3ca44
   - type: executable_for
     from: SYM-operator-institutions-test-test-reconcile-institutions
     to: TEST-operator-institutions

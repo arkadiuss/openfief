@@ -636,6 +636,55 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab1954b4b89b
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-st-locked-log
+    to: TEST-ingest-connectapi-statements
+    created_at: 2026-11-03T01:08:44.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09dc7f10eb97
+  - type: constrains
+    from: REQ-ingest-connector-answer-counted-on-wire
+    to: FACT-SUBJECT-48574C3BDC2B27C0
+    created_at: 2026-11-03T05:55:17.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a72500d0ca5b
+  - type: requires_property
+    from: REQ-ingest-connector-answer-counted-on-wire
+    to: FACT-PROP-55F75A7B42F2AD31
+    created_at: 2026-11-03T05:55:18.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52996b968ea3
+  - type: specified_by
+    from: REQ-ingest-connector-answer-counted-on-wire
+    to: SCEN-ingest-connector-answer-counted-on-wire
+    created_at: 2026-11-03T05:55:18.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efdb239c6ed4
+  - type: supersedes
+    from: REQ-ingest-connector-answer-counted-on-wire
+    to: REQ-ingest-connector-answer-bounded
+    created_at: 2026-11-03T05:55:18.191Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1ebc578a84b
+  - type: implements
+    from: SYM-ingest-conn-rpc-bounded-codec-name
+    to: REQ-ingest-connector-answer-counted-on-wire
+    created_at: 2026-11-03T06:16:40.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b38d24750f9f
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-bounded-codec-name
+    to: TEST-ingest-connectrpc-codec
+    created_at: 2026-11-03T06:16:40.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfb0b560dd29
   - type: implements
     from: SYM-identity-gen-pb-finish-passkey-check-request-get-session-token
     to: REQ-identity-auth-contract
@@ -678,10 +727,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b2c6fa04ce12
-  - type: executable_for
-    from: SYM-ingest-connectapi-test-st-locked-log
-    to: TEST-ingest-connectapi-statements
-    created_at: 2026-11-03T01:08:44.510Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-09dc7f10eb97

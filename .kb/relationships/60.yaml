@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-66015c8b94fc
+  - type: implements
+    from: SYM-plugins-app-check-secrets-all
+    to: REQ-plugins-secret-names-never-shared
+    created_at: 2026-11-03T08:23:10.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8743b6edd717
+  - type: covered_by
+    from: SYM-plugins-app-check-secrets-all
+    to: TEST-plugins-app-upgrade
+    created_at: 2026-11-03T08:23:10.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be6172693ddb
+  - type: covered_by
+    from: SYM-plugins-app-check-secrets-all
+    to: TEST-plugins-app-install
+    created_at: 2026-11-03T08:23:10.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1411e3277c65

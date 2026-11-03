@@ -601,20 +601,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79dc0eb33aed
-  - type: executable_for
-    from: SYM-identity-app-passkeycheck-test-auth-fixture-passkey-check
-    to: TEST-identity-passkey-check-app
-    created_at: 2026-11-03T04:38:06.546Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f70b87c8cffc
-  - type: executable_for
-    from: SYM-ui-passkeycheck-test-test-passkey-check-refusals
-    to: TEST-ui-passkey-check
-    created_at: 2026-11-03T04:45:22.915Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7e12546cfaa6
   - type: implements
     from: SYM-plugins-grant-validate
     to: REQ-plugins-secrets-never-platform
@@ -643,3 +629,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-360323d0e3d4
+  - type: implements
+    from: SYM-plugins-cli-shown
+    to: REQ-plugins-cli-shows-vendor-text-escaped
+    created_at: 2026-11-03T09:19:40.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45aa4ba77b19
+  - type: covered_by
+    from: SYM-plugins-cli-shown
+    to: TEST-plugins-cli-escape
+    created_at: 2026-11-03T09:19:40.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c52cba6f572
+  - type: executable_for
+    from: SYM-identity-app-passkeycheck-test-auth-fixture-passkey-check
+    to: TEST-identity-passkey-check-app
+    created_at: 2026-11-03T04:38:06.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f70b87c8cffc
+  - type: executable_for
+    from: SYM-ui-passkeycheck-test-test-passkey-check-refusals
+    to: TEST-ui-passkey-check
+    created_at: 2026-11-03T04:45:22.915Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e12546cfaa6

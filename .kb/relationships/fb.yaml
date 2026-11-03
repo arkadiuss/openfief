@@ -762,13 +762,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d420d007a171
-  - type: implements
-    from: SYM-ingest-xtb-walker-in
-    to: REQ-ingest-xtb-reader-bounded
-    created_at: 2026-11-02T21:00:08.576Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3ce04e6d0621
   - type: covered_by
     from: SYM-ingest-xtb-walker-in
     to: TEST-ingest-xtb-xlsx
@@ -776,6 +769,20 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cd28b2ffa82b
+  - type: executable_for
+    from: SYM-core-test-helper-approve-bond-terms
+    to: TEST-core-undeclared-deliveries
+    created_at: 2026-11-02T22:28:44.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3014f6f0c187
+  - type: implements
+    from: SYM-ingest-xtb-walker-in
+    to: REQ-ingest-xtb-reader-bounded-by-pod-memory
+    created_at: 2026-11-03T07:25:31.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-160f770fa38b
   - type: implements
     from: SYM-identity-connectapi-service-auth-service-finish-passkey-check
     to: REQ-identity-protected-actions-recent-passkey-check
@@ -811,13 +818,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8701b54a2b1
-  - type: executable_for
-    from: SYM-core-test-helper-approve-bond-terms
-    to: TEST-core-undeclared-deliveries
-    created_at: 2026-11-02T22:28:44.184Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3014f6f0c187
   - type: constrains
     from: REQ-views-plugin-approved-institutions
     to: FACT-SUBJECT-12FB7BFC966CEC95

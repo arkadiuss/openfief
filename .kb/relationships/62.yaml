@@ -959,27 +959,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e531ee7f026e
   - type: implements
-    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
-    to: REQ-identity-auth-contract
-    created_at: 2026-11-03T04:53:26.257Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5b0f135ccb08
-  - type: implements
-    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
-    to: REQ-AUTO-BC327C2200FC820F
-    created_at: 2026-11-03T04:53:26.319Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-482ea119a8bc
-  - type: covered_by
-    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
-    to: TEST-identity-auth-contract
-    created_at: 2026-11-03T04:53:26.360Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3d19342e02ff
-  - type: implements
     from: SYM-plugins-valid-instance-name
     to: REQ-plugins-secrets-never-platform
     created_at: 2026-11-02T22:22:31.548Z
@@ -1000,3 +979,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3561c7b36ef
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-TestClientTooLargeIsNotRefusal
+    to: TEST-ingest-connectrpc-answer-heap
+    created_at: 2026-11-03T06:20:26.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8c3ab6b59b4
+  - type: verified_by
+    from: SCEN-plugins-cli-escapes-vendor-text
+    to: TEST-plugins-cli-escape
+    created_at: 2026-11-03T09:18:10.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f852b7c63c7b
+  - type: verified_by
+    from: SCEN-plugins-cli-escapes-vendor-text
+    to: TEST-plugins-cli-terminal
+    created_at: 2026-11-03T09:18:10.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36b7b60b8447
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
+    to: REQ-identity-auth-contract
+    created_at: 2026-11-03T04:53:26.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b0f135ccb08
+  - type: implements
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
+    to: REQ-AUTO-BC327C2200FC820F
+    created_at: 2026-11-03T04:53:26.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-482ea119a8bc
+  - type: covered_by
+    from: SYM-identity-gen-pb-sign-out-everywhere-request-proto-message
+    to: TEST-identity-auth-contract
+    created_at: 2026-11-03T04:53:26.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d19342e02ff

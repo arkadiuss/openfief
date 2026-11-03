@@ -23,6 +23,9 @@ const (
 	strangerImage  = "registry.example.com/example/stranger@" + unpinnedDigest
 	brokenImage    = "registry.example.com/example/unreachable@" + unpinnedDigest
 	badNameImage   = "registry.example.com/example/bad_name@" + unpinnedDigest
+	// roleClashImage's manifest names the Secret role b-credentials, so
+	// as instance sample it would mount instance sample-b's Secret.
+	roleClashImage = "registry.example.com/example/role-clash@" + unpinnedDigest
 	publisherSubj  = "https://github.com/example/sample-connector/.github/workflows/release.yml@refs/heads/main"
 	strangerSubj   = "https://github.com/stranger/plugin/.github/workflows/release.yml@refs/heads/main"
 )
@@ -57,6 +60,9 @@ func (fakeImages) Inspect(_ context.Context, image plugins.ImageRef) (plugins.Si
 		out.Signatures = []plugins.SignerIdentity{{Issuer: plugins.GitHubActionsIssuer, Subject: strangerSubj}}
 	case "registry.example.com/example/unsigned":
 		return plugins.SignedImage{Image: image}, nil
+	case "registry.example.com/example/role-clash":
+		out.Manifest.Secrets[0].Role = "b-credentials"
+		out.Signatures = []plugins.SignerIdentity{plugins.OpenFiefCI().Identity}
 	case "registry.example.com/example/unreachable":
 		return plugins.SignedImage{}, errRegistryDown
 	default:
