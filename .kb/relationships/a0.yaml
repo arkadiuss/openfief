@@ -706,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4f18e971f9b
+  - type: constrains
+    from: REQ-views-ghostfolio-checks-version-before-writes
+    to: FACT-SUBJECT-494CEF16128E84E0
+    created_at: 2026-11-03T14:31:39.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6b1f944374
+  - type: requires_property
+    from: REQ-views-ghostfolio-checks-version-before-writes
+    to: FACT-PROP-6AF6CBA755DC6BA3
+    created_at: 2026-11-03T14:31:39.141Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17f4f89fb7e6

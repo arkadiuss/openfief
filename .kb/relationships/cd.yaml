@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c74546896d6
+  - type: constrains
+    from: REQ-views-ghostfolio-follows-no-redirect
+    to: FACT-SUBJECT-B858CA4E12513023
+    created_at: 2026-11-03T14:31:50.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42c020c5cef9
+  - type: requires_property
+    from: REQ-views-ghostfolio-follows-no-redirect
+    to: FACT-PROP-94434CB12908F52F
+    created_at: 2026-11-03T14:31:51.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28d57c110ed7
+  - type: implements
+    from: SYM-views-ghostfolio-ghostfolio
+    to: REQ-views-ghostfolio-checks-version-before-writes
+    created_at: 2026-11-03T14:33:04.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d0ba88ff16b

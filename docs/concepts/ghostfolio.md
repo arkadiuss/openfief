@@ -26,7 +26,7 @@ The package is [internal/views/ghostfolio](../../internal/views/ghostfolio/):
 | [project.go](../../internal/views/ghostfolio/project.go) | `Project`: from `Source` (the record plus the owner's `Listing`s) to `Desired`, and the `Problem`s it leaves out. Pure |
 | [plan.go](../../internal/views/ghostfolio/plan.go) | `MakePlan`: from `Desired` and `Actual` to a `Plan`; `CheckPreview`, `Batches`. Pure |
 | [record.go](../../internal/views/ghostfolio/record.go) | `ReadRecord`: the read API's accounts, transactions and bond valuations, through the `Record` port |
-| [client.go](../../internal/views/ghostfolio/client.go) | `Client`, Ghostfolio's HTTP API; `SupportedVersions` |
+| [client.go](../../internal/views/ghostfolio/client.go) | `Client`, Ghostfolio's HTTP API, which follows no redirect; `SupportedVersions`, `CheckVersion` |
 | [sync.go](../../internal/views/ghostfolio/sync.go) | `Syncer.Sync`, one pass of the loop, through the `Ghostfolio` port |
 
 ### One pass
@@ -34,7 +34,9 @@ The package is [internal/views/ghostfolio](../../internal/views/ghostfolio/):
 ```mermaid
 flowchart TD
   start(["Syncer.Sync"]) --> login["Client.Login<br/>security token for a bearer token"]
-  login --> user["Client.User"]
+  login --> version["Client.Version"]
+  version -- "outside SupportedVersions" --> unsupported(["ErrUnsupportedVersion: nothing written"])
+  version --> user["Client.User"]
   user -- "restricted view on" --> refuse(["ErrRestrictedView: nothing written"])
   user --> read["ReadRecord<br/>read API: accounts, transactions,<br/>bond valuations"]
   read --> project["Project: Desired"]
@@ -48,8 +50,9 @@ flowchart TD
   clear --> cash["set the cash balances that differ,<br/>delete those on other dates"]
 ```
 
-1. **Refuse while the restricted view is on.** Ghostfolio's "restricted view" setting blanks comments, fees and quantities in its responses, so every activity would look stale; the sync stops with `ErrRestrictedView` before reading anything (D-64).
-2. **Read and project.** `ReadRecord` reads every account, every page of its current transactions, and, for an account that ever held a treasury bond, its stored valuations from its first bond transaction through its valued-through date, in ranges the read API accepts. `Project` turns them into the desired activities and cash balances.
+1. **Refuse an unsupported Ghostfolio.** Before reading or changing anything, the sync reads Ghostfolio's version and stops with `ErrUnsupportedVersion` unless `CheckVersion` finds it in `SupportedVersions`, so a Ghostfolio whose internal endpoints may have been renamed is never written to (D-188).
+2. **Refuse while the restricted view is on.** Ghostfolio's "restricted view" setting blanks comments, fees and quantities in its responses, so every activity would look stale; the sync stops with `ErrRestrictedView` before reading anything (D-64).
+3. **Read and project.** `ReadRecord` reads every account, every page of its current transactions, and, for an account that ever held a treasury bond, its stored valuations from its first bond transaction through its valued-through date, in ranges the read API accepts. `Project` turns them into the desired activities and cash balances.
 3. **Plan.** `MakePlan` keeps an activity of an owned account when a desired one agrees with it in every field, comment included. A manually edited activity keeps its comment, so only comparing fields finds the edit (D-64). Every desired activity nothing agrees with is imported; every other activity of an owned account is stale and deleted. So an edit is reverted by importing the right one and deleting the edited one. Cash balances are compared the same way, by account, date and value.
 4. **Import, then delete.** Imports go first, because deleting an asset's last activity would take its price history with it (D-64). The one exception is a stale activity the import would skip as a duplicate, such as one moved to another owned account: Ghostfolio's duplicate check ignores the account, so that one is deleted first, and the import brings back any asset it removed, prices included, since every import carries them. That is the only exception (D-64): an activity on a `MANUAL` asset an earlier version left, such as the bond asset it keyed and named by the series code alone, is deleted after the import like any stale one, and the old asset goes with its last activity. Ghostfolio's import reuses an existing `MANUAL` asset of the same name, so bond assets are named so that no earlier version did (`BondName`), and an import never lands on a leftover. Each batch of at most `BatchSize` (500) activities is sent first with `dryRun=true`, and only when `CheckPreview` finds every activity stored as sent (none a duplicate, each in the same account under the same symbol) is it sent for real. An owned account that should hold nothing but does is emptied with one bulk delete filtered to it; the client refuses a bulk delete with no account filter, which in Ghostfolio deletes every activity the user has (D-64).
 5. **Cash.** Each desired balance Ghostfolio lacks, or holds with another value, is set (Ghostfolio keeps one per account and date, so setting replaces), and every balance of an owned account on a date with no desired one is deleted (D-108).
@@ -112,12 +115,15 @@ The plugin reads the read API with its own projected ServiceAccount token (audie
 
 ### The supported versions
 
-`SupportedVersions` is `>=3.93.0 <3.94.0`: the versions the contract test's recordings come from (D-64). Ghostfolio only shows its version to administrators, so the view can't check it at run time; an owner on another version runs at their own risk, and the dry run stops an import that Ghostfolio would store differently.
+`SupportedVersions` is `>=3.93.0 <3.94.0`: the versions the contract test's recordings come from (D-64). The view checks it on every sync, before it changes or deletes anything (D-188). Ghostfolio names its version to a user who isn't an administrator only in the meta of its export, so `Client.Version` reads `GET /api/v1/export` filtered to an activity ID no activity has, which carries none of the owner's activities. A development build's version, `dev`, or anything that isn't `MAJOR.MINOR.PATCH`, is refused too.
+
+The client never follows a redirect (D-188): `NewClient` sends its requests with a copy of the HTTP client it is given whose redirect policy refuses every one with `ErrRedirect`, since a 307 or 308 on the login would send its body, the security token among it, again to wherever the redirect points.
 
 ## Decisions
 
 - **D-3, D-4**: the view's reconcile loop over the accounts it created, with the transaction's key in each comment, stale activities deleted and missing ones imported, manual edits reverted.
 - **D-64**: UUIDs for owned accounts; import first, bulk deletes always filtered; bonds as `MANUAL` assets with a UUID from the instance and the series code, named so no earlier version did, so leftovers go after the import, and the full price history every sync; edits found by comparing fields; dry runs; refusal under the restricted view; a pinned version range with contract tests.
+- **D-188**: the Ghostfolio's version checked before anything is changed or deleted; no redirect followed.
 - **D-108**: dividends of quantity 1 at the gross amount with the tax withheld as the fee; a standalone fee against a `MANUAL` "OpenFief fees" asset per currency; the owned accounts' cash balance following OpenFief's cash; the owner's ISIN listings.
 - **D-133**: an owned account per other currency of an account's cash, holding only that balance, with a UUID from the instance, the account and the currency.
 - **D-134**: the bond and fee assets' symbols also derive from the Ghostfolio user's ID.
@@ -136,10 +142,11 @@ The plugin reads the read API with its own projected ServiceAccount token (audie
 | Over 500 seeded random cases, applying a plan as Ghostfolio does (assets go with their last activity, an import reuses a `MANUAL` asset of the same name) and planning again gives an empty plan; every bond keeps its asset, even from an earlier version's keys; the owner's own activities and balances stay | `TestPlanIsIdempotent` in [plan_property_test.go](../../internal/views/ghostfolio/plan_property_test.go) | REQ-views-ghostfolio-reconcile-cash, TEST-views-ghostfolio-plan-properties |
 | A pass's calls in order over a fake Ghostfolio and a paged fake read API; refusals write nothing | `TestSync`, `TestSyncRefuses` in [sync_test.go](../../internal/views/ghostfolio/sync_test.go) | REQ-views-ghostfolio-read-record, REQ-views-ghostfolio-reconcile-cash, TEST-views-ghostfolio-sync |
 | No unfiltered bulk delete or listing; error statuses without bodies | `TestClientNeverDeletesUnfiltered`, `TestClientErrors` in [client_test.go](../../internal/views/ghostfolio/client_test.go) | REQ-views-ghostfolio-client, TEST-views-ghostfolio-client |
+| Only 3.93.x is supported; the version read from the export's meta; no redirect followed, the login's 302, 307 and 308 among them, and the caller's client untouched; a sync stops after reading an unsupported version, having written nothing | `TestCheckVersion`, `TestClientVersion`, `TestClientFollowsNoRedirect`, `TestSyncRefusesUnsupportedVersion` in [version_test.go](../../internal/views/ghostfolio/version_test.go) | REQ-views-ghostfolio-checks-version-before-writes, REQ-views-ghostfolio-follows-no-redirect, TEST-views-ghostfolio-version |
 | The manifest asks for the view capability, the token Secret, the host of `url` and an in-cluster service; the config is checked; the plugin refuses to start without the core, its instance name, or a Ghostfolio, with both a `url` and an in-cluster service, or with a `url` and no egress proxy; the timer loop | `TestManifest`, `TestConfigParse`, `TestReadSecretFile`, `TestNewSyncer`, `TestNewSyncerWith`, `TestLoop` in [main_test.go](../../plugins/ghostfolio/main_test.go) | REQ-plugins-ghostfolio-plugin, TEST-plugins-ghostfolio-main |
 | The loop against a real Ghostfolio 3.93.0: a first sync that moves an earlier version's bond to its new asset and sets the balances, an unchanged second sync, a reverted edit, reverted balances, a deletion with its balance, a cleared account, the restricted view, the owner's own activity and balance untouched | `TestGhostfolioContract` in [contract_test.go](../../internal/views/ghostfolio/contract_test.go) | REQ-views-ghostfolio-version-range, REQ-views-ghostfolio-client, REQ-views-ghostfolio-cash-balances-per-currency, TEST-views-ghostfolio-contract |
 
-These requirements refine the firm ones imported from D-3, D-4 and D-64. `TestGhostfolioContract` replays hypert recordings made against a fresh local `ghostfolio/ghostfolio:3.93.0` with a new anonymous user, its base currency set to PLN, and the synthetic record of [fakes_test.go](../../internal/views/ghostfolio/fakes_test.go); replay checks each request's method, path, query, headers and JSON body. The security and bearer tokens never reach a recording; the test's comment says how to record again. Every other test runs offline over fakes.
+These requirements refine the firm ones imported from D-3, D-4 and D-64. `TestGhostfolioContract` replays hypert recordings made before the version check, so it answers `Version` from the recordings' version without a request; `TestClientVersion` checks that request on an `httptest` server. It replays hypert recordings made against a fresh local `ghostfolio/ghostfolio:3.93.0` with a new anonymous user, its base currency set to PLN, and the synthetic record of [fakes_test.go](../../internal/views/ghostfolio/fakes_test.go); replay checks each request's method, path, query, headers and JSON body. The security and bearer tokens never reach a recording; the test's comment says how to record again. Every other test runs offline over fakes.
 
 ## Not built yet
 
@@ -147,4 +154,4 @@ These requirements refine the firm ones imported from D-3, D-4 and D-64. `TestGh
 - **Interest.** The read API has no interest kind yet (D-101), so there is no `INTEREST` activity.
 - **The demo doesn't run the plugin**, and no end-to-end test reaches a Ghostfolio, in the cluster or outside it.
 - **The catalog (D-43).** The plugin is built and signed by CI but not in the catalog.
-- **A version check at run time.** Ghostfolio shows its version only to administrators.
+- **A recorded version check.** The version request follows Ghostfolio 3.93.0's export source, not a recording; the next recording against a real Ghostfolio adds it.

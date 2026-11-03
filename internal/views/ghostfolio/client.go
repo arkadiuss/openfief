@@ -21,8 +21,20 @@ import (
 // accounts, activities and import endpoints are Ghostfolio's internal API,
 // renamed within /v1 without notice (R-15), so a version outside the range
 // may not work. The account balance endpoints, which the view uses since
-// D-108, are internal too.
+// D-108, are internal too. CheckVersion holds the same range, and the
+// view changes nothing in a Ghostfolio outside it (D-188).
 const SupportedVersions = ">=3.93.0 <3.94.0"
+
+// supportedMajor and supportedMinor are SupportedVersions as numbers: any
+// patch release of 3.93.
+const (
+	supportedMajor = 3
+	supportedMinor = 93
+)
+
+// noActivity is an activity ID no activity has, by which the version
+// check's export carries no activity of the owner's (Version).
+const noActivity = "00000000-0000-0000-0000-000000000000"
 
 // Client errors.
 var (
@@ -36,6 +48,14 @@ var (
 	ErrNoAccountFilter = errors.New("no account filter")
 	// ErrBadResponse reports a response body the client can't read.
 	ErrBadResponse = errors.New("unreadable Ghostfolio response")
+	// ErrUnsupportedVersion reports a Ghostfolio whose version is outside
+	// SupportedVersions, or that names none the view can read: the view
+	// changes and deletes nothing there (D-188).
+	ErrUnsupportedVersion = errors.New("unsupported Ghostfolio version")
+	// ErrRedirect reports a response that redirects: the client never
+	// follows one, since a 307 or 308 would send the request again, the
+	// login's security token among it, to wherever it points (D-188).
+	ErrRedirect = errors.New("redirected by Ghostfolio: the client follows no redirect")
 )
 
 // HTTPError is a Ghostfolio response with an error status. It names the
@@ -70,9 +90,54 @@ type Client struct {
 }
 
 // NewClient returns a client for the Ghostfolio at base, logging in with the
-// security token from token.
+// security token from token. It sends its requests with a copy of hc that
+// follows no redirect (D-188); hc itself is left as it is.
 func NewClient(hc *http.Client, base string, token TokenSource) *Client {
-	return &Client{http: hc, base: strings.TrimSuffix(base, "/"), token: token}
+	noRedirects := *hc
+	noRedirects.CheckRedirect = refuseRedirect
+	return &Client{http: &noRedirects, base: strings.TrimSuffix(base, "/"), token: token}
+}
+
+// refuseRedirect is the client's redirect policy: it follows none (D-188).
+func refuseRedirect(*http.Request, []*http.Request) error { return ErrRedirect }
+
+// Version returns the version Ghostfolio names in the meta of its export
+// (GET /api/v1/export), the one place its API names its version to a user
+// who isn't an administrator. The export is filtered to an activity ID no
+// activity has, so it carries none of the owner's activities.
+func (c *Client) Version(ctx context.Context) (string, error) {
+	var out struct {
+		Meta struct {
+			Version string `json:"version"`
+		} `json:"meta"`
+	}
+	q := url.Values{"activityIds": {noActivity}}
+	if err := c.do(ctx, "read the version", http.MethodGet, "/api/v1/export", q, nil, &out); err != nil {
+		return "", err
+	}
+	return out.Meta.Version, nil
+}
+
+// CheckVersion refuses a Ghostfolio version outside SupportedVersions, or
+// one that isn't MAJOR.MINOR.PATCH, such as a development build's "dev"
+// (D-188).
+func CheckVersion(version string) error {
+	parts := strings.Split(version, ".")
+	var v [3]int
+	if len(parts) != len(v) {
+		return fmt.Errorf("%w: %q, supported %s", ErrUnsupportedVersion, version, SupportedVersions)
+	}
+	for i, p := range parts {
+		n, err := strconv.Atoi(p)
+		if err != nil || n < 0 {
+			return fmt.Errorf("%w: %q, supported %s", ErrUnsupportedVersion, version, SupportedVersions)
+		}
+		v[i] = n
+	}
+	if v[0] != supportedMajor || v[1] != supportedMinor {
+		return fmt.Errorf("%w: %q, supported %s", ErrUnsupportedVersion, version, SupportedVersions)
+	}
+	return nil
 }
 
 // User is the part of Ghostfolio's user the view reads.

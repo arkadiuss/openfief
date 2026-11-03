@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d47414ec6246
+  - type: executable_for
+    from: SYM-views-ghostfolio-test-sync-refuses-unsupported-version
+    to: TEST-views-ghostfolio-version
+    created_at: 2026-11-03T14:33:45.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d942ffca466

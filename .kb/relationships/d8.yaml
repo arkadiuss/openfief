@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3525e46bf7a7
+  - type: validates
+    from: TEST-views-ghostfolio-version
+    to: REQ-views-ghostfolio-checks-version-before-writes
+    created_at: 2026-11-03T14:31:53.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b65a59f6151
+  - type: validates
+    from: TEST-views-ghostfolio-version
+    to: REQ-views-ghostfolio-follows-no-redirect
+    created_at: 2026-11-03T14:31:53.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac5351657a44

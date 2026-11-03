@@ -895,3 +895,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1309f5d222e0
+  - type: validates
+    from: TEST-views-ghostfolio-sync
+    to: REQ-views-ghostfolio-checks-version-before-writes
+    created_at: 2026-11-03T14:31:55.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb54c9eeeed8

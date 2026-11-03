@@ -65103,8 +65103,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-client
+      - type: covered_by
+        target: TEST-views-ghostfolio-version
       - type: implements
         target: REQ-views-ghostfolio-client
+      - type: implements
+        target: REQ-views-ghostfolio-follows-no-redirect
   - id: SYM-views-ghostfolio-user
     title: User
     sourceFile: internal/views/ghostfolio/client.go
@@ -65382,6 +65386,8 @@ symbols:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
       - type: implements
+        target: REQ-views-ghostfolio-checks-version-before-writes
+      - type: implements
         target: REQ-views-ghostfolio-reconcile-cash
   - id: SYM-views-ghostfolio-syncer
     title: Syncer
@@ -65434,6 +65440,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-ghostfolio-sync
+      - type: implements
+        target: REQ-views-ghostfolio-checks-version-before-writes
       - type: implements
         target: REQ-views-ghostfolio-reconcile-cash
       - type: implements
@@ -131318,3 +131326,113 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-cosign
+  - id: SYM-views-ghostfolio-client-version
+    status: active
+    title: Client.Version
+    sourceFile: internal/views/ghostfolio/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:31:59.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-version
+      - type: implements
+        target: REQ-views-ghostfolio-checks-version-before-writes
+  - id: SYM-views-ghostfolio-check-version
+    status: active
+    title: CheckVersion
+    sourceFile: internal/views/ghostfolio/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:32:11.853Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-version
+      - type: implements
+        target: REQ-views-ghostfolio-checks-version-before-writes
+  - id: SYM-views-ghostfolio-refuse-redirect
+    status: active
+    title: refuseRedirect
+    sourceFile: internal/views/ghostfolio/client.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:32:23.510Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-ghostfolio-version
+      - type: implements
+        target: REQ-views-ghostfolio-follows-no-redirect
+  - id: SYM-views-ghostfolio-test-check-version
+    title: TestCheckVersion
+    sourceFile: internal/views/ghostfolio/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:11.144Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-version
+  - id: SYM-views-ghostfolio-test-client-version
+    title: TestClientVersion
+    sourceFile: internal/views/ghostfolio/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:20.937Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-version
+  - id: SYM-views-ghostfolio-test-client-follows-no-redirect
+    title: TestClientFollowsNoRedirect
+    sourceFile: internal/views/ghostfolio/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:31.508Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-version
+  - id: SYM-views-ghostfolio-test-sync-refuses-unsupported-version
+    title: TestSyncRefusesUnsupportedVersion
+    sourceFile: internal/views/ghostfolio/version_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:42.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-version
+  - id: SYM-views-ghostfolio-test-helper-fake-ghostfolio-version
+    title: fakeGhostfolio.Version
+    sourceFile: internal/views/ghostfolio/sync_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:33:53.254Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-sync
+  - id: SYM-views-ghostfolio-test-helper-recorded-version-version
+    title: recordedVersion.Version
+    sourceFile: internal/views/ghostfolio/contract_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:34:04.803Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-contract
+  - id: SYM-views-ghostfolio-test-helper-recorded-version
+    title: recordedVersion
+    sourceFile: internal/views/ghostfolio/contract_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T14:34:15.489Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-ghostfolio-contract

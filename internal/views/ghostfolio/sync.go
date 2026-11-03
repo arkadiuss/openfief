@@ -18,6 +18,9 @@ var ErrRestrictedView = errors.New("the restricted view setting is on in Ghostfo
 // implements it.
 type Ghostfolio interface {
 	Login(ctx context.Context) error
+	// Version names the Ghostfolio's version, which CheckVersion checks
+	// before the sync reads or changes anything (D-188).
+	Version(ctx context.Context) (string, error)
 	User(ctx context.Context) (User, error)
 	Accounts(ctx context.Context) ([]string, error)
 	CreateAccount(ctx context.Context, a Account) error
@@ -70,7 +73,9 @@ type Report struct {
 // Sync runs one pass. Every step is safe to repeat, so a pass that fails
 // halfway is finished by the next one:
 //
-//  1. log in, and refuse while the restricted view is on;
+//  1. log in, refuse a Ghostfolio whose version is outside
+//     SupportedVersions (D-188), and refuse while the restricted view is
+//     on;
 //  2. read the record and project it (Project);
 //  3. read the owned accounts' activities and cash balances, and plan
 //     (MakePlan);
@@ -87,6 +92,13 @@ func (s *Syncer) Sync(ctx context.Context) (Report, error) {
 	g := s.ghostfolio
 	if err := g.Login(ctx); err != nil {
 		return Report{}, fmt.Errorf("logging in to Ghostfolio: %w", err)
+	}
+	version, err := g.Version(ctx)
+	if err != nil {
+		return Report{}, fmt.Errorf("reading Ghostfolio's version: %w", err)
+	}
+	if checkErr := CheckVersion(version); checkErr != nil {
+		return Report{}, checkErr
 	}
 	user, err := g.User(ctx)
 	if err != nil {

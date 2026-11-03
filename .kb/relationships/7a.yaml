@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0c93f6ab209
+  - type: implements
+    from: SYM-views-ghostfolio-client-version
+    to: REQ-views-ghostfolio-checks-version-before-writes
+    created_at: 2026-11-03T14:32:03.688Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a241e858a75c
+  - type: covered_by
+    from: SYM-views-ghostfolio-client-version
+    to: TEST-views-ghostfolio-version
+    created_at: 2026-11-03T14:32:03.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b16c553fb18f
