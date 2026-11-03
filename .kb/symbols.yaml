@@ -133029,3 +133029,129 @@ symbols:
         target: TEST-plugins-app-upgrade
       - type: implements
         target: REQ-plugins-secret-names-never-shared
+  - id: SYM-valuation-postgres-migrate-river
+    title: migrateRiver
+    sourceFile: internal/valuation/postgres/migrate.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:18.444Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-queue
+      - type: implements
+        target: REQ-decision-d36-4-river-job-queue
+      - type: implements
+        target: REQ-valuation-river-migrations-serialized
+  - id: SYM-demo-seed-wait-for-database
+    title: waitForDatabase
+    sourceFile: cmd/demo-seed/dbwait.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:29.251Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-db-wait
+      - type: implements
+        target: REQ-demo-seed-waits-for-database
+  - id: SYM-demo-seed-sleep-ctx
+    title: sleepCtx
+    sourceFile: cmd/demo-seed/dbwait.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:39.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-seed-db-wait
+      - type: implements
+        target: REQ-demo-seed-waits-for-database
+  - id: SYM-valuation-postgres-test-concurrent-migrations
+    title: TestConcurrentMigrations
+    sourceFile: internal/valuation/postgres/queue_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:48.752Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+  - id: SYM-valuation-postgres-test-helper-new-database
+    title: newDatabase
+    sourceFile: internal/valuation/postgres/db_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:15:58.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-queue
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+      - type: executable_for
+        target: TEST-valuation-postgres-worker
+  - id: SYM-demo-seed-test-helper-fake-db
+    title: fakeDB
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:08.145Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-helper-fake-db-ping
+    title: fakeDB.ping
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:18.675Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-helper-fake-db-sleep
+    title: fakeDB.sleep
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:29.413Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-wait-for-database
+    title: TestWaitForDatabase
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:39.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-wait-for-database-keeps-the-last-error
+    title: TestWaitForDatabaseKeepsTheLastError
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:16:51.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait
+  - id: SYM-demo-seed-test-sleep-ctx-stops-with-the-context
+    title: TestSleepCtxStopsWithTheContext
+    sourceFile: cmd/demo-seed/dbwait_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T17:17:01.156Z
+    relationships:
+      - type: executable_for
+        target: TEST-demo-seed-db-wait

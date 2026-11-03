@@ -40,6 +40,17 @@ const (
 // migration applied, dropped when the test ends.
 func newPool(t *testing.T) *pgxpool.Pool {
 	t.Helper()
+	pool := newDatabase(t)
+	if err := postgres.Migrate(t.Context(), pool); err != nil {
+		t.Fatalf("Migrate: %v", err)
+	}
+	return pool
+}
+
+// newDatabase returns a pool on a fresh, empty database, dropped when the
+// test ends.
+func newDatabase(t *testing.T) *pgxpool.Pool {
+	t.Helper()
 	dsn := os.Getenv(dsnVar)
 	if dsn == "" {
 		t.Skip(dsnVar + " is not set: task test:pg runs this test on a disposable PostgreSQL")
@@ -62,9 +73,6 @@ func newPool(t *testing.T) *pgxpool.Pool {
 		pool.Close()
 		adminExec(context.WithoutCancel(ctx), t, dsn, "DROP DATABASE IF EXISTS "+name+" WITH (FORCE)")
 	})
-	if err := postgres.Migrate(ctx, pool); err != nil {
-		t.Fatalf("Migrate: %v", err)
-	}
 	return pool
 }
 

@@ -34,6 +34,46 @@ func TestMigrateTwice(t *testing.T) {
 	}
 }
 
+// TestConcurrentMigrations runs the migrations from several pools on one
+// fresh database at once, as the core and the demo loader do when they start
+// together: every run succeeds, and River's schema ends up migrated once.
+// Without the River migration lock two runs both apply one River version and
+// one fails on a duplicate key.
+func TestConcurrentMigrations(t *testing.T) {
+	t.Parallel()
+	first := newDatabase(t)
+	const runs = 4
+	pools := make([]*pgxpool.Pool, 0, runs)
+	pools = append(pools, first)
+	for range runs - 1 {
+		p, err := pgxpool.NewWithConfig(t.Context(), first.Config())
+		if err != nil {
+			t.Fatalf("connecting: %v", err)
+		}
+		t.Cleanup(p.Close)
+		pools = append(pools, p)
+	}
+	errs := make(chan error, runs)
+	for _, p := range pools {
+		go func() { errs <- postgres.Migrate(t.Context(), p) }()
+	}
+	for range runs {
+		if err := <-errs; err != nil {
+			t.Errorf("concurrent Migrate: %v", err)
+		}
+	}
+	n := countRows(t, first, `SELECT count(*) FROM information_schema.tables WHERE (table_schema, table_name) = ('river', 'river_job')`)
+	if n != 1 {
+		t.Errorf("river.river_job found %d times, want once", n)
+	}
+	locks := countRows(t, first, `
+		SELECT count(*) FROM pg_locks WHERE locktype = 'advisory' AND granted
+		AND database = (SELECT oid FROM pg_database WHERE datname = current_database())`)
+	if locks != 0 {
+		t.Errorf("%d advisory locks still held after the migrations, want none", locks)
+	}
+}
+
 // pricesOf returns one price on 2026-03-02 per close, each of its own
 // synthetic instrument.
 func pricesOf(t *testing.T, closes []string) []valuation.Price {

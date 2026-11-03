@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dffece7cd117
+  - type: verified_by
+    from: SCEN-demo-seed-waits-for-database
+    to: TEST-demo-seed-db-wait
+    created_at: 2026-11-03T17:14:57.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c6adb20f271
