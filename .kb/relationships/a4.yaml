@@ -160,20 +160,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c82787894f7a
-  - type: implements
-    from: SYM-ledger-app-ledger-save-kind
-    to: REQ-ledger-app-sleeve-kinds
-    created_at: 2026-10-28T09:55:28.917Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-309bfbd6d0d6
-  - type: covered_by
-    from: SYM-ledger-app-ledger-save-kind
-    to: TEST-ledger-app-kinds
-    created_at: 2026-10-28T09:55:28.953Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ed2fb2ec7eb3
   - type: executable_for
     from: SYM-cosign-test-inspect-unreachable-registry
     to: TEST-plugins-cosign
@@ -811,3 +797,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c11a3b04aff0
+  - type: executable_for
+    from: SYM-portfolio-pg-test-ensure-defaults-on-postgres
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:43:49.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dfc60e01475

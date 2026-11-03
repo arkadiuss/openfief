@@ -22,7 +22,7 @@ const purchasePricePlaces = 2
 type DueMaturity struct {
 	Account ledger.AccountID
 	Wrapper string
-	Payout  ledger.PayoutSetting
+	Payout  ingest.PayoutSetting
 	Lot     ledger.Lot
 	Terms   pl.Terms
 	Due     kernel.Date
@@ -159,7 +159,7 @@ func bookMaturity(m *DueMaturity, readings []valuation.IndexReading) (ledger.Tra
 // the same day and keyed as t plus ":payout", so the account's cash
 // matches the registry while t still counts as return. It reports false
 // when the payout stays as cash, or t brought no cash.
-func PayoutWithdrawal(t *ledger.Transaction, payout ledger.PayoutSetting) (ledger.Transaction, bool, error) {
+func PayoutWithdrawal(t *ledger.Transaction, payout ingest.PayoutSetting) (ledger.Transaction, bool, error) {
 	if !payout.PaidOut(t.Date) {
 		return ledger.Transaction{}, false, nil
 	}

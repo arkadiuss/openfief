@@ -1,6 +1,6 @@
 -- The portfolio context's schema: the optional model portfolio (docs/DESIGN.md
--- D-52). Only the portfolio context reads or writes it. Sleeves and sleeve
--- kinds stay in the ledger schema, next to the accounts that refer to them.
+-- D-52). Only the portfolio context reads or writes it. Sleeve kinds, sleeves
+-- and which account is in which sleeve join it in 0002.
 
 -- Whether the model portfolio is on. At most one row; no row means it was
 -- never saved and is off (D-52: off by default).

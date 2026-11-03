@@ -33,10 +33,34 @@ var (
 type AccountLedger interface {
 	// Accounts returns every account, in ID order.
 	Accounts(ctx context.Context) ([]ledger.Account, error)
-	// Sleeves returns every sleeve, in ID order.
-	Sleeves(ctx context.Context) ([]portfolio.Sleeve, error)
 	// SaveAccount creates a or replaces the account with its ID.
 	SaveAccount(ctx context.Context, a ledger.Account) error
+}
+
+// AccountSleeves is what the owner's account entries read from and write
+// to the portfolio context, which keeps which account is in which sleeve.
+// *portfolio/app.Registry implements it.
+type AccountSleeves interface {
+	// Sleeves returns every sleeve, in ID order.
+	Sleeves(ctx context.Context) ([]portfolio.Sleeve, error)
+	// AccountSleeves returns the sleeve of every account in one.
+	AccountSleeves(ctx context.Context) (map[ledger.AccountID]portfolio.SleeveID, error)
+	// PlaceAccount puts the stored account in sleeve, replacing the sleeve
+	// it was in.
+	PlaceAccount(ctx context.Context, account ledger.AccountID, sleeve portfolio.SleeveID) error
+	// RemoveAccount takes a deleted account out of its sleeve.
+	RemoveAccount(ctx context.Context, account ledger.AccountID) error
+}
+
+// PayoutSettings keeps each account's payout setting (D-135) with the
+// settings in force before it (D-162), in the ingest schema: an account
+// setting the treasury-bonds connector reads. ingest/postgres.Store
+// implements it.
+type PayoutSettings interface {
+	PayoutSettingReader
+	// SavePayoutSetting stores account's payout setting, replacing the
+	// stored one.
+	SavePayoutSetting(ctx context.Context, account ledger.AccountID, p ingest.PayoutSetting) error
 }
 
 // AccountTerms keep an account's tax wrapper and fee rule (D-76, D-78),
@@ -54,11 +78,17 @@ type AccountTerms interface {
 	FeeRule(ctx context.Context, account ledger.AccountID) (jurisdiction.FeeRule, error)
 }
 
-// AccountEntry is an account with the terms it is valued under: its tax
+// AccountEntry is an account with the sleeve the portfolio context puts it
+// in, its payout setting, and the terms it is valued under: its tax
 // wrapper and fee rule.
 type AccountEntry struct {
 	ledger.Account
 
+	// Sleeve is the sleeve the account is in; empty for none.
+	Sleeve portfolio.SleeveID
+	// Payout is the account's payout setting (D-135, D-162); the zero
+	// setting keeps its payouts as cash.
+	Payout  ingest.PayoutSetting
 	Wrapper jurisdiction.Wrapper
 	Fee     jurisdiction.FeeRule
 }
@@ -73,7 +103,7 @@ type AccountChange struct {
 	// Fee is the new fee rule; nil keeps the account's.
 	Fee *jurisdiction.FeeRule
 	// Payout is the new payout setting (D-135); nil keeps the account's.
-	Payout *ledger.Payout
+	Payout *ingest.Payout
 	// PayoutFrom is the day Payout takes effect from (D-162): today or an
 	// earlier day; zero is today.
 	PayoutFrom kernel.Date
@@ -109,7 +139,7 @@ type NewAccount struct {
 	Fee *jurisdiction.FeeRule
 	// Payout is the account's payout setting (D-135); nil keeps its
 	// payouts as cash.
-	Payout *ledger.Payout
+	Payout *ingest.Payout
 }
 
 // Accounts are the owner's account entries (D-72, D-73): creating and
@@ -132,6 +162,11 @@ type Accounts struct {
 	Deletions   AccountDeletions
 	Connections AccountConnections
 	Forget      TermsForgetter
+	// Sleeves keeps which sleeve each account is in, in the portfolio
+	// context.
+	Sleeves AccountSleeves
+	// PayoutSettings keeps each account's payout setting (D-135, D-162).
+	PayoutSettings PayoutSettings
 	// Payouts supersedes the payout withdrawals a changed payout setting no
 	// longer makes (D-162); nil supersedes none.
 	Payouts PayoutLedger
@@ -169,8 +204,9 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 	if institution == "" {
 		institution = broker.Institution
 	}
-	entry.Account = ledger.Account{ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name, Sleeve: n.Sleeve}
-	if entry.Payout, err = a.firstPayout(&entry.Account, n.Payout); err != nil {
+	entry.Account = ledger.Account{ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name}
+	entry.Sleeve = n.Sleeve
+	if entry.Payout, err = a.firstPayout(institution, n.Payout); err != nil {
 		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
 	}
 	if err := a.storeNew(ctx, &entry, n); err != nil {
@@ -199,14 +235,14 @@ func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id l
 	if err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
-	if err := a.save(ctx, entry.Account); err != nil {
+	if err := a.save(ctx, &entry, c.Payout != nil); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
 	if err := a.recordTerms(ctx, id, c.Wrapper, c.Fee); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
 	if c.Payout != nil {
-		if err := a.supersedePayouts(ctx, &entry.Account, from); err != nil {
+		if err := a.supersedePayouts(ctx, &entry, from); err != nil {
 			return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 		}
 	}
@@ -238,7 +274,7 @@ func (a *Accounts) Bind(ctx context.Context, origin, sessionToken string, id led
 // storeNew saves the new account entry, records its terms, and binds n's
 // instance to it with its broker account.
 func (a *Accounts) storeNew(ctx context.Context, entry *AccountEntry, n *NewAccount) error {
-	if err := a.save(ctx, entry.Account); err != nil {
+	if err := a.save(ctx, entry, n.Payout != nil); err != nil {
 		return err
 	}
 	if err := a.recordTerms(ctx, entry.ID, entry.Wrapper, n.Fee); err != nil {
@@ -250,9 +286,17 @@ func (a *Accounts) storeNew(ctx context.Context, entry *AccountEntry, n *NewAcco
 	return a.connect(ctx, entry.ID, n.Instance, n.BrokerAccount)
 }
 
-// entry returns account acc with its tax wrapper, the pack's
-// default unless one was recorded, and its fee rule.
+// entry returns account acc with its sleeve, its payout setting, its tax
+// wrapper, the pack's default unless one was recorded, and its fee rule.
 func (a *Accounts) entry(ctx context.Context, acc ledger.Account) (AccountEntry, error) {
+	sleeves, err := a.Sleeves.AccountSleeves(ctx)
+	if err != nil {
+		return AccountEntry{}, fmt.Errorf("loading the sleeve of %s: %w", acc.ID, err)
+	}
+	payout, err := a.PayoutSettings.PayoutSetting(ctx, acc.ID)
+	if err != nil {
+		return AccountEntry{}, fmt.Errorf("loading the payout setting of %s: %w", acc.ID, err)
+	}
 	w, recorded, err := a.Terms.TaxWrapper(ctx, acc.ID)
 	if err != nil {
 		return AccountEntry{}, fmt.Errorf("loading the tax wrapper of %s: %w", acc.ID, err)
@@ -264,7 +308,7 @@ func (a *Accounts) entry(ctx context.Context, acc ledger.Account) (AccountEntry,
 	if err != nil {
 		return AccountEntry{}, fmt.Errorf("loading the fee rule of %s: %w", acc.ID, err)
 	}
-	return AccountEntry{Account: acc, Wrapper: w, Fee: fee}, nil
+	return AccountEntry{Account: acc, Sleeve: sleeves[acc.ID], Payout: payout, Wrapper: w, Fee: fee}, nil
 }
 
 // newEntry returns the terms n gives a new account, checked: its wrapper,
@@ -283,32 +327,31 @@ func (a *Accounts) newEntry(n *NewAccount) (AccountEntry, error) {
 	return entry, nil
 }
 
-// firstPayout returns a new account's payout setting p, which covers its
-// whole history (D-162), or acc's own, none, for nil p, checked as payout
-// checks it.
-func (a *Accounts) firstPayout(acc *ledger.Account, p *ledger.Payout) (*ledger.PayoutSetting, error) {
+// firstPayout returns the payout setting p of a new account at
+// institution, which covers its whole history (D-162), or the default, as
+// cash, for nil p, checked as payout checks it.
+func (a *Accounts) firstPayout(institution ingest.InstitutionID, p *ingest.Payout) (ingest.PayoutSetting, error) {
 	if p == nil {
-		return acc.Payout, nil
+		return ingest.PayoutSetting{}, nil
 	}
-	if err := ingest.CheckPayout(ingest.InstitutionID(acc.Institution), *p); err != nil {
-		return nil, fmt.Errorf("%w: %w", ledger.ErrInvalidAccount, err)
+	if err := ingest.CheckPayout(institution, *p); err != nil {
+		return ingest.PayoutSetting{}, fmt.Errorf("%w: %w", ledger.ErrInvalidAccount, err)
 	}
-	return &ledger.PayoutSetting{Payout: *p}, nil
+	return ingest.PayoutSetting{Payout: *p}, nil
 }
 
-// payout returns acc's payout setting with p in force from the day from
-// (D-162), or acc's own for nil p, checked: only a hand-entered bond
+// payout returns entry's payout setting with p in force from the day from
+// (D-162), or its own for nil p, checked: only a hand-entered bond
 // account may pay out (ingest.CheckPayout), as an invalid account
 // otherwise.
-func (a *Accounts) payout(acc *ledger.Account, p *ledger.Payout, from kernel.Date) (*ledger.PayoutSetting, error) {
+func (a *Accounts) payout(entry *AccountEntry, p *ingest.Payout, from kernel.Date) (ingest.PayoutSetting, error) {
 	if p == nil {
-		return acc.Payout, nil
+		return entry.Payout, nil
 	}
-	if err := ingest.CheckPayout(ingest.InstitutionID(acc.Institution), *p); err != nil {
-		return nil, fmt.Errorf("%w: %w", ledger.ErrInvalidAccount, err)
+	if err := ingest.CheckPayout(ingest.InstitutionID(entry.Institution), *p); err != nil {
+		return ingest.PayoutSetting{}, fmt.Errorf("%w: %w", ledger.ErrInvalidAccount, err)
 	}
-	s := acc.PayoutSetting().Changed(*p, from)
-	return &s, nil
+	return entry.Payout.Changed(*p, from), nil
 }
 
 // payoutFrom returns the day a payout change takes effect from: from, or
@@ -370,20 +413,39 @@ func (a *Accounts) stored(ctx context.Context, id ledger.AccountID) (ledger.Acco
 	return accounts[i], nil
 }
 
-// save checks acc and its sleeve, then stores it.
-func (a *Accounts) save(ctx context.Context, acc ledger.Account) error {
-	if err := acc.Validate(); err != nil {
+// save checks entry's account, its sleeve and its payout setting, then
+// stores each with the context that owns it: the account in the ledger,
+// its sleeve in the portfolio context, and its payout setting here when
+// withPayout says it was given. An account is in one sleeve, so an empty
+// sleeve is an invalid account and one not stored fails with ErrNoSleeve.
+func (a *Accounts) save(ctx context.Context, entry *AccountEntry, withPayout bool) error {
+	if err := entry.Validate(); err != nil {
 		return fmt.Errorf("checking the account: %w", err)
 	}
-	sleeves, err := a.Ledger.Sleeves(ctx)
+	if entry.Sleeve == "" {
+		return fmt.Errorf("checking the account: %w %s: no sleeve", ledger.ErrInvalidAccount, entry.ID)
+	}
+	if err := entry.Payout.Validate(); err != nil {
+		return fmt.Errorf("checking the account: %w %s: %w", ledger.ErrInvalidAccount, entry.ID, err)
+	}
+	sleeves, err := a.Sleeves.Sleeves(ctx)
 	if err != nil {
 		return fmt.Errorf("loading sleeves: %w", err)
 	}
-	if !slices.ContainsFunc(sleeves, func(s portfolio.Sleeve) bool { return s.ID == acc.Sleeve }) {
-		return fmt.Errorf("sleeve %q: %w", acc.Sleeve, ErrNoSleeve)
+	if !slices.ContainsFunc(sleeves, func(s portfolio.Sleeve) bool { return s.ID == entry.Sleeve }) {
+		return fmt.Errorf("sleeve %q: %w", entry.Sleeve, ErrNoSleeve)
 	}
-	if err := a.Ledger.SaveAccount(ctx, acc); err != nil {
+	if err := a.Ledger.SaveAccount(ctx, entry.Account); err != nil {
 		return fmt.Errorf("saving the account: %w", err)
+	}
+	if err := a.Sleeves.PlaceAccount(ctx, entry.ID, entry.Sleeve); err != nil {
+		return fmt.Errorf("placing the account in its sleeve: %w", err)
+	}
+	if !withPayout {
+		return nil
+	}
+	if err := a.PayoutSettings.SavePayoutSetting(ctx, entry.ID, entry.Payout); err != nil {
+		return fmt.Errorf("saving the payout setting: %w", err)
 	}
 	return nil
 }
@@ -437,11 +499,11 @@ func hasAccount(accounts []ledger.Account, id ledger.AccountID) bool {
 	return slices.ContainsFunc(accounts, func(acc ledger.Account) bool { return acc.ID == id })
 }
 
-// supersedePayouts imports the deletions of acc's payout withdrawals dated
+// supersedePayouts imports the deletions of the payout withdrawals of acc dated
 // on or after from that its payout setting no longer makes
 // (ingest.StalePayouts); without Payouts, none. Running it again finds
 // none left.
-func (a *Accounts) supersedePayouts(ctx context.Context, acc *ledger.Account, from kernel.Date) error {
+func (a *Accounts) supersedePayouts(ctx context.Context, acc *AccountEntry, from kernel.Date) error {
 	if a.Payouts == nil {
 		return nil
 	}
@@ -449,7 +511,7 @@ func (a *Accounts) supersedePayouts(ctx context.Context, acc *ledger.Account, fr
 	if err != nil {
 		return fmt.Errorf("loading transactions: %w", err)
 	}
-	stale, err := ingest.StalePayouts(current, acc.PayoutSetting(), from)
+	stale, err := ingest.StalePayouts(current, acc.Payout, from)
 	if err != nil {
 		return fmt.Errorf("superseding payout withdrawals: %w", err)
 	}
@@ -484,7 +546,7 @@ func (a *Accounts) changed(ctx context.Context, acc ledger.Account, c *AccountCh
 	if err != nil {
 		return AccountEntry{}, kernel.Date{}, err
 	}
-	if entry.Payout, err = a.payout(&entry.Account, c.Payout, from); err != nil {
+	if entry.Payout, err = a.payout(&entry, c.Payout, from); err != nil {
 		return AccountEntry{}, kernel.Date{}, err
 	}
 	return entry, from, nil

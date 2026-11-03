@@ -678,3 +678,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b39ea7a763f5
+  - type: implements
+    from: SYM-portfolio-pg-store-delete-sleeve
+    to: REQ-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:45.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0fbe5cebf50
+  - type: implements
+    from: SYM-portfolio-pg-store-delete-sleeve
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-11-03T12:30:45.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-295e3a14abff
+  - type: covered_by
+    from: SYM-portfolio-pg-store-delete-sleeve
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:45.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f061b416233

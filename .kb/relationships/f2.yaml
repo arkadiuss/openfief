@@ -608,3 +608,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91ecec0dbcc3
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-mem-registry-kinds
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:37:46.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd103f65c1bf

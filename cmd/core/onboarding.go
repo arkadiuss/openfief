@@ -10,16 +10,15 @@ import (
 	ingestapp "github.com/arkadiuss/openfief/internal/ingest/app"
 	ingestconnect "github.com/arkadiuss/openfief/internal/ingest/connectapi"
 	ingestpg "github.com/arkadiuss/openfief/internal/ingest/postgres"
-	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
 	portfolioconnect "github.com/arkadiuss/openfief/internal/portfolio/connectapi"
 )
 
 // newSleeves returns the owner's sleeve entries (D-71, D-79) over the
-// ledger, which keeps sleeves and kinds, with the owner's sessions checked
-// by auth on origins.
-func newSleeves(l *ledgerapp.Ledger, auth *identityapp.Auth, origins identity.Origins) *portfolioapp.Sleeves {
-	return &portfolioapp.Sleeves{Owners: portfolioOwners(auth, origins), Store: l, Deletions: l}
+// portfolio registry r, which keeps sleeves and kinds, with the owner's
+// sessions checked by auth on origins.
+func newSleeves(r *portfolioapp.Registry, auth *identityapp.Auth, origins identity.Origins) *portfolioapp.Sleeves {
+	return &portfolioapp.Sleeves{Owners: portfolioOwners(auth, origins), Store: r, Deletions: r}
 }
 
 // newAccounts returns the owner's account entries (D-72, D-79) over d: the
@@ -32,6 +31,7 @@ func newAccounts(d *connectorDeps, owners ingestapp.Owners, terms accountTerms) 
 	return &ingestapp.Accounts{
 		Owners: owners, Ledger: d.ledger, Bindings: store, Brokers: store, Terms: terms, Pack: jurisdictionPack(), Now: d.now,
 		Deletions: d.ledger, Connections: store, Forget: terms, Payouts: ledgerImporter{ledger: d.ledger},
+		Sleeves: d.sleeves, PayoutSettings: store,
 	}
 }
 

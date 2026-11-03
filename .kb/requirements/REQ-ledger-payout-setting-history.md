@@ -1,6 +1,6 @@
 ---
 title: An account's first payout setting must cover its whole history, a change must take effect from a day given, possibly earlier than today, and what falls due on a day must follow the setting in force on it.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-162
 tags:
   - strict-modeling

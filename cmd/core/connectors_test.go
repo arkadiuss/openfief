@@ -210,7 +210,7 @@ func saveDemoRegistry(t *testing.T, dsn string) {
 		if err != nil {
 			return fmt.Errorf("setup: %w", err)
 		}
-		saveRegistry(t, d.ledger, &ds)
+		saveRegistry(t, d.ledger, d.sleeves, &ds)
 		return nil
 	})
 	if err != nil {

@@ -3,6 +3,7 @@ package connectapi_test
 import (
 	"context"
 	"log/slog"
+	"maps"
 	"net/http/httptest"
 	"slices"
 	"testing"
@@ -26,13 +27,39 @@ import (
 )
 
 // memRegistry is the ledger's accounts over the default sleeves, in
-// memory, or failing with err, with the accounts' current transactions
-// and what was imported, for a payout change (D-162).
+// memory, or failing with err, with the sleeve each account is in, their
+// payout settings, the accounts' current transactions and what was
+// imported, for a payout change (D-162).
 type memRegistry struct {
 	accounts []ledger.Account
+	in       map[ledger.AccountID]portfolio.SleeveID
+	payouts  map[ledger.AccountID]ingest.PayoutSetting
 	current  []ledger.Transaction
 	imported []ledger.Transaction
 	err      error
+}
+
+func (m *memRegistry) AccountSleeves(context.Context) (map[ledger.AccountID]portfolio.SleeveID, error) {
+	return maps.Clone(m.in), m.err
+}
+
+func (m *memRegistry) PlaceAccount(_ context.Context, account ledger.AccountID, sleeve portfolio.SleeveID) error {
+	m.in[account] = sleeve
+	return nil
+}
+
+func (m *memRegistry) RemoveAccount(_ context.Context, account ledger.AccountID) error {
+	delete(m.in, account)
+	return nil
+}
+
+func (m *memRegistry) PayoutSetting(_ context.Context, account ledger.AccountID) (ingest.PayoutSetting, error) {
+	return m.payouts[account], m.err
+}
+
+func (m *memRegistry) SavePayoutSetting(_ context.Context, account ledger.AccountID, p ingest.PayoutSetting) error {
+	m.payouts[account] = p
+	return nil
 }
 
 func (m *memRegistry) CurrentTransactions(context.Context, ledger.AccountID) ([]ledger.Transaction, error) {
@@ -125,7 +152,7 @@ type accountsClient struct {
 func newAccountsClient(t *testing.T, reg *memRegistry, links *memLinks, caller string) accountsClient {
 	t.Helper()
 	accounts := &app.Accounts{
-		Owners: owners{}, Ledger: reg, Bindings: links, Brokers: links, Pack: pl.NewPack(), Payouts: reg,
+		Owners: owners{}, Ledger: reg, Bindings: links, Brokers: links, Pack: pl.NewPack(), Payouts: reg, Sleeves: reg, PayoutSettings: reg,
 		Terms: &memTerms{wrappers: map[ledger.AccountID]jurisdiction.Wrapper{}, fees: map[ledger.AccountID]jurisdiction.FeeRule{}},
 		Now:   func() time.Time { return time.Date(2026, time.March, 2, 6, 0, 0, 0, time.UTC) },
 	}
@@ -137,7 +164,11 @@ func newAccountsClient(t *testing.T, reg *memRegistry, links *memLinks, caller s
 
 // fixture returns the fakes: acc-bonds stored, ibkr-main's broker accounts.
 func fixture() (*memRegistry, *memLinks) {
-	return &memRegistry{accounts: []ledger.Account{{ID: bondsAccount, Institution: "treasury-bonds", Name: "Bonds", Sleeve: "bonds"}}},
+	return &memRegistry{
+			accounts: []ledger.Account{{ID: bondsAccount, Institution: "treasury-bonds", Name: "Bonds"}},
+			in:       map[ledger.AccountID]portfolio.SleeveID{bondsAccount: "bonds"},
+			payouts:  map[ledger.AccountID]ingest.PayoutSetting{},
+		},
 		&memLinks{brokers: []ingest.BrokerAccount{
 			{Instance: "ibkr-main", ID: "U0000001", Institution: "ibkr"},
 			{Instance: "ibkr-main", ID: "U0000002", Institution: "ibkr", Account: bondsAccount},
@@ -199,8 +230,8 @@ func TestAccountServiceBondPayout(t *testing.T) {
 		paid.Msg.GetAccount().GetBondPayoutSince() != "2026-03-02" {
 		t.Errorf("UpdateAccount paying out = %v, %v; want paid out since 2026-03-02", paid, err)
 	}
-	i := slices.IndexFunc(reg.accounts, func(a ledger.Account) bool { return a.ID == bondsAccount })
-	if got := reg.accounts[i].PayoutSetting(); got.Payout != ledger.PayoutPaidOut || got.Since.String() != "2026-03-02" {
+
+	if got := reg.payouts[bondsAccount]; got.Payout != ingest.PayoutPaidOut || got.Since.String() != "2026-03-02" {
 		t.Errorf("stored payout = %+v, want paid out since 2026-03-02", got)
 	}
 	checkPayoutBackToCash(t, c, reg)

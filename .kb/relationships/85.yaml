@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e39391a2a5e8
+  - type: executable_for
+    from: SYM-ingest-connectapi-test-helper-mem-registry-save-payout-setting
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-03T12:35:42.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2729e59ce88c

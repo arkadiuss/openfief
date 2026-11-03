@@ -496,3 +496,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf66e4ef4ef9
+  - type: executable_for
+    from: SYM-portfolio-pg-test-helper-check-result
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:42:08.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-805e157294a9

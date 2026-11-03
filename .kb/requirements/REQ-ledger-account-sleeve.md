@@ -1,6 +1,6 @@
 ---
 title: Every account must belong to exactly one sleeve, and an account without a sleeve, ID, institution or name must be rejected.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#33-ledger-and-valuation
 tags:
   - strict-modeling

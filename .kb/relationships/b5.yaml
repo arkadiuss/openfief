@@ -120,13 +120,6 @@ relationships:
     id: rel-c9692fca51ad
   - type: implements
     from: SYM-ledger-pg-store-save-assertion-check
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:32:01.830Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-b589b385e975
-  - type: implements
-    from: SYM-ledger-pg-store-save-assertion-check
     to: REQ-AUTO-D9FBE33256704D04
     created_at: 2026-10-28T06:32:01.847Z
     created_by: kibi/upsert
@@ -832,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cdefa8e12879
+  - type: implements
+    from: SYM-ledger-pg-store-save-assertion-check
+    to: REQ-ledger-pg-store-accounts
+    created_at: 2026-11-03T12:13:59.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f61e6fb76f52

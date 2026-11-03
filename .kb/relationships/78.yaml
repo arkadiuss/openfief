@@ -62,20 +62,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2a9e65605fb
-  - type: implements
-    from: SYM-ledger-app-ledger-sleeves
-    to: REQ-ledger-app-registry
-    created_at: 2026-10-28T06:11:09.342Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-716a7fd22768
-  - type: covered_by
-    from: SYM-ledger-app-ledger-sleeves
-    to: TEST-ledger-app-registry
-    created_at: 2026-10-28T06:11:09.362Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-55b50e16583d
   - type: executable_for
     from: SYM-valuation-postgres-test-helper-date
     to: TEST-valuation-postgres-queue
@@ -125,13 +111,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b3d70982e95a
-  - type: executable_for
-    from: SYM-ledger-pg-test-sleeve-kind-constraints
-    to: TEST-ledger-pg-kinds
-    created_at: 2026-10-28T09:56:58.150Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e0df897f5110
   - type: implements
     from: SYM-demo-market-in
     to: REQ-demo-consistent-history

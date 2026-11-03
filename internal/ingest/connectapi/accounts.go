@@ -127,20 +127,20 @@ func (s *accountService) RemapBrokerAccount(ctx context.Context, req *connect.Re
 func pbAccount(a *app.AccountEntry) *ingestv1.Account {
 	out := &ingestv1.Account{
 		Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve),
-		TaxWrapper: string(a.Wrapper), FeeRule: pbFeeRule(&a.Fee), BondPayout: pbPayout(a.PayoutSetting().Payout),
+		TaxWrapper: string(a.Wrapper), FeeRule: pbFeeRule(&a.Fee), BondPayout: pbPayout(a.Payout.Payout),
 	}
-	if since := a.PayoutSetting().Since; !since.IsZero() {
+	if since := a.Payout.Since; !since.IsZero() {
 		out.BondPayoutSince = since.String()
 	}
 	return out
 }
 
 // pbPayout converts a payout setting (D-135).
-func pbPayout(p ledger.Payout) ingestv1.BondPayout {
+func pbPayout(p ingest.Payout) ingestv1.BondPayout {
 	switch p {
-	case ledger.PayoutCash:
+	case ingest.PayoutCash:
 		return ingestv1.BondPayout_BOND_PAYOUT_CASH
-	case ledger.PayoutPaidOut:
+	case ingest.PayoutPaidOut:
 		return ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT
 	}
 	return ingestv1.BondPayout_BOND_PAYOUT_UNSPECIFIED
@@ -149,17 +149,17 @@ func pbPayout(p ledger.Payout) ingestv1.BondPayout {
 // payoutFrom reads a requested payout setting: nil for unspecified, which
 // keeps the account's, and an out-of-range value as it is, which the
 // accounts refuse.
-func payoutFrom(p ingestv1.BondPayout) *ledger.Payout {
-	var out ledger.Payout
+func payoutFrom(p ingestv1.BondPayout) *ingest.Payout {
+	var out ingest.Payout
 	switch p {
 	case ingestv1.BondPayout_BOND_PAYOUT_UNSPECIFIED:
 		return nil
 	case ingestv1.BondPayout_BOND_PAYOUT_CASH:
-		out = ledger.PayoutCash
+		out = ingest.PayoutCash
 	case ingestv1.BondPayout_BOND_PAYOUT_PAID_OUT:
-		out = ledger.PayoutPaidOut
+		out = ingest.PayoutPaidOut
 	default:
-		out = ledger.Payout(p)
+		out = ingest.Payout(p)
 	}
 	return &out
 }

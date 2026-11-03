@@ -398,13 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-733bc07c74ab
-  - type: verified_by
-    from: SCEN-portfolio-role-override-explicit
-    to: TEST-ledger-pg-kinds
-    created_at: 2026-10-29T11:35:45.276Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bd4ddfd6b068
   - type: implements
     from: SYM-ui-server-setup-page
     to: REQ-ui-first-run-wizard-steps
@@ -776,3 +769,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e03bfb00f97e
+  - type: verified_by
+    from: SCEN-portfolio-role-override-explicit
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T11:52:28.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f91bb89d7e81
+  - type: implements
+    from: SYM-portfolio-pg-scan-sleeve
+    to: REQ-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:34.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb050fb415c4
+  - type: covered_by
+    from: SYM-portfolio-pg-scan-sleeve
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:34.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b08bd6e3803e
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-mem-registry-save-kind
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:37:35.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ca0864f981d

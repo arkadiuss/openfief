@@ -62,13 +62,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccb0b9fa12b8
-  - type: implements
-    from: SYM-ledger-pg-decode-book
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:32:31.568Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-046de28d9721
   - type: covered_by
     from: SYM-ledger-pg-decode-book
     to: TEST-ledger-pg-store
@@ -76,20 +69,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9db8eae16243
-  - type: implements
-    from: SYM-ledger-pg-store-sleeves
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:34:59.839Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4a4ec080c78f
-  - type: covered_by
-    from: SYM-ledger-pg-store-sleeves
-    to: TEST-ledger-pg-store
-    created_at: 2026-10-28T06:34:59.852Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-78b13e2f7a13
   - type: executable_for
     from: SYM-operator-test-manifests-kinds
     to: TEST-operator-manifests
@@ -118,27 +97,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53a840028163
-  - type: executable_for
-    from: SYM-ledger-pg-test-migrate-gives-stored-sleeves-a-kind
-    to: TEST-ledger-pg-kinds
-    created_at: 2026-10-28T09:56:46.307Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-85c8cf66c14b
-  - type: implements
-    from: SYM-ledger-pg-store-sleeves
-    to: REQ-ledger-pg-sleeve-kinds
-    created_at: 2026-10-28T09:59:26.095Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fce2aeebc8e3
-  - type: covered_by
-    from: SYM-ledger-pg-store-sleeves
-    to: TEST-ledger-pg-kinds
-    created_at: 2026-10-28T09:59:26.118Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9ba40018bd81
   - type: implements
     from: SYM-demo-direct-opening
     to: REQ-demo-consistent-history
@@ -749,20 +707,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e77b7fd601b3
   - type: implements
-    from: SYM-ledger-payout-period
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:26:51.622Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e33f2faba19d
-  - type: covered_by
-    from: SYM-ledger-payout-period
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T17:26:51.673Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9bf621b3c2fc
-  - type: implements
     from: SYM-ingest-ticker-entry-priced-by-listing
     to: REQ-ingest-ticker-currency-picked
     created_at: 2026-11-01T23:40:49.232Z
@@ -776,3 +720,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-532b4a822aec
+  - type: verified_by
+    from: SCEN-ledger-app-accounts
+    to: TEST-ledger-app-registry
+    created_at: 2026-11-03T11:49:14.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ad302ad09ac9
+  - type: verified_by
+    from: SCEN-ledger-app-accounts
+    to: TEST-ledger-app-import
+    created_at: 2026-11-03T11:49:14.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61a109385f75
+  - type: implements
+    from: SYM-ledger-pg-decode-book
+    to: REQ-ledger-pg-store-accounts
+    created_at: 2026-11-03T12:06:57.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-579a640df82e

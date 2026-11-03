@@ -32,7 +32,7 @@ func (acc1Only) MayAct(_ context.Context, c identity.Caller, a identity.Action, 
 func TestRESTServesOnlyViewableAccounts(t *testing.T) {
 	t.Parallel()
 	l := newLedger(t)
-	l.accounts = append(l.accounts, ledger.Account{ID: "acc-2", Institution: "broker-b", Name: "Synthetic B", Sleeve: "core"})
+	l.accounts = append(l.accounts, ledger.Account{ID: "acc-2", Institution: "broker-b", Name: "Synthetic B"})
 	h, err := connectapi.New(newViews(t, l, app.WithAuthorizer(acc1Only{})), fakeVerifier{},
 		connectapi.WithLogger(slog.New(slog.NewJSONHandler(&bytes.Buffer{}, nil))))
 	if err != nil {

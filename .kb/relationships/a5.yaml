@@ -629,3 +629,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1108b48991c9
+  - type: implements
+    from: SYM-views-app-with-portfolio
+    to: REQ-views-app-queries
+    created_at: 2026-11-03T12:32:20.073Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-681ac1702b9d
+  - type: covered_by
+    from: SYM-views-app-with-portfolio
+    to: TEST-views-app
+    created_at: 2026-11-03T12:32:20.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6e865a4fd6a

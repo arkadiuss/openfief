@@ -524,3 +524,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa40c10b3e22
+  - type: implements
+    from: SYM-portfolio-pg-store-delete-kind
+    to: REQ-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:55.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94a965662d1e
+  - type: implements
+    from: SYM-portfolio-pg-store-delete-kind
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-11-03T12:30:55.240Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aed8ae602343
+  - type: covered_by
+    from: SYM-portfolio-pg-store-delete-kind
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:30:55.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80e6ff917d0d
+  - type: implements
+    from: SYM-portfolio-pg-store-account-sleeves
+    to: REQ-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:31:15.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f69adc1f831
+  - type: implements
+    from: SYM-portfolio-pg-store-account-sleeves
+    to: REQ-portfolio-account-in-one-sleeve
+    created_at: 2026-11-03T12:31:15.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23eb8e3fdb99
+  - type: covered_by
+    from: SYM-portfolio-pg-store-account-sleeves
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:31:15.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-198904f6cb68
+  - type: implements
+    from: SYM-portfolio-pg-store-in-tx
+    to: REQ-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:31:44.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-987607df5257
+  - type: implements
+    from: SYM-portfolio-pg-store-in-tx
+    to: REQ-portfolio-defaults-on-fresh-install
+    created_at: 2026-11-03T12:31:44.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fa2a356e9bc
+  - type: covered_by
+    from: SYM-portfolio-pg-store-in-tx
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:31:44.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee0813982d6
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-mem-registry-account-sleeves
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:38:53.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8d35e08e0c3

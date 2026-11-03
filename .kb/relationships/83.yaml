@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf9a11884841
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-mem-registry-in-tx
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:39:15.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a283b85ab487

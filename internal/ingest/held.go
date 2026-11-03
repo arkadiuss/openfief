@@ -19,7 +19,7 @@ type HeldAccount struct {
 	Wrapper string
 	// Payout is the account's payout setting (D-135): whether what its
 	// bonds pay stays as its cash or is paid out.
-	Payout   ledger.PayoutSetting
+	Payout   PayoutSetting
 	Holdings []ledger.Holding
 	// Lots are the account's open lots, oldest first.
 	Lots []ledger.Lot

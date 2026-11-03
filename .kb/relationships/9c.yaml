@@ -678,3 +678,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c4229aeee214
+  - type: implements
+    from: SYM-ingest-payout-setting-paid-out
+    to: REQ-ingest-payout-setting-history
+    created_at: 2026-11-03T12:25:06.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a8a1ee3b4a9
+  - type: implements
+    from: SYM-ingest-payout-setting-paid-out
+    to: REQ-treasurybonds-account-payout-setting
+    created_at: 2026-11-03T12:25:06.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-696f5c22fab3
+  - type: covered_by
+    from: SYM-ingest-payout-setting-paid-out
+    to: TEST-ingest-payout-setting
+    created_at: 2026-11-03T12:25:06.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cea6689d8d3

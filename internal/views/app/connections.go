@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
 // Connections reads how connector instances feed accounts: the connector
@@ -21,15 +20,6 @@ type Connections interface {
 // Without it there are none.
 func WithConnections(c Connections) Option {
 	return func(v *Views) { v.connections = c }
-}
-
-// SleeveKinds returns every sleeve kind, in key order (D-71).
-func (v *Views) SleeveKinds(ctx context.Context) ([]portfolio.Kind, error) {
-	k, err := v.ledger.Kinds(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("loading sleeve kinds: %w", err)
-	}
-	return k, nil
 }
 
 // ConnectorBindings returns every connector binding to an account the

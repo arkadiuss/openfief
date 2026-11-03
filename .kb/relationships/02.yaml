@@ -538,13 +538,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a85aacee45b3
-  - type: executable_for
-    from: SYM-ledger-app-test-helper-mem-store-delete-kind
-    to: TEST-ledger-app-deletions
-    created_at: 2026-10-31T14:51:47.452Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-499c904bdceb
   - type: implements
     from: SYM-ingestv1-list-broker-accounts-request-descriptor
     to: REQ-ingest-broker-accounts-owner-only
@@ -615,13 +608,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-56793a5c47fa
-  - type: covered_by
-    from: SYM-ledger-payout-string
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T07:51:11.154Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dfd9bde680d9
   - type: constrains
     from: REQ-valuation-gap-item-per-account
     to: FACT-SUBJECT-431B4CEEE9046544
@@ -664,13 +650,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf9064add44b
-  - type: implements
-    from: SYM-ledger-payout-string
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:31:12.004Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fc60d03f6024
   - type: executable_for
     from: SYM-operator-test-market-data
     to: TEST-operator-market-data
@@ -748,3 +727,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b19a57d87c2
+  - type: constrains
+    from: REQ-portfolio-registry-checks-sleeves
+    to: FACT-SUBJECT-046E37A7BFB62D9C
+    created_at: 2026-11-03T11:50:50.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c284df56832d
+  - type: requires_property
+    from: REQ-portfolio-registry-checks-sleeves
+    to: FACT-PROP-0F1E024B312A92B3
+    created_at: 2026-11-03T11:50:50.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2d6da4b8d21
+  - type: specified_by
+    from: REQ-portfolio-registry-checks-sleeves
+    to: SCEN-portfolio-registry-checks-sleeves
+    created_at: 2026-11-03T11:50:51.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-715230d50763
+  - type: supersedes
+    from: REQ-portfolio-registry-checks-sleeves
+    to: REQ-ledger-app-sleeve-kinds
+    created_at: 2026-11-03T11:50:51.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56ed492c4147

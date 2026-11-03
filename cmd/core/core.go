@@ -21,6 +21,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
+	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
 	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
@@ -147,7 +148,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 		return nil, fmt.Errorf("valuation store: %w", err)
 	}
 	l, recorder := ingestDeps(pool, vstore)
-	if defErr := ensureDefaults(ctx, l, cfg); defErr != nil {
+	sleeves := portfolioapp.NewRegistry(portfoliopg.New(pool), l)
+	if defErr := ensureDefaults(ctx, sleeves, cfg); defErr != nil {
 		return nil, defErr
 	}
 	auth, err := newAuth(pool, &cfg.Auth, now)
@@ -171,7 +173,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	// (D-163), until SpiceDB answers (D-164).
 	authz := identityapp.Policy{}
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)),
-		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz))
+		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
+		viewsapp.WithPortfolio(sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, jurisdictionPack().ReportingCurrency(), cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
@@ -182,7 +185,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	}
 	api := apis.plugin
 	deps := &connectorDeps{
-		pool: pool, ledger: l, recorder: recorder, crossChecks: checks, now: now, log: log,
+		pool: pool, ledger: l, sleeves: sleeves, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		entries: &entryCaller{}, bonds: vstore, model: models,
 		rankings:  newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
@@ -194,7 +197,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withStatementService(plugin, newUploads(deps, owners), newTickers(deps, owners), callers, log)
 	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
 	plugin = withPriceCheckService(plugin, checks, callers, log)
-	plugin = withOnboardingServices(plugin, newSleeves(l, auth, cfg.Auth.Origins),
+	plugin = withOnboardingServices(plugin, newSleeves(sleeves, auth, cfg.Auth.Origins),
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
 	plugin = withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins, authz)), callers, log), attn.items, callers, log)
@@ -203,11 +206,11 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 
 // ensureDefaults stores the built-in sleeve kinds and sleeves when cfg
 // asks.
-func ensureDefaults(ctx context.Context, l *ledgerapp.Ledger, cfg *serveConfig) error {
+func ensureDefaults(ctx context.Context, sleeves *portfolioapp.Registry, cfg *serveConfig) error {
 	if !cfg.EnsureDefaults {
 		return nil
 	}
-	if err := l.EnsureDefaults(ctx); err != nil {
+	if err := sleeves.EnsureDefaults(ctx); err != nil {
 		return fmt.Errorf("storing the default sleeves: %w", err)
 	}
 	return nil

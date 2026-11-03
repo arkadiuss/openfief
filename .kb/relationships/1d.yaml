@@ -853,3 +853,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a75468c440b1
+  - type: verified_by
+    from: SCEN-ingest-payout-setting-history
+    to: TEST-ingest-payout-setting
+    created_at: 2026-11-03T11:49:34.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33fa763fb62b
+  - type: verified_by
+    from: SCEN-ingest-payout-setting-history
+    to: TEST-ingest-pg-payouts
+    created_at: 2026-11-03T11:49:34.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99ae7a452dd8
+  - type: implements
+    from: SYM-demo-account-sleeves
+    to: REQ-demo-synthetic-only
+    created_at: 2026-11-03T12:23:21.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bda652783fc8
+  - type: covered_by
+    from: SYM-demo-account-sleeves
+    to: TEST-demo-dataset
+    created_at: 2026-11-03T12:23:21.567Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9857cdaa4a15

@@ -10,7 +10,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	"github.com/arkadiuss/openfief/internal/views"
@@ -55,6 +54,8 @@ type Views struct {
 	terms       Terms
 	attention   AttentionItems
 	authz       identityapp.Authorizer
+	portfolio   Portfolio
+	payouts     PayoutSettings
 }
 
 // New returns the queries over the given ports, with totals, valuations and
@@ -76,15 +77,6 @@ func New(l Ledger, v Valuations, s ValuationStatuses, r FXRates, stored, reporti
 // ReportingCurrency returns the currency totals, valuations and the
 // allocation are reported in.
 func (v *Views) ReportingCurrency() kernel.Currency { return v.reporting }
-
-// Sleeves returns every sleeve, in ID order.
-func (v *Views) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
-	s, err := v.ledger.Sleeves(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("loading sleeves: %w", err)
-	}
-	return s, nil
-}
 
 // Accounts returns every account the caller may view (D-163), in ID order.
 // Every total, the allocation, performance, transfers and yearly taxes are
@@ -311,12 +303,19 @@ func (v *Views) Allocation(ctx context.Context, on kernel.Date, d views.Dimensio
 	if err != nil {
 		return AllocationOn{}, err
 	}
+	sleeves, err := v.accountSleeves(ctx)
+	if err != nil {
+		return AllocationOn{}, err
+	}
 	var items []views.AllocationItem
 	out := AllocationOn{Date: on, Kind: k}
 	for i := range accounts {
 		got, unvalued, itemErr := v.allocationItems(ctx, &accounts[i], on, k, &settings)
 		if itemErr != nil {
 			return AllocationOn{}, itemErr
+		}
+		for j := range got {
+			got[j].Sleeve = sleeves[accounts[i].ID]
 		}
 		items = append(items, got...)
 		out.Unvalued = append(out.Unvalued, unvalued...)

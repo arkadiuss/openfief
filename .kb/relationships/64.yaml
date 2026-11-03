@@ -839,3 +839,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83a8c95c4e94
+  - type: executable_for
+    from: SYM-ingest-test-payout-keys
+    to: TEST-ingest-payout-setting
+    created_at: 2026-11-03T12:36:12.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31370ca60917

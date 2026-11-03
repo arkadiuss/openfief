@@ -70,6 +70,15 @@ func (f *fakeLedger) Sleeves(context.Context) ([]portfolio.Sleeve, error) {
 	return []portfolio.Sleeve{{ID: "core", Name: "Core", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive}}, f.fail
 }
 
+// AccountSleeves puts every account in core.
+func (f *fakeLedger) AccountSleeves(context.Context) (map[ledger.AccountID]portfolio.SleeveID, error) {
+	out := make(map[ledger.AccountID]portfolio.SleeveID, len(f.accounts))
+	for _, a := range f.accounts {
+		out[a.ID] = "core"
+	}
+	return out, f.fail
+}
+
 func (f *fakeLedger) Accounts(context.Context) ([]ledger.Account, error) { return f.accounts, f.fail }
 
 func (f *fakeLedger) Account(_ context.Context, id ledger.AccountID) (ledger.Account, error) {
@@ -201,7 +210,7 @@ func newLedger(t *testing.T) *fakeLedger {
 		},
 	}
 	return &fakeLedger{
-		accounts: []ledger.Account{{ID: "acc-1", Institution: "broker-a", Name: "Synthetic A", Sleeve: "core"}},
+		accounts: []ledger.Account{{ID: "acc-1", Institution: "broker-a", Name: "Synthetic A"}},
 		txs:      []ledger.Transaction{buy, opening},
 		holdings: []ledger.Holding{
 			{Account: "acc-1", Instrument: bond, Date: on, Quantity: kernel.NewQuantity(dec(t, "10"))},
@@ -256,7 +265,7 @@ func newViews(t *testing.T, l *fakeLedger, opts ...app.Option) *app.Views {
 		{Account: "acc-1", Instrument: instrument(t, isinIE, "ETF1"), Date: on, Basis: valuation.Market, Source: "test-prices", Quantity: kernel.NewQuantity(dec(t, "3")), Value: money(t, "31.5", "USD"), Reporting: money(t, "126.00", "PLN"), Net: money(t, "120.00", "PLN"), LiquidationMissing: valuation.MissingMarginalRate},
 	}
 	rates := fakeRates{{Currency: cur(t, "USD"), Base: cur(t, "PLN"), Date: on, Rate: dec(t, "4.00"), Source: "test"}}
-	v, err := app.New(l, vals, fakeStatuses{through: on}, rates, cur(t, "PLN"), cur(t, "PLN"), opts...)
+	v, err := app.New(l, vals, fakeStatuses{through: on}, rates, cur(t, "PLN"), cur(t, "PLN"), append([]app.Option{app.WithPortfolio(l)}, opts...)...)
 	if err != nil {
 		t.Fatalf("app.New(PLN): %v", err)
 	}

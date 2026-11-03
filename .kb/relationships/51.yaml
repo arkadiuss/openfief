@@ -615,13 +615,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-380fccb66d8b
-  - type: covered_by
-    from: SYM-ledger-payout-setting-changed
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T07:51:37.135Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-df0ba6b24da6
   - type: constrains
     from: REQ-treasurybonds-lots-any-order
     to: FACT-SUBJECT-8422AA93FAB9FA88
@@ -636,13 +629,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2771670ffa3a
-  - type: implements
-    from: SYM-ledger-payout-setting-changed
-    to: REQ-treasurybonds-account-payout-setting
-    created_at: 2026-11-01T08:42:23.481Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1127af05129c
   - type: implements
     from: SYM-ingest-start-mode
     to: REQ-ingest-start-from-whole-history
@@ -734,27 +720,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-121a2a3f19d7
-  - type: implements
-    from: SYM-ledger-payout-setting-on
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:26:58.468Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-745dbe584326
-  - type: covered_by
-    from: SYM-ledger-payout-setting-on
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T17:26:58.514Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4bc3077036f1
-  - type: implements
-    from: SYM-ledger-payout-setting-changed
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:30:40.505Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9d29ae13bcd7
   - type: executable_for
     from: SYM-views-app-test-authz-test-views-compute-over-viewable-accounts
     to: TEST-views-app-authz

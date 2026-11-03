@@ -20,6 +20,8 @@ import (
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	ledgerpg "github.com/arkadiuss/openfief/internal/ledger/postgres"
 	"github.com/arkadiuss/openfief/internal/portfolio"
+	portfolioapp "github.com/arkadiuss/openfief/internal/portfolio/app"
+	portfoliopg "github.com/arkadiuss/openfief/internal/portfolio/postgres"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 	valuationpg "github.com/arkadiuss/openfief/internal/valuation/postgres"
@@ -292,18 +294,18 @@ func checkRefused(t *testing.T, reset bool) {
 	t.Helper()
 	pool := emptyPool(t)
 	ctx := t.Context()
-	if err := ledgerpg.Migrate(ctx, pool); err != nil {
+	if err := errors.Join(ledgerpg.Migrate(ctx, pool), portfoliopg.Migrate(ctx, pool)); err != nil {
 		t.Fatalf("Migrate: %v", err)
 	}
 	theirs := portfolio.Sleeve{ID: "core", Name: "Someone's sleeve", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive}
-	if err := ledgerapp.New(ledgerpg.New(pool)).SaveSleeve(ctx, theirs); err != nil {
+	if err := portfolioapp.NewRegistry(portfoliopg.New(pool), ledgerapp.New(ledgerpg.New(pool))).SaveSleeve(ctx, theirs); err != nil {
 		t.Fatalf("SaveSleeve: %v", err)
 	}
 	err := load(ctx, pool, testConfig(t, "2026-10-28", reset), quiet())
 	if !errors.Is(err, demo.ErrNotDemoDatabase) {
 		t.Fatalf("load: err = %v, want ErrNotDemoDatabase", err)
 	}
-	if n := count(t, pool, "SELECT count(*) FROM ledger.sleeves"); n != 1 {
+	if n := count(t, pool, "SELECT count(*) FROM portfolio.sleeves"); n != 1 {
 		t.Errorf("%d sleeves after the refusal, want the 1 that was there", n)
 	}
 	if n := count(t, pool, "SELECT count(*) FROM information_schema.schemata WHERE schema_name IN ('demo', 'valuation', 'river')"); n != 0 {

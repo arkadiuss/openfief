@@ -9,16 +9,14 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/ledger/app"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
 // Synthetic IDs and ISINs with valid check digits; nothing real is implied.
 const (
 	isinA = "PLTEST000010"
 
-	acc1 ledger.AccountID   = "acc-1"
-	acc2 ledger.AccountID   = "acc-2"
-	core portfolio.SleeveID = "core"
+	acc1 ledger.AccountID = "acc-1"
+	acc2 ledger.AccountID = "acc-2"
 )
 
 func dec(t *testing.T, s string) kernel.Decimal {
@@ -84,31 +82,18 @@ func header(t *testing.T, account ledger.AccountID, id, day string) ledger.Trans
 	}
 }
 
-// seeded returns the use cases over an empty memStore with the built-in
-// sleeve kinds, the sleeve core and the accounts acc-1 and acc-2 in it.
+// seeded returns the use cases over an empty memStore with the
+// accounts acc-1 and acc-2 in it.
 func seeded(t *testing.T) (*app.Ledger, *memStore) {
 	t.Helper()
 	store := newMemStore()
 	l := app.New(store)
-	for _, k := range portfolio.DefaultKinds() {
-		if err := l.SaveKind(t.Context(), k); err != nil {
-			t.Fatalf("SaveKind(%s): %v", k.Key, err)
-		}
-	}
-	if err := l.SaveSleeve(t.Context(), coreSleeve()); err != nil {
-		t.Fatalf("SaveSleeve: %v", err)
-	}
 	for _, id := range []ledger.AccountID{acc1, acc2} {
-		if err := l.SaveAccount(t.Context(), ledger.Account{ID: id, Institution: "test-broker", Name: string(id), Sleeve: core}); err != nil {
+		if err := l.SaveAccount(t.Context(), ledger.Account{ID: id, Institution: "test-broker", Name: string(id)}); err != nil {
 			t.Fatalf("SaveAccount(%s): %v", id, err)
 		}
 	}
 	return l, store
-}
-
-// coreSleeve returns the sleeve core that seeded stores.
-func coreSleeve() portfolio.Sleeve {
-	return portfolio.Sleeve{ID: core, Name: "Core", Kind: portfolio.KindCore, Role: portfolio.RoleDefensive}
 }
 
 // checkResult fails t on err, or unless got is want; empty and nil slices

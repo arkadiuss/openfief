@@ -6,33 +6,64 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/portfolio"
+	"github.com/arkadiuss/openfief/internal/portfolio/app"
 )
 
 // ErrCorrupt reports a stored row the portfolio context can't read back.
 var ErrCorrupt = errors.New("corrupt portfolio row")
 
-// Store keeps the model portfolio in the portfolio schema. It implements
-// portfolio/app.ModelStore.
+// Store keeps the model portfolio, the sleeve kinds, the sleeves and which
+// account is in which sleeve in the portfolio schema. It implements
+// portfolio/app.ModelStore and portfolio/app.RegistryStore. New returns
+// one over a pool, where each call commits on its own; InTx passes one
+// whose calls all run in one transaction.
 type Store struct {
-	pool *pgxpool.Pool
+	db db
+	tx pgx.Tx // nil outside InTx
+}
+
+// db is what Store runs its statements on: a *pgxpool.Pool or a pgx.Tx.
+// Begin on a pgx.Tx starts a savepoint.
+type db interface {
+	Begin(ctx context.Context) (pgx.Tx, error)
+	Exec(ctx context.Context, sql string, args ...any) (pgconn.CommandTag, error)
+	Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error)
+	QueryRow(ctx context.Context, sql string, args ...any) pgx.Row
 }
 
 // New returns the store over pool. Run Migrate first.
-func New(pool *pgxpool.Pool) *Store { return &Store{pool: pool} }
+func New(pool *pgxpool.Pool) *Store { return &Store{db: pool} }
+
+// InTx runs fn with a Store whose calls all run in one database
+// transaction, committed when fn returns nil and rolled back otherwise.
+// Inside InTx it runs fn in the same transaction.
+func (s *Store) InTx(ctx context.Context, fn func(tx app.RegistryStore) error) error {
+	if s.tx != nil {
+		return fn(s)
+	}
+	err := pgx.BeginFunc(ctx, s.db, func(tx pgx.Tx) error {
+		return fn(&Store{db: tx, tx: tx})
+	})
+	if err != nil {
+		return fmt.Errorf("portfolio transaction: %w", err)
+	}
+	return nil
+}
 
 // Model returns the stored model portfolio, or the zero Model, off with no
 // targets, when none was ever saved (D-52).
 func (s *Store) Model(ctx context.Context) (portfolio.Model, error) {
 	var m portfolio.Model
-	err := s.pool.QueryRow(ctx, "SELECT enabled FROM portfolio.model").Scan(&m.Enabled)
+	err := s.db.QueryRow(ctx, "SELECT enabled FROM portfolio.model").Scan(&m.Enabled)
 	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		return portfolio.Model{}, fmt.Errorf("loading the model portfolio: %w", err)
 	}
-	rows, err := s.pool.Query(ctx, `
+	rows, err := s.db.Query(ctx, `
 		SELECT kind, name, coalesce(currency, ''), weight::text FROM portfolio.model_targets ORDER BY position`)
 	if err != nil {
 		return portfolio.Model{}, fmt.Errorf("loading the model's targets: %w", err)
@@ -69,7 +100,7 @@ func scanTarget(row pgx.CollectableRow) (portfolio.Target, error) {
 // its targets, in one database transaction. It stores what it is given; the
 // portfolio context checks the model first (app.CheckModel).
 func (s *Store) SaveModel(ctx context.Context, m portfolio.Model) error {
-	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
+	err := pgx.BeginFunc(ctx, s.db, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, `
 			INSERT INTO portfolio.model (singleton, enabled) VALUES (true, $1)
 			ON CONFLICT (singleton) DO UPDATE SET enabled = EXCLUDED.enabled, updated_at = now()`, m.Enabled); err != nil {

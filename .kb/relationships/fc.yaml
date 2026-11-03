@@ -531,3 +531,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbf69888a5a1
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-sleeves-place-account
+    to: TEST-ingest-app-accounts
+    created_at: 2026-11-03T12:33:56.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dc749b1a6ad

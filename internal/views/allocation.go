@@ -10,6 +10,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
+	"github.com/arkadiuss/openfief/internal/portfolio"
 	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
@@ -102,7 +103,10 @@ func AssetClassOf(in ledger.Instrument) AssetClass {
 // AllocationItem is one valued holding or cash balance of an account on a
 // date: what an allocation groups.
 type AllocationItem struct {
-	Account    ledger.Account
+	Account ledger.Account
+	// Sleeve is the account's sleeve, which the portfolio context keeps;
+	// empty for none.
+	Sleeve     portfolio.SleeveID
 	AssetClass AssetClass
 	// Value is in its original currency.
 	Value kernel.Money
@@ -167,7 +171,7 @@ func groupKey(item *AllocationItem, d Dimension) (string, error) {
 	case ByInstitution:
 		return item.Account.Institution, nil
 	case BySleeve:
-		return string(item.Account.Sleeve), nil
+		return string(item.Sleeve), nil
 	}
 	return "", fmt.Errorf("%w: %s", ErrUnknownDimension, d)
 }

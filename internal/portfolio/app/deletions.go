@@ -7,9 +7,8 @@ import (
 	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
-// SleeveDeletions deletes sleeves and kinds nothing refers to (D-120);
-// *ledger/app.Ledger implements it, as it keeps the sleeves next to the
-// accounts that refer to them.
+// SleeveDeletions deletes sleeves and kinds nothing refers to (D-120).
+// *Registry implements it.
 type SleeveDeletions interface {
 	// DeleteSleeve deletes sleeve id unless an account is in it, which
 	// fails with an error wrapping portfolio.ErrSleeveHasAccounts.

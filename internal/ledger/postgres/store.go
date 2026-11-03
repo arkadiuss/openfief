@@ -11,7 +11,6 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/ledger/app"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
 // Store is the ledger's app.Store in PostgreSQL, in the ledger schema that
@@ -68,68 +67,12 @@ func (s *Store) WithTx(fn func(tx pgx.Tx) error) error {
 	return fn(s.tx)
 }
 
-// SaveSleeve creates s or replaces the sleeve with its ID. Its kind must be
-// stored.
-func (s *Store) SaveSleeve(ctx context.Context, sl portfolio.Sleeve) error {
-	_, err := s.db.Exec(ctx, `
-		INSERT INTO ledger.sleeves (id, name, kind, role, role_override) VALUES ($1, $2, $3, $4, $5)
-		ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, kind = EXCLUDED.kind, role = EXCLUDED.role,
-			role_override = EXCLUDED.role_override`,
-		string(sl.ID), sl.Name, string(sl.Kind), sl.Role.String(), sl.RoleOverride)
-	if err != nil {
-		return fmt.Errorf("saving sleeve %s: %w", sl.ID, err)
-	}
-	return nil
-}
-
-// Sleeves returns every sleeve, in ID order.
-func (s *Store) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
-	rows, err := s.db.Query(ctx, `
-		SELECT id, name, kind, role, role_override FROM ledger.sleeves ORDER BY id COLLATE "C"`)
-	if err != nil {
-		return nil, fmt.Errorf("loading sleeves: %w", err)
-	}
-	out, err := pgx.CollectRows(rows, scanSleeve)
-	if err != nil {
-		return nil, fmt.Errorf("loading sleeves: %w", err)
-	}
-	return out, nil
-}
-
-// scanSleeve reads one sleeve row.
-func scanSleeve(row pgx.CollectableRow) (portfolio.Sleeve, error) {
-	var id, name, kind, role string
-	var override bool
-	if err := row.Scan(&id, &name, &kind, &role, &override); err != nil {
-		return portfolio.Sleeve{}, fmt.Errorf("reading a sleeve: %w", err)
-	}
-	r, err := portfolio.ParseRole(role)
-	if err != nil {
-		return portfolio.Sleeve{}, fmt.Errorf("%w: sleeve %s: %w", ErrCorruptLog, id, err)
-	}
-	return portfolio.Sleeve{
-		ID: portfolio.SleeveID(id), Name: name, Kind: portfolio.KindKey(kind), Role: r, RoleOverride: override,
-	}, nil
-}
-
-// SaveAccount creates a or replaces the account with its ID, with its
-// payout setting (D-135) and the settings in force before it (D-162). Its
-// sleeve must be stored.
+// SaveAccount creates a or replaces the account with its ID.
 func (s *Store) SaveAccount(ctx context.Context, a ledger.Account) error {
-	payout, since := a.PayoutSetting(), ""
-	if !payout.Since.IsZero() {
-		since = payout.Since.String()
-	}
-	earlier, err := encodeEarlier(&payout)
-	if err != nil {
-		return fmt.Errorf("saving account %s: %w", a.ID, err)
-	}
-	_, err = s.db.Exec(ctx, `
-		INSERT INTO ledger.accounts (id, institution, name, sleeve_id, payout, payout_since, payout_earlier)
-		VALUES ($1, $2, $3, $4, $5, nullif($6, '')::date, $7::jsonb)
-		ON CONFLICT (id) DO UPDATE SET institution = EXCLUDED.institution, name = EXCLUDED.name, sleeve_id = EXCLUDED.sleeve_id,
-		    payout = EXCLUDED.payout, payout_since = EXCLUDED.payout_since, payout_earlier = EXCLUDED.payout_earlier`,
-		string(a.ID), a.Institution, a.Name, string(a.Sleeve), payout.Payout.String(), since, string(earlier))
+	_, err := s.db.Exec(ctx, `
+		INSERT INTO ledger.accounts (id, institution, name) VALUES ($1, $2, $3)
+		ON CONFLICT (id) DO UPDATE SET institution = EXCLUDED.institution, name = EXCLUDED.name`,
+		string(a.ID), a.Institution, a.Name)
 	if err != nil {
 		return fmt.Errorf("saving account %s: %w", a.ID, err)
 	}
@@ -137,8 +80,7 @@ func (s *Store) SaveAccount(ctx context.Context, a ledger.Account) error {
 }
 
 // selectAccounts lists accounts; callers add WHERE and ORDER BY.
-const selectAccounts = `SELECT id, institution, name, sleeve_id, payout, coalesce(payout_since::text, ''), payout_earlier::text
-	FROM ledger.accounts`
+const selectAccounts = `SELECT id, institution, name FROM ledger.accounts`
 
 // Account returns the account with id, or an error wrapping app.ErrNotFound.
 func (s *Store) Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error) {
@@ -189,26 +131,9 @@ func (s *Store) Accounts(ctx context.Context) ([]ledger.Account, error) {
 
 // scanAccount reads one row of selectAccounts.
 func scanAccount(row pgx.CollectableRow) (ledger.Account, error) {
-	var id, institution, name, sleeve, payout, since, earlier string
-	if err := row.Scan(&id, &institution, &name, &sleeve, &payout, &since, &earlier); err != nil {
+	var id, institution, name string
+	if err := row.Scan(&id, &institution, &name); err != nil {
 		return ledger.Account{}, fmt.Errorf("reading account: %w", err)
 	}
-	a := ledger.Account{ID: ledger.AccountID(id), Institution: institution, Name: name, Sleeve: portfolio.SleeveID(sleeve)}
-	p, err := ledger.ParsePayout(payout)
-	if err != nil {
-		return ledger.Account{}, fmt.Errorf("%w: account %s: %w", ErrCorruptLog, id, err)
-	}
-	setting := ledger.PayoutSetting{Payout: p}
-	if since != "" {
-		if setting.Since, err = parseDate(since); err != nil {
-			return ledger.Account{}, err
-		}
-	}
-	if setting.Earlier, err = decodeEarlier([]byte(earlier)); err != nil {
-		return ledger.Account{}, fmt.Errorf("account %s: %w", id, err)
-	}
-	if setting.Payout != ledger.PayoutCash || !setting.Since.IsZero() || len(setting.Earlier) > 0 {
-		a.Payout = &setting
-	}
-	return a, nil
+	return ledger.Account{ID: ledger.AccountID(id), Institution: institution, Name: name}, nil
 }

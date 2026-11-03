@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4809b3e63923
+  - type: implements
+    from: SYM-portfolio-app-registry-delete-sleeve
+    to: REQ-portfolio-delete-unused-sleeves-and-kinds
+    created_at: 2026-11-03T12:28:29.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a9484cfbd8f
+  - type: covered_by
+    from: SYM-portfolio-app-registry-delete-sleeve
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:28:29.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc8012fdb280

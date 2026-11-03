@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-791adf14eaa9
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-ledger-account-sleeves
+    to: TEST-views-app
+    created_at: 2026-11-03T12:44:08.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3c9b9a5ce8f

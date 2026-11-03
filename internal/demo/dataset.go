@@ -36,10 +36,12 @@ type Dataset struct {
 	// converts at the tax rate of that date (D-20), or go-live.
 	FXFrom kernel.Date
 
-	Sleeves     []portfolio.Sleeve
-	Accounts    []ledger.Account
-	Instruments []Instrument
-	Bonds       []BondSeries
+	Sleeves []portfolio.Sleeve
+	// AccountSleeves is the sleeve each account is in.
+	AccountSleeves map[ledger.AccountID]portfolio.SleeveID
+	Accounts       []ledger.Account
+	Instruments    []Instrument
+	Bonds          []BondSeries
 	// TaxWrapper is the bond account's: IKE.
 	TaxWrapper pl.TaxWrapper
 
@@ -67,7 +69,7 @@ func GoLive(today kernel.Date) kernel.Date { return today.AddDays(-historyDays) 
 // nothing else: the same seed and today always give the same dataset.
 func Generate(seed uint64, today kernel.Date) (Dataset, error) {
 	goLive := GoLive(today)
-	ds := Dataset{Seed: seed, Today: today, GoLive: goLive, Sleeves: Sleeves(), Accounts: Accounts(), TaxWrapper: pl.IKE, CPI: CPIReadings()}
+	ds := Dataset{Seed: seed, Today: today, GoLive: goLive, Sleeves: Sleeves(), AccountSleeves: AccountSleeves(), Accounts: Accounts(), TaxWrapper: pl.IKE, CPI: CPIReadings()}
 	m, err := newMarket(seed, goLive.AddDays(-pricesBeforeGoLive), today, &ds)
 	if err != nil {
 		return Dataset{}, err

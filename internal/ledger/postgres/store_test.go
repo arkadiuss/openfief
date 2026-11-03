@@ -12,7 +12,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/ledger/postgres"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
 
 func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
@@ -40,7 +39,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql", "0008_accounts_only.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `
@@ -53,7 +52,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("listing tables: %v", err)
 	}
-	want := []string{"accounts", "assertion_checks", "postings", "schema_migrations", "sleeve_kinds", "sleeves", "transaction_versions", "transfer_links"}
+	want := []string{"accounts", "assertion_checks", "postings", "schema_migrations", "transaction_versions", "transfer_links"}
 	if diff := cmp.Diff(want, tables); diff != "" {
 		t.Errorf("ledger tables (-want +got):\n%s", diff)
 	}
@@ -63,36 +62,19 @@ func TestRegistryRoundTrip(t *testing.T) {
 	t.Parallel()
 	store, _ := seededStore(t)
 	ctx := t.Context()
-	play := portfolio.Sleeve{ID: "play", Name: "Play", Kind: portfolio.KindRetirement, Role: portfolio.RoleOffensive, RoleOverride: true}
-	renamed := portfolio.Sleeve{ID: core, Name: "Core renamed", Kind: portfolio.KindBonds, Role: portfolio.RoleDefensive}
-	for _, s := range []portfolio.Sleeve{play, renamed} {
-		if err := store.SaveSleeve(ctx, s); err != nil {
-			t.Fatalf("SaveSleeve(%s): %v", s.ID, err)
-		}
-	}
-	sleeves, err := store.Sleeves(ctx)
-	checkResult(t, "Sleeves", []portfolio.Sleeve{renamed, play}, sleeves, err)
-
-	// A hand-entered bond account paid out since a day keeps its payout setting (D-135) and the setting in force
-	// before it (D-162).
-	moved := ledger.Account{
-		ID: acc2, Institution: "treasury-bonds", Name: "Moved", Sleeve: "play",
-		Payout: &ledger.PayoutSetting{Payout: ledger.PayoutPaidOut, Since: date(t, "2026-03-02"), Earlier: []ledger.PayoutPeriod{{Payout: ledger.PayoutCash}}},
-	}
+	// A saved account replaces the one with its ID.
+	moved := ledger.Account{ID: acc2, Institution: "treasury-bonds", Name: "Moved"}
 	if saveErr := store.SaveAccount(ctx, moved); saveErr != nil {
 		t.Fatalf("SaveAccount: %v", saveErr)
 	}
 	accounts, err := store.Accounts(ctx)
-	checkResult(t, "Accounts", []ledger.Account{{ID: acc1, Institution: "test-broker", Name: "acc-1", Sleeve: core}, moved}, accounts, err)
+	checkResult(t, "Accounts", []ledger.Account{{ID: acc1, Institution: "test-broker", Name: "acc-1"}, moved}, accounts, err)
 	one, err := store.Account(ctx, acc2)
 	checkResult(t, "Account", moved, one, err)
 
 	_, err = store.Account(ctx, "acc-9")
 	if diff := cmp.Diff(app.ErrNotFound, err, cmpopts.EquateErrors()); diff != "" {
 		t.Errorf("Account of an unknown ID (-want +got):\n%s", diff)
-	}
-	if err := store.SaveAccount(ctx, ledger.Account{ID: "acc-9", Institution: "x", Name: "x", Sleeve: "nowhere"}); err == nil {
-		t.Errorf("SaveAccount with an unknown sleeve succeeded, want a foreign key error")
 	}
 }
 

@@ -553,20 +553,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-f76847a7a591
   - type: implements
-    from: SYM-ledger-payout-setting-periods
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:27:05.492Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4ee4711a3dc2
-  - type: covered_by
-    from: SYM-ledger-payout-setting-periods
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T17:27:05.539Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5822139c3bfd
-  - type: implements
     from: SYM-viewsv1-account-get-bond-payout-since
     to: REQ-ui-bond-payout-change-date
     created_at: 2026-11-01T17:36:26.640Z

@@ -62,13 +62,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d70f4342b5ca
-  - type: implements
-    from: SYM-ledger-pg-store-accounts
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:35:13.684Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-443be59b9666
   - type: covered_by
     from: SYM-ledger-pg-store-accounts
     to: TEST-ledger-pg-store
@@ -972,3 +965,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aab0ced2a32c
+  - type: implements
+    from: SYM-ledger-pg-store-accounts
+    to: REQ-ledger-pg-store-accounts
+    created_at: 2026-11-03T12:12:31.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd3e92f722af
+  - type: implements
+    from: SYM-ingest-payout
+    to: REQ-ingest-payout-setting-history
+    created_at: 2026-11-03T12:24:04.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e121e1397dc3
+  - type: implements
+    from: SYM-ingest-payout
+    to: REQ-treasurybonds-account-payout-setting
+    created_at: 2026-11-03T12:24:04.144Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25b48418dbaf
+  - type: covered_by
+    from: SYM-ingest-payout
+    to: TEST-ingest-payout-setting
+    created_at: 2026-11-03T12:24:04.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9fedcaa5982

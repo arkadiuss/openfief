@@ -1,5 +1,5 @@
 ---
-title: Sleeves and accounts are validated before they are stored
+title: Accounts are validated before they are stored, and imports need a stored account
 status: active
 sourceFile: internal/ledger/app/ledger_test.go
 origin:

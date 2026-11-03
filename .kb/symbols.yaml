@@ -4161,7 +4161,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-account
       - type: implements
-        target: REQ-ledger-account-sleeve
+        target: REQ-ledger-account-fields
   - id: SYM-ledger-account
     title: Account
     sourceFile: internal/ledger/account.go
@@ -4175,7 +4175,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-account
       - type: implements
-        target: REQ-ledger-account-sleeve
+        target: REQ-ledger-account-fields
   - id: SYM-ledger-account-validate
     title: Account.Validate
     sourceFile: internal/ledger/account.go
@@ -4188,7 +4188,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-account
       - type: implements
-        target: REQ-ledger-account-sleeve
+        target: REQ-ledger-account-fields
   - id: SYM-ledger-book-kind
     title: BookKind
     sourceFile: internal/ledger/account.go
@@ -9648,7 +9648,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-registry
       - type: implements
-        target: REQ-ledger-app-registry
+        target: REQ-ledger-app-accounts
   - id: SYM-ledger-app-new
     title: New
     sourceFile: internal/ledger/app/ledger.go
@@ -9661,22 +9661,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-registry
       - type: implements
-        target: REQ-ledger-app-registry
-  - id: SYM-ledger-app-ledger-save-sleeve
-    title: Ledger.SaveSleeve
-    sourceFile: internal/ledger/app/ledger.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:09:23.614Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-app-registry
-      - type: implements
-        target: REQ-ledger-app-registry
-      - type: implements
-        target: REQ-ledger-app-sleeve-kinds
+        target: REQ-ledger-app-accounts
   - id: SYM-ledger-app-ledger-save-account
     title: Ledger.SaveAccount
     sourceFile: internal/ledger/app/ledger.go
@@ -9689,30 +9674,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-registry
       - type: implements
-        target: REQ-ledger-app-registry
-  - id: SYM-ledger-app-has-sleeve
-    title: hasSleeve
-    sourceFile: internal/ledger/app/ledger.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:09:31.894Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-app-registry
-      - type: implements
-        target: REQ-ledger-app-registry
-  - id: SYM-ledger-app-test-save-sleeve
-    title: TestSaveSleeve
-    sourceFile: internal/ledger/app/ledger_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:09:39.399Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-registry
+        target: REQ-ledger-app-accounts
   - id: SYM-ledger-app-test-save-account
     title: TestSaveAccount
     sourceFile: internal/ledger/app/ledger_test.go
@@ -9811,38 +9773,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T06:10:12.539Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-check
-      - type: executable_for
-        target: TEST-ledger-app-import
-      - type: executable_for
-        target: TEST-ledger-app-query
-      - type: executable_for
-        target: TEST-ledger-app-registry
-  - id: SYM-ledger-app-test-helper-mem-store-save-sleeve
-    title: memStore.SaveSleeve
-    sourceFile: internal/ledger/app/memstore_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:10:17.586Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-check
-      - type: executable_for
-        target: TEST-ledger-app-import
-      - type: executable_for
-        target: TEST-ledger-app-query
-      - type: executable_for
-        target: TEST-ledger-app-registry
-  - id: SYM-ledger-app-test-helper-mem-store-sleeves
-    title: memStore.Sleeves
-    sourceFile: internal/ledger/app/memstore_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:10:21.958Z
     relationships:
       - type: executable_for
         target: TEST-ledger-app-check
@@ -9975,7 +9905,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-registry
       - type: implements
-        target: REQ-ledger-app-registry
+        target: REQ-ledger-app-accounts
   - id: SYM-ledger-app-assertion-store
     title: AssertionStore
     sourceFile: internal/ledger/app/ports.go
@@ -10006,19 +9936,6 @@ symbols:
         target: REQ-ledger-app-import-append
       - type: implements
         target: REQ-ledger-app-import-atomic
-  - id: SYM-ledger-app-ledger-sleeves
-    title: Ledger.Sleeves
-    sourceFile: internal/ledger/app/query.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:11:08.819Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-app-registry
-      - type: implements
-        target: REQ-ledger-app-registry
   - id: SYM-ledger-app-ledger-accounts
     title: Ledger.Accounts
     sourceFile: internal/ledger/app/query.go
@@ -10031,7 +9948,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-registry
       - type: implements
-        target: REQ-ledger-app-registry
+        target: REQ-ledger-app-accounts
   - id: SYM-ledger-app-ledger-account
     title: Ledger.Account
     sourceFile: internal/ledger/app/query.go
@@ -10044,7 +9961,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-registry
       - type: implements
-        target: REQ-ledger-app-registry
+        target: REQ-ledger-app-accounts
   - id: SYM-ledger-app-ledger-current-transactions
     title: Ledger.CurrentTransactions
     sourceFile: internal/ledger/app/query.go
@@ -10301,7 +10218,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-registry
       - type: implements
-        target: REQ-ledger-app-registry
+        target: REQ-ledger-app-accounts
   - id: SYM-ledger-app-import-one
     title: importOne
     sourceFile: internal/ledger/app/import.go
@@ -10367,7 +10284,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-app-registry
       - type: implements
-        target: REQ-ledger-app-registry
+        target: REQ-ledger-app-accounts
   - id: SYM-ledger-app-test-helper-mem-store-in-tx
     title: memStore.InTx
     sourceFile: internal/ledger/app/memstore_test.go
@@ -10464,7 +10381,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-D9FBE33256704D04
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-store-assertion-checks
     title: Store.AssertionChecks
     sourceFile: internal/ledger/postgres/checks.go
@@ -10479,7 +10396,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-D9FBE33256704D04
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-scan-check
     title: scanCheck
     sourceFile: internal/ledger/postgres/checks.go
@@ -10494,7 +10411,7 @@ symbols:
       - type: implements
         target: REQ-AUTO-D9FBE33256704D04
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-parse-kind
     title: parseKind
     sourceFile: internal/ledger/postgres/codec.go
@@ -10507,7 +10424,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-parse-book-kind
     title: parseBookKind
     sourceFile: internal/ledger/postgres/codec.go
@@ -10520,7 +10437,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-parse-status
     title: parseStatus
     sourceFile: internal/ledger/postgres/codec.go
@@ -10533,7 +10450,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-parse-date
     title: parseDate
     sourceFile: internal/ledger/postgres/codec.go
@@ -10546,7 +10463,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-parse-decimal
     title: parseDecimal
     sourceFile: internal/ledger/postgres/codec.go
@@ -10559,7 +10476,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-decode-book
     title: decodeBook
     sourceFile: internal/ledger/postgres/codec.go
@@ -10572,7 +10489,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-decode-holding
     title: decodeHolding
     sourceFile: internal/ledger/postgres/codec.go
@@ -10585,7 +10502,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-decode-posting
     title: decodePosting
     sourceFile: internal/ledger/postgres/codec.go
@@ -10598,7 +10515,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-test-helper-new-pool
     title: newPool
     sourceFile: internal/ledger/postgres/db_test.go
@@ -10838,7 +10755,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-instrument-columns
     title: instrumentColumns
     sourceFile: internal/ledger/postgres/log.go
@@ -10851,7 +10768,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-columns-of
     title: columnsOf
     sourceFile: internal/ledger/postgres/log.go
@@ -10864,7 +10781,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-store-versions
     title: Store.Versions
     sourceFile: internal/ledger/postgres/log.go
@@ -10877,7 +10794,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-store-log
     title: Store.Log
     sourceFile: internal/ledger/postgres/log.go
@@ -10890,7 +10807,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-stored-version
     title: storedVersion
     sourceFile: internal/ledger/postgres/log.go
@@ -10903,7 +10820,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-store-load
     title: Store.load
     sourceFile: internal/ledger/postgres/log.go
@@ -10931,7 +10848,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-scan-version
     title: scanVersion
     sourceFile: internal/ledger/postgres/log.go
@@ -10944,7 +10861,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-migration
     title: migration
     sourceFile: internal/ledger/postgres/migrate.go
@@ -10957,7 +10874,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-migrate
     title: Migrate
     sourceFile: internal/ledger/postgres/migrate.go
@@ -10970,7 +10887,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-migrate-tx
     title: migrateTx
     sourceFile: internal/ledger/postgres/migrate.go
@@ -10983,7 +10900,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-applied-versions
     title: appliedVersions
     sourceFile: internal/ledger/postgres/migrate.go
@@ -10996,7 +10913,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-migrations
     title: migrations
     sourceFile: internal/ledger/postgres/migrate.go
@@ -11009,7 +10926,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-store
     title: Store
     sourceFile: internal/ledger/postgres/store.go
@@ -11023,7 +10940,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-db
     title: db
     sourceFile: internal/ledger/postgres/store.go
@@ -11036,7 +10953,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-new
     title: New
     sourceFile: internal/ledger/postgres/store.go
@@ -11049,7 +10966,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-store-in-tx
     title: Store.InTx
     sourceFile: internal/ledger/postgres/store.go
@@ -11076,57 +10993,6 @@ symbols:
         target: TEST-ledger-pg-hook
       - type: implements
         target: REQ-ledger-app-import-atomic
-  - id: SYM-ledger-pg-store-save-sleeve
-    title: Store.SaveSleeve
-    sourceFile: internal/ledger/postgres/store.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:34:55.906Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-kinds
-      - type: covered_by
-        target: TEST-ledger-pg-store
-      - type: implements
-        target: REQ-ledger-pg-sleeve-kinds
-      - type: implements
-        target: REQ-ledger-pg-store
-  - id: SYM-ledger-pg-store-sleeves
-    title: Store.Sleeves
-    sourceFile: internal/ledger/postgres/store.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:34:59.418Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-kinds
-      - type: covered_by
-        target: TEST-ledger-pg-store
-      - type: implements
-        target: REQ-ledger-pg-sleeve-kinds
-      - type: implements
-        target: REQ-ledger-pg-store
-  - id: SYM-ledger-pg-scan-sleeve
-    title: scanSleeve
-    sourceFile: internal/ledger/postgres/store.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T06:35:02.857Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-kinds
-      - type: covered_by
-        target: TEST-ledger-pg-store
-      - type: implements
-        target: REQ-ledger-pg-sleeve-kinds
-      - type: implements
-        target: REQ-ledger-pg-store
   - id: SYM-ledger-pg-store-save-account
     title: Store.SaveAccount
     sourceFile: internal/ledger/postgres/store.go
@@ -11139,7 +11005,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-store-account
     title: Store.Account
     sourceFile: internal/ledger/postgres/store.go
@@ -11152,7 +11018,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-store-accounts
     title: Store.Accounts
     sourceFile: internal/ledger/postgres/store.go
@@ -11165,7 +11031,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-scan-account
     title: scanAccount
     sourceFile: internal/ledger/postgres/store.go
@@ -11178,7 +11044,7 @@ symbols:
       - type: covered_by
         target: TEST-ledger-pg-store
       - type: implements
-        target: REQ-ledger-pg-store
+        target: REQ-ledger-pg-store-accounts
   - id: SYM-ledger-pg-test-migrate-is-idempotent-and-owns-the-ledger-schema
     title: TestMigrateIsIdempotentAndOwnsTheLedgerSchema
     sourceFile: internal/ledger/postgres/store_test.go
@@ -23025,112 +22891,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-portfolio-sleeve-kind
-  - id: SYM-ledger-app-test-helper-core-sleeve
-    title: coreSleeve
-    sourceFile: internal/ledger/app/helpers_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:55:22.954Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-kinds
-      - type: executable_for
-        target: TEST-ledger-app-registry
-  - id: SYM-ledger-app-ledger-save-kind
-    title: Ledger.SaveKind
-    sourceFile: internal/ledger/app/kinds.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:55:27.583Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-app-kinds
-      - type: implements
-        target: REQ-ledger-app-sleeve-kinds
-  - id: SYM-ledger-app-ledger-kinds
-    title: Ledger.Kinds
-    sourceFile: internal/ledger/app/kinds.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:55:32.668Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-app-kinds
-      - type: implements
-        target: REQ-ledger-app-sleeve-kinds
-  - id: SYM-ledger-app-ledger-ensure-defaults
-    title: Ledger.EnsureDefaults
-    sourceFile: internal/ledger/app/kinds.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:55:37.261Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-app-kinds
-      - type: implements
-        target: REQ-portfolio-defaults-on-fresh-install
-      - type: implements
-        target: REQ-portfolio-install-sleeves
-  - id: SYM-ledger-app-test-save-kind
-    title: TestSaveKind
-    sourceFile: internal/ledger/app/kinds_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:55:41.665Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-kinds
-  - id: SYM-ledger-app-test-ensure-defaults
-    title: TestEnsureDefaults
-    sourceFile: internal/ledger/app/kinds_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:55:47.113Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-kinds
-  - id: SYM-ledger-app-test-helper-mem-store-save-kind
-    title: memStore.SaveKind
-    sourceFile: internal/ledger/app/memstore_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:55:53.702Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-kinds
-  - id: SYM-ledger-app-test-helper-mem-store-kinds
-    title: memStore.Kinds
-    sourceFile: internal/ledger/app/memstore_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:55:59.811Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-kinds
-  - id: SYM-ledger-app-kind-store
-    title: KindStore
-    sourceFile: internal/ledger/app/ports.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:56:05.415Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-app-kinds
-      - type: implements
-        target: REQ-ledger-app-sleeve-kinds
   - id: SYM-ledger-pg-test-helper-new-database
     title: newDatabase
     sourceFile: internal/ledger/postgres/db_test.go
@@ -23140,106 +22900,11 @@ symbols:
       recorded_at: 2026-10-28T09:56:11.927Z
     relationships:
       - type: executable_for
-        target: TEST-ledger-pg-kinds
-  - id: SYM-ledger-pg-test-helper-migrate-through
-    title: MigrateThrough
-    sourceFile: internal/ledger/postgres/export_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:56:17.140Z
-    relationships:
+        target: TEST-ledger-pg-hook
       - type: executable_for
-        target: TEST-ledger-pg-kinds
-  - id: SYM-ledger-pg-store-save-kind
-    title: Store.SaveKind
-    sourceFile: internal/ledger/postgres/kinds.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:56:22.047Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-kinds
-      - type: implements
-        target: REQ-ledger-pg-sleeve-kinds
-  - id: SYM-ledger-pg-store-kinds
-    title: Store.Kinds
-    sourceFile: internal/ledger/postgres/kinds.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:56:27.138Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-kinds
-      - type: implements
-        target: REQ-ledger-pg-sleeve-kinds
-  - id: SYM-ledger-pg-scan-kind
-    title: scanKind
-    sourceFile: internal/ledger/postgres/kinds.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:56:33.695Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-kinds
-      - type: implements
-        target: REQ-ledger-pg-sleeve-kinds
-  - id: SYM-ledger-pg-test-migrate-stores-the-default-kinds
-    title: TestMigrateStoresTheDefaultKinds
-    sourceFile: internal/ledger/postgres/kinds_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:56:40.107Z
-    relationships:
+        target: TEST-ledger-pg-log
       - type: executable_for
-        target: TEST-ledger-pg-kinds
-  - id: SYM-ledger-pg-test-migrate-gives-stored-sleeves-a-kind
-    title: TestMigrateGivesStoredSleevesAKind
-    sourceFile: internal/ledger/postgres/kinds_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:56:45.179Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-pg-kinds
-  - id: SYM-ledger-pg-test-kind-round-trip
-    title: TestKindRoundTrip
-    sourceFile: internal/ledger/postgres/kinds_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:56:50.854Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-pg-kinds
-  - id: SYM-ledger-pg-test-sleeve-kind-constraints
-    title: TestSleeveKindConstraints
-    sourceFile: internal/ledger/postgres/kinds_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:56:56.798Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-pg-kinds
-  - id: SYM-ledger-pg-test-ensure-defaults-on-postgres
-    title: TestEnsureDefaultsOnPostgres
-    sourceFile: internal/ledger/postgres/kinds_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T09:57:03.564Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-pg-kinds
+        target: TEST-ledger-pg-store
   - id: SYM-plugins-catalog-entry
     title: CatalogEntry
     sourceFile: internal/plugins/catalog.go
@@ -28033,7 +27698,7 @@ symbols:
         target: REQ-views-unconvertible-reporting-currency-refused
   - id: SYM-views-app-views-sleeves
     title: Views.Sleeves
-    sourceFile: internal/views/app/views.go
+    sourceFile: internal/views/app/sleeves.go
     status: active
     symbol_role: behavioral
     origin:
@@ -79389,26 +79054,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-postgres-brokers
-  - id: SYM-ledger-app-test-ensure-defaults-only-on-a-fresh-install
-    title: TestEnsureDefaultsOnlyOnAFreshInstall
-    sourceFile: internal/ledger/app/kinds_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T11:53:45.843Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-kinds
-  - id: SYM-ledger-pg-test-migrate-gives-differing-sleeves-a-role-override
-    title: TestMigrateGivesDifferingSleevesARoleOverride
-    sourceFile: internal/ledger/postgres/kinds_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T11:53:53.110Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-pg-kinds
   - id: SYM-portfolio-key-rune
     title: keyRune
     sourceFile: internal/portfolio/key.go
@@ -79881,16 +79526,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T12:59:57.808Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-accounts
-  - id: SYM-ingest-app-test-helper-mem-accounts-sleeves
-    title: memAccounts.Sleeves
-    sourceFile: internal/ingest/app/accounts_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T13:00:04.476Z
     relationships:
       - type: executable_for
         target: TEST-ingest-app-accounts
@@ -80762,7 +80397,7 @@ symbols:
         target: REQ-views-onboarding-lists
   - id: SYM-views-app-views-sleeve-kinds
     title: Views.SleeveKinds
-    sourceFile: internal/views/app/connections.go
+    sourceFile: internal/views/app/sleeves.go
     status: active
     symbol_role: behavioral
     origin:
@@ -105583,36 +105218,6 @@ symbols:
         target: REQ-ingest-delete-unused-account
       - type: implements
         target: REQ-portfolio-delete-unused
-  - id: SYM-ledger-app-ledger-delete-sleeve
-    title: Ledger.DeleteSleeve
-    sourceFile: internal/ledger/app/deletions.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T14:51:22.147Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-app-deletions
-      - type: implements
-        target: REQ-portfolio-delete-unused
-      - type: implements
-        target: REQ-portfolio-delete-unused-sleeves-and-kinds
-  - id: SYM-ledger-app-ledger-delete-kind
-    title: Ledger.DeleteKind
-    sourceFile: internal/ledger/app/deletions.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T14:51:27.173Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-app-deletions
-      - type: implements
-        target: REQ-portfolio-delete-unused
-      - type: implements
-        target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-ledger-app-ledger-has-transactions-from
     title: Ledger.HasTransactionsFrom
     sourceFile: internal/ledger/app/deletions.go
@@ -105633,26 +105238,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-31T14:51:36.808Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-deletions
-  - id: SYM-ledger-app-test-helper-mem-store-delete-sleeve
-    title: memStore.DeleteSleeve
-    sourceFile: internal/ledger/app/deletions_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T14:51:41.427Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-app-deletions
-  - id: SYM-ledger-app-test-helper-mem-store-delete-kind
-    title: memStore.DeleteKind
-    sourceFile: internal/ledger/app/deletions_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T14:51:45.734Z
     relationships:
       - type: executable_for
         target: TEST-ledger-app-deletions
@@ -105701,36 +105286,6 @@ symbols:
         target: REQ-ingest-delete-unused-account
       - type: implements
         target: REQ-portfolio-delete-unused
-  - id: SYM-ledger-pg-store-delete-sleeve
-    title: Store.DeleteSleeve
-    sourceFile: internal/ledger/postgres/deletions.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T14:52:07.392Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-deletions
-      - type: implements
-        target: REQ-portfolio-delete-unused
-      - type: implements
-        target: REQ-portfolio-delete-unused-sleeves-and-kinds
-  - id: SYM-ledger-pg-store-delete-kind
-    title: Store.DeleteKind
-    sourceFile: internal/ledger/postgres/deletions.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T14:52:11.692Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-deletions
-      - type: implements
-        target: REQ-portfolio-delete-unused
-      - type: implements
-        target: REQ-portfolio-delete-unused-sleeves-and-kinds
   - id: SYM-ledger-pg-store-has-transactions-from
     title: Store.HasTransactionsFrom
     sourceFile: internal/ledger/postgres/deletions.go
@@ -105751,16 +105306,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-31T14:52:20.926Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-pg-deletions
-  - id: SYM-ledger-pg-test-delete-sleeve-then-kind
-    title: TestDeleteSleeveThenKind
-    sourceFile: internal/ledger/postgres/deletions_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T14:52:25.543Z
     relationships:
       - type: executable_for
         target: TEST-ledger-pg-deletions
@@ -119571,16 +119116,6 @@ symbols:
         target: REQ-ingest-bond-payout-change-from-day
       - type: implements
         target: REQ-treasurybonds-account-payout-setting
-  - id: SYM-ingest-app-test-helper-held-ledger-account
-    title: heldLedger.Account
-    sourceFile: internal/ingest/app/held_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:47:28.955Z
-    relationships:
-      - type: executable_for
-        target: TEST-ingest-app-held
   - id: SYM-ingest-connectapi-pb-payout
     title: pbPayout
     sourceFile: internal/ingest/connectapi/accounts.go
@@ -119897,19 +119432,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-treasurybonds-maturities
-  - id: SYM-ledger-account-payout-setting
-    title: Account.PayoutSetting
-    sourceFile: internal/ledger/account.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:50:42.533Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-account
-      - type: implements
-        target: REQ-ledger-payout-setting-history
   - id: SYM-ledger-new-redemption
     title: NewRedemption
     sourceFile: internal/ledger/events.go
@@ -119923,137 +119445,6 @@ symbols:
         target: TEST-ledger-events
       - type: implements
         target: REQ-ledger-redemption-kind
-  - id: SYM-ledger-payout
-    title: Payout
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:50:58.750Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-      - type: implements
-        target: REQ-treasurybonds-account-payout-setting
-  - id: SYM-ledger-payout-string
-    title: Payout.String
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:51:08.486Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-  - id: SYM-ledger-parse-payout
-    title: ParsePayout
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:51:15.489Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-  - id: SYM-ledger-payout-setting
-    title: PayoutSetting
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:51:21.086Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-      - type: implements
-        target: REQ-treasurybonds-account-payout-setting
-  - id: SYM-ledger-payout-setting-paid-out
-    title: PayoutSetting.PaidOut
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:51:27.898Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-      - type: implements
-        target: REQ-treasurybonds-account-payout-setting
-  - id: SYM-ledger-payout-setting-changed
-    title: PayoutSetting.Changed
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:51:34.653Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-      - type: implements
-        target: REQ-treasurybonds-account-payout-setting
-  - id: SYM-ledger-payout-setting-validate
-    title: PayoutSetting.Validate
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:51:41.501Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-  - id: SYM-ledger-test-payout-setting-paid-out
-    title: TestPayoutSettingPaidOut
-    sourceFile: internal/ledger/payout_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:51:47.349Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-payout
-  - id: SYM-ledger-test-payout-setting-changed
-    title: TestPayoutSettingChanged
-    sourceFile: internal/ledger/payout_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:51:53.657Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-payout
-  - id: SYM-ledger-test-payout-keys
-    title: TestPayoutKeys
-    sourceFile: internal/ledger/payout_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T07:51:59.744Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-payout
   - id: SYM-ledger-pg-test-redemption-round-trip
     title: TestRedemptionRoundTrip
     sourceFile: internal/ledger/postgres/store_test.go
@@ -120074,9 +119465,9 @@ symbols:
       recorded_at: 2026-11-01T07:52:13.331Z
     relationships:
       - type: covered_by
-        target: TEST-ledger-pg-store
+        target: TEST-views-connectapi-connect
       - type: implements
-        target: REQ-ledger-payout-setting-history
+        target: REQ-views-api-contract
   - id: SYM-ui-posted-payout
     title: postedPayout
     sourceFile: internal/views/ui/accounts.go
@@ -124240,114 +123631,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-xtb-mapper
-  - id: SYM-ledger-payout-period
-    title: PayoutPeriod
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T17:26:49.040Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-  - id: SYM-ledger-payout-setting-on
-    title: PayoutSetting.On
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T17:26:56.216Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-  - id: SYM-ledger-payout-setting-periods
-    title: PayoutSetting.periods
-    sourceFile: internal/ledger/payout.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T17:27:03.017Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-payout
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-  - id: SYM-ledger-test-helper-setting-of
-    title: settingOf
-    sourceFile: internal/ledger/payout_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T17:27:09.573Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-payout
-  - id: SYM-ledger-test-helper-changed-setting
-    title: changedSetting
-    sourceFile: internal/ledger/payout_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T17:27:15.843Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-payout
-  - id: SYM-ledger-test-payout-setting-validate
-    title: TestPayoutSettingValidate
-    sourceFile: internal/ledger/payout_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T17:27:22.124Z
-    relationships:
-      - type: executable_for
-        target: TEST-ledger-payout
-  - id: SYM-ledger-pg-stored-period
-    title: storedPeriod
-    sourceFile: internal/ledger/postgres/payout.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T17:27:29.279Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-store
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-  - id: SYM-ledger-pg-encode-earlier
-    title: encodeEarlier
-    sourceFile: internal/ledger/postgres/payout.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T17:27:36.582Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-store
-      - type: implements
-        target: REQ-ledger-payout-setting-history
-  - id: SYM-ledger-pg-decode-earlier
-    title: decodeEarlier
-    sourceFile: internal/ledger/postgres/payout.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-01T17:27:43.423Z
-    relationships:
-      - type: covered_by
-        target: TEST-ledger-pg-store
-      - type: implements
-        target: REQ-ledger-payout-setting-history
   - id: SYM-connectorv1-ticker-transaction-get-open-price
     title: TickerTransaction.GetOpenPrice
     sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
@@ -131084,3 +130367,1324 @@ symbols:
         target: TEST-views-connectapi-plugins
       - type: implements
         target: REQ-views-plugin-approved-institutions
+  - id: SYM-demo-account-sleeves
+    title: AccountSleeves
+    sourceFile: internal/demo/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:23:17.272Z
+    relationships:
+      - type: covered_by
+        target: TEST-demo-dataset
+      - type: implements
+        target: REQ-demo-synthetic-only
+  - id: SYM-ingest-app-account-sleeves
+    title: AccountSleeves
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:23:29.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-service
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+  - id: SYM-ingest-app-payout-settings
+    title: PayoutSettings
+    sourceFile: internal/ingest/app/accounts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:23:39.672Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-accounts
+      - type: implements
+        target: REQ-ingest-account-service
+  - id: SYM-ingest-app-payout-setting-reader
+    title: PayoutSettingReader
+    sourceFile: internal/ingest/app/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:23:51.468Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-sync-carries-holdings
+  - id: SYM-ingest-payout
+    title: Payout
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:24:00.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-ingest-payout-string
+    title: Payout.String
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:24:10.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+  - id: SYM-ingest-parse-payout
+    title: ParsePayout
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:24:21.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+  - id: SYM-ingest-payout-period
+    title: PayoutPeriod
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:24:31.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+  - id: SYM-ingest-payout-setting
+    title: PayoutSetting
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:24:40.618Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-ingest-payout-setting-on
+    title: PayoutSetting.On
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:24:52.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+  - id: SYM-ingest-payout-setting-paid-out
+    title: PayoutSetting.PaidOut
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:25:03.142Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-ingest-payout-setting-changed
+    title: PayoutSetting.Changed
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:25:14.033Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+      - type: implements
+        target: REQ-treasurybonds-account-payout-setting
+  - id: SYM-ingest-payout-setting-validate
+    title: PayoutSetting.Validate
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:25:25.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+  - id: SYM-ingest-payout-setting-periods
+    title: PayoutSetting.periods
+    sourceFile: internal/ingest/payoutsetting.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:25:36.807Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-payout-setting
+      - type: implements
+        target: REQ-ingest-payout-setting-history
+  - id: SYM-ingest-pg-stored-period
+    title: storedPeriod
+    sourceFile: internal/ingest/postgres/payouts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:25:48.223Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-payouts
+      - type: implements
+        target: REQ-ingest-pg-payout-settings
+  - id: SYM-ingest-pg-store-save-payout-setting
+    title: Store.SavePayoutSetting
+    sourceFile: internal/ingest/postgres/payouts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:25:58.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-payouts
+      - type: implements
+        target: REQ-ingest-pg-payout-settings
+  - id: SYM-ingest-pg-store-payout-setting
+    title: Store.PayoutSetting
+    sourceFile: internal/ingest/postgres/payouts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:26:09.369Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-payouts
+      - type: implements
+        target: REQ-ingest-pg-payout-settings
+  - id: SYM-ingest-pg-decode-setting
+    title: decodeSetting
+    sourceFile: internal/ingest/postgres/payouts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:26:20.756Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-payouts
+      - type: implements
+        target: REQ-ingest-pg-payout-settings
+  - id: SYM-ingest-pg-encode-earlier
+    title: encodeEarlier
+    sourceFile: internal/ingest/postgres/payouts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:26:31.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-payouts
+      - type: implements
+        target: REQ-ingest-pg-payout-settings
+  - id: SYM-ingest-pg-decode-earlier
+    title: decodeEarlier
+    sourceFile: internal/ingest/postgres/payouts.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:26:42.372Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-payouts
+      - type: implements
+        target: REQ-ingest-pg-payout-settings
+  - id: SYM-portfolio-app-registry-store
+    title: RegistryStore
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:26:54.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+      - type: implements
+        target: REQ-portfolio-registry-checks-sleeves
+  - id: SYM-portfolio-app-account-reader
+    title: AccountReader
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:27:07.055Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+  - id: SYM-portfolio-app-registry
+    title: Registry
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:27:16.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+      - type: implements
+        target: REQ-portfolio-registry-checks-sleeves
+  - id: SYM-portfolio-app-new-registry
+    title: NewRegistry
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:27:27.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+  - id: SYM-portfolio-app-registry-save-kind
+    title: Registry.SaveKind
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:27:37.833Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-registry-checks-sleeves
+  - id: SYM-portfolio-app-registry-kinds
+    title: Registry.Kinds
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:27:49.242Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-registry-checks-sleeves
+  - id: SYM-portfolio-app-registry-save-sleeve
+    title: Registry.SaveSleeve
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:28:00.491Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-registry-checks-sleeves
+  - id: SYM-portfolio-app-registry-sleeves
+    title: Registry.Sleeves
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:28:11.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-registry-checks-sleeves
+  - id: SYM-portfolio-app-registry-delete-sleeve
+    title: Registry.DeleteSleeve
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:28:24.468Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfolio-app-registry-delete-kind
+    title: Registry.DeleteKind
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:28:37.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+  - id: SYM-portfolio-app-registry-place-account
+    title: Registry.PlaceAccount
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:28:50.541Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+  - id: SYM-portfolio-app-registry-account-sleeves
+    title: Registry.AccountSleeves
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:29:02.533Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+  - id: SYM-portfolio-app-registry-remove-account
+    title: Registry.RemoveAccount
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:29:14.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+  - id: SYM-portfolio-app-registry-ensure-defaults
+    title: Registry.EnsureDefaults
+    sourceFile: internal/portfolio/app/registry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:29:24.525Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-app-registry
+      - type: implements
+        target: REQ-portfolio-defaults-on-fresh-install
+      - type: implements
+        target: REQ-portfolio-install-sleeves
+  - id: SYM-portfolio-pg-store-save-kind
+    title: Store.SaveKind
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:29:34.226Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-store-kinds
+    title: Store.Kinds
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:29:43.901Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-scan-kind
+    title: scanKind
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:29:57.808Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-store-save-sleeve
+    title: Store.SaveSleeve
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:30:11.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-store-sleeves
+    title: Store.Sleeves
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:30:22.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-scan-sleeve
+    title: scanSleeve
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:30:31.595Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-store-delete-sleeve
+    title: Store.DeleteSleeve
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:30:41.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-store-delete-kind
+    title: Store.DeleteKind
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:30:51.800Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-delete-unused-sleeves-and-kinds
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-store-place-account
+    title: Store.PlaceAccount
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:31:02.452Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-store-account-sleeves
+    title: Store.AccountSleeves
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:31:12.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-store-remove-account
+    title: Store.RemoveAccount
+    sourceFile: internal/portfolio/postgres/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:31:22.058Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-account-in-one-sleeve
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-db
+    title: db
+    sourceFile: internal/portfolio/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:31:32.164Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-store-in-tx
+    title: Store.InTx
+    sourceFile: internal/portfolio/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:31:41.407Z
+    relationships:
+      - type: covered_by
+        target: TEST-portfolio-pg-sleeves
+      - type: implements
+        target: REQ-portfolio-defaults-on-fresh-install
+      - type: implements
+        target: REQ-portfolio-pg-sleeves
+  - id: SYM-views-app-portfolio
+    title: Portfolio
+    sourceFile: internal/views/app/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:31:51.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-payout-settings
+    title: PayoutSettings
+    sourceFile: internal/views/app/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:32:03.901Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-with-portfolio
+    title: WithPortfolio
+    sourceFile: internal/views/app/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:32:16.013Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-with-payout-settings
+    title: WithPayoutSettings
+    sourceFile: internal/views/app/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:32:27.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-account-settings
+    title: AccountSettings
+    sourceFile: internal/views/app/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:32:38.552Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-account-settings
+    title: Views.AccountSettings
+    sourceFile: internal/views/app/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:32:50.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-app-views-account-sleeves
+    title: Views.accountSleeves
+    sourceFile: internal/views/app/sleeves.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:33:01.376Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app
+      - type: implements
+        target: REQ-views-app-queries
+  - id: SYM-views-connectapi-read-service-account
+    title: readService.account
+    sourceFile: internal/views/connectapi/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:33:10.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-connect
+      - type: implements
+        target: REQ-views-api-contract
+  - id: SYM-ingest-app-test-helper-mem-sleeves
+    title: memSleeves
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:33:21.637Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-sleeves-sleeves
+    title: memSleeves.Sleeves
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:33:32.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-sleeves-account-sleeves
+    title: memSleeves.AccountSleeves
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:33:42.011Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-sleeves-place-account
+    title: memSleeves.PlaceAccount
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:33:52.375Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-sleeves-remove-account
+    title: memSleeves.RemoveAccount
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:34:02.903Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-payouts
+    title: memPayouts
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:34:12.951Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-payouts-payout-setting
+    title: memPayouts.PayoutSetting
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:34:23.750Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-mem-payouts-save-payout-setting
+    title: memPayouts.SavePayoutSetting
+    sourceFile: internal/ingest/app/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:34:34.957Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-accounts
+  - id: SYM-ingest-app-test-helper-held-ledger-payout-setting
+    title: heldLedger.PayoutSetting
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:34:47.329Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-connectapi-test-helper-mem-registry-account-sleeves
+    title: memRegistry.AccountSleeves
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:34:57.559Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-registry-place-account
+    title: memRegistry.PlaceAccount
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:35:07.433Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-registry-remove-account
+    title: memRegistry.RemoveAccount
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:35:18.541Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-registry-payout-setting
+    title: memRegistry.PayoutSetting
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:35:28.644Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-connectapi-test-helper-mem-registry-save-payout-setting
+    title: memRegistry.SavePayoutSetting
+    sourceFile: internal/ingest/connectapi/accounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:35:39.010Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-accounts
+  - id: SYM-ingest-test-payout-setting-paid-out
+    title: TestPayoutSettingPaidOut
+    sourceFile: internal/ingest/payoutsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:35:48.959Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout-setting
+  - id: SYM-ingest-test-payout-setting-changed
+    title: TestPayoutSettingChanged
+    sourceFile: internal/ingest/payoutsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:35:58.551Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout-setting
+  - id: SYM-ingest-test-payout-keys
+    title: TestPayoutKeys
+    sourceFile: internal/ingest/payoutsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:36:08.613Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout-setting
+  - id: SYM-ingest-test-payout-setting-validate
+    title: TestPayoutSettingValidate
+    sourceFile: internal/ingest/payoutsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:36:18.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout-setting
+  - id: SYM-ingest-test-helper-setting-of
+    title: settingOf
+    sourceFile: internal/ingest/payoutsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:36:27.359Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout-setting
+  - id: SYM-ingest-test-helper-changed-setting
+    title: changedSetting
+    sourceFile: internal/ingest/payoutsetting_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:36:37.191Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-payout-setting
+  - id: SYM-ingest-pg-test-payout-setting-round-trip
+    title: TestPayoutSettingRoundTrip
+    sourceFile: internal/ingest/postgres/payouts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:36:46.640Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-payouts
+  - id: SYM-ingest-pg-test-helper-check-payout-setting
+    title: checkPayoutSetting
+    sourceFile: internal/ingest/postgres/payouts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:36:57.111Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-payouts
+  - id: SYM-portfolio-app-test-helper-mem-registry
+    title: memRegistry
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:37:08.446Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-new-mem-registry
+    title: newMemRegistry
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:37:19.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-save-kind
+    title: memRegistry.SaveKind
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:37:31.001Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-kinds
+    title: memRegistry.Kinds
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:37:42.693Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-save-sleeve
+    title: memRegistry.SaveSleeve
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:37:53.612Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-sleeves
+    title: memRegistry.Sleeves
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:38:03.149Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-delete-sleeve
+    title: memRegistry.DeleteSleeve
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:38:13.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-delete-kind
+    title: memRegistry.DeleteKind
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:38:25.168Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-place-account
+    title: memRegistry.PlaceAccount
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:38:36.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-account-sleeves
+    title: memRegistry.AccountSleeves
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:38:48.888Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-remove-account
+    title: memRegistry.RemoveAccount
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:39:00.380Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-mem-registry-in-tx
+    title: memRegistry.InTx
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:39:11.403Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-ledger-accounts
+    title: ledgerAccounts
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:39:22.471Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-ledger-accounts-account
+    title: ledgerAccounts.Account
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:39:33.010Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-core-sleeve
+    title: coreSleeve
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:39:43.547Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-seeded-registry
+    title: seededRegistry
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:39:54.004Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-helper-check-result
+    title: checkResult
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:40:03.418Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-registry-save-sleeve
+    title: TestRegistrySaveSleeve
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:40:20.226Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-registry-save-kind
+    title: TestRegistrySaveKind
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:40:38.215Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-registry-ensure-defaults
+    title: TestRegistryEnsureDefaults
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:40:55.669Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-registry-ensure-defaults-only-on-a-fresh-install
+    title: TestRegistryEnsureDefaultsOnlyOnAFreshInstall
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:41:13.717Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-registry-place-account
+    title: TestRegistryPlaceAccount
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:41:28.721Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-app-test-registry-deletes
+    title: TestRegistryDeletes
+    sourceFile: internal/portfolio/app/registry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:41:39.281Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-app-registry
+  - id: SYM-portfolio-pg-test-helper-sql-state
+    title: sqlState
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:41:50.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-test-helper-check-result
+    title: checkResult
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:42:03.895Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-test-helper-known-accounts
+    title: knownAccounts
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:42:17.202Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-test-helper-known-accounts-account
+    title: knownAccounts.Account
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:42:31.656Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-test-migrate-stores-the-default-kinds
+    title: TestMigrateStoresTheDefaultKinds
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:42:42.811Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-test-kind-round-trip
+    title: TestKindRoundTrip
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:42:55.349Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-test-sleeve-kind-constraints
+    title: TestSleeveKindConstraints
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:43:07.241Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-test-sleeves-and-accounts-round-trip
+    title: TestSleevesAndAccountsRoundTrip
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:43:18.352Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-test-delete-sleeves
+    title: TestDeleteSleeves
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:43:31.714Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-portfolio-pg-test-ensure-defaults-on-postgres
+    title: TestEnsureDefaultsOnPostgres
+    sourceFile: internal/portfolio/postgres/sleeves_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:43:44.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-portfolio-pg-sleeves
+  - id: SYM-views-app-test-helper-fake-ledger-account-sleeves
+    title: fakeLedger.AccountSleeves
+    sourceFile: internal/views/app/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:44:00.853Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app
+  - id: SYM-views-connectapi-test-helper-fake-ledger-account-sleeves
+    title: fakeLedger.AccountSleeves
+    sourceFile: internal/views/connectapi/fakes_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T12:44:20.643Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-connect

@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-418335c554f9
+  - type: executable_for
+    from: SYM-portfolio-pg-test-kind-round-trip
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:42:59.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c7f0584124

@@ -48,13 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d0833f19d9e4
-  - type: implements
-    from: SYM-ledger-pg-decode-holding
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:32:35.817Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-84cd7a1e2656
   - type: covered_by
     from: SYM-ledger-pg-decode-holding
     to: TEST-ledger-pg-store
@@ -62,20 +55,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f5b57aafde50
-  - type: implements
-    from: SYM-ledger-pg-scan-sleeve
-    to: REQ-ledger-pg-store
-    created_at: 2026-10-28T06:35:03.298Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4971da403004
-  - type: covered_by
-    from: SYM-ledger-pg-scan-sleeve
-    to: TEST-ledger-pg-store
-    created_at: 2026-10-28T06:35:03.311Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-76262db7f37f
   - type: executable_for
     from: SYM-ledger-app-test-helper-mem-tx-snapshot
     to: TEST-ledger-app-seed
@@ -132,20 +111,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39761a6e83af
-  - type: implements
-    from: SYM-ledger-pg-scan-sleeve
-    to: REQ-ledger-pg-sleeve-kinds
-    created_at: 2026-10-28T09:59:37.077Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2d5361eb6af6
-  - type: covered_by
-    from: SYM-ledger-pg-scan-sleeve
-    to: TEST-ledger-pg-kinds
-    created_at: 2026-10-28T09:59:37.121Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e81982011c92
   - type: implements
     from: SYM-delivery-transaction
     to: REQ-ingest-delivery-contract-messages
@@ -580,3 +545,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c528d5a17313
+  - type: implements
+    from: SYM-ledger-pg-decode-holding
+    to: REQ-ledger-pg-store-accounts
+    created_at: 2026-11-03T12:07:14.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30b5b30c6b57
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-mem-registry-remove-account
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:39:03.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed16b14c5359

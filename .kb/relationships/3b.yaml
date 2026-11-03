@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9396fcb6a747
-  - type: executable_for
-    from: SYM-ledger-test-helper-setting-of
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T17:27:11.982Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8548091eb718
   - type: verified_by
     from: SCEN-tooling-ci-ui-browser-checks
     to: TEST-tooling-affected-plan

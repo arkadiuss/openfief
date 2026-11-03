@@ -62,8 +62,8 @@ func payoutTx(t *testing.T, kind ledger.TransactionKind, id, day string) ledger.
 func TestStalePayouts(t *testing.T) {
 	t.Parallel()
 	from := goLiveDate(t, "2026-01-01")
-	paid := ledger.PayoutSetting{Payout: ledger.PayoutPaidOut}
-	backToCash := paid.Changed(ledger.PayoutCash, from)
+	paid := ingest.PayoutSetting{Payout: ingest.PayoutPaidOut}
+	backToCash := paid.Changed(ingest.PayoutCash, from)
 	current := []ledger.Transaction{
 		payoutTx(t, ledger.KindWithdrawal, "lot:COI1028:2024-10-10:coupon:2025-10-10:payout", "2025-10-10"),
 		payoutTx(t, ledger.KindWithdrawal, "lot:COI1028:2024-10-10:coupon:2026-10-10:payout", "2026-10-10"),
@@ -73,7 +73,7 @@ func TestStalePayouts(t *testing.T) {
 	}
 	tests := []struct {
 		name    string
-		setting ledger.PayoutSetting
+		setting ingest.PayoutSetting
 		want    []string
 	}{
 		{

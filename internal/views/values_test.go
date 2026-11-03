@@ -139,7 +139,7 @@ func TestCashOnDays(t *testing.T) {
 // leaves it out of a liquidation allocation with its reason.
 func TestValueHoldingsOfAKind(t *testing.T) {
 	t.Parallel()
-	acc := ledger.Account{ID: "acc-1", Institution: "broker-a", Name: "Synthetic", Sleeve: "core"}
+	acc := ledger.Account{ID: "acc-1", Institution: "broker-a", Name: "Synthetic"}
 	row := ikzeRow(t)
 	holdings := []ledger.Holding{{Account: acc.ID, Instrument: row.Instrument, Date: row.Date, Quantity: kernel.NewQuantity(kernel.NewDecimal(1, 0))}}
 	items, unvalued, err := views.ValueHoldings(acc, holdings, []valuation.HoldingValuation{row}, row.Date, views.Net)

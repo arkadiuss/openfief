@@ -200,13 +200,14 @@ flowchart LR
   views --> ledger
   views --> valuation
   views --> portfolio
+  portfolio --> ledger
   portfolio --> valuation
   plugins
   identity
   kernel["kernel (shared)"]
 ```
 
-The [code map](/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has four arrows the design lacks: `ledger` imports `portfolio` to attach accounts to sleeves; `views` imports `jurisdiction/pl` to tell a treasury bond series from a listed instrument in the allocation; `ingest` imports `jurisdiction/pl` to check that a bond lot can be valued; and `portfolio` imports `ledger` to parse a model target's ISIN. The designed `jurisdiction/pl` node is two packages in the code: `jurisdiction`, the pack contract with the fee rule and number format (D-70), and `jurisdiction/pl`, the Polish pack behind it; `valuation` reaches the pack through the contract, and `ingest` and `views` use the contract's tax wrappers and settings. `cmd/core` picks the pack, `pl.NewPack()`, joins valuation's recorder and store into the account entries' terms, and hands the pack and the store to the read API for cash values, settings and yearly taxes.
+The [code map](/reference/code-map/) draws the same map from the actual imports on every build. Comparing the two is a quick architecture check. Today the code has three arrows the design lacks: `views` imports `jurisdiction/pl` to tell a treasury bond series from a listed instrument in the allocation; `ingest` imports `jurisdiction/pl` to check that a bond lot can be valued; and `ingest` imports `portfolio` to make an account's ID from its name and to name the sleeve the account goes in, which the portfolio context's `Registry` keeps (`cmd/core` wires it in). `portfolio` reads `ledger` as designed: it keeps which account is in which sleeve keyed by the ledger's account ID, and reads accounts through its `AccountReader` port. The ledger imports no other context, and keeps neither sleeves nor the payout setting, which is ingest's. The designed `jurisdiction/pl` node is two packages in the code: `jurisdiction`, the pack contract with the fee rule and number format (D-70), and `jurisdiction/pl`, the Polish pack behind it; `valuation` reaches the pack through the contract, and `ingest` and `views` use the contract's tax wrappers and settings. `cmd/core` picks the pack, `pl.NewPack()`, joins valuation's recorder and store into the account entries' terms, and hands the pack and the store to the read API for cash values, settings and yearly taxes.
 
 ## The demo environment
 

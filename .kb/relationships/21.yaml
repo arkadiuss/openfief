@@ -580,3 +580,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b74717b266cd
+  - type: constrains
+    from: REQ-ingest-payout-setting-history
+    to: FACT-SUBJECT-EC85BCBCA2EF269A
+    created_at: 2026-11-03T11:51:24.291Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3740b849c301
+  - type: requires_property
+    from: REQ-ingest-payout-setting-history
+    to: FACT-PROP-F5C946A5FC1D36F8
+    created_at: 2026-11-03T11:51:24.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76f69911ba97
+  - type: specified_by
+    from: REQ-ingest-payout-setting-history
+    to: SCEN-ingest-payout-setting-history
+    created_at: 2026-11-03T11:51:24.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7510540622cb
+  - type: supersedes
+    from: REQ-ingest-payout-setting-history
+    to: REQ-ledger-payout-setting-history
+    created_at: 2026-11-03T11:51:24.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f82acfb48f96
+  - type: implements
+    from: SYM-portfolio-app-account-reader
+    to: REQ-portfolio-account-in-one-sleeve
+    created_at: 2026-11-03T12:27:11.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8411f9eabfe4
+  - type: covered_by
+    from: SYM-portfolio-app-account-reader
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:27:11.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-931331131dca
+  - type: executable_for
+    from: SYM-portfolio-pg-test-helper-sql-state
+    to: TEST-portfolio-pg-sleeves
+    created_at: 2026-11-03T12:41:54.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ab4f5847d39

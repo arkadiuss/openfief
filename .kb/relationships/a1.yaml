@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e45a3c3a752
+  - type: implements
+    from: SYM-portfolio-app-new-registry
+    to: REQ-portfolio-account-in-one-sleeve
+    created_at: 2026-11-03T12:27:30.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79dcb9033c3d
+  - type: covered_by
+    from: SYM-portfolio-app-new-registry
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:27:30.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73269ffdba55

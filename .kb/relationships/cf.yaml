@@ -637,13 +637,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-83a90b49f835
   - type: executable_for
-    from: SYM-ledger-test-payout-setting-validate
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T17:27:24.467Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6db6c8ed1693
-  - type: executable_for
     from: SYM-plugins-test-trust-open-fief-ci-signed
     to: TEST-plugins-trust
     created_at: 2026-11-02T20:04:03.754Z
@@ -678,3 +671,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-653200ea2eaf
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-sleeves-sleeves
+    to: TEST-ingest-app-accounts
+    created_at: 2026-11-03T12:33:35.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cada346d9d6
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-payouts-payout-setting
+    to: TEST-ingest-app-accounts
+    created_at: 2026-11-03T12:34:27.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b19a8aeca6d
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-mem-registry-delete-kind
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:38:29.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d05d0008cde1

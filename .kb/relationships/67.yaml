@@ -482,13 +482,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5ee7b3742eb
-  - type: executable_for
-    from: SYM-ingest-app-test-helper-mem-accounts-sleeves
-    to: TEST-ingest-app-accounts
-    created_at: 2026-10-29T13:00:06.317Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f041a7eb4443
   - type: implements
     from: SYM-portfoliov1-add-sleeve-response-descriptor
     to: REQ-portfolio-sleeve-service
@@ -860,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0b3137f3ee3
+  - type: executable_for
+    from: SYM-portfolio-app-test-helper-ledger-accounts
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:39:26.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00410e0c79ff

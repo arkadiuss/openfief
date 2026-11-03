@@ -48,20 +48,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f797d5c4bef
-  - type: implements
-    from: SYM-ledger-app-has-sleeve
-    to: REQ-ledger-app-registry
-    created_at: 2026-10-28T06:09:32.437Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-167b8d370cb6
-  - type: covered_by
-    from: SYM-ledger-app-has-sleeve
-    to: TEST-ledger-app-registry
-    created_at: 2026-10-28T06:09:32.477Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c9534ac85445
   - type: executable_for
     from: SYM-ledger-pg-test-helper-winner
     to: TEST-ledger-pg-log
@@ -511,26 +497,12 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-09e0f97f68a5
   - type: covered_by
-    from: SYM-ledger-payout
-    to: TEST-ledger-payout
-    created_at: 2026-11-01T07:51:01.972Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-549e4f074a6c
-  - type: covered_by
     from: SYM-viewsv1-bond-payout-descriptor
     to: TEST-ui-values
     created_at: 2026-11-01T07:55:26.937Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00376a3a04af
-  - type: implements
-    from: SYM-ledger-payout
-    to: REQ-treasurybonds-account-payout-setting
-    created_at: 2026-11-01T08:42:03.289Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ce52dc8ca58b
   - type: implements
     from: SYM-ingest-connectapi-opening-cash-from
     to: REQ-ingest-opening-cash-entered-once
@@ -552,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5576708ed896
-  - type: implements
-    from: SYM-ledger-payout
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:30:19.710Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8179c56180c5
   - type: implements
     from: SYM-viewsv1-bond-payout-descriptor
     to: REQ-ui-bond-payout-change-date

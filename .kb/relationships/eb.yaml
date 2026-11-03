@@ -440,13 +440,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c248dd7bc0b
-  - type: covered_by
-    from: SYM-ledger-account-payout-setting
-    to: TEST-ledger-account
-    created_at: 2026-11-01T07:50:45.594Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d9ec9d57bf05
   - type: implements
     from: SYM-valuation-postgres-store-rank-of
     to: REQ-valuation-market-data-source-ranking
@@ -573,13 +566,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-20a64fe9d61f
-  - type: implements
-    from: SYM-ledger-account-payout-setting
-    to: REQ-ledger-payout-setting-history
-    created_at: 2026-11-01T17:29:59.508Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8adf1e277801
   - type: validates
     from: TEST-core-unclassified
     to: REQ-valuation-unclassifiable-instrument-attention-item

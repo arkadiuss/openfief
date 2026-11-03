@@ -129,8 +129,19 @@ func Sleeves() []portfolio.Sleeve {
 // Accounts returns the demo's three accounts.
 func Accounts() []ledger.Account {
 	return []ledger.Account{
-		{ID: IBKRAccount, Institution: IBKRInstitution, Name: "Demo IBKR", Sleeve: OffensiveSleeve},
-		{ID: XTBAccount, Institution: XTBInstitution, Name: "Demo XTB", Sleeve: OffensiveSleeve},
-		{ID: BondsAccount, Institution: BondsInstitution, Name: "Demo treasury bonds (IKE)", Sleeve: DefensiveSleeve},
+		{ID: IBKRAccount, Institution: IBKRInstitution, Name: "Demo IBKR"},
+		{ID: XTBAccount, Institution: XTBInstitution, Name: "Demo XTB"},
+		{ID: BondsAccount, Institution: BondsInstitution, Name: "Demo treasury bonds (IKE)"},
+	}
+}
+
+// AccountSleeves returns the sleeve each demo account is in: the bonds
+// account in the defensive sleeve, the brokerage accounts in the offensive
+// one. The portfolio context keeps it, not the ledger.
+func AccountSleeves() map[ledger.AccountID]portfolio.SleeveID {
+	return map[ledger.AccountID]portfolio.SleeveID{
+		IBKRAccount:  OffensiveSleeve,
+		XTBAccount:   OffensiveSleeve,
+		BondsAccount: DefensiveSleeve,
 	}
 }

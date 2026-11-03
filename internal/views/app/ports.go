@@ -6,7 +6,6 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 	"github.com/arkadiuss/openfief/internal/valuation"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 )
@@ -16,10 +15,6 @@ import (
 // account that is not stored fail with an error wrapping
 // ledgerapp.ErrUnknownAccount.
 type Ledger interface {
-	// Sleeves returns every sleeve, in ID order.
-	Sleeves(ctx context.Context) ([]portfolio.Sleeve, error)
-	// Kinds returns every sleeve kind, in key order.
-	Kinds(ctx context.Context) ([]portfolio.Kind, error)
 	// Accounts returns every account, in ID order.
 	Accounts(ctx context.Context) ([]ledger.Account, error)
 	// Account returns the account id.

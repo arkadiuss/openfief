@@ -19,8 +19,7 @@ var (
 
 // SleeveStore stores sleeve kinds and sleeves, checking each against the
 // portfolio rules (portfolio.CheckKind, portfolio.CheckSleeve) before it
-// stores it. *ledger/app.Ledger implements it: the ledger keeps sleeves next
-// to the accounts that refer to them.
+// stores it. *Registry implements it.
 type SleeveStore interface {
 	// Kinds returns every sleeve kind, in key order.
 	Kinds(ctx context.Context) ([]portfolio.Kind, error)

@@ -168,13 +168,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-2d7f0f58a077
   - type: executable_for
-    from: SYM-ledger-pg-test-migrate-stores-the-default-kinds
-    to: TEST-ledger-pg-kinds
-    created_at: 2026-10-28T09:56:41.185Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f2811b2e168b
-  - type: executable_for
     from: SYM-identity-test-new-script-token
     to: TEST-identity-domain
     created_at: 2026-10-28T14:13:51.449Z
@@ -587,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6dc2d8f5723c
+  - type: implements
+    from: SYM-views-app-payout-settings
+    to: REQ-views-app-queries
+    created_at: 2026-11-03T12:32:08.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34af85c457ac
+  - type: covered_by
+    from: SYM-views-app-payout-settings
+    to: TEST-views-app
+    created_at: 2026-11-03T12:32:08.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc0560250beb

@@ -629,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3c80af174d5
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-check-payout-setting
+    to: TEST-ingest-pg-payouts
+    created_at: 2026-11-03T12:37:01.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd88759ef946

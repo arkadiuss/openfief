@@ -7,17 +7,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
-	"github.com/arkadiuss/openfief/internal/portfolio"
 )
-
-// Sleeves returns every sleeve, in ID order.
-func (l *Ledger) Sleeves(ctx context.Context) ([]portfolio.Sleeve, error) {
-	s, err := l.store.Sleeves(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("loading sleeves: %w", err)
-	}
-	return s, nil
-}
 
 // Accounts returns every account, in ID order.
 func (l *Ledger) Accounts(ctx context.Context) ([]ledger.Account, error) {

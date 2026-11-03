@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f77f00e747a
+  - type: implements
+    from: SYM-portfolio-app-registry-save-kind
+    to: REQ-portfolio-registry-checks-sleeves
+    created_at: 2026-11-03T12:27:41.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eea5ac683e05
+  - type: covered_by
+    from: SYM-portfolio-app-registry-save-kind
+    to: TEST-portfolio-app-registry
+    created_at: 2026-11-03T12:27:41.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc077d9c950a
