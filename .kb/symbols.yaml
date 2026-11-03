@@ -116952,7 +116952,11 @@ symbols:
       recorded_at: 2026-10-31T18:45:47.566Z
     relationships:
       - type: covered_by
+        target: TEST-attention-pg-outbox
+      - type: covered_by
         target: TEST-attention-pg-store
+      - type: implements
+        target: REQ-attention-outbox-read-subject
       - type: implements
         target: REQ-attention-outbox-same-transaction
   - id: SYM-attention-pg-store-unpublished
@@ -131632,3 +131636,33 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-postgres-job-errors
+  - id: SYM-attention-pg-test-outbox-holds-no-broker-account-number
+    title: TestOutboxHoldsNoBrokerAccountNumber
+    sourceFile: internal/attention/postgres/outbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:55:12.115Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-outbox
+  - id: SYM-attention-pg-test-helper-outbox-rows
+    title: outboxRows
+    sourceFile: internal/attention/postgres/outbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:55:21.855Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-outbox
+  - id: SYM-attention-pg-test-helper-outbox-row
+    title: outboxRow
+    sourceFile: internal/attention/postgres/outbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T15:55:31.874Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-pg-outbox

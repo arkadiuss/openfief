@@ -124,11 +124,15 @@ type payload struct {
 	At      string `json:"at"`
 }
 
-// eventPayload returns the payload of step's change to item id.
+// eventPayload returns the payload of step's change to item id. Its
+// subject is the one read access may see (attention.ReadSubject): an
+// unmapped broker account's event names only its connector instance, never
+// the broker account number (D-121, D-165). The item keeps its full
+// subject for the owner.
 func eventPayload(id int64, step *attention.Step) payload {
 	c := &step.Change
 	return payload{
-		ItemID: id, Kind: string(step.Kind), Subject: step.Subject, Seq: c.Seq, State: c.State.String(),
+		ItemID: id, Kind: string(step.Kind), Subject: attention.ReadSubject(step.Kind, step.Subject), Seq: c.Seq, State: c.State.String(),
 		Reason: c.Reason.String(), Detail: c.Detail, At: c.At.UTC().Format(time.RFC3339),
 	}
 }

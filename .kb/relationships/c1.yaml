@@ -720,3 +720,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97e8504b14e5
+  - type: constrains
+    from: REQ-attention-outbox-read-subject
+    to: FACT-SUBJECT-8F14A580D2598A57
+    created_at: 2026-11-03T15:54:57.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d33fd1a7889f
+  - type: requires_property
+    from: REQ-attention-outbox-read-subject
+    to: FACT-PROP-4AE9543A77A4C6E3
+    created_at: 2026-11-03T15:54:57.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b348418de03a
+  - type: specified_by
+    from: REQ-attention-outbox-read-subject
+    to: SCEN-attention-outbox-read-subject
+    created_at: 2026-11-03T15:54:57.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85a0955f6116

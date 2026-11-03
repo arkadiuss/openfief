@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aaf9894fbbc8
+  - type: verified_by
+    from: SCEN-attention-outbox-read-subject
+    to: TEST-attention-pg-outbox
+    created_at: 2026-11-03T15:54:50.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df3241e9454a
+  - type: verified_by
+    from: SCEN-attention-outbox-read-subject
+    to: TEST-attention-pg-store
+    created_at: 2026-11-03T15:54:50.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c799a0d8c45

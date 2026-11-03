@@ -137,9 +137,12 @@ func checkOutbox(t *testing.T, s *postgres.Store, id int64, step, ack *attention
 	if err != nil {
 		t.Fatalf("Unpublished: %v", err)
 	}
+	// The events name the subject as read access sees it: only the
+	// connector instance of an unmapped broker account (D-121, D-165).
+	subject := attention.ReadSubject(step.Kind, step.Subject)
 	wantEvents := []app.Event{
-		{ID: 1, ItemID: id, Kind: step.Kind, Subject: step.Subject, Change: step.Change},
-		{ID: 2, ItemID: id, Kind: step.Kind, Subject: step.Subject, Change: ack.Change},
+		{ID: 1, ItemID: id, Kind: step.Kind, Subject: subject, Change: step.Change},
+		{ID: 2, ItemID: id, Kind: step.Kind, Subject: subject, Change: ack.Change},
 	}
 	if diff := cmp.Diff(wantEvents, events); diff != "" {
 		t.Errorf("Unpublished (-want +got):\n%s", diff)
