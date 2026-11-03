@@ -73,7 +73,7 @@ Everything in [`internal/plugins`](../../internal/plugins/) is pure: no I/O, no 
 | [cluster_service.go](../../internal/plugins/cluster_service.go) | `ClusterServiceRequest` (the manifest's), `ClusterService` and `ParseClusterService` (the owner's pick, `namespace/service:port`, D-74) |
 | [errors.go](../../internal/plugins/errors.go) | Sentinel errors and `FieldError` |
 | [app/install.go](../../internal/plugins/app/install.go) | The CLI's use cases: `Installer.Prepare`, `Install`, `PlanUninstall`, `Uninstall`, `Instances`, and the ports `ImageInspector` and `InstanceStore` they consume |
-| [app/egress.go](../../internal/plugins/app/egress.go), [app/tokencache.go](../../internal/plugins/app/tokencache.go) | The egress proxy's use case, `app.Egress`, and its token cache, `app.CachingTokenReviewer`; see [Egress](egress.md) |
+| [app/egress.go](../../internal/plugins/app/egress.go), [app/tokencache.go](../../internal/plugins/app/tokencache.go) | The egress proxy's use case, `app.Egress`, and its token cache, `app.CachingTokenReviewer`, which the core's plugin port uses too: only JWT-shaped tokens are reviewed and a refusal is remembered for ten seconds (`JWTShaped`, D-184); see [Egress](egress.md) |
 
 ### From a plugin and its grant to a workload
 

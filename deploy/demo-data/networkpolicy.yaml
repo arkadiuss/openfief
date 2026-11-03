@@ -1,0 +1,22 @@
+# Admits the demo dataset loader to the database (D-184): the database's own policy (deploy/core) admits only the
+# core and CloudNativePG, so the loader brings this one, which adds its pods on PostgreSQL's port.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-db-from-demo-seed
+  labels:
+    app.kubernetes.io/name: demo-seed
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      cnpg.io/cluster: openfief-db
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: demo-seed
+      ports:
+        - protocol: TCP
+          port: 5432

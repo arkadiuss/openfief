@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f96b6dcb7beb
+  - type: verified_by
+    from: SCEN-deploy-network-policies
+    to: TEST-deploy-network-policies
+    created_at: 2026-11-03T00:10:32.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f5ad986e2cd

@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a825fd313cb
+  - type: executable_for
+    from: SYM-plugins-egress-test-check-address-denying
+    to: TEST-plugins-egress-deny
+    created_at: 2026-11-03T00:15:47.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-554af7233e89

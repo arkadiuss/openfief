@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1f67091869c8
+  - type: implements
+    from: SYM-egress-proxy-cmd-fn-main
+    to: REQ-plugins-egress-denies-node-and-cluster-ranges
+    created_at: 2026-11-03T00:14:39.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f5ae7e3ffad

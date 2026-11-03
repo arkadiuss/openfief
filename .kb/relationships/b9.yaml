@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-537036721e22
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-checking-resolver
+    to: REQ-plugins-egress-denies-node-and-cluster-ranges
+    created_at: 2026-11-03T00:14:03.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ff87bc835dd

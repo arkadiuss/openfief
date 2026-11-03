@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"net/netip"
 	"os"
 	"os/signal"
 	"syscall"
@@ -24,22 +25,35 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/plugins"
 	"github.com/arkadiuss/openfief/internal/plugins/app"
+	"github.com/arkadiuss/openfief/internal/plugins/egress"
 	"github.com/arkadiuss/openfief/internal/plugins/kube"
 	"github.com/arkadiuss/openfief/internal/plugins/smokescreen"
 )
 
+// nodeIPEnv names the environment variable that holds the addresses of the
+// node the proxy runs on, comma-separated; the Deployment sets it from the
+// pod's status.hostIP.
+const nodeIPEnv = "OPENFIEF_NODE_IP"
+
 func main() {
 	addr := flag.String("listen", ":4750", "address plugins connect to")
+	denyCIDRs := flag.String("deny-cidr", "", "comma-separated ranges to refuse beyond the private and internal ones, "+
+		"such as a cluster's public or global IPv6 pod, Service and node ranges")
 	flag.Parse()
 	log := logrus.New()
 	log.SetFormatter(&logrus.JSONFormatter{})
-	if err := run(*addr, log); err != nil {
+	deny, err := egress.ParseDenyList(*denyCIDRs, os.Getenv(nodeIPEnv))
+	if err != nil {
+		log.WithError(err).Error("egress proxy stopped")
+		os.Exit(1)
+	}
+	if err := run(*addr, deny, log); err != nil {
 		log.WithError(err).Error("egress proxy stopped")
 		os.Exit(1)
 	}
 }
 
-func run(addr string, log *logrus.Logger) error {
+func run(addr string, deny []netip.Prefix, log *logrus.Logger) error {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	defer stop()
 
@@ -65,8 +79,9 @@ func run(addr string, log *logrus.Logger) error {
 	if err != nil {
 		return fmt.Errorf("listen on %s: %w", addr, err)
 	}
-	proxy, err := smokescreen.New(app.NewEgress(tokens, lists), smokescreen.Options{
+	proxy, err := smokescreen.New(app.NewEgress(tokens, lists), &smokescreen.Options{
 		Listener:    listener,
+		Deny:        deny,
 		Healthcheck: http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusNoContent) }),
 		Log:         log,
 	})

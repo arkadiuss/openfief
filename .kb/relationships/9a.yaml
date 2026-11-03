@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36e85aef8719
+  - type: implements
+    from: SYM-plugins-app-caching-token-reviewer-lookup
+    to: REQ-plugins-token-review-not-amplified
+    created_at: 2026-11-03T00:13:08.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef9d164d4676

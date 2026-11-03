@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e172d9581ad
+  - type: implements
+    from: SYM-plugins-smokescreen-fn-forbidden-ranges
+    to: REQ-plugins-egress-denies-node-and-cluster-ranges
+    created_at: 2026-11-03T00:14:28.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f963371b0bc4

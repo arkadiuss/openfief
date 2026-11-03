@@ -25,6 +25,13 @@ spec:
         - name: egress-proxy
           image: ghcr.io/arkadiuss/openfief/egress-proxy
           args: ["-listen=:4750"]
+          env:
+            # The node's own address, which the proxy refuses as a destination like the private ranges (D-184).
+            # A cluster whose pods, Services or nodes use public or global IPv6 ranges adds them with -deny-cidr.
+            - name: OPENFIEF_NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
           ports:
             - name: proxy
               containerPort: 4750

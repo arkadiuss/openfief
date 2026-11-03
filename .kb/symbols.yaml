@@ -6606,6 +6606,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-8CBFBD6A12E0865B
       - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+      - type: implements
         target: REQ-plugins-egress-proxy-connect-only-allow-list
   - id: SYM-egress-proxy-cmd-fn-run
     title: run
@@ -6620,6 +6622,8 @@ symbols:
         target: TEST-plugins-smokescreen-proxy
       - type: implements
         target: REQ-plugins-egress-allow-lists-fail-closed
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
       - type: implements
         target: REQ-plugins-egress-proxy-connect-only-allow-list
   - id: SYM-plugins-app-token-reviewer
@@ -7129,6 +7133,8 @@ symbols:
       - type: implements
         target: REQ-AUTO-79189DB32149E23F
       - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+      - type: implements
         target: REQ-plugins-egress-proxy-checks-every-address
   - id: SYM-plugins-smokescreen-fn-checking-resolver
     title: checkingResolver
@@ -7144,6 +7150,8 @@ symbols:
         target: TEST-plugins-smokescreen-proxy
       - type: implements
         target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
       - type: implements
         target: REQ-plugins-egress-proxy-checks-every-address
   - id: SYM-plugins-smokescreen-fn-checking-resolver-lookup-port
@@ -7172,6 +7180,8 @@ symbols:
         target: TEST-plugins-smokescreen-proxy
       - type: implements
         target: REQ-AUTO-79189DB32149E23F
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
       - type: implements
         target: REQ-plugins-egress-proxy-checks-every-address
   - id: SYM-plugins-smokescreen-fn-forbidden-error
@@ -16845,6 +16855,8 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-fn-cached-review
     title: cachedReview
     sourceFile: internal/plugins/app/tokencache.go
@@ -16871,6 +16883,8 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-caching-token-reviewer-review-token
     title: CachingTokenReviewer.ReviewToken
     sourceFile: internal/plugins/app/tokencache.go
@@ -16884,8 +16898,10 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-caching-token-reviewer-lookup
-    title: CachingTokenReviewer.lookup
+    title: fresh
     sourceFile: internal/plugins/app/tokencache.go
     status: active
     symbol_role: behavioral
@@ -16897,6 +16913,8 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-caching-token-reviewer-store
     title: CachingTokenReviewer.store
     sourceFile: internal/plugins/app/tokencache.go
@@ -16910,6 +16928,8 @@ symbols:
         target: TEST-plugins-app-token-cache
       - type: implements
         target: REQ-plugins-egress-token-review-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
   - id: SYM-plugins-app-fn-token-expiry
     title: tokenExpiry
     sourceFile: internal/plugins/app/tokencache.go
@@ -76849,6 +76869,8 @@ symbols:
         target: TEST-views-browser-proxy
       - type: implements
         target: REQ-core-reverse-proxies-view-plugins
+      - type: implements
+        target: REQ-views-proxied-pages-security-headers
   - id: SYM-fd-browserproxy-proxy-serve-http
     title: Proxy.ServeHTTP
     sourceFile: internal/views/browserproxy/proxy.go
@@ -76877,6 +76899,8 @@ symbols:
         target: TEST-views-browser-proxy
       - type: implements
         target: REQ-views-browser-route-longest-prefix
+      - type: implements
+        target: REQ-views-proxied-pages-security-headers
   - id: SYM-fd-browserproxy-proxy-unreachable
     title: Proxy.unreachable
     sourceFile: internal/views/browserproxy/proxy.go
@@ -76890,6 +76914,8 @@ symbols:
         target: TEST-views-browser-proxy
       - type: implements
         target: REQ-core-reverse-proxies-view-plugins
+      - type: implements
+        target: REQ-views-proxied-pages-security-headers
   - id: SYM-fd-browserproxy-rewrite
     title: rewrite
     sourceFile: internal/views/browserproxy/proxy.go
@@ -127727,3 +127753,245 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-bond-lots
+  - id: SYM-plugins-egress-parse-deny-list
+    title: ParseDenyList
+    sourceFile: internal/plugins/egress/deny.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:22.225Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-deny
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+  - id: SYM-plugins-egress-check-address-denying
+    title: CheckAddressDenying
+    sourceFile: internal/plugins/egress/deny.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:32.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-egress-deny
+      - type: implements
+        target: REQ-plugins-egress-denies-node-and-cluster-ranges
+  - id: SYM-plugins-app-jwt-shaped
+    title: JWTShaped
+    sourceFile: internal/plugins/app/tokencache.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:42.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-app-token-cache
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-fd-browserproxy-security-headers
+    title: SecurityHeaders
+    sourceFile: internal/views/browserproxy/proxy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:11:54.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-browser-proxy
+      - type: implements
+        target: REQ-views-proxied-pages-security-headers
+  - id: SYM-core-browser-read-tokens
+    title: browserReadTokens
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:06.256Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-tokens
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-core-read-apis
+    title: readAPIs
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:17.241Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-tokens
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-core-port-apis
+    title: portAPIs
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:30.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-read-tokens
+      - type: implements
+        target: REQ-plugins-token-review-not-amplified
+  - id: SYM-core-test-jwt-for
+    title: jwtFor
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:42.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-core-test-count-reviews
+    title: countReviews
+    sourceFile: cmd/core/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:12:54.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-auth
+  - id: SYM-plugins-egress-test-parse-deny-list
+    title: TestParseDenyList
+    sourceFile: internal/plugins/egress/deny_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:15:35.282Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-deny
+  - id: SYM-plugins-egress-test-check-address-denying
+    title: TestCheckAddressDenying
+    sourceFile: internal/plugins/egress/deny_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:15:44.807Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-egress-deny
+  - id: SYM-plugins-smokescreen-test-start-proxy-denying
+    title: startProxyDenying
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:15:55.393Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-smokescreen-test-proxy-denies-extra-ranges
+    title: TestProxyDeniesExtraRanges
+    sourceFile: internal/plugins/smokescreen/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:05.824Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-smokescreen-proxy
+  - id: SYM-plugins-app-test-jwt-named
+    title: jwtNamed
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:16.824Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-refusals-bounded
+    title: TestCachingTokenReviewerRefusalsBounded
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:27.720Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-refusing-reviewer
+    title: refusingReviewer
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:38.258Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-refusing-reviewer-review-token
+    title: refusingReviewer.ReviewToken
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:48.677Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-plugins-app-test-jwt-shaped
+    title: TestJWTShaped
+    sourceFile: internal/plugins/app/tokencache_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:16:59.638Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-app-token-cache
+  - id: SYM-fd-browserproxy-test-security-headers
+    title: TestProxySecurityHeaders
+    sourceFile: internal/views/browserproxy/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:17:10.781Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browser-proxy
+  - id: SYM-fd-browserproxy-test-check-security-headers
+    title: checkSecurityHeaders
+    sourceFile: internal/views/browserproxy/proxy_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:17:21.831Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-browser-proxy
+  - id: SYM-deploy-np-test-check
+    title: check
+    sourceFile: scripts/tests/network-policies.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:40:09.295Z
+    relationships:
+      - type: executable_for
+        target: TEST-deploy-network-policies
+  - id: SYM-deploy-np-test-policy
+    title: policy
+    sourceFile: scripts/tests/network-policies.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T00:40:20.752Z
+    relationships:
+      - type: executable_for
+        target: TEST-deploy-network-policies

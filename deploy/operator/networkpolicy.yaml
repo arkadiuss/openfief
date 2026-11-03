@@ -1,0 +1,17 @@
+# The operator's NetworkPolicy (D-184). Nothing calls the operator: it watches the API server and writes to it, and
+# its probes on 8081 come from the node, which needs no rule. So it admits no ingress at all, and a compromised
+# plugin or core can't reach its probe or metrics endpoints. Its egress, to the API server and to the registries it
+# reads image signatures from (D-56), is not restricted here: registries are wherever the owner's plugins come from.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-operator
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-operator
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: openfief-operator
+  policyTypes: [Ingress]

@@ -664,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6cdba79eca4b
+  - type: constrains
+    from: REQ-views-proxied-pages-security-headers
+    to: FACT-SUBJECT-743A59DF21A2D8C8
+    created_at: 2026-11-03T00:11:04.316Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-404b278b6b47
+  - type: requires_property
+    from: REQ-views-proxied-pages-security-headers
+    to: FACT-PROP-6EEE827D19578C7B
+    created_at: 2026-11-03T00:11:04.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3258ebb52b3b
+  - type: specified_by
+    from: REQ-views-proxied-pages-security-headers
+    to: SCEN-views-proxied-pages-security-headers
+    created_at: 2026-11-03T00:11:04.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75ee27da96c2
