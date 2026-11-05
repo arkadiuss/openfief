@@ -727,3 +727,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-344b627fc739
+  - type: implements
+    from: SYM-plugins-fn-append-signer
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-11-05T22:24:45.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b1f052d4d3f
+  - type: covered_by
+    from: SYM-plugins-fn-append-signer
+    to: TEST-plugins-trust
+    created_at: 2026-11-05T22:24:45.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfd1959a43bf
+  - type: executable_for
+    from: SYM-operator-cmd-test-helper-ci-and-catalog-signers
+    to: TEST-operator-cmd
+    created_at: 2026-11-05T22:25:49.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef04ffb4e099

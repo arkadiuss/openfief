@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"slices"
 	"testing"
 	"time"
 
@@ -99,19 +100,32 @@ func TestParseFlagsTrustedSigners(t *testing.T) {
 	}
 }
 
-func TestTrustPolicy(t *testing.T) {
-	t.Parallel()
-	// The embedded catalog grows with every release (D-88), so the expected
-	// signers come from it: OpenFief's CI, then each catalog publisher.
+// ciAndCatalogSigners names the signers a policy without owner signers
+// holds. The embedded catalog grows with every release (D-88), so they come
+// from it: OpenFief's CI, then each distinct catalog publisher once, in
+// catalog order, however many entries it signs.
+func ciAndCatalogSigners(t *testing.T) []string {
+	t.Helper()
 	c, err := catalog.Load()
 	if err != nil {
 		t.Fatalf("catalog: %v", err)
 	}
-	ciAndCatalog := make([]string, 0, 1+len(c.Entries))
-	ciAndCatalog = append(ciAndCatalog, "openfief-ci")
+	names := []string{"openfief-ci"}
+	var publishers []*plugins.Signer
 	for i := range c.Entries {
-		ciAndCatalog = append(ciAndCatalog, c.Entries[i].Publisher.Name)
+		p := &c.Entries[i].Publisher
+		if slices.ContainsFunc(publishers, func(s *plugins.Signer) bool { return cmp.Equal(s, p) }) {
+			continue
+		}
+		publishers = append(publishers, p)
+		names = append(names, p.Name)
 	}
+	return names
+}
+
+func TestTrustPolicy(t *testing.T) {
+	t.Parallel()
+	ciAndCatalog := ciAndCatalogSigners(t)
 	dir := t.TempDir()
 	write := func(name, content string) string {
 		path := filepath.Join(dir, name)

@@ -133244,3 +133244,52 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-app-scheduler
+  - id: SYM-plugins-fn-append-signer
+    title: appendSigner
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T22:24:43.142Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-trusted-signers-only
+  - id: SYM-plugins-fn-same-signer
+    title: sameSigner
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T22:24:49.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-trusted-signers-only
+  - id: SYM-plugins-fn-same-source
+    title: sameSource
+    sourceFile: internal/plugins/trust.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T22:24:55.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-trust
+      - type: implements
+        target: REQ-plugins-trusted-signers-only
+  - id: SYM-operator-cmd-test-helper-ci-and-catalog-signers
+    title: ciAndCatalogSigners
+    sourceFile: cmd/operator/main_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T22:25:46.965Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-cmd

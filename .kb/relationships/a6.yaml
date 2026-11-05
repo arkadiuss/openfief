@@ -629,3 +629,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-183b102bb7f3
+  - type: implements
+    from: SYM-plugins-fn-same-signer
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-11-05T22:24:51.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f11251db0c0b
+  - type: covered_by
+    from: SYM-plugins-fn-same-signer
+    to: TEST-plugins-trust
+    created_at: 2026-11-05T22:24:51.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59f0dbe209b6
