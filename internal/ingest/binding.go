@@ -77,7 +77,7 @@ const maxInstanceNameLen = 56
 
 // ValidateInstanceName reports whether name can name a connector instance:
 // a lower-case DNS label of at most 56 characters that starts with a
-// letter, as a Plugin's name must be.
+// letter and has no two hyphens in a row, as a Plugin's name must be (D-89).
 func ValidateInstanceName(name string) error {
 	if len(name) > maxInstanceNameLen || !instanceName.MatchString(name) {
 		return fmt.Errorf("%w: %q", ErrInvalidInstanceName, name)
@@ -85,5 +85,6 @@ func ValidateInstanceName(name string) error {
 	return nil
 }
 
-// instanceName matches a lower-case DNS label that starts with a letter.
-var instanceName = regexp.MustCompile(`^[a-z]([-a-z0-9]*[a-z0-9])?$`)
+// instanceName matches a lower-case DNS label that starts with a letter and
+// has no "--", which separates an instance from a Secret role (D-89).
+var instanceName = regexp.MustCompile(`^[a-z][a-z0-9]*(-[a-z0-9]+)*$`)

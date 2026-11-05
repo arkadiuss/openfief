@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"slices"
 	"testing"
 	"time"
 
@@ -10,6 +11,7 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/internal/plugins/catalog"
 	"github.com/arkadiuss/openfief/internal/plugins/operator"
 )
 
@@ -98,8 +100,32 @@ func TestParseFlagsTrustedSigners(t *testing.T) {
 	}
 }
 
+// ciAndCatalogSigners names the signers a policy without owner signers
+// holds. The embedded catalog grows with every release (D-88), so they come
+// from it: OpenFief's CI, then each distinct catalog publisher once, in
+// catalog order, however many entries it signs.
+func ciAndCatalogSigners(t *testing.T) []string {
+	t.Helper()
+	c, err := catalog.Load()
+	if err != nil {
+		t.Fatalf("catalog: %v", err)
+	}
+	names := []string{"openfief-ci"}
+	var publishers []*plugins.Signer
+	for i := range c.Entries {
+		p := &c.Entries[i].Publisher
+		if slices.ContainsFunc(publishers, func(s *plugins.Signer) bool { return cmp.Equal(s, p) }) {
+			continue
+		}
+		publishers = append(publishers, p)
+		names = append(names, p.Name)
+	}
+	return names
+}
+
 func TestTrustPolicy(t *testing.T) {
 	t.Parallel()
+	ciAndCatalog := ciAndCatalogSigners(t)
 	dir := t.TempDir()
 	write := func(name, content string) string {
 		path := filepath.Join(dir, name)
@@ -114,11 +140,11 @@ func TestTrustPolicy(t *testing.T) {
 		wantSigners []string
 		wantErr     error
 	}{
-		{name: "no signers file: CI and the catalog only", path: filepath.Join(dir, "missing.json"), wantSigners: []string{"openfief-ci"}},
+		{name: "no signers file: CI and the catalog only", path: filepath.Join(dir, "missing.json"), wantSigners: ciAndCatalog},
 		{
 			name:        "owner signers are added",
 			path:        write("ok.json", `{"signers":[{"name":"my-ci","issuer":"https://issuer.example.com","subject":"https://example.com/release"}]}`),
-			wantSigners: []string{"openfief-ci", "my-ci"},
+			wantSigners: append(append([]string(nil), ciAndCatalog...), "my-ci"),
 		},
 		{name: "invalid signers file stops the operator", path: write("bad.json", `{"signers":[{"name":"x"}]}`), wantErr: plugins.ErrInvalidSigner},
 		{name: "unknown field stops the operator", path: write("unknown.json", `{"allowUnsigned":true}`), wantErr: plugins.ErrInvalidCatalog},

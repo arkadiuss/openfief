@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73269ffdba55
+  - type: constrains
+    from: REQ-operator-gomemlimit-nine-tenths
+    to: FACT-SUBJECT-040695DC2B45EBE0
+    created_at: 2026-11-03T18:24:36.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d206ba8c01b
+  - type: requires_property
+    from: REQ-operator-gomemlimit-nine-tenths
+    to: FACT-PROP-FEB0AA047CB12F83
+    created_at: 2026-11-03T18:24:36.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cae767c11782
+  - type: specified_by
+    from: REQ-operator-gomemlimit-nine-tenths
+    to: SCEN-operator-plugin-gomemlimit
+    created_at: 2026-11-03T18:24:36.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b497bc417043

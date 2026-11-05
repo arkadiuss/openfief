@@ -70,7 +70,7 @@ func TestDeepCopyIsIndependent(t *testing.T) {
 			name: "PluginGrant",
 			obj: &v1alpha1.PluginGrant{
 				ObjectMeta: metav1.ObjectMeta{Name: "sample", Namespace: "openfief"},
-				Spec:       v1alpha1.Permissions{Capabilities: []string{"connector"}, Secrets: []string{"sample-token"}},
+				Spec:       v1alpha1.Permissions{Capabilities: []string{"connector"}, Secrets: []string{"sample--token"}},
 			},
 			edit: func(o runtime.Object) {
 				if g, ok := o.(*v1alpha1.PluginGrant); ok {

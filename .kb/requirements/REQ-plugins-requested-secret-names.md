@@ -1,6 +1,6 @@
 ---
 title: A plugin instance must request, and its workload must mount, the Secret <instance>-<role> for each Secret role its manifest names, and a role must be a DNS label.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-89
 tags:
   - strict-modeling

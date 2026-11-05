@@ -56,9 +56,23 @@ type SecretMount struct {
 	MountPath string
 }
 
+// SecretNameSeparator joins an instance and a role in the name of the
+// instance's Secret. Neither an instance name nor a role may hold it, so a
+// Secret's name reads only one way (D-89).
+const SecretNameSeparator = "--"
+
 // SecretName is the name of the Secret an instance mounts for a role:
-// "<instance>-<role>" (D-89).
-func SecretName(instance, role string) string { return instance + "-" + role }
+// "<instance>--<role>" (D-89).
+func SecretName(instance, role string) string { return instance + SecretNameSeparator + role }
+
+// validateNoSeparator returns ErrSecretNameSeparator for field when n, an
+// instance name or a Secret role, holds SecretNameSeparator (D-89).
+func validateNoSeparator(field, n string) []error {
+	if strings.Contains(n, SecretNameSeparator) {
+		return []error{fieldErr(field, ErrSecretNameSeparator, n)}
+	}
+	return nil
+}
 
 // ReservedMountPath is where Kubernetes and OpenFief put service account
 // tokens; no Secret may be mounted at, above or below it.
@@ -214,7 +228,9 @@ func validateSecretMounts(ms []SecretMount) []error {
 	for i, r := range roles {
 		if validateLabel(r) != nil {
 			errs = append(errs, fieldErr(indexed("secrets", i)+".role", ErrInvalidName, r))
+			continue
 		}
+		errs = append(errs, validateNoSeparator(indexed("secrets", i)+".role", r)...)
 	}
 	errs = append(errs, duplicates("secrets", roles, func(s string) string { return s })...)
 	for i, p := range paths {

@@ -16,7 +16,7 @@ import (
 func TestRunRefusesSharedSecret(t *testing.T) {
 	t.Parallel()
 	c := installed()
-	c.instances = append(c.instances, app.Instance{Name: "sample-x", HasPlugin: true, HasGrant: true, Secrets: []string{"sample-key"}})
+	c.instances = append(c.instances, app.Instance{Name: "sample-x", HasPlugin: true, HasGrant: true, Secrets: []string{"sample--key"}})
 	out, err := runOn(c, "y\n", "plugin", "install", sampleImage)
 	if !errors.Is(err, app.ErrSecretInUse) || len(c.instances) != 1 {
 		t.Errorf("install naming sample-x's Secret: %v, instances %v; want ErrSecretInUse and nothing installed\n%s", err, c.instances, out)

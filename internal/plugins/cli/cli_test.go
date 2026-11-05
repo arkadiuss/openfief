@@ -193,12 +193,12 @@ func env(c *fakeCluster, in string, out, errOut *bytes.Buffer) *cli.Env {
 }
 
 // installed is a cluster with the named instances, each naming the Secret
-// view-key, which is labelled as the first one's (D-182).
+// view--key, which is labelled as the first one's (D-182).
 func installed(names ...string) *fakeCluster {
 	c := &fakeCluster{}
 	for _, n := range names {
-		owners := map[string]string{"view-key": names[0]}
-		c.instances = append(c.instances, app.Instance{Name: n, HasPlugin: true, HasGrant: true, Secrets: []string{"view-key"}, SecretOwners: owners})
+		owners := map[string]string{"view--key": names[0]}
+		c.instances = append(c.instances, app.Instance{Name: n, HasPlugin: true, HasGrant: true, Secrets: []string{"view--key"}, SecretOwners: owners})
 	}
 	return c
 }
@@ -210,7 +210,7 @@ func TestRun(t *testing.T) {
 		{
 			name: "install confirmed", args: []string{"plugin", "install", sampleImage, "--config", "config.json"}, in: "y\n",
 			cluster: installed(), wantNames: []string{"sample"},
-			wantOut: []string{"Instance:     sample", "unverified: signed by trusted signer openfief-ci", "sample-key (role key) at /etc/openfief/view", `Config given: {"theme":"dark"}`, "Install sample? [y/N] ", "Installed sample."},
+			wantOut: []string{"Instance:     sample", "unverified: signed by trusted signer openfief-ci", "sample--key (role key) at /etc/openfief/view", `Config given: {"theme":"dark"}`, "Install sample? [y/N] ", "Installed sample."},
 		},
 		{
 			name: "install declined changes nothing", args: []string{"plugin", "install", sampleImage}, in: "n\n",
@@ -249,16 +249,16 @@ func TestRun(t *testing.T) {
 		{
 			name: "uninstall confirmed", args: []string{"plugin", "uninstall", "sample"}, in: "yes\n",
 			cluster: installed("sample", "other"), wantNames: []string{"other"}, wantDeleted: []string{"sample"},
-			wantOut: []string{"Keeps Secrets another instance uses: view-key", "Uninstall sample? [y/N] ", "Uninstalled sample."},
+			wantOut: []string{"Keeps Secrets another instance uses: view--key", "Uninstall sample? [y/N] ", "Uninstalled sample."},
 		},
 		{
 			name: "uninstall the last user of a Secret", args: []string{"plugin", "uninstall", "sample", "--yes"},
-			cluster: installed("sample"), wantDeleted: []string{"sample", "view-key"}, wantOut: []string{"Secret view-key"},
+			cluster: installed("sample"), wantDeleted: []string{"sample", "view--key"}, wantOut: []string{"Secret view--key"},
 		},
 		{
 			name: "uninstall leaves a Secret not labelled as the instance's", args: []string{"plugin", "uninstall", "other", "--yes"},
 			cluster: installed("sample", "other"), wantNames: []string{"sample"}, wantDeleted: []string{"other"},
-			wantOut: []string{"Leaves Secrets not labelled openfief.io/instance=other: view-key"},
+			wantOut: []string{"Leaves Secrets not labelled openfief.io/instance=other: view--key"},
 		},
 		{name: "uninstall declined", args: []string{"plugin", "uninstall", "sample"}, in: "\n", cluster: installed("sample"), wantNames: []string{"sample"}, wantErr: cli.ErrAborted},
 		{name: "uninstall unknown", args: []string{"plugin", "uninstall", "nope", "--yes"}, cluster: installed(), wantErr: app.ErrNotInstalled},

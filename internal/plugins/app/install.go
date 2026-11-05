@@ -30,8 +30,9 @@ var (
 	// ErrSecretInUse reports an install or upgrade whose instance would
 	// mount a Secret another installed instance already names: two
 	// instances never share a Secret (D-89). Names join the instance and
-	// the role with a hyphen, and both may hold hyphens, so instance ibkr's
-	// role flex-token and instance ibkr-flex's role token name one Secret.
+	// the role with "--", which neither may hold, so two instances' roles
+	// never spell one Secret; a grant can still name another instance's
+	// Secret, and this check stays as a second layer (D-182).
 	ErrSecretInUse = errors.New("another instance already names that Secret")
 	// ErrSecretNotOwned reports a Secret an uninstall left alone because it
 	// doesn't carry the instance's plugins.OwnerInstanceLabel (D-182).

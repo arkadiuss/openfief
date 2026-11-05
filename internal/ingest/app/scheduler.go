@@ -82,7 +82,8 @@ type ScopeSource interface {
 
 // Scheduler owns connector instances' syncs (D-49): it syncs every running
 // instance when its SyncPolicy says it is due, one sync per instance at a
-// time, retries a failed batch with the same batch ID after a backoff, and
+// time and at most Workers at once, retries a failed batch with the same
+// batch ID after a backoff, and
 // stores the watermark of each completed sync. An instance that is no
 // longer listed is no longer synced; its state and data stay (D-58).
 //
@@ -106,6 +107,11 @@ type Scheduler struct {
 	// sync of it carries (D-117); nil sends nothing.
 	Held   HeldSource
 	Policy ingest.SyncPolicy
+	// Workers is how many syncs Tick runs at once: one when it is zero or
+	// less (D-189). Each sync holds its delivery in memory while it imports
+	// it, so the owner raises it only together with the core's memory
+	// limit.
+	Workers int
 	// Timeout bounds one attempt: the call and the import.
 	Timeout time.Duration
 	Now     func() time.Time
@@ -139,7 +145,9 @@ func (s *Scheduler) Run(ctx context.Context, ticks <-chan time.Time) {
 }
 
 // Tick starts, in the background, a sync of every listed instance that is
-// due and not syncing in this process. Wait waits for them.
+// due and not syncing in this process, while fewer than Workers syncs run;
+// a due instance that finds every worker busy waits for a later tick, in
+// the order the instances are listed. Wait waits for them.
 func (s *Scheduler) Tick(ctx context.Context) error {
 	names, err := s.Instances.ConnectorInstances(ctx)
 	if err != nil {
@@ -155,7 +163,7 @@ func (s *Scheduler) Tick(ctx context.Context) error {
 	}
 	now := s.Now()
 	for _, name := range names {
-		if now.Before(next[name]) || !s.begin(name) {
+		if now.Before(next[name]) || !s.begin(name, s.workers()) {
 			continue
 		}
 		s.wg.Go(func() {
@@ -176,21 +184,25 @@ func (s *Scheduler) Wait() { s.wg.Wait() }
 // fails with ErrSyncRunning while the instance syncs. A failure counts like
 // a scheduled one.
 func (s *Scheduler) SyncNow(ctx context.Context, instance string, mode ingest.Mode) (SyncResult, error) {
-	if !s.begin(instance) {
+	if !s.begin(instance, 0) {
 		return SyncResult{}, fmt.Errorf("%w: %s", ErrSyncRunning, instance)
 	}
 	defer s.end(instance)
 	return s.attempt(ctx, instance, mode)
 }
 
-// begin marks instance as syncing in this process, unless it already is.
-func (s *Scheduler) begin(instance string) bool {
+// workers is how many syncs Tick runs at once (D-189).
+func (s *Scheduler) workers() int { return max(s.Workers, 1) }
+
+// begin marks instance as syncing in this process, unless it already is
+// or, with a positive limit, limit syncs already run.
+func (s *Scheduler) begin(instance string, limit int) bool {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if s.running == nil {
 		s.running = map[string]bool{}
 	}
-	if s.running[instance] {
+	if s.running[instance] || (limit > 0 && len(s.running) >= limit) {
 		return false
 	}
 	s.running[instance] = true

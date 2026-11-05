@@ -1,6 +1,6 @@
 ---
 title: For each Secret role in a plugin's manifest, the operator must mount the Secret named <instance>-<role>.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

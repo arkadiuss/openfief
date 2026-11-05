@@ -388,10 +388,18 @@ type TrustPolicy struct {
 // NewTrustPolicy builds the policy from the catalog and the owner's signers.
 // OpenFief's CI is always trusted. It fails on an invalid catalog, an invalid
 // owner signer, or an owner signer whose kind is not SignerOwner.
+//
+// A publisher who signs several catalog entries, or an owner signer listed
+// twice, is trusted once, where it first appears: two signers are the same
+// when their name, kind and identity are all equal (sameSigner). Signers that
+// share only a name stay apart, because trust follows the identity and the
+// name is only for messages; Catalog.Validate doesn't require names to be
+// unique, so a publisher who signs with two identities keeps both. An owner
+// signer with a publisher's identity stays apart too: its kind differs.
 func NewTrustPolicy(catalog Catalog, owner []Signer) (TrustPolicy, error) {
 	p := TrustPolicy{signers: []Signer{OpenFiefCI()}, catalog: catalog}
 	for i := range catalog.Entries {
-		p.signers = append(p.signers, catalog.Entries[i].Publisher)
+		p.signers = appendSigner(p.signers, &catalog.Entries[i].Publisher)
 	}
 	errs := []error{catalog.Validate()}
 	for i := range owner {
@@ -404,7 +412,7 @@ func NewTrustPolicy(catalog Catalog, owner []Signer) (TrustPolicy, error) {
 			errs = append(errs, err)
 			continue
 		}
-		p.signers = append(p.signers, s)
+		p.signers = appendSigner(p.signers, &s)
 	}
 	if err := errors.Join(errs...); err != nil {
 		return TrustPolicy{}, err
@@ -472,6 +480,35 @@ func appendNew(names []string, s string) []string {
 		return names
 	}
 	return append(names, s)
+}
+
+// appendSigner appends s to signers unless signers already holds the same
+// signer.
+func appendSigner(signers []Signer, s *Signer) []Signer {
+	for i := range signers {
+		if sameSigner(&signers[i], s) {
+			return signers
+		}
+	}
+	return append(signers, *s)
+}
+
+// sameSigner reports whether a and b have the same name, kind and identity,
+// comparing the identity's source by value rather than by pointer.
+func sameSigner(a, b *Signer) bool {
+	x, y := &a.Identity, &b.Identity
+	return a.Name == b.Name && a.Kind == b.Kind &&
+		x.Issuer == y.Issuer && x.Subject == y.Subject && x.SubjectPattern == y.SubjectPattern &&
+		x.PublicKey == y.PublicKey && sameSource(x.Source, y.Source)
+}
+
+// sameSource reports whether a and b are both nil or pin the same repository
+// and ref.
+func sameSource(a, b *SignerSource) bool {
+	if a == nil || b == nil {
+		return a == b
+	}
+	return *a == *b
 }
 
 // signedBy reports whether any of img's signatures was made by id.

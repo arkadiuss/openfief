@@ -357,8 +357,27 @@ func TestNewTrustPolicy(t *testing.T) {
 	if err != nil {
 		t.Fatalf("image: %v", err)
 	}
+	imgB, err := plugins.ParseImageRef(imageB)
+	if err != nil {
+		t.Fatalf("image: %v", err)
+	}
 	publisher := plugins.Signer{Name: "p", Kind: plugins.SignerPublisher, Identity: keyless(issuerExample, subjectCI)}
+	other := plugins.Signer{Name: "q", Kind: plugins.SignerPublisher, Identity: keyless(issuerExample, subjectOtherRef)}
+	namesake := plugins.Signer{Name: "p", Kind: plugins.SignerPublisher, Identity: keyless(issuerExample, subjectOtherRef)}
+	// pinned and pinnedAgain are one publisher whose sources are separate
+	// pointers to equal values: the policy compares sources by value.
+	pinned := plugins.Signer{Name: "r", Kind: plugins.SignerPublisher, Identity: fromSource(issuerExample, subjectCI, ownerRepository, ownerRef)}
+	pinnedAgain := plugins.Signer{Name: "r", Kind: plugins.SignerPublisher, Identity: fromSource(issuerExample, subjectCI, ownerRepository, ownerRef)}
 	owner := plugins.Signer{Name: "o", Kind: plugins.SignerOwner, Identity: keyless(issuerExample, subjectOtherRef)}
+	// entries is a catalog with one entry per publisher, on alternating images.
+	entries := func(publishers ...plugins.Signer) plugins.Catalog {
+		imgs := []plugins.ImageRef{img, imgB}
+		var c plugins.Catalog
+		for i, s := range publishers {
+			c.Entries = append(c.Entries, plugins.CatalogEntry{Name: "sample", Image: imgs[i%len(imgs)], Publisher: s})
+		}
+		return c
+	}
 	tests := []struct {
 		name        string
 		catalog     plugins.Catalog
@@ -372,6 +391,37 @@ func TestNewTrustPolicy(t *testing.T) {
 			catalog:     plugins.Catalog{Entries: []plugins.CatalogEntry{{Name: "sample", Image: img, Publisher: publisher}}},
 			owner:       []plugins.Signer{owner},
 			wantSigners: []string{"openfief-ci", "p", "o"},
+		},
+		{
+			name:        "a publisher of several entries is trusted once",
+			catalog:     entries(publisher, publisher, publisher),
+			wantSigners: []string{"openfief-ci", "p"},
+		},
+		{
+			name:        "a publisher whose source pins are equal copies is trusted once",
+			catalog:     entries(pinned, pinnedAgain),
+			wantSigners: []string{"openfief-ci", "r"},
+		},
+		{
+			name:        "two publishers are trusted once each, in catalog order",
+			catalog:     entries(other, publisher, other, publisher),
+			wantSigners: []string{"openfief-ci", "q", "p"},
+		},
+		{
+			name:        "publishers sharing only a name are both trusted",
+			catalog:     entries(publisher, namesake),
+			wantSigners: []string{"openfief-ci", "p", "p"},
+		},
+		{
+			name:        "an owner signer listed twice is trusted once",
+			owner:       []plugins.Signer{owner, owner},
+			wantSigners: []string{"openfief-ci", "o"},
+		},
+		{
+			name:        "an owner signer with a publisher's identity is kept apart",
+			catalog:     entries(publisher),
+			owner:       []plugins.Signer{{Name: "p", Kind: plugins.SignerOwner, Identity: publisher.Identity}},
+			wantSigners: []string{"openfief-ci", "p", "p"},
 		},
 		{name: "owner signer posing as a publisher", owner: []plugins.Signer{publisher}, wantErr: plugins.ErrInvalidSigner},
 		{

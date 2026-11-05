@@ -50,6 +50,9 @@ spec:
             - --sync-every=6h
             - --sync-jitter=30m
             - --sync-timeout=5m
+            # One connector sync at a time (D-189): each holds its delivery in memory while it imports it. Raise it only
+            # together with limits.memory below, and GOMEMLIMIT with it.
+            - --sync-workers=1
             - --service-account=openfief-core
             # Sessions: 12h idle, 7d at most.
             - --session-idle=12h

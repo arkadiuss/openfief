@@ -6,6 +6,7 @@ import (
 	"io"
 	"slices"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -140,13 +141,17 @@ func delivery(t *testing.T) app.Delivery {
 }
 
 // fakeBindings binds every instance to its accounts, or fails with err.
+// Syncs of several instances look up their bindings at once.
 type fakeBindings struct {
 	accounts []ledger.AccountID
 	err      error
+	mu       sync.Mutex
 	calls    int
 }
 
 func (f *fakeBindings) BoundAccounts(context.Context, string) ([]ledger.AccountID, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
 	f.calls++
 	return f.accounts, f.err
 }

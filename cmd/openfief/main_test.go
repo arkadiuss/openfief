@@ -154,7 +154,7 @@ func checkInstalled(t *testing.T, store *kube.Instances, image, out string) {
 	}
 	// A connector's grant names its institutions, none here (D-185).
 	want := v1alpha1.Permissions{
-		Capabilities: []string{"connector"}, Egress: []string{"api.example.com:443"}, Secrets: []string{"sample-credentials"},
+		Capabilities: []string{"connector"}, Egress: []string{"api.example.com:443"}, Secrets: []string{"sample--credentials"},
 		Institutions: &[]string{},
 	}
 	if diff := cmp.Diff(want, g.Spec); diff != "" {

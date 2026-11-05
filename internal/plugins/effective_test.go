@@ -66,7 +66,7 @@ func TestEffective(t *testing.T) {
 			name: "partial grant enforces only the overlap",
 			grant: func(g *plugins.Grant) {
 				g.Permissions.Egress = []plugins.EgressHost{host("api.example.com", 443), host("data.example.org", 443)}
-				g.Permissions.Secrets = []string{"sample-token"}
+				g.Permissions.Secrets = []string{"sample--token"}
 				g.Permissions.DataTiers = nil
 			},
 			plugin: func(*plugins.Plugin) {},

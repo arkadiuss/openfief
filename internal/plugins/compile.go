@@ -169,7 +169,7 @@ type Workload struct {
 //     granted; never DNS (D-32);
 //   - HTTPS_PROXY set to the proxy only when some egress host is granted, with
 //     NO_PROXY set to the core;
-//   - the granted Secrets, each the instance's own <instance>-<role>
+//   - the granted Secrets, each the instance's own <instance>--<role>
 //     (D-89), mounted read-only;
 //   - a ServiceAccount without Kubernetes API access, and a projected token
 //     with audience CoreAudience (D-27), in the openfief namespace (D-15);

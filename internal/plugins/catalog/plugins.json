@@ -1,3 +1,88 @@
 {
-  "plugins": []
+  "plugins": [
+    {
+      "image": "ghcr.io/arkadiuss/openfief/eodhd@sha256:2450b6955a7af525e57e2c57f53012ca4f917a5c85e6937f0074b3d68f7db592",
+      "name": "eodhd",
+      "publisher": {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "name": "openfief",
+        "sourceRef": "refs/heads/main",
+        "sourceRepository": "https://github.com/arkadiuss/openfief",
+        "subject": "https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main"
+      },
+      "version": "2026.11.0-alpha.1"
+    },
+    {
+      "image": "ghcr.io/arkadiuss/openfief/ghostfolio@sha256:1f4ee5058b6973e5cc8210b577c2f1a52de15b76d361064453c23a86be216879",
+      "name": "ghostfolio",
+      "publisher": {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "name": "openfief",
+        "sourceRef": "refs/heads/main",
+        "sourceRepository": "https://github.com/arkadiuss/openfief",
+        "subject": "https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main"
+      },
+      "version": "2026.11.0-alpha.1"
+    },
+    {
+      "image": "ghcr.io/arkadiuss/openfief/ibkr-flex@sha256:20894eeec8748d662404418619e77f6b012e0a3b0212686ec0046288e67b3468",
+      "name": "ibkr-flex",
+      "publisher": {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "name": "openfief",
+        "sourceRef": "refs/heads/main",
+        "sourceRepository": "https://github.com/arkadiuss/openfief",
+        "subject": "https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main"
+      },
+      "version": "2026.11.0-alpha.1"
+    },
+    {
+      "image": "ghcr.io/arkadiuss/openfief/nbp-fx@sha256:d037736375a16168f7b408059a2770ff5a6f83408eccdd7b184a0893205807cb",
+      "name": "nbp-fx",
+      "publisher": {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "name": "openfief",
+        "sourceRef": "refs/heads/main",
+        "sourceRepository": "https://github.com/arkadiuss/openfief",
+        "subject": "https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main"
+      },
+      "version": "2026.11.0-alpha.1"
+    },
+    {
+      "image": "ghcr.io/arkadiuss/openfief/treasury-bonds@sha256:b14dc8fc58676c89c7fc3ed2698e5220b7526770b96af7a62468e324c18145eb",
+      "name": "treasury-bonds",
+      "publisher": {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "name": "openfief",
+        "sourceRef": "refs/heads/main",
+        "sourceRepository": "https://github.com/arkadiuss/openfief",
+        "subject": "https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main"
+      },
+      "version": "2026.11.0-alpha.1"
+    },
+    {
+      "image": "ghcr.io/arkadiuss/openfief/ui@sha256:85c8178c656b66142c6c1ec6ff749d700c605763684b4308cc6541f2ddb918ed",
+      "name": "ui",
+      "publisher": {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "name": "openfief",
+        "sourceRef": "refs/heads/main",
+        "sourceRepository": "https://github.com/arkadiuss/openfief",
+        "subject": "https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main"
+      },
+      "version": "2026.11.0-alpha.1"
+    },
+    {
+      "image": "ghcr.io/arkadiuss/openfief/xtb@sha256:c34510aa55c96e695af70f86fa1dced00e12e13e004d253e5319aa206ee3c0d8",
+      "name": "xtb",
+      "publisher": {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "name": "openfief",
+        "sourceRef": "refs/heads/main",
+        "sourceRepository": "https://github.com/arkadiuss/openfief",
+        "subject": "https://github.com/arkadiuss/openfief/.github/workflows/images.yml@refs/heads/main"
+      },
+      "version": "2026.11.0-alpha.1"
+    }
+  ]
 }
