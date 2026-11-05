@@ -99,6 +99,20 @@ The pattern library, as drawn. M0 needs only the first group; the rest belong to
 - **Charts.** The allocation and value-over-time charts (D-30) use vert, then or, kasztan, a grey and the vert tint, in that order, with direct labels where they fit.
 - **Empty states.** Kasztan asleep, one line saying what's missing, and the action that fills it.
 
+**M0 screens (D-192 to D-196):**
+
+- **Top bar.** The wordmark, then Overview, Accounts, Inbox with its open count as a gold pill, Settings; the session's scope and *Sign out* at the end. On a phone it folds behind *Menu*.
+- **Overview.** One column of cards on a phone, a 12-column grid from 960 px:
+  - *Ask*: a surface card spanning the width. A display-font status sentence, then the Ask box (a 52 px field with a search icon and a `/` hint, focused by `/`, and an *Ask* primary button), suggestion chips drawn from the current state, the answer as a conversation (the question as an `--accent-soft` bubble on the right, the answer card under it with its table and one *Open …* link), and one muted line saying the answers come from the owner's record with no AI model.
+  - *Value*: an `--accent` hero card: an `--or-bright` eyebrow, gross in large mono with its currency, the change this month and the year's time-weighted return, then net and liquidation.
+  - *Over time*: one chart card with a segmented switch (Value, Performance, Gross · net · liquidation), the *Tracking began* marker and one caption line.
+  - *Needs you*: the first three open items, each a status pill, a title, one line of context and its action, and *Open inbox (n)*. With nothing open it is Kasztan asleep and one line.
+  - *Accounts*: grouped under sleeve eyebrows with each sleeve's total; a row is the name, institution and wrapper, a status pill, the value and the month's change, and the whole row is a link.
+  - *Allocation* bars, each a link to its holdings, and *Recent activity*, a dated list.
+- **Inbox.** A title and one sentence, a segmented filter (Open, Acknowledged, Done) with counts, then a card per group with an eyebrow and count; an item is a title, one line of context with links to its account or instrument, a status pill, the evidence (two prices side by side, a sync's timeline in a disclosure) and its action in place. A side column offers Ask suggestions about the open items.
+- **Account.** A breadcrumb, the name with sleeve, wrapper and sync pills, the account's actions (*Upload statement* primary, *Enter cash balance*), a gold banner for its own open items, four figure cards (gross, net, liquidation, time-weighted return), then tabs: Holdings, Transactions, Lots, Cash, Reconciliation, Account settings. Every holding links to its instrument.
+- **Instrument.** The same frame for one instrument: price chart with its source, holdings and lots across accounts, transactions, price checks with their history, ticker and ISIN, OKI class.
+
 **Later, agent surfaces (not built):**
 
 - **Fief card.** The canton, the agent's name and thesis, an *Active* or *Revoked* pill, a meter of the lease in use split into holdings and open orders, and the lease's rules as chips.
