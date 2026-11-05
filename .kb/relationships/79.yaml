@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b25c1d2dfd29
+  - type: implements
+    from: SYM-ingest-batch-record
+    to: REQ-ingest-completed-batches-pages
+    created_at: 2026-11-05T23:39:51.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d49eac30dc8
+  - type: covered_by
+    from: SYM-ingest-batch-record
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:39:51.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b49e72c7b0f

@@ -678,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea3af5fda264
+  - type: verified_by
+    from: SCEN-ingest-sync-attempt-history
+    to: TEST-ingest-sync-attempt
+    created_at: 2026-11-05T23:38:59.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10e00b940672
+  - type: verified_by
+    from: SCEN-ingest-sync-attempt-history
+    to: TEST-ingest-app-sync-errors
+    created_at: 2026-11-05T23:38:59.366Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb146168131c
+  - type: verified_by
+    from: SCEN-ingest-sync-attempt-history
+    to: TEST-ingest-connectrpc-sync-errors
+    created_at: 2026-11-05T23:38:59.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5aff3f48adf
+  - type: verified_by
+    from: SCEN-ingest-sync-attempt-history
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:38:59.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-052f6ef75027

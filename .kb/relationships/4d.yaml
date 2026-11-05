@@ -797,3 +797,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ada964cbe9c8
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-records-attempts
+    to: TEST-ingest-app-sync-errors
+    created_at: 2026-11-05T23:40:56.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bdd6d3af40a

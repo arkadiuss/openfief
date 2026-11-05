@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9857cdaa4a15
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-answering-connector-sync
+    to: TEST-ingest-connectrpc-sync-errors
+    created_at: 2026-11-05T23:41:03.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59a020cf8bd0

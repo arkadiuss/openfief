@@ -762,3 +762,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-16cee175f9d4
+  - type: constrains
+    from: REQ-ingest-completed-batches-pages
+    to: FACT-SUBJECT-871677CA0278750B
+    created_at: 2026-11-05T23:39:15.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09a47c05821c
+  - type: requires_property
+    from: REQ-ingest-completed-batches-pages
+    to: FACT-PROP-B7459642FFF8DD71
+    created_at: 2026-11-05T23:39:16.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58bdfef3ac68
+  - type: specified_by
+    from: REQ-ingest-completed-batches-pages
+    to: SCEN-ingest-completed-batches-pages
+    created_at: 2026-11-05T23:39:16.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cacc9a9f96db
+  - type: executable_for
+    from: SYM-ingest-pg-test-completed-batches
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:41:41.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7be40851d49

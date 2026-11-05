@@ -797,3 +797,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6bfbd0ca6522
+  - type: implements
+    from: SYM-ingest-conn-rpc-sync-error
+    to: REQ-ingest-sync-attempt-history
+    created_at: 2026-11-05T23:40:08.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db080e5ed077
+  - type: covered_by
+    from: SYM-ingest-conn-rpc-sync-error
+    to: TEST-ingest-connectrpc-sync-errors
+    created_at: 2026-11-05T23:40:08.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80152eb56c13

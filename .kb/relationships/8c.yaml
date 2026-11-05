@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-267208d02d28
+  - type: implements
+    from: SYM-ingest-pg-store-sync-attempts
+    to: REQ-ingest-sync-attempt-history
+    created_at: 2026-11-05T23:40:16.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9445bd50e4f0
+  - type: covered_by
+    from: SYM-ingest-pg-store-sync-attempts
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:40:16.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d37d6a803b79

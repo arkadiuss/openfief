@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a52a9533dc1
+  - type: executable_for
+    from: SYM-ingest-pg-test-sync-attempts-pages
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:41:33.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5df52456c582

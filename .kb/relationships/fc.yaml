@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7dc749b1a6ad
+  - type: implements
+    from: SYM-ingest-app-is-booking-error
+    to: REQ-ingest-sync-attempt-history
+    created_at: 2026-11-05T23:40:04.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29a73a1a7d29
+  - type: covered_by
+    from: SYM-ingest-app-is-booking-error
+    to: TEST-ingest-app-sync-errors
+    created_at: 2026-11-05T23:40:04.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f55376a9e549

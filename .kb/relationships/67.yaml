@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f96c80d69a7
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-row
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:41:25.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c40e4f01ed4

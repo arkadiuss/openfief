@@ -133293,3 +133293,446 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-operator-cmd
+  - id: SYM-ingest-sync-error-class
+    title: SyncErrorClass
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:16.775Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-sync-attempt
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-sync-error-class-string
+    title: SyncErrorClass.String
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:21.046Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-sync-attempt
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-parse-sync-error-class
+    title: ParseSyncErrorClass
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:25.217Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-sync-attempt
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-sync-attempt
+    title: SyncAttempt
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:28.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-sync-attempt
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-sync-attempt-failed
+    title: SyncAttempt.Failed
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:32.994Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-sync-attempt
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-sync-status
+    title: SyncStatus
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:36.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-sync-attempt
+      - type: implements
+        target: REQ-ingest-sync-keeps-failing
+  - id: SYM-ingest-sync-status-keeps-failing
+    title: SyncStatus.KeepsFailing
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:41.132Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-sync-attempt
+      - type: implements
+        target: REQ-ingest-sync-keeps-failing
+  - id: SYM-ingest-attempt-query
+    title: AttemptQuery
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:45.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-batch-record
+    title: BatchRecord
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:50.008Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-completed-batches-pages
+  - id: SYM-ingest-batch-query
+    title: BatchQuery
+    sourceFile: internal/ingest/syncattempt.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:54.263Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-completed-batches-pages
+  - id: SYM-ingest-app-sync-error-class-of
+    title: SyncErrorClassOf
+    sourceFile: internal/ingest/app/syncerror.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:39:58.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-sync-errors
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-app-is-booking-error
+    title: isBookingError
+    sourceFile: internal/ingest/app/syncerror.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:02.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-sync-errors
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-conn-rpc-sync-error
+    title: syncError
+    sourceFile: internal/ingest/connectrpc/client.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:07.083Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-sync-errors
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-pg-append-attempt
+    title: appendAttempt
+    sourceFile: internal/ingest/postgres/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:10.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-pg-store-sync-attempts
+    title: Store.SyncAttempts
+    sourceFile: internal/ingest/postgres/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:14.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-pg-scan-attempt
+    title: scanAttempt
+    sourceFile: internal/ingest/postgres/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:18.830Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-sync-attempt-history
+  - id: SYM-ingest-pg-store-sync-statuses
+    title: Store.SyncStatuses
+    sourceFile: internal/ingest/postgres/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:22.717Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-sync-keeps-failing
+  - id: SYM-ingest-pg-scan-status
+    title: scanStatus
+    sourceFile: internal/ingest/postgres/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:26.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-sync-keeps-failing
+  - id: SYM-ingest-pg-utc
+    title: utc
+    sourceFile: internal/ingest/postgres/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:31.167Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-sync-keeps-failing
+  - id: SYM-ingest-pg-store-completed-batches
+    title: Store.CompletedBatches
+    sourceFile: internal/ingest/postgres/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:35.214Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-completed-batches-pages
+  - id: SYM-ingest-pg-scan-batch-record
+    title: scanBatchRecord
+    sourceFile: internal/ingest/postgres/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:39.148Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-completed-batches-pages
+  - id: SYM-ingest-test-sync-error-class-names
+    title: TestSyncErrorClassNames
+    sourceFile: internal/ingest/syncattempt_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:42.926Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-sync-attempt
+  - id: SYM-ingest-test-keeps-failing
+    title: TestKeepsFailing
+    sourceFile: internal/ingest/syncattempt_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:46.611Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-sync-attempt
+  - id: SYM-ingest-app-test-sync-error-class-of
+    title: TestSyncErrorClassOf
+    sourceFile: internal/ingest/app/syncerror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:50.973Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-sync-errors
+  - id: SYM-ingest-app-test-scheduler-records-attempts
+    title: TestSchedulerRecordsAttempts
+    sourceFile: internal/ingest/app/syncerror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:55.262Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-sync-errors
+  - id: SYM-ingest-conn-rpc-test-helper-answering-connector
+    title: answeringConnector
+    sourceFile: internal/ingest/connectrpc/syncerror_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:40:58.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-sync-errors
+  - id: SYM-ingest-conn-rpc-test-helper-answering-connector-sync
+    title: answeringConnector.Sync
+    sourceFile: internal/ingest/connectrpc/syncerror_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:02.409Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-sync-errors
+  - id: SYM-ingest-conn-rpc-test-client-sync-error-classes
+    title: TestClientSyncErrorClasses
+    sourceFile: internal/ingest/connectrpc/syncerror_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:06.539Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-sync-errors
+  - id: SYM-ingest-pg-test-helper-failed
+    title: failed
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:10.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-ingest-pg-test-helper-succeeded
+    title: succeeded
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:13.656Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-ingest-pg-test-helper-sync-history
+    title: syncHistory
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:17.161Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-ingest-pg-test-helper-must-fail
+    title: mustFail
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:20.758Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-ingest-pg-test-helper-row
+    title: row
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:24.449Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-ingest-pg-test-sync-attempts
+    title: TestSyncAttempts
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:28.337Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-ingest-pg-test-sync-attempts-pages
+    title: TestSyncAttemptsPages
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:32.057Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-ingest-pg-test-sync-statuses
+    title: TestSyncStatuses
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:36.031Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-ingest-pg-test-completed-batches
+    title: TestCompletedBatches
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T23:41:40.154Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history

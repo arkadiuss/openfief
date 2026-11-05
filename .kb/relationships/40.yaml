@@ -559,3 +559,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed16b14c5359
+  - type: implements
+    from: SYM-ingest-pg-store-sync-statuses
+    to: REQ-ingest-sync-keeps-failing
+    created_at: 2026-11-05T23:40:24.236Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2fbda21915d
+  - type: covered_by
+    from: SYM-ingest-pg-store-sync-statuses
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:40:24.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f9493fcb5ef

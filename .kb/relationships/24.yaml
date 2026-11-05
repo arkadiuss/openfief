@@ -671,3 +671,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae6a33c9c4a8
+  - type: implements
+    from: SYM-ingest-sync-error-class
+    to: REQ-ingest-sync-attempt-history
+    created_at: 2026-11-05T23:39:18.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5914e85df3af
+  - type: covered_by
+    from: SYM-ingest-sync-error-class
+    to: TEST-ingest-sync-attempt
+    created_at: 2026-11-05T23:39:18.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00c3793fb071

@@ -16,7 +16,7 @@ import (
 func loggableErrors() []error {
 	return []error{
 		context.Canceled, context.DeadlineExceeded,
-		ErrSyncRunning, ErrEntryRefused, ErrNoEntries, ErrConnectorUnavailable, ErrInvalidDelivery,
+		ErrSyncRunning, ErrEntryRefused, ErrNoEntries, ErrConnectorUnavailable, ErrConnectorFailed, ErrInvalidDelivery,
 		ErrNoConnector, ErrNoCrossCheckStore, ErrInvalidUpload, ErrFileTooLarge, ErrSeedingOutsideOpening,
 		ingest.ErrUndeclaredInstitution, ingest.ErrAccountNotBound, ingest.ErrInvalidBatch, ingest.ErrInvalidInstitution,
 		ingest.ErrInvalidInstanceName, ingest.ErrStartedFromHistory, ingest.ErrOpeningCashEntered,

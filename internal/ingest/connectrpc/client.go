@@ -61,7 +61,7 @@ func H2CClient() *http.Client {
 func (c *Client) Sync(ctx context.Context, instance string, sc *app.SyncCall) (app.Delivery, error) {
 	call, err := c.service(ctx, instance)
 	if err != nil {
-		return app.Delivery{}, err
+		return app.Delivery{}, fmt.Errorf("%w: %w", app.ErrConnectorUnavailable, err)
 	}
 	m, err := modeTo(sc.Mode)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *Client) Sync(ctx context.Context, instance string, sc *app.SyncCall) (a
 	req.Header().Set("Authorization", call.auth)
 	resp, err := call.svc.Sync(ctx, req)
 	if err != nil {
-		return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, err)
+		return app.Delivery{}, fmt.Errorf("connector %s: %w", instance, syncError(err))
 	}
 	return deliveryFrom(resp.Msg.GetDelivery(), sc.ID, resp.Msg.GetWatermark())
 }
@@ -170,6 +170,24 @@ func entryError(err error) error {
 		return fmt.Errorf("%w: %w", app.ErrConnectorUnavailable, err)
 	}
 	return err
+}
+
+// syncError returns err, a failed Sync call, wrapping what the scheduler
+// classifies it by (app.SyncErrorClassOf), never by its text: a context's
+// end as it is; an answer too large to read app.ErrInvalidDelivery; an
+// instance that could not be reached or answered UNAVAILABLE or
+// DEADLINE_EXCEEDED app.ErrConnectorUnavailable; and any other answer of
+// the connector app.ErrConnectorFailed.
+func syncError(err error) error {
+	switch code := connect.CodeOf(err); {
+	case errors.Is(err, context.DeadlineExceeded), errors.Is(err, context.Canceled):
+		return err
+	case errors.Is(err, ErrDeliveryTooLarge):
+		return fmt.Errorf("%w: %w", app.ErrInvalidDelivery, err)
+	case code == connect.CodeUnavailable, code == connect.CodeDeadlineExceeded:
+		return fmt.Errorf("%w: %w", app.ErrConnectorUnavailable, err)
+	}
+	return fmt.Errorf("%w: %w", app.ErrConnectorFailed, err)
 }
 
 // sendChunks sends src's bytes on stream in chunks of ChunkSize. A send that

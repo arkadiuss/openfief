@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc0560250beb
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-must-fail
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:41:22.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-556139108e40

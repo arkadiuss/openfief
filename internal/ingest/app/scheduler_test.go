@@ -36,6 +36,8 @@ type memStore struct {
 	outcomes []string
 	// claimErr, when set, fails every claim.
 	claimErr error
+	// attempts lists every attempt recorded, in order.
+	attempts []ingest.SyncAttempt
 }
 
 func newMemStore() *memStore { return &memStore{instances: map[string]*memInstance{}} }
@@ -70,22 +72,24 @@ func (m *memStore) StartBatch(_ context.Context, instance string, b app.OpenBatc
 	return nil
 }
 
-func (m *memStore) CompleteSync(_ context.Context, instance string, b *ingest.Batch, watermark string, next, _ time.Time) error {
+func (m *memStore) CompleteSync(_ context.Context, b *ingest.Batch, watermark string, a *ingest.SyncAttempt) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	in := m.get(instance)
+	in := m.get(a.Instance)
 	in.claim.Watermark, in.claim.Failures, in.claim.Open = watermark, 0, nil
-	in.next, in.leaseUntil = next, time.Time{}
+	in.next, in.leaseUntil = a.NextSync, time.Time{}
 	m.outcomes = append(m.outcomes, string(b.ID)+":completed")
+	m.attempts = append(m.attempts, *a)
 	return nil
 }
 
-func (m *memStore) FailSync(_ context.Context, instance string, id ingest.BatchID, failures int, next, _ time.Time) error {
+func (m *memStore) FailSync(_ context.Context, a *ingest.SyncAttempt) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	in := m.get(instance)
-	in.claim.Failures, in.next, in.leaseUntil = failures, next, time.Time{}
-	m.outcomes = append(m.outcomes, fmt.Sprintf("%s:failed %d", id, failures))
+	in := m.get(a.Instance)
+	in.claim.Failures, in.next, in.leaseUntil = a.Failures, a.NextSync, time.Time{}
+	m.outcomes = append(m.outcomes, fmt.Sprintf("%s:failed %d", a.Batch, a.Failures))
+	m.attempts = append(m.attempts, *a)
 	return nil
 }
 
