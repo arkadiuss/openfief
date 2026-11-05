@@ -10,6 +10,7 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/internal/plugins/catalog"
 	"github.com/arkadiuss/openfief/internal/plugins/operator"
 )
 
@@ -108,17 +109,28 @@ func TestTrustPolicy(t *testing.T) {
 		}
 		return path
 	}
+	// OpenFief's CI first, then each publisher of the embedded catalog, which
+	// a release fills (D-88), then the owner's signers.
+	c, err := catalog.Load()
+	if err != nil {
+		t.Fatalf("catalog: %v", err)
+	}
+	ciAndCatalog := make([]string, 0, 1+len(c.Entries))
+	ciAndCatalog = append(ciAndCatalog, "openfief-ci")
+	for i := range c.Entries {
+		ciAndCatalog = append(ciAndCatalog, c.Entries[i].Publisher.Name)
+	}
 	tests := []struct {
 		name        string
 		path        string
 		wantSigners []string
 		wantErr     error
 	}{
-		{name: "no signers file: CI and the catalog only", path: filepath.Join(dir, "missing.json"), wantSigners: []string{"openfief-ci"}},
+		{name: "no signers file: CI and the catalog only", path: filepath.Join(dir, "missing.json"), wantSigners: ciAndCatalog},
 		{
 			name:        "owner signers are added",
 			path:        write("ok.json", `{"signers":[{"name":"my-ci","issuer":"https://issuer.example.com","subject":"https://example.com/release"}]}`),
-			wantSigners: []string{"openfief-ci", "my-ci"},
+			wantSigners: append(append([]string(nil), ciAndCatalog...), "my-ci"),
 		},
 		{name: "invalid signers file stops the operator", path: write("bad.json", `{"signers":[{"name":"x"}]}`), wantErr: plugins.ErrInvalidSigner},
 		{name: "unknown field stops the operator", path: write("unknown.json", `{"allowUnsigned":true}`), wantErr: plugins.ErrInvalidCatalog},
