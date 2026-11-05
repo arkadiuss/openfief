@@ -12,7 +12,11 @@
   <p class="alert alert-warn">The OpenFief core could not say how you can sign in. Try again in a moment.</p>
   {{end}}
   <p class="lede">Sign in with the passkey you made for this host.</p>
+  {{if .DemoLoading}}
+  <p class="alert alert-info" role="status"><strong>Demo data is loading.</strong> The synthetic demo portfolio is still being loaded. Refresh in a minute to view the demo.</p>
+  {{end}}
   <div class="actions"><button type="button" class="primary" data-webauthn="login">Sign in with passkey</button>
+  {{if .DemoLoading}}<a class="button" href="/login">Refresh</a>{{end}}
   {{if .Demo}}
   <form method="post" action="/login/demo" class="inline">
     <button type="submit">View demo</button>

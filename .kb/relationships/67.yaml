@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f96c80d69a7
+  - type: implements
+    from: SYM-core-write-connect-error
+    to: REQ-identity-demo-loading-no-wizard
+    created_at: 2026-11-03T19:30:23.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fab6f6d7a14
+  - type: covered_by
+    from: SYM-core-write-connect-error
+    to: TEST-core-demo-loading
+    created_at: 2026-11-03T19:30:24.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c58a3445c0f2

@@ -734,3 +734,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78f2a78398e6
+  - type: implements
+    from: SYM-identity-demo-loading
+    to: REQ-identity-demo-loading-no-wizard
+    created_at: 2026-11-03T19:28:24.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0090fa1c542a
+  - type: covered_by
+    from: SYM-identity-demo-loading
+    to: TEST-identity-demo-loading
+    created_at: 2026-11-03T19:28:24.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4995dc6181d6

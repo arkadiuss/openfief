@@ -682,7 +682,12 @@ type GetLoginMethodsResponse struct {
 	// needs an enrollment link (core enroll-link, or another host's session).
 	PasskeyRegistered bool `protobuf:"varint,1,opt,name=passkey_registered,json=passkeyRegistered,proto3" json:"passkey_registered,omitempty"`
 	// Whether CreateDemoSession would succeed.
-	DemoSessions  bool `protobuf:"varint,2,opt,name=demo_sessions,json=demoSessions,proto3" json:"demo_sessions,omitempty"`
+	DemoSessions bool `protobuf:"varint,2,opt,name=demo_sessions,json=demoSessions,proto3" json:"demo_sessions,omitempty"`
+	// Whether the core runs with demo sessions on while the database doesn't
+	// carry the demo marker yet: the demo data is still loading, so the login
+	// page says so instead of offering the demo, and the first-run wizard's
+	// writes are refused.
+	DemoLoading   bool `protobuf:"varint,3,opt,name=demo_loading,json=demoLoading,proto3" json:"demo_loading,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -727,6 +732,13 @@ func (x *GetLoginMethodsResponse) GetPasskeyRegistered() bool {
 func (x *GetLoginMethodsResponse) GetDemoSessions() bool {
 	if x != nil {
 		return x.DemoSessions
+	}
+	return false
+}
+
+func (x *GetLoginMethodsResponse) GetDemoLoading() bool {
+	if x != nil {
+		return x.DemoLoading
 	}
 	return false
 }
@@ -2552,10 +2564,11 @@ const file_openfief_identity_v1_auth_proto_rawDesc = "" +
 	"revoked_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\x12?\n" +
 	"\x06status\x18\a \x01(\x0e2'.openfief.identity.v1.ScriptTokenStatusR\x06status\"0\n" +
 	"\x16GetLoginMethodsRequest\x12\x16\n" +
-	"\x06origin\x18\x01 \x01(\tR\x06origin\"m\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\"\x90\x01\n" +
 	"\x17GetLoginMethodsResponse\x12-\n" +
 	"\x12passkey_registered\x18\x01 \x01(\bR\x11passkeyRegistered\x12#\n" +
-	"\rdemo_sessions\x18\x02 \x01(\bR\fdemoSessions\"\x95\x01\n" +
+	"\rdemo_sessions\x18\x02 \x01(\bR\fdemoSessions\x12!\n" +
+	"\fdemo_loading\x18\x03 \x01(\bR\vdemoLoading\"\x95\x01\n" +
 	"\x18BeginRegistrationRequest\x12\x16\n" +
 	"\x06origin\x18\x01 \x01(\tR\x06origin\x12)\n" +
 	"\x0fenrollment_code\x18\x02 \x01(\tH\x00R\x0eenrollmentCode\x12%\n" +
