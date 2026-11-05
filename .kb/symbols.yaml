@@ -1244,7 +1244,7 @@ symbols:
       - type: covered_by
         target: TEST-tooling-release-version
       - type: implements
-        target: REQ-tooling-release-channel-version
+        target: REQ-tooling-release-version-resume
   - id: SYM-release-version-test-expect
     title: expect
     status: active
@@ -133244,3 +133244,98 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-app-scheduler
+  - id: SYM-release-publish-release-assets
+    title: release_assets
+    status: active
+    sourceFile: scripts/release-publish.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T21:54:54.041Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-publish
+      - type: implements
+        target: REQ-tooling-release-publish-resumable
+  - id: SYM-release-publish-ensure-tag
+    title: ensure_tag
+    status: active
+    sourceFile: scripts/release-publish.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T21:54:59.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-publish
+      - type: implements
+        target: REQ-tooling-release-publish-resumable
+  - id: SYM-release-publish-ensure-release
+    title: ensure_release
+    status: active
+    sourceFile: scripts/release-publish.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T21:55:05.660Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-publish
+      - type: implements
+        target: REQ-tooling-release-publish-resumable
+  - id: SYM-release-publish-ensure-pull-request
+    title: ensure_pull_request
+    status: active
+    sourceFile: scripts/release-publish.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T21:55:11.438Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-publish
+      - type: implements
+        target: REQ-tooling-release-publish-resumable
+  - id: SYM-release-publish-test-setup
+    title: setup
+    status: active
+    sourceFile: scripts/tests/release-publish.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T21:55:17.115Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-publish
+  - id: SYM-release-publish-test-release-with
+    title: release_with
+    status: active
+    sourceFile: scripts/tests/release-publish.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T21:55:22.842Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-publish
+  - id: SYM-release-publish-test-check
+    title: check
+    status: active
+    sourceFile: scripts/tests/release-publish.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T21:55:28.305Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-publish
+  - id: SYM-release-notes-known-limits
+    title: known_limits
+    status: active
+    sourceFile: scripts/release-notes.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-05T21:55:40.099Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-notes
+      - type: implements
+        target: REQ-tooling-release-notes-known-limits

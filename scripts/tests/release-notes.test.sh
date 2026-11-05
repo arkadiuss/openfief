@@ -147,7 +147,46 @@ First release.
 - Update README
 - chore: base"
 
+# Known limits come from the version's own file at the ref, ahead of the changes; another version's file is ignored.
+git tag 2026.11.0-alpha.1
+mkdir -p .github/release-notes/2026.11.0-alpha.2 .github/release-notes/2026.11.0-alpha.3
+printf -- '- The demo has no price checks yet.\n- Bonds are valued at par.\n\n' >.github/release-notes/2026.11.0-alpha.2/known-limits.md
+printf -- '- Only for alpha.3.\n' >.github/release-notes/2026.11.0-alpha.3/known-limits.md
+git add .github
+commit -m "docs: known limits of the next alphas"
+expect_notes "known limits from the version's file come first" 2026.11.0-alpha.2 "## 2026.11.0-alpha.2
+
+Changes since 2026.11.0-alpha.1.
+
+### Known limits
+
+- The demo has no price checks yet.
+- Bonds are valued at par.
+
+### Other changes
+
+- docs: known limits of the next alphas"
+
+expect_notes "a version without a file has no known limits" 2026.11.0-alpha.4 "## 2026.11.0-alpha.4
+
+Changes since 2026.11.0-alpha.1.
+
+### Other changes
+
+- docs: known limits of the next alphas"
+
+printf '\n  \n' >.github/release-notes/2026.11.0-alpha.3/known-limits.md
+git add .github
+commit -m "docs: empty the known limits"
+if out="$(bash "$root/scripts/release-notes.sh" 2026.11.0-alpha.3 2>&1)"; then
+  printf 'FAIL: an empty known-limits file should fail, got:\n%s\n' "$out" >&2
+  failures=$((failures + 1))
+elif ! grep -q 'known-limits.md is empty' <<<"$out"; then
+  printf 'FAIL: an empty known-limits file should be named, got:\n%s\n' "$out" >&2
+  failures=$((failures + 1))
+fi
+
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi
-echo "release-notes: 5 cases passed"
+echo "release-notes: 8 cases passed"

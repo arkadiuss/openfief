@@ -18,7 +18,12 @@
 # digest it signed, on a release commit; the other images and the CLI, which embed the catalog, are built from that
 # commit, which the tag points at, and the bundle job pins the images' signed digests. A pull request brings the
 # catalog commit back to main.
-# Release notes come from Conventional Commits through scripts/release-notes.sh (task release:notes).
+# Release notes come from Conventional Commits through scripts/release-notes.sh (task release:notes), with a Known
+# limits section from .github/release-notes/<version>/known-limits.md when the release commit has one.
+# Publishing is resumable: when publish fails part-way, "Re-run failed jobs" re-runs publish and deploy-demo on the
+# same release commit; task release:publish (scripts/release-publish.sh) keeps a tag already at that commit, uploads
+# only the assets an existing release lacks and opens no second pull request. Opening that pull request needs the
+# repository setting "Allow GitHub Actions to create and approve pull requests" (docs/dev/pipeline.md#releases).
 name: Release
 
 on:
@@ -264,6 +269,8 @@ jobs:
           if-no-files-found: error
 
   publish:
+    # Tags the release commit, publishes the release and opens the catalog's pull request, each only when an earlier
+    # attempt of this run didn't, so re-running the failed jobs finishes a publish that stopped part-way.
     name: publish
     needs: [plan, catalog, images, bundle, cli]
     if: needs.plan.outputs.publish == 'true'

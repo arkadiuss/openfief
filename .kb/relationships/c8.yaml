@@ -566,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-76794301aa23
+  - type: constrains
+    from: REQ-tooling-release-notes-known-limits
+    to: FACT-SUBJECT-99A195D7176EF798
+    created_at: 2026-11-05T21:55:38.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-425e8cb2e129
+  - type: requires_property
+    from: REQ-tooling-release-notes-known-limits
+    to: FACT-PROP-F9791365B22578E9
+    created_at: 2026-11-05T21:55:38.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a051270a8cb6
+  - type: specified_by
+    from: REQ-tooling-release-notes-known-limits
+    to: SCEN-tooling-release-notes-known-limits
+    created_at: 2026-11-05T21:55:38.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c751963dcd09

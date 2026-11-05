@@ -751,11 +751,11 @@ tasks:
       - PATH='{{.BIN}}':"$PATH" bash scripts/demo/validate.sh
 
   release:check:
-    desc: 'Validate a release version for its channel (alpha, beta or stable), e.g. task release:check CHANNEL=alpha VERSION=2026.11.0-alpha.1'
+    desc: 'Validate a release version for its channel (alpha, beta or stable) and that its tag doesn''t exist yet; with COMMIT, a tag already at that commit passes too (release:publish resuming), e.g. task release:check CHANNEL=alpha VERSION=2026.11.0-alpha.1'
     requires:
       vars: [CHANNEL, VERSION]
     cmds:
-      - bash scripts/release-version.sh '{{.CHANNEL}}' '{{.VERSION}}'
+      - bash scripts/release-version.sh '{{.CHANNEL}}' '{{.VERSION}}' {{if .COMMIT}}'{{.COMMIT}}'{{end}}
 
   release:notes:
     desc: 'Release notes from Conventional Commits since the previous release, e.g. task release:notes VERSION=2026.11.0'
@@ -831,11 +831,14 @@ tasks:
       - tar -czf "dist/openfief-docs-{{.VERSION}}.tar.gz" -C site/public .
 
   release:publish:
-    desc: 'Tag the release commit, publish the GitHub release (a pre-release for an alpha or beta) with the bundle, the docs and the signed CLI, and open the pull request that brings the catalog to main (CI only, after the dry run; needs dist/bundle and dist/cli)'
+    desc: 'Tag the release commit, publish the GitHub release (a pre-release for an alpha or beta) with the bundle, the docs and the signed CLI, and open the pull request that brings the catalog to main (CI only, after the dry run; needs dist/bundle and dist/cli). Resumable: a re-run keeps a tag already at the release commit, uploads only the assets an existing release lacks and opens no second pull request'
     requires:
       vars: [CHANNEL, VERSION]
     cmds:
+      # HEAD is the release commit: main plus the catalog of this release's signed plugin digests (D-88). A tag an
+      # earlier attempt created there passes the check; a tag anywhere else fails it.
       - task: release:check
+        vars: {CHANNEL: '{{.CHANNEL}}', VERSION: '{{.VERSION}}', COMMIT: HEAD}
       - |
         set -e
         for f in 'dist/bundle/openfief-crds-{{.VERSION}}.yaml' 'dist/bundle/openfief-install-{{.VERSION}}.yaml' \
@@ -844,19 +847,8 @@ tasks:
         done
       - task: release:assets
       - bash scripts/release-notes.sh '{{.VERSION}}' >dist/release-notes.md
-      # HEAD is the release commit: main plus the catalog of this release's signed plugin digests (D-88).
-      - gh api 'repos/{owner}/{repo}/git/refs' -f ref='refs/tags/{{.VERSION}}' -f sha="$(git rev-parse HEAD)" >/dev/null
       # Every channel ships the same assets; alpha and beta are pre-releases.
-      - |
-        set -e
-        prerelease=--prerelease
-        [ '{{.CHANNEL}}' != stable ] || prerelease=
-        gh release create '{{.VERSION}}' --verify-tag $prerelease --title '{{.VERSION}}' --notes-file dist/release-notes.md \
-          dist/bundle/openfief-*-'{{.VERSION}}'.yaml 'dist/bundle/cnpg-{{.CNPG_VERSION}}.yaml' \
-          'dist/openfief-docs-{{.VERSION}}.tar.gz' $(find dist/cli -type f | sort)
-      - >-
-        gh pr create --base main --head 'release/{{.VERSION}}' --title 'chore(release): catalog the first-party plugins of {{.VERSION}}'
-        --body 'Adds the plugin digests release {{.VERSION}} signed to the catalog (D-88), as tagged in {{.VERSION}}.'
+      - bash scripts/release-publish.sh '{{.CHANNEL}}' '{{.VERSION}}' '{{.CNPG_VERSION}}'
 
   docs:check:
     desc: ID checks for the design documents

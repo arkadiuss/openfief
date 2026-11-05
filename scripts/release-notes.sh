@@ -2,6 +2,9 @@
 # Release notes in Markdown from the Conventional Commits since the previous release (docs/dev/sdlc.md).
 # A stable release starts after the previous stable one; a pre-release (alpha or beta) after the previous release of
 # any channel.
+# Known limits: when the ref has .github/release-notes/<version>/known-limits.md, its Markdown becomes a "Known limits"
+# section ahead of the changes. The file holds the section's body, without the heading; the author commits it to
+# main before starting the release, and an empty one is refused.
 # Usage: release-notes.sh <version> [ref, default HEAD]
 set -euo pipefail
 
@@ -36,6 +39,20 @@ section() {
   fi
 }
 
+# known_limits prints the version's known limits as of the ref, without trailing blank lines, or nothing without a
+# file; it fails on a file with nothing in it.
+known_limits() {
+  local path=".github/release-notes/$version/known-limits.md" body
+  git cat-file -e "$ref:$path" 2>/dev/null || return 0
+  body="$(git show "$ref:$path")"
+  if [ -z "${body//[[:space:]]/}" ]; then
+    echo "release-notes: $path is empty; delete it or say what the known limits are" >&2
+    return 1
+  fi
+  printf '%s\n' "$body"
+}
+
+limits="$(known_limits)"
 previous="$(previous_release)"
 range="$ref"
 [ -z "$previous" ] || range="$previous..$ref"
@@ -55,6 +72,7 @@ if [ -n "$previous" ]; then
 else
   echo "First release."
 fi
+[ -z "$limits" ] || printf '\n### Known limits\n\n%s\n' "$limits"
 for key in breaking features fixes performance other; do
   [ -n "${lines[$key]:-}" ] || continue
   case "$key" in

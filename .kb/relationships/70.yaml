@@ -440,3 +440,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-998e99af29e5
+  - type: implements
+    from: SYM-release-publish-ensure-pull-request
+    to: REQ-tooling-release-publish-resumable
+    created_at: 2026-11-05T21:55:13.730Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7df855e65778
+  - type: covered_by
+    from: SYM-release-publish-ensure-pull-request
+    to: TEST-tooling-release-publish
+    created_at: 2026-11-05T21:55:13.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c28e5a4574e9

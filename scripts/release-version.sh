@@ -3,11 +3,13 @@
 # stable: YYYY.M.N; beta: YYYY.M.N-beta.K; alpha: YYYY.M.N-alpha.K. No v prefix, no leading zeros, K from 1, and
 # the tag must not exist yet. The author picks N and K: an alpha's K, like a beta's, counts the pre-releases of one
 # YYYY.M.N, so the first alpha of November 2026 is 2026.11.0-alpha.1 and the next 2026.11.0-alpha.2.
-# Usage: release-version.sh <alpha|beta|stable> <version>
+# Given the release commit (the publish job passes HEAD), a tag that already points at that commit passes too, so a
+# re-run of a publish that created the tag can finish what it didn't; a tag at any other commit is still refused.
+# Usage: release-version.sh <alpha|beta|stable> <version> [release-commit]
 set -euo pipefail
 
-if [ "$#" -ne 2 ]; then
-  echo "usage: release-version.sh <alpha|beta|stable> <version>" >&2
+if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
+  echo "usage: release-version.sh <alpha|beta|stable> <version> [release-commit]" >&2
   exit 2
 fi
 
@@ -23,6 +25,7 @@ valid_version() {
 
 channel="$1"
 version="$2"
+release_commit="${3:-}"
 case "$channel" in
   stable) format='YYYY.M.N' ;;
   beta) format='YYYY.M.N-beta.K' ;;
@@ -36,8 +39,20 @@ if ! valid_version "$channel" "$version"; then
   echo "release: '$version' is not a $channel version ($format, no v prefix, no leading zeros)" >&2
   exit 1
 fi
-if git rev-parse -q --verify "refs/tags/$version" >/dev/null; then
-  echo "release: tag '$version' already exists" >&2
-  exit 1
+if tagged="$(git rev-parse -q --verify "refs/tags/$version^{commit}")"; then
+  if [ -z "$release_commit" ]; then
+    echo "release: tag '$version' already exists" >&2
+    exit 1
+  fi
+  if ! commit="$(git rev-parse -q --verify "$release_commit^{commit}")"; then
+    echo "release: release commit '$release_commit' doesn't exist" >&2
+    exit 1
+  fi
+  if [ "$tagged" != "$commit" ]; then
+    echo "release: tag '$version' already exists at $tagged, not at the release commit $commit" >&2
+    exit 1
+  fi
+  echo "release: $channel $version is valid; tag '$version' already points at the release commit, resuming"
+  exit 0
 fi
 echo "release: $channel $version is valid"

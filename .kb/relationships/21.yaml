@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ab4f5847d39
+  - type: executable_for
+    from: SYM-release-publish-test-check
+    to: TEST-tooling-release-publish
+    created_at: 2026-11-05T21:55:30.602Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0279c6b93fe

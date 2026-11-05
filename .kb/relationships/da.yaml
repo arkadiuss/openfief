@@ -727,3 +727,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fda7f03cedf0
+  - type: constrains
+    from: REQ-tooling-release-publish-resumable
+    to: FACT-SUBJECT-E0B7FB80EF7389C6
+    created_at: 2026-11-05T21:54:52.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18ec9c4ba7ef
+  - type: requires_property
+    from: REQ-tooling-release-publish-resumable
+    to: FACT-PROP-DC41C69BF27B039A
+    created_at: 2026-11-05T21:54:52.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe793f482353
+  - type: specified_by
+    from: REQ-tooling-release-publish-resumable
+    to: SCEN-tooling-release-publish-resume
+    created_at: 2026-11-05T21:54:52.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5dc281cf3fd8

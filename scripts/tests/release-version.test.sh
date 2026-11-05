@@ -12,20 +12,25 @@ git init -q
 git -c user.name=test -c user.email=test@example.invalid commit -q --allow-empty -m "chore: base"
 git tag 2026.10.0
 git tag 2026.10.0-alpha.1
+# The release commit of a publish that created its tag and then failed, which a re-run resumes: a lightweight tag,
+# as the GitHub API creates it, and an annotated one. HEAD is a later commit, so HEAD~1 is the release commit.
+git tag -a -m "2026.10.0-beta.1" 2026.10.0-beta.1
+git -c user.name=test -c user.email=test@example.invalid commit -q --allow-empty -m "chore: later"
 failures=0
 
 expect() {
-  local want="$1" channel="$2" version="$3" got=pass
-  bash "$root/scripts/release-version.sh" "$channel" "$version" >/dev/null 2>&1 || got=fail
+  local want="$1" channel="$2" version="$3" commit="${4:-}" got=pass
+  bash "$root/scripts/release-version.sh" "$channel" "$version" ${commit:+"$commit"} >/dev/null 2>&1 || got=fail
   if [ "$got" != "$want" ]; then
-    echo "FAIL: $channel $version should $want, got $got" >&2
+    echo "FAIL: $channel $version ${commit:+at $commit }should $want, got $got" >&2
     failures=$((failures + 1))
   fi
 }
 
+# The optional fourth column is the release commit the publish job passes.
 cases=0
-while read -r want channel version; do
-  expect "$want" "$channel" "$version"
+while read -r want channel version commit; do
+  expect "$want" "$channel" "$version" "$commit"
   cases=$((cases + 1))
 done <<'EOF'
 pass stable 2026.11.0
@@ -55,6 +60,14 @@ fail alpha 2026.11.0-beta.1
 fail beta 2026.11.0-alpha.1
 fail stable 2026.11.0-alpha.1
 fail alpha 2026.10.0-alpha.1
+fail beta 2026.10.0-beta.1
+pass alpha 2026.10.0-alpha.1 HEAD~1
+pass beta 2026.10.0-beta.1 HEAD~1
+pass alpha 2026.11.0-alpha.1 HEAD
+fail alpha 2026.10.0-alpha.1 HEAD
+fail beta 2026.10.0-beta.1 HEAD
+fail alpha 2026.10.0-alpha.1 no-such-commit
+fail alpha 2026.11.0-alpha.0 HEAD
 EOF
 
 if [ "$failures" -ne 0 ]; then

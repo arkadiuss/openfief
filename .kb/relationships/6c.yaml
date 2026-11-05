@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2840c13883c4
+  - type: verified_by
+    from: SCEN-tooling-release-notes-known-limits
+    to: TEST-tooling-release-notes
+    created_at: 2026-11-05T21:55:34.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-211db4ddd7d6

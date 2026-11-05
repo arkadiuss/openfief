@@ -622,3 +622,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c297b3c2c681
+  - type: constrains
+    from: REQ-tooling-release-version-resume
+    to: FACT-SUBJECT-0A0B3C08E47FD8CE
+    created_at: 2026-11-05T21:54:30.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62466db4f5e7
+  - type: requires_property
+    from: REQ-tooling-release-version-resume
+    to: FACT-PROP-00E945E7DD218550
+    created_at: 2026-11-05T21:54:30.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcdb6efc6234
+  - type: specified_by
+    from: REQ-tooling-release-version-resume
+    to: SCEN-tooling-release-version-invalid
+    created_at: 2026-11-05T21:54:30.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bceffb459d86
+  - type: specified_by
+    from: REQ-tooling-release-version-resume
+    to: SCEN-tooling-release-version-alpha
+    created_at: 2026-11-05T21:54:30.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9248e9ed6f39
+  - type: specified_by
+    from: REQ-tooling-release-version-resume
+    to: SCEN-tooling-release-version-resume
+    created_at: 2026-11-05T21:54:30.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465528b03902
+  - type: supersedes
+    from: REQ-tooling-release-version-resume
+    to: REQ-tooling-release-channel-version
+    created_at: 2026-11-05T21:54:30.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c4cb795c9db5
