@@ -685,3 +685,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-986466b6ad92
+  - type: implements
+    from: SYM-cmd-openfief-version-line
+    to: REQ-tooling-cli-version
+    created_at: 2026-11-06T16:09:02.007Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbd004b2ded8
+  - type: covered_by
+    from: SYM-cmd-openfief-version-line
+    to: TEST-cmd-openfief-version
+    created_at: 2026-11-06T16:09:02.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-475586867967
+  - type: executable_for
+    from: SYM-release-smoke-test-check
+    to: TEST-tooling-release-smoke
+    created_at: 2026-11-06T16:43:19.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9452cea841ad
+  - type: constrains
+    from: REQ-tooling-archtest-stable-tests
+    to: FACT-SUBJECT-7FC90ECEBA7CC833
+    created_at: 2026-11-06T17:49:59.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-532e14a15161
+  - type: requires_property
+    from: REQ-tooling-archtest-stable-tests
+    to: FACT-PROP-AE722B4B7923029B
+    created_at: 2026-11-06T17:49:59.723Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7599b2270d9f
+  - type: specified_by
+    from: REQ-tooling-archtest-stable-tests
+    to: SCEN-tooling-archtest-sleep-skip
+    created_at: 2026-11-06T17:49:59.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-805909ff1417

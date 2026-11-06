@@ -783,3 +783,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f64c71862a6a
+  - type: implements
+    from: SYM-archtest-skip-dir
+    to: REQ-tooling-archtest-baseline
+    created_at: 2026-11-06T18:09:39.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a67e52d06b
+  - type: covered_by
+    from: SYM-archtest-skip-dir
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:09:39.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50afa6993828
+  - type: covered_by
+    from: SYM-archtest-skip-dir
+    to: TEST-tooling-archtest-repo
+    created_at: 2026-11-06T18:09:39.111Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9d498b01963

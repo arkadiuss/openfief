@@ -566,3 +566,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f8e4d06da3e
+  - type: implements
+    from: SYM-archtest-go-statements
+    to: REQ-tooling-archtest-money-purity
+    created_at: 2026-11-06T18:11:23.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b07315ba453
+  - type: covered_by
+    from: SYM-archtest-go-statements
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:11:23.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6da372e92a4

@@ -839,3 +839,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7df578bdb192
+  - type: verified_by
+    from: SCEN-tooling-archtest-sleep-skip
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T17:49:57.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-057cf0a15958
+  - type: implements
+    from: SYM-archtest-stable-tests
+    to: REQ-tooling-archtest-stable-tests
+    created_at: 2026-11-06T18:12:51.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b281fccc9909
+  - type: covered_by
+    from: SYM-archtest-stable-tests
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:12:51.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6937b567214

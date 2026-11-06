@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-006125154d90
+  - type: implements
+    from: SYM-archtest-strip-sql-comments
+    to: REQ-tooling-archtest-schemas
+    created_at: 2026-11-06T18:12:25.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8acf749e997c
+  - type: covered_by
+    from: SYM-archtest-strip-sql-comments
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:12:25.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf932324693b

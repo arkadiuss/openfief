@@ -825,3 +825,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-280ee53d1788
+  - type: constrains
+    from: REQ-tooling-archtest-catalog-tests
+    to: FACT-SUBJECT-7FC90ECEBA7CC833
+    created_at: 2026-11-06T17:50:02.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e2396890641
+  - type: requires_property
+    from: REQ-tooling-archtest-catalog-tests
+    to: FACT-PROP-0AB6953BE08F32E8
+    created_at: 2026-11-06T17:50:02.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fdd8987cc33
+  - type: specified_by
+    from: REQ-tooling-archtest-catalog-tests
+    to: SCEN-tooling-archtest-catalog-pinned
+    created_at: 2026-11-06T17:50:02.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a0526df6280
+  - type: implements
+    from: SYM-archtest-money
+    to: REQ-tooling-archtest-money-purity
+    created_at: 2026-11-06T18:09:48.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80cd125bf17f
+  - type: covered_by
+    from: SYM-archtest-money
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:09:48.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf8070609418

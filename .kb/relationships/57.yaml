@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6671bb220b2d
+  - type: implements
+    from: SYM-archtest-adapter-break
+    to: REQ-tooling-archtest-imports
+    created_at: 2026-11-06T18:07:48.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdb2965ecf42
+  - type: covered_by
+    from: SYM-archtest-adapter-break
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:07:48.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-168ed2241b5e

@@ -951,3 +951,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bee1ea06ca36
+  - type: implements
+    from: SYM-archtest-under
+    to: REQ-tooling-archtest-imports
+    created_at: 2026-11-06T18:08:53.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f37e69bb9ea
+  - type: covered_by
+    from: SYM-archtest-under
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:08:53.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eecba900be9f
+  - type: implements
+    from: SYM-archtest-look-through
+    to: REQ-tooling-archtest-privacy
+    created_at: 2026-11-06T18:10:57.900Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3eee1c52ee98
+  - type: covered_by
+    from: SYM-archtest-look-through
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:10:57.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-250061c7790a
+  - type: implements
+    from: SYM-archtest-base-name
+    to: REQ-tooling-archtest-schemas
+    created_at: 2026-11-06T18:12:40.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e33600e57afb
+  - type: covered_by
+    from: SYM-archtest-base-name
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:12:40.939Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-480d3de2e1eb

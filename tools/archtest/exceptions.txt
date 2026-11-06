@@ -1,0 +1,30 @@
+# Architecture test exceptions (docs/dev/code-organization.md#architecture-tests).
+#
+# What a rule allows for good, one per line, each with its reason:
+# <rule> | <key> | <reason>. Like the baseline, every line must still match a
+# violation, so the list stays exact. A line needs a reason the rule's own
+# wording allows: a test that waits on something outside the process or needs
+# a tool a contributor may lack; a money exception only for a package that
+# only draws.
+
+# Stable tests: PostgreSQL integration tests run under task test:pg, which sets
+# OPENFIEF_PG_DSN; plain go test skips them.
+stable-tests | cmd/core/core_test.go emptyDatabase Skip | needs PostgreSQL (task test:pg), which a contributor may lack
+stable-tests | cmd/demo-seed/load_test.go emptyPool Skip | needs PostgreSQL (task test:pg), which a contributor may lack
+stable-tests | internal/attention/postgres/store_test.go newPool Skip | needs PostgreSQL (task test:pg), which a contributor may lack
+stable-tests | internal/identity/postgres/store_test.go newPool Skip | needs PostgreSQL (task test:pg), which a contributor may lack
+stable-tests | internal/ingest/postgres/store_test.go newPool Skip | needs PostgreSQL (task test:pg), which a contributor may lack
+stable-tests | internal/ledger/postgres/db_test.go newDatabase Skip | needs PostgreSQL (task test:pg), which a contributor may lack
+stable-tests | internal/portfolio/postgres/store_test.go newPool Skip | needs PostgreSQL (task test:pg), which a contributor may lack
+stable-tests | internal/valuation/postgres/db_test.go newDatabase Skip | needs PostgreSQL (task test:pg), which a contributor may lack
+
+# Stable tests: waits, each with a deadline, on something outside the process.
+stable-tests | cmd/core/core_test.go waitValued time.Sleep | polls, with a deadline, River jobs that run on PostgreSQL
+stable-tests | cmd/core/bondlots_test.go checkBondValued time.Sleep | polls, with a deadline, River jobs that run on PostgreSQL
+stable-tests | internal/plugins/operator/signingkeys_test.go testCluster.waitForSigningKeys time.Sleep | polls, with a deadline, envtest's API server
+
+# Stable tests: tools or data a contributor may lack.
+stable-tests | internal/valuation/postgres/worker_test.go TestDailyAt Skip | needs the system's time zone database
+stable-tests | internal/valuation/postgres/worker_test.go TestTodayIn Skip | needs the system's time zone database
+stable-tests | internal/views/ui/browser_test.go TestServeForBrowser Skip | serves the UI only for task ui:browser's Chromium checks; plain go test never listens on a port
+stable-tests | test/e2e/ui_test.go skipUnlessK3s Skip | needs k3s's bundled Traefik; the k3d run checks the demo's routes

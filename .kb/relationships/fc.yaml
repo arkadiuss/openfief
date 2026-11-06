@@ -671,3 +671,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92086a620d12
+  - type: implements
+    from: SYM-archtest-known
+    to: REQ-tooling-archtest-imports
+    created_at: 2026-11-06T18:07:25.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b54bb23ecab3
+  - type: covered_by
+    from: SYM-archtest-known
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:07:25.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0437968ff328
+  - type: implements
+    from: SYM-archtest-context-map-break
+    to: REQ-tooling-archtest-imports
+    created_at: 2026-11-06T18:07:30.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35d0b5c45164
+  - type: covered_by
+    from: SYM-archtest-context-map-break
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:07:30.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92691d5f23ca

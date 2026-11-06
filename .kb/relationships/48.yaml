@@ -944,3 +944,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c2bd7e08bc7
+  - type: constrains
+    from: REQ-tooling-archtest-schemas
+    to: FACT-SUBJECT-7FC90ECEBA7CC833
+    created_at: 2026-11-06T17:49:49.749Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccc8c8240ded
+  - type: requires_property
+    from: REQ-tooling-archtest-schemas
+    to: FACT-PROP-BC05B9683FAA33D9
+    created_at: 2026-11-06T17:49:49.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29dd4c8827cb
+  - type: specified_by
+    from: REQ-tooling-archtest-schemas
+    to: SCEN-tooling-archtest-foreign-schema
+    created_at: 2026-11-06T17:49:49.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45256cc6861f
