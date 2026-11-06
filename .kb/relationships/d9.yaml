@@ -797,3 +797,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d71fa1f3388
+  - type: verified_by
+    from: SCEN-e2e-credentials-only-in-secrets
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T19:44:41.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bec8fbd7edae

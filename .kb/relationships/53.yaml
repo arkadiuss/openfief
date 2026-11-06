@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62a5fcc577e7
+  - type: executable_for
+    from: SYM-e2e-connector-check-credential-nowhere-else
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:07:22.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-338cb2bd50a9

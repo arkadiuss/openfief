@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-257ed2b8e11d
+  - type: specified_by
+    from: REQ-platform-httproute-component
+    to: SCEN-e2e-httproute-https-through-gateway
+    created_at: 2026-11-06T19:44:56.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cd7628cd142

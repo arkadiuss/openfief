@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb7c8485c3c8
+  - type: executable_for
+    from: SYM-e2e-connector-find-transaction
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:06:51.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba7094410034

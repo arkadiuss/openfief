@@ -3,7 +3,8 @@
 # GHCR holds, and makes them available to the local cluster in one of two ways:
 #   - core, operator, egress-proxy and demo-seed are loaded into the nodes under the tags test/e2e/overlays/openfief
 #     names, openfief.test/<name>:e2e (.test never resolves, so nothing pulls them);
-#   - the plugin images the operator deploys, nbp-fx and the built-in UI, go to the suite's registry, because the
+#   - the plugin images the operator deploys, nbp-fx, the built-in UI and the suite's synthetic connector
+#     (test/e2e/connector, two images with different manifests), go to the suite's registry, because the
 #     operator deploys a plugin only after it has read the image's signature from its registry (D-56, D-57). The suite
 #     signs them there with a key it makes at run time (test/e2e/registry_test.go);
 #   - core, operator and egress-proxy go to that registry too, for the suite's install from the release bundle, which
@@ -55,6 +56,16 @@ for dockerfile in cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/D
   if [[ " ${bundle[*]} " == *" $name "* ]]; then
     pushed+=("$name")
   fi
+done
+# The suite's synthetic connector (test/e2e/connector), never released: built twice, each image labelled with its
+# own manifest, so the suite can upgrade from the first to the second, which asks for an egress host more.
+for variant in e2e-connector:manifest.json e2e-connector-egress:manifest-egress.json; do
+  name="${variant%%:*}"
+  manifest="test/e2e/connector/${variant#*:}"
+  image="openfief.test/$name:e2e"
+  echo "e2e-images: building $image from test/e2e/connector/Dockerfile with $manifest"
+  docker build --file test/e2e/connector/Dockerfile --build-arg "MANIFEST=$(cat "$manifest")" --tag "$image" .
+  pushed+=("$name")
 done
 
 nodes=()

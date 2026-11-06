@@ -1070,3 +1070,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bcebb798384f
+  - type: verified_by
+    from: SCEN-e2e-uninstall-keeps-data
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T19:44:42.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92687147ea7a
+  - type: executable_for
+    from: SYM-e2e-connector-kube-plugins-holding
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:07:39.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6748de23c449

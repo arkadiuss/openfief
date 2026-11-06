@@ -930,3 +930,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da4faa4014c5
+  - type: verified_by
+    from: SCEN-e2e-plugin-verified-when-catalog-pinned
+    to: TEST-e2e-operator-trust
+    created_at: 2026-11-06T19:44:38.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9059d17071c9
+  - type: implements
+    from: SYM-e2e-connector-fixture-connector-sync
+    to: REQ-AUTO-0455DAAE4C01C965
+    created_at: 2026-11-06T20:08:40.315Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f7805d315b7
+  - type: implements
+    from: SYM-e2e-connector-fixture-connector-sync
+    to: REQ-plugins-uninstall-keeps-data
+    created_at: 2026-11-06T20:08:40.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c36821d2c4f8
+  - type: covered_by
+    from: SYM-e2e-connector-fixture-connector-sync
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:08:40.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66dce2ecd63b

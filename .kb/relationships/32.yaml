@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b93ecbd23b26
+  - type: executable_for
+    from: SYM-e2e-trust-copy-referrers
+    to: TEST-e2e-operator-trust
+    created_at: 2026-11-06T20:01:15.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84126e9994ac
+  - type: executable_for
+    from: SYM-e2e-connector-containers-use-secret
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:07:16.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dcc15b3b0f4

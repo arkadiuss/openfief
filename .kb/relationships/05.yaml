@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0574f79ca740
+  - type: executable_for
+    from: SYM-e2e-scope-resource-kind
+    to: TEST-e2e-operator-scope
+    created_at: 2026-11-06T20:02:03.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5942bce29242
+  - type: executable_for
+    from: SYM-e2e-exposure-kube-job-of-database
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:04:29.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db56b558ebca

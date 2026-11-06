@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45256cc6861f
+  - type: specified_by
+    from: REQ-AUTO-0455DAAE4C01C965
+    to: SCEN-e2e-credentials-only-in-secrets
+    created_at: 2026-11-06T19:44:57.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20a6241436b7
+  - type: specified_by
+    from: REQ-AUTO-0455DAAE4C01C965
+    to: SCEN-e2e-credentials-mounted-only-in-granted-plugin
+    created_at: 2026-11-06T19:44:57.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65b874ac96b9

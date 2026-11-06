@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9caefd6e450a
+  - type: executable_for
+    from: SYM-e2e-exposure-uses-host-port
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:04:19.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d144d99df13
+  - type: executable_for
+    from: SYM-e2e-connector-synthetic-credential
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:06:04.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2926c09c2c25

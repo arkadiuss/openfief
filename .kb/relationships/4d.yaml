@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-302e8bf62721
+  - type: executable_for
+    from: SYM-e2e-connector-test-connector-credentials-and-uninstall
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:05:53.222Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a76afac5f918

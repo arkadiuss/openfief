@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-171f86c8a62e
+  - type: executable_for
+    from: SYM-e2e-scope-scope-namespaces
+    to: TEST-e2e-operator-scope
+    created_at: 2026-11-06T20:02:27.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-570d10aef58c

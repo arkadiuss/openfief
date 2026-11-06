@@ -72,6 +72,15 @@ vars:
   # Where task e2e renders the release bundle (task release:bundle) of the images task e2e:images pushed to the
   # suite's registry, which the suite's bundle run installs.
   E2E_BUNDLE_DIR: '{{.ROOT_DIR}}/.bin/e2e/bundle'
+  # The Gateway API implementations the end-to-end suite's exposure test reaches the core through (task e2e:gateway):
+  # Envoy Gateway on kind, from its release manifest (which brings the Gateway API CRDs), and on k3d, should k3s's
+  # Traefik CRD chart bring none, the Gateway API's standard CRDs. A version bump needs the manifest's new sha256.
+  # renovate: datasource=github-releases depName=envoyproxy/gateway
+  ENVOY_GATEWAY_VERSION: v1.10.0
+  ENVOY_GATEWAY_INSTALL_SHA256: f87f4d59b983aa760da52a2a0002c612028106fe69beefdf3d30cfb03905944e
+  # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+  GATEWAY_API_VERSION: v1.6.1
+  GATEWAY_API_INSTALL_SHA256: 24d931f22abd8e40c973264319ead7cfa09d0fb7716b7ab1ee2ff174cb063a73
   # Generates the read API's OpenAPI document from its protobuf definitions (D-50).
   # renovate: datasource=go depName=github.com/sudorandom/protoc-gen-connect-openapi
   PROTOC_GEN_CONNECT_OPENAPI_VERSION: v0.28.0
@@ -544,6 +553,16 @@ tasks:
     cmds:
       - bash scripts/assert-local-cluster.sh
       - bash scripts/e2e-images.sh '{{.CLUSTER}}' '{{.E2E_CLUSTER_NAME}}' '{{.E2E_REGISTRY_ENV}}'
+
+  e2e:gateway:
+    desc: 'Give the local e2e cluster a Gateway API implementation for the exposure test: Envoy Gateway on kind, pinned by version and sha256; on k3d, the bundled Traefik''s Gateway API provider, which the CI job turns on at cluster creation (test/e2e/testdata/traefik-gateway.yaml), e.g. task e2e:gateway CLUSTER=kind'
+    requires:
+      vars: [CLUSTER]
+    cmds:
+      - bash scripts/assert-local-cluster.sh
+      - >-
+        bash scripts/e2e-gateway.sh '{{.CLUSTER}}' '{{.ENVOY_GATEWAY_VERSION}}' '{{.ENVOY_GATEWAY_INSTALL_SHA256}}'
+        '{{.GATEWAY_API_VERSION}}' '{{.GATEWAY_API_INSTALL_SHA256}}' '{{.ROOT_DIR}}/.bin/e2e/gateway'
 
   e2e:k3s-image:
     desc: 'The k3s image the k3d e2e cluster runs: the demo machine''s pinned K3S_VERSION (CI passes it to k3d)'

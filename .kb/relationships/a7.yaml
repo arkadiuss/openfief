@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4545955e1853
+  - type: executable_for
+    from: SYM-e2e-scope-cluster-kinds
+    to: TEST-e2e-operator-scope
+    created_at: 2026-11-06T20:02:17.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f3f45758929

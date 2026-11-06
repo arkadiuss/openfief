@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b80d3ea48bfb
+  - type: specified_by
+    from: REQ-operator-namespace-scoped-except-service-read
+    to: SCEN-e2e-operator-namespace-scoped
+    created_at: 2026-11-06T19:44:53.820Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91259d6dbea5

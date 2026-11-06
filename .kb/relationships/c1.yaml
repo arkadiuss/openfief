@@ -846,3 +846,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d009f3959c94
+  - type: executable_for
+    from: SYM-e2e-scope-read-operator-role
+    to: TEST-e2e-operator-scope
+    created_at: 2026-11-06T20:02:42.480Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cda547537395
+  - type: executable_for
+    from: SYM-e2e-exposure-check-bundle-exposes-nothing
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:03:38.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffb190cd002a

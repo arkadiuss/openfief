@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c581d2f17137
+  - type: executable_for
+    from: SYM-e2e-exposure-kube-owned-by-install
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:04:24.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79e0274893d7

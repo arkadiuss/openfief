@@ -832,3 +832,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e902c3255e7
+  - type: executable_for
+    from: SYM-e2e-exposure-is-cluster-ip
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:03:48.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-220449fd12d1

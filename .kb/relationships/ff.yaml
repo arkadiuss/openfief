@@ -867,3 +867,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-863042869be1
+  - type: specified_by
+    from: REQ-AUTO-761F6500ECFC0316
+    to: SCEN-e2e-credentials-mounted-only-in-granted-plugin
+    created_at: 2026-11-06T19:44:58.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a648c1009824

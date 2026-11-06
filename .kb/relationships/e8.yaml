@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4818b0545146
+  - type: implements
+    from: SYM-e2e-connector-fixture-main
+    to: REQ-AUTO-0455DAAE4C01C965
+    created_at: 2026-11-06T20:08:25.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f176be339c7
+  - type: covered_by
+    from: SYM-e2e-connector-fixture-main
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:08:25.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fc037ead497

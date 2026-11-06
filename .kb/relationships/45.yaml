@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6053a4ec151
+  - type: executable_for
+    from: SYM-e2e-connector-volumes-use-secret
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:07:10.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b7903962809

@@ -1,0 +1,1 @@
+{"capabilities":["connector"],"institutions":["e2e-bank"],"egress":["example.org"],"secrets":[{"role":"credentials","mountPath":"/etc/openfief/e2e-connector"}],"configSchema":{"type":"object","properties":{"account":{"type":"string","minLength":1,"maxLength":64},"date":{"type":"string","pattern":"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"}},"additionalProperties":false}}
