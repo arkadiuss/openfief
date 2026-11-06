@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9faf3da6af26
+  - type: implements
+    from: SYM-ui-server-instrument-transactions-fragment
+    to: REQ-decision-d195-2-instrument-page
+    created_at: 2026-11-06T10:48:20.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eaa336baa618
+  - type: covered_by
+    from: SYM-ui-server-instrument-transactions-fragment
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:48:20.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bc35c2f1d94

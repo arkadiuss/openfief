@@ -106,16 +106,16 @@ func purchasedForm(series, purchase string) *http.Request {
 func TestAccountBondLotForm(t *testing.T) {
 	t.Parallel()
 	h := bondHarness(t)
-	rec := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), ownerSession))
+	rec := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID+"?tab=lots", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, `<h2 id="bond-lot-title">Add bond lot</h2>`, `action="/accounts/`+accountID+`/bond-lots"`,
+	wantBody(t, rec, `<h2 id="bond-lot-title">Add bond lot</h2>`, `action="/accounts/`+accountID+`/bond-lots?tab=lots"`,
 		`name="series"`, `name="purchase_date"`, `name="purchase"`, `<option value="exchange"`, `name="first_rate"`, `name="fee"`, "Open lots",
-		`action="/accounts/`+accountID+`/bond-lots/delete"`, `aria-label="Delete the SYN lot bought on 2026-01-02"`)
-	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), readSession))
+		`action="/accounts/`+accountID+`/bond-lots/delete?tab=lots"`, `aria-label="Delete the SYN lot bought on 2026-01-02"`)
+	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID+"?tab=lots", ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantNoBody(t, rec, "Add bond lot", "bond-lots/delete")
 	other := newHarness(t)
-	rec = other.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), ownerSession))
+	rec = other.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID+"?tab=lots", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantNoBody(t, rec, "Add bond lot", "bond-lots/delete")
 }
@@ -129,7 +129,7 @@ func TestAddBondLot(t *testing.T) {
 	h := bondHarness(t)
 	rec := h.serve(t, withSession(lotForm("edo0536"), ownerSession))
 	wantStatus(t, rec, http.StatusSeeOther)
-	if loc := rec.Header().Get("Location"); loc != "/accounts/"+accountID+"#lots-title" {
+	if loc := rec.Header().Get("Location"); loc != "/accounts/"+accountID+"?tab=lots#lots-title" {
 		t.Errorf("Location = %q, want the account's open lots", loc)
 	}
 	var added []*ingestv1.AddBondLotRequest
@@ -204,7 +204,7 @@ func TestDeleteBondLot(t *testing.T) {
 	h := bondHarness(t)
 	rec := h.serve(t, withSession(deleteForm("edo0536"), ownerSession))
 	wantStatus(t, rec, http.StatusSeeOther)
-	if loc := rec.Header().Get("Location"); loc != "/accounts/"+accountID+"#lots-title" {
+	if loc := rec.Header().Get("Location"); loc != "/accounts/"+accountID+"?tab=lots#lots-title" {
 		t.Errorf("Location = %q, want the account's open lots", loc)
 	}
 	var deleted []*ingestv1.DeleteBondLotRequest

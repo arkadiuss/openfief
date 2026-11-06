@@ -62,7 +62,6 @@ func TestOverview(t *testing.T) {
 	wantBody(t, rec,
 		"Total on 2026-03-31", "1 500,00 PLN",
 		"Synthetic brokerage", `valued through <span class="mono">2026-03-31</span>`, "Revaluation pending", "1 000,00 PLN",
-		`id="allocation"`, "66.7%", "33.3%", `class="fill series-1" width="66.7"`, `class="fill series-2" width="33.3"`,
 		`data-chart="{&#34;kind&#34;:&#34;line&#34;`, "from 2026-03-30 to 2026-03-31",
 		`<label for="chart-start">Charts start on</label>`, `name="start" type="date" value="2026-03-30"`,
 		`By default the charts start on <span class="mono">2026-03-30</span>, where tracking began`,
@@ -71,6 +70,8 @@ func TestOverview(t *testing.T) {
 		`<a href="/inbox">1 flagged balance assertion(s)</a>`,
 	)
 	wantNoBody(t, rec, "model portfolio", "Model", "TWR: not built", "&#34;series&#34;", `data-chart="{&#34;kind&#34;:&#34;bar&#34;`)
+	alloc := h.serve(t, withSession(request(http.MethodGet, "/?over=allocation", ""), ownerSession))
+	wantBody(t, alloc, `id="allocation"`, "66.7%", "33.3%", `class="fill series-1" width="66.7"`, `class="fill series-2" width="33.3"`)
 	perf := h.serve(t, withSession(request(http.MethodGet, "/?over=performance", ""), ownerSession))
 	wantBody(t, perf, "From 2026-03-30 to 2026-03-31", `Tracking began on <span class="mono">2026-03-30</span>`,
 		"time-weighted return as an index, 100 on 2026-03-30", `Its value with cash on 2026-03-31 is <span class="mono">1`,
@@ -81,7 +82,8 @@ func TestOverview(t *testing.T) {
 	}
 	var dims []viewsv1.AllocationDimension
 	h.read.locked(func() { dims = append(dims, h.read.dimensions...) })
-	if diff := cmp.Diff([]viewsv1.AllocationDimension{viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS, viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS}, dims); diff != "" {
+	asset := viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS
+	if diff := cmp.Diff([]viewsv1.AllocationDimension{asset, asset, asset}, dims); diff != "" {
 		t.Errorf("allocation dimensions (-want +got):\n%s", diff)
 	}
 }
@@ -107,9 +109,9 @@ func TestOverviewDate(t *testing.T) {
 func TestAllocationSwitch(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
+	rec := h.serve(t, withSession(request(http.MethodGet, "/?over=allocation", ""), ownerSession))
 	for _, d := range dimensions() {
-		wantBody(t, rec, `hx-get="/allocation?by=`+d.Key+`&amp;date=2026-03-31&amp;value=gross"`)
+		wantBody(t, rec, `hx-get="/allocation?by=`+d.Key+`&amp;date=2026-03-31&amp;over=allocation&amp;value=gross"`)
 	}
 	rec = h.serve(t, htmx(withSession(request(http.MethodGet, "/allocation?by=currency&date=2026-03-31", ""), ownerSession)))
 	wantStatus(t, rec, http.StatusOK)
@@ -122,7 +124,7 @@ func TestAllocationSwitch(t *testing.T) {
 	}
 	rec = h.serve(t, withSession(request(http.MethodGet, "/allocation?by=currency&date=2026-03-31", ""), ownerSession))
 	wantStatus(t, rec, http.StatusSeeOther)
-	if got := rec.Header().Get("Location"); got != "/?by=currency&date=2026-03-31" {
+	if got := rec.Header().Get("Location"); got != "/?by=currency&date=2026-03-31&over=allocation" {
 		t.Errorf("Location = %q", got)
 	}
 }
@@ -133,18 +135,29 @@ func TestAllocationSwitch(t *testing.T) {
 func TestAccountPage(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	rec := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), readSession))
-	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec,
-		"Synthetic brokerage", `valued through <span class="mono">2026-03-31</span>`,
-		"SYN (XX0000000001)", "250,00 EUR", "1 000,00 PLN", "market",
-		"12 345,67 EUR",
-		"2026-01-02", "2 000,00 EUR", "opening lot",
-		"cash EUR", "flagged",
-		"Synthetic deposit", "deposit",
-		`hx-get="/accounts/acc-synthetic-1/transactions?page_token=page-2"`,
-	)
-	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/unknown", ""), readSession))
+	tabs := []struct {
+		query string
+		want  []string
+	}{
+		{"", []string{
+			"Synthetic brokerage", `valued through <span class="mono">2026-03-31</span>`,
+			"SYN (XX0000000001)", "250,00 EUR", "1 000,00 PLN", "market",
+			`<a href="/instruments/XX0000000001?account=acc-synthetic-1">Synthetic Fund · SYN (XX0000000001)</a>`,
+		}},
+		{"?tab=cash", []string{"12 345,67 EUR"}},
+		{"?tab=lots", []string{"2026-01-02", "2 000,00 EUR", "opening lot"}},
+		{"?tab=reconciliation", []string{"cash EUR", "flagged"}},
+		{"?tab=transactions", []string{
+			"Synthetic deposit", "deposit", `hx-get="/accounts/acc-synthetic-1/transactions?page_token=page-2"`,
+			`href="/accounts/acc-synthetic-1?page_token=page-2&amp;tab=transactions"`,
+		}},
+	}
+	for _, tab := range tabs {
+		rec := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID+tab.query, ""), readSession))
+		wantStatus(t, rec, http.StatusOK)
+		wantBody(t, rec, tab.want...)
+	}
+	rec := h.serve(t, withSession(request(http.MethodGet, "/accounts/unknown", ""), readSession))
 	wantStatus(t, rec, http.StatusNotFound)
 }
 

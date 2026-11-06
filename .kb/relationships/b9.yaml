@@ -1035,3 +1035,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2860dae5648d
+  - type: implements
+    from: SYM-ui-server-account-head
+    to: REQ-ui-account-page-tabs
+    created_at: 2026-11-06T10:44:21.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-749f843af9e3
+  - type: covered_by
+    from: SYM-ui-server-account-head
+    to: TEST-ui-account-tabs
+    created_at: 2026-11-06T10:44:21.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8748463bca7

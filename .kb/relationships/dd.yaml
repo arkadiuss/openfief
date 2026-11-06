@@ -615,3 +615,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d878e4ae1b23
+  - type: implements
+    from: SYM-ui-account-transactions
+    to: REQ-ui-account-page-tabs
+    created_at: 2026-11-06T10:44:16.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fff47de54a0
+  - type: covered_by
+    from: SYM-ui-account-transactions
+    to: TEST-ui-pages
+    created_at: 2026-11-06T10:44:16.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-245b943553c9
+  - type: implements
+    from: SYM-ui-account-data
+    to: REQ-ui-account-page-tabs
+    created_at: 2026-11-06T10:44:58.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ccb795be92e
+  - type: covered_by
+    from: SYM-ui-account-data
+    to: TEST-ui-account-tabs
+    created_at: 2026-11-06T10:44:58.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d08692dc909

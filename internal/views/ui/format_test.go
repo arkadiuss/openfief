@@ -156,7 +156,7 @@ func TestBuildCharts(t *testing.T) {
 	}}
 	hist := buildPerformance(perf, nil, plainFormat())
 	wantHist := performanceView{
-		From: "2026-01-02", To: "2026-01-03", Default: "2026-01-02", Currency: "PLN", Points: 2, Value: pln("11.00"), Gap: "the next day is not fully valued yet",
+		From: "2026-01-02", To: "2026-01-03", Default: "2026-01-02", Currency: "PLN", Points: 2, Value: pln("11.00"), Gap: "the next day is not fully valued yet", Return: "+10.0%",
 		Chart: "{\"kind\":\"line\",\"group\":\"\u202f\",\"decimal\":\".\"," + `"label":"Portfolio (time-weighted return)","currency":"index","labels":["2026-01-02","2026-01-03"],"values":["100","110"],"mark":"2026-01-02"}`,
 	}
 	if diff := cmp.Diff(wantHist, hist, protocmp.Transform()); diff != "" {

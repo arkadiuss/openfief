@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bd84bd6f2527
+  - type: implements
+    from: SYM-ui-instrument-holding-row
+    to: REQ-decision-d195-2-instrument-page
+    created_at: 2026-11-06T10:47:25.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2046849a5809
+  - type: covered_by
+    from: SYM-ui-instrument-holding-row
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:47:25.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6b0caddb62

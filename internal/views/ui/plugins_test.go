@@ -130,7 +130,7 @@ func TestTransactionsMarkRemovedInstance(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
 	for _, r := range []*http.Request{
-		request(http.MethodGet, "/accounts/"+accountID, ""),
+		request(http.MethodGet, "/accounts/"+accountID+"?tab=transactions", ""),
 		htmx(request(http.MethodGet, "/accounts/"+accountID+"/transactions?page_token=page-2", "")),
 	} {
 		rec := h.serve(t, withSession(r, readSession))

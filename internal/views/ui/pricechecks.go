@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 	"slices"
 	"strings"
 
@@ -32,6 +33,9 @@ var errBadPercent = errors.New("the threshold must be a percent greater than 0 a
 type checkRow struct {
 	Check       *viewsv1.PriceCheck
 	Acknowledge bool
+	// Next is the page the acknowledgement returns to, the Inbox when
+	// empty.
+	Next string
 }
 
 // instrumentChecks are one instrument's price checks: the latest, and the
@@ -46,6 +50,8 @@ type instrumentChecks struct {
 	Custom    string
 	// Owner shows the owner's threshold form.
 	Owner bool
+	// Next is the page the owner's forms return to, the Inbox when empty.
+	Next string
 }
 
 // Open reports whether the latest check is flagged and not acknowledged:
@@ -117,7 +123,7 @@ func (s *server) setPriceCheckThreshold(w http.ResponseWriter, r *http.Request, 
 	}
 	threshold, err := fractionOf(r.PostForm.Get("threshold"))
 	if err != nil {
-		s.renderInbox(w, r, sess, http.StatusBadRequest, "", err.Error())
+		s.refusePriceCheckForm(w, r, sess, err.Error())
 		return
 	}
 	_, err = s.priceChecks.SetPriceCheckThreshold(r.Context(), connect.NewRequest(&valuationv1.SetPriceCheckThresholdRequest{
@@ -127,15 +133,41 @@ func (s *server) setPriceCheckThreshold(w http.ResponseWriter, r *http.Request, 
 	s.afterPriceCheckForm(w, r, sess, "SetPriceCheckThreshold", err)
 }
 
-// afterPriceCheckForm answers a posted price check form: back to the
-// Inbox when the core took it, the Inbox with the core's reason when it
-// refused it, and any other failure like any failed call to the core.
+// afterPriceCheckForm answers a posted price check form: back to the page
+// it came from when the core took it, the Inbox or the instrument's page
+// (priceCheckReturn), that page with the core's reason when it refused
+// it, and any other failure like any failed call to the core.
 func (s *server) afterPriceCheckForm(w http.ResponseWriter, r *http.Request, sess session, name string, err error) {
-	if err == nil {
+	isin, toInstrument := priceCheckReturn(r)
+	switch {
+	case err == nil && toInstrument:
+		http.Redirect(w, r, "/instruments/"+url.PathEscape(isin), http.StatusSeeOther)
+	case err == nil:
 		http.Redirect(w, r, backToInbox(r), http.StatusSeeOther)
+	case toInstrument:
+		s.afterInstrumentForm(w, r, sess, isin, name, err)
+	default:
+		s.afterInboxForm(w, r, sess, name, err)
+	}
+}
+
+// priceCheckReturn returns the ISIN of the instrument whose page a posted
+// price check form came from, and false for the Inbox: its next field
+// must be the page of the instrument the form names, nothing else.
+func priceCheckReturn(r *http.Request) (string, bool) {
+	isin := r.PostFormValue("isin")
+	next := r.PostFormValue("next")
+	return isin, isin != "" && next == instrumentPath(isin)
+}
+
+// refusePriceCheckForm shows the page a price check form came from with
+// reason, refused before the core was called.
+func (s *server) refusePriceCheckForm(w http.ResponseWriter, r *http.Request, sess session, reason string) {
+	if isin, ok := priceCheckReturn(r); ok {
+		s.renderInstrument(w, r, sess, isin, http.StatusBadRequest, instrumentForm{Error: reason})
 		return
 	}
-	s.afterInboxForm(w, r, sess, name, err)
+	s.renderInbox(w, r, sess, http.StatusBadRequest, "", reason)
 }
 
 // fractionOf turns a threshold the owner typed in percent, such as "2.5",

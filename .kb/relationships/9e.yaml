@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-79b3cfb1363e
+  - type: implements
+    from: SYM-ui-uc-server-after-price-check-form
+    to: REQ-ui-instrument-page
+    created_at: 2026-11-06T11:05:31.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12d5f0959977
+  - type: covered_by
+    from: SYM-ui-uc-server-after-price-check-form
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T11:05:32.001Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0dfb3ebeb26a

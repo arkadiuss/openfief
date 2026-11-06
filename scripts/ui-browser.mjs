@@ -7,7 +7,9 @@
 // network is gone, and empties its cache on sign-out; an action the fake core refuses for want of a recent passkey
 // check (D-183) asks to confirm with a passkey, runs the check with Chromium's virtual authenticator, and goes ahead;
 // at 360 px the overview's Ask box (D-194) takes "/", answers a suggestion chip, a typed command and one it doesn't
-// understand, its chart card switches to the performance, and the Inbox shows its side column of Ask suggestions.
+// understand, its chart card switches to the performance, and the Inbox shows its side column of Ask suggestions;
+// at 360 px an account's tabs wrap and switch in place (D-195), an instrument's page shows its parts and takes the
+// owner's rename, and the overview's chart card switches to the allocation, whose currency bar opens its holdings.
 // Usage: node scripts/ui-browser.mjs <screenshot-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
@@ -47,7 +49,11 @@ async function serve() {
 
 // The fakes' one account is acc-synthetic-1 (internal/views/ui/fakes_test.go).
 const pages = {
-  overview: '/', 'overview-ask': '/?q=what+needs+me', 'overview-performance': '/?over=performance', accounts: '/accounts', account: '/accounts/acc-synthetic-1', inbox: '/inbox',
+  overview: '/', 'overview-ask': '/?q=what+needs+me', 'overview-performance': '/?over=performance', 'overview-allocation': '/?over=allocation',
+  accounts: '/accounts', account: '/accounts/acc-synthetic-1', 'account-transactions': '/accounts/acc-synthetic-1?tab=transactions',
+  'account-lots': '/accounts/acc-synthetic-1?tab=lots', 'account-cash': '/accounts/acc-synthetic-1?tab=cash',
+  'account-reconciliation': '/accounts/acc-synthetic-1?tab=reconciliation', 'account-settings': '/accounts/acc-synthetic-1?tab=settings',
+  instrument: '/instruments/XX0000000001?account=acc-synthetic-1', holdings: '/holdings?by=currency&key=EUR', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
   settings: '/settings', setup: '/setup',
 };
@@ -114,7 +120,7 @@ async function shoot(browser, label, options) {
 async function phoneRows(browser) {
   const ctx = await context(browser, { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, true);
   const page = await ctx.newPage();
-  await page.goto(base + '/accounts/acc-synthetic-1', { waitUntil: 'networkidle' });
+  await page.goto(base + '/accounts/acc-synthetic-1?tab=transactions', { waitUntil: 'networkidle' });
   const more = page.locator('a', { hasText: 'More transactions' });
   if (await more.count() > 0) {
     const rows = await page.locator('.table.stack tbody tr').count();
@@ -199,6 +205,56 @@ async function askBox(browser) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check(overflow <= 0, `phone: the Inbox with its Ask column scrolls ${overflow} px sideways`);
   await page.screenshot({ path: path.join(out, 'phone360-light-inbox-ask.png'), fullPage: true });
+  await ctx.close();
+}
+
+// sideways returns how many pixels the page scrolls sideways.
+async function sideways(page) {
+  return page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+}
+
+// recordPages checks the pages of D-195 at 360 px: an account's six tabs wrap without scrolling sideways and switch in
+// place with htmx, the address following; an instrument's page shows its name, price chart, holdings, transactions,
+// price checks and tax class, and the owner's rename form saves; the overview's chart card switches to the allocation,
+// and a currency's bar opens the holdings behind it.
+async function recordPages(browser) {
+  const ctx = await context(browser, { viewport: { width: 360, height: 780 }, isMobile: true, hasTouch: true }, true);
+  const page = await ctx.newPage();
+  await page.goto(base + '/accounts/acc-synthetic-1', { waitUntil: 'networkidle' });
+  check(await page.locator('.tab-list a').count() === 6, 'phone: the account has not six tabs');
+  check(await page.isVisible('nav.breadcrumb'), 'phone: the account has no breadcrumb');
+  check(await sideways(page) <= 0, 'phone: the account with its tabs scrolls sideways');
+  for (const [label, heading] of [['Lots', '#lots-title'], ['Reconciliation', '#checks-title'], ['Account settings', '#settings-title']]) {
+    await page.click(`.tab-list a:has-text("${label}")`);
+    const swapped = await page.waitForSelector(`#account-tabs ${heading}`, { timeout: 5000 }).then(() => true, () => false);
+    check(swapped, `phone: the ${label} tab does not swap in`);
+    check(new URL(page.url()).searchParams.has('tab'), `phone: the ${label} tab leaves the address without its tab`);
+    check(await sideways(page) <= 0, `phone: the ${label} tab scrolls sideways`);
+  }
+  await page.screenshot({ path: path.join(out, 'phone360-light-account-settings-tab.png'), fullPage: true });
+  await page.goto(base + '/accounts/acc-synthetic-1', { waitUntil: 'networkidle' });
+  await page.click('#holdings-title ~ .table a[href^="/instruments/"] >> nth=0');
+  await page.waitForSelector('#prices-title', { timeout: 5000 });
+  for (const part of ['#prices-title', '#instrument-holdings-title', '#instrument-tx-title', '#instrument-checks-title', '#classes-title', '#rename-title']) {
+    check(await page.locator(part).count() === 1, `phone: the instrument page has no ${part}`);
+  }
+  check(await page.locator('#prices-title ~ .chart canvas').count() > 0, 'phone: the instrument page draws no price chart');
+  check(await sideways(page) <= 0, 'phone: the instrument page scrolls sideways');
+  await page.screenshot({ path: path.join(out, 'phone360-light-instrument.png'), fullPage: true });
+  await page.fill('#instrument-name', 'Synthetic World Fund');
+  await Promise.all([page.waitForURL('**/instruments/XX0000000001?renamed=1'), page.click('form[action$="/name"] button[type="submit"]')]);
+  check((await page.textContent('main')).includes('The name is saved.'), 'phone: the rename does not say it is saved');
+  await page.screenshot({ path: path.join(out, 'phone360-light-instrument-renamed.png'), fullPage: true });
+  await page.goto(base + '/', { waitUntil: 'networkidle' });
+  await page.click('#over-time nav a:has-text("Allocation")');
+  await page.waitForSelector('#over-time #allocation .bars', { timeout: 5000 });
+  check(await sideways(page) <= 0, 'phone: the allocation tab scrolls sideways');
+  await page.screenshot({ path: path.join(out, 'phone360-light-overview-allocation.png'), fullPage: true });
+  await page.click('#allocation nav[aria-label="Split by"] a:has-text("Currency")');
+  await page.waitForSelector('#allocation a.bar[href^="/holdings?by=currency"]', { timeout: 5000 });
+  await Promise.all([page.waitForURL('**/holdings?**'), page.click('#allocation a.bar >> nth=0')]);
+  check(await page.isVisible('#filtered-holdings-title'), 'phone: a currency bar does not open its holdings');
+  check(await sideways(page) <= 0, 'phone: the holdings behind a bar scroll sideways');
   await ctx.close();
 }
 
@@ -296,6 +352,7 @@ try {
   await phoneRows(browser);
   await removedRedirect(browser);
   await askBox(browser);
+  await recordPages(browser);
   await passkeyCheck(browser);
   await app();
 } finally {

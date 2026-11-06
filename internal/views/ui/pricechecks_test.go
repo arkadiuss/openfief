@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"slices"
 	"sync"
 	"testing"
 
@@ -33,7 +34,7 @@ func (f *fakeRead) ListPriceChecks(_ context.Context, r *connect.Request[viewsv1
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
 	}
-	return connect.NewResponse(&viewsv1.ListPriceChecksResponse{Threshold: "0.01", Checks: []*viewsv1.PriceCheck{
+	resp := &viewsv1.ListPriceChecksResponse{Threshold: "0.01", Checks: []*viewsv1.PriceCheck{
 		{
 			Date: "2026-03-12", Instrument: syntheticInstrument(), PriceDate: "2026-03-12",
 			Price: &viewsv1.Money{Amount: "84", Currency: "GBP"}, PriceSource: "eodhd",
@@ -52,7 +53,11 @@ func (f *fakeRead) ListPriceChecks(_ context.Context, r *connect.Request[viewsv1
 			CrossCheck: &viewsv1.Money{Amount: "3.1", Currency: "USD"}, CrossCheckSource: "ibkr-main",
 			Status: viewsv1.PriceCheckStatus_PRICE_CHECK_STATUS_CURRENCY_MISMATCH, Threshold: "0.05",
 		},
-	}}), nil
+	}}
+	if isin := r.Msg.GetIsin(); isin != "" {
+		resp.Checks = slices.DeleteFunc(resp.GetChecks(), func(c *viewsv1.PriceCheck) bool { return c.GetInstrument().GetIsin() != isin })
+	}
+	return connect.NewResponse(resp), nil
 }
 
 // fakePriceChecks is an in-memory PriceCheckService: it wants an
@@ -115,7 +120,8 @@ func TestInboxPriceChecks(t *testing.T) {
 	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), demoSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "Numbers to check · 1", "The price of XX0000000001/SYN differs", "84,125 GBP", "(2026-03-13)", "86,5 GBP",
-		"ibkr-main", "2.8232%", "threshold 1%", "History: 1 earlier check(s)", "0.2381%")
+		"ibkr-main", "2.8232%", "threshold 1%", "History: 1 earlier check(s)", "0.2381%",
+		`<a href="/instruments/XX0000000001">Open instrument XX0000000001</a>`)
 	wantNoBody(t, rec, "<script>", "style=", "Acknowledge</button>", "/inbox/price-checks/threshold")
 	rec = h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), ownerSession))
 	wantBody(t, rec, `action="/inbox/price-checks/acknowledge"`, `name="date" value="2026-03-15"`, "Acknowledge</button>",

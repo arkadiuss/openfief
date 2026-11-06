@@ -28,6 +28,9 @@ type performanceView struct {
 	Gap     string
 	Pending bool
 	Chart   string
+	// Return is the time-weighted return from From to To in percent;
+	// empty without days.
+	Return string
 	// Model is the model portfolio; nil while it is off (D-52).
 	Model *modelView
 	// Suggested counts the suggested transfers the owner has not decided
@@ -123,7 +126,7 @@ func buildPerformance(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPort
 // named label: the portfolio's, or an account's.
 func buildLine(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPortfolioResponse, f numberFormat, label string) performanceView {
 	chart := chartData{
-		Kind: "line", Label: label, Currency: "index", Group: f.Group, Decimal: f.Decimal,
+		Kind: chartLine, Label: label, Currency: "index", Group: f.Group, Decimal: f.Decimal,
 		Mark: p.GetDefaultFrom(),
 	}
 	v := performanceView{Currency: p.GetReportingCurrency(), Pending: p.GetRevaluationPending(), Default: p.GetDefaultFrom()}
@@ -150,6 +153,7 @@ func buildLine(p *viewsv1.GetPerformanceResponse, m *viewsv1.GetModelPortfolioRe
 	v.Points = len(chart.Labels)
 	if v.Points > 0 {
 		v.From, v.To = chart.Labels[0], chart.Labels[v.Points-1]
+		v.Return = returnPercent(chart.Values[0], chart.Values[v.Points-1], f)
 	}
 	v.Chart = chart.encode()
 	return v

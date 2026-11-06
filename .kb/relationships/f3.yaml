@@ -608,3 +608,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83d929511e80
+  - type: constrains
+    from: REQ-ui-allocation-bars-to-holdings
+    to: FACT-SUBJECT-170F46396880C6D5
+    created_at: 2026-11-06T10:43:34.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20423eeb4197
+  - type: requires_property
+    from: REQ-ui-allocation-bars-to-holdings
+    to: FACT-PROP-164B71608449FDF4
+    created_at: 2026-11-06T10:43:34.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d019e8f8108a
+  - type: specified_by
+    from: REQ-ui-allocation-bars-to-holdings
+    to: SCEN-ui-allocation-bars-to-holdings
+    created_at: 2026-11-06T10:43:34.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb2cadfb4187

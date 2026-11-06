@@ -608,3 +608,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-27412e3ae044
+  - type: constrains
+    from: REQ-ui-instrument-links
+    to: FACT-SUBJECT-BF8827AE5AF75C88
+    created_at: 2026-11-06T10:43:43.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea9ceef9db30
+  - type: requires_property
+    from: REQ-ui-instrument-links
+    to: FACT-PROP-05D07EF6E10529CF
+    created_at: 2026-11-06T10:43:43.612Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46547c83b2e8
+  - type: specified_by
+    from: REQ-ui-instrument-links
+    to: SCEN-ui-instrument-links
+    created_at: 2026-11-06T10:43:43.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b4601aa2869
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-instrument-transactions
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:50:29.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c46befa5851d

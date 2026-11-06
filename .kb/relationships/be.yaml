@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ca3d04dc7f3
+  - type: constrains
+    from: REQ-decision-d195-2-instrument-page
+    to: FACT-SUBJECT-125585B15F19664A
+    created_at: 2026-11-06T10:43:08.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94376dcb2b53
+  - type: requires_property
+    from: REQ-decision-d195-2-instrument-page
+    to: FACT-PROP-1A76A39A920EBE65
+    created_at: 2026-11-06T10:43:08.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af2fef4e6a09
+  - type: specified_by
+    from: REQ-decision-d195-2-instrument-page
+    to: SCEN-decision-d195-2-instrument-page
+    created_at: 2026-11-06T10:43:08.548Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9a9855939e8

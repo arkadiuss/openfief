@@ -727,3 +727,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8d7749c50fc
+  - type: constrains
+    from: REQ-decision-d195-3-holding-and-bar-link-down
+    to: FACT-SUBJECT-0928C4E60706ECE2
+    created_at: 2026-11-06T10:43:13.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f2554283852
+  - type: requires_property
+    from: REQ-decision-d195-3-holding-and-bar-link-down
+    to: FACT-PROP-82E284DA8EEFAF2D
+    created_at: 2026-11-06T10:43:14.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5b14912b04e
+  - type: specified_by
+    from: REQ-decision-d195-3-holding-and-bar-link-down
+    to: SCEN-decision-d195-3-holding-and-bar-link-down
+    created_at: 2026-11-06T10:43:14.065Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcbc6971bdf8

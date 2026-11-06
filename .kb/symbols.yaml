@@ -51951,9 +51951,14 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T19:50:44.848Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: covered_by
         target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-page-tabs
       - type: implements
         target: REQ-ui-account-pages
   - id: SYM-ui-instrument-key
@@ -51992,20 +51997,11 @@ symbols:
       recorded_at: 2026-10-28T19:51:00.266Z
     relationships:
       - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-ui-account-pages
-  - id: SYM-ui-server-positions
-    title: server.positions
-    sourceFile: internal/views/ui/account.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:51:05.415Z
-    relationships:
+        target: TEST-ui-account-tabs
       - type: covered_by
         target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-page-tabs
       - type: implements
         target: REQ-ui-account-pages
   - id: SYM-ui-server-transactions
@@ -69173,7 +69169,11 @@ symbols:
       recorded_at: 2026-10-29T02:14:43.641Z
     relationships:
       - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: covered_by
         target: TEST-ui-bond-lots
+      - type: implements
+        target: REQ-ui-account-page-tabs
       - type: implements
         target: REQ-ui-bond-lot-entry
   - id: SYM-ui-bond-lot-form
@@ -90727,9 +90727,13 @@ symbols:
       recorded_at: 2026-10-30T06:19:09.903Z
     relationships:
       - type: covered_by
+        target: TEST-ui-instrument
+      - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
         target: REQ-ui-inbox-price-checks
+      - type: implements
+        target: REQ-ui-instrument-page
   - id: SYM-ui-uc-fraction-of
     title: fractionOf
     sourceFile: internal/views/ui/pricechecks.go
@@ -109536,6 +109540,8 @@ symbols:
         target: REQ-ingest-xtb-isin-owner-confirms
       - type: implements
         target: REQ-ui-inbox-tickers
+      - type: implements
+        target: REQ-ui-instrument-links
   - id: SYM-ui-test-helper-fake-tickers
     title: fakeTickers
     sourceFile: internal/views/ui/tickers_test.go
@@ -140921,8 +140927,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-attention
+      - type: covered_by
+        target: TEST-ui-pricechecks
       - type: implements
         target: REQ-ui-inbox-settle-in-place
+      - type: implements
+        target: REQ-ui-instrument-links
   - id: SYM-ui-item-pill
     title: itemPill
     sourceFile: internal/views/ui/inbox.go
@@ -144027,6 +144037,8 @@ symbols:
         target: REQ-decision-d194-1-ask-box
       - type: implements
         target: REQ-ui-ask-commands
+      - type: implements
+        target: REQ-ui-instrument-links
   - id: SYM-ui-server-latest-date
     title: server.latestDate
     sourceFile: internal/views/ui/askanswer.go
@@ -144323,9 +144335,15 @@ symbols:
       recorded_at: 2026-11-06T08:23:43.262Z
     relationships:
       - type: covered_by
+        target: TEST-ui-home
+      - type: covered_by
         target: TEST-ui-home-unit
       - type: implements
         target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-decision-d195-3-holding-and-bar-link-down
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
       - type: implements
         target: REQ-ui-overview-places
   - id: SYM-ui-ask-box
@@ -144817,6 +144835,8 @@ symbols:
       - type: implements
         target: REQ-decision-d193-1-overview
       - type: implements
+        target: REQ-ui-overview-allocation-tab
+      - type: implements
         target: REQ-ui-overview-places
   - id: SYM-ui-over-time-view
     title: overTimeView
@@ -144908,6 +144928,8 @@ symbols:
       - type: implements
         target: REQ-decision-d193-1-overview
       - type: implements
+        target: REQ-ui-overview-allocation-tab
+      - type: implements
         target: REQ-ui-overview-places
   - id: SYM-ui-server-over-time-fragment
     title: server.overTimeFragment
@@ -144935,3 +144957,983 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-home-unit
+  - id: SYM-ui-account-data-crumbs
+    title: accountData.Crumbs
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:43:45.112Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-account-data-holding-link
+    title: accountData.HoldingLink
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:43:49.930Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-decision-d195-3-holding-and-bar-link-down
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-account-data-return
+    title: accountData.Return
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:43:54.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-account-data-tab-fragment
+    title: accountData.TabFragment
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:43:59.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-account-data-tab-link
+    title: accountData.TabLink
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:04.586Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-account-data-tab-query
+    title: accountData.tabQuery
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:09.496Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-account-transactions
+    title: accountTransactions
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:14.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-server-account-head
+    title: server.accountHead
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:19.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-server-account-tab
+    title: server.accountTab
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:24.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-server-account-tab-fragment
+    title: server.accountTabFragment
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:29.164Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-server-account-view
+    title: server.accountView
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:34.217Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-server-holdings
+    title: server.holdings
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:38.917Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-sync-pill
+    title: syncPill
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:43.489Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-transactions-view-account-name
+    title: transactionsView.AccountName
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:48.284Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-transactions-view-columns
+    title: transactionsView.Columns
+    sourceFile: internal/views/ui/account.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:44:53.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-account-tab
+    title: accountTab
+    sourceFile: internal/views/ui/accounttabs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:11.328Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-account-tabs
+    title: accountTabs
+    sourceFile: internal/views/ui/accounttabs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:16.180Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-parse-account-tab
+    title: parseAccountTab
+    sourceFile: internal/views/ui/accounttabs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:21.046Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-read-error
+    title: readError
+    sourceFile: internal/views/ui/accounttabs.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:25.187Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-read-error-error
+    title: readError.Error
+    sourceFile: internal/views/ui/accounttabs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:29.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-read-error-unwrap
+    title: readError.Unwrap
+    sourceFile: internal/views/ui/accounttabs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:34.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-server-read-failed
+    title: server.readFailed
+    sourceFile: internal/views/ui/accounttabs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:39.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-filtered-cash
+    title: filteredCash
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:44.124Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-filtered-holding
+    title: filteredHolding
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:48.754Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-holdings-data
+    title: holdingsData
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:52.836Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-holdings-data-crumbs
+    title: holdingsData.Crumbs
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:45:57.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-holdings-data-label
+    title: holdingsData.Label
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:02.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-holdings-link
+    title: holdingsLink
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:06.777Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d195-3-holding-and-bar-link-down
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-in-group
+    title: inGroup
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:11.506Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-server-asset-class
+    title: server.assetClass
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:16.330Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-server-filtered-cash
+    title: server.filteredCash
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:21.042Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-server-filtered-holdings
+    title: server.filteredHoldings
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:25.948Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-server-holdings-page
+    title: server.holdingsPage
+    sourceFile: internal/views/ui/holdings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:30.839Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-allocation-bars-to-holdings
+  - id: SYM-ui-accounts-crumb
+    title: accountsCrumb
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:35.712Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-overview-crumb
+    title: overviewCrumb
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:40.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-account-tabs
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-checks-return-to
+    title: checksReturnTo
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:45.488Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-crumb
+    title: crumb
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:50.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-instrument-crumbs
+    title: instrumentCrumbs
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:55.208Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-instrument-data
+    title: instrumentData
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:46:59.542Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-instrument-data-name
+    title: instrumentData.Name
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:04.343Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-instrument-data-tickers
+    title: instrumentData.Tickers
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:09.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-instrument-form
+    title: instrumentForm
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:14.055Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-rename
+  - id: SYM-ui-instrument-from
+    title: instrumentFrom
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:19.023Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pages
+      - type: implements
+        target: REQ-decision-d195-3-holding-and-bar-link-down
+  - id: SYM-ui-instrument-holding-row
+    title: instrumentHoldingRow
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:23.985Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-instrument-holdings
+    title: instrumentHoldings
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:28.971Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-instrument-path
+    title: instrumentPath
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:33.971Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-listing-chart
+    title: listingChart
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:39.152Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-price-chart
+    title: priceChart
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:43.874Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-price-charts
+    title: priceCharts
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:48.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-server-after-instrument-form
+    title: server.afterInstrumentForm
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:53.870Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-rename
+  - id: SYM-ui-server-instrument-items
+    title: server.instrumentItems
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:47:58.968Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-server-instrument-page
+    title: server.instrumentPage
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:03.875Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-server-instrument-record
+    title: server.instrumentRecord
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:08.929Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-server-instrument-transactions
+    title: server.instrumentTransactions
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:13.805Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-server-instrument-transactions-fragment
+    title: server.instrumentTransactionsFragment
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:18.575Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-server-instrument-view
+    title: server.instrumentView
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:23.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-server-rename-instrument
+    title: server.renameInstrument
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:28.123Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-rename
+  - id: SYM-ui-server-render-instrument
+    title: server.renderInstrument
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:32.835Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+  - id: SYM-ui-confirmed-link
+    title: confirmedLink
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:37.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-instrument-links
+  - id: SYM-ui-is-alphanumeric
+    title: isAlphanumeric
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:42.123Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-instrument-links
+  - id: SYM-ui-price-check-return
+    title: priceCheckReturn
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:51.270Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-server-refuse-price-check-form
+    title: server.refusePriceCheckForm
+    sourceFile: internal/views/ui/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:48:55.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-ui-instrument-page
+  - id: SYM-ui-server-record-routes
+    title: server.recordRoutes
+    sourceFile: internal/views/ui/server.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:49:04.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-instrument
+      - type: implements
+        target: REQ-decision-d195-2-instrument-page
+      - type: implements
+        target: REQ-ui-account-page-tabs
+  - id: SYM-ui-test-helper-item-selected
+    title: itemSelected
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:49:32.263Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-account-frame
+    title: TestAccountFrame
+    sourceFile: internal/views/ui/accounttabs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:49:36.436Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-account-tabs
+  - id: SYM-ui-test-account-tab-fragment
+    title: TestAccountTabFragment
+    sourceFile: internal/views/ui/accounttabs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:49:40.726Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-account-tabs
+  - id: SYM-ui-test-holdings-behind-bar
+    title: TestHoldingsBehindBar
+    sourceFile: internal/views/ui/accounttabs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:49:44.916Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-account-tabs
+  - id: SYM-ui-test-sync-pill
+    title: TestSyncPill
+    sourceFile: internal/views/ui/accounttabs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:49:49.204Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-account-tabs
+  - id: SYM-ui-test-instrument-page
+    title: TestInstrumentPage
+    sourceFile: internal/views/ui/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:49:53.932Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-instrument
+  - id: SYM-ui-test-instrument-transactions-paging
+    title: TestInstrumentTransactionsPaging
+    sourceFile: internal/views/ui/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:49:58.699Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-instrument
+  - id: SYM-ui-test-price-check-forms-return-to-instrument
+    title: TestPriceCheckFormsReturnToInstrument
+    sourceFile: internal/views/ui/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:50:03.323Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-instrument
+  - id: SYM-ui-test-rename-instrument
+    title: TestRenameInstrument
+    sourceFile: internal/views/ui/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:50:08.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-instrument
+  - id: SYM-ui-test-helper-fake-instruments
+    title: fakeInstruments
+    sourceFile: internal/views/ui/instrument_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:50:12.086Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-instrument
+  - id: SYM-ui-test-helper-fake-instruments-rename-instrument
+    title: fakeInstruments.RenameInstrument
+    sourceFile: internal/views/ui/instrument_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:50:16.127Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-instrument
+  - id: SYM-ui-test-helper-fake-instruments-locked
+    title: fakeInstruments.locked
+    sourceFile: internal/views/ui/instrument_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:50:20.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-instrument
+  - id: SYM-ui-test-helper-fake-read-list-instrument-prices
+    title: fakeRead.ListInstrumentPrices
+    sourceFile: internal/views/ui/instrument_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:50:24.142Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-instrument
+  - id: SYM-ui-test-helper-fake-read-list-instrument-transactions
+    title: fakeRead.ListInstrumentTransactions
+    sourceFile: internal/views/ui/instrument_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T10:50:28.300Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-instrument

@@ -1021,3 +1021,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25d1bf01291e
+  - type: implements
+    from: SYM-ui-server-instrument-items
+    to: REQ-ui-instrument-page
+    created_at: 2026-11-06T10:48:00.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f91f5f2cfa98
+  - type: covered_by
+    from: SYM-ui-server-instrument-items
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:48:00.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfd439af31ed

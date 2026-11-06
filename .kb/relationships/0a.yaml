@@ -713,3 +713,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59a7ce3b7f33
+  - type: constrains
+    from: REQ-ui-overview-allocation-tab
+    to: FACT-SUBJECT-46E34EF656D14E91
+    created_at: 2026-11-06T10:43:39.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-180b0a7e358d
+  - type: requires_property
+    from: REQ-ui-overview-allocation-tab
+    to: FACT-PROP-86768EF599BFECED
+    created_at: 2026-11-06T10:43:39.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f27e6b04ef8d
+  - type: specified_by
+    from: REQ-ui-overview-allocation-tab
+    to: SCEN-ui-overview-allocation-tab
+    created_at: 2026-11-06T10:43:39.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c747bd61ce8
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-instruments-rename-instrument
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:50:17.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c22f10a5439b

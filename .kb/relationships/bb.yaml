@@ -678,3 +678,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dc9f46dc1fad
+  - type: implements
+    from: SYM-ui-accounts-crumb
+    to: REQ-ui-account-page-tabs
+    created_at: 2026-11-06T10:46:37.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb3f16fe583e
+  - type: covered_by
+    from: SYM-ui-accounts-crumb
+    to: TEST-ui-account-tabs
+    created_at: 2026-11-06T10:46:37.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc84b822edc5
+  - type: implements
+    from: SYM-ui-server-record-routes
+    to: REQ-decision-d195-2-instrument-page
+    created_at: 2026-11-06T10:49:06.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3dfea8ebc96
+  - type: implements
+    from: SYM-ui-server-record-routes
+    to: REQ-ui-account-page-tabs
+    created_at: 2026-11-06T10:49:06.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee4ce38cde80
+  - type: covered_by
+    from: SYM-ui-server-record-routes
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:49:06.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb3baed4ce8d

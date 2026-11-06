@@ -108,6 +108,14 @@ func (f *fakeAttention) act(session string, id int64, state viewsv1.AttentionIte
 // ListAttentionItems lists the fake's items in the requested view and,
 // with an account, those tied to it, counting each state over the account
 // filter, as the core does.
+// itemSelected reports whether req's account and ISIN filters select it.
+func itemSelected(it *viewsv1.AttentionItem, req *viewsv1.ListAttentionItemsRequest) bool {
+	if a := req.GetAccountId(); a != "" && !slices.Contains(it.GetAccountIds(), a) {
+		return false
+	}
+	return req.GetIsin() == "" || it.GetIsin() == req.GetIsin()
+}
+
 func (f *fakeRead) ListAttentionItems(_ context.Context, r *connect.Request[viewsv1.ListAttentionItemsRequest]) (*connect.Response[viewsv1.ListAttentionItemsResponse], error) {
 	if err := f.check(r.Header()); err != nil {
 		return nil, err
@@ -121,7 +129,7 @@ func (f *fakeRead) ListAttentionItems(_ context.Context, r *connect.Request[view
 	out := &viewsv1.ListAttentionItemsResponse{}
 	counts := map[viewsv1.AttentionView]int32{}
 	for _, it := range f.attention.items {
-		if a := r.Msg.GetAccountId(); a != "" && !slices.Contains(it.GetAccountIds(), a) {
+		if !itemSelected(it, r.Msg) {
 			continue
 		}
 		if it.GetKind() == kindTransferSuggested && f.transfers.decided() {

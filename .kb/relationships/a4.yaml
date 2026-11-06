@@ -846,3 +846,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7d1a9ccb5fe
+  - type: verified_by
+    from: SCEN-ui-instrument-links
+    to: TEST-ui-pricechecks
+    created_at: 2026-11-06T10:43:02.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ccab47ec5db
+  - type: verified_by
+    from: SCEN-ui-instrument-links
+    to: TEST-ui-tickers
+    created_at: 2026-11-06T10:43:03.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a38266f711e
+  - type: verified_by
+    from: SCEN-ui-instrument-links
+    to: TEST-ui-home
+    created_at: 2026-11-06T10:43:03.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e83743ed133

@@ -91,7 +91,7 @@ func buildValueChart(totals []*viewsv1.DateTotal, currency string, k valueKind, 
 		kinds = valueKinds()
 	}
 	chart := chartData{
-		Kind: "line", Label: kinds[0].Label + " value with cash", Currency: currency,
+		Kind: chartLine, Label: kinds[0].Label + " value with cash", Currency: currency,
 		Group: f.Group, Decimal: f.Decimal, Mark: mark,
 	}
 	for _, more := range kinds[1:] {

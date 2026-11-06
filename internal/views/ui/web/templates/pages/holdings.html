@@ -1,0 +1,40 @@
+{{define "page-head"}}
+{{with .Data}}
+{{template "breadcrumb" .Crumbs}}
+<h1>{{$.Title}}</h1>
+{{end}}
+{{end}}
+{{define "content"}}
+{{with .Data}}
+<p class="lede">What the allocation's bar of {{if eq .Dimension.Key "currency"}}the currency{{else}}the asset class{{end}} {{.Label}} holds on {{.Date}}, in the accounts you may view. Each instrument opens its own page.</p>
+<section class="card" aria-labelledby="filtered-holdings-title">
+  <h2 id="filtered-holdings-title">Holdings</h2>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Instrument</th><th scope="col">Account</th><th scope="col" class="num">Value</th><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th></tr></thead>
+    <tbody>
+    {{range .Holdings}}
+    <tr>
+      <td><a href="/instruments/{{.Valuation.Instrument.Isin}}?account={{.AccountID}}">{{instrument .Valuation.Instrument}}</a></td>
+      <td><a href="/accounts/{{.AccountID}}">{{.Account}}</a></td>
+      <td class="num">{{money .Valuation.Value}}</td>{{template "valuation-values" .Valuation}}
+    </tr>
+    {{else}}
+    <tr><td colspan="6" class="empty">No valued holding on this date.</td></tr>
+    {{end}}
+    </tbody>
+    {{with .Total}}<tfoot><tr><th scope="row" colspan="3">Holdings, gross</th><td class="num">{{money .}}</td><td colspan="2"></td></tr></tfoot>{{end}}
+  </table></div>
+  <p class="muted">Value is in the instrument's currency; gross, net and liquidation are in the reporting currency.</p>
+</section>
+{{if .Cash}}
+<section class="card" aria-labelledby="filtered-cash-title">
+  <h2 id="filtered-cash-title">Cash</h2>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Account</th><th scope="col" class="num">Balance</th></tr></thead>
+    <tbody>{{range .Cash}}<tr><td><a href="/accounts/{{.AccountID}}?tab=cash">{{.Account}}</a></td><td class="num">{{money .Balance}}</td></tr>{{end}}</tbody>
+  </table></div>
+  <p class="muted">Cash in its own currency.</p>
+</section>
+{{end}}
+{{end}}
+{{end}}

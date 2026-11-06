@@ -874,3 +874,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e85e0a5b2cd9
+  - type: verified_by
+    from: SCEN-ui-allocation-bars-to-holdings
+    to: TEST-ui-account-tabs
+    created_at: 2026-11-06T10:43:00.228Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2157c5bce117
+  - type: verified_by
+    from: SCEN-ui-allocation-bars-to-holdings
+    to: TEST-ui-home
+    created_at: 2026-11-06T10:43:00.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c87be2b5751
+  - type: verified_by
+    from: SCEN-ui-allocation-bars-to-holdings
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-06T10:43:00.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f36484702968

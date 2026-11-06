@@ -1,0 +1,3 @@
+{{/* The breadcrumb of an account's or an instrument's page (docs/dev/design-system.md, M0 screens), its last step the
+     page itself. */}}
+{{define "breadcrumb"}}<nav class="breadcrumb" aria-label="Breadcrumb"><ol>{{range .}}<li>{{if .Href}}<a href="{{.Href}}">{{.Text}}</a>{{else}}<span aria-current="page">{{.Text}}</span>{{end}}</li>{{end}}</ol></nav>{{end}}

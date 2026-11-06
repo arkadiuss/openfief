@@ -82,9 +82,10 @@ func (a *allocationView) ValueFragmentLink(k valueKind) string {
 	return "/allocation?" + a.query(a.Dimension, k)
 }
 
-// query is the allocation's query on the same date, by d, of value k.
+// query is the allocation's query on the same date, by d, of value k, on
+// the chart card's allocation tab (D-193).
 func (a *allocationView) query(d dimension, k valueKind) string {
-	return url.Values{"by": {d.Key}, valueParam: {k.Key}, dateParam: {a.Date}}.Encode()
+	return url.Values{"by": {d.Key}, valueParam: {k.Key}, dateParam: {a.Date}, overParam: {overAllocation}}.Encode()
 }
 
 // overviewData is what the overview shows (D-193): the status sentence
@@ -103,8 +104,8 @@ type overviewData struct {
 	Flagged int
 	// FlaggedPrices counts the flagged price checks (D-22).
 	FlaggedPrices int
-	Allocation    *allocationView
-	// Over is the chart card: the value or the performance over time.
+	// Over is the chart card: the value or the performance over time, or
+	// the allocation.
 	Over *overTimeView
 	// Open counts the open attention items; Needs are the first of them,
 	// Failing the connector instances whose sync keeps failing.
@@ -296,16 +297,11 @@ func (s *server) firstRunAnswer(w http.ResponseWriter, r *http.Request, sess ses
 	return demo, false
 }
 
-// charts reads the overview's charts on date into data: the allocation by
-// the dimension and of the value the query picks, the chart card
-// (overTime), the portfolio's total on date and the value card. It returns
-// the method that failed with its error.
+// charts reads the overview's charts on date into data: the chart card
+// (overTime) with the allocation, the portfolio's total on date and the
+// value card. It returns the method that failed with its error.
 func (s *server) charts(r *http.Request, sess session, date, start kernel.Date, data *overviewData) (string, error) {
-	q := r.URL.Query()
 	var err error
-	if data.Allocation, err = s.allocation(r, sess, date, parseDimension(q.Get("by")), parseValueKind(q.Get(valueParam))); err != nil {
-		return "GetAllocation", err
-	}
 	if data.Over, err = s.overTime(r, sess, date, start); err != nil {
 		return "over time", err
 	}
@@ -394,7 +390,7 @@ func (s *server) accountRows(r *http.Request, sess session, date kernel.Date, ac
 func (s *server) allocationFragment(w http.ResponseWriter, r *http.Request, sess session) {
 	q := r.URL.Query()
 	if !isHTMX(r) {
-		back := url.Values{"by": {q.Get("by")}, dateParam: {q.Get(dateParam)}}
+		back := url.Values{"by": {q.Get("by")}, dateParam: {q.Get(dateParam)}, overParam: {overAllocation}}
 		if v := q.Get(valueParam); v != "" {
 			back.Set(valueParam, v)
 		}

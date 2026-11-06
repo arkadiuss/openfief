@@ -35,7 +35,7 @@ const staticCacheControl = "public, max-age=3600"
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService, TickerService, AttentionService, SyncService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService, TickerService, AttentionService, SyncService, InstrumentService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -79,6 +79,9 @@ type Config struct {
 	// Syncs calls the core's SyncService (D-196, D-79) like Auth: the
 	// owner's "Retry now" on a failing sync.
 	Syncs ingestv1connect.SyncServiceClient
+	// Instruments calls the core's InstrumentService (D-197, D-79) like
+	// Auth: the owner's display names of instruments.
+	Instruments ledgerv1connect.InstrumentServiceClient
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -94,7 +97,7 @@ type Config struct {
 func (cfg *Config) missingClient() bool {
 	clients := []any{
 		cfg.Auth, cfg.Model, cfg.BondLots, cfg.Statements, cfg.Read, cfg.Sleeves, cfg.Accounts, cfg.MarketData,
-		cfg.PriceChecks, cfg.Settings, cfg.Transfers, cfg.Tickers, cfg.Attention, cfg.Syncs,
+		cfg.PriceChecks, cfg.Settings, cfg.Transfers, cfg.Tickers, cfg.Attention, cfg.Syncs, cfg.Instruments,
 	}
 	return slices.Contains(clients, nil)
 }
@@ -121,6 +124,8 @@ type server struct {
 	transfers   ledgerv1connect.TransferServiceClient
 	attention   attentionv1connect.AttentionServiceClient
 	syncs       ingestv1connect.SyncServiceClient
+	// instruments takes the owner's display names of instruments (D-197).
+	instruments ledgerv1connect.InstrumentServiceClient
 	// ask answers the Ask box's questions (D-194): commandAnswerer in M0.
 	ask answerer
 }
@@ -148,7 +153,8 @@ func New(cfg *Config) (http.Handler, error) {
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
 		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
 		settings: cfg.Settings, transfers: cfg.Transfers, tickers: cfg.Tickers, attention: cfg.Attention, syncs: cfg.Syncs,
-		pages: p, pwa: app, today: cfg.Today, log: cfg.Log,
+		instruments: cfg.Instruments,
+		pages:       p, pwa: app, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
 		s.today = utcToday
@@ -182,16 +188,27 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /value-chart", s.withSession(s.valueChartFragment))
 	mux.HandleFunc("GET /over-time", s.withSession(s.overTimeFragment))
 	mux.HandleFunc("GET /ask", s.withSession(s.askFragment))
-	mux.HandleFunc("GET /accounts/{id}", s.withSession(s.accountPage))
-	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
-	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
-	mux.HandleFunc("POST /accounts/{id}/bond-lots/delete", s.withOwner(s.deleteBondLot))
+	s.recordRoutes(mux)
 	s.inboxRoutes(mux)
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	s.settingsRoutes(mux)
 	s.onboardingRoutes(mux)
 	s.statementRoutes(mux)
 	return mux
+}
+
+// recordRoutes maps the pages of an account and of an instrument (D-195),
+// their tabs and next pages, and the owner's forms on them.
+func (s *server) recordRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("GET /accounts/{id}", s.withSession(s.accountPage))
+	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
+	mux.HandleFunc("GET /accounts/{id}/tab", s.withSession(s.accountTabFragment))
+	mux.HandleFunc("GET /holdings", s.withSession(s.holdingsPage))
+	mux.HandleFunc("GET /instruments/{isin}", s.withSession(s.instrumentPage))
+	mux.HandleFunc("GET /instruments/{isin}/transactions", s.withSession(s.instrumentTransactionsFragment))
+	mux.HandleFunc("POST /instruments/{isin}/name", s.withOwner(s.renameInstrument))
+	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
+	mux.HandleFunc("POST /accounts/{id}/bond-lots/delete", s.withOwner(s.deleteBondLot))
 }
 
 // settingsRoutes maps the settings page and its forms, every one the

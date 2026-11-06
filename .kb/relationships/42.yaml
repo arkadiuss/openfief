@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4c9695345c4
+  - type: implements
+    from: SYM-ui-checks-return-to
+    to: REQ-ui-instrument-page
+    created_at: 2026-11-06T10:46:47.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-861ad7e754f6
+  - type: covered_by
+    from: SYM-ui-checks-return-to
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:46:47.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c21abd3eb026

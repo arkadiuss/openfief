@@ -1,0 +1,131 @@
+{{define "scripts"}}
+<script src="/static/vendor/chart-4.5.1.umd.min.js" defer></script>
+<script src="/static/app.js" defer></script>
+{{end}}
+{{define "page-head"}}
+{{with .Data}}
+{{template "breadcrumb" .Crumbs}}
+<div class="page-head">
+  <div>
+    <h1>{{.Name}}</h1>
+    <p class="lede ids">{{range $i, $t := .Tickers}}{{if $i}} · {{end}}<span class="mono">{{$t}}</span>{{end}}{{if .Tickers}} · {{end}}ISIN <span class="mono">{{.Detail.Isin}}</span></p>
+    <p class="pills head-pills"><span class="pill pill-neutral">{{enum .Detail.AssetClass ""}}</span></p>
+  </div>
+</div>
+{{end}}
+{{end}}
+{{define "content"}}
+{{with .Data}}
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+{{if .Renamed}}<p class="alert alert-info" role="status">The name is saved. Every page shows it before the ticker and ISIN.</p>{{end}}
+{{with .Items}}
+<section class="banner" aria-labelledby="instrument-items-title">
+  <h2 id="instrument-items-title" class="eyebrow">Needs you · {{len .}}</h2>
+  <ul>
+  {{range .}}<li><a href="/inbox#item-{{.Item.Id}}">{{.Title}}</a>{{with .Item.Detail}} <span class="muted">· {{.}}</span>{{end}}</li>{{end}}
+  </ul>
+  <p><a href="/inbox">Open the Inbox</a></p>
+</section>
+{{end}}
+
+<section class="figures" aria-label="Latest prices">
+  {{range .Detail.Listings}}
+  <div class="card figure-card"><p class="label">{{.Instrument.Symbol}} · latest price</p><p class="figure-value mono">{{with .LatestPrice}}{{money .Close}}{{else}}–{{end}}</p><p class="muted note">{{with .LatestPrice}}on <span class="mono">{{.Date}}</span>, {{end}}{{with .PriceSource}}valued at {{.}}{{else}}no source has priced it{{end}}</p></div>
+  {{else}}
+  <div class="card figure-card"><p class="label">Latest price</p><p class="figure-value">–</p><p class="muted note">No listing of it is held or priced.</p></div>
+  {{end}}
+</section>
+
+<section class="card" aria-labelledby="prices-title">
+  <h2 id="prices-title">Price history</h2>
+  {{range .Prices}}
+  <h3>{{.Symbol}}, from <span class="mono">{{.Primary}}</span></h3>
+  {{if .Points}}
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="{{.Symbol}}'s closing prices from {{.From}} to {{.To}} in {{.Currency}}, from {{.Primary}}{{range .Others}} and {{.}}{{end}}"></canvas></div>
+  {{end}}
+  <p class="muted">Closing prices from {{.From}} to {{.To}} in {{.Currency}}. Holdings are valued at <span class="mono">{{.Primary}}</span>'s, the primary source{{if .Others}}; {{range $i, $o := .Others}}{{if $i}}, {{end}}<span class="mono">{{$o}}</span>{{end}} only cross-check it{{end}}.</p>
+  {{else}}
+  <p class="muted">No prices stored in the last year.</p>
+  {{end}}
+</section>
+
+<section class="card" aria-labelledby="instrument-holdings-title">
+  <h2 id="instrument-holdings-title">Holdings and lots on {{.Date}}</h2>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Account</th><th scope="col">Ticker</th><th scope="col" class="num">Quantity</th><th scope="col">Open lots</th></tr></thead>
+    <tbody>
+    {{range .Holdings}}
+    <tr>
+      <td><a href="/accounts/{{.AccountID}}">{{.Account}}</a></td>
+      <td class="mono">{{.Holding.Instrument.Symbol}}</td>
+      <td class="num">{{amount .Holding.Quantity}}</td>
+      <td>{{if .Holding.Lots}}<ul class="lots">{{range .Holding.Lots}}<li><span class="mono">{{.Opened}}</span>: <span class="mono">{{amount .Quantity}}</span> for <span class="mono">{{money .Cost}}</span>{{if .Opening}} <span class="muted">opening lot</span>{{end}}</li>{{end}}</ul>{{else}}<span class="muted">none</span>{{end}}</td>
+    </tr>
+    {{else}}
+    <tr><td colspan="4" class="empty">No account you may view holds it on this date.</td></tr>
+    {{end}}
+    </tbody>
+  </table></div>
+</section>
+
+<section class="card" id="transactions" aria-labelledby="instrument-tx-title">
+  <h2 id="instrument-tx-title">Transactions</h2>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Date</th><th scope="col">Account</th><th scope="col">Kind</th><th scope="col">Description</th><th scope="col">Postings</th><th scope="col">Source</th></tr></thead>
+    <tbody>
+    {{template "transaction-rows" .Txs}}
+    </tbody>
+  </table></div>
+  {{if not .Txs.Transactions}}<p class="muted">No transactions.</p>{{end}}
+</section>
+
+<section class="card" aria-labelledby="instrument-checks-title">
+  <h2 id="instrument-checks-title">Price checks</h2>
+  {{range .Checks}}
+  <h3>{{instrument .Instrument}}</h3>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Date</th><th scope="col" class="num">Price</th><th scope="col">From</th><th scope="col" class="num">Cross-check</th><th scope="col">From</th><th scope="col" class="num">Difference</th><th scope="col">Status</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+    <tbody><tr>{{template "price-check-row" .Latest}}</tr>{{range .History}}<tr>{{template "price-check-row" .}}</tr>{{end}}</tbody>
+  </table></div>
+  <p class="muted">The latest first, then its history. Flagged beyond {{.Threshold}}{{if .Custom}}, this listing's own threshold{{end}}.</p>
+  {{if .Owner}}{{template "price-check-threshold" .}}{{end}}
+  {{else}}
+  <p class="muted">No institution's own price has been compared with it yet.</p>
+  {{end}}
+</section>
+
+<section class="card" aria-labelledby="classes-title">
+  <h2 id="classes-title">Yearly tax class</h2>
+  {{if .Detail.ExemptionClasses}}
+  <div class="table"><table>
+    <thead><tr><th scope="col">Tax</th><th scope="col">Class</th><th scope="col">Chosen by</th></tr></thead>
+    <tbody>
+    {{range .Detail.ExemptionClasses}}
+    <tr><td>{{wrapper .Wrapper}}</td><td>{{className .ExemptionClass}}{{if not .Known}} <span class="pill pill-warn">not classified</span>{{end}}</td><td>{{if .OwnerChosen}}you{{else if .Known}}the jurisdiction pack{{else}}nobody yet{{end}}</td></tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  {{if .Owner}}<p class="muted">Classify it for a yearly tax on the <a href="/settings#taxes-title">settings page</a>.</p>{{end}}
+  {{else}}
+  <p class="muted">No yearly tax counts it.</p>
+  {{end}}
+</section>
+
+{{if .Owner}}
+<section class="card" aria-labelledby="rename-title">
+  <h2 id="rename-title">Name</h2>
+  <p class="muted">The name every page shows before the ticker and ISIN. It starts as the first one a connector delivered; yours replaces it, and the delivered one is kept.</p>
+  <form method="post" action="/instruments/{{.Detail.Isin}}/name">
+    <div class="fields">
+      <div class="field">
+        <label for="instrument-name">Display name</label>
+        <input id="instrument-name" name="name" value="{{.Rename}}" required maxlength="200" autocomplete="off" aria-describedby="instrument-name-help">
+        <p class="help" id="instrument-name-help">Up to 200 characters.</p>
+      </div>
+    </div>
+    <div class="actions"><button type="submit" class="primary">Save name</button></div>
+  </form>
+</section>
+{{end}}
+{{end}}
+{{end}}

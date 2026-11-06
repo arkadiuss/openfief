@@ -825,3 +825,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-df076d5e105c
+  - type: constrains
+    from: REQ-ui-account-page-tabs
+    to: FACT-SUBJECT-06D0F05B92638B31
+    created_at: 2026-11-06T10:43:28.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cba93efbd889
+  - type: requires_property
+    from: REQ-ui-account-page-tabs
+    to: FACT-PROP-7DCAB441075242B0
+    created_at: 2026-11-06T10:43:28.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0e65eb820b7
+  - type: specified_by
+    from: REQ-ui-account-page-tabs
+    to: SCEN-ui-account-page-tabs
+    created_at: 2026-11-06T10:43:28.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efba1f6dc70c

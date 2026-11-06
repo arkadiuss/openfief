@@ -12,8 +12,8 @@
 <p class="help" id="chart-start-help">{{if .Account}}By default the charts start on the account's first day, <span class="mono">{{.Default}}</span>.{{else}}By default the charts start on <span class="mono">{{.Default}}</span>, where tracking began: from that day every account's history is known, since none was seeded from a starting balance later.{{end}} Choose any other day: the performance index is 100 on it, and a dashed line marks where tracking began.</p>
 {{end}}
 {{end}}
-{{/* The overview's one chart card (D-193): Value, Performance, or the three values (D-77), with the charts' start and
-     where tracking began (D-138). Each tab is a link, swapped in by htmx. */}}
+{{/* The overview's one chart card (D-193): Value, Performance, Allocation, or the three values (D-77), with the charts'
+     start and where tracking began (D-138). Each tab is a link, swapped in by htmx. */}}
 {{define "over-time"}}
 <section id="over-time" class="card over-time" aria-labelledby="over-title">
   <div class="card-head">
@@ -23,12 +23,14 @@
       {{range .Tabs}}<a href="{{$o.Link .Key}}" hx-get="{{$o.FragmentLink .Key}}" hx-target="#over-time" hx-swap="outerHTML" hx-push-url="{{$o.Link .Key}}"{{if eq .Key $o.Tab}} aria-current="page"{{end}}>{{.Label}}</a>{{end}}
     </nav>
   </div>
-  {{if eq .Tab "performance"}}{{template "performance-chart" .History}}{{else}}{{template "value-chart" .Value}}{{end}}
+  {{if eq .Tab "performance"}}{{template "performance-chart" .History}}{{else if eq .Tab "allocation"}}{{template "allocation" .Allocation}}{{else}}{{template "value-chart" .Value}}{{end}}
+  {{if ne .Tab "allocation"}}
   <details class="change"{{if .Start.Chosen}} open{{end}}>
     <summary>Charts start on {{.Start.From}}</summary>
     {{template "chart-start" .Start}}
     {{if not .Start.Default}}<p class="muted">No transactions yet: the charts start once there are.</p>{{end}}
   </details>
+  {{end}}
 </section>
 {{end}}
 

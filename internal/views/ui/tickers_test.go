@@ -132,8 +132,8 @@ func TestConfirmTicker(t *testing.T) {
 	h := newHarness(t)
 	rec := h.serve(t, withSession(form("/inbox/tickers/confirm", "instance=xtb-main&symbol=TESTB.UK&isin=+gbtestb00000+&currency=GBX"), ownerSession))
 	wantStatus(t, rec, http.StatusSeeOther)
-	if loc := rec.Header().Get("Location"); loc != "/inbox?booked=2" {
-		t.Errorf("redirect to %q, want /inbox?booked=2", loc)
+	if loc := rec.Header().Get("Location"); loc != "/inbox?booked=2&isin=GBTESTB00000" {
+		t.Errorf("redirect to %q, want /inbox?booked=2&isin=GBTESTB00000", loc)
 	}
 	h.tickers.mu.Lock()
 	got := h.tickers.confirmed
@@ -142,10 +142,11 @@ func TestConfirmTicker(t *testing.T) {
 	if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
 		t.Errorf("confirmations handed to the core (-want +got):\n%s", diff)
 	}
-	booked := h.serve(t, withSession(request(http.MethodGet, "/inbox?booked=2", ""), ownerSession))
-	wantBody(t, booked, "Confirmed: 2 waiting row(s) booked.")
-	forged := h.serve(t, withSession(request(http.MethodGet, "/inbox?booked=all", ""), ownerSession))
+	booked := h.serve(t, withSession(request(http.MethodGet, "/inbox?booked=2&isin=GBTESTB00000", ""), ownerSession))
+	wantBody(t, booked, "Confirmed: 2 waiting row(s) booked.", `<a href="/instruments/GBTESTB00000">Open GBTESTB00000</a>`)
+	forged := h.serve(t, withSession(request(http.MethodGet, "/inbox?booked=all&isin=%3Cb%3EXX", ""), ownerSession))
 	wantBody(t, forged, "Confirmed:  waiting row(s) booked.")
+	wantNoBody(t, forged, "/instruments/")
 	refused := h.serve(t, withSession(form("/inbox/tickers/confirm", "instance=xtb-main&symbol=TESTC.PL&isin=PLTESTC00008"), ownerSession))
 	wantStatus(t, refused, http.StatusBadRequest)
 	wantBody(t, refused, "The core refused this: the ticker&#39;s ISIN is already confirmed")

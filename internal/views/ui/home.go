@@ -211,13 +211,13 @@ func groupBySleeve(rows []accountRow, sleeves []*viewsv1.Sleeve) []sleeveGroup {
 func accountPill(row *accountRow, failing, open int) statusPill {
 	switch {
 	case failing > 0:
-		return statusPill{"Sync failing", "pill-danger"}
+		return statusPill{"Sync failing", pillDanger}
 	case open > 0:
 		return statusPill{strconv.Itoa(open) + " to check", "pill-warn"}
 	case row.Status.GetValuedThrough() == "":
 		return statusPill{"Not valued yet", "pill-neutral"}
 	}
-	return statusPill{"Valued " + row.Status.GetValuedThrough(), "pill-ok"}
+	return statusPill{"Valued " + row.Status.GetValuedThrough(), pillOK}
 }
 
 // activityLine writes one entry of the recent activity (D-193), naming
@@ -269,8 +269,9 @@ func accountLinks(ids []string, names map[string]string) []inboxLink {
 }
 
 // allocationBars returns a's groups as bars (D-193), each a link to what
-// is behind it where a page shows that: a sleeve's accounts on the
-// overview, an institution's on the accounts page.
+// is behind it (D-195): a sleeve's accounts on the overview, an
+// institution's on the accounts page, an asset class's or a currency's
+// holdings.
 func allocationBars(a *allocationView) []allocationBar {
 	out := make([]allocationBar, 0, len(a.Groups))
 	for i, g := range a.Groups {
@@ -280,6 +281,8 @@ func allocationBars(a *allocationView) []allocationBar {
 			bar.Href = "#sleeve-" + url.PathEscape(g.Key)
 		case dimInstitution:
 			bar.Href = accountsPath
+		case dimAssetClass, dimCurrency:
+			bar.Href = holdingsLink(a.Dimension.Key, g.Key, a.Date)
 		}
 		out = append(out, bar)
 	}
@@ -294,6 +297,7 @@ const seriesCount = 5
 const (
 	overParam       = "over"
 	overPerformance = "performance"
+	overAllocation  = "allocation"
 )
 
 // homeData reads what the overview shows besides its charts (D-193): the

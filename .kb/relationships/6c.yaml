@@ -783,3 +783,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d96d60aa99b4
+  - type: implements
+    from: SYM-ui-listing-chart
+    to: REQ-decision-d195-2-instrument-page
+    created_at: 2026-11-06T10:47:40.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-837a82b4ad2a
+  - type: covered_by
+    from: SYM-ui-listing-chart
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:47:40.845Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7a13a5d69f2
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-instruments-locked
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:50:21.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-768ba3123ec3

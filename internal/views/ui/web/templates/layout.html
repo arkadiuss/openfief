@@ -41,7 +41,7 @@
   {{end}}
 </header>
 <main>
-<h1>{{.Title}}</h1>
+{{block "page-head" .}}<h1>{{.Title}}</h1>{{end}}
 {{template "content" .}}
 </main>
 </body>

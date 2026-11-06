@@ -776,3 +776,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d561e9c1860a
+  - type: implements
+    from: SYM-ui-filtered-cash
+    to: REQ-ui-allocation-bars-to-holdings
+    created_at: 2026-11-06T10:45:45.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-79597a89b0a2
+  - type: covered_by
+    from: SYM-ui-filtered-cash
+    to: TEST-ui-account-tabs
+    created_at: 2026-11-06T10:45:45.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19e033a4b367

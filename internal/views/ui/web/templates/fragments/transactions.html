@@ -1,7 +1,9 @@
 {{define "transaction-rows"}}
+{{$t := .}}
 {{range .Transactions}}
 <tr>
   <td class="mono">{{.Date}}</td>
+  {{if $t.ShowAccount}}<td><a href="/accounts/{{.AccountId}}">{{$t.AccountName .AccountId}}</a></td>{{end}}
   <td>{{enum .Kind.String "TRANSACTION_KIND_"}}{{if .LotOpened}} (opened <span class="mono">{{.LotOpened}}</span>){{end}}</td>
   <td>{{.Description}}</td>
   <td><ul class="postings">{{range .Postings}}<li>{{book .Book}}: <span class="mono">{{money .Amount}}</span>{{if .Quantity}} (quantity <span class="mono">{{amount .Quantity}}</span>){{end}}</li>{{end}}</ul></td>
@@ -10,7 +12,7 @@
 {{end}}
 {{if .Next}}
 <tr class="more">
-  <td colspan="5"><a href="{{.NextLink}}" hx-get="{{.NextFragment}}" hx-target="closest tr" hx-swap="outerHTML">More transactions</a></td>
+  <td colspan="{{.Columns}}"><a href="{{.NextLink}}" hx-get="{{.NextFragment}}" hx-target="closest tr" hx-swap="outerHTML">More transactions</a></td>
 </tr>
 {{end}}
 {{end}}

@@ -107,6 +107,7 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		Settings:    valuationv1connect.NewSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Transfers:   ledgerv1connect.NewTransferServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Attention:   attentionv1connect.NewAttentionServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		Instruments: ledgerv1connect.NewInstrumentServiceClient(authClient(openfief.TokenFile{}), coreURL),
 	})
 	if err != nil {
 		return nil, fmt.Errorf("ui: %w", err)

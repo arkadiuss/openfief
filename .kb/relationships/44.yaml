@@ -1007,5 +1007,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-7e8f7a70f690
+      },
+    {
+        type: implements,
+        from: SYM-ui-item-links,
+        to: REQ-ui-instrument-links,
+        created_at: 2026-11-06T10:48:48.299Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-e248644d19f4
+      },
+    {
+        type: covered_by,
+        from: SYM-ui-item-links,
+        to: TEST-ui-pricechecks,
+        created_at: 2026-11-06T10:48:48.334Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-b94062a35180
       }
   ]

@@ -28,7 +28,7 @@
       <tfoot><tr><th scope="row">Total</th><td class="num">{{money .Total}}</td><td></td></tr></tfoot>
     </table></div>
   </details>
-  {{if eq .Dimension.Key "sleeve" "institution"}}<p class="muted">Every bar opens the accounts behind it.</p>{{end}}
+  <p class="muted">Every bar opens {{if eq .Dimension.Key "sleeve" "institution"}}the accounts{{else}}the holdings{{end}} behind it.</p>
   {{else}}
   <p class="muted">Nothing is valued on this date yet.</p>
   {{end}}

@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25f5e06557d5
+  - type: executable_for
+    from: SYM-ui-test-holdings-behind-bar
+    to: TEST-ui-account-tabs
+    created_at: 2026-11-06T10:49:46.589Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74a8f61919f5

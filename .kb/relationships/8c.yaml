@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0b8987c72c6
+  - type: implements
+    from: SYM-ui-transactions-view-columns
+    to: REQ-ui-instrument-page
+    created_at: 2026-11-06T10:44:54.693Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe9b4943cdee
+  - type: covered_by
+    from: SYM-ui-transactions-view-columns
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:44:54.722Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7226b431310

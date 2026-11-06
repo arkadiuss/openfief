@@ -2,6 +2,7 @@ package ui
 
 import (
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 
@@ -64,7 +65,8 @@ func (s *server) confirmTicker(w http.ResponseWriter, r *http.Request, sess sess
 		Symbol: r.PostForm.Get("symbol"), Isin: isin, Currency: currency,
 	}))
 	if err == nil {
-		http.Redirect(w, r, inboxPath+"?booked="+strconv.Itoa(int(resp.Msg.GetBooked())), http.StatusSeeOther)
+		q := url.Values{"booked": {strconv.Itoa(int(resp.Msg.GetBooked()))}, "isin": {isin}}
+		http.Redirect(w, r, inboxPath+"?"+q.Encode(), http.StatusSeeOther)
 		return
 	}
 	s.afterInboxForm(w, r, sess, "ConfirmTicker", err)

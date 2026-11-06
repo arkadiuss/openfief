@@ -755,3 +755,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a289d5435164
+  - type: constrains
+    from: REQ-ui-instrument-rename
+    to: FACT-SUBJECT-125585B15F19664A
+    created_at: 2026-11-06T10:43:22.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca11a49fa1bb
+  - type: requires_property
+    from: REQ-ui-instrument-rename
+    to: FACT-PROP-A75D580DAFBAE1C0
+    created_at: 2026-11-06T10:43:22.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f01599ad7544
+  - type: specified_by
+    from: REQ-ui-instrument-rename
+    to: SCEN-ui-instrument-rename
+    created_at: 2026-11-06T10:43:22.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20c6d5c1093b
+  - type: implements
+    from: SYM-ui-server-holdings
+    to: REQ-ui-account-page-tabs
+    created_at: 2026-11-06T10:44:40.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d593aaeef59
+  - type: covered_by
+    from: SYM-ui-server-holdings
+    to: TEST-ui-pages
+    created_at: 2026-11-06T10:44:40.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35378aa79f5b

@@ -57,7 +57,8 @@ func (f *fakeRead) GetInstrument(_ context.Context, r *connect.Request[viewsv1.G
 	}
 	return connect.NewResponse(&viewsv1.GetInstrumentResponse{Instrument: &viewsv1.InstrumentDetail{
 		Isin: in.GetIsin(), Name: in.GetName(), AssetClass: "listed",
-		Listings: []*viewsv1.InstrumentListing{{Instrument: in, PriceSource: "eodhd", LatestPrice: &viewsv1.InstrumentPrice{Date: "2026-03-31", Close: &viewsv1.Money{Amount: "25.00", Currency: "EUR"}}}},
+		ExemptionClasses: []*viewsv1.InstrumentExemptionClass{{Wrapper: "oki", ExemptionClass: "investment", Known: true}},
+		Listings:         []*viewsv1.InstrumentListing{{Instrument: in, PriceSource: "eodhd", LatestPrice: &viewsv1.InstrumentPrice{Date: "2026-03-31", Close: &viewsv1.Money{Amount: "25.00", Currency: "EUR"}}}},
 	}}), nil
 }
 
@@ -88,7 +89,7 @@ func TestOverviewHome(t *testing.T) {
 		`id="over-title">Over time`, `aria-current="page">Value</a>`, `hx-get="/over-time?date=2026-03-31&amp;over=performance"`,
 		`id="needs-title">Needs you`, "Open inbox (2)", "Map a broker account flex-main reported",
 		`id="sleeve-core"`, `<a class="account-row" href="/accounts/acc-synthetic-1">`, "Valued 2026-03-31", `id="sleeve-core"`,
-		`class="bars"`, `class="fill series-1" width="66.7"`,
+		`hx-get="/over-time?by=asset-class&amp;date=2026-03-31&amp;over=allocation&amp;value=gross"`,
 		`id="activity-title">Recent activity`, "Synced · ibkr-main · 4 new transactions", "Coupon booked",
 		`<script src="/static/ask.js" defer></script>`,
 	)
@@ -107,6 +108,11 @@ func TestOverTimeTabs(t *testing.T) {
 	wantStatus(t, frag, http.StatusOK)
 	wantBody(t, frag, `id="over-time"`, `aria-current="page">Gross · net · liquidation</a>`, "Liquidation value with cash")
 	wantNoBody(t, frag, "<html")
+	alloc := h.serve(t, htmx(withSession(request(http.MethodGet, "/over-time?date=2026-03-31&over=allocation&by=currency", ""), readSession)))
+	wantStatus(t, alloc, http.StatusOK)
+	wantBody(t, alloc, `aria-current="page">Allocation</a>`, `<section id="allocation"`, `class="bars"`, `class="fill series-1" width="66.7"`,
+		`aria-current="true">Currency</a>`, `<a class="bar" href="/holdings?by=currency&amp;date=2026-03-31&amp;key=`)
+	wantNoBody(t, alloc, "Charts start on")
 	plain := h.serve(t, withSession(request(http.MethodGet, "/over-time?date=2026-03-31&over=performance", ""), readSession))
 	wantStatus(t, plain, http.StatusSeeOther)
 }
@@ -128,6 +134,7 @@ func TestAskBox(t *testing.T) {
 		{"value on 2026-03-31", []string{"Value on 2026-03-31: 1 500,00 PLN gross", "Liquidation", "Open the overview on 2026-03-31"}},
 		{"show synthetic brokerage", []string{"Synthetic brokerage: 1 000,00 PLN gross", "Open Synthetic brokerage", `href="/accounts/acc-synthetic-1"`}},
 		{"show sleeve core", []string{"Core: 1 account", "Open Core on the overview"}},
+		{"show instrument SYN", []string{"Synthetic Fund · XX0000000001", `href="/instruments/XX0000000001"`, "Open Synthetic Fund · XX0000000001"}},
 		{"show SYN", []string{"Synthetic Fund", "10 units", "last priced 25,00 EUR"}},
 		{"buy more bonds", []string{"I can&#39;t answer that yet", "What needs me", "Allocation by currency"}},
 	}

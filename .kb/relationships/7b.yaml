@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aa644b26f6c5
+  - type: implements
+    from: SYM-ui-holdings-data
+    to: REQ-ui-allocation-bars-to-holdings
+    created_at: 2026-11-06T10:45:54.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81e5d90676da
+  - type: covered_by
+    from: SYM-ui-holdings-data
+    to: TEST-ui-account-tabs
+    created_at: 2026-11-06T10:45:54.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0c9857a996d

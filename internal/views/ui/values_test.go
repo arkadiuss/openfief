@@ -123,7 +123,10 @@ func TestValueSwitches(t *testing.T) {
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/?value=liquidation&chart=net", ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "Liquidation value</th>", "Net value with cash")
+	wantBody(t, rec, "Net value with cash")
+	rec = h.serve(t, withSession(request(http.MethodGet, "/?value=liquidation&over=allocation", ""), readSession))
+	wantStatus(t, rec, http.StatusOK)
+	wantBody(t, rec, "Liquidation value</th>")
 	frag := h.serve(t, htmx(withSession(request(http.MethodGet, "/value-chart?chart=liquidation&from=2026-03-30&date=2026-03-31", ""), readSession)))
 	wantStatus(t, frag, http.StatusOK)
 	wantBody(t, frag, `id="value-chart"`, "The line skips 2 day(s) without a Liquidation value")
@@ -135,7 +138,7 @@ func TestValueSwitches(t *testing.T) {
 	alloc := h.serve(t, htmx(withSession(request(http.MethodGet, "/allocation?by=sleeve&value=net&date=2026-03-31", ""), readSession)))
 	wantStatus(t, alloc, http.StatusOK)
 	wantBody(t, alloc, "Net value</th>", `aria-current="true">Net</a>`)
-	if got := seen(h.read, func() []string { return valueNames(h.read.values) }); len(got) != 2 || got[1] != "VALUE_KIND_NET" {
+	if got := seen(h.read, func() []string { return valueNames(h.read.values) }); len(got) != 3 || got[1] != "VALUE_KIND_LIQUIDATION" || got[2] != "VALUE_KIND_NET" {
 		t.Errorf("allocation values asked = %q", got)
 	}
 	plain := h.serve(t, withSession(request(http.MethodGet, "/value-chart?chart=net&date=2026-03-31", ""), readSession))
@@ -150,8 +153,11 @@ func TestAccountThreeValuesAndMarks(t *testing.T) {
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "no tax wrapper", "none set, so sales cost nothing", "950,00 PLN",
-		"missing: needs your marginal PIT rate", "no longer updated", `<span class="mono">ibkr-old</span>`, "12 345,67 EUR")
+	wantBody(t, rec, "950,00 PLN", "missing: needs your marginal PIT rate", "no longer updated", `<span class="mono">ibkr-old</span>`)
+	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID+"?tab=settings", ""), readSession))
+	wantBody(t, rec, "no tax wrapper", "none set, so sales cost nothing")
+	rec = h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID+"?tab=cash", ""), readSession))
+	wantBody(t, rec, "12 345,67 EUR")
 }
 
 // TestNumberFormatSetting picks comma-dot on the settings page: the page
@@ -164,7 +170,7 @@ func TestNumberFormatSetting(t *testing.T) {
 	wantBody(t, page, `id="values-title"`, "5 000,00 PLN", "5,000.00 PLN", "The jurisdiction pack's default",
 		"an IKZE's liquidation value stays missing until it is set, as it is now")
 	wantStatus(t, h.serve(t, withSession(form("/settings/number-format", "number_format=comma-dot"), ownerSession)), http.StatusSeeOther)
-	acc := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID, ""), ownerSession))
+	acc := h.serve(t, withSession(request(http.MethodGet, "/accounts/"+accountID+"?tab=cash", ""), ownerSession))
 	wantBody(t, acc, "12,345.67 EUR", "1,000.00 PLN")
 	wantStatus(t, h.serve(t, withSession(form("/settings/marginal-rate", "marginal_rate=32"), ownerSession)), http.StatusSeeOther)
 	if got := seenOne(h.settings, func() string { return h.settings.rate }); got != "0.32" {

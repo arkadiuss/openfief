@@ -357,10 +357,8 @@ func (s *server) instrumentAnswer(r *http.Request, sess session, t askTarget, ac
 			name = a.GetName()
 		}
 		card.Rows = append(card.Rows, answerRow{Label: name, Detail: h.GetInstrument().GetSymbol(), Figure: f.amount(h.GetQuantity()) + " units", Href: "/accounts/" + url.PathEscape(h.GetAccountId())})
-		if card.Link == nil {
-			card.Link = &answerLink{Href: "/accounts/" + url.PathEscape(h.GetAccountId()), Text: "Open " + name}
-		}
 	}
+	card.Link = &answerLink{Href: instrumentPath(d.GetIsin()), Text: "Open " + card.Title}
 	return card, nil
 }
 
@@ -447,7 +445,7 @@ func (a commandAnswerer) allocation(r *http.Request, sess session, d dimension, 
 	card := answerCard{
 		Title: "By " + strings.ToLower(d.Label) + ", gross, on " + date.String(),
 		Text:  "Holdings at their stored valuations plus cash, in the reporting currency: " + f.money(total) + " in all.",
-		Link:  &answerLink{Href: "/?" + url.Values{"by": {d.Key}}.Encode() + "#allocation", Text: "Open the allocation"},
+		Link:  &answerLink{Href: "/?" + url.Values{"by": {d.Key}, overParam: {overAllocation}}.Encode() + "#over-time", Text: "Open the allocation"},
 	}
 	for i, g := range resp.Msg.GetGroups() {
 		if i == answerRows {

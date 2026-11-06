@@ -748,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-121e17b049d5
+  - type: constrains
+    from: REQ-ui-instrument-page
+    to: FACT-SUBJECT-125585B15F19664A
+    created_at: 2026-11-06T10:43:18.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cbb3b6312f2
+  - type: requires_property
+    from: REQ-ui-instrument-page
+    to: FACT-PROP-F6C8C17944D6A2C5
+    created_at: 2026-11-06T10:43:18.379Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de78305aa40c
+  - type: specified_by
+    from: REQ-ui-instrument-page
+    to: SCEN-ui-instrument-page
+    created_at: 2026-11-06T10:43:18.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fd57ed9ad58

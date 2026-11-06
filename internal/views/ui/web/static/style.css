@@ -140,8 +140,8 @@ button, .button {
   border: 1.5px solid var(--accent); background: transparent; color: var(--link);
 }
 button:hover, .button:hover { background: var(--accent-soft); }
-button.primary { background: var(--accent); color: var(--on-accent); }
-button.primary:hover { background: var(--accent); filter: brightness(1.12); }
+button.primary, .button.primary { background: var(--accent); color: var(--on-accent); }
+button.primary:hover, .button.primary:hover { background: var(--accent); filter: brightness(1.12); }
 button.danger { background: var(--danger); border-color: var(--danger); color: var(--on-danger); }
 button.danger:hover { background: var(--danger); filter: brightness(1.08); }
 button.quiet {
@@ -413,3 +413,33 @@ a.bar:hover .bar-head > :first-child { text-decoration: underline; }
   .overview-grid > .allocation { grid-column: span 4; }
   .inbox-layout { grid-template-columns: minmax(0, 1fr) 18rem; align-items: start; }
 }
+
+/* An account's and an instrument's page (D-195): a breadcrumb, the name with its pills and actions, figure cards,
+   then tabs that wrap on a phone, each a link that works without JavaScript. */
+.breadcrumb ol { display: flex; flex-wrap: wrap; gap: 0 var(--space-1); list-style: none; margin: 0 0 var(--space-1); padding: 0; font-size: 0.92rem; color: var(--muted); }
+.breadcrumb li { display: inline-flex; align-items: center; gap: var(--space-1); min-width: 0; overflow-wrap: anywhere; }
+.breadcrumb li + li::before { content: "/"; color: var(--muted); }
+.breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+.page-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: var(--space-3) var(--space-5); margin-bottom: var(--space-4); }
+.page-head > div:first-child { flex: 1 1 18rem; min-width: 0; }
+.page-head h1 { margin-bottom: var(--space-2); overflow-wrap: anywhere; }
+.page-head .ids { margin-bottom: var(--space-2); overflow-wrap: anywhere; }
+.page-head .ids .mono { white-space: normal; overflow-wrap: anywhere; }
+.head-pills { margin: 0; }
+.head-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4); }
+.figures .card { margin-bottom: 0; padding: var(--space-4); }
+.figure-card .label { margin: 0 0 var(--space-1); color: var(--label); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.figure-value { margin: 0 0 var(--space-1); font-size: 1.35rem; font-weight: 500; overflow-wrap: anywhere; white-space: normal; }
+.figure-card .note { margin: 0; font-size: 0.85rem; }
+.tab-list { display: flex; flex-wrap: wrap; gap: 0 var(--space-1); margin: 0 0 var(--space-4); border-bottom: 1px solid var(--border); }
+.tab-list a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--space-3);
+  color: var(--muted); text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent; margin-bottom: -1px;
+}
+.tab-list a:hover { color: var(--text); background: var(--sunken); }
+.tab-list a[aria-current="page"] { color: var(--text); border-bottom-color: var(--highlight); }
+.facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: var(--space-3) var(--space-5); margin: 0 0 var(--space-4); }
+.facts dt { color: var(--label); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.facts dd { margin: 0; overflow-wrap: anywhere; }
+ul.lots { list-style: none; margin: 0; padding: 0; }

@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-39daff878082
+  - type: implements
+    from: SYM-ui-server-account-page
+    to: REQ-ui-account-page-tabs
+    created_at: 2026-11-06T10:45:03.623Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e169ae23ad07
+  - type: covered_by
+    from: SYM-ui-server-account-page
+    to: TEST-ui-account-tabs
+    created_at: 2026-11-06T10:45:03.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c444ddc64c7

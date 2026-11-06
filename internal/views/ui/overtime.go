@@ -9,11 +9,12 @@ import (
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
-// The chart card's tabs (D-193): the value, the performance and the three
-// values (D-77).
+// The chart card's tabs (D-193): the value, the performance, the
+// allocation and the three values (D-77).
 const (
 	tabValue       = "value"
 	tabPerformance = overPerformance
+	tabAllocation  = overAllocation
 	tabAll         = "all"
 )
 
@@ -24,12 +25,13 @@ type overTab struct {
 
 // overTabs are the chart card's tabs, in order.
 func overTabs() []overTab {
-	return []overTab{{tabValue, "Value"}, {tabPerformance, "Performance"}, {tabAll, "Gross · net · liquidation"}}
+	return []overTab{{tabValue, "Value"}, {tabPerformance, "Performance"}, {tabAllocation, "Allocation"}, {tabAll, "Gross · net · liquidation"}}
 }
 
 // overTimeView is the overview's one chart card (D-193): the value over
 // time (D-106) with its switch of the three values (D-77), or the
-// performance (D-61), from the charts' start (D-138).
+// performance (D-61), from the charts' start (D-138), or the allocation
+// (D-30) by the dimension and of the value its switches pick.
 type overTimeView struct {
 	Tab  string
 	Tabs []overTab
@@ -39,6 +41,8 @@ type overTimeView struct {
 	Value            *valueChartView
 	History          performanceView
 	Start            chartStartView
+	// Allocation is the allocation the card's allocation tab shows.
+	Allocation *allocationView
 }
 
 // Link is the overview showing tab, for browsers without htmx.
@@ -53,6 +57,12 @@ func (o *overTimeView) query(tab string) string {
 	switch tab {
 	case tabPerformance:
 		q.Set(overParam, overPerformance)
+	case tabAllocation:
+		q.Set(overParam, overAllocation)
+		if a := o.Allocation; a != nil {
+			q.Set("by", a.Dimension.Key)
+			q.Set(valueParam, a.Value.Key)
+		}
 	case tabAll:
 		q.Set(chartParam, allValues().Key)
 	}
@@ -64,8 +74,9 @@ func (o *overTimeView) query(tab string) string {
 
 // overTime reads the chart card on date: the performance from the charts'
 // start, the one the owner chose in start or else the default (D-138),
-// and the value over time over the same days, of the value the query's
-// chart parameter picks; the query's over parameter picks the tab.
+// the value over time over the same days, of the value the query's chart
+// parameter picks, and the allocation by the dimension and of the value
+// the query picks; the query's over parameter picks the tab.
 func (s *server) overTime(r *http.Request, sess session, date, start kernel.Date) (*overTimeView, error) {
 	q := r.URL.Query()
 	history, err := s.performance(r, sess, start, date)
@@ -81,13 +92,20 @@ func (s *server) overTime(r *http.Request, sess session, date, start kernel.Date
 	if err != nil {
 		return nil, err
 	}
+	alloc, err := s.allocation(r, sess, date, parseDimension(q.Get("by")), parseValueKind(q.Get(valueParam)))
+	if err != nil {
+		return nil, err
+	}
 	o := &overTimeView{
 		Tab: tabValue, Tabs: overTabs(), Date: date.String(), StartParam: optionalString(start), Value: value, History: history,
-		Start: chartStartView{Action: "/", Date: date.String(), From: value.From, Default: history.Default, Chosen: !start.IsZero()},
+		Start:      chartStartView{Action: "/", Date: date.String(), From: value.From, Default: history.Default, Chosen: !start.IsZero()},
+		Allocation: alloc,
 	}
 	switch {
 	case q.Get(overParam) == overPerformance:
 		o.Tab = tabPerformance
+	case q.Get(overParam) == overAllocation:
+		o.Tab = tabAllocation
 	case kind == allValues():
 		o.Tab = tabAll
 	}
@@ -100,7 +118,7 @@ func (s *server) overTimeFragment(w http.ResponseWriter, r *http.Request, sess s
 	q := r.URL.Query()
 	if !isHTMX(r) {
 		back := url.Values{}
-		for _, k := range []string{dateParam, startParam, overParam, chartParam} {
+		for _, k := range []string{dateParam, startParam, overParam, chartParam, "by", valueParam} {
 			if v := q.Get(k); v != "" {
 				back.Set(k, v)
 			}

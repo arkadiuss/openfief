@@ -923,3 +923,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3135f0b4cd6
+  - type: implements
+    from: SYM-ui-holdings-link
+    to: REQ-ui-allocation-bars-to-holdings
+    created_at: 2026-11-06T10:46:08.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92f99cc1fd8d
+  - type: implements
+    from: SYM-ui-holdings-link
+    to: REQ-decision-d195-3-holding-and-bar-link-down
+    created_at: 2026-11-06T10:46:08.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab3ff81afb91
+  - type: covered_by
+    from: SYM-ui-holdings-link
+    to: TEST-ui-home
+    created_at: 2026-11-06T10:46:08.490Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca9d81eb1430

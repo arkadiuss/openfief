@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffad481aa54e
+  - type: implements
+    from: SYM-ui-instrument-holdings
+    to: REQ-decision-d195-2-instrument-page
+    created_at: 2026-11-06T10:47:30.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0738bf0bf17e
+  - type: covered_by
+    from: SYM-ui-instrument-holdings
+    to: TEST-ui-instrument
+    created_at: 2026-11-06T10:47:30.694Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eac4de0dfb61

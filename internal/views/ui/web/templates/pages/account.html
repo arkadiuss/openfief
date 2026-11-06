@@ -2,11 +2,25 @@
 <script src="/static/vendor/chart-4.5.1.umd.min.js" defer></script>
 <script src="/static/app.js" defer></script>
 {{end}}
+{{define "page-head"}}
+{{with .Data}}
+{{template "breadcrumb" .Crumbs}}
+<div class="page-head">
+  <div>
+    <h1>{{.Account.Name}}</h1>
+    <p class="pills head-pills">
+      <span class="pill pill-neutral">Sleeve {{.Sleeve}}</span>
+      {{with .Account.TaxWrapper}}<span class="pill pill-neutral">{{wrapper .}}</span>{{end}}
+      {{with .Sync}}<span class="pill {{.Class}}">{{.Word}}</span>{{end}}
+      {{template "valuation-status" .Status}}
+    </p>
+  </div>
+  {{with .UploadForm}}<div class="head-actions"><a class="button primary" href="#upload">Upload statement</a></div>{{end}}
+</div>
+{{end}}
+{{end}}
 {{define "content"}}
 {{with .Data}}
-<p class="lede">{{.Account.Institution}} · sleeve {{.Account.Sleeve}} · {{wrapper .Account.TaxWrapper}} · showing {{.Date}}</p>
-<p class="muted">Sale fee rule: {{feeRule .Account.FeeRule}}.</p>
-<p>{{template "valuation-status" .Status}}</p>
 {{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
 {{with .Items}}
 <section class="banner" aria-labelledby="account-items-title">
@@ -44,103 +58,21 @@
 </section>
 {{end}}
 
-<section class="card" aria-labelledby="account-value-title">
-  <h2 id="account-value-title">Value on {{.Date}}</h2>
+<section class="figures" aria-label="Value on {{.Date}}">
   {{with .Total}}
-  <div class="table"><table>
-    <thead><tr><th scope="col"><span class="sr-only">Line</span></th><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col" class="num">Of which cash</th></tr></thead>
-    <tbody>
-    <tr><th scope="row">Total</th>{{template "three-values" .}}<td class="num">{{money .CashReporting}}</td></tr>
-    <tr><th scope="row">Of which losses offset</th>{{template "losses-offset" .}}<td class="num empty">–</td></tr>
-    </tbody>
-  </table></div>
-  {{template "losses-offset-help"}}
-  <p class="muted">Holdings and cash in the reporting currency. Gross is before any tax or fee; net is what you keep at the planned exit; liquidation is the cash in hand if everything were sold today, after every tax and fee.{{if .CashUnconverted}} Some cash has no FX rate yet and is left out.{{end}}</p>
+  <div class="card figure-card"><p class="label">Gross, with cash</p><p class="figure-value mono">{{money .ValueReporting}}</p><p class="muted note">before any tax or fee{{with .CashReporting}}; cash {{money .}}{{end}}</p></div>
+  <div class="card figure-card"><p class="label">Net</p><p class="figure-value mono">{{with .NetReporting}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</p><p class="muted note">what you keep at the planned exit</p></div>
+  <div class="card figure-card"><p class="label">Liquidation</p><p class="figure-value mono">{{with .LiquidationReporting}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</p><p class="muted note">sold today, after every tax and fee</p></div>
   {{else}}
-  <p class="muted">Nothing is valued on this date yet.</p>
+  <div class="card figure-card"><p class="label">Gross, with cash</p><p class="figure-value">not valued</p><p class="muted note">Nothing is valued on {{.Date}} yet.</p></div>
   {{end}}
+  <div class="card figure-card"><p class="label">TWR since {{with .Charts}}{{.Performance.From}}{{end}}</p><p class="figure-value mono">{{with .Return}}<a href="{{$.Data.TabLink "holdings"}}#account-charts-title">{{.}}</a>{{else}}–{{end}}</p><p class="muted note">{{with .Status.GetValuedThrough}}valued through <span class="mono">{{.}}</span>{{else}}not valued yet{{end}}</p></div>
 </section>
 
-{{with .Charts}}
-<section class="card" aria-labelledby="account-charts-title">
-  <h2 id="account-charts-title">Over time</h2>
-  {{template "chart-start" .Start}}
-  {{with .Value}}
-  <h3>Value</h3>
-  {{if .Points}}
-  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="The account's gross, net and liquidation values with cash from {{.From}} to {{.To}}, in {{.Currency}}{{if .Mark}}; tracking began on {{.Mark}}{{end}}"></canvas></div>
-  <p class="muted">The account's gross, net and liquidation values, cash included, from {{.From}} to {{.To}} in {{.Currency}}.{{if .Gaps}} The liquidation line skips {{.Gaps}} day(s) without a liquidation value.{{end}}</p>
-  {{else}}
-  <p class="muted">No valued days yet.</p>
-  {{end}}
-  {{end}}
-  {{with .Performance}}
-  <h3>Performance</h3>
-  {{if .Points}}
-  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="The account's time-weighted return from {{.From}} to {{.To}}, 100 on {{.From}}"></canvas></div>
-  <p class="muted">From {{.From}} to {{.To}}: the account's time-weighted return as an index, 100 on {{.From}}. Every deposit and withdrawal is money in or out of the account, transfers between your accounts included, so none counts as performance. In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
-  {{if .Pending}}<p><span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation pending</span> <span class="muted">The lines may still change.</span></p>{{end}}
-  {{else}}
-  <p class="muted">No valued days yet.</p>
-  {{end}}
-  {{end}}
-</section>
-{{end}}
-
-<section class="card" aria-labelledby="holdings-title">
-  <h2 id="holdings-title">Holdings</h2>
-  <div class="table"><table>
-    <thead><tr><th scope="col">Instrument</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Value</th><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col">Basis</th></tr></thead>
-    <tbody>
-    {{range .Holdings}}
-    <tr>
-      <td>{{instrument .Holding.Instrument}}{{template "no-longer-updated" .Holding}}</td>
-      <td class="num">{{amount .Holding.Quantity}}</td>
-      {{with .Valuation}}
-      <td class="num">{{money .Value}}</td>{{template "valuation-values" .}}<td>{{enum .Basis.String "VALUATION_BASIS_"}}</td>
-      {{else}}
-      <td colspan="5" class="empty">no valuation on this date</td>
-      {{end}}
-    </tr>
-    {{else}}
-    <tr><td colspan="7" class="empty">No holdings.</td></tr>
-    {{end}}
-    </tbody>
-  </table></div>
-  <p class="muted">Value is the gross value in the instrument's currency; gross, net and liquidation are in the reporting currency.</p>
-</section>
-
-<section class="card" aria-labelledby="cash-title">
-  <h2 id="cash-title">Cash</h2>
-  {{if .Cash}}
-  <div class="table"><table>
-    <thead><tr><th scope="col">Currency</th><th scope="col" class="num">Balance</th></tr></thead>
-    <tbody>{{range .Cash}}<tr><td>{{.Currency}}</td><td class="num">{{money .}}</td></tr>{{end}}</tbody>
-  </table></div>
-  {{else}}<p class="muted">No cash.</p>{{end}}
-</section>
-
-<section class="card" aria-labelledby="lots-title">
-  <h2 id="lots-title">Open lots</h2>
-  {{if .BondLot}}<p class="muted">Delete a lot entered by mistake. The ledger keeps it as a superseded version, and entering it again brings it back.</p>{{end}}
-  <div class="table"><table>
-    <thead><tr><th scope="col">Instrument</th><th scope="col">Opened</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Cost</th><th scope="col">Origin</th>{{if $.Data.BondLot}}<th scope="col">Correction</th>{{end}}</tr></thead>
-    <tbody>
-    {{range .Lots}}
-    <tr><td>{{instrument .Instrument}}{{template "no-longer-updated" .}}</td><td class="mono">{{.Opened}}</td><td class="num">{{amount .Quantity}}</td><td class="num">{{money .Cost}}</td>
-      <td>{{if .Opening}}opening lot{{else}}{{.OriginSource}} <span class="mono">{{.OriginExternalId}}</span>{{end}}</td>
-      {{if $.Data.BondLot}}<td><form method="post" action="/accounts/{{$.Data.Account.Id}}/bond-lots/delete" class="inline">
-        <input type="hidden" name="series" value="{{.Instrument.Symbol}}"><input type="hidden" name="purchase_date" value="{{.Opened}}">
-        <button type="submit" class="danger" aria-label="Delete the {{.Instrument.Symbol}} lot bought on {{.Opened}}">Delete</button></form></td>{{end}}</tr>
-    {{else}}
-    <tr><td colspan="{{if $.Data.BondLot}}6{{else}}5{{end}}" class="empty">No open lots.</td></tr>
-    {{end}}
-    </tbody>
-  </table></div>
-</section>
+{{template "account-tabs" .}}
 
 {{with .UploadForm}}
-<section class="card" aria-labelledby="upload-title">
+<section class="card" id="upload" aria-labelledby="upload-title">
   <h2 id="upload-title">Upload statement</h2>
   <p class="muted">A statement file this account's institution exported, up to 64 MiB, such as an IBKR Flex Query statement. The core hands it to {{.Instance}}, the connector bound to this account, which decides whether it can read it; a statement of several linked accounts is booked into each one mapped to it. Importing the same statement again changes nothing.</p>
   <form method="post" action="/accounts/{{$.Data.Account.Id}}/statements" enctype="multipart/form-data">
@@ -179,12 +111,131 @@
   </form>
 </section>
 {{end}}
+{{end}}
+{{end}}
 
+{{/* The account's tabs (docs/dev/design-system.md, M0 screens): each a link that works without JavaScript, swapped in
+     by htmx with the panel it shows. */}}
+{{define "account-tabs"}}
+<section id="account-tabs" class="tabs" aria-label="Account">
+  {{$d := .}}
+  <nav class="tab-list" aria-label="Account sections">
+    {{range .Tabs}}<a href="{{$d.TabLink .Key}}" hx-get="{{$d.TabFragment .Key}}" hx-target="#account-tabs" hx-swap="outerHTML" hx-push-url="{{$d.TabLink .Key}}"{{if eq .Key $d.Tab}} aria-current="page"{{end}}>{{.Label}}</a>{{end}}
+  </nav>
+  <div class="tab-panel">
+  {{if eq .Tab "holdings"}}{{template "account-holdings" .}}
+  {{else if eq .Tab "transactions"}}{{template "account-transactions" .}}
+  {{else if eq .Tab "lots"}}{{template "account-lots" .}}
+  {{else if eq .Tab "cash"}}{{template "account-cash" .}}
+  {{else if eq .Tab "reconciliation"}}{{template "account-reconciliation" .}}
+  {{else}}{{template "account-settings" .}}{{end}}
+  </div>
+</section>
+{{end}}
+
+{{define "account-holdings"}}
+<section class="card" aria-labelledby="holdings-title">
+  <h2 id="holdings-title">Holdings on {{.Date}}</h2>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Instrument</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Value</th><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col">Basis</th></tr></thead>
+    <tbody>
+    {{range .Holdings}}
+    <tr>
+      <td><a href="{{$.HoldingLink .Holding.Instrument}}">{{instrument .Holding.Instrument}}</a>{{template "no-longer-updated" .Holding}}</td>
+      <td class="num">{{amount .Holding.Quantity}}</td>
+      {{with .Valuation}}
+      <td class="num">{{money .Value}}</td>{{template "valuation-values" .}}<td>{{enum .Basis.String "VALUATION_BASIS_"}}</td>
+      {{else}}
+      <td colspan="5" class="empty">no valuation on this date</td>
+      {{end}}
+    </tr>
+    {{else}}
+    <tr><td colspan="7" class="empty">No holdings.</td></tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  <p class="muted">Each instrument opens its own page: its price history and sources, its lots across accounts, its transactions, its price checks and its OKI class. Value is the gross value in the instrument's currency; gross, net and liquidation are in the reporting currency.</p>
+  {{with .Total}}
+  <details class="change">
+    <summary>The account's total with cash, and its losses offset</summary>
+    <div class="table"><table>
+      <thead><tr><th scope="col"><span class="sr-only">Line</span></th><th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col" class="num">Of which cash</th></tr></thead>
+      <tbody>
+      <tr><th scope="row">Total</th>{{template "three-values" .}}<td class="num">{{money .CashReporting}}</td></tr>
+      <tr><th scope="row">Of which losses offset</th>{{template "losses-offset" .}}<td class="num empty">–</td></tr>
+      </tbody>
+    </table></div>
+    {{template "losses-offset-help"}}
+    <p class="muted">Holdings and cash in the reporting currency. Gross is before any tax or fee; net is what you keep at the planned exit; liquidation is the cash in hand if everything were sold today, after every tax and fee.{{if .CashUnconverted}} Some cash has no FX rate yet and is left out.{{end}}</p>
+  </details>
+  {{end}}
+</section>
+
+{{with .Charts}}
+<section class="card" aria-labelledby="account-charts-title">
+  <h2 id="account-charts-title">Over time</h2>
+  {{template "chart-start" .Start}}
+  {{with .Value}}
+  <h3>Value</h3>
+  {{if .Points}}
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="The account's gross, net and liquidation values with cash from {{.From}} to {{.To}}, in {{.Currency}}{{if .Mark}}; tracking began on {{.Mark}}{{end}}"></canvas></div>
+  <p class="muted">The account's gross, net and liquidation values, cash included, from {{.From}} to {{.To}} in {{.Currency}}.{{if .Gaps}} The liquidation line skips {{.Gaps}} day(s) without a liquidation value.{{end}}</p>
+  {{else}}
+  <p class="muted">No valued days yet.</p>
+  {{end}}
+  {{end}}
+  {{with .Performance}}
+  <h3>Performance</h3>
+  {{if .Points}}
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="The account's time-weighted return from {{.From}} to {{.To}}, 100 on {{.From}}"></canvas></div>
+  <p class="muted">From {{.From}} to {{.To}}: the account's time-weighted return as an index, 100 on {{.From}}. Every deposit and withdrawal is money in or out of the account, transfers between your accounts included, so none counts as performance. In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
+  {{if .Pending}}<p><span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation pending</span> <span class="muted">The lines may still change.</span></p>{{end}}
+  {{else}}
+  <p class="muted">No valued days yet.</p>
+  {{end}}
+  {{end}}
+</section>
+{{end}}
+{{end}}
+
+{{define "account-transactions"}}
+<section class="card" aria-labelledby="tx-title">
+  <h2 id="tx-title">Transactions</h2>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Date</th><th scope="col">Kind</th><th scope="col">Description</th><th scope="col">Postings</th><th scope="col">Source</th></tr></thead>
+    <tbody>
+    {{template "transaction-rows" .Transactions}}
+    </tbody>
+  </table></div>
+  {{if not .Transactions.Transactions}}<p class="muted">No transactions.</p>{{end}}
+</section>
+{{end}}
+
+{{define "account-lots"}}
+<section class="card" aria-labelledby="lots-title">
+  <h2 id="lots-title">Open lots on {{.Date}}</h2>
+  {{if .BondLot}}<p class="muted">Delete a lot entered by mistake. The ledger keeps it as a superseded version, and entering it again brings it back.</p>{{end}}
+  <div class="table"><table>
+    <thead><tr><th scope="col">Instrument</th><th scope="col">Opened</th><th scope="col" class="num">Quantity</th><th scope="col" class="num">Cost</th><th scope="col">Origin</th>{{if $.BondLot}}<th scope="col">Correction</th>{{end}}</tr></thead>
+    <tbody>
+    {{range .Lots}}
+    <tr><td><a href="{{$.HoldingLink .Instrument}}">{{instrument .Instrument}}</a>{{template "no-longer-updated" .}}</td><td class="mono">{{.Opened}}</td><td class="num">{{amount .Quantity}}</td><td class="num">{{money .Cost}}</td>
+      <td>{{if .Opening}}opening lot{{else}}{{.OriginSource}} <span class="mono">{{.OriginExternalId}}</span>{{end}}</td>
+      {{if $.BondLot}}<td><form method="post" action="/accounts/{{$.Account.Id}}/bond-lots/delete?tab=lots" class="inline">
+        <input type="hidden" name="series" value="{{.Instrument.Symbol}}"><input type="hidden" name="purchase_date" value="{{.Opened}}">
+        <button type="submit" class="danger" aria-label="Delete the {{.Instrument.Symbol}} lot bought on {{.Opened}}">Delete</button></form></td>{{end}}</tr>
+    {{else}}
+    <tr><td colspan="{{if $.BondLot}}6{{else}}5{{end}}" class="empty">No open lots.</td></tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  <p class="muted">Open lots with the day each was opened and its cost, oldest first, as FIFO consumes them.</p>
+</section>
 {{with .BondLot}}
 <section class="card" aria-labelledby="bond-lot-title">
   <h2 id="bond-lot-title">Add bond lot</h2>
   <p class="muted">A lot of treasury bonds you bought for cash at 100 PLN each or by exchanging maturing bonds at 99.90 PLN each, with the series' terms from its issue letter. It is booked on its purchase date, as a deposit of its cost and a buy, and lots can be entered in any order. The core hands it to this account's connector; the lot then appears under open lots, valued by the bond rules. Entering the same series and day again replaces that lot.</p>
-  <form method="post" action="/accounts/{{$.Data.Account.Id}}/bond-lots">
+  <form method="post" action="/accounts/{{$.Account.Id}}/bond-lots?tab=lots">
     <div class="fields">
       <div class="field">
         <label for="lot-series">Series</label>
@@ -224,21 +275,40 @@
   </form>
 </section>
 {{end}}
+{{end}}
 
-<section class="card" aria-labelledby="checks-title">
-  <h2 id="checks-title">Balance assertions</h2>
-  {{template "checks" .Checks}}
-</section>
-
-<section class="card" aria-labelledby="tx-title">
-  <h2 id="tx-title">Transactions</h2>
+{{define "account-cash"}}
+<section class="card" aria-labelledby="cash-title">
+  <h2 id="cash-title">Cash on {{.Date}}</h2>
+  {{if .Cash}}
   <div class="table"><table>
-    <thead><tr><th scope="col">Date</th><th scope="col">Kind</th><th scope="col">Description</th><th scope="col">Postings</th><th scope="col">Source</th></tr></thead>
-    <tbody>
-    {{template "transaction-rows" .Transactions}}
-    </tbody>
+    <thead><tr><th scope="col">Currency</th><th scope="col" class="num">Balance</th></tr></thead>
+    <tbody>{{range .Cash}}<tr><td>{{.Currency}}</td><td class="num">{{money .}}</td></tr>{{end}}</tbody>
   </table></div>
-  {{if not .Transactions.Transactions}}<p class="muted">No transactions.</p>{{end}}
+  {{else}}<p class="muted">No cash.</p>{{end}}
+  <p class="muted">Cash per currency, derived from the account's transactions; interest and fees are in its transactions.</p>
 </section>
 {{end}}
+
+{{define "account-reconciliation"}}
+<section class="card" aria-labelledby="checks-title">
+  <h2 id="checks-title">Balance assertions</h2>
+  <p class="muted">What the institution reported, against what OpenFief derived. A mismatch is flagged here and also waits in the <a href="/inbox">Inbox</a>.</p>
+  {{template "checks" .Checks}}
+</section>
+{{end}}
+
+{{define "account-settings"}}
+<section class="card" aria-labelledby="settings-title">
+  <h2 id="settings-title">Account settings</h2>
+  <dl class="facts">
+    <div><dt>Institution</dt><dd>{{.Account.Institution}}</dd></div>
+    <div><dt>Sleeve</dt><dd>{{.Sleeve}}</dd></div>
+    <div><dt>Tax wrapper</dt><dd>{{wrapper .Account.TaxWrapper}}</dd></div>
+    <div><dt>Sale fee rule</dt><dd>{{feeRule .Account.FeeRule}}</dd></div>
+    <div><dt>Connector instances</dt><dd>{{range $i, $n := .Instances}}{{if $i}}, {{end}}<span class="mono">{{$n}}</span>{{else}}none bound{{end}}</dd></div>
+    <div><dt>Account ID</dt><dd class="mono ident">{{.Account.Id}}</dd></div>
+  </dl>
+  <p class="muted">The account's name, sleeve, tax wrapper, sale fee rule and connector are changed, and the account deleted, on the <a href="/accounts">Accounts</a> page.</p>
+</section>
 {{end}}

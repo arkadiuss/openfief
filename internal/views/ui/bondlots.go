@@ -99,18 +99,18 @@ func (s *server) addBondLot(w http.ResponseWriter, r *http.Request, sess session
 		Origin: sess.Origin, SessionToken: sess.Token, AccountId: id, Lot: f.message(),
 	}))
 	if err == nil {
-		http.Redirect(w, r, "/accounts/"+url.PathEscape(id)+"#lots-title", http.StatusSeeOther)
+		http.Redirect(w, r, "/accounts/"+url.PathEscape(id)+"?tab=lots#lots-title", http.StatusSeeOther)
 		return
 	}
 	code := connect.CodeOf(err)
 	if code == connect.CodeUnavailable {
 		s.renderAccount(w, r, sess, http.StatusServiceUnavailable, accountForm{
-			Lot: f, Error: "The bond lot was not added: its connector can't be reached now. Try again in a moment.",
+			Tab: tabLots, Lot: f, Error: "The bond lot was not added: its connector can't be reached now. Try again in a moment.",
 		})
 		return
 	}
 	if status, refused := refusalStatus(code); refused {
-		s.renderAccount(w, r, sess, status, accountForm{Lot: f, Error: "The bond lot was not added: " + connectMessage(err)})
+		s.renderAccount(w, r, sess, status, accountForm{Tab: tabLots, Lot: f, Error: "The bond lot was not added: " + connectMessage(err)})
 		return
 	}
 	s.coreFailed(w, r, "AddBondLot", err)
@@ -136,18 +136,18 @@ func (s *server) deleteBondLot(w http.ResponseWriter, r *http.Request, sess sess
 		Origin: sess.Origin, SessionToken: sess.Token, AccountId: id, Series: strings.ToUpper(v[0]), PurchaseDate: v[1],
 	}))
 	if err == nil {
-		http.Redirect(w, r, "/accounts/"+url.PathEscape(id)+"#lots-title", http.StatusSeeOther)
+		http.Redirect(w, r, "/accounts/"+url.PathEscape(id)+"?tab=lots#lots-title", http.StatusSeeOther)
 		return
 	}
 	code := connect.CodeOf(err)
 	if code == connect.CodeUnavailable {
 		s.renderAccount(w, r, sess, http.StatusServiceUnavailable, accountForm{
-			Error: "The bond lot was not deleted: its connector can't be reached now. Try again in a moment.",
+			Tab: tabLots, Error: "The bond lot was not deleted: its connector can't be reached now. Try again in a moment.",
 		})
 		return
 	}
 	if status, refused := refusalStatus(code); refused {
-		s.renderAccount(w, r, sess, status, accountForm{Error: "The bond lot was not deleted: " + connectMessage(err)})
+		s.renderAccount(w, r, sess, status, accountForm{Tab: tabLots, Error: "The bond lot was not deleted: " + connectMessage(err)})
 		return
 	}
 	s.coreFailed(w, r, "DeleteBondLot", err)

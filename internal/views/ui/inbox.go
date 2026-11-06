@@ -136,6 +136,9 @@ type inboxView struct {
 	// Notice is what the owner's last action did; Error why the core
 	// refused it.
 	Notice, Error string
+	// NoticeLink is where the notice leads: a confirmed ticker's
+	// instrument (D-195); nil for none.
+	NoticeLink *inboxLink
 	// Calm is an open view with nothing open: Kasztan asleep and one
 	// line.
 	Calm bool
@@ -185,6 +188,24 @@ func inboxNotice(q url.Values) string {
 	return ""
 }
 
+// confirmedLink links the instrument whose ticker the owner just confirmed,
+// named by the redirect's isin, to its page (D-195); nil without a well
+// formed one.
+func confirmedLink(q url.Values) *inboxLink {
+	isin := q.Get("isin")
+	if len(isin) != isinChars || strings.TrimFunc(isin, isAlphanumeric) != "" {
+		return nil
+	}
+	return &inboxLink{Href: instrumentPath(isin), Text: "Open " + isin}
+}
+
+// isinChars is how many characters an ISIN has.
+const isinChars = 12
+
+// isAlphanumeric reports whether r is an upper-case ASCII letter or a
+// digit, as an ISIN's characters are.
+func isAlphanumeric(r rune) bool { return (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') }
+
 // digitsOnly keeps the digits of s, so a crafted query writes nothing else
 // into the page.
 func digitsOnly(s string) string {
@@ -222,6 +243,9 @@ func (s *server) renderInbox(w http.ResponseWriter, r *http.Request, sess sessio
 		return
 	}
 	data := inboxView{View: key, Owner: sess.Owner(), Notice: notice, Error: refusal, Groups: newInboxGroups()}
+	if notice != "" {
+		data.NoticeLink = confirmedLink(r.URL.Query())
+	}
 	for _, f := range []inboxFilter{
 		{Key: viewOpen, Label: "Open", Count: int(resp.Msg.GetOpen())},
 		{Key: viewAcknowledged, Label: "Acknowledged", Count: int(resp.Msg.GetAcknowledged())},
@@ -629,6 +653,9 @@ func itemLinks(it *viewsv1.AttentionItem) []inboxLink {
 	for _, a := range accounts {
 		out = append(out, inboxLink{Href: "/accounts/" + url.PathEscape(a), Text: "Open account " + a})
 	}
+	if isin := it.GetIsin(); isin != "" {
+		out = append(out, inboxLink{Href: instrumentPath(isin), Text: "Open instrument " + isin})
+	}
 	if page := attentionKindOf(it.GetKind()).Page; page != "" {
 		out = append(out, inboxLink{Href: page, Text: attentionKindOf(it.GetKind()).Action})
 	}
@@ -646,11 +673,11 @@ func itemPill(it *viewsv1.AttentionItem) statusPill {
 	case viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_ACKNOWLEDGED:
 		return statusPill{"Acknowledged", "pill-neutral"}
 	case viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_RESOLVED:
-		return statusPill{labelDone, "pill-ok"}
+		return statusPill{labelDone, pillOK}
 	case viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN, viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_UNSPECIFIED:
 	}
 	if it.GetKind() == kindSyncFailing {
-		return statusPill{"Failing", "pill-danger"}
+		return statusPill{"Failing", pillDanger}
 	}
 	return statusPill{"Needs you", "pill-warn"}
 }

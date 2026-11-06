@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dbe7865ad5e4
+  - type: implements
+    from: SYM-ui-account-data-tab-query
+    to: REQ-ui-account-page-tabs
+    created_at: 2026-11-06T10:44:11.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c18383b33f0
+  - type: covered_by
+    from: SYM-ui-account-data-tab-query
+    to: TEST-ui-account-tabs
+    created_at: 2026-11-06T10:44:11.232Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-145197c88cbb
