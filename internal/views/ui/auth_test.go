@@ -11,13 +11,15 @@ import (
 )
 
 // TestLoginPage checks the login page: the passkey button always, "View
-// demo" only when the core says demo sessions work, and a page that still
+// demo" only when the core says demo sessions work, a notice to refresh
+// instead while a demo deployment's data is loading, and a page that still
 // renders, saying so, when the core can't answer.
 func TestLoginPage(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name     string
 		demo     bool
+		loading  bool
 		down     bool
 		want     []string
 		wantNot  []string
@@ -25,13 +27,18 @@ func TestLoginPage(t *testing.T) {
 	}{
 		{name: "passkey only", want: []string{"Sign in with passkey", `data-webauthn="login"`}, wantNot: []string{"View demo"}},
 		{name: "demo sessions offered", demo: true, want: []string{"Sign in with passkey", "View demo", `action="/login/demo"`}},
+		{
+			name: "demo data loading", loading: true,
+			want:    []string{"Sign in with passkey", "Demo data is loading.", "Refresh in a minute", `class="alert alert-info" role="status"`, `href="/login">Refresh</a>`},
+			wantNot: []string{"View demo", `action="/login/demo"`},
+		},
 		{name: "core down", down: true, want: []string{"could not say how you can sign in"}, wantNot: []string{"View demo"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			h := newHarness(t)
-			h.auth.locked(func() { h.auth.demo, h.auth.down = tt.demo, tt.down })
+			h.auth.locked(func() { h.auth.demo, h.auth.demoLoading, h.auth.down = tt.demo, tt.loading, tt.down })
 			rec := h.serve(t, request(http.MethodGet, "/login", ""))
 			wantStatus(t, rec, http.StatusOK)
 			wantBody(t, rec, tt.want...)

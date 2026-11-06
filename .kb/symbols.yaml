@@ -48332,6 +48332,8 @@ symbols:
       - type: covered_by
         target: TEST-identity-auth-app
       - type: implements
+        target: REQ-identity-demo-loading-no-wizard
+      - type: implements
         target: REQ-identity-demo-sessions
       - type: implements
         target: REQ-identity-passkey-ceremonies
@@ -52084,6 +52086,8 @@ symbols:
         target: TEST-ui-auth
       - type: implements
         target: REQ-AUTO-585F02DB972C1660
+      - type: implements
+        target: REQ-ui-demo-no-wizard
       - type: implements
         target: REQ-ui-login-flows
   - id: SYM-ui-ceremony-start
@@ -76306,7 +76310,7 @@ symbols:
       - type: implements
         target: REQ-identity-enroll-localhost-forward
       - type: implements
-        target: REQ-identity-first-run-wizard-follows
+        target: REQ-identity-first-run-wizard-follows-outside-demo
   - id: SYM-fd-identity-kube-core-access
     title: CoreAccess
     sourceFile: internal/identity/kube/firstpasskey.go
@@ -81094,9 +81098,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-setup-data-steps
     title: setupData.Steps
     sourceFile: internal/views/ui/setup.go
@@ -81109,9 +81113,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-setup-step
     title: setupStep
     sourceFile: internal/views/ui/setup.go
@@ -81124,9 +81128,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-server-setup-page
     title: server.setupPage
     sourceFile: internal/views/ui/setup.go
@@ -81139,9 +81143,11 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-demo-no-wizard
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-outside-demo
+      - type: implements
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-server-render-setup
     title: server.renderSetup
     sourceFile: internal/views/ui/setup.go
@@ -81154,9 +81160,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-server-onboarding-routes
     title: server.onboardingRoutes
     sourceFile: internal/views/ui/setup.go
@@ -81169,9 +81175,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-first-run
     title: firstRun
     sourceFile: internal/views/ui/setup.go
@@ -81184,9 +81190,11 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-demo-no-wizard
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-outside-demo
+      - type: implements
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-return-to
     title: returnTo
     sourceFile: internal/views/ui/sleeves.go
@@ -88073,7 +88081,7 @@ symbols:
       - type: implements
         target: REQ-identity-enroll-origin
       - type: implements
-        target: REQ-identity-first-run-wizard-follows
+        target: REQ-identity-first-run-wizard-follows-outside-demo
   - id: SYM-exp-identity-kube-core-access-ready-pod
     title: CoreAccess.readyPod
     sourceFile: internal/identity/kube/firstpasskey.go
@@ -133736,3 +133744,327 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ingest-pg-sync-history
+  - id: SYM-fd-identity-cli-test-until-stopped
+    title: TestUntilStopped
+    sourceFile: internal/identity/cli/untilstopped_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T00:05:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
+  - id: SYM-fd-identity-cli-test-helper-stop-once
+    title: stopOnce
+    sourceFile: internal/identity/cli/untilstopped_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T00:05:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
+  - id: SYM-identity-demo-sessions-available
+    title: DemoSessionsAvailable
+    sourceFile: internal/identity/demo.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:28:08.956Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-demo-loading
+      - type: implements
+        target: REQ-identity-demo-sessions
+  - id: SYM-identity-demo-loading
+    title: DemoLoading
+    sourceFile: internal/identity/demo.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:28:21.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-demo-loading
+      - type: implements
+        target: REQ-demo-no-wizard-until-loaded
+      - type: implements
+        target: REQ-identity-demo-loading-no-wizard
+  - id: SYM-identity-app-auth-demo-loading
+    title: Auth.DemoLoading
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:28:35.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-demo-loading-no-wizard
+  - id: SYM-identity-app-auth-demo-state
+    title: Auth.demoState
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:28:50.457Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-demo-loading-no-wizard
+      - type: implements
+        target: REQ-identity-demo-sessions
+  - id: SYM-identityv1-get-login-methods-response-get-demo-loading
+    title: GetLoginMethodsResponse.GetDemoLoading
+    sourceFile: sdk/go/gen/openfief/identity/v1/auth.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:29:05.854Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-auth
+      - type: implements
+        target: REQ-ui-demo-no-wizard
+  - id: SYM-core-demo-loads
+    title: demoLoads
+    sourceFile: cmd/core/onboarding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:29:24.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-demo-loading
+      - type: implements
+        target: REQ-identity-demo-loading-no-wizard
+  - id: SYM-core-onboarding-reads
+    title: onboardingReads
+    sourceFile: cmd/core/onboarding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:29:43.308Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-demo-loading
+      - type: implements
+        target: REQ-identity-demo-loading-no-wizard
+  - id: SYM-core-refuse-while-demo-loads
+    title: refuseWhileDemoLoads
+    sourceFile: cmd/core/onboarding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:30:02.852Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-demo-loading
+      - type: implements
+        target: REQ-demo-owner-changes-after-load
+      - type: implements
+        target: REQ-identity-demo-loading-no-wizard
+  - id: SYM-core-write-connect-error
+    title: writeConnectError
+    sourceFile: cmd/core/onboarding.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:30:19.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-demo-loading
+      - type: implements
+        target: REQ-identity-demo-loading-no-wizard
+  - id: SYM-ui-server-demo-methods
+    title: server.demoMethods
+    sourceFile: internal/views/ui/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:30:38.147Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-ui-demo-no-wizard
+  - id: SYM-ui-demo-deployment
+    title: demoDeployment
+    sourceFile: internal/views/ui/setup.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:30:54.527Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-demo-no-wizard-until-loaded
+      - type: implements
+        target: REQ-ui-demo-no-wizard
+  - id: SYM-identity-test-demo-deployment
+    title: TestDemoDeployment
+    sourceFile: internal/identity/demo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:31:11.092Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-demo-loading
+  - id: SYM-core-test-refuse-while-demo-loads
+    title: TestRefuseWhileDemoLoads
+    sourceFile: cmd/core/demoloading_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:31:31.975Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-demo-loading
+  - id: SYM-core-test-helper-want-demo-answer
+    title: wantDemoAnswer
+    sourceFile: cmd/core/demoloading_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:31:53.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-demo-loading
+  - id: SYM-core-test-helper-fixed-demo
+    title: fixedDemo
+    sourceFile: cmd/core/demoloading_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:32:09.586Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-demo-loading
+  - id: SYM-core-test-helper-fixed-demo-demo-loading
+    title: fixedDemo.DemoLoading
+    sourceFile: cmd/core/demoloading_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:32:25.445Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-demo-loading
+  - id: SYM-core-test-helper-accepting-accounts
+    title: acceptingAccounts
+    sourceFile: cmd/core/demoloading_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:32:41.420Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-demo-loading
+  - id: SYM-core-test-helper-accepting-accounts-create-account
+    title: acceptingAccounts.CreateAccount
+    sourceFile: cmd/core/demoloading_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:32:57.645Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-demo-loading
+  - id: SYM-core-test-helper-accepting-accounts-list-broker-accounts
+    title: acceptingAccounts.ListBrokerAccounts
+    sourceFile: cmd/core/demoloading_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:33:13.359Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-demo-loading
+  - id: SYM-core-test-helper-accepting-sleeves
+    title: acceptingSleeves
+    sourceFile: cmd/core/demoloading_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:33:28.343Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-demo-loading
+  - id: SYM-core-test-helper-accepting-sleeves-add-sleeve
+    title: acceptingSleeves.AddSleeve
+    sourceFile: cmd/core/demoloading_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:33:43.157Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-demo-loading
+  - id: SYM-ui-test-no-wizard-on-demo
+    title: TestNoWizardOnDemo
+    sourceFile: internal/views/ui/onboarding_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:33:58.270Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-onboarding
+  - id: SYM-ui-server-first-run-answer
+    title: server.firstRunAnswer
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:46:19.725Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-ui-demo-no-wizard
+      - type: implements
+        target: REQ-ui-first-run-wizard-steps-outside-demo
+  - id: SYM-identity-app-test-helper-check-demo-methods
+    title: checkDemoMethods
+    sourceFile: internal/identity/app/auth_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:46:34.965Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-auth-app
+  - id: SYM-identity-app-demo-flags
+    title: demoFlags
+    sourceFile: internal/identity/app/auth.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-03T19:49:02.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-identity-auth-app
+      - type: implements
+        target: REQ-identity-demo-loading-no-wizard
+      - type: implements
+        target: REQ-identity-demo-sessions

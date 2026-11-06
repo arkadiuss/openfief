@@ -29,7 +29,7 @@ func (s *authService) GetLoginMethods(ctx context.Context, req *connect.Request[
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
-	return connect.NewResponse(&identityv1.GetLoginMethodsResponse{PasskeyRegistered: m.PasskeyRegistered, DemoSessions: m.DemoSessions}), nil
+	return connect.NewResponse(&identityv1.GetLoginMethodsResponse{PasskeyRegistered: m.PasskeyRegistered, DemoSessions: m.DemoSessions, DemoLoading: m.DemoLoading}), nil
 }
 
 // BeginRegistration starts creating a passkey.

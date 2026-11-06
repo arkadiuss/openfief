@@ -1,6 +1,6 @@
 ---
 title: 'First-run setup must happen in the built-in UI: after the owner creates the first passkey, a first-run wizard must walk them through creating accounts and sleeves and binding the connector instances already installed.'
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

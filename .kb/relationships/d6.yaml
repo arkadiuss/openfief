@@ -1077,3 +1077,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c2fb9f8da49
+  - type: constrains
+    from: REQ-demo-no-wizard-until-loaded
+    to: FACT-SUBJECT-E96D53850D05A05E
+    created_at: 2026-11-05T23:58:44.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfe1a14d5181
+  - type: requires_property
+    from: REQ-demo-no-wizard-until-loaded
+    to: FACT-PROP-12D8010727747633
+    created_at: 2026-11-05T23:58:45.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e493e481fd5e
+  - type: specified_by
+    from: REQ-demo-no-wizard-until-loaded
+    to: SCEN-ui-demo-no-wizard
+    created_at: 2026-11-05T23:58:45.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2221241f386c
+  - type: specified_by
+    from: REQ-demo-no-wizard-until-loaded
+    to: SCEN-identity-demo-loading-refuses-wizard-writes
+    created_at: 2026-11-05T23:58:45.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddaf0e8d395c

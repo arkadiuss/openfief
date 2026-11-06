@@ -8,6 +8,7 @@ import (
 	"net/url"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
@@ -94,6 +95,9 @@ type overviewData struct {
 	Start   chartStartView
 	Value   *valueChartView
 	History performanceView
+	// DemoLoading is whether this is a demo deployment whose demo data is
+	// still loading; the empty overview then says so.
+	DemoLoading bool
 }
 
 // chartData is the data a chart canvas carries for app.js: amounts stay
@@ -181,8 +185,8 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 		s.coreFailed(w, r, "ListAccounts", err)
 		return
 	}
-	if firstRun(sess, len(accounts.Msg.GetAccounts())) {
-		http.Redirect(w, r, setupSleeves, http.StatusSeeOther)
+	demo, answered := s.firstRunAnswer(w, r, sess, len(accounts.Msg.GetAccounts()))
+	if answered {
 		return
 	}
 	statuses, err := s.read.ListValuationStatuses(ctx, bearer(&viewsv1.ListValuationStatusesRequest{}, sess))
@@ -200,7 +204,7 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 		s.errorPage(w, r, http.StatusBadRequest, err.Error())
 		return
 	}
-	data := overviewData{Date: date.String()}
+	data := overviewData{Date: date.String(), DemoLoading: demo.GetDemoLoading()}
 	if method, chartErr := s.charts(r, sess, date, start, &data); chartErr != nil {
 		s.coreFailed(w, r, method, chartErr)
 		return
@@ -217,6 +221,29 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 		return
 	}
 	s.show(w, r, http.StatusOK, "overview", page{Title: "Overview", Session: &sess, Data: data})
+}
+
+// firstRunAnswer answers the overview's request itself when sess, seeing
+// an install with accounts accounts, is on its first run: with the
+// redirect to the first-run wizard (D-73), or with the core's failure.
+// Only an owner without accounts asks the core whether this is a demo
+// deployment, which has no first run; it returns the core's answer, nil
+// when it didn't ask, for the overview to say whether the demo data is
+// still loading, then whether it answered the request.
+func (s *server) firstRunAnswer(w http.ResponseWriter, r *http.Request, sess session, accounts int) (*identityv1.GetLoginMethodsResponse, bool) {
+	var demo *identityv1.GetLoginMethodsResponse
+	if sess.Owner() && accounts == 0 {
+		var err error
+		if demo, err = s.demoMethods(r); err != nil {
+			s.coreFailed(w, r, "GetLoginMethods", err)
+			return nil, true
+		}
+	}
+	if firstRun(sess, accounts, demoDeployment(demo)) {
+		http.Redirect(w, r, setupSleeves, http.StatusSeeOther)
+		return nil, true
+	}
+	return demo, false
 }
 
 // charts reads the overview's charts on date into data: the allocation by

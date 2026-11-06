@@ -741,3 +741,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5df52456c582
+  - type: implements
+    from: SYM-identity-app-auth-demo-state
+    to: REQ-identity-demo-loading-no-wizard
+    created_at: 2026-11-03T19:28:53.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d6e232df684
+  - type: implements
+    from: SYM-identity-app-auth-demo-state
+    to: REQ-identity-demo-sessions
+    created_at: 2026-11-03T19:28:53.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1bc3b5912b9
+  - type: covered_by
+    from: SYM-identity-app-auth-demo-state
+    to: TEST-identity-auth-app
+    created_at: 2026-11-03T19:28:53.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-416b26a6aa39

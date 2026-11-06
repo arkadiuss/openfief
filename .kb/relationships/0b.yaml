@@ -580,6 +580,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38092f5f805d
+  - type: executable_for
+    from: SYM-core-test-helper-accepting-accounts
+    to: TEST-core-demo-loading
+    created_at: 2026-11-03T19:32:45.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7526040ba3cb
   - type: constrains
     from: REQ-plugins-requested-secret-names-double-hyphen
     to: FACT-SUBJECT-010DD798EAB0E3D4

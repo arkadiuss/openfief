@@ -475,20 +475,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-556f2234ec90
-  - type: implements
-    from: SYM-ui-setup-data
-    to: REQ-ui-first-run-wizard-steps
-    created_at: 2026-10-29T13:15:51.005Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-42387d4dc673
-  - type: implements
-    from: SYM-ui-setup-data
-    to: REQ-ui-first-run-wizard
-    created_at: 2026-10-29T13:15:51.052Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cdcd4f1fa23c
   - type: covered_by
     from: SYM-ui-setup-data
     to: TEST-ui-onboarding
@@ -1007,3 +993,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af7ae1d82e98
+  - type: executable_for
+    from: SYM-ui-test-no-wizard-on-demo
+    to: TEST-ui-onboarding
+    created_at: 2026-11-03T19:34:01.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c9b49e6c352
+  - type: implements
+    from: SYM-ui-setup-data
+    to: REQ-ui-first-run-wizard-outside-demo
+    created_at: 2026-11-06T00:07:20.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3b499a6bb31
+  - type: implements
+    from: SYM-ui-setup-data
+    to: REQ-ui-first-run-wizard-steps-outside-demo
+    created_at: 2026-11-06T00:07:32.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71af5e2e9bb9

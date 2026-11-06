@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-160f770fa38b
+  - type: implements
+    from: SYM-core-onboarding-reads
+    to: REQ-identity-demo-loading-no-wizard
+    created_at: 2026-11-03T19:29:47.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e9ba5af7dbb
+  - type: covered_by
+    from: SYM-core-onboarding-reads
+    to: TEST-core-demo-loading
+    created_at: 2026-11-03T19:29:47.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cb72dfb842e
