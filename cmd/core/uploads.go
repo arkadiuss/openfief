@@ -37,7 +37,8 @@ func newUploads(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Uploads {
 // entries in the ingest schema, and a confirmed ticker's entries booked
 // into the ledger.
 func newTickers(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Tickers {
-	return &ingestapp.Tickers{Owners: owners, Store: ingestpg.New(d.pool), Ledger: ledgerImporter{ledger: d.ledger}, Names: d.names}
+	l := ledgerImporter{ledger: d.ledger}
+	return &ingestapp.Tickers{Owners: owners, Store: ingestpg.New(d.pool), Ledger: l, Assertions: l, Names: d.names}
 }
 
 // withStatementService returns h with the StatementService, the

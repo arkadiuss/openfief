@@ -650,3 +650,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7a33ac87522
+  - type: executable_for
+    from: SYM-ingest-xtb-test-map-cash-income
+    to: TEST-ingest-xtb-cash-income
+    created_at: 2026-11-02T05:55:25.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93d339ac06d7
+  - type: validates
+    from: TEST-ingest-ticker-booking
+    to: REQ-ingest-xtb-open-positions-assert-holdings
+    created_at: 2026-11-02T06:59:48.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1960a0d796d4
+  - type: validates
+    from: TEST-ingest-ticker-booking
+    to: REQ-ingest-xtb-unconfirmed-ticker-asserted-on-confirm
+    created_at: 2026-11-02T06:59:48.343Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc490e56f876
+  - type: validates
+    from: TEST-ingest-ticker-booking
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T06:59:48.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40a3489c786e
+  - type: validates
+    from: TEST-ingest-ticker-booking
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T06:59:48.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2f181f58db8

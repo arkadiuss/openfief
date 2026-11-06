@@ -50,6 +50,7 @@ func TestBookValidate(t *testing.T) {
 		{name: "withholding tax", kind: ledger.BookWithholdingTax, currency: "USD", wantString: "withholding-tax:USD"},
 		{name: "fx", kind: ledger.BookFX, currency: "EUR", wantString: "fx:EUR"},
 		{name: "equity", kind: ledger.BookEquity, currency: "PLN", wantString: "equity:PLN"},
+		{name: "income", kind: ledger.BookIncome, currency: "PLN", wantString: "income:PLN"},
 		{name: "cash without currency", kind: ledger.BookCash, wantString: "cash:", wantErr: ledger.ErrInvalidBook},
 		{name: "cash with an instrument", kind: ledger.BookCash, currency: "USD", instrument: true, wantString: "cash:USD", wantErr: ledger.ErrInvalidBook},
 		{name: "holding with a currency", kind: ledger.BookHolding, currency: "USD", instrument: true, wantString: "holding:" + isinA + "/TSTA", wantErr: ledger.ErrInvalidBook},

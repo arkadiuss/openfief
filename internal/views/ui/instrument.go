@@ -6,12 +6,14 @@ import (
 	"net/http"
 	"net/url"
 	"slices"
+	"strconv"
 	"strings"
 	"unicode/utf8"
 
 	"connectrpc.com/connect"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
+	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	ledgerv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ledger/v1"
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
@@ -91,8 +93,13 @@ type instrumentData struct {
 	Rename   string
 	Error    string
 	Renamed  bool
-	Txs      transactionsView
-	Accounts map[string]string
+	// Confirmed are, for the owner, the tickers confirmed with this ISIN,
+	// each with its correction form (D-153); Corrected is how many rows
+	// the last correction booked anew, "" for none.
+	Confirmed []*ingestv1.ConfirmedTicker
+	Corrected string
+	Txs       transactionsView
+	Accounts  map[string]string
 }
 
 // Name is the instrument's display name, or its ISIN when it has none
@@ -116,9 +123,10 @@ func (d *instrumentData) Tickers() []string {
 // instrumentForm is what the owner posted to an instrument's page and why
 // the core refused it; the zero value is a fresh page.
 type instrumentForm struct {
-	Name    string
-	Error   string
-	Renamed bool
+	Name      string
+	Error     string
+	Renamed   bool
+	Corrected string
 }
 
 // priceCharts groups an instrument's stored prices by listing (D-195),
@@ -217,7 +225,11 @@ func instrumentCrumbs(name, account string, names map[string]string) []crumb {
 
 // instrumentPage shows one instrument (D-195).
 func (s *server) instrumentPage(w http.ResponseWriter, r *http.Request, sess session) {
-	s.renderInstrument(w, r, sess, r.PathValue("isin"), http.StatusOK, instrumentForm{Renamed: r.URL.Query().Has("renamed")})
+	form := instrumentForm{Renamed: r.URL.Query().Has("renamed")}
+	if n, err := strconv.Atoi(r.URL.Query().Get("corrected")); err == nil && n >= 0 {
+		form.Corrected = strconv.Itoa(n)
+	}
+	s.renderInstrument(w, r, sess, r.PathValue("isin"), http.StatusOK, form)
 }
 
 // renderInstrument shows the page of the instrument with ISIN isin with
@@ -252,11 +264,14 @@ func (s *server) instrumentView(r *http.Request, sess session, isin string, form
 		return nil, "", err
 	}
 	data := &instrumentData{
-		Date: date.String(), Detail: in.Msg.GetInstrument(), Owner: sess.Owner(), Error: form.Error, Renamed: form.Renamed,
+		Date: date.String(), Detail: in.Msg.GetInstrument(), Owner: sess.Owner(), Error: form.Error, Renamed: form.Renamed, Corrected: form.Corrected,
 		Rename: cmp.Or(form.Name, in.Msg.GetInstrument().GetName()), Items: s.instrumentItems(r, sess, isin),
 	}
 	if method, readErr := s.instrumentRecord(r, sess, date, data); readErr != nil {
 		return nil, method, readErr
+	}
+	if data.Confirmed, err = s.confirmedTickers(r, sess, isin); err != nil {
+		return nil, "ListConfirmedTickers", err
 	}
 	data.Crumbs = instrumentCrumbs(data.Name(), r.URL.Query().Get(accountParam), data.Accounts)
 	return data, "", nil

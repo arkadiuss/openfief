@@ -6,6 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
+
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -117,25 +119,48 @@ func TestUploadsStartHistoryUnreadable(t *testing.T) {
 	}
 }
 
-// fakeTickerStore holds the waiting entries of one ticker, the listing
-// confirming it settles, and records the keys booked.
+// fakeTickerStore holds the entries and holdings of one ticker at
+// xtb-main, the listing confirming or correcting it settles, the one a
+// correction replaces, and records the keys booked.
 type fakeTickerStore struct {
 	app.TickerStore
 
-	waiting []ingest.TickerEntry
-	listing ingest.Listing
-	booked  []ledger.TransactionKey
+	waiting  []ingest.TickerEntry
+	holdings []ingest.TickerAssertion
+	listing  ingest.Listing
+	previous ingest.Listing
+	booked   []ledger.TransactionKey
 }
 
-func (f *fakeTickerStore) ConfirmTicker(_ context.Context, c ingest.TickerConfirmation) ([]ingest.TickerEntry, ingest.Listing, error) {
+func (f *fakeTickerStore) TickerAccounts(context.Context, string, string, bool) ([]ledger.AccountID, error) {
+	rows := f.rows("xtb-main")
+	return rows[0].Accounts(), nil
+}
+
+func (f *fakeTickerStore) ConfirmTicker(_ context.Context, c ingest.TickerConfirmation) (ingest.TickerBooking, error) {
 	l := f.listing
 	l.ISIN = c.ISIN
-	return f.waiting, l, nil
+	return ingest.TickerBooking{Listing: l, Rows: f.rows(c.Instance)}, nil
 }
 
-func (f *fakeTickerStore) BookedTickerEntries(_ context.Context, _ string, keys []ledger.TransactionKey) error {
-	f.booked = append(f.booked, keys...)
+func (f *fakeTickerStore) CorrectTicker(_ context.Context, c ingest.TickerConfirmation) (ingest.TickerBooking, error) {
+	l := f.listing
+	l.ISIN = c.ISIN
+	return ingest.TickerBooking{Listing: l, Previous: f.previous, Rows: f.rows(c.Instance)}, nil
+}
+
+func (f *fakeTickerStore) BookedTickerRows(_ context.Context, rows []ingest.TickerRows) error {
+	for i := range rows {
+		for j := range rows[i].Entries {
+			f.booked = append(f.booked, rows[i].Entries[j].Header.Key)
+		}
+	}
 	return nil
+}
+
+// rows returns the store's rows at instance.
+func (f *fakeTickerStore) rows(instance string) []ingest.TickerRows {
+	return []ingest.TickerRows{{Instance: instance, Entries: f.waiting, Assertions: f.holdings}}
 }
 
 // TestTickersConfirmOpeningLots checks that the opening lots of an
@@ -190,5 +215,98 @@ func TestTickersConfirmOpeningLots(t *testing.T) {
 				t.Errorf("booked %d keys, want %d", len(store.booked), len(tt.waiting))
 			}
 		})
+	}
+}
+
+// fakeWithdrawer records the balance assertions withdrawn.
+type fakeWithdrawer struct {
+	withdrawn []ledger.BalanceAssertion
+}
+
+func (f *fakeWithdrawer) WithdrawAssertions(_ context.Context, assertions []ledger.BalanceAssertion) error {
+	f.withdrawn = append(f.withdrawn, assertions...)
+	return nil
+}
+
+// correctFixture is a ticker store holding a buy and a holding of
+// TESTA.PL at xtb-main, confirmed as PLTESTA00002, and the confirmation
+// correcting it to PLTESTC00008.
+func correctFixture(t *testing.T) (func() *fakeTickerStore, ingest.TickerConfirmation) {
+	t.Helper()
+	day, err := kernel.ParseDate("2026-06-30")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oldISIN, err := ledger.ParseISIN("PLTESTA00002")
+	if err != nil {
+		t.Fatal(err)
+	}
+	newISIN, err := ledger.ParseISIN("PLTESTC00008")
+	if err != nil {
+		t.Fatal(err)
+	}
+	buy := ingest.TickerEntry{
+		Symbol: "TESTA.PL", Kind: ledger.KindBuy, Quantity: kernel.NewQuantity(kernel.NewDecimal(7, 0)), Amount: syntheticCash(t, "864.15"),
+		Header: ledger.TransactionHeader{Key: ledger.TransactionKey{Source: "xtb:acc-1", ExternalID: "9000000002"}, Account: "acc-1", Date: day},
+	}
+	holding := ingest.TickerAssertion{Symbol: "TESTA.PL", Account: "acc-1", Date: day, Quantity: kernel.NewQuantity(kernel.NewDecimal(7, 0))}
+	pln := syntheticCash(t, "1").Currency()
+	newStore := func() *fakeTickerStore {
+		return &fakeTickerStore{
+			waiting: []ingest.TickerEntry{buy}, holdings: []ingest.TickerAssertion{holding},
+			listing: ingest.Listing{Currency: pln}, previous: ingest.Listing{ISIN: oldISIN, Currency: pln},
+		}
+	}
+	return newStore, ingest.TickerConfirmation{Instance: "xtb-main", Symbol: "TESTA.PL", ISIN: newISIN}
+}
+
+// TestTickersCorrect checks D-153's correction: every row of the ticker is
+// booked anew with the corrected ISIN, keyed in its instance so it
+// supersedes the old version, its holding asserted of the corrected
+// instrument and the old one withdrawn.
+func TestTickersCorrect(t *testing.T) {
+	t.Parallel()
+	newStore, c := correctFixture(t)
+	l, w, store := &fakeLedger{}, &fakeWithdrawer{}, newStore()
+	tickers := app.Tickers{Owners: fakeOwners{}, Store: store, Ledger: l, Assertions: w}
+	if _, err := tickers.Correct(t.Context(), "https://ui.example.com", "owner", c); err != nil {
+		t.Fatalf("Correct: %v", err)
+	}
+	got := make([]string, 0, len(l.txs)+len(l.assertions)+len(w.withdrawn))
+	for i := range l.txs {
+		got = append(got, "tx "+l.txs[i].Key.String()+" "+l.txs[i].Postings[0].Book.String())
+	}
+	for i := range l.assertions {
+		got = append(got, "asserted "+l.assertions[i].Book.String())
+	}
+	for i := range w.withdrawn {
+		got = append(got, "withdrawn "+w.withdrawn[i].Book.String())
+	}
+	want := []string{
+		"tx plugin:xtb-main:xtb:acc-1/9000000002 holding:PLTESTC00008/TESTA.PL",
+		"asserted holding:PLTESTC00008/TESTA.PL", "withdrawn holding:PLTESTA00002/TESTA.PL",
+	}
+	if diff := cmp.Diff(want, got); diff != "" || len(store.booked) != 1 {
+		t.Errorf("Correct booked %v (-want +got):\n%s", store.booked, diff)
+	}
+}
+
+// TestTickersCorrectRefused checks that a correction to another ISIN
+// without a way to withdraw the old holdings fails, and that an owner the
+// authorizer doesn't let change the account is refused a correction or a
+// confirmation before anything is booked (D-163).
+func TestTickersCorrectRefused(t *testing.T) {
+	t.Parallel()
+	newStore, c := correctFixture(t)
+	if _, err := (&app.Tickers{Owners: fakeOwners{}, Store: newStore(), Ledger: &fakeLedger{}}).Correct(t.Context(), "o", "owner", c); !errors.Is(err, app.ErrNoAssertionWithdrawer) {
+		t.Errorf("Correct without a withdrawer = %v, want ErrNoAssertionWithdrawer", err)
+	}
+	denied := &fakeLedger{}
+	refused := app.Tickers{Owners: fakeOwners{denied: []ledger.AccountID{"acc-1"}}, Store: newStore(), Ledger: denied, Assertions: &fakeWithdrawer{}}
+	if _, err := refused.Correct(t.Context(), "o", "owner", c); !errors.Is(err, app.ErrNotOwner) || denied.calls != 0 {
+		t.Errorf("Correct of an account the owner may not change = %v after %d imports, want ErrNotOwner and none", err, denied.calls)
+	}
+	if _, err := refused.Confirm(t.Context(), "o", "owner", c); !errors.Is(err, app.ErrNotOwner) || denied.calls != 0 {
+		t.Errorf("Confirm into an account the owner may not change = %v after %d imports, want ErrNotOwner and none", err, denied.calls)
 	}
 }

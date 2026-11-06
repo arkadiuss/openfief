@@ -56,6 +56,9 @@ const (
 	BookKind_BOOK_KIND_FX              BookKind = 5
 	// The counterpart of deposits, withdrawals and opening lots (D-33).
 	BookKind_BOOK_KIND_EQUITY BookKind = 6
+	// The source of income that no holding produces, such as a broker's
+	// interest on uninvested cash or a closed CFD's result (D-152).
+	BookKind_BOOK_KIND_INCOME BookKind = 7
 )
 
 // Enum value maps for BookKind.
@@ -68,6 +71,7 @@ var (
 		4: "BOOK_KIND_WITHHOLDING_TAX",
 		5: "BOOK_KIND_FX",
 		6: "BOOK_KIND_EQUITY",
+		7: "BOOK_KIND_INCOME",
 	}
 	BookKind_value = map[string]int32{
 		"BOOK_KIND_UNSPECIFIED":     0,
@@ -77,6 +81,7 @@ var (
 		"BOOK_KIND_WITHHOLDING_TAX": 4,
 		"BOOK_KIND_FX":              5,
 		"BOOK_KIND_EQUITY":          6,
+		"BOOK_KIND_INCOME":          7,
 	}
 )
 
@@ -130,6 +135,12 @@ const (
 	// (D-135): its holding posting gives up the units at the redemption
 	// value, with the tax withheld at source posted to withholding tax.
 	TransactionKind_TRANSACTION_KIND_REDEMPTION TransactionKind = 11
+	// Income that no holding produces, such as a broker's interest on
+	// uninvested cash or a closed CFD's result, with any tax withheld
+	// (D-152): income gives it, withholding tax takes the tax, cash gets the
+	// rest; a negative one, such as a CFD's loss, takes cash out.
+	// Performance counts it as return, never as money paid in.
+	TransactionKind_TRANSACTION_KIND_CASH_INCOME TransactionKind = 12
 )
 
 // Enum value maps for TransactionKind.
@@ -147,6 +158,7 @@ var (
 		9:  "TRANSACTION_KIND_INTEREST",
 		10: "TRANSACTION_KIND_DELETION",
 		11: "TRANSACTION_KIND_REDEMPTION",
+		12: "TRANSACTION_KIND_CASH_INCOME",
 	}
 	TransactionKind_value = map[string]int32{
 		"TRANSACTION_KIND_UNSPECIFIED":   0,
@@ -161,6 +173,7 @@ var (
 		"TRANSACTION_KIND_INTEREST":      9,
 		"TRANSACTION_KIND_DELETION":      10,
 		"TRANSACTION_KIND_REDEMPTION":    11,
+		"TRANSACTION_KIND_CASH_INCOME":   12,
 	}
 )
 
@@ -1443,8 +1456,14 @@ type Delivery struct {
 	// keeps the first name any connector delivers for an instrument; the
 	// owner can rename it.
 	InstrumentNames []*InstrumentName `protobuf:"bytes,15,rep,name=instrument_names,json=instrumentNames,proto3" json:"instrument_names,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// The holdings of instruments named in tickers that the institution
+	// reports, such as the summed volume of each ticker's open positions in
+	// an xStation export (D-155). The core asserts each as a balance
+	// assertion of the instrument the owner confirmed for its ticker, and
+	// holds it until the owner does.
+	TickerAssertions []*TickerAssertion `protobuf:"bytes,16,rep,name=ticker_assertions,json=tickerAssertions,proto3" json:"ticker_assertions,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Delivery) Reset() {
@@ -1578,6 +1597,13 @@ func (x *Delivery) GetTickerTransactions() []*TickerTransaction {
 func (x *Delivery) GetInstrumentNames() []*InstrumentName {
 	if x != nil {
 		return x.InstrumentNames
+	}
+	return nil
+}
+
+func (x *Delivery) GetTickerAssertions() []*TickerAssertion {
+	if x != nil {
+		return x.TickerAssertions
 	}
 	return nil
 }
@@ -1878,6 +1904,99 @@ func (x *TickerTransaction) GetOpenPrice() string {
 	return ""
 }
 
+// TickerAssertion is a holding of an instrument named by ticker only that
+// the institution reports for an account at the end of a date (D-155),
+// like a BalanceAssertion of a holding.
+type TickerAssertion struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The symbol of one of the delivery's tickers.
+	Symbol string `protobuf:"bytes,1,opt,name=symbol,proto3" json:"symbol,omitempty"`
+	// The OpenFief account ID; empty when broker_account names the account.
+	AccountId string `protobuf:"bytes,2,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	// The institution's own ID of the account, as on Transaction (D-72).
+	BrokerAccount string `protobuf:"bytes,3,opt,name=broker_account,json=brokerAccount,proto3" json:"broker_account,omitempty"`
+	// YYYY-MM-DD.
+	Date string `protobuf:"bytes,4,opt,name=date,proto3" json:"date,omitempty"`
+	// The units held, a non-negative decimal.
+	Quantity string `protobuf:"bytes,5,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	// Where the rows are in the statement, as in Problem.
+	Ref           string `protobuf:"bytes,6,opt,name=ref,proto3" json:"ref,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TickerAssertion) Reset() {
+	*x = TickerAssertion{}
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TickerAssertion) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TickerAssertion) ProtoMessage() {}
+
+func (x *TickerAssertion) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TickerAssertion.ProtoReflect.Descriptor instead.
+func (*TickerAssertion) Descriptor() ([]byte, []int) {
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *TickerAssertion) GetSymbol() string {
+	if x != nil {
+		return x.Symbol
+	}
+	return ""
+}
+
+func (x *TickerAssertion) GetAccountId() string {
+	if x != nil {
+		return x.AccountId
+	}
+	return ""
+}
+
+func (x *TickerAssertion) GetBrokerAccount() string {
+	if x != nil {
+		return x.BrokerAccount
+	}
+	return ""
+}
+
+func (x *TickerAssertion) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *TickerAssertion) GetQuantity() string {
+	if x != nil {
+		return x.Quantity
+	}
+	return ""
+}
+
+func (x *TickerAssertion) GetRef() string {
+	if x != nil {
+		return x.Ref
+	}
+	return ""
+}
+
 type LookupInstrumentsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Tickers       []*Ticker              `protobuf:"bytes,1,rep,name=tickers,proto3" json:"tickers,omitempty"`
@@ -1887,7 +2006,7 @@ type LookupInstrumentsRequest struct {
 
 func (x *LookupInstrumentsRequest) Reset() {
 	*x = LookupInstrumentsRequest{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[18]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1899,7 +2018,7 @@ func (x *LookupInstrumentsRequest) String() string {
 func (*LookupInstrumentsRequest) ProtoMessage() {}
 
 func (x *LookupInstrumentsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[18]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1912,7 +2031,7 @@ func (x *LookupInstrumentsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LookupInstrumentsRequest.ProtoReflect.Descriptor instead.
 func (*LookupInstrumentsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{18}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *LookupInstrumentsRequest) GetTickers() []*Ticker {
@@ -1941,7 +2060,7 @@ type InstrumentProposal struct {
 
 func (x *InstrumentProposal) Reset() {
 	*x = InstrumentProposal{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[19]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1953,7 +2072,7 @@ func (x *InstrumentProposal) String() string {
 func (*InstrumentProposal) ProtoMessage() {}
 
 func (x *InstrumentProposal) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[19]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1966,7 +2085,7 @@ func (x *InstrumentProposal) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentProposal.ProtoReflect.Descriptor instead.
 func (*InstrumentProposal) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{19}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *InstrumentProposal) GetSymbol() string {
@@ -2006,7 +2125,7 @@ type LookupInstrumentsResponse struct {
 
 func (x *LookupInstrumentsResponse) Reset() {
 	*x = LookupInstrumentsResponse{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[20]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2018,7 +2137,7 @@ func (x *LookupInstrumentsResponse) String() string {
 func (*LookupInstrumentsResponse) ProtoMessage() {}
 
 func (x *LookupInstrumentsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[20]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2031,7 +2150,7 @@ func (x *LookupInstrumentsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LookupInstrumentsResponse.ProtoReflect.Descriptor instead.
 func (*LookupInstrumentsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{20}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *LookupInstrumentsResponse) GetProposals() []*InstrumentProposal {
@@ -2079,7 +2198,7 @@ type SyncRequest struct {
 
 func (x *SyncRequest) Reset() {
 	*x = SyncRequest{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[21]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2091,7 +2210,7 @@ func (x *SyncRequest) String() string {
 func (*SyncRequest) ProtoMessage() {}
 
 func (x *SyncRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[21]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2104,7 +2223,7 @@ func (x *SyncRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncRequest.ProtoReflect.Descriptor instead.
 func (*SyncRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{21}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *SyncRequest) GetBatchId() string {
@@ -2191,7 +2310,7 @@ type AccountHoldings struct {
 
 func (x *AccountHoldings) Reset() {
 	*x = AccountHoldings{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[22]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2203,7 +2322,7 @@ func (x *AccountHoldings) String() string {
 func (*AccountHoldings) ProtoMessage() {}
 
 func (x *AccountHoldings) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[22]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2216,7 +2335,7 @@ func (x *AccountHoldings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AccountHoldings.ProtoReflect.Descriptor instead.
 func (*AccountHoldings) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{22}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *AccountHoldings) GetAccountId() string {
@@ -2289,7 +2408,7 @@ type BondPayoutPeriod struct {
 
 func (x *BondPayoutPeriod) Reset() {
 	*x = BondPayoutPeriod{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[23]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2301,7 +2420,7 @@ func (x *BondPayoutPeriod) String() string {
 func (*BondPayoutPeriod) ProtoMessage() {}
 
 func (x *BondPayoutPeriod) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[23]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2314,7 +2433,7 @@ func (x *BondPayoutPeriod) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BondPayoutPeriod.ProtoReflect.Descriptor instead.
 func (*BondPayoutPeriod) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{23}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *BondPayoutPeriod) GetBondPayout() BondPayout {
@@ -2342,7 +2461,7 @@ type Holding struct {
 
 func (x *Holding) Reset() {
 	*x = Holding{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[24]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2354,7 +2473,7 @@ func (x *Holding) String() string {
 func (*Holding) ProtoMessage() {}
 
 func (x *Holding) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[24]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2367,7 +2486,7 @@ func (x *Holding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Holding.ProtoReflect.Descriptor instead.
 func (*Holding) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{24}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *Holding) GetInstrument() *Instrument {
@@ -2403,7 +2522,7 @@ type OpenLot struct {
 
 func (x *OpenLot) Reset() {
 	*x = OpenLot{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[25]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2415,7 +2534,7 @@ func (x *OpenLot) String() string {
 func (*OpenLot) ProtoMessage() {}
 
 func (x *OpenLot) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[25]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2428,7 +2547,7 @@ func (x *OpenLot) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OpenLot.ProtoReflect.Descriptor instead.
 func (*OpenLot) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{25}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *OpenLot) GetInstrument() *Instrument {
@@ -2478,7 +2597,7 @@ type SyncResponse struct {
 
 func (x *SyncResponse) Reset() {
 	*x = SyncResponse{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[26]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2490,7 +2609,7 @@ func (x *SyncResponse) String() string {
 func (*SyncResponse) ProtoMessage() {}
 
 func (x *SyncResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[26]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2503,7 +2622,7 @@ func (x *SyncResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncResponse.ProtoReflect.Descriptor instead.
 func (*SyncResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{26}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *SyncResponse) GetDelivery() *Delivery {
@@ -2543,7 +2662,7 @@ type FileHeader struct {
 
 func (x *FileHeader) Reset() {
 	*x = FileHeader{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[27]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2555,7 +2674,7 @@ func (x *FileHeader) String() string {
 func (*FileHeader) ProtoMessage() {}
 
 func (x *FileHeader) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[27]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2568,7 +2687,7 @@ func (x *FileHeader) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileHeader.ProtoReflect.Descriptor instead.
 func (*FileHeader) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{27}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *FileHeader) GetBatchId() string {
@@ -2619,7 +2738,7 @@ type ImportFileRequest struct {
 
 func (x *ImportFileRequest) Reset() {
 	*x = ImportFileRequest{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[28]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2631,7 +2750,7 @@ func (x *ImportFileRequest) String() string {
 func (*ImportFileRequest) ProtoMessage() {}
 
 func (x *ImportFileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[28]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2644,7 +2763,7 @@ func (x *ImportFileRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportFileRequest.ProtoReflect.Descriptor instead.
 func (*ImportFileRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{28}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ImportFileRequest) GetPart() isImportFileRequest_Part {
@@ -2699,7 +2818,7 @@ type ImportFileResponse struct {
 
 func (x *ImportFileResponse) Reset() {
 	*x = ImportFileResponse{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[29]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2711,7 +2830,7 @@ func (x *ImportFileResponse) String() string {
 func (*ImportFileResponse) ProtoMessage() {}
 
 func (x *ImportFileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[29]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2724,7 +2843,7 @@ func (x *ImportFileResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportFileResponse.ProtoReflect.Descriptor instead.
 func (*ImportFileResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{29}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ImportFileResponse) GetDelivery() *Delivery {
@@ -2760,7 +2879,7 @@ type BondLot struct {
 
 func (x *BondLot) Reset() {
 	*x = BondLot{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[30]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2772,7 +2891,7 @@ func (x *BondLot) String() string {
 func (*BondLot) ProtoMessage() {}
 
 func (x *BondLot) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[30]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2785,7 +2904,7 @@ func (x *BondLot) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BondLot.ProtoReflect.Descriptor instead.
 func (*BondLot) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{30}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *BondLot) GetSeries() string {
@@ -2851,7 +2970,7 @@ type BondLotKey struct {
 
 func (x *BondLotKey) Reset() {
 	*x = BondLotKey{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[31]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2863,7 +2982,7 @@ func (x *BondLotKey) String() string {
 func (*BondLotKey) ProtoMessage() {}
 
 func (x *BondLotKey) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[31]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2876,7 +2995,7 @@ func (x *BondLotKey) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BondLotKey.ProtoReflect.Descriptor instead.
 func (*BondLotKey) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{31}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *BondLotKey) GetSeries() string {
@@ -2918,7 +3037,7 @@ type ImportBondLotsRequest struct {
 
 func (x *ImportBondLotsRequest) Reset() {
 	*x = ImportBondLotsRequest{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[32]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2930,7 +3049,7 @@ func (x *ImportBondLotsRequest) String() string {
 func (*ImportBondLotsRequest) ProtoMessage() {}
 
 func (x *ImportBondLotsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[32]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2943,7 +3062,7 @@ func (x *ImportBondLotsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportBondLotsRequest.ProtoReflect.Descriptor instead.
 func (*ImportBondLotsRequest) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{32}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *ImportBondLotsRequest) GetBatchId() string {
@@ -2990,7 +3109,7 @@ type ImportBondLotsResponse struct {
 
 func (x *ImportBondLotsResponse) Reset() {
 	*x = ImportBondLotsResponse{}
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[33]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3002,7 +3121,7 @@ func (x *ImportBondLotsResponse) String() string {
 func (*ImportBondLotsResponse) ProtoMessage() {}
 
 func (x *ImportBondLotsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openfief_connector_v1_connector_proto_msgTypes[33]
+	mi := &file_openfief_connector_v1_connector_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3015,7 +3134,7 @@ func (x *ImportBondLotsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportBondLotsResponse.ProtoReflect.Descriptor instead.
 func (*ImportBondLotsResponse) Descriptor() ([]byte, []int) {
-	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{33}
+	return file_openfief_connector_v1_connector_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ImportBondLotsResponse) GetDelivery() *Delivery {
@@ -3101,7 +3220,7 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"instrument\x12*\n" +
 	"\x11first_period_rate\x18\x02 \x01(\tR\x0ffirstPeriodRate\x12\x16\n" +
 	"\x06margin\x18\x03 \x01(\tR\x06margin\x12N\n" +
-	"\x14early_redemption_fee\x18\x04 \x01(\v2\x1c.openfief.connector.v1.MoneyR\x12earlyRedemptionFee\"\xe7\a\n" +
+	"\x14early_redemption_fee\x18\x04 \x01(\v2\x1c.openfief.connector.v1.MoneyR\x12earlyRedemptionFee\"\xbc\b\n" +
 	"\bDelivery\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12 \n" +
 	"\vinstitution\x18\x02 \x01(\tR\vinstitution\x12F\n" +
@@ -3119,7 +3238,8 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\x0fbroker_accounts\x18\f \x03(\v2$.openfief.connector.v1.BrokerAccountR\x0ebrokerAccounts\x127\n" +
 	"\atickers\x18\r \x03(\v2\x1d.openfief.connector.v1.TickerR\atickers\x12Y\n" +
 	"\x13ticker_transactions\x18\x0e \x03(\v2(.openfief.connector.v1.TickerTransactionR\x12tickerTransactions\x12P\n" +
-	"\x10instrument_names\x18\x0f \x03(\v2%.openfief.connector.v1.InstrumentNameR\x0finstrumentNames\"8\n" +
+	"\x10instrument_names\x18\x0f \x03(\v2%.openfief.connector.v1.InstrumentNameR\x0finstrumentNames\x12S\n" +
+	"\x11ticker_assertions\x18\x10 \x03(\v2&.openfief.connector.v1.TickerAssertionR\x10tickerAssertions\"8\n" +
 	"\x0eInstrumentName\x12\x12\n" +
 	"\x04isin\x18\x01 \x01(\tR\x04isin\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"b\n" +
@@ -3145,7 +3265,15 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\n" +
 	"lot_opened\x18\f \x01(\tR\tlotOpened\x12\x1d\n" +
 	"\n" +
-	"open_price\x18\r \x01(\tR\topenPrice\"S\n" +
+	"open_price\x18\r \x01(\tR\topenPrice\"\xb1\x01\n" +
+	"\x0fTickerAssertion\x12\x16\n" +
+	"\x06symbol\x18\x01 \x01(\tR\x06symbol\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x02 \x01(\tR\taccountId\x12%\n" +
+	"\x0ebroker_account\x18\x03 \x01(\tR\rbrokerAccount\x12\x12\n" +
+	"\x04date\x18\x04 \x01(\tR\x04date\x12\x1a\n" +
+	"\bquantity\x18\x05 \x01(\tR\bquantity\x12\x10\n" +
+	"\x03ref\x18\x06 \x01(\tR\x03ref\"S\n" +
 	"\x18LookupInstrumentsRequest\x127\n" +
 	"\atickers\x18\x01 \x03(\v2\x1d.openfief.connector.v1.TickerR\atickers\"p\n" +
 	"\x12InstrumentProposal\x12\x16\n" +
@@ -3230,7 +3358,7 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\n" +
 	"account_id\x18\x05 \x01(\tR\taccountId\"U\n" +
 	"\x16ImportBondLotsResponse\x12;\n" +
-	"\bdelivery\x18\x01 \x01(\v2\x1f.openfief.connector.v1.DeliveryR\bdelivery*\xaa\x01\n" +
+	"\bdelivery\x18\x01 \x01(\v2\x1f.openfief.connector.v1.DeliveryR\bdelivery*\xc0\x01\n" +
 	"\bBookKind\x12\x19\n" +
 	"\x15BOOK_KIND_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eBOOK_KIND_CASH\x10\x01\x12\x15\n" +
@@ -3238,7 +3366,8 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\rBOOK_KIND_FEE\x10\x03\x12\x1d\n" +
 	"\x19BOOK_KIND_WITHHOLDING_TAX\x10\x04\x12\x10\n" +
 	"\fBOOK_KIND_FX\x10\x05\x12\x14\n" +
-	"\x10BOOK_KIND_EQUITY\x10\x06*\x85\x03\n" +
+	"\x10BOOK_KIND_EQUITY\x10\x06\x12\x14\n" +
+	"\x10BOOK_KIND_INCOME\x10\a*\xa7\x03\n" +
 	"\x0fTransactionKind\x12 \n" +
 	"\x1cTRANSACTION_KIND_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14TRANSACTION_KIND_BUY\x10\x01\x12\x19\n" +
@@ -3252,7 +3381,8 @@ const file_openfief_connector_v1_connector_proto_rawDesc = "" +
 	"\x19TRANSACTION_KIND_INTEREST\x10\t\x12\x1d\n" +
 	"\x19TRANSACTION_KIND_DELETION\x10\n" +
 	"\x12\x1f\n" +
-	"\x1bTRANSACTION_KIND_REDEMPTION\x10\v*c\n" +
+	"\x1bTRANSACTION_KIND_REDEMPTION\x10\v\x12 \n" +
+	"\x1cTRANSACTION_KIND_CASH_INCOME\x10\f*c\n" +
 	"\vProblemKind\x12\x1c\n" +
 	"\x18PROBLEM_KIND_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18PROBLEM_KIND_UNSUPPORTED\x10\x01\x12\x18\n" +
@@ -3295,7 +3425,7 @@ func file_openfief_connector_v1_connector_proto_rawDescGZIP() []byte {
 }
 
 var file_openfief_connector_v1_connector_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
-var file_openfief_connector_v1_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
+var file_openfief_connector_v1_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
 var file_openfief_connector_v1_connector_proto_goTypes = []any{
 	(BookKind)(0),                     // 0: openfief.connector.v1.BookKind
 	(TransactionKind)(0),              // 1: openfief.connector.v1.TransactionKind
@@ -3322,22 +3452,23 @@ var file_openfief_connector_v1_connector_proto_goTypes = []any{
 	(*InstrumentName)(nil),            // 22: openfief.connector.v1.InstrumentName
 	(*Ticker)(nil),                    // 23: openfief.connector.v1.Ticker
 	(*TickerTransaction)(nil),         // 24: openfief.connector.v1.TickerTransaction
-	(*LookupInstrumentsRequest)(nil),  // 25: openfief.connector.v1.LookupInstrumentsRequest
-	(*InstrumentProposal)(nil),        // 26: openfief.connector.v1.InstrumentProposal
-	(*LookupInstrumentsResponse)(nil), // 27: openfief.connector.v1.LookupInstrumentsResponse
-	(*SyncRequest)(nil),               // 28: openfief.connector.v1.SyncRequest
-	(*AccountHoldings)(nil),           // 29: openfief.connector.v1.AccountHoldings
-	(*BondPayoutPeriod)(nil),          // 30: openfief.connector.v1.BondPayoutPeriod
-	(*Holding)(nil),                   // 31: openfief.connector.v1.Holding
-	(*OpenLot)(nil),                   // 32: openfief.connector.v1.OpenLot
-	(*SyncResponse)(nil),              // 33: openfief.connector.v1.SyncResponse
-	(*FileHeader)(nil),                // 34: openfief.connector.v1.FileHeader
-	(*ImportFileRequest)(nil),         // 35: openfief.connector.v1.ImportFileRequest
-	(*ImportFileResponse)(nil),        // 36: openfief.connector.v1.ImportFileResponse
-	(*BondLot)(nil),                   // 37: openfief.connector.v1.BondLot
-	(*BondLotKey)(nil),                // 38: openfief.connector.v1.BondLotKey
-	(*ImportBondLotsRequest)(nil),     // 39: openfief.connector.v1.ImportBondLotsRequest
-	(*ImportBondLotsResponse)(nil),    // 40: openfief.connector.v1.ImportBondLotsResponse
+	(*TickerAssertion)(nil),           // 25: openfief.connector.v1.TickerAssertion
+	(*LookupInstrumentsRequest)(nil),  // 26: openfief.connector.v1.LookupInstrumentsRequest
+	(*InstrumentProposal)(nil),        // 27: openfief.connector.v1.InstrumentProposal
+	(*LookupInstrumentsResponse)(nil), // 28: openfief.connector.v1.LookupInstrumentsResponse
+	(*SyncRequest)(nil),               // 29: openfief.connector.v1.SyncRequest
+	(*AccountHoldings)(nil),           // 30: openfief.connector.v1.AccountHoldings
+	(*BondPayoutPeriod)(nil),          // 31: openfief.connector.v1.BondPayoutPeriod
+	(*Holding)(nil),                   // 32: openfief.connector.v1.Holding
+	(*OpenLot)(nil),                   // 33: openfief.connector.v1.OpenLot
+	(*SyncResponse)(nil),              // 34: openfief.connector.v1.SyncResponse
+	(*FileHeader)(nil),                // 35: openfief.connector.v1.FileHeader
+	(*ImportFileRequest)(nil),         // 36: openfief.connector.v1.ImportFileRequest
+	(*ImportFileResponse)(nil),        // 37: openfief.connector.v1.ImportFileResponse
+	(*BondLot)(nil),                   // 38: openfief.connector.v1.BondLot
+	(*BondLotKey)(nil),                // 39: openfief.connector.v1.BondLotKey
+	(*ImportBondLotsRequest)(nil),     // 40: openfief.connector.v1.ImportBondLotsRequest
+	(*ImportBondLotsResponse)(nil),    // 41: openfief.connector.v1.ImportBondLotsResponse
 }
 var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	0,  // 0: openfief.connector.v1.Book.kind:type_name -> openfief.connector.v1.BookKind
@@ -3367,47 +3498,48 @@ var file_openfief_connector_v1_connector_proto_depIdxs = []int32{
 	23, // 24: openfief.connector.v1.Delivery.tickers:type_name -> openfief.connector.v1.Ticker
 	24, // 25: openfief.connector.v1.Delivery.ticker_transactions:type_name -> openfief.connector.v1.TickerTransaction
 	22, // 26: openfief.connector.v1.Delivery.instrument_names:type_name -> openfief.connector.v1.InstrumentName
-	11, // 27: openfief.connector.v1.TickerTransaction.key:type_name -> openfief.connector.v1.TransactionKey
-	1,  // 28: openfief.connector.v1.TickerTransaction.kind:type_name -> openfief.connector.v1.TransactionKind
-	7,  // 29: openfief.connector.v1.TickerTransaction.amount:type_name -> openfief.connector.v1.Money
-	7,  // 30: openfief.connector.v1.TickerTransaction.charge:type_name -> openfief.connector.v1.Money
-	23, // 31: openfief.connector.v1.LookupInstrumentsRequest.tickers:type_name -> openfief.connector.v1.Ticker
-	26, // 32: openfief.connector.v1.LookupInstrumentsResponse.proposals:type_name -> openfief.connector.v1.InstrumentProposal
-	3,  // 33: openfief.connector.v1.SyncRequest.mode:type_name -> openfief.connector.v1.Mode
-	8,  // 34: openfief.connector.v1.SyncRequest.instruments:type_name -> openfief.connector.v1.Instrument
-	29, // 35: openfief.connector.v1.SyncRequest.accounts:type_name -> openfief.connector.v1.AccountHoldings
-	20, // 36: openfief.connector.v1.SyncRequest.bond_terms:type_name -> openfief.connector.v1.BondTerms
-	31, // 37: openfief.connector.v1.AccountHoldings.holdings:type_name -> openfief.connector.v1.Holding
-	32, // 38: openfief.connector.v1.AccountHoldings.lots:type_name -> openfief.connector.v1.OpenLot
-	5,  // 39: openfief.connector.v1.AccountHoldings.bond_payout:type_name -> openfief.connector.v1.BondPayout
-	30, // 40: openfief.connector.v1.AccountHoldings.bond_payout_earlier:type_name -> openfief.connector.v1.BondPayoutPeriod
-	5,  // 41: openfief.connector.v1.BondPayoutPeriod.bond_payout:type_name -> openfief.connector.v1.BondPayout
-	8,  // 42: openfief.connector.v1.Holding.instrument:type_name -> openfief.connector.v1.Instrument
-	8,  // 43: openfief.connector.v1.OpenLot.instrument:type_name -> openfief.connector.v1.Instrument
-	7,  // 44: openfief.connector.v1.OpenLot.cost:type_name -> openfief.connector.v1.Money
-	21, // 45: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	3,  // 46: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
-	7,  // 47: openfief.connector.v1.FileHeader.opening_cash:type_name -> openfief.connector.v1.Money
-	34, // 48: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
-	21, // 49: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	7,  // 50: openfief.connector.v1.BondLot.early_redemption_fee:type_name -> openfief.connector.v1.Money
-	6,  // 51: openfief.connector.v1.BondLot.purchase:type_name -> openfief.connector.v1.BondPurchase
-	37, // 52: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
-	38, // 53: openfief.connector.v1.ImportBondLotsRequest.deleted:type_name -> openfief.connector.v1.BondLotKey
-	21, // 54: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
-	28, // 55: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
-	35, // 56: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
-	39, // 57: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
-	25, // 58: openfief.connector.v1.ConnectorService.LookupInstruments:input_type -> openfief.connector.v1.LookupInstrumentsRequest
-	33, // 59: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
-	36, // 60: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
-	40, // 61: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
-	27, // 62: openfief.connector.v1.ConnectorService.LookupInstruments:output_type -> openfief.connector.v1.LookupInstrumentsResponse
-	59, // [59:63] is the sub-list for method output_type
-	55, // [55:59] is the sub-list for method input_type
-	55, // [55:55] is the sub-list for extension type_name
-	55, // [55:55] is the sub-list for extension extendee
-	0,  // [0:55] is the sub-list for field type_name
+	25, // 27: openfief.connector.v1.Delivery.ticker_assertions:type_name -> openfief.connector.v1.TickerAssertion
+	11, // 28: openfief.connector.v1.TickerTransaction.key:type_name -> openfief.connector.v1.TransactionKey
+	1,  // 29: openfief.connector.v1.TickerTransaction.kind:type_name -> openfief.connector.v1.TransactionKind
+	7,  // 30: openfief.connector.v1.TickerTransaction.amount:type_name -> openfief.connector.v1.Money
+	7,  // 31: openfief.connector.v1.TickerTransaction.charge:type_name -> openfief.connector.v1.Money
+	23, // 32: openfief.connector.v1.LookupInstrumentsRequest.tickers:type_name -> openfief.connector.v1.Ticker
+	27, // 33: openfief.connector.v1.LookupInstrumentsResponse.proposals:type_name -> openfief.connector.v1.InstrumentProposal
+	3,  // 34: openfief.connector.v1.SyncRequest.mode:type_name -> openfief.connector.v1.Mode
+	8,  // 35: openfief.connector.v1.SyncRequest.instruments:type_name -> openfief.connector.v1.Instrument
+	30, // 36: openfief.connector.v1.SyncRequest.accounts:type_name -> openfief.connector.v1.AccountHoldings
+	20, // 37: openfief.connector.v1.SyncRequest.bond_terms:type_name -> openfief.connector.v1.BondTerms
+	32, // 38: openfief.connector.v1.AccountHoldings.holdings:type_name -> openfief.connector.v1.Holding
+	33, // 39: openfief.connector.v1.AccountHoldings.lots:type_name -> openfief.connector.v1.OpenLot
+	5,  // 40: openfief.connector.v1.AccountHoldings.bond_payout:type_name -> openfief.connector.v1.BondPayout
+	31, // 41: openfief.connector.v1.AccountHoldings.bond_payout_earlier:type_name -> openfief.connector.v1.BondPayoutPeriod
+	5,  // 42: openfief.connector.v1.BondPayoutPeriod.bond_payout:type_name -> openfief.connector.v1.BondPayout
+	8,  // 43: openfief.connector.v1.Holding.instrument:type_name -> openfief.connector.v1.Instrument
+	8,  // 44: openfief.connector.v1.OpenLot.instrument:type_name -> openfief.connector.v1.Instrument
+	7,  // 45: openfief.connector.v1.OpenLot.cost:type_name -> openfief.connector.v1.Money
+	21, // 46: openfief.connector.v1.SyncResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	3,  // 47: openfief.connector.v1.FileHeader.mode:type_name -> openfief.connector.v1.Mode
+	7,  // 48: openfief.connector.v1.FileHeader.opening_cash:type_name -> openfief.connector.v1.Money
+	35, // 49: openfief.connector.v1.ImportFileRequest.header:type_name -> openfief.connector.v1.FileHeader
+	21, // 50: openfief.connector.v1.ImportFileResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	7,  // 51: openfief.connector.v1.BondLot.early_redemption_fee:type_name -> openfief.connector.v1.Money
+	6,  // 52: openfief.connector.v1.BondLot.purchase:type_name -> openfief.connector.v1.BondPurchase
+	38, // 53: openfief.connector.v1.ImportBondLotsRequest.lots:type_name -> openfief.connector.v1.BondLot
+	39, // 54: openfief.connector.v1.ImportBondLotsRequest.deleted:type_name -> openfief.connector.v1.BondLotKey
+	21, // 55: openfief.connector.v1.ImportBondLotsResponse.delivery:type_name -> openfief.connector.v1.Delivery
+	29, // 56: openfief.connector.v1.ConnectorService.Sync:input_type -> openfief.connector.v1.SyncRequest
+	36, // 57: openfief.connector.v1.ConnectorService.ImportFile:input_type -> openfief.connector.v1.ImportFileRequest
+	40, // 58: openfief.connector.v1.ConnectorService.ImportBondLots:input_type -> openfief.connector.v1.ImportBondLotsRequest
+	26, // 59: openfief.connector.v1.ConnectorService.LookupInstruments:input_type -> openfief.connector.v1.LookupInstrumentsRequest
+	34, // 60: openfief.connector.v1.ConnectorService.Sync:output_type -> openfief.connector.v1.SyncResponse
+	37, // 61: openfief.connector.v1.ConnectorService.ImportFile:output_type -> openfief.connector.v1.ImportFileResponse
+	41, // 62: openfief.connector.v1.ConnectorService.ImportBondLots:output_type -> openfief.connector.v1.ImportBondLotsResponse
+	28, // 63: openfief.connector.v1.ConnectorService.LookupInstruments:output_type -> openfief.connector.v1.LookupInstrumentsResponse
+	60, // [60:64] is the sub-list for method output_type
+	56, // [56:60] is the sub-list for method input_type
+	56, // [56:56] is the sub-list for extension type_name
+	56, // [56:56] is the sub-list for extension extendee
+	0,  // [0:56] is the sub-list for field type_name
 }
 
 func init() { file_openfief_connector_v1_connector_proto_init() }
@@ -3415,7 +3547,7 @@ func file_openfief_connector_v1_connector_proto_init() {
 	if File_openfief_connector_v1_connector_proto != nil {
 		return
 	}
-	file_openfief_connector_v1_connector_proto_msgTypes[28].OneofWrappers = []any{
+	file_openfief_connector_v1_connector_proto_msgTypes[29].OneofWrappers = []any{
 		(*ImportFileRequest_Header)(nil),
 		(*ImportFileRequest_Chunk)(nil),
 	}
@@ -3425,7 +3557,7 @@ func file_openfief_connector_v1_connector_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_connector_v1_connector_proto_rawDesc), len(file_openfief_connector_v1_connector_proto_rawDesc)),
 			NumEnums:      7,
-			NumMessages:   34,
+			NumMessages:   35,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

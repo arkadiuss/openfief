@@ -4,8 +4,12 @@
 // ticker and market only, with no ISIN (D-35). For each new ticker, the
 // market-data connector looks the ISIN up by ticker and market and
 // proposes it; the owner confirms it once, or enters it when the lookup
-// found none. The rows of a ticker not confirmed yet wait as ingest
-// problems, and the core books them once it is. The built-in UI hands the
+// found none. A confirmation holds for every account at the ticker's
+// institution, and the owner can correct it, which books every row of the
+// ticker anew and supersedes what was booked under the old ISIN (D-153).
+// The rows of a ticker not confirmed yet, and the holdings an institution
+// reports for it (D-155), wait, the rows as ingest problems, and the core
+// books them once it is. The built-in UI hands the
 // owner's confirmations to the core through TickerService, one owner-only
 // service for this kind of entry (D-79), on the core's plugin port (D-115).
 //
@@ -22,7 +26,9 @@
 // - An ISIN without a valid check digit fails with INVALID_ARGUMENT; a
 //   ticker no connector instance reported with NOT_FOUND; a ticker already
 //   confirmed with another ISIN, or another trading currency, with
-//   FAILED_PRECONDITION.
+//   FAILED_PRECONDITION, as does a correction of a ticker never confirmed.
+// - Confirming or correcting asks whether the owner may change every
+//   account the ticker's rows are in (D-163); PERMISSION_DENIED otherwise.
 // - When the confirmed ISIN's listing names no trading currency and the
 //   exchange the ticker's market suffix names quotes in more than one, as
 //   London does in pence (GBX), pounds and dollars, the owner picks one
@@ -71,16 +77,33 @@ const (
 	// TickerServiceConfirmTickerProcedure is the fully-qualified name of the TickerService's
 	// ConfirmTicker RPC.
 	TickerServiceConfirmTickerProcedure = "/openfief.ingest.v1.TickerService/ConfirmTicker"
+	// TickerServiceListConfirmedTickersProcedure is the fully-qualified name of the TickerService's
+	// ListConfirmedTickers RPC.
+	TickerServiceListConfirmedTickersProcedure = "/openfief.ingest.v1.TickerService/ListConfirmedTickers"
+	// TickerServiceCorrectTickerProcedure is the fully-qualified name of the TickerService's
+	// CorrectTicker RPC.
+	TickerServiceCorrectTickerProcedure = "/openfief.ingest.v1.TickerService/CorrectTicker"
 )
 
 // TickerServiceClient is a client for the openfief.ingest.v1.TickerService service.
 type TickerServiceClient interface {
 	// ListPendingTickers returns every ticker no ISIN is confirmed for yet.
 	ListPendingTickers(context.Context, *connect.Request[v1.ListPendingTickersRequest]) (*connect.Response[v1.ListPendingTickersResponse], error)
-	// ConfirmTicker records the ISIN of one ticker, proposed or typed, and
-	// books every row waiting for it. Confirming the same ISIN again books
-	// whatever still waits.
+	// ConfirmTicker records the ISIN of one ticker, proposed or typed, for
+	// every account at its institution, and books every row waiting for it
+	// at any of the institution's connector instances. Confirming the same
+	// ISIN again books whatever still waits.
 	ConfirmTicker(context.Context, *connect.Request[v1.ConfirmTickerRequest]) (*connect.Response[v1.ConfirmTickerResponse], error)
+	// ListConfirmedTickers returns every ticker whose ISIN is confirmed, once
+	// per institution.
+	ListConfirmedTickers(context.Context, *connect.Request[v1.ListConfirmedTickersRequest]) (*connect.Response[v1.ListConfirmedTickersResponse], error)
+	// CorrectTicker replaces a confirmed ticker's ISIN, or its trading
+	// currency, for every account at its institution, keeping the earlier
+	// confirmation, and books every row of the ticker anew with it: the
+	// transactions booked under the old ISIN are superseded, never erased
+	// (D-18), and its holdings are asserted of the corrected instrument.
+	// Correcting to the current ISIN and currency books nothing new.
+	CorrectTicker(context.Context, *connect.Request[v1.CorrectTickerRequest]) (*connect.Response[v1.CorrectTickerResponse], error)
 }
 
 // NewTickerServiceClient constructs a client for the openfief.ingest.v1.TickerService service. By
@@ -107,13 +130,28 @@ func NewTickerServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(tickerServiceMethods.ByName("ConfirmTicker")),
 			connect.WithClientOptions(opts...),
 		),
+		listConfirmedTickers: connect.NewClient[v1.ListConfirmedTickersRequest, v1.ListConfirmedTickersResponse](
+			httpClient,
+			baseURL+TickerServiceListConfirmedTickersProcedure,
+			connect.WithSchema(tickerServiceMethods.ByName("ListConfirmedTickers")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		correctTicker: connect.NewClient[v1.CorrectTickerRequest, v1.CorrectTickerResponse](
+			httpClient,
+			baseURL+TickerServiceCorrectTickerProcedure,
+			connect.WithSchema(tickerServiceMethods.ByName("CorrectTicker")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // tickerServiceClient implements TickerServiceClient.
 type tickerServiceClient struct {
-	listPendingTickers *connect.Client[v1.ListPendingTickersRequest, v1.ListPendingTickersResponse]
-	confirmTicker      *connect.Client[v1.ConfirmTickerRequest, v1.ConfirmTickerResponse]
+	listPendingTickers   *connect.Client[v1.ListPendingTickersRequest, v1.ListPendingTickersResponse]
+	confirmTicker        *connect.Client[v1.ConfirmTickerRequest, v1.ConfirmTickerResponse]
+	listConfirmedTickers *connect.Client[v1.ListConfirmedTickersRequest, v1.ListConfirmedTickersResponse]
+	correctTicker        *connect.Client[v1.CorrectTickerRequest, v1.CorrectTickerResponse]
 }
 
 // ListPendingTickers calls openfief.ingest.v1.TickerService.ListPendingTickers.
@@ -126,14 +164,35 @@ func (c *tickerServiceClient) ConfirmTicker(ctx context.Context, req *connect.Re
 	return c.confirmTicker.CallUnary(ctx, req)
 }
 
+// ListConfirmedTickers calls openfief.ingest.v1.TickerService.ListConfirmedTickers.
+func (c *tickerServiceClient) ListConfirmedTickers(ctx context.Context, req *connect.Request[v1.ListConfirmedTickersRequest]) (*connect.Response[v1.ListConfirmedTickersResponse], error) {
+	return c.listConfirmedTickers.CallUnary(ctx, req)
+}
+
+// CorrectTicker calls openfief.ingest.v1.TickerService.CorrectTicker.
+func (c *tickerServiceClient) CorrectTicker(ctx context.Context, req *connect.Request[v1.CorrectTickerRequest]) (*connect.Response[v1.CorrectTickerResponse], error) {
+	return c.correctTicker.CallUnary(ctx, req)
+}
+
 // TickerServiceHandler is an implementation of the openfief.ingest.v1.TickerService service.
 type TickerServiceHandler interface {
 	// ListPendingTickers returns every ticker no ISIN is confirmed for yet.
 	ListPendingTickers(context.Context, *connect.Request[v1.ListPendingTickersRequest]) (*connect.Response[v1.ListPendingTickersResponse], error)
-	// ConfirmTicker records the ISIN of one ticker, proposed or typed, and
-	// books every row waiting for it. Confirming the same ISIN again books
-	// whatever still waits.
+	// ConfirmTicker records the ISIN of one ticker, proposed or typed, for
+	// every account at its institution, and books every row waiting for it
+	// at any of the institution's connector instances. Confirming the same
+	// ISIN again books whatever still waits.
 	ConfirmTicker(context.Context, *connect.Request[v1.ConfirmTickerRequest]) (*connect.Response[v1.ConfirmTickerResponse], error)
+	// ListConfirmedTickers returns every ticker whose ISIN is confirmed, once
+	// per institution.
+	ListConfirmedTickers(context.Context, *connect.Request[v1.ListConfirmedTickersRequest]) (*connect.Response[v1.ListConfirmedTickersResponse], error)
+	// CorrectTicker replaces a confirmed ticker's ISIN, or its trading
+	// currency, for every account at its institution, keeping the earlier
+	// confirmation, and books every row of the ticker anew with it: the
+	// transactions booked under the old ISIN are superseded, never erased
+	// (D-18), and its holdings are asserted of the corrected instrument.
+	// Correcting to the current ISIN and currency books nothing new.
+	CorrectTicker(context.Context, *connect.Request[v1.CorrectTickerRequest]) (*connect.Response[v1.CorrectTickerResponse], error)
 }
 
 // NewTickerServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -156,12 +215,29 @@ func NewTickerServiceHandler(svc TickerServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(tickerServiceMethods.ByName("ConfirmTicker")),
 		connect.WithHandlerOptions(opts...),
 	)
+	tickerServiceListConfirmedTickersHandler := connect.NewUnaryHandler(
+		TickerServiceListConfirmedTickersProcedure,
+		svc.ListConfirmedTickers,
+		connect.WithSchema(tickerServiceMethods.ByName("ListConfirmedTickers")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	tickerServiceCorrectTickerHandler := connect.NewUnaryHandler(
+		TickerServiceCorrectTickerProcedure,
+		svc.CorrectTicker,
+		connect.WithSchema(tickerServiceMethods.ByName("CorrectTicker")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.ingest.v1.TickerService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TickerServiceListPendingTickersProcedure:
 			tickerServiceListPendingTickersHandler.ServeHTTP(w, r)
 		case TickerServiceConfirmTickerProcedure:
 			tickerServiceConfirmTickerHandler.ServeHTTP(w, r)
+		case TickerServiceListConfirmedTickersProcedure:
+			tickerServiceListConfirmedTickersHandler.ServeHTTP(w, r)
+		case TickerServiceCorrectTickerProcedure:
+			tickerServiceCorrectTickerHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -177,4 +253,12 @@ func (UnimplementedTickerServiceHandler) ListPendingTickers(context.Context, *co
 
 func (UnimplementedTickerServiceHandler) ConfirmTicker(context.Context, *connect.Request[v1.ConfirmTickerRequest]) (*connect.Response[v1.ConfirmTickerResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.ingest.v1.TickerService.ConfirmTicker is not implemented"))
+}
+
+func (UnimplementedTickerServiceHandler) ListConfirmedTickers(context.Context, *connect.Request[v1.ListConfirmedTickersRequest]) (*connect.Response[v1.ListConfirmedTickersResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.ingest.v1.TickerService.ListConfirmedTickers is not implemented"))
+}
+
+func (UnimplementedTickerServiceHandler) CorrectTicker(context.Context, *connect.Request[v1.CorrectTickerRequest]) (*connect.Response[v1.CorrectTickerResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.ingest.v1.TickerService.CorrectTicker is not implemented"))
 }

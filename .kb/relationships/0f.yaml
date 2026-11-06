@@ -596,13 +596,6 @@ relationships:
     id: rel-536887362795
   - type: implements
     from: SYM-ingest-xtb-stock-category
-    to: REQ-ingest-xtb-cfd-flagged
-    created_at: 2026-10-31T13:29:34.704Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f9ea08a34656
-  - type: implements
-    from: SYM-ingest-xtb-stock-category
     to: REQ-AUTO-A5EE8BC2AE68372A
     created_at: 2026-10-31T13:29:34.758Z
     created_by: kibi/upsert
@@ -902,3 +895,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00a901bdd52f
+  - type: implements
+    from: SYM-ingest-xtb-stock-category
+    to: REQ-ingest-xtb-cfd-closed-cash-income
+    created_at: 2026-11-02T05:52:56.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4574833473e6
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-correct-ticker-response-get-booked
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:06:59.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c65924f97a39
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-correct-ticker-response-get-booked
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:06:59.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3665606dea4
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-response-get-tickers
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:08:54.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daf9e47d39d3
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-response-get-tickers
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:08:54.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80058e90582d

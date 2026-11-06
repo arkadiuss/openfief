@@ -685,3 +685,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c1e6ddd5548
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-request
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:07:37.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b9e360325f9
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-request
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:07:37.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5671c4f6df4e
+  - type: implements
+    from: SYM-ingest-ticker-rows
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:13:51.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3e642d72c76
+  - type: implements
+    from: SYM-ingest-ticker-rows
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:13:51.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e53996c88606
+  - type: covered_by
+    from: SYM-ingest-ticker-rows
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:13:51.137Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2f1690c4f5a

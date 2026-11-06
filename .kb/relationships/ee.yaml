@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f9d1788f312
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:03:21.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efa18027b2f3
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:03:21.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4360a8afe3b3

@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"errors"
 	"net/http"
 	"net/url"
 	"strings"
@@ -24,6 +25,13 @@ const checkpointsQuery = "?" + tabParam + "=" + tabCash + checkpointsAnchor
 // checkpoints.
 func checkpointsLink(id string) string {
 	return "/accounts/" + url.PathEscape(id) + checkpointsQuery
+}
+
+// checkpointRoutes maps the owner's cash checkpoint forms on the account
+// page's Cash tab (D-158).
+func (s *server) checkpointRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("POST /accounts/{id}/cash-checkpoints", s.withOwner(s.recordCashCheckpoint))
+	mux.HandleFunc("POST /accounts/{id}/cash-checkpoints/book", s.withOwner(s.bookCashDifference))
 }
 
 // checkpointForms adds the owner's cash checkpoint entries to data
@@ -120,7 +128,8 @@ func (s *server) recordCashCheckpoint(w http.ResponseWriter, r *http.Request, se
 
 // bookCashDifference hands the owner's booking of a checkpoint's
 // difference to the core (BookCashDifference, D-158): a deposit or a
-// withdrawal dated on the checkpoint, after which it matches. A refusal,
+// withdrawal, or cash income when the form says "as" "cash-income"
+// (D-152), dated on the checkpoint, after which it matches. A refusal,
 // such as a checkpoint that matches already, shows the account page again
 // with the core's reason.
 func (s *server) bookCashDifference(w http.ResponseWriter, r *http.Request, sess session) {
@@ -134,10 +143,33 @@ func (s *server) bookCashDifference(w http.ResponseWriter, r *http.Request, sess
 		s.errorPage(w, r, http.StatusBadRequest, "The booking form is malformed.")
 		return
 	}
-	_, err := s.checkpoints.BookCashDifference(r.Context(), connect.NewRequest(&ledgerv1.BookCashDifferenceRequest{
+	cashIncome, err := bookedAs(r)
+	if err != nil {
+		s.errorPage(w, r, http.StatusBadRequest, "The booking form is malformed.")
+		return
+	}
+	_, err = s.checkpoints.BookCashDifference(r.Context(), connect.NewRequest(&ledgerv1.BookCashDifferenceRequest{
 		Origin: sess.Origin, SessionToken: sess.Token, AccountId: id, Date: v[0], Currency: strings.ToUpper(v[1]),
+		CashIncome: cashIncome,
 	}))
 	s.afterCheckpoint(w, r, sess, "BookCashDifference", "The difference was not booked: ", nil, err)
+}
+
+// errMalformedBooking reports a booking form whose "as" field is neither
+// absent nor "cash-income".
+var errMalformedBooking = errors.New("malformed booking form")
+
+// bookedAs reports whether the booking form asks for cash income: its
+// "as" field is "cash-income", or absent for the default deposit or
+// withdrawal. Any other value, or more than one, is errMalformedBooking.
+func bookedAs(r *http.Request) (bool, error) {
+	switch as := r.PostForm["as"]; {
+	case len(as) == 0:
+		return false, nil
+	case len(as) == 1 && as[0] == "cash-income":
+		return true, nil
+	}
+	return false, errMalformedBooking
 }
 
 // afterCheckpoint answers a checkpoint form: back to the account's cash

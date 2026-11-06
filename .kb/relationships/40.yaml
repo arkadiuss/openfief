@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bfe212ecb72c
+  - type: constrains
+    from: REQ-ingest-xtb-holdings-mapping
+    to: FACT-SUBJECT-D9FABE88488D17CE
+    created_at: 2026-11-02T07:00:42.862Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-333c318a2f91
+  - type: requires_property
+    from: REQ-ingest-xtb-holdings-mapping
+    to: FACT-PROP-1C957452EA3CE64F
+    created_at: 2026-11-02T07:00:42.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31956bad8bcd
+  - type: specified_by
+    from: REQ-ingest-xtb-holdings-mapping
+    to: SCEN-ingest-xtb-holdings-mapping
+    created_at: 2026-11-02T07:00:42.969Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aebdaa44f29

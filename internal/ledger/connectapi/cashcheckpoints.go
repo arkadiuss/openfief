@@ -63,18 +63,35 @@ func (s *checkpointService) BookCashDifference(ctx context.Context, req *connect
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
-	t, err := s.checkpoints.BookDifference(ctx, m.GetOrigin(), m.GetSessionToken(), ledger.AccountID(m.GetAccountId()), on, c)
+	as := ledger.AsDepositOrWithdrawal
+	if m.GetCashIncome() {
+		as = ledger.AsCashIncome
+	}
+	t, err := s.checkpoints.BookDifference(ctx, m.GetOrigin(), m.GetSessionToken(), ledger.AccountID(m.GetAccountId()), on, c, as)
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
-	cash := t.Postings[0].Amount
-	if cash.Sign() < 0 {
-		cash = cash.Neg()
-	}
+	cash := bookedAmount(&t)
 	return connect.NewResponse(&ledgerv1.BookCashDifferenceResponse{
 		Key:  &ledgerv1.TransactionKey{Source: t.Key.Source, ExternalId: t.Key.ExternalID},
 		Kind: t.Kind.String(), Amount: cash.Amount().String(), Currency: cash.Currency().String(),
 	}), nil
+}
+
+// bookedAmount returns the amount of a booked difference t: deposited or
+// withdrawn, positive, or the cash income, negative for a fee, as its cash
+// posting moves it.
+func bookedAmount(t *ledger.Transaction) kernel.Money {
+	var cash kernel.Money
+	for _, p := range t.Postings {
+		if p.Book.Kind == ledger.BookCash {
+			cash = p.Amount
+		}
+	}
+	if t.Kind == ledger.KindWithdrawal {
+		return cash.Neg()
+	}
+	return cash
 }
 
 // dateAndCurrency parses a request's date and currency.

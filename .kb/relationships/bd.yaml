@@ -748,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b9993d0afad
+  - type: constrains
+    from: REQ-ledger-withdraw-holding-assertions
+    to: FACT-SUBJECT-28DFEEA67D39A622
+    created_at: 2026-11-02T07:01:08.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-098d5f7eca30
+  - type: requires_property
+    from: REQ-ledger-withdraw-holding-assertions
+    to: FACT-PROP-8AEF58E75B144BE1
+    created_at: 2026-11-02T07:01:08.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1f3704c6b82
+  - type: specified_by
+    from: REQ-ledger-withdraw-holding-assertions
+    to: SCEN-ledger-withdraw-holding-assertions
+    created_at: 2026-11-02T07:01:08.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84b64d1ed370

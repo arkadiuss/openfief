@@ -685,3 +685,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5329705baef4
+  - type: constrains
+    from: REQ-ingest-ticker-correction-service
+    to: FACT-SUBJECT-51265BDA30800E3F
+    created_at: 2026-11-02T07:00:52.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef5eae70122b
+  - type: requires_property
+    from: REQ-ingest-ticker-correction-service
+    to: FACT-PROP-A670ACC20AAA4C16
+    created_at: 2026-11-02T07:00:52.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20d7693167e3
+  - type: specified_by
+    from: REQ-ingest-ticker-correction-service
+    to: SCEN-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:00:52.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a1f1899977d
+  - type: executable_for
+    from: SYM-ingest-test-test-confirmed-ticker-currency-choices
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:12:05.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6befd3a83ef
+  - type: implements
+    from: SYM-ingest-pg-load-ticker
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:18:29.856Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdbfa9ad304f
+  - type: implements
+    from: SYM-ingest-pg-load-ticker
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:18:29.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6b4a3a00de7
+  - type: covered_by
+    from: SYM-ingest-pg-load-ticker
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:18:29.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5397dad2b0ca

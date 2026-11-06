@@ -135,6 +135,36 @@ func TestTransactionConstructors(t *testing.T) {
 			},
 		},
 		{
+			name: "free-funds interest as cash income with its tax withheld",
+			build: func() (ledger.Transaction, error) {
+				return ledger.NewCashIncome(h, m("12.34", "PLN"), m("2.34", "PLN"))
+			},
+			wantKind: ledger.KindCashIncome,
+			want: []posting{
+				{Book: ledger.IncomeBook(pln), Amount: m("-12.34", "PLN")},
+				{Book: ledger.WithholdingTaxBook(pln), Amount: m("2.34", "PLN")},
+				{Book: ledger.CashBook(pln), Amount: m("10.00", "PLN")},
+			},
+		},
+		{
+			name:     "closed CFD's profit as cash income, nothing withheld",
+			build:    func() (ledger.Transaction, error) { return ledger.NewCashIncome(h, m("40.50", "USD"), none) },
+			wantKind: ledger.KindCashIncome,
+			want: []posting{
+				{Book: ledger.IncomeBook(usd), Amount: m("-40.50", "USD")},
+				{Book: ledger.CashBook(usd), Amount: m("40.50", "USD")},
+			},
+		},
+		{
+			name:     "closed CFD's loss as negative cash income takes cash out",
+			build:    func() (ledger.Transaction, error) { return ledger.NewCashIncome(h, m("-7.25", "PLN"), none) },
+			wantKind: ledger.KindCashIncome,
+			want: []posting{
+				{Book: ledger.IncomeBook(pln), Amount: m("7.25", "PLN")},
+				{Book: ledger.CashBook(pln), Amount: m("-7.25", "PLN")},
+			},
+		},
+		{
 			name:     "deletion has no postings",
 			build:    func() (ledger.Transaction, error) { return ledger.NewDeletion(h) },
 			wantKind: ledger.KindDeletion,
@@ -204,6 +234,14 @@ func TestTransactionConstructors(t *testing.T) {
 		{name: "zero dividend", build: func() (ledger.Transaction, error) { return ledger.NewDividend(h, in, m("0", "USD"), none) }, wantErr: ledger.ErrInvalidTransaction},
 		{name: "interest with more tax than gross", build: func() (ledger.Transaction, error) { return ledger.NewInterest(h, in, m("10", "PLN"), m("11", "PLN")) }, wantErr: ledger.ErrInvalidTransaction},
 		{name: "zero interest", build: func() (ledger.Transaction, error) { return ledger.NewInterest(h, in, m("0", "PLN"), none) }, wantErr: ledger.ErrInvalidTransaction},
+		{name: "zero cash income", build: func() (ledger.Transaction, error) { return ledger.NewCashIncome(h, m("0", "PLN"), none) }, wantErr: ledger.ErrInvalidTransaction},
+		{name: "cash income without a currency", build: func() (ledger.Transaction, error) { return ledger.NewCashIncome(h, none, none) }, wantErr: ledger.ErrInvalidTransaction},
+		{name: "cash income with more tax than income", build: func() (ledger.Transaction, error) {
+			return ledger.NewCashIncome(h, m("1", "PLN"), m("2", "PLN"))
+		}, wantErr: ledger.ErrInvalidTransaction},
+		{name: "negative cash income with tax withheld", build: func() (ledger.Transaction, error) {
+			return ledger.NewCashIncome(h, m("-1", "PLN"), m("0.19", "PLN"))
+		}, wantErr: ledger.ErrInvalidTransaction},
 		{name: "redemption of no units", build: func() (ledger.Transaction, error) { return ledger.NewRedemption(h, in, zeroQty, m("100", "PLN"), none) }, wantErr: ledger.ErrInvalidTransaction},
 		{name: "redemption with more tax than value", build: func() (ledger.Transaction, error) {
 			return ledger.NewRedemption(h, in, ten, m("10", "PLN"), m("11", "PLN"))
@@ -310,12 +348,12 @@ func TestRefusalsNameNoValues(t *testing.T) {
 func TestKindNames(t *testing.T) {
 	t.Parallel()
 	got := []string{}
-	for k := ledger.TransactionKind(0); k <= ledger.KindRedemption+1; k++ {
+	for k := ledger.TransactionKind(0); k <= ledger.KindCashIncome+1; k++ {
 		got = append(got, k.String())
 	}
 	want := []string{
 		"TransactionKind(0)", "buy", "sell", "dividend", "fee", "fx-conversion",
-		"deposit", "withdrawal", "opening-lot", "interest", "deletion", "redemption", "TransactionKind(12)",
+		"deposit", "withdrawal", "opening-lot", "interest", "deletion", "redemption", "cash-income", "TransactionKind(13)",
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("TransactionKind.String (-want +got):\n%s", diff)

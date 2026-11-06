@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-10c024aee206
+  - type: implements
+    from: SYM-connector-gen-pb-ticker-assertion-reset
+    to: REQ-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:03:06.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-964e63717df8
+  - type: covered_by
+    from: SYM-connector-gen-pb-ticker-assertion-reset
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:03:06.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f955adb7956d

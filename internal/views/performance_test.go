@@ -33,7 +33,7 @@ func dec(t *testing.T, s string) kernel.Decimal {
 }
 
 // event is one transaction of a performance case: a deposit, withdrawal,
-// opening cash, buy of ETF1, interest on ETF1 or opening lot of ETF1, in account acc, on day
+// opening cash, buy of ETF1, interest on ETF1, cash income or opening lot of ETF1, in account acc, on day
 // offset day, of amount in currency (the cost for a buy or a lot), qty units.
 type event struct {
 	kind, acc   string
@@ -63,6 +63,8 @@ func (e *event) build(t *testing.T, n int) ledger.Transaction {
 		tx, err = ledger.NewBuy(h, instrument(t, isinIE, "ETF1"), kernel.NewQuantity(dec(t, e.qty)), amount, kernel.Money{})
 	case "interest":
 		tx, err = ledger.NewInterest(h, instrument(t, isinIE, "ETF1"), amount, kernel.Money{})
+	case "cash-income":
+		tx, err = ledger.NewCashIncome(h, amount, kernel.Money{})
 	case "opening-lot":
 		tx, err = ledger.NewOpeningLot(h, instrument(t, isinIE, "ETF1"), kernel.NewQuantity(dec(t, e.qty)), amount, h.Date.AddDays(-30))
 	default:
@@ -221,6 +223,23 @@ func TestPerformance(t *testing.T) {
 			},
 			// (1100 + 50) / 1000 = 1.15: the price move and the coupon.
 			want: []pt{{0, "1000", "0", "1000", "100"}, {1, "1100", "0", "-50", "115"}, {2, "1100", "0", "0", "115"}},
+		},
+		{
+			// D-152: cash income, such as a broker's interest on uninvested
+			// cash, is return, not money paid in, and a negative one, such as
+			// a closed CFD's loss, is a loss, not money taken out.
+			name: "cash income counts as return, not as money paid in",
+			c: perfCase{
+				events: investedEvents(
+					event{kind: "cash-income", acc: "acc-1", day: 1, amount: "50", cur: "PLN"},
+					event{kind: "cash-income", acc: "acc-1", day: 2, amount: "-23", cur: "PLN"},
+				),
+				rows: []row{{"acc-1", 0, "10", "1000.00"}, {"acc-1", 1, "10", "1000.00"}, {"acc-1", 2, "10", "1000.00"}},
+				last: 2, through: 2,
+			},
+			// 1050 / 1000 = 1.05 with no cash flow; then 1027 / 1050, rounded
+			// to 12 places, 0.978095238095, times 1.05.
+			want: []pt{{0, "1000", "0", "1000", "100"}, {1, "1050", "0", "0", "105"}, {2, "1027", "0", "0", "102.7"}},
 		},
 		{
 			name: "a withdrawal is not a loss",

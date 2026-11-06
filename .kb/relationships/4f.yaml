@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02bb2a2fc311
+  - type: implements
+    from: SYM-ingest-xtb-mapping-read-cash-rows
+    to: REQ-ingest-xtb-free-funds-interest
+    created_at: 2026-11-02T05:59:58.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e18fac10933f
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-read-cash-rows
+    to: TEST-ingest-xtb-cash-income
+    created_at: 2026-11-02T05:59:58.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-599278ffac87

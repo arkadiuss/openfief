@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab232436318c
+  - type: implements
+    from: SYM-ingest-delivery-ticker-assertions
+    to: REQ-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:14:35.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c102bf50bd2
+  - type: covered_by
+    from: SYM-ingest-delivery-ticker-assertions
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:14:35.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2523f65d6f27

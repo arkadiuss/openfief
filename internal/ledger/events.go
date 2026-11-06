@@ -125,7 +125,18 @@ func incomePostings(h TransactionHeader, what string, in Instrument, gross, with
 	if err := needPositive(h, what, gross.Amount()); err != nil {
 		return nil, err
 	}
-	postings := []Posting{{Book: HoldingBook(in), Amount: gross.Neg()}}
+	rest, err := withheldPostings(h, what, gross, withholding)
+	if err != nil {
+		return nil, err
+	}
+	return append([]Posting{{Book: HoldingBook(in), Amount: gross.Neg()}}, rest...), nil
+}
+
+// withheldPostings returns where positive income gross, named what, goes:
+// withholding tax takes withholding, when it isn't zero, and cash the rest,
+// when it isn't zero.
+func withheldPostings(h TransactionHeader, what string, gross, withholding kernel.Money) ([]Posting, error) {
+	var postings []Posting
 	net := gross
 	if !withholding.IsZero() {
 		if err := needNotNegative(h, "withholding tax", withholding); err != nil {
@@ -144,6 +155,35 @@ func incomePostings(h TransactionHeader, what string, in Instrument, gross, with
 		postings = append(postings, Posting{Book: CashBook(net.Currency()), Amount: net})
 	}
 	return postings, nil
+}
+
+// NewCashIncome books amount of income that no holding produces (D-152),
+// such as a broker's interest on uninvested cash or a closed CFD's result,
+// of which withholding was withheld at source, such as the tax on that
+// interest: income gives the amount, withholding tax takes the withheld
+// part and cash receives the rest. A negative amount, such as a closed
+// CFD's loss or a fee the owner books as cash income (D-158), takes its
+// size out of cash into income, and nothing is withheld from it. A zero
+// Money withholding means none was withheld. Performance counts it as
+// return, never as money paid in or out.
+func NewCashIncome(h TransactionHeader, amount, withholding kernel.Money) (Transaction, error) {
+	if amount.Currency().IsZero() || amount.IsZero() {
+		return Transaction{}, fmt.Errorf("%w %s: cash income must be a non-zero amount with a currency", ErrInvalidTransaction, h.Key)
+	}
+	if amount.Sign() < 0 {
+		if !withholding.IsZero() {
+			return Transaction{}, fmt.Errorf("%w %s: nothing is withheld from a negative cash income", ErrInvalidTransaction, h.Key)
+		}
+		return h.build(KindCashIncome,
+			Posting{Book: IncomeBook(amount.Currency()), Amount: amount.Neg()},
+			Posting{Book: CashBook(amount.Currency()), Amount: amount},
+		)
+	}
+	postings, err := withheldPostings(h, "cash income", amount, withholding)
+	if err != nil {
+		return Transaction{}, err
+	}
+	return h.build(KindCashIncome, append([]Posting{{Book: IncomeBook(amount.Currency()), Amount: amount.Neg()}}, postings...)...)
 }
 
 // NewFee books a fee charged on its own, such as an account fee: the fee

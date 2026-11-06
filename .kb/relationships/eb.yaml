@@ -559,13 +559,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9508102e051
-  - type: covered_by
-    from: SYM-ingest-pg-listing-row-listing
-    to: TEST-core-xtb-opening
-    created_at: 2026-11-01T17:26:16.003Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-20a64fe9d61f
   - type: validates
     from: TEST-core-unclassified
     to: REQ-valuation-unclassifiable-instrument-attention-item
@@ -721,9 +714,58 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-11c98ef2dd39
   - type: implements
-    from: SYM-ingest-pg-listing-row-listing
-    to: REQ-ingest-trading-currency-listing-or-exchange
-    created_at: 2026-11-02T01:03:19.408Z
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-get-currency-choices
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:03:51.758Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-98b0a0dfa07c
+    id: rel-9407d77430cf
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-get-currency-choices
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:03:51.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e311b55b2137
+  - type: implements
+    from: SYM-ingest-app-tickers-correct
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:14:57.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27b8a05505a2
+  - type: implements
+    from: SYM-ingest-app-tickers-correct
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:14:57.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e7e071b2633
+  - type: covered_by
+    from: SYM-ingest-app-tickers-correct
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:14:58.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2083875f530f
+  - type: implements
+    from: SYM-ingest-pg-record
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:18:44.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-31184c9d0c65
+  - type: implements
+    from: SYM-ingest-pg-record
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:18:45.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3804126ee037
+  - type: covered_by
+    from: SYM-ingest-pg-record
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:18:45.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff2f728a6816

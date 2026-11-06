@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a418385434d1
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-response-proto-reflect
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:09:10.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6b804ea4161
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-response-proto-reflect
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:09:10.087Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61896fb3ce7e
+  - type: executable_for
+    from: SYM-ingest-test-test-ticker-booking-ledger
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:12:18.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-225e0b86da07

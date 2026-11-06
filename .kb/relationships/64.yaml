@@ -916,3 +916,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c58640b1a379
+  - type: implements
+    from: SYM-connector-gen-pb-ticker-assertion-get-quantity
+    to: REQ-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:02:26.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-36410f7a1a44
+  - type: covered_by
+    from: SYM-connector-gen-pb-ticker-assertion-get-quantity
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:02:26.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff6fecfa4ef4
+  - type: implements
+    from: SYM-ingest-ticker-assertion
+    to: REQ-ingest-xtb-open-positions-assert-holdings
+    created_at: 2026-11-02T07:11:29.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f402d0fc344
+  - type: implements
+    from: SYM-ingest-ticker-assertion
+    to: REQ-ingest-xtb-unconfirmed-ticker-asserted-on-confirm
+    created_at: 2026-11-02T07:11:29.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0060ce59bd4
+  - type: covered_by
+    from: SYM-ingest-ticker-assertion
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:11:29.682Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5556a5237da2

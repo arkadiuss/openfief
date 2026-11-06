@@ -671,3 +671,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de1d81d9631f
+  - type: implements
+    from: SYM-ui-server-confirmed-tickers
+    to: REQ-ui-tickers-correct
+    created_at: 2026-11-06T14:15:08.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a60b9f4d911
+  - type: covered_by
+    from: SYM-ui-server-confirmed-tickers
+    to: TEST-ui-tickers
+    created_at: 2026-11-06T14:15:08.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6eb4d8a68409

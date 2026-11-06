@@ -48,6 +48,43 @@ func tickersFrom(d *connectorv1.Delivery, m *ingest.Mapping) error {
 		}
 		brokerEntriesOf(m, id).TickerEntries = append(brokerEntriesOf(m, id).TickerEntries, e)
 	}
+	return tickerAssertionsFrom(d, m, known)
+}
+
+// tickerAssertionsFrom adds to m the ticker assertions of d (D-155), those
+// d names by broker account to m.ByBrokerAccount. Each must name one of
+// the delivery's tickers, a date and a quantity that is not negative.
+func tickerAssertionsFrom(d *connectorv1.Delivery, m *ingest.Mapping, known map[string]bool) error {
+	for i, t := range d.GetTickerAssertions() {
+		field := fmt.Sprintf("ticker_assertions[%d]", i)
+		if !known[t.GetSymbol()] {
+			return invalid(field+".symbol names no ticker of the delivery", nil)
+		}
+		on, err := dateFrom(field+".date", t.GetDate())
+		if err != nil {
+			return err
+		}
+		qty, err := decimalFrom(field+".quantity", t.GetQuantity())
+		if err != nil {
+			return err
+		}
+		a := ingest.TickerAssertion{
+			Symbol: t.GetSymbol(), Account: ledger.AccountID(t.GetAccountId()), Date: on, Quantity: kernel.NewQuantity(qty), Ref: t.GetRef(),
+		}
+		if vErr := a.Validate(); vErr != nil {
+			return invalid(field, vErr)
+		}
+		id, err := owner(field, t.GetAccountId(), t.GetBrokerAccount())
+		if err != nil {
+			return err
+		}
+		if id == "" {
+			m.TickerAssertions = append(m.TickerAssertions, a)
+			continue
+		}
+		a.Account = ""
+		brokerEntriesOf(m, id).TickerAssertions = append(brokerEntriesOf(m, id).TickerAssertions, a)
+	}
 	return nil
 }
 

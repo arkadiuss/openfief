@@ -104,7 +104,7 @@ func pbChange(v *ledger.VersionedTransaction) *viewsv1.ActivityChange {
 			out.Instrument = pbInstrument(p.Book.Instrument)
 		case ledger.BookCash:
 			out.Amount = pbMoney(p.Amount)
-		case ledger.BookFee, ledger.BookWithholdingTax, ledger.BookFX, ledger.BookEquity:
+		case ledger.BookFee, ledger.BookWithholdingTax, ledger.BookFX, ledger.BookEquity, ledger.BookIncome:
 		}
 	}
 	return out

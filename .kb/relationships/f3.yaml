@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38afe21488e8
+  - type: validates
+    from: TEST-ingest-broker-accounts
+    to: REQ-ingest-xtb-open-positions-assert-holdings
+    created_at: 2026-11-02T07:00:03.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-624669db9587

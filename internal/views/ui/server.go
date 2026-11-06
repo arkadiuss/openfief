@@ -195,6 +195,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /over-time", s.withSession(s.overTimeFragment))
 	mux.HandleFunc("GET /ask", s.withSession(s.askFragment))
 	s.recordRoutes(mux)
+	s.checkpointRoutes(mux)
 	s.inboxRoutes(mux)
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	s.settingsRoutes(mux)
@@ -215,8 +216,6 @@ func (s *server) recordRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /instruments/{isin}/name", s.withOwner(s.renameInstrument))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots/delete", s.withOwner(s.deleteBondLot))
-	mux.HandleFunc("POST /accounts/{id}/cash-checkpoints", s.withOwner(s.recordCashCheckpoint))
-	mux.HandleFunc("POST /accounts/{id}/cash-checkpoints/book", s.withOwner(s.bookCashDifference))
 }
 
 // settingsRoutes maps the settings page and its forms, every one the

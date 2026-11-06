@@ -18,6 +18,7 @@
 {{with .Data}}
 {{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
 {{if .Renamed}}<p class="alert alert-info" role="status">The name is saved. Every page shows it before the ticker and ISIN.</p>{{end}}
+{{with .Corrected}}<p class="alert alert-info" role="status">The ISIN is corrected: {{.}} row(s) booked anew with it.</p>{{end}}
 {{with .Items}}
 <section class="banner" aria-labelledby="instrument-items-title">
   <h2 id="instrument-items-title" class="eyebrow">Needs you · {{len .}}</h2>
@@ -110,6 +111,42 @@
   <p class="muted">No yearly tax counts it.</p>
   {{end}}
 </section>
+
+{{with .Confirmed}}
+<section class="card" id="confirmed-tickers" aria-labelledby="confirmed-tickers-title">
+  <h2 id="confirmed-tickers-title">Confirmed tickers</h2>
+  <p class="muted">The tickers you confirmed with this ISIN, for every account at their institution. A wrong ISIN can be corrected: every row of the ticker, at every account of the institution, is then booked anew with the corrected one. What was booked under this ISIN is superseded and kept in the log, never erased, and the holdings are asserted of the corrected instrument.</p>
+  <div class="table"><table>
+    <thead><tr>
+      <th scope="col">Ticker</th><th scope="col">Name</th><th scope="col">Institution</th><th scope="col">Trading currency</th><th scope="col" class="num">Rows booked</th><th scope="col">Correct</th>
+    </tr></thead>
+    <tbody>
+    {{range .}}
+    <tr>
+      <td class="mono">{{.Symbol}}</td>
+      <td>{{.Name}}</td>
+      <td>{{.Institution}}</td>
+      <td>{{if .TradingCurrency}}{{.TradingCurrency}}{{else}}<span class="muted">unknown</span>{{end}}</td>
+      <td class="num">{{.Booked}}</td>
+      <td>
+        <form method="post" action="/instruments/{{$.Data.Detail.Isin}}/tickers/correct" class="inline">
+          <input type="hidden" name="instance" value="{{.Instance}}"><input type="hidden" name="symbol" value="{{.Symbol}}">
+          <label for="correct-{{.Institution}}-{{.Symbol}}" class="sr-only">Corrected ISIN of {{.Symbol}}</label>
+          <input id="correct-{{.Institution}}-{{.Symbol}}" name="isin" class="mono" maxlength="12" autocomplete="off" spellcheck="false" value="{{.Isin}}" placeholder="ISIN">
+          {{if .CurrencyChoices}}<label for="correct-currency-{{.Institution}}-{{.Symbol}}" class="sr-only">Trading currency of {{.Symbol}}</label>
+          <select id="correct-currency-{{.Institution}}-{{.Symbol}}" name="currency">
+            <option value="" selected>The listing's{{if .TradingCurrency}}: {{.TradingCurrency}}{{end}}</option>
+            {{range .CurrencyChoices}}<option value="{{.}}">{{.}}</option>{{end}}
+          </select>{{end}}
+          <button type="submit" class="danger" aria-label="Correct the ISIN of {{.Symbol}}">Correct</button>
+        </form>
+      </td>
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+</section>
+{{end}}
 
 {{if .Owner}}
 <section class="card" aria-labelledby="rename-title">

@@ -650,3 +650,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59967b8c3190
+  - type: implements
+    from: SYM-connector-gen-pb-ticker-assertion-get-symbol
+    to: REQ-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:02:42.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6662120b6d1
+  - type: covered_by
+    from: SYM-connector-gen-pb-ticker-assertion-get-symbol
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:02:42.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-243ff4b096d8
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-get-instance
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:03:59.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfd3a446516d
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-get-instance
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:03:59.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a23e0b9a38d6

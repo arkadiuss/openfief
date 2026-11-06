@@ -664,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-663fae6d0c48
+  - type: verified_by
+    from: SCEN-ingest-ticker-correction-service
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:00:22.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bb382afbd57
+  - type: verified_by
+    from: SCEN-ingest-ticker-correction-service
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:00:22.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-131f03381fc3
+  - type: verified_by
+    from: SCEN-ingest-ticker-correction-service
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:00:22.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04d38029f785

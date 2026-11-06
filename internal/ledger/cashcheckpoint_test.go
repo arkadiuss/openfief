@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
@@ -13,7 +14,8 @@ import (
 // synthetic log, whose derived USD cash on 2026-03-06 is 1287 (D-158): more
 // cash shown is a deposit, less a withdrawal, each dated on the checkpoint
 // and keyed by it; once booked, the checkpoint matches, and the derived cash
-// changes only by the booked transaction. A matching checkpoint, an
+// changes only by the booked transaction. Booked as cash income (D-152),
+// more cash shown is income and less is a fee. A matching checkpoint, an
 // assertion a connector reported and a holding are refused.
 func TestCashDifference(t *testing.T) {
 	t.Parallel()
@@ -21,6 +23,7 @@ func TestCashDifference(t *testing.T) {
 		name     string
 		shown    string
 		reported bool
+		as       ledger.DifferenceBooking
 		wantKind ledger.TransactionKind
 		wantCash string
 		wantID   string
@@ -28,6 +31,15 @@ func TestCashDifference(t *testing.T) {
 	}{
 		{name: "more cash shown is a deposit", shown: "1300", wantKind: ledger.KindDeposit, wantCash: "13", wantID: "2026-03-06/USD/1300/1287"},
 		{name: "less cash shown is a withdrawal", shown: "1280.50", wantKind: ledger.KindWithdrawal, wantCash: "-6.5", wantID: "2026-03-06/USD/1280.5/1287"},
+		{
+			name: "more cash shown booked as cash income is income", shown: "1300", as: ledger.AsCashIncome,
+			wantKind: ledger.KindCashIncome, wantCash: "13", wantID: "2026-03-06/USD/1300/1287",
+		},
+		{
+			name: "less cash shown booked as cash income is a fee", shown: "1280.50", as: ledger.AsCashIncome,
+			wantKind: ledger.KindCashIncome, wantCash: "-6.5", wantID: "2026-03-06/USD/1280.5/1287",
+		},
+		{name: "an unknown way to book it", shown: "1300", as: ledger.AsCashIncome + 1, wantErr: ledger.ErrUnknownBooking},
 		{name: "a matching checkpoint has nothing to book", shown: "1287.00", wantErr: ledger.ErrNoCashDifference},
 		{name: "a reported assertion is no checkpoint", shown: "1300", reported: true, wantErr: ledger.ErrNotCheckpoint},
 	}
@@ -42,7 +54,7 @@ func TestCashDifference(t *testing.T) {
 			if err != nil {
 				t.Fatalf("CashOn: %v", err)
 			}
-			got, err := ledger.CashDifference(&a, derived.Amount())
+			got, err := ledger.CashDifference(&a, derived.Amount(), tt.as)
 			if !errors.Is(err, tt.wantErr) {
 				t.Fatalf("CashDifference = %v, want %v", err, tt.wantErr)
 			}
@@ -54,7 +66,7 @@ func TestCashDifference(t *testing.T) {
 	}
 	holding := ledger.HoldingAssertion(testAccount, date(t, "2026-03-06"), instrument(t, isinA, "AAA"), qty(t, "1"))
 	holding.Entered = true
-	if _, err := ledger.CashDifference(&holding, dec(t, "0")); !errors.Is(err, ledger.ErrInvalidAssertion) {
+	if _, err := ledger.CashDifference(&holding, dec(t, "0"), ledger.AsDepositOrWithdrawal); !errors.Is(err, ledger.ErrInvalidAssertion) {
 		t.Errorf("CashDifference of a holding = %v, want ErrInvalidAssertion", err)
 	}
 }
@@ -70,7 +82,7 @@ func checkBooked(t *testing.T, log []ledger.VersionedTransaction, a *ledger.Bala
 	if got.Kind != kind || got.Key != wantKey || !got.Date.Equal(a.Date) || got.Account != a.Account {
 		t.Errorf("booked %s %s on %s in %s, want %s %s on %s", got.Kind, got.Key, got.Date, got.Account, kind, wantKey, a.Date)
 	}
-	if diff := cmp.Diff(money(t, cash, "USD"), got.Postings[0].Amount); diff != "" {
+	if diff := cmp.Diff([]kernel.Money{money(t, cash, "USD")}, cashPostings(got)); diff != "" {
 		t.Errorf("cash posting (-want +got):\n%s", diff)
 	}
 	booked := append(append([]ledger.VersionedTransaction(nil), log...), ledger.VersionedTransaction{Transaction: *got, Version: 1})
@@ -85,6 +97,17 @@ func checkBooked(t *testing.T, log []ledger.VersionedTransaction, a *ledger.Bala
 	if before, err := ledger.CashOn(booked, a.Account, a.Book.Currency, day); err != nil || !before.Equal(want) {
 		t.Errorf("cash the day before = %v, %v; want %s unchanged", before, err, want)
 	}
+}
+
+// cashPostings returns the amounts t posts to cash.
+func cashPostings(t *ledger.Transaction) []kernel.Money {
+	var out []kernel.Money
+	for _, p := range t.Postings {
+		if p.Book.Kind == ledger.BookCash {
+			out = append(out, p.Amount)
+		}
+	}
+	return out
 }
 
 func TestCheckpointItem(t *testing.T) {

@@ -39,7 +39,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql", "0008_accounts_only.sql", "0009_recorded_changes.sql", "0010_instrument_names.sql", "0011_cash_checkpoints.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql", "0008_accounts_only.sql", "0009_recorded_changes.sql", "0010_instrument_names.sql", "0011_cash_checkpoints.sql", "0012_cash_income.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `
@@ -86,6 +86,20 @@ func TestRedemptionRoundTrip(t *testing.T) {
 	r := must(t)(ledger.NewRedemption(header(t, acc1, "10-redemption", "2026-04-05"), instrument(t, isinA, "TSTA"), qty(t, "10"),
 		money(t, "1007.50", "PLN"), money(t, "1.43", "PLN")))
 	want := []ledger.VersionedTransaction{versioned(&r, 1)}
+	appendAll(t, store, want)
+	got, err := store.Log(t.Context(), acc1)
+	checkResult(t, "Log(acc-1)", want, got, err)
+}
+
+// TestCashIncomeRoundTrip checks that cash income (D-152), with its tax
+// withheld, and a negative one, are stored and read back as they were
+// booked.
+func TestCashIncomeRoundTrip(t *testing.T) {
+	t.Parallel()
+	store, _ := seededStore(t)
+	interest := must(t)(ledger.NewCashIncome(header(t, acc1, "11-interest", "2026-04-30"), money(t, "12.34", "PLN"), money(t, "2.34", "PLN")))
+	loss := must(t)(ledger.NewCashIncome(header(t, acc1, "12-cfd", "2026-05-04"), money(t, "-7.25", "PLN"), kernel.Money{}))
+	want := []ledger.VersionedTransaction{versioned(&interest, 1), versioned(&loss, 1)}
 	appendAll(t, store, want)
 	got, err := store.Log(t.Context(), acc1)
 	checkResult(t, "Log(acc-1)", want, got, err)
@@ -168,6 +182,15 @@ func TestAssertionChecksRoundTrip(t *testing.T) {
 	}
 	got, err := store.AssertionChecks(ctx, acc1)
 	checkResult(t, "AssertionChecks", []app.AssertionCheck{checks[1], checks[2], checks[3]}, got, err)
+	// A holding assertion a ticker's ISIN correction replaces is removed
+	// (D-153); removing it again changes nothing.
+	for range 2 {
+		if delErr := store.DeleteAssertionCheck(ctx, acc1, units.Date, units.Book); delErr != nil {
+			t.Fatalf("DeleteAssertionCheck: %v", delErr)
+		}
+	}
+	got, err = store.AssertionChecks(ctx, acc1)
+	checkResult(t, "AssertionChecks after the delete", []app.AssertionCheck{checks[2], checks[3]}, got, err)
 }
 
 // TestCashCheckpointRoundTrip checks that a cash checkpoint the owner

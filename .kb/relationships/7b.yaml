@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd06638f39a3
+  - type: executable_for
+    from: SYM-ingest-test-helper-holding-of
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:12:37.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f62b42093997
+  - type: implements
+    from: SYM-ingest-pg-ticker-assertions
+    to: REQ-ingest-xtb-unconfirmed-ticker-asserted-on-confirm
+    created_at: 2026-11-02T07:18:52.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4a95022bdd5
+  - type: covered_by
+    from: SYM-ingest-pg-ticker-assertions
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:18:52.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec509fd11702

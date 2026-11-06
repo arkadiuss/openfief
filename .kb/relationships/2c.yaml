@@ -993,3 +993,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9393a3ac2e1c
+  - type: implements
+    from: SYM-ingest-pg-current
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:17:59.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd16dbb98b47
+  - type: implements
+    from: SYM-ingest-pg-current
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:17:59.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7faad81cb94
+  - type: covered_by
+    from: SYM-ingest-pg-current
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:17:59.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40b07df531d0

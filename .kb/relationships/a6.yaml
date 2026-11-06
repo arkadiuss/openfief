@@ -811,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cdb1e2d48040
+  - type: validates
+    from: TEST-ingest-connectrpc-tickers
+    to: REQ-ingest-xtb-open-positions-assert-holdings
+    created_at: 2026-11-02T07:00:01.429Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b231a9e384a3

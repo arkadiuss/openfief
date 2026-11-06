@@ -121,8 +121,9 @@ func instrumentNames(names []ledger.InstrumentName) []*connectorv1.InstrumentNam
 	return out
 }
 
-// tickers adds to d the tickers m names instruments by and their entries,
-// those named by broker account with broker_account set (D-116).
+// tickers adds to d the tickers m names instruments by, their entries and
+// their assertions, those named by broker account with broker_account set
+// (D-116, D-155).
 func tickers(d *connectorv1.Delivery, m *ingest.Mapping) error {
 	for i := range m.Tickers {
 		t := &m.Tickers[i]
@@ -147,6 +148,38 @@ func tickers(d *connectorv1.Delivery, m *ingest.Mapping) error {
 			}
 			t.AccountId, t.BrokerAccount = "", string(e.Account)
 			d.TickerTransactions = append(d.TickerTransactions, t)
+		}
+	}
+	return tickerAssertions(d, m)
+}
+
+// tickerAssertions adds to d the ticker assertions of m (D-155), those
+// named by broker account with broker_account set, after checking each.
+func tickerAssertions(d *connectorv1.Delivery, m *ingest.Mapping) error {
+	add := func(a *ingest.TickerAssertion, broker ingest.BrokerAccountID) error {
+		if err := a.Validate(); err != nil {
+			return fmt.Errorf("ticker assertion: %w", err)
+		}
+		out := &connectorv1.TickerAssertion{
+			Symbol: a.Symbol, AccountId: string(a.Account), Date: a.Date.String(), Quantity: a.Quantity.String(), Ref: a.Ref,
+		}
+		if broker != "" {
+			out.AccountId, out.BrokerAccount = "", string(broker)
+		}
+		d.TickerAssertions = append(d.TickerAssertions, out)
+		return nil
+	}
+	for i := range m.TickerAssertions {
+		if err := add(&m.TickerAssertions[i], ""); err != nil {
+			return fmt.Errorf("ticker_assertions[%d]: %w", i, err)
+		}
+	}
+	for i := range m.ByBrokerAccount {
+		e := &m.ByBrokerAccount[i]
+		for j := range e.TickerAssertions {
+			if err := add(&e.TickerAssertions[j], e.Account); err != nil {
+				return fmt.Errorf("broker account %d ticker_assertions[%d]: %w", i, j, err)
+			}
 		}
 	}
 	return nil
@@ -354,6 +387,8 @@ func bookKind(k ledger.BookKind) (connectorv1.BookKind, error) {
 		return connectorv1.BookKind_BOOK_KIND_FX, nil
 	case ledger.BookEquity:
 		return connectorv1.BookKind_BOOK_KIND_EQUITY, nil
+	case ledger.BookIncome:
+		return connectorv1.BookKind_BOOK_KIND_INCOME, nil
 	}
 	return 0, fmt.Errorf("%w: ledger account kind %d", ErrUnknownValue, k)
 }
@@ -372,6 +407,7 @@ func transactionKinds() map[ledger.TransactionKind]connectorv1.TransactionKind {
 		ledger.KindInterest:     connectorv1.TransactionKind_TRANSACTION_KIND_INTEREST,
 		ledger.KindDeletion:     connectorv1.TransactionKind_TRANSACTION_KIND_DELETION,
 		ledger.KindRedemption:   connectorv1.TransactionKind_TRANSACTION_KIND_REDEMPTION,
+		ledger.KindCashIncome:   connectorv1.TransactionKind_TRANSACTION_KIND_CASH_INCOME,
 	}
 }
 

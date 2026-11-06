@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae4c8d2c22dc
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-reset
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:04:59.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-019b5f2be19b
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-reset
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:04:59.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32c34945755a

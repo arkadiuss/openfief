@@ -4,8 +4,12 @@
 // ticker and market only, with no ISIN (D-35). For each new ticker, the
 // market-data connector looks the ISIN up by ticker and market and
 // proposes it; the owner confirms it once, or enters it when the lookup
-// found none. The rows of a ticker not confirmed yet wait as ingest
-// problems, and the core books them once it is. The built-in UI hands the
+// found none. A confirmation holds for every account at the ticker's
+// institution, and the owner can correct it, which books every row of the
+// ticker anew and supersedes what was booked under the old ISIN (D-153).
+// The rows of a ticker not confirmed yet, and the holdings an institution
+// reports for it (D-155), wait, the rows as ingest problems, and the core
+// books them once it is. The built-in UI hands the
 // owner's confirmations to the core through TickerService, one owner-only
 // service for this kind of entry (D-79), on the core's plugin port (D-115).
 //
@@ -22,7 +26,9 @@
 // - An ISIN without a valid check digit fails with INVALID_ARGUMENT; a
 //   ticker no connector instance reported with NOT_FOUND; a ticker already
 //   confirmed with another ISIN, or another trading currency, with
-//   FAILED_PRECONDITION.
+//   FAILED_PRECONDITION, as does a correction of a ticker never confirmed.
+// - Confirming or correcting asks whether the owner may change every
+//   account the ticker's rows are in (D-163); PERMISSION_DENIED otherwise.
 // - When the confirmed ISIN's listing names no trading currency and the
 //   exchange the ticker's market suffix names quotes in more than one, as
 //   London does in pence (GBX), pounds and dollars, the owner picks one
@@ -406,6 +412,360 @@ func (x *ConfirmTickerResponse) GetBooked() int32 {
 	return 0
 }
 
+type ListConfirmedTickersRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Origin        string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken  string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListConfirmedTickersRequest) Reset() {
+	*x = ListConfirmedTickersRequest{}
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListConfirmedTickersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListConfirmedTickersRequest) ProtoMessage() {}
+
+func (x *ListConfirmedTickersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListConfirmedTickersRequest.ProtoReflect.Descriptor instead.
+func (*ListConfirmedTickersRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_tickers_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListConfirmedTickersRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *ListConfirmedTickersRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+// ConfirmedTicker is a ticker whose ISIN the owner confirmed, for every
+// account at its institution (D-153).
+type ConfirmedTicker struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The institution, as its connectors name it, such as "xtb".
+	Institution string `protobuf:"bytes,1,opt,name=institution,proto3" json:"institution,omitempty"`
+	// A connector instance of the institution that reported it, the first by
+	// name, which CorrectTicker takes.
+	Instance string `protobuf:"bytes,2,opt,name=instance,proto3" json:"instance,omitempty"`
+	// The ticker as the institution names it, such as "TESTA.PL".
+	Symbol string `protobuf:"bytes,3,opt,name=symbol,proto3" json:"symbol,omitempty"`
+	// The ISO 3166-1 alpha-2 code of its market's country, or empty.
+	Country string `protobuf:"bytes,4,opt,name=country,proto3" json:"country,omitempty"`
+	// Its display name at the institution.
+	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
+	// The confirmed ISIN.
+	Isin string `protobuf:"bytes,6,opt,name=isin,proto3" json:"isin,omitempty"`
+	// The trading currency its listing settled, such as "GBX" for pence, or
+	// empty when none is known.
+	TradingCurrency string `protobuf:"bytes,7,opt,name=trading_currency,json=tradingCurrency,proto3" json:"trading_currency,omitempty"`
+	// The trading currencies its exchange quotes in, when more than one, as
+	// on PendingTicker: a correction to an ISIN whose listing names none
+	// picks one of them (D-170).
+	CurrencyChoices []string `protobuf:"bytes,8,rep,name=currency_choices,json=currencyChoices,proto3" json:"currency_choices,omitempty"`
+	// How many statement rows are booked with it.
+	Booked        int32 `protobuf:"varint,9,opt,name=booked,proto3" json:"booked,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ConfirmedTicker) Reset() {
+	*x = ConfirmedTicker{}
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ConfirmedTicker) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConfirmedTicker) ProtoMessage() {}
+
+func (x *ConfirmedTicker) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConfirmedTicker.ProtoReflect.Descriptor instead.
+func (*ConfirmedTicker) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_tickers_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ConfirmedTicker) GetInstitution() string {
+	if x != nil {
+		return x.Institution
+	}
+	return ""
+}
+
+func (x *ConfirmedTicker) GetInstance() string {
+	if x != nil {
+		return x.Instance
+	}
+	return ""
+}
+
+func (x *ConfirmedTicker) GetSymbol() string {
+	if x != nil {
+		return x.Symbol
+	}
+	return ""
+}
+
+func (x *ConfirmedTicker) GetCountry() string {
+	if x != nil {
+		return x.Country
+	}
+	return ""
+}
+
+func (x *ConfirmedTicker) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ConfirmedTicker) GetIsin() string {
+	if x != nil {
+		return x.Isin
+	}
+	return ""
+}
+
+func (x *ConfirmedTicker) GetTradingCurrency() string {
+	if x != nil {
+		return x.TradingCurrency
+	}
+	return ""
+}
+
+func (x *ConfirmedTicker) GetCurrencyChoices() []string {
+	if x != nil {
+		return x.CurrencyChoices
+	}
+	return nil
+}
+
+func (x *ConfirmedTicker) GetBooked() int32 {
+	if x != nil {
+		return x.Booked
+	}
+	return 0
+}
+
+type ListConfirmedTickersResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// In institution, then symbol order.
+	Tickers       []*ConfirmedTicker `protobuf:"bytes,1,rep,name=tickers,proto3" json:"tickers,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListConfirmedTickersResponse) Reset() {
+	*x = ListConfirmedTickersResponse{}
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListConfirmedTickersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListConfirmedTickersResponse) ProtoMessage() {}
+
+func (x *ListConfirmedTickersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListConfirmedTickersResponse.ProtoReflect.Descriptor instead.
+func (*ListConfirmedTickersResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_tickers_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ListConfirmedTickersResponse) GetTickers() []*ConfirmedTicker {
+	if x != nil {
+		return x.Tickers
+	}
+	return nil
+}
+
+type CorrectTickerRequest struct {
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	// A connector instance that reported the ticker, as listed.
+	Instance string `protobuf:"bytes,3,opt,name=instance,proto3" json:"instance,omitempty"`
+	Symbol   string `protobuf:"bytes,4,opt,name=symbol,proto3" json:"symbol,omitempty"`
+	// The corrected ISIN, with a valid check digit.
+	Isin string `protobuf:"bytes,5,opt,name=isin,proto3" json:"isin,omitempty"`
+	// The trading currency the owner picked, one of the ticker's
+	// currency_choices, when the listing of isin names none (D-170); empty
+	// otherwise.
+	Currency      string `protobuf:"bytes,6,opt,name=currency,proto3" json:"currency,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CorrectTickerRequest) Reset() {
+	*x = CorrectTickerRequest{}
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CorrectTickerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CorrectTickerRequest) ProtoMessage() {}
+
+func (x *CorrectTickerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CorrectTickerRequest.ProtoReflect.Descriptor instead.
+func (*CorrectTickerRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_tickers_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *CorrectTickerRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *CorrectTickerRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *CorrectTickerRequest) GetInstance() string {
+	if x != nil {
+		return x.Instance
+	}
+	return ""
+}
+
+func (x *CorrectTickerRequest) GetSymbol() string {
+	if x != nil {
+		return x.Symbol
+	}
+	return ""
+}
+
+func (x *CorrectTickerRequest) GetIsin() string {
+	if x != nil {
+		return x.Isin
+	}
+	return ""
+}
+
+func (x *CorrectTickerRequest) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
+type CorrectTickerResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The rows booked anew.
+	Booked        int32 `protobuf:"varint,1,opt,name=booked,proto3" json:"booked,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CorrectTickerResponse) Reset() {
+	*x = CorrectTickerResponse{}
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CorrectTickerResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CorrectTickerResponse) ProtoMessage() {}
+
+func (x *CorrectTickerResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_ingest_v1_tickers_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CorrectTickerResponse.ProtoReflect.Descriptor instead.
+func (*CorrectTickerResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_ingest_v1_tickers_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CorrectTickerResponse) GetBooked() int32 {
+	if x != nil {
+		return x.Booked
+	}
+	return 0
+}
+
 var File_openfief_ingest_v1_tickers_proto protoreflect.FileDescriptor
 
 const file_openfief_ingest_v1_tickers_proto_rawDesc = "" +
@@ -434,10 +794,36 @@ const file_openfief_ingest_v1_tickers_proto_rawDesc = "" +
 	"\x04isin\x18\x05 \x01(\tR\x04isin\x12\x1a\n" +
 	"\bcurrency\x18\x06 \x01(\tR\bcurrency\"/\n" +
 	"\x15ConfirmTickerResponse\x12\x16\n" +
-	"\x06booked\x18\x01 \x01(\x05R\x06booked2\xef\x01\n" +
+	"\x06booked\x18\x01 \x01(\x05R\x06booked\"Z\n" +
+	"\x1bListConfirmedTickersRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\"\x97\x02\n" +
+	"\x0fConfirmedTicker\x12 \n" +
+	"\vinstitution\x18\x01 \x01(\tR\vinstitution\x12\x1a\n" +
+	"\binstance\x18\x02 \x01(\tR\binstance\x12\x16\n" +
+	"\x06symbol\x18\x03 \x01(\tR\x06symbol\x12\x18\n" +
+	"\acountry\x18\x04 \x01(\tR\acountry\x12\x12\n" +
+	"\x04name\x18\x05 \x01(\tR\x04name\x12\x12\n" +
+	"\x04isin\x18\x06 \x01(\tR\x04isin\x12)\n" +
+	"\x10trading_currency\x18\a \x01(\tR\x0ftradingCurrency\x12)\n" +
+	"\x10currency_choices\x18\b \x03(\tR\x0fcurrencyChoices\x12\x16\n" +
+	"\x06booked\x18\t \x01(\x05R\x06booked\"]\n" +
+	"\x1cListConfirmedTickersResponse\x12=\n" +
+	"\atickers\x18\x01 \x03(\v2#.openfief.ingest.v1.ConfirmedTickerR\atickers\"\xb7\x01\n" +
+	"\x14CorrectTickerRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x1a\n" +
+	"\binstance\x18\x03 \x01(\tR\binstance\x12\x16\n" +
+	"\x06symbol\x18\x04 \x01(\tR\x06symbol\x12\x12\n" +
+	"\x04isin\x18\x05 \x01(\tR\x04isin\x12\x1a\n" +
+	"\bcurrency\x18\x06 \x01(\tR\bcurrency\"/\n" +
+	"\x15CorrectTickerResponse\x12\x16\n" +
+	"\x06booked\x18\x01 \x01(\x05R\x06booked2\xd5\x03\n" +
 	"\rTickerService\x12x\n" +
 	"\x12ListPendingTickers\x12-.openfief.ingest.v1.ListPendingTickersRequest\x1a..openfief.ingest.v1.ListPendingTickersResponse\"\x03\x90\x02\x01\x12d\n" +
-	"\rConfirmTicker\x12(.openfief.ingest.v1.ConfirmTickerRequest\x1a).openfief.ingest.v1.ConfirmTickerResponseB\xd6\x01\n" +
+	"\rConfirmTicker\x12(.openfief.ingest.v1.ConfirmTickerRequest\x1a).openfief.ingest.v1.ConfirmTickerResponse\x12~\n" +
+	"\x14ListConfirmedTickers\x12/.openfief.ingest.v1.ListConfirmedTickersRequest\x1a0.openfief.ingest.v1.ListConfirmedTickersResponse\"\x03\x90\x02\x01\x12d\n" +
+	"\rCorrectTicker\x12(.openfief.ingest.v1.CorrectTickerRequest\x1a).openfief.ingest.v1.CorrectTickerResponseB\xd6\x01\n" +
 	"\x16com.openfief.ingest.v1B\fTickersProtoP\x01ZDgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1;ingestv1\xa2\x02\x03OIX\xaa\x02\x12Openfief.Ingest.V1\xca\x02\x12Openfief\\Ingest\\V1\xe2\x02\x1eOpenfief\\Ingest\\V1\\GPBMetadata\xea\x02\x14Openfief::Ingest::V1b\x06proto3"
 
 var (
@@ -452,25 +838,35 @@ func file_openfief_ingest_v1_tickers_proto_rawDescGZIP() []byte {
 	return file_openfief_ingest_v1_tickers_proto_rawDescData
 }
 
-var file_openfief_ingest_v1_tickers_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_openfief_ingest_v1_tickers_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_openfief_ingest_v1_tickers_proto_goTypes = []any{
-	(*ListPendingTickersRequest)(nil),  // 0: openfief.ingest.v1.ListPendingTickersRequest
-	(*PendingTicker)(nil),              // 1: openfief.ingest.v1.PendingTicker
-	(*ListPendingTickersResponse)(nil), // 2: openfief.ingest.v1.ListPendingTickersResponse
-	(*ConfirmTickerRequest)(nil),       // 3: openfief.ingest.v1.ConfirmTickerRequest
-	(*ConfirmTickerResponse)(nil),      // 4: openfief.ingest.v1.ConfirmTickerResponse
+	(*ListPendingTickersRequest)(nil),    // 0: openfief.ingest.v1.ListPendingTickersRequest
+	(*PendingTicker)(nil),                // 1: openfief.ingest.v1.PendingTicker
+	(*ListPendingTickersResponse)(nil),   // 2: openfief.ingest.v1.ListPendingTickersResponse
+	(*ConfirmTickerRequest)(nil),         // 3: openfief.ingest.v1.ConfirmTickerRequest
+	(*ConfirmTickerResponse)(nil),        // 4: openfief.ingest.v1.ConfirmTickerResponse
+	(*ListConfirmedTickersRequest)(nil),  // 5: openfief.ingest.v1.ListConfirmedTickersRequest
+	(*ConfirmedTicker)(nil),              // 6: openfief.ingest.v1.ConfirmedTicker
+	(*ListConfirmedTickersResponse)(nil), // 7: openfief.ingest.v1.ListConfirmedTickersResponse
+	(*CorrectTickerRequest)(nil),         // 8: openfief.ingest.v1.CorrectTickerRequest
+	(*CorrectTickerResponse)(nil),        // 9: openfief.ingest.v1.CorrectTickerResponse
 }
 var file_openfief_ingest_v1_tickers_proto_depIdxs = []int32{
 	1, // 0: openfief.ingest.v1.ListPendingTickersResponse.tickers:type_name -> openfief.ingest.v1.PendingTicker
-	0, // 1: openfief.ingest.v1.TickerService.ListPendingTickers:input_type -> openfief.ingest.v1.ListPendingTickersRequest
-	3, // 2: openfief.ingest.v1.TickerService.ConfirmTicker:input_type -> openfief.ingest.v1.ConfirmTickerRequest
-	2, // 3: openfief.ingest.v1.TickerService.ListPendingTickers:output_type -> openfief.ingest.v1.ListPendingTickersResponse
-	4, // 4: openfief.ingest.v1.TickerService.ConfirmTicker:output_type -> openfief.ingest.v1.ConfirmTickerResponse
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	6, // 1: openfief.ingest.v1.ListConfirmedTickersResponse.tickers:type_name -> openfief.ingest.v1.ConfirmedTicker
+	0, // 2: openfief.ingest.v1.TickerService.ListPendingTickers:input_type -> openfief.ingest.v1.ListPendingTickersRequest
+	3, // 3: openfief.ingest.v1.TickerService.ConfirmTicker:input_type -> openfief.ingest.v1.ConfirmTickerRequest
+	5, // 4: openfief.ingest.v1.TickerService.ListConfirmedTickers:input_type -> openfief.ingest.v1.ListConfirmedTickersRequest
+	8, // 5: openfief.ingest.v1.TickerService.CorrectTicker:input_type -> openfief.ingest.v1.CorrectTickerRequest
+	2, // 6: openfief.ingest.v1.TickerService.ListPendingTickers:output_type -> openfief.ingest.v1.ListPendingTickersResponse
+	4, // 7: openfief.ingest.v1.TickerService.ConfirmTicker:output_type -> openfief.ingest.v1.ConfirmTickerResponse
+	7, // 8: openfief.ingest.v1.TickerService.ListConfirmedTickers:output_type -> openfief.ingest.v1.ListConfirmedTickersResponse
+	9, // 9: openfief.ingest.v1.TickerService.CorrectTicker:output_type -> openfief.ingest.v1.CorrectTickerResponse
+	6, // [6:10] is the sub-list for method output_type
+	2, // [2:6] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_openfief_ingest_v1_tickers_proto_init() }
@@ -484,7 +880,7 @@ func file_openfief_ingest_v1_tickers_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_ingest_v1_tickers_proto_rawDesc), len(file_openfief_ingest_v1_tickers_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

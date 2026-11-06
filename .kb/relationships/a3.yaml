@@ -1063,3 +1063,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6f6d60be941
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-correct-ticker-response-reset
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:07:23.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b51ca72943a
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-correct-ticker-response-reset
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:07:23.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f5310db188f
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-request-get-origin
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:07:53.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba7cedaa53d4
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-list-confirmed-tickers-request-get-origin
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:07:53.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea1c6a949a7d
+  - type: implements
+    from: SYM-ui-server-correct-ticker
+    to: REQ-ui-tickers-correct
+    created_at: 2026-11-02T07:10:02.207Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-610e7e6a8895
+  - type: covered_by
+    from: SYM-ui-server-correct-ticker
+    to: TEST-ui-tickers
+    created_at: 2026-11-02T07:10:02.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff3db26f5270

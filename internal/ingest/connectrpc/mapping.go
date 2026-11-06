@@ -169,6 +169,8 @@ func bookKindFrom(field string, k connectorv1.BookKind) (ledger.BookKind, error)
 		return ledger.BookFX, nil
 	case connectorv1.BookKind_BOOK_KIND_EQUITY:
 		return ledger.BookEquity, nil
+	case connectorv1.BookKind_BOOK_KIND_INCOME:
+		return ledger.BookIncome, nil
 	case connectorv1.BookKind_BOOK_KIND_UNSPECIFIED:
 	}
 	return 0, invalid(fmt.Sprintf("%s.kind %s", field, k), nil)
@@ -230,6 +232,7 @@ func transactionKinds() map[connectorv1.TransactionKind]ledger.TransactionKind {
 		connectorv1.TransactionKind_TRANSACTION_KIND_INTEREST:      ledger.KindInterest,
 		connectorv1.TransactionKind_TRANSACTION_KIND_DELETION:      ledger.KindDeletion,
 		connectorv1.TransactionKind_TRANSACTION_KIND_REDEMPTION:    ledger.KindRedemption,
+		connectorv1.TransactionKind_TRANSACTION_KIND_CASH_INCOME:   ledger.KindCashIncome,
 	}
 }
 
@@ -392,7 +395,7 @@ func deliveryItems(d *connectorv1.Delivery) int {
 	n := len(d.GetTransactions()) + len(d.GetBalanceAssertions()) + len(d.GetProblems()) +
 		len(d.GetPrices()) + len(d.GetFxRates()) + len(d.GetIndexReadings()) + len(d.GetIndexLevels()) +
 		len(d.GetBondTerms()) + len(d.GetCrossCheckPrices()) + len(d.GetBrokerAccounts()) +
-		len(d.GetTickers()) + len(d.GetTickerTransactions()) + len(d.GetInstrumentNames())
+		len(d.GetTickers()) + len(d.GetTickerTransactions()) + len(d.GetInstrumentNames()) + len(d.GetTickerAssertions())
 	for _, t := range d.GetTransactions() {
 		n += len(t.GetPostings())
 	}

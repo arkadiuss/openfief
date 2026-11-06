@@ -881,3 +881,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9278985d32a8
+  - type: implements
+    from: SYM-ingestv1connect-tickers-unimplemented-ticker-service-handler-correct-ticker
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:09:32.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ba08885aca1
+  - type: covered_by
+    from: SYM-ingestv1connect-tickers-unimplemented-ticker-service-handler-correct-ticker
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:09:32.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c80dbaf0f030
+  - type: executable_for
+    from: SYM-ui-test-fake-tickers-list-confirmed-tickers
+    to: TEST-ui-tickers
+    created_at: 2026-11-02T07:10:47.310Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfa4d813c294

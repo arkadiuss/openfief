@@ -7,4 +7,21 @@ The implementation of M0 ran into these questions. No decision in [DESIGN.md](DE
 
 Items are grouped by area and numbered for discussion only; the numbers are not design IDs.
 
-No questions are open.
+## XTB
+
+81. **Where a closed CFD's result comes from.**
+   - *Problem:* D-24 and D-152 book a closed CFD's result as cash income so the account's cash reconciles. The export R-24 read held no CFD, so it isn't known whether `Closed Positions`' `Profit/Loss` is net of the position's commission, swap and rollover, nor whether `Cash Operations` repeats the result, or those charges, in rows of its own.
+   - *Today:* each closed position of a category other than a stock or ETF books its `Profit/Loss`, in the account's currency, as cash income on the UTC date it closed, keyed `closed-position:` plus its position ID. `Cash Operations` rows of such a category stay unsupported ingest problems, so nothing is booked twice ([Ingest](concepts/ingest.md#mapping-an-xstation-export)).
+   - *Options:* keep; or book `Gross Profit` with commission, swap and rollover as fees of their own; or book the result from `Cash Operations` once a real CFD export shows its rows.
+
+82. **A ticker an export no longer shows open.**
+   - *Problem:* D-155 asserts, from an export's `Open Positions`, the summed volume of each ticker with open positions. A ticker the account held before and has since sold entirely has no row there, so the export says nothing about it explicitly.
+   - *Today:* only the tickers with open positions on the report's date are asserted; a ticker with none gets no assertion, so a missing sale isn't caught by the export's own holdings ([Ingest](concepts/ingest.md#mapping-an-xstation-export)).
+   - *Options:* keep; or assert zero for every confirmed ticker the account holds that the export's `Open Positions` doesn't list.
+
+## Ghostfolio
+
+80. **Cash income in Ghostfolio.**
+   - *Problem:* D-152's cash income has no holding, and Ghostfolio's `INTEREST` activity needs an asset. D-108 names a manual asset only for fees.
+   - *Today:* cash income has no activity: it moves only the owned account's cash balance, which follows OpenFief's cash (D-108), so Ghostfolio's totals include it but its activities don't list it ([Ghostfolio](concepts/ghostfolio.md)).
+   - *Options:* keep; or book it as an `INTEREST` against a manual "OpenFief cash income" asset per currency, derived like the fee asset (D-108, D-134).

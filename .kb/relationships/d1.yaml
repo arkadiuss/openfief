@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-938c3da3ea45
+  - type: implements
+    from: SYM-ingest-app-connectors-book-tickers
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:31:36.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-365408bdbcaf

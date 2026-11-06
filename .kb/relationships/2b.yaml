@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c5103e02fd86
+  - type: executable_for
+    from: SYM-ledger-test-helper-cash-postings
+    to: TEST-ledger-cash-checkpoint
+    created_at: 2026-11-02T06:00:05.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d779173e57ee

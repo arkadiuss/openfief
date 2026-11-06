@@ -566,3 +566,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3faa6ce43af2
+  - type: implements
+    from: SYM-ingest-pg-ticker-rows-unexported
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:19:22.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b11fc3f35d14
+  - type: implements
+    from: SYM-ingest-pg-ticker-rows-unexported
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:19:22.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43c5b38255cc
+  - type: covered_by
+    from: SYM-ingest-pg-ticker-rows-unexported
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:19:22.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbea6cee3b44

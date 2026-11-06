@@ -776,3 +776,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-760f7ae73c94
+  - type: validates
+    from: TEST-ingest-connectrpc-cash-income
+    to: REQ-ledger-cash-income-kind
+    created_at: 2026-11-02T05:50:49.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-43c695f07cb3
+  - type: validates
+    from: TEST-ingest-connectrpc-cash-income
+    to: REQ-ledger-cash-income-tax-withheld
+    created_at: 2026-11-02T05:50:49.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba98198fee5e

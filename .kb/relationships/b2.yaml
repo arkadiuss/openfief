@@ -720,3 +720,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d713624192a1
+  - type: constrains
+    from: REQ-ingest-ticker-assertion-contract
+    to: FACT-SUBJECT-09561DB01CFD7F7F
+    created_at: 2026-11-02T07:00:36.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cadeec95ee0
+  - type: requires_property
+    from: REQ-ingest-ticker-assertion-contract
+    to: FACT-PROP-3493B6FD938D478D
+    created_at: 2026-11-02T07:00:36.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42cf18d7dd40
+  - type: specified_by
+    from: REQ-ingest-ticker-assertion-contract
+    to: SCEN-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:00:36.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29f219b38cc3
+  - type: implements
+    from: SYM-ingest-pg-ticker-row
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:19:06.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a07be7524b7
+  - type: implements
+    from: SYM-ingest-pg-ticker-row
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:19:06.977Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-adc2b90a297d
+  - type: covered_by
+    from: SYM-ingest-pg-ticker-row
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:19:07.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11f107a0eafd

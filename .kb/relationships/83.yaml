@@ -748,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8959b75f8874
+  - type: implements
+    from: SYM-ingest-connectrpc-ticker-assertions-from
+    to: REQ-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:14:27.398Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2f606847388
+  - type: covered_by
+    from: SYM-ingest-connectrpc-ticker-assertions-from
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:14:27.446Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4297753f5d59
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-correct-fixture
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:15:35.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05fcb58bcdbb

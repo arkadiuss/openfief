@@ -440,13 +440,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3ca6c353e46
-  - type: executable_for
-    from: SYM-ingest-app-test-helper-fake-ticker-store-booked-ticker-entries
-    to: TEST-ingest-app-start
-    created_at: 2026-11-01T08:01:51.716Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6c085504f162
   - type: implements
     from: SYM-views-connectapi-pb-broken-transfers
     to: REQ-ledger-transfer-broken-stops-counting
@@ -671,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72b511d7172f
+  - type: implements
+    from: SYM-connector-gen-pb-ticker-assertion-proto-message
+    to: REQ-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:02:50.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b9d5b052d71
+  - type: covered_by
+    from: SYM-connector-gen-pb-ticker-assertion-proto-message
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:02:51.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12db6350a107

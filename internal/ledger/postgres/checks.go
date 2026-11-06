@@ -6,6 +6,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/ledger/app"
 )
@@ -82,4 +83,15 @@ func scanCheck(row pgx.CollectableRow, account ledger.AccountID) (app.AssertionC
 		return app.AssertionCheck{}, err
 	}
 	return c, nil
+}
+
+// DeleteAssertionCheck removes the check of account's assertion of book on
+// day, if there is one.
+func (s *Store) DeleteAssertionCheck(ctx context.Context, account ledger.AccountID, day kernel.Date, book ledger.Book) error {
+	_, err := s.db.Exec(ctx, `DELETE FROM ledger.assertion_checks WHERE account_id = $1 AND date = $2 AND book = $3`,
+		string(account), day.String(), book.String())
+	if err != nil {
+		return fmt.Errorf("removing the balance assertion check of %s on %s: %w", account, day, err)
+	}
+	return nil
 }

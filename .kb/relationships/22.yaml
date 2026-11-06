@@ -594,13 +594,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db23ee37bdf2
-  - type: covered_by
-    from: SYM-ingest-pg-listing-row-confirm
-    to: TEST-core-xtb-opening
-    created_at: 2026-11-01T23:59:03.709Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-80d7cc40787c
   - type: implements
     from: SYM-identity-gen-pb-begin-passkey-check-request-reset
     to: REQ-identity-auth-contract
@@ -784,16 +777,23 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-96a7ced11bfc
   - type: implements
-    from: SYM-ingest-pg-listing-row-confirm
-    to: REQ-ingest-owner-picks-ambiguous-trading-currency
-    created_at: 2026-11-02T02:38:48.175Z
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-get-trading-currency
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:04:37.129Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-f9680156d9b5
-  - type: implements
-    from: SYM-ingest-pg-listing-row-confirm
-    to: REQ-ingest-ambiguous-currency-positions-wait
-    created_at: 2026-11-02T02:38:48.219Z
+    id: rel-30a699080f58
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-get-trading-currency
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:04:37.172Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-135585768194
+    id: rel-4c8be3f1baa8
+  - type: executable_for
+    from: SYM-ingest-pg-test-test-correcting-an-unconfirmed-ticker
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:19:29.867Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-78c726c0f6dc

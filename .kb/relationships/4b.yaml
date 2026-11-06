@@ -832,3 +832,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c0b65e7804f6
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-string
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:05:07.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ead7b419505
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-confirmed-ticker-string
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:05:07.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-792f8797997a
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-hold-at-two-instances
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:20:11.648Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f52e2c2ed8b1

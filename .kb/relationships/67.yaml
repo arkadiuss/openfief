@@ -979,3 +979,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cc0fb9e97da8
+  - type: executable_for
+    from: SYM-ingest-test-helper-replaced-of
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:12:50.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01510b04a772

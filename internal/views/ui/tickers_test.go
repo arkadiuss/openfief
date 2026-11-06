@@ -37,6 +37,38 @@ type fakeTickers struct {
 
 	mu        sync.Mutex
 	confirmed []*ingestv1.ConfirmTickerRequest
+	corrected []*ingestv1.CorrectTickerRequest
+}
+
+// errNotConfirmed is the fake core's refusal of a correction of a ticker
+// never confirmed.
+var errNotConfirmed = errors.New("the ticker's ISIN is not confirmed")
+
+func (f *fakeTickers) ListConfirmedTickers(_ context.Context, r *connect.Request[ingestv1.ListConfirmedTickersRequest]) (*connect.Response[ingestv1.ListConfirmedTickersResponse], error) {
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	return connect.NewResponse(&ingestv1.ListConfirmedTickersResponse{Tickers: []*ingestv1.ConfirmedTicker{
+		{Institution: "xtb", Instance: "xtb-main", Symbol: "TESTD.PL", Country: "PL", Name: "Test Delta SA", Isin: "XX0000000001", TradingCurrency: "PLN", Booked: 3},
+		{Institution: "xtb", Instance: "xtb-main", Symbol: "TESTE.PL", Country: "PL", Name: "Test Epsilon SA", Isin: "PLTESTE00002", TradingCurrency: "PLN", Booked: 2},
+		{
+			Institution: "xtb", Instance: "xtb-main", Symbol: "TESTF.UK", Country: "GB", Name: "Test Phi PLC", Isin: "XX0000000001",
+			TradingCurrency: "GBX", CurrencyChoices: londonCurrencies(), Booked: 1,
+		},
+	}}), nil
+}
+
+func (f *fakeTickers) CorrectTicker(_ context.Context, r *connect.Request[ingestv1.CorrectTickerRequest]) (*connect.Response[ingestv1.CorrectTickerResponse], error) {
+	if err := owner(r.Msg.GetSessionToken()); err != nil {
+		return nil, err
+	}
+	if r.Msg.GetSymbol() != "TESTD.PL" && r.Msg.GetSymbol() != "TESTF.UK" {
+		return nil, codeErr(connect.CodeFailedPrecondition, errNotConfirmed)
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.corrected = append(f.corrected, r.Msg)
+	return connect.NewResponse(&ingestv1.CorrectTickerResponse{Booked: 3}), nil
 }
 
 func (f *fakeTickers) ListPendingTickers(_ context.Context, r *connect.Request[ingestv1.ListPendingTickersRequest]) (*connect.Response[ingestv1.ListPendingTickersResponse], error) {
@@ -170,4 +202,54 @@ func TestUploadWaitingForTickers(t *testing.T) {
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "Import batch b-8 from xtb", `2 of the rows wait for their ticker's ISIN: <a href="/inbox">confirm the tickers in the Inbox</a>`,
 		"waits for the owner to confirm the ISIN of TESTA.PL")
+}
+
+// TestCorrectTicker checks D-153 on the instrument's page (D-195): to the
+// owner, the tickers confirmed with its ISIN are listed with their
+// institution, trading currency and rows booked, each with a form to
+// correct the ISIN, and a choice of currency on London, and no ticker of
+// another ISIN; a read session sees none of it. The owner's correction,
+// trimmed and in upper case, reaches the core, then the corrected
+// instrument's page says how many rows were booked anew; the core's
+// refusal is shown on the page.
+func TestCorrectTicker(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	page := h.serve(t, withSession(request(http.MethodGet, "/instruments/XX0000000001", ""), ownerSession))
+	wantStatus(t, page, http.StatusOK)
+	wantBody(t, page, "Confirmed tickers", "TESTD.PL", "Test Delta SA", `action="/instruments/XX0000000001/tickers/correct"`,
+		`value="XX0000000001"`, `aria-label="Correct the ISIN of TESTD.PL"`, `<td class="num">3</td>`,
+		`<select id="correct-currency-xtb-TESTF.UK" name="currency">`, `<option value="" selected>The listing's: GBX</option>`,
+		"superseded and kept in the log")
+	wantNoBody(t, page, `id="correct-currency-xtb-TESTD.PL"`, "TESTE.PL")
+	read := h.serve(t, withSession(request(http.MethodGet, "/instruments/XX0000000001", ""), readSession))
+	wantStatus(t, read, http.StatusOK)
+	wantNoBody(t, read, "Confirmed tickers")
+	path := "/instruments/XX0000000001/tickers/correct"
+	rec := h.serve(t, withSession(form(path, "instance=xtb-main&symbol=TESTD.PL&isin=+pltestc00008+"), ownerSession))
+	wantStatus(t, rec, http.StatusSeeOther)
+	if loc := rec.Header().Get("Location"); loc != "/instruments/PLTESTC00008?corrected=3" {
+		t.Errorf("redirect to %q, want /instruments/PLTESTC00008?corrected=3", loc)
+	}
+	h.tickers.mu.Lock()
+	got := h.tickers.corrected
+	h.tickers.mu.Unlock()
+	want := []*ingestv1.CorrectTickerRequest{{Origin: testOrigin, SessionToken: ownerSession, Instance: "xtb-main", Symbol: "TESTD.PL", Isin: "PLTESTC00008"}}
+	if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
+		t.Errorf("corrections handed to the core (-want +got):\n%s", diff)
+	}
+	corrected := h.serve(t, withSession(request(http.MethodGet, "/instruments/XX0000000001?corrected=3", ""), ownerSession))
+	wantBody(t, corrected, "The ISIN is corrected: 3 row(s) booked anew with it.")
+	refused := h.serve(t, withSession(form(path, "instance=xtb-main&symbol=TESTA.PL&isin=PLTESTC00008"), ownerSession))
+	wantStatus(t, refused, http.StatusBadRequest)
+	wantBody(t, refused, "The core refused this: the ticker&#39;s ISIN is not confirmed")
+	long := h.serve(t, withSession(form(path, "instance=xtb-main&symbol=TESTD.PL&isin="+strings.Repeat("X", 13)), ownerSession))
+	wantStatus(t, long, http.StatusBadRequest)
+	wantBody(t, long, "An ISIN has 12 characters")
+	if malformed := h.serve(t, withSession(form(path, "instance=xtb-main&isin=PLTESTC00008"), ownerSession)); malformed.Code != http.StatusBadRequest {
+		t.Errorf("a correction without its symbol = %d, want 400", malformed.Code)
+	}
+	if read := h.serve(t, withSession(form(path, "instance=xtb-main&symbol=TESTD.PL&isin=PLTESTC00008"), readSession)); read.Code != http.StatusForbidden {
+		t.Errorf("a read session's correction = %d, want 403", read.Code)
+	}
 }

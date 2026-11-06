@@ -291,7 +291,7 @@
 
 <section class="card" id="cash-checkpoints" aria-labelledby="cash-checkpoints-title">
   <h2 id="cash-checkpoints-title">Cash checkpoints</h2>
-  <p class="muted">The cash your bank, broker or the bond registry shows for this account on a date. It is checked against the cash derived from the transactions, and neither changes the other: a difference waits in the <a href="/inbox">Inbox</a>, and you book it here as an ordinary transaction, a deposit when the institution shows more and a withdrawal when it shows less, so it never counts as return.</p>
+  <p class="muted">The cash your bank, broker or the bond registry shows for this account on a date. It is checked against the cash derived from the transactions, and neither changes the other: a difference waits in the <a href="/inbox">Inbox</a>, and you book it here as an ordinary transaction: a deposit when the institution shows more and a withdrawal when it shows less, so it never counts as return, or cash income when the difference is income, such as interest, or a fee, so it counts as return.</p>
   {{if .Checkpoints}}
   <div class="table"><table>
     <thead><tr><th scope="col">Date</th><th scope="col" class="num">Shown</th><th scope="col" class="num">Derived</th><th scope="col" class="num">Difference</th><th scope="col">Result</th>{{if $.CheckpointForm}}<th scope="col">Book</th>{{end}}</tr></thead>
@@ -301,7 +301,10 @@
       <td>{{if .Booking}}<span class="pill pill-danger">differs</span>{{else}}<span class="pill pill-ok">matches</span>{{end}}</td>
       {{if $.CheckpointForm}}<td>{{if .Booking}}<form method="post" action="/accounts/{{$.Account.Id}}/cash-checkpoints/book" class="inline">
         <input type="hidden" name="date" value="{{.Check.Date}}"><input type="hidden" name="currency" value="{{.Check.Book.Currency}}">
-        <button type="submit" aria-label="Book the difference of {{.Check.Date}} as a {{.Booking}}">Book as a {{.Booking}}</button></form>{{else}}<span class="muted">nothing to book</span>{{end}}</td>{{end}}</tr>
+        <button type="submit" aria-label="Book the difference of {{.Check.Date}} as a {{.Booking}}">Book as a {{.Booking}}</button></form>
+        <form method="post" action="/accounts/{{$.Account.Id}}/cash-checkpoints/book" class="inline">
+        <input type="hidden" name="date" value="{{.Check.Date}}"><input type="hidden" name="currency" value="{{.Check.Book.Currency}}"><input type="hidden" name="as" value="cash-income">
+        <button type="submit" class="quiet" aria-label="Book the difference of {{.Check.Date}} as cash income">Book as cash income</button></form>{{else}}<span class="muted">nothing to book</span>{{end}}</td>{{end}}</tr>
     {{end}}
     </tbody>
   </table></div>

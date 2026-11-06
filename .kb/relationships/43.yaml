@@ -657,13 +657,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bfefb8d38920
-  - type: covered_by
-    from: SYM-ingest-pg-listing-row-parts
-    to: TEST-core-xtb-opening
-    created_at: 2026-11-01T23:58:52.148Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c75cbadd4b69
   - type: implements
     from: SYM-identity-app-principal-caller
     to: REQ-identity-authz-one-interface
@@ -720,10 +713,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1c47e56a5e2
-  - type: implements
-    from: SYM-ingest-pg-listing-row-parts
-    to: REQ-ingest-trading-currency-listing-or-exchange
-    created_at: 2026-11-02T02:37:31.926Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ddc5c7f1ea01

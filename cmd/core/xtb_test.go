@@ -32,8 +32,9 @@ import (
 const sendingBank = "Bank Testowy"
 
 // xtbExport is a synthetic XTB export: a deposit, buys of TESTA.PL and
-// TESTB.UK, a sale of TESTA.PL, a dividend of TESTB.UK with tax withheld
-// and a withdrawal whose comment names the account.
+// TESTB.UK, a sale of TESTA.PL, a dividend of TESTB.UK with tax withheld,
+// a withdrawal whose comment names the account, and the 8 units of
+// TESTA.PL still open on the report's date, 2026-06-30 (D-155).
 func xtbExport() []byte {
 	day := func(m time.Month, d int) time.Time { return time.Date(2026, m, d, 10, 0, 0, 0, time.UTC) }
 	e := xtbtest.Export{
@@ -46,6 +47,9 @@ func xtbExport() []byte {
 			xtbtest.CashRow("Stock purchase", "Test Beta PLC", "TESTB.UK", "ETF", day(2, 3), "-400.00000000000006", "9000000008", "OPEN BUY 20/20 @ 4.80"),
 			xtbtest.CashRow("Stock purchase", "Test Alpha SA", "TESTA.PL", "STOCK", day(2, 2), "-1000", "9000000002", "OPEN BUY 10/10 @ 100"),
 			xtbtest.CashRow("Deposit", "", "", "", day(1, 5), "5000", "9000000001", "Przelew z "+sendingBank+" S.A."),
+		},
+		Open: [][]xtbtest.Cell{
+			xtbtest.OpenRow(&xtbtest.Position{Name: "Test Alpha SA", Ticker: "TESTA.PL", Category: "STOCK", Volume: "8", OpenPrice: "100", Opened: day(2, 2)}),
 		},
 	}
 	return e.Bytes()
@@ -143,7 +147,11 @@ func TestXTBUpload(t *testing.T) {
 	if err != nil || again.GetUnchanged() != 6 || again.GetNew() != 0 || again.GetProblemsTotal() != 0 {
 		t.Errorf("uploading the export again = %v, %v; want all 6 rows booked and unchanged", again, err)
 	}
-	checkXTBBooked(t, srv, session)
+	checkXTBBooked(t, srv, session, "PLTESTA00002")
+	checkHoldingAsserted(t, srv, session, "PLTESTA00002")
+	checkCorrectTicker(t, tickers, session)
+	checkXTBBooked(t, srv, session, "PLTESTC00008")
+	checkHoldingAsserted(t, srv, session, "PLTESTC00008")
 	checkNoTransferComments(t, pool)
 	if _, err := uploadStatementIn(t, api, session, string(demo.XTBAccount), ingestv1.Mode_MODE_OPENING, xtbExport()); connect.CodeOf(err) != connect.CodeFailedPrecondition ||
 		!strings.Contains(err.Error(), "whole history") {
@@ -253,8 +261,9 @@ func checkConfirmTickers(t *testing.T, tickers tickerAPI, session string) {
 
 // checkXTBBooked checks through the read API that the XTB account holds
 // the six rows, keyed by XTB's operation IDs and scoped to xtb-main, its
-// instruments with the confirmed ISINs and XTB's symbols.
-func checkXTBBooked(t *testing.T, srv *httptest.Server, session string) {
+// instruments with the confirmed ISINs, TESTA.PL's isinA, and XTB's
+// symbols.
+func checkXTBBooked(t *testing.T, srv *httptest.Server, session, isinA string) {
 	t.Helper()
 	var got viewsv1.ListTransactionsResponse
 	getJSON(t, srv, "/v1/accounts/"+string(demo.XTBAccount)+"/transactions?page_size=100", session, &got)
@@ -269,9 +278,61 @@ func checkXTBBooked(t *testing.T, srv *httptest.Server, session string) {
 			}
 		}
 	}
-	want := map[string]bool{"PLTESTA00002/TESTA.PL": true, "GBTESTB00000/TESTB.UK": true}
+	want := map[string]bool{isinA + "/TESTA.PL": true, "GBTESTB00000/TESTB.UK": true}
 	if len(got.GetTransactions()) != 6 || !cmp.Equal(want, instruments) {
 		t.Errorf("the XTB account holds %d transactions of %v, want 6 of %v", len(got.GetTransactions()), instruments, want)
+	}
+}
+
+// checkHoldingAsserted checks through the read API that the export's open
+// positions asserted the account's 8 units of TESTA.PL on 2026-06-30 as a
+// holding of isinA, matched, and no other holding (D-155, D-153).
+func checkHoldingAsserted(t *testing.T, srv *httptest.Server, session, isinA string) {
+	t.Helper()
+	var got viewsv1.ListAssertionChecksResponse
+	getJSON(t, srv, "/v1/accounts/"+string(demo.XTBAccount)+"/balance-assertions", session, &got)
+	var holdings []string
+	for _, c := range got.GetChecks() {
+		if in := c.GetBook().GetInstrument(); in != nil {
+			holdings = append(holdings, c.GetDate()+" "+in.GetIsin()+"/"+in.GetSymbol()+" "+c.GetReported()+" "+c.GetStatus().String())
+		}
+	}
+	want := []string{"2026-06-30 " + isinA + "/TESTA.PL 8 ASSERTION_STATUS_MATCHED"}
+	if diff := cmp.Diff(want, holdings); diff != "" {
+		t.Errorf("holding assertions (-want +got):\n%s", diff)
+	}
+}
+
+// checkCorrectTicker lists the confirmed tickers, corrects TESTA.PL to
+// PLTESTC00008, which books its three rows anew (D-153), and checks the
+// refusals: an unknown ticker and an unknown session.
+func checkCorrectTicker(t *testing.T, tickers tickerAPI, session string) {
+	t.Helper()
+	list := connect.NewRequest(&ingestv1.ListConfirmedTickersRequest{Origin: localUI, SessionToken: session})
+	list.Header().Set("Authorization", "Bearer "+uiCaller)
+	confirmed, err := tickers.ListConfirmedTickers(t.Context(), list)
+	if err != nil || len(confirmed.Msg.GetTickers()) != 2 || confirmed.Msg.GetTickers()[0].GetIsin() != "PLTESTA00002" ||
+		confirmed.Msg.GetTickers()[0].GetBooked() != 2 {
+		t.Fatalf("ListConfirmedTickers = %v, %v; want TESTA.PL with its 2 rows booked and TESTB.UK", confirmed, err)
+	}
+	correct := func(sess, symbol string) (*ingestv1.CorrectTickerResponse, error) {
+		req := connect.NewRequest(&ingestv1.CorrectTickerRequest{Origin: localUI, SessionToken: sess, Instance: "xtb-main", Symbol: symbol, Isin: "PLTESTC00008"})
+		req.Header().Set("Authorization", "Bearer "+uiCaller)
+		resp, callErr := tickers.CorrectTicker(t.Context(), req)
+		if callErr != nil {
+			return nil, fmt.Errorf("correct: %w", callErr)
+		}
+		return resp.Msg, nil
+	}
+	got, err := correct(session, "TESTA.PL")
+	if err != nil || got.GetBooked() != 2 {
+		t.Errorf("CorrectTicker(TESTA.PL) = %v, %v; want its 2 rows booked anew", got, err)
+	}
+	if _, err := correct(session, "TESTZ.PL"); connect.CodeOf(err) != connect.CodeNotFound {
+		t.Errorf("CorrectTicker of an unknown ticker = %v, want NotFound", err)
+	}
+	if _, err := correct("ofsess_nope_nope", "TESTA.PL"); connect.CodeOf(err) != connect.CodeUnauthenticated {
+		t.Errorf("CorrectTicker from an unknown session = %v, want Unauthenticated", err)
 	}
 }
 

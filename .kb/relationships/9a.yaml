@@ -797,3 +797,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-401fff550bb2
+  - type: verified_by
+    from: SCEN-ledger-withdraw-holding-assertions
+    to: TEST-ledger-app-withdraw
+    created_at: 2026-11-02T07:00:26.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce469104be4d
+  - type: verified_by
+    from: SCEN-ledger-withdraw-holding-assertions
+    to: TEST-ledger-pg-store
+    created_at: 2026-11-02T07:00:26.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18e46f315b58
+  - type: implements
+    from: SYM-ingest-booked-ticker-rows
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:13:04.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c37311a09609
+  - type: implements
+    from: SYM-ingest-booked-ticker-rows
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:13:04.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-100b56ace0d2
+  - type: covered_by
+    from: SYM-ingest-booked-ticker-rows
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:13:04.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-774e94f64f22

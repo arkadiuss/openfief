@@ -150,7 +150,9 @@ var (
 //   - a fee becomes a FEE against the MANUAL fee asset of its currency, and
 //     fees or tax in another currency than their activity's become FEEs of
 //     their own;
-//   - FX conversions, deposits and withdrawals have no activity;
+//   - FX conversions, deposits, withdrawals and cash income (D-152) have no
+//     activity: cash income has no holding to book it on, and the cash
+//     balance carries it;
 //   - a bond is a MANUAL asset (BondSymbol) named by BondName, whose
 //     price history is its stored valuations divided by the quantity held;
 //   - a listed instrument takes its data source and symbol from Listings.
@@ -237,7 +239,7 @@ func (p *projector) activities(accountID, comment string, t *ledger.Transaction)
 		return p.income(accountID, comment, TypeInterest, t)
 	case ledger.KindFee:
 		return p.feesOnly(accountID, comment, t)
-	case ledger.KindFXConversion, ledger.KindDeposit, ledger.KindWithdrawal, ledger.KindDeletion:
+	case ledger.KindFXConversion, ledger.KindDeposit, ledger.KindWithdrawal, ledger.KindDeletion, ledger.KindCashIncome:
 		return nil, nil
 	}
 	return nil, fmt.Errorf("%w: kind %s", errMalformed, t.Kind)

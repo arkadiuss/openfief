@@ -1084,3 +1084,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4364f7297d4f
+  - type: implements
+    from: SYM-connector-gen-pb-ticker-assertion-get-account-id
+    to: REQ-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:02:02.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-128337125a2c
+  - type: covered_by
+    from: SYM-connector-gen-pb-ticker-assertion-get-account-id
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:02:02.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3380c3b3fef2

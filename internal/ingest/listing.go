@@ -139,14 +139,21 @@ func CurrencyChoices(t *Ticker, proposal *ISINProposal, isin ledger.ISIN) []stri
 // else none. No currency is assumed.
 func ListingOf(t *Ticker, proposal *ISINProposal, isin ledger.ISIN, chosen string) Listing {
 	out := Listing{ISIN: isin}
+	if c, minor, ok := ParseTradingCurrency(ListingCode(t, proposal, isin, chosen)); ok {
+		out.Currency, out.Minor = c, minor
+	}
+	return out
+}
+
+// ListingCode returns the trading currency code ListingOf settles, as a
+// market-data source or the owner names it, such as "GBX", or "" for
+// none: the code the owner sees for a confirmed ticker.
+func ListingCode(t *Ticker, proposal *ISINProposal, isin ledger.ISIN, chosen string) string {
 	code := settledCode(t, proposal, isin)
 	if code == "" && slices.Contains(CurrencyChoices(t, proposal, isin), chosen) {
 		code = chosen
 	}
-	if c, minor, ok := ParseTradingCurrency(code); ok {
-		out.Currency, out.Minor = c, minor
-	}
-	return out
+	return code
 }
 
 // ConfirmListing returns the listing the owner's confirmation of isin for

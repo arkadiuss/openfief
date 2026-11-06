@@ -60,6 +60,9 @@ func CheckBound(instance string, bound []ledger.AccountID, m *Mapping) error {
 	for i := range m.TickerEntries {
 		check(m.TickerEntries[i].Header.Account)
 	}
+	for i := range m.TickerAssertions {
+		check(m.TickerAssertions[i].Account)
+	}
 	if len(unbound) == 0 {
 		return nil
 	}

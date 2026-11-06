@@ -57,12 +57,12 @@ func (l *Ledger) RecordCashCheckpoint(ctx context.Context, account ledger.Accoun
 
 // BookCashDifference books the difference between account's cash
 // checkpoint of on in c and the cash derived on that date as an ordinary
-// manual transaction (ledger.CashDifference): a deposit when the
-// institution showed more, a withdrawal when it showed less. It returns
-// the transaction. A checkpoint the owner never entered fails with
+// manual transaction (ledger.CashDifference), as the owner chose: by
+// default a deposit when the institution showed more, a withdrawal when it
+// showed less, or cash income (D-152). It returns the transaction. A checkpoint the owner never entered fails with
 // ErrUnknownCheckpoint, a matching one with ledger.ErrNoCashDifference.
 // Once booked, the checkpoint matches and its attention item clears.
-func (l *Ledger) BookCashDifference(ctx context.Context, account ledger.AccountID, on kernel.Date, c kernel.Currency) (ledger.Transaction, error) {
+func (l *Ledger) BookCashDifference(ctx context.Context, account ledger.AccountID, on kernel.Date, c kernel.Currency, as ledger.DifferenceBooking) (ledger.Transaction, error) {
 	a, err := l.checkpoint(ctx, account, on, c)
 	if err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking a cash difference: %w", err)
@@ -75,7 +75,7 @@ func (l *Ledger) BookCashDifference(ctx context.Context, account ledger.AccountI
 	if err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking a cash difference: %w", err)
 	}
-	t, err := ledger.CashDifference(&a, derived.Amount())
+	t, err := ledger.CashDifference(&a, derived.Amount(), as)
 	if err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking a cash difference: %w", err)
 	}
@@ -150,7 +150,7 @@ type CashCheckpoints struct {
 // differences; *Ledger implements it.
 type CashCheckpointBook interface {
 	RecordCashCheckpoint(ctx context.Context, account ledger.AccountID, on kernel.Date, cash kernel.Money) (AssertionCheck, error)
-	BookCashDifference(ctx context.Context, account ledger.AccountID, on kernel.Date, c kernel.Currency) (ledger.Transaction, error)
+	BookCashDifference(ctx context.Context, account ledger.AccountID, on kernel.Date, c kernel.Currency, as ledger.DifferenceBooking) (ledger.Transaction, error)
 }
 
 // Record records the cash the institution showed for account on a date, as
@@ -172,17 +172,18 @@ func (c *CashCheckpoints) Record(ctx context.Context, origin, sessionToken strin
 }
 
 // BookDifference books the difference to account's checkpoint of on in cur
-// as a deposit or withdrawal (Ledger.BookCashDifference). The caller must
+// as the owner chose, a deposit or withdrawal by default, or cash income
+// (Ledger.BookCashDifference). The caller must
 // be the owner and may change account (D-163); otherwise it fails with
 // ErrNotOwner and books nothing.
-func (c *CashCheckpoints) BookDifference(ctx context.Context, origin, sessionToken string, account ledger.AccountID, on kernel.Date, cur kernel.Currency) (ledger.Transaction, error) {
+func (c *CashCheckpoints) BookDifference(ctx context.Context, origin, sessionToken string, account ledger.AccountID, on kernel.Date, cur kernel.Currency, as ledger.DifferenceBooking) (ledger.Transaction, error) {
 	if err := c.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking a cash difference: %w", err)
 	}
 	if err := mayChange(ctx, c.Owners, origin, sessionToken, []ledger.AccountID{account}); err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking a cash difference: %w", err)
 	}
-	t, err := c.Ledger.BookCashDifference(ctx, account, on, cur)
+	t, err := c.Ledger.BookCashDifference(ctx, account, on, cur, as)
 	if err != nil {
 		return ledger.Transaction{}, fmt.Errorf("booking a cash difference: %w", err)
 	}

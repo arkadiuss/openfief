@@ -608,3 +608,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-06787e6aa719
+  - type: implements
+    from: SYM-ingest-app-tickers-book-rows
+    to: REQ-ingest-confirmed-isin-owner-corrects
+    created_at: 2026-11-02T07:15:12.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce4dd5601995
+  - type: implements
+    from: SYM-ingest-app-tickers-book-rows
+    to: REQ-ingest-confirmed-isin-per-institution
+    created_at: 2026-11-02T07:15:12.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9c052f1738d
+  - type: covered_by
+    from: SYM-ingest-app-tickers-book-rows
+    to: TEST-ingest-app-start
+    created_at: 2026-11-02T07:15:12.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7646f0d6441c

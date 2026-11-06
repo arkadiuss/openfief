@@ -1,6 +1,6 @@
 ---
 title: The XTB connector must report every open or closed CFD position, and every cash operation of a category other than a stock or ETF, as an unsupported ingest problem.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-24
 tags:
   - strict-modeling

@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a48d73b98f4e
+  - type: implements
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-get-session-token
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:06:00.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9f929d186d6
+  - type: covered_by
+    from: SYM-ingestv1-tickers-pb-correct-ticker-request-get-session-token
+    to: TEST-core-xtb-upload
+    created_at: 2026-11-02T07:06:00.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2778f661afb8

@@ -16,8 +16,9 @@ import (
 // ForgetAccount removes what the ingest schema holds of a deleted account
 // (D-120), in one transaction: its connector bindings, and the mappings of
 // the broker accounts mapped to it, which are left unmapped as when first
-// reported, the go-live an opening upload recorded for it (D-160), and its
-// payout setting (D-135). Forgetting it again changes nothing.
+// reported, the go-live an opening upload recorded for it (D-160), its
+// payout setting (D-135), and the ticker entries and holdings named in it
+// (D-116, D-155). Forgetting it again changes nothing.
 func (s *Store) ForgetAccount(ctx context.Context, account ledger.AccountID) error {
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		if _, err := tx.Exec(ctx, `DELETE FROM ingest.connector_bindings WHERE account_id = $1`, string(account)); err != nil {
@@ -33,6 +34,12 @@ func (s *Store) ForgetAccount(ctx context.Context, account ledger.AccountID) err
 		}
 		if _, err := tx.Exec(ctx, `DELETE FROM ingest.payout_settings WHERE account_id = $1`, string(account)); err != nil {
 			return fmt.Errorf("payout setting: %w", err)
+		}
+		if _, err := tx.Exec(ctx, `DELETE FROM ingest.ticker_entries WHERE account_id = $1`, string(account)); err != nil {
+			return fmt.Errorf("ticker entries: %w", err)
+		}
+		if _, err := tx.Exec(ctx, `DELETE FROM ingest.ticker_assertions WHERE account_id = $1`, string(account)); err != nil {
+			return fmt.Errorf("ticker assertions: %w", err)
 		}
 		return nil
 	})

@@ -325,6 +325,15 @@ func (i ledgerImporter) AddOpeningLots(ctx context.Context, txs []ledger.Transac
 	return importSummary(&sum), nil
 }
 
+// WithdrawAssertions withdraws holding assertions through the ledger, such
+// as those a ticker correction replaces (D-153).
+func (i ledgerImporter) WithdrawAssertions(ctx context.Context, assertions []ledger.BalanceAssertion) error {
+	if err := i.ledger.WithdrawAssertions(ctx, assertions); err != nil {
+		return fmt.Errorf("ledger: %w", err)
+	}
+	return nil
+}
+
 // Seed seeds through the ledger.
 func (i ledgerImporter) Seed(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion) (ingest.ImportSummary, error) {
 	sum, err := i.ledger.Seed(ctx, txs, assertions)

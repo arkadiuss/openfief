@@ -762,3 +762,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2d1d28dc385
+  - type: implements
+    from: SYM-ingest-xtb-mapping-closed-cfd
+    to: REQ-ingest-xtb-cfd-closed-cash-income
+    created_at: 2026-11-02T05:54:57.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-026ef59e966f
+  - type: covered_by
+    from: SYM-ingest-xtb-mapping-closed-cfd
+    to: TEST-ingest-xtb-cash-income
+    created_at: 2026-11-02T05:54:58.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6e870164ccb
+  - type: implements
+    from: SYM-ingest-pg-store-confirmed-ticker-list
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:16:33.925Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c968e4be23e
+  - type: covered_by
+    from: SYM-ingest-pg-store-confirmed-ticker-list
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:16:33.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfdb58aff999

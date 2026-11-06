@@ -594,3 +594,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f3ea0df48a23
+  - type: implements
+    from: SYM-connector-gen-pb-ticker-assertion-get-broker-account
+    to: REQ-ingest-ticker-assertion-contract
+    created_at: 2026-11-02T07:02:10.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc9a5982d730
+  - type: covered_by
+    from: SYM-connector-gen-pb-ticker-assertion-get-broker-account
+    to: TEST-ingest-connectrpc-tickers
+    created_at: 2026-11-02T07:02:10.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e068b9e4613a
+  - type: implements
+    from: SYM-ingest-pg-store-ticker-accounts
+    to: REQ-ingest-ticker-correction-service
+    created_at: 2026-11-02T07:16:49.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c809d847672
+  - type: covered_by
+    from: SYM-ingest-pg-store-ticker-accounts
+    to: TEST-ingest-postgres-tickers
+    created_at: 2026-11-02T07:16:49.224Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8147c106c0d0

@@ -629,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1626b5c0fd6b
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-cash-income-round-trip
+    to: TEST-ingest-connectrpc-cash-income
+    created_at: 2026-11-02T05:55:32.494Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e973b1537c7

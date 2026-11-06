@@ -3,6 +3,7 @@ package xtb
 import (
 	"errors"
 	"fmt"
+	"maps"
 	"regexp"
 	"slices"
 
@@ -89,35 +90,44 @@ type cashRow struct {
 }
 
 // cashOperations maps Cash Operations, oldest first: the sheet lists them
-// newest first (R-24). Dividends are booked with the tax withheld from
-// them, which has rows of its own.
+// newest first (R-24). Dividends and free-funds interest are booked with
+// the tax withheld from them, which has rows of its own.
 func (m *mapping) cashOperations() {
-	recs := m.x.cash.records()
-	slices.Reverse(recs)
-	var rows, dividends, withholdings []*cashRow
-	for _, rec := range recs {
-		r, err := m.readCash(rec)
-		if err != nil {
-			m.problem(problemOf(m.cashRef(rec, ""), err))
-			continue
-		}
-		switch r.kind {
-		case typeDividend:
-			dividends = append(dividends, r)
-		case typeWithholding:
-			withholdings = append(withholdings, r)
-		}
-		rows = append(rows, r)
-	}
-	withheld := m.pairWithholding(dividends, withholdings)
-	for _, r := range rows {
-		if r.kind == typeWithholding {
+	rows := m.readCashRows()
+	withheld := m.pairWithholding(rows.byType[typeDividend], rows.byType[typeWithholding])
+	maps.Copy(withheld, m.pairInterestTax(rows.byType[typeInterest], rows.byType[typeInterestTax]))
+	for _, r := range rows.all {
+		if r.kind == typeWithholding || r.kind == typeInterestTax {
 			continue
 		}
 		if err := m.cashOperation(r, withheld[r]); err != nil {
 			m.problem(problemOf(r.ref, err))
 		}
 	}
+}
+
+// cashRows are the Cash Operations rows read, oldest first, and by type.
+type cashRows struct {
+	all    []*cashRow
+	byType map[string][]*cashRow
+}
+
+// readCashRows reads Cash Operations, oldest first, and returns the rows
+// it could read; a row it can't read is an ingest problem.
+func (m *mapping) readCashRows() cashRows {
+	recs := m.x.cash.records()
+	slices.Reverse(recs)
+	out := cashRows{byType: map[string][]*cashRow{}}
+	for _, rec := range recs {
+		r, err := m.readCash(rec)
+		if err != nil {
+			m.problem(problemOf(m.cashRef(rec, ""), err))
+			continue
+		}
+		out.byType[r.kind] = append(out.byType[r.kind], r)
+		out.all = append(out.all, r)
+	}
+	return out
 }
 
 // cashRef names a Cash Operations row in a problem, with its ID when known.
@@ -203,8 +213,9 @@ func (m *mapping) cashOperation(r *cashRow, withheld kernel.Money) error {
 		return m.trade(r)
 	case typeDividend:
 		return m.dividend(r, withheld)
-	case typeInterest, typeInterestTax:
-		return unsupported("free-funds interest is not supported yet")
+	case typeInterest:
+		return m.interest(r, withheld)
+	case typeInterestTax:
 	}
 	return unsupported("cash operation type %q is not supported", shown(r.kind))
 }
@@ -235,6 +246,26 @@ func (m *mapping) transfer(r *cashRow, in bool) error {
 		return fmt.Errorf("%w: %w", errLedger, err)
 	}
 	t.Account = ""
+	m.entries.Transactions = append(m.entries.Transactions, t)
+	return nil
+}
+
+// interest books free-funds interest, XTB's interest on uninvested cash,
+// as cash income (D-152), with the tax withheld from it, which has a row
+// of its own: income gives the interest, withholding tax takes the tax and
+// cash receives the rest. Its description is fixed; the comment, which
+// names the month, isn't read.
+func (m *mapping) interest(r *cashRow, withheld kernel.Money) error {
+	if r.amount.Sign() < 0 {
+		return unsupported("negative free-funds interest is not supported")
+	}
+	h := r.header()
+	h.Account = standIn
+	t, err := ledger.NewCashIncome(h, r.amount, withheld)
+	if err != nil {
+		return fmt.Errorf("%w: %w", errLedger, err)
+	}
+	t.Account, t.Description = "", "free-funds interest"
 	m.entries.Transactions = append(m.entries.Transactions, t)
 	return nil
 }
@@ -322,29 +353,54 @@ func (m *mapping) needStock(r *cashRow) error {
 	return nil
 }
 
+// pairInterestTax returns the tax withheld from each free-funds interest
+// row: each tax row belongs to the one interest row of its date, and
+// several rows of one interest add up. A tax row with no such interest,
+// more than one, or a positive amount (a refund) is an ingest problem.
+func (m *mapping) pairInterestTax(interest, taxes []*cashRow) map[*cashRow]kernel.Money {
+	return m.pairTax(interest, taxes, taxNames{"free-funds interest tax", "free-funds interest", "free-funds interest rows"},
+		func(_, _ *cashRow) bool { return true })
+}
+
 // pairWithholding returns the tax withheld from each dividend: each
 // withholding tax row belongs to the one dividend of its ticker on its
 // date, and several rows of one dividend add up. A row with no such
 // dividend, more than one, or a positive amount (a refund) is an ingest
 // problem.
 func (m *mapping) pairWithholding(dividends, withholdings []*cashRow) map[*cashRow]kernel.Money {
+	return m.pairTax(dividends, withholdings, taxNames{"withholding tax", "dividend", "dividends"},
+		func(d, w *cashRow) bool { return d.symbol == w.symbol })
+}
+
+// taxNames name a tax row and its income, once and as several, in
+// problems.
+type taxNames struct {
+	tax, income, incomes string
+}
+
+// pairTax returns the tax each of incomes was withheld: each of taxes,
+// named by names, belongs to the one income dated on its date that same
+// accepts, and several taxes of one income add up. A tax with no such
+// income, more than one, or a positive amount (a refund) is an ingest
+// problem.
+func (m *mapping) pairTax(incomes, taxes []*cashRow, names taxNames, same func(income, tax *cashRow) bool) map[*cashRow]kernel.Money {
 	withheld := map[*cashRow]kernel.Money{}
-	for _, w := range withholdings {
+	for _, w := range taxes {
 		var found []*cashRow
-		for _, d := range dividends {
-			if d.symbol == w.symbol && d.on.Equal(w.on) {
+		for _, d := range incomes {
+			if same(d, w) && d.on.Equal(w.on) {
 				found = append(found, d)
 			}
 		}
 		switch {
 		case w.amount.Sign() >= 0:
-			m.problem(ingest.Unsupported(w.ref, "a withholding tax refund is not supported"))
+			m.problem(ingest.Unsupported(w.ref, "a "+names.tax+" refund is not supported"))
 			continue
 		case len(found) == 0:
-			m.problem(ingest.Unsupported(w.ref, "withholding tax without its dividend in this file"))
+			m.problem(ingest.Unsupported(w.ref, names.tax+" without its "+names.income+" in this file"))
 			continue
 		case len(found) > 1:
-			m.problem(ingest.Unsupported(w.ref, fmt.Sprintf("withholding tax matches %d dividends", len(found))))
+			m.problem(ingest.Unsupported(w.ref, fmt.Sprintf("%s matches %d %s", names.tax, len(found), names.incomes)))
 			continue
 		}
 		d := found[0]
@@ -355,7 +411,7 @@ func (m *mapping) pairWithholding(dividends, withholdings []*cashRow) map[*cashR
 		}
 		total, err := sum.Add(w.amount.Neg())
 		if err != nil {
-			m.problem(ingest.Unsupported(w.ref, "withholding tax in another currency than its dividend"))
+			m.problem(ingest.Unsupported(w.ref, names.tax+" in another currency than its "+names.income))
 			continue
 		}
 		withheld[d] = total

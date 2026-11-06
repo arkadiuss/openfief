@@ -535,6 +535,7 @@ components:
         - BOOK_KIND_WITHHOLDING_TAX
         - BOOK_KIND_FX
         - BOOK_KIND_EQUITY
+        - BOOK_KIND_INCOME
       description: BookKind is the kind of a ledger account inside an account.
     openfief.views.v1.ClassAmount:
       type: object
@@ -2438,6 +2439,7 @@ components:
         - TRANSACTION_KIND_OPENING_LOT
         - TRANSACTION_KIND_INTEREST
         - TRANSACTION_KIND_REDEMPTION
+        - TRANSACTION_KIND_CASH_INCOME
       description: TransactionKind is what kind of economic event a transaction is.
     openfief.views.v1.Transfer:
       type: object

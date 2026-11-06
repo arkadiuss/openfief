@@ -5,9 +5,10 @@
 // assertion (D-18) and checks it against the cash derived from the
 // transaction log, which it never changes. A mismatch raises an attention
 // item (D-130); from it the owner books the difference as an ordinary
-// manual transaction: a deposit when the institution shows more cash, a
-// withdrawal when it shows less, so an unexplained difference never shows
-// as return. One owner-only service for this kind of entry (D-79).
+// manual transaction: by default a deposit when the institution shows more
+// cash, a withdrawal when it shows less, so an unexplained difference never
+// shows as return, or cash income (D-152) when it is income or a fee. One
+// owner-only service for this kind of entry (D-79).
 //
 // Calling conventions are the AuthService's
 // (proto/openfief/identity/v1/auth.proto), as in transfers.proto:
@@ -75,9 +76,10 @@ type CashCheckpointServiceClient interface {
 	// earlier one.
 	RecordCashCheckpoint(context.Context, *connect.Request[v1.RecordCashCheckpointRequest]) (*connect.Response[v1.RecordCashCheckpointResponse], error)
 	// BookCashDifference books the difference between a checkpoint and the
-	// cash derived on its date as a deposit or a withdrawal, dated on the
-	// checkpoint's date, so the checkpoint matches. Booking the same
-	// difference again books nothing new.
+	// cash derived on its date as a deposit or a withdrawal, or as cash
+	// income when the request asks, dated on the checkpoint's date, so the
+	// checkpoint matches. Booking the same difference again books nothing
+	// new.
 	BookCashDifference(context.Context, *connect.Request[v1.BookCashDifferenceRequest]) (*connect.Response[v1.BookCashDifferenceResponse], error)
 }
 
@@ -132,9 +134,10 @@ type CashCheckpointServiceHandler interface {
 	// earlier one.
 	RecordCashCheckpoint(context.Context, *connect.Request[v1.RecordCashCheckpointRequest]) (*connect.Response[v1.RecordCashCheckpointResponse], error)
 	// BookCashDifference books the difference between a checkpoint and the
-	// cash derived on its date as a deposit or a withdrawal, dated on the
-	// checkpoint's date, so the checkpoint matches. Booking the same
-	// difference again books nothing new.
+	// cash derived on its date as a deposit or a withdrawal, or as cash
+	// income when the request asks, dated on the checkpoint's date, so the
+	// checkpoint matches. Booking the same difference again books nothing
+	// new.
 	BookCashDifference(context.Context, *connect.Request[v1.BookCashDifferenceRequest]) (*connect.Response[v1.BookCashDifferenceResponse], error)
 }
 

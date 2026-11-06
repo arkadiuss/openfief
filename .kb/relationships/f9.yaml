@@ -769,3 +769,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4d5aa27fd5c
+  - type: implements
+    from: SYM-ingest-ticker-assertion-assertion
+    to: REQ-ingest-xtb-open-positions-assert-holdings
+    created_at: 2026-11-02T07:11:37.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4be6ec6202fe
+  - type: implements
+    from: SYM-ingest-ticker-assertion-assertion
+    to: REQ-ingest-xtb-unconfirmed-ticker-asserted-on-confirm
+    created_at: 2026-11-02T07:11:37.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab9ae059b8e6
+  - type: covered_by
+    from: SYM-ingest-ticker-assertion-assertion
+    to: TEST-ingest-ticker-booking
+    created_at: 2026-11-02T07:11:37.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0282cf5586ff

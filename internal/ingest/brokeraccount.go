@@ -67,10 +67,11 @@ func (b *BrokerAccount) Mapped() bool { return b.Account != "" }
 // OpenFief account: their Account is empty, and their key's source names no
 // account (D-72).
 type BrokerEntries struct {
-	Account       BrokerAccountID
-	Transactions  []ledger.Transaction
-	Assertions    []ledger.BalanceAssertion
-	TickerEntries []TickerEntry
+	Account          BrokerAccountID
+	Transactions     []ledger.Transaction
+	Assertions       []ledger.BalanceAssertion
+	TickerEntries    []TickerEntry
+	TickerAssertions []TickerAssertion
 }
 
 // Resolution is a mapping with its broker accounts resolved: what to
@@ -91,7 +92,8 @@ type Resolution struct {
 // OpenFief accounts known maps them to (D-72): each transaction and balance
 // assertion gets the account, and each transaction's key source gets ":"
 // and the account ID, so that keys stay per account as connectors key them
-// (ledger.TransactionKey); ticker entries likewise. Entries of a broker account that is not mapped
+// (ledger.TransactionKey); ticker entries likewise, and ticker assertions
+// get the account. Entries of a broker account that is not mapped
 // are left out and the account listed in Unmapped. In an opening batch the
 // seeding transactions and opening-lot ticker entries of a broker account
 // already seeded are left out too, so seeding one newly mapped account
@@ -105,6 +107,7 @@ func ResolveBrokerAccounts(m *Mapping, known []BrokerAccount, mode Mode) Resolut
 		CrossCheckPrices: slices.Clone(m.CrossCheckPrices),
 		Tickers:          slices.Clone(m.Tickers),
 		TickerEntries:    slices.Clone(m.TickerEntries),
+		TickerAssertions: slices.Clone(m.TickerAssertions),
 	}}
 	byID := make(map[BrokerAccountID]BrokerAccount, len(known))
 	for i := range known {
@@ -154,6 +157,10 @@ func book(e *BrokerEntries, account ledger.AccountID, reseeding bool, out *Mappi
 		t.Header.Account = account
 		t.Header.Key.Source += ":" + string(account)
 		out.TickerEntries = append(out.TickerEntries, t)
+	}
+	for _, a := range e.TickerAssertions {
+		a.Account = account
+		out.TickerAssertions = append(out.TickerAssertions, a)
 	}
 }
 

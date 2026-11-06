@@ -60,6 +60,8 @@ func TestResolveBrokerAccounts(t *testing.T) {
 				Account:      main,
 				Transactions: []ledger.Transaction{brokerTx(ledger.KindOpeningLot, "lot-1"), brokerTx(ledger.KindBuy, "t-1")},
 				Assertions:   []ledger.BalanceAssertion{{Book: ledger.Book{Kind: ledger.BookCash}}},
+				// A holding named by ticker gets the account too (D-155).
+				TickerAssertions: []ingest.TickerAssertion{{Symbol: "TESTA.PL"}},
 			},
 			{Account: side, Transactions: []ledger.Transaction{brokerTx(ledger.KindBuy, "t-2")}},
 		},
@@ -69,6 +71,7 @@ func TestResolveBrokerAccounts(t *testing.T) {
 		return []ingest.BrokerAccount{{Instance: "ibkr-main", ID: main, Account: "acc-main", Seeded: seeded}, {Instance: "ibkr-main", ID: side}}
 	}
 	direct := m.Transactions[0]
+	mainHoldings := []ingest.TickerAssertion{{Symbol: "TESTA.PL", Account: "acc-main"}}
 	tests := []struct {
 		name  string
 		known []ingest.BrokerAccount
@@ -90,6 +93,7 @@ func TestResolveBrokerAccounts(t *testing.T) {
 				Mapping: ingest.Mapping{
 					Transactions: []ledger.Transaction{direct, booked(ledger.KindOpeningLot, "lot-1"), booked(ledger.KindBuy, "t-1")},
 					Assertions:   []ledger.BalanceAssertion{mainAssertion}, Problems: m.Problems,
+					TickerAssertions: mainHoldings,
 				},
 				Unmapped: []ingest.BrokerAccountID{side},
 			},
@@ -101,6 +105,7 @@ func TestResolveBrokerAccounts(t *testing.T) {
 				Mapping: ingest.Mapping{
 					Transactions: []ledger.Transaction{direct, booked(ledger.KindOpeningLot, "lot-1"), booked(ledger.KindBuy, "t-1")},
 					Assertions:   []ledger.BalanceAssertion{mainAssertion}, Problems: m.Problems,
+					TickerAssertions: mainHoldings,
 				},
 				Unmapped: []ingest.BrokerAccountID{side},
 				Seeding:  []ingest.BrokerAccountID{main},
@@ -113,6 +118,7 @@ func TestResolveBrokerAccounts(t *testing.T) {
 				Mapping: ingest.Mapping{
 					Transactions: []ledger.Transaction{direct, booked(ledger.KindBuy, "t-1")},
 					Assertions:   []ledger.BalanceAssertion{mainAssertion}, Problems: m.Problems,
+					TickerAssertions: mainHoldings,
 				},
 				Unmapped: []ingest.BrokerAccountID{side},
 			},
@@ -124,6 +130,7 @@ func TestResolveBrokerAccounts(t *testing.T) {
 				Mapping: ingest.Mapping{
 					Transactions: []ledger.Transaction{direct, booked(ledger.KindOpeningLot, "lot-1"), booked(ledger.KindBuy, "t-1")},
 					Assertions:   []ledger.BalanceAssertion{mainAssertion}, Problems: m.Problems,
+					TickerAssertions: mainHoldings,
 				},
 				Unmapped: []ingest.BrokerAccountID{side},
 				Seeding:  []ingest.BrokerAccountID{main, "U0000003"},

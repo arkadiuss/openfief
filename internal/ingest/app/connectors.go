@@ -568,7 +568,7 @@ func (c *Connectors) admit(ctx context.Context, instance, source string, mode in
 	if err != nil {
 		return ingest.Resolution{}, nil, err
 	}
-	booked, err := c.bookTickers(ctx, instance, &kept)
+	booked, err := c.bookTickers(ctx, instance, d.Institution, &kept)
 	if err != nil {
 		return ingest.Resolution{}, nil, err
 	}
@@ -578,7 +578,7 @@ func (c *Connectors) admit(ctx context.Context, instance, source string, mode in
 
 // checkBound refuses m unless every account it names is bound to instance.
 func (c *Connectors) checkBound(ctx context.Context, instance string, m *ingest.Mapping) error {
-	if len(m.Transactions) == 0 && len(m.Assertions) == 0 && len(m.TickerEntries) == 0 {
+	if len(m.Transactions) == 0 && len(m.Assertions) == 0 && len(m.TickerEntries) == 0 && len(m.TickerAssertions) == 0 {
 		return nil
 	}
 	bound, err := c.Bindings.BoundAccounts(ctx, instance)

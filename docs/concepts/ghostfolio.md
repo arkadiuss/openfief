@@ -70,6 +70,7 @@ Every step is safe to repeat: accounts are created with the same UUIDs, an activ
 | Interest, such as a bond's coupon (D-101) | `INTEREST`, shaped like a `DIVIDEND` |
 | Fee | `FEE` against the fee asset of its currency (D-108) |
 | FX conversion, deposit, withdrawal | none: they move only cash, which the balance follows |
+| Cash income, such as XTB's interest on uninvested cash or a closed CFD's result (D-152) | none: it has no holding to book an activity on, and it moves only cash, which the balance follows |
 
 Fees of a buy or sell in the activity's currency are its fee; a fee or withheld tax in another currency becomes a `FEE` of its own, commented `#fee:` and the currency after the transaction's comment. A treasury bond (an instrument the read API classes as `treasury_bond`) is a `MANUAL` asset: its symbol is `BondSymbol`, a UUID derived from the instance's name, the Ghostfolio user's ID and the series code, and its name `BondName`, the code plus " (OpenFief bond)", which no earlier version used, and every sync sends its whole price history, each stored valuation divided by the quantity held at the end of that day (D-64). A fee asset is a `MANUAL` asset per currency named "OpenFief fees" and the currency, `FeeSymbol` of the instance, the user and the currency (D-108). Symbols are unique across Ghostfolio's users, so keying them by the instance alone would still collide between two installs whose instances share a name (D-134). A listed instrument takes Ghostfolio's data source and symbol, such as `YAHOO` and its ticker, from the owner's listings by ISIN (D-108); an instrument with no listing is left out as a `ProblemUnlisted`, and the rest is still synced.
 
@@ -151,7 +152,7 @@ These requirements refine the firm ones imported from D-3, D-4 and D-64. `TestGh
 ## Not built yet
 
 - **Cash in other currencies** than the Ghostfolio user's base currency is left out of the balances (implementation question 11).
-- **Interest.** The read API has no interest kind yet (D-101), so there is no `INTEREST` activity.
+- **Cash income as an activity.** Cash income (D-152) moves only the cash balance: Ghostfolio's `INTEREST` needs an asset, and no decision names one for income that no holding produces (implementation question 80).
 - **The demo doesn't run the plugin**, and no end-to-end test reaches a Ghostfolio, in the cluster or outside it.
 - **The catalog (D-43).** The plugin is built and signed by CI but not in the catalog.
 - **A recorded version check.** The version request follows Ghostfolio 3.93.0's export source, not a recording; the next recording against a real Ghostfolio adds it.

@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4163d36570c7
+  - type: validates
+    from: TEST-ingest-xtb-holdings
+    to: REQ-ingest-xtb-open-positions-assert-holdings
+    created_at: 2026-11-02T06:59:50.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-066b01abd306

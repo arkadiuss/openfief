@@ -72,6 +72,9 @@ enum BookKind {
   BOOK_KIND_FX = 5;
   // The counterpart of deposits, withdrawals and opening lots (D-33).
   BOOK_KIND_EQUITY = 6;
+  // The source of income that no holding produces, such as a broker's
+  // interest on uninvested cash or a closed CFD's result (D-152).
+  BOOK_KIND_INCOME = 7;
 }
 
 // Book names a ledger account: a holding names its instrument and no
@@ -113,6 +116,12 @@ enum TransactionKind {
   // (D-135): its holding posting gives up the units at the redemption
   // value, with the tax withheld at source posted to withholding tax.
   TRANSACTION_KIND_REDEMPTION = 11;
+  // Income that no holding produces, such as a broker's interest on
+  // uninvested cash or a closed CFD's result, with any tax withheld
+  // (D-152): income gives it, withholding tax takes the tax, cash gets the
+  // rest; a negative one, such as a CFD's loss, takes cash out.
+  // Performance counts it as return, never as money paid in.
+  TRANSACTION_KIND_CASH_INCOME = 12;
 }
 
 // TransactionKey identifies a transaction across re-imports (D-18). The core
@@ -311,6 +320,12 @@ message Delivery {
   // keeps the first name any connector delivers for an instrument; the
   // owner can rename it.
   repeated InstrumentName instrument_names = 15;
+  // The holdings of instruments named in tickers that the institution
+  // reports, such as the summed volume of each ticker's open positions in
+  // an xStation export (D-155). The core asserts each as a balance
+  // assertion of the instrument the owner confirmed for its ticker, and
+  // holds it until the owner does.
+  repeated TickerAssertion ticker_assertions = 16;
 }
 
 // InstrumentName is an instrument's display name at the institution, for
@@ -375,6 +390,24 @@ message TickerTransaction {
   // of the exchange its market names, once the owner confirms its ISIN.
   // Empty for any other kind and for an opening lot priced by amount.
   string open_price = 13;
+}
+
+// TickerAssertion is a holding of an instrument named by ticker only that
+// the institution reports for an account at the end of a date (D-155),
+// like a BalanceAssertion of a holding.
+message TickerAssertion {
+  // The symbol of one of the delivery's tickers.
+  string symbol = 1;
+  // The OpenFief account ID; empty when broker_account names the account.
+  string account_id = 2;
+  // The institution's own ID of the account, as on Transaction (D-72).
+  string broker_account = 3;
+  // YYYY-MM-DD.
+  string date = 4;
+  // The units held, a non-negative decimal.
+  string quantity = 5;
+  // Where the rows are in the statement, as in Problem.
+  string ref = 6;
 }
 
 message LookupInstrumentsRequest {

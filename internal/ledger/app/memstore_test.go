@@ -216,6 +216,13 @@ func (s *memStore) SaveAssertionCheck(_ context.Context, c *app.AssertionCheck) 
 	return nil
 }
 
+func (s *memStore) DeleteAssertionCheck(_ context.Context, account ledger.AccountID, day kernel.Date, book ledger.Book) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	delete(s.checks, checkKey{account, day, book})
+	return nil
+}
+
 func (s *memStore) AssertionChecks(_ context.Context, account ledger.AccountID) ([]app.AssertionCheck, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
