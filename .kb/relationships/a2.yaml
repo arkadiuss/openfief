@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-716cb2c2e5e8
+  - type: executable_for
+    from: SYM-treasurybonds-test-sync-result
+    to: TEST-treasurybonds-coupons
+    created_at: 2026-11-02T09:42:11.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d41956107d1e

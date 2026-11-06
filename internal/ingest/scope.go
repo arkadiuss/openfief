@@ -1,6 +1,10 @@
 package ingest
 
-import "github.com/arkadiuss/openfief/internal/ledger"
+import (
+	"strings"
+
+	"github.com/arkadiuss/openfief/internal/ledger"
+)
 
 // connectorKeyPrefix starts the transaction key source of everything a
 // connector plugin delivers; the instance's name follows it.
@@ -26,6 +30,28 @@ func ScopeToConnector(instance string, txs []ledger.Transaction) []ledger.Transa
 		if out[i].Key.Source != "" {
 			out[i].Key.Source = ConnectorKeySource(instance, out[i].Key.Source)
 		}
+	}
+	return out
+}
+
+// BookedBy returns the headers of the transactions of current that
+// connector instance delivered, in order, each keyed as the connector keyed
+// it: the source without the prefix ConnectorKeySource added. A connector
+// that stores nothing learns from them what it booked, such as the coupons
+// of a bond lot the owner deletes (D-154). Transactions of any other source
+// are left out.
+func BookedBy(instance string, current []ledger.Transaction) []ledger.TransactionHeader {
+	prefix := ConnectorKeySource(instance, "")
+	var out []ledger.TransactionHeader
+	for i := range current {
+		source, ok := strings.CutPrefix(current[i].Key.Source, prefix)
+		if !ok || source == "" {
+			continue
+		}
+		out = append(out, ledger.TransactionHeader{
+			Key:     ledger.TransactionKey{Source: source, ExternalID: current[i].Key.ExternalID},
+			Account: current[i].Account, Date: current[i].Date,
+		})
 	}
 	return out
 }

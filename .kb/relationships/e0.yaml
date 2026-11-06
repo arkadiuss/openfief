@@ -951,3 +951,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2732bcb4fdbd
+  - type: validates
+    from: TEST-treasurybonds-mapper
+    to: REQ-ingest-bond-lot-delete-deletes-coupons
+    created_at: 2026-11-02T10:24:21.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bed1a533ed7
+  - type: implements
+    from: SYM-connectorv1-booked-transaction-proto-message
+    to: REQ-treasurybonds-lot-delete-deletes-booked
+    created_at: 2026-11-02T10:25:51.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46fdc8e3cce1
+  - type: covered_by
+    from: SYM-connectorv1-booked-transaction-proto-message
+    to: TEST-ingest-connectrpc-bonds
+    created_at: 2026-11-02T10:25:51.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9b9fe59d324

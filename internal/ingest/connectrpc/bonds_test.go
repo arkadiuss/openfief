@@ -15,6 +15,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest/app"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
+	"github.com/arkadiuss/openfief/internal/ledger"
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1/connectorv1connect"
 )
@@ -150,13 +151,27 @@ func TestClientDeletesBondLots(t *testing.T) {
 	l := lotOf(t, 40)
 	exchanged := l
 	exchanged.Purchase = ingest.PurchaseExchange
-	e := &ingest.BondLotEntries{GoLive: goLive(t), Lots: []ingest.BondLot{exchanged}, Deleted: []ingest.BondLotKey{{Series: l.Series(), Purchased: goLive(t)}}}
+	e := &ingest.BondLotEntries{
+		GoLive: goLive(t), Lots: []ingest.BondLot{exchanged}, Deleted: []ingest.BondLotKey{{Series: l.Series(), Purchased: goLive(t)}},
+		Booked: []ledger.TransactionHeader{{
+			Key:     ledger.TransactionKey{Source: "treasury-bonds:acc-bonds", ExternalID: "lot:EDO0536:2026-05-15:redemption"},
+			Account: "acc-bonds", Date: goLive(t),
+		}},
+	}
 	if _, err := newClient(t, conn).ImportBondLots(t.Context(), "bonds-main", "b-1", e); err != nil {
 		t.Fatalf("ImportBondLots: %v", err)
 	}
 	want := []*connectorv1.BondLotKey{{Series: "EDO0536", PurchaseDate: "2026-05-15"}}
 	if diff := cmp.Diff(want, conn.req.GetDeleted(), protocmp.Transform()); diff != "" {
 		t.Errorf("deleted lots sent (-want +got):\n%s", diff)
+	}
+	// D-154: what the connector booked in the account goes with the deleted lots.
+	wantBooked := []*connectorv1.BookedTransaction{{
+		Key:  &connectorv1.TransactionKey{Source: "treasury-bonds:acc-bonds", ExternalId: "lot:EDO0536:2026-05-15:redemption"},
+		Date: "2026-05-15",
+	}}
+	if diff := cmp.Diff(wantBooked, conn.req.GetBooked(), protocmp.Transform()); diff != "" {
+		t.Errorf("booked transactions sent (-want +got):\n%s", diff)
 	}
 	if got := conn.req.GetLots()[0].GetPurchase(); got != connectorv1.BondPurchase_BOND_PURCHASE_EXCHANGE {
 		t.Errorf("purchase sent = %s, want exchange", got)

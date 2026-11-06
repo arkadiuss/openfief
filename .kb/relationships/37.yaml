@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40b2c354e0fb
+  - type: validates
+    from: TEST-ingest-app-bondlots
+    to: REQ-ingest-bond-lot-delete-deletes-coupons
+    created_at: 2026-11-02T10:24:23.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca9d3a5a469e
+  - type: implements
+    from: SYM-delivery-bond-lot-entries
+    to: REQ-treasurybonds-lot-delete-deletes-booked
+    created_at: 2026-11-02T10:27:59.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec2c213241cc

@@ -573,13 +573,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-21fa69eda018
-  - type: implements
-    from: SYM-treasurybonds-earliest-purchase
-    to: REQ-treasurybonds-coupons-as-interest
-    created_at: 2026-10-31T13:57:18.076Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-65cff80c5028
   - type: covered_by
     from: SYM-treasurybonds-earliest-purchase
     to: TEST-treasurybonds-coupons
@@ -832,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f210b2b5e91
+  - type: implements
+    from: SYM-treasurybonds-earliest-purchase
+    to: REQ-treasurybonds-coupons-booked-every-sync
+    created_at: 2026-11-02T09:20:56.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b15ae7d044b

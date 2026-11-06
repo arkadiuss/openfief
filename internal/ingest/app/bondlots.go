@@ -55,6 +55,12 @@ type BatchRecorder interface {
 	RecordBatch(ctx context.Context, instance string, b *ingest.Batch) error
 }
 
+// AccountTransactions reads an account's current transactions;
+// ledger/app.Ledger implements it.
+type AccountTransactions interface {
+	CurrentTransactions(ctx context.Context, account ledger.AccountID) ([]ledger.Transaction, error)
+}
+
 // BondLots takes treasury bond lots the owner enters by hand in the
 // built-in UI (D-9) and hands each to the connector instance bound to its
 // account, which maps it; the core imports what it delivers like any
@@ -65,6 +71,10 @@ type BondLots struct {
 	Connectors *Connectors
 	// Batches records each completed batch in the import batch history.
 	Batches BatchRecorder
+	// Booked reads the account's current transactions, from which Delete
+	// tells the connector what it booked there (D-154); nil tells it
+	// nothing, so only the lot's own transactions are deleted.
+	Booked AccountTransactions
 	// Today returns the date a lot may be bought on at the latest.
 	Today func() kernel.Date
 	// NewBatchID returns a fresh import batch ID.
@@ -105,10 +115,13 @@ func (b *BondLots) Add(ctx context.Context, origin, sessionToken string, account
 
 // Delete deletes the lot of account that key names, as a correction
 // (D-100), for the owner whose session sessionToken is, on origin: it hands
-// the key to the one connector instance bound to account, which delivers a
-// deletion of each of the lot's transactions, and imports them as a new
-// transactions batch. Each deletion supersedes the lot's transaction, which
-// the ledger keeps (D-18); deleting it again changes nothing. A key without
+// the key to the one connector instance bound to account, with the
+// account's current transactions that instance delivered (ingest.BookedBy),
+// and the connector delivers a deletion of each of the lot's transactions
+// and of each one it booked for the lot since, such as its coupons, so
+// their cash goes too (D-154); Delete imports them as a new transactions
+// batch. Each deletion supersedes its transaction, which the ledger keeps
+// (D-18); deleting it again changes nothing. A key without
 // a series or date wraps ingest.ErrInvalidBondLot, and a lot never entered
 // wraps ledger.ErrNothingToDelete; otherwise Delete fails as Add does.
 func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, account ledger.AccountID, key ingest.BondLotKey) (ingest.Batch, error) {
@@ -122,7 +135,12 @@ func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, acco
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}
-	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, &ingest.BondLotEntries{Deleted: []ingest.BondLotKey{key}})
+	booked, err := b.booked(ctx, instance, account)
+	if err != nil {
+		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
+	}
+	entries := &ingest.BondLotEntries{Deleted: []ingest.BondLotKey{key}, Booked: booked}
+	batch, err := b.Connectors.ImportBondLots(ctx, instance, b.NewBatchID(), account, entries)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}
@@ -130,6 +148,19 @@ func (b *BondLots) Delete(ctx context.Context, origin, sessionToken string, acco
 		return ingest.Batch{}, fmt.Errorf("deleting a bond lot: %w", err)
 	}
 	return batch, nil
+}
+
+// booked returns the current transactions of account that instance
+// delivered, keyed as it keyed them, or none without Booked.
+func (b *BondLots) booked(ctx context.Context, instance string, account ledger.AccountID) ([]ledger.TransactionHeader, error) {
+	if b.Booked == nil {
+		return nil, nil
+	}
+	current, err := b.Booked.CurrentTransactions(ctx, account)
+	if err != nil {
+		return nil, fmt.Errorf("transactions of %s: %w", account, err)
+	}
+	return ingest.BookedBy(instance, current), nil
 }
 
 // boundInstance returns the one connector instance bound to account, or an

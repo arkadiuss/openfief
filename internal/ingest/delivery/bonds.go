@@ -19,6 +19,9 @@ var ErrMalformedLot = errors.New("malformed bond lot")
 // errNoFee reports a lot without its early-redemption fee.
 var errNoFee = errors.New("early_redemption_fee is missing")
 
+// errNoKey reports a booked transaction without its source or external ID.
+var errNoKey = errors.New("source and external_id are required")
+
 // BondLots reads the lots of an ImportBondLots request, in order. It
 // checks only that each field parses; whether a lot can be booked is
 // ingest.BondLot.Validate's to say.
@@ -113,6 +116,32 @@ func BondLotEntries(req *connectorv1.ImportBondLotsRequest) (ingest.BondLotEntri
 			return ingest.BondLotEntries{}, fmt.Errorf("%w: deleted[%d].purchase_date: %w", ErrMalformedLot, i, err)
 		}
 		out.Deleted = append(out.Deleted, ingest.BondLotKey{Series: series, Purchased: purchased})
+	}
+	booked, bookedErr := bookedFrom(out.Account, req.GetBooked())
+	if bookedErr != nil {
+		return ingest.BondLotEntries{}, bookedErr
+	}
+	out.Booked = booked
+	return out, nil
+}
+
+// bookedFrom reads the transactions of account a request says the
+// connector booked (D-154): each needs a key and a date.
+func bookedFrom(account ledger.AccountID, booked []*connectorv1.BookedTransaction) ([]ledger.TransactionHeader, error) {
+	out := make([]ledger.TransactionHeader, 0, len(booked))
+	for i, b := range booked {
+		k := b.GetKey()
+		if k.GetSource() == "" || k.GetExternalId() == "" {
+			return nil, fmt.Errorf("%w: booked[%d].key: %w", ErrMalformedLot, i, errNoKey)
+		}
+		day, err := kernel.ParseDate(b.GetDate())
+		if err != nil {
+			return nil, fmt.Errorf("%w: booked[%d].date: %w", ErrMalformedLot, i, err)
+		}
+		out = append(out, ledger.TransactionHeader{
+			Key:     ledger.TransactionKey{Source: k.GetSource(), ExternalID: k.GetExternalId()},
+			Account: account, Date: day,
+		})
 	}
 	return out, nil
 }

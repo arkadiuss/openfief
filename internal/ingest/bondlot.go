@@ -78,6 +78,12 @@ type BondLotEntries struct {
 	GoLive  kernel.Date
 	Lots    []BondLot
 	Deleted []BondLotKey
+	// Booked are, only with Deleted, the account's current transactions
+	// the connector instance delivered, keyed as the connector keyed them
+	// (BookedBy), so a connector that stores nothing can delete everything
+	// it booked for a deleted lot, its coupons and their cash included
+	// (D-154).
+	Booked []ledger.TransactionHeader
 }
 
 // Key returns the lot's key: its series and purchase date.

@@ -1098,3 +1098,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3380c3b3fef2
+  - type: validates
+    from: TEST-core-bond-coupons
+    to: REQ-ingest-bond-lot-delete-deletes-coupons
+    created_at: 2026-11-02T10:24:25.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60dc912bf4f2
+  - type: executable_for
+    from: SYM-core-test-helper-coupon-connector-import-bond-lots
+    to: TEST-core-bond-coupons
+    created_at: 2026-11-02T10:27:35.921Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fae6516439c8
+  - type: implements
+    from: SYM-treasurybonds-mapper-deletions
+    to: REQ-ingest-bond-lot-delete-deletes-coupons
+    created_at: 2026-11-02T10:27:44.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12edbdeca050

@@ -271,12 +271,26 @@ func with(r *refusal, change func(r *refusal)) *refusal {
 	return r
 }
 
+// fakeTransactions are an account's current transactions.
+type fakeTransactions []ledger.Transaction
+
+func (f fakeTransactions) CurrentTransactions(context.Context, ledger.AccountID) ([]ledger.Transaction, error) {
+	return f, nil
+}
+
 func TestBondLotsDelete(t *testing.T) {
 	t.Parallel()
 	caller := &fakeCaller{delivery: bondDelivery(t, bondsAccount)}
 	l := &fakeLedger{summary: ingest.ImportSummary{NewVersions: 2}}
 	b := bondLots(t, caller, l, &fakeStores{}, []string{"bonds-main"})
 	lot := edoLot(t)
+	coupon := ledger.Transaction{
+		Key:     ledger.TransactionKey{Source: "plugin:bonds-main:treasury-bonds:" + string(bondsAccount), ExternalID: "lot:EDO0536:2026-05-04:redemption"},
+		Account: bondsAccount, Date: lot.Purchased, Kind: ledger.KindRedemption,
+	}
+	other := coupon
+	other.Key.Source = "manual"
+	b.Booked = fakeTransactions{coupon, other}
 	got, err := b.Delete(t.Context(), "https://ui.example.com", "owner", bondsAccount, lot.Key())
 	if err != nil {
 		t.Fatalf("Delete: %v", err)
@@ -284,8 +298,15 @@ func TestBondLotsDelete(t *testing.T) {
 	if got.ID != "b-1" || got.Source != app.SourceEntry || got.Imported.NewVersions != 2 {
 		t.Errorf("Delete batch = %+v, want b-1 from the owner's entry with the new versions", got)
 	}
-	// D-98: an account not seeded with opening lots has no go-live to send.
-	want := ingest.BondLotEntries{Account: bondsAccount, Deleted: []ingest.BondLotKey{lot.Key()}}
+	// D-98: an account not seeded with opening lots has no go-live to send. D-154: what the instance booked there
+	// goes with the deleted lot, keyed as the connector keyed it.
+	want := ingest.BondLotEntries{
+		Account: bondsAccount, Deleted: []ingest.BondLotKey{lot.Key()},
+		Booked: []ledger.TransactionHeader{{
+			Key:     ledger.TransactionKey{Source: "treasury-bonds:" + string(bondsAccount), ExternalID: "lot:EDO0536:2026-05-04:redemption"},
+			Account: bondsAccount, Date: lot.Purchased,
+		}},
+	}
 	if diff := cmp.Diff(want, caller.entries, cmpopts.EquateEmpty()); diff != "" || caller.instance != "bonds-main" {
 		t.Errorf("handed to %s (-want +got):\n%s", caller.instance, diff)
 	}

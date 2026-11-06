@@ -102,8 +102,12 @@ func TestBondLotEntries(t *testing.T) {
 	exchanged := lotMessage()
 	exchanged.Purchase = connectorv1.BondPurchase_BOND_PURCHASE_EXCHANGE
 	got, err := delivery.BondLotEntries(&connectorv1.ImportBondLotsRequest{
-		GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{exchanged},
+		GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{exchanged}, AccountId: "acc-bonds",
 		Deleted: []*connectorv1.BondLotKey{{Series: "EDO0536", PurchaseDate: "2026-05-10"}},
+		Booked: []*connectorv1.BookedTransaction{{
+			Key:  &connectorv1.TransactionKey{Source: "treasury-bonds:acc-bonds", ExternalId: "lot:EDO0536:2026-05-10:redemption"},
+			Date: "2036-05-10",
+		}},
 	})
 	if err != nil {
 		t.Fatalf("BondLotEntries: %v", err)
@@ -117,18 +121,27 @@ func TestBondLotEntries(t *testing.T) {
 	}
 	terms := edoTerms(t)
 	want := ingest.BondLotEntries{
+		Account: "acc-bonds",
 		GoLive:  day("2026-06-01"),
 		Lots:    []ingest.BondLot{{Terms: terms, Quantity: kernel.NewQuantity(dec(t, "40")), Purchased: day("2026-05-04"), Purchase: ingest.PurchaseExchange}},
 		Deleted: []ingest.BondLotKey{{Series: terms.Series, Purchased: day("2026-05-10")}},
+		Booked: []ledger.TransactionHeader{{
+			Key:     ledger.TransactionKey{Source: "treasury-bonds:acc-bonds", ExternalID: "lot:EDO0536:2026-05-10:redemption"},
+			Account: "acc-bonds", Date: day("2036-05-10"),
+		}},
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("BondLotEntries (-want +got):\n%s", diff)
 	}
 	for name, req := range map[string]*connectorv1.ImportBondLotsRequest{
-		"a malformed go-live": {GoLive: "1.6.2026", Lots: []*connectorv1.BondLot{lotMessage()}},
-		"a deleted series":    {GoLive: "2026-06-01", Deleted: []*connectorv1.BondLotKey{{Series: "EDO536", PurchaseDate: "2026-05-10"}}},
-		"a deleted date":      {GoLive: "2026-06-01", Deleted: []*connectorv1.BondLotKey{{Series: "EDO0536", PurchaseDate: "10.5.2026"}}},
-		"an unknown purchase": {GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{withPurchase(9)}},
+		"a malformed go-live":                  {GoLive: "1.6.2026", Lots: []*connectorv1.BondLot{lotMessage()}},
+		"a deleted series":                     {GoLive: "2026-06-01", Deleted: []*connectorv1.BondLotKey{{Series: "EDO536", PurchaseDate: "2026-05-10"}}},
+		"a deleted date":                       {GoLive: "2026-06-01", Deleted: []*connectorv1.BondLotKey{{Series: "EDO0536", PurchaseDate: "10.5.2026"}}},
+		"an unknown purchase":                  {GoLive: "2026-06-01", Lots: []*connectorv1.BondLot{withPurchase(9)}},
+		"a booked transaction without its key": {Booked: []*connectorv1.BookedTransaction{{Date: "2025-10-10"}}},
+		"a booked transaction without its date": {Booked: []*connectorv1.BookedTransaction{{
+			Key: &connectorv1.TransactionKey{Source: "treasury-bonds:acc-bonds", ExternalId: "x"},
+		}}},
 	} {
 		if _, err := delivery.BondLotEntries(req); !errors.Is(err, delivery.ErrMalformedLot) {
 			t.Errorf("%s: %v, want ErrMalformedLot", name, err)

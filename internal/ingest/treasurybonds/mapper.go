@@ -3,7 +3,9 @@ package treasurybonds
 import (
 	"errors"
 	"fmt"
+	"slices"
 	"strconv"
+	"strings"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
@@ -78,7 +80,9 @@ type Mapper struct {
 // it is booked as the opening lot it was, on the go-live date and keeping
 // its own purchase date and cost, so it keeps its key. Each deleted lot of
 // e (D-100) becomes a deletion of each of its transactions, keyed and
-// dated as adding it was. Map also returns each series' terms once, in the
+// dated as adding it was, and of everything e.Booked says was booked for
+// it since: its coupons, its redemption and their payout withdrawals, so
+// their cash goes with it (D-154). Map also returns each series' terms once, in the
 // order the series first appear. Any invalid lot, one series bought on one
 // day twice in the batch, or one series with two different terms refuses
 // the whole batch.
@@ -138,7 +142,7 @@ func (m Mapper) mapDeleted(e *ingest.BondLotEntries, seen map[ingest.BondLotKey]
 		if err != nil {
 			return nil, fmt.Errorf("deleted lot %d: %w", i+1, err)
 		}
-		txs, err := m.deletions(in, k, e.GoLive)
+		txs, err := m.deletions(in, k, e.GoLive, e.Booked)
 		if err != nil {
 			return nil, fmt.Errorf("deleted lot %d: %w", i+1, err)
 		}
@@ -222,14 +226,34 @@ func (m Mapper) lotTransactions(in ledger.Instrument, l *ingest.BondLot, goLive 
 	return []ledger.Transaction{deposit, buy}, nil
 }
 
-// deletions returns the deletion of each transaction lot k was booked as,
-// keyed and dated as lotTransactions books it.
-func (m Mapper) deletions(in ledger.Instrument, k ingest.BondLotKey, goLive kernel.Date) ([]ledger.Transaction, error) {
-	id := lotID(k)
-	headers := []ledger.TransactionHeader{m.header(id+":deposit", k.Purchased), m.header(id+":buy", k.Purchased)}
-	if opening(k.Purchased, goLive) {
-		headers = []ledger.TransactionHeader{m.header(id, goLive)}
+// bookedFor returns the headers of booked that were booked for lot k in
+// m's account under SourcePrefix, other than those of lot itself: every
+// key that extends the lot's own, "lot:<series>:<purchase date>:", such as
+// a coupon ("...:coupon:<due date>"), a redemption ("...:redemption") and
+// their payout withdrawals (":payout"), each with its own date.
+func (m Mapper) bookedFor(k ingest.BondLotKey, booked, lot []ledger.TransactionHeader) []ledger.TransactionHeader {
+	source, prefix := SourcePrefix+string(m.account), lotID(k)+":"
+	var out []ledger.TransactionHeader
+	for _, b := range booked {
+		if b.Key.Source != source || !strings.HasPrefix(b.Key.ExternalID, prefix) ||
+			slices.ContainsFunc(lot, func(h ledger.TransactionHeader) bool { return h.Key == b.Key }) {
+			continue
+		}
+		out = append(out, m.header(b.Key.ExternalID, b.Date))
 	}
+	return out
+}
+
+// deletions returns the deletion of each transaction lot k was booked as,
+// keyed and dated as lotTransactions books it, then of each of booked, in
+// order, that was booked for the lot (bookedFor).
+func (m Mapper) deletions(in ledger.Instrument, k ingest.BondLotKey, goLive kernel.Date, booked []ledger.TransactionHeader) ([]ledger.Transaction, error) {
+	id := lotID(k)
+	lot := []ledger.TransactionHeader{m.header(id+":deposit", k.Purchased), m.header(id+":buy", k.Purchased)}
+	if opening(k.Purchased, goLive) {
+		lot = []ledger.TransactionHeader{m.header(id, goLive)}
+	}
+	headers := slices.Concat(lot, m.bookedFor(k, booked, lot))
 	out := make([]ledger.Transaction, 0, len(headers))
 	for _, h := range headers {
 		t, err := ledger.NewDeletion(h)

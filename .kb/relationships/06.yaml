@@ -783,3 +783,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92bb24988784
+  - type: constrains
+    from: REQ-treasurybonds-cpi-years-kept
+    to: FACT-SUBJECT-7F62B31170D482ED
+    created_at: 2026-11-02T09:18:37.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef0acd1ac494
+  - type: requires_property
+    from: REQ-treasurybonds-cpi-years-kept
+    to: FACT-PROP-4712F181BA381E8D
+    created_at: 2026-11-02T09:18:37.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63eaedd9b585
+  - type: specified_by
+    from: REQ-treasurybonds-cpi-years-kept
+    to: SCEN-treasurybonds-cpi-years-kept
+    created_at: 2026-11-02T09:18:38.043Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e648fd3fcf68
