@@ -881,3 +881,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe5612d4db06
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-changing-owners-check-owner
+    to: TEST-valuation-app-chart-start
+    created_at: 2026-11-02T08:26:46.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a99888bef33c

@@ -56,6 +56,13 @@ components:
           description: |-
             The day bond_payout took effect, YYYY-MM-DD; empty for the account's
              first setting, which covers its whole history (D-162).
+        openedOnSeedingDay:
+          type: boolean
+          title: opened_on_seeding_day
+          description: |-
+            Whether the owner marked the account as opened on its seeding day
+             (D-168): its seeding then doesn't move the portfolio's charts' default
+             start (D-138).
       title: Account
       additionalProperties: false
       description: Account is one account at an institution. It belongs to one sleeve.
@@ -833,9 +840,10 @@ components:
           title: from
           description: |-
             The first date, the charts' start the owner chose (D-138), YYYY-MM-DD;
-             empty means the default start (the response's default_from), and a
-             date before the first transaction means that transaction's date. The
-             index is 100 on it.
+             empty means the start the owner stored as a setting (D-167, the
+             response's chosen_from) or, without one, the default start (the
+             response's default_from). A date before the first transaction means
+             that transaction's date. The index is 100 on it.
         to:
           type: string
           title: to
@@ -899,8 +907,17 @@ components:
              tracking began, which the charts mark. The portfolio's is the latest
              day an account was seeded from a starting balance (D-23), or its first
              transaction's date when none was: an account with its whole history,
-             or opened later, doesn't move it. An account's is its own first day.
-             Empty when nothing is recorded yet.
+             opened later, or marked as opened on its seeding day (D-168) doesn't
+             move it. An account's is its own first day. Empty when nothing is
+             recorded yet.
+        chosenFrom:
+          type: string
+          title: chosen_from
+          description: |-
+            The charts' start the owner stored as a setting (D-167) for the
+             portfolio or for the account asked for, YYYY-MM-DD; empty when none
+             is stored, and the charts start on default_from unless the request
+             named from.
       title: GetPerformanceResponse
       additionalProperties: false
     openfief.views.v1.GetSettingsRequest:
@@ -3326,9 +3343,10 @@ paths:
           in: query
           description: |-
             The first date, the charts' start the owner chose (D-138), YYYY-MM-DD;
-             empty means the default start (the response's default_from), and a
-             date before the first transaction means that transaction's date. The
-             index is 100 on it.
+             empty means the start the owner stored as a setting (D-167, the
+             response's chosen_from) or, without one, the default start (the
+             response's default_from). A date before the first transaction means
+             that transaction's date. The index is 100 on it.
           schema:
             type: string
             title: from

@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11f107a0eafd
+  - type: implements
+    from: SYM-views-app-views-viewable
+    to: REQ-identity-read-access-viewable-accounts-only
+    created_at: 2026-11-02T08:32:03.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f35949a09dc

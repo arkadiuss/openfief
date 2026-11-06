@@ -60,6 +60,7 @@ type Views struct {
 	changes     RecordedChanges
 	prices      InstrumentPrices
 	names       InstrumentNames
+	starts      ChartStarts
 }
 
 // New returns the queries over the given ports, with totals, valuations and

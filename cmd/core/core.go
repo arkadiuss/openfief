@@ -192,7 +192,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	names := &ledgerapp.Names{Store: ledgerpg.New(pool), Owners: ledgerOwners(auth, cfg.Auth.Origins, authz), Postings: l}
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)), viewsapp.WithInstrumentNames(names),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
-		viewsapp.WithPortfolio(sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)), historyOptions(pool, vstore))
+		viewsapp.WithPortfolio(sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)), viewsapp.WithChartStarts(vstore), historyOptions(pool, vstore))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, jurisdictionPack().ReportingCurrency(), cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)
@@ -216,7 +216,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withPriceCheckService(plugin, checks, callers, log)
 	plugin = withOnboardingServices(plugin, newSleeves(sleeves, auth, cfg.Auth.Origins),
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), auth, callers, log)
-	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
+	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg),
+		newChartStarts(auth, cfg.Auth.Origins, authz, vstore, l), callers, log)
 	plugin = withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log)
 	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil
 }

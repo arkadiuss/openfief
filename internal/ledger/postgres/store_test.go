@@ -39,7 +39,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql", "0008_accounts_only.sql", "0009_recorded_changes.sql", "0010_instrument_names.sql", "0011_cash_checkpoints.sql", "0012_cash_income.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql", "0008_accounts_only.sql", "0009_recorded_changes.sql", "0010_instrument_names.sql", "0011_cash_checkpoints.sql", "0012_cash_income.sql", "0013_opened_on_seeding_day.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `
@@ -62,8 +62,9 @@ func TestRegistryRoundTrip(t *testing.T) {
 	t.Parallel()
 	store, _ := seededStore(t)
 	ctx := t.Context()
-	// A saved account replaces the one with its ID.
-	moved := ledger.Account{ID: acc2, Institution: "treasury-bonds", Name: "Moved"}
+	// A saved account replaces the one with its ID, with the owner's mark
+	// that it was opened on its seeding day (D-168).
+	moved := ledger.Account{ID: acc2, Institution: "treasury-bonds", Name: "Moved", OpenedOnSeedingDay: true}
 	if saveErr := store.SaveAccount(ctx, moved); saveErr != nil {
 		t.Fatalf("SaveAccount: %v", saveErr)
 	}

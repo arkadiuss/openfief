@@ -811,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-276e69ba9260
+  - type: implements
+    from: SYM-views-app-with-authorizer
+    to: REQ-identity-read-access-viewable-accounts-only
+    created_at: 2026-11-02T08:32:18.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e647648ba08

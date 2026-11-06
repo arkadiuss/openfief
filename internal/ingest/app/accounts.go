@@ -107,6 +107,9 @@ type AccountChange struct {
 	// PayoutFrom is the day Payout takes effect from (D-162): today or an
 	// earlier day; zero is today.
 	PayoutFrom kernel.Date
+	// OpenedOnSeedingDay marks or unmarks the account as opened on its
+	// seeding day (D-168); nil keeps the account's mark.
+	OpenedOnSeedingDay *bool
 }
 
 // PayoutLedger is what a change of an account's payout setting reads from
@@ -140,6 +143,10 @@ type NewAccount struct {
 	// Payout is the account's payout setting (D-135); nil keeps its
 	// payouts as cash.
 	Payout *ingest.Payout
+	// OpenedOnSeedingDay marks the account as opened on its seeding day
+	// (D-168), so its seeding doesn't move the portfolio's charts' default
+	// start (D-138).
+	OpenedOnSeedingDay bool
 }
 
 // Accounts are the owner's account entries (D-72, D-73): creating and
@@ -204,7 +211,9 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 	if institution == "" {
 		institution = broker.Institution
 	}
-	entry.Account = ledger.Account{ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name}
+	entry.Account = ledger.Account{
+		ID: ledger.AccountID(id), Institution: string(institution), Name: n.Name, OpenedOnSeedingDay: n.OpenedOnSeedingDay,
+	}
 	entry.Sleeve = n.Sleeve
 	if entry.Payout, err = a.firstPayout(institution, n.Payout); err != nil {
 		return AccountEntry{}, fmt.Errorf("creating account %s: %w", id, err)
@@ -215,7 +224,8 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 	return entry, nil
 }
 
-// Update renames the stored account id and moves it to a sleeve, and
+// Update renames the stored account id and moves it to a sleeve, marks or
+// unmarks it as opened on its seeding day when c says (D-168), and
 // records its tax wrapper and fee rule when c changes them, and its payout
 // setting (D-135), in force from the day c gives, today or earlier, today
 // when it gives none (D-162). The payout withdrawals booked from that day on
@@ -526,7 +536,8 @@ func (a *Accounts) supersedePayouts(ctx context.Context, acc *AccountEntry, from
 
 // changed returns account acc as c changes it, checked, with the day a
 // payout change takes effect from: its name and sleeve, its tax wrapper
-// and fee rule when c gives them, and its payout setting (payout).
+// and fee rule when c gives them, its mark of being opened on its seeding
+// day when c gives one (D-168), and its payout setting (payout).
 func (a *Accounts) changed(ctx context.Context, acc ledger.Account, c *AccountChange) (AccountEntry, kernel.Date, error) {
 	entry, entryErr := a.entry(ctx, acc)
 	if entryErr != nil {
@@ -542,6 +553,9 @@ func (a *Accounts) changed(ctx context.Context, acc ledger.Account, c *AccountCh
 		return AccountEntry{}, kernel.Date{}, err
 	}
 	entry.Name, entry.Sleeve = c.Name, c.Sleeve
+	if c.OpenedOnSeedingDay != nil {
+		entry.OpenedOnSeedingDay = *c.OpenedOnSeedingDay
+	}
 	from, err := a.payoutFrom(c.PayoutFrom)
 	if err != nil {
 		return AccountEntry{}, kernel.Date{}, err

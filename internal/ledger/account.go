@@ -27,6 +27,11 @@ type Account struct {
 	// account.
 	Institution string
 	Name        string
+	// OpenedOnSeedingDay is the owner's mark that the account was opened
+	// on the day it was seeded (D-168): no history is unknown before its
+	// seeding, so it doesn't move the portfolio's charts' default start
+	// (D-138).
+	OpenedOnSeedingDay bool
 }
 
 // Validate reports whether a has an ID, an institution and a name.

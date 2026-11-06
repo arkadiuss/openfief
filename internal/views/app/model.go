@@ -54,7 +54,8 @@ func endOfHistory() (kernel.Date, error) {
 
 // ModelPortfolio returns the model portfolio, or an error wrapping
 // ErrModelOff while it is off (D-52). from and to resolve as Performance
-// does: a zero from is the charts' default start (D-138), a from before
+// does: a zero from is the charts' start the owner stored (D-167) or else
+// their default start (D-138), a from before
 // the first transaction starts there, and a zero to is the latest
 // valued-through date of any account, so the model's line and the
 // time-weighted return cover the same days, both 100 on the first (D-53).
@@ -101,6 +102,11 @@ func (v *Views) modelRange(ctx context.Context, from, to kernel.Date) (modelDays
 	rec, err := v.recorded(ctx, accounts)
 	if err != nil {
 		return modelDays{}, err
+	}
+	if from.IsZero() && len(rec.txs) > 0 {
+		if from, err = v.storedStart(ctx, ""); err != nil {
+			return modelDays{}, err
+		}
 	}
 	if len(rec.txs) > 0 {
 		from = views.ChosenStart(from, rec.first, rec.start)

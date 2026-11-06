@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-247b6e50c217
+  - type: implements
+    from: SYM-views-gen-pb-account-get-opened-on-seeding-day
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:36:11.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5cb84278cae0
+  - type: covered_by
+    from: SYM-views-gen-pb-account-get-opened-on-seeding-day
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:36:12.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-918df798f225

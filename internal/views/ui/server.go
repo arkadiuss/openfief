@@ -194,6 +194,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /value-chart", s.withSession(s.valueChartFragment))
 	mux.HandleFunc("GET /over-time", s.withSession(s.overTimeFragment))
 	mux.HandleFunc("GET /ask", s.withSession(s.askFragment))
+	mux.HandleFunc("POST /chart-start", s.withOwner(s.setChartStart))
 	s.recordRoutes(mux)
 	s.checkpointRoutes(mux)
 	s.inboxRoutes(mux)

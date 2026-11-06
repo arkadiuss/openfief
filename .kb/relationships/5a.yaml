@@ -895,3 +895,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1bcb29aa1207
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service-set-chart-start
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:23:50.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73bfa166a566
+  - type: implements
+    from: SYM-valuation-connectapi-settings-service-set-chart-start
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:23:51.026Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c905e1f51a50
+  - type: covered_by
+    from: SYM-valuation-connectapi-settings-service-set-chart-start
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:23:51.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04df2c7c72f1

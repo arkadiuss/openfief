@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90c059262c45
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-settings-set-chart-start
+    to: TEST-ui-chart-start-setting
+    created_at: 2026-11-02T08:28:10.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1e54b647a95

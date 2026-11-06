@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7578ba153889
+  - type: implements
+    from: SYM-valuation-postgres-store-chart-start
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:23:36.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76c62b840edf
+  - type: covered_by
+    from: SYM-valuation-postgres-store-chart-start
+    to: TEST-valuation-pg-chart-start
+    created_at: 2026-11-02T08:23:36.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd65f705df3b

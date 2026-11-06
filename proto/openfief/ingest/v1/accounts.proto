@@ -52,8 +52,8 @@ service AccountService {
 
   // UpdateAccount renames an account, moves it to another sleeve, or
   // changes its tax wrapper or fee rule, which revalues it (D-36), or the
-  // payout setting of a hand-entered bond account (D-135); its ID and
-  // institution stay.
+  // payout setting of a hand-entered bond account (D-135), or marks it as
+  // opened on its seeding day (D-168); its ID and institution stay.
   rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse);
 
   // BindAccount binds a connector instance to a stored account, as
@@ -97,6 +97,10 @@ message Account {
   // The day bond_payout took effect, YYYY-MM-DD; empty for the account's
   // first setting, which covers its whole history (D-162).
   string bond_payout_since = 8;
+  // Whether the owner marked the account as opened on its seeding day
+  // (D-168): its seeding from a starting balance then doesn't move the
+  // portfolio's charts' default start (D-138).
+  bool opened_on_seeding_day = 9;
 }
 
 // BondPayout is the payout setting of a hand-entered bond account
@@ -152,6 +156,9 @@ message CreateAccountRequest {
   FeeRule fee_rule = 9;
   // The payout setting (D-135); unspecified for BOND_PAYOUT_CASH.
   BondPayout bond_payout = 10;
+  // Marks the account as opened on its seeding day (D-168), so that its
+  // seeding doesn't move the portfolio's charts' default start (D-138).
+  bool opened_on_seeding_day = 11;
 }
 
 message CreateAccountResponse {
@@ -175,6 +182,9 @@ message UpdateAccountRequest {
   // from that day on are booked anew under it on the next sync, superseding
   // those booked before. A day after today fails with INVALID_ARGUMENT.
   string bond_payout_from = 9;
+  // Marks or unmarks the account as opened on its seeding day (D-168);
+  // unset keeps the account's mark.
+  optional bool opened_on_seeding_day = 10;
 }
 
 message UpdateAccountResponse {

@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8d75171bcc1
+  - type: validates
+    from: TEST-identity-app-access
+    to: REQ-identity-read-access-viewable-accounts-only
+    created_at: 2026-11-02T08:22:35.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec195ad08f8a

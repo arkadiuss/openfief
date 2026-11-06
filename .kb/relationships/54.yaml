@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca1ec1b45107
+  - type: implements
+    from: SYM-views-connectapi-pb-performance
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:30:04.922Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b813dafece0b
+  - type: covered_by
+    from: SYM-views-connectapi-pb-performance
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:30:04.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b83a4ba883cd

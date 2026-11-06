@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9462f6b980ba
+  - type: validates
+    from: TEST-valuation-app-chart-start
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:22:15.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-262180a9c9f7
+  - type: validates
+    from: TEST-valuation-app-chart-start
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:22:15.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-989b43530086

@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b0bc048eb853
+  - type: implements
+    from: SYM-ingest-app-accounts-changed
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:29:25.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5fbed56eaec
+  - type: covered_by
+    from: SYM-ingest-app-accounts-changed
+    to: TEST-ingest-app-opened
+    created_at: 2026-11-02T08:29:25.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd810d7808d7

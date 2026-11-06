@@ -839,3 +839,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-002b34fdc045
+  - type: executable_for
+    from: SYM-valuation-postgres-test-chart-start-round-trip
+    to: TEST-valuation-pg-chart-start
+    created_at: 2026-11-02T08:27:43.359Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb84c22830c7

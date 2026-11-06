@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ab72107c0e2
+  - type: executable_for
+    from: SYM-views-app-test-chart-start-stored-starts
+    to: TEST-views-app-chart-start
+    created_at: 2026-11-02T08:25:26.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b500d225f41

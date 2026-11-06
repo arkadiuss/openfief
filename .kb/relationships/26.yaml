@@ -790,3 +790,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af5aa3c6e965
+  - type: implements
+    from: SYM-views-app-views-stored-start
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:24:13.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e4c6f99a132
+  - type: implements
+    from: SYM-views-app-views-stored-start
+    to: REQ-identity-read-access-viewable-accounts-only
+    created_at: 2026-11-02T08:24:13.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8e46fb915de
+  - type: covered_by
+    from: SYM-views-app-views-stored-start
+    to: TEST-views-app-chart-start
+    created_at: 2026-11-02T08:24:13.920Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48c1749b0b51

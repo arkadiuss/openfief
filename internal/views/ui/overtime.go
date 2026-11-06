@@ -98,7 +98,7 @@ func (s *server) overTime(r *http.Request, sess session, date, start kernel.Date
 	}
 	o := &overTimeView{
 		Tab: tabValue, Tabs: overTabs(), Date: date.String(), StartParam: optionalString(start), Value: value, History: history,
-		Start:      chartStartView{Action: "/", Date: date.String(), From: value.From, Default: history.Default, Chosen: !start.IsZero()},
+		Start:      newChartStart(sess, "/", date, value.From, history.Default, history.Stored, start),
 		Allocation: alloc,
 	}
 	switch {

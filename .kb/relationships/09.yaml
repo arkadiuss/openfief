@@ -874,3 +874,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-edb93352d395
+  - type: implements
+    from: SYM-valuation-postgres-store-save-chart-start
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:23:43.497Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29c2ec0ad9db
+  - type: implements
+    from: SYM-valuation-postgres-store-save-chart-start
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:23:43.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39ba267d5cc5
+  - type: covered_by
+    from: SYM-valuation-postgres-store-save-chart-start
+    to: TEST-valuation-pg-chart-start
+    created_at: 2026-11-02T08:23:43.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccb36641bb49

@@ -1056,3 +1056,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d4fc515e933c
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-request-get-account-id
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:34:34.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f77c675d24c
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-request-get-account-id
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:34:35.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f664da9b00a
+  - type: covered_by
+    from: SYM-valuationv1-set-chart-start-request-get-account-id
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:34:35.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b2bbd83e4b8
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-response-proto-reflect
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:35:19.261Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ce926f61985
+  - type: implements
+    from: SYM-valuationv1-set-chart-start-response-proto-reflect
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:35:19.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcb348aafaa9
+  - type: covered_by
+    from: SYM-valuationv1-set-chart-start-response-proto-reflect
+    to: TEST-core-chart-start
+    created_at: 2026-11-02T08:35:19.344Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6744eefcec6

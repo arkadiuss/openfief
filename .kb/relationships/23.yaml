@@ -734,3 +734,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f7b62e9a089
+  - type: validates
+    from: TEST-views-chart-start
+    to: REQ-ui-opened-account-keeps-default-start
+    created_at: 2026-11-02T08:22:25.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25b443c93937
+  - type: validates
+    from: TEST-views-chart-start
+    to: REQ-ui-unmarked-seeded-account-moves-start
+    created_at: 2026-11-02T08:22:25.164Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-807c9526d1ac

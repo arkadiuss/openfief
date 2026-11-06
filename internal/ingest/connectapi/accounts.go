@@ -43,6 +43,7 @@ func (s *accountService) CreateAccount(ctx context.Context, req *connect.Request
 		Name: m.GetName(), Institution: ingest.InstitutionID(m.GetInstitution()), Sleeve: portfolio.SleeveID(m.GetSleeve()),
 		Instance: m.GetConnectorInstance(), BrokerAccount: ingest.BrokerAccountID(m.GetBrokerAccount()),
 		Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee, Payout: payoutFrom(m.GetBondPayout()),
+		OpenedOnSeedingDay: m.GetOpenedOnSeedingDay(),
 	})
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -51,7 +52,8 @@ func (s *accountService) CreateAccount(ctx context.Context, req *connect.Request
 }
 
 // UpdateAccount renames an account, moves it to another sleeve or changes
-// its tax wrapper, fee rule or payout setting.
+// its tax wrapper, fee rule, payout setting or its mark of being opened on
+// its seeding day (D-168).
 func (s *accountService) UpdateAccount(ctx context.Context, req *connect.Request[ingestv1.UpdateAccountRequest]) (*connect.Response[ingestv1.UpdateAccountResponse], error) {
 	m := req.Msg
 	fee, err := feeRuleFrom(m.GetFeeRule())
@@ -64,7 +66,7 @@ func (s *accountService) UpdateAccount(ctx context.Context, req *connect.Request
 	}
 	acc, err := s.accounts.Update(ctx, m.GetOrigin(), m.GetSessionToken(), ledger.AccountID(m.GetAccountId()), &app.AccountChange{
 		Name: m.GetName(), Sleeve: portfolio.SleeveID(m.GetSleeve()), Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee,
-		Payout: payoutFrom(m.GetBondPayout()), PayoutFrom: from,
+		Payout: payoutFrom(m.GetBondPayout()), PayoutFrom: from, OpenedOnSeedingDay: m.OpenedOnSeedingDay,
 	})
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -123,11 +125,13 @@ func (s *accountService) RemapBrokerAccount(ctx context.Context, req *connect.Re
 	return connect.NewResponse(&ingestv1.RemapBrokerAccountResponse{}), nil
 }
 
-// pbAccount converts an account with its terms and payout setting.
+// pbAccount converts an account with its terms, payout setting and mark
+// of being opened on its seeding day.
 func pbAccount(a *app.AccountEntry) *ingestv1.Account {
 	out := &ingestv1.Account{
 		Id: string(a.ID), Institution: a.Institution, Name: a.Name, Sleeve: string(a.Sleeve),
 		TaxWrapper: string(a.Wrapper), FeeRule: pbFeeRule(&a.Fee), BondPayout: pbPayout(a.Payout.Payout),
+		OpenedOnSeedingDay: a.OpenedOnSeedingDay,
 	}
 	if since := a.Payout.Since; !since.IsZero() {
 		out.BondPayoutSince = since.String()

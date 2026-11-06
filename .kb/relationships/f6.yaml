@@ -804,3 +804,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-790f068b1450
+  - type: validates
+    from: TEST-core-chart-start
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:22:20.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e35800abd638
+  - type: validates
+    from: TEST-core-chart-start
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:22:20.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-562fdb497f7c
+  - type: validates
+    from: TEST-core-chart-start
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:22:20.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3de0ecd467b

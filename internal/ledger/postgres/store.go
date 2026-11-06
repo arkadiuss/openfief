@@ -67,12 +67,14 @@ func (s *Store) WithTx(fn func(tx pgx.Tx) error) error {
 	return fn(s.tx)
 }
 
-// SaveAccount creates a or replaces the account with its ID.
+// SaveAccount creates a or replaces the account with its ID, with the
+// owner's mark that it was opened on its seeding day (D-168).
 func (s *Store) SaveAccount(ctx context.Context, a ledger.Account) error {
 	_, err := s.db.Exec(ctx, `
-		INSERT INTO ledger.accounts (id, institution, name) VALUES ($1, $2, $3)
-		ON CONFLICT (id) DO UPDATE SET institution = EXCLUDED.institution, name = EXCLUDED.name`,
-		string(a.ID), a.Institution, a.Name)
+		INSERT INTO ledger.accounts (id, institution, name, opened_on_seeding_day) VALUES ($1, $2, $3, $4)
+		ON CONFLICT (id) DO UPDATE SET institution = EXCLUDED.institution, name = EXCLUDED.name,
+		    opened_on_seeding_day = EXCLUDED.opened_on_seeding_day`,
+		string(a.ID), a.Institution, a.Name, a.OpenedOnSeedingDay)
 	if err != nil {
 		return fmt.Errorf("saving account %s: %w", a.ID, err)
 	}
@@ -80,7 +82,7 @@ func (s *Store) SaveAccount(ctx context.Context, a ledger.Account) error {
 }
 
 // selectAccounts lists accounts; callers add WHERE and ORDER BY.
-const selectAccounts = `SELECT id, institution, name FROM ledger.accounts`
+const selectAccounts = `SELECT id, institution, name, opened_on_seeding_day FROM ledger.accounts`
 
 // Account returns the account with id, or an error wrapping app.ErrNotFound.
 func (s *Store) Account(ctx context.Context, id ledger.AccountID) (ledger.Account, error) {
@@ -132,8 +134,9 @@ func (s *Store) Accounts(ctx context.Context) ([]ledger.Account, error) {
 // scanAccount reads one row of selectAccounts.
 func scanAccount(row pgx.CollectableRow) (ledger.Account, error) {
 	var id, institution, name string
-	if err := row.Scan(&id, &institution, &name); err != nil {
+	var opened bool
+	if err := row.Scan(&id, &institution, &name, &opened); err != nil {
 		return ledger.Account{}, fmt.Errorf("reading account: %w", err)
 	}
-	return ledger.Account{ID: ledger.AccountID(id), Institution: institution, Name: name}, nil
+	return ledger.Account{ID: ledger.AccountID(id), Institution: institution, Name: name, OpenedOnSeedingDay: opened}, nil
 }

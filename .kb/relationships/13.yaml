@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c21c487aba3d
+  - type: executable_for
+    from: SYM-views-app-test-chart-start-performance-of
+    to: TEST-views-app-chart-start
+    created_at: 2026-11-02T08:25:33.212Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b479345aa469

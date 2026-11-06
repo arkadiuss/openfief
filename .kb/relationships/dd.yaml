@@ -664,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de4707f39bfe
+  - type: validates
+    from: TEST-ui-chart-start-setting
+    to: REQ-ui-charts-start-stored-setting
+    created_at: 2026-11-02T08:22:11.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69928bfb52ca
+  - type: validates
+    from: TEST-ui-chart-start-setting
+    to: REQ-ui-charts-start-default-clears-setting
+    created_at: 2026-11-02T08:22:11.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-003199ba673e
+  - type: validates
+    from: TEST-ui-chart-start-setting
+    to: REQ-ledger-account-opened-on-seeding-day
+    created_at: 2026-11-02T08:22:11.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f1eedd08c44

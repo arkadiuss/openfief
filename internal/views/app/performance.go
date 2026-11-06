@@ -17,7 +17,10 @@ type Performance struct {
 	From, To kernel.Date
 	// Start is the charts' default start (D-138), which is also where
 	// tracking began: zero when nothing is recorded.
-	Start  kernel.Date
+	Start kernel.Date
+	// Chosen is the charts' start the owner stored as a setting (D-167):
+	// zero when none is stored.
+	Chosen kernel.Date
 	Series views.PerformanceSeries
 	// Pending reports a revaluation of some account that is pending or
 	// running: its stored valuations may change.
@@ -26,9 +29,11 @@ type Performance struct {
 
 // Performance returns the portfolio's time-weighted return (D-61) per day,
 // with its value including cash, in the reporting currency, over the days
-// from through to, both inclusive. A zero from means the charts' default
-// start (D-138, views.ChartStart): the latest day an account was seeded
-// from a starting balance, or the first transaction's date when none was.
+// from through to, both inclusive. A zero from means the charts' start the
+// owner stored as a setting (D-167) or, without one, the charts' default
+// start (D-138, views.ChartStart): the latest day an account not marked as
+// opened on its seeding day (D-168) was seeded from a starting balance, or
+// the first transaction's date when none was.
 // A from before the first transaction starts there; the index is 100 on
 // the first day. A zero to means the latest valued-through date of any
 // account. The series stops at the last day all accounts are valued for
@@ -48,12 +53,17 @@ func (v *Views) Performance(ctx context.Context, from, to kernel.Date) (Performa
 	if err != nil {
 		return Performance{}, fmt.Errorf("loading transfer links: %w", err)
 	}
-	return v.performance(ctx, accounts, &rec, rec.start, from, to, links)
+	chosen, err := v.storedStart(ctx, "")
+	if err != nil {
+		return Performance{}, err
+	}
+	return v.performance(ctx, accounts, &rec, starts{def: rec.start, chosen: chosen}, from, to, links)
 }
 
 // AccountPerformance returns one account's time-weighted return as
 // Performance does the portfolio's, except that its default start is the
-// account's own first day (D-138) and every deposit and withdrawal is a
+// account's own first day (D-138), the start the owner stored is the
+// account's own (D-167), and every deposit and withdrawal is a
 // cash flow of the account, a transfer from or to another of the owner's
 // accounts included. An unknown account fails like Account.
 func (v *Views) AccountPerformance(ctx context.Context, id ledger.AccountID, from, to kernel.Date) (Performance, error) {
@@ -66,18 +76,31 @@ func (v *Views) AccountPerformance(ctx context.Context, id ledger.AccountID, fro
 	if err != nil {
 		return Performance{}, err
 	}
-	return v.performance(ctx, accounts, &rec, rec.first, from, to, nil)
+	chosen, err := v.storedStart(ctx, id)
+	if err != nil {
+		return Performance{}, err
+	}
+	return v.performance(ctx, accounts, &rec, starts{def: rec.first, chosen: chosen}, from, to, nil)
+}
+
+// starts are a chart's default start (D-138) and the start the owner
+// stored as a setting (D-167), zero when none is.
+type starts struct {
+	def, chosen kernel.Date
 }
 
 // performance computes the time-weighted return of accounts, whose record
-// is rec, from the start chosen as from over def (views.ChosenStart)
-// through to, leaving out the cash flows of the confirmed transfers in
-// links.
-func (v *Views) performance(ctx context.Context, accounts []ledger.Account, rec *record, def, from, to kernel.Date, links []ledger.TransferLink) (Performance, error) {
+// is rec, from the start chosen as from, or else as the stored start, over
+// the default start (views.ChosenStart) through to, leaving out the cash
+// flows of the confirmed transfers in links.
+func (v *Views) performance(ctx context.Context, accounts []ledger.Account, rec *record, s starts, from, to kernel.Date, links []ledger.TransferLink) (Performance, error) {
 	if len(rec.txs) == 0 {
-		return Performance{From: from, To: to}, nil
+		return Performance{From: from, To: to, Chosen: s.chosen}, nil
 	}
-	from = views.ChosenStart(from, rec.first, def)
+	if from.IsZero() {
+		from = s.chosen
+	}
+	from = views.ChosenStart(from, rec.first, s.def)
 	if to.IsZero() {
 		// When nothing is valued that late, the series is the first day, unvalued.
 		to = later(rec.latest, from)
@@ -93,7 +116,7 @@ func (v *Views) performance(ctx context.Context, accounts []ledger.Account, rec 
 	if in.Rates, err = v.cashRates(ctx, rec.txs, to); err != nil {
 		return Performance{}, err
 	}
-	out := Performance{From: from, To: to, Start: def, Pending: rec.pending}
+	out := Performance{From: from, To: to, Start: s.def, Chosen: s.chosen, Pending: rec.pending}
 	if out.Series, err = views.Performance(in); err != nil {
 		return Performance{}, fmt.Errorf("computing performance: %w", err)
 	}
@@ -112,7 +135,9 @@ type record struct {
 }
 
 // recorded loads the record of accounts. An account with transactions that
-// was never valued counts as valued through the day before its first one.
+// was never valued counts as valued through the day before its first one,
+// and one the owner marked as opened on its seeding day (D-168) doesn't
+// move the charts' default start.
 func (v *Views) recorded(ctx context.Context, accounts []ledger.Account) (record, error) {
 	var (
 		rec       record
@@ -131,6 +156,7 @@ func (v *Views) recorded(ctx context.Context, accounts []ledger.Account) (record
 			return record{}, fmt.Errorf("loading valuation status: %w", err)
 		}
 		h := views.HistoryOf(txs)
+		h.OpenedOnSeedingDay = accounts[i].OpenedOnSeedingDay
 		histories = append(histories, h)
 		through := s.ValuedThrough
 		if through.IsZero() {

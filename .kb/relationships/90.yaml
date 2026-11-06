@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0300b856073d
+  - type: executable_for
+    from: SYM-valuation-app-test-set-chart-start
+    to: TEST-valuation-app-chart-start
+    created_at: 2026-11-02T08:27:27.357Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-483063d62bbd
