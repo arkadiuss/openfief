@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9876ddc3c524
+  - type: implements
+    from: SYM-valuation-pg-store-latest-prices
+    to: REQ-valuation-instrument-price-history
+    created_at: 2026-11-06T01:13:09.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ca3b33b0057
+  - type: covered_by
+    from: SYM-valuation-pg-store-latest-prices
+    to: TEST-valuation-pg-price-history
+    created_at: 2026-11-06T01:13:10.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d01b37d0e97

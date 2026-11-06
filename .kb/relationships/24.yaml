@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00c3793fb071
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-recorded-changes
+    to: TEST-ledger-pg-recorded-changes
+    created_at: 2026-11-06T01:12:53.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b23bead9c10

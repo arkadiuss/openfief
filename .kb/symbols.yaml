@@ -134068,3 +134068,134 @@ symbols:
         target: REQ-identity-demo-loading-no-wizard
       - type: implements
         target: REQ-identity-demo-sessions
+  - id: SYM-ledger-app-recorded-version
+    title: RecordedVersion
+    sourceFile: internal/ledger/app/recorded.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:12:32.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-recorded-changes
+      - type: implements
+        target: REQ-ledger-recorded-changes-pages
+  - id: SYM-ledger-app-recorded-version-is-correction
+    title: RecordedVersion.IsCorrection
+    sourceFile: internal/ledger/app/recorded.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:12:37.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-recorded-changes
+      - type: implements
+        target: REQ-ledger-recorded-changes-pages
+  - id: SYM-ledger-app-recorded-version-is-coupon
+    title: RecordedVersion.IsCoupon
+    sourceFile: internal/ledger/app/recorded.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:12:41.243Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-recorded-changes
+      - type: implements
+        target: REQ-ledger-recorded-changes-pages
+  - id: SYM-ledger-pg-store-recorded-changes
+    title: Store.RecordedChanges
+    sourceFile: internal/ledger/postgres/recorded.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:12:45.011Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-recorded-changes
+      - type: implements
+        target: REQ-ledger-recorded-changes-pages
+  - id: SYM-ledger-pg-test-helper-recorded-fixture
+    title: recordedFixture
+    sourceFile: internal/ledger/postgres/recorded_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:12:48.666Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-recorded-changes
+  - id: SYM-ledger-pg-test-helper-recorded-changes
+    title: recordedChanges
+    sourceFile: internal/ledger/postgres/recorded_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:12:52.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-recorded-changes
+  - id: SYM-ledger-pg-test-recorded-changes
+    title: TestRecordedChanges
+    sourceFile: internal/ledger/postgres/recorded_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:12:56.160Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-recorded-changes
+  - id: SYM-ledger-pg-test-recorded-changes-pages
+    title: TestRecordedChangesPages
+    sourceFile: internal/ledger/postgres/recorded_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:13:00.136Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-recorded-changes
+  - id: SYM-valuation-pg-store-price-history
+    title: Store.PriceHistory
+    sourceFile: internal/valuation/postgres/pricehistory.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:13:04.215Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-pg-price-history
+      - type: implements
+        target: REQ-valuation-instrument-price-history
+  - id: SYM-valuation-pg-store-latest-prices
+    title: Store.LatestPrices
+    sourceFile: internal/valuation/postgres/pricehistory.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:13:08.384Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-pg-price-history
+      - type: implements
+        target: REQ-valuation-instrument-price-history
+  - id: SYM-valuation-pg-test-price-history
+    title: TestPriceHistory
+    sourceFile: internal/valuation/postgres/pricehistory_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:13:12.354Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-pg-price-history

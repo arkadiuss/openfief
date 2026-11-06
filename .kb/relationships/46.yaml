@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce1b2188843c
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-recorded-fixture
+    to: TEST-ledger-pg-recorded-changes
+    created_at: 2026-11-06T01:12:50.171Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f27c44c3e7db

@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1ccdeffeeef
+  - type: executable_for
+    from: SYM-ledger-pg-test-recorded-changes
+    to: TEST-ledger-pg-recorded-changes
+    created_at: 2026-11-06T01:12:57.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f6fa07af795

@@ -706,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c2712b42db86
+  - type: implements
+    from: SYM-ledger-pg-store-recorded-changes
+    to: REQ-ledger-recorded-changes-pages
+    created_at: 2026-11-06T01:12:46.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4376e73488c
+  - type: covered_by
+    from: SYM-ledger-pg-store-recorded-changes
+    to: TEST-ledger-pg-recorded-changes
+    created_at: 2026-11-06T01:12:46.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5cef914d74d
