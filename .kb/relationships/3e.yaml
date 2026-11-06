@@ -559,3 +559,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-29b97286b97d
+  - type: implements
+    from: SYM-identity-app-auth-auth-login-methods
+    to: REQ-identity-demo-loading-no-wizard
+    created_at: 2026-11-05T22:58:42.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-390edd7ebb2a

@@ -860,3 +860,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f96c80d69a7
+  - type: implements
+    from: SYM-core-write-connect-error
+    to: REQ-identity-demo-loading-no-wizard
+    created_at: 2026-11-03T19:30:23.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fab6f6d7a14
+  - type: covered_by
+    from: SYM-core-write-connect-error
+    to: TEST-core-demo-loading
+    created_at: 2026-11-03T19:30:24.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c58a3445c0f2
+  - type: constrains
+    from: REQ-ui-first-run-wizard-outside-demo
+    to: FACT-SUBJECT-19F616256B0C77FB
+    created_at: 2026-11-05T23:58:57.540Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcd410fc0f11
+  - type: requires_property
+    from: REQ-ui-first-run-wizard-outside-demo
+    to: FACT-PROP-BB3232461A9F08FC
+    created_at: 2026-11-05T23:58:57.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18c0ef700934
+  - type: supersedes
+    from: REQ-ui-first-run-wizard-outside-demo
+    to: REQ-ui-first-run-wizard
+    created_at: 2026-11-05T23:58:57.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2c36fbe2e65

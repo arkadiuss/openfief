@@ -198,7 +198,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withMarketDataService(plugin, deps.rankings, callers, log)
 	plugin = withPriceCheckService(plugin, checks, callers, log)
 	plugin = withOnboardingServices(plugin, newSleeves(sleeves, auth, cfg.Auth.Origins),
-		newAccounts(deps, owners, accountTerms{recorder, vstore}), callers, log)
+		newAccounts(deps, owners, accountTerms{recorder, vstore}), auth, callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
 	plugin = withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins, authz)), callers, log), attn.items, callers, log)
 	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil

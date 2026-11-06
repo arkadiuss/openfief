@@ -229,6 +229,11 @@ message GetLoginMethodsResponse {
   bool passkey_registered = 1;
   // Whether CreateDemoSession would succeed.
   bool demo_sessions = 2;
+  // Whether the core runs with demo sessions on while the database doesn't
+  // carry the demo marker yet: the demo data is still loading, so the login
+  // page says so instead of offering the demo, and the first-run wizard's
+  // writes are refused.
+  bool demo_loading = 3;
 }
 
 message BeginRegistrationRequest {

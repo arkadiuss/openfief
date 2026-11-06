@@ -552,3 +552,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-43ca676f575a
+  - type: executable_for
+    from: SYM-identity-app-test-helper-check-demo-methods
+    to: TEST-identity-auth-app
+    created_at: 2026-11-03T19:46:38.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7bcd5d16264

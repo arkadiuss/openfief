@@ -664,6 +664,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-152a8d325988
+  - type: constrains
+    from: REQ-ui-demo-no-wizard
+    to: FACT-SUBJECT-19F616256B0C77FB
+    created_at: 2026-11-03T19:04:25.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d812b43dff39
+  - type: requires_property
+    from: REQ-ui-demo-no-wizard
+    to: FACT-PROP-691482F4353DB0B2
+    created_at: 2026-11-03T19:04:25.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0d96ce14de9
+  - type: specified_by
+    from: REQ-ui-demo-no-wizard
+    to: SCEN-ui-demo-no-wizard
+    created_at: 2026-11-03T19:04:25.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-762cdb94c6d3
   - type: implements
     from: SYM-operator-go-mem-limit
     to: REQ-operator-plugin-gomemlimit

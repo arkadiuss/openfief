@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d7a73bc8c73d
+  - type: executable_for
+    from: SYM-core-test-helper-fixed-demo-demo-loading
+    to: TEST-core-demo-loading
+    created_at: 2026-11-03T19:32:29.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9723af66d12

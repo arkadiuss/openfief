@@ -1,7 +1,12 @@
 package ui
 
 import (
+	"fmt"
 	"net/http"
+
+	"connectrpc.com/connect"
+
+	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
 )
 
 // The first-run wizard's steps (D-73), in order.
@@ -43,8 +48,19 @@ type setupStep struct {
 // install started with, which the owner may rename, change or add to; then
 // the accounts, each with the connector instance already installed that
 // feeds it and the broker account it is; then where to go next. Installing
-// plugins stays in the CLI (D-46).
+// plugins stays in the CLI (D-46). A demo deployment has no wizard: its
+// data comes from the demo loader, so the page sends the owner to the
+// overview.
 func (s *server) setupPage(w http.ResponseWriter, r *http.Request, sess session) {
+	demo, err := s.demoMethods(r)
+	if err != nil {
+		s.coreFailed(w, r, "GetLoginMethods", err)
+		return
+	}
+	if demoDeployment(demo) {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
 	s.renderSetup(w, r, sess, http.StatusOK, r.URL.Query().Get("step"), "")
 }
 
@@ -95,6 +111,24 @@ func (s *server) onboardingRoutes(mux *http.ServeMux) {
 // firstRun reports whether an owner session sees an install that has no
 // account yet: the overview then sends the owner to the first-run wizard,
 // which is where the owner lands after creating the first passkey (D-73).
-func firstRun(sess session, accounts int) bool {
-	return sess.Owner() && accounts == 0
+// A demo deployment (demo) never has a first run: the demo loader fills
+// it.
+func firstRun(sess session, accounts int, demo bool) bool {
+	return sess.Owner() && accounts == 0 && !demo
+}
+
+// demoMethods asks the core what its login page offers at the request's
+// origin, which says whether this is a demo deployment.
+func (s *server) demoMethods(r *http.Request) (*identityv1.GetLoginMethodsResponse, error) {
+	resp, err := s.auth.GetLoginMethods(r.Context(), connect.NewRequest(&identityv1.GetLoginMethodsRequest{Origin: requestOrigin(r)}))
+	if err != nil {
+		return nil, fmt.Errorf("GetLoginMethods: %w", err)
+	}
+	return resp.Msg, nil
+}
+
+// demoDeployment reports whether the core runs a demo deployment, by what
+// its login page offers (m): demo sessions, or the demo data still loading.
+func demoDeployment(m *identityv1.GetLoginMethodsResponse) bool {
+	return m.GetDemoSessions() || m.GetDemoLoading()
 }

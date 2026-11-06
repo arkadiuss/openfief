@@ -643,3 +643,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0288c88eccdd
+  - type: constrains
+    from: REQ-demo-owner-changes-after-load
+    to: FACT-SUBJECT-4A7A9FDAFA7537ED
+    created_at: 2026-11-05T23:58:50.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-344d5ccddff8
+  - type: requires_property
+    from: REQ-demo-owner-changes-after-load
+    to: FACT-PROP-8A2807A5EF534FA4
+    created_at: 2026-11-05T23:58:50.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-036e5012a02a
+  - type: specified_by
+    from: REQ-demo-owner-changes-after-load
+    to: SCEN-identity-demo-loading-refuses-wizard-writes
+    created_at: 2026-11-05T23:58:50.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8bbebca805a3

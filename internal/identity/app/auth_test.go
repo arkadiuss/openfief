@@ -615,15 +615,19 @@ func TestRemoveOwnPasskey(t *testing.T) {
 	}
 }
 
+// TestDemoSessions checks the demo authenticator (D-68) on every pairing
+// of the flag and the demo marker, and that the flag without the marker
+// reports the demo data as loading.
 func TestDemoSessions(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
-		name string
-		demo demoConfig
-		want bool
+		name        string
+		demo        demoConfig
+		want        bool
+		wantLoading bool
 	}{
 		{name: "flag on, database marked", demo: demoConfig{on: true, marked: true}, want: true},
-		{name: "flag on, database not marked", demo: demoConfig{on: true}},
+		{name: "flag on, database not marked: demo data loading", demo: demoConfig{on: true}, wantLoading: true},
 		{name: "flag off, database marked", demo: demoConfig{marked: true}},
 		{name: "flag off, database not marked", demo: demoConfig{}},
 	}
@@ -631,10 +635,7 @@ func TestDemoSessions(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			f := newAuthFixture(t, tt.demo)
-			methods, err := f.auth.LoginMethods(t.Context(), local)
-			if err != nil || methods.DemoSessions != tt.want {
-				t.Errorf("LoginMethods = %+v, %v; want demo %v", methods, err, tt.want)
-			}
+			checkDemoMethods(t, f, tt.want, tt.wantLoading)
 			ns, err := f.auth.Login(t.Context(), f.auth.Demo(), local, app.Proof{})
 			if !tt.want {
 				if !errors.Is(err, app.ErrForbidden) {
@@ -644,6 +645,21 @@ func TestDemoSessions(t *testing.T) {
 			}
 			checkDemoSession(t, f, &ns, err)
 		})
+	}
+}
+
+// checkDemoMethods checks that the login methods offer demo sessions as
+// want says and report the demo data loading as loading says, and that
+// DemoLoading agrees.
+func checkDemoMethods(t *testing.T, f *authFixture, want, loading bool) {
+	t.Helper()
+	methods, err := f.auth.LoginMethods(t.Context(), local)
+	if err != nil || methods.DemoSessions != want || methods.DemoLoading != loading {
+		t.Errorf("LoginMethods = %+v, %v; want demo %v, loading %v", methods, err, want, loading)
+	}
+	got, err := f.auth.DemoLoading(t.Context())
+	if err != nil || got != loading {
+		t.Errorf("DemoLoading = %v, %v; want %v", got, err, loading)
 	}
 }
 

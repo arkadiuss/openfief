@@ -22,6 +22,9 @@ type loginData struct {
 	Passkey bool
 	// Demo is whether the core offers read-only demo sessions here.
 	Demo bool
+	// DemoLoading is whether this is a demo deployment whose demo data is
+	// still loading: the page says so instead of offering the demo.
+	DemoLoading bool
 	// Unavailable is set when the core could not say which ways in exist.
 	Unavailable bool
 	// NeedsHTTPS is set on plain HTTP away from localhost, where the
@@ -30,8 +33,9 @@ type loginData struct {
 }
 
 // loginPage shows the ways in the core offers at this origin: the passkey
-// button, and "View demo" only when the core says demo sessions work. It
-// still renders when the core can't answer, saying so.
+// button, and "View demo" only when the core says demo sessions work; on a
+// demo deployment whose data is still loading, a notice to refresh in a
+// minute instead. It still renders when the core can't answer, saying so.
 func (s *server) loginPage(w http.ResponseWriter, r *http.Request) {
 	origin := requestOrigin(r)
 	data := loginData{NeedsHTTPS: strings.HasPrefix(origin, "http://") && !localHTTP(origin)}
@@ -42,6 +46,7 @@ func (s *server) loginPage(w http.ResponseWriter, r *http.Request) {
 	} else {
 		data.Passkey = methods.Msg.GetPasskeyRegistered()
 		data.Demo = methods.Msg.GetDemoSessions()
+		data.DemoLoading = methods.Msg.GetDemoLoading()
 	}
 	s.show(w, r, http.StatusOK, "login", page{Title: "Sign in", Data: data})
 }

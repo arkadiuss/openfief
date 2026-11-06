@@ -265,6 +265,9 @@ type LoginMethods struct {
 	PasskeyRegistered bool
 	// DemoSessions is whether the demo authenticator would issue a session.
 	DemoSessions bool
+	// DemoLoading is whether demo sessions are on but the database doesn't
+	// carry the demo marker yet: the demo data is still loading.
+	DemoLoading bool
 }
 
 // LoginMethods returns what the login page can offer on the allowed origin
@@ -284,8 +287,25 @@ func (a *Auth) LoginMethods(ctx context.Context, origin string) (LoginMethods, e
 			m.PasskeyRegistered = true
 		}
 	}
-	m.DemoSessions, err = a.demoAvailable(ctx)
-	return m, err
+	demo, err := a.demoState(ctx)
+	if err != nil {
+		return LoginMethods{}, err
+	}
+	m.DemoSessions = identity.DemoSessionsAvailable(demo.sessions, demo.marked)
+	m.DemoLoading = identity.DemoLoading(demo.sessions, demo.marked)
+	return m, nil
+}
+
+// DemoLoading reports whether the core runs with demo sessions on while
+// the database doesn't carry the demo marker yet (identity.DemoLoading):
+// what the first-run wizard would write is refused until the demo loader
+// has marked the database.
+func (a *Auth) DemoLoading(ctx context.Context) (bool, error) {
+	demo, err := a.demoState(ctx)
+	if err != nil {
+		return false, err
+	}
+	return identity.DemoLoading(demo.sessions, demo.marked), nil
 }
 
 // Demo returns the demo authenticator: a read-scoped session for the owner
@@ -395,16 +415,33 @@ func (a *Auth) nowSecond() time.Time { return a.now().UTC().Truncate(time.Second
 
 // demoAvailable reports whether both conditions for demo sessions hold:
 // the configuration turns them on, and the database carries the demo
-// marker. The marker is read only when the configuration allows them.
+// marker (identity.DemoSessionsAvailable).
 func (a *Auth) demoAvailable(ctx context.Context) (bool, error) {
+	demo, err := a.demoState(ctx)
+	if err != nil {
+		return false, err
+	}
+	return identity.DemoSessionsAvailable(demo.sessions, demo.marked), nil
+}
+
+// demoFlags is what the demo rules decide on: whether the configuration
+// turns demo sessions on, and whether the database carries the demo
+// marker.
+type demoFlags struct {
+	sessions, marked bool
+}
+
+// demoState returns the demo flags. The marker is read only when the
+// configuration turns demo sessions on; otherwise it counts as absent.
+func (a *Auth) demoState(ctx context.Context) (demoFlags, error) {
 	if !a.cfg.DemoSessions || a.demo == nil {
-		return false, nil
+		return demoFlags{}, nil
 	}
 	marked, err := a.demo.DemoMarked(ctx)
 	if err != nil {
-		return false, fmt.Errorf("reading the demo marker: %w", err)
+		return demoFlags{}, fmt.Errorf("reading the demo marker: %w", err)
 	}
-	return marked, nil
+	return demoFlags{sessions: true, marked: marked}, nil
 }
 
 // ensureOwner returns the owner, creating them with a random handle on

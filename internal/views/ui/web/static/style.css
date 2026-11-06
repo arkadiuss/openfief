@@ -99,6 +99,7 @@ p { margin: 0 0 var(--space-3); max-width: 75ch; }
 .alert { padding: var(--space-3) var(--space-4); border-radius: var(--radius-input); margin: 0 0 var(--space-4); max-width: none; }
 .alert-error { background: var(--danger-soft); color: var(--danger-text); border-left: 3px solid var(--danger); }
 .alert-warn { background: var(--warn-soft); color: var(--warn-text); border-left: 3px solid var(--highlight); }
+.alert-info { background: var(--neutral-soft); color: var(--neutral-text); border-left: 3px solid var(--border-strong); }
 .alert a { color: inherit; }
 .notice { border-left: 3px solid var(--highlight); }
 .warn-text { color: var(--warn-text); }
