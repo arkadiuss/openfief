@@ -46,6 +46,7 @@ site/                    the docs site: Hugo config, theme, site-only pages (doc
 **Money (P).** Never `float64` for amounts, prices, rates or quantities. Use the kernel's decimal-backed types, and every amount carries its currency.
 
 **Layering:**
+- A context's Kubernetes API types (`internal/plugins/operator/v1alpha1`, its CRDs) are a contract, like `proto/`: the context's adapters and `cmd` may import them.
 - `app` imports domain packages.
 - Adapters import `app` and domain packages.
 - Only `cmd` imports adapters.
@@ -57,6 +58,8 @@ site/                    the docs site: Hugo config, theme, site-only pages (doc
 **Interfaces.** Declare an interface where it's consumed (in `app`), keep it small, and return concrete types.
 
 **Anti-corruption.** Broker and vendor formats are parsed and translated in their adapter or plugin. Domain code never sees an IBKR, XTB or Ghostfolio shape.
+
+**Support packages.** `internal/demo` holds the synthetic demo dataset and is no context: it imports domain packages only, and only `cmd` imports it. `internal/kernel` is the shared kernel above.
 
 **Banned packages.** No `util`, `common`, `helpers`, `models` or `types`. Find the context the code belongs to.
 
@@ -81,7 +84,7 @@ Lint checks what one file does; architecture tests check how the code fits toget
 - **Plugins.** Nothing under `plugins/` or `sdk/` imports `internal/` or `cmd/`.
 - **Schemas.** A context's SQL, in its migrations and its adapters' queries, names only its own schema.
 - **Money.** No `float32` or `float64` in domain, `app` and kernel packages, and no `float` or `double` field in the contracts under `proto/`. Code that only draws, such as chart coordinates, is listed by package.
-- **Pure domain.** No `go` statements and no package-level variables other than errors and constants in domain packages, beyond what depguard and forbidigo already ban.
+- **Pure domain.** No `go` statements and no package-level variables other than errors, constants and compiled regular expressions in domain packages, beyond what depguard and forbidigo already ban.
 - **Privacy (GR-12).** No logging call takes a value of a money, quantity, price or rate type, an ISIN, a broker account number or a token, as an argument or inside an error it logs.
 - **Banned packages.** No package named `util`, `common`, `helpers`, `models` or `types`.
 - **Stable tests.** No `time.Sleep` and no `t.Skip` in tests, outside a listed few that wait on something outside the process or need a tool a contributor may lack, each with its reason.
