@@ -76955,6 +76955,26 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-identity-cli
+  - id: SYM-fd-identity-cli-test-until-stopped
+    title: TestUntilStopped
+    sourceFile: internal/identity/cli/untilstopped_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T00:05:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
+  - id: SYM-fd-identity-cli-test-helper-stop-once
+    title: stopOnce
+    sourceFile: internal/identity/cli/untilstopped_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T00:05:00.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-identity-cli
   - id: SYM-fd-identity-cli-test-enroll-fails
     title: TestEnrollFails
     sourceFile: internal/identity/cli/enroll_test.go

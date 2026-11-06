@@ -170,15 +170,21 @@ sleeves and binding the connector instances you installed.
 // untilStopped waits until the owner stops the command (ctx ends) and the
 // port-forward with it, or the port-forward ends on its own, an error.
 func untilStopped(ctx context.Context, forwarded <-chan error) error {
+	var ferr error
 	select {
-	case ferr := <-forwarded:
-		return forwardEnded(ferr)
-	case <-ctx.Done():
-		if ferr := <-forwarded; ferr != nil {
-			return fmt.Errorf("stopping the port-forward: %w", ferr)
+	case ferr = <-forwarded:
+		// A forward ends when the owner stops it too, and select picks at
+		// random when both are ready: only an end before the stop is one.
+		if ctx.Err() == nil {
+			return forwardEnded(ferr)
 		}
-		return nil
+	case <-ctx.Done():
+		ferr = <-forwarded
 	}
+	if ferr != nil {
+		return fmt.Errorf("stopping the port-forward: %w", ferr)
+	}
+	return nil
 }
 
 // forwardEnded reports a port-forward that ended before the owner stopped
