@@ -130,7 +130,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Egress host | plugins | `plugins.EgressHost` | One hostname and port in a manifest, grant or egress allow-list. Never an IP address or a wildcard. | domain, URL |
 | Browser path | plugins | `plugins.Manifest.BrowserPath` | The URL path prefix a view plugin serves to browsers, such as `/` for the built-in UI. Its manifest declares it and its grant approves it; the core, the only entry point for browsers, proxies it to the plugin (D-81). | route, mount point |
 | Egress decision | plugins | `app.EgressDecision` | The egress proxy's answer to one plugin's HTTP CONNECT: the plugin, the destination, whether its egress allow-list allows it, and why. Resolved addresses are checked separately, before dialing. | ACL verdict |
-| Data tier | plugins | `plugins.DataTier` | A named class of data a plugin asks to see. Only a name in M0; what each tier holds is undecided (P-33). | |
+| Data tier | plugins | `plugins.DataTier` | A class of data a role sends a model: T0 whole-portfolio holdings, amounts, transactions and tax data; TF one fief's own lease and positions; T1 a thesis; T2 public data. The owner lists the models allowed for each (D-206). | |
 | Image reference | plugins | `plugins.ImageRef` | A plugin's container image, pinned by digest (`repository@sha256:...`), never by tag. | image tag |
 | Effective permissions | plugins | `plugins.EffectivePermissions` | What OpenFief enforces for a plugin: only what its Plugin requests and its Grant approves. | |
 | Workload | plugins | `plugins.Workload` | What the operator creates for one plugin, compiled from its effective permissions: identity, token, Secret mounts, environment, NetworkPolicy and egress allow-list. | deployment (the Kubernetes object is one part) |
@@ -238,7 +238,10 @@ Don't create code for these before their milestone.
 | LLM | Large language model. |
 | MCP | Model Context Protocol: an open protocol, introduced by Anthropic in 2024, through which a model or agent calls tools and reads resources. |
 | MiFID II | The EU Markets in Financial Instruments Directive (second version), which defines investment advice and portfolio management. |
-| Model router | The component that decides which model serves each role and which data tiers it may receive. |
+| Model router | The core's component that gives each role a primary model and fallbacks and sends a request only to a model allowed for every data tier in it (D-205, D-206). |
+| Model provider | A plugin that reaches one model provider's API with its key, lists its models with their prices and abilities, and generates for the router (D-205). |
+| OpenRouter | A hosted gateway to many providers' models behind one OpenAI-compatible API, billed from prepaid credits with per-key credit limits. |
+| Turnstile | Cloudflare's challenge that tells people from bots without a puzzle; the demo puts it in front of the Ask box (D-208). |
 | NATS / JetStream | NATS is an open-source messaging system; JetStream is its persistence layer (streams, KV, object store). |
 | NBP reference rate | The National Bank of Poland's main policy interest rate, which sets ROR and DOR interest. |
 | NBP table A | The National Bank of Poland's daily table of average exchange rates, used to convert foreign income for tax. |
