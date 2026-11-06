@@ -22,3 +22,10 @@ dist/
 /site/public/
 /site/resources/
 .hugo_build.lock
+
+# Binaries `go build ./cmd/<name>` writes at the repository root (a 63 MB core once got committed).
+/core
+/demo-seed
+/egress-proxy
+/openfief
+/operator
