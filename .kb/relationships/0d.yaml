@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b636f1e116e
+  - type: executable_for
+    from: SYM-views-app-test-syncs-for-viewers
+    to: TEST-views-app-viewers
+    created_at: 2026-11-06T06:16:53.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0b89f45c0d1

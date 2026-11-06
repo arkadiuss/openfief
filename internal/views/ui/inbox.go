@@ -91,6 +91,11 @@ type inboxItem struct {
 	Sync       *syncTimeline
 	Assertions []*viewsv1.AssertionCheck
 	Transfer   *viewsv1.Transfer
+	// Suggestion is a suggested transfer's pair (D-105), which the owner
+	// confirms or marks not a transfer in place when Decide; a read
+	// session sees it Waiting for the owner.
+	Suggestion      *viewsv1.Transfer
+	Decide, Waiting bool
 	// Brokers are the unmapped broker accounts of an unmapped broker
 	// account's instance, and Accounts the accounts to map them to, for
 	// the owner's form; empty for a read session.
@@ -99,22 +104,20 @@ type inboxItem struct {
 }
 
 // inboxGroup is one of the Inbox's groups (D-196), with its items and,
-// in the decisions group, the transfers to decide or decided.
+// in the decisions group of the done view, the transfers decided.
 type inboxGroup struct {
 	ID, Title, Empty string
 	Items            []inboxItem
-	// Suggested are the transfers waiting for the owner's decision
-	// (D-105), in the open view; Confirmed and Rejected the decided ones,
-	// in the done view.
-	Suggested, Confirmed, Rejected []*viewsv1.Transfer
+	// Confirmed and Rejected are the transfers the owner decided (D-105),
+	// in the done view; a suggested one is an attention item (D-130).
+	Confirmed, Rejected []*viewsv1.Transfer
 	// PriceChecks are every instrument's price checks with their history
 	// (D-112), in the done view.
 	PriceChecks []instrumentChecks
 }
 
-// Count is how many entries the group lists: items and transfers to
-// decide.
-func (g *inboxGroup) Count() int { return len(g.Items) + len(g.Suggested) }
+// Count is how many items the group lists.
+func (g *inboxGroup) Count() int { return len(g.Items) }
 
 // inboxFilter is one of the Inbox's views as its segmented filter shows it.
 type inboxFilter struct {
@@ -132,8 +135,8 @@ type inboxView struct {
 	// Notice is what the owner's last action did; Error why the core
 	// refused it.
 	Notice, Error string
-	// Calm is an open view with nothing open and no transfer to decide:
-	// Kasztan asleep and one line.
+	// Calm is an open view with nothing open: Kasztan asleep and one
+	// line.
 	Calm bool
 }
 
@@ -207,7 +210,7 @@ func (s *server) renderInbox(w http.ResponseWriter, r *http.Request, sess sessio
 		g.Items = append(g.Items, row)
 	}
 	ev.extras(&data, key)
-	data.Calm = key == viewOpen && resp.Msg.GetOpen() == 0 && len(data.Groups[groupDecisions].Suggested) == 0
+	data.Calm = key == viewOpen && resp.Msg.GetOpen() == 0
 	s.show(w, r, status, "inbox", page{Title: "Inbox", Session: &sess, Data: data})
 }
 
@@ -282,7 +285,7 @@ type evidenceStep struct {
 // evidenceSteps returns the reads the Inbox may need for items in view,
 // into ev: pending tickers and unmapped broker accounts for the owner,
 // price checks for a flagged one or the done view's list, and transfers
-// for a broken one or the open and done views' transfers.
+// for a broken or suggested one or the done view's decided transfers.
 func (s *server) evidenceSteps(r *http.Request, sess session, view string, items []*viewsv1.AttentionItem, ev *inboxEvidence) []evidenceStep {
 	kinds := map[string]bool{}
 	for _, it := range items {
@@ -292,7 +295,7 @@ func (s *server) evidenceSteps(r *http.Request, sess session, view string, items
 	return []evidenceStep{
 		{kinds[kindTicker] && owner, func() error { return s.tickerEvidence(r, sess, ev) }},
 		{kinds[kindPriceCheck] || view == viewDone, func() error { return s.priceCheckEvidence(r, sess, ev) }},
-		{kinds[kindTransferBroken] || view != viewAcknowledged, func() error { return s.transferEvidence(r, sess, ev) }},
+		{kinds[kindTransferBroken] || kinds[kindTransferSuggested] || view == viewDone, func() error { return s.transferEvidence(r, sess, ev) }},
 		{kinds[kindBrokerUnmapped] && owner, func() error { return s.unmappedEvidence(r, sess, ev) }},
 	}
 }
@@ -412,6 +415,7 @@ func (ev *inboxEvidence) item(it *viewsv1.AttentionItem, owner bool, seen map[st
 	row.Acknowledge = owner && it.GetState() == viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN
 	row.Resolve = owner && !resolved && it.GetOwnerResolves()
 	ev.evidence(&row, owner && !resolved, seen)
+	row.Waiting = !owner && !resolved && row.Suggestion != nil
 	return row
 }
 
@@ -432,6 +436,9 @@ func (ev *inboxEvidence) evidence(row *inboxItem, act bool, seen map[string]bool
 		row.Assertions = assertionsOn(ev.asserts[it.GetAccountId()], it.GetSubject())
 	case kindTransferBroken:
 		row.Transfer = ev.brokenTransfer(it.GetSubject())
+	case kindTransferSuggested:
+		row.Suggestion = pairNamed(ev.transfers.GetSuggested(), it.GetSubject())
+		row.Decide = act && row.Suggestion != nil
 	case kindBrokerUnmapped:
 		ev.mapForm(row, act, seen)
 	}
@@ -461,19 +468,16 @@ func (ev *inboxEvidence) mapForm(row *inboxItem, act bool, seen map[string]bool)
 	row.Brokers, row.Accounts = brokersOf(ev.brokers, instance), ev.accounts
 }
 
-// extras adds what the view lists besides items: the transfers waiting for
-// the owner in the open view; the decided transfers and every price check
-// with its history in the done view, so nothing the removed pages showed
-// is lost (D-192).
+// extras adds what the done view lists besides items: the decided
+// transfers and every price check with its history, so nothing the
+// removed pages showed is lost (D-192).
 func (ev *inboxEvidence) extras(data *inboxView, view string) {
-	decisions := data.Groups[groupDecisions]
-	switch view {
-	case viewOpen:
-		decisions.Suggested = ev.transfers.GetSuggested()
-	case viewDone:
-		decisions.Confirmed, decisions.Rejected = ev.transfers.GetConfirmed(), ev.transfers.GetRejected()
-		data.Groups[groupNumbersToCheck].PriceChecks = ev.checks
+	if view != viewDone {
+		return
 	}
+	decisions := data.Groups[groupDecisions]
+	decisions.Confirmed, decisions.Rejected = ev.transfers.GetConfirmed(), ev.transfers.GetRejected()
+	data.Groups[groupNumbersToCheck].PriceChecks = ev.checks
 }
 
 // ticker returns the pending ticker an item's subject, "<instance>/<symbol>",
@@ -503,7 +507,13 @@ func (ev *inboxEvidence) priceChecks(subject string) *instrumentChecks {
 // brokenTransfer returns the broken pair a transfer-broken item's subject,
 // "<withdrawal> -> <deposit>", names, or nil.
 func (ev *inboxEvidence) brokenTransfer(subject string) *viewsv1.Transfer {
-	for _, t := range ev.transfers.GetBroken() {
+	return pairNamed(ev.transfers.GetBroken(), subject)
+}
+
+// pairNamed returns the transfer among transfers whose pair a transfer
+// item's subject, "<withdrawal> -> <deposit>", names, or nil.
+func pairNamed(transfers []*viewsv1.Transfer, subject string) *viewsv1.Transfer {
+	for _, t := range transfers {
 		if t.GetWithdrawalSource()+"/"+t.GetWithdrawalExternalId()+" -> "+t.GetDepositSource()+"/"+t.GetDepositExternalId() == subject {
 			return t
 		}
@@ -542,8 +552,21 @@ func brokersOf(brokers []*ingestv1.BrokerAccount, instance string) []*ingestv1.B
 	return out
 }
 
+// fixedTitles are the titles of the kinds whose title names nothing of
+// their item.
+func fixedTitles() map[string]string {
+	return map[string]string{
+		kindImportProblems:    "An import left rows out",
+		kindTransferBroken:    "A confirmed transfer no longer matches",
+		kindTransferSuggested: "Confirm a transfer between your accounts",
+	}
+}
+
 // itemTitle says in a few words what an item asks of the owner.
 func itemTitle(it *viewsv1.AttentionItem) string {
+	if title, ok := fixedTitles()[it.GetKind()]; ok {
+		return title
+	}
 	subject := it.GetSubject()
 	switch it.GetKind() {
 	case kindTicker:
@@ -553,14 +576,10 @@ func itemTitle(it *viewsv1.AttentionItem) string {
 		return "Map a broker account " + it.GetConnectorInstance() + " reported"
 	case kindSyncFailing:
 		return "The " + it.GetConnectorInstance() + " sync keeps failing"
-	case kindImportProblems:
-		return "An import left rows out"
 	case kindPriceCheck:
 		return "The price of " + subject + " differs"
 	case kindAssertion:
 		return "A balance in " + it.GetAccountId() + " doesn't match"
-	case kindTransferBroken:
-		return "A confirmed transfer no longer matches"
 	case kindSettingMissing:
 		return "Set " + subject
 	case kindUnclassified:

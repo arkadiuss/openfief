@@ -804,3 +804,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd6aafba7ef7
+  - type: verified_by
+    from: SCEN-attention-transfer-suggested-item
+    to: TEST-attention-app-checks
+    created_at: 2026-11-06T06:14:55.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d23133246a5
+  - type: verified_by
+    from: SCEN-attention-transfer-suggested-item
+    to: TEST-views-pairs
+    created_at: 2026-11-06T06:14:55.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bdd431615b0
+  - type: verified_by
+    from: SCEN-attention-transfer-suggested-item
+    to: TEST-views-app-viewers
+    created_at: 2026-11-06T06:14:55.194Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0647d186321
+  - type: verified_by
+    from: SCEN-attention-transfer-suggested-item
+    to: TEST-core-suggested-transfers
+    created_at: 2026-11-06T06:14:55.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9224ac719bd1

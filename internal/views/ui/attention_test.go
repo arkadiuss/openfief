@@ -124,6 +124,10 @@ func (f *fakeRead) ListAttentionItems(_ context.Context, r *connect.Request[view
 		if a := r.Msg.GetAccountId(); a != "" && !slices.Contains(it.GetAccountIds(), a) {
 			continue
 		}
+		if it.GetKind() == kindTransferSuggested && f.transfers.decided() {
+			// The core's check clears the item once the pair is decided.
+			it.State = viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_RESOLVED
+		}
 		view := viewOfState(it.GetState())
 		counts[view]++
 		if r.Msg.GetView() == viewsv1.AttentionView_ATTENTION_VIEW_UNSPECIFIED || r.Msg.GetView() == view {
@@ -167,7 +171,7 @@ func TestInboxSettlesAttentionItems(t *testing.T) {
 	wantBody(t, rec, "<title>Inbox", `<a href="/inbox" aria-current="page">Inbox&nbsp;<span class="pill pill-gold" title="2 open">2`,
 		"Data coming in · 2", "Map a broker account flex-main reported", "An import left rows out", `href="/accounts"`,
 		`action="/inbox/acknowledge"`, `action="/inbox/resolve"`, `name="item" value="2"`, "Open <span class=\"count\">2</span>",
-		"History: 1 change(s)", "Numbers to check · 0", "Decisions · 1")
+		"History: 1 change(s)", "Numbers to check · 0", "Decisions · 0")
 	wantNoBody(t, rec, "<script>", "style=")
 
 	rec = h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
@@ -202,7 +206,7 @@ func TestInboxRefusals(t *testing.T) {
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "Map a broker account flex-main reported", "Waiting for the owner.")
+	wantBody(t, rec, "Map a broker account flex-main reported")
 	wantNoBody(t, rec, `action="/inbox/acknowledge"`, `action="/inbox/resolve"`, `action="/accounts/bind"`)
 
 	rec = h.serve(t, withSession(itemPost("/inbox/acknowledge", 1), readSession))

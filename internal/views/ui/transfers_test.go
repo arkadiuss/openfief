@@ -66,6 +66,23 @@ func (f *fakeTransfers) decide(origin, session string, w, d *ledgerv1.Transactio
 	return &ledgerv1.TransferLink{Withdrawal: w, Deposit: d, Decision: decision, Version: int64(len(f.sessions))}, nil
 }
 
+// decided reports whether the owner decided the synthetic pair.
+func (f *fakeTransfers) decided() bool {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	return f.decision != ledgerv1.TransferDecision_TRANSFER_DECISION_UNSPECIFIED
+}
+
+// suggestedItem is the transfer-suggested attention item of the synthetic
+// pair, tied to both its accounts (D-105, D-130).
+func suggestedItem() *viewsv1.AttentionItem {
+	return &viewsv1.AttentionItem{
+		Id: 9, Kind: kindTransferSuggested, Subject: "test/w1 -> test/d1", Detail: "suggested",
+		State: viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN, Group: viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_DECISIONS,
+		AccountId: "acc-1", AccountIds: []string{"acc-1", "acc-2"},
+	}
+}
+
 // ListTransfers lists the synthetic pair under its current decision.
 func (f *fakeRead) ListTransfers(_ context.Context, r *connect.Request[viewsv1.ListTransfersRequest]) (*connect.Response[viewsv1.ListTransfersResponse], error) {
 	if err := f.check(r.Header()); err != nil {
@@ -103,16 +120,19 @@ func transferPost(path, w string) *http.Request {
 }
 
 // TestInboxTransfers checks the transfers in the Inbox (D-105, D-196): the
-// suggestion with its accounts, dates and amount among the decisions,
-// confirmed in place; the confirmed pair in the done view, corrected there
-// as not a transfer, back to the done view.
+// suggestion's attention item with its accounts, dates and amount among the
+// decisions, counted in the navigation and confirmed in place; the item
+// done once the pair is decided; the confirmed pair in the done view,
+// corrected there as not a transfer, back to the done view.
 func TestInboxTransfers(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
+	h.attention.add(suggestedItem())
 	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "Decisions · 1", "Confirm a transfer between your accounts", "acc-1", "acc-2", "2026-03-02", "2026-03-04",
-		"2\u202f500 PLN", `action="/inbox/transfers/confirm"`, `name="withdrawal_id" value="w1"`)
+		"2\u202f500 PLN", `action="/inbox/transfers/confirm"`, `name="withdrawal_id" value="w1"`, "Not a transfer",
+		`title="3 open"`)
 	wantNoBody(t, rec, "<script>", "style=")
 
 	rec = h.serve(t, withSession(transferPost("/inbox/transfers/confirm", "w1"), ownerSession))
@@ -122,6 +142,7 @@ func TestInboxTransfers(t *testing.T) {
 	}
 	rec = h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), ownerSession))
 	wantBody(t, rec, "Decisions · 0", "No transfers to confirm")
+	wantNoBody(t, rec, "Confirm a transfer between your accounts")
 	rec = h.serve(t, withSession(request(http.MethodGet, "/inbox?view=done", ""), ownerSession))
 	wantBody(t, rec, "Transfers you decided: 1 confirmed, 0 rejected", `<span class="pill pill-ok">Confirmed</span>`, "2\u202f500 PLN")
 
@@ -149,6 +170,7 @@ func rejectFromDone() *http.Request {
 func TestTransfersRefusals(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
+	h.attention.add(suggestedItem())
 	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "Waiting for the owner")

@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4a8b6698a00
+  - type: implements
+    from: SYM-core-transfer-suggestions-suggested-transfers
+    to: REQ-attention-transfer-suggested-item
+    created_at: 2026-11-06T06:15:51.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-109576487133
+  - type: covered_by
+    from: SYM-core-transfer-suggestions-suggested-transfers
+    to: TEST-core-suggested-transfers
+    created_at: 2026-11-06T06:15:51.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6020cce799f9

@@ -135,6 +135,40 @@ func BrokenTransfers(l Ledger) Check {
 	}}
 }
 
+// TransferSuggestions reads the transfers suggested between the owner's
+// own accounts that the owner has neither confirmed nor rejected (D-105);
+// the core computes them from the ledger by the read side's rule, over
+// every account.
+type TransferSuggestions interface {
+	SuggestedTransfers(ctx context.Context) ([]ledger.TransferPair, error)
+}
+
+// SuggestedTransferDetail is the detail of every transfer-suggested item:
+// the same while the pair stays suggested, so an acknowledged item stays
+// acknowledged.
+const SuggestedTransferDetail = "suggested; until you confirm it, its legs count as money in and out"
+
+// SuggestedTransfers is the check of suggested transfers (D-105, D-130):
+// each pair suggested and not decided yet is a condition, its subject the
+// pair as ledger.TransferPair.String writes it, like a broken transfer's.
+// Confirming or rejecting the pair ends the suggestion, and the item
+// clears with the next sweep.
+func SuggestedTransfers(s TransferSuggestions) Check {
+	return Check{Kind: attention.KindTransferSuggested, Find: func(ctx context.Context) ([]attention.Condition, error) {
+		pairs, err := s.SuggestedTransfers(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("loading suggested transfers: %w", err)
+		}
+		out := make([]attention.Condition, 0, len(pairs))
+		for _, p := range pairs {
+			out = append(out, attention.Condition{
+				Kind: attention.KindTransferSuggested, Subject: p.String(), Detail: SuggestedTransferDetail,
+			})
+		}
+		return out, nil
+	}}
+}
+
 // FlaggedPriceChecks is the check of price checks (D-110..D-112): each
 // instrument whose latest check, by date then source, is flagged and not
 // acknowledged is a condition, its subject the instrument, its detail the

@@ -63,6 +63,11 @@ const (
 	// KindTransferBroken is a confirmed transfer whose legs no longer
 	// match after a correction (D-131). Subject: the pair.
 	KindTransferBroken Kind = "transfer-broken"
+	// KindTransferSuggested is a transfer between the owner's own accounts
+	// that is suggested and neither confirmed nor rejected yet (D-105):
+	// until the owner decides, its legs count as money in and out.
+	// Subject: the pair.
+	KindTransferSuggested Kind = "transfer-suggested"
 )
 
 // OwnerResolves reports whether the owner may resolve an item of kind k by

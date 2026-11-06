@@ -482,3 +482,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ecffcc8d679
+  - type: executable_for
+    from: SYM-views-app-test-helper-sync-bindings
+    to: TEST-views-app-viewers
+    created_at: 2026-11-06T06:16:41.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a23bd95364a5

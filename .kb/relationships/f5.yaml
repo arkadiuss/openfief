@@ -867,3 +867,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c0482ce9067
+  - type: implements
+    from: SYM-views-app-unbound-visible
+    to: REQ-views-syncs-for-viewers
+    created_at: 2026-11-06T06:16:08.627Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b45886638b3b
+  - type: implements
+    from: SYM-views-app-unbound-visible
+    to: REQ-decision-d199-1-viewer-syncs
+    created_at: 2026-11-06T06:16:08.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b36f425344c0
+  - type: covered_by
+    from: SYM-views-app-unbound-visible
+    to: TEST-views-app-viewers
+    created_at: 2026-11-06T06:16:08.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a03473cbdb00

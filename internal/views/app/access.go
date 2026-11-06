@@ -50,6 +50,57 @@ func (v *Views) viewable(ctx context.Context, accounts []ledger.Account) ([]ledg
 	return out, nil
 }
 
+// unboundVisible reports whether the caller in ctx may see what is tied to
+// a connector instance and to no account (D-165, D-199): the owner and the
+// other holders of read access (D-137), script tokens, view plugins and
+// demo sessions, which view every account until SpiceDB answers (D-163),
+// and nobody else, so a viewer (D-65) never does.
+func unboundVisible(ctx context.Context) bool {
+	switch identityapp.CallerFrom(ctx).Holder {
+	case identity.HolderOwner, identity.HolderScriptToken, identity.HolderViewPlugin, identity.HolderDemoSession:
+		return true
+	}
+	return false
+}
+
+// instanceAccounts returns the accounts each connector instance is bound to
+// (the connector bindings, D-72), by instance; none without Connections.
+func (v *Views) instanceAccounts(ctx context.Context) (map[string][]ledger.AccountID, error) {
+	out := map[string][]ledger.AccountID{}
+	if v.connections == nil {
+		return out, nil
+	}
+	bindings, err := v.connections.Bindings(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("loading connector bindings: %w", err)
+	}
+	for _, b := range bindings {
+		out[b.Instance] = append(out[b.Instance], b.Account)
+	}
+	return out, nil
+}
+
+// mayViewAny reports whether the caller in ctx may see a record tied to
+// accounts, such as a connector instance's syncs tied to the accounts it is
+// bound to (D-199): when it may view any one of them; a record tied to none
+// as unboundVisible says.
+func (v *Views) mayViewAny(ctx context.Context, accounts []ledger.AccountID) (bool, error) {
+	if len(accounts) == 0 {
+		return unboundVisible(ctx), nil
+	}
+	caller := identityapp.CallerFrom(ctx)
+	for _, a := range accounts {
+		ok, err := v.authz.MayAct(ctx, caller, identity.ActionView, string(a))
+		if err != nil {
+			return false, fmt.Errorf("authorizing a view of %s: %w", a, err)
+		}
+		if ok {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
 // viewableBindings returns those of bindings whose account the caller in
 // ctx may view, in their order.
 func (v *Views) viewableBindings(ctx context.Context, bindings []ingest.Binding) ([]ingest.Binding, error) {

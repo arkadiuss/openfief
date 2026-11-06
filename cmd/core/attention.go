@@ -41,7 +41,8 @@ func attentionOwners(auth *identityapp.Auth, origins identity.Origins) *ownerSes
 // newAttention wires the attention items over pool (D-130, D-131) with the
 // core's checks: flagged balance assertions and price checks, import
 // problems, unmapped broker accounts, unconfirmed tickers, the missing
-// marginal rate, broken transfers and syncs that keep failing. Its events
+// marginal rate, broken and suggested transfers and syncs that keep
+// failing. Its events
 // go to a log publisher.
 func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.Store, checks *valuationapp.CrossChecks,
 	owners attentionapp.Owners, now func() time.Time, log *slog.Logger,
@@ -56,6 +57,7 @@ func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.S
 		attentionapp.UnconfirmedTickers(imports),
 		attentionapp.MissingSettings(l, vstore, jurisdictionPack()),
 		attentionapp.BrokenTransfers(l),
+		attentionapp.SuggestedTransfers(transferSuggestions{ledger: l}),
 		attentionapp.FailingSyncs(imports),
 	)
 	return &attention{items: items, relay: &attentionapp.Relay{Outbox: store, Publisher: attentionapp.LogPublisher{Log: log}, Now: now}}

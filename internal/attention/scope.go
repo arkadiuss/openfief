@@ -65,7 +65,7 @@ func GroupOf(k Kind) Group {
 		return GroupDataComingIn
 	case KindAssertionFlagged, KindPriceCheckFlagged:
 		return GroupNumbersToCheck
-	case KindTransferBroken, KindSettingMissing, kindUnclassified:
+	case KindTransferBroken, KindTransferSuggested, KindSettingMissing, kindUnclassified:
 	}
 	return GroupDecisions
 }
@@ -94,8 +94,8 @@ type Scope struct {
 //     connector-sync-failing and bond-terms-or-index-levels-undeclared
 //     "<instance>": the instance;
 //   - import-problems: the instance its detail names;
-//   - setting-missing, transfer-broken (a pair of transaction keys) and any
-//     other kind: nothing.
+//   - setting-missing, transfer-broken and transfer-suggested (a pair of
+//     transaction keys) and any other kind: nothing.
 func ScopeOf(it *Item) Scope {
 	parts := strings.Split(it.Subject, "/")
 	switch it.Kind {
@@ -109,7 +109,7 @@ func ScopeOf(it *Item) Scope {
 		if instance, _, found := strings.Cut(it.Current().Detail, ": "); found {
 			return Scope{Instance: instance}
 		}
-	case KindSettingMissing, KindTransferBroken:
+	case KindSettingMissing, KindTransferBroken, KindTransferSuggested:
 	}
 	return Scope{}
 }

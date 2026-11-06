@@ -755,3 +755,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a51b5bcc1b8d
+  - type: constrains
+    from: REQ-attention-transfer-suggested-item
+    to: FACT-SUBJECT-79707F3C00BA3407
+    created_at: 2026-11-06T06:15:07.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6de25a168d8e
+  - type: requires_property
+    from: REQ-attention-transfer-suggested-item
+    to: FACT-PROP-B5B4210697082509
+    created_at: 2026-11-06T06:15:07.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c67b79e65aa
+  - type: specified_by
+    from: REQ-attention-transfer-suggested-item
+    to: SCEN-attention-transfer-suggested-item
+    created_at: 2026-11-06T06:15:07.334Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d1539e5c72c
+  - type: constrains
+    from: REQ-decision-d198-1-keeps-failing
+    to: FACT-SUBJECT-AC8FD430E6FAEE89
+    created_at: 2026-11-06T06:15:23.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f08ec3d93e4
+  - type: requires_property
+    from: REQ-decision-d198-1-keeps-failing
+    to: FACT-PROP-C09BEB7F3A0802D8
+    created_at: 2026-11-06T06:15:24.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9e6de4d449f
+  - type: specified_by
+    from: REQ-decision-d198-1-keeps-failing
+    to: SCEN-decision-d198-1-keeps-failing
+    created_at: 2026-11-06T06:15:24.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75e0e873a6db
+  - type: executable_for
+    from: SYM-views-app-test-helper-suggestion-views
+    to: TEST-views-app-viewers
+    created_at: 2026-11-06T06:33:32.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac451b3337fc

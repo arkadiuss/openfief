@@ -965,3 +965,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e4c49251066
+  - type: implements
+    from: SYM-views-suggested-pair-accounts
+    to: REQ-attention-transfer-suggested-item
+    created_at: 2026-11-06T06:16:00.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49549ababe2c
+  - type: covered_by
+    from: SYM-views-suggested-pair-accounts
+    to: TEST-views-pairs
+    created_at: 2026-11-06T06:16:00.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ee30857e307

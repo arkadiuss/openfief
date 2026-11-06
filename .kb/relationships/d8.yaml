@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-02736f54852a
+  - type: executable_for
+    from: SYM-core-test-helper-suggested-item-of
+    to: TEST-core-suggested-transfers
+    created_at: 2026-11-06T06:33:40.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe1494c1d79d

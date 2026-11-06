@@ -25,6 +25,7 @@ func TestGroupOf(t *testing.T) {
 		{attention.KindAssertionFlagged, attention.GroupNumbersToCheck},
 		{attention.KindPriceCheckFlagged, attention.GroupNumbersToCheck},
 		{attention.KindTransferBroken, attention.GroupDecisions},
+		{attention.KindTransferSuggested, attention.GroupDecisions},
 		{attention.KindSettingMissing, attention.GroupDecisions},
 		{valuationapp.UnclassifiedKind, attention.GroupDecisions},
 		{"some-later-check", attention.GroupDecisions},
@@ -104,6 +105,7 @@ func TestScopeOf(t *testing.T) {
 		{name: "import problems without an instance", kind: attention.KindImportProblems, subject: "b-1", detail: "2 rows"},
 		{name: "a setting", kind: attention.KindSettingMissing, subject: "marginal-rate"},
 		{name: "a broken transfer", kind: attention.KindTransferBroken, subject: "test/w -> test/d"},
+		{name: "a suggested transfer", kind: attention.KindTransferSuggested, subject: "test/w -> test/d"},
 		{name: "a later check", kind: "some-later-check", subject: "acc-1/x"},
 	}
 	for _, tt := range tests {

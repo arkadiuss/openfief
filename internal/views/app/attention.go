@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
+	"maps"
 	"slices"
 
 	"github.com/arkadiuss/openfief/internal/attention"
@@ -51,7 +52,8 @@ type AttentionQuery struct {
 
 // ScopedItem is an attention item with its scope and group, and every
 // account it is tied to: its scope's account, or both legs' accounts of a
-// broken transfer (D-131), whose scope then names the withdrawal's.
+// broken (D-131) or suggested (D-105) transfer, whose scope then names the
+// withdrawal's.
 type ScopedItem struct {
 	attention.Item
 
@@ -71,11 +73,12 @@ type AttentionList struct {
 }
 
 // Attention returns the attention items q selects with their history, in
-// ID order. A broken transfer's item is tied to both its legs' accounts
-// (views.PairAccounts). An item tied to an account the caller may not view
-// is left out (D-163), so a broken transfer's is listed only when the caller
-// may view both, as Transfers lists the pair; an item tied to no account
-// names only its connector instance, as attention.ScopeOf reads it (D-165).
+// ID order. A broken or suggested transfer's item is tied to both its legs'
+// accounts (views.PairAccounts, views.SuggestedPairAccounts). An item tied
+// to an account the caller may not view is left out (D-163), so a transfer's
+// is listed only when the caller may view both, as Transfers lists the pair;
+// an item tied to no account names only its connector instance, as
+// attention.ScopeOf reads it, and is listed as unboundVisible says (D-165).
 func (v *Views) Attention(ctx context.Context, q *AttentionQuery) (AttentionList, error) {
 	if v.attention == nil {
 		return AttentionList{}, nil
@@ -84,7 +87,7 @@ func (v *Views) Attention(ctx context.Context, q *AttentionQuery) (AttentionList
 	if err != nil {
 		return AttentionList{}, fmt.Errorf("loading attention items: %w", err)
 	}
-	pairs, err := v.brokenPairAccounts(ctx, items)
+	pairs, err := v.pairAccounts(ctx, items)
 	if err != nil {
 		return AttentionList{}, err
 	}
@@ -106,10 +109,10 @@ func (v *Views) Attention(ctx context.Context, q *AttentionQuery) (AttentionList
 }
 
 // scopedItem returns it with its scope, group and accounts; pairs are the
-// accounts of each confirmed pair's legs, by pair.
+// accounts of each decided or suggested pair's legs, by pair.
 func scopedItem(it *attention.Item, pairs map[string][]ledger.AccountID) ScopedItem {
 	out := ScopedItem{Item: *it, Scope: attention.ScopeOf(it), Group: attention.GroupOf(it.Kind)}
-	if it.Kind == attention.KindTransferBroken {
+	if pairKind(it.Kind) {
 		for _, a := range pairs[it.Subject] {
 			out.Accounts = append(out.Accounts, string(a))
 		}
@@ -124,10 +127,18 @@ func scopedItem(it *attention.Item, pairs map[string][]ledger.AccountID) ScopedI
 	return out
 }
 
-// brokenPairAccounts returns the accounts of each confirmed pair's legs
-// (views.PairAccounts), read only when items hold a broken transfer.
-func (v *Views) brokenPairAccounts(ctx context.Context, items []attention.Item) (map[string][]ledger.AccountID, error) {
-	if !slices.ContainsFunc(items, func(it attention.Item) bool { return it.Kind == attention.KindTransferBroken }) {
+// pairKind reports whether items of kind k are about a pair of transfer
+// legs: a broken transfer (D-131) or a suggested one (D-105).
+func pairKind(k attention.Kind) bool {
+	return k == attention.KindTransferBroken || k == attention.KindTransferSuggested
+}
+
+// pairAccounts returns the accounts of each decided pair's legs
+// (views.PairAccounts) and of each suggested pair's
+// (views.SuggestedPairAccounts), read only when items hold a broken or
+// suggested transfer.
+func (v *Views) pairAccounts(ctx context.Context, items []attention.Item) (map[string][]ledger.AccountID, error) {
+	if !slices.ContainsFunc(items, func(it attention.Item) bool { return pairKind(it.Kind) }) {
 		return map[string][]ledger.AccountID{}, nil
 	}
 	accounts, err := v.ledger.Accounts(ctx)
@@ -146,14 +157,18 @@ func (v *Views) brokenPairAccounts(ctx context.Context, items []attention.Item) 
 	if err != nil {
 		return nil, fmt.Errorf("loading transfer links: %w", err)
 	}
-	return views.PairAccounts(links, txs), nil
+	out := views.PairAccounts(links, txs)
+	maps.Copy(out, views.SuggestedPairAccounts(txs, links))
+	return out, nil
 }
 
 // mayViewAll reports whether the caller in ctx may view an item tied to
 // accounts: one tied to some only when it may view every one of them
-// (D-163); one tied to none, as every holder of read access may today
-// (D-165).
+// (D-163); one tied to none as unboundVisible says (D-165).
 func (v *Views) mayViewAll(ctx context.Context, accounts []string) (bool, error) {
+	if len(accounts) == 0 {
+		return unboundVisible(ctx), nil
+	}
 	caller := identityapp.CallerFrom(ctx)
 	for _, a := range accounts {
 		ok, err := v.authz.MayAct(ctx, caller, identity.ActionView, a)

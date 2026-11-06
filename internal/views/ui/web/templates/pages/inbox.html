@@ -118,9 +118,12 @@
   {{template "checks" .}}
   {{end}}
   {{with .Transfer}}{{template "inbox-transfer" .}}{{end}}
+  {{with .Suggestion}}{{template "inbox-transfer" .}}{{end}}
   {{if .Brokers}}{{template "inbox-map" .}}{{end}}
   <div class="actions">
     {{with .PriceCheck}}{{if .Latest.Acknowledge}}{{template "price-check-acknowledge" .Latest.Check}}{{end}}{{end}}
+    {{if .Decide}}<form method="post" action="/inbox/transfers/confirm" class="inline">{{template "inbox-transfer-keys" .Suggestion}}<button type="submit" class="primary">Confirm</button></form>
+      <form method="post" action="/inbox/transfers/reject" class="inline">{{template "inbox-transfer-keys" .Suggestion}}<button type="submit" class="danger">Not a transfer</button></form>{{else if .Waiting}}<span class="muted">Waiting for the owner.</span>{{end}}
     {{if and .Transfer .Acknowledge}}<form method="post" action="/inbox/transfers/reject" class="inline">{{template "inbox-transfer-keys" .Transfer}}<button type="submit" class="danger">Reject the pair</button></form>{{end}}
     {{if .Acknowledge}}<form method="post" action="/inbox/acknowledge" class="inline"><input type="hidden" name="item" value="{{.Item.Id}}"><button type="submit">Acknowledge</button></form>{{end}}
     {{if .Resolve}}<form method="post" action="/inbox/resolve" class="inline"><input type="hidden" name="item" value="{{.Item.Id}}"><button type="submit">Resolve</button></form>{{end}}
@@ -148,20 +151,7 @@
 <section class="card inbox-group" aria-labelledby="{{.ID}}-title">
   <h2 id="{{.ID}}-title" class="eyebrow">{{.Title}} · {{.Count}}</h2>
   {{if .Items}}<ul class="items">{{range .Items}}{{template "inbox-item" .}}{{end}}</ul>{{end}}
-  {{if .Suggested}}
-  <ul class="items">
-  {{range .Suggested}}
-  <li class="item">
-    <div class="item-head"><p class="item-title">Confirm a transfer between your accounts</p><span class="pill pill-warn">Needs you</span></div>
-    <p class="muted">Until you confirm it, the withdrawal and the deposit count as money in and out of the time-weighted return.</p>
-    {{template "inbox-transfer" .}}
-    {{if $owner}}<div class="actions"><form method="post" action="/inbox/transfers/confirm" class="inline">{{template "inbox-transfer-keys" .}}<button type="submit" class="primary">Confirm</button></form>
-      <form method="post" action="/inbox/transfers/reject" class="inline">{{template "inbox-transfer-keys" .}}<button type="submit" class="danger">Not a transfer</button></form></div>{{else}}<p class="muted">Waiting for the owner.</p>{{end}}
-  </li>
-  {{end}}
-  </ul>
-  {{end}}
-  {{if and (not .Items) (not .Suggested) (not .Confirmed) (not .Rejected) (not .PriceChecks)}}<p class="muted">{{if eq $.Data.View "open"}}{{.Empty}}{{else}}Nothing here.{{end}}</p>{{end}}
+  {{if and (not .Items) (not .Confirmed) (not .Rejected) (not .PriceChecks)}}<p class="muted">{{if eq $.Data.View "open"}}{{.Empty}}{{else}}Nothing here.{{end}}</p>{{end}}
   {{if or .Confirmed .Rejected}}
   <details class="change">
     <summary>Transfers you decided: {{len .Confirmed}} confirmed, {{len .Rejected}} rejected</summary>

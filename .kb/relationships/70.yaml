@@ -468,3 +468,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63ad51b43b4b
+  - type: implements
+    from: SYM-views-app-pair-kind
+    to: REQ-attention-transfer-suggested-item
+    created_at: 2026-11-06T06:16:21.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1975cd8bd69
+  - type: covered_by
+    from: SYM-views-app-pair-kind
+    to: TEST-views-app-viewers
+    created_at: 2026-11-06T06:16:21.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f42dd8a1828

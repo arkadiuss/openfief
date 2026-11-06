@@ -31,3 +31,19 @@ func PairAccounts(links []ledger.TransferLink, txs []ledger.Transaction) map[str
 	}
 	return out
 }
+
+// SuggestedPairAccounts returns, for each transfer SuggestTransfers
+// suggests among the cash flows of txs, the current transactions of every
+// account, given the owner's links, keyed by its pair as
+// ledger.TransferPair.String writes it, which is a transfer-suggested
+// attention item's subject (D-105, D-130): the withdrawal's account, then
+// the deposit's.
+func SuggestedPairAccounts(txs []ledger.Transaction, links []ledger.TransferLink) map[string][]ledger.AccountID {
+	out := map[string][]ledger.AccountID{}
+	suggested := SuggestTransfers(ExternalFlows(txs), links)
+	for i := range suggested {
+		t := &suggested[i]
+		out[t.Pair().String()] = []ledger.AccountID{t.Withdrawal.Account, t.Deposit.Account}
+	}
+	return out
+}

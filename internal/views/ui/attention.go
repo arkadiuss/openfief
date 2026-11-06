@@ -20,17 +20,18 @@ type attentionKind struct {
 }
 
 // The core's kinds of attention items the UI tells apart (D-130, D-131,
-// D-132, D-94, D-179, D-196).
+// D-132, D-94, D-105, D-179, D-196).
 const (
-	kindAssertion      = "balance-assertion-flagged"
-	kindPriceCheck     = "price-check-flagged"
-	kindImportProblems = "import-problems"
-	kindBrokerUnmapped = "broker-account-unmapped"
-	kindTicker         = "ticker-unconfirmed"
-	kindSettingMissing = "setting-missing"
-	kindTransferBroken = "transfer-broken"
-	kindUnclassified   = "instrument-unclassified"
-	kindSyncFailing    = "connector-sync-failing"
+	kindAssertion         = "balance-assertion-flagged"
+	kindPriceCheck        = "price-check-flagged"
+	kindImportProblems    = "import-problems"
+	kindBrokerUnmapped    = "broker-account-unmapped"
+	kindTicker            = "ticker-unconfirmed"
+	kindSettingMissing    = "setting-missing"
+	kindTransferBroken    = "transfer-broken"
+	kindTransferSuggested = "transfer-suggested"
+	kindUnclassified      = "instrument-unclassified"
+	kindSyncFailing       = "connector-sync-failing"
 )
 
 // attentionKindOf names kind, one of the core's kinds of attention items
@@ -46,6 +47,7 @@ func attentionKindOf(kind string) attentionKind {
 		kindTicker:                              {Label: "Ticker to confirm"},
 		kindSettingMissing:                      {Label: "Missing setting", Page: "/settings", Action: "Open the settings"},
 		kindTransferBroken:                      {Label: "Transfer broken by a correction"},
+		kindTransferSuggested:                   {Label: "Transfer to confirm"},
 		kindUnclassified:                        {Label: "Instrument to classify", Page: "/settings", Action: "Classify it in the settings"},
 		"market-data-gap":                       {Label: "Market data stopped arriving", Page: "/settings#series-sources-title", Action: "Open the sources"},
 		"bond-terms-or-index-levels-undeclared": {Label: "Bond terms, index levels or readings dropped", Page: "/plugins", Action: "Open the plugins"},

@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49c99831c58d
+  - type: implements
+    from: SYM-views-app-views-viewable-i-ds
+    to: REQ-views-syncs-for-viewers
+    created_at: 2026-11-06T06:33:11.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-837de3d32f3e
+  - type: covered_by
+    from: SYM-views-app-views-viewable-i-ds
+    to: TEST-views-app-viewers
+    created_at: 2026-11-06T06:33:12.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed1dfa8f093c

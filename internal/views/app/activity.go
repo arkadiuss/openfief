@@ -9,6 +9,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	"github.com/arkadiuss/openfief/internal/ingest"
+	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/views"
 )
@@ -54,8 +55,12 @@ func WithRecordedChanges(c RecordedChanges) Option {
 // Activity returns the page of at most size recent activities after the
 // cursor after, or from the newest when after is nil (D-193): completed
 // import batches, failed sync attempts, and coupons and corrections in the
-// accounts the caller may view (D-163). Imports and syncs are tied to their
-// connector instance only, as an item tied to no account is (D-165).
+// accounts the caller may view (D-163). An import or sync is listed when
+// it booked into an account the caller may view, naming only those; one
+// that booked into none, and a failed sync attempt, are tied to their
+// connector instance, and listed when the caller may view an account the
+// instance is bound to, or, for an instance bound to none, as
+// unboundVisible says (D-199, D-165).
 func (v *Views) Activity(ctx context.Context, after *views.ActivityCursor, size int) (views.ActivityPage, error) {
 	if size < 1 || size > views.MaxPageSize {
 		return views.ActivityPage{}, fmt.Errorf("%w: %d", views.ErrInvalidPageSize, size)
@@ -67,10 +72,14 @@ func (v *Views) Activity(ctx context.Context, after *views.ActivityCursor, size 
 	fetch := size + 1
 	var fetched [3][]views.Activity
 	var err error
-	if fetched[views.SourceBatches], err = v.batchActivity(ctx, from[views.SourceBatches], fetch); err != nil {
+	bound, err := v.instanceAccounts(ctx)
+	if err != nil {
 		return views.ActivityPage{}, err
 	}
-	if fetched[views.SourceFailures], err = v.failureActivity(ctx, from[views.SourceFailures], fetch); err != nil {
+	if fetched[views.SourceBatches], err = v.batchActivity(ctx, from[views.SourceBatches], fetch, bound); err != nil {
+		return views.ActivityPage{}, err
+	}
+	if fetched[views.SourceFailures], err = v.failureActivity(ctx, from[views.SourceFailures], fetch, bound); err != nil {
 		return views.ActivityPage{}, err
 	}
 	if fetched[views.SourceChanges], err = v.changeActivity(ctx, from[views.SourceChanges], fetch); err != nil {
@@ -85,8 +94,10 @@ func (v *Views) Activity(ctx context.Context, after *views.ActivityCursor, size 
 
 // batchActivity returns up to fetch completed batches after b, each naming
 // only the accounts it booked into that the caller may view (D-163), and
-// hidden when it booked into some and the caller may view none of them.
-func (v *Views) batchActivity(ctx context.Context, b views.ActivityBound, fetch int) ([]views.Activity, error) {
+// hidden when it booked into some and the caller may view none of them;
+// one that booked into none is hidden unless the caller may see its
+// instance, bound to the accounts in bound (D-199).
+func (v *Views) batchActivity(ctx context.Context, b views.ActivityBound, fetch int, bound map[string][]ledger.AccountID) ([]views.Activity, error) {
 	if v.syncs == nil {
 		return nil, nil
 	}
@@ -94,28 +105,45 @@ func (v *Views) batchActivity(ctx context.Context, b views.ActivityBound, fetch 
 	if err != nil {
 		return nil, fmt.Errorf("loading import batches: %w", err)
 	}
-	caller := identityapp.CallerFrom(ctx)
 	out := make([]views.Activity, len(batches))
 	for i := range batches {
 		booked := batches[i].Accounts
-		batches[i].Accounts = nil
-		for _, a := range booked {
-			ok, authzErr := v.authz.MayAct(ctx, caller, identity.ActionView, string(a))
-			if authzErr != nil {
-				return nil, fmt.Errorf("authorizing a view of %s: %w", a, authzErr)
-			}
-			if ok {
-				batches[i].Accounts = append(batches[i].Accounts, a)
-			}
+		if batches[i].Accounts, err = v.viewableIDs(ctx, booked); err != nil {
+			return nil, err
 		}
 		out[i] = views.BatchActivity(&batches[i])
-		out[i].Hidden = len(booked) > 0 && len(batches[i].Accounts) == 0
+		visible := len(batches[i].Accounts) > 0
+		if len(booked) == 0 {
+			if visible, err = v.mayViewAny(ctx, bound[batches[i].Instance]); err != nil {
+				return nil, err
+			}
+		}
+		out[i].Hidden = !visible
 	}
 	return out, nil
 }
 
-// failureActivity returns up to fetch failed sync attempts after b.
-func (v *Views) failureActivity(ctx context.Context, b views.ActivityBound, fetch int) ([]views.Activity, error) {
+// viewableIDs returns those of accounts the caller in ctx may view, in
+// their order (D-163); none for none.
+func (v *Views) viewableIDs(ctx context.Context, accounts []ledger.AccountID) ([]ledger.AccountID, error) {
+	caller := identityapp.CallerFrom(ctx)
+	var out []ledger.AccountID
+	for _, a := range accounts {
+		ok, err := v.authz.MayAct(ctx, caller, identity.ActionView, string(a))
+		if err != nil {
+			return nil, fmt.Errorf("authorizing a view of %s: %w", a, err)
+		}
+		if ok {
+			out = append(out, a)
+		}
+	}
+	return out, nil
+}
+
+// failureActivity returns up to fetch failed sync attempts after b, each
+// hidden unless the caller may see its instance, bound to the accounts in
+// bound (D-199).
+func (v *Views) failureActivity(ctx context.Context, b views.ActivityBound, fetch int, bound map[string][]ledger.AccountID) ([]views.Activity, error) {
 	if v.syncs == nil {
 		return nil, nil
 	}
@@ -126,6 +154,11 @@ func (v *Views) failureActivity(ctx context.Context, b views.ActivityBound, fetc
 	out := make([]views.Activity, len(failed))
 	for i := range failed {
 		out[i] = views.FailureActivity(&failed[i])
+		visible, viewErr := v.mayViewAny(ctx, bound[failed[i].Instance])
+		if viewErr != nil {
+			return nil, viewErr
+		}
+		out[i].Hidden = !visible
 	}
 	return out, nil
 }
@@ -155,14 +188,30 @@ func (v *Views) changeActivity(ctx context.Context, b views.ActivityBound, fetch
 }
 
 // SyncStatuses returns where each connector instance's syncs stand, in
-// instance order (D-196); none without the sync history.
+// instance order (D-196), of the instances the caller may see: one bound
+// to an account the caller may view, and one bound to none as
+// unboundVisible says (D-199, D-165); none without the sync history.
 func (v *Views) SyncStatuses(ctx context.Context) ([]ingest.SyncStatus, error) {
 	if v.syncs == nil {
 		return nil, nil
 	}
-	out, err := v.syncs.SyncStatuses(ctx)
+	all, err := v.syncs.SyncStatuses(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("loading sync statuses: %w", err)
+	}
+	bound, err := v.instanceAccounts(ctx)
+	if err != nil {
+		return nil, err
+	}
+	out := make([]ingest.SyncStatus, 0, len(all))
+	for i := range all {
+		visible, viewErr := v.mayViewAny(ctx, bound[all[i].Instance])
+		if viewErr != nil {
+			return nil, viewErr
+		}
+		if visible {
+			out = append(out, all[i])
+		}
 	}
 	return out, nil
 }
@@ -177,8 +226,8 @@ type SyncAttemptPage struct {
 
 // SyncAttempts returns the page of at most size of instance's sync
 // attempts after the bound after, or from the newest when after is the
-// zero bound, with its status (D-196). An instance never synced is
-// ErrUnknownInstance.
+// zero bound, with its status (D-196). An instance never synced, or one the
+// caller may not see (SyncStatuses, D-199), is ErrUnknownInstance.
 func (v *Views) SyncAttempts(ctx context.Context, instance string, after views.ActivityBound, size int) (SyncAttemptPage, error) {
 	if size < 1 || size > views.MaxPageSize {
 		return SyncAttemptPage{}, fmt.Errorf("%w: %d", views.ErrInvalidPageSize, size)

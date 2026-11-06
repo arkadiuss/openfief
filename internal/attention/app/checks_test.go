@@ -59,6 +59,13 @@ func (f *fakeImports) UnsupportedBatches(context.Context) ([]ingest.BatchProblem
 	return f.batches, nil
 }
 
+// fakeSuggestions is app.TransferSuggestions over fixed pairs.
+type fakeSuggestions []ledger.TransferPair
+
+func (f fakeSuggestions) SuggestedTransfers(context.Context) ([]ledger.TransferPair, error) {
+	return f, nil
+}
+
 // fakePriceChecks is app.PriceChecks over fixed checks.
 type fakePriceChecks []valuation.PriceCheck
 
@@ -171,6 +178,22 @@ func TestChecks(t *testing.T) {
 				})
 			},
 			want: []attention.Condition{{Kind: attention.KindTransferBroken, Subject: "test/w -> test/d", Detail: "confirmed as version 1; its legs no longer match"}},
+		},
+		{
+			name: "suggested transfers",
+			check: func(*testing.T) app.Check {
+				return app.SuggestedTransfers(fakeSuggestions{
+					{Withdrawal: key("w"), Deposit: key("d")}, {Withdrawal: key("w3"), Deposit: key("d3")},
+				})
+			},
+			want: []attention.Condition{
+				{Kind: attention.KindTransferSuggested, Subject: "test/w -> test/d", Detail: app.SuggestedTransferDetail},
+				{Kind: attention.KindTransferSuggested, Subject: "test/w3 -> test/d3", Detail: app.SuggestedTransferDetail},
+			},
+		},
+		{
+			name:  "no suggested transfers",
+			check: func(*testing.T) app.Check { return app.SuggestedTransfers(fakeSuggestions{}) },
 		},
 		{
 			name: "flagged price checks: only an instrument's latest, unacknowledged",

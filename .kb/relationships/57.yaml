@@ -524,3 +524,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70a6d0fdebdc
+  - type: verified_by
+    from: SCEN-decision-d198-2-attempts-kept
+    to: TEST-ingest-sync-attempt
+    created_at: 2026-11-06T06:15:01.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ab5f6fa6a92
+  - type: verified_by
+    from: SCEN-decision-d198-2-attempts-kept
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-06T06:15:01.885Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fb0603f350e
+  - type: implements
+    from: SYM-views-app-views-may-view-any
+    to: REQ-views-syncs-for-viewers
+    created_at: 2026-11-06T06:16:16.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e94f7a9025ce
+  - type: implements
+    from: SYM-views-app-views-may-view-any
+    to: REQ-decision-d199-1-viewer-syncs
+    created_at: 2026-11-06T06:16:16.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8d8aedc8a49
+  - type: covered_by
+    from: SYM-views-app-views-may-view-any
+    to: TEST-views-app-viewers
+    created_at: 2026-11-06T06:16:16.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8854eed19479

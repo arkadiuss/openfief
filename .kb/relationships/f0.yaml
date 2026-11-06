@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4edda3708dea
+  - type: implements
+    from: SYM-ui-fixed-titles
+    to: REQ-ui-inbox-transfer-suggested-item
+    created_at: 2026-11-06T06:33:16.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9f66d61c63f
+  - type: covered_by
+    from: SYM-ui-fixed-titles
+    to: TEST-ui-transfers
+    created_at: 2026-11-06T06:33:16.908Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d192b98afbb

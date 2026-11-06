@@ -139860,19 +139860,6 @@ symbols:
         target: TEST-views-app-uiv2
       - type: implements
         target: REQ-views-transfer-broken-accounts
-  - id: SYM-views-app-views-broken-pair-accounts
-    title: Views.brokenPairAccounts
-    sourceFile: internal/views/app/attention.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-06T03:43:34.044Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-app-uiv2
-      - type: implements
-        target: REQ-views-transfer-broken-accounts
   - id: SYM-views-app-views-may-view-all
     title: Views.mayViewAll
     sourceFile: internal/views/app/attention.go
@@ -141504,3 +141491,403 @@ symbols:
         target: TEST-ingest-connectapi-syncs
       - type: implements
         target: REQ-ingest-owner-retries-sync
+  - id: SYM-attention-app-transfer-suggestions
+    title: TransferSuggestions
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:15:29.577Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-transfer-suggested-item
+  - id: SYM-attention-app-suggested-transfers
+    title: SuggestedTransfers
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:15:34.025Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-checks
+      - type: implements
+        target: REQ-attention-transfer-suggested-item
+  - id: SYM-attention-app-test-helper-fake-suggestions
+    title: fakeSuggestions
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:15:37.915Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-attention-app-test-helper-fake-suggestions-suggested-transfers
+    title: fakeSuggestions.SuggestedTransfers
+    sourceFile: internal/attention/app/checks_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:15:41.767Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-checks
+  - id: SYM-core-transfer-suggestions
+    title: transferSuggestions
+    sourceFile: cmd/core/transfers.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:15:45.677Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-suggested-transfers
+      - type: implements
+        target: REQ-attention-transfer-suggested-item
+  - id: SYM-core-transfer-suggestions-suggested-transfers
+    title: transferSuggestions.SuggestedTransfers
+    sourceFile: cmd/core/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:15:50.143Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-suggested-transfers
+      - type: implements
+        target: REQ-attention-transfer-suggested-item
+  - id: SYM-core-test-suggested-transfers-raise-items
+    title: TestSuggestedTransfersRaiseItems
+    sourceFile: cmd/core/suggested_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:15:54.547Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-suggested-transfers
+  - id: SYM-views-suggested-pair-accounts
+    title: SuggestedPairAccounts
+    sourceFile: internal/views/pairs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:15:58.740Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-pairs
+      - type: implements
+        target: REQ-attention-transfer-suggested-item
+  - id: SYM-views-test-suggested-pair-accounts
+    title: TestSuggestedPairAccounts
+    sourceFile: internal/views/pairs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:02.920Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-pairs
+  - id: SYM-views-app-unbound-visible
+    title: unboundVisible
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:07.015Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-viewers
+      - type: implements
+        target: REQ-decision-d199-1-viewer-syncs
+      - type: implements
+        target: REQ-views-syncs-for-viewers
+  - id: SYM-views-app-views-instance-accounts
+    title: Views.instanceAccounts
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:11.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-viewers
+      - type: implements
+        target: REQ-views-syncs-for-viewers
+  - id: SYM-views-app-views-may-view-any
+    title: Views.mayViewAny
+    sourceFile: internal/views/app/access.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:15.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-viewers
+      - type: implements
+        target: REQ-decision-d199-1-viewer-syncs
+      - type: implements
+        target: REQ-views-syncs-for-viewers
+  - id: SYM-views-app-pair-kind
+    title: pairKind
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:19.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-viewers
+      - type: implements
+        target: REQ-attention-transfer-suggested-item
+  - id: SYM-views-app-views-pair-accounts
+    title: Views.pairAccounts
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:24.213Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-viewers
+      - type: implements
+        target: REQ-attention-transfer-suggested-item
+  - id: SYM-views-app-test-helper-viewer-of
+    title: viewerOf
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:28.043Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-helper-grant-authorizer
+    title: grantAuthorizer
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:31.888Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-helper-grant-authorizer-may-act
+    title: grantAuthorizer.MayAct
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:35.717Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-helper-sync-bindings
+    title: syncBindings
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:39.533Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-helper-sync-bindings-bindings
+    title: syncBindings.Bindings
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:43.433Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-helper-viewer-history
+    title: viewerHistory
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:47.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-syncs-for-viewers
+    title: TestSyncsForViewers
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:51.679Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-unbound-items-for-viewers
+    title: TestUnboundItemsForViewers
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:16:56.200Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-suggested-transfer-item-tied-to-both-accounts
+    title: TestSuggestedTransferItemTiedToBothAccounts
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:17:00.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-ui-pair-named
+    title: pairNamed
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:17:05.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-inbox-transfer-suggested-item
+  - id: SYM-ui-test-helper-fake-transfers-decided
+    title: fakeTransfers.decided
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:17:08.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-helper-suggested-item
+    title: suggestedItem
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:17:12.785Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-views-app-views-viewable-i-ds
+    title: Views.viewableIDs
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:33:10.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-viewers
+      - type: implements
+        target: REQ-views-syncs-for-viewers
+  - id: SYM-ui-fixed-titles
+    title: fixedTitles
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:33:15.126Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-inbox-transfer-suggested-item
+  - id: SYM-views-app-test-helper-check-instances
+    title: checkInstances
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:33:19.437Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-helper-seen-activity
+    title: seenActivity
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:33:23.352Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-helper-activity-seen
+    title: activitySeen
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:33:27.201Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-views-app-test-helper-suggestion-views
+    title: suggestionViews
+    sourceFile: internal/views/app/viewers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:33:31.092Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-viewers
+  - id: SYM-core-test-helper-import-suggested-pair
+    title: importSuggestedPair
+    sourceFile: cmd/core/suggested_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:33:35.015Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-suggested-transfers
+  - id: SYM-core-test-helper-suggested-item-of
+    title: suggestedItemOf
+    sourceFile: cmd/core/suggested_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:33:38.919Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-suggested-transfers
