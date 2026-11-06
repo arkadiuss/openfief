@@ -76,7 +76,10 @@ Each `cosign` call prints `Verified OK`, and the checksum `OK`. Anything else, s
 
 ```bash
 install -m 0755 "openfief-$VERSION-$OS-$ARCH" ~/.local/bin/openfief
+openfief version
 ```
+
+`openfief version` prints `openfief <version> commit <commit>`: the version you downloaded, and the commit the release tagged. A CLI built from the repository says `dev` instead. `2026.11.0-alpha.1` predates the command, so it prints its usage instead.
 
 ## 3. Verify the images
 
