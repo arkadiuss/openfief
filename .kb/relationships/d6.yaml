@@ -888,13 +888,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dba28ed081e3
-  - type: executable_for
-    from: SYM-core-test-helper-fake-attention-items-clear
-    to: TEST-core-unclassified
-    created_at: 2026-11-01T06:42:05.152Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2882203ab9d3
   - type: constrains
     from: REQ-valuation-market-data-gap-attention-item
     to: FACT-SUBJECT-C9C67D3EB8F4BC3F
@@ -1168,3 +1161,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-995e03801f67
+  - type: executable_for
+    from: SYM-core-test-helper-fake-attention-items-clear
+    to: TEST-core-valuation-attention
+    created_at: 2026-11-01T20:17:40.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-968b8bfc4823

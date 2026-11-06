@@ -818,3 +818,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8695e507f54e
+  - type: implements
+    from: SYM-pl-estimate
+    to: REQ-pl-oki-current-year-estimate
+    created_at: 2026-11-02T04:22:01.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7af51a39a5ab
+  - type: implements
+    from: SYM-pl-estimate
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:22:01.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66b92da461f5
+  - type: covered_by
+    from: SYM-pl-estimate
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:22:02.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0cfda510801
+  - type: implements
+    from: SYM-pl-exempt
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:22:17.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8837765376ad
+  - type: implements
+    from: SYM-pl-exempt
+    to: REQ-pl-oki-base-and-tax-whole-zloty
+    created_at: 2026-11-02T04:22:18.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ecfbd34cb62
+  - type: covered_by
+    from: SYM-pl-exempt
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:22:18.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-007f2bceb1c9

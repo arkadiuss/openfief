@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3af4b0800db5
+  - type: implements
+    from: SYM-valuation-account-terms-tax-cost
+    to: REQ-pl-sale-tax-cost-includes-buy-fees
+    created_at: 2026-11-01T20:31:36.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-600e05c437e1

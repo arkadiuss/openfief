@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-651050a1ddcd
+  - type: executable_for
+    from: SYM-attention-app-test-unclassified-instruments
+    to: TEST-attention-app-unclassified
+    created_at: 2026-11-02T04:18:33.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a88eb8869d74

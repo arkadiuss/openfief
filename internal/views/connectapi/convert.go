@@ -84,6 +84,10 @@ func pbAccount(a *ledger.Account, terms *app.AccountTerms, settings *app.Account
 	if since := settings.Payout.Since; !since.IsZero() {
 		out.BondPayoutSince = since.String()
 	}
+	out.AccountForm = string(terms.Form)
+	if terms.EarlierPayments != nil {
+		out.EarlierPayments = pbMoney(*terms.EarlierPayments)
+	}
 	return out
 }
 

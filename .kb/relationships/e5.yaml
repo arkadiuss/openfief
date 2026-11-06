@@ -755,3 +755,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e8e5be4a5900
+  - type: validates
+    from: TEST-views-yearly-tax
+    to: REQ-pl-oki-form-decides-cash-class
+    created_at: 2026-11-01T20:10:40.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7cf3164a25e
+  - type: validates
+    from: TEST-ledger-sale
+    to: REQ-pl-dividends-outside-netting
+    created_at: 2026-11-01T20:10:43.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea520898559c
+  - type: validates
+    from: TEST-ledger-sale
+    to: REQ-pl-sale-tax-cost-includes-buy-fees
+    created_at: 2026-11-01T20:10:43.620Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce82246e6fbf
+  - type: implements
+    from: SYM-pl-oki-act-check
+    to: REQ-pl-oki-exempt-amounts-never-fall
+    created_at: 2026-11-02T04:21:23.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ee8534ba4de
+  - type: implements
+    from: SYM-pl-oki-act-check
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:21:23.107Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c9342934c61
+  - type: covered_by
+    from: SYM-pl-oki-act-check
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:21:23.134Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ec8b07fa94d5
+  - type: executable_for
+    from: SYM-valuation-test-unclassified
+    to: TEST-valuation-unclassified
+    created_at: 2026-11-02T04:26:37.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f30d39edb84f

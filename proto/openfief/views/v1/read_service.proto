@@ -359,6 +359,13 @@ message Account {
   // (D-168): its seeding then doesn't move the portfolio's charts' default
   // start (D-138).
   bool opened_on_seeding_day = 9;
+  // The account's form, set when it was created, such as an OKI account's
+  // "brokerage-account" (D-147); empty for a wrapper without forms, or an
+  // account created before its form was asked for.
+  string account_form = 10;
+  // What was paid into the account before its history is known, as the
+  // owner entered it (D-149); unset until entered.
+  Money earlier_payments = 11;
 }
 
 // BondPayout is what happens to what a hand-entered bond account's bonds
@@ -436,12 +443,16 @@ message YearlyTax {
   // The exempt part of each class's average; empty when the exempt
   // amounts are not known.
   repeated ClassAmount exempt = 12;
-  // The part of average left to tax; unset when the exempt amounts are not
-  // known.
+  // The part of average left to tax, the tax base, which the Polish pack
+  // rounds to whole złoty as it does the tax (D-144); unset when the
+  // exempt amounts are not known.
   Money taxed = 13;
   // The ISINs counted in a class without being classified (D-132): the
   // owner classifies them once.
   repeated string unclassified_instruments = 14;
+  // Whether the tax is an estimate over the days so far (D-146): the year
+  // is counted through a day before its last, such as the current year.
+  bool estimate = 15;
 }
 
 // ClassAmount is an amount of one exemption class of a yearly tax, such as
@@ -770,6 +781,24 @@ message GetSettingsResponse {
   bool number_format_default = 3;
   // The tax wrappers an account can have, the default first.
   repeated string tax_wrappers = 4;
+  // What each wrapper asks of an account beyond its key, in the order of
+  // tax_wrappers: the forms it can have (D-147) and whether it takes
+  // earlier payments (D-149).
+  repeated WrapperTerms wrapper_terms = 5;
+}
+
+// WrapperTerms is what a tax wrapper asks of an account beyond its key.
+message WrapperTerms {
+  string tax_wrapper = 1;
+  // The forms an account in it can have, a key of the jurisdiction pack's
+  // each, which the owner sets when creating the account, such as OKI's
+  // "bank-account", "treasury-bond-account", "brokerage-account" and
+  // "fund-register" (D-147); empty when it has none.
+  repeated string account_forms = 2;
+  // Whether it taxes an early return above what was paid in, so an account
+  // in it whose earlier history is unknown takes the total of its earlier
+  // payments in, IKE for Poland (D-149).
+  bool earlier_payments = 3;
 }
 
 message ListYearlyTaxesRequest {

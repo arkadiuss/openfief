@@ -699,3 +699,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3256c6a125a6
+  - type: implements
+    from: SYM-ingest-connectapi-first
+    to: REQ-ingest-earlier-payments-checks
+    created_at: 2026-11-02T04:20:36.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58dd5c122939
+  - type: implements
+    from: SYM-ingest-connectapi-first
+    to: REQ-pl-ike-unknown-history-payments-entered
+    created_at: 2026-11-02T04:20:36.487Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d6f4b2ad853
+  - type: covered_by
+    from: SYM-ingest-connectapi-first
+    to: TEST-ingest-connectapi-accounts
+    created_at: 2026-11-02T04:20:36.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f41be69fbcbf

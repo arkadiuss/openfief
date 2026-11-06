@@ -503,13 +503,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5267c0b00550
-  - type: implements
-    from: SYM-pl-oki-exemptions
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:00:59.909Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d07288bcb633
   - type: covered_by
     from: SYM-pl-oki-exemptions
     to: TEST-pl-oki
@@ -825,3 +818,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ccb5c2c0082d
+  - type: implements
+    from: SYM-pl-oki-exemptions
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:24:53.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-318f4fe4cfba
+  - type: implements
+    from: SYM-ui-form-label
+    to: REQ-ingest-account-form-checks
+    created_at: 2026-11-02T04:28:17.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a46e867c2061
+  - type: implements
+    from: SYM-ui-form-label
+    to: REQ-ingest-oki-account-form-set-at-creation
+    created_at: 2026-11-02T04:28:17.443Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbfe49c0f885
+  - type: covered_by
+    from: SYM-ui-form-label
+    to: TEST-ui-account-forms
+    created_at: 2026-11-02T04:28:17.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80376f49719a

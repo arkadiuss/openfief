@@ -13,9 +13,6 @@ const KindSyncFailing Kind = "connector-sync-failing"
 // read API can group and scope their items; a test checks them against
 // the raising contexts' constants.
 const (
-	// kindUnclassified is valuation's instrument to classify (D-132).
-	// Subject: the ISIN.
-	kindUnclassified Kind = "instrument-unclassified"
 	// kindMarketDataGap is valuation's series that stopped arriving
 	// (D-94). Subject: the account and the series, such as
 	// "acc-1/prices/XX0000000001/SYM" or "acc-1/fx_rates/USD".
@@ -68,7 +65,7 @@ func GroupOf(k Kind) Group {
 		return GroupDataComingIn
 	case KindAssertionFlagged, KindCashCheckpointMismatch, KindPriceCheckFlagged:
 		return GroupNumbersToCheck
-	case KindTransferBroken, KindTransferSuggested, KindSettingMissing, kindUnclassified:
+	case KindTransferBroken, KindTransferSuggested, KindSettingMissing, KindInstrumentUnclassified:
 	}
 	return GroupDecisions
 }
@@ -98,14 +95,16 @@ type Scope struct {
 //     connector-sync-failing, bond-terms-or-index-levels-undeclared and
 //     cross-check-prices-undeclared "<instance>": the instance;
 //   - import-problems: the instance its detail names;
-//   - setting-missing, transfer-broken and transfer-suggested (a pair of
-//     transaction keys) and any other kind: nothing.
+//   - setting-missing "earlier-payments/<account>", an IKE's missing
+//     earlier payments (D-149): the account;
+//   - any other setting-missing, transfer-broken and transfer-suggested (a
+//     pair of transaction keys) and any other kind: nothing.
 func ScopeOf(it *Item) Scope {
 	parts := strings.Split(it.Subject, "/")
 	switch it.Kind {
 	case KindAssertionFlagged, KindCashCheckpointMismatch, kindMarketDataGap:
 		return accountScope(it.Kind, parts)
-	case KindPriceCheckFlagged, kindUnclassified:
+	case KindPriceCheckFlagged, KindInstrumentUnclassified:
 		return Scope{Instrument: parts[0]}
 	case KindBrokerAccountUnmapped, KindTickerUnconfirmed, KindSyncFailing, kindUndeclared, kindUndeclaredCrossChecks:
 		return Scope{Instance: parts[0]}
@@ -113,10 +112,19 @@ func ScopeOf(it *Item) Scope {
 		if instance, _, found := strings.Cut(it.Current().Detail, ": "); found {
 			return Scope{Instance: instance}
 		}
-	case KindSettingMissing, KindTransferBroken, KindTransferSuggested:
+	case KindSettingMissing:
+		// An IKE's missing earlier payments (D-149) are its account's.
+		if len(parts) == 2 && parts[0] == earlierPaymentsSetting {
+			return Scope{Account: parts[1]}
+		}
+	case KindTransferBroken, KindTransferSuggested:
 	}
 	return Scope{}
 }
+
+// earlierPaymentsSetting starts the subject of an IKE's missing earlier
+// payments, "earlier-payments/<account>" (attention/app.EarlierPaymentsSetting).
+const earlierPaymentsSetting = "earlier-payments"
 
 // accountScopeParts is how many parts a subject starting with its account
 // has at least when it also names an instrument: the account, a date or a

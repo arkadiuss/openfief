@@ -881,3 +881,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb3549115b60
+  - type: validates
+    from: TEST-valuation-realized
+    to: REQ-pl-sale-tax-cost-includes-buy-fees
+    created_at: 2026-11-01T20:10:46.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2a116c40ac1
+  - type: validates
+    from: TEST-valuation-realized
+    to: REQ-pl-dividends-outside-netting
+    created_at: 2026-11-01T20:10:47.005Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e477f6315190
+  - type: verified_by
+    from: SCEN-demo-ike-earlier-payments
+    to: TEST-demo-earlier-payments
+    created_at: 2026-11-01T20:11:36.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aac08330391

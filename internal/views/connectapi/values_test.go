@@ -2,6 +2,7 @@ package connectapi_test
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"testing"
 
@@ -27,8 +28,9 @@ type restMoney struct {
 }
 
 // TestSettingsOverREST reads the settings and acc-1's terms: PLN, the
-// Polish default number format, four wrappers; acc-1 in IKZE with its fee
-// rule.
+// Polish default number format, four wrappers, OKI's four forms and IKE's
+// earlier payments (D-147, D-149); acc-1 in IKZE with its fee rule and the
+// form the fake stores.
 func TestSettingsOverREST(t *testing.T) {
 	t.Parallel()
 	var settings struct {
@@ -36,22 +38,35 @@ func TestSettingsOverREST(t *testing.T) {
 		NumberFormat        struct{ Key, DecimalSeparator string }
 		NumberFormatDefault bool     `json:"numberFormatDefault"`
 		TaxWrappers         []string `json:"taxWrappers"`
+		WrapperTerms        []struct {
+			TaxWrapper      string   `json:"taxWrapper"`
+			AccountForms    []string `json:"accountForms"`
+			EarlierPayments bool     `json:"earlierPayments"`
+		} `json:"wrapperTerms"`
 	}
 	getJSON(t, "/v1/settings", &settings)
 	got := []any{settings.ReportingCurrency, settings.NumberFormat.Key, settings.NumberFormat.DecimalSeparator, settings.NumberFormatDefault, len(settings.TaxWrappers)}
 	if diff := cmp.Diff([]any{"PLN", "space-comma", ",", true, 4}, got); diff != "" {
 		t.Errorf("settings (-want +got):\n%s", diff)
 	}
+	terms := map[string]string{}
+	for _, w := range settings.WrapperTerms {
+		terms[w.TaxWrapper] = fmt.Sprint(len(w.AccountForms), w.EarlierPayments)
+	}
+	if diff := cmp.Diff(map[string]string{"taxable": "0 false", "ike": "0 true", "ikze": "0 false", "oki": "4 false"}, terms); diff != "" {
+		t.Errorf("wrapper terms, forms and earlier payments (-want +got):\n%s", diff)
+	}
 	var account struct {
 		Account struct {
-			TaxWrapper string `json:"taxWrapper"`
-			FeeRule    struct {
+			TaxWrapper  string `json:"taxWrapper"`
+			AccountForm string `json:"accountForm"`
+			FeeRule     struct {
 				Rate string `json:"rate"`
 			} `json:"feeRule"`
 		} `json:"account"`
 	}
 	getJSON(t, "/v1/accounts/acc-1", &account)
-	if account.Account.TaxWrapper != "ikze" || account.Account.FeeRule.Rate != "0.0029" {
+	if account.Account.TaxWrapper != "ikze" || account.Account.FeeRule.Rate != "0.0029" || account.Account.AccountForm != "brokerage-account" {
 		t.Errorf("account = %+v", account)
 	}
 }

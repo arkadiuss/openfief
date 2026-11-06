@@ -594,3 +594,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6292fd34520
+  - type: implements
+    from: SYM-jurisdiction-account-form
+    to: REQ-pl-oki-cash-class-by-form
+    created_at: 2026-11-02T04:24:12.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2eb894ff04c2
+  - type: covered_by
+    from: SYM-jurisdiction-account-form
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:24:12.444Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac28b94b121f
+  - type: implements
+    from: SYM-ledger-split-lot
+    to: REQ-ledger-lot-buy-fees
+    created_at: 2026-11-02T04:24:20.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8e131405754
+  - type: covered_by
+    from: SYM-ledger-split-lot
+    to: TEST-ledger-lot
+    created_at: 2026-11-02T04:24:20.282Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe7a9b688d1f

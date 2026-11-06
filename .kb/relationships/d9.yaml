@@ -783,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1866f0d68da4
+  - type: implements
+    from: SYM-views-paid-in
+    to: REQ-views-ike-paid-in-earlier-payments
+    created_at: 2026-11-01T20:28:52.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71937291d6ec
+  - type: implements
+    from: SYM-views-paid-in
+    to: REQ-pl-ike-early-return-above-entered-payments
+    created_at: 2026-11-01T20:29:12.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d71fa1f3388

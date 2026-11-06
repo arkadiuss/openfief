@@ -965,3 +965,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c7ead184721
+  - type: executable_for
+    from: SYM-ui-test-oki-account-form
+    to: TEST-ui-account-forms
+    created_at: 2026-11-02T04:27:31.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c869d422f5c1

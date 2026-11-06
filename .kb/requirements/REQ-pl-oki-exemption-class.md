@@ -1,6 +1,6 @@
 ---
 title: The Polish pack must classify a treasury savings bond as a savings asset, PLN cash as a savings asset on an account that held such bonds in the year and an investment asset otherwise, foreign cash as other, and report that it can't classify a holding priced at market, which counts as other.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-132
 tags:
   - strict-modeling
@@ -34,10 +34,4 @@ The Polish pack must classify a treasury savings bond as a savings asset, PLN ca
 
 ## Context
 
-D-127 names the classes and D-132 says what an instrument the pack can't classify counts as. The pack holds no data on listed instruments, so it can classify none of them. Modeled by Claude Code for the taxes work package; the author has not reviewed it yet.
-
-## Source
-
-> **[D-132]** When the pack can't tell whether an instrument is a savings asset, an investment asset or neither for D-127's exemptions, such as a fund whose policy it can't read, the instrument counts as neither, so the estimate errs high, and an attention item (D-130) asks the owner to classify it once; the owner's choice stays with the instrument.
-
-docs/DESIGN.md#D-132
+Closed: superseded by REQ-pl-oki-cash-class-by-form. D-147 makes the OKI account's form decide its PLN cash's class, replacing the narrow reading that PLN cash was savings only on an account that held treasury bonds in the year. Modeled by Claude Code for the taxes package D-144..D-150; the author has not reviewed it yet.

@@ -76,11 +76,26 @@ type AccountTerms interface {
 	TaxWrapper(ctx context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error)
 	// FeeRule returns account's fee rule, the zero rule unless recorded.
 	FeeRule(ctx context.Context, account ledger.AccountID) (jurisdiction.FeeRule, error)
+	// RecordAccountForm records account's form (D-147), one its wrapper w
+	// offers.
+	RecordAccountForm(ctx context.Context, account ledger.AccountID, w jurisdiction.Wrapper, form jurisdiction.AccountForm) error
+	// AccountForm returns account's recorded form, and false when none was
+	// recorded.
+	AccountForm(ctx context.Context, account ledger.AccountID) (jurisdiction.AccountForm, bool, error)
+	// RecordEarlierPayments records the total paid into account before its
+	// history is known (D-149), for a wrapper w that taxes what is
+	// withdrawn above what was paid in.
+	RecordEarlierPayments(ctx context.Context, account ledger.AccountID, w jurisdiction.Wrapper, paid kernel.Money) error
+	// EarlierPayments returns account's recorded earlier payments, and
+	// false when none were recorded.
+	EarlierPayments(ctx context.Context, account ledger.AccountID) (kernel.Money, bool, error)
 }
 
 // AccountEntry is an account with the sleeve the portfolio context puts it
 // in, its payout setting, and the terms it is valued under: its tax
-// wrapper and fee rule.
+// wrapper and fee rule, its form (D-147), empty unless its wrapper has
+// forms, and the earlier payments the owner entered (D-149), nil unless
+// entered.
 type AccountEntry struct {
 	ledger.Account
 
@@ -88,9 +103,11 @@ type AccountEntry struct {
 	Sleeve portfolio.SleeveID
 	// Payout is the account's payout setting (D-135, D-162); the zero
 	// setting keeps its payouts as cash.
-	Payout  ingest.PayoutSetting
-	Wrapper jurisdiction.Wrapper
-	Fee     jurisdiction.FeeRule
+	Payout          ingest.PayoutSetting
+	Wrapper         jurisdiction.Wrapper
+	Fee             jurisdiction.FeeRule
+	Form            jurisdiction.AccountForm
+	EarlierPayments *kernel.Money
 }
 
 // AccountChange is what the owner changes in an account: its name and
@@ -110,6 +127,13 @@ type AccountChange struct {
 	// OpenedOnSeedingDay marks or unmarks the account as opened on its
 	// seeding day (D-168); nil keeps the account's mark.
 	OpenedOnSeedingDay *bool
+	// Form is the account's form (D-147); empty keeps the account's. An
+	// account's form, once set, never changes; one moved into a wrapper
+	// with forms, or created in it before forms, takes one here.
+	Form jurisdiction.AccountForm
+	// EarlierPayments are what was paid in before the account's history
+	// is known (D-149); nil keeps the account's.
+	EarlierPayments *kernel.Money
 }
 
 // PayoutLedger is what a change of an account's payout setting reads from
@@ -147,6 +171,12 @@ type NewAccount struct {
 	// (D-168), so its seeding doesn't move the portfolio's charts' default
 	// start (D-138).
 	OpenedOnSeedingDay bool
+	// Form is the account's form, which its wrapper requires when it has
+	// forms, such as OKI's (D-147), and refuses otherwise.
+	Form jurisdiction.AccountForm
+	// EarlierPayments are what was paid in before the account's history
+	// is known (D-149); nil for none entered.
+	EarlierPayments *kernel.Money
 }
 
 // Accounts are the owner's account entries (D-72, D-73): creating and
@@ -180,10 +210,11 @@ type Accounts struct {
 }
 
 // Create creates the account n names, records its tax wrapper, the pack's
-// default when n gives none, and its fee rule, the zero rule when n gives
-// none, binds its instance to it and maps its broker account to it. An
-// empty institution takes the broker account's. It returns the account as
-// stored.
+// default when n gives none, its fee rule, the zero rule when n gives
+// none, its form, which a wrapper with forms requires (D-147), and its
+// earlier payments when given (D-149), binds its instance to it and maps
+// its broker account to it. An empty institution takes the broker
+// account's. It returns the account as stored.
 func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *NewAccount) (AccountEntry, error) {
 	if err := a.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return AccountEntry{}, fmt.Errorf("creating an account: %w", err)
@@ -228,8 +259,9 @@ func (a *Accounts) Create(ctx context.Context, origin, sessionToken string, n *N
 // unmarks it as opened on its seeding day when c says (D-168), and
 // records its tax wrapper and fee rule when c changes them, and its payout
 // setting (D-135), in force from the day c gives, today or earlier, today
-// when it gives none (D-162). The payout withdrawals booked from that day on
-// that the new setting no longer makes are then superseded
+// when it gives none (D-162), its form when it has none yet (D-147) and its
+// earlier payments when given (D-149). The payout withdrawals booked from
+// that day on that the new setting no longer makes are then superseded
 // (ingest.StalePayouts), and the next sync books the coupons and
 // maturities from that day anew. Its ID and institution stay. It returns
 // the account as stored.
@@ -245,10 +277,17 @@ func (a *Accounts) Update(ctx context.Context, origin, sessionToken string, id l
 	if err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
+	newForm, err := a.changedTaxDetails(&entry, c)
+	if err != nil {
+		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
+	}
 	if err := a.save(ctx, &entry, c.Payout != nil); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
 	if err := a.recordTerms(ctx, id, c.Wrapper, c.Fee); err != nil {
+		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
+	}
+	if err := a.recordTaxDetails(ctx, &entry, newForm, c.EarlierPayments); err != nil {
 		return AccountEntry{}, fmt.Errorf("changing account %s: %w", id, err)
 	}
 	if c.Payout != nil {
@@ -290,6 +329,9 @@ func (a *Accounts) storeNew(ctx context.Context, entry *AccountEntry, n *NewAcco
 	if err := a.recordTerms(ctx, entry.ID, entry.Wrapper, n.Fee); err != nil {
 		return err
 	}
+	if err := a.recordTaxDetails(ctx, entry, entry.Form, n.EarlierPayments); err != nil {
+		return err
+	}
 	if n.Instance == "" {
 		return nil
 	}
@@ -318,7 +360,19 @@ func (a *Accounts) entry(ctx context.Context, acc ledger.Account) (AccountEntry,
 	if err != nil {
 		return AccountEntry{}, fmt.Errorf("loading the fee rule of %s: %w", acc.ID, err)
 	}
-	return AccountEntry{Account: acc, Sleeve: sleeves[acc.ID], Payout: payout, Wrapper: w, Fee: fee}, nil
+	form, _, err := a.Terms.AccountForm(ctx, acc.ID)
+	if err != nil {
+		return AccountEntry{}, fmt.Errorf("loading the form of %s: %w", acc.ID, err)
+	}
+	out := AccountEntry{Account: acc, Sleeve: sleeves[acc.ID], Payout: payout, Wrapper: w, Fee: fee, Form: form}
+	paid, entered, err := a.Terms.EarlierPayments(ctx, acc.ID)
+	if err != nil {
+		return AccountEntry{}, fmt.Errorf("loading the earlier payments of %s: %w", acc.ID, err)
+	}
+	if entered {
+		out.EarlierPayments = &paid
+	}
+	return out, nil
 }
 
 // newEntry returns the terms n gives a new account, checked: its wrapper,
@@ -334,6 +388,13 @@ func (a *Accounts) newEntry(n *NewAccount) (AccountEntry, error) {
 	if err := a.checkTerms(entry.Wrapper, &entry.Fee); err != nil {
 		return AccountEntry{}, err
 	}
+	if err := a.checkForm(entry.Wrapper, n.Form); err != nil {
+		return AccountEntry{}, err
+	}
+	if err := a.checkEarlierPayments(entry.Wrapper, n.EarlierPayments); err != nil {
+		return AccountEntry{}, err
+	}
+	entry.Form, entry.EarlierPayments = n.Form, n.EarlierPayments
 	return entry, nil
 }
 

@@ -665,20 +665,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-80dbc0f9259c
   - type: implements
-    from: SYM-core-revaluation-client
-    to: REQ-valuation-unclassified-attention
-    created_at: 2026-10-31T20:08:10.884Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9cfddd1b93d9
-  - type: covered_by
-    from: SYM-core-revaluation-client
-    to: TEST-core-unclassified
-    created_at: 2026-10-31T20:08:10.918Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d4d7bec4fcd4
-  - type: implements
     from: SYM-ingest-app-tickers-pending
     to: REQ-ingest-xtb-isin-owner-confirms
     created_at: 2026-10-31T18:03:38.232Z
@@ -910,13 +896,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-582d0d9e1a19
   - type: implements
-    from: SYM-core-revaluation-client
-    to: REQ-valuation-unclassifiable-instrument-attention-item
-    created_at: 2026-11-01T10:16:11.791Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9aa86cd7c22f
-  - type: implements
     from: SYM-valuation-convert-at
     to: REQ-valuation-fx-rate-lookup
     created_at: 2026-11-02T23:57:39.538Z
@@ -1028,3 +1007,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-679700c322a5
+  - type: implements
+    from: SYM-core-revaluation-client
+    to: REQ-valuation-market-data-gap-attention-item
+    created_at: 2026-11-01T20:14:20.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e54b47bf2ac0
+  - type: covered_by
+    from: SYM-core-revaluation-client
+    to: TEST-core-valuation-attention
+    created_at: 2026-11-01T20:14:20.154Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efd04255c428
+  - type: executable_for
+    from: SYM-valuation-app-test-helper-fake-recorder-save-earlier-payments
+    to: TEST-valuation-app-plan
+    created_at: 2026-11-02T04:25:27.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f380b00c35e

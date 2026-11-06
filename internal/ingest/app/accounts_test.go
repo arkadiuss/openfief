@@ -78,6 +78,8 @@ func (m *memAccounts) SaveAccount(_ context.Context, a ledger.Account) error {
 type memTerms struct {
 	wrappers map[ledger.AccountID]jurisdiction.Wrapper
 	fees     map[ledger.AccountID]jurisdiction.FeeRule
+	forms    map[ledger.AccountID]jurisdiction.AccountForm
+	paid     map[ledger.AccountID]kernel.Money
 }
 
 func (m *memTerms) RecordTaxWrapper(_ context.Context, account ledger.AccountID, w jurisdiction.Wrapper) error {
@@ -97,6 +99,32 @@ func (m *memTerms) TaxWrapper(_ context.Context, account ledger.AccountID) (juri
 
 func (m *memTerms) FeeRule(_ context.Context, account ledger.AccountID) (jurisdiction.FeeRule, error) {
 	return m.fees[account], nil
+}
+
+func (m *memTerms) RecordAccountForm(_ context.Context, account ledger.AccountID, _ jurisdiction.Wrapper, form jurisdiction.AccountForm) error {
+	if m.forms == nil {
+		m.forms = map[ledger.AccountID]jurisdiction.AccountForm{}
+	}
+	m.forms[account] = form
+	return nil
+}
+
+func (m *memTerms) AccountForm(_ context.Context, account ledger.AccountID) (jurisdiction.AccountForm, bool, error) {
+	f, ok := m.forms[account]
+	return f, ok, nil
+}
+
+func (m *memTerms) RecordEarlierPayments(_ context.Context, account ledger.AccountID, _ jurisdiction.Wrapper, paid kernel.Money) error {
+	if m.paid == nil {
+		m.paid = map[ledger.AccountID]kernel.Money{}
+	}
+	m.paid[account] = paid
+	return nil
+}
+
+func (m *memTerms) EarlierPayments(_ context.Context, account ledger.AccountID) (kernel.Money, bool, error) {
+	p, ok := m.paid[account]
+	return p, ok, nil
 }
 
 // newAccounts returns the account entries over in-memory fakes holding

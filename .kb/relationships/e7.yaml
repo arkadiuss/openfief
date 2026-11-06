@@ -1049,3 +1049,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d34b4e87014
+  - type: constrains
+    from: REQ-views-ike-paid-in-earlier-payments
+    to: FACT-SUBJECT-8853DD7448E131BB
+    created_at: 2026-11-01T20:13:15.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a258994988f
+  - type: requires_property
+    from: REQ-views-ike-paid-in-earlier-payments
+    to: FACT-PROP-6361F12EDBBD0022
+    created_at: 2026-11-01T20:13:15.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf9b4e75f202
+  - type: specified_by
+    from: REQ-views-ike-paid-in-earlier-payments
+    to: SCEN-views-ike-paid-in-earlier-payments
+    created_at: 2026-11-01T20:13:15.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcebb798384f

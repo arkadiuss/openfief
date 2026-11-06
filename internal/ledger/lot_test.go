@@ -131,6 +131,32 @@ func TestConsumeFIFOCostSplitAddsUp(t *testing.T) {
 	}
 }
 
+// TestConsumeFIFOFeeSplitAddsUp checks that a lot's buy fees split with its
+// units as its cost does (D-150): 1.00 USD and 4.00 PLN of fees over 3
+// units give 0.33, 0.34 and 0.33 USD and 1.33, 1.34 and 1.33 PLN, adding up
+// to the fees.
+func TestConsumeFIFOFeeSplitAddsUp(t *testing.T) {
+	t.Parallel()
+	lots := []ledger.Lot{feeLot(t, "b-1", "2026-03-03", "3", "300.00", money(t, "1.00", "USD"), money(t, "4.00", "PLN"))}
+	fees := make([][]kernel.Money, 0, len(lots[0].Fees)+1)
+	for range 3 {
+		got, err := ledger.ConsumeFIFO(lots, qty(t, "1"))
+		if err != nil {
+			t.Fatalf("ConsumeFIFO: %v", err)
+		}
+		fees = append(fees, got.Consumed[0].Fees)
+		lots = got.Remaining
+	}
+	want := [][]kernel.Money{
+		{money(t, "0.33", "USD"), money(t, "1.33", "PLN")},
+		{money(t, "0.34", "USD"), money(t, "1.34", "PLN")},
+		{money(t, "0.33", "USD"), money(t, "1.33", "PLN")},
+	}
+	if diff := cmp.Diff(want, fees); diff != "" {
+		t.Errorf("consumed fees (-want +got):\n%s", diff)
+	}
+}
+
 // lotLog is a synthetic log of instrument A: an opening lot, a buy corrected
 // from 1400 to 1500 USD, a sale across both, and on one day a sale whose key
 // sorts before the buy that covers it.
@@ -147,8 +173,16 @@ func lotLog(t *testing.T) []ledger.VersionedTransaction {
 		v(must(t)(ledger.NewBuy(header(t, "b-1", "2026-03-03"), a, qty(t, "10"), money(t, "1500.00", "USD"), none)), 2),
 		v(must(t)(ledger.NewSell(header(t, "s-1", "2026-03-04"), a, qty(t, "5"), money(t, "800", "USD"), none)), 1),
 		v(must(t)(ledger.NewSell(header(t, "a-sell", "2026-03-05"), a, qty(t, "10"), money(t, "1600", "USD"), none)), 1),
-		v(must(t)(ledger.NewBuy(header(t, "b-2", "2026-03-05"), a, qty(t, "4"), money(t, "600.00", "USD"), none)), 1),
+		v(must(t)(ledger.NewBuy(header(t, "b-2", "2026-03-05"), a, qty(t, "4"), money(t, "600.00", "USD"), money(t, "2.00", "USD"))), 1),
 	}
+}
+
+// feeLot is a lot bought on opened, not an opening lot, carrying fees.
+func feeLot(t *testing.T, id, opened, units, cost string, fees ...kernel.Money) ledger.Lot {
+	t.Helper()
+	l := lot(t, id, opened, units, cost, false)
+	l.Fees = fees
+	return l
 }
 
 func TestLotsOn(t *testing.T) {
@@ -165,7 +199,7 @@ func TestLotsOn(t *testing.T) {
 			lot(t, "o-1", "2019-05-17", "3", "100.00", true), lot(t, "b-1", "2026-03-03", "10", "1500.00", false),
 		}},
 		{name: "sale takes the opening lot first", on: "2026-03-04", want: []ledger.Lot{lot(t, "b-1", "2026-03-03", "8", "1200.00", false)}},
-		{name: "same-day buy applied before the sale", on: "2026-03-05", want: []ledger.Lot{lot(t, "b-2", "2026-03-05", "2", "300.00", false)}},
+		{name: "same-day buy applied before the sale, keeping its share of the buy's fee", on: "2026-03-05", want: []ledger.Lot{feeLot(t, "b-2", "2026-03-05", "2", "300.00", money(t, "1.00", "USD"))}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

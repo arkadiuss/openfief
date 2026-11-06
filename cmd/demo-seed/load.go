@@ -252,10 +252,15 @@ func (l *loader) direct(ctx context.Context) error {
 }
 
 // inputs records the valuation inputs (D-36): the bond account's tax
-// wrapper, the bond terms, CPI, prices, FX rates and the version of the
-// jurisdiction pack's rules. Each enqueues the revaluations it causes.
+// wrapper and its earlier payments (D-149), the bond terms, CPI, prices, FX
+// rates and the version of the jurisdiction pack's rules. Each enqueues the
+// revaluations it causes.
 func (l *loader) inputs(ctx context.Context, rates []valuation.FXRate) error {
-	if err := l.recorder.RecordTaxWrapper(ctx, demo.BondsAccount, jurisdiction.Wrapper(l.ds.TaxWrapper.String())); err != nil {
+	w := jurisdiction.Wrapper(l.ds.TaxWrapper.String())
+	if err := l.recorder.RecordTaxWrapper(ctx, demo.BondsAccount, w); err != nil {
+		return fmt.Errorf("demo inputs: %w", err)
+	}
+	if err := l.recorder.RecordEarlierPayments(ctx, demo.BondsAccount, w, l.ds.EarlierPayments); err != nil {
 		return fmt.Errorf("demo inputs: %w", err)
 	}
 	for i := range l.ds.Bonds {

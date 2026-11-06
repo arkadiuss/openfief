@@ -127,6 +127,13 @@ type TermsRecorder interface {
 	// (D-132), replacing any earlier one. No stored value depends on it,
 	// so it causes no revaluation.
 	SaveExemptionClass(ctx context.Context, isin string, class jurisdiction.ExemptionClass) error
+	// SaveAccountForm records account's form (D-147), replacing any earlier
+	// one. No stored value depends on it, so it causes no revaluation.
+	SaveAccountForm(ctx context.Context, account ledger.AccountID, form jurisdiction.AccountForm) error
+	// SaveEarlierPayments records the total paid into account before its
+	// history is known (D-149), replacing any earlier one. Totals are taxed
+	// when read, so it causes no revaluation.
+	SaveEarlierPayments(ctx context.Context, account ledger.AccountID, paid kernel.Money) error
 	// SaveRulesVersion records the version of the jurisdiction pack's rules
 	// the stored values were computed under and, only when it differs from
 	// the one recorded before, enqueues revals. It reports whether it

@@ -652,13 +652,6 @@ relationships:
     id: rel-fcfb8efcf6a7
   - type: implements
     from: SYM-pl-oki-act-rate
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:01:19.477Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9a93e63b1635
-  - type: implements
-    from: SYM-pl-oki-act-rate
     to: REQ-pl-oki-tax-rate
     created_at: 2026-10-31T19:01:19.507Z
     created_by: kibi/upsert
@@ -867,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd65f705df3b
+  - type: implements
+    from: SYM-pl-oki-act-rate
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:24:26.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4fc930ccf16
+  - type: implements
+    from: SYM-pl-oki-act-rate
+    to: REQ-pl-oki-rate-from-announcements
+    created_at: 2026-11-01T20:28:13.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f51ad84e8091

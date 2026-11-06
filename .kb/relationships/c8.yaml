@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-579f4187e8db
+  - type: verified_by
+    from: SCEN-attention-unclassified-instrument-check
+    to: TEST-attention-app-unclassified
+    created_at: 2026-11-01T20:11:05.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa8147ddfa03
+  - type: verified_by
+    from: SCEN-attention-unclassified-instrument-check
+    to: TEST-valuation-unclassified
+    created_at: 2026-11-01T20:11:05.140Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4012591f1b49

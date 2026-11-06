@@ -23,6 +23,22 @@ const (
 	nominalCents = 10_000
 )
 
+// BondsEarlierPayments returns what was paid into the bond account, an IKE
+// seeded at go-live, before its record begins: its bonds' cost and its
+// opening cash, the total the demo's owner enters so its early return is
+// taxed above it (D-149).
+func BondsEarlierPayments() (kernel.Money, error) {
+	lots, err := bondLots()
+	if err != nil {
+		return kernel.Money{}, err
+	}
+	cents := int64(bondsOpeningCash)
+	for i := range lots {
+		cents += lots[i].units * nominalCents
+	}
+	return kernel.NewMoney(kernel.NewDecimal(cents, -2), pl.Nominal().Currency()), nil
+}
+
 // simulateBonds returns the bond account's seeding at go-live, its bond
 // lots and some cash, and its history since: the coupons of the COI bonds,
 // which pay their interest out yearly, booked as interest of their series

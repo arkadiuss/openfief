@@ -776,3 +776,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-50d3a5bf97a8
+  - type: implements
+    from: SYM-pl-oki-act-yearly-tax
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:21:45.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8bb7f12bb6a
+  - type: implements
+    from: SYM-pl-oki-act-yearly-tax
+    to: REQ-pl-oki-base-and-tax-whole-zloty
+    created_at: 2026-11-02T04:21:45.402Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26ccf896a6c1
+  - type: covered_by
+    from: SYM-pl-oki-act-yearly-tax
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:21:45.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0023556042f5
+  - type: implements
+    from: SYM-pl-ratio
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:22:40.953Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f0372c0ea8f
+  - type: implements
+    from: SYM-pl-ratio
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:22:41.014Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d5f58cea26e
+  - type: covered_by
+    from: SYM-pl-ratio
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:22:41.044Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22d5a87ef847

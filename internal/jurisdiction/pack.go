@@ -134,6 +134,15 @@ type TaxRules interface {
 	// the pack can't tell (D-132): the class it then returns is the one a
 	// counts in until the owner classifies it.
 	ExemptionClass(w Wrapper, a *Asset) (ExemptionClass, bool)
+	// AccountForms returns the forms an account in w can have, which the
+	// owner sets when creating it, such as OKI's (D-147); none for a
+	// wrapper whose rules don't tell forms apart.
+	AccountForms(w Wrapper) []AccountForm
+	// TaxesAbovePaidIn reports whether w taxes an early return on what is
+	// withdrawn above what was paid in, such as IKE (D-128), so an account
+	// in it whose earlier history is unknown (D-23) needs the total of its
+	// earlier payments in, which the owner enters (D-149).
+	TaxesAbovePaidIn(w Wrapper) bool
 	// YearlyTax returns w's tax for year on the days its accounts were
 	// held, or an error wrapping ErrNoYearlyTax for a wrapper without one.
 	YearlyTax(w Wrapper, year int, accounts []TaxAccount) (YearlyTax, error)

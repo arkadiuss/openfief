@@ -678,13 +678,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2a17fcf2a1c
-  - type: implements
-    from: SYM-pl-oki-act-exemptions
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:01:26.116Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-64dd8c93b72b
   - type: covered_by
     from: SYM-pl-oki-act-exemptions
     to: TEST-pl-oki
@@ -923,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b238eabcaaa4
+  - type: implements
+    from: SYM-pl-oki-act-exemptions
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:24:15.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-330cdb68d4a3
+  - type: implements
+    from: SYM-pl-oki-act-exemptions
+    to: REQ-pl-oki-exempt-amounts-from-announcements
+    created_at: 2026-11-01T20:28:32.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5013d872b271

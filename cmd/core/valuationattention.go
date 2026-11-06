@@ -17,8 +17,8 @@ import (
 )
 
 // revaluationClient returns the River client of the revaluation workers
-// (D-36), raising the attention items they find, such as an instrument the
-// owner should classify for OKI's exemptions (D-132), through attn.
+// (D-36), raising the attention items they find, such as a gap in a
+// series' market data (D-94), through attn.
 func revaluationClient(pool *pgxpool.Pool, vstore *valuationpg.Store, cfg *serveConfig, attn valuationapp.AttentionRaiser,
 	now func() time.Time, log *slog.Logger,
 ) (*river.Client[pgx.Tx], error) {
@@ -46,11 +46,11 @@ type attentionItems interface {
 }
 
 // valuationAttention adapts the attention items to valuation's
-// AttentionRaiser, so the items a revaluation raises and clears, such as
-// an instrument to classify (D-132), land in the attention store; ingest's
-// port, ingest/app.AttentionRaiser, has the same shape, so it serves
-// ingest's undeclared cross-check prices (D-141) and bond terms and index
-// levels (D-179) too. The
+// AttentionRaiser, so the items a revaluation raises and clears, such as a
+// gap in a series' market data (D-94), land in the attention store;
+// ingest's port, ingest/app.AttentionRaiser, has the same shape, so it
+// serves ingest's undeclared cross-check prices (D-141) and bond terms and
+// index levels (D-179) too. The
 // valuation context declares its port with plain strings and the
 // attention context its own condition, so neither imports the other.
 type valuationAttention struct {

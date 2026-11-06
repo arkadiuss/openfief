@@ -27,7 +27,7 @@ func NewPack() *Pack { return &Pack{OKI: CurrentOKIAct()} }
 
 // RulesVersion is the version of the pack's rules: raise it whenever a
 // change to them changes a stored value, so every account is revalued.
-const RulesVersion = "2"
+const RulesVersion = "3"
 
 // Version returns "pl/" and RulesVersion.
 func (*Pack) Version() string { return "pl/" + RulesVersion }

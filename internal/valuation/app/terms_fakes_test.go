@@ -27,6 +27,14 @@ func (f *fakeRecorder) SaveExemptionClass(_ context.Context, isin string, class 
 	return f.record("exemption class "+isin+" "+string(class), nil)
 }
 
+func (f *fakeRecorder) SaveAccountForm(_ context.Context, account ledger.AccountID, form jurisdiction.AccountForm) error {
+	return f.record("form "+string(account)+" "+string(form), nil)
+}
+
+func (f *fakeRecorder) SaveEarlierPayments(_ context.Context, account ledger.AccountID, paid kernel.Money) error {
+	return f.record("earlier payments "+string(account)+" "+paid.String(), nil)
+}
+
 func (f *fakeStore) TaxWrapper(_ context.Context, account ledger.AccountID) (jurisdiction.Wrapper, bool, error) {
 	w, ok := f.wrappers[account]
 	return w, ok, f.err

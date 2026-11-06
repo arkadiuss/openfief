@@ -825,3 +825,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4fbd5cb1aa43
+  - type: implements
+    from: SYM-pl-ratio-round
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:23:57.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fca2ab329f8
+  - type: implements
+    from: SYM-pl-ratio-round
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:23:57.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0a91faef5e75
+  - type: covered_by
+    from: SYM-pl-ratio-round
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:23:57.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b035059a6f33

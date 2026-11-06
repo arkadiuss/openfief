@@ -39,11 +39,16 @@ func (s *accountService) CreateAccount(ctx context.Context, req *connect.Request
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
+	paid, err := s.earlierPaymentsFrom(m.GetEarlierPayments())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
 	acc, err := s.accounts.Create(ctx, m.GetOrigin(), m.GetSessionToken(), &app.NewAccount{
 		Name: m.GetName(), Institution: ingest.InstitutionID(m.GetInstitution()), Sleeve: portfolio.SleeveID(m.GetSleeve()),
 		Instance: m.GetConnectorInstance(), BrokerAccount: ingest.BrokerAccountID(m.GetBrokerAccount()),
 		Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee, Payout: payoutFrom(m.GetBondPayout()),
 		OpenedOnSeedingDay: m.GetOpenedOnSeedingDay(),
+		Form:               jurisdiction.AccountForm(m.GetAccountForm()), EarlierPayments: first(paid),
 	})
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -60,6 +65,10 @@ func (s *accountService) UpdateAccount(ctx context.Context, req *connect.Request
 	if err != nil {
 		return nil, s.fail(ctx, err)
 	}
+	paid, err := s.earlierPaymentsFrom(m.GetEarlierPayments())
+	if err != nil {
+		return nil, s.fail(ctx, err)
+	}
 	from, err := payoutFromDay(m.GetBondPayoutFrom())
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -67,6 +76,7 @@ func (s *accountService) UpdateAccount(ctx context.Context, req *connect.Request
 	acc, err := s.accounts.Update(ctx, m.GetOrigin(), m.GetSessionToken(), ledger.AccountID(m.GetAccountId()), &app.AccountChange{
 		Name: m.GetName(), Sleeve: portfolio.SleeveID(m.GetSleeve()), Wrapper: jurisdiction.Wrapper(m.GetTaxWrapper()), Fee: fee,
 		Payout: payoutFrom(m.GetBondPayout()), PayoutFrom: from, OpenedOnSeedingDay: m.OpenedOnSeedingDay,
+		Form: jurisdiction.AccountForm(m.GetAccountForm()), EarlierPayments: first(paid),
 	})
 	if err != nil {
 		return nil, s.fail(ctx, err)
@@ -136,7 +146,33 @@ func pbAccount(a *app.AccountEntry) *ingestv1.Account {
 	if since := a.Payout.Since; !since.IsZero() {
 		out.BondPayoutSince = since.String()
 	}
+	out.AccountForm = string(a.Form)
+	if a.EarlierPayments != nil {
+		out.EarlierPayments = a.EarlierPayments.Amount().String()
+	}
 	return out
+}
+
+// earlierPaymentsFrom parses earlier payments (D-149), a decimal in the
+// pack's currency, as a one-element slice; none when text is empty. Text
+// that is not a decimal is an invalid account.
+func (s *accountService) earlierPaymentsFrom(text string) ([]kernel.Money, error) {
+	if text == "" {
+		return nil, nil
+	}
+	d, err := kernel.ParseDecimal(text)
+	if err != nil {
+		return nil, fmt.Errorf("%w: earlier payments: %w", ledger.ErrInvalidAccount, err)
+	}
+	return []kernel.Money{kernel.NewMoney(d, s.accounts.Pack.ReportingCurrency())}, nil
+}
+
+// first returns the first of ms, or nil when there is none.
+func first(ms []kernel.Money) *kernel.Money {
+	if len(ms) == 0 {
+		return nil
+	}
+	return &ms[0]
 }
 
 // pbPayout converts a payout setting (D-135).

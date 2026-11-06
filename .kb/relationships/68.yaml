@@ -475,20 +475,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55c6e7123924
-  - type: implements
-    from: SYM-valuation-app-revaluer-raise-items
-    to: REQ-valuation-gap-item-per-account
-    created_at: 2026-11-01T09:06:00.023Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a1eed7b24c6d
-  - type: covered_by
-    from: SYM-valuation-app-revaluer-raise-items
-    to: TEST-valuation-app-series
-    created_at: 2026-11-01T09:06:00.094Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a1372b01f14c
   - type: covered_by
     from: SYM-ingest-before-go-live
     to: TEST-ingest-golive
@@ -671,3 +657,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42a027859baf
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-pln-amount
+    to: TEST-ingest-app-account-forms
+    created_at: 2026-11-02T04:19:29.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd1fedf2801e
+  - type: implements
+    from: SYM-ui-wrapper-terms
+    to: REQ-ingest-account-form-checks
+    created_at: 2026-11-02T04:27:53.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1855e88aabdd
+  - type: implements
+    from: SYM-ui-wrapper-terms
+    to: REQ-ingest-oki-account-form-set-at-creation
+    created_at: 2026-11-02T04:27:53.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-051b0322fc58
+  - type: covered_by
+    from: SYM-ui-wrapper-terms
+    to: TEST-ui-account-forms
+    created_at: 2026-11-02T04:27:53.103Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd40b079edff

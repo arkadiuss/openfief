@@ -6,6 +6,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/arkadiuss/openfief/internal/attention"
+	attentionapp "github.com/arkadiuss/openfief/internal/attention/app"
 	"github.com/arkadiuss/openfief/internal/ingest"
 	valuationapp "github.com/arkadiuss/openfief/internal/valuation/app"
 )
@@ -29,7 +30,7 @@ func TestGroupOf(t *testing.T) {
 		{attention.KindTransferBroken, attention.GroupDecisions},
 		{attention.KindTransferSuggested, attention.GroupDecisions},
 		{attention.KindSettingMissing, attention.GroupDecisions},
-		{valuationapp.UnclassifiedKind, attention.GroupDecisions},
+		{attention.KindInstrumentUnclassified, attention.GroupDecisions},
 		{"some-later-check", attention.GroupDecisions},
 	}
 	for _, tt := range tests {
@@ -77,7 +78,7 @@ func TestScopeOf(t *testing.T) {
 			want: attention.Scope{Instrument: "XX0000000001"},
 		},
 		{
-			name: "an instrument to classify", kind: valuationapp.UnclassifiedKind, subject: "XX0000000001",
+			name: "an instrument to classify", kind: attention.KindInstrumentUnclassified, subject: "XX0000000001",
 			want: attention.Scope{Instrument: "XX0000000001"},
 		},
 		{
@@ -114,6 +115,10 @@ func TestScopeOf(t *testing.T) {
 		},
 		{name: "import problems without an instance", kind: attention.KindImportProblems, subject: "b-1", detail: "2 rows"},
 		{name: "a setting", kind: attention.KindSettingMissing, subject: "marginal-rate"},
+		{
+			name: "an IKE's missing earlier payments", kind: attention.KindSettingMissing, subject: attentionapp.EarlierPaymentsSetting + "/ike-1",
+			want: attention.Scope{Account: "ike-1"},
+		},
 		{name: "a broken transfer", kind: attention.KindTransferBroken, subject: "test/w -> test/d"},
 		{name: "a suggested transfer", kind: attention.KindTransferSuggested, subject: "test/w -> test/d"},
 		{name: "a later check", kind: "some-later-check", subject: "acc-1/x"},

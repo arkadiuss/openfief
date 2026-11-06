@@ -176,9 +176,9 @@
   </table></div>
   <dl class="values">
     <div><dt>Rate</dt><dd>{{if .Rate}}{{percent .Rate}}{{else}}<span class="warn-text">not known yet</span>{{end}}</dd></div>
-    <div><dt>Tax</dt><dd>{{with .Tax}}{{money .}}{{else}}<span class="warn-text">not known yet</span>{{end}}</dd></div>
+    <div><dt>Tax</dt><dd>{{with .Tax}}{{money .}}{{else}}<span class="warn-text">not known yet</span>{{end}}{{if .Estimate}} <span class="pill pill-neutral">Estimate</span>{{end}}</dd></div>
   </dl>
-  <p class="muted">The base is each OKI account's average value: its end-of-day values over the year, plus each day's payments in up to that day's withdrawals, divided by the days it was held, foreign amounts at the NBP rate of the business day before. Savings assets are exempt up to 25,000 PLN and investment assets up to 100,000 PLN, at most 100,000 PLN together, savings first; other assets aren't exempt.{{with .Through}} Counted through {{.}}, {{$year}} so far, so it is an estimate until the year ends.{{end}}</p>
+  <p class="muted">The base is each OKI account's average value, kept exact: its end-of-day values over the year, plus each day's payments in up to that day's withdrawals, divided by the days it was held since its first transaction, foreign amounts at the NBP rate of the business day before. Savings assets are exempt up to 25,000 PLN and investment assets up to 100,000 PLN, at most 100,000 PLN together, savings first, until the finance minister announces higher amounts from 2030; other assets aren't exempt. The taxed base and the tax are rounded to whole złoty. Later years' rates and exempt amounts come from the minister's announcements with each release.{{if .Estimate}} Counted through {{.Through}}: an estimate over the days so far, until the year ends.{{else}}{{with .Through}} Counted through {{.}}.{{end}}{{end}}</p>
   {{end}}
   {{end}}
   {{if .Instruments}}

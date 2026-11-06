@@ -42,8 +42,10 @@ type Dataset struct {
 	Accounts       []ledger.Account
 	Instruments    []Instrument
 	Bonds          []BondSeries
-	// TaxWrapper is the bond account's: IKE.
-	TaxWrapper pl.TaxWrapper
+	// TaxWrapper is the bond account's: IKE. EarlierPayments are what was
+	// paid into it before go-live (BondsEarlierPayments, D-149).
+	TaxWrapper      pl.TaxWrapper
+	EarlierPayments kernel.Money
 
 	// IBKROpening is the Flex statement the IBKR account is seeded from,
 	// and IBKRActivity its monthly activity statements, oldest first.
@@ -75,6 +77,9 @@ func Generate(seed uint64, today kernel.Date) (Dataset, error) {
 		return Dataset{}, err
 	}
 	if ds.Bonds, err = Bonds(); err != nil {
+		return Dataset{}, err
+	}
+	if ds.EarlierPayments, err = BondsEarlierPayments(); err != nil {
 		return Dataset{}, err
 	}
 	h := simulateIBKR(m, newRNG(seed^streamIBKR), goLive, today)

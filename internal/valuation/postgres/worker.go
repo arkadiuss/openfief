@@ -51,7 +51,7 @@ type Config struct {
 	// Logger receives River's logs; nil is slog's default.
 	Logger *slog.Logger
 	// Attention raises and clears the attention items revaluations find,
-	// such as an instrument to classify (D-132); nil raises none.
+	// such as a gap in a series' market data (D-94); nil raises none.
 	Attention app.AttentionRaiser
 	// Plugins are River plugins the client installs, such as the core's
 	// job tracing; none by default.

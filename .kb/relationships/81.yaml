@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63265b84bb19
+  - type: implements
+    from: SYM-pl-oki-forms
+    to: REQ-pl-oki-form-decides-cash-class
+    created_at: 2026-11-02T04:21:15.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f07573953d87
+  - type: implements
+    from: SYM-pl-oki-forms
+    to: REQ-pl-oki-cash-class-by-form
+    created_at: 2026-11-02T04:21:15.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92aac7f67d3e
+  - type: covered_by
+    from: SYM-pl-oki-forms
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:21:15.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3707b54dddd

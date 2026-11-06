@@ -98,6 +98,14 @@ func marketLot(t *testing.T, in ledger.Instrument, opened, quantity, cost, curre
 	}
 }
 
+// feeLot is marketLot with fee as its buy fee.
+func feeLot(t *testing.T, in ledger.Instrument, opened, quantity, cost, currency string, fee kernel.Money) ledger.Lot {
+	t.Helper()
+	l := marketLot(t, in, opened, quantity, cost, currency)
+	l.Fees = []kernel.Money{fee}
+	return l
+}
+
 func TestValueMarketHolding(t *testing.T) {
 	t.Parallel()
 	etf := instrument(t, etfISIN, "SYNTH")
@@ -109,7 +117,7 @@ func TestValueMarketHolding(t *testing.T) {
 	rates := []valuation.FXRate{rate(t, "USD", "2026-02-27", "4.0000"), rate(t, "USD", "2026-03-06", "4.0123")}
 	lots := map[string][]ledger.Lot{
 		etf.String():    {marketLot(t, etf, "2026-03-02", "12.5", "1200", "USD")},
-		plnETF.String(): {marketLot(t, plnETF, "2026-03-02", "1", "9", "PLN")},
+		plnETF.String(): {feeLot(t, plnETF, "2026-03-02", "1", "9", "PLN", money(t, "0.50", "PLN"))},
 	}
 	tests := []struct {
 		name string
@@ -130,13 +138,14 @@ func TestValueMarketHolding(t *testing.T) {
 			},
 		},
 		{
-			// 10.01 - 19% x 1.01 (0.1919 -> 0.19) = 9.82.
-			name: "a PLN price needs no rate",
+			// The tax cost is the lot's 9 plus its 0.50 buy fee (D-150):
+			// 10.01 - 19% x 0.51 (0.0969 -> 0.10) = 9.91.
+			name: "a PLN price needs no rate; the buy fee is in the tax cost",
 			h:    holding(t, plnETF, "2026-03-06", "1"),
 			want: valuation.HoldingValuation{
 				Value: money(t, "10.005", "PLN"), Reporting: money(t, "10.01", "PLN"), Source: "vendor", PriceDate: date(t, "2026-03-06"),
-				Net: money(t, "9.82", "PLN"), Liquidation: money(t, "9.82", "PLN"),
-				TaxCost: money(t, "9.00", "PLN"), SaleCost: money(t, "0", "PLN"),
+				Net: money(t, "9.91", "PLN"), Liquidation: money(t, "9.91", "PLN"),
+				TaxCost: money(t, "9.50", "PLN"), SaleCost: money(t, "0", "PLN"),
 			},
 		},
 		{

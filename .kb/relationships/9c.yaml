@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40e07d5e8226
+  - type: implements
+    from: SYM-pl-class-ratios
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:22:26.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-215c5276a72d
+  - type: implements
+    from: SYM-pl-class-ratios
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:22:26.385Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8cebb9f7877
+  - type: covered_by
+    from: SYM-pl-class-ratios
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:22:26.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9705496cb06a

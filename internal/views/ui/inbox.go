@@ -637,15 +637,27 @@ func itemTitle(it *viewsv1.AttentionItem) string {
 	case kindCashCheckpoint:
 		return "The cash balance you entered for " + it.GetAccountId() + " differs"
 	case kindSettingMissing:
-		return "Set " + subject
+		return settingTitle(subject)
 	case kindUnclassified:
 		return "Classify " + subject + " for the yearly tax"
 	}
 	return attentionKindOf(it.GetKind()).Label
 }
 
+// settingTitle titles a missing setting's item by its subject: an IKE's
+// missing earlier payments, "earlier-payments/<account>", by its account
+// (D-149), any other by the setting.
+func settingTitle(subject string) string {
+	if account, ok := strings.CutPrefix(subject, "earlier-payments/"); ok {
+		return "Enter the earlier payments into " + account
+	}
+	return "Set " + subject
+}
+
 // itemLinks returns the pages an item links to: its accounts, and the page
-// where a kind not settled in place is settled; a mismatched cash
+// where a kind not settled in place is settled (attentionItemKind, so an
+// IKE's missing earlier payments link the accounts page, D-149); a
+// mismatched cash
 // checkpoint's is its account's Cash tab, where the owner books the
 // difference (D-158).
 func itemLinks(it *viewsv1.AttentionItem) []inboxLink {
@@ -660,8 +672,8 @@ func itemLinks(it *viewsv1.AttentionItem) []inboxLink {
 	if isin := it.GetIsin(); isin != "" {
 		out = append(out, inboxLink{Href: instrumentPath(isin), Text: "Open instrument " + isin})
 	}
-	if page := attentionKindOf(it.GetKind()).Page; page != "" {
-		out = append(out, inboxLink{Href: page, Text: attentionKindOf(it.GetKind()).Action})
+	if k := attentionItemKind(it.GetKind(), it.GetSubject()); k.Page != "" {
+		out = append(out, inboxLink{Href: k.Page, Text: k.Action})
 	}
 	if it.GetKind() == kindCashCheckpoint {
 		if page := checkpointPage(it.GetSubject()); page != "" {

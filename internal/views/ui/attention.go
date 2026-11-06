@@ -3,6 +3,7 @@ package ui
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"connectrpc.com/connect"
 
@@ -35,6 +36,9 @@ const (
 	kindCashCheckpoint    = "cash-checkpoint-mismatch"
 )
 
+// openAccounts is the words of an item's link to the accounts page.
+const openAccounts = "Open the accounts"
+
 // attentionKindOf names kind, one of the core's kinds of attention items
 // (D-130, D-131, D-132, D-94, D-141, D-179, D-196); a kind it doesn't know shows
 // its own name and no page. Kinds the Inbox settles in place name no page:
@@ -43,8 +47,8 @@ func attentionKindOf(kind string) attentionKind {
 	kinds := map[string]attentionKind{
 		kindAssertion:                           {Label: "Flagged balance assertion"},
 		kindPriceCheck:                          {Label: "Flagged price check"},
-		kindImportProblems:                      {Label: "Rows an import left out", Page: accountsPath, Action: "Open the accounts"},
-		kindBrokerUnmapped:                      {Label: "Unmapped broker account", Page: accountsPath, Action: "Open the accounts"},
+		kindImportProblems:                      {Label: "Rows an import left out", Page: accountsPath, Action: openAccounts},
+		kindBrokerUnmapped:                      {Label: "Unmapped broker account", Page: accountsPath, Action: openAccounts},
 		kindTicker:                              {Label: "Ticker to confirm"},
 		kindSettingMissing:                      {Label: "Missing setting", Page: "/settings", Action: "Open the settings"},
 		kindTransferBroken:                      {Label: "Transfer broken by a correction"},
@@ -60,6 +64,17 @@ func attentionKindOf(kind string) attentionKind {
 		return k
 	}
 	return attentionKind{Label: kind}
+}
+
+// attentionItemKind names an item of kind about subject: as its kind does
+// (attentionKindOf), but an IKE's missing earlier payments, whose subject
+// starts with "earlier-payments/", are entered on the accounts page
+// (D-149).
+func attentionItemKind(kind, subject string) attentionKind {
+	if kind == kindSettingMissing && strings.HasPrefix(subject, "earlier-payments/") {
+		return attentionKind{Label: "Missing earlier payments into an IKE", Page: accountsPath, Action: openAccounts}
+	}
+	return attentionKindOf(kind)
 }
 
 // acknowledgeAttentionItem hands the owner's acknowledgement of the posted

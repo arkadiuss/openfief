@@ -351,6 +351,9 @@ type fakeRead struct {
 	// institution is the account's institution; empty is a synthetic
 	// broker.
 	institution string
+	// ike makes ListAccounts' account an IKE whose owner entered 30 000 PLN
+	// of earlier payments (D-149).
+	ike bool
 	// pluginsUnavailable makes ListPlugins answer UNAVAILABLE, as a core
 	// that can't read its cluster does.
 	pluginsUnavailable bool
@@ -380,6 +383,12 @@ func (f *fakeRead) GetSettings(_ context.Context, r *connect.Request[viewsv1.Get
 	resp := &viewsv1.GetSettingsResponse{
 		ReportingCurrency: "PLN", NumberFormatDefault: true, TaxWrappers: []string{"taxable", "ike", "ikze", "oki"},
 		NumberFormat: &viewsv1.NumberFormat{Key: "space-comma", GroupSeparator: " ", DecimalSeparator: ","},
+		WrapperTerms: []*viewsv1.WrapperTerms{
+			{TaxWrapper: "taxable"},
+			{TaxWrapper: "ike", EarlierPayments: true},
+			{TaxWrapper: "ikze"},
+			{TaxWrapper: "oki", AccountForms: []string{"bank-account", "treasury-bond-account", "brokerage-account", "fund-register"}},
+		},
 	}
 	f.locked(func() {
 		if f.format != nil {
@@ -400,14 +409,16 @@ func (f *fakeRead) ListAccounts(_ context.Context, r *connect.Request[viewsv1.Li
 		return nil, err
 	}
 	f.mu.Lock()
-	none, institution := f.noAccounts, f.institution
+	none, institution, ike := f.noAccounts, f.institution, f.ike
 	f.mu.Unlock()
 	if none {
 		return connect.NewResponse(&viewsv1.ListAccountsResponse{}), nil
 	}
-	return connect.NewResponse(&viewsv1.ListAccountsResponse{Accounts: []*viewsv1.Account{
-		{Id: accountID, Institution: cmp.Or(institution, "synthetic-broker"), Name: "Synthetic brokerage", Sleeve: "core"},
-	}}), nil
+	acc := &viewsv1.Account{Id: accountID, Institution: cmp.Or(institution, "synthetic-broker"), Name: "Synthetic brokerage", Sleeve: "core"}
+	if ike {
+		acc.TaxWrapper, acc.EarlierPayments = "ike", pln("30000")
+	}
+	return connect.NewResponse(&viewsv1.ListAccountsResponse{Accounts: []*viewsv1.Account{acc}}), nil
 }
 
 func (f *fakeRead) GetAccount(_ context.Context, r *connect.Request[viewsv1.GetAccountRequest]) (*connect.Response[viewsv1.GetAccountResponse], error) {

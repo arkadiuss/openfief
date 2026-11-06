@@ -776,3 +776,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-220f65c0b140
+  - type: implements
+    from: SYM-ui-setting-title
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T18:45:50.023Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e629f1007516
+  - type: implements
+    from: SYM-ui-setting-title
+    to: REQ-attention-earlier-payments-missing
+    created_at: 2026-11-06T18:45:50.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0cdbb0f94cc
+  - type: covered_by
+    from: SYM-ui-setting-title
+    to: TEST-ui-account-forms
+    created_at: 2026-11-06T18:45:50.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f9a83f6a6b6

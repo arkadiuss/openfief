@@ -37,54 +37,50 @@ type Payment struct {
 }
 
 // PaidIn returns what was paid into one account and withdrawn from it,
-// from its current transactions txs, in date order: each deposit and
-// withdrawal, opening cash included, and, for the positions it was seeded
-// with at go-live (D-23), their opening lots' cost, since their payments
-// are not in the record; each converted at the latest FX rate on or before
-// the date pack takes for it (Pack.TaxRateDate of the transaction's date,
-// or of the lot's open date). It reports true when an amount has no rate.
-func PaidIn(txs []ledger.Transaction, rates []valuation.FXRate, pack jurisdiction.Pack) ([]Payment, bool, error) {
+// from its current transactions txs, in date order, each converted at the
+// latest FX rate on or before the date pack takes for it (Pack.TaxRateDate
+// of its date): each deposit and withdrawal. The earlier history of an
+// account seeded from a starting balance (D-23) is unknown, so what was
+// paid in before is earlier, the total the owner entered (D-149), dated on
+// its go-live, the date of its latest seeding transaction; its seeding, the
+// opening cash and opening lots, is no payment. It reports true, missing,
+// for such an account with earlier nil, and when an amount has no rate.
+func PaidIn(txs []ledger.Transaction, rates []valuation.FXRate, pack jurisdiction.Pack, earlier *kernel.Money) ([]Payment, bool, error) {
 	var out []Payment
-	for _, p := range payments(txs) {
-		pln, err := valuation.ConvertAt(p.amount, pack.ReportingCurrency(), rates, pack.TaxRateDate(p.rateDay), valuation.ValueRounding)
+	if goLive, seeded := goLiveOf(txs); seeded {
+		if earlier == nil {
+			return nil, true, nil
+		}
+		out = append(out, Payment{Date: goLive, Amount: *earlier})
+	}
+	for _, f := range ExternalFlows(txs) {
+		if f.Seeding {
+			continue
+		}
+		pln, err := valuation.ConvertAt(f.Amount, pack.ReportingCurrency(), rates, pack.TaxRateDate(f.Date), valuation.ValueRounding)
 		if errors.Is(err, valuation.ErrNoRate) {
 			return nil, true, nil
 		}
 		if err != nil {
 			return nil, false, fmt.Errorf("paid in: %w", err)
 		}
-		out = append(out, Payment{Date: p.date, Amount: pln})
+		out = append(out, Payment{Date: f.Date, Amount: pln})
 	}
 	slices.SortStableFunc(out, func(a, b Payment) int { return a.Date.Compare(b.Date) })
 	return out, false, nil
 }
 
-// payment is an amount paid in, on its date, with the date of the event
-// whose tax rate converts it.
-type payment struct {
-	date, rateDay kernel.Date
-	amount        kernel.Money
-}
-
-// payments returns the deposits and withdrawals of txs and the opening
-// lots' costs, unconverted.
-func payments(txs []ledger.Transaction) []payment {
-	var out []payment
-	for _, f := range ExternalFlows(txs) {
-		out = append(out, payment{date: f.Date, rateDay: f.Date, amount: f.Amount})
-	}
+// goLiveOf returns the date of the latest seeding transaction among txs,
+// and false when there is none: the account has its whole history.
+func goLiveOf(txs []ledger.Transaction) (kernel.Date, bool) {
+	var out kernel.Date
+	seeded := false
 	for i := range txs {
-		t := &txs[i]
-		if t.Kind != ledger.KindOpeningLot {
-			continue
-		}
-		for _, p := range t.Postings {
-			if p.Book.Kind == ledger.BookHolding && p.Quantity.Sign() > 0 {
-				out = append(out, payment{date: t.Date, rateDay: t.LotOpened, amount: p.Amount})
-			}
+		if t := &txs[i]; ledger.IsSeeding(t) && (!seeded || t.Date.After(out)) {
+			out, seeded = t.Date, true
 		}
 	}
-	return out
+	return out, seeded
 }
 
 // TaxTotals sets the net and liquidation values of each total in totals,

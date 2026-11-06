@@ -41,12 +41,12 @@ func (f *fakeAttentionItems) Clear(_ context.Context, kind attentiondomain.Kind,
 }
 
 // TestValuationAttention checks the adapter from valuation's attention port
-// to the attention items (D-132): a raise becomes the condition with its
+// to the attention items (D-130), with a market-data gap's item (D-94): a raise becomes the condition with its
 // kind, subject and detail, a clear names the kind and subject, and the
 // attention store's failure reaches the revaluation.
 func TestValuationAttention(t *testing.T) {
 	t.Parallel()
-	const isin = "PLTEST000010"
+	const subject = "acc-1/prices/PLTEST000010"
 	tests := []struct {
 		name    string
 		clear   bool
@@ -57,19 +57,19 @@ func TestValuationAttention(t *testing.T) {
 		{
 			name: "raise",
 			want: []attentionCall{{Op: "raise", Cond: attentiondomain.Condition{
-				Kind: valuationapp.UnclassifiedKind, Subject: isin, Detail: "detail",
+				Kind: valuationapp.GapKind, Subject: subject, Detail: "detail",
 			}}},
 		},
 		{
 			name:  "clear",
 			clear: true,
-			want:  []attentionCall{{Op: "clear", Cond: attentiondomain.Condition{Kind: valuationapp.UnclassifiedKind, Subject: isin}}},
+			want:  []attentionCall{{Op: "clear", Cond: attentiondomain.Condition{Kind: valuationapp.GapKind, Subject: subject}}},
 		},
 		{
 			name: "raise fails",
 			fail: errAttentionDown,
 			want: []attentionCall{{Op: "raise", Cond: attentiondomain.Condition{
-				Kind: valuationapp.UnclassifiedKind, Subject: isin, Detail: "detail",
+				Kind: valuationapp.GapKind, Subject: subject, Detail: "detail",
 			}}},
 			wantErr: errAttentionDown,
 		},
@@ -77,7 +77,7 @@ func TestValuationAttention(t *testing.T) {
 			name:    "clear fails",
 			clear:   true,
 			fail:    errAttentionDown,
-			want:    []attentionCall{{Op: "clear", Cond: attentiondomain.Condition{Kind: valuationapp.UnclassifiedKind, Subject: isin}}},
+			want:    []attentionCall{{Op: "clear", Cond: attentiondomain.Condition{Kind: valuationapp.GapKind, Subject: subject}}},
 			wantErr: errAttentionDown,
 		},
 	}
@@ -88,9 +88,9 @@ func TestValuationAttention(t *testing.T) {
 			var port valuationapp.AttentionRaiser = valuationAttention{items: items}
 			var err error
 			if tt.clear {
-				err = port.Clear(t.Context(), valuationapp.UnclassifiedKind, isin)
+				err = port.Clear(t.Context(), valuationapp.GapKind, subject)
 			} else {
-				err = port.Raise(t.Context(), valuationapp.UnclassifiedKind, isin, "detail")
+				err = port.Raise(t.Context(), valuationapp.GapKind, subject, "detail")
 			}
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Errorf("error (-want +got):\n%s", diff)

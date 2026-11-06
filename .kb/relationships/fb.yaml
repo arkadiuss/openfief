@@ -930,3 +930,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-577e5e9d7f31
+  - type: constrains
+    from: REQ-ingest-account-form-checks
+    to: FACT-SUBJECT-9B72F507E96B0FE2
+    created_at: 2026-11-01T20:12:50.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87c2248057bd
+  - type: requires_property
+    from: REQ-ingest-account-form-checks
+    to: FACT-PROP-0EAF76631E37B63F
+    created_at: 2026-11-01T20:12:50.621Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df9b572e0123
+  - type: specified_by
+    from: REQ-ingest-account-form-checks
+    to: SCEN-ingest-account-form-checks
+    created_at: 2026-11-01T20:12:50.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81dd8547e6ad

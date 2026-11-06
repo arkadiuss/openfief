@@ -629,13 +629,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-92d8de50e0b8
-  - type: executable_for
-    from: SYM-core-test-helper-attention-call
-    to: TEST-core-unclassified
-    created_at: 2026-11-01T06:41:37.130Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7870183d761d
   - type: implements
     from: SYM-valuation-gen-pb-set-series-source-response-proto-reflect
     to: REQ-valuation-market-data-series-service
@@ -769,3 +762,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52ab7b7fa5df
+  - type: executable_for
+    from: SYM-core-test-helper-attention-call
+    to: TEST-core-valuation-attention
+    created_at: 2026-11-01T20:16:30.314Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f196e1b95e33
+  - type: implements
+    from: SYM-attention-app-earlier-payments-missing
+    to: REQ-attention-earlier-payments-missing
+    created_at: 2026-11-01T20:32:29.904Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89c5146775de
+  - type: covered_by
+    from: SYM-attention-app-earlier-payments-missing
+    to: TEST-attention-app-checks
+    created_at: 2026-11-01T20:32:29.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02794d2a1016

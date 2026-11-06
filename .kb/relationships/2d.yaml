@@ -783,3 +783,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f86fc9fb6e1c
+  - type: executable_for
+    from: SYM-valuation-postgres-test-helper-form
+    to: TEST-valuation-postgres-account-forms
+    created_at: 2026-11-02T04:26:09.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2602710ea13
+  - type: implements
+    from: SYM-ingest-app-accounts-changed-tax-details
+    to: REQ-ingest-account-form-checks
+    created_at: 2026-11-02T06:15:52.489Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-449b7e6424ce
+  - type: implements
+    from: SYM-ingest-app-accounts-changed-tax-details
+    to: REQ-ingest-oki-account-form-set-at-creation
+    created_at: 2026-11-02T06:15:52.556Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9157675d5a9
+  - type: covered_by
+    from: SYM-ingest-app-accounts-changed-tax-details
+    to: TEST-ingest-app-account-forms
+    created_at: 2026-11-02T06:15:52.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd35cc84e656

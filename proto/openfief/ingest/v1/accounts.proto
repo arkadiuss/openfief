@@ -101,6 +101,15 @@ message Account {
   // (D-168): its seeding from a starting balance then doesn't move the
   // portfolio's charts' default start (D-138).
   bool opened_on_seeding_day = 9;
+  // The account's form, a key of the jurisdiction pack, set when the
+  // account is created, such as an OKI account's "bank-account",
+  // "treasury-bond-account", "brokerage-account" or "fund-register"
+  // (D-147); empty for a wrapper without forms.
+  string account_form = 10;
+  // What was paid into an IKE before its history is known, as a decimal
+  // amount in the pack's currency, PLN for Poland (D-149); empty when the
+  // owner hasn't entered it.
+  string earlier_payments = 11;
 }
 
 // BondPayout is the payout setting of a hand-entered bond account
@@ -159,6 +168,14 @@ message CreateAccountRequest {
   // Marks the account as opened on its seeding day (D-168), so that its
   // seeding doesn't move the portfolio's charts' default start (D-138).
   bool opened_on_seeding_day = 11;
+  // The account's form (D-147): required for a wrapper that has forms,
+  // such as OKI, and refused for any other with INVALID_ARGUMENT.
+  string account_form = 12;
+  // What was paid into the account before its history is known, as a
+  // decimal amount in the pack's currency (D-149); empty for none. Only a
+  // wrapper that taxes what is withdrawn above what was paid in, IKE for
+  // Poland, takes it.
+  string earlier_payments = 13;
 }
 
 message CreateAccountResponse {
@@ -185,6 +202,14 @@ message UpdateAccountRequest {
   // Marks or unmarks the account as opened on its seeding day (D-168);
   // unset keeps the account's mark.
   optional bool opened_on_seeding_day = 10;
+  // The account's form (D-147); empty keeps the account's. A form, once
+  // set, never changes; an account moved into a wrapper with forms takes
+  // one here.
+  string account_form = 11;
+  // What was paid into the account before its history is known, as a
+  // decimal amount in the pack's currency (D-149); empty keeps the
+  // account's.
+  string earlier_payments = 12;
 }
 
 message UpdateAccountResponse {

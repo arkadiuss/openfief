@@ -100,10 +100,24 @@ func taxedTotal(t *testing.T, accounts []views.TaxedAccount) views.DateTotal {
 	return totals[0]
 }
 
-// TestPaidIn checks what an IKE's early return is taxed above (D-128): an
-// opening lot of 100 USD opened 2025-12-30, at the rate of 2025-12-29
-// (4.00), 400; a 1 000 PLN deposit; a 200 PLN withdrawal. A deposit in a
-// currency without a rate is reported.
+// TestPaidIn checks what an IKE's early return is taxed above (D-128,
+// D-149): an account seeded on 2026-01-02 from an opening lot has an
+// unknown earlier history, so what was paid in before is the 30 000 PLN
+// the owner entered, dated on its go-live, and the lot is no payment; then
+// a 1 000 PLN deposit and a 200 PLN withdrawal. Without the entered amount
+// it is missing; an account with its whole history counts its deposits
+// alone. A deposit in a currency without a rate is reported.
+// checkWholeHistory fails t unless an account with its whole history, txs,
+// counts its deposits and withdrawals alone, want, with no earlier
+// payments.
+func checkWholeHistory(t *testing.T, txs []ledger.Transaction, rates []valuation.FXRate, want []views.Payment) {
+	t.Helper()
+	got, missing, err := views.PaidIn(txs, rates, pl.NewPack(), nil)
+	if diff := cmp.Diff(want, got); err != nil || missing || diff != "" {
+		t.Errorf("an account with its whole history: %v, %v (-want +got):\n%s", missing, err, diff)
+	}
+}
+
 func TestPaidIn(t *testing.T) {
 	t.Parallel()
 	h := func(id, day string) ledger.TransactionHeader {
@@ -120,19 +134,24 @@ func TestPaidIn(t *testing.T) {
 		}
 	}
 	rates := []valuation.FXRate{{Currency: money(t, "0", "USD").Currency(), Base: money(t, "0", "PLN").Currency(), Date: date(t, "2025-12-29"), Rate: kernel.NewDecimal(4, 0), Source: "test"}}
-	got, missing, err := views.PaidIn([]ledger.Transaction{withdrawal, deposit, opening}, rates, pl.NewPack())
+	earlier := money(t, "30000", "PLN")
+	got, missing, err := views.PaidIn([]ledger.Transaction{withdrawal, deposit, opening}, rates, pl.NewPack(), &earlier)
 	if err != nil || missing {
 		t.Fatalf("PaidIn: %v, %v", missing, err)
 	}
 	want := []views.Payment{
-		{Date: date(t, "2026-01-02"), Amount: money(t, "400.00", "PLN")},
+		{Date: date(t, "2026-01-02"), Amount: money(t, "30000", "PLN")},
 		{Date: date(t, "2026-01-05"), Amount: money(t, "1000.00", "PLN")},
 		{Date: date(t, "2026-02-01"), Amount: money(t, "-200.00", "PLN")},
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("(-want +got):\n%s", diff)
 	}
-	if _, missing, err := views.PaidIn([]ledger.Transaction{euros}, rates, pl.NewPack()); err != nil || !missing {
+	if _, unentered, paidErr := views.PaidIn([]ledger.Transaction{withdrawal, deposit, opening}, rates, pl.NewPack(), nil); paidErr != nil || !unentered {
+		t.Errorf("a seeded account without earlier payments: %v, %v; want missing", unentered, paidErr)
+	}
+	checkWholeHistory(t, []ledger.Transaction{withdrawal, deposit}, rates, want[1:])
+	if _, missing, err := views.PaidIn([]ledger.Transaction{euros}, rates, pl.NewPack(), nil); err != nil || !missing {
 		t.Errorf("a EUR deposit without a rate: %v, %v; want missing", missing, err)
 	}
 }

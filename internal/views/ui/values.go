@@ -100,6 +100,19 @@ func wrapperLabel(key string) string {
 	return key
 }
 
+// formLabel names an account form key of the jurisdiction pack (D-147): the
+// Polish pack's OKI forms by their usual names, any other as its key.
+func formLabel(key string) string {
+	labels := map[string]string{
+		"bank-account": "Bank account", "treasury-bond-account": "Treasury bond account",
+		"brokerage-account": "Brokerage account", "fund-register": "Fund register",
+	}
+	if l, ok := labels[key]; ok {
+		return l
+	}
+	return key
+}
+
 // isZero reports whether a decimal string is empty or zero.
 func isZero(s string) bool {
 	d, err := kernel.ParseDecimal(s)

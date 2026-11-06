@@ -588,20 +588,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-7f989c42c238
   - type: implements
-    from: SYM-pl-clamp
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:02:53.397Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1e46cd2ddac6
-  - type: covered_by
-    from: SYM-pl-clamp
-    to: TEST-pl-oki
-    created_at: 2026-10-31T19:02:53.429Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-42fb49da8ede
-  - type: implements
     from: SYM-valuationv1-set-exemption-class-request-string
     to: REQ-valuation-owner-exemption-class
     created_at: 2026-10-31T19:16:00.506Z
@@ -832,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-200fbadba858
+  - type: executable_for
+    from: SYM-attention-app-test-helper-held
+    to: TEST-attention-app-unclassified
+    created_at: 2026-11-02T04:18:25.783Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-084b706d0200

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"math"
+	"slices"
 
 	"connectrpc.com/connect"
 
@@ -32,6 +33,11 @@ func (s *readService) GetSettings(ctx context.Context, _ *connect.Request[viewsv
 	}
 	for _, w := range got.Wrappers {
 		out.TaxWrappers = append(out.TaxWrappers, string(w))
+		terms := &viewsv1.WrapperTerms{TaxWrapper: string(w), EarlierPayments: slices.Contains(got.EarlierPayments, w)}
+		for _, f := range got.Forms[w] {
+			terms.AccountForms = append(terms.AccountForms, string(f))
+		}
+		out.WrapperTerms = append(out.WrapperTerms, terms)
 	}
 	return connect.NewResponse(out), nil
 }
@@ -66,7 +72,7 @@ func pbYearlyTax(t *app.YearlyTax) *viewsv1.YearlyTax {
 		return out
 	}
 	out.Days, out.Average, out.Averages = clampInt32(t.Days), pbMoney(t.Average), pbClassAmounts(t.Averages)
-	out.UnclassifiedInstruments = t.Unclassified
+	out.UnclassifiedInstruments, out.Estimate = t.Unclassified, t.Estimate
 	if !t.Through.IsZero() {
 		out.Through = pbDate(t.Through)
 	}

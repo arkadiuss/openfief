@@ -664,3 +664,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f5825c5cd1c
+  - type: implements
+    from: SYM-pl-ratio-sign
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:23:33.614Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3282b734543
+  - type: implements
+    from: SYM-pl-ratio-sign
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:23:33.661Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cad96681adf4
+  - type: covered_by
+    from: SYM-pl-ratio-sign
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:23:33.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f54c634f3231

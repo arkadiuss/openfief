@@ -121,6 +121,8 @@ func (m *memLinks) MapBrokerAccount(_ context.Context, _ string, id ingest.Broke
 type memTerms struct {
 	wrappers map[ledger.AccountID]jurisdiction.Wrapper
 	fees     map[ledger.AccountID]jurisdiction.FeeRule
+	forms    map[ledger.AccountID]jurisdiction.AccountForm
+	paid     map[ledger.AccountID]kernel.Money
 }
 
 func (m *memTerms) RecordTaxWrapper(_ context.Context, account ledger.AccountID, w jurisdiction.Wrapper) error {
@@ -140,6 +142,32 @@ func (m *memTerms) TaxWrapper(_ context.Context, account ledger.AccountID) (juri
 
 func (m *memTerms) FeeRule(_ context.Context, account ledger.AccountID) (jurisdiction.FeeRule, error) {
 	return m.fees[account], nil
+}
+
+func (m *memTerms) RecordAccountForm(_ context.Context, account ledger.AccountID, _ jurisdiction.Wrapper, form jurisdiction.AccountForm) error {
+	if m.forms == nil {
+		m.forms = map[ledger.AccountID]jurisdiction.AccountForm{}
+	}
+	m.forms[account] = form
+	return nil
+}
+
+func (m *memTerms) AccountForm(_ context.Context, account ledger.AccountID) (jurisdiction.AccountForm, bool, error) {
+	f, ok := m.forms[account]
+	return f, ok, nil
+}
+
+func (m *memTerms) RecordEarlierPayments(_ context.Context, account ledger.AccountID, _ jurisdiction.Wrapper, paid kernel.Money) error {
+	if m.paid == nil {
+		m.paid = map[ledger.AccountID]kernel.Money{}
+	}
+	m.paid[account] = paid
+	return nil
+}
+
+func (m *memTerms) EarlierPayments(_ context.Context, account ledger.AccountID) (kernel.Money, bool, error) {
+	p, ok := m.paid[account]
+	return p, ok, nil
 }
 
 // accountsClient is the generated AccountService client.
@@ -298,6 +326,44 @@ func withdrawal(t *testing.T, id, day string) ledger.Transaction {
 		t.Fatal(err)
 	}
 	return w
+}
+
+// TestAccountServiceFormAndEarlierPayments creates an OKI account with its
+// form (D-147) and changes an IKE's earlier payments (D-149): both come back
+// with the account, the payments as a decimal in PLN; an OKI account
+// without a form, and earlier payments that are no decimal, are
+// INVALID_ARGUMENT.
+func TestAccountServiceFormAndEarlierPayments(t *testing.T) {
+	t.Parallel()
+	reg, links := fixture()
+	c := newAccountsClient(t, reg, links, viewCaller)
+	ctx := t.Context()
+	oki, err := c.CreateAccount(ctx, connect.NewRequest(&ingestv1.CreateAccountRequest{
+		Origin: local, SessionToken: ownerSession, Name: "OKI", Institution: "xtb", Sleeve: "core", TaxWrapper: "oki",
+		AccountForm: "brokerage-account",
+	}))
+	if err != nil || oki.Msg.GetAccount().GetAccountForm() != "brokerage-account" {
+		t.Errorf("CreateAccount of an OKI account = %v, %v; want its form", oki, err)
+	}
+	ike, err := c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
+		Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Name: "IKE", Sleeve: "core", TaxWrapper: "ike",
+		EarlierPayments: "30000.50",
+	}))
+	if err != nil || ike.Msg.GetAccount().GetEarlierPayments() != "30000.5" {
+		t.Errorf("UpdateAccount with earlier payments = %v, %v; want 30000.5", ike, err)
+	}
+	_, err = c.CreateAccount(ctx, connect.NewRequest(&ingestv1.CreateAccountRequest{
+		Origin: local, SessionToken: ownerSession, Name: "OKI 2", Institution: "xtb", Sleeve: "core", TaxWrapper: "oki",
+	}))
+	if connect.CodeOf(err) != connect.CodeInvalidArgument {
+		t.Errorf("an OKI account without a form: %v, want INVALID_ARGUMENT", err)
+	}
+	_, err = c.UpdateAccount(ctx, connect.NewRequest(&ingestv1.UpdateAccountRequest{
+		Origin: local, SessionToken: ownerSession, AccountId: bondsAccount, Name: "IKE", Sleeve: "core", EarlierPayments: "a lot",
+	}))
+	if connect.CodeOf(err) != connect.CodeInvalidArgument {
+		t.Errorf("earlier payments that are no decimal: %v, want INVALID_ARGUMENT", err)
+	}
 }
 
 func TestAccountServiceErrors(t *testing.T) {

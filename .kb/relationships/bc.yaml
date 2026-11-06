@@ -909,3 +909,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6f40957d3d73
+  - type: validates
+    from: TEST-core-valuation-attention
+    to: REQ-valuation-market-data-gap-attention-item
+    created_at: 2026-11-01T20:10:31.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f62732d6089
+  - type: implements
+    from: SYM-pl-shown
+    to: REQ-pl-oki-average-value-exact
+    created_at: 2026-11-02T04:22:34.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30556adab88d
+  - type: implements
+    from: SYM-pl-shown
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-02T04:22:34.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24adfd63a8c2
+  - type: covered_by
+    from: SYM-pl-shown
+    to: TEST-pl-oki
+    created_at: 2026-11-02T04:22:34.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cc5eb686ac0
+  - type: implements
+    from: SYM-valuation-postgres-store-earlier-payments
+    to: REQ-ingest-earlier-payments-checks
+    created_at: 2026-11-02T04:25:48.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0af382caf061
+  - type: implements
+    from: SYM-valuation-postgres-store-earlier-payments
+    to: REQ-pl-ike-unknown-history-payments-entered
+    created_at: 2026-11-02T04:25:48.475Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44892463b1b0
+  - type: covered_by
+    from: SYM-valuation-postgres-store-earlier-payments
+    to: TEST-valuation-postgres-account-forms
+    created_at: 2026-11-02T04:25:48.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5ca86eb60b6
+  - type: implements
+    from: SYM-viewsv1-wrapper-terms-descriptor
+    to: REQ-views-yearly-tax-estimate-and-terms
+    created_at: 2026-11-02T04:30:31.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bd6242151ec
+  - type: covered_by
+    from: SYM-viewsv1-wrapper-terms-descriptor
+    to: TEST-views-connectapi-values
+    created_at: 2026-11-02T04:30:31.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f85b2a5e6c7

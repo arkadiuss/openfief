@@ -538,27 +538,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb01c84a95c3
-  - type: implements
-    from: SYM-core-valuation-attention-raise
-    to: REQ-valuation-unclassified-attention
-    created_at: 2026-11-01T06:41:09.142Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-730d536795d9
-  - type: covered_by
-    from: SYM-core-valuation-attention-raise
-    to: TEST-core-unclassified
-    created_at: 2026-11-01T06:41:09.180Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1f710033adc6
-  - type: implements
-    from: SYM-core-valuation-attention-raise
-    to: REQ-valuation-unclassifiable-instrument-attention-item
-    created_at: 2026-11-01T10:16:02.488Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9cdf826f5b43
   - type: executable_for
     from: SYM-treasurybonds-test-helper-check-digit
     to: TEST-treasurybonds-maturities
@@ -734,3 +713,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-091384f7d4e4
+  - type: implements
+    from: SYM-core-valuation-attention-raise
+    to: REQ-valuation-market-data-gap-attention-item
+    created_at: 2026-11-01T20:15:39.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02e27df6e27c
+  - type: covered_by
+    from: SYM-core-valuation-attention-raise
+    to: TEST-core-valuation-attention
+    created_at: 2026-11-01T20:15:39.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18f84c41a9d8

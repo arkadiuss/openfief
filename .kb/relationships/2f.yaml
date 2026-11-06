@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d20b5ccb2f23
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-earlier-payments
+    to: REQ-ingest-earlier-payments-checks
+    created_at: 2026-11-02T04:25:04.753Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5330d1f3514d
+  - type: implements
+    from: SYM-valuation-app-input-recorder-record-earlier-payments
+    to: REQ-pl-ike-unknown-history-payments-entered
+    created_at: 2026-11-02T04:25:04.795Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15aa232544c7
+  - type: covered_by
+    from: SYM-valuation-app-input-recorder-record-earlier-payments
+    to: TEST-valuation-app-account-forms
+    created_at: 2026-11-02T04:25:04.831Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebcc35db31d0

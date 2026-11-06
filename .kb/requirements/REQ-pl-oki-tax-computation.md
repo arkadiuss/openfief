@@ -1,6 +1,6 @@
 ---
 title: The Polish pack must compute OKI's yearly tax from each OKI account's days held, averaging each class's end-of-day values plus its share of the payments counted up to each day's withdrawals over the days held, half up to grosze, exempting savings assets first then investment assets up to the year's amounts, and taxing the rest at the year's rate half up to grosze, with no rate or tax while the year's rate or exempt amounts are not known.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-127
 tags:
   - strict-modeling
@@ -34,14 +34,4 @@ The Polish pack must compute OKI's yearly tax from each OKI account's days held,
 
 ## Context
 
-D-127 fixes the act's base, exemptions and rates; the split of payments between classes follows art. 26 ust. 3 of the act (R-18). Rounding is a narrow reading listed in docs/implementation-questions.md. Modeled by Claude Code for the taxes work package; the author has not reviewed it yet.
-
-## Why this changed
-
-It replaces REQ-pl-oki-act-as-data: D-127 replaces D-76's balance limit with the act's exemptions and yearly rates, in force from 2027-01-01. The superseded requirement is closed.
-
-## Source
-
-> **[D-127]** OKI's yearly tax follows the act in force from 2027-01-01. Its base is the sum over the owner's OKI accounts of each account's average value: the sum of its end-of-day values over the tax year, plus each day's payments in up to that day's withdrawals, divided by the days of the year the account was held. Values count listed securities at market price, treasury savings bonds at nominal plus accrued indexation or capitalization, and cash, with foreign amounts at the NBP average rate of the last business day before. Up to 25,000 PLN of the average of savings assets ... and up to 100,000 PLN of investment assets ... are exempt, at most 100,000 PLN together, savings first; other assets get no exemption. The rate is 0.85% for 2027, then 19% of the NBP reference rate in force on 31 October of the year before, at least 0.1%, rounded down to two decimal places; the exemptions rise with CPI from 2030.
-
-docs/DESIGN.md#D-127
+Closed: superseded by REQ-pl-oki-yearly-tax-exact. D-144 keeps each account's average exact and rounds the base and the tax to whole złoty instead of grosze, D-145 takes later rates and exempt amounts from the minister's announcements instead of computing them, and D-146 marks the current year an estimate. Modeled by Claude Code for the taxes package D-144..D-150; the author has not reviewed it yet.

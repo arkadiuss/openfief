@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55fba35c74ad
+  - type: implements
+    from: SYM-viewsv1-wrapper-terms-get-account-forms
+    to: REQ-views-yearly-tax-estimate-and-terms
+    created_at: 2026-11-02T04:30:48.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb54a58559d5
+  - type: covered_by
+    from: SYM-viewsv1-wrapper-terms-get-account-forms
+    to: TEST-views-connectapi-values
+    created_at: 2026-11-02T04:30:48.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a9989325f4f6

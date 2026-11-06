@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd7239de2406
+  - type: validates
+    from: TEST-ledger-lot
+    to: REQ-pl-sale-tax-cost-includes-buy-fees
+    created_at: 2026-11-01T20:10:45.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d7e88a999c2

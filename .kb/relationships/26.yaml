@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48c1749b0b51
+  - type: implements
+    from: SYM-valuation-postgres-store-account-form
+    to: REQ-ingest-account-form-checks
+    created_at: 2026-11-02T04:25:34.476Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b32a5664161d
+  - type: implements
+    from: SYM-valuation-postgres-store-account-form
+    to: REQ-ingest-oki-account-form-set-at-creation
+    created_at: 2026-11-02T04:25:34.522Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e00bbad128dc
+  - type: covered_by
+    from: SYM-valuation-postgres-store-account-form
+    to: TEST-valuation-postgres-account-forms
+    created_at: 2026-11-02T04:25:34.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e902c3255e7

@@ -489,13 +489,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c45acd5a0cf
-  - type: implements
-    from: SYM-jurisdiction-tax-day
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:06:32.783Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2523bd1f1b48
   - type: covered_by
     from: SYM-jurisdiction-tax-day
     to: TEST-pl-oki
@@ -825,3 +818,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff79657869e4
+  - type: implements
+    from: SYM-jurisdiction-tax-day
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:21:45.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-280ee53d1788

@@ -419,13 +419,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a927bb62ed29
-  - type: implements
-    from: SYM-pl-day-added
-    to: REQ-pl-oki-tax-computation
-    created_at: 2026-10-31T19:02:12.361Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f36518e4848b
   - type: covered_by
     from: SYM-pl-day-added
     to: TEST-pl-oki
@@ -601,3 +594,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-918df798f225
+  - type: implements
+    from: SYM-pl-day-added
+    to: REQ-pl-oki-yearly-tax-exact
+    created_at: 2026-11-01T20:23:43.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4fa53b606ced
+  - type: executable_for
+    from: SYM-demo-test-bonds-earlier-payments
+    to: TEST-demo-earlier-payments
+    created_at: 2026-11-02T04:51:47.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a65fbfd332c1

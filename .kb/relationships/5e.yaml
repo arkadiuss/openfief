@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-601eafb4fce8
+  - type: executable_for
+    from: SYM-attention-app-test-helper-fake-holdings-valued-through
+    to: TEST-attention-app-unclassified
+    created_at: 2026-11-01T20:33:30.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd953d7c42c0
