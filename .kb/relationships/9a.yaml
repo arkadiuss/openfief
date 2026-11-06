@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-851d0e9b9823
+  - type: implements
+    from: SYM-ingest-conn-app-connectors-sync
+    to: REQ-telemetry-domain-spans
+    created_at: 2026-11-02T03:15:01.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcb57a089179
+  - type: covered_by
+    from: SYM-ingest-conn-app-connectors-sync
+    to: TEST-ingest-app-tracing
+    created_at: 2026-11-02T03:15:01.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-418012a20843

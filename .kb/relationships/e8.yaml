@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b4a9160d113
+  - type: implements
+    from: SYM-operator-traced
+    to: REQ-telemetry-domain-spans
+    created_at: 2026-11-02T03:13:54.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8790fe58787e
+  - type: covered_by
+    from: SYM-operator-traced
+    to: TEST-operator-tracing
+    created_at: 2026-11-02T03:13:54.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e39355f55f6

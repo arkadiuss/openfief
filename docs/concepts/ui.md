@@ -222,6 +222,10 @@ The UI is also an app the owner can install, a progressive web app:
 
 [`deploy/demo/plugins/ui.yaml`](../../deploy/demo/plugins/ui.yaml) installs the instance `ui` with a grant for exactly the `view` capability and the browser path `/`. The operator runs it as Service `plugin-ui`, port `connect` (8080), which only the core may reach. The demo's Ingress, [`deploy/demo/routes/openfief.yaml`](../../deploy/demo/routes/openfief.yaml), sends every path to the core, Service `openfief-core`, port `http`, which serves the read API itself and proxies the rest to the UI; the demo-only `core-from-traefik` policy admits k3s's Traefik to the core, and nothing admits it to the UI. The core's other Connect services, the AuthService and the owner's entry services, are on its plugin port, `connect`, which only plugin pods reach: neither the Ingress nor `kubectl port-forward` to `http` gets to them (D-115). The demo's core accepts `https://demo.openfief.dev` next to the base's `http://localhost:8080` (`OPENFIEF_AUTH_ORIGINS`), and runs with `--demo-sessions`, so "View demo" works on the demo database.
 
+### Tracing
+
+With tracing on ([Send traces to a collector](../guides/tracing.md)), the core's front door runs each browser request in a span of a new trace, drops the browser's own trace headers, and passes its trace on to the UI in a `traceparent` header. The UI starts its tracing with `openfief.StartTelemetry`, continues that trace in a span per request and passes it on to the core with each read API and owner-service call, so one page view is one trace. The UI exports nothing itself.
+
 ## Decisions
 
 - **GR-12**: a failed core call is logged by its Connect code, and a page that can't render or a response that can't be written by `kernel.LogSafe`, never by the error's text.

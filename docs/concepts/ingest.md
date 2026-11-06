@@ -591,6 +591,10 @@ Dates are read as `yyyyMMdd` or `yyyy-MM-dd`, optionally followed by `;`, `,`, s
 
 DESIGN §3.7 lists malicious statement files as a threat. `decode` reads with `encoding/xml` in strict mode and refuses any `DOCTYPE` or other directive, undeclared entities, non-UTF-8 input and any root other than `FlexQueryResponse`. Anything malformed is `ErrMalformed`. Anything over a limit is `ErrTooLarge`, and either way the map fails before anything is imported. The limits are fields of `Limits`; a zero field takes its default: `MaxBytes` 64 MiB, `MaxDepth` 16, `MaxElements` 500,000, `MaxAttrs` 512 per element, `MaxAttrLen` 4,096 bytes.
 
+### Tracing
+
+With tracing on ([Send traces to a collector](../guides/tracing.md)), each sync, statement upload and bond-lot entry runs in a span, `ingest.sync`, `ingest.import_file` or `ingest.import_bond_lots`, which names the connector instance and the batch's mode and nothing it carries. The core's call to the connector is a child span, and the connector continues the same trace, which the core passes on in a W3C `traceparent` header. A failed one is marked as an error without the error's message.
+
 ## Decisions
 
 - **GR-12**: `app.LogSafe` is `kernel.LogSafe` with ingest's known errors (`loggableErrors`), which the other contexts' sinks now share.

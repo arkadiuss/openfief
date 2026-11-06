@@ -734,3 +734,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-afb88f19a440
+  - type: constrains
+    from: REQ-telemetry-off-by-default
+    to: FACT-SUBJECT-30780576F5E0F88D
+    created_at: 2026-11-02T03:06:12.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-328abe296670
+  - type: requires_property
+    from: REQ-telemetry-off-by-default
+    to: FACT-PROP-0674A598696F5E86
+    created_at: 2026-11-02T03:06:12.963Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e27f8379b25
+  - type: specified_by
+    from: REQ-telemetry-off-by-default
+    to: SCEN-telemetry-off-by-default
+    created_at: 2026-11-02T03:06:13.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8e5be4a5900

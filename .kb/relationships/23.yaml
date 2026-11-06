@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-70d833ce55c9
+  - type: executable_for
+    from: SYM-core-tracing-test-sync-through-plugin
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:19:51.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f7b62e9a089

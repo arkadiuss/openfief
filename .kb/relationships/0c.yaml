@@ -587,3 +587,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbea6cee3b44
+  - type: implements
+    from: SYM-telemetry-key-values
+    to: REQ-telemetry-standard-variables
+    created_at: 2026-11-02T03:10:16.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c60e20bf3f9
+  - type: implements
+    from: SYM-telemetry-key-values
+    to: REQ-telemetry-bad-variable-refused
+    created_at: 2026-11-02T03:10:16.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75234abb2907
+  - type: covered_by
+    from: SYM-telemetry-key-values
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:10:16.650Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-823445f84edf
+  - type: executable_for
+    from: SYM-ingest-app-test-tracing-check-spans
+    to: TEST-ingest-app-tracing
+    created_at: 2026-11-02T03:21:40.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b42e53f72bfc

@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f16dca54d3d5
+  - type: executable_for
+    from: SYM-core-tracing-test-has-span
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:20:52.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6861ba1fe6db

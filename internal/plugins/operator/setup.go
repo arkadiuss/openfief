@@ -25,6 +25,7 @@ import (
 // SetupWithManager registers the reconciler: it runs on changes to a
 // Plugin, its objects and its PluginGrant, and reconciles every Plugin when
 // the core's or egress proxy's Service or the allow-list ConfigMap changes.
+// Each reconcile runs in a span (traced).
 func (r *PluginReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	err := ctrl.NewControllerManagedBy(mgr).
 		Named("plugin").
@@ -38,7 +39,7 @@ func (r *PluginReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		Watches(&corev1.Service{}, handler.EnqueueRequestsFromMapFunc(r.allPluginsIfNamed(r.Settings.CoreService, r.Settings.EgressProxyService))).
 		Watches(&corev1.ConfigMap{}, handler.EnqueueRequestsFromMapFunc(r.allPluginsIfNamed(plugins.EgressAllowListConfigMap))).
 		Watches(&v1alpha1.Plugin{}, handler.EnqueueRequestsFromMapFunc(r.otherClaimants)).
-		Complete(r)
+		Complete(traced("plugin", r))
 	if err != nil {
 		return fmt.Errorf("set up plugin controller: %w", err)
 	}
@@ -133,9 +134,10 @@ func grantStatus(g *v1alpha1.PluginGrant) v1alpha1.PluginGrantStatus {
 	return st
 }
 
-// SetupWithManager registers the reconciler for PluginGrants.
+// SetupWithManager registers the reconciler for PluginGrants, each
+// reconcile in a span (traced).
 func (r *GrantReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	if err := ctrl.NewControllerManagedBy(mgr).Named("plugingrant").For(&v1alpha1.PluginGrant{}).Complete(r); err != nil {
+	if err := ctrl.NewControllerManagedBy(mgr).Named("plugingrant").For(&v1alpha1.PluginGrant{}).Complete(traced("plugingrant", r)); err != nil {
 		return fmt.Errorf("set up plugin grant controller: %w", err)
 	}
 	return nil

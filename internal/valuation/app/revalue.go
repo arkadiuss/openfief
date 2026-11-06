@@ -10,7 +10,11 @@ import (
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	"github.com/arkadiuss/openfief/internal/valuation"
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
+
+// tracerScope names the valuation use cases' spans (telemetry.Run).
+const tracerScope = "github.com/arkadiuss/openfief/internal/valuation/app"
 
 // Revaluer runs revaluations (D-36): it derives an account's holdings and
 // lots for each day from the log and stores their valuations.
@@ -54,8 +58,22 @@ type RevalueResult struct {
 // (D-94); a series a holding needs today whose source has had no value
 // for longer than the gap threshold raises an attention item (raiseGaps).
 // The rows depend only on the log, the stored inputs and today, so running
-// it again gives the same result.
+// it again gives the same result. It runs in a span valuation.revalue,
+// which names no account, date or value.
 func (r *Revaluer) Revalue(ctx context.Context, account ledger.AccountID, from kernel.Date) (RevalueResult, error) {
+	var (
+		res RevalueResult
+		err error
+	)
+	telemetry.Run(ctx, tracerScope, "valuation.revalue", func(ctx context.Context) error {
+		res, err = r.revalueAccount(ctx, account, from)
+		return err
+	})
+	return res, err
+}
+
+// revalueAccount is Revalue without its span.
+func (r *Revaluer) revalueAccount(ctx context.Context, account ledger.AccountID, from kernel.Date) (RevalueResult, error) {
 	today := r.today()
 	log, err := r.log.Log(ctx, account)
 	if err != nil {

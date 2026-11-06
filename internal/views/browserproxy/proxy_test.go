@@ -55,6 +55,8 @@ func (f fakeTokens) TokenFor(_ context.Context, instance string) (string, error)
 // seen is what the plugin received.
 type seen struct {
 	Path, Query, Host, Auth, Proto, FwdHost, FwdFor, Forwarded, Cookie, Body string
+	// Traceparent and Tracestate are the trace context the plugin got.
+	Traceparent, Tracestate string
 }
 
 // pluginServer records each request and answers with a cookie and a body.
@@ -70,6 +72,7 @@ func pluginServer(t *testing.T, got *seen) *httptest.Server {
 			Proto: r.Header.Get("X-Forwarded-Proto"), FwdHost: r.Header.Get("X-Forwarded-Host"),
 			FwdFor: r.Header.Get("X-Forwarded-For"), Forwarded: r.Header.Get("Forwarded"),
 			Cookie: r.Header.Get("Cookie"), Body: string(body),
+			Traceparent: r.Header.Get("Traceparent"), Tracestate: r.Header.Get("Tracestate"),
 		}
 		http.SetCookie(w, &http.Cookie{Name: "__Host-openfief_session", Value: "synthetic", Path: "/", Secure: true, HttpOnly: true, SameSite: http.SameSiteStrictMode})
 		w.WriteHeader(http.StatusTeapot)
@@ -93,6 +96,7 @@ func TestProxyForwards(t *testing.T) {
 			headers: map[string]string{
 				"Authorization": "Bearer stolen", "X-Forwarded-Host": "evil.example.com", "Forwarded": "proto=https",
 				"X-Forwarded-For": "192.0.2.7", "Cookie": "__Host-openfief_session=ofsess_x",
+				"Traceparent": "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01", "Tracestate": "forged=1",
 			},
 			want: seen{
 				Path: "/accounts/a-1", Query: "date=2026-10-28", Host: "localhost:8080", Auth: "Bearer core-token-for-ui",

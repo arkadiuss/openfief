@@ -9,7 +9,9 @@
 // Toward the plugin it sets what the plugin may trust, and only that: the
 // browser's Host, the scheme the browser used in X-Forwarded-Proto, and the
 // core's token in Authorization. Whatever a client sent in those headers,
-// or in any other X-Forwarded-* or Forwarded header, is dropped.
+// or in any other X-Forwarded-* or Forwarded header, is dropped. So is the
+// browser's trace context: each request to a plugin runs in a client span
+// of the core's, whose W3C traceparent replaces it.
 //
 // Toward the browser it adds the security headers D-184 requires on every
 // answer, the plugin's and its own (SecurityHeaders): a content security
@@ -29,6 +31,7 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/views"
 	"github.com/arkadiuss/openfief/internal/views/app"
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
 
 // The transport's limits toward view plugins.
@@ -67,7 +70,8 @@ type Proxy struct {
 type targetKey struct{}
 
 // New returns the proxy over door, logging failed requests to log (nil
-// discards). Calls to plugins never go through an HTTP proxy.
+// discards). Calls to plugins never go through an HTTP proxy, and each runs
+// in a client span that propagates the core's trace (telemetry.Transport).
 func New(door *app.FrontDoor, log *slog.Logger) *Proxy {
 	if log == nil {
 		log = slog.New(slog.DiscardHandler)
@@ -82,7 +86,7 @@ func New(door *app.FrontDoor, log *slog.Logger) *Proxy {
 	p := &Proxy{door: door, log: log}
 	p.proxy = &httputil.ReverseProxy{
 		Rewrite:        rewrite,
-		Transport:      transport,
+		Transport:      telemetry.Transport(transport),
 		ModifyResponse: func(resp *http.Response) error { SecurityHeaders(resp.Header); return nil },
 		ErrorHandler:   p.unreachable,
 	}
@@ -132,8 +136,9 @@ func (p *Proxy) unreachable(w http.ResponseWriter, r *http.Request, err error) {
 // rewrite points the outgoing request at the chosen plugin. Rewrite has
 // already dropped the hop-by-hop headers and every X-Forwarded-* header the
 // client sent; this also drops Forwarded, keeps the browser's Host, sets
-// X-Forwarded-Proto and X-Forwarded-Host to what the core saw, and replaces
-// Authorization with the core's token for the plugin.
+// X-Forwarded-Proto and X-Forwarded-Host to what the core saw, replaces
+// Authorization with the core's token for the plugin, and drops the
+// browser's trace context, which the transport replaces with the core's.
 func rewrite(pr *httputil.ProxyRequest) {
 	target, ok := pr.In.Context().Value(targetKey{}).(app.BrowserTarget)
 	if !ok {
@@ -147,6 +152,8 @@ func rewrite(pr *httputil.ProxyRequest) {
 	pr.Out.Host = pr.In.Host
 	h := pr.Out.Header
 	h.Del("Forwarded")
+	h.Del("Traceparent")
+	h.Del("Tracestate")
 	h.Set("X-Forwarded-Proto", BrowserScheme(pr.In))
 	h.Set("X-Forwarded-Host", pr.In.Host)
 	h.Set("Authorization", "Bearer "+target.Token)

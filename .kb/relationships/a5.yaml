@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-648a84c89fa2
+  - type: implements
+    from: SYM-telemetry-redacting-exporter-shutdown
+    to: REQ-telemetry-private-spans
+    created_at: 2026-11-02T03:10:54.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f7d331ce988
+  - type: covered_by
+    from: SYM-telemetry-redacting-exporter-shutdown
+    to: TEST-telemetry-redact
+    created_at: 2026-11-02T03:10:54.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c6346f41db7

@@ -937,3 +937,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d556bb94ba4d
+  - type: implements
+    from: SYM-telemetry-config-parse-protocol
+    to: REQ-telemetry-standard-variables
+    created_at: 2026-11-02T03:09:43.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce6a937e96c8
+  - type: implements
+    from: SYM-telemetry-config-parse-protocol
+    to: REQ-telemetry-bad-variable-refused
+    created_at: 2026-11-02T03:09:43.703Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aac3373b1bb2
+  - type: covered_by
+    from: SYM-telemetry-config-parse-protocol
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:09:43.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6821af5df4fd

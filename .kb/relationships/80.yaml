@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0c8d224a45e
+  - type: executable_for
+    from: SYM-telemetry-test-test-parse-config-headers
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:16:27.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21698dfb1713

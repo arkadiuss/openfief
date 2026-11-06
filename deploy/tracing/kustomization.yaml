@@ -1,0 +1,63 @@
+# Optional tracing: the core and the operator send OpenTelemetry spans to the owner's collector over OTLP. Tracing is
+# off in the bases: without OTEL_EXPORTER_OTLP_ENDPOINT nothing is recorded or sent. This component lives outside the
+# bases; add it to your own overlay. docs/guides/tracing.md shows a complete overlay that replaces every placeholder,
+# which scripts/tests/tracing.test.sh builds.
+#
+# It adds three things, each with a placeholder an overlay replaces:
+#   configmap.yaml      ConfigMap openfief-tracing: the standard OpenTelemetry variables, which the core and the
+#                       operator read as their environment. The placeholder sets only OTEL_EXPORTER_OTLP_ENDPOINT, to a
+#                       collector's OTLP/HTTP port: http://otel-collector.observability.invalid:4318. Add any other
+#                       standard variable as a key: OTEL_EXPORTER_OTLP_PROTOCOL (grpc, or http/protobuf by default),
+#                       OTEL_TRACES_SAMPLER and OTEL_TRACES_SAMPLER_ARG, OTEL_SERVICE_NAME, OTEL_RESOURCE_ATTRIBUTES.
+#   the patches below   read that ConfigMap into the core's and the operator's environment, and
+#                       OTEL_EXPORTER_OTLP_HEADERS, which may hold the collector's credential, from key headers of the
+#                       Secret openfief-tracing when the owner creates one; without it no header is sent.
+#   networkpolicy.yaml  lets the core reach the collector, which its own policy doesn't (deploy/core/networkpolicy.yaml):
+#                       the placeholder allows ports 4317 and 4318 of every pod in namespace observability; narrow it
+#                       to your collector's pods. The operator has no NetworkPolicy and needs none.
+# The .invalid name can never resolve, so a placeholder left in place sends nothing anywhere: each export fails and is
+# logged, and the core and the operator run on. Plugins export nothing: the operator doesn't pass these variables to
+# them, and their NetworkPolicy and the egress proxy keep them from any collector (docs/implementation-questions.md).
+# Spans never carry amounts, holdings, account numbers, tokens or query arguments (GR-12).
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+  - configmap.yaml
+  - networkpolicy.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: openfief-core
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/envFrom
+        value:
+          - configMapRef:
+              name: openfief-tracing
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: OTEL_EXPORTER_OTLP_HEADERS
+          valueFrom:
+            secretKeyRef:
+              name: openfief-tracing
+              key: headers
+              optional: true
+  - target:
+      kind: Deployment
+      name: openfief-operator
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/envFrom
+        value:
+          - configMapRef:
+              name: openfief-tracing
+      - op: add
+        path: /spec/template/spec/containers/0/env
+        value:
+          - name: OTEL_EXPORTER_OTLP_HEADERS
+            valueFrom:
+              secretKeyRef:
+                name: openfief-tracing
+                key: headers
+                optional: true

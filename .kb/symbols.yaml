@@ -13955,8 +13955,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-app-revalue
+      - type: covered_by
+        target: TEST-valuation-app-tracing
       - type: implements
         target: REQ-decision-d36-2-valuations-rebuildable
+      - type: implements
+        target: REQ-telemetry-domain-spans
       - type: implements
         target: REQ-valuation-revaluation-rows
   - id: SYM-valuation-app-revaluer-rows
@@ -16426,8 +16430,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ledger-app-seed
+      - type: covered_by
+        target: TEST-ledger-app-tracing
       - type: implements
         target: REQ-ledger-seed-atomic
+      - type: implements
+        target: REQ-telemetry-domain-spans
   - id: SYM-ledger-app-test-helper-seeding
     title: seeding
     sourceFile: internal/ledger/app/seed_test.go
@@ -17176,11 +17184,15 @@ symbols:
       recorded_at: 2026-10-28T08:02:42.998Z
     relationships:
       - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: covered_by
         target: TEST-sdk-go-core-client
       - type: implements
         target: REQ-AUTO-C6544ADAF8F5AE65
       - type: implements
         target: REQ-sdk-go-token-rotation
+      - type: implements
+        target: REQ-telemetry-plugins-sdk
   - id: SYM-sdk-go-bearer-transport
     title: bearerTransport
     sourceFile: sdk/go/openfief/core.go
@@ -17420,6 +17432,10 @@ symbols:
         target: REQ-sdk-go-connector-server-bounds
       - type: implements
         target: REQ-sdk-go-core-only
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-telemetry-plugins-sdk
   - id: SYM-sdk-go-receive-file
     title: ReceiveFile
     sourceFile: sdk/go/openfief/serve.go
@@ -21357,10 +21373,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-tracing
       - type: implements
         target: REQ-ingest-connector-batches
       - type: implements
         target: REQ-ingest-core-owns-schedules
+      - type: implements
+        target: REQ-telemetry-domain-spans
   - id: SYM-ingest-conn-app-connectors-import-file
     title: Connectors.ImportFile
     sourceFile: internal/ingest/app/connectors.go
@@ -21380,6 +21400,10 @@ symbols:
         target: REQ-ingest-multi-account-transactions-books-every-mapped
       - type: implements
         target: REQ-ingest-uploads-through-core
+      - type: covered_by
+        target: TEST-ingest-app-tracing
+      - type: implements
+        target: REQ-telemetry-domain-spans
   - id: SYM-ingest-conn-app-connectors-deliver
     title: Connectors.deliver
     sourceFile: internal/ingest/app/connectors.go
@@ -41935,6 +41959,8 @@ symbols:
         target: REQ-plugins-core-only-caller
       - type: implements
         target: REQ-sdk-go-serve-connector
+      - type: implements
+        target: REQ-telemetry-plugins-sdk
   - id: SYM-sdk-go-serve-until-done
     title: serveUntilDone
     sourceFile: sdk/go/openfief/run.go
@@ -66587,10 +66613,14 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-bondlots
+      - type: covered_by
+        target: TEST-ingest-app-tracing
       - type: implements
         target: REQ-ingest-bond-lot-handed-with-account
       - type: implements
         target: REQ-ingest-bond-lot-handoff
+      - type: implements
+        target: REQ-telemetry-domain-spans
       - type: implements
         target: REQ-treasurybonds-account-history-from-first-purchase
   - id: SYM-ingest-app-connectors-store-terms
@@ -76635,6 +76665,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-views-browser-proxy
+      - type: implements
+        target: REQ-telemetry-trace-boundary
       - type: implements
         target: REQ-views-browser-proxy-headers
   - id: SYM-fd-browserproxy-browser-scheme
@@ -102004,6 +102036,7 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-30T05:02:40.764Z
+    granularity_reason: module-level-behavior
     relationships:
       - type: covered_by
         target: TEST-ledger-app-seed
@@ -151328,3 +151361,1221 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-bond-lot-sync-race
+  - id: SYM-telemetry-protocol
+    title: Protocol
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:08:59.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-config
+    title: Config
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:09:05.597Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-off-by-default
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-config-enabled
+    title: Config.Enabled
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:09:12.668Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-off-by-default
+  - id: SYM-telemetry-parse-config
+    title: ParseConfig
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:09:19.812Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-bad-variable-refused
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-export-off
+    title: exportOff
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:09:26.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-bad-variable-refused
+      - type: implements
+        target: REQ-telemetry-off-by-default
+  - id: SYM-telemetry-first
+    title: first
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:09:33.272Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-config-parse-protocol
+    title: Config.parseProtocol
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:09:40.911Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-bad-variable-refused
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-config-endpoint
+    title: Config.endpoint
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:09:48.862Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-bad-variable-refused
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-config-parse-sampler
+    title: Config.parseSampler
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:09:56.536Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-bad-variable-refused
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-samplers
+    title: samplers
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:10:05.164Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-key-values
+    title: keyValues
+    sourceFile: sdk/go/telemetry/config.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:10:13.875Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-config
+      - type: implements
+        target: REQ-telemetry-bad-variable-refused
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-exportable
+    title: exportable
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:10:21.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-redact
+    title: Redact
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:10:30.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-redacting-exporter
+    title: RedactingExporter
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:10:38.341Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-redacting-exporter-export-spans
+    title: RedactingExporter.ExportSpans
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:10:44.974Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-redacting-exporter-shutdown
+    title: RedactingExporter.Shutdown
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:10:52.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-redacted-span
+    title: redactedSpan
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:10:57.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-redacted-span-attributes
+    title: redactedSpan.Attributes
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:11:04.559Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-redacted-span-events
+    title: redactedSpan.Events
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:11:10.976Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-redacted-span-links
+    title: redactedSpan.Links
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:11:18.459Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-redacted-span-status
+    title: redactedSpan.Status
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:11:26.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-keep
+    title: keep
+    sourceFile: sdk/go/telemetry/redact.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:11:34.177Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-redact
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-telemetry
+    title: Telemetry
+    sourceFile: sdk/go/telemetry/telemetry.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:11:39.891Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-flush-on-shutdown
+      - type: implements
+        target: REQ-telemetry-off-by-default
+  - id: SYM-telemetry-start-from-env
+    title: StartFromEnv
+    sourceFile: sdk/go/telemetry/telemetry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:11:46.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-telemetry-off-by-default
+  - id: SYM-telemetry-start
+    title: Start
+    sourceFile: sdk/go/telemetry/telemetry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:11:53.619Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-off-by-default
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-telemetry-shutdown
+    title: Telemetry.Shutdown
+    sourceFile: sdk/go/telemetry/telemetry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:12:00.573Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-flush-on-shutdown
+  - id: SYM-telemetry-new-exporter
+    title: newExporter
+    sourceFile: sdk/go/telemetry/telemetry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:12:07.475Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-standard-variables
+  - id: SYM-telemetry-run
+    title: Run
+    sourceFile: sdk/go/telemetry/telemetry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:12:14.806Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-domain-spans
+  - id: SYM-telemetry-server-handler
+    title: ServerHandler
+    sourceFile: sdk/go/telemetry/http.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:12:21.765Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-trace-propagation
+  - id: SYM-telemetry-public-handler
+    title: PublicHandler
+    sourceFile: sdk/go/telemetry/http.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:12:28.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-trace-boundary
+  - id: SYM-telemetry-transport
+    title: Transport
+    sourceFile: sdk/go/telemetry/http.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:12:35.358Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-trace-propagation
+  - id: SYM-telemetry-span-name
+    title: spanName
+    sourceFile: sdk/go/telemetry/http.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:12:42.077Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-procedure
+    title: procedure
+    sourceFile: sdk/go/telemetry/http.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:12:48.803Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-telemetry-traced
+    title: traced
+    sourceFile: sdk/go/telemetry/http.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:12:55.558Z
+    relationships:
+      - type: covered_by
+        target: TEST-telemetry-export
+      - type: implements
+        target: REQ-telemetry-trace-propagation
+  - id: SYM-sdk-go-start-telemetry
+    title: StartTelemetry
+    sourceFile: sdk/go/openfief/telemetry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:13:02.537Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve-connector
+      - type: implements
+        target: REQ-telemetry-plugins-sdk
+  - id: SYM-sdk-go-with-telemetry
+    title: withTelemetry
+    sourceFile: sdk/go/openfief/telemetry.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:13:09.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-serve-connector
+      - type: implements
+        target: REQ-telemetry-plugins-sdk
+  - id: SYM-core-tracing-with-tracing
+    title: withTracing
+    sourceFile: cmd/core/tracing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:13:16.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-telemetry-off-by-default
+  - id: SYM-core-tracing-new-pool
+    title: newPool
+    sourceFile: cmd/core/tracing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:13:23.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-core-tracing-query-tracer
+    title: queryTracer
+    sourceFile: cmd/core/tracing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:13:30.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-telemetry-private-spans
+  - id: SYM-core-tracing-job-tracing
+    title: jobTracing
+    sourceFile: cmd/core/tracing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:13:37.622Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-telemetry-trace-propagation
+  - id: SYM-core-tracing-plugin-client
+    title: pluginClient
+    sourceFile: cmd/core/tracing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:13:44.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-tracing-privacy
+      - type: implements
+        target: REQ-telemetry-trace-propagation
+  - id: SYM-operator-traced
+    title: traced
+    sourceFile: internal/plugins/operator/tracing.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:13:52.032Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-tracing
+      - type: implements
+        target: REQ-telemetry-domain-spans
+  - id: SYM-ingest-app-connectors-sync-batch
+    title: Connectors.syncBatch
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:13:59.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-core-owns-schedules
+  - id: SYM-ingest-app-connectors-import-file-batch
+    title: Connectors.importFileBatch
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:14:06.428Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-uploads-through-core
+  - id: SYM-ingest-app-connectors-import-bond-lots-batch
+    title: Connectors.importBondLotsBatch
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:14:14.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-handed-with-account
+      - type: implements
+        target: REQ-ingest-bond-lot-handoff
+  - id: SYM-ledger-app-ledger-import-in-tx
+    title: Ledger.importInTx
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:14:21.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-seed
+      - type: implements
+        target: REQ-ledger-seed-atomic
+  - id: SYM-ledger-app-import-mode-string
+    title: importMode.String
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:14:29.596Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-tracing
+      - type: implements
+        target: REQ-telemetry-domain-spans
+  - id: SYM-valuation-app-revaluer-revalue-account
+    title: Revaluer.revalueAccount
+    sourceFile: internal/valuation/app/revalue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:14:36.479Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-revalue
+      - type: implements
+        target: REQ-decision-d36-2-valuations-rebuildable
+      - type: implements
+        target: REQ-valuation-revaluation-rows
+  - id: SYM-operator-cmd-manage
+    title: manage
+    sourceFile: cmd/operator/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:14:43.989Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-cmd
+      - type: implements
+        target: REQ-AUTO-0F49083BE9F08807
+      - type: implements
+        target: REQ-operator-namespace-scoped-except-service-read
+  - id: SYM-uiplugin-direct-transport
+    title: directTransport
+    sourceFile: plugins/ui/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:14:50.926Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-plugin
+      - type: implements
+        target: REQ-AUTO-902181B0129A6321
+      - type: implements
+        target: REQ-ui-plugin-packaging
+  - id: SYM-telemetry-test-env
+    title: env
+    sourceFile: sdk/go/telemetry/config_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:16:11.336Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-config
+  - id: SYM-telemetry-test-test-parse-config
+    title: TestParseConfig
+    sourceFile: sdk/go/telemetry/config_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:16:17.798Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-config
+  - id: SYM-telemetry-test-test-parse-config-headers
+    title: TestParseConfigHeaders
+    sourceFile: sdk/go/telemetry/config_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:16:24.500Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-config
+  - id: SYM-telemetry-test-test-parse-config-refuses
+    title: TestParseConfigRefuses
+    sourceFile: sdk/go/telemetry/config_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:16:31.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-config
+  - id: SYM-telemetry-test-test-parse-config-never-quotes-headers
+    title: TestParseConfigNeverQuotesHeaders
+    sourceFile: sdk/go/telemetry/config_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:16:38.100Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-config
+  - id: SYM-telemetry-test-test-config-sampler
+    title: TestConfigSampler
+    sourceFile: sdk/go/telemetry/config_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:16:45.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-config
+  - id: SYM-telemetry-test-contains-any
+    title: containsAny
+    sourceFile: sdk/go/telemetry/redact_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:16:52.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-redact
+  - id: SYM-telemetry-test-test-redact
+    title: TestRedact
+    sourceFile: sdk/go/telemetry/redact_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:16:59.095Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-redact
+  - id: SYM-telemetry-test-check-redacted
+    title: checkRedacted
+    sourceFile: sdk/go/telemetry/redact_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:17:06.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-redact
+  - id: SYM-telemetry-test-collector
+    title: collector
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:17:14.007Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-telemetry-test-collector-serve-http
+    title: collector.ServeHTTP
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:17:21.304Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-telemetry-test-collector-received
+    title: collector.received
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:17:28.694Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-telemetry-test-start-with
+    title: startWith
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:17:36.279Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-telemetry-test-test-start
+    title: TestStart
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:17:44.026Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-telemetry-test-check-off
+    title: checkOff
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:17:52.116Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-telemetry-test-trace-seen
+    title: traceSeen
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:17:59.547Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-telemetry-test-check-exported
+    title: checkExported
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:18:07.142Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-telemetry-test-check-domain-span
+    title: checkDomainSpan
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:18:14.793Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-telemetry-test-keys
+    title: keys
+    sourceFile: sdk/go/telemetry/telemetry_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:18:22.782Z
+    relationships:
+      - type: executable_for
+        target: TEST-telemetry-export
+  - id: SYM-core-tracing-test-denied-keys
+    title: deniedKeys
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:18:30.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-denied-values
+    title: deniedValues
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:18:36.941Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-traced-tokens
+    title: tracedTokens
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:18:43.654Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-traced-tokens-token-for
+    title: tracedTokens.TokenFor
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:18:51.087Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-traced-tokens-token
+    title: tracedTokens.Token
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:18:58.358Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-traced-verifier
+    title: tracedVerifier
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:19:05.123Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-traced-verifier-verify-core
+    title: tracedVerifier.VerifyCore
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:19:11.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-traced-connector
+    title: tracedConnector
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:19:18.979Z
+    granularity_reason: test-suite
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-traced-connector-sync
+    title: tracedConnector.Sync
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:19:26.171Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-refusal
+    title: refusal
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:19:33.624Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-test-tracing-keeps-data-out
+    title: TestTracingKeepsDataOut
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:19:41.050Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-sync-through-plugin
+    title: syncThroughPlugin
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:19:49.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-call-core-ports
+    title: callCorePorts
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:19:58.602Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-send
+    title: send
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:20:07.812Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-run-queries
+    title: runQueries
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:20:16.642Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-run-job
+    title: runJob
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:20:24.856Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-check-linked-work
+    title: checkLinkedWork
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:20:32.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-check-new-browser-trace
+    title: checkNewBrowserTrace
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:20:41.348Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-has-span
+    title: hasSpan
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:20:49.287Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-check-private
+    title: checkPrivate
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:20:58.546Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-check-attrs
+    title: checkAttrs
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:21:06.790Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-core-tracing-test-check-text
+    title: checkText
+    sourceFile: cmd/core/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:21:14.838Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-tracing-privacy
+  - id: SYM-ingest-app-test-tracing-test-connectors-run-in-spans
+    title: TestConnectorsRunInSpans
+    sourceFile: internal/ingest/app/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:21:22.957Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-tracing
+  - id: SYM-ingest-app-test-tracing-span-want
+    title: spanWant
+    sourceFile: internal/ingest/app/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:21:30.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-tracing
+  - id: SYM-ingest-app-test-tracing-check-spans
+    title: checkSpans
+    sourceFile: internal/ingest/app/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:21:37.596Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-tracing
+  - id: SYM-ingest-app-test-tracing-same-attrs
+    title: sameAttrs
+    sourceFile: internal/ingest/app/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:21:44.334Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-tracing
+  - id: SYM-ledger-app-test-tracing-test-imports-run-in-spans
+    title: TestImportsRunInSpans
+    sourceFile: internal/ledger/app/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:21:50.684Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-tracing
+  - id: SYM-ledger-app-test-tracing-status-of
+    title: statusOf
+    sourceFile: internal/ledger/app/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:21:56.983Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-tracing
+  - id: SYM-ledger-app-test-tracing-outcome
+    title: outcome
+    sourceFile: internal/ledger/app/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:22:03.680Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-tracing
+  - id: SYM-valuation-app-test-tracing-test-revalue-runs-in-a-span
+    title: TestRevalueRunsInASpan
+    sourceFile: internal/valuation/app/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:22:10.578Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-tracing
+  - id: SYM-operator-test-tracing-test-traced-reconciles
+    title: TestTracedReconciles
+    sourceFile: internal/plugins/operator/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:22:17.251Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-tracing
+  - id: SYM-operator-test-tracing-reconcile-statuses
+    title: reconcileStatuses
+    sourceFile: internal/plugins/operator/tracing_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:22:24.523Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-tracing
+  - id: SYM-deploy-test-tracing-check
+    title: check
+    sourceFile: scripts/tests/tracing.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T03:22:30.839Z
+    relationships:
+      - type: executable_for
+        target: TEST-deploy-tracing-component

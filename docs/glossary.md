@@ -248,6 +248,7 @@ Don't create code for these before their milestone.
 | OpenTelemetry / OTLP | OpenTelemetry is the vendor-neutral standard for traces, metrics and logs, a CNCF project formed in 2019 by merging OpenTracing and OpenCensus. OTLP is its wire protocol, which collectors and tracing back ends accept. |
 | OMS | Order management system: the component that validates, routes and tracks orders. |
 | OPA / Rego | Open Policy Agent, a CNCF policy engine; Rego is its Datalog-inspired policy language. |
+| OpenTelemetry / OTLP | OpenTelemetry: the vendor-neutral standard for traces, metrics and logs, a Cloud Native Computing Foundation project born in 2019 from merging OpenTracing and OpenCensus. A *trace* follows one operation across processes as a tree of *spans*, each a timed step with attributes; W3C Trace Context carries the trace from process to process in a `traceparent` header. OTLP, the OpenTelemetry Protocol, sends them to a collector over gRPC or HTTP. |
 | Paper trading | Trading against a simulated account with fake money. |
 | OTS / ROR / DOR / TOS | Polish retail treasury bond types: OTS 3-month fixed, ROR 1-year and DOR 2-year with monthly coupons at the NBP reference rate plus a margin, TOS 3-year fixed and capitalized yearly. |
 | PIT | Podatek dochodowy od osób fizycznych, Poland's personal income tax; also the act that levies it. |

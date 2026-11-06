@@ -11,6 +11,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/riverqueue/river"
 	"github.com/riverqueue/river/riverdriver/riverpgxv5"
+	"github.com/riverqueue/river/rivertype"
 
 	"github.com/arkadiuss/openfief/internal/jurisdiction"
 	"github.com/arkadiuss/openfief/internal/kernel"
@@ -52,6 +53,9 @@ type Config struct {
 	// Attention raises and clears the attention items revaluations find,
 	// such as an instrument to classify (D-132); nil raises none.
 	Attention app.AttentionRaiser
+	// Plugins are River plugins the client installs, such as the core's
+	// job tracing; none by default.
+	Plugins []rivertype.Plugin
 }
 
 // DailyAt is a River schedule that fires once a day at Hour:Minute in
@@ -131,6 +135,7 @@ func NewClient(pool *pgxpool.Pool, store *Store, l Ledger, cfg *Config) (*river.
 		Logger:  cfg.Logger,
 		Queues:  map[string]river.QueueConfig{Queue: {MaxWorkers: cfg.Concurrency}},
 		Workers: workers,
+		Plugins: cfg.Plugins,
 		PeriodicJobs: []*river.PeriodicJob{river.NewPeriodicJob(cfg.EndOfDay,
 			func() (river.JobArgs, *river.InsertOpts) { return EndOfDay{}, nil },
 			&river.PeriodicJobOpts{ID: EndOfDay{}.Kind()})},

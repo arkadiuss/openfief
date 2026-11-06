@@ -29,6 +29,7 @@ func revaluationClient(pool *pgxpool.Pool, vstore *valuationpg.Store, cfg *serve
 		Today:       valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		Logger:      log,
 		Attention:   attn,
+		Plugins:     jobTracing(),
 	})
 	if err != nil {
 		return nil, fmt.Errorf("revaluation workers: %w", err)

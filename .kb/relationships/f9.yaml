@@ -790,3 +790,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0282cf5586ff
+  - type: verified_by
+    from: SCEN-telemetry-private-spans
+    to: TEST-telemetry-redact
+    created_at: 2026-11-02T03:07:09.454Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b853fd7557b
+  - type: verified_by
+    from: SCEN-telemetry-private-spans
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:07:09.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26578b8909a1

@@ -1,0 +1,12 @@
+# The standard OpenTelemetry variables the core and the operator read (docs/guides/tracing.md). The endpoint is a
+# placeholder that can never resolve; an overlay replaces it with its collector's. Never put a credential here: the
+# collector's API key goes in key headers of the Secret openfief-tracing, as OTEL_EXPORTER_OTLP_HEADERS expects it.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openfief-tracing
+  namespace: openfief
+  labels:
+    app.kubernetes.io/part-of: openfief
+data:
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector.observability.invalid:4318

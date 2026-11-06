@@ -16,6 +16,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/views/connectapi"
 	viewskube "github.com/arkadiuss/openfief/internal/views/kube"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
 
 const (
@@ -182,9 +183,9 @@ func plain(w http.ResponseWriter, status int, body string) {
 // to the shutdown timeout, and cancels what is left.
 func serve(ctx context.Context, cmd *command, log *slog.Logger, now func() time.Time) error {
 	cfg := &cmd.Serve
-	pool, err := pgxpool.New(ctx, cmd.DSN)
+	pool, err := newPool(ctx, cmd.DSN)
 	if err != nil {
-		return fmt.Errorf("connecting: %w", err)
+		return err
 	}
 	defer pool.Close()
 	s := &server{pool: pool}
@@ -218,14 +219,17 @@ func serve(ctx context.Context, cmd *command, log *slog.Logger, now func() time.
 
 // listen starts serving s's browser port on cfg.Listen and its plugin port
 // on cfg.PluginListen (D-115), sending what each server's Serve returns to
-// served. When a port can't listen, it closes what it started.
+// served. Every request but the health probes runs in a server span: on the
+// browser port a new trace, whatever the caller sent; on the plugin port the
+// trace the plugin propagated. When a port can't listen, it closes what it
+// started.
 func listen(ctx context.Context, s *server, cfg *serveConfig, served chan<- error, log *slog.Logger) ([]*http.Server, error) {
 	ports := []struct {
 		name, address string
 		handler       http.Handler
 	}{
-		{"browser", cfg.Listen, s.browserHandler()},
-		{"plugin", cfg.PluginListen, s.pluginHandler()},
+		{"browser", cfg.Listen, telemetry.PublicHandler(s.browserHandler())},
+		{"plugin", cfg.PluginListen, telemetry.ServerHandler(s.pluginHandler())},
 	}
 	servers := make([]*http.Server, 0, len(ports))
 	for _, port := range ports {

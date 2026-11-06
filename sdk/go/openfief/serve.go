@@ -12,6 +12,7 @@ import (
 
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1/connectorv1connect"
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
 
 // AudiencePrefix starts the audience of the token the core presents to a
@@ -91,7 +92,8 @@ func bearerToken(value string) (string, bool) {
 // It speaks HTTP/1.1 and HTTP/2 without TLS, since ImportFile streams. It
 // reads a body of at most MaxBodyBytes and a message of at most
 // MaxMessageBytes, unless opts say otherwise, and bounds how long a request
-// may take to arrive.
+// may take to arrive. Each call runs in a server span that continues the
+// core's trace (telemetry.ServerHandler).
 func NewConnectorServer(addr string, svc connectorv1connect.ConnectorServiceHandler, v CoreVerifier, opts ...connect.HandlerOption) *http.Server {
 	mux := http.NewServeMux()
 	opts = append([]connect.HandlerOption{connect.WithReadMaxBytes(MaxMessageBytes)}, opts...)
@@ -101,7 +103,7 @@ func NewConnectorServer(addr string, svc connectorv1connect.ConnectorServiceHand
 	p.SetHTTP1(true)
 	p.SetUnencryptedHTTP2(true)
 	return &http.Server{
-		Addr: addr, Handler: http.MaxBytesHandler(mux, MaxBodyBytes), Protocols: &p,
+		Addr: addr, Handler: telemetry.ServerHandler(http.MaxBytesHandler(mux, MaxBodyBytes)), Protocols: &p,
 		ReadHeaderTimeout: readHeaderTimeout, ReadTimeout: readTimeout, IdleTimeout: idleTimeout,
 	}
 }

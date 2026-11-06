@@ -839,3 +839,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6020cce799f9
+  - type: implements
+    from: SYM-ingest-app-connectors-import-bond-lots
+    to: REQ-telemetry-domain-spans
+    created_at: 2026-11-02T03:15:15.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e02a9b4b5745
+  - type: covered_by
+    from: SYM-ingest-app-connectors-import-bond-lots
+    to: TEST-ingest-app-tracing
+    created_at: 2026-11-02T03:15:15.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a4483c9535c
+  - type: executable_for
+    from: SYM-telemetry-test-test-parse-config
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:16:20.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc9c7933f0ad
+  - type: executable_for
+    from: SYM-core-tracing-test-traced-tokens
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:18:46.401Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcf64dcc9943

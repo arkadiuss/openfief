@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-22055f9b5dbe
+  - type: implements
+    from: SYM-telemetry-protocol
+    to: REQ-telemetry-standard-variables
+    created_at: 2026-11-02T03:09:02.377Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-766e447e1009
+  - type: covered_by
+    from: SYM-telemetry-protocol
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:09:02.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72955b638919

@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f1211eab668
+  - type: implements
+    from: SYM-telemetry-new-exporter
+    to: REQ-telemetry-standard-variables
+    created_at: 2026-11-02T03:12:10.184Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6a28cefc2e5
+  - type: covered_by
+    from: SYM-telemetry-new-exporter
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:12:10.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ed3c175bf08

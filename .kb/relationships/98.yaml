@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddb8c24ddad6
+  - type: implements
+    from: SYM-ledger-app-ledger-import-all
+    to: REQ-telemetry-domain-spans
+    created_at: 2026-11-02T03:15:23.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9af4fa750e7b
+  - type: covered_by
+    from: SYM-ledger-app-ledger-import-all
+    to: TEST-ledger-app-tracing
+    created_at: 2026-11-02T03:15:23.245Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4da9186c90a

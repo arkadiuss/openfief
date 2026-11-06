@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2754eef6eeb0
+  - type: implements
+    from: SYM-sdk-go-with-telemetry
+    to: REQ-telemetry-plugins-sdk
+    created_at: 2026-11-02T03:13:12.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea2055fefb4a
+  - type: covered_by
+    from: SYM-sdk-go-with-telemetry
+    to: TEST-sdk-go-serve-connector
+    created_at: 2026-11-02T03:13:12.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81dc6260ba3f

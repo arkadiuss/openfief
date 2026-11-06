@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f6b762b4bb0
+  - type: implements
+    from: SYM-telemetry-telemetry-shutdown
+    to: REQ-telemetry-flush-on-shutdown
+    created_at: 2026-11-02T03:12:03.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9afb67f8086b
+  - type: covered_by
+    from: SYM-telemetry-telemetry-shutdown
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:12:03.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0bfb88abbb2

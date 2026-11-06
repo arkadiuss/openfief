@@ -496,3 +496,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-876ed8c98e6f
+  - type: verified_by
+    from: SCEN-telemetry-deploy-component
+    to: TEST-deploy-tracing-component
+    created_at: 2026-11-02T03:07:37.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58f4ac26c21e
+  - type: executable_for
+    from: SYM-telemetry-test-trace-seen
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:18:02.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0bc048eb853

@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-72716fcfb0c7
+  - type: implements
+    from: SYM-sdk-go-serve-connector
+    to: REQ-telemetry-plugins-sdk
+    created_at: 2026-11-02T03:16:07.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-846809b23a6b

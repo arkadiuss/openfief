@@ -73,6 +73,22 @@ spec:
             # collected before the container's 256Mi limit kills it. Keep it about 80% of limits.memory.
             - name: GOMEMLIMIT
               value: 200MiB
+            # Tracing is off: nothing is recorded or sent without an OTLP endpoint. The standard OpenTelemetry
+            # variables turn it on, best through the optional component ../tracing, which also lets the core reach
+            # the collector through its NetworkPolicy (docs/guides/tracing.md). For example:
+            # - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            #   value: http://otel-collector.observability:4318
+            # - name: OTEL_EXPORTER_OTLP_PROTOCOL       # http/protobuf (default) or grpc (port 4317)
+            #   value: http/protobuf
+            # - name: OTEL_TRACES_SAMPLER               # parentbased_always_on by default
+            #   value: parentbased_traceidratio
+            # - name: OTEL_TRACES_SAMPLER_ARG
+            #   value: "0.25"
+            # - name: OTEL_EXPORTER_OTLP_HEADERS        # may hold a credential: from a Secret, never a literal
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: openfief-otlp
+            #       key: headers
           ports:
             - name: http
               containerPort: 8080

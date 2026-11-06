@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-599278ffac87
+  - type: implements
+    from: SYM-core-tracing-with-tracing
+    to: REQ-telemetry-off-by-default
+    created_at: 2026-11-02T03:13:19.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b221808514d4
+  - type: covered_by
+    from: SYM-core-tracing-with-tracing
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:13:19.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7e4244f2c17

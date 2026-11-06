@@ -853,3 +853,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c605bd2baaf
+  - type: verified_by
+    from: SCEN-telemetry-domain-spans
+    to: TEST-ingest-app-tracing
+    created_at: 2026-11-02T03:07:18.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1923c05513e0
+  - type: verified_by
+    from: SCEN-telemetry-domain-spans
+    to: TEST-ledger-app-tracing
+    created_at: 2026-11-02T03:07:18.126Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19d1f08aa61c
+  - type: verified_by
+    from: SCEN-telemetry-domain-spans
+    to: TEST-valuation-app-tracing
+    created_at: 2026-11-02T03:07:18.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1fae1bf3718
+  - type: verified_by
+    from: SCEN-telemetry-domain-spans
+    to: TEST-operator-tracing
+    created_at: 2026-11-02T03:07:18.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d011cd8dc9e5
+  - type: verified_by
+    from: SCEN-telemetry-domain-spans
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:07:18.259Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40e07d5e8226

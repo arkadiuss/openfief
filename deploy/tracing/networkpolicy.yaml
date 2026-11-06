@@ -1,0 +1,27 @@
+# Lets the core reach the owner's OpenTelemetry collector over OTLP: gRPC on 4317 and HTTP on 4318, and nothing else.
+# It adds to the core's own NetworkPolicy, whose egress allows only DNS, the database, plugin pods and the Kubernetes
+# API server. The destination is a placeholder: every pod in namespace observability; narrow it to your collector's
+# pods, and keep only the port your OTEL_EXPORTER_OTLP_PROTOCOL uses.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: openfief-core-to-collector
+  namespace: openfief
+  labels:
+    app.kubernetes.io/name: openfief-core
+    app.kubernetes.io/part-of: openfief
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: openfief-core
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: observability
+      ports:
+        - protocol: TCP
+          port: 4317
+        - protocol: TCP
+          port: 4318

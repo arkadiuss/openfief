@@ -776,3 +776,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-64b1e9366819
+  - type: implements
+    from: SYM-telemetry-exportable
+    to: REQ-telemetry-private-spans
+    created_at: 2026-11-02T03:10:24.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91cef5072c92
+  - type: covered_by
+    from: SYM-telemetry-exportable
+    to: TEST-telemetry-redact
+    created_at: 2026-11-02T03:10:25.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-957238f5599d
+  - type: covered_by
+    from: SYM-telemetry-exportable
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:10:25.046Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ef2a3830a1e

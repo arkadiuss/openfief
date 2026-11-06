@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2833b063546c
+  - type: constrains
+    from: REQ-telemetry-private-spans
+    to: FACT-SUBJECT-0F7CCDCA324FB944
+    created_at: 2026-11-02T03:07:15.549Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdbd06938cd4
+  - type: requires_property
+    from: REQ-telemetry-private-spans
+    to: FACT-PROP-3E9F6BA9A9650237
+    created_at: 2026-11-02T03:07:15.598Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2a357c75561
+  - type: specified_by
+    from: REQ-telemetry-private-spans
+    to: SCEN-telemetry-private-spans
+    created_at: 2026-11-02T03:07:15.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-955dc4eec904

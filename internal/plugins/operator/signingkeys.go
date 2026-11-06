@@ -112,7 +112,8 @@ func SigningKeysConfigMap(keys plugins.SigningKeys) *corev1.ConfigMap {
 }
 
 // SetupWithManager registers the publisher: it runs once at start, then on
-// every change to the ConfigMap and after each Refresh.
+// every change to the ConfigMap and after each Refresh, each time in a span
+// (traced).
 func (p *SigningKeysPublisher) SetupWithManager(mgr ctrl.Manager) error {
 	start := make(chan event.GenericEvent, 1)
 	start <- event.GenericEvent{Object: &corev1.ConfigMap{ObjectMeta: metav1.ObjectMeta{
@@ -125,7 +126,7 @@ func (p *SigningKeysPublisher) SetupWithManager(mgr ctrl.Manager) error {
 		Named("signing-keys").
 		For(&corev1.ConfigMap{}, builder.WithPredicates(isKeys)).
 		WatchesRawSource(source.Channel(start, &handler.EnqueueRequestForObject{})).
-		Complete(p)
+		Complete(traced("signing-keys", p))
 	if err != nil {
 		return fmt.Errorf("set up signing keys publisher: %w", err)
 	}

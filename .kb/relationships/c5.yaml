@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4bfbcc5e87ad
+  - type: executable_for
+    from: SYM-ingest-app-test-tracing-same-attrs
+    to: TEST-ingest-app-tracing
+    created_at: 2026-11-02T03:21:47.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1826dba9753e

@@ -33,6 +33,7 @@ import (
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1/valuationv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1/viewsv1connect"
 	"github.com/arkadiuss/openfief/sdk/go/openfief"
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
 
 const (
@@ -67,7 +68,10 @@ func serve() int {
 	return 0
 }
 
-// run serves the UI until ctx is done.
+// run serves the UI until ctx is done, with the plugin's tracing
+// (openfief.StartTelemetry): each request in a span that continues the
+// core's trace, and each call to the core in one that propagates it. It
+// sends the spans still buffered before it returns.
 func run(ctx context.Context, log *slog.Logger) error {
 	addr, err := openfief.ListenAddress()
 	if err != nil {
@@ -77,9 +81,16 @@ func run(ctx context.Context, log *slog.Logger) error {
 	if err != nil {
 		return err
 	}
-	srv := &http.Server{Addr: addr, Handler: handler, ReadHeaderTimeout: readHeaderTimeout, IdleTimeout: idleTimeout}
+	flush, err := openfief.StartTelemetry(ctx)
+	if err != nil {
+		return fmt.Errorf("tracing: %w", err)
+	}
+	srv := &http.Server{Addr: addr, Handler: telemetry.ServerHandler(handler), ReadHeaderTimeout: readHeaderTimeout, IdleTimeout: idleTimeout}
 	log.Info("ui serving", "address", addr)
-	return serveUntilDone(ctx, srv)
+	serveErr := serveUntilDone(ctx, srv)
+	stopCtx, cancel := context.WithTimeout(context.WithoutCancel(ctx), shutdownTimeout)
+	defer cancel()
+	return errors.Join(serveErr, flush(stopCtx))
 }
 
 // newHandler builds the UI's handler from the plugin's environment: the
@@ -154,15 +165,21 @@ func uploadClient(tokens openfief.TokenSource) *http.Client {
 
 // readClient is the HTTP client for the read API. It sets no Authorization
 // of its own: each call carries the owner's session token. Like every call
-// to the core it never uses a proxy.
+// to the core it never uses a proxy, and it propagates the trace
+// (telemetry.Transport).
 func readClient() *http.Client {
+	return &http.Client{Transport: telemetry.Transport(directTransport()), Timeout: coreTimeout}
+}
+
+// directTransport is http.DefaultTransport's settings without a proxy.
+func directTransport() *http.Transport {
 	base, ok := http.DefaultTransport.(*http.Transport)
 	if !ok {
 		base = &http.Transport{}
 	}
 	t := base.Clone()
 	t.Proxy = nil
-	return &http.Client{Transport: t, Timeout: coreTimeout}
+	return t
 }
 
 // serveUntilDone runs srv until it fails or ctx is done, then shuts it down,

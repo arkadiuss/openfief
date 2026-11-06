@@ -769,3 +769,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2eff5c85f900
+  - type: implements
+    from: SYM-telemetry-config
+    to: REQ-telemetry-off-by-default
+    created_at: 2026-11-02T03:09:08.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d27d2d05d94
+  - type: implements
+    from: SYM-telemetry-config
+    to: REQ-telemetry-standard-variables
+    created_at: 2026-11-02T03:09:08.246Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01ed826e750a
+  - type: covered_by
+    from: SYM-telemetry-config
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:09:08.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50c7f81f9a7b
+  - type: implements
+    from: SYM-fd-browserproxy-rewrite
+    to: REQ-telemetry-trace-boundary
+    created_at: 2026-11-02T03:15:44.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5bca21ff5fe7

@@ -1,9 +1,14 @@
 // Command operator runs OpenFief's plugin operator (D-13): it reconciles the
 // Plugin and PluginGrant resources of the openfief namespace, and only that
 // namespace (D-15), into running, isolated plugins.
+//
+// Each reconcile runs in an OpenTelemetry span when the standard variables
+// name an OTLP endpoint (OTEL_EXPORTER_OTLP_ENDPOINT and its kin,
+// docs/guides/tracing.md); without one nothing is recorded or sent.
 package main
 
 import (
+	"context"
 	"errors"
 	"flag"
 	"fmt"
@@ -26,9 +31,15 @@ import (
 	"github.com/arkadiuss/openfief/internal/plugins/cosign"
 	"github.com/arkadiuss/openfief/internal/plugins/operator"
 	"github.com/arkadiuss/openfief/internal/plugins/operator/v1alpha1"
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
 
 const (
+	// operatorService names the operator in its spans unless
+	// OTEL_SERVICE_NAME does.
+	operatorService = "openfief-operator"
+	// flushTimeout bounds sending the spans still buffered at exit.
+	flushTimeout      = 5 * time.Second
 	defaultPluginPort = 8080
 	// defaultTrustedSigners is where deploy/operator mounts the optional
 	// openfief-trusted-signers ConfigMap.
@@ -99,6 +110,19 @@ func run(args []string) error {
 		return err
 	}
 	ctrl.SetLogger(zap.New(zap.UseFlagOptions(&o.zap)))
+	ctx := ctrl.SetupSignalHandler()
+	tel, err := telemetry.StartFromEnv(ctx, operatorService)
+	if err != nil {
+		return fmt.Errorf("tracing: %w", err)
+	}
+	runErr := manage(ctx, o)
+	flush, cancel := context.WithTimeout(context.WithoutCancel(ctx), flushTimeout)
+	defer cancel()
+	return errors.Join(runErr, tel.Shutdown(flush))
+}
+
+// manage runs the controllers until ctx is done.
+func manage(ctx context.Context, o *options) error {
 	scheme := runtime.NewScheme()
 	if schemeErr := errors.Join(clientgoscheme.AddToScheme(scheme), v1alpha1.AddToScheme(scheme)); schemeErr != nil {
 		return fmt.Errorf("scheme: %w", schemeErr)
@@ -146,7 +170,7 @@ func run(args []string) error {
 	if err := mgr.AddReadyzCheck("readyz", healthz.Ping); err != nil {
 		return fmt.Errorf("ready check: %w", err)
 	}
-	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {
+	if err := mgr.Start(ctx); err != nil {
 		return fmt.Errorf("run: %w", err)
 	}
 	return nil

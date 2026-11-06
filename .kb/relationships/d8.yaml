@@ -706,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b43c44d9b8c4
+  - type: constrains
+    from: REQ-telemetry-bad-variable-refused
+    to: FACT-SUBJECT-30780576F5E0F88D
+    created_at: 2026-11-02T03:06:38.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35a8d06506ea
+  - type: requires_property
+    from: REQ-telemetry-bad-variable-refused
+    to: FACT-PROP-6C230F73D9CFFEC5
+    created_at: 2026-11-02T03:06:38.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f278a14dac6
+  - type: specified_by
+    from: REQ-telemetry-bad-variable-refused
+    to: SCEN-telemetry-bad-variable-refused
+    created_at: 2026-11-02T03:06:38.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1c4d5624f0e

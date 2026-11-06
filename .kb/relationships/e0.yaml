@@ -972,3 +972,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9b9fe59d324
+  - type: implements
+    from: SYM-telemetry-traced
+    to: REQ-telemetry-trace-propagation
+    created_at: 2026-11-02T03:12:58.209Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d217c44ed593
+  - type: covered_by
+    from: SYM-telemetry-traced
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:12:58.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-669d96e90768

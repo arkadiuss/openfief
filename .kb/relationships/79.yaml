@@ -1042,3 +1042,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8c78ac877172
+  - type: implements
+    from: SYM-telemetry-span-name
+    to: REQ-telemetry-private-spans
+    created_at: 2026-11-02T03:12:44.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e8fd0af5c9d
+  - type: covered_by
+    from: SYM-telemetry-span-name
+    to: TEST-core-tracing-privacy
+    created_at: 2026-11-02T03:12:44.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4fc515e933c

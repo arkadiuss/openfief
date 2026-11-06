@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83c7823c2fb5
+  - type: executable_for
+    from: SYM-telemetry-test-test-config-sampler
+    to: TEST-telemetry-config
+    created_at: 2026-11-02T03:16:48.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47e157980043

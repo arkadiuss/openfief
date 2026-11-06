@@ -10,7 +10,11 @@ import (
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
+	"github.com/arkadiuss/openfief/sdk/go/telemetry"
 )
+
+// tracerScope names the ledger use cases' spans (telemetry.Run).
+const tracerScope = "github.com/arkadiuss/openfief/internal/ledger/app"
 
 // MaxAppendAttempts is how many times Import decides and appends one
 // transaction before it gives up on a version conflict. Each retry reloads
@@ -179,8 +183,35 @@ const (
 	importOpeningLots
 )
 
-// importAll is Import, Seed or AddOpeningLots, as mode says.
+// String names the mode in a span: import, seed or opening_lots.
+func (m importMode) String() string {
+	switch m {
+	case importPlain:
+		return "import"
+	case importSeed:
+		return "seed"
+	case importOpeningLots:
+		return "opening_lots"
+	}
+	return "unknown"
+}
+
+// importAll is Import, Seed or AddOpeningLots, as mode says. It runs in a
+// span ledger.import naming the mode, never what is imported.
 func (l *Ledger) importAll(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion, mode importMode) (ImportSummary, error) {
+	var (
+		res ImportSummary
+		err error
+	)
+	telemetry.Run(ctx, tracerScope, "ledger.import", func(ctx context.Context) error {
+		res, err = l.importInTx(ctx, txs, assertions, mode)
+		return err
+	}, telemetry.KeyImport.String(mode.String()))
+	return res, err
+}
+
+// importInTx is importAll without its span: one database transaction.
+func (l *Ledger) importInTx(ctx context.Context, txs []ledger.Transaction, assertions []ledger.BalanceAssertion, mode importMode) (ImportSummary, error) {
 	ordered := slices.Clone(txs)
 	slices.SortStableFunc(ordered, func(a, b ledger.Transaction) int { return compareKeys(a.Key, b.Key) })
 	var sum ImportSummary

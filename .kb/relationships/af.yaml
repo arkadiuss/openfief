@@ -923,3 +923,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e69a479ad615
+  - type: implements
+    from: SYM-valuation-app-revaluer-revalue
+    to: REQ-telemetry-domain-spans
+    created_at: 2026-11-02T03:15:37.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e15a9ec8a17c
+  - type: covered_by
+    from: SYM-valuation-app-revaluer-revalue
+    to: TEST-valuation-app-tracing
+    created_at: 2026-11-02T03:15:37.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05c9c157f528
+  - type: executable_for
+    from: SYM-telemetry-test-check-off
+    to: TEST-telemetry-export
+    created_at: 2026-11-02T03:17:55.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53afa1309ebe
