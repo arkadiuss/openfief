@@ -143,6 +143,17 @@ components:
           type: integer
           title: unsupported
           format: int32
+        accountIds:
+          type: array
+          items:
+            type: string
+          title: account_ids
+          description: |-
+            The accounts its transactions and balance assertions were booked into,
+             in ID order: every mapped account a statement of several accounts books
+             (D-109, D-140), the caller may view (D-163). A batch whose accounts the
+             caller may view none of is not listed; one that booked into no account,
+             or completed before batches recorded their accounts, names none.
       title: ActivityBatch
       additionalProperties: false
       description: |-
@@ -336,6 +347,17 @@ components:
             The connector instance it is about, such as an unmapped broker
              account's, a failing sync's or an import batch's: an item tied to no
              account names only its instance (D-165).
+        accountIds:
+          type: array
+          items:
+            type: string
+          title: account_ids
+          description: |-
+            Every account it is tied to: account_id, or both legs' accounts of a
+             transfer a correction broke (D-131), the withdrawal's first, whose
+             account_id names the withdrawal's. Such an item is listed only to a
+             caller who may view each of them (D-163); filtering by account_id
+             matches any of them.
       title: AttentionItem
       additionalProperties: false
       description: AttentionItem is something a check found that needs the owner (D-130).
@@ -1174,8 +1196,8 @@ components:
           type: string
           title: account_id
           description: |-
-            Only the items tied to this account, such as an account page's
-             banner; empty for any.
+            Only the items tied to this account, by any of their account_ids,
+             such as an account page's banner; empty for any.
         isin:
           type: string
           title: isin
@@ -2966,8 +2988,8 @@ paths:
         - name: accountId
           in: query
           description: |-
-            Only the items tied to this account, such as an account page's
-             banner; empty for any.
+            Only the items tied to this account, by any of their account_ids,
+             such as an account page's banner; empty for any.
           schema:
             type: string
             title: account_id

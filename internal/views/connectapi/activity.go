@@ -57,6 +57,9 @@ func pbActivity(a *views.Activity) *viewsv1.Activity {
 			Transactions: clampInt32(b.Transactions), NewTransactions: clampInt32(b.New), Corrected: clampInt32(b.NewVersions),
 			FailedAssertions: clampInt32(b.FailedAssertions), Problems: clampInt32(b.Problems), Unsupported: clampInt32(b.Unsupported),
 		}
+		for _, acc := range b.Accounts {
+			out.Batch.AccountIds = append(out.Batch.AccountIds, string(acc))
+		}
 	case a.Attempt != nil:
 		out.ConnectorInstance = a.Attempt.Instance
 		out.Attempt = pbSyncAttempt(a.Attempt)

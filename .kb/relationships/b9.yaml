@@ -1000,3 +1000,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd253f51797a
+  - type: constrains
+    from: REQ-views-transfer-broken-accounts
+    to: FACT-SUBJECT-2E58C155B7CE8DF1
+    created_at: 2026-11-06T03:43:03.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8ad92fd1723
+  - type: requires_property
+    from: REQ-views-transfer-broken-accounts
+    to: FACT-PROP-D8ECB5FF8C247F6C
+    created_at: 2026-11-06T03:43:03.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-732c27d0ee4a
+  - type: specified_by
+    from: REQ-views-transfer-broken-accounts
+    to: SCEN-views-transfer-broken-accounts
+    created_at: 2026-11-06T03:43:03.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9001a2a9e2e7

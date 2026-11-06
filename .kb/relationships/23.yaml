@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9fce63a7ff39
+  - type: verified_by
+    from: SCEN-views-transfer-broken-accounts
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T03:42:55.525Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-092370e46549
+  - type: verified_by
+    from: SCEN-views-transfer-broken-accounts
+    to: TEST-views-pairs
+    created_at: 2026-11-06T03:42:55.566Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d6fa25c237d

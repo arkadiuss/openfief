@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-582f5c69a1bd
+  - type: executable_for
+    from: SYM-views-test-helper-leg-in
+    to: TEST-views-pairs
+    created_at: 2026-11-06T03:43:27.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9231361d1a2d

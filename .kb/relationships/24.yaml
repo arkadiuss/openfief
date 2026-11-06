@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-81154d0b3023
+  - type: executable_for
+    from: SYM-views-app-test-broken-transfer-item-tied-to-both-accounts
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T03:43:53.354Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef5c36c1e5d6

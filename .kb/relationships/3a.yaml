@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8f828e96de50
+  - type: implements
+    from: SYM-ingest-pg-batch-accounts
+    to: REQ-ingest-batch-accounts
+    created_at: 2026-11-06T03:44:01.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-932a5c4813d7
+  - type: covered_by
+    from: SYM-ingest-pg-batch-accounts
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-06T03:44:02.011Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab8ced73f93b

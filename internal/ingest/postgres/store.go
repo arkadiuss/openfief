@@ -128,11 +128,11 @@ func (s *Store) CompleteSync(ctx context.Context, b *ingest.Batch, watermark str
 		tag, err := tx.Exec(ctx, `
 			UPDATE ingest.import_batches SET state = 'completed', attempts = attempts + 1, last_attempt_at = $3,
 				finished_at = $3, institution = $4, transactions = $5, assertions = $6, new = $7, new_versions = $8,
-				unchanged = $9, failed_assertions = $10, problems = $11, unsupported = $12
+				unchanged = $9, failed_assertions = $10, problems = $11, unsupported = $12, accounts = $13
 			WHERE id = $1 AND instance = $2 AND state = 'open'`,
 			string(b.ID), instance, at, string(b.Institution), b.Transactions, b.Assertions, b.Imported.New,
 			b.Imported.NewVersions, b.Imported.Unchanged, b.Imported.FailedAssertions, len(b.Problems),
-			ingest.CountUnsupported(b.Problems))
+			ingest.CountUnsupported(b.Problems), batchAccounts(b))
 		if err != nil {
 			return fmt.Errorf("completing: %w", err)
 		}
@@ -193,14 +193,26 @@ func (s *Store) RecordBatch(ctx context.Context, instance string, b *ingest.Batc
 	if _, err := s.pool.Exec(ctx, `
 		INSERT INTO ingest.import_batches (id, instance, source, mode, started_at, state, attempts, last_attempt_at,
 			institution, transactions, assertions, new, new_versions, unchanged, failed_assertions, problems, unsupported,
-			finished_at)
-		VALUES ($1, $2, $3, $4, now(), 'completed', 1, now(), $5, $6, $7, $8, $9, $10, $11, $12, $13, now())`,
+			finished_at, accounts)
+		VALUES ($1, $2, $3, $4, now(), 'completed', 1, now(), $5, $6, $7, $8, $9, $10, $11, $12, $13, now(), $14)`,
 		string(b.ID), instance, b.Source, b.Mode.String(), string(b.Institution), b.Transactions, b.Assertions,
 		b.Imported.New, b.Imported.NewVersions, b.Imported.Unchanged, b.Imported.FailedAssertions, len(b.Problems),
-		ingest.CountUnsupported(b.Problems)); err != nil {
+		ingest.CountUnsupported(b.Problems), batchAccounts(b)); err != nil {
 		return fmt.Errorf("recording batch %s of %s: %w", b.ID, instance, err)
 	}
 	return nil
+}
+
+// batchAccounts returns the IDs of the accounts b booked into, as the
+// accounts column keeps them: never NULL for a batch that completes, so an
+// empty array tells "booked into none" from a batch completed before the
+// column existed (D-109, D-140).
+func batchAccounts(b *ingest.Batch) []string {
+	out := make([]string, 0, len(b.Accounts))
+	for _, a := range b.Accounts {
+		out = append(out, string(a))
+	}
+	return out
 }
 
 // UnsupportedBatches returns each completed batch with rows OpenFief could

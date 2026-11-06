@@ -10,6 +10,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/app"
 	"github.com/arkadiuss/openfief/internal/ingest/postgres"
+	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
 // failed returns a failed attempt of xtb-main's batch id, the failures-th in
@@ -47,7 +48,7 @@ func syncHistory(t *testing.T) (*postgres.Store, *pgxpool.Pool) {
 	claim(t, s, "xtb-main", at(6))
 	mustFail(t, s, failed("b-1", 2, at(17), at(7)))
 	claim(t, s, "xtb-main", at(17))
-	b1 := &ingest.Batch{ID: "b-1", Institution: "xtb", Source: app.SourceSync, Mode: ingest.ModeOpening, Transactions: 3, Imported: ingest.ImportSummary{New: 3}}
+	b1 := &ingest.Batch{ID: "b-1", Institution: "xtb", Source: app.SourceSync, Mode: ingest.ModeOpening, Transactions: 3, Imported: ingest.ImportSummary{New: 3}, Accounts: []ledger.AccountID{"acc-1", "acc-2"}}
 	if err := s.CompleteSync(ctx, b1, "w-1", succeeded("xtb-main", b1, at(100), at(18))); err != nil {
 		t.Fatalf("CompleteSync b-1: %v", err)
 	}
@@ -190,7 +191,7 @@ func TestCompletedBatches(t *testing.T) {
 	at := func(m int) time.Time { return t0().Add(time.Duration(m) * time.Minute) }
 	want := []ingest.BatchRecord{
 		{ID: "n-1", Instance: "nbp", Source: "sync", Mode: ingest.ModeTransactions, Finished: at(31), Institution: "nbp"},
-		{ID: "b-1", Instance: "xtb-main", Source: "sync", Mode: ingest.ModeOpening, Finished: at(18), Institution: "xtb", Transactions: 3, New: 3},
+		{ID: "b-1", Instance: "xtb-main", Source: "sync", Mode: ingest.ModeOpening, Finished: at(18), Institution: "xtb", Transactions: 3, New: 3, Accounts: []ledger.AccountID{"acc-1", "acc-2"}},
 	}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("completed batches (-want +got):\n%s", diff)
@@ -201,5 +202,24 @@ func TestCompletedBatches(t *testing.T) {
 	}
 	if len(rest) != 1 || rest[0].ID != "b-1" {
 		t.Errorf("batches after n-1 = %+v, want b-1 only", rest)
+	}
+}
+
+// TestRecordedBatchKeepsAccounts checks that a recorded upload keeps the
+// accounts it booked into (D-140), and lists them with the completed
+// batches.
+func TestRecordedBatchKeepsAccounts(t *testing.T) {
+	t.Parallel()
+	s, _ := syncHistory(t)
+	upload := &ingest.Batch{ID: "u-1", Institution: "xtb", Source: app.SourceUpload, Mode: ingest.ModeTransactions, Accounts: []ledger.AccountID{"acc-2"}}
+	if err := s.RecordBatch(t.Context(), "xtb-main", upload); err != nil {
+		t.Fatalf("RecordBatch u-1: %v", err)
+	}
+	newest, err := s.CompletedBatches(t.Context(), &ingest.BatchQuery{Limit: 1})
+	if err != nil {
+		t.Fatalf("CompletedBatches after the upload: %v", err)
+	}
+	if len(newest) != 1 || newest[0].ID != "u-1" || !cmp.Equal(newest[0].Accounts, []ledger.AccountID{"acc-2"}) {
+		t.Errorf("newest batch = %+v, want the upload u-1 booked into acc-2", newest)
 	}
 }

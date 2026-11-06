@@ -133995,6 +133995,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-pg-sync-history
       - type: implements
+        target: REQ-ingest-batch-accounts
+      - type: implements
         target: REQ-ingest-completed-batches-pages
   - id: SYM-ingest-test-sync-error-class-names
     title: TestSyncErrorClassNames
@@ -134925,6 +134927,8 @@ symbols:
         target: TEST-views-app-uiv2
       - type: implements
         target: REQ-views-activity
+      - type: implements
+        target: REQ-views-activity-batch-accounts
   - id: SYM-views-app-views-failure-activity
     title: Views.failureActivity
     sourceFile: internal/views/app/activity.go
@@ -135226,19 +135230,6 @@ symbols:
         target: TEST-views-app-uiv2
       - type: implements
         target: REQ-views-attention-inbox
-  - id: SYM-views-app-views-may-view-scope
-    title: Views.mayViewScope
-    sourceFile: internal/views/app/attention.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-06T02:02:50.495Z
-    relationships:
-      - type: covered_by
-        target: TEST-views-app-uiv2
-      - type: implements
-        target: REQ-views-attention-inbox
   - id: SYM-views-app-attention-query-scopes
     title: AttentionQuery.scopes
     sourceFile: internal/views/app/attention.go
@@ -135252,6 +135243,8 @@ symbols:
         target: TEST-views-app-uiv2
       - type: implements
         target: REQ-views-attention-inbox
+      - type: implements
+        target: REQ-views-transfer-broken-accounts
   - id: SYM-views-app-attention-list
     title: AttentionList
     sourceFile: internal/views/app/attention.go
@@ -140099,3 +140092,169 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-views-connectapi-uiv2
+  - id: SYM-views-pair-accounts
+    title: PairAccounts
+    sourceFile: internal/views/pairs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:43:13.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-pairs
+      - type: implements
+        target: REQ-views-transfer-broken-accounts
+  - id: SYM-views-test-pair-accounts
+    title: TestPairAccounts
+    sourceFile: internal/views/pairs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:43:17.905Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-pairs
+  - id: SYM-views-test-helper-pair-link
+    title: pairLink
+    sourceFile: internal/views/pairs_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:43:21.827Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-pairs
+  - id: SYM-views-test-helper-leg-in
+    title: legIn
+    sourceFile: internal/views/pairs_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:43:25.532Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-pairs
+  - id: SYM-views-app-scoped-item-of
+    title: scopedItem
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:43:29.727Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-transfer-broken-accounts
+  - id: SYM-views-app-views-broken-pair-accounts
+    title: Views.brokenPairAccounts
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:43:34.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-transfer-broken-accounts
+  - id: SYM-views-app-views-may-view-all
+    title: Views.mayViewAll
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:43:38.424Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+      - type: implements
+        target: REQ-views-transfer-broken-accounts
+  - id: SYM-views-app-test-broken-transfer-item-tied-to-both-accounts
+    title: TestBrokenTransferItemTiedToBothAccounts
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:43:51.806Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-activity-batch-accounts
+    title: TestActivityBatchAccounts
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:43:56.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-ingest-pg-batch-accounts
+    title: batchAccounts
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:44:00.446Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-ingest-batch-accounts
+  - id: SYM-views-app-test-helper-check-both-accounts
+    title: checkBothAccounts
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:46:10.777Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-ingest-pg-test-recorded-batch-keeps-accounts
+    title: TestRecordedBatchKeepsAccounts
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T03:46:14.884Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-views-pb-attention-item-get-account-ids
+    title: AttentionItem.GetAccountIds
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:03:51.478Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-activity-batch-get-account-ids
+    title: ActivityBatch.GetAccountIds
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:03:56.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity

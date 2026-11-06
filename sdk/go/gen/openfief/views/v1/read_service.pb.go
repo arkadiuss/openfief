@@ -6384,8 +6384,14 @@ type AttentionItem struct {
 	// account's, a failing sync's or an import batch's: an item tied to no
 	// account names only its instance (D-165).
 	ConnectorInstance string `protobuf:"bytes,11,opt,name=connector_instance,json=connectorInstance,proto3" json:"connector_instance,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Every account it is tied to: account_id, or both legs' accounts of a
+	// transfer a correction broke (D-131), the withdrawal's first, whose
+	// account_id names the withdrawal's. Such an item is listed only to a
+	// caller who may view each of them (D-163); filtering by account_id
+	// matches any of them.
+	AccountIds    []string `protobuf:"bytes,12,rep,name=account_ids,json=accountIds,proto3" json:"account_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AttentionItem) Reset() {
@@ -6495,12 +6501,19 @@ func (x *AttentionItem) GetConnectorInstance() string {
 	return ""
 }
 
+func (x *AttentionItem) GetAccountIds() []string {
+	if x != nil {
+		return x.AccountIds
+	}
+	return nil
+}
+
 type ListAttentionItemsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Only the items in this view; unspecified for every item.
 	View AttentionView `protobuf:"varint,1,opt,name=view,proto3,enum=openfief.views.v1.AttentionView" json:"view,omitempty"`
-	// Only the items tied to this account, such as an account page's
-	// banner; empty for any.
+	// Only the items tied to this account, by any of their account_ids,
+	// such as an account page's banner; empty for any.
 	AccountId string `protobuf:"bytes,2,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
 	// Only the items about the instrument with this ISIN; empty for any.
 	Isin string `protobuf:"bytes,3,opt,name=isin,proto3" json:"isin,omitempty"`
@@ -6659,8 +6672,14 @@ type ActivityBatch struct {
 	// Balance assertions that didn't match.
 	FailedAssertions int32 `protobuf:"varint,8,opt,name=failed_assertions,json=failedAssertions,proto3" json:"failed_assertions,omitempty"`
 	// Rows the mapping left out, and of them those OpenFief can't book yet.
-	Problems      int32 `protobuf:"varint,9,opt,name=problems,proto3" json:"problems,omitempty"`
-	Unsupported   int32 `protobuf:"varint,10,opt,name=unsupported,proto3" json:"unsupported,omitempty"`
+	Problems    int32 `protobuf:"varint,9,opt,name=problems,proto3" json:"problems,omitempty"`
+	Unsupported int32 `protobuf:"varint,10,opt,name=unsupported,proto3" json:"unsupported,omitempty"`
+	// The accounts its transactions and balance assertions were booked into,
+	// in ID order: every mapped account a statement of several accounts books
+	// (D-109, D-140), the caller may view (D-163). A batch whose accounts the
+	// caller may view none of is not listed; one that booked into no account,
+	// or completed before batches recorded their accounts, names none.
+	AccountIds    []string `protobuf:"bytes,11,rep,name=account_ids,json=accountIds,proto3" json:"account_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -6763,6 +6782,13 @@ func (x *ActivityBatch) GetUnsupported() int32 {
 		return x.Unsupported
 	}
 	return 0
+}
+
+func (x *ActivityBatch) GetAccountIds() []string {
+	if x != nil {
+		return x.AccountIds
+	}
+	return nil
 }
 
 // ActivityChange is a transaction version the ledger recorded: a coupon or
@@ -8717,7 +8743,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x05state\x18\x02 \x01(\x0e2%.openfief.views.v1.AttentionItemStateR\x05state\x12>\n" +
 	"\x06reason\x18\x03 \x01(\x0e2&.openfief.views.v1.AttentionItemReasonR\x06reason\x12\x16\n" +
 	"\x06detail\x18\x04 \x01(\tR\x06detail\x12\x0e\n" +
-	"\x02at\x18\x05 \x01(\tR\x02at\"\xaa\x03\n" +
+	"\x02at\x18\x05 \x01(\tR\x02at\"\xcb\x03\n" +
 	"\rAttentionItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
 	"\x04kind\x18\x02 \x01(\tR\x04kind\x12\x18\n" +
@@ -8731,7 +8757,9 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"account_id\x18\t \x01(\tR\taccountId\x12\x12\n" +
 	"\x04isin\x18\n" +
 	" \x01(\tR\x04isin\x12-\n" +
-	"\x12connector_instance\x18\v \x01(\tR\x11connectorInstance\"\xb3\x01\n" +
+	"\x12connector_instance\x18\v \x01(\tR\x11connectorInstance\x12\x1f\n" +
+	"\vaccount_ids\x18\f \x03(\tR\n" +
+	"accountIds\"\xb3\x01\n" +
 	"\x19ListAttentionItemsRequest\x124\n" +
 	"\x04view\x18\x01 \x01(\x0e2 .openfief.views.v1.AttentionViewR\x04view\x12\x1d\n" +
 	"\n" +
@@ -8742,7 +8770,7 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x05items\x18\x01 \x03(\v2 .openfief.views.v1.AttentionItemR\x05items\x12\x12\n" +
 	"\x04open\x18\x02 \x01(\x05R\x04open\x12\"\n" +
 	"\facknowledged\x18\x03 \x01(\x05R\facknowledged\x12\x12\n" +
-	"\x04done\x18\x04 \x01(\x05R\x04done\"\xd0\x02\n" +
+	"\x04done\x18\x04 \x01(\x05R\x04done\"\xf1\x02\n" +
 	"\rActivityBatch\x12\x19\n" +
 	"\bbatch_id\x18\x01 \x01(\tR\abatchId\x12\x16\n" +
 	"\x06source\x18\x02 \x01(\tR\x06source\x12\x12\n" +
@@ -8754,7 +8782,9 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\x11failed_assertions\x18\b \x01(\x05R\x10failedAssertions\x12\x1a\n" +
 	"\bproblems\x18\t \x01(\x05R\bproblems\x12 \n" +
 	"\vunsupported\x18\n" +
-	" \x01(\x05R\vunsupported\"\xd9\x02\n" +
+	" \x01(\x05R\vunsupported\x12\x1f\n" +
+	"\vaccount_ids\x18\v \x03(\tR\n" +
+	"accountIds\"\xd9\x02\n" +
 	"\x0eActivityChange\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x12\x16\n" +

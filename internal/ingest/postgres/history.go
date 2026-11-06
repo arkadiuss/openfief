@@ -8,6 +8,7 @@ import (
 	"github.com/jackc/pgx/v5"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
+	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
 // appendAttempt appends a to the sync history in tx: with its error class
@@ -141,7 +142,7 @@ func (s *Store) CompletedBatches(ctx context.Context, q *ingest.BatchQuery) ([]i
 	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT id, instance, source, mode, finished_at, institution, transactions, new, new_versions, unchanged,
-			failed_assertions, problems, coalesce(unsupported, 0)
+			failed_assertions, problems, coalesce(unsupported, 0), coalesce(accounts, '{}')
 		FROM ingest.import_batches
 		WHERE state = 'completed'
 			AND ($1::timestamptz IS NULL OR (finished_at, id COLLATE "C") < ($1, $2::text COLLATE "C"))
@@ -161,9 +162,13 @@ func (s *Store) CompletedBatches(ctx context.Context, q *ingest.BatchQuery) ([]i
 func scanBatchRecord(row pgx.CollectableRow) (ingest.BatchRecord, error) {
 	var b ingest.BatchRecord
 	var id, mode, institution string
+	var accounts []string
 	if err := row.Scan(&id, &b.Instance, &b.Source, &mode, &b.Finished, &institution, &b.Transactions, &b.New,
-		&b.NewVersions, &b.Unchanged, &b.FailedAssertions, &b.Problems, &b.Unsupported); err != nil {
+		&b.NewVersions, &b.Unchanged, &b.FailedAssertions, &b.Problems, &b.Unsupported, &accounts); err != nil {
 		return ingest.BatchRecord{}, fmt.Errorf("reading a batch: %w", err)
+	}
+	for _, a := range accounts {
+		b.Accounts = append(b.Accounts, ledger.AccountID(a))
 	}
 	m, err := parseMode(mode)
 	if err != nil {

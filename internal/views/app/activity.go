@@ -83,7 +83,9 @@ func (v *Views) Activity(ctx context.Context, after *views.ActivityCursor, size 
 	return page, nil
 }
 
-// batchActivity returns up to fetch completed batches after b.
+// batchActivity returns up to fetch completed batches after b, each naming
+// only the accounts it booked into that the caller may view (D-163), and
+// hidden when it booked into some and the caller may view none of them.
 func (v *Views) batchActivity(ctx context.Context, b views.ActivityBound, fetch int) ([]views.Activity, error) {
 	if v.syncs == nil {
 		return nil, nil
@@ -92,9 +94,22 @@ func (v *Views) batchActivity(ctx context.Context, b views.ActivityBound, fetch 
 	if err != nil {
 		return nil, fmt.Errorf("loading import batches: %w", err)
 	}
+	caller := identityapp.CallerFrom(ctx)
 	out := make([]views.Activity, len(batches))
 	for i := range batches {
+		booked := batches[i].Accounts
+		batches[i].Accounts = nil
+		for _, a := range booked {
+			ok, authzErr := v.authz.MayAct(ctx, caller, identity.ActionView, string(a))
+			if authzErr != nil {
+				return nil, fmt.Errorf("authorizing a view of %s: %w", a, authzErr)
+			}
+			if ok {
+				batches[i].Accounts = append(batches[i].Accounts, a)
+			}
+		}
 		out[i] = views.BatchActivity(&batches[i])
+		out[i].Hidden = len(booked) > 0 && len(batches[i].Accounts) == 0
 	}
 	return out, nil
 }

@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6445cbb5831f
+  - type: implements
+    from: SYM-views-app-views-batch-activity
+    to: REQ-views-activity-batch-accounts
+    created_at: 2026-11-06T03:43:48.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9b32a332368

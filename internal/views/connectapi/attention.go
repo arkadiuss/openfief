@@ -53,8 +53,8 @@ func attentionView(v viewsv1.AttentionView) (app.AttentionView, error) {
 	return 0, fmt.Errorf("%w: attention view %d", errBadParameter, v)
 }
 
-// pbAttentionItem converts an attention item with its history, group and
-// scope, its subject as read access may see it (attention.ReadSubject,
+// pbAttentionItem converts an attention item with its history, group,
+// scope and accounts, its subject as read access may see it (attention.ReadSubject,
 // D-121, D-137).
 func pbAttentionItem(it *app.ScopedItem) *viewsv1.AttentionItem {
 	cur := it.Current()
@@ -62,7 +62,7 @@ func pbAttentionItem(it *app.ScopedItem) *viewsv1.AttentionItem {
 		Id: it.ID, Kind: string(it.Kind), Subject: attention.ReadSubject(it.Kind, it.Subject), State: pbAttentionState(cur.State), Detail: cur.Detail,
 		OwnerResolves: attention.OwnerResolves(it.Kind), History: make([]*viewsv1.AttentionItemChange, 0, len(it.Changes)),
 		Group: viewsv1.AttentionItemGroup(enumNumber(int(it.Group))), AccountId: it.Scope.Account,
-		Isin: it.Scope.Instrument, ConnectorInstance: it.Scope.Instance,
+		Isin: it.Scope.Instrument, ConnectorInstance: it.Scope.Instance, AccountIds: it.Accounts,
 	}
 	for _, c := range it.Changes {
 		out.History = append(out.History, &viewsv1.AttentionItemChange{

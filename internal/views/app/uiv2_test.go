@@ -135,6 +135,65 @@ func TestAttentionItemsCarryScopeAndGroup(t *testing.T) {
 	}
 }
 
+// TestBrokenTransferItemTiedToBothAccounts checks that a transfer a
+// correction broke is tied to both legs' accounts: each account's filter
+// finds it, its scope names the withdrawal's, and a caller who may not view
+// either account doesn't see it.
+func TestBrokenTransferItemTiedToBothAccounts(t *testing.T) {
+	t.Parallel()
+	key := func(id string) ledger.TransactionKey { return ledger.TransactionKey{Source: "test", ExternalID: id} }
+	pair := ledger.TransferPair{Withdrawal: key("w-1"), Deposit: key("d-1")}
+	items := fakeItems{item(7, attention.KindTransferBroken, pair.String(), attention.StateOpen, "its legs no longer match")}
+	tests := []struct {
+		name   string
+		q      app.AttentionQuery
+		denied ledger.AccountID
+		ids    []int64
+	}{
+		{name: "every item", ids: []int64{7}},
+		{name: "the withdrawal's account", q: app.AttentionQuery{Account: "acc-1"}, ids: []int64{7}},
+		{name: "the deposit's account", q: app.AttentionQuery{Account: "acc-2"}, ids: []int64{7}},
+		{name: "another account", q: app.AttentionQuery{Account: "acc-3"}, ids: []int64{}},
+		{name: "the withdrawal's account hidden", denied: "acc-1", ids: []int64{}},
+		{name: "the deposit's account hidden", denied: "acc-2", ids: []int64{}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			f := newFixture(t)
+			f.ledger.txs = map[ledger.AccountID][]ledger.Transaction{
+				"acc-1": {{Key: key("w-1"), Account: "acc-1"}}, "acc-2": {{Key: key("d-1"), Account: "acc-2"}},
+			}
+			f.ledger.links = []ledger.TransferLink{{Pair: pair, Decision: ledger.TransferConfirmed, Version: 1}}
+			v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"),
+				app.WithAttention(items), app.WithAuthorizer(&denyingAuthorizer{denied: tt.denied}))
+			if err != nil {
+				t.Fatalf("app.New: %v", err)
+			}
+			list, err := v.Attention(reader(t), &tt.q)
+			if err != nil {
+				t.Fatalf("Attention: %v", err)
+			}
+			if diff := cmp.Diff(tt.ids, itemIDs(&list)); diff != "" {
+				t.Errorf("items (-want +got):\n%s", diff)
+			}
+			checkBothAccounts(t, &list)
+		})
+	}
+}
+
+// checkBothAccounts checks that every item of l is tied to acc-1 and acc-2,
+// its scope naming acc-1.
+func checkBothAccounts(t *testing.T, l *app.AttentionList) {
+	t.Helper()
+	for i := range l.Items {
+		got := &l.Items[i]
+		if diff := cmp.Diff([]string{"acc-1", "acc-2"}, got.Accounts); diff != "" || got.Scope.Account != "acc-1" {
+			t.Errorf("accounts (-want +got):\n%s; scope account %q, want acc-1", diff, got.Scope.Account)
+		}
+	}
+}
+
 // fakeHistory is the ingest store's batches, attempts and statuses.
 type fakeHistory struct {
 	batches  []ingest.BatchRecord
@@ -188,7 +247,8 @@ func (f fakeChanges) RecordedChanges(_ context.Context, before time.Time, _ int6
 }
 
 // history is xtb-main's sync history: a sync at minute 10, failures at
-// 20, 30 and 40, an upload at 25; the ledger corrected an acc-2
+// 20, 30 and 40, an upload into acc-1 and acc-2 at 25 and one into acc-1
+// at 27; the ledger corrected an acc-2
 // transaction at 35 and booked an acc-1 coupon at 15.
 func history(t *testing.T) (*fakeHistory, fakeChanges) {
 	t.Helper()
@@ -197,7 +257,8 @@ func history(t *testing.T) (*fakeHistory, fakeChanges) {
 	}
 	h := &fakeHistory{
 		batches: []ingest.BatchRecord{
-			{ID: "u-1", Instance: "files", Source: "upload", Finished: at(25)},
+			{ID: "u-2", Instance: "files", Source: "upload", Finished: at(27), Accounts: []ledger.AccountID{"acc-1"}},
+			{ID: "u-1", Instance: "files", Source: "upload", Finished: at(25), Accounts: []ledger.AccountID{"acc-1", "acc-2"}},
 			{ID: "b-1", Instance: "xtb-main", Source: "sync", Finished: at(10)},
 		},
 		attempts: []ingest.SyncAttempt{fail(4, 40, 3), fail(3, 30, 2), fail(2, 20, 1), {ID: 1, Instance: "xtb-main", Batch: "b-1", Ended: at(10)}},
@@ -219,12 +280,16 @@ func TestActivity(t *testing.T) {
 		want   []views.ActivityKind
 	}{
 		{name: "everything, newest first", want: []views.ActivityKind{
-			views.ActivitySyncFailed, views.ActivityCorrection, views.ActivitySyncFailed, views.ActivityImport,
+			views.ActivitySyncFailed, views.ActivityCorrection, views.ActivitySyncFailed, views.ActivityImport, views.ActivityImport,
 			views.ActivitySyncFailed, views.ActivityCoupon, views.ActivitySync,
 		}},
 		{name: "a correction in an account the caller may not view", denied: "acc-2", want: []views.ActivityKind{
-			views.ActivitySyncFailed, views.ActivitySyncFailed, views.ActivityImport,
+			views.ActivitySyncFailed, views.ActivitySyncFailed, views.ActivityImport, views.ActivityImport,
 			views.ActivitySyncFailed, views.ActivityCoupon, views.ActivitySync,
+		}},
+		{name: "an upload booked only into an account the caller may not view", denied: "acc-1", want: []views.ActivityKind{
+			views.ActivitySyncFailed, views.ActivityCorrection, views.ActivitySyncFailed, views.ActivityImport,
+			views.ActivitySyncFailed, views.ActivitySync,
 		}},
 	}
 	for _, tt := range tests {
@@ -241,6 +306,33 @@ func TestActivity(t *testing.T) {
 				t.Errorf("kinds (-want +got):\n%s", diff)
 			}
 		})
+	}
+}
+
+// TestActivityBatchAccounts checks that an upload names the accounts it
+// booked into that the caller may view, and none it may not (D-140, D-163).
+func TestActivityBatchAccounts(t *testing.T) {
+	t.Parallel()
+	f := newFixture(t)
+	h, changes := history(t)
+	v, err := app.New(f.ledger, f.valuations, f.statuses, f.rates, cur(t, "PLN"), cur(t, "PLN"),
+		app.WithSyncHistory(h), app.WithRecordedChanges(changes), app.WithAuthorizer(&denyingAuthorizer{denied: "acc-1"}))
+	if err != nil {
+		t.Fatalf("app.New: %v", err)
+	}
+	page, err := v.Activity(reader(t), nil, 10)
+	if err != nil {
+		t.Fatalf("Activity: %v", err)
+	}
+	got := map[ingest.BatchID][]ledger.AccountID{}
+	for i := range page.Activities {
+		if b := page.Activities[i].Batch; b != nil {
+			got[b.ID] = b.Accounts
+		}
+	}
+	want := map[ingest.BatchID][]ledger.AccountID{"u-1": {"acc-2"}, "b-1": nil}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("batches' accounts (-want +got):\n%s", diff)
 	}
 }
 

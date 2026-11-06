@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"time"
+
+	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
 // ErrUnknownSyncErrorClass reports a stored or requested sync error class
@@ -193,6 +195,10 @@ type BatchRecord struct {
 	// of them OpenFief can't book yet.
 	Problems    int
 	Unsupported int
+	// Accounts are the accounts it booked into, in ID order: every mapped
+	// account a statement of several accounts books (D-109, D-140); none
+	// for a batch completed before the history kept them.
+	Accounts []ledger.AccountID
 }
 
 // BatchQuery selects completed import batches, newest first: by when they

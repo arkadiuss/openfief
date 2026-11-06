@@ -804,3 +804,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bc4b9dc190a5
+  - type: constrains
+    from: REQ-views-activity-batch-accounts
+    to: FACT-SUBJECT-8719479B656BD2E4
+    created_at: 2026-11-06T03:43:08.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67465322ba7f
+  - type: requires_property
+    from: REQ-views-activity-batch-accounts
+    to: FACT-PROP-DB70213DFF368B7D
+    created_at: 2026-11-06T03:43:08.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6502879d86f9
+  - type: specified_by
+    from: REQ-views-activity-batch-accounts
+    to: SCEN-views-activity-batch-accounts
+    created_at: 2026-11-06T03:43:08.293Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03c6e90493d8

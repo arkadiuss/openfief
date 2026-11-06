@@ -839,3 +839,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44768cbdb7b0
+  - type: implements
+    from: SYM-views-app-views-may-view-all
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T03:43:39.944Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a98f83edd0cb
+  - type: implements
+    from: SYM-views-app-views-may-view-all
+    to: REQ-views-transfer-broken-accounts
+    created_at: 2026-11-06T03:43:39.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-873cc5146801
+  - type: covered_by
+    from: SYM-views-app-views-may-view-all
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T03:43:40.000Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72ba8cb0e07b

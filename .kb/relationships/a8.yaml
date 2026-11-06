@@ -916,3 +916,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-de993dc453bc
+  - type: implements
+    from: SYM-views-app-views-broken-pair-accounts
+    to: REQ-views-transfer-broken-accounts
+    created_at: 2026-11-06T03:43:35.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8933e7e3eda6
+  - type: covered_by
+    from: SYM-views-app-views-broken-pair-accounts
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T03:43:35.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-422a0d6b5b6f

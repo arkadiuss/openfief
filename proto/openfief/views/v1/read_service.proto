@@ -1308,6 +1308,12 @@ message AttentionItem {
   // account's, a failing sync's or an import batch's: an item tied to no
   // account names only its instance (D-165).
   string connector_instance = 11;
+  // Every account it is tied to: account_id, or both legs' accounts of a
+  // transfer a correction broke (D-131), the withdrawal's first, whose
+  // account_id names the withdrawal's. Such an item is listed only to a
+  // caller who may view each of them (D-163); filtering by account_id
+  // matches any of them.
+  repeated string account_ids = 12;
 }
 
 // AttentionItemGroup is what the owner does about an attention item, as
@@ -1340,8 +1346,8 @@ enum AttentionView {
 message ListAttentionItemsRequest {
   // Only the items in this view; unspecified for every item.
   AttentionView view = 1;
-  // Only the items tied to this account, such as an account page's
-  // banner; empty for any.
+  // Only the items tied to this account, by any of their account_ids,
+  // such as an account page's banner; empty for any.
   string account_id = 2;
   // Only the items about the instrument with this ISIN; empty for any.
   string isin = 3;
@@ -1396,6 +1402,12 @@ message ActivityBatch {
   // Rows the mapping left out, and of them those OpenFief can't book yet.
   int32 problems = 9;
   int32 unsupported = 10;
+  // The accounts its transactions and balance assertions were booked into,
+  // in ID order: every mapped account a statement of several accounts books
+  // (D-109, D-140), the caller may view (D-163). A batch whose accounts the
+  // caller may view none of is not listed; one that booked into no account,
+  // or completed before batches recorded their accounts, names none.
+  repeated string account_ids = 11;
 }
 
 // ActivityChange is a transaction version the ledger recorded: a coupon or

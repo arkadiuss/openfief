@@ -38,7 +38,7 @@ type fakeHistory struct{}
 
 func (fakeHistory) CompletedBatches(_ context.Context, q *ingest.BatchQuery) ([]ingest.BatchRecord, error) {
 	all := []ingest.BatchRecord{
-		{ID: "u-1", Instance: "files", Source: "upload", Mode: ingest.ModeTransactions, Finished: minute(25), Institution: "xtb", Transactions: 42, New: 38, Problems: 4, Unsupported: 4},
+		{ID: "u-1", Instance: "files", Source: "upload", Mode: ingest.ModeTransactions, Finished: minute(25), Institution: "xtb", Transactions: 42, New: 38, Problems: 4, Unsupported: 4, Accounts: []ledger.AccountID{"acc-1", "acc-2"}},
 		{ID: "b-1", Instance: "xtb-main", Source: "sync", Mode: ingest.ModeTransactions, Finished: minute(10), Institution: "xtb", Transactions: 2, New: 2},
 	}
 	var out []ingest.BatchRecord
@@ -250,6 +250,7 @@ func TestConnectActivityDetails(t *testing.T) {
 	}
 	type detail struct {
 		Instance, Source                  string
+		Accounts                          []string
 		Transactions, Unsupported, Failed int32
 		Class                             viewsv1.SyncErrorClass
 		Account, ISIN, Cash               string
@@ -257,12 +258,12 @@ func TestConnectActivityDetails(t *testing.T) {
 	}
 	upload, failed, coupon := acts[2].GetBatch(), acts[0].GetAttempt(), acts[4].GetChange()
 	got := []detail{
-		{Instance: acts[2].GetConnectorInstance(), Source: upload.GetSource(), Transactions: upload.GetTransactions(), Unsupported: upload.GetUnsupported()},
+		{Instance: acts[2].GetConnectorInstance(), Source: upload.GetSource(), Accounts: upload.GetAccountIds(), Transactions: upload.GetTransactions(), Unsupported: upload.GetUnsupported()},
 		{Instance: acts[0].GetConnectorInstance(), Failed: failed.GetFailures(), Class: failed.GetErrorClass()},
 		{Account: coupon.GetAccountId(), ISIN: coupon.GetInstrument().GetIsin(), Cash: coupon.GetAmount().GetAmount(), Kind: coupon.GetKind()},
 	}
 	want := []detail{
-		{Instance: "files", Source: "upload", Transactions: 42, Unsupported: 4},
+		{Instance: "files", Source: "upload", Accounts: []string{"acc-1", "acc-2"}, Transactions: 42, Unsupported: 4},
 		{Instance: "xtb-main", Failed: 3, Class: viewsv1.SyncErrorClass_SYNC_ERROR_CLASS_TIMEOUT},
 		{Account: "acc-1", ISIN: isinPL, Cash: "10.12", Kind: viewsv1.TransactionKind_TRANSACTION_KIND_INTEREST},
 	}

@@ -60,7 +60,8 @@ type Activity struct {
 	// recorded at the same time, for ActivityCoupon and ActivityCorrection.
 	Change   *ledger.VersionedTransaction
 	ChangeID int64
-	// Hidden is a change in an account the caller may not view (D-163): it
+	// Hidden is a change in an account the caller may not view, or a batch
+	// that booked only into such accounts (D-163): it
 	// is paged past but not listed.
 	Hidden bool
 }
