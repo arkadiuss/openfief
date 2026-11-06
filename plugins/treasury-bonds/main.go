@@ -120,7 +120,7 @@ func endpointClient(configured, def string) (*http.Client, string, error) {
 	if err != nil {
 		return nil, "", fmt.Errorf("endpoint: %w", err)
 	}
-	hc, err := ep.NewEgressClient()
+	hc, err := ep.NewClient()
 	if err != nil {
 		return nil, "", fmt.Errorf("egress: %w", err)
 	}

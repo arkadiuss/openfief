@@ -1,6 +1,7 @@
 package openfief
 
 import (
+	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/pem"
@@ -8,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
@@ -32,6 +34,10 @@ const (
 	// maxCABundle bounds the bundle read from the Secret; a Secret holds at
 	// most 1 MiB.
 	maxCABundle = 1 << 20
+	// EnvClusterServiceAddress holds the ClusterIP and port of the in-cluster
+	// service the owner picked for the instance and its grant approved
+	// (D-74), as ClusterIP:port; unset without one.
+	EnvClusterServiceAddress = "OPENFIEF_CLUSTER_SERVICE_ADDRESS"
 )
 
 // Endpoint errors.
@@ -45,12 +51,17 @@ var (
 	// ErrOutsideEndpoint reports a request, a redirect included, to anywhere
 	// but the endpoint's base URL and the paths below it.
 	ErrOutsideEndpoint = errors.New("request outside the endpoint's base URL")
+	// ErrClusterService reports a missing or malformed in-cluster service
+	// address.
+	ErrClusterService = errors.New("no in-cluster service address (OPENFIEF_CLUSTER_SERVICE_ADDRESS is not ClusterIP:port)")
 )
 
-// Endpoint is an external HTTPS service a connector calls: the base URL the
-// owner configured, or the provider's real one by default, and the extra CA
+// Endpoint is an HTTPS service a connector calls: the base URL the owner
+// configured, or the provider's real one by default, and the extra CA
 // certificates the client trusts on top of the system's roots, never instead
-// of them.
+// of them. It is reached through the egress proxy, or, when the instance has
+// an approved in-cluster service (D-74), directly at that service's address,
+// with TLS verified for the base URL's host.
 type Endpoint struct {
 	// BaseURL is the service's https base URL without a trailing slash,
 	// such as https://api.nbp.pl, as BaseURL returns it.
@@ -58,6 +69,9 @@ type Endpoint struct {
 	// CABundle holds PEM certificates trusted besides the system's roots;
 	// nil for none.
 	CABundle []byte
+	// ClusterService is the in-cluster service's ClusterIP:port, from
+	// EnvClusterServiceAddress; empty without one.
+	ClusterService string
 }
 
 // BaseURL returns the base URL a connector calls: configured, or def when
@@ -105,14 +119,26 @@ func NewEndpoint(configured, def string, bundle []byte) (Endpoint, error) {
 }
 
 // LoadEndpoint is NewEndpoint with the bundle the instance's CA bundle
-// Secret holds at CABundleDir/CABundleFile; without that Secret, or that
-// key, it adds no certificate.
+// Secret holds at CABundleDir/CABundleFile, and the in-cluster service's
+// address from EnvClusterServiceAddress; without that Secret, or that key,
+// it adds no certificate, and without the address it reaches the base URL
+// through the egress proxy.
 func LoadEndpoint(configured, def string) (Endpoint, error) {
 	bundle, err := ReadCABundle(filepath.Join(CABundleDir, CABundleFile))
 	if err != nil {
 		return Endpoint{}, err
 	}
-	return NewEndpoint(configured, def, bundle)
+	e, err := NewEndpoint(configured, def, bundle)
+	if err != nil {
+		return Endpoint{}, err
+	}
+	if addr := os.Getenv(EnvClusterServiceAddress); addr != "" {
+		if _, _, splitErr := net.SplitHostPort(addr); splitErr != nil {
+			return Endpoint{}, fmt.Errorf("%w: %q", ErrClusterService, addr)
+		}
+		e.ClusterService = addr
+	}
+	return e, nil
 }
 
 // ReadCABundle reads the CA bundle at path; a missing file, which is what an
@@ -164,6 +190,48 @@ func (e Endpoint) TLSConfig(system *x509.CertPool) (*tls.Config, error) {
 // leaves it.
 func (e Endpoint) Within(next http.RoundTripper) http.RoundTripper {
 	return &endpointTransport{base: e.BaseURL, next: next}
+}
+
+// NewClient returns the HTTP client the connector calls the endpoint with:
+// ClusterClient's with an in-cluster service, NewEgressClient's otherwise.
+func (e Endpoint) NewClient() (*http.Client, error) {
+	if e.ClusterService == "" {
+		return e.NewEgressClient()
+	}
+	system, err := x509.SystemCertPool()
+	if err != nil {
+		return nil, fmt.Errorf("system roots: %w", err)
+	}
+	return e.ClusterClient(system)
+}
+
+// ClusterClient returns an HTTP client that sends every request directly to
+// the in-cluster service at ClusterService, outside the egress proxy (D-74),
+// verifies the service's certificate for the BaseURL's host against
+// Roots(system), and is confined to the BaseURL (Within). Plugins have no
+// DNS, so the base URL's host only names what the certificate must be issued
+// for; the address is always the service's.
+func (e Endpoint) ClusterClient(system *x509.CertPool) (*http.Client, error) {
+	if _, _, err := net.SplitHostPort(e.ClusterService); err != nil {
+		return nil, fmt.Errorf("%w: %q", ErrClusterService, e.ClusterService)
+	}
+	cfg, err := e.TLSConfig(system)
+	if err != nil {
+		return nil, err
+	}
+	def, ok := http.DefaultTransport.(*http.Transport)
+	if !ok {
+		def = &http.Transport{}
+	}
+	t := def.Clone()
+	t.Proxy = nil
+	t.TLSClientConfig = cfg
+	addr := e.ClusterService
+	dialer := &net.Dialer{}
+	t.DialContext = func(ctx context.Context, network, _ string) (net.Conn, error) {
+		return dialer.DialContext(ctx, network, addr)
+	}
+	return &http.Client{Transport: e.Within(t)}, nil
 }
 
 // NewEgressClient returns an HTTP client for the endpoint: through the egress

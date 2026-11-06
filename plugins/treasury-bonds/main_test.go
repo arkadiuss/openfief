@@ -34,6 +34,7 @@ func TestManifest(t *testing.T) {
 		Capabilities:     []plugins.Capability{plugins.CapabilityConnector},
 		Egress:           []plugins.EgressHost{{Host: "api-sdp.stat.gov.pl", Port: 443}, {Host: "static.nbp.pl", Port: 443}},
 		EgressFromConfig: []string{"gusBaseUrl", "nbpBaseUrl"},
+		ClusterService:   &plugins.ClusterServiceRequest{Description: "an in-cluster HTTPS service to call instead of GUS and NBP, at the gusBaseUrl and nbpBaseUrl paths, its certificate issued for their hosts"},
 		Secrets:          []plugins.SecretMount{{Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true}},
 		// It books for the institution every delivery names (D-182).
 		Institutions: []string{"treasury-bonds"},

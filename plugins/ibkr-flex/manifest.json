@@ -3,6 +3,7 @@
   "institutions": ["ibkr"],
   "egress": ["ndcdyn.interactivebrokers.com"],
   "egressFromConfig": ["baseUrl"],
+  "clusterService": {"description": "an in-cluster HTTPS service to call instead of the IBKR Flex Web Service, at the baseUrl path, its certificate issued for the baseUrl host"},
   "secrets": [{"role": "flex-token", "mountPath": "/etc/openfief/ibkr-flex"}, {"role": "ca-bundle", "mountPath": "/etc/openfief/ca-bundle", "optional": true}],
   "crossCheckPrices": true,
   "statementFiles": true,

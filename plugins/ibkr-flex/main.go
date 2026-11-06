@@ -82,7 +82,7 @@ func run(ctx context.Context, log *slog.Logger) error {
 	if err != nil {
 		return fmt.Errorf("config baseUrl: %w", err)
 	}
-	hc, err := ep.NewEgressClient()
+	hc, err := ep.NewClient()
 	if err != nil {
 		return fmt.Errorf("egress: %w", err)
 	}

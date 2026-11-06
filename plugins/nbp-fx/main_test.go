@@ -22,6 +22,7 @@ func TestManifest(t *testing.T) {
 		Capabilities:     []plugins.Capability{plugins.CapabilityConnector},
 		Egress:           []plugins.EgressHost{{Host: "api.nbp.pl", Port: 443}},
 		EgressFromConfig: []string{"baseUrl"},
+		ClusterService:   &plugins.ClusterServiceRequest{Description: "an in-cluster HTTPS service to call instead of NBP, at the baseUrl path, its certificate issued for the baseUrl host"},
 		Secrets:          []plugins.SecretMount{{Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true}},
 		// It books for the institution every delivery names (D-182).
 		Institutions: []string{institution},

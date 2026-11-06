@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c53fd9cca00f
+  - type: executable_for
+    from: SYM-sdk-go-endpoint-test-cluster-get
+    to: TEST-sdk-go-endpoint-cluster
+    created_at: 2026-11-06T23:26:07.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d95818ef5218

@@ -313,6 +313,7 @@ func TestManifest(t *testing.T) {
 		// The host of its baseUrl config field (D-75), and the optional
 		// extra CA bundle the client trusts besides the system's roots.
 		EgressFromConfig: []string{"baseUrl"},
+		ClusterService:   &plugins.ClusterServiceRequest{Description: "an in-cluster HTTPS service to call instead of the IBKR Flex Web Service, at the baseUrl path, its certificate issued for the baseUrl host"},
 		Secrets: []plugins.SecretMount{
 			{Role: "flex-token", MountPath: flexMount},
 			{Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true},

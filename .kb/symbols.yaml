@@ -158623,3 +158623,59 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-treasury-bonds-endpoint
+  - id: SYM-sdk-go-endpoint-endpoint-new-client
+    title: Endpoint.NewClient
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:25:49.514Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint-cluster
+      - type: implements
+        target: REQ-sdk-endpoint-cluster-service
+  - id: SYM-sdk-go-endpoint-endpoint-cluster-client
+    title: Endpoint.ClusterClient
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:25:55.203Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint-cluster
+      - type: implements
+        target: REQ-sdk-endpoint-cluster-service
+  - id: SYM-sdk-go-endpoint-test-test-endpoint-cluster-client
+    title: TestEndpointClusterClient
+    sourceFile: sdk/go/openfief/cluster_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:26:00.693Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint-cluster
+  - id: SYM-sdk-go-endpoint-test-cluster-get
+    title: clusterGet
+    sourceFile: sdk/go/openfief/cluster_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:26:06.005Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint-cluster
+  - id: SYM-sdk-go-endpoint-test-service-server
+    title: serviceServer
+    sourceFile: sdk/go/openfief/cluster_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T23:26:11.535Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint-cluster

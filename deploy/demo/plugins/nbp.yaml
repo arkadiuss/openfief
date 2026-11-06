@@ -16,6 +16,7 @@ spec:
     institutions: [nbp]
     egress: [api.nbp.pl]
     egressFromConfig: [baseUrl]
+    clusterService: {description: 'an in-cluster HTTPS service to call instead of NBP, at the baseUrl path, its certificate issued for the baseUrl host'}
     secrets:
       - {role: ca-bundle, mountPath: /etc/openfief/ca-bundle, optional: true}
     configSchema:

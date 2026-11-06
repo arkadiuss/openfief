@@ -5,6 +5,7 @@
   "indexReadings": true,
   "egress": ["api-sdp.stat.gov.pl", "static.nbp.pl"],
   "egressFromConfig": ["gusBaseUrl", "nbpBaseUrl"],
+  "clusterService": {"description": "an in-cluster HTTPS service to call instead of GUS and NBP, at the gusBaseUrl and nbpBaseUrl paths, its certificate issued for their hosts"},
   "secrets": [{"role": "ca-bundle", "mountPath": "/etc/openfief/ca-bundle", "optional": true}],
   "configSchema": {
     "type": "object",

@@ -35,6 +35,7 @@ func TestManifest(t *testing.T) {
 		Egress:       []plugins.EgressHost{{Host: "eodhd.com", Port: 443}},
 		// The host of its baseUrl config field (D-75).
 		EgressFromConfig: []string{"baseUrl"},
+		ClusterService:   &plugins.ClusterServiceRequest{Description: "an in-cluster HTTPS service to call instead of EODHD, at the baseUrl path, its certificate issued for the baseUrl host"},
 		Secrets:          []plugins.SecretMount{{Role: "api-token", MountPath: keyMount}, {Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true}},
 		MarketData:       true,
 		// It books for the institution every delivery names (D-182).
