@@ -384,13 +384,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09ec5128a42c
-  - type: implements
-    from: SYM-exp-identity-cli-enroll-origin
-    to: REQ-identity-first-run-wizard-follows
-    created_at: 2026-10-29T22:36:13.167Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-6c821a966f01
   - type: covered_by
     from: SYM-exp-identity-cli-enroll-origin
     to: TEST-identity-cli
@@ -601,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-837c0254a3a8
+  - type: implements
+    from: SYM-exp-identity-cli-enroll-origin
+    to: REQ-identity-first-run-wizard-follows-outside-demo
+    created_at: 2026-11-05T23:59:40.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8c3ed6fa1cc

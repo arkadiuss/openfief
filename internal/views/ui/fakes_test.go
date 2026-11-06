@@ -58,6 +58,7 @@ type fakeAuth struct {
 
 	mu          sync.Mutex
 	demo        bool
+	demoLoading bool
 	down        bool
 	origins     []string
 	bearers     []string
@@ -87,7 +88,7 @@ func (f *fakeAuth) GetLoginMethods(_ context.Context, r *connect.Request[identit
 	if err := f.record(r.Header(), r.Msg.GetOrigin()); err != nil {
 		return nil, err
 	}
-	return connect.NewResponse(&identityv1.GetLoginMethodsResponse{PasskeyRegistered: true, DemoSessions: f.flag(&f.demo)}), nil
+	return connect.NewResponse(&identityv1.GetLoginMethodsResponse{PasskeyRegistered: true, DemoSessions: f.flag(&f.demo), DemoLoading: f.flag(&f.demoLoading)}), nil
 }
 
 func (f *fakeAuth) BeginLogin(_ context.Context, r *connect.Request[identityv1.BeginLoginRequest]) (*connect.Response[identityv1.BeginLoginResponse], error) {

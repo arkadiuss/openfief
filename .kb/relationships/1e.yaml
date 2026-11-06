@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-05a67d0df14c
+  - type: validates
+    from: TEST-identity-demo-loading
+    to: REQ-identity-demo-sessions
+    created_at: 2026-11-03T19:03:54.695Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6553f1d96d42

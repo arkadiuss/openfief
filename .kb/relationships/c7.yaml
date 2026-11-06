@@ -538,3 +538,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-712dded54527
+  - type: implements
+    from: SYM-ui-server-first-run-answer
+    to: REQ-ui-demo-no-wizard
+    created_at: 2026-11-03T19:46:23.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b506d3662cd
+  - type: covered_by
+    from: SYM-ui-server-first-run-answer
+    to: TEST-ui-onboarding
+    created_at: 2026-11-03T19:46:23.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be1ff4e5836a
+  - type: implements
+    from: SYM-ui-server-first-run-answer
+    to: REQ-ui-first-run-wizard-steps-outside-demo
+    created_at: 2026-11-06T00:00:30.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04ed3a01b84f

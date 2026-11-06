@@ -381,6 +381,42 @@ func TestFirstRunWizard(t *testing.T) {
 	wantStatus(t, rec, http.StatusForbidden)
 }
 
+// TestNoWizardOnDemo checks that a demo deployment never shows the
+// first-run wizard: an owner without accounts stays on the overview, which
+// says the demo data is loading while it is, and /setup sends the owner
+// there, whether the demo data is loading or loaded.
+func TestNoWizardOnDemo(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name          string
+		demo, loading bool
+		want          []string
+		wantNot       []string
+	}{
+		{name: "demo data loading", loading: true, want: []string{"Demo data is loading.", "Refresh in a minute."}, wantNot: []string{"No accounts yet."}},
+		{name: "demo data loaded", demo: true, want: []string{"No accounts yet."}, wantNot: []string{"Demo data is loading."}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			h := newHarness(t)
+			h.read.locked(func() { h.read.noAccounts = true })
+			h.auth.locked(func() { h.auth.demo, h.auth.demoLoading = tt.demo, tt.loading })
+			rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
+			wantStatus(t, rec, http.StatusOK)
+			wantBody(t, rec, tt.want...)
+			wantNoBody(t, rec, tt.wantNot...)
+			for _, path := range []string{"/setup", setupSleeves, setupAccounts, "/setup?step=done"} {
+				rec = h.serve(t, withSession(request(http.MethodGet, path, ""), ownerSession))
+				wantStatus(t, rec, http.StatusSeeOther)
+				if got := rec.Header().Get("Location"); got != "/" {
+					t.Errorf("%s on a demo went to %q, want the overview", path, got)
+				}
+			}
+		})
+	}
+}
+
 func TestReturnTo(t *testing.T) {
 	t.Parallel()
 	for in, want := range map[string]string{

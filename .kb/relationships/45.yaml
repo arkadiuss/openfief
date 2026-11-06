@@ -734,3 +734,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-315e6916a709
+  - type: implements
+    from: SYM-plugins-fn-append-signer
+    to: REQ-plugins-trusted-signers-only
+    created_at: 2026-11-05T22:24:45.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b1f052d4d3f
+  - type: covered_by
+    from: SYM-plugins-fn-append-signer
+    to: TEST-plugins-trust
+    created_at: 2026-11-05T22:24:45.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfd1959a43bf
+  - type: executable_for
+    from: SYM-operator-cmd-test-helper-ci-and-catalog-signers
+    to: TEST-operator-cmd
+    created_at: 2026-11-05T22:25:49.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef04ffb4e099
+  - type: constrains
+    from: REQ-ui-first-run-wizard-steps-outside-demo
+    to: FACT-SUBJECT-3CCED7DCCD94CEEF
+    created_at: 2026-11-05T23:59:12.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13cfc7c543e3
+  - type: requires_property
+    from: REQ-ui-first-run-wizard-steps-outside-demo
+    to: FACT-PROP-00C307F77B378612
+    created_at: 2026-11-05T23:59:12.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bb51d07a387
+  - type: specified_by
+    from: REQ-ui-first-run-wizard-steps-outside-demo
+    to: SCEN-ui-first-run-wizard-steps
+    created_at: 2026-11-05T23:59:12.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc18e295c57a
+  - type: supersedes
+    from: REQ-ui-first-run-wizard-steps-outside-demo
+    to: REQ-ui-first-run-wizard-steps
+    created_at: 2026-11-05T23:59:12.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb3e7890f605

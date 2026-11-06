@@ -517,3 +517,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-55a73e32627c
+  - type: executable_for
+    from: SYM-core-test-refuse-while-demo-loads
+    to: TEST-core-demo-loading
+    created_at: 2026-11-03T19:31:36.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa645c43e755
