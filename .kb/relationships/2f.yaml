@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1074d790ee35
+  - type: implements
+    from: SYM-ibkr-flex-flex-endpoints
+    to: REQ-connectors-configurable-endpoint
+    created_at: 2026-11-06T22:48:14.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f3ca246e69b
+  - type: covered_by
+    from: SYM-ibkr-flex-flex-endpoints
+    to: TEST-plugins-ibkr-flex-endpoint
+    created_at: 2026-11-06T22:48:15.025Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baaace4718d8

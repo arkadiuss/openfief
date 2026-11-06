@@ -21,6 +21,7 @@ var (
 // rawConfig is the plugin's configuration as OPENFIEF_CONFIG holds it.
 type rawConfig struct {
 	Start       string          `json:"start"`
+	BaseURL     string          `json:"baseUrl"`
 	Instruments []rawInstrument `json:"instruments"`
 	Indices     []rawIndex      `json:"indices"`
 }

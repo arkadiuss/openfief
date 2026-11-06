@@ -294,8 +294,9 @@ func TestFetchCode(t *testing.T) {
 
 // TestManifest checks that manifest.json, which the image carries as its
 // signed label (D-42), is a valid manifest asking for exactly what the
-// plugin needs: the connector capability, IBKR's Flex Web Service host and
-// the credentials Secret where the plugin reads it, and its declarations.
+// plugin needs: the connector capability, IBKR's Flex Web Service host or
+// the one its config names, the credentials Secret where the plugin reads
+// it, the optional CA bundle, and its declarations.
 func TestManifest(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("manifest.json")
@@ -309,7 +310,13 @@ func TestManifest(t *testing.T) {
 	want := plugins.Manifest{
 		Capabilities: []plugins.Capability{plugins.CapabilityConnector},
 		Egress:       []plugins.EgressHost{{Host: "ndcdyn.interactivebrokers.com", Port: 443}},
-		Secrets:      []plugins.SecretMount{{Role: "flex-token", MountPath: flexMount}},
+		// The host of its baseUrl config field (D-75), and the optional
+		// extra CA bundle the client trusts besides the system's roots.
+		EgressFromConfig: []string{"baseUrl"},
+		Secrets: []plugins.SecretMount{
+			{Role: "flex-token", MountPath: flexMount},
+			{Role: openfief.CABundleRole, MountPath: openfief.CABundleDir, Optional: true},
+		},
 		// It sends IBKR's mark prices as cross-check prices (D-112) and maps
 		// uploaded Flex statements (D-109).
 		CrossCheckPrices: true, StatementFiles: true,

@@ -41830,7 +41830,11 @@ symbols:
       recorded_at: 2026-10-28T17:24:42.436Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-nbp-fx-endpoint
+      - type: covered_by
         target: TEST-plugins-nbp-fx-main
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
       - type: implements
         target: REQ-plugins-nbp-fx-sync
   - id: SYM-nbp-fx-main
@@ -41882,7 +41886,11 @@ symbols:
       recorded_at: 2026-10-28T17:25:00.905Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-nbp-fx-endpoint
+      - type: covered_by
         target: TEST-plugins-nbp-fx-main
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
       - type: implements
         target: REQ-plugins-nbp-fx-sync
   - id: SYM-nbp-fx-config-start-date
@@ -56858,7 +56866,11 @@ symbols:
       recorded_at: 2026-10-28T21:42:01.088Z
     relationships:
       - type: covered_by
+        target: TEST-plugins-eodhd-endpoint
+      - type: covered_by
         target: TEST-plugins-eodhd-main
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
       - type: implements
         target: REQ-plugins-eodhd-config
       - type: implements
@@ -67764,6 +67776,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-treasury-bonds
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds-endpoint
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
       - type: implements
         target: REQ-plugins-treasury-bonds-connector
       - type: implements
@@ -74168,6 +74184,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-plugins-treasury-bonds
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds-endpoint
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
       - type: implements
         target: REQ-plugins-treasury-bonds-connector
   - id: SYM-treasury-bonds-config-start-date
@@ -157948,3 +157968,658 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-sdk-go-endpoint
+  - id: SYM-e2e-fixture-main
+    title: main
+    sourceFile: test/e2e/fixture/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:44:11.543Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-serve
+    title: serve
+    sourceFile: test/e2e/fixture/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:44:17.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-run
+    title: run
+    sourceFile: test/e2e/fixture/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:44:23.250Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-date-range
+    title: dateRange
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:44:29.381Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-window
+    title: window
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:44:35.350Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-listings
+    title: listings
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:44:41.090Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-closes
+    title: closes
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:44:46.946Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-mid-rates
+    title: midRates
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:44:52.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-credentials
+    title: credentials
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:44:58.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-new-handler
+    title: newHandler
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:03.950Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-flex-send-request
+    title: flexSendRequest
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:09.426Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-flex-get-statement
+    title: flexGetStatement
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:15.081Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-flex-error
+    title: flexError
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:20.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-write-xml
+    title: writeXML
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:26.275Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-write-body
+    title: writeBody
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:31.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-eodhd-search
+    title: eodhdSearch
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:37.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-eodhd-bar
+    title: eodhdBar
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:43.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-eodhd-closes
+    title: eodhdCloses
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:48.827Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-eodhd-authorized
+    title: eodhdAuthorized
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:45:54.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-span
+    title: span
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:00.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-nbp-table
+    title: nbpTable
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:05.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-nbp-rate
+    title: nbpRate
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:11.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-nbp-table-a
+    title: nbpTableA
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:16.969Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-weekdays
+    title: weekdays
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:22.461Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-accepted
+    title: accepted
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:27.879Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-write-json
+    title: writeJSON
+    sourceFile: test/e2e/fixture/handler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:33.562Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-fixture-server
+      - type: implements
+        target: REQ-e2e-institution-fixture-server
+  - id: SYM-e2e-fixture-test-fixture-server
+    title: fixtureServer
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:39.363Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-test-fixture-serves-flex
+    title: TestFixtureServesFlex
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:44.867Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-test-fixture-serves-eodhd
+    title: TestFixtureServesEODHD
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:50.219Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-check-closes
+    title: checkCloses
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:46:55.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-test-fixture-serves-nbp
+    title: TestFixtureServesNBP
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:47:01.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-test-fixture-refuses-malformed
+    title: TestFixtureRefusesMalformed
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:47:06.617Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-test-run
+    title: TestRun
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:47:12.093Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-answer
+    title: answer
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:47:17.647Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-fetch
+    title: fetch
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:47:23.131Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-day
+    title: day
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:47:28.710Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-key-pair
+    title: keyPair
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:47:34.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-e2e-fixture-test-key-pair-files
+    title: keyPairFiles
+    sourceFile: test/e2e/fixture/handler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:47:39.649Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-fixture-server
+  - id: SYM-ibkr-flex-config
+    title: config
+    sourceFile: plugins/ibkr-flex/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:47:56.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex-endpoint
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
+  - id: SYM-ibkr-flex-flex-fetch
+    title: flexFetch
+    sourceFile: plugins/ibkr-flex/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:48:02.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex-endpoint
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
+  - id: SYM-ibkr-flex-flex-urls
+    title: flexURLs
+    sourceFile: plugins/ibkr-flex/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:48:07.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex-endpoint
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
+  - id: SYM-ibkr-flex-flex-endpoints
+    title: flexEndpoints
+    sourceFile: plugins/ibkr-flex/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:48:13.272Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ibkr-flex-endpoint
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
+  - id: SYM-treasury-bonds-endpoint-client
+    title: endpointClient
+    sourceFile: plugins/treasury-bonds/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:48:18.606Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds-endpoint
+      - type: implements
+        target: REQ-connectors-configurable-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-extra-ca-bundle
+  - id: SYM-nbp-fx-test-endpoint-test-config-base-url
+    title: TestConfigBaseURL
+    sourceFile: plugins/nbp-fx/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:48:52.965Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx-endpoint
+  - id: SYM-nbp-fx-test-endpoint-check-config
+    title: checkConfig
+    sourceFile: plugins/nbp-fx/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:48:58.024Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx-endpoint
+  - id: SYM-nbp-fx-test-endpoint-read-manifest
+    title: readManifest
+    sourceFile: plugins/nbp-fx/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:03.154Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-nbp-fx-endpoint
+  - id: SYM-plugins-eodhd-test-endpoint-test-config-base-url
+    title: TestConfigBaseURL
+    sourceFile: plugins/eodhd/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:08.143Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-endpoint
+  - id: SYM-plugins-eodhd-test-endpoint-check-config
+    title: checkConfig
+    sourceFile: plugins/eodhd/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:13.124Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-endpoint
+  - id: SYM-plugins-eodhd-test-endpoint-read-manifest
+    title: readManifest
+    sourceFile: plugins/eodhd/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:18.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-eodhd-endpoint
+  - id: SYM-ibkr-flex-test-endpoint-test-config-base-url
+    title: TestConfigBaseURL
+    sourceFile: plugins/ibkr-flex/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:23.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex-endpoint
+  - id: SYM-ibkr-flex-test-endpoint-check-config
+    title: checkConfig
+    sourceFile: plugins/ibkr-flex/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:28.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex-endpoint
+  - id: SYM-ibkr-flex-test-endpoint-read-manifest
+    title: readManifest
+    sourceFile: plugins/ibkr-flex/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:33.069Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex-endpoint
+  - id: SYM-ibkr-flex-test-endpoint-test-flex-endpoints
+    title: TestFlexEndpoints
+    sourceFile: plugins/ibkr-flex/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:38.070Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ibkr-flex-endpoint
+  - id: SYM-treasury-bonds-test-endpoint-test-config-base-ur-ls
+    title: TestConfigBaseURLs
+    sourceFile: plugins/treasury-bonds/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:42.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds-endpoint
+  - id: SYM-treasury-bonds-test-endpoint-check-config
+    title: checkConfig
+    sourceFile: plugins/treasury-bonds/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:47.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds-endpoint
+  - id: SYM-treasury-bonds-test-endpoint-read-manifest
+    title: readManifest
+    sourceFile: plugins/treasury-bonds/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T22:49:52.899Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds-endpoint

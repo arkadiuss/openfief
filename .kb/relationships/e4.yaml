@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-591e3f686f23
+  - type: implements
+    from: SYM-e2e-fixture-write-body
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:45:33.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e5cfe6b2d35
+  - type: covered_by
+    from: SYM-e2e-fixture-write-body
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:45:33.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a93ea482e162

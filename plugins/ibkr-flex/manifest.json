@@ -2,11 +2,17 @@
   "capabilities": ["connector"],
   "institutions": ["ibkr"],
   "egress": ["ndcdyn.interactivebrokers.com"],
-  "secrets": [{"role": "flex-token", "mountPath": "/etc/openfief/ibkr-flex"}],
+  "egressFromConfig": ["baseUrl"],
+  "secrets": [{"role": "flex-token", "mountPath": "/etc/openfief/ibkr-flex"}, {"role": "ca-bundle", "mountPath": "/etc/openfief/ca-bundle", "optional": true}],
   "crossCheckPrices": true,
   "statementFiles": true,
   "configSchema": {
     "type": "object",
+    "properties": {
+      "baseUrl": {"type": "string", "maxLength": 2048, "pattern": "^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\\s]*)?$",
+        "default": "https://ndcdyn.interactivebrokers.com/AccountManagement/FlexWebService",
+        "description": "The IBKR Flex Web Service, or a mirror of it: an https URL; the install shows its host and the grant approves it"}
+    },
     "additionalProperties": false
   }
 }

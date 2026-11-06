@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-abd8e7abe990
+  - type: executable_for
+    from: SYM-e2e-fixture-test-answer
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:47:19.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfa96f567d0c

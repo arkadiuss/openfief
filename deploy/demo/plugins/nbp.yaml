@@ -1,5 +1,7 @@
 # The instance nbp of the first-party NBP FX connector (plugins/nbp-fx), with the owner's approval of exactly what
-# it requests: the connector capability, api.nbp.pl through the egress proxy and booking for nbp (D-185).
+# it requests: the connector capability, api.nbp.pl through the egress proxy, booking for nbp (D-185) and its
+# optional extra CA bundle Secret nbp--ca-bundle, which the demo never creates, so the plugin runs without it. Its
+# config sets no baseUrl, so it calls NBP's real API and asks for no host from config (D-75).
 # spec.manifest must equal the image's signed label, plugins/nbp-fx/manifest.json (`task plugins:labels:check`
 # compares them). The digest is a placeholder that ../openfief's `images:` sets (scripts/demo/pin-images.sh).
 apiVersion: openfief.io/v1alpha1
@@ -13,10 +15,19 @@ spec:
     capabilities: [connector]
     institutions: [nbp]
     egress: [api.nbp.pl]
+    egressFromConfig: [baseUrl]
+    secrets:
+      - {role: ca-bundle, mountPath: /etc/openfief/ca-bundle, optional: true}
     configSchema:
       type: object
       properties:
         start: {type: string, minLength: 10, maxLength: 10, pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'}
+        baseUrl:
+          type: string
+          maxLength: 2048
+          pattern: '^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\s]*)?$'
+          default: https://api.nbp.pl
+          description: 'The NBP Web API, or a mirror of it: an https URL; the install shows its host and the grant approves it'
       additionalProperties: false
 ---
 apiVersion: openfief.io/v1alpha1
@@ -28,3 +39,4 @@ spec:
   capabilities: [connector]
   egress: [api.nbp.pl]
   institutions: [nbp]
+  secrets: [nbp--ca-bundle]

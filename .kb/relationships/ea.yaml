@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3acca6ff50e8
+  - type: executable_for
+    from: SYM-nbp-fx-test-endpoint-read-manifest
+    to: TEST-plugins-nbp-fx-endpoint
+    created_at: 2026-11-06T22:49:04.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e211062fecf

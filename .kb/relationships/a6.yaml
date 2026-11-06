@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b231a9e384a3
+  - type: implements
+    from: SYM-e2e-fixture-flex-error
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:45:22.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-388cadb5705b
+  - type: covered_by
+    from: SYM-e2e-fixture-flex-error
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:45:22.492Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a61ae1fabbaa

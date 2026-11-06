@@ -16,7 +16,7 @@ RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags=
 
 FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
 # The plugin's manifest (D-42), signed with the image: written from manifest.json by `task plugins:labels`.
-LABEL io.openfief.plugin.manifest='{"capabilities":["connector"],"configSchema":{"additionalProperties":false,"properties":{"start":{"maxLength":10,"minLength":10,"pattern":"^[0-9]{4}-[0-9]{2}-[0-9]{2}","type":"string"}},"type":"object"},"egress":["api.nbp.pl"],"institutions":["nbp"]}'
+LABEL io.openfief.plugin.manifest='{"capabilities":["connector"],"configSchema":{"additionalProperties":false,"properties":{"baseUrl":{"default":"https://api.nbp.pl","description":"The NBP Web API, or a mirror of it: an https URL; the install shows its host and the grant approves it","maxLength":2048,"pattern":"^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[^?#\\s]*)?$","type":"string"},"start":{"maxLength":10,"minLength":10,"pattern":"^[0-9]{4}-[0-9]{2}-[0-9]{2}","type":"string"}},"type":"object"},"egress":["api.nbp.pl"],"egressFromConfig":["baseUrl"],"institutions":["nbp"],"secrets":[{"mountPath":"/etc/openfief/ca-bundle","optional":true,"role":"ca-bundle"}]}'
 COPY --from=build /out/plugin /plugin
 # Numeric, not nonroot:nonroot: the pods run with runAsNonRoot, and the kubelet refuses to start a container
 # whose image names its user, since it can't tell that a name isn't root (CreateContainerConfigError).

@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-616f5cfa1071
+  - type: implements
+    from: SYM-e2e-fixture-window
+    to: REQ-e2e-institution-fixture-server
+    created_at: 2026-11-06T22:44:37.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcc9630abf2f
+  - type: covered_by
+    from: SYM-e2e-fixture-window
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:44:37.312Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6102ce9ad578

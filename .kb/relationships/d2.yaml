@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f0e585e88642
+  - type: executable_for
+    from: SYM-ibkr-flex-test-endpoint-read-manifest
+    to: TEST-plugins-ibkr-flex-endpoint
+    created_at: 2026-11-06T22:49:34.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-966c815ee545

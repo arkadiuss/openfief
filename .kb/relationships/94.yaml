@@ -797,3 +797,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-989b43530086
+  - type: executable_for
+    from: SYM-e2e-fixture-test-test-fixture-serves-nbp
+    to: TEST-e2e-fixture-server
+    created_at: 2026-11-06T22:47:02.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63af0679a36d
+  - type: executable_for
+    from: SYM-ibkr-flex-test-endpoint-test-config-base-url
+    to: TEST-plugins-ibkr-flex-endpoint
+    created_at: 2026-11-06T22:49:24.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3bf17c4b7cc

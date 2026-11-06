@@ -7,7 +7,7 @@
 // after the first interest period: year-on-year CPI from GUS's public SDP
 // API (api-sdp.stat.gov.pl) and the NBP reference rate from NBP's published
 // archive (static.nbp.pl), both reached anonymously through the egress
-// proxy (D-32). The mapping and the index sync are
+// proxy (D-32), or at the base URLs the owner configured. The mapping and the index sync are
 // internal/ingest/treasurybonds, the adapters internal/valuation/gus and
 // internal/valuation/nbp; this binary only wires them to the SDK.
 //
@@ -15,11 +15,17 @@
 // instance serves every bond account bound to it and its config names none
 // (D-118). Each sync carries what those accounts hold, and the connector
 // books each coupon that fell due as interest (D-101, D-117). Config
-// (OPENFIEF_CONFIG, checked against the manifest's schema) holds only
-// start, optional: the first month the first sync delivers index readings
-// for; without it, January 13 years before today's year:
+// (OPENFIEF_CONFIG, checked against the manifest's schema) holds start,
+// optional: the first month the first sync delivers index readings for;
+// without it, January 13 years before today's year. gusBaseUrl and
+// nbpBaseUrl, optional too, are GUS's SDP API and NBP's archive, or mirrors
+// of them: https URLs whose hosts the install shows and the grant approves
+// (D-75). The clients trust the system's roots plus the PEM certificates of
+// the instance's optional Secret <instance>--ca-bundle (file ca.crt), mounted
+// at /etc/openfief/ca-bundle:
 //
-//	{"start": "2014-01-01"}
+//	{"start": "2014-01-01", "gusBaseUrl": "https://api-sdp.stat.gov.pl",
+//	 "nbpBaseUrl": "https://static.nbp.pl"}
 package main
 
 import (
@@ -54,7 +60,9 @@ var errStartTooEarly = errors.New("start is before the Polish holiday calendar")
 
 // config is the plugin's configuration.
 type config struct {
-	Start string `json:"start"`
+	Start      string `json:"start"`
+	GUSBaseURL string `json:"gusBaseUrl"`
+	NBPBaseURL string `json:"nbpBaseUrl"`
 }
 
 func main() {
@@ -89,12 +97,15 @@ func run(ctx context.Context, log *slog.Logger) error {
 	if err != nil {
 		return err
 	}
-	hc, err := openfief.NewEgressClient()
+	gusHC, gusURL, err := endpointClient(cfg.GUSBaseURL, gus.DefaultBaseURL)
 	if err != nil {
-		return fmt.Errorf("egress: %w", err)
+		return fmt.Errorf("config gusBaseUrl: %w", err)
 	}
-	hc.Timeout = requestTimeout
-	c := newConnector(hc, start, today)
+	nbpHC, nbpURL, err := endpointClient(cfg.NBPBaseURL, nbp.DefaultArchiveURL)
+	if err != nil {
+		return fmt.Errorf("config nbpBaseUrl: %w", err)
+	}
+	c := newConnector(gus.New(gusHC, gusURL), nbp.NewArchive(nbpHC, nbpURL), start, today)
 	log.Info("treasury-bonds serving", "first_sync_from", start.String())
 	if err := openfief.ServeConnector(ctx, c); err != nil {
 		return fmt.Errorf("treasury-bonds: %w", err)
@@ -102,10 +113,24 @@ func run(ctx context.Context, log *slog.Logger) error {
 	return nil
 }
 
-// newConnector is the connector, reading GUS and NBP with hc
-// from start on.
-func newConnector(hc *http.Client, start kernel.Date, today func() kernel.Date) *connector {
-	cpi, rates := gus.New(hc, gus.DefaultBaseURL), nbp.NewArchive(hc, nbp.DefaultArchiveURL)
+// endpointClient is the egress client for the base URL configured, or def,
+// with the instance's extra CA bundle, and that base URL.
+func endpointClient(configured, def string) (*http.Client, string, error) {
+	ep, err := openfief.LoadEndpoint(configured, def)
+	if err != nil {
+		return nil, "", fmt.Errorf("endpoint: %w", err)
+	}
+	hc, err := ep.NewEgressClient()
+	if err != nil {
+		return nil, "", fmt.Errorf("egress: %w", err)
+	}
+	hc.Timeout = requestTimeout
+	return hc, ep.BaseURL, nil
+}
+
+// newConnector is the connector, reading CPI from cpi and the reference
+// rate from rates from start on.
+func newConnector(cpi *gus.Client, rates *nbp.Archive, start kernel.Date, today func() kernel.Date) *connector {
 	return &connector{
 		indices: &treasurybonds.IndexSync{CPI: cpi, Rates: rates, Start: start},
 		coupons: &treasurybonds.CouponSync{CPI: cpi, Rates: rates},

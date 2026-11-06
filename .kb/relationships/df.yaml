@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-319f846d7afa
+  - type: executable_for
+    from: SYM-ibkr-flex-test-endpoint-test-flex-endpoints
+    to: TEST-plugins-ibkr-flex-endpoint
+    created_at: 2026-11-06T22:49:39.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95bfc81c1994
