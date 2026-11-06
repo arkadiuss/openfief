@@ -62,25 +62,26 @@ func TestOverview(t *testing.T) {
 	wantBody(t, rec,
 		"Total on 2026-03-31", "1 500,00 PLN",
 		"Synthetic brokerage", `valued through <span class="mono">2026-03-31</span>`, "Revaluation pending", "1 000,00 PLN",
-		`id="allocation"`, "66.7%", "33.3%",
-		`data-chart="{&#34;kind&#34;:&#34;bar&#34;`, `&#34;values&#34;:[&#34;1000.00&#34;,&#34;500.00&#34;]`,
-		`data-chart="{&#34;kind&#34;:&#34;line&#34;`, "From 2026-03-30 to 2026-03-31",
+		`id="allocation"`, "66.7%", "33.3%", `class="fill series-1" width="66.7"`, `class="fill series-2" width="33.3"`,
+		`data-chart="{&#34;kind&#34;:&#34;line&#34;`, "from 2026-03-30 to 2026-03-31",
 		`<label for="chart-start">Charts start on</label>`, `name="start" type="date" value="2026-03-30"`,
 		`By default the charts start on <span class="mono">2026-03-30</span>, where tracking began`,
-		`&#34;mark&#34;:&#34;2026-03-30&#34;`, `Tracking began on <span class="mono">2026-03-30</span>`,
-		"time-weighted return as an index, 100 on 2026-03-30", `Its value with cash on 2026-03-31 is <span class="mono">1`,
-		`&#34;values&#34;:[&#34;100&#34;,&#34;101.5&#34;]`,
+		`&#34;mark&#34;:&#34;2026-03-30&#34;`, "TWR &#43;1,5% this year",
 		"/static/vendor/chart-4.5.1.umd.min.js", "/static/app.js",
 		`<a href="/inbox">1 flagged balance assertion(s)</a>`,
 	)
-	wantNoBody(t, rec, "model portfolio", "Model", "TWR: not built", "series")
+	wantNoBody(t, rec, "model portfolio", "Model", "TWR: not built", "&#34;series&#34;", `data-chart="{&#34;kind&#34;:&#34;bar&#34;`)
+	perf := h.serve(t, withSession(request(http.MethodGet, "/?over=performance", ""), ownerSession))
+	wantBody(t, perf, "From 2026-03-30 to 2026-03-31", `Tracking began on <span class="mono">2026-03-30</span>`,
+		"time-weighted return as an index, 100 on 2026-03-30", `Its value with cash on 2026-03-31 is <span class="mono">1`,
+		`&#34;values&#34;:[&#34;100&#34;,&#34;101.5&#34;]`)
 	bearers := seen(h.read, func() []string { return h.read.bearers })
 	if len(bearers) == 0 || slices.ContainsFunc(bearers, func(b string) bool { return b != "Bearer "+ownerSession }) {
 		t.Errorf("read API bearers = %v, want the session token on every call", bearers)
 	}
 	var dims []viewsv1.AllocationDimension
 	h.read.locked(func() { dims = append(dims, h.read.dimensions...) })
-	if diff := cmp.Diff([]viewsv1.AllocationDimension{viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS}, dims); diff != "" {
+	if diff := cmp.Diff([]viewsv1.AllocationDimension{viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS, viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS}, dims); diff != "" {
 		t.Errorf("allocation dimensions (-want +got):\n%s", diff)
 	}
 }

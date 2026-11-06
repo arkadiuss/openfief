@@ -902,3 +902,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7c5b87d79707
+  - type: implements
+    from: SYM-ui-account-pill
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:23:27.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cf948fc65f2
+  - type: implements
+    from: SYM-ui-account-pill
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:23:27.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-701346b5b90a
+  - type: covered_by
+    from: SYM-ui-account-pill
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:23:27.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3135f0b4cd6

@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-30cf32de26fa
+  - type: verified_by
+    from: SCEN-ui-ask-commands
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:17:49.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81cbde8091c3
+  - type: verified_by
+    from: SCEN-ui-ask-commands
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:17:49.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a19b6337db7

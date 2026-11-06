@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fa6f11310dbd
+  - type: constrains
+    from: REQ-ui-inbox-ask-column
+    to: FACT-SUBJECT-BF8827AE5AF75C88
+    created_at: 2026-11-06T08:18:21.190Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-959696fcc262
+  - type: requires_property
+    from: REQ-ui-inbox-ask-column
+    to: FACT-PROP-96082FF0C239B48E
+    created_at: 2026-11-06T08:18:21.234Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd2827dd4eb6
+  - type: specified_by
+    from: REQ-ui-inbox-ask-column
+    to: SCEN-ui-inbox-ask-column
+    created_at: 2026-11-06T08:18:21.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76e5904dc885

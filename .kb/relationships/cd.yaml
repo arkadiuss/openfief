@@ -909,3 +909,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95066fa7a54b
+  - type: implements
+    from: SYM-ui-span
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:20:01.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c66b3d728ff5
+  - type: implements
+    from: SYM-ui-span
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:20:01.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d985a16257dc
+  - type: covered_by
+    from: SYM-ui-span
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:20:01.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da35939bfa00

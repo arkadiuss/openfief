@@ -42,16 +42,16 @@ func attentionKindOf(kind string) attentionKind {
 	kinds := map[string]attentionKind{
 		kindAssertion:                           {Label: "Flagged balance assertion"},
 		kindPriceCheck:                          {Label: "Flagged price check"},
-		kindImportProblems:                      {Label: "Rows an import left out", Page: "/accounts", Action: "Open the accounts"},
-		kindBrokerUnmapped:                      {Label: "Unmapped broker account", Page: "/accounts", Action: "Open the accounts"},
+		kindImportProblems:                      {Label: "Rows an import left out", Page: accountsPath, Action: "Open the accounts"},
+		kindBrokerUnmapped:                      {Label: "Unmapped broker account", Page: accountsPath, Action: "Open the accounts"},
 		kindTicker:                              {Label: "Ticker to confirm"},
 		kindSettingMissing:                      {Label: "Missing setting", Page: "/settings", Action: "Open the settings"},
 		kindTransferBroken:                      {Label: "Transfer broken by a correction"},
 		kindTransferSuggested:                   {Label: "Transfer to confirm"},
 		kindUnclassified:                        {Label: "Instrument to classify", Page: "/settings", Action: "Classify it in the settings"},
 		"market-data-gap":                       {Label: "Market data stopped arriving", Page: "/settings#series-sources-title", Action: "Open the sources"},
-		"bond-terms-or-index-levels-undeclared": {Label: "Bond terms, index levels or readings dropped", Page: "/plugins", Action: "Open the plugins"},
-		kindSyncFailing:                         {Label: "Sync keeps failing", Page: "/plugins", Action: "Open the plugins"},
+		"bond-terms-or-index-levels-undeclared": {Label: "Bond terms, index levels or readings dropped", Page: pluginsPath, Action: openPlugins},
+		kindSyncFailing:                         {Label: "Sync keeps failing", Page: pluginsPath, Action: openPlugins},
 	}
 	if k, ok := kinds[kind]; ok {
 		return k

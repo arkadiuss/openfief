@@ -818,3 +818,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4da2e861bea3
+  - type: verified_by
+    from: SCEN-decision-d195-1-figures-link-down
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:17:47.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-143ca10385fa
+  - type: implements
+    from: SYM-ui-command-answerer-answer
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:21:10.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7cbba1f9b80
+  - type: implements
+    from: SYM-ui-command-answerer-answer
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:21:10.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2dd089a6565
+  - type: covered_by
+    from: SYM-ui-command-answerer-answer
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:21:10.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e1b97c3fa71

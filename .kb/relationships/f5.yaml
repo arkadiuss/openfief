@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a03473cbdb00
+  - type: implements
+    from: SYM-ui-plural
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:21:54.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0857e8681f51
+  - type: implements
+    from: SYM-ui-plural
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:21:54.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a23be681ba70
+  - type: covered_by
+    from: SYM-ui-plural
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:21:54.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5bb51b9a59c

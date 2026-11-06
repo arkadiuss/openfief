@@ -147,6 +147,8 @@
 <nav class="segmented" aria-label="Inbox views">
   {{range .Filters}}<a href="/inbox?view={{.Key}}"{{if .Current}} aria-current="page"{{end}}>{{.Label}} <span class="count">{{.Count}}</span></a>{{end}}
 </nav>
+<div class="inbox-layout">
+<div>
 {{range .Groups}}
 <section class="card inbox-group" aria-labelledby="{{.ID}}-title">
   <h2 id="{{.ID}}-title" class="eyebrow">{{.Title}} · {{.Count}}</h2>
@@ -183,5 +185,8 @@
   <p class="muted">No check has found anything new to look at.</p>
 </div></div>
 {{end}}
+</div>
+{{with .Ask}}{{template "ask-about" .}}{{end}}
+</div>
 {{end}}
 {{end}}

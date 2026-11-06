@@ -12,3 +12,59 @@
 <p class="help" id="chart-start-help">{{if .Account}}By default the charts start on the account's first day, <span class="mono">{{.Default}}</span>.{{else}}By default the charts start on <span class="mono">{{.Default}}</span>, where tracking began: from that day every account's history is known, since none was seeded from a starting balance later.{{end}} Choose any other day: the performance index is 100 on it, and a dashed line marks where tracking began.</p>
 {{end}}
 {{end}}
+{{/* The overview's one chart card (D-193): Value, Performance, or the three values (D-77), with the charts' start and
+     where tracking began (D-138). Each tab is a link, swapped in by htmx. */}}
+{{define "over-time"}}
+<section id="over-time" class="card over-time" aria-labelledby="over-title">
+  <div class="card-head">
+    <h2 id="over-title">Over time</h2>
+    {{$o := .}}
+    <nav class="segmented" aria-label="Chart">
+      {{range .Tabs}}<a href="{{$o.Link .Key}}" hx-get="{{$o.FragmentLink .Key}}" hx-target="#over-time" hx-swap="outerHTML" hx-push-url="{{$o.Link .Key}}"{{if eq .Key $o.Tab}} aria-current="page"{{end}}>{{.Label}}</a>{{end}}
+    </nav>
+  </div>
+  {{if eq .Tab "performance"}}{{template "performance-chart" .History}}{{else}}{{template "value-chart" .Value}}{{end}}
+  <details class="change"{{if .Start.Chosen}} open{{end}}>
+    <summary>Charts start on {{.Start.From}}</summary>
+    {{template "chart-start" .Start}}
+    {{if not .Start.Default}}<p class="muted">No transactions yet: the charts start once there are.</p>{{end}}
+  </details>
+</section>
+{{end}}
+
+{{define "performance-chart"}}
+<section class="chart-part" aria-labelledby="history-title">
+  <h3 id="history-title">Performance</h3>
+  {{if .Points}}
+  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Time-weighted return{{if .Model}} and the model portfolio's backtest{{end}} from {{.From}} to {{.To}}, 100 on {{.From}}{{if .Default}}; tracking began on {{.Default}}{{end}}"></canvas></div>
+  <p class="muted">From {{.From}} to {{.To}}: the portfolio's time-weighted return as an index, 100 on {{.From}}, so deposits, withdrawals and the transfers between your accounts you confirmed don't count as performance.{{with .Default}} Tracking began on <span class="mono">{{.}}</span>.{{end}}{{with .Value}} Its value with cash on {{$.To}} is <span class="mono">{{money .}}</span>.{{end}} In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
+  {{if .Pending}}<p><span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation pending</span> <span class="muted">The line may still change.</span></p>{{end}}
+  {{if .Suggested}}<p class="alert alert-warn"><a href="/inbox">{{.Suggested}} suggested transfer(s)</a> between your accounts wait for you: until you confirm one, its withdrawal and deposit count as money in and out.</p>{{end}}
+  {{else}}
+  <p class="muted">No valued days yet.</p>
+  {{end}}
+  {{with .Model}}
+  <h3>Model portfolio</h3>
+  {{if .BacktestStart}}
+  <p class="muted">The second line is the model portfolio's backtest, rebalanced to its target weights at each year end, 100 on the same first day. Its history runs from {{.BacktestStart}} to {{.BacktestEnd}}.</p>
+  {{else}}
+  <p class="alert alert-warn">The model portfolio has no backtest yet: some target has no history in the reporting currency.</p>
+  {{end}}
+  <div class="table"><table>
+    <thead><tr><th scope="col">Max drawdown</th><th scope="col" class="num">Fall</th><th scope="col">Peak</th><th scope="col">Trough</th><th scope="col">Over</th></tr></thead>
+    <tbody>
+    {{range .Drawdowns}}
+    <tr>
+      <td>{{.Name}}</td>
+      {{if .Missing}}<td colspan="4" class="warn-text">No history: {{.Missing}}</td>
+      {{else if not .Peak}}<td colspan="4" class="empty">No history</td>
+      {{else}}<td class="num">{{if .NeverFell}}never fell{{else}}{{.Depth}}{{end}}</td><td class="mono">{{.Peak}}</td><td class="mono">{{.Trough}}</td><td><span class="mono">{{.First}}</span> to <span class="mono">{{.Last}}</span></td>
+      {{end}}
+    </tr>
+    {{end}}
+    </tbody>
+  </table></div>
+  <p class="muted">The worst fall from a peak to a later trough over each one's whole history (D-54): the model over its backtest, each target in the reporting currency from its first day with a price and an FX rate.</p>
+  {{end}}
+</section>
+{{end}}

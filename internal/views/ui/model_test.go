@@ -146,7 +146,7 @@ func TestOverviewModel(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
 	h.read.locked(func() { h.read.modelOn = true })
-	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), readSession))
+	rec := h.serve(t, withSession(request(http.MethodGet, "/?over=performance", ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec,
 		`&#34;series&#34;:[{&#34;label&#34;:&#34;Model portfolio (backtest)&#34;,&#34;values&#34;:[&#34;100&#34;,&#34;99.25&#34;]}]`,

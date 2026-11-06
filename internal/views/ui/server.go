@@ -121,6 +121,8 @@ type server struct {
 	transfers   ledgerv1connect.TransferServiceClient
 	attention   attentionv1connect.AttentionServiceClient
 	syncs       ingestv1connect.SyncServiceClient
+	// ask answers the Ask box's questions (D-194): commandAnswerer in M0.
+	ask answerer
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
@@ -154,6 +156,7 @@ func New(cfg *Config) (http.Handler, error) {
 	if s.log == nil {
 		s.log = slog.New(slog.DiscardHandler)
 	}
+	s.ask = commandAnswerer{s: s}
 	return securityHeaders(sameOrigin(s.routes(static))), nil
 }
 
@@ -177,6 +180,8 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /{$}", s.withSession(s.overview))
 	mux.HandleFunc("GET /allocation", s.withSession(s.allocationFragment))
 	mux.HandleFunc("GET /value-chart", s.withSession(s.valueChartFragment))
+	mux.HandleFunc("GET /over-time", s.withSession(s.overTimeFragment))
+	mux.HandleFunc("GET /ask", s.withSession(s.askFragment))
 	mux.HandleFunc("GET /accounts/{id}", s.withSession(s.accountPage))
 	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))

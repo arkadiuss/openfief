@@ -713,3 +713,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6dd1f87659a0
+  - type: implements
+    from: SYM-ui-ask-box
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:23:49.121Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0da72e19dab0
+  - type: implements
+    from: SYM-ui-ask-box
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:23:49.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1100345c1ac
+  - type: covered_by
+    from: SYM-ui-ask-box
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:23:49.177Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c7f3c0583b4
+  - type: implements
+    from: SYM-ui-failing-per-account
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:23:58.054Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e9a1b16fc6e
+  - type: implements
+    from: SYM-ui-failing-per-account
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:23:58.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55d1b7a8985a
+  - type: covered_by
+    from: SYM-ui-failing-per-account
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:23:58.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42cc5de95921

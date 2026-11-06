@@ -545,3 +545,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f4c5153f428d
+  - type: implements
+    from: SYM-ui-ask-period
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:18:58.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-573c596383b2
+  - type: implements
+    from: SYM-ui-ask-period
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:18:58.666Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bcff77bc4f62
+  - type: covered_by
+    from: SYM-ui-ask-period
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:18:58.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74c0276e5985

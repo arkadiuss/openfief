@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-24b5d103c9ef
+  - type: implements
+    from: SYM-ui-server-sleeve-answer
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:22:21.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50cebf31e963
+  - type: implements
+    from: SYM-ui-server-sleeve-answer
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:22:21.070Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a28af2ae99c6
+  - type: covered_by
+    from: SYM-ui-server-sleeve-answer
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:22:21.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd797f25baca

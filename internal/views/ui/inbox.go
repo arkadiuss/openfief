@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"strings"
 
 	"connectrpc.com/connect"
@@ -138,6 +139,32 @@ type inboxView struct {
 	// Calm is an open view with nothing open: Kasztan asleep and one
 	// line.
 	Calm bool
+	// Ask are the side column's Ask suggestions about the open items
+	// (D-194), in the open view.
+	Ask []string
+}
+
+// inboxAsk returns the Ask box's questions about items, the open ones
+// (D-194): what needs the owner, why each failing sync fails and each
+// account an item is tied to, at most maxSuggestions, each once.
+func inboxAsk(items []*viewsv1.AttentionItem) []string {
+	out := []string{"What needs me?"}
+	add := func(q string) {
+		if !slices.Contains(out, q) && len(out) < maxSuggestions {
+			out = append(out, q)
+		}
+	}
+	for _, it := range items {
+		if it.GetKind() == kindSyncFailing && it.GetConnectorInstance() != "" {
+			add("Why is " + it.GetConnectorInstance() + " failing?")
+		}
+	}
+	for _, it := range items {
+		for _, a := range it.GetAccountIds() {
+			add("Show account " + a)
+		}
+	}
+	return out
 }
 
 // inboxPage shows the Inbox in the view the request names, open by
@@ -210,6 +237,9 @@ func (s *server) renderInbox(w http.ResponseWriter, r *http.Request, sess sessio
 		g.Items = append(g.Items, row)
 	}
 	ev.extras(&data, key)
+	if key == viewOpen {
+		data.Ask = inboxAsk(resp.Msg.GetItems())
+	}
 	data.Calm = key == viewOpen && resp.Msg.GetOpen() == 0
 	s.show(w, r, status, "inbox", page{Title: "Inbox", Session: &sess, Data: data})
 }

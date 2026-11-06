@@ -622,3 +622,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f834cd9475cf
+  - type: implements
+    from: SYM-ui-parse-ask
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:19:30.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c9774ac181c
+  - type: implements
+    from: SYM-ui-parse-ask
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:19:30.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-562cd53cfe3d
+  - type: covered_by
+    from: SYM-ui-parse-ask
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:19:30.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40748e39b820

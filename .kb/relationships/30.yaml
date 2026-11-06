@@ -643,3 +643,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ad25ba04e8a6
+  - type: implements
+    from: SYM-ui-server-over-time
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:26:56.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df3592eda63c
+  - type: implements
+    from: SYM-ui-server-over-time
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:26:56.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cc58e6a82b0
+  - type: covered_by
+    from: SYM-ui-server-over-time
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:26:56.215Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f90157107606
+  - type: executable_for
+    from: SYM-ui-test-helper-group-by-sleeve-summary
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:48:54.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07808db74291

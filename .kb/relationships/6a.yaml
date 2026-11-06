@@ -573,3 +573,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58b09e55f328
+  - type: implements
+    from: SYM-ui-sleeve-group
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:24:38.509Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-706d1d4dca6a
+  - type: implements
+    from: SYM-ui-sleeve-group
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:24:38.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2df011d894cc
+  - type: covered_by
+    from: SYM-ui-sleeve-group
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:24:38.557Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db5283614162

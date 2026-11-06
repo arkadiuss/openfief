@@ -643,3 +643,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a3c889b4cf4
+  - type: verified_by
+    from: SCEN-ui-ask-never-logged
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:17:50.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c016f20e9aa
+  - type: verified_by
+    from: SCEN-ui-ask-never-logged
+    to: TEST-browserproxy-logs
+    created_at: 2026-11-06T08:17:50.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6aa438f3a5f2

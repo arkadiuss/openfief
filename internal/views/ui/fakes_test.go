@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -355,6 +356,9 @@ type fakeRead struct {
 	pluginsUnavailable bool
 	// noAccounts makes ListAccounts list none, as on a fresh install.
 	noAccounts bool
+	// syncsUnavailable makes ListSyncStatuses fail, as a core that can't
+	// read its database does.
+	syncsUnavailable bool
 	// format is the number format GetSettings answers, the owner's choice
 	// through the fake SettingsService; nil is the Polish default.
 	format *viewsv1.NumberFormat
@@ -385,7 +389,7 @@ func (f *fakeRead) GetSettings(_ context.Context, r *connect.Request[viewsv1.Get
 func pln(amount string) *viewsv1.Money { return &viewsv1.Money{Amount: amount, Currency: "PLN"} }
 
 func syntheticInstrument() *viewsv1.Instrument {
-	return &viewsv1.Instrument{Isin: "XX0000000001", Symbol: "SYN"}
+	return &viewsv1.Instrument{Isin: "XX0000000001", Symbol: "SYN", Name: "Synthetic Fund"}
 }
 
 func (f *fakeRead) ListAccounts(_ context.Context, r *connect.Request[viewsv1.ListAccountsRequest]) (*connect.Response[viewsv1.ListAccountsResponse], error) {
@@ -632,6 +636,13 @@ type harness struct {
 // the SDK's CoreHTTPClient over a token file, as the plugin wires it.
 func newHarness(t *testing.T) *harness {
 	t.Helper()
+	return newHarnessLogging(t, nil)
+}
+
+// newHarnessLogging is newHarness with the UI logging to log; nil
+// discards.
+func newHarnessLogging(t *testing.T, log *slog.Logger) *harness {
+	t.Helper()
 	h := &harness{
 		auth: &fakeAuth{}, model: newFakeModel(), bondLots: &fakeBondLots{}, statements: &fakeStatements{}, read: &fakeRead{},
 		sleeves: &fakeSleeves{}, accounts: &fakeAccounts{}, marketData: newFakeMarketData(), checks: &fakePriceChecks{},
@@ -678,6 +689,7 @@ func newHarness(t *testing.T) *harness {
 		Tickers:     ingestv1connect.NewTickerServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Attention:   attentionv1connect.NewAttentionServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Syncs:       ingestv1connect.NewSyncServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Log:         log,
 	})
 	if err != nil {
 		t.Fatalf("New: %v", err)

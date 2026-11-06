@@ -790,3 +790,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eded1df2d2d5
+  - type: implements
+    from: SYM-ui-over-time-view-link
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:26:41.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15550150bde6
+  - type: implements
+    from: SYM-ui-over-time-view-link
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:26:41.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18cf3f008471
+  - type: covered_by
+    from: SYM-ui-over-time-view-link
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:26:41.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce48f0d33e13

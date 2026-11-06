@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-093a33ed36f9
+  - type: implements
+    from: SYM-ui-sync-status-row
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:22:34.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80a22b0dc11d
+  - type: implements
+    from: SYM-ui-sync-status-row
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:22:34.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e0b0dde96a8
+  - type: covered_by
+    from: SYM-ui-sync-status-row
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:22:34.791Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59967b8c3190

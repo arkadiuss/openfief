@@ -2,6 +2,7 @@ package ui
 
 import (
 	"net/http"
+	"slices"
 	"testing"
 
 	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
@@ -20,11 +21,15 @@ func TestOverviewChartStart(t *testing.T) {
 	wantBody(t, rec,
 		`name="start" type="date" value="2026-03-31"`,
 		`Back to the default, <span class="mono">2026-03-30</span>`, `href="/?date=2026-03-31"`,
-		"time-weighted return as an index, 100 on 2026-03-31",
 		`from=2026-03-31`, `start=2026-03-31`, `mark=2026-03-30`,
 	)
+	rec = h.serve(t, withSession(request(http.MethodGet, "/?start=2026-03-31&over=performance", ""), readSession))
+	wantBody(t, rec, "time-weighted return as an index, 100 on 2026-03-31", `aria-current="page">Performance</a>`)
 	h.read.locked(func() {
-		if n := len(h.read.performance); n == 0 || h.read.performance[n-1].GetFrom() != "2026-03-31" || h.read.performance[n-1].GetAccountId() != "" {
+		chosen := slices.ContainsFunc(h.read.performance, func(p *viewsv1.GetPerformanceRequest) bool {
+			return p.GetFrom() == "2026-03-31" && p.GetAccountId() == ""
+		})
+		if !chosen {
 			t.Errorf("GetPerformance requests = %v, want the portfolio's from 2026-03-31", h.read.performance)
 		}
 		if n := len(h.read.model); n == 0 || h.read.model[n-1].GetFrom() != "2026-03-31" {

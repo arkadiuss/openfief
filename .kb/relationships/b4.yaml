@@ -706,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e2744f13e54
+  - type: implements
+    from: SYM-ui-failing-syncs
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:24:02.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cba4416277e2
+  - type: implements
+    from: SYM-ui-failing-syncs
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:24:02.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4ebb23d2af6
+  - type: covered_by
+    from: SYM-ui-failing-syncs
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:24:02.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5250e074d590

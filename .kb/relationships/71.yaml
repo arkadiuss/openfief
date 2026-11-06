@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-977fecd25e11
+  - type: implements
+    from: SYM-ui-ask-help
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:22:48.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-096c5015ebd8
+  - type: covered_by
+    from: SYM-ui-ask-help
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:22:48.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fe4abac576f

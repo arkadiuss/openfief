@@ -1,0 +1,41 @@
+{{/* The Ask box (D-194): a fixed set of commands, answered from the read API alone. It holds no AI model; the question
+     never leaves the UI and is never logged. Each answer is a card (answerCard), the seam an agent fills in M2 (P-57). */}}
+{{define "ask-box"}}
+<form class="ask-form" method="get" action="/" hx-get="/ask" hx-target="#answer" hx-swap="innerHTML" role="search" aria-label="Ask">
+  <label for="ask-q" class="sr-only">Ask about your portfolio</label>
+  <div class="ask-field">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+    <input id="ask-q" name="q" type="search" value="{{.Question}}" maxlength="200" autocomplete="off" spellcheck="false" enterkeyhint="search"
+      placeholder="Ask: what needs me, show bonds, why is xtb failing" aria-describedby="ask-help">
+    <kbd class="key" title="Press / to ask">/</kbd>
+  </div>
+  <button type="submit" class="primary">Ask</button>
+</form>
+{{with .Suggestions}}<div class="chips" role="group" aria-label="Suggestions">{{range .}}<a class="chip" href="{{askLink .}}" hx-get="{{askGet .}}" hx-target="#answer" hx-swap="innerHTML">{{.}}</a>{{end}}</div>{{end}}
+<div id="answer" aria-live="polite">{{with .Answer}}{{template "ask-answer" .}}{{end}}</div>
+<p class="muted" id="ask-help">Commands for now: OpenFief answers from your own record and the question never leaves it. The box holds no AI model; an agent can take it over in M2.</p>
+{{end}}
+
+{{define "ask-answer"}}
+<div class="conversation">
+  <p class="bubble"><span class="sr-only">You asked: </span>{{.Question}}</p>
+  <div class="answer">
+    <div class="answer-head"><p class="answer-title">{{.Title}}</p><span class="muted">Answered from your data · no AI model</span></div>
+    {{with .Text}}<p>{{.}}</p>{{end}}
+    {{if .Rows}}<table class="answer-table"><tbody>
+      {{range .Rows}}<tr><td>{{if .Href}}<a href="{{.Href}}">{{.Label}}</a>{{else}}{{.Label}}{{end}}</td><td class="muted">{{.Detail}}</td><td class="num">{{.Figure}}</td></tr>{{end}}
+    </tbody></table>{{end}}
+    {{with .Help}}<ul class="ask-help">{{range .}}<li>{{.Command}}: <a href="{{askLink .Example}}" hx-get="{{askGet .Example}}" hx-target="#answer" hx-swap="innerHTML">{{.Example}}</a></li>{{end}}</ul>{{end}}
+    {{with .Link}}<a class="open" href="{{.Href}}">{{.Text}}</a>{{end}}
+  </div>
+</div>
+{{end}}
+
+{{/* The Inbox's side column (D-194, D-196): Ask suggestions about the open items, answered on the overview. */}}
+{{define "ask-about"}}
+<aside class="card ask-about" aria-labelledby="ask-about-title">
+  <h2 id="ask-about-title">Ask about these</h2>
+  <div class="chips" role="group" aria-label="Ask suggestions">{{range .}}<a class="chip" href="{{askLink .}}">{{.}}</a>{{end}}</div>
+  <p class="muted">The overview's Ask box answers from the same items, with no AI model. In M2 an agent can work this queue for you.</p>
+</aside>
+{{end}}

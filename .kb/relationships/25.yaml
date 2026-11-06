@@ -755,3 +755,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80e923c22fea
+  - type: implements
+    from: SYM-ui-server-account-answer
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:22:03.257Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccbc55c50be3
+  - type: implements
+    from: SYM-ui-server-account-answer
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:22:03.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04792e844be1
+  - type: covered_by
+    from: SYM-ui-server-account-answer
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:22:03.303Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f78b599c0ef7
+  - type: implements
+    from: SYM-ui-money-change
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:24:15.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-972a2b60bc57
+  - type: implements
+    from: SYM-ui-money-change
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:24:15.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12b274fce1b1
+  - type: covered_by
+    from: SYM-ui-money-change
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:24:15.898Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a82b7e737077

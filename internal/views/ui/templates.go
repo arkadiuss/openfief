@@ -62,6 +62,10 @@ func templateFuncs(f numberFormat) template.FuncMap {
 		"terms":        termsFields,
 		"themeColor":   themeColor,
 		"waitingRows":  waitingRows,
+		"signed":       f.signed,
+		"askLink":      askLink,
+		"askGet":       askGet,
+		"needsAction":  needsAction,
 	}
 }
 

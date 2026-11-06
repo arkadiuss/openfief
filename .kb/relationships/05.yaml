@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-978a7b767751
+  - type: executable_for
+    from: SYM-ui-test-activity-line
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:25:42.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b53b426579f2

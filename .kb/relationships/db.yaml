@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b35ed8b371c9
+  - type: constrains
+    from: REQ-decision-d193-1-overview
+    to: FACT-SUBJECT-46E34EF656D14E91
+    created_at: 2026-11-06T08:17:57.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab913d32a68c
+  - type: requires_property
+    from: REQ-decision-d193-1-overview
+    to: FACT-PROP-95BBC05849D39D55
+    created_at: 2026-11-06T08:17:57.119Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca318c31c00d
+  - type: specified_by
+    from: REQ-decision-d193-1-overview
+    to: SCEN-decision-d193-1-overview
+    created_at: 2026-11-06T08:17:57.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7a33ac87522

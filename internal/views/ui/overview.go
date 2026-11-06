@@ -33,6 +33,11 @@ type accountRow struct {
 	// Total is the account's total on the date; nil when nothing is valued.
 	Total   *viewsv1.DateTotal
 	Flagged int
+	// Change is the gross value's change since the end of last month
+	// (D-193); nil when either day has none.
+	Change *viewsv1.Money
+	// Pill is the account's status pill on the overview (accountPill).
+	Pill statusPill
 }
 
 // allocationRow is one group of the allocation with its share of the total.
@@ -55,6 +60,9 @@ type allocationView struct {
 	Groups     []allocationRow
 	Unvalued   []*viewsv1.UnvaluedHolding
 	Chart      string
+	// Bars are the groups as bars, each a link where a page shows what
+	// is behind it (D-193, D-195).
+	Bars []allocationBar
 }
 
 // Link is the URL that shows the allocation by d on the same date.
@@ -79,10 +87,16 @@ func (a *allocationView) query(d dimension, k valueKind) string {
 	return url.Values{"by": {d.Key}, valueParam: {k.Key}, dateParam: {a.Date}}.Encode()
 }
 
-// overviewData is what the overview shows.
+// overviewData is what the overview shows (D-193): the status sentence
+// and the Ask box, the value card, the chart card, the first open items,
+// the recent activity, the accounts by sleeve and the allocation.
 type overviewData struct {
 	Date     string
+	Status   statusLine
+	Ask      askBox
+	Hero     heroView
 	Accounts []accountRow
+	Sleeves  []sleeveGroup
 	// Total is the portfolio's gross, net and liquidation values with cash
 	// on Date; nil when the date has no total.
 	Total   *viewsv1.DateTotal
@@ -90,11 +104,14 @@ type overviewData struct {
 	// FlaggedPrices counts the flagged price checks (D-22).
 	FlaggedPrices int
 	Allocation    *allocationView
-	// Start picks where the two time charts start (D-138); Value is the
-	// value-over-time chart (D-106), History the performance chart.
-	Start   chartStartView
-	Value   *valueChartView
-	History performanceView
+	// Over is the chart card: the value or the performance over time.
+	Over *overTimeView
+	// Open counts the open attention items; Needs are the first of them,
+	// Failing the connector instances whose sync keeps failing.
+	Open     int
+	Needs    []inboxItem
+	Failing  []string
+	Activity []activityEntry
 	// DemoLoading is whether this is a demo deployment whose demo data is
 	// still loading; the empty overview then says so.
 	DemoLoading bool
@@ -170,6 +187,7 @@ func buildAllocation(resp *viewsv1.GetAllocationResponse, d dimension, k valueKi
 		chart.Values = append(chart.Values, value.GetAmount())
 	}
 	v.Chart = chart.encode()
+	v.Bars = allocationBars(v)
 	return v
 }
 
@@ -209,18 +227,50 @@ func (s *server) overview(w http.ResponseWriter, r *http.Request, sess session) 
 		s.coreFailed(w, r, method, chartErr)
 		return
 	}
-	if data.Accounts, err = s.accountRows(r, sess, date, accounts.Msg.GetAccounts(), statuses.Msg.GetStatuses()); err != nil {
-		s.coreFailed(w, r, "account rows", err)
+	if method, homeErr := s.home(r, sess, date, accounts.Msg.GetAccounts(), statuses.Msg.GetStatuses(), &data); homeErr != nil {
+		s.coreFailed(w, r, method, homeErr)
 		return
+	}
+	s.show(w, r, http.StatusOK, "overview", page{Title: "Overview", Session: &sess, Data: data})
+}
+
+// home reads the overview's account rows on date, its counts of flagged
+// checks, its other places (homeData), its status sentence and the Ask
+// box's answer to the request's question, if any, into data. It returns
+// what failed with its error.
+func (s *server) home(r *http.Request, sess session, date kernel.Date, accounts []*viewsv1.Account, statuses []*viewsv1.ValuationStatus, data *overviewData) (string, error) {
+	var err error
+	if data.Accounts, err = s.accountRows(r, sess, date, accounts, statuses); err != nil {
+		return "account rows", err
 	}
 	for _, a := range data.Accounts {
 		data.Flagged += a.Flagged
 	}
 	if data.FlaggedPrices, err = s.flaggedPriceChecks(r, sess); err != nil {
-		s.coreFailed(w, r, "ListPriceChecks", err)
-		return
+		return "ListPriceChecks", err
 	}
-	s.show(w, r, http.StatusOK, "overview", page{Title: "Overview", Session: &sess, Data: data})
+	if homeErr := s.homeData(r, sess, data); homeErr != nil {
+		return "overview", homeErr
+	}
+	data.Status = statusLine{ValuedThrough: latestValued(statuses), Open: data.Open, Failing: data.Failing}
+	if q := r.URL.Query().Get(askParam); q != "" {
+		card, askErr := s.ask.answer(r, sess, q)
+		if askErr != nil {
+			return "ask", askErr
+		}
+		data.Ask.Question, data.Ask.Answer = q, &card
+	}
+	return "", nil
+}
+
+// latestValued returns the latest day any of statuses is valued through,
+// or "" when none is.
+func latestValued(statuses []*viewsv1.ValuationStatus) string {
+	latest := ""
+	for _, st := range statuses {
+		latest = max(latest, st.GetValuedThrough())
+	}
+	return latest
 }
 
 // firstRunAnswer answers the overview's request itself when sess, seeing
@@ -247,31 +297,56 @@ func (s *server) firstRunAnswer(w http.ResponseWriter, r *http.Request, sess ses
 }
 
 // charts reads the overview's charts on date into data: the allocation by
-// the dimension and of the value the query picks, the performance from the
-// charts' start (D-138), the one the owner chose in start or else the
-// default, and the value over time over the same days with the
-// portfolio's total on date. It returns the method that failed with its
-// error.
+// the dimension and of the value the query picks, the chart card
+// (overTime), the portfolio's total on date and the value card. It returns
+// the method that failed with its error.
 func (s *server) charts(r *http.Request, sess session, date, start kernel.Date, data *overviewData) (string, error) {
 	q := r.URL.Query()
 	var err error
 	if data.Allocation, err = s.allocation(r, sess, date, parseDimension(q.Get("by")), parseValueKind(q.Get(valueParam))); err != nil {
 		return "GetAllocation", err
 	}
-	if data.History, err = s.performance(r, sess, start, date); err != nil {
-		return "GetPerformance", err
+	if data.Over, err = s.overTime(r, sess, date, start); err != nil {
+		return "over time", err
 	}
-	from := date
-	if first, startErr := kernel.ParseDate(data.History.From); startErr == nil && !first.After(date) {
-		from = first
-	}
-	if data.Value, err = s.valueChart(r, sess, from, date, parseChartKind(q.Get(chartParam)), optionalString(start), data.History.Default); err != nil {
+	data.Total = data.Over.Value.Last
+	data.Hero, err = s.hero(r, sess, date, data.Over)
+	if err != nil {
 		return "ListValuationTotals", err
 	}
-	data.Start = chartStartView{Action: "/", Date: date.String(), From: data.Value.From, Default: data.History.Default, Chosen: !start.IsZero()}
-	data.Total = data.Value.Last
 	return "", nil
 }
+
+// hero returns the value card on date (D-193): the total's three values
+// from over's value chart, the gross value's change since the end of last
+// month and the time-weighted return this year.
+func (s *server) hero(r *http.Request, sess session, date kernel.Date, over *overTimeView) (heroView, error) {
+	f := requestFormat(r)
+	h := heroView{Date: date.String()}
+	if t := over.Value.Last; t != nil {
+		h.Gross, h.Net, h.Liquidation = t.GetValueReporting(), t.GetNetReporting(), t.GetLiquidationReporting()
+	}
+	month, err := s.read.ListValuationTotals(r.Context(), bearer(&viewsv1.ListValuationTotalsRequest{
+		From: monthStart(date).AddDays(-monthLookback).String(), To: date.String(),
+	}, sess))
+	if err != nil {
+		return heroView{}, fmt.Errorf("ListValuationTotals: %w", err)
+	}
+	change := monthChange(month.Msg.GetTotals(), date, f)
+	h.MonthChange, h.MonthPercent = change.Money, change.Percent
+	perf, err := s.read.GetPerformance(r.Context(), bearer(&viewsv1.GetPerformanceRequest{
+		From: yearStart(date.Year()).AddDays(-monthLookback).String(), To: date.String(),
+	}, sess))
+	if err != nil {
+		return heroView{}, fmt.Errorf("GetPerformance: %w", err)
+	}
+	h.YearReturn = yearReturn(perf.Msg.GetDays(), date, f)
+	return h, nil
+}
+
+// monthLookback is how many days before a month or year the value card
+// looks for the last valued day before it.
+const monthLookback = 14
 
 // allocation reads the allocation of value k on date by d.
 func (s *server) allocation(r *http.Request, sess session, date kernel.Date, d dimension, k valueKind) (*allocationView, error) {
@@ -292,7 +367,7 @@ func (s *server) accountRows(r *http.Request, sess session, date kernel.Date, ac
 	rows := make([]accountRow, 0, len(accounts))
 	for _, a := range accounts {
 		vals, err := s.read.ListAccountValuations(r.Context(), bearer(&viewsv1.ListAccountValuationsRequest{
-			AccountId: a.GetId(), From: date.String(), To: date.String(),
+			AccountId: a.GetId(), From: monthStart(date).AddDays(-monthLookback).String(), To: date.String(),
 		}, sess))
 		if err != nil {
 			return nil, fmt.Errorf("ListAccountValuations: %w", err)
@@ -304,9 +379,10 @@ func (s *server) accountRows(r *http.Request, sess session, date kernel.Date, ac
 			return nil, fmt.Errorf("ListAssertionChecks: %w", err)
 		}
 		row := accountRow{Account: a, Status: byID[a.GetId()], Flagged: len(flagged.Msg.GetChecks())}
-		if totals := vals.Msg.GetTotals(); len(totals) > 0 {
+		if totals := vals.Msg.GetTotals(); len(totals) > 0 && totals[len(totals)-1].GetDate() == date.String() {
 			row.Total = totals[len(totals)-1]
 		}
+		row.Change = monthChange(vals.Msg.GetTotals(), date, requestFormat(r)).Money
 		rows = append(rows, row)
 	}
 	return rows, nil

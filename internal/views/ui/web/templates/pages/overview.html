@@ -1,56 +1,107 @@
 {{define "scripts"}}
 <script src="/static/vendor/chart-4.5.1.umd.min.js" defer></script>
 <script src="/static/app.js" defer></script>
+<script src="/static/ask.js" defer></script>
 {{end}}
 {{define "content"}}
-{{with $.Session.Attention}}<p class="alert alert-warn"><a href="/inbox">{{.}} attention item(s)</a> wait for you in the Inbox.</p>{{end}}
 {{with .Data}}
-{{if .Flagged}}<p class="alert alert-warn"><a href="/inbox">{{.Flagged}} flagged balance assertion(s)</a> need attention.</p>{{end}}
-{{if .FlaggedPrices}}<p class="alert alert-warn"><a href="/inbox">{{.FlaggedPrices}} flagged price check(s)</a>: an institution's own price differs from the valuation price.</p>{{end}}
-<section class="card total" aria-labelledby="total-title">
-  <h2 id="total-title" class="eyebrow">Total on {{.Date}}</h2>
-  {{with .Total}}
-  <p class="figure">{{money .ValueReporting}}</p>
+<section class="card ask" id="ask" aria-labelledby="status-title">
+  <h2 id="status-title" class="status">{{.Status.Sentence}}</h2>
+  {{if or $.Session.Attention .Flagged .FlaggedPrices}}<p class="muted status-links">{{with $.Session.Attention}}<a href="/inbox">{{.}} attention item(s)</a> wait for you in the Inbox.{{end}}
+    {{if .Flagged}}<a href="/inbox">{{.Flagged}} flagged balance assertion(s)</a> need attention.{{end}}
+    {{if .FlaggedPrices}}<a href="/inbox">{{.FlaggedPrices}} flagged price check(s)</a>: an institution's own price differs from the valuation price.{{end}}</p>{{end}}
+  {{template "ask-box" .Ask}}
+</section>
+
+<div class="overview-grid">
+<section class="card hero" aria-labelledby="hero-title">
+  <h2 id="hero-title" class="eyebrow">Total on {{.Date}} · gross</h2>
+  {{with .Hero}}
+  {{with .Gross}}<a class="figure" href="#accounts" aria-describedby="hero-title">{{money .}}</a>{{else}}<p class="figure">not valued</p>{{end}}
+  <p class="hero-change">{{with .MonthChange}}<span class="mono">{{signed .}}</span> ({{$.Data.Hero.MonthPercent}}) this month{{else}}No change this month yet{{end}}{{with .YearReturn}} · <a href="/?over=performance#over-time">TWR {{.}} this year</a>{{end}}</p>
   <dl class="values">
-    <div><dt>Net</dt><dd>{{with .NetReporting}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</dd></div>
-    <div><dt>Liquidation</dt><dd>{{with .LiquidationReporting}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</dd></div>
+    <div><dt>Net</dt><dd>{{with .Net}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</dd></div>
+    <div><dt>Liquidation</dt><dd>{{with .Liquidation}}{{money .}}{{else}}<span class="warn-text">missing</span>{{end}}</dd></div>
   </dl>
-  <p class="muted">Gross: holdings at their stored valuations plus cash, in the reporting currency. Net is what you keep at the planned exit, after the taxes due then; liquidation is the cash in hand if everything were sold today, after every tax and fee. A value is missing when some holding or cash lacks it, such as an IKZE before your marginal PIT rate is set.</p>
+  {{end}}
+  <p class="hero-note">Holdings at their stored valuations plus cash, in the reporting currency. Net is what you keep at the planned exit, after the taxes due then; liquidation is the cash in hand if everything were sold today, after every tax and fee.</p>
+</section>
+
+{{template "over-time" .Over}}
+
+<section class="card needs" aria-labelledby="needs-title">
+  <div class="card-head"><h2 id="needs-title">Needs you</h2><a href="/inbox">Open inbox ({{.Open}})</a></div>
+  {{if .Needs}}
+  <ul class="items">
+  {{range .Needs}}<li class="item needs-item">
+    <span class="pill {{.Pill.Class}}">{{.Pill.Word}}</span>
+    <div><p class="item-title">{{.Title}}</p><p class="muted">{{.Item.Detail}}{{range .Links}} · <a href="{{.Href}}">{{.Text}}</a>{{end}}</p></div>
+    {{with needsAction .Item}}<a class="button" href="{{.Href}}">{{.Text}}</a>{{end}}
+  </li>{{end}}
+  </ul>
+  {{else if .Accounts}}
+  <div class="state">{{template "kasztan" "asleep"}}<div><p class="state-title">Nothing needs you.</p><p class="muted">No check has found anything new to look at.</p></div></div>
   {{else}}
-  <p class="figure">{{money .Allocation.Total}}</p>
-  <p class="muted">Holdings at their stored valuations plus cash, in the reporting currency.</p>
+  <p class="muted">Nothing needs you.</p>
   {{end}}
 </section>
 
-<section class="card" aria-labelledby="accounts-title">
-  <h2 id="accounts-title">Accounts</h2>
+<section class="card activity" aria-labelledby="activity-title">
+  <h2 id="activity-title">Recent activity</h2>
+  {{if .Activity}}
+  <ol class="activity-list">
+  {{range .Activity}}<li><span class="mono day">{{.Day}}</span><span>{{.Text}}{{range .Links}} · <a href="{{.Href}}">{{.Text}}</a>{{end}}</span></li>{{end}}
+  </ol>
+  {{else}}
+  <p class="muted">No imports, syncs, coupons or corrections yet.</p>
+  {{end}}
+</section>
+
+<section class="card accounts" id="accounts" aria-labelledby="accounts-title">
+  <div class="card-head"><h2 id="accounts-title">Accounts</h2><span class="muted">by sleeve · gross with cash</span></div>
   {{if .Accounts}}
-  <div class="table"><table>
-    <thead><tr>
-      <th scope="col">Account</th><th scope="col">Institution</th><th scope="col">Sleeve</th>
-      <th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col">Valuation</th><th scope="col" class="num">Flagged</th>
-    </tr></thead>
-    <tbody>
-    {{range .Accounts}}
-    <tr>
-      <td><a href="/accounts/{{.Account.Id}}">{{.Account.Name}}</a></td>
-      <td>{{.Account.Institution}}</td>
-      <td>{{.Account.Sleeve}}</td>
-      {{with .Total}}{{template "three-values" .}}{{else}}<td colspan="3" class="num empty">not valued</td>{{end}}
-      <td>{{template "valuation-status" .Status}}</td>
-      <td class="num">{{if .Flagged}}<a href="/inbox">{{.Flagged}}</a>{{else}}0{{end}}</td>
-    </tr>
-    {{end}}
-    </tbody>
-    {{with $.Data.Total}}
-    <tfoot>
-    <tr><th scope="row" colspan="3">Losses offset</th>{{template "losses-offset" .}}<td colspan="2"></td></tr>
-    <tr><th scope="row" colspan="3">Portfolio total</th>{{template "three-values" .}}<td colspan="2"></td></tr>
-    </tfoot>
-    {{end}}
-  </table></div>
-  <p class="muted">Each account's holdings with its cash, in the reporting currency.</p>
-  {{if .Total}}{{template "losses-offset-help"}}{{end}}
+  {{range .Sleeves}}
+  <div class="sleeve" id="sleeve-{{.ID}}">
+    <p class="eyebrow sleeve-head"><span>{{.Name}}</span><span class="mono">{{with .Total}}{{money .}}{{end}}</span></p>
+    <ul class="account-rows">
+    {{range .Accounts}}<li><a class="account-row" href="/accounts/{{.Account.Id}}">
+      <span class="who"><span class="name">{{.Account.Name}}</span> <span class="muted">{{.Account.Institution}}{{with .Account.TaxWrapper}} · {{wrapper .}}{{end}}</span></span>
+      <span class="pill {{.Pill.Class}}">{{.Pill.Word}}</span>
+      <span class="mono amount">{{with .Total}}{{money .ValueReporting}}{{else}}not valued{{end}}</span>
+      <span class="mono change">{{with .Change}}{{signed .}}{{end}}</span>
+    </a></li>{{end}}
+    </ul>
+  </div>
+  {{end}}
+  <details class="change">
+    <summary>Gross, net and liquidation per account</summary>
+    <div class="table"><table>
+      <thead><tr>
+        <th scope="col">Account</th><th scope="col">Institution</th><th scope="col">Sleeve</th>
+        <th scope="col" class="num">Gross</th><th scope="col" class="num">Net</th><th scope="col" class="num">Liquidation</th><th scope="col">Valuation</th><th scope="col" class="num">Flagged</th>
+      </tr></thead>
+      <tbody>
+      {{range .Accounts}}
+      <tr>
+        <td><a href="/accounts/{{.Account.Id}}">{{.Account.Name}}</a></td>
+        <td>{{.Account.Institution}}</td>
+        <td>{{.Account.Sleeve}}</td>
+        {{with .Total}}{{template "three-values" .}}{{else}}<td colspan="3" class="num empty">not valued</td>{{end}}
+        <td>{{template "valuation-status" .Status}}</td>
+        <td class="num">{{if .Flagged}}<a href="/inbox">{{.Flagged}}</a>{{else}}0{{end}}</td>
+      </tr>
+      {{end}}
+      </tbody>
+      {{with $.Data.Total}}
+      <tfoot>
+      <tr><th scope="row" colspan="3">Losses offset</th>{{template "losses-offset" .}}<td colspan="2"></td></tr>
+      <tr><th scope="row" colspan="3">Portfolio total</th>{{template "three-values" .}}<td colspan="2"></td></tr>
+      </tfoot>
+      {{end}}
+    </table></div>
+    <p class="muted">Each account's holdings with its cash, in the reporting currency.</p>
+    {{if .Total}}{{template "losses-offset-help"}}{{end}}
+  </details>
   {{else}}
   <div class="state">{{template "kasztan" "asleep"}}<div>
     {{if .DemoLoading}}
@@ -65,51 +116,7 @@
 </section>
 
 {{template "allocation" .Allocation}}
-
-<section class="card" aria-labelledby="start-title">
-  <h2 id="start-title">Time charts</h2>
-  {{template "chart-start" .Start}}
-  {{if not .Start.Default}}<p class="muted">No transactions yet: the charts start once there are.</p>{{end}}
-</section>
-
-{{template "value-chart" .Value}}
-
-<section class="card" aria-labelledby="history-title">
-  <h2 id="history-title">Performance</h2>
-  {{with .History}}
-  {{if .Points}}
-  <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Time-weighted return{{if .Model}} and the model portfolio's backtest{{end}} from {{.From}} to {{.To}}, 100 on {{.From}}{{if .Default}}; tracking began on {{.Default}}{{end}}"></canvas></div>
-  <p class="muted">From {{.From}} to {{.To}}: the portfolio's time-weighted return as an index, 100 on {{.From}}, so deposits, withdrawals and the transfers between your accounts you confirmed don't count as performance.{{with .Default}} Tracking began on <span class="mono">{{.}}</span>.{{end}}{{with .Value}} Its value with cash on {{$.Data.History.To}} is <span class="mono">{{money .}}</span>.{{end}} In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
-  {{if .Pending}}<p><span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation pending</span> <span class="muted">The line may still change.</span></p>{{end}}
-  {{if .Suggested}}<p class="alert alert-warn"><a href="/inbox">{{.Suggested}} suggested transfer(s)</a> between your accounts wait for you: until you confirm one, its withdrawal and deposit count as money in and out.</p>{{end}}
-  {{else}}
-  <p class="muted">No valued days yet.</p>
-  {{end}}
-  {{with .Model}}
-  <h3>Model portfolio</h3>
-  {{if .BacktestStart}}
-  <p class="muted">The second line is the model portfolio's backtest, rebalanced to its target weights at each year end, 100 on the same first day. Its history runs from {{.BacktestStart}} to {{.BacktestEnd}}.</p>
-  {{else}}
-  <p class="alert alert-warn">The model portfolio has no backtest yet: some target has no history in the reporting currency.</p>
-  {{end}}
-  <div class="table"><table>
-    <thead><tr><th scope="col">Max drawdown</th><th scope="col" class="num">Fall</th><th scope="col">Peak</th><th scope="col">Trough</th><th scope="col">Over</th></tr></thead>
-    <tbody>
-    {{range .Drawdowns}}
-    <tr>
-      <td>{{.Name}}</td>
-      {{if .Missing}}<td colspan="4" class="warn-text">No history: {{.Missing}}</td>
-      {{else if not .Peak}}<td colspan="4" class="empty">No history</td>
-      {{else}}<td class="num">{{if .NeverFell}}never fell{{else}}{{.Depth}}{{end}}</td><td class="mono">{{.Peak}}</td><td class="mono">{{.Trough}}</td><td><span class="mono">{{.First}}</span> to <span class="mono">{{.Last}}</span></td>
-      {{end}}
-    </tr>
-    {{end}}
-    </tbody>
-  </table></div>
-  <p class="muted">The worst fall from a peak to a later trough over each one's whole history (D-54): the model over its backtest, each target in the reporting currency from its first day with a price and an FX rate.</p>
-  {{end}}
-  {{end}}
-</section>
+</div>
 {{end}}
 {{end}}
 {{define "value-chart"}}

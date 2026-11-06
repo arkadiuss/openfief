@@ -99,7 +99,7 @@ func TestOverviewThreeValues(t *testing.T) {
 	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "1 500,00 PLN", "1 400,00 PLN", "<dt>Liquidation</dt><dd><span class=\"warn-text\">missing</span>",
-		"1 000,00 PLN", "950,00 PLN", `id="value-title">Value over time`, `id="history-title">Performance`,
+		"1 000,00 PLN", "950,00 PLN", `id="value-title">Value over time`, `aria-current="page">Value</a>`,
 		`aria-current="true">Gross</a>`, `/value-chart?chart=net`, `&#34;group&#34;:&#34; &#34;,&#34;decimal&#34;:&#34;,&#34;`,
 		"Gross value with cash")
 	if got := seen(h.read, func() []string { return valueNames(h.read.values) }); len(got) != 1 || got[0] != "VALUE_KIND_GROSS" {

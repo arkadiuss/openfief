@@ -741,3 +741,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e87670e092a4
+  - type: implements
+    from: SYM-ui-ask-target
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:23:01.008Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-71f058d1e18d
+  - type: covered_by
+    from: SYM-ui-ask-target
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:23:01.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d9a6f845e95
+  - type: executable_for
+    from: SYM-ui-test-group-by-sleeve
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:25:47.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c04802b1359e

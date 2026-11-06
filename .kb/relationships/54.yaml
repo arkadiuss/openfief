@@ -825,3 +825,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a4af616d5e44
+  - type: implements
+    from: SYM-ui-inbox-ask
+    to: REQ-ui-inbox-ask-column
+    created_at: 2026-11-06T08:18:32.501Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a770ec5076c
+  - type: covered_by
+    from: SYM-ui-inbox-ask
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:18:32.532Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed9de013673a

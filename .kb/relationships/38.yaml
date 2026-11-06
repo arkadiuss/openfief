@@ -825,3 +825,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-03c6e90493d8
+  - type: executable_for
+    from: SYM-ui-test-match-instance
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:20:19.072Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7a1e62fad38
+  - type: implements
+    from: SYM-ui-ask-state
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:22:52.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b53e847da19
+  - type: covered_by
+    from: SYM-ui-ask-state
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:22:52.495Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e7c4b2631c5

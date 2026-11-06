@@ -741,3 +741,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b9667fe902f7
+  - type: verified_by
+    from: SCEN-ui-inbox-ask-column
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:17:51.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c7bc1b8e7f7
+  - type: implements
+    from: SYM-ui-target-rows
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:22:39.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39efc587bdaf
+  - type: implements
+    from: SYM-ui-target-rows
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:22:39.258Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-748f33a677b1
+  - type: covered_by
+    from: SYM-ui-target-rows
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:22:39.280Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25f5e06557d5

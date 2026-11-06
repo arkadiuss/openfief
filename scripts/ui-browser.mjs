@@ -5,7 +5,9 @@
 // pages D-192 removed land on the Inbox at 360 px with its in-place forms, and an account's banner links there; the manifest makes the UI
 // installable; the service worker caches only static files, serves the offline page instead of a page when the
 // network is gone, and empties its cache on sign-out; an action the fake core refuses for want of a recent passkey
-// check (D-183) asks to confirm with a passkey, runs the check with Chromium's virtual authenticator, and goes ahead.
+// check (D-183) asks to confirm with a passkey, runs the check with Chromium's virtual authenticator, and goes ahead;
+// at 360 px the overview's Ask box (D-194) takes "/", answers a suggestion chip, a typed command and one it doesn't
+// understand, its chart card switches to the performance, and the Inbox shows its side column of Ask suggestions.
 // Usage: node scripts/ui-browser.mjs <screenshot-dir>
 // The browser is DOCS_CHROMIUM, else a Playwright-managed Chromium, else the installed Google Chrome.
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
@@ -45,7 +47,7 @@ async function serve() {
 
 // The fakes' one account is acc-synthetic-1 (internal/views/ui/fakes_test.go).
 const pages = {
-  overview: '/', accounts: '/accounts', account: '/accounts/acc-synthetic-1', inbox: '/inbox',
+  overview: '/', 'overview-ask': '/?q=what+needs+me', 'overview-performance': '/?over=performance', accounts: '/accounts', account: '/accounts/acc-synthetic-1', inbox: '/inbox',
   'inbox-acknowledged': '/inbox?view=acknowledged', 'inbox-done': '/inbox?view=done', sleeves: '/sleeves', plugins: '/plugins',
   settings: '/settings', setup: '/setup',
 };
@@ -164,6 +166,42 @@ async function removedRedirect(browser) {
   await ctx.close();
 }
 
+// askBox checks the overview's Ask box at phone width (D-194): "/" focuses it, a suggestion chip and a typed command
+// are answered in place as cards with an Open link, a question it doesn't understand gets the commands it does, the
+// chart card switches to the performance, and none of it scrolls sideways; then the Inbox's side column of Ask
+// suggestions shows and links to the overview.
+async function askBox(browser) {
+  const ctx = await context(browser, { viewport: { width: 360, height: 780 }, isMobile: true, hasTouch: true }, true);
+  const page = await ctx.newPage();
+  await page.goto(base + '/', { waitUntil: 'networkidle' });
+  await page.keyboard.press('/');
+  check(await page.evaluate(() => document.activeElement && document.activeElement.id === 'ask-q'), 'phone: "/" does not focus the Ask box');
+  check((await page.textContent('#ask-help')).includes('no AI model'), 'phone: the Ask box does not say it holds no AI model');
+  await page.click('.chips .chip >> nth=0');
+  await page.waitForSelector('#answer .answer .open', { timeout: 5000 });
+  await page.screenshot({ path: path.join(out, 'phone360-light-ask-chip.png'), fullPage: true });
+  for (const [question, expected] of [['allocation by currency', 'By currency'], ['why is xtb failing', 'xtb-main'], ['buy more bonds', "can't answer that yet"]]) {
+    await page.fill('#ask-q', question);
+    await page.click('.ask-form button[type="submit"]');
+    const answered = await page.waitForFunction(
+      (want) => document.querySelector('#answer .answer') && document.querySelector('#answer').textContent.includes(want), expected, { timeout: 5000 },
+    ).then(() => true, () => false);
+    check(answered, `phone: the Ask box does not answer "${question}" with "${expected}"`);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    check(overflow <= 0, `phone: the answer to "${question}" scrolls ${overflow} px sideways`);
+    await page.screenshot({ path: path.join(out, `phone360-light-ask-${question.replace(/\W+/g, '-')}.png`), fullPage: true });
+  }
+  check(new URL(page.url()).search === '', 'phone: an answer in place changed the address');
+  await page.click('#over-time nav a:has-text("Performance")');
+  await page.waitForSelector('#over-time #history-title', { timeout: 5000 });
+  await page.goto(base + '/inbox', { waitUntil: 'networkidle' });
+  check(await page.isVisible('.ask-about .chip'), 'phone: the Inbox shows no Ask suggestions');
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  check(overflow <= 0, `phone: the Inbox with its Ask column scrolls ${overflow} px sideways`);
+  await page.screenshot({ path: path.join(out, 'phone360-light-inbox-ask.png'), fullPage: true });
+  await ctx.close();
+}
+
 // app checks installability, the worker's cache, the offline page and sign-out, in a profile of its own: an
 // incognito context is never installable.
 // passkeyCheck creates a script token while the fake core wants a recent passkey check (D-183): the settings ask to
@@ -257,6 +295,7 @@ try {
   await phoneMenu(browser);
   await phoneRows(browser);
   await removedRedirect(browser);
+  await askBox(browser);
   await passkeyCheck(browser);
   await app();
 } finally {

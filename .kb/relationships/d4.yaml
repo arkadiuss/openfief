@@ -678,3 +678,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e8bfd8d1b28
+  - type: implements
+    from: SYM-ui-number-format-signed
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:18:28.015Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d94d6e5a4331
+  - type: covered_by
+    from: SYM-ui-number-format-signed
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:18:28.041Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2379bbb82e18
+  - type: implements
+    from: SYM-ui-sync-answer
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:22:30.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbc88573b10e
+  - type: implements
+    from: SYM-ui-sync-answer
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:22:30.052Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8c90604c675
+  - type: covered_by
+    from: SYM-ui-sync-answer
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:22:30.075Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5454b2af3f0d

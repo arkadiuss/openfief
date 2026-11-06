@@ -615,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7715048d7ec9
+  - type: implements
+    from: SYM-ui-year-return
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:25:01.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-443e79ac1f4f
+  - type: implements
+    from: SYM-ui-year-return
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:25:01.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eaae00eef08d
+  - type: covered_by
+    from: SYM-ui-year-return
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:25:01.138Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a5dc3d703d1

@@ -143279,3 +143279,1659 @@ symbols:
         target: TEST-ledger-connectapi-instruments
       - type: implements
         target: REQ-ledger-instrument-names
+  - id: SYM-ui-test-helper-new-harness-logging
+    title: newHarnessLogging
+    sourceFile: internal/views/ui/fakes_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:18:22.035Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-number-format-signed
+    title: numberFormat.signed
+    sourceFile: internal/views/ui/format.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:18:26.448Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-inbox-ask
+    title: inboxAsk
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:18:30.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-ui-inbox-ask-column
+  - id: SYM-ui-latest-valued
+    title: latestValued
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:18:35.359Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-server-hero
+    title: server.hero
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:18:39.774Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-server-home
+    title: server.home
+    sourceFile: internal/views/ui/overview.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:18:44.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-browserproxy-test-proxy-logs-no-query
+    title: TestProxyLogsNoQuery
+    sourceFile: internal/views/browserproxy/logs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:18:48.223Z
+    relationships:
+      - type: executable_for
+        target: TEST-browserproxy-logs
+  - id: SYM-ui-ask-command
+    title: askCommand
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:18:52.629Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-ask-period
+    title: askPeriod
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:18:57.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-ask-query
+    title: askQuery
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:01.442Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-first-group
+    title: firstGroup
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:05.868Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-month-start
+    title: monthStart
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:10.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-normalize-question
+    title: normalizeQuestion
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:14.878Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-pad2
+    title: pad2
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:19.388Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-parse-allocation
+    title: parseAllocation
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:23.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-parse-ask
+    title: parseAsk
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:28.545Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-parse-ask-date
+    title: parseAskDate
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:33.008Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-parse-period
+    title: parsePeriod
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:37.481Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-period-kind
+    title: periodKind
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:42.025Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-period-range
+    title: periodRange
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:46.544Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-show-kind
+    title: showKind
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:50.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-show-kind-of
+    title: showKindOf
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:55.465Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-span
+    title: span
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:19:59.912Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-year-start
+    title: yearStart
+    sourceFile: internal/views/ui/ask.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:04.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-test-ask-suggestions
+    title: TestAskSuggestions
+    sourceFile: internal/views/ui/ask_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:08.851Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-ui-test-known-commands-are-understood
+    title: TestKnownCommandsAreUnderstood
+    sourceFile: internal/views/ui/ask_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:13.306Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-ui-test-match-instance
+    title: TestMatchInstance
+    sourceFile: internal/views/ui/ask_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:17.554Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-ui-test-match-target
+    title: TestMatchTarget
+    sourceFile: internal/views/ui/ask_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:21.877Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-ui-test-parse-ask
+    title: TestParseAsk
+    sourceFile: internal/views/ui/ask_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:26.181Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-ui-test-period-range
+    title: TestPeriodRange
+    sourceFile: internal/views/ui/ask_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:30.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-ui-test-return-percent
+    title: TestReturnPercent
+    sourceFile: internal/views/ui/ask_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:34.826Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-ask
+  - id: SYM-ui-answer-card
+    title: answerCard
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:39.122Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-answer-link
+    title: answerLink
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:43.464Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-answer-row
+    title: answerRow
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:47.894Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-answerer
+    title: answerer
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:52.311Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-ask-catalog
+    title: askCatalog
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:20:56.716Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-command-answerer
+    title: commandAnswerer
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:00.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-command-answerer-allocation
+    title: commandAnswerer.allocation
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:04.774Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-command-answerer-answer
+    title: commandAnswerer.answer
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:09.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-command-answerer-needs
+    title: commandAnswerer.needs
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:13.508Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-command-answerer-performance
+    title: commandAnswerer.performance
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:17.934Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-command-answerer-show
+    title: commandAnswerer.show
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:22.335Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-command-answerer-sync
+    title: commandAnswerer.sync
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:26.666Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-command-answerer-value
+    title: commandAnswerer.value
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:31.079Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-group-label
+    title: groupLabel
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:35.457Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-non-empty
+    title: nonEmpty
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:39.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-or-missing
+    title: orMissing
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:44.210Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-or-none
+    title: orNone
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:48.486Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-plural
+    title: plural
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:52.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-return-percent
+    title: returnPercent
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:21:57.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-server-account-answer
+    title: server.accountAnswer
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:01.754Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-server-ask-targets
+    title: server.askTargets
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:06.154Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-server-instrument-answer
+    title: server.instrumentAnswer
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:10.694Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-server-latest-date
+    title: server.latestDate
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:15.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-server-sleeve-answer
+    title: server.sleeveAnswer
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:19.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-sorted-accounts
+    title: sortedAccounts
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:23.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-sync-answer
+    title: syncAnswer
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:28.430Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-sync-status-row
+    title: syncStatusRow
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:33.172Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-target-rows
+    title: targetRows
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:37.640Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-unknown-answer
+    title: unknownAnswer
+    sourceFile: internal/views/ui/askanswer.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:42.124Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d194-1-ask-box
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-ask-help
+    title: askHelp
+    sourceFile: internal/views/ui/askmatch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:46.647Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-ask-state
+    title: askState
+    sourceFile: internal/views/ui/askmatch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:50.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-ask-suggestions
+    title: askSuggestions
+    sourceFile: internal/views/ui/askmatch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:55.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-ask-target
+    title: askTarget
+    sourceFile: internal/views/ui/askmatch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:22:59.476Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-known-commands
+    title: knownCommands
+    sourceFile: internal/views/ui/askmatch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:03.819Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-match-instance
+    title: matchInstance
+    sourceFile: internal/views/ui/askmatch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:08.197Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-match-target
+    title: matchTarget
+    sourceFile: internal/views/ui/askmatch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:12.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-ask
+      - type: implements
+        target: REQ-ui-ask-commands
+  - id: SYM-ui-account-links
+    title: accountLinks
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:16.891Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-account-names
+    title: accountNames
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:21.294Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-account-pill
+    title: accountPill
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:25.710Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-activity-entry
+    title: activityEntry
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:30.028Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-activity-line
+    title: activityLine
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:34.452Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-allocation-bar
+    title: allocationBar
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:38.868Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-allocation-bars
+    title: allocationBars
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:43.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-ask-box
+    title: askBox
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:47.625Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-diff-money
+    title: diffMoney
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:51.962Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-failing-per-account
+    title: failingPerAccount
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:23:56.471Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-failing-syncs
+    title: failingSyncs
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:00.925Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-group-by-sleeve
+    title: groupBySleeve
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:05.333Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-hero-view
+    title: heroView
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:09.793Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-money-change
+    title: moneyChange
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:14.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-month-change
+    title: monthChange
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:18.841Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-needs-of
+    title: needsOf
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:23.492Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-open-per-account
+    title: openPerAccount
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:28.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-server-home-data
+    title: server.homeData
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:32.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-sleeve-group
+    title: sleeveGroup
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:36.916Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-sleeve-names
+    title: sleeveNames
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:41.485Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-status-line
+    title: statusLine
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:45.407Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-status-line-sentence
+    title: statusLine.Sentence
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:50.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-sum-money
+    title: sumMoney
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:54.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-year-return
+    title: yearReturn
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:24:59.314Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-test-ask-box
+    title: TestAskBox
+    sourceFile: internal/views/ui/home_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:03.732Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-test-ask-never-logs-the-question
+    title: TestAskNeverLogsTheQuestion
+    sourceFile: internal/views/ui/home_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:08.012Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-test-inbox-ask-column
+    title: TestInboxAskColumn
+    sourceFile: internal/views/ui/home_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:12.282Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-test-over-time-tabs
+    title: TestOverTimeTabs
+    sourceFile: internal/views/ui/home_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:16.612Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-test-overview-home
+    title: TestOverviewHome
+    sourceFile: internal/views/ui/home_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:20.849Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-test-helper-fake-read-get-instrument
+    title: fakeRead.GetInstrument
+    sourceFile: internal/views/ui/home_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:24.917Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-test-helper-fake-read-list-activity
+    title: fakeRead.ListActivity
+    sourceFile: internal/views/ui/home_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:28.866Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-test-helper-fake-read-list-instrument-holdings
+    title: fakeRead.ListInstrumentHoldings
+    sourceFile: internal/views/ui/home_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:32.823Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-test-helper-fake-read-list-sync-statuses
+    title: fakeRead.ListSyncStatuses
+    sourceFile: internal/views/ui/home_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:36.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home
+  - id: SYM-ui-test-activity-line
+    title: TestActivityLine
+    sourceFile: internal/views/ui/home_unit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:41.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home-unit
+  - id: SYM-ui-test-group-by-sleeve
+    title: TestGroupBySleeve
+    sourceFile: internal/views/ui/home_unit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:45.407Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home-unit
+  - id: SYM-ui-test-month-change
+    title: TestMonthChange
+    sourceFile: internal/views/ui/home_unit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:49.667Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home-unit
+  - id: SYM-ui-test-status-sentence
+    title: TestStatusSentence
+    sourceFile: internal/views/ui/home_unit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:53.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home-unit
+  - id: SYM-ui-test-year-return
+    title: TestYearReturn
+    sourceFile: internal/views/ui/home_unit_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:25:58.253Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home-unit
+  - id: SYM-ui-ask-get
+    title: askGet
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:02.903Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-ask-href
+    title: askHref
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:07.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-ask-link
+    title: askLink
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:12.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-needs-action
+    title: needsAction
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:17.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-over-tab
+    title: overTab
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:22.168Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-over-tabs
+    title: overTabs
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:26.815Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-over-time-view
+    title: overTimeView
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:30.917Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-over-time-view-fragment-link
+    title: overTimeView.FragmentLink
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:35.614Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-over-time-view-link
+    title: overTimeView.Link
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:40.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-over-time-view-query
+    title: overTimeView.query
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:44.928Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-server-ask-fragment
+    title: server.askFragment
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:49.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-server-over-time
+    title: server.overTime
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:54.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-server-over-time-fragment
+    title: server.overTimeFragment
+    sourceFile: internal/views/ui/overtime.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:26:59.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home
+      - type: implements
+        target: REQ-decision-d193-1-overview
+      - type: implements
+        target: REQ-ui-overview-places
+  - id: SYM-ui-test-helper-group-by-sleeve-summary
+    title: summary
+    sourceFile: internal/views/ui/home_unit_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T08:48:53.119Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-home-unit

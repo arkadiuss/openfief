@@ -797,3 +797,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94144ca67690
+  - type: implements
+    from: SYM-ui-command-answerer-needs
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:21:15.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8db0533b96c
+  - type: implements
+    from: SYM-ui-command-answerer-needs
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:21:15.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fdb9e32776ca
+  - type: covered_by
+    from: SYM-ui-command-answerer-needs
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:21:15.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b321737e11a
+  - type: implements
+    from: SYM-ui-or-missing
+    to: REQ-decision-d194-1-ask-box
+    created_at: 2026-11-06T08:21:45.728Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77a565ecf50b
+  - type: implements
+    from: SYM-ui-or-missing
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:21:45.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59cf461a69ff
+  - type: covered_by
+    from: SYM-ui-or-missing
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:21:45.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-391bc6a38f6d

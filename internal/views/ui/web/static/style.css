@@ -295,3 +295,121 @@ details.change[open] { padding: var(--space-3); background: var(--sunken); borde
 @media (prefers-reduced-motion: no-preference) {
   a, button, .button, .switch a, .top nav a { transition: background-color 150ms ease, filter 150ms ease; }
 }
+
+/* The overview (D-193): one column on a phone, a 12-column grid from 960 px. */
+.overview-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 var(--space-5); }
+.card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-2) var(--space-4); margin-bottom: var(--space-3); }
+.card-head h2 { margin: 0; }
+.card-head .segmented { margin: 0; }
+
+/* The Ask box (D-194): the status sentence, a 52 px field with a / hint, suggestion chips and the answer as a
+   conversation. */
+.ask .status { font-family: var(--font-display); font-size: clamp(1.3rem, 3.5vw, 1.75rem); font-weight: 700; margin: 0 0 var(--space-2); }
+.ask .status-links { margin-bottom: var(--space-3); }
+.ask-form { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0; }
+.ask-field {
+  flex: 1 1 18rem; display: flex; align-items: center; gap: var(--space-2); min-height: 52px; min-width: 0;
+  padding: 0 var(--space-3); border: 1.5px solid var(--border-strong); border-radius: var(--radius); background: var(--bg); color: var(--muted);
+}
+.ask-field:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ask-field input { flex: 1; min-width: 0; border: 0; padding: 0; background: transparent; font-size: 1rem; min-height: 48px; }
+.ask-field input:focus-visible { outline: 0; }
+.ask-form button { min-height: 52px; }
+.key { font-family: var(--font-mono); font-size: 0.75rem; padding: 0 var(--space-1); border: 1px solid var(--border); border-radius: var(--radius-input); color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-3); }
+.chip {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--space-4);
+  border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface);
+  color: var(--link); text-decoration: none; font-size: 0.92rem; overflow-wrap: anywhere;
+}
+.chip:hover { background: var(--accent-soft); }
+.conversation { display: flex; flex-direction: column; gap: var(--space-3); border-top: 1px solid var(--border); padding-top: var(--space-4); margin-bottom: var(--space-3); }
+.bubble { align-self: flex-end; max-width: 85%; margin: 0; padding: var(--space-2) var(--space-4); background: var(--accent-soft); border-radius: var(--radius); overflow-wrap: anywhere; }
+.answer { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-4); min-width: 0; }
+.answer-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-1) var(--space-3); }
+.answer-title { font-weight: 600; margin: 0 0 var(--space-2); overflow-wrap: anywhere; }
+.answer-table { margin: 0 0 var(--space-3); }
+.answer-table td.num { white-space: nowrap; }
+.answer .open { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+.answer .open::after { content: " \2192"; white-space: pre; }
+.ask-help { margin: 0 0 var(--space-3); padding-left: var(--space-5); }
+.ask-help li { margin-bottom: var(--space-1); }
+
+/* The value card: the hero, on the brand's vert. */
+.hero { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.hero .eyebrow { color: var(--or-bright); }
+.hero a { color: var(--on-accent); }
+.hero .figure {
+  display: block; margin: var(--space-2) 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: clamp(1.8rem, 6vw, 2.4rem); font-weight: 500; line-height: 1.15; text-decoration: none; overflow-wrap: anywhere;
+}
+.hero .values { border-top: 1px solid var(--on-accent); padding-top: var(--space-3); }
+.hero .values dt { color: var(--on-accent); }
+.hero .warn-text { color: var(--on-accent); }
+.hero-change { margin-bottom: var(--space-3); }
+.hero-note { font-size: 0.85rem; margin: 0; }
+
+/* The chart card: one chart at a time. The value chart is a card of its own elsewhere; here it is part of this one. */
+.over-time .card { border: 0; padding: 0; margin: 0 0 var(--space-3); background: none; }
+.over-time .card h2 { font-size: 1rem; }
+.chart-part h3 { margin-top: 0; }
+
+/* Needs you, Recent activity and the accounts by sleeve. */
+.needs-item { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.needs-item > div { flex: 1 1 12rem; min-width: 0; }
+.needs-item .item-title { margin: 0; }
+.needs-item p.muted { margin: 0; }
+.activity-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.activity-list li { display: flex; gap: var(--space-3); min-width: 0; }
+.activity-list li > :last-child { min-width: 0; overflow-wrap: anywhere; }
+.activity-list .day { flex: none; color: var(--muted); font-size: 0.85rem; padding-top: 0.15em; }
+.sleeve { border-top: 1px solid var(--border); padding-top: var(--space-2); margin-top: var(--space-2); }
+.sleeve-head { display: flex; justify-content: space-between; gap: var(--space-3); }
+.sleeve-head .mono { letter-spacing: 0; }
+.account-rows { list-style: none; margin: 0 0 var(--space-2); padding: 0; }
+.account-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-3); min-height: 44px; padding: var(--space-2) 0;
+  color: var(--text); text-decoration: none;
+}
+.account-row:hover .name { text-decoration: underline; }
+.account-row .who { flex: 1 1 12rem; min-width: 0; overflow-wrap: anywhere; }
+.account-row .name { font-weight: 600; color: var(--link); }
+.account-row .amount { margin-left: auto; text-align: right; }
+.account-row .change { min-width: 5rem; text-align: right; color: var(--muted); }
+
+/* The allocation's bars (D-193): each a link to what is behind it where a page shows that. Widths are SVG
+   attributes, since the CSP allows no inline style. */
+.bars { list-style: none; margin: 0 0 var(--space-3); padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.bar { display: flex; flex-direction: column; gap: var(--space-1); color: var(--text); text-decoration: none; }
+a.bar { min-height: 44px; }
+a.bar:hover .bar-head > :first-child { text-decoration: underline; }
+.bar-head { display: flex; justify-content: space-between; gap: var(--space-3); overflow-wrap: anywhere; }
+.bar-track { display: block; width: 100%; height: 0.6rem; border-radius: var(--radius-pill); }
+.bar-track .track { fill: var(--sunken); }
+.bar-value { font-size: 0.85rem; }
+.fill.series-1 { fill: var(--series-1); }
+.fill.series-2 { fill: var(--series-2); }
+.fill.series-3 { fill: var(--series-3); }
+.fill.series-4 { fill: var(--series-4); }
+.fill.series-5 { fill: var(--series-5); }
+
+/* The Inbox with its side column of Ask suggestions (D-194). */
+.inbox-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 var(--space-5); }
+
+/* On a phone an answer's row wraps: what it is about first, the detail and the figure under it. */
+@media (max-width: 640px) {
+  .answer-table tr { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 var(--space-3); border-bottom: 1px solid var(--border); padding: var(--space-2) 0; }
+  .answer-table td { border-bottom: 0; padding: 0; overflow-wrap: anywhere; }
+  .answer-table td:first-child { flex: 1 1 100%; }
+  .answer-table td.num { white-space: normal; text-align: right; }
+}
+
+@media (min-width: 960px) {
+  .overview-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .overview-grid > .hero { grid-column: span 4; }
+  .overview-grid > .over-time { grid-column: span 8; }
+  .overview-grid > .needs, .overview-grid > .activity { grid-column: span 6; }
+  .overview-grid > .accounts { grid-column: span 8; }
+  .overview-grid > .allocation { grid-column: span 4; }
+  .inbox-layout { grid-template-columns: minmax(0, 1fr) 18rem; align-items: start; }
+}

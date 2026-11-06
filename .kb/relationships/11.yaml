@@ -846,3 +846,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aba65b0be6e4
+  - type: executable_for
+    from: SYM-ui-test-helper-fake-read-list-instrument-holdings
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:25:34.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ca09fa516bb

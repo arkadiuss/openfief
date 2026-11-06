@@ -85,7 +85,7 @@ func TestLabels(t *testing.T) {
 	t.Parallel()
 	tests := []struct{ name, got, want string }{
 		{name: "cash book", got: bookLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_WITHHOLDING_TAX, Currency: "USD"}), want: "withholding tax USD"},
-		{name: "holding book", got: bookLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_HOLDING, Instrument: syntheticInstrument()}), want: "SYN (XX0000000001)"},
+		{name: "holding book", got: bookLabel(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_HOLDING, Instrument: syntheticInstrument()}), want: "Synthetic Fund · SYN (XX0000000001)"},
 		{name: "a named instrument, its name first", got: instrumentLabel(&viewsv1.Instrument{Isin: "XX0000000001", Symbol: "SYN", Name: "Synthetic Fund"}), want: "Synthetic Fund · SYN (XX0000000001)"},
 		{name: "cash balance", got: plainFormat().balance(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_CASH, Currency: "USD"}, "1234.50"), want: "1\u202f234.50 USD"},
 		{name: "holding balance is a quantity", got: separators(" ", ",").balance(&viewsv1.Book{Kind: viewsv1.BookKind_BOOK_KIND_HOLDING, Instrument: syntheticInstrument()}, "12"), want: "12"},

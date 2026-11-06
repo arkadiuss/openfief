@@ -965,3 +965,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f33c9d21abd
+  - type: constrains
+    from: REQ-ui-ask-commands
+    to: FACT-SUBJECT-800DEFF21D2F3983
+    created_at: 2026-11-06T08:18:13.477Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cbb503698b4d
+  - type: requires_property
+    from: REQ-ui-ask-commands
+    to: FACT-PROP-46603284F294815A
+    created_at: 2026-11-06T08:18:13.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a68650547365
+  - type: specified_by
+    from: REQ-ui-ask-commands
+    to: SCEN-ui-ask-commands
+    created_at: 2026-11-06T08:18:13.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-57d226a93455

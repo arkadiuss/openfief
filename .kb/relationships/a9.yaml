@@ -699,3 +699,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-38ed087fc8c3
+  - type: verified_by
+    from: SCEN-decision-d194-1-ask-box
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:17:45.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-379c67a1e69b
+  - type: verified_by
+    from: SCEN-decision-d194-1-ask-box
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:17:45.919Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-129d358e7a9b
+  - type: verified_by
+    from: SCEN-decision-d194-1-ask-box
+    to: TEST-browserproxy-logs
+    created_at: 2026-11-06T08:17:45.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0769c2ed93b9
+  - type: implements
+    from: SYM-ui-server-hero
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:18:41.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c40b78482d22
+  - type: implements
+    from: SYM-ui-server-hero
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:18:41.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce156d666c43
+  - type: covered_by
+    from: SYM-ui-server-hero
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:18:41.371Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf0439133913
+  - type: executable_for
+    from: SYM-ui-test-parse-ask
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:20:27.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-571012d6ec5d

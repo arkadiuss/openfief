@@ -489,3 +489,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-db94853fc397
+  - type: implements
+    from: SYM-ui-known-commands
+    to: REQ-ui-ask-commands
+    created_at: 2026-11-06T08:23:05.328Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50fd9089c666
+  - type: covered_by
+    from: SYM-ui-known-commands
+    to: TEST-ui-ask
+    created_at: 2026-11-06T08:23:05.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a1b06f5850f
+  - type: executable_for
+    from: SYM-ui-test-over-time-tabs
+    to: TEST-ui-home
+    created_at: 2026-11-06T08:25:18.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-855f2ca55563

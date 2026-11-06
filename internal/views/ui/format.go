@@ -95,6 +95,16 @@ func (f numberFormat) money(m *viewsv1.Money) string {
 	return f.amount(m.GetAmount()) + " " + m.GetCurrency()
 }
 
+// signed writes a change of money with its sign, "+8 214,90 PLN" or
+// "-3,10 PLN"; an unset Money is empty.
+func (f numberFormat) signed(m *viewsv1.Money) string {
+	out := f.money(m)
+	if out != "" && !strings.HasPrefix(out, "-") {
+		return "+" + out
+	}
+	return out
+}
+
 // balance writes a balance of a ledger account, such as a balance
 // assertion's reported or derived balance, with its unit: a holding's is a
 // quantity of its instrument, any other's an amount in the ledger
@@ -135,12 +145,27 @@ type dimension struct {
 
 // dimensions are the allocation's dimensions in the order the switch shows
 // them; the first is the default.
+// The allocation's dimension keys, as its switch's links name them.
+const (
+	dimAssetClass  = "asset-class"
+	dimCurrency    = "currency"
+	dimInstitution = "institution"
+	dimSleeve      = "sleeve"
+)
+
+// pluginsPath is the installed plugins' page, and openPlugins the words
+// of a link to it.
+const (
+	pluginsPath = "/plugins"
+	openPlugins = "Open the plugins"
+)
+
 func dimensions() []dimension {
 	return []dimension{
-		{Key: "asset-class", Label: "Asset class", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS},
-		{Key: "currency", Label: "Currency", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_CURRENCY},
-		{Key: "institution", Label: "Institution", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_INSTITUTION},
-		{Key: "sleeve", Label: "Sleeve", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_SLEEVE},
+		{Key: dimAssetClass, Label: "Asset class", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_ASSET_CLASS},
+		{Key: dimCurrency, Label: "Currency", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_CURRENCY},
+		{Key: dimInstitution, Label: "Institution", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_INSTITUTION},
+		{Key: dimSleeve, Label: "Sleeve", Enum: viewsv1.AllocationDimension_ALLOCATION_DIMENSION_SLEEVE},
 	}
 }
 

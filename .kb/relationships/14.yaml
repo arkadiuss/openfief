@@ -622,3 +622,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c33a5a5ccdc9
+  - type: implements
+    from: SYM-ui-activity-line
+    to: REQ-ui-overview-places
+    created_at: 2026-11-06T08:23:36.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5886e3e9f19
+  - type: implements
+    from: SYM-ui-activity-line
+    to: REQ-decision-d193-1-overview
+    created_at: 2026-11-06T08:23:36.067Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6eff275024bc
+  - type: covered_by
+    from: SYM-ui-activity-line
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T08:23:36.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e983954ae1cc

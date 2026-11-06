@@ -197,7 +197,7 @@ func TestTransfersRefusals(t *testing.T) {
 func TestOverviewLinksSuggestedTransfers(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
+	rec := h.serve(t, withSession(request(http.MethodGet, "/?over=performance", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, `<a href="/inbox">1 suggested transfer(s)</a>`, `<a href="/inbox">Inbox`)
 	if strings.Contains(rec.Body.String(), "suggested transfer(s)</a>") && h.transfers.decision != 0 {
