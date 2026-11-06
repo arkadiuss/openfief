@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f2f181f58db8
+  - type: executable_for
+    from: SYM-e2e-trust-delete-instance
+    to: TEST-e2e-operator-trust
+    created_at: 2026-11-06T20:01:44.288Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d592755e5af

@@ -8,7 +8,8 @@
 // version deploy/demo/cnpg pins, the namespace and CRDs (deploy/crds), the
 // demo's one-instance cluster openfief-db (deploy/demo/database), the
 // suite's trusted signer (a key made for this run, which signs the plugin
-// image in the suite's registry, see registry_test.go), the demo's
+// image in the suite's registry, see registry_test.go), with which it also
+// builds the openfief CLI from this checkout (buildCLI), the demo's
 // application layer (deploy/demo/openfief through overlays/openfief, which
 // only swaps the images, points the demo's ui instance at the UI's signed
 // image in the suite's registry and admits the suite's client pod), and two
@@ -139,8 +140,12 @@ func install(ctx context.Context, k *kube, logf func(string, ...any)) error {
 				return trustErr
 			}
 			var imageErr error
-			ui, imageErr = reg.image(ctx, uiImage)
-			return imageErr
+			if ui, imageErr = reg.image(ctx, uiImage); imageErr != nil {
+				return imageErr
+			}
+			// The connector test installs and uninstalls with the CLI, as the
+			// bundle run's first run does (connector_test.go).
+			return buildCLI(ctx, reg, signer, logf)
 		},
 		func() error { return installApp(ctx, k, logf, editApp(signers, ui.cluster)) },
 		func() error { return installClients(ctx, k, logf) },

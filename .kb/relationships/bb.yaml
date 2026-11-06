@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-96dec67afbce
+  - type: executable_for
+    from: SYM-e2e-exposure-gateway-client
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:05:18.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8facade9b98
+  - type: executable_for
+    from: SYM-e2e-connector-wait-uninstalled
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:07:50.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7787ca7250cb

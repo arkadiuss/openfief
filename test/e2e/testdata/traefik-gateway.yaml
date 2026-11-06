@@ -1,0 +1,17 @@
+# Turns on the Gateway API provider of k3s's bundled Traefik for the end-to-end suite's exposure test
+# (test/e2e/exposure_test.go). The CI job's k3d cluster starts with this file in k3s's manifests directory, so Traefik
+# starts with the provider and its GatewayClass traefik; the suite's Gateway then listens on the websecure entry
+# point, port 8443. The chart's own default Gateway stays off: the suite brings its own. The demo machine's Traefik
+# doesn't get this file.
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    providers:
+      kubernetesGateway:
+        enabled: true
+    gateway:
+      enabled: false

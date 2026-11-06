@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8a9e14e8cf0
+  - type: executable_for
+    from: SYM-e2e-gateway-fetch
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:08:00.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-654e318982b1

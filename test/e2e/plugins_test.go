@@ -113,15 +113,18 @@ func TestOperatorDeploysSignedPlugin(t *testing.T) {
 // the checkout.
 func installFX(t *testing.T, k *kube, name string, image plugins.ImageRef) {
 	t.Helper()
-	data, err := os.ReadFile(fxManifest)
-	if err != nil {
-		t.Fatalf("reading the manifest: %v", err)
+	for _, obj := range []*unstructured.Unstructured{fxGrant(name), fxPluginObject(t, name, image.String())} {
+		if err := k.applyOne(t.Context(), obj); err != nil {
+			t.Fatal(err)
+		}
 	}
-	var manifest map[string]any
-	if err := json.Unmarshal(data, &manifest); err != nil {
-		t.Fatalf("decoding the manifest: %v", err)
-	}
-	grant := &unstructured.Unstructured{Object: map[string]any{
+}
+
+// fxGrant is the PluginGrant of an NBP FX connector instance name: it
+// approves everything the connector's manifest requests, and a host it
+// doesn't.
+func fxGrant(name string) *unstructured.Unstructured {
+	return &unstructured.Unstructured{Object: map[string]any{
 		"apiVersion": "openfief.io/v1alpha1", "kind": "PluginGrant",
 		"metadata": map[string]any{"name": name, "namespace": namespace},
 		"spec": map[string]any{
@@ -131,20 +134,29 @@ func installFX(t *testing.T, k *kube, name string, image plugins.ImageRef) {
 			"institutions": []any{"nbp"},
 		},
 	}}
-	plugin := &unstructured.Unstructured{Object: map[string]any{
+}
+
+// fxPluginObject is the Plugin of an NBP FX connector instance name with image,
+// written as given, declaring the connector's own manifest.
+func fxPluginObject(t *testing.T, name, image string) *unstructured.Unstructured {
+	t.Helper()
+	data, err := os.ReadFile(fxManifest)
+	if err != nil {
+		t.Fatalf("reading the manifest: %v", err)
+	}
+	var manifest map[string]any
+	if err := json.Unmarshal(data, &manifest); err != nil {
+		t.Fatalf("decoding the manifest: %v", err)
+	}
+	return &unstructured.Unstructured{Object: map[string]any{
 		"apiVersion": "openfief.io/v1alpha1", "kind": "Plugin",
 		"metadata": map[string]any{"name": name, "namespace": namespace},
 		"spec": map[string]any{
-			"image":    image.String(),
+			"image":    image,
 			"manifest": manifest,
 			"config":   map[string]any{"start": fxStart},
 		},
 	}}
-	for _, obj := range []*unstructured.Unstructured{grant, plugin} {
-		if err := k.applyOne(t.Context(), obj); err != nil {
-			t.Fatal(err)
-		}
-	}
 }
 
 // getPlugin returns Plugin name of the openfief namespace.

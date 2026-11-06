@@ -818,3 +818,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-995dfce238e7
+  - type: implements
+    from: SYM-e2e-connector-fixture-status
+    to: REQ-AUTO-0455DAAE4C01C965
+    created_at: 2026-11-06T20:08:45.559Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-937016ed126f
+  - type: covered_by
+    from: SYM-e2e-connector-fixture-status
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:08:45.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-491b0804f78b

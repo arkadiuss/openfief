@@ -860,3 +860,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ebdaef627acc
+  - type: executable_for
+    from: SYM-e2e-connector-kube-core-pod
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:06:28.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d8ec0b8e885

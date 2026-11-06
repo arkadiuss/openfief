@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0768430a0189
+  - type: executable_for
+    from: SYM-e2e-trust-test-operator-verified-only-when-catalog-pinned
+    to: TEST-e2e-operator-trust
+    created_at: 2026-11-06T20:01:00.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3fa06e8dfbf2

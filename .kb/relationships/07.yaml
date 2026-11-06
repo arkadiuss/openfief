@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b72a507bfeae
+  - type: executable_for
+    from: SYM-e2e-exposure-test-bundle-exposure
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:03:27.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f73a75c7919
+  - type: executable_for
+    from: SYM-e2e-exposure-serial
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:04:51.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-01f6456393b9

@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9e0611870835
+  - type: executable_for
+    from: SYM-e2e-exposure-pod-port
+    to: TEST-e2e-exposure
+    created_at: 2026-11-06T20:05:23.195Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e3a4e414cea

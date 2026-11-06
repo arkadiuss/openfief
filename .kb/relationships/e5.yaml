@@ -734,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-afb88f19a440
+  - type: executable_for
+    from: SYM-e2e-connector-check-mounted-only-by-instance
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:07:04.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f394f4cd47c4

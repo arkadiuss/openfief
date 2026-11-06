@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da417ffd7bfd
+  - type: executable_for
+    from: SYM-e2e-connector-kube-instance-left
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:07:55.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c85953fa1f73

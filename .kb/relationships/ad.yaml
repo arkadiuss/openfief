@@ -1049,3 +1049,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-793b19b5f3bb
+  - type: executable_for
+    from: SYM-e2e-connector-dump-database
+    to: TEST-e2e-connector-credentials
+    created_at: 2026-11-06T20:07:45.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ebb67521a75

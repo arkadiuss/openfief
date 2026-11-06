@@ -184,6 +184,8 @@ jobs:
     # task e2e:images also starts a registry container on the cluster's Docker network for the plugin images, which
     # the suite signs with a key made for the run, so the operator deploys them as it would an owner's (D-57), and
     # for the bundle's core, operator and egress-proxy images.
+    # task e2e:gateway gives the cluster a Gateway API implementation for the exposure test: a pinned Envoy Gateway on
+    # kind, and on k3d the bundled Traefik's Gateway API provider, which traefik-gateway.yaml turns on at creation.
     name: e2e (${{ matrix.cluster }})
     needs: plan
     if: needs.plan.outputs.code == 'true'
@@ -218,6 +220,7 @@ jobs:
             --api-port 127.0.0.1:6550
             --image ${{ steps.k3s.outputs.image }}
             --k3s-arg --secrets-encryption@server:0
+            --volume ${{ github.workspace }}/test/e2e/testdata/traefik-gateway.yaml:/var/lib/rancher/k3s/server/manifests/traefik-gateway.yaml@server:0
           # renovate: datasource=github-releases depName=k3d-io/k3d
           k3d-version: v5.9.0
       - name: Create a kind cluster
@@ -229,6 +232,11 @@ jobs:
           version: v0.33.0
       - name: task e2e:images
         run: task e2e:images CLUSTER="$CLUSTER"
+        env:
+          CLUSTER: ${{ matrix.cluster }}
+      # The exposure test's Gateway (D-28): Envoy Gateway on kind, Traefik's Gateway API provider on k3d.
+      - name: task e2e:gateway
+        run: task e2e:gateway CLUSTER="$CLUSTER"
         env:
           CLUSTER: ${{ matrix.cluster }}
       # kibi prove runs task e2e and records a receipt on each end-to-end test (docs/dev/kibi.md); the run's

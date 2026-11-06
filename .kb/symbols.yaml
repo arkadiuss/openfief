@@ -151522,3 +151522,970 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-release-smoke
+  - id: SYM-e2e-trust-test-operator-requires-grant
+    title: TestOperatorRequiresGrant
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:00:43.998Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-test-operator-refuses-tag-reference
+    title: TestOperatorRefusesTagReference
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:00:49.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-test-operator-upgrade-waits-for-grant
+    title: TestOperatorUpgradeWaitsForGrant
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:00:54.016Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-test-operator-verified-only-when-catalog-pinned
+    title: TestOperatorVerifiedOnlyWhenCatalogPinned
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:00:58.866Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-copy-catalog-image
+    title: copyCatalogImage
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:03.897Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-catalog-image
+    title: catalogImage
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:08.825Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-copy-referrers
+    title: copyReferrers
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:13.694Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-copy-manifest
+    title: copyManifest
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:18.705Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-bare-fx-plugin
+    title: bareFXPlugin
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:23.451Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-instance-state
+    title: instanceState
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:28.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-state-of
+    title: stateOf
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:33.100Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-wait-condition
+    title: waitCondition
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:37.942Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-delete-instance
+    title: deleteInstance
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:42.664Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-create-credential
+    title: createCredential
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:47.361Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-connector-manifests
+    title: connectorManifests
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:52.133Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-trust-read-connector-manifests
+    title: readConnectorManifests
+    sourceFile: test/e2e/trust_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:01:56.985Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-trust
+  - id: SYM-e2e-scope-resource-kind
+    title: resourceKind
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:01.802Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-scope-namespaced-kinds
+    title: namespacedKinds
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:06.972Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-scope-cluster-kinds
+    title: clusterKinds
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:15.079Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-scope-verbs
+    title: verbs
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:21.003Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-scope-scope-namespaces
+    title: scopeNamespaces
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:25.746Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-scope-test-bundle-operator-scope
+    title: TestBundleOperatorScope
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:30.539Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-scope-kube-reviews
+    title: kube.reviews
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:35.752Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-scope-read-operator-role
+    title: readOperatorRole
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:40.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-scope-role-allows
+    title: roleAllows
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:45.760Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-scope-operator-may
+    title: operatorMay
+    sourceFile: test/e2e/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:50.784Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-operator-scope
+  - id: SYM-e2e-exposure-gateway-gvr
+    title: gatewayGVR
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:02:55.732Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-route-gv-rs
+    title: routeGVRs
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:00.735Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-exposing-kinds
+    title: exposingKinds
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:05.997Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-gateway-impl
+    title: gatewayImpl
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:10.857Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-gateway-of
+    title: gatewayOf
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:15.962Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-peer
+    title: peer
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:21.068Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-test-bundle-exposure
+    title: TestBundleExposure
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:26.040Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-bundle-object
+    title: bundleObject
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:30.972Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-check-bundle-exposes-nothing
+    title: checkBundleExposesNothing
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:36.359Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-bundle-objects
+    title: bundleObjects
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:41.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-is-cluster-ip
+    title: isClusterIP
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:46.936Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-check-namespace-exposes-nothing
+    title: checkNamespaceExposesNothing
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:52.127Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-routes-in
+    title: kube.routesIn
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:03:57.357Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-exposed-services
+    title: kube.exposedServices
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:02.428Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-foreign-workloads
+    title: kube.foreignWorkloads
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:07.426Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-install-deployments
+    title: kube.installDeployments
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:12.485Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-uses-host-port
+    title: usesHostPort
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:17.474Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-owned-by-install
+    title: kube.ownedByInstall
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:22.558Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-job-of-database
+    title: kube.jobOfDatabase
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:27.679Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-deployment-of
+    title: kube.deploymentOf
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:33.148Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-gateway-tls-files
+    title: gatewayTLSFiles
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:38.453Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-gateway-certs
+    title: gatewayCerts
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:44.091Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-serial
+    title: serial
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:49.466Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-install-gateway
+    title: installGateway
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:04:54.756Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-apply-route-component
+    title: applyRouteComponent
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:00.090Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-decode-object
+    title: decodeObject
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:05.869Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-only-item
+    title: onlyItem
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:11.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-gateway-client
+    title: gatewayClient
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:16.202Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-pod-port
+    title: podPort
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:21.360Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-data-plane
+    title: kube.dataPlane
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:26.613Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-data-service
+    title: kube.dataService
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:31.584Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-container-port
+    title: containerPort
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:36.849Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-kube-forward-pod
+    title: kube.forwardPod
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:41.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-exposure-wait-https
+    title: waitHTTPS
+    sourceFile: test/e2e/exposure_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:46.547Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-connector-test-connector-credentials-and-uninstall
+    title: TestConnectorCredentialsAndUninstall
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:51.490Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-credential-secret
+    title: credentialSecret
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:05:56.957Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-synthetic-credential
+    title: syntheticCredential
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:02.297Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-connector-grant
+    title: connectorGrant
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:07.573Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-connector-plugin
+    title: connectorPlugin
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:13.515Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-bind-books
+    title: bindBooks
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:19.686Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-kube-core-pod
+    title: kube.corePod
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:25.846Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-uninstall-books
+    title: uninstallBooks
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:31.987Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-sync-deposit
+    title: syncDeposit
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:37.790Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-wait-deposit
+    title: waitDeposit
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:43.672Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-find-transaction
+    title: findTransaction
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:49.718Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-transactions-page
+    title: transactionsPage
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:06:55.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-check-mounted-only-by-instance
+    title: checkMountedOnlyByInstance
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:02.357Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-volumes-use-secret
+    title: volumesUseSecret
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:08.226Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-containers-use-secret
+    title: containersUseSecret
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:14.894Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-check-credential-nowhere-else
+    title: checkCredentialNowhereElse
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:20.574Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-kube-config-maps-holding
+    title: kube.configMapsHolding
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:26.202Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-kube-pods-holding
+    title: kube.podsHolding
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:32.049Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-kube-plugins-holding
+    title: kube.pluginsHolding
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:37.399Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-dump-database
+    title: dumpDatabase
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:43.132Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-wait-uninstalled
+    title: waitUninstalled
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:48.670Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-connector-kube-instance-left
+    title: kube.instanceLeft
+    sourceFile: test/e2e/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:53.795Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-connector-credentials
+  - id: SYM-e2e-gateway-fetch
+    title: fetch
+    sourceFile: scripts/e2e-gateway.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:07:58.744Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-gateway-gateway-api-crds
+    title: gateway_api_crds
+    sourceFile: scripts/e2e-gateway.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:03.368Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-exposure
+  - id: SYM-e2e-test-helper-fx-grant
+    title: fxGrant
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:08.326Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-test-helper-fx-plugin-object
+    title: fxPluginObject
+    sourceFile: test/e2e/plugins_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:13.401Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-plugins
+  - id: SYM-e2e-connector-fixture-config
+    title: config
+    sourceFile: test/e2e/connector/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:18.406Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-connector-credentials
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-e2e-connector-fixture-main
+    title: main
+    sourceFile: test/e2e/connector/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:23.517Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-connector-credentials
+      - type: implements
+        target: REQ-AUTO-0455DAAE4C01C965
+  - id: SYM-e2e-connector-fixture-serve
+    title: serve
+    sourceFile: test/e2e/connector/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:28.688Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-connector-credentials
+      - type: implements
+        target: REQ-AUTO-0455DAAE4C01C965
+  - id: SYM-e2e-connector-fixture-connector
+    title: connector
+    sourceFile: test/e2e/connector/main.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:33.255Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-connector-credentials
+      - type: implements
+        target: REQ-AUTO-0455DAAE4C01C965
+  - id: SYM-e2e-connector-fixture-connector-sync
+    title: connector.Sync
+    sourceFile: test/e2e/connector/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:38.497Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-connector-credentials
+      - type: implements
+        target: REQ-AUTO-0455DAAE4C01C965
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-e2e-connector-fixture-status
+    title: status
+    sourceFile: test/e2e/connector/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:43.651Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-connector-credentials
+      - type: implements
+        target: REQ-AUTO-0455DAAE4C01C965
+  - id: SYM-e2e-connector-fixture-connector-credential
+    title: connector.credential
+    sourceFile: test/e2e/connector/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:48.823Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-connector-credentials
+      - type: implements
+        target: REQ-AUTO-0455DAAE4C01C965
+  - id: SYM-e2e-connector-fixture-deposit
+    title: deposit
+    sourceFile: test/e2e/connector/main.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T20:08:53.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-e2e-connector-credentials
+      - type: implements
+        target: REQ-plugins-uninstall-keeps-data

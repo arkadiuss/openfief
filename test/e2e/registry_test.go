@@ -60,9 +60,12 @@ var (
 )
 
 // pluginImages are the plugin images task e2e:images pushes to the
-// registry, which the suite signs: the NBP FX connector and the built-in UI,
-// which the operator deploys for the demo's ui instance (editApp).
-func pluginImages() []string { return []string{"nbp-fx", uiImage} }
+// registry, which the suite signs: the NBP FX connector, the built-in UI,
+// which the operator deploys for the demo's ui instance (editApp), and the
+// suite's synthetic connector's two images (test/e2e/connector).
+func pluginImages() []string {
+	return []string{fxImage, uiImage, connectorImage, connectorEgressImage}
+}
 
 // pluginResource is the operator's Plugin resource.
 func pluginResource() schema.GroupVersionResource {

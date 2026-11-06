@@ -944,3 +944,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-871b9a22a02d
+  - type: executable_for
+    from: SYM-e2e-trust-catalog-image
+    to: TEST-e2e-operator-trust
+    created_at: 2026-11-06T20:01:10.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f4859c72aad
+  - type: executable_for
+    from: SYM-e2e-trust-state-of
+    to: TEST-e2e-operator-trust
+    created_at: 2026-11-06T20:01:34.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27e022491fcc

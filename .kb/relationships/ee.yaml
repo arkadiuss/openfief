@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c05b587fc5cf
+  - type: verified_by
+    from: SCEN-e2e-plugin-tag-refused
+    to: TEST-e2e-operator-trust
+    created_at: 2026-11-06T19:44:37.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9fcdaa54ed8

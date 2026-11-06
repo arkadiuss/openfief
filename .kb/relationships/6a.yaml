@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-48585538ea25
+  - type: executable_for
+    from: SYM-e2e-scope-test-bundle-operator-scope
+    to: TEST-e2e-operator-scope
+    created_at: 2026-11-06T20:02:32.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da185aa2b93e
