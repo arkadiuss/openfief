@@ -9,6 +9,9 @@ work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 cd "$work"
 git init -q
+# CI runners have no git identity, and an annotated tag needs one.
+git config user.name test
+git config user.email test@example.invalid
 git -c user.name=test -c user.email=test@example.invalid commit -q --allow-empty -m "chore: base"
 git tag 2026.10.0
 git tag 2026.10.0-alpha.1
