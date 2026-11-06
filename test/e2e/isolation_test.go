@@ -956,7 +956,10 @@ func corePortTokens(env *isolation) []probeCase {
 		if token != "" {
 			headers = append(headers, bearer(token))
 		}
-		return probeCase{name: name, from: env.xtb, args: []string{"--data", "{}", login}, headers: headers, want: want}
+		// The login page asks on an allowed origin, as the UI does: a call
+		// without one is refused as forbidden whatever its token (D-60).
+		body := `{"origin":"` + localCore + `"}`
+		return probeCase{name: name, from: env.xtb, args: []string{"--data", body, login}, headers: headers, want: want}
 	}
 	tk := env.tokens
 	return []probeCase{
