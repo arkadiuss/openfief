@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba98198fee5e
+  - type: executable_for
+    from: SYM-e2e-isolation-service-address
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:31:11.217Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf849628bcc4

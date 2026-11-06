@@ -657,3 +657,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c633f9c6235f
+  - type: executable_for
+    from: SYM-e2e-isolation-network-of
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:31:57.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ae8065c53b9

@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42a027859baf
+  - type: executable_for
+    from: SYM-e2e-isolation-parse-probe
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:32:33.715Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eecfffb3a9dc

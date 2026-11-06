@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0aa074782dd3
+  - type: executable_for
+    from: SYM-e2e-isolation-iso-tokens
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:30:30.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-403a9678650f

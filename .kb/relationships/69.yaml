@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-435e55eb1060
+  - type: executable_for
+    from: SYM-e2e-isolation-probe-case-stdin
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:33:29.775Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe049f70b660

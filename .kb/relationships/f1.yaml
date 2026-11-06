@@ -811,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f83fa8fcd809
+  - type: executable_for
+    from: SYM-e2e-isolation-connector-tokens
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:34:18.676Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c5e3beeb912e

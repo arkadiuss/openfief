@@ -972,3 +972,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9b9fe59d324
+  - type: executable_for
+    from: SYM-e2e-isolation-check-xtb-objects
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:31:52.284Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1adef2c6ba6c

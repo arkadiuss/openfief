@@ -818,3 +818,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b231a9e384a3
+  - type: constrains
+    from: REQ-e2e-egress-configured-destinations
+    to: FACT-SUBJECT-15508E625207C57D
+    created_at: 2026-11-06T20:50:02.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb2a0539f980
+  - type: requires_property
+    from: REQ-e2e-egress-configured-destinations
+    to: FACT-PROP-307D298D0E8CE5BD
+    created_at: 2026-11-06T20:50:02.848Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6808316d4a54
+  - type: specified_by
+    from: REQ-e2e-egress-configured-destinations
+    to: SCEN-e2e-egress-proxy-log
+    created_at: 2026-11-06T20:50:02.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a3af44ac6d71
+  - type: specified_by
+    from: REQ-e2e-egress-configured-destinations
+    to: SCEN-e2e-egress-outside-grant-refused
+    created_at: 2026-11-06T20:50:02.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11e7983c31c9
+  - type: depends_on
+    from: REQ-e2e-egress-configured-destinations
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-11-06T20:50:02.934Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6e090b5974c
+  - type: depends_on
+    from: REQ-e2e-egress-configured-destinations
+    to: REQ-AUTO-15828B9727AFA488
+    created_at: 2026-11-06T20:50:02.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39cbc89a3f8f

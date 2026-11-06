@@ -503,3 +503,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5bf922137b5b
+  - type: executable_for
+    from: SYM-e2e-isolation-lookup-fails
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:32:51.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2bfc50dc8ac

@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6fde9f13c59a
+  - type: verified_by
+    from: SCEN-e2e-egress-bypass-fails
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:30:00.060Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b297c9201e71

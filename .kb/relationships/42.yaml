@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-819ca7c440a5
+  - type: executable_for
+    from: SYM-e2e-isolation-proxy-line-text
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:34:33.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ff6b914f5f4

@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee9372996a96
+  - type: executable_for
+    from: SYM-e2e-isolation-kube-token
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:30:50.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-deb3fd3f1040
