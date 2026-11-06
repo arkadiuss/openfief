@@ -39,7 +39,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("reading migrations: %v", err)
 	}
-	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql", "0008_accounts_only.sql", "0009_recorded_changes.sql"}, applied); diff != "" {
+	if diff := cmp.Diff([]string{"0001_ledger.sql", "0002_sleeve_kinds.sql", "0003_role_override.sql", "0004_interest_and_deletion.sql", "0005_transfer_links.sql", "0006_redemption_and_payout.sql", "0007_payout_history.sql", "0008_accounts_only.sql", "0009_recorded_changes.sql", "0010_instrument_names.sql"}, applied); diff != "" {
 		t.Errorf("applied migrations (-want +got):\n%s", diff)
 	}
 	rows, err = pool.Query(t.Context(), `
@@ -52,7 +52,7 @@ func TestMigrateIsIdempotentAndOwnsTheLedgerSchema(t *testing.T) {
 	if err != nil {
 		t.Fatalf("listing tables: %v", err)
 	}
-	want := []string{"accounts", "assertion_checks", "postings", "schema_migrations", "transaction_versions", "transfer_links"}
+	want := []string{"accounts", "assertion_checks", "instrument_names", "postings", "schema_migrations", "transaction_versions", "transfer_links"}
 	if diff := cmp.Diff(want, tables); diff != "" {
 		t.Errorf("ledger tables (-want +got):\n%s", diff)
 	}
