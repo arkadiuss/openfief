@@ -9,7 +9,6 @@ This area covers running agents (GR-5, GR-7, GR-9, GR-10), the model-portfolio m
 - **[P-29] Agents out of process, intents instead of orders.** Agents run out of process and sandboxed, and see only data scoped to their lease. Agent and orchestrator talk over A2A; the tools OpenFief exposes are served over MCP. Agents send order intents with a thesis and invalidation conditions, never raw broker orders: GR-7's "tools to make transactions" is the gateway's intent API, gated by a capability token (see T-5).
 - **[P-30] Agents reach the world only through OpenFief.** Agent sandboxes have no direct network egress. Models are reached through the model router, which enforces P-33's tiers and meters model spend per agent; news and filings arrive through the reader (P-31); trades go through the gateway. The M0 egress proxy and per-plugin NetworkPolicy (D-11, D-32) are the mechanism. Without this, P-31 and P-33 are advice to agent authors rather than controls.
 - **[P-31] Reader and decider.** Defend against prompt injection by splitting a reader (untrusted text in, typed and validated research notes out) from a decider that sees only those notes. Every input carries its source, and a thesis changes only on two independent sources (see R-6).
-- **[P-32] Maintainer without trading tools.** The GR-4 maintainer has no transaction tools. OpenFief computes the figures (weights, drift); the model narrates them and proposes model-portfolio changes; the owner applies them. Open: OQ-12.
 
 ## Models and data
 
@@ -81,7 +80,7 @@ Interface outlines, not code. Every plugin also follows the decided plugin rules
 - **Data seen:** T0 (full holdings, the model portfolio and its targets) and T2.
 - **Models:** configurable (GR-4, GR-11); the author would use only a local model (GR-4).
 - **Threats:** T0 sent to a cloud provider through misconfiguration; prompt injection through public data skewing summaries; the maintainer silently changing the model portfolio; invented numbers in summaries.
-- **Controls:** the router pins the role to local providers (P-33); no transaction tools and precomputed figures (P-32); every call logged (P-18).
+- **Controls:** the router pins the role to local providers (P-33); no transaction tools and precomputed figures (D-204); every call logged (P-18).
 
 ### Thesis agent: research
 
@@ -109,7 +108,7 @@ Interface outlines, not code. Every plugin also follows the decided plugin rules
 
 - **[OQ-4]** Default agent: the author's or pfranczyk's? Should the agent contract be co-designed with pfranczyk?
 - **[OQ-6]** Which local model runs the GR-4 maintainer role on the author's hardware? (Depends on OQ-18.)
-- **[OQ-12]** What authority does the GR-4 maintainer have? Does "maintains" include placing trades (for example rebalancing the defensive part), or only maintaining the model portfolio? Who sets the size of the offensive part: the owner, the model portfolio, or the maintainer? (P-32)
+- **[OQ-12]** Who sets the size of the offensive part: the owner, the model portfolio, or the maintainer? D-204 settles that the maintainer places no trades.
 - **[OQ-14]** May a cloud-hosted thesis agent see its own fief's amounts and positions? Are tier rules hard limits or defaults the owner can override under GR-11? (T-6, P-33)
 - **[OQ-18]** What hardware is available for local models?
 - **[OQ-29]** May raw market-data prices reach a cloud-hosted model (GR-8)? EODHD's terms forbid redistributing its data to others (R-16, D-51). Derived figures such as portfolio values are probably fine; raw price series sent to a model provider may not be.
