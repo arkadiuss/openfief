@@ -1,0 +1,3 @@
+- One delivery from a connector holds at most 200 000 prices (D-190). A longer history doesn't arrive in this release; paged deliveries, each imported on its own, come in a later one.
+- Reporting in a currency other than PLN is refused (T-12).
+- This is an alpha: contracts may change between releases, while the data already stored is migrated with each change (D-161).

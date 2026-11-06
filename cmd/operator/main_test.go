@@ -134,17 +134,6 @@ func TestTrustPolicy(t *testing.T) {
 		}
 		return path
 	}
-	// OpenFief's CI first, then each publisher of the embedded catalog, which
-	// a release fills (D-88), then the owner's signers.
-	c, err := catalog.Load()
-	if err != nil {
-		t.Fatalf("catalog: %v", err)
-	}
-	ciAndCatalog := make([]string, 0, 1+len(c.Entries))
-	ciAndCatalog = append(ciAndCatalog, "openfief-ci")
-	for i := range c.Entries {
-		ciAndCatalog = append(ciAndCatalog, c.Entries[i].Publisher.Name)
-	}
 	tests := []struct {
 		name        string
 		path        string

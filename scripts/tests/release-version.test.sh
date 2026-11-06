@@ -70,6 +70,14 @@ fail alpha 2026.10.0-alpha.1 no-such-commit
 fail alpha 2026.11.0-alpha.0 HEAD
 EOF
 
+# The refusal of an existing tag tells the owner how to resume instead.
+refusal="$(bash "$root/scripts/release-version.sh" alpha 2026.10.0-alpha.1 2>&1 >/dev/null || true)"
+if [[ "$refusal" != *"re-run the failed jobs to resume"* ]]; then
+  echo "FAIL: an existing tag's refusal should say to re-run the failed jobs to resume" >&2
+  failures=$((failures + 1))
+fi
+cases=$((cases + 1))
+
 if [ "$failures" -ne 0 ]; then
   exit 1
 fi

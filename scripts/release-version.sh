@@ -41,7 +41,7 @@ if ! valid_version "$channel" "$version"; then
 fi
 if tagged="$(git rev-parse -q --verify "refs/tags/$version^{commit}")"; then
   if [ -z "$release_commit" ]; then
-    echo "release: tag '$version' already exists" >&2
+    echo "release: tag '$version' already exists; to finish a publish that failed part-way, re-run the failed jobs to resume (a whole new run would build a different release commit)" >&2
     exit 1
   fi
   if ! commit="$(git rev-parse -q --verify "$release_commit^{commit}")"; then
