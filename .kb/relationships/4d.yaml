@@ -867,3 +867,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-471dbee3b673
+  - type: implements
+    from: SYM-ingest-connectrpc-instrument-names-from
+    to: REQ-ingest-instrument-names
+    created_at: 2026-11-06T07:02:32.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-175612aecd24
+  - type: covered_by
+    from: SYM-ingest-connectrpc-instrument-names-from
+    to: TEST-ingest-connectrpc-names
+    created_at: 2026-11-06T07:02:32.292Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0286b211dc3c
+  - type: implements
+    from: SYM-gen-ledger-instruments-pb-rename-instrument-response-string
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:31:33.329Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce1daf03e04a
+  - type: covered_by
+    from: SYM-gen-ledger-instruments-pb-rename-instrument-response-string
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:31:33.367Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c31057d40b5b

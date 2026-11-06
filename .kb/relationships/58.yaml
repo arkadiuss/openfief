@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a8e4ec41dbb
+  - type: implements
+    from: SYM-ledger-app-names-deliver
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:00:24.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3f0c6cba1af
+  - type: covered_by
+    from: SYM-ledger-app-names-deliver
+    to: TEST-ledger-app-names
+    created_at: 2026-11-06T07:00:24.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6dd1f87659a0

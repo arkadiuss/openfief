@@ -233,6 +233,20 @@ type ISINProposal struct {
 	Currency string
 }
 
+// ConfirmedName returns the display name an instrument takes when the
+// owner confirms isin for p (D-197): the institution's own name of the
+// ticker, or else the market-data lookup's name when isin is the one it
+// proposed; ok is false when neither names it.
+func ConfirmedName(p *PendingTicker, isin ledger.ISIN) (string, bool) {
+	switch {
+	case p.Ticker.Name != "":
+		return p.Ticker.Name, true
+	case p.Proposal.Name != "" && p.Proposal.ISIN.Equal(isin):
+		return p.Proposal.Name, true
+	}
+	return "", false
+}
+
 // PendingTicker is a ticker of a connector instance whose ISIN the owner
 // hasn't confirmed yet, with the market-data connector's proposal, if it
 // found one (Proposal.ISIN not zero), and how many entries wait for it.

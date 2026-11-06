@@ -141891,3 +141891,1391 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-suggested-transfers
+  - id: SYM-ledger-instrument-name
+    title: InstrumentName
+    sourceFile: internal/ledger/instrumentname.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:59:28.403Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument-names
+      - type: implements
+        target: REQ-decision-d197-1-instrument-display-name
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-clean-instrument-name
+    title: CleanInstrumentName
+    sourceFile: internal/ledger/instrumentname.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:59:33.159Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-current-instrument-names
+    title: CurrentInstrumentNames
+    sourceFile: internal/ledger/instrumentname.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:59:37.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument-names
+      - type: implements
+        target: REQ-decision-d197-1-instrument-display-name
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-first-delivered-names
+    title: FirstDeliveredNames
+    sourceFile: internal/ledger/instrumentname.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:59:42.375Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-instrument-names
+      - type: implements
+        target: REQ-decision-d197-1-instrument-display-name
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-test-clean-instrument-name
+    title: TestCleanInstrumentName
+    sourceFile: internal/ledger/instrumentname_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:59:46.991Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-instrument-names
+  - id: SYM-ledger-test-current-instrument-names
+    title: TestCurrentInstrumentNames
+    sourceFile: internal/ledger/instrumentname_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:59:51.593Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-instrument-names
+  - id: SYM-ledger-test-first-delivered-names
+    title: TestFirstDeliveredNames
+    sourceFile: internal/ledger/instrumentname_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T06:59:56.126Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-instrument-names
+  - id: SYM-ledger-test-helper-isin-of
+    title: isinOf
+    sourceFile: internal/ledger/instrumentname_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:00.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-instrument-names
+  - id: SYM-ledger-app-instrument-name-store
+    title: InstrumentNameStore
+    sourceFile: internal/ledger/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:04.799Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-app-instrument-postings
+    title: InstrumentPostings
+    sourceFile: internal/ledger/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:09.433Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-app-names
+    title: Names
+    sourceFile: internal/ledger/app/names.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:13.451Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-app-names-current
+    title: Names.Current
+    sourceFile: internal/ledger/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:18.019Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-app-names-deliver
+    title: Names.Deliver
+    sourceFile: internal/ledger/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:22.638Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-app-names-rename
+    title: Names.Rename
+    sourceFile: internal/ledger/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:27.311Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-app-names-posting-accounts
+    title: Names.postingAccounts
+    sourceFile: internal/ledger/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:32.073Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-app-posts-to
+    title: postsTo
+    sourceFile: internal/ledger/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:36.612Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-app-test-names-deliver-and-rename
+    title: TestNamesDeliverAndRename
+    sourceFile: internal/ledger/app/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:41.322Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-names
+  - id: SYM-ledger-app-test-names-rename-refusals
+    title: TestNamesRenameRefusals
+    sourceFile: internal/ledger/app/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:46.010Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-names
+  - id: SYM-ledger-app-test-helper-check-name
+    title: checkName
+    sourceFile: internal/ledger/app/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:50.023Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-names
+  - id: SYM-ledger-app-test-helper-mem-names
+    title: memNames
+    sourceFile: internal/ledger/app/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:54.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-names
+  - id: SYM-ledger-app-test-helper-mem-names-append-instrument-names
+    title: memNames.AppendInstrumentNames
+    sourceFile: internal/ledger/app/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:00:58.134Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-names
+  - id: SYM-ledger-app-test-helper-mem-names-instrument-names
+    title: memNames.InstrumentNames
+    sourceFile: internal/ledger/app/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:02.103Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-names
+  - id: SYM-ledger-app-test-helper-names-over
+    title: namesOver
+    sourceFile: internal/ledger/app/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:05.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-names
+  - id: SYM-ledger-connectapi-new-instruments
+    title: NewInstruments
+    sourceFile: internal/ledger/connectapi/instruments.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:10.565Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-connectapi-instrument-service
+    title: instrumentService
+    sourceFile: internal/ledger/connectapi/instruments.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:14.585Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-connectapi-instrument-service-rename-instrument
+    title: instrumentService.RenameInstrument
+    sourceFile: internal/ledger/connectapi/instruments.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:19.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-connectapi-instrument-service-fail
+    title: instrumentService.fail
+    sourceFile: internal/ledger/connectapi/instruments.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:23.727Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-connectapi-test-instrument-service
+    title: TestInstrumentService
+    sourceFile: internal/ledger/connectapi/instruments_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:28.381Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-instruments
+  - id: SYM-ledger-connectapi-test-helper-check-refused
+    title: checkRefused
+    sourceFile: internal/ledger/connectapi/instruments_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:32.356Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-instruments
+  - id: SYM-ledger-connectapi-test-helper-name-store
+    title: nameStore
+    sourceFile: internal/ledger/connectapi/instruments_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:36.301Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-instruments
+  - id: SYM-ledger-connectapi-test-helper-name-store-append-instrument-names
+    title: nameStore.AppendInstrumentNames
+    sourceFile: internal/ledger/connectapi/instruments_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:40.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-instruments
+  - id: SYM-ledger-connectapi-test-helper-name-store-instrument-names
+    title: nameStore.InstrumentNames
+    sourceFile: internal/ledger/connectapi/instruments_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:44.179Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-instruments
+  - id: SYM-ledger-connectapi-test-helper-postings
+    title: postings
+    sourceFile: internal/ledger/connectapi/instruments_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:47.987Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-instruments
+  - id: SYM-ledger-connectapi-test-helper-postings-accounts
+    title: postings.Accounts
+    sourceFile: internal/ledger/connectapi/instruments_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:51.925Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-instruments
+  - id: SYM-ledger-connectapi-test-helper-postings-current-transactions
+    title: postings.CurrentTransactions
+    sourceFile: internal/ledger/connectapi/instruments_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:55.850Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-connectapi-instruments
+  - id: SYM-ledger-pg-store-append-instrument-names
+    title: Store.AppendInstrumentNames
+    sourceFile: internal/ledger/postgres/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:01:59.953Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-pg-store-instrument-names
+    title: Store.InstrumentNames
+    sourceFile: internal/ledger/postgres/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:04.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-pg-scan-name
+    title: scanName
+    sourceFile: internal/ledger/postgres/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:08.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-pg-names
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-ledger-pg-test-instrument-names
+    title: TestInstrumentNames
+    sourceFile: internal/ledger/postgres/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:12.668Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-pg-names
+  - id: SYM-ibkrflex-stmt-name-instrument
+    title: stmt.nameInstrument
+    sourceFile: internal/ingest/ibkrflex/fields.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:17.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-ibkrflex-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-ibkrflex-test-map-instrument-names
+    title: TestMapInstrumentNames
+    sourceFile: internal/ingest/ibkrflex/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:21.392Z
+    relationships:
+      - type: executable_for
+        target: TEST-ibkrflex-names
+  - id: SYM-ingest-connectrpc-instrument-name-from
+    title: instrumentNameFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:25.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-ingest-connectrpc-instrument-names-from
+    title: instrumentNamesFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:30.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-ingest-connectrpc-test-instrument-names-round-trip
+    title: TestInstrumentNamesRoundTrip
+    sourceFile: internal/ingest/connectrpc/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:34.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-names
+  - id: SYM-ingest-delivery-instrument-names
+    title: instrumentNames
+    sourceFile: internal/ingest/delivery/delivery.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:39.754Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-ingest-app-instrument-namer
+    title: InstrumentNamer
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:44.330Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-ingest-app-connectors-store-names
+    title: Connectors.storeNames
+    sourceFile: internal/ingest/app/connectors.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:48.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-ingest-app-tickers-name
+    title: Tickers.name
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:02:53.512Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-ingest-app-test-connectors-sync-names-instruments
+    title: TestConnectorsSyncNamesInstruments
+    sourceFile: internal/ingest/app/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:02.608Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-names
+  - id: SYM-ingest-app-test-tickers-confirm-names-the-instrument
+    title: TestTickersConfirmNamesTheInstrument
+    sourceFile: internal/ingest/app/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:07.070Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-names
+  - id: SYM-ingest-app-test-helper-pending-store
+    title: pendingStore
+    sourceFile: internal/ingest/app/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:10.926Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-names
+  - id: SYM-ingest-app-test-helper-pending-store-pending-tickers
+    title: pendingStore.PendingTickers
+    sourceFile: internal/ingest/app/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:14.768Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-names
+  - id: SYM-ingest-app-test-helper-recorded-names
+    title: recordedNames
+    sourceFile: internal/ingest/app/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:18.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-names
+  - id: SYM-ingest-app-test-helper-recorded-names-deliver
+    title: recordedNames.Deliver
+    sourceFile: internal/ingest/app/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:22.458Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-names
+  - id: SYM-ingest-confirmed-name
+    title: ConfirmedName
+    sourceFile: internal/ingest/ticker.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:26.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-ticker-name
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-ingest-test-confirmed-name
+    title: TestConfirmedName
+    sourceFile: internal/ingest/tickername_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:30.976Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-ticker-name
+  - id: SYM-views-app-instrument-names
+    title: InstrumentNames
+    sourceFile: internal/views/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:35.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-views-app-views-instrument-names
+    title: Views.InstrumentNames
+    sourceFile: internal/views/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:39.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-views-app-with-instrument-names
+    title: WithInstrumentNames
+    sourceFile: internal/views/app/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:44.334Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-views-connectapi-fill-names
+    title: fillNames
+    sourceFile: internal/views/connectapi/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:48.786Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-views-connectapi-named-instruments
+    title: namedInstruments
+    sourceFile: internal/views/connectapi/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:53.349Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-views-connectapi-names-interceptor
+    title: namesInterceptor
+    sourceFile: internal/views/connectapi/names.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:03:57.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-views-connectapi-names-interceptor-wrap-streaming-client
+    title: namesInterceptor.WrapStreamingClient
+    sourceFile: internal/views/connectapi/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:04:01.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-views-connectapi-names-interceptor-wrap-streaming-handler
+    title: namesInterceptor.WrapStreamingHandler
+    sourceFile: internal/views/connectapi/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:04:06.353Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-views-connectapi-names-interceptor-wrap-unary
+    title: namesInterceptor.WrapUnary
+    sourceFile: internal/views/connectapi/names.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:04:10.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-views-connectapi-test-rest-instrument-names
+    title: TestRESTInstrumentNames
+    sourceFile: internal/views/connectapi/names_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:04:15.323Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-names
+  - id: SYM-views-connectapi-test-helper-fake-names
+    title: fakeNames
+    sourceFile: internal/views/connectapi/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:04:19.265Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-names
+  - id: SYM-views-connectapi-test-helper-fake-names-current
+    title: fakeNames.Current
+    sourceFile: internal/views/connectapi/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:04:23.138Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-names
+  - id: SYM-views-connectapi-test-helper-names-api
+    title: namesAPI
+    sourceFile: internal/views/connectapi/names_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:04:27.162Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-names
+  - id: SYM-core-with-instrument-service
+    title: withInstrumentService
+    sourceFile: cmd/core/transfers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:04:31.655Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-instrument-service
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-core-test-instrument-service
+    title: TestInstrumentService
+    sourceFile: cmd/core/instruments_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:04:35.819Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-instrument-service
+  - id: SYM-gen-connector-names-delivery-get-instrument-names
+    title: Delivery.GetInstrumentNames
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:29:55.066Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-connector-names-instrument-name
+    title: InstrumentName
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:29:59.248Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-connector-names-instrument-name-reset
+    title: InstrumentName.Reset
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:04.022Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-connector-names-instrument-name-string
+    title: InstrumentName.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:08.895Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-connector-names-instrument-name-proto-message
+    title: InstrumentName.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:13.650Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-connector-names-instrument-name-proto-reflect
+    title: InstrumentName.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:18.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-connector-names-instrument-name-descriptor
+    title: InstrumentName.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:23.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-connector-names-instrument-name-get-isin
+    title: InstrumentName.GetIsin
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:27.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-connector-names-instrument-name-get-name
+    title: InstrumentName.GetName
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:32.683Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request
+    title: RenameInstrumentRequest
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:36.797Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request-reset
+    title: RenameInstrumentRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:41.412Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request-string
+    title: RenameInstrumentRequest.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:46.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request-proto-message
+    title: RenameInstrumentRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:50.746Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request-proto-reflect
+    title: RenameInstrumentRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:30:55.475Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request-descriptor
+    title: RenameInstrumentRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:00.101Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request-get-origin
+    title: RenameInstrumentRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:04.615Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request-get-session-token
+    title: RenameInstrumentRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:09.276Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request-get-isin
+    title: RenameInstrumentRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:13.912Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-request-get-name
+    title: RenameInstrumentRequest.GetName
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:18.546Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-response
+    title: RenameInstrumentResponse
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:22.602Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-response-reset
+    title: RenameInstrumentResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:27.210Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-response-string
+    title: RenameInstrumentResponse.String
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:31.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-response-proto-message
+    title: RenameInstrumentResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:36.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-response-proto-reflect
+    title: RenameInstrumentResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:40.936Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-response-descriptor
+    title: RenameInstrumentResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:45.684Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-rename-instrument-response-get-name
+    title: RenameInstrumentResponse.GetName
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:50.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-file-openfief-ledger-v1-instruments-proto-raw-desc-gzip
+    title: file_openfief_ledger_v1_instruments_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:54.945Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-init
+    title: init
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:31:59.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-file-openfief-ledger-v1-instruments-proto-init
+    title: file_openfief_ledger_v1_instruments_proto_init
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:04.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-pb-x
+    title: x
+    sourceFile: sdk/go/gen/openfief/ledger/v1/instruments.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:08.744Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-connect-instrument-service-client
+    title: instrumentServiceClient
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/instruments.connect.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:13.382Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-connect-new-instrument-service-client
+    title: NewInstrumentServiceClient
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/instruments.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:18.086Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-connect-instrument-service-client-rename-instrument
+    title: instrumentServiceClient.RenameInstrument
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/instruments.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:26.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-connect-instrument-service-handler
+    title: InstrumentServiceHandler
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/instruments.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:31.398Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-connect-new-instrument-service-handler
+    title: NewInstrumentServiceHandler
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/instruments.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:36.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-connect-unimplemented-instrument-service-handler
+    title: UnimplementedInstrumentServiceHandler
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/instruments.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:40.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-ledger-instruments-connect-unimplemented-instrument-service-handler-rename-instrument
+    title: UnimplementedInstrumentServiceHandler.RenameInstrument
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/instruments.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:44.829Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names
+  - id: SYM-gen-views-names-instrument-get-name
+    title: Instrument.GetName
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:49.462Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-gen-views-names-instrument-detail-get-name
+    title: InstrumentDetail.GetName
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:32:54.728Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-names
+      - type: implements
+        target: REQ-views-instrument-names
+  - id: SYM-ingest-app-tickers-pending-tickers
+    title: Tickers.pendingTickers
+    sourceFile: internal/ingest/app/tickers.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:47:26.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-names
+      - type: implements
+        target: REQ-ingest-instrument-names
+  - id: SYM-gen-ledger-instruments-connect-instrument-service-client-interface
+    title: InstrumentServiceClient
+    sourceFile: sdk/go/gen/openfief/ledger/v1/ledgerv1connect/instruments.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T07:47:30.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-connectapi-instruments
+      - type: implements
+        target: REQ-ledger-instrument-names

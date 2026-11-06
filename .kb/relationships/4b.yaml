@@ -734,3 +734,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-33cb86fedd8e
+  - type: implements
+    from: SYM-views-app-instrument-names
+    to: REQ-views-instrument-names
+    created_at: 2026-11-06T07:03:37.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd7186d31f90
+  - type: covered_by
+    from: SYM-views-app-instrument-names
+    to: TEST-views-connectapi-names
+    created_at: 2026-11-06T07:03:37.084Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcdfafa51145

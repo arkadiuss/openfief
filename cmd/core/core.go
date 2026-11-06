@@ -188,7 +188,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	// authz is the one authorizer every read path and owner service asks
 	// (D-163), until SpiceDB answers (D-164).
 	authz := identityapp.Policy{}
-	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)),
+	names := &ledgerapp.Names{Store: ledgerpg.New(pool), Owners: ledgerOwners(auth, cfg.Auth.Origins, authz), Postings: l}
+	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)), viewsapp.WithInstrumentNames(names),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
 		viewsapp.WithPortfolio(sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)), historyOptions(pool, vstore))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, jurisdictionPack().ReportingCurrency(), cfg.Reporting, opts...)
@@ -199,15 +200,14 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	if err != nil {
 		return nil, err
 	}
-	api := apis.plugin
 	deps := &connectorDeps{
 		pool: pool, ledger: l, sleeves: sleeves, recorder: recorder, crossChecks: checks, now: now, log: log,
 		today:   valuationpg.TodayIn(cfg.EndOfDay.Location, now),
 		entries: &entryCaller{}, syncs: &syncTrigger{}, bonds: vstore, model: models,
 		rankings:  newRankings(pool, l, vstore, valuationOwners(auth, cfg.Auth.Origins)),
-		attention: attn.items,
+		attention: attn.items, names: names,
 	}
-	plugin := withModelService(withAuthService(api, auth, callers, log), models, callers, log)
+	plugin := withModelService(withAuthService(apis.plugin, auth, callers, log), models, callers, log)
 	owners := ingestOwners(auth, cfg.Auth.Origins, authz)
 	plugin = withBondLotService(plugin, newBondLots(deps, owners), callers, log)
 	plugin = withStatementService(plugin, newUploads(deps, owners), newTickers(deps, owners), newRetries(deps, owners), callers, log)
@@ -216,7 +216,8 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withOnboardingServices(plugin, newSleeves(sleeves, auth, cfg.Auth.Origins),
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), auth, callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
-	plugin = withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins, authz)), callers, log), attn.items, callers, log)
+	plugin = withInstrumentService(withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins, authz)), callers, log),
+		attn.items, callers, log), names, callers, log)
 	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil
 }
 

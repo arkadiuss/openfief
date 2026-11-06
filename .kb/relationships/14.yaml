@@ -573,3 +573,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a3cebb08fff
+  - type: verified_by
+    from: SCEN-ledger-instrument-names
+    to: TEST-ledger-instrument-names
+    created_at: 2026-11-06T06:59:04.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-928f4e63d730
+  - type: verified_by
+    from: SCEN-ledger-instrument-names
+    to: TEST-ledger-app-names
+    created_at: 2026-11-06T06:59:04.275Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95523f73193a
+  - type: verified_by
+    from: SCEN-ledger-instrument-names
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T06:59:04.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e5d54997ec1
+  - type: verified_by
+    from: SCEN-ledger-instrument-names
+    to: TEST-ledger-pg-names
+    created_at: 2026-11-06T06:59:04.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f106f62cd899
+  - type: verified_by
+    from: SCEN-ledger-instrument-names
+    to: TEST-core-instrument-service
+    created_at: 2026-11-06T06:59:04.351Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d528ef4244aa
+  - type: implements
+    from: SYM-ingest-connectrpc-instrument-name-from
+    to: REQ-ingest-instrument-names
+    created_at: 2026-11-06T07:02:27.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae355b9bcc7f
+  - type: covered_by
+    from: SYM-ingest-connectrpc-instrument-name-from
+    to: TEST-ingest-connectrpc-names
+    created_at: 2026-11-06T07:02:27.565Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c33a5a5ccdc9

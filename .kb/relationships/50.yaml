@@ -699,3 +699,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a559748551e
+  - type: constrains
+    from: REQ-ingest-instrument-names
+    to: FACT-SUBJECT-89CE8A78286C28E6
+    created_at: 2026-11-06T06:59:21.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-767abfcbb5b7
+  - type: requires_property
+    from: REQ-ingest-instrument-names
+    to: FACT-PROP-8E5A1D2D4D3C8962
+    created_at: 2026-11-06T06:59:21.519Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c2224144b624
+  - type: specified_by
+    from: REQ-ingest-instrument-names
+    to: SCEN-ingest-instrument-names
+    created_at: 2026-11-06T06:59:21.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d1dbba753f3

@@ -120,6 +120,9 @@ type connectorDeps struct {
 	// syncs is the scheduler the owner's sync retries go to (D-196);
 	// runConnectors sets it once the scheduler runs.
 	syncs *syncTrigger
+	// names keeps the instruments' display names connectors deliver
+	// (D-197).
+	names *ledgerapp.Names
 }
 
 // withConnectorDeps connects to dsn, migrates, and runs fn with what the
@@ -176,6 +179,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 			CrossChecks: crossCheckInputs{checks: d.crossChecks}, Brokers: store, Today: d.today,
 			Seeding: d.ledger, Starts: store, Sources: sourceInputs{rankings: d.rankings}, Declarations: discovery,
 			Tickers: store, Lookup: caller, Instances: discovery, Attention: valuationAttention{items: d.attention},
+			Names: d.names,
 		},
 		Instances: discovery,
 		Store:     store,

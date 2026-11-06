@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a98e6595e89
+  - type: executable_for
+    from: SYM-ledger-test-clean-instrument-name
+    to: TEST-ledger-instrument-names
+    created_at: 2026-11-06T06:59:48.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4f163e161a5

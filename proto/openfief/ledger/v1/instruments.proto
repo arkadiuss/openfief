@@ -1,0 +1,47 @@
+// OpenFief's instrument naming contract (docs/DESIGN.md D-197, D-79).
+//
+// An instrument has a display name: the first one a connector delivers for
+// it, such as XTB's display name, IBKR's description or the market-data
+// lookup's, which the owner can change. Pages show it before the ticker and
+// ISIN. The read API serves every instrument's name (Instrument.name); the
+// owner renames one through InstrumentService, one owner-only service for
+// this kind of entry (D-79). The ledger keeps every name append-only; the
+// owner's latest wins over the delivered one.
+//
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto), as in transfers.proto:
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, an origin off the core's allow-list, or an owner
+//   the authorizer doesn't let change every account that posts to the
+//   instrument (D-163), fails with PERMISSION_DENIED.
+// - An ISIN that is not well formed, or a name that is empty, longer than
+//   200 characters or holds a control character, fails with
+//   INVALID_ARGUMENT. Nothing is stored then.
+syntax = "proto3";
+
+package openfief.ledger.v1;
+
+// InstrumentService records the owner's display names of instruments.
+service InstrumentService {
+  // RenameInstrument records name as the owner's display name of isin. Its
+  // surrounding space is trimmed and every run of white space inside it
+  // becomes one space.
+  rpc RenameInstrument(RenameInstrumentRequest) returns (RenameInstrumentResponse);
+}
+
+message RenameInstrumentRequest {
+  string origin = 1;
+  string session_token = 2;
+  string isin = 3;
+  string name = 4;
+}
+
+message RenameInstrumentResponse {
+  // The name as stored, cleaned.
+  string name = 1;
+}

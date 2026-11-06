@@ -938,6 +938,12 @@ components:
         symbol:
           type: string
           title: symbol
+        name:
+          type: string
+          title: name
+          description: |-
+            The instrument's display name (D-197): the first one a connector
+             delivered for its ISIN, or the owner's; empty when it has none.
       title: Instrument
       additionalProperties: false
       description: 'Instrument is something that can be held: an ISIN plus a venue symbol.'
@@ -962,6 +968,10 @@ components:
           items:
             $ref: '#/components/schemas/openfief.views.v1.InstrumentExemptionClass'
           title: exemption_classes
+        name:
+          type: string
+          title: name
+          description: Its display name (D-197), as Instrument.name.
       title: InstrumentDetail
       additionalProperties: false
       description: InstrumentDetail is an instrument across the caller's accounts (D-195).

@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c74fb76b2f0
+  - type: implements
+    from: SYM-ledger-app-instrument-postings
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:00:11.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b8bbfa620a3
+  - type: covered_by
+    from: SYM-ledger-app-instrument-postings
+    to: TEST-ledger-app-names
+    created_at: 2026-11-06T07:00:11.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c7ca574c662

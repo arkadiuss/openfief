@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28312ebaeb61
+  - type: implements
+    from: SYM-ingest-app-tickers-pending-tickers
+    to: REQ-ingest-instrument-names
+    created_at: 2026-11-06T07:47:27.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88754085f860
+  - type: covered_by
+    from: SYM-ingest-app-tickers-pending-tickers
+    to: TEST-ingest-app-names
+    created_at: 2026-11-06T07:47:27.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19ba9a489727

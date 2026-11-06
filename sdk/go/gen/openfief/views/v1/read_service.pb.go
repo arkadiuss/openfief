@@ -1244,9 +1244,12 @@ func (x *Money) GetCurrency() string {
 
 // Instrument is something that can be held: an ISIN plus a venue symbol.
 type Instrument struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Isin          string                 `protobuf:"bytes,1,opt,name=isin,proto3" json:"isin,omitempty"`
-	Symbol        string                 `protobuf:"bytes,2,opt,name=symbol,proto3" json:"symbol,omitempty"`
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Isin   string                 `protobuf:"bytes,1,opt,name=isin,proto3" json:"isin,omitempty"`
+	Symbol string                 `protobuf:"bytes,2,opt,name=symbol,proto3" json:"symbol,omitempty"`
+	// The instrument's display name (D-197): the first one a connector
+	// delivered for its ISIN, or the owner's; empty when it has none.
+	Name          string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1291,6 +1294,13 @@ func (x *Instrument) GetIsin() string {
 func (x *Instrument) GetSymbol() string {
 	if x != nil {
 		return x.Symbol
+	}
+	return ""
+}
+
+func (x *Instrument) GetName() string {
+	if x != nil {
+		return x.Name
 	}
 	return ""
 }
@@ -7771,8 +7781,10 @@ type InstrumentDetail struct {
 	// "listed" or "treasury_bond", as the allocation classes it.
 	AssetClass       string                      `protobuf:"bytes,3,opt,name=asset_class,json=assetClass,proto3" json:"asset_class,omitempty"`
 	ExemptionClasses []*InstrumentExemptionClass `protobuf:"bytes,4,rep,name=exemption_classes,json=exemptionClasses,proto3" json:"exemption_classes,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// Its display name (D-197), as Instrument.name.
+	Name          string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *InstrumentDetail) Reset() {
@@ -7831,6 +7843,13 @@ func (x *InstrumentDetail) GetExemptionClasses() []*InstrumentExemptionClass {
 		return x.ExemptionClasses
 	}
 	return nil
+}
+
+func (x *InstrumentDetail) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
 }
 
 type GetInstrumentRequest struct {
@@ -8343,11 +8362,12 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"$openfief/views/v1/read_service.proto\x12\x11openfief.views.v1\x1a\x1cgoogle/api/annotations.proto\";\n" +
 	"\x05Money\x12\x16\n" +
 	"\x06amount\x18\x01 \x01(\tR\x06amount\x12\x1a\n" +
-	"\bcurrency\x18\x02 \x01(\tR\bcurrency\"8\n" +
+	"\bcurrency\x18\x02 \x01(\tR\bcurrency\"L\n" +
 	"\n" +
 	"Instrument\x12\x12\n" +
 	"\x04isin\x18\x01 \x01(\tR\x04isin\x12\x16\n" +
-	"\x06symbol\x18\x02 \x01(\tR\x06symbol\"\x98\x01\n" +
+	"\x06symbol\x18\x02 \x01(\tR\x06symbol\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\"\x98\x01\n" +
 	"\x06Sleeve\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x121\n" +
@@ -8869,13 +8889,14 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\awrapper\x18\x01 \x01(\tR\awrapper\x12'\n" +
 	"\x0fexemption_class\x18\x02 \x01(\tR\x0eexemptionClass\x12!\n" +
 	"\fowner_chosen\x18\x03 \x01(\bR\vownerChosen\x12\x14\n" +
-	"\x05known\x18\x04 \x01(\bR\x05known\"\xe3\x01\n" +
+	"\x05known\x18\x04 \x01(\bR\x05known\"\xf7\x01\n" +
 	"\x10InstrumentDetail\x12\x12\n" +
 	"\x04isin\x18\x01 \x01(\tR\x04isin\x12@\n" +
 	"\blistings\x18\x02 \x03(\v2$.openfief.views.v1.InstrumentListingR\blistings\x12\x1f\n" +
 	"\vasset_class\x18\x03 \x01(\tR\n" +
 	"assetClass\x12X\n" +
-	"\x11exemption_classes\x18\x04 \x03(\v2+.openfief.views.v1.InstrumentExemptionClassR\x10exemptionClasses\"*\n" +
+	"\x11exemption_classes\x18\x04 \x03(\v2+.openfief.views.v1.InstrumentExemptionClassR\x10exemptionClasses\x12\x12\n" +
+	"\x04name\x18\x05 \x01(\tR\x04name\"*\n" +
 	"\x14GetInstrumentRequest\x12\x12\n" +
 	"\x04isin\x18\x01 \x01(\tR\x04isin\"\\\n" +
 	"\x15GetInstrumentResponse\x12C\n" +

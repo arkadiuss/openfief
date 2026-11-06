@@ -832,3 +832,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2af4fca610b
+  - type: verified_by
+    from: SCEN-ingest-instrument-names
+    to: TEST-ibkrflex-names
+    created_at: 2026-11-06T06:59:05.569Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a45fcdcbf13
+  - type: verified_by
+    from: SCEN-ingest-instrument-names
+    to: TEST-ingest-connectrpc-names
+    created_at: 2026-11-06T06:59:05.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-baa0ba33103e
+  - type: verified_by
+    from: SCEN-ingest-instrument-names
+    to: TEST-ingest-app-names
+    created_at: 2026-11-06T06:59:05.659Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7dc4099225f6
+  - type: verified_by
+    from: SCEN-ingest-instrument-names
+    to: TEST-ingest-ticker-name
+    created_at: 2026-11-06T06:59:05.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b938c5fe6c6e
+  - type: implements
+    from: SYM-gen-ledger-instruments-pb-rename-instrument-request-proto-reflect
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:30:57.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff831ad0e056
+  - type: covered_by
+    from: SYM-gen-ledger-instruments-pb-rename-instrument-request-proto-reflect
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:30:57.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e85e0a5b2cd9

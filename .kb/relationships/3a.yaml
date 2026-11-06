@@ -601,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab8ced73f93b
+  - type: executable_for
+    from: SYM-ingest-connectrpc-test-instrument-names-round-trip
+    to: TEST-ingest-connectrpc-names
+    created_at: 2026-11-06T07:02:36.748Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecd9f2bf5f0a

@@ -776,3 +776,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-53f4e55898c7
+  - type: implements
+    from: SYM-ingest-app-tickers-name
+    to: REQ-ingest-instrument-names
+    created_at: 2026-11-06T07:02:55.131Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e3e31836ea
+  - type: covered_by
+    from: SYM-ingest-app-tickers-name
+    to: TEST-ingest-app-names
+    created_at: 2026-11-06T07:02:55.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3b47dcc6f35

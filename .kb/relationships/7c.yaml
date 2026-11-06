@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0df345d808d
+  - type: implements
+    from: SYM-views-connectapi-names-interceptor-wrap-streaming-client
+    to: REQ-views-instrument-names
+    created_at: 2026-11-06T07:04:03.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4532a28f5a34
+  - type: covered_by
+    from: SYM-views-connectapi-names-interceptor-wrap-streaming-client
+    to: TEST-views-connectapi-names
+    created_at: 2026-11-06T07:04:03.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c0a489191d0

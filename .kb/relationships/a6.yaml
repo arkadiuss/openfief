@@ -734,3 +734,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8182321bd51
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-check-refused
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:01:33.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbb70202b1b4
+  - type: implements
+    from: SYM-gen-ledger-instruments-pb-file-openfief-ledger-v1-instruments-proto-init
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:32:05.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8bc5c06e97d
+  - type: covered_by
+    from: SYM-gen-ledger-instruments-pb-file-openfief-ledger-v1-instruments-proto-init
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:32:05.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a289d5435164

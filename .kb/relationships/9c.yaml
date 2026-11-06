@@ -734,3 +734,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d40bbc939f52
+  - type: implements
+    from: SYM-ledger-connectapi-instrument-service
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:01:16.162Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc056e05c4db
+  - type: covered_by
+    from: SYM-ledger-connectapi-instrument-service
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:01:16.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68a4312f97d6
+  - type: implements
+    from: SYM-ledger-connectapi-instrument-service-fail
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:01:25.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e08126a0e79
+  - type: covered_by
+    from: SYM-ledger-connectapi-instrument-service-fail
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:01:25.375Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e5574528cdd
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-postings-accounts
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:01:53.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c58e57f76f5
+  - type: implements
+    from: SYM-gen-ledger-instruments-pb-x
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:32:10.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d65985abb034
+  - type: covered_by
+    from: SYM-gen-ledger-instruments-pb-x
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:32:10.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95c2205f2a7f

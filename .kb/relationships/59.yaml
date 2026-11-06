@@ -580,3 +580,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cdb9070d4c1c
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-postings
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:01:49.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e589e6ab6c9

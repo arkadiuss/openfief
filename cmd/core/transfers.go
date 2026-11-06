@@ -39,6 +39,18 @@ func withTransferService(h http.Handler, transfers *ledgerapp.Transfers, callers
 	return mux
 }
 
+// withInstrumentService returns h with the InstrumentService mounted next
+// to it (D-197, D-79): its calls go to the names' handler, admitted like
+// the AuthService's, view plugins only, every other path to h. Nothing may
+// store its responses.
+func withInstrumentService(h http.Handler, names *ledgerapp.Names, callers identityconnect.Callers, log *slog.Logger) http.Handler {
+	path, handler := ledgerconnect.NewInstruments(names, identityconnect.NewCallerInterceptor(callers, log), log)
+	mux := http.NewServeMux()
+	mux.Handle(path, noStore(handler))
+	mux.Handle("/", h)
+	return mux
+}
+
 // transferSuggestions are the transfers between the owner's own accounts
 // that the read side suggests and the owner hasn't decided yet (D-105),
 // over every account's current transactions: what the attention check

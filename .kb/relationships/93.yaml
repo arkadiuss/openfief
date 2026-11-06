@@ -951,3 +951,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-068843f42f85
+  - type: implements
+    from: SYM-ledger-app-names-current
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:00:19.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a48f557bc7fd
+  - type: covered_by
+    from: SYM-ledger-app-names-current
+    to: TEST-ledger-app-names
+    created_at: 2026-11-06T07:00:19.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3f33c9d21abd

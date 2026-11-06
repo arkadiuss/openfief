@@ -58,7 +58,7 @@ func New(v *app.Views, verifier app.TokenVerifier, opts ...Option) (http.Handler
 		o(&c)
 	}
 	path, handler := viewsv1connect.NewReadServiceHandler(&readService{views: v, log: c.log},
-		connect.WithInterceptors(&authInterceptor{verifier: verifier, log: c.log}),
+		connect.WithInterceptors(&authInterceptor{verifier: verifier, log: c.log}, &namesInterceptor{views: v, log: c.log}),
 		connect.WithReadMaxBytes(MaxRequestBytes))
 	transcoder, err := vanguard.NewTranscoder([]*vanguard.Service{vanguard.NewService(path, handler)})
 	if err != nil {

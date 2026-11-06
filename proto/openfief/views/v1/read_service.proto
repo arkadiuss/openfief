@@ -297,6 +297,9 @@ message Money {
 message Instrument {
   string isin = 1;
   string symbol = 2;
+  // The instrument's display name (D-197): the first one a connector
+  // delivered for its ISIN, or the owner's; empty when it has none.
+  string name = 3;
 }
 
 // SleeveRole is what a sleeve is for.
@@ -1599,6 +1602,8 @@ message InstrumentDetail {
   // "listed" or "treasury_bond", as the allocation classes it.
   string asset_class = 3;
   repeated InstrumentExemptionClass exemption_classes = 4;
+  // Its display name (D-197), as Instrument.name.
+  string name = 5;
 }
 
 message GetInstrumentRequest {

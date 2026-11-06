@@ -106,6 +106,20 @@ func (r *row) instrument() (ledger.Instrument, error) {
 	return in, nil
 }
 
+// nameInstrument keeps the description IBKR gives the instrument of r, a
+// trade or an open position of a stock or ETF, as its display name
+// (D-197); a row of anything else, or without an ISIN or a description,
+// names nothing.
+func (s *stmt) nameInstrument(r *row) {
+	if needStock(r) != nil {
+		return
+	}
+	in, err := r.instrument()
+	if desc := r.text("description"); err == nil && desc != "" {
+		s.out.Names = append(s.out.Names, ledger.InstrumentName{ISIN: in.ISIN, Name: desc})
+	}
+}
+
 // parseDate parses an IBKR date, yyyyMMdd or yyyy-MM-dd, optionally followed
 // by a separator (";", ",", " " or "T") and a time of day, which is dropped:
 // the calendar date is taken as IBKR reports it, with no time zone

@@ -59,6 +59,7 @@ type Views struct {
 	syncs       SyncHistory
 	changes     RecordedChanges
 	prices      InstrumentPrices
+	names       InstrumentNames
 }
 
 // New returns the queries over the given ports, with totals, valuations and

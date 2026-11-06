@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ac451b3337fc
+  - type: implements
+    from: SYM-ingest-confirmed-name
+    to: REQ-ingest-instrument-names
+    created_at: 2026-11-06T07:03:28.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27a79ea897ec
+  - type: covered_by
+    from: SYM-ingest-confirmed-name
+    to: TEST-ingest-ticker-name
+    created_at: 2026-11-06T07:03:28.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ed6065ad619

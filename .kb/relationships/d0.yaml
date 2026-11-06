@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1739d9447609
+  - type: implements
+    from: SYM-ledger-pg-store-instrument-names
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:02:05.814Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9955e12397e
+  - type: covered_by
+    from: SYM-ledger-pg-store-instrument-names
+    to: TEST-ledger-pg-names
+    created_at: 2026-11-06T07:02:05.841Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f756e95d5041

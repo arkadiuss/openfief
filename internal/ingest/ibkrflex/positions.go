@@ -105,6 +105,7 @@ func (p *positions) row(r *row) {
 		p.s.problem(ref, err)
 		return
 	}
+	p.s.nameInstrument(r)
 	h, ok := p.held[in]
 	if !ok {
 		h = &heldUnits{}

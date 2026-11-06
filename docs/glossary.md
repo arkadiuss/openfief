@@ -14,6 +14,7 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Transaction | ledger | `ledger.Transaction` | One economic event from a source. Append-only and versioned; keyed by source plus the institution's own ID. | trade, activity, operation |
 | Posting | ledger | `ledger.Posting` | One leg of a transaction. A transaction's postings sum to zero per currency. | entry, leg |
 | Instrument | ledger | `ledger.Instrument` | Something that can be held, identified by ISIN plus a venue symbol. A bond series is an instrument. | security, ticker, asset |
+| Display name | ledger | `ledger.InstrumentName` | The name an instrument is shown by, before its ticker and ISIN (D-197): the first one a connector delivers for its ISIN, such as XTB's display name, IBKR's description or the market-data lookup's, until the owner renames it. Kept per ISIN, append-only. | title, label |
 | Holding | ledger | `ledger.Holding` | The quantity of one instrument in one account on a date, derived from postings. | position (allowed only inside connector adapters, as the broker's word) |
 | Lot | ledger | `ledger.Lot` | A quantity acquired on a date at a cost; consumed FIFO. An opening lot is seeded from a broker's current positions instead of full history. | |
 | Interest | ledger | `ledger.NewInterest` | Income paid on a holding, such as a treasury bond's coupon, booked as a transaction of its own kind and posted like a dividend (D-101). | dividend (for a coupon) |

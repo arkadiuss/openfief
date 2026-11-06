@@ -692,3 +692,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-69536d6e07df
+  - type: implements
+    from: SYM-gen-ledger-instruments-pb-rename-instrument-request-descriptor
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:31:01.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3607ca9b4370
+  - type: covered_by
+    from: SYM-gen-ledger-instruments-pb-rename-instrument-request-descriptor
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:31:01.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-656363b87165
+  - type: implements
+    from: SYM-gen-ledger-instruments-connect-unimplemented-instrument-service-handler
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:32:41.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e93b1c4c9f9
+  - type: covered_by
+    from: SYM-gen-ledger-instruments-connect-unimplemented-instrument-service-handler
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:32:41.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e486e19ff72f

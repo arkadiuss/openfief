@@ -42,7 +42,17 @@ type Delivery struct {
 	// CrossCheckPrices are the institution's own prices, which only
 	// cross-check Prices (D-22) and never value a holding.
 	CrossCheckPrices []valuation.CrossCheckPrice
-	Watermark        string
+	// InstrumentNames are the display names the delivery gives its
+	// instruments (D-197).
+	InstrumentNames []ledger.InstrumentName
+	Watermark       string
+}
+
+// InstrumentNamer records the display names connectors deliver for
+// instruments, the first for each kept (D-197); *ledger/app.Names
+// implements it.
+type InstrumentNamer interface {
+	Deliver(ctx context.Context, source string, names []ledger.InstrumentName) error
 }
 
 // Errors a ConnectorCaller wraps when the connector answers that it won't
@@ -274,6 +284,9 @@ type Connectors struct {
 	// first reported; nil, or nil Instances, proposes none.
 	Lookup    InstrumentLookup
 	Instances InstanceLister
+	// Names records the display names deliveries give instruments
+	// (D-197); nil records none.
+	Names InstrumentNamer
 	// Today returns the date a batch starts on.
 	Today func() kernel.Date
 }
@@ -414,6 +427,18 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	batch.Complete(&m, imported)
 	batch.Unmapped = r.Unmapped
 	return batch, nil
+}
+
+// storeNames records the display names instance delivered (D-197),
+// nothing without Names.
+func (c *Connectors) storeNames(ctx context.Context, instance string, names []ledger.InstrumentName) error {
+	if c.Names == nil || len(names) == 0 {
+		return nil
+	}
+	if err := c.Names.Deliver(ctx, instance, names); err != nil {
+		return fmt.Errorf("instrument names: %w", err)
+	}
+	return nil
 }
 
 // declarations returns what instance's manifest declares (D-112, D-182),
@@ -568,9 +593,10 @@ func (c *Connectors) checkBound(ctx context.Context, instance string, m *ingest.
 
 // storeMarketData records the instance as a source of each kind of market
 // data d carries, then stores its valuation inputs and its treasury bond
-// series terms. readings are d's index readings with their source; none is
-// stored when d no longer carries any, as when they were dropped as
-// undeclared (D-186).
+// series terms, and the display names it gives instruments (D-197).
+// readings are d's index readings with their source; none is stored when
+// d no longer carries any, as when they were dropped as undeclared
+// (D-186).
 func (c *Connectors) storeMarketData(ctx context.Context, instance string, id ingest.BatchID, d *Delivery, readings []ingest.IndexReading) error {
 	if len(d.IndexReadings) == 0 {
 		readings = nil
@@ -581,7 +607,10 @@ func (c *Connectors) storeMarketData(ctx context.Context, instance string, id in
 	if err := c.storeInputs(ctx, instance, id, d, readings); err != nil {
 		return err
 	}
-	return c.storeTerms(ctx, instance, id, d.BondTerms)
+	if err := c.storeTerms(ctx, instance, id, d.BondTerms); err != nil {
+		return err
+	}
+	return c.storeNames(ctx, instance, d.InstrumentNames)
 }
 
 // storeInputs stores a delivery's prices, FX rates and the validated index

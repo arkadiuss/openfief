@@ -980,5 +980,32 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-6fcbdeb1412e
+      },
+    {
+        type: implements,
+        from: SYM-ledger-instrument-name,
+        to: REQ-ledger-instrument-names,
+        created_at: 2026-11-06T06:59:30.011Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-f735e204f6c0
+      },
+    {
+        type: implements,
+        from: SYM-ledger-instrument-name,
+        to: REQ-decision-d197-1-instrument-display-name,
+        created_at: 2026-11-06T06:59:30.043Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-c3e3ad585fd1
+      },
+    {
+        type: covered_by,
+        from: SYM-ledger-instrument-name,
+        to: TEST-ledger-instrument-names,
+        created_at: 2026-11-06T06:59:30.065Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-7e8f7a70f690
       }
   ]

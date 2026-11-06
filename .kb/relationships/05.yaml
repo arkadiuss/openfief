@@ -587,3 +587,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f9e309300e6a
+  - type: implements
+    from: SYM-gen-connector-names-instrument-name-reset
+    to: REQ-ingest-instrument-names
+    created_at: 2026-11-06T07:30:05.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cecafc62142a
+  - type: covered_by
+    from: SYM-gen-connector-names-instrument-name-reset
+    to: TEST-ingest-connectrpc-names
+    created_at: 2026-11-06T07:30:05.663Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-978a7b767751

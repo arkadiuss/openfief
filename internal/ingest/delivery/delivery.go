@@ -103,7 +103,22 @@ func FromMapping(batch, institution string, m *ingest.Mapping) (*connectorv1.Del
 	if err := tickers(d, m); err != nil {
 		return nil, err
 	}
+	d.InstrumentNames = instrumentNames(m.Names)
 	return d, nil
+}
+
+// instrumentNames writes the first valid display name of each instrument
+// among names (ledger.FirstDeliveredNames, D-197).
+func instrumentNames(names []ledger.InstrumentName) []*connectorv1.InstrumentName {
+	first := ledger.FirstDeliveredNames(names)
+	if len(first) == 0 {
+		return nil
+	}
+	out := make([]*connectorv1.InstrumentName, 0, len(first))
+	for _, n := range first {
+		out = append(out, &connectorv1.InstrumentName{Isin: n.ISIN.String(), Name: n.Name})
+	}
+	return out
 }
 
 // tickers adds to d the tickers m names instruments by and their entries,

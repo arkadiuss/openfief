@@ -171,4 +171,7 @@ type Mapping struct {
 	ByBrokerAccount  []BrokerEntries
 	Tickers          []Ticker
 	TickerEntries    []TickerEntry
+	// Names are the display names the institution gives the instruments
+	// it delivers by ISIN, such as IBKR's description (D-197).
+	Names []ledger.InstrumentName
 }

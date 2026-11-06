@@ -36,6 +36,7 @@ func (s *stmt) trades(rows []row) {
 		ref := s.ref("Trades", r, "tradeID")
 		t, err := s.trade(r)
 		s.add(ref, &t, err)
+		s.nameInstrument(r)
 	}
 }
 

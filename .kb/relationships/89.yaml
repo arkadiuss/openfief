@@ -734,3 +734,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5fe5de9c22b1
+  - type: implements
+    from: SYM-ingest-delivery-instrument-names
+    to: REQ-ingest-instrument-names
+    created_at: 2026-11-06T07:02:41.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f06fd48dcd26
+  - type: covered_by
+    from: SYM-ingest-delivery-instrument-names
+    to: TEST-ingest-connectrpc-names
+    created_at: 2026-11-06T07:02:41.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91fd1b7c2b56

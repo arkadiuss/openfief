@@ -175,6 +175,9 @@ type Tickers struct {
 	Owners Owners
 	Store  TickerStore
 	Ledger LedgerImporter
+	// Names records the name a confirmed ticker gives its instrument
+	// (ingest.ConfirmedName, D-197); nil records none.
+	Names InstrumentNamer
 }
 
 // Pending returns, to the owner, every ticker waiting for its ISIN.
@@ -202,8 +205,15 @@ func (t *Tickers) Confirm(ctx context.Context, origin, sessionToken string, c in
 	if err := t.Owners.CheckOwner(ctx, origin, sessionToken); err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("confirming a ticker: %w", err)
 	}
+	pending, err := t.pendingTickers(ctx)
+	if err != nil {
+		return ingest.ImportSummary{}, fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, err)
+	}
 	waiting, listing, err := t.Store.ConfirmTicker(ctx, c)
 	if err != nil {
+		return ingest.ImportSummary{}, fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, err)
+	}
+	if err = t.name(ctx, pending, c); err != nil {
 		return ingest.ImportSummary{}, fmt.Errorf("confirming %s of %s: %w", c.Symbol, c.Instance, err)
 	}
 	if len(waiting) == 0 {
@@ -227,6 +237,37 @@ func (t *Tickers) Confirm(ctx context.Context, origin, sessionToken string, c in
 		return ingest.ImportSummary{}, fmt.Errorf("booking %s of %s: %w", c.Symbol, c.Instance, err)
 	}
 	return sum, nil
+}
+
+// pendingTickers returns the tickers waiting for the owner, whose names a
+// confirmation names its ISIN by (D-197); none without Names.
+func (t *Tickers) pendingTickers(ctx context.Context) ([]ingest.PendingTicker, error) {
+	if t.Names == nil {
+		return nil, nil
+	}
+	out, err := t.Store.PendingTickers(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("pending tickers: %w", err)
+	}
+	return out, nil
+}
+
+// name records the display name the confirmed ticker c gives its ISIN,
+// found among pending (ingest.ConfirmedName, D-197), as delivered by c's
+// instance; nothing without Names or a name.
+func (t *Tickers) name(ctx context.Context, pending []ingest.PendingTicker, c ingest.TickerConfirmation) error {
+	for i := range pending {
+		p := &pending[i]
+		if p.Instance != c.Instance || p.Ticker.Symbol != c.Symbol {
+			continue
+		}
+		if name, ok := ingest.ConfirmedName(p, c.ISIN); ok {
+			if err := t.Names.Deliver(ctx, c.Instance, []ledger.InstrumentName{{ISIN: c.ISIN, Name: name}}); err != nil {
+				return fmt.Errorf("naming %s: %w", c.ISIN, err)
+			}
+		}
+	}
+	return nil
 }
 
 // book imports a confirmed ticker's transactions: those that hold an

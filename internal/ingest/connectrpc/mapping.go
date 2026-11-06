@@ -341,11 +341,35 @@ func deliveryFrom(d *connectorv1.Delivery, id ingest.BatchID, watermark string) 
 	if err != nil {
 		return app.Delivery{}, err
 	}
+	names, err := instrumentNamesFrom(d)
+	if err != nil {
+		return app.Delivery{}, err
+	}
 	return app.Delivery{
 		Institution: ingest.InstitutionID(d.GetInstitution()), Mapping: m,
 		Prices: prices, FXRates: rates, IndexReadings: readings, IndexLevels: levels, BondTerms: terms,
-		CrossCheckPrices: crossChecks, Watermark: watermark,
+		CrossCheckPrices: crossChecks, InstrumentNames: names, Watermark: watermark,
 	}, nil
+}
+
+// instrumentNamesFrom translates d's instrument names (D-197); none for
+// none.
+func instrumentNamesFrom(d *connectorv1.Delivery) ([]ledger.InstrumentName, error) {
+	if len(d.GetInstrumentNames()) == 0 {
+		return nil, nil
+	}
+	return translate("instrument_names", d.GetInstrumentNames(), instrumentNameFrom)
+}
+
+// instrumentNameFrom translates one instrument's display name (D-197): an
+// ISIN with a valid check digit and the name as delivered, which the
+// ledger cleans or leaves out (ledger.FirstDeliveredNames).
+func instrumentNameFrom(field string, n *connectorv1.InstrumentName) (ledger.InstrumentName, error) {
+	isin, err := ledger.ParseISIN(n.GetIsin())
+	if err != nil {
+		return ledger.InstrumentName{}, invalid(field+".isin", err)
+	}
+	return ledger.InstrumentName{ISIN: isin, Name: n.GetName()}, nil
 }
 
 // checkDelivery refuses a missing delivery, one for another batch than id
@@ -368,7 +392,7 @@ func deliveryItems(d *connectorv1.Delivery) int {
 	n := len(d.GetTransactions()) + len(d.GetBalanceAssertions()) + len(d.GetProblems()) +
 		len(d.GetPrices()) + len(d.GetFxRates()) + len(d.GetIndexReadings()) + len(d.GetIndexLevels()) +
 		len(d.GetBondTerms()) + len(d.GetCrossCheckPrices()) + len(d.GetBrokerAccounts()) +
-		len(d.GetTickers()) + len(d.GetTickerTransactions())
+		len(d.GetTickers()) + len(d.GetTickerTransactions()) + len(d.GetInstrumentNames())
 	for _, t := range d.GetTransactions() {
 		n += len(t.GetPostings())
 	}

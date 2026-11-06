@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a542eb68946a
+  - type: implements
+    from: SYM-views-app-views-instrument-names
+    to: REQ-views-instrument-names
+    created_at: 2026-11-06T07:03:41.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51dc19bc05f7
+  - type: covered_by
+    from: SYM-views-app-views-instrument-names
+    to: TEST-views-connectapi-names
+    created_at: 2026-11-06T07:03:41.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30cd8498a582

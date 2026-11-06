@@ -860,3 +860,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6feba274b92
+  - type: constrains
+    from: REQ-decision-d197-1-instrument-display-name
+    to: FACT-SUBJECT-78769BB3928FD422
+    created_at: 2026-11-06T06:59:12.097Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3bd509e07364
+  - type: requires_property
+    from: REQ-decision-d197-1-instrument-display-name
+    to: FACT-PROP-99F309583B91413E
+    created_at: 2026-11-06T06:59:12.146Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-268f19fd97a9
+  - type: specified_by
+    from: REQ-decision-d197-1-instrument-display-name
+    to: SCEN-decision-d197-1-instrument-display-name
+    created_at: 2026-11-06T06:59:12.193Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d4f0c86200e

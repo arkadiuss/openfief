@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-59a020cf8bd0
+  - type: implements
+    from: SYM-ledger-current-instrument-names
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T06:59:39.383Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-660e6dba7239
+  - type: implements
+    from: SYM-ledger-current-instrument-names
+    to: REQ-decision-d197-1-instrument-display-name
+    created_at: 2026-11-06T06:59:39.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fb96a00e480
+  - type: covered_by
+    from: SYM-ledger-current-instrument-names
+    to: TEST-ledger-instrument-names
+    created_at: 2026-11-06T06:59:39.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465f7145591f

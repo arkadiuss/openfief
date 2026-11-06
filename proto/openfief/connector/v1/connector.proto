@@ -306,6 +306,20 @@ message Delivery {
   // with the ISIN the owner confirmed for its ticker, and holds it as an
   // ingest problem until the owner does.
   repeated TickerTransaction ticker_transactions = 14;
+  // The display names the institution gives the instruments it delivers
+  // by ISIN, such as IBKR's description (D-197), each ISIN once. The core
+  // keeps the first name any connector delivers for an instrument; the
+  // owner can rename it.
+  repeated InstrumentName instrument_names = 15;
+}
+
+// InstrumentName is an instrument's display name at the institution, for
+// the owner (D-197).
+message InstrumentName {
+  // The ISIN, with a valid check digit.
+  string isin = 1;
+  // At most 200 characters, no control characters.
+  string name = 2;
 }
 
 // Ticker is an instrument as an institution that reports no ISIN names it

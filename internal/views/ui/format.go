@@ -165,9 +165,14 @@ func bookLabel(b *viewsv1.Book) string {
 	return enumLabel(b.GetKind().String(), "BOOK_KIND_") + " " + b.GetCurrency()
 }
 
-// instrumentLabel names an instrument by its venue symbol and ISIN.
+// instrumentLabel names an instrument by its display name, when it has
+// one, before its venue symbol and ISIN (D-197).
 func instrumentLabel(i *viewsv1.Instrument) string {
-	return i.GetSymbol() + " (" + i.GetIsin() + ")"
+	label := i.GetSymbol() + " (" + i.GetIsin() + ")"
+	if name := i.GetName(); name != "" {
+		return name + " · " + label
+	}
+	return label
 }
 
 // enumLabel turns a protobuf enum value name into words: the prefix is

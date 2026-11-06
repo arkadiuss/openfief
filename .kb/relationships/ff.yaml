@@ -755,3 +755,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d6b9d90af3b4
+  - type: implements
+    from: SYM-ledger-app-names-rename
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:00:28.970Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f07e0959c9b
+  - type: covered_by
+    from: SYM-ledger-app-names-rename
+    to: TEST-ledger-app-names
+    created_at: 2026-11-06T07:00:28.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc5831c01848
+  - type: implements
+    from: SYM-gen-ledger-instruments-pb-rename-instrument-request
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:30:38.411Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bba7650e659c
+  - type: covered_by
+    from: SYM-gen-ledger-instruments-pb-rename-instrument-request
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:30:38.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3139d0cec6fa

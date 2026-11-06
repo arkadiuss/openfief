@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58486f35d17c
+  - type: implements
+    from: SYM-gen-ledger-instruments-connect-new-instrument-service-client
+    to: REQ-ledger-instrument-names
+    created_at: 2026-11-06T07:32:19.763Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16134bf36051
+  - type: covered_by
+    from: SYM-gen-ledger-instruments-connect-new-instrument-service-client
+    to: TEST-ledger-connectapi-instruments
+    created_at: 2026-11-06T07:32:19.796Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed784eab8f7a
