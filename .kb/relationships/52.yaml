@@ -846,3 +846,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f7541c42f094
+  - type: implements
+    from: SYM-views-connectapi-pb-batch-accounts
+    to: REQ-views-batch-counts-per-viewable-account
+    created_at: 2026-11-06T11:52:11.718Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfa19554d139
+  - type: covered_by
+    from: SYM-views-connectapi-pb-batch-accounts
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T11:52:11.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-797c1bde698a

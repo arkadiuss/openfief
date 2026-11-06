@@ -211,7 +211,11 @@ func TestCompletedBatches(t *testing.T) {
 func TestRecordedBatchKeepsAccounts(t *testing.T) {
 	t.Parallel()
 	s, _ := syncHistory(t)
-	upload := &ingest.Batch{ID: "u-1", Institution: "xtb", Source: app.SourceUpload, Mode: ingest.ModeTransactions, Accounts: []ledger.AccountID{"acc-2"}}
+	counts := []ingest.AccountCounts{{Account: "acc-2", Transactions: 4, New: 3, NewVersions: 1, FailedAssertions: 1}}
+	upload := &ingest.Batch{
+		ID: "u-1", Institution: "xtb", Source: app.SourceUpload, Mode: ingest.ModeTransactions, Accounts: []ledger.AccountID{"acc-2"},
+		PerAccount: counts,
+	}
 	if err := s.RecordBatch(t.Context(), "xtb-main", upload); err != nil {
 		t.Fatalf("RecordBatch u-1: %v", err)
 	}
@@ -221,5 +225,22 @@ func TestRecordedBatchKeepsAccounts(t *testing.T) {
 	}
 	if len(newest) != 1 || newest[0].ID != "u-1" || !cmp.Equal(newest[0].Accounts, []ledger.AccountID{"acc-2"}) {
 		t.Errorf("newest batch = %+v, want the upload u-1 booked into acc-2", newest)
+	}
+	if len(newest) == 1 && !cmp.Equal(newest[0].PerAccount, counts) {
+		t.Errorf("the upload's counts per account = %+v, want %+v (D-199)", newest[0].PerAccount, counts)
+	}
+}
+
+// TestCompletedBatchesByID checks that the batch history selects completed
+// batches by their IDs, for a sync's attempts (D-199).
+func TestCompletedBatchesByID(t *testing.T) {
+	t.Parallel()
+	s, _ := syncHistory(t)
+	byID, err := s.CompletedBatches(t.Context(), &ingest.BatchQuery{IDs: []ingest.BatchID{"b-1"}, Limit: 5})
+	if err != nil {
+		t.Fatalf("CompletedBatches of b-1: %v", err)
+	}
+	if len(byID) != 1 || byID[0].ID != "b-1" {
+		t.Errorf("batches with ID b-1 = %+v, want b-1 alone", byID)
 	}
 }

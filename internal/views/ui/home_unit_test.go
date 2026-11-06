@@ -133,6 +133,18 @@ func TestActivityLine(t *testing.T) {
 			want: activityEntry{Day: "2026-03-31", Text: "Imported · files · 1 new transaction, 2 left out", Links: []inboxLink{{Href: "/accounts/" + accountID, Text: "Synthetic brokerage"}}},
 		},
 		{
+			name: "a sync into two accounts, counted per account",
+			a: &viewsv1.Activity{
+				Kind: viewsv1.ActivityKind_ACTIVITY_KIND_SYNC, At: "2026-03-31T11:00:00Z", ConnectorInstance: "ibkr-main",
+				Batch: &viewsv1.ActivityBatch{NewTransactions: 3, AccountIds: []string{accountID, "acc-2"}, Accounts: []*viewsv1.BatchAccount{
+					{AccountId: accountID, NewTransactions: 1}, {AccountId: "acc-2", NewTransactions: 2},
+				}},
+			},
+			want: activityEntry{Day: "2026-03-31", Text: "Synced · ibkr-main · 3 new transactions", Links: []inboxLink{
+				{Href: "/accounts/" + accountID, Text: "Synthetic brokerage: 1 new"}, {Href: "/accounts/acc-2", Text: "acc-2: 2 new"},
+			}},
+		},
+		{
 			name: "a failed sync",
 			a: &viewsv1.Activity{
 				Kind: viewsv1.ActivityKind_ACTIVITY_KIND_SYNC_FAILED, At: "2026-03-30T06:00:00Z", ConnectorInstance: "xtb-main",

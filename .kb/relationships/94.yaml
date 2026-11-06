@@ -776,3 +776,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-67a013ac1c9a
+  - type: executable_for
+    from: SYM-ledger-app-test-import-summary-per-account
+    to: TEST-ledger-app-per-account
+    created_at: 2026-11-06T11:52:25.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9462f6b980ba

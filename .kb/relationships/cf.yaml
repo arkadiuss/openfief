@@ -762,3 +762,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c262b83fc948
+  - type: implements
+    from: SYM-ledger-app-import-summary-per-account
+    to: REQ-views-batch-counts-per-viewable-account
+    created_at: 2026-11-06T11:51:56.883Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fee0c01c07e
+  - type: covered_by
+    from: SYM-ledger-app-import-summary-per-account
+    to: TEST-ledger-app-per-account
+    created_at: 2026-11-06T11:51:56.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ad82120f152

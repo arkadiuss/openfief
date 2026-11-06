@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2af3e72407b
+  - type: constrains
+    from: REQ-views-batch-counts-per-viewable-account
+    to: FACT-SUBJECT-8719479B656BD2E4
+    created_at: 2026-11-06T11:51:21.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a3737a6d78f
+  - type: requires_property
+    from: REQ-views-batch-counts-per-viewable-account
+    to: FACT-PROP-77701B8DFDEB24E6
+    created_at: 2026-11-06T11:51:21.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be8634c636c5
+  - type: specified_by
+    from: REQ-views-batch-counts-per-viewable-account
+    to: SCEN-views-batch-counts-per-viewable-account
+    created_at: 2026-11-06T11:51:21.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9603e733177c

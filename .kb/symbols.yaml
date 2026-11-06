@@ -145937,3 +145937,416 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-instrument
+  - id: SYM-ingest-account-counts
+    title: AccountCounts
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:51:22.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-count-per-account
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-ingest-count-per-account
+    title: CountPerAccount
+    sourceFile: internal/ingest/batch.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:51:27.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-count-per-account
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-ingest-pg-batch-i-ds
+    title: batchIDs
+    sourceFile: internal/ingest/postgres/history.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:51:32.422Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-ingest-pg-account-count
+    title: accountCount
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:51:36.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-ingest-pg-account-counts
+    title: accountCounts
+    sourceFile: internal/ingest/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:51:41.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-pg-sync-history
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-ledger-app-account-import
+    title: AccountImport
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:51:45.995Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-per-account
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-ledger-app-account-result
+    title: AccountResult
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:51:50.236Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-per-account
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-ledger-app-import-summary-per-account
+    title: ImportSummary.PerAccount
+    sourceFile: internal/ledger/app/import.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:51:55.194Z
+    relationships:
+      - type: covered_by
+        target: TEST-ledger-app-per-account
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-views-scope-batch
+    title: ScopeBatch
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:00.092Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-scope-batch
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-views-app-views-booked-by
+    title: Views.bookedBy
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:05.137Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-batch-counts
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-views-connectapi-pb-batch-accounts
+    title: pbBatchAccounts
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:09.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-ui-batch-links
+    title: batchLinks
+    sourceFile: internal/views/ui/home.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:14.853Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-home-unit
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-ingest-test-count-per-account
+    title: TestCountPerAccount
+    sourceFile: internal/ingest/counts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:19.198Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-count-per-account
+  - id: SYM-ledger-app-test-import-summary-per-account
+    title: TestImportSummaryPerAccount
+    sourceFile: internal/ledger/app/peraccount_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:23.528Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-per-account
+  - id: SYM-views-app-test-batch-counts-per-viewable-account
+    title: TestBatchCountsPerViewableAccount
+    sourceFile: internal/views/app/batchcounts_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:27.944Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-batch-counts
+  - id: SYM-views-app-test-helper-counted-history
+    title: countedHistory
+    sourceFile: internal/views/app/batchcounts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:32.107Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-batch-counts
+  - id: SYM-views-app-test-helper-upload-seen
+    title: uploadSeen
+    sourceFile: internal/views/app/batchcounts_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:36.300Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-batch-counts
+  - id: SYM-views-test-scope-batch
+    title: TestScopeBatch
+    sourceFile: internal/views/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:40.628Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-scope-batch
+  - id: SYM-ledger-app-test-helper-in
+    title: in
+    sourceFile: internal/ledger/app/import_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:44.793Z
+    relationships:
+      - type: executable_for
+        target: TEST-ledger-app-import
+  - id: SYM-ingest-pg-test-completed-batches-by-id
+    title: TestCompletedBatchesByID
+    sourceFile: internal/ingest/postgres/history_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T11:52:48.994Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-pg-sync-history
+  - id: SYM-gen-views-batch-counts-activity-batch-get-accounts
+    title: ActivityBatch.GetAccounts
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:12:33.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account
+    title: BatchAccount
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:12:38.048Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-reset
+    title: BatchAccount.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:12:43.570Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-string
+    title: BatchAccount.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:12:48.931Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-proto-message
+    title: BatchAccount.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:12:54.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-proto-reflect
+    title: BatchAccount.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:12:59.827Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-descriptor
+    title: BatchAccount.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:13:05.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-get-account-id
+    title: BatchAccount.GetAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:13:10.656Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-get-transactions
+    title: BatchAccount.GetTransactions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:13:16.339Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-get-new-transactions
+    title: BatchAccount.GetNewTransactions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:13:22.233Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-get-corrected
+    title: BatchAccount.GetCorrected
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:13:28.261Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-batch-account-get-failed-assertions
+    title: BatchAccount.GetFailedAssertions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:13:34.234Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account
+  - id: SYM-gen-views-batch-counts-sync-attempt-get-accounts
+    title: SyncAttempt.GetAccounts
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T12:13:40.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-batch-counts-per-viewable-account

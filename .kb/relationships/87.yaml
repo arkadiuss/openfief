@@ -797,3 +797,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9b504e76d9c1
+  - type: implements
+    from: SYM-gen-views-batch-counts-batch-account-get-failed-assertions
+    to: REQ-views-batch-counts-per-viewable-account
+    created_at: 2026-11-06T12:13:36.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9b255aacf13
+  - type: covered_by
+    from: SYM-gen-views-batch-counts-batch-account-get-failed-assertions
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T12:13:36.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2dda058d4904

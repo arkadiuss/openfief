@@ -25,6 +25,10 @@ type ImportSummary struct {
 	Unchanged   int
 	New         int
 	NewVersions int
+	// Accounts counts the same per account of the incoming transactions,
+	// so a caller who may view only some of an import's accounts sees only
+	// theirs (D-199).
+	Accounts map[ledger.AccountID]AccountImport
 	// EarliestAffected is, per account whose current transactions the import
 	// changed, the earliest date it changed: the date of every appended
 	// version and of every version it superseded, in that version's account.
@@ -50,16 +54,66 @@ func (s *ImportSummary) Flagged() []AssertionCheck {
 	return out
 }
 
-// count adds one transaction with decision d.
-func (s *ImportSummary) count(d ledger.ImportDecision) {
+// AccountImport is what an import did with one account's incoming
+// transactions, by import decision.
+type AccountImport struct {
+	Unchanged, New, NewVersions int
+}
+
+// AccountResult is what an import did in one account: its incoming
+// transactions by import decision and its checks that found a mismatch.
+type AccountResult struct {
+	Account                     ledger.AccountID
+	Unchanged, New, NewVersions int
+	Flagged                     int
+}
+
+// PerAccount returns what the import did in each account it imported a
+// transaction into or flagged a check of, in ID order (D-199).
+func (s *ImportSummary) PerAccount() []AccountResult {
+	byID := map[ledger.AccountID]*AccountResult{}
+	get := func(id ledger.AccountID) *AccountResult {
+		if r, ok := byID[id]; ok {
+			return r
+		}
+		byID[id] = &AccountResult{Account: id}
+		return byID[id]
+	}
+	for id, a := range s.Accounts {
+		r := get(id)
+		r.Unchanged, r.New, r.NewVersions = a.Unchanged, a.New, a.NewVersions
+	}
+	for i := range s.Checks {
+		if s.Checks[i].Flagged() {
+			get(s.Checks[i].Assertion.Account).Flagged++
+		}
+	}
+	out := make([]AccountResult, 0, len(byID))
+	for _, r := range byID {
+		out = append(out, *r)
+	}
+	slices.SortFunc(out, func(a, b AccountResult) int { return cmp.Compare(a.Account, b.Account) })
+	return out
+}
+
+// count adds one transaction with decision d, in account.
+func (s *ImportSummary) count(account ledger.AccountID, d ledger.ImportDecision) {
+	if s.Accounts == nil {
+		s.Accounts = map[ledger.AccountID]AccountImport{}
+	}
+	a := s.Accounts[account]
 	switch d {
 	case ledger.ImportUnchanged:
 		s.Unchanged++
+		a.Unchanged++
 	case ledger.ImportNew:
 		s.New++
+		a.New++
 	case ledger.ImportNewVersion:
 		s.NewVersions++
+		a.NewVersions++
 	}
+	s.Accounts[account] = a
 }
 
 // affect records that account's current transactions changed on day.
@@ -181,7 +235,7 @@ func importTx(ctx context.Context, tx Store, txs []ledger.Transaction, assertion
 		if err != nil {
 			return ImportSummary{}, err
 		}
-		sum.count(d)
+		sum.count(t.Account, d)
 		if d != ledger.ImportUnchanged {
 			sum.affect(t.Account, t.Date)
 		}

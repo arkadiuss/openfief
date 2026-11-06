@@ -741,3 +741,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c22f10a5439b
+  - type: verified_by
+    from: SCEN-views-batch-counts-per-viewable-account
+    to: TEST-views-scope-batch
+    created_at: 2026-11-06T11:51:16.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52060b45a463
+  - type: verified_by
+    from: SCEN-views-batch-counts-per-viewable-account
+    to: TEST-views-app-batch-counts
+    created_at: 2026-11-06T11:51:16.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-942e94931cd0
+  - type: verified_by
+    from: SCEN-views-batch-counts-per-viewable-account
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T11:51:16.747Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d26d36e1a5ef
+  - type: verified_by
+    from: SCEN-views-batch-counts-per-viewable-account
+    to: TEST-ledger-app-per-account
+    created_at: 2026-11-06T11:51:16.771Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f52d3ca12b2d
+  - type: verified_by
+    from: SCEN-views-batch-counts-per-viewable-account
+    to: TEST-ingest-count-per-account
+    created_at: 2026-11-06T11:51:16.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-394f9c7165ec
+  - type: verified_by
+    from: SCEN-views-batch-counts-per-viewable-account
+    to: TEST-ui-home-unit
+    created_at: 2026-11-06T11:51:16.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df96aaa8179e
+  - type: verified_by
+    from: SCEN-views-batch-counts-per-viewable-account
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-06T11:51:16.836Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2b55690767e

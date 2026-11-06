@@ -146,6 +146,7 @@ func TestBondLotsAdd(t *testing.T) {
 	want := ingest.Batch{
 		ID: "b-1", Institution: "treasury-bonds", Source: app.SourceEntry, Mode: ingest.ModeTransactions, Started: march2(t),
 		Transactions: 2, Imported: ingest.ImportSummary{New: 2}, Accounts: []ledger.AccountID{bondsAccount},
+		PerAccount: []ingest.AccountCounts{{Account: bondsAccount, Transactions: 2}},
 	}
 	if diff := cmp.Diff(want, got, cmpopts.EquateEmpty()); diff != "" {
 		t.Errorf("Add batch (-want +got):\n%s", diff)

@@ -804,3 +804,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b89c36d5004
+  - type: implements
+    from: SYM-ingest-count-per-account
+    to: REQ-views-batch-counts-per-viewable-account
+    created_at: 2026-11-06T11:51:29.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23eaf668bd57
+  - type: covered_by
+    from: SYM-ingest-count-per-account
+    to: TEST-ingest-count-per-account
+    created_at: 2026-11-06T11:51:29.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b843b67c435

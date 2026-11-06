@@ -199,6 +199,9 @@ type BatchRecord struct {
 	// account a statement of several accounts books (D-109, D-140); none
 	// for a batch completed before the history kept them.
 	Accounts []ledger.AccountID
+	// PerAccount are its counts in each of Accounts (D-199); none for a
+	// batch completed before the history kept them.
+	PerAccount []AccountCounts
 }
 
 // BatchQuery selects completed import batches, newest first: by when they
@@ -209,6 +212,8 @@ type BatchQuery struct {
 	// a previous page.
 	Before   time.Time
 	BeforeID BatchID
+	// IDs, unless empty, returns only the batches with these IDs.
+	IDs []BatchID
 	// Limit is the most batches to return.
 	Limit int
 }

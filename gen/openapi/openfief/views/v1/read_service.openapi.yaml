@@ -154,11 +154,22 @@ components:
              (D-109, D-140), the caller may view (D-163). A batch whose accounts the
              caller may view none of is not listed; one that booked into no account,
              or completed before batches recorded their accounts, names none.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.BatchAccount'
+          title: accounts
+          description: |-
+            The batch's counts in each of account_ids, in the same order (D-199);
+             empty for a batch completed before batches recorded them.
       title: ActivityBatch
       additionalProperties: false
       description: |-
         ActivityBatch is a completed import batch: what came in and what the
-         ledger did with it. Only counts, never an amount (GR-12).
+         ledger did with it. Only counts, never an amount (GR-12). To a caller who
+         may view only some of the accounts it booked into (D-163), its counts are
+         those of these accounts alone, summed from accounts, and problems and
+         unsupported, rows tied to no account, are 0 (D-199).
     openfief.views.v1.ActivityChange:
       type: object
       properties:
@@ -447,6 +458,35 @@ components:
       title: BacktestDay
       additionalProperties: false
       description: BacktestDay is the model portfolio's backtest at the end of one day.
+    openfief.views.v1.BatchAccount:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        transactions:
+          type: integer
+          title: transactions
+          format: int32
+        newTransactions:
+          type: integer
+          title: new_transactions
+          format: int32
+        corrected:
+          type: integer
+          title: corrected
+          format: int32
+        failedAssertions:
+          type: integer
+          title: failed_assertions
+          format: int32
+      title: BatchAccount
+      additionalProperties: false
+      description: |-
+        BatchAccount is what an import batch did in one account (D-199): the
+         transactions its mapping produced there, of them those new to the ledger
+         and those that corrected one, and the balance assertions that didn't
+         match. Only counts (GR-12).
     openfief.views.v1.BondPayout:
       type: string
       title: BondPayout
@@ -2253,6 +2293,16 @@ components:
           type: string
           title: next_sync_at
           description: When the attempt scheduled the next one, RFC 3339, UTC.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.BatchAccount'
+          title: accounts
+          description: |-
+            For an attempt that went through, the accounts its batch booked into
+             that the caller may view, each with its counts, in ID order (D-199);
+             empty for a failed attempt and for a batch completed before batches
+             recorded them. Set by ListSyncAttempts only.
       title: SyncAttempt
       additionalProperties: false
       description: SyncAttempt is one attempt to sync a connector instance.

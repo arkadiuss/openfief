@@ -337,10 +337,16 @@ func (i ledgerImporter) Seed(ctx context.Context, txs []ledger.Transaction, asse
 // importSummary returns the ingest context's view of a ledger import
 // summary.
 func importSummary(s *ledgerapp.ImportSummary) ingest.ImportSummary {
-	return ingest.ImportSummary{
+	out := ingest.ImportSummary{
 		New: s.New, NewVersions: s.NewVersions, Unchanged: s.Unchanged,
 		FailedAssertions: len(s.Flagged()), AlreadySeeded: s.AlreadySeeded,
 	}
+	for _, a := range s.PerAccount() {
+		out.Accounts = append(out.Accounts, ingest.AccountCounts{
+			Account: a.Account, New: a.New, NewVersions: a.NewVersions, Unchanged: a.Unchanged, FailedAssertions: a.Flagged,
+		})
+	}
+	return out
 }
 
 // valuationInputs records a delivery's prices, FX rates, index readings,

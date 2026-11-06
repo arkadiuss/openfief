@@ -93,7 +93,8 @@ func (v *Views) Activity(ctx context.Context, after *views.ActivityCursor, size 
 }
 
 // batchActivity returns up to fetch completed batches after b, each naming
-// only the accounts it booked into that the caller may view (D-163), and
+// only the accounts it booked into that the caller may view, with only
+// their counts (D-163, D-199: views.ScopeBatch), and
 // hidden when it booked into some and the caller may view none of them;
 // one that booked into none is hidden unless the caller may see its
 // instance, bound to the accounts in bound (D-199).
@@ -108,9 +109,11 @@ func (v *Views) batchActivity(ctx context.Context, b views.ActivityBound, fetch 
 	out := make([]views.Activity, len(batches))
 	for i := range batches {
 		booked := batches[i].Accounts
-		if batches[i].Accounts, err = v.viewableIDs(ctx, booked); err != nil {
-			return nil, err
+		viewable, viewErr := v.viewableIDs(ctx, booked)
+		if viewErr != nil {
+			return nil, viewErr
 		}
+		batches[i] = views.ScopeBatch(&batches[i], viewable)
 		out[i] = views.BatchActivity(&batches[i])
 		visible := len(batches[i].Accounts) > 0
 		if len(booked) == 0 {
@@ -222,6 +225,10 @@ type SyncAttemptPage struct {
 	Status   ingest.SyncStatus
 	Attempts []ingest.SyncAttempt
 	Next     *views.ActivityBound
+	// Booked are, by batch, the counts of each account the batch of an
+	// attempt that went through booked into, of the accounts the caller
+	// may view (D-199).
+	Booked map[ingest.BatchID][]ingest.AccountCounts
 }
 
 // SyncAttempts returns the page of at most size of instance's sync
@@ -256,5 +263,36 @@ func (v *Views) SyncAttempts(ctx context.Context, instance string, after views.A
 		page.Next = &views.ActivityBound{At: last.Ended, ID: last.ID}
 	}
 	page.Attempts = attempts
+	if page.Booked, err = v.bookedBy(ctx, attempts); err != nil {
+		return SyncAttemptPage{}, err
+	}
 	return page, nil
+}
+
+// bookedBy returns, by batch, the counts of the accounts the caller may
+// view that the batch of each of attempts that went through booked into
+// (D-199).
+func (v *Views) bookedBy(ctx context.Context, attempts []ingest.SyncAttempt) (map[ingest.BatchID][]ingest.AccountCounts, error) {
+	var ids []ingest.BatchID
+	for i := range attempts {
+		if !attempts[i].Failed() {
+			ids = append(ids, attempts[i].Batch)
+		}
+	}
+	out := map[ingest.BatchID][]ingest.AccountCounts{}
+	if len(ids) == 0 {
+		return out, nil
+	}
+	batches, err := v.syncs.CompletedBatches(ctx, &ingest.BatchQuery{IDs: ids, Limit: len(ids)})
+	if err != nil {
+		return nil, fmt.Errorf("loading the attempts' batches: %w", err)
+	}
+	for i := range batches {
+		viewable, viewErr := v.viewableIDs(ctx, batches[i].Accounts)
+		if viewErr != nil {
+			return nil, viewErr
+		}
+		out[batches[i].ID] = views.ScopeBatch(&batches[i], viewable).PerAccount
+	}
+	return out, nil
 }

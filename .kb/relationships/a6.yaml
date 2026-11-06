@@ -790,3 +790,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35378aa79f5b
+  - type: executable_for
+    from: SYM-views-app-test-helper-upload-seen
+    to: TEST-views-app-batch-counts
+    created_at: 2026-11-06T11:52:37.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-890e261d27ae

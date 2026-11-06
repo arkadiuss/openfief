@@ -84,6 +84,22 @@ type ImportSummary struct {
 	// AlreadySeeded are the accounts an opening batch found already seeded
 	// with the same content: for them the batch changed nothing (D-23).
 	AlreadySeeded []ledger.AccountID
+	// Accounts are the same counts per account, in ID order, their
+	// Transactions left zero: the mapping counts those (D-199).
+	Accounts []AccountCounts
+}
+
+// AccountCounts is what a batch did in one account (D-199): the
+// transactions its mapping produced there, what the ledger did with them,
+// and the balance assertions that didn't match. Only counts, never an
+// amount (GR-12).
+type AccountCounts struct {
+	Account          ledger.AccountID
+	Transactions     int
+	New              int
+	NewVersions      int
+	Unchanged        int
+	FailedAssertions int
 }
 
 // Batch is one run of a connector's ingest path: what was read from where,
@@ -106,6 +122,9 @@ type Batch struct {
 	// balance assertions are in, in ID order: every mapped account a
 	// statement of several accounts books (D-109).
 	Accounts []ledger.AccountID
+	// PerAccount are its counts in each of Accounts, in the same order
+	// (D-199).
+	PerAccount []AccountCounts
 	// Unmapped are the broker accounts the delivery named that are not
 	// mapped to an OpenFief account: nothing of them was booked (D-72).
 	Unmapped []BrokerAccountID
@@ -130,12 +149,36 @@ func NewBatch(id BatchID, institution InstitutionID, source string, mode Mode, s
 
 // Complete records in b the results of its mapping m and of importing it
 // into the ledger.
-func (b *Batch) Complete(m *Mapping, imported ImportSummary) {
+func (b *Batch) Complete(m *Mapping, imported *ImportSummary) {
 	b.Transactions = len(m.Transactions)
 	b.Assertions = len(m.Assertions)
-	b.Imported = imported
+	b.Imported = *imported
 	b.Problems = append([]Problem(nil), m.Problems...)
 	b.Accounts = MappedAccounts(m)
+	b.PerAccount = CountPerAccount(m, imported)
+}
+
+// CountPerAccount returns, for each account m's transactions and balance
+// assertions are in, in ID order, the transactions m produced there and
+// imported's counts of it; an account imported doesn't name has only its
+// transactions (D-199).
+func CountPerAccount(m *Mapping, imported *ImportSummary) []AccountCounts {
+	accounts := MappedAccounts(m)
+	out := make([]AccountCounts, len(accounts))
+	at := make(map[ledger.AccountID]int, len(accounts))
+	for i, a := range accounts {
+		out[i].Account, at[a] = a, i
+	}
+	for i := range m.Transactions {
+		out[at[m.Transactions[i].Account]].Transactions++
+	}
+	for _, c := range imported.Accounts {
+		if i, ok := at[c.Account]; ok {
+			c.Transactions = out[i].Transactions
+			out[i] = c
+		}
+	}
+	return out
 }
 
 // MappedAccounts returns the accounts m's transactions and balance

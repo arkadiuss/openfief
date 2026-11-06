@@ -50,7 +50,7 @@ func TestSeed(t *testing.T) {
 		t.Fatalf("first Seed: %v", err)
 	}
 	checks := []app.AssertionCheck{{Assertion: assertions[0], Status: app.AssertionMatched, Derived: dec(t, "250")}}
-	checkSummary(t, &app.ImportSummary{New: 2, EarliestAffected: affected(t, "acc-1", "2026-03-31"), Checks: checks}, &sum)
+	checkSummary(t, &app.ImportSummary{New: 2, Accounts: in("acc-1", app.AccountImport{New: 2}), EarliestAffected: affected(t, "acc-1", "2026-03-31"), Checks: checks}, &sum)
 	wantLog := []ledger.VersionedTransaction{versioned(&first[1], 1), versioned(&first[0], 1)}
 	checkLog(t, store, wantLog)
 
@@ -58,7 +58,7 @@ func TestSeed(t *testing.T) {
 	if err != nil {
 		t.Fatalf("same Seed again: %v", err)
 	}
-	checkSummary(t, &app.ImportSummary{Unchanged: 2, AlreadySeeded: []ledger.AccountID{acc1}, Checks: checks}, &again)
+	checkSummary(t, &app.ImportSummary{Unchanged: 2, Accounts: in("acc-1", app.AccountImport{Unchanged: 2}), AlreadySeeded: []ledger.AccountID{acc1}, Checks: checks}, &again)
 
 	changed := seeding(t, acc1, "2026-03-31", "1510", "250")
 	_, err = l.Seed(ctx, changed, nil)
@@ -78,7 +78,7 @@ func TestSeed(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Seed of acc-2: %v", err)
 	}
-	checkSummary(t, &app.ImportSummary{New: 2, EarliestAffected: affected(t, "acc-2", "2026-03-31")}, &sum)
+	checkSummary(t, &app.ImportSummary{New: 2, Accounts: in("acc-2", app.AccountImport{New: 2}), EarliestAffected: affected(t, "acc-2", "2026-03-31")}, &sum)
 }
 
 func TestGoLive(t *testing.T) {
@@ -167,18 +167,18 @@ func TestAddOpeningLots(t *testing.T) {
 	if err != nil {
 		t.Fatalf("first lot: %v", err)
 	}
-	checkSummary(t, &app.ImportSummary{New: 1, EarliestAffected: affected(t, "acc-1", "2026-06-01")}, &sum)
+	checkSummary(t, &app.ImportSummary{New: 1, Accounts: in("acc-1", app.AccountImport{New: 1}), EarliestAffected: affected(t, "acc-1", "2026-06-01")}, &sum)
 
 	second := bondLot(t, acc1, "EDO0536", "2026-05-20", "2026-06-01", "5")
 	if sum, err = l.AddOpeningLots(ctx, []ledger.Transaction{second}, nil); err != nil {
 		t.Fatalf("second lot: %v", err)
 	}
-	checkSummary(t, &app.ImportSummary{New: 1, EarliestAffected: affected(t, "acc-1", "2026-06-01")}, &sum)
+	checkSummary(t, &app.ImportSummary{New: 1, Accounts: in("acc-1", app.AccountImport{New: 1}), EarliestAffected: affected(t, "acc-1", "2026-06-01")}, &sum)
 
 	if sum, err = l.AddOpeningLots(ctx, []ledger.Transaction{second}, nil); err != nil {
 		t.Fatalf("second lot again: %v", err)
 	}
-	checkSummary(t, &app.ImportSummary{Unchanged: 1}, &sum)
+	checkSummary(t, &app.ImportSummary{Unchanged: 1, Accounts: in("acc-1", app.AccountImport{Unchanged: 1})}, &sum)
 
 	// A lot on another date than go-live would move it: refused, nothing imported.
 	late := bondLot(t, acc1, "EDO0536", "2026-05-21", "2026-06-15", "1")
@@ -192,7 +192,7 @@ func TestAddOpeningLots(t *testing.T) {
 	if sum, err = l.AddOpeningLots(ctx, []ledger.Transaction{gone}, nil); err != nil {
 		t.Fatalf("deleting the first lot: %v", err)
 	}
-	checkSummary(t, &app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-06-01")}, &sum)
+	checkSummary(t, &app.ImportSummary{NewVersions: 1, Accounts: in("acc-1", app.AccountImport{NewVersions: 1}), EarliestAffected: affected(t, "acc-1", "2026-06-01")}, &sum)
 	checkLog(t, store, []ledger.VersionedTransaction{versioned(&first, 1), versioned(&gone, 2), versioned(&second, 1)})
 	current, err := l.CurrentTransactions(ctx, acc1)
 	if err != nil {

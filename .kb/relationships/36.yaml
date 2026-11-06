@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-97bf8c998c44
+  - type: implements
+    from: SYM-ingest-account-counts
+    to: REQ-views-batch-counts-per-viewable-account
+    created_at: 2026-11-06T11:51:23.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f28df7c3e6a
+  - type: covered_by
+    from: SYM-ingest-account-counts
+    to: TEST-ingest-count-per-account
+    created_at: 2026-11-06T11:51:24.036Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-495e81cd85ea

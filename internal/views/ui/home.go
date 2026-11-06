@@ -237,7 +237,7 @@ func activityLine(a *viewsv1.Activity, names map[string]string, f numberFormat) 
 		if b.GetUnsupported() > 0 {
 			e.Text += ", " + strconv.Itoa(int(b.GetUnsupported())) + " left out"
 		}
-		e.Links = accountLinks(b.GetAccountIds(), names)
+		e.Links = batchLinks(b, names)
 	case viewsv1.ActivityKind_ACTIVITY_KIND_SYNC_FAILED:
 		e.Text = "Sync failed · " + inst + " · " + enumLabel(a.GetAttempt().GetErrorClass().String(), "SYNC_ERROR_CLASS_")
 	case viewsv1.ActivityKind_ACTIVITY_KIND_COUPON:
@@ -255,6 +255,23 @@ func activityLine(a *viewsv1.Activity, names map[string]string, f numberFormat) 
 		e.Text = "Something happened"
 	}
 	return e
+}
+
+// batchLinks links each account a batch booked into, of those the caller
+// may view, to its page, named by names with its own new transactions
+// when the read API counts them per account (D-199).
+func batchLinks(b *viewsv1.ActivityBatch, names map[string]string) []inboxLink {
+	if len(b.GetAccounts()) == 0 {
+		return accountLinks(b.GetAccountIds(), names)
+	}
+	out := make([]inboxLink, 0, len(b.GetAccounts()))
+	for _, c := range b.GetAccounts() {
+		id := c.GetAccountId()
+		out = append(out, inboxLink{
+			Href: "/accounts/" + url.PathEscape(id), Text: cmp.Or(names[id], id) + ": " + strconv.Itoa(int(c.GetNewTransactions())) + " new",
+		})
+	}
+	return out
 }
 
 // accountLinks links each of ids to its account's page, named by names.

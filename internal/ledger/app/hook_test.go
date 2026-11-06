@@ -57,6 +57,7 @@ func TestImportHooksRunInTheImportTransaction(t *testing.T) {
 			wantLog: []ledger.VersionedTransaction{versioned(&f.deposit, 1)},
 			wantSeen: []app.ImportSummary{{
 				New:              1,
+				Accounts:         in("acc-1", app.AccountImport{New: 1}),
 				EarliestAffected: affected(t, "acc-1", "2026-03-02"),
 				Checks:           []app.AssertionCheck{matched},
 			}},

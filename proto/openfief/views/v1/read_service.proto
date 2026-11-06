@@ -1386,7 +1386,10 @@ enum ActivityKind {
 }
 
 // ActivityBatch is a completed import batch: what came in and what the
-// ledger did with it. Only counts, never an amount (GR-12).
+// ledger did with it. Only counts, never an amount (GR-12). To a caller who
+// may view only some of the accounts it booked into (D-163), its counts are
+// those of these accounts alone, summed from accounts, and problems and
+// unsupported, rows tied to no account, are 0 (D-199).
 message ActivityBatch {
   string batch_id = 1;
   // The ingest path that ran it: "sync", "upload", "entry" or "file".
@@ -1411,6 +1414,21 @@ message ActivityBatch {
   // caller may view none of is not listed; one that booked into no account,
   // or completed before batches recorded their accounts, names none.
   repeated string account_ids = 11;
+  // The batch's counts in each of account_ids, in the same order (D-199);
+  // empty for a batch completed before batches recorded them.
+  repeated BatchAccount accounts = 12;
+}
+
+// BatchAccount is what an import batch did in one account (D-199): the
+// transactions its mapping produced there, of them those new to the ledger
+// and those that corrected one, and the balance assertions that didn't
+// match. Only counts (GR-12).
+message BatchAccount {
+  string account_id = 1;
+  int32 transactions = 2;
+  int32 new_transactions = 3;
+  int32 corrected = 4;
+  int32 failed_assertions = 5;
 }
 
 // ActivityChange is a transaction version the ledger recorded: a coupon or
@@ -1510,6 +1528,11 @@ message SyncAttempt {
   int32 failures = 8;
   // When the attempt scheduled the next one, RFC 3339, UTC.
   string next_sync_at = 9;
+  // For an attempt that went through, the accounts its batch booked into
+  // that the caller may view, each with its counts, in ID order (D-199);
+  // empty for a failed attempt and for a batch completed before batches
+  // recorded them. Set by ListSyncAttempts only.
+  repeated BatchAccount accounts = 10;
 }
 
 // SyncStatus is where a connector instance's syncs stand.

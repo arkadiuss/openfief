@@ -60,11 +60,24 @@ func pbActivity(a *views.Activity) *viewsv1.Activity {
 		for _, acc := range b.Accounts {
 			out.Batch.AccountIds = append(out.Batch.AccountIds, string(acc))
 		}
+		out.Batch.Accounts = pbBatchAccounts(b.PerAccount)
 	case a.Attempt != nil:
 		out.ConnectorInstance = a.Attempt.Instance
 		out.Attempt = pbSyncAttempt(a.Attempt)
 	case a.Change != nil:
 		out.Change = pbChange(a.Change)
+	}
+	return out
+}
+
+// pbBatchAccounts converts a batch's counts per account (D-199).
+func pbBatchAccounts(counts []ingest.AccountCounts) []*viewsv1.BatchAccount {
+	out := make([]*viewsv1.BatchAccount, 0, len(counts))
+	for _, c := range counts {
+		out = append(out, &viewsv1.BatchAccount{
+			AccountId: string(c.Account), Transactions: clampInt32(c.Transactions), NewTransactions: clampInt32(c.New),
+			Corrected: clampInt32(c.NewVersions), FailedAssertions: clampInt32(c.FailedAssertions),
+		})
 	}
 	return out
 }
@@ -155,7 +168,9 @@ func (s *readService) ListSyncAttempts(ctx context.Context, req *connect.Request
 	}
 	out := &viewsv1.ListSyncAttemptsResponse{Status: pbSyncStatus(&page.Status), Attempts: make([]*viewsv1.SyncAttempt, 0, len(page.Attempts))}
 	for i := range page.Attempts {
-		out.Attempts = append(out.Attempts, pbSyncAttempt(&page.Attempts[i]))
+		a := pbSyncAttempt(&page.Attempts[i])
+		a.Accounts = pbBatchAccounts(page.Booked[page.Attempts[i].Batch])
+		out.Attempts = append(out.Attempts, a)
 	}
 	if page.Next != nil {
 		out.NextPageToken = page.Next.Encode()

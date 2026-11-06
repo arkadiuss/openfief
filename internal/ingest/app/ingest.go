@@ -112,7 +112,7 @@ func (s *Service) ingest(ctx context.Context, institution ingest.InstitutionID, 
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("ingest %s batch %s: %w", institution, batch.ID, err)
 	}
-	batch.Complete(&m, imported)
+	batch.Complete(&m, &imported)
 	return batch, nil
 }
 

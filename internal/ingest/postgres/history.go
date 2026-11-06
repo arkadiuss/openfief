@@ -142,12 +142,13 @@ func (s *Store) CompletedBatches(ctx context.Context, q *ingest.BatchQuery) ([]i
 	}
 	rows, err := s.pool.Query(ctx, `
 		SELECT id, instance, source, mode, finished_at, institution, transactions, new, new_versions, unchanged,
-			failed_assertions, problems, coalesce(unsupported, 0), coalesce(accounts, '{}')
+			failed_assertions, problems, coalesce(unsupported, 0), coalesce(accounts, '{}'), account_counts
 		FROM ingest.import_batches
 		WHERE state = 'completed'
 			AND ($1::timestamptz IS NULL OR (finished_at, id COLLATE "C") < ($1, $2::text COLLATE "C"))
+			AND (cardinality($4::text[]) = 0 OR id = ANY($4::text[]))
 		ORDER BY finished_at DESC, id COLLATE "C" DESC LIMIT $3`,
-		before, string(q.BeforeID), q.Limit)
+		before, string(q.BeforeID), q.Limit, batchIDs(q.IDs))
 	if err != nil {
 		return nil, fmt.Errorf("loading completed batches: %w", err)
 	}
@@ -158,17 +159,33 @@ func (s *Store) CompletedBatches(ctx context.Context, q *ingest.BatchQuery) ([]i
 	return out, nil
 }
 
+// batchIDs returns ids as text, an empty array for none.
+func batchIDs(ids []ingest.BatchID) []string {
+	out := make([]string, 0, len(ids))
+	for _, id := range ids {
+		out = append(out, string(id))
+	}
+	return out
+}
+
 // scanBatchRecord reads one completed batch.
 func scanBatchRecord(row pgx.CollectableRow) (ingest.BatchRecord, error) {
 	var b ingest.BatchRecord
 	var id, mode, institution string
 	var accounts []string
+	var counts []accountCount
 	if err := row.Scan(&id, &b.Instance, &b.Source, &mode, &b.Finished, &institution, &b.Transactions, &b.New,
-		&b.NewVersions, &b.Unchanged, &b.FailedAssertions, &b.Problems, &b.Unsupported, &accounts); err != nil {
+		&b.NewVersions, &b.Unchanged, &b.FailedAssertions, &b.Problems, &b.Unsupported, &accounts, &counts); err != nil {
 		return ingest.BatchRecord{}, fmt.Errorf("reading a batch: %w", err)
 	}
 	for _, a := range accounts {
 		b.Accounts = append(b.Accounts, ledger.AccountID(a))
+	}
+	for _, c := range counts {
+		b.PerAccount = append(b.PerAccount, ingest.AccountCounts{
+			Account: ledger.AccountID(c.Account), Transactions: c.Transactions, New: c.New, NewVersions: c.NewVersions,
+			Unchanged: c.Unchanged, FailedAssertions: c.FailedAssertions,
+		})
 	}
 	m, err := parseMode(mode)
 	if err != nil {

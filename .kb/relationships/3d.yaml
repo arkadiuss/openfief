@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1c00cf9234b1
+  - type: implements
+    from: SYM-gen-views-batch-counts-batch-account-get-corrected
+    to: REQ-views-batch-counts-per-viewable-account
+    created_at: 2026-11-06T12:13:30.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceecdb6c7c3c
+  - type: covered_by
+    from: SYM-gen-views-batch-counts-batch-account-get-corrected
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T12:13:30.056Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b5c75fd835f

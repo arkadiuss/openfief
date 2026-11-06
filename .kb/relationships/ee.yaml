@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a489f48c799a
+  - type: implements
+    from: SYM-ingest-pg-batch-i-ds
+    to: REQ-views-batch-counts-per-viewable-account
+    created_at: 2026-11-06T11:51:34.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b4cfe24448b
+  - type: covered_by
+    from: SYM-ingest-pg-batch-i-ds
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-06T11:51:34.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67050d54d5c3

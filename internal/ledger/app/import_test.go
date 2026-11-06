@@ -41,6 +41,11 @@ func newImportFixture(t *testing.T) importFixture {
 	return f
 }
 
+// in returns an Accounts map of what an import did in the one account id.
+func in(id string, a app.AccountImport) map[ledger.AccountID]app.AccountImport {
+	return map[ledger.AccountID]app.AccountImport{ledger.AccountID(id): a}
+}
+
 // affected returns an EarliestAffected map from account and date pairs.
 func affected(t *testing.T, pairs ...string) map[ledger.AccountID]kernel.Date {
 	t.Helper()
@@ -88,43 +93,43 @@ func TestImportAppendsVersions(t *testing.T) {
 		{
 			name:    "new keys become version 1",
 			imports: [][]ledger.Transaction{{f.deposit, f.buy}},
-			want:    app.ImportSummary{New: 2, EarliestAffected: affected(t, "acc-1", "2026-03-02")},
+			want:    app.ImportSummary{New: 2, Accounts: in("acc-1", app.AccountImport{New: 2}), EarliestAffected: affected(t, "acc-1", "2026-03-02")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.deposit, 1)},
 		},
 		{
 			name:    "re-import changes nothing",
 			imports: [][]ledger.Transaction{{f.deposit, f.buy}, {f.deposit, f.buy}},
-			want:    app.ImportSummary{Unchanged: 2},
+			want:    app.ImportSummary{Unchanged: 2, Accounts: in("acc-1", app.AccountImport{Unchanged: 2})},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.deposit, 1)},
 		},
 		{
 			name:    "posting order and number form don't matter",
 			imports: [][]ledger.Transaction{{f.buy}, {f.buyReordered}},
-			want:    app.ImportSummary{Unchanged: 1},
+			want:    app.ImportSummary{Unchanged: 1, Accounts: in("acc-1", app.AccountImport{Unchanged: 1})},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1)},
 		},
 		{
 			name:    "a changed row supersedes and the old version stays",
 			imports: [][]ledger.Transaction{{f.buy}, {f.buyCorrected}},
-			want:    app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03")},
+			want:    app.ImportSummary{NewVersions: 1, Accounts: in("acc-1", app.AccountImport{NewVersions: 1}), EarliestAffected: affected(t, "acc-1", "2026-03-03")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.buyCorrected, 2)},
 		},
 		{
 			name:    "changing a row back is another version",
 			imports: [][]ledger.Transaction{{f.buy}, {f.buyCorrected}, {f.buy}},
-			want:    app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03")},
+			want:    app.ImportSummary{NewVersions: 1, Accounts: in("acc-1", app.AccountImport{NewVersions: 1}), EarliestAffected: affected(t, "acc-1", "2026-03-03")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.buyCorrected, 2), versioned(&f.buy, 3)},
 		},
 		{
 			name:    "one key twice in one import",
 			imports: [][]ledger.Transaction{{f.buy, f.buyCorrected}},
-			want:    app.ImportSummary{New: 1, NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03")},
+			want:    app.ImportSummary{New: 1, NewVersions: 1, Accounts: in("acc-1", app.AccountImport{New: 1, NewVersions: 1}), EarliestAffected: affected(t, "acc-1", "2026-03-03")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.buyCorrected, 2)},
 		},
 		{
 			name:    "a correction to another account and date affects both",
 			imports: [][]ledger.Transaction{{f.buy}, {f.buyMoved}},
-			want:    app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03", "acc-2", "2026-03-01")},
+			want:    app.ImportSummary{NewVersions: 1, Accounts: in("acc-2", app.AccountImport{NewVersions: 1}), EarliestAffected: affected(t, "acc-1", "2026-03-03", "acc-2", "2026-03-01")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1), versioned(&f.buyMoved, 2)},
 		},
 		{
@@ -180,7 +185,7 @@ func TestImportRetriesVersionConflicts(t *testing.T) {
 				s.beforeAppend = nil
 				return s.appendOutside(v)
 			},
-			want:    app.ImportSummary{Unchanged: 1},
+			want:    app.ImportSummary{Unchanged: 1, Accounts: in("acc-1", app.AccountImport{Unchanged: 1})},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buy, 1)},
 		},
 		{
@@ -190,7 +195,7 @@ func TestImportRetriesVersionConflicts(t *testing.T) {
 				other := versioned(&f.buyCorrected, 1)
 				return s.appendOutside(&other)
 			},
-			want:    app.ImportSummary{NewVersions: 1, EarliestAffected: affected(t, "acc-1", "2026-03-03")},
+			want:    app.ImportSummary{NewVersions: 1, Accounts: in("acc-1", app.AccountImport{NewVersions: 1}), EarliestAffected: affected(t, "acc-1", "2026-03-03")},
 			wantLog: []ledger.VersionedTransaction{versioned(&f.buyCorrected, 1), versioned(&f.buy, 2)},
 		},
 		{

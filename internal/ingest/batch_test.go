@@ -96,10 +96,11 @@ func TestBatchComplete(t *testing.T) {
 	summary := ingest.ImportSummary{New: 2, Unchanged: 1, FailedAssertions: 1}
 	want := b
 	got := b
-	got.Complete(&m, summary)
+	got.Complete(&m, &summary)
 	want.Transactions, want.Assertions, want.Imported = 3, 2, summary
 	want.Problems = []ingest.Problem{ingest.Unsupported("Trades#1", "option trade")}
 	want.Accounts = []ledger.AccountID{""}
+	want.PerAccount = []ingest.AccountCounts{{Transactions: 3}}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("Complete (-want +got):\n%s", diff)
 	}

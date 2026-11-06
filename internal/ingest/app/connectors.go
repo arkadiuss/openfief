@@ -424,7 +424,7 @@ func (c *Connectors) deliver(ctx context.Context, instance string, id ingest.Bat
 	if err := c.recordStarts(ctx, source, mode, starts); err != nil {
 		return ingest.Batch{}, fmt.Errorf("deliver from %s batch %s: %w", instance, id, err)
 	}
-	batch.Complete(&m, imported)
+	batch.Complete(&m, &imported)
 	batch.Unmapped = r.Unmapped
 	return batch, nil
 }

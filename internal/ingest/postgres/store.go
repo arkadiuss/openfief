@@ -128,11 +128,12 @@ func (s *Store) CompleteSync(ctx context.Context, b *ingest.Batch, watermark str
 		tag, err := tx.Exec(ctx, `
 			UPDATE ingest.import_batches SET state = 'completed', attempts = attempts + 1, last_attempt_at = $3,
 				finished_at = $3, institution = $4, transactions = $5, assertions = $6, new = $7, new_versions = $8,
-				unchanged = $9, failed_assertions = $10, problems = $11, unsupported = $12, accounts = $13
+				unchanged = $9, failed_assertions = $10, problems = $11, unsupported = $12, accounts = $13,
+				account_counts = $14
 			WHERE id = $1 AND instance = $2 AND state = 'open'`,
 			string(b.ID), instance, at, string(b.Institution), b.Transactions, b.Assertions, b.Imported.New,
 			b.Imported.NewVersions, b.Imported.Unchanged, b.Imported.FailedAssertions, len(b.Problems),
-			ingest.CountUnsupported(b.Problems), batchAccounts(b))
+			ingest.CountUnsupported(b.Problems), batchAccounts(b), accountCounts(b.PerAccount))
 		if err != nil {
 			return fmt.Errorf("completing: %w", err)
 		}
@@ -193,14 +194,38 @@ func (s *Store) RecordBatch(ctx context.Context, instance string, b *ingest.Batc
 	if _, err := s.pool.Exec(ctx, `
 		INSERT INTO ingest.import_batches (id, instance, source, mode, started_at, state, attempts, last_attempt_at,
 			institution, transactions, assertions, new, new_versions, unchanged, failed_assertions, problems, unsupported,
-			finished_at, accounts)
-		VALUES ($1, $2, $3, $4, now(), 'completed', 1, now(), $5, $6, $7, $8, $9, $10, $11, $12, $13, now(), $14)`,
+			finished_at, accounts, account_counts)
+		VALUES ($1, $2, $3, $4, now(), 'completed', 1, now(), $5, $6, $7, $8, $9, $10, $11, $12, $13, now(), $14, $15)`,
 		string(b.ID), instance, b.Source, b.Mode.String(), string(b.Institution), b.Transactions, b.Assertions,
 		b.Imported.New, b.Imported.NewVersions, b.Imported.Unchanged, b.Imported.FailedAssertions, len(b.Problems),
-		ingest.CountUnsupported(b.Problems), batchAccounts(b)); err != nil {
+		ingest.CountUnsupported(b.Problems), batchAccounts(b), accountCounts(b.PerAccount)); err != nil {
 		return fmt.Errorf("recording batch %s of %s: %w", b.ID, instance, err)
 	}
 	return nil
+}
+
+// accountCount is one account's counts as the account_counts column keeps
+// them (D-199).
+type accountCount struct {
+	Account          string `json:"account"`
+	Transactions     int    `json:"transactions"`
+	New              int    `json:"new"`
+	NewVersions      int    `json:"newVersions"`
+	Unchanged        int    `json:"unchanged"`
+	FailedAssertions int    `json:"failedAssertions"`
+}
+
+// accountCounts returns counts as the account_counts column keeps them: a
+// JSON array, never NULL for a batch that completes.
+func accountCounts(counts []ingest.AccountCounts) []accountCount {
+	out := make([]accountCount, 0, len(counts))
+	for _, c := range counts {
+		out = append(out, accountCount{
+			Account: string(c.Account), Transactions: c.Transactions, New: c.New, NewVersions: c.NewVersions,
+			Unchanged: c.Unchanged, FailedAssertions: c.FailedAssertions,
+		})
+	}
+	return out
 }
 
 // batchAccounts returns the IDs of the accounts b booked into, as the

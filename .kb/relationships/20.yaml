@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-745628ac2c1f
+  - type: executable_for
+    from: SYM-views-app-test-batch-counts-per-viewable-account
+    to: TEST-views-app-batch-counts
+    created_at: 2026-11-06T11:52:29.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-089f030b3061

@@ -63,7 +63,7 @@ func TestConcurrentSeedsOverPostgres(t *testing.T) {
 	checkResult(t, "Log", []ledger.VersionedTransaction{versioned(&w[1], 1), versioned(&w[0], 1)}, log, err)
 
 	again, err := l.Seed(ctx, w, nil)
-	checkResult(t, "same Seed again", app.ImportSummary{Unchanged: 2, AlreadySeeded: []ledger.AccountID{acc1}}, again, err)
+	checkResult(t, "same Seed again", app.ImportSummary{Unchanged: 2, Accounts: map[ledger.AccountID]app.AccountImport{acc1: {Unchanged: 2}}, AlreadySeeded: []ledger.AccountID{acc1}}, again, err)
 }
 
 func TestLockAccount(t *testing.T) {

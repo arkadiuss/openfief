@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
@@ -38,7 +39,10 @@ type fakeHistory struct{}
 
 func (fakeHistory) CompletedBatches(_ context.Context, q *ingest.BatchQuery) ([]ingest.BatchRecord, error) {
 	all := []ingest.BatchRecord{
-		{ID: "u-1", Instance: "files", Source: "upload", Mode: ingest.ModeTransactions, Finished: minute(25), Institution: "xtb", Transactions: 42, New: 38, Problems: 4, Unsupported: 4, Accounts: []ledger.AccountID{"acc-1", "acc-2"}},
+		{
+			ID: "u-1", Instance: "files", Source: "upload", Mode: ingest.ModeTransactions, Finished: minute(25), Institution: "xtb", Transactions: 42, New: 38, Problems: 4, Unsupported: 4, Accounts: []ledger.AccountID{"acc-1", "acc-2"},
+			PerAccount: []ingest.AccountCounts{{Account: "acc-1", Transactions: 40, New: 36, NewVersions: 1}, {Account: "acc-2", Transactions: 2, New: 2, FailedAssertions: 1}},
+		},
 		{ID: "b-1", Instance: "xtb-main", Source: "sync", Mode: ingest.ModeTransactions, Finished: minute(10), Institution: "xtb", Transactions: 2, New: 2},
 	}
 	var out []ingest.BatchRecord
@@ -251,19 +255,24 @@ func TestConnectActivityDetails(t *testing.T) {
 	type detail struct {
 		Instance, Source                  string
 		Accounts                          []string
+		Counts                            []string
 		Transactions, Unsupported, Failed int32
 		Class                             viewsv1.SyncErrorClass
 		Account, ISIN, Cash               string
 		Kind                              viewsv1.TransactionKind
 	}
 	upload, failed, coupon := acts[2].GetBatch(), acts[0].GetAttempt(), acts[4].GetChange()
+	counts := make([]string, 0, len(upload.GetAccounts()))
+	for _, c := range upload.GetAccounts() {
+		counts = append(counts, fmt.Sprintf("%s %d %d %d %d", c.GetAccountId(), c.GetTransactions(), c.GetNewTransactions(), c.GetCorrected(), c.GetFailedAssertions()))
+	}
 	got := []detail{
-		{Instance: acts[2].GetConnectorInstance(), Source: upload.GetSource(), Accounts: upload.GetAccountIds(), Transactions: upload.GetTransactions(), Unsupported: upload.GetUnsupported()},
+		{Instance: acts[2].GetConnectorInstance(), Source: upload.GetSource(), Accounts: upload.GetAccountIds(), Counts: counts, Transactions: upload.GetTransactions(), Unsupported: upload.GetUnsupported()},
 		{Instance: acts[0].GetConnectorInstance(), Failed: failed.GetFailures(), Class: failed.GetErrorClass()},
 		{Account: coupon.GetAccountId(), ISIN: coupon.GetInstrument().GetIsin(), Cash: coupon.GetAmount().GetAmount(), Kind: coupon.GetKind()},
 	}
 	want := []detail{
-		{Instance: "files", Source: "upload", Accounts: []string{"acc-1", "acc-2"}, Transactions: 42, Unsupported: 4},
+		{Instance: "files", Source: "upload", Accounts: []string{"acc-1", "acc-2"}, Counts: []string{"acc-1 40 36 1 0", "acc-2 2 2 0 1"}, Transactions: 42, Unsupported: 4},
 		{Instance: "xtb-main", Failed: 3, Class: viewsv1.SyncErrorClass_SYNC_ERROR_CLASS_TIMEOUT},
 		{Account: "acc-1", ISIN: isinPL, Cash: "10.12", Kind: viewsv1.TransactionKind_TRANSACTION_KIND_INTEREST},
 	}

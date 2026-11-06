@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b7afc156c640
+  - type: executable_for
+    from: SYM-views-app-test-helper-counted-history
+    to: TEST-views-app-batch-counts
+    created_at: 2026-11-06T11:52:33.798Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d10f0dd95b7c

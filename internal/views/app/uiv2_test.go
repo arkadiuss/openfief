@@ -3,6 +3,7 @@ package app_test
 import (
 	"context"
 	"errors"
+	"slices"
 	"testing"
 	"time"
 
@@ -205,7 +206,7 @@ type fakeHistory struct {
 func (f *fakeHistory) CompletedBatches(_ context.Context, q *ingest.BatchQuery) ([]ingest.BatchRecord, error) {
 	var out []ingest.BatchRecord
 	for i := range f.batches {
-		if b := &f.batches[i]; (q.Before.IsZero() || b.Finished.Before(q.Before)) && len(out) < q.Limit {
+		if b := &f.batches[i]; (q.Before.IsZero() || b.Finished.Before(q.Before)) && len(out) < q.Limit && (len(q.IDs) == 0 || slices.Contains(q.IDs, b.ID)) {
 			out = append(out, *b)
 		}
 	}

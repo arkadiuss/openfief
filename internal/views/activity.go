@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"slices"
 	"time"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
@@ -74,6 +75,39 @@ func BatchActivity(b *ingest.BatchRecord) Activity {
 		kind = ActivitySync
 	}
 	return Activity{Kind: kind, At: b.Finished, Batch: b}
+}
+
+// ScopeBatch returns b as a caller who may view visible, those of its
+// accounts in their order, sees it (D-199): naming only those accounts,
+// with only their counts. A caller who may view every account it booked
+// into sees its totals; one who may view only some sees the sums of their
+// counts, and none of its left-out rows, which are tied to no account. A
+// batch that booked into no account is unchanged.
+func ScopeBatch(b *ingest.BatchRecord, visible []ledger.AccountID) ingest.BatchRecord {
+	out := *b
+	if len(b.Accounts) == 0 {
+		return out
+	}
+	out.Accounts = visible
+	out.PerAccount = nil
+	for _, c := range b.PerAccount {
+		if slices.Contains(visible, c.Account) {
+			out.PerAccount = append(out.PerAccount, c)
+		}
+	}
+	if len(visible) == len(b.Accounts) {
+		return out
+	}
+	out.Transactions, out.New, out.NewVersions, out.Unchanged, out.FailedAssertions = 0, 0, 0, 0, 0
+	out.Problems, out.Unsupported = 0, 0
+	for _, c := range out.PerAccount {
+		out.Transactions += c.Transactions
+		out.New += c.New
+		out.NewVersions += c.NewVersions
+		out.Unchanged += c.Unchanged
+		out.FailedAssertions += c.FailedAssertions
+	}
+	return out
 }
 
 // FailureActivity returns the activity of a failed sync attempt.

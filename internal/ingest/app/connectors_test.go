@@ -181,7 +181,8 @@ func TestConnectorsSync(t *testing.T) {
 	want := app.SyncResult{Watermark: "w-2", Batch: ingest.Batch{
 		ID: "b-1", Institution: "xtb", Source: app.SourceSync, Mode: ingest.ModeTransactions, Started: march2(t),
 		Transactions: 1, Assertions: 1, Imported: ingest.ImportSummary{New: 1}, Accounts: []ledger.AccountID{"acc-1"},
-		Problems: []ingest.Problem{ingest.Unsupported("row 2", "broker interest")},
+		PerAccount: []ingest.AccountCounts{{Account: "acc-1", Transactions: 1}},
+		Problems:   []ingest.Problem{ingest.Unsupported("row 2", "broker interest")},
 	}}
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("Sync (-want +got):\n%s", diff)

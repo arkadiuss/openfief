@@ -99,12 +99,12 @@ func TestImportOverPostgres(t *testing.T) {
 		ledger.HoldingAssertion(acc1, date(t, "2026-03-03"), a, qty(t, "12")),
 	}
 	first, err := l.Import(ctx, []ledger.Transaction{deposit, buy}, assertions)
-	checkResult(t, "first Import", app.ImportSummary{New: 2, EarliestAffected: map[ledger.AccountID]kernel.Date{acc1: date(t, "2026-03-02")}, Checks: []app.AssertionCheck{
+	checkResult(t, "first Import", app.ImportSummary{New: 2, Accounts: map[ledger.AccountID]app.AccountImport{acc1: {New: 2}}, EarliestAffected: map[ledger.AccountID]kernel.Date{acc1: date(t, "2026-03-02")}, Checks: []app.AssertionCheck{
 		{Assertion: assertions[0], Status: app.AssertionMatched, Derived: dec(t, "499")},
 		{Assertion: assertions[1], Status: app.AssertionFlagged, Derived: dec(t, "10")},
 	}}, first, err)
 	again, err := l.Import(ctx, []ledger.Transaction{deposit, buy}, nil)
-	checkResult(t, "re-import", app.ImportSummary{Unchanged: 2, Checks: first.Checks}, again, err)
+	checkResult(t, "re-import", app.ImportSummary{Unchanged: 2, Accounts: map[ledger.AccountID]app.AccountImport{acc1: {Unchanged: 2}}, Checks: first.Checks}, again, err)
 
 	const imports = 8
 	sums := make([]app.ImportSummary, imports)
