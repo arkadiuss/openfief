@@ -692,3 +692,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2b23bead9c10
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-response-string
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:49:37.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99655123e0be
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-response-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:49:37.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-281d66936559
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-holdings
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:54:43.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-192e4956ab22
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-holdings
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:54:43.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81154d0b3023

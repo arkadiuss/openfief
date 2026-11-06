@@ -573,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a9943fde7fa
+  - type: implements
+    from: SYM-views-pb-list-instrument-holdings-request-get-isin
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:51:28.488Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c8dae287ad0
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-holdings-request-get-isin
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:51:28.510Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e29b740ee55

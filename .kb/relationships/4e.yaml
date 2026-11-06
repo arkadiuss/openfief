@@ -594,3 +594,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1699dbe326bf
+  - type: constrains
+    from: REQ-views-activity
+    to: FACT-SUBJECT-8719479B656BD2E4
+    created_at: 2026-11-06T01:58:38.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28da9b07e0ad
+  - type: requires_property
+    from: REQ-views-activity
+    to: FACT-PROP-2CD1FC36CBC76E39
+    created_at: 2026-11-06T01:58:38.433Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10959aa3bda8
+  - type: specified_by
+    from: REQ-views-activity
+    to: SCEN-views-activity
+    created_at: 2026-11-06T01:58:38.465Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c8328dd8d72
+  - type: implements
+    from: SYM-views-app-recorded-changes
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:00:57.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff1b3ea4b10e
+  - type: covered_by
+    from: SYM-views-app-recorded-changes
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:00:57.594Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67b8cb8301c6

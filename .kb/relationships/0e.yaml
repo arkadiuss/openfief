@@ -601,3 +601,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-75a6a1374827
+  - type: executable_for
+    from: SYM-views-app-test-helper-instrument-views
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:07:06.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-93bdbc4edfa3
+  - type: implements
+    from: SYM-views-pb-activity-kind-type
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:32:39.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c69e3282a28d
+  - type: covered_by
+    from: SYM-views-pb-activity-kind-type
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:32:39.533Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa75f4957533
+  - type: implements
+    from: SYM-views-pbconnect-read-service-client-list-sync-attempts
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:53:58.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a7681617df6
+  - type: covered_by
+    from: SYM-views-pbconnect-read-service-client-list-sync-attempts
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:53:58.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e485d0c3c0f

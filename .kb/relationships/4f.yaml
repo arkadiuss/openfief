@@ -685,3 +685,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8c7f0584124
+  - type: implements
+    from: SYM-views-app-listing
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:01:49.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03762ec9cfe4
+  - type: covered_by
+    from: SYM-views-app-listing
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:01:49.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3571eefb5d31
+  - type: implements
+    from: SYM-views-pb-activity
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:36:57.248Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5e0e2c5153a
+  - type: covered_by
+    from: SYM-views-pb-activity
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:36:57.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7da846ffe1f7

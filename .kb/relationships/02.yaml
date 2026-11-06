@@ -769,3 +769,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44e6cf9f3f87
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-activity
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:08:29.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d93342b5b5eb
+  - type: implements
+    from: SYM-views-pb-sync-attempt-proto-message
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:39:33.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efbfdd6a6226
+  - type: covered_by
+    from: SYM-views-pb-sync-attempt-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:39:33.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3ed5cbf7f23a

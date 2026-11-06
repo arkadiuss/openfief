@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e78cb10bcad
+  - type: executable_for
+    from: SYM-views-app-test-helper-inbox-items
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:05:44.088Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9276be0ae4f3
+  - type: implements
+    from: SYM-views-pb-list-sync-statuses-response-proto-reflect
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:42:31.325Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92d783dd1634
+  - type: covered_by
+    from: SYM-views-pb-list-sync-statuses-response-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:42:31.347Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74e306b90640

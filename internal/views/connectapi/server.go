@@ -196,7 +196,7 @@ func (s *readService) ListPriceChecks(ctx context.Context, req *connect.Request[
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}
-	list, err := s.views.PriceChecks(ctx, status)
+	list, err := s.views.PriceChecks(ctx, status, req.Msg.GetIsin())
 	if err != nil {
 		return nil, toConnectError(ctx, s.log, err)
 	}

@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-60e03c9bf2f4
+  - type: verified_by
+    from: SCEN-views-activity
+    to: TEST-views-activity
+    created_at: 2026-11-06T01:58:25.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b9f13c9e2dca
+  - type: verified_by
+    from: SCEN-views-activity
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T01:58:25.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73ed1437d220
+  - type: verified_by
+    from: SCEN-views-activity
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T01:58:25.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba927973c841

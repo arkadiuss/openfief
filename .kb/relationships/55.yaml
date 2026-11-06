@@ -601,3 +601,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da403046bb81
+  - type: implements
+    from: SYM-views-pb-activity-get-batch
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:37:43.737Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db991ef1ecd1
+  - type: covered_by
+    from: SYM-views-pb-activity-get-batch
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:37:43.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe90783d4251
+  - type: implements
+    from: SYM-views-pb-instrument-exemption-class-descriptor
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:46:19.406Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f6eb72fa2dad
+  - type: covered_by
+    from: SYM-views-pb-instrument-exemption-class-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:46:19.431Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bed225b39f1f

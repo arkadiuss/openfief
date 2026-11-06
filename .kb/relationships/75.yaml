@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a555460f89d5
+  - type: implements
+    from: SYM-views-change-activity
+    to: REQ-views-activity
+    created_at: 2026-11-06T01:59:12.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e3a1c47fb6a
+  - type: covered_by
+    from: SYM-views-change-activity
+    to: TEST-views-activity
+    created_at: 2026-11-06T01:59:12.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b727e241d186

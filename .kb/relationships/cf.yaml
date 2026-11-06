@@ -713,3 +713,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d05d0008cde1
+  - type: implements
+    from: SYM-views-instrument-class
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:00:19.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bea45a7cb47c
+  - type: covered_by
+    from: SYM-views-instrument-class
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:00:19.120Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2cd3f2ee93cc
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-sync-statuses
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:03:53.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2e6bd0ba4fa
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-sync-statuses
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:03:53.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b903f22e5365
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-sync-attempts
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:08:43.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8cf6043aac2f
+  - type: implements
+    from: SYM-views-pb-activity-change
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:44.133Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5383675408db
+  - type: covered_by
+    from: SYM-views-pb-activity-change
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:44.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f85b5ac312fc

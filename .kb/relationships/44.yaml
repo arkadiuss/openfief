@@ -926,5 +926,23 @@ relationships:
         created_by: kibi/upsert,
         source: mcp://kibi/upsert,
         id: rel-ba03599b2834
+      },
+    {
+        type: implements,
+        from: SYM-views-pb-list-activity-response-get-next-page-token,
+        to: REQ-views-activity,
+        created_at: 2026-11-06T02:39:14.558Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-bd4b13e1ec1a
+      },
+    {
+        type: covered_by,
+        from: SYM-views-pb-list-activity-response-get-next-page-token,
+        to: TEST-views-connectapi-uiv2,
+        created_at: 2026-11-06T02:39:14.589Z,
+        created_by: kibi/upsert,
+        source: mcp://kibi/upsert,
+        id: rel-4639329d2143
       }
   ]

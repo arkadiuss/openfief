@@ -580,3 +580,80 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7e9ee1b920b5
+  - type: constrains
+    from: REQ-views-instrument-page
+    to: FACT-SUBJECT-977E962D34806092
+    created_at: 2026-11-06T01:58:48.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-824b349a961e
+  - type: requires_property
+    from: REQ-views-instrument-page
+    to: FACT-PROP-FC6B713346B278D3
+    created_at: 2026-11-06T01:58:48.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1aa60ca57e85
+  - type: specified_by
+    from: REQ-views-instrument-page
+    to: SCEN-views-instrument-page
+    created_at: 2026-11-06T01:58:48.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bd7c36053847
+  - type: implements
+    from: SYM-views-pb-list-attention-items-response-get-done
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:34:21.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3242015ca63
+  - type: covered_by
+    from: SYM-views-pb-list-attention-items-response-get-done
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:34:21.213Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00b70e52e7f7
+  - type: implements
+    from: SYM-views-pb-activity-change-get-instrument
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:36:48.109Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38d1e242183d
+  - type: covered_by
+    from: SYM-views-pb-activity-change-get-instrument
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:36:48.132Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5128a4ab8823
+  - type: implements
+    from: SYM-views-pb-list-sync-statuses-request-string
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:41:53.081Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2e648744d56
+  - type: covered_by
+    from: SYM-views-pb-list-sync-statuses-request-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:41:53.104Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b699eaa6c7a2
+  - type: implements
+    from: SYM-views-pb-list-instrument-transactions-request-proto-reflect
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:52:43.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-925022bc6647
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-transactions-request-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:52:43.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-41c109bd633f

@@ -134381,3 +134381,5626 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-attention-app-failing-syncs
+  - id: SYM-views-activity-kind
+    title: ActivityKind
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:58:49.849Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-activity-source
+    title: ActivitySource
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:58:54.085Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-activity
+    title: Activity
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:58:58.237Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-batch-activity
+    title: BatchActivity
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:02.363Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-failure-activity
+    title: FailureActivity
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:06.474Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-change-activity
+    title: ChangeActivity
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:10.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-activity-cursor
+    title: ActivityCursor
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:14.719Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-activity-cursor-json
+    title: activityCursorJSON
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:18.844Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-activity-cursor-encode
+    title: ActivityCursor.Encode
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:22.994Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-parse-activity-cursor
+    title: ParseActivityCursor
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:27.145Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-activity-page
+    title: ActivityPage
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:31.365Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-merge-activity
+    title: MergeActivity
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:35.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-next-source
+    title: nextSource
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:39.840Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-activity-bound-of
+    title: Activity.bound
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:44.086Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-activity-bound
+    title: ActivityBound
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:47.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-activity-bound-is-zero
+    title: ActivityBound.IsZero
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:51.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-activity-bound-encode
+    title: ActivityBound.Encode
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:59:56.216Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-parse-activity-bound
+    title: ParseActivityBound
+    sourceFile: internal/views/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:00.394Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-activity
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-posts-to
+    title: PostsTo
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:04.825Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-instrument-transactions
+    title: InstrumentTransactions
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:09.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-instrument-listings
+    title: InstrumentListings
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:13.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-instrument-class
+    title: InstrumentClass
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:17.597Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-instrument-classes
+    title: InstrumentClasses
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:21.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-instrument-price
+    title: InstrumentPrice
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:25.909Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-mark-primary
+    title: MarkPrimary
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:30.189Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-listing-of
+    title: ListingOf
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:34.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-instrument-holding
+    title: InstrumentHolding
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:38.496Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-holdings-of
+    title: HoldingsOf
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:42.935Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-asset-of
+    title: AssetOf
+    sourceFile: internal/views/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:47.263Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-instrument
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-sync-history
+    title: SyncHistory
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:51.549Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-activity
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-app-recorded-changes
+    title: RecordedChanges
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:00:55.940Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-app-with-recorded-changes
+    title: WithRecordedChanges
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:00.413Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-app-views-activity
+    title: Views.Activity
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:04.816Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-app-views-batch-activity
+    title: Views.batchActivity
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:09.167Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-app-views-failure-activity
+    title: Views.failureActivity
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:13.560Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-app-views-change-activity
+    title: Views.changeActivity
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:17.908Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-app-with-sync-history
+    title: WithSyncHistory
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:22.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-app-views-sync-statuses
+    title: Views.SyncStatuses
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:26.709Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-app-sync-attempt-page
+    title: SyncAttemptPage
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:30.789Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-app-views-sync-attempts
+    title: Views.SyncAttempts
+    sourceFile: internal/views/app/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:34.937Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-app-instrument-prices
+    title: InstrumentPrices
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:39.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-with-instrument-prices
+    title: WithInstrumentPrices
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:43.423Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-listing
+    title: Listing
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:47.660Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-instrument
+    title: Instrument
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:51.778Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-viewable-transactions
+    title: Views.viewableTransactions
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:01:56.053Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-instrument
+    title: Views.Instrument
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:00.320Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-instrument-listings
+    title: Views.instrumentListings
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:04.572Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-listing
+    title: Views.listing
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:08.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-latest-prices
+    title: Views.latestPrices
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:12.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-source-of
+    title: Views.sourceOf
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:17.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-instrument-classes
+    title: Views.instrumentClasses
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:21.352Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-instrument-prices
+    title: Views.InstrumentPrices
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:25.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-instrument-holdings
+    title: Views.InstrumentHoldings
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:29.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-views-instrument-transactions
+    title: Views.InstrumentTransactions
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:33.787Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-attention-view
+    title: AttentionView
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:37.936Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-app-attention-query
+    title: AttentionQuery
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: type-shape
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:41.999Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-app-scoped-item
+    title: ScopedItem
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:46.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-app-views-may-view-scope
+    title: Views.mayViewScope
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:50.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-app-attention-query-scopes
+    title: AttentionQuery.scopes
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:54.906Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-app-attention-list
+    title: AttentionList
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:02:58.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-app-attention-list-add
+    title: AttentionList.add
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:02.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-app-attention-view-holds
+    title: AttentionView.holds
+    sourceFile: internal/views/app/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:07.378Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-app-of-isin
+    title: ofISIN
+    sourceFile: internal/views/app/pricechecks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:11.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-app-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-connectapi-page-size
+    title: pageSize
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:15.670Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-connectapi-pb-time
+    title: pbTime
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:19.866Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-connectapi-pb-sync-attempt
+    title: pbSyncAttempt
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:23.804Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-connectapi-attention-view
+    title: attentionView
+    sourceFile: internal/views/connectapi/attention.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:27.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-core-history-options
+    title: historyOptions
+    sourceFile: cmd/core/core.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:32.137Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-connectapi-read-service-list-activity
+    title: readService.ListActivity
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:35.977Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-connectapi-pb-activity
+    title: pbActivity
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:39.813Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-connectapi-pb-change
+    title: pbChange
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:43.738Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-connectapi-pb-sync-status
+    title: pbSyncStatus
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:47.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-connectapi-read-service-list-sync-statuses
+    title: readService.ListSyncStatuses
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:51.848Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-connectapi-read-service-list-sync-attempts
+    title: readService.ListSyncAttempts
+    sourceFile: internal/views/connectapi/activity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:55.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-connectapi-read-service-get-instrument
+    title: readService.GetInstrument
+    sourceFile: internal/views/connectapi/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:03:59.998Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-connectapi-pb-instrument-price
+    title: pbInstrumentPrice
+    sourceFile: internal/views/connectapi/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:04.070Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-connectapi-read-service-list-instrument-prices
+    title: readService.ListInstrumentPrices
+    sourceFile: internal/views/connectapi/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:08.020Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-connectapi-read-service-list-instrument-holdings
+    title: readService.ListInstrumentHoldings
+    sourceFile: internal/views/connectapi/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:11.904Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-connectapi-read-service-list-instrument-transactions
+    title: readService.ListInstrumentTransactions
+    sourceFile: internal/views/connectapi/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:15.770Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-test-helper-activity-at
+    title: activityAt
+    sourceFile: internal/views/activity_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:19.683Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-helper-batch-at
+    title: batchAt
+    sourceFile: internal/views/activity_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:23.332Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-helper-failure-at
+    title: failureAt
+    sourceFile: internal/views/activity_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:27.139Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-helper-change-at
+    title: changeAt
+    sourceFile: internal/views/activity_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:30.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-helper-names
+    title: names
+    sourceFile: internal/views/activity_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:34.269Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-merge-activity
+    title: TestMergeActivity
+    sourceFile: internal/views/activity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:37.918Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-merge-activity-pages
+    title: TestMergeActivityPages
+    sourceFile: internal/views/activity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:41.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-helper-after3
+    title: after3
+    sourceFile: internal/views/activity_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:45.347Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-activity-cursor
+    title: TestActivityCursor
+    sourceFile: internal/views/activity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:49.392Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-activity-kinds
+    title: TestActivityKinds
+    sourceFile: internal/views/activity_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:53.443Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-activity
+  - id: SYM-views-test-helper-buy-of
+    title: buyOf
+    sourceFile: internal/views/instrument_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:04:57.285Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-instrument
+  - id: SYM-views-test-instrument-transactions-and-listings
+    title: TestInstrumentTransactionsAndListings
+    sourceFile: internal/views/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:01.238Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-instrument
+  - id: SYM-views-test-listing-of
+    title: TestListingOf
+    sourceFile: internal/views/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:05.280Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-instrument
+  - id: SYM-views-test-holdings-of
+    title: TestHoldingsOf
+    sourceFile: internal/views/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:09.262Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-instrument
+  - id: SYM-views-test-helper-taxed-wrappers
+    title: taxedWrappers
+    sourceFile: internal/views/instrument_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:12.934Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-instrument
+  - id: SYM-views-test-asset-of
+    title: TestAssetOf
+    sourceFile: internal/views/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:16.938Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-instrument
+  - id: SYM-views-test-instrument-classes
+    title: TestInstrumentClasses
+    sourceFile: internal/views/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:20.910Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-instrument
+  - id: SYM-views-test-mark-primary
+    title: TestMarkPrimary
+    sourceFile: internal/views/instrument_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:25.133Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-instrument
+  - id: SYM-views-app-test-helper-at
+    title: at
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:28.842Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-items
+    title: fakeItems
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:32.313Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-items-list
+    title: fakeItems.List
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:35.789Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-item
+    title: item
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:39.241Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-inbox-items
+    title: inboxItems
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:42.710Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-attention-views-and-scopes
+    title: TestAttentionViewsAndScopes
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:46.651Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-item-i-ds
+    title: itemIDs
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:50.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-attention-items-carry-scope-and-group
+    title: TestAttentionItemsCarryScopeAndGroup
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:54.187Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-history
+    title: fakeHistory
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:05:57.800Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-history-completed-batches
+    title: fakeHistory.CompletedBatches
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:01.292Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-history-sync-attempts
+    title: fakeHistory.SyncAttempts
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:04.812Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-attempt-selected
+    title: attemptSelected
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:08.369Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-history-sync-statuses
+    title: fakeHistory.SyncStatuses
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:12.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-changes
+    title: fakeChanges
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:15.576Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-changes-recorded-changes
+    title: fakeChanges.RecordedChanges
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:19.175Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-history
+    title: history
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:22.728Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-activity
+    title: TestActivity
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:26.797Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-activity-kinds
+    title: activityKinds
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:30.284Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-activity-without-ports-and-failures
+    title: TestActivityWithoutPortsAndFailures
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:34.253Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-sync-statuses-keep-failing
+    title: TestSyncStatusesKeepFailing
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:38.432Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-sync-attempts-pages
+    title: TestSyncAttemptsPages
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:43.316Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-sync-attempts-refuses
+    title: TestSyncAttemptsRefuses
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:47.772Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-prices
+    title: fakePrices
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:51.456Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-prices-price-history
+    title: fakePrices.PriceHistory
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:55.018Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-prices-latest-prices
+    title: fakePrices.LatestPrices
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:06:58.457Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-fake-prices-source-of
+    title: fakePrices.SourceOf
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:01.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-instrument-views
+    title: instrumentViews
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:05.224Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-instrument
+    title: TestInstrument
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:09.456Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-instrument-prices
+    title: TestInstrumentPrices
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:13.618Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-instrument-across-viewable-accounts
+    title: TestInstrumentAcrossViewableAccounts
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:17.999Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-external-i-ds
+    title: externalIDs
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:22.061Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-helper-holding-accounts
+    title: holdingAccounts
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:26.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-app-test-price-checks-of-an-instrument
+    title: TestPriceChecksOfAnInstrument
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:30.732Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-connectapi-test-helper-minute
+    title: minute
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:34.231Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-history
+    title: fakeHistory
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:37.668Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-history-completed-batches
+    title: fakeHistory.CompletedBatches
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:41.454Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-history-sync-attempts
+    title: fakeHistory.SyncAttempts
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:45.079Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-history-sync-statuses
+    title: fakeHistory.SyncStatuses
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:48.942Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-changes
+    title: fakeChanges
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:52.878Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-changes-recorded-changes
+    title: fakeChanges.RecordedChanges
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:07:56.950Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-prices
+    title: fakePrices
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:00.703Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-prices-price-history
+    title: fakePrices.PriceHistory
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:04.412Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-prices-latest-prices
+    title: fakePrices.LatestPrices
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:08.000Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-fake-prices-source-of
+    title: fakePrices.SourceOf
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:11.612Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-uiv2-api
+    title: uiv2API
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:15.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-serve-json
+    title: serveJSON
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:19.117Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-rest-attention-inbox
+    title: TestRESTAttentionInbox
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:23.454Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-rest-activity
+    title: TestRESTActivity
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:27.847Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-connect-activity-details
+    title: TestConnectActivityDetails
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:32.404Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-rest-syncs
+    title: TestRESTSyncs
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:37.069Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-rest-sync-attempts
+    title: TestRESTSyncAttempts
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:41.514Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-rest-instrument
+    title: TestRESTInstrument
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:45.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-rest-instrument-prices
+    title: TestRESTInstrumentPrices
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:49.864Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-rest-instrument-holdings
+    title: TestRESTInstrumentHoldings
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:53.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-u-iv2-enums-match
+    title: TestUIv2EnumsMatch
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:08:58.182Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-pb-attention-item-group
+    title: AttentionItemGroup
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:09.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-item-group-enum
+    title: AttentionItemGroup.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:14.548Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-item-group-string
+    title: AttentionItemGroup.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:19.545Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-item-group-descriptor
+    title: AttentionItemGroup.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:24.514Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-item-group-type
+    title: AttentionItemGroup.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:29.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-item-group-number
+    title: AttentionItemGroup.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:34.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-item-group-enum-descriptor
+    title: AttentionItemGroup.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:39.175Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-view
+    title: AttentionView
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:43.376Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-view-enum
+    title: AttentionView.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:48.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-view-string
+    title: AttentionView.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:53.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-view-descriptor
+    title: AttentionView.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:31:57.972Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-view-type
+    title: AttentionView.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:03.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-view-number
+    title: AttentionView.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:08.149Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-view-enum-descriptor
+    title: AttentionView.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:13.244Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-activity-kind
+    title: ActivityKind
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:17.698Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-kind-enum
+    title: ActivityKind.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:22.696Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-kind-string
+    title: ActivityKind.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:27.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-kind-descriptor
+    title: ActivityKind.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:32.858Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-kind-type
+    title: ActivityKind.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:37.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-kind-number
+    title: ActivityKind.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:43.142Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-kind-enum-descriptor
+    title: ActivityKind.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:48.226Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-sync-error-class
+    title: SyncErrorClass
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:52.617Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-error-class-enum
+    title: SyncErrorClass.Enum
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:32:57.468Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-error-class-string
+    title: SyncErrorClass.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:02.301Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-error-class-descriptor
+    title: SyncErrorClass.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:07.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-error-class-type
+    title: SyncErrorClass.Type
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:11.842Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-error-class-number
+    title: SyncErrorClass.Number
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:16.490Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-error-class-enum-descriptor
+    title: SyncErrorClass.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:21.288Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-transaction-get-account-id
+    title: Transaction.GetAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:26.140Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-price-checks-request-get-isin
+    title: ListPriceChecksRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:31.071Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-attention-item-get-group
+    title: AttentionItem.GetGroup
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:35.839Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-item-get-account-id
+    title: AttentionItem.GetAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:40.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-item-get-isin
+    title: AttentionItem.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:45.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-attention-item-get-connector-instance
+    title: AttentionItem.GetConnectorInstance
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:50.418Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-list-attention-items-request-get-view
+    title: ListAttentionItemsRequest.GetView
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:33:55.356Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-list-attention-items-request-get-account-id
+    title: ListAttentionItemsRequest.GetAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:00.290Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-list-attention-items-request-get-isin
+    title: ListAttentionItemsRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:05.188Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-list-attention-items-request-get-connector-instance
+    title: ListAttentionItemsRequest.GetConnectorInstance
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:09.930Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-list-attention-items-response-get-acknowledged
+    title: ListAttentionItemsResponse.GetAcknowledged
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:14.837Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-list-attention-items-response-get-done
+    title: ListAttentionItemsResponse.GetDone
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:19.739Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-attention-inbox
+  - id: SYM-views-pb-activity-batch
+    title: ActivityBatch
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:23.953Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-reset
+    title: ActivityBatch.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:28.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-string
+    title: ActivityBatch.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:33.693Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-proto-message
+    title: ActivityBatch.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:38.629Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-proto-reflect
+    title: ActivityBatch.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:43.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-descriptor
+    title: ActivityBatch.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:48.537Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-batch-id
+    title: ActivityBatch.GetBatchId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:53.422Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-source
+    title: ActivityBatch.GetSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:34:58.276Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-mode
+    title: ActivityBatch.GetMode
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:03.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-institution
+    title: ActivityBatch.GetInstitution
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:08.262Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-transactions
+    title: ActivityBatch.GetTransactions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:13.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-new-transactions
+    title: ActivityBatch.GetNewTransactions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:18.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-corrected
+    title: ActivityBatch.GetCorrected
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:23.299Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-failed-assertions
+    title: ActivityBatch.GetFailedAssertions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:28.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-problems
+    title: ActivityBatch.GetProblems
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:33.393Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-batch-get-unsupported
+    title: ActivityBatch.GetUnsupported
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:38.400Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change
+    title: ActivityChange
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:42.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-reset
+    title: ActivityChange.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:47.577Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-string
+    title: ActivityChange.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:52.625Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-proto-message
+    title: ActivityChange.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:35:57.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-proto-reflect
+    title: ActivityChange.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:02.312Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-descriptor
+    title: ActivityChange.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:07.231Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-get-account-id
+    title: ActivityChange.GetAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:12.060Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-get-source
+    title: ActivityChange.GetSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:16.989Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-get-external-id
+    title: ActivityChange.GetExternalId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:22.018Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-get-version
+    title: ActivityChange.GetVersion
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:26.914Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-get-deleted
+    title: ActivityChange.GetDeleted
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:31.789Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-get-kind
+    title: ActivityChange.GetKind
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:36.710Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-get-date
+    title: ActivityChange.GetDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:41.678Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-get-instrument
+    title: ActivityChange.GetInstrument
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:46.625Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-change-get-amount
+    title: ActivityChange.GetAmount
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:51.483Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity
+    title: Activity
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:36:55.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-reset
+    title: Activity.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:00.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-string
+    title: Activity.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:05.643Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-proto-message
+    title: Activity.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:10.762Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-proto-reflect
+    title: Activity.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:16.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-descriptor
+    title: Activity.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:21.398Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-get-kind
+    title: Activity.GetKind
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:26.643Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-get-at
+    title: Activity.GetAt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:31.878Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-get-connector-instance
+    title: Activity.GetConnectorInstance
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:37.087Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-get-batch
+    title: Activity.GetBatch
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:42.274Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-get-attempt
+    title: Activity.GetAttempt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:47.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-activity-get-change
+    title: Activity.GetChange
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:52.260Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-request
+    title: ListActivityRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:37:56.774Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-request-reset
+    title: ListActivityRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:01.954Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-request-string
+    title: ListActivityRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:07.242Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-request-proto-message
+    title: ListActivityRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:12.426Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-request-proto-reflect
+    title: ListActivityRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:17.534Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-request-descriptor
+    title: ListActivityRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:22.730Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-request-get-page-size
+    title: ListActivityRequest.GetPageSize
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:27.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-request-get-page-token
+    title: ListActivityRequest.GetPageToken
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:32.761Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-response
+    title: ListActivityResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:37.073Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-response-reset
+    title: ListActivityResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:42.021Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-response-string
+    title: ListActivityResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:47.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-response-proto-message
+    title: ListActivityResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:52.345Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-response-proto-reflect
+    title: ListActivityResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:38:57.652Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-response-descriptor
+    title: ListActivityResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:02.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-response-get-activities
+    title: ListActivityResponse.GetActivities
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:07.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-list-activity-response-get-next-page-token
+    title: ListActivityResponse.GetNextPageToken
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:13.034Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pb-sync-attempt
+    title: SyncAttempt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:17.427Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-reset
+    title: SyncAttempt.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:22.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-string
+    title: SyncAttempt.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:27.387Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-proto-message
+    title: SyncAttempt.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:32.359Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-proto-reflect
+    title: SyncAttempt.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:37.331Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-descriptor
+    title: SyncAttempt.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:42.352Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-get-connector-instance
+    title: SyncAttempt.GetConnectorInstance
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:47.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-get-batch-id
+    title: SyncAttempt.GetBatchId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:52.435Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-get-mode
+    title: SyncAttempt.GetMode
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:39:57.664Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-get-started-at
+    title: SyncAttempt.GetStartedAt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:02.840Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-get-ended-at
+    title: SyncAttempt.GetEndedAt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:08.119Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-get-failed
+    title: SyncAttempt.GetFailed
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:13.127Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-get-error-class
+    title: SyncAttempt.GetErrorClass
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:18.148Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-get-failures
+    title: SyncAttempt.GetFailures
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:23.189Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-attempt-get-next-sync-at
+    title: SyncAttempt.GetNextSyncAt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:28.424Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status
+    title: SyncStatus
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:32.900Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-reset
+    title: SyncStatus.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:37.903Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-string
+    title: SyncStatus.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:42.867Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-proto-message
+    title: SyncStatus.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:47.833Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-proto-reflect
+    title: SyncStatus.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:52.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-descriptor
+    title: SyncStatus.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:40:57.962Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-get-connector-instance
+    title: SyncStatus.GetConnectorInstance
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:02.983Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-get-last-attempt-at
+    title: SyncStatus.GetLastAttemptAt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:07.988Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-get-last-success-at
+    title: SyncStatus.GetLastSuccessAt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:12.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-get-failures
+    title: SyncStatus.GetFailures
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:17.871Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-get-failing-since
+    title: SyncStatus.GetFailingSince
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:22.752Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-get-last-error-class
+    title: SyncStatus.GetLastErrorClass
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:27.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-get-next-sync-at
+    title: SyncStatus.GetNextSyncAt
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:32.675Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-sync-status-get-keeps-failing
+    title: SyncStatus.GetKeepsFailing
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:37.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-request
+    title: ListSyncStatusesRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:41.870Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-request-reset
+    title: ListSyncStatusesRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:46.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-request-string
+    title: ListSyncStatusesRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:51.616Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-request-proto-message
+    title: ListSyncStatusesRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:41:56.515Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-request-proto-reflect
+    title: ListSyncStatusesRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:01.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-request-descriptor
+    title: ListSyncStatusesRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:06.282Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-response
+    title: ListSyncStatusesResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:10.509Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-response-reset
+    title: ListSyncStatusesResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:15.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-response-string
+    title: ListSyncStatusesResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:20.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-response-proto-message
+    title: ListSyncStatusesResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:24.978Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-response-proto-reflect
+    title: ListSyncStatusesResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:29.865Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-response-descriptor
+    title: ListSyncStatusesResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:34.788Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-statuses-response-get-statuses
+    title: ListSyncStatusesResponse.GetStatuses
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:39.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-request
+    title: ListSyncAttemptsRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:43.938Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-request-reset
+    title: ListSyncAttemptsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:48.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-request-string
+    title: ListSyncAttemptsRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:53.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-request-proto-message
+    title: ListSyncAttemptsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:42:58.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-request-proto-reflect
+    title: ListSyncAttemptsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:03.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-request-descriptor
+    title: ListSyncAttemptsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:08.494Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-request-get-connector-instance
+    title: ListSyncAttemptsRequest.GetConnectorInstance
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:13.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-request-get-page-size
+    title: ListSyncAttemptsRequest.GetPageSize
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:18.306Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-request-get-page-token
+    title: ListSyncAttemptsRequest.GetPageToken
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:23.284Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-response
+    title: ListSyncAttemptsResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:27.751Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-response-reset
+    title: ListSyncAttemptsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:32.776Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-response-string
+    title: ListSyncAttemptsResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:37.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-response-proto-message
+    title: ListSyncAttemptsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:42.891Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-response-proto-reflect
+    title: ListSyncAttemptsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:47.948Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-response-descriptor
+    title: ListSyncAttemptsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:52.933Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-response-get-status
+    title: ListSyncAttemptsResponse.GetStatus
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:43:57.930Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-response-get-attempts
+    title: ListSyncAttemptsResponse.GetAttempts
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:02.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-list-sync-attempts-response-get-next-page-token
+    title: ListSyncAttemptsResponse.GetNextPageToken
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:07.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pb-instrument-price
+    title: InstrumentPrice
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:12.129Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-reset
+    title: InstrumentPrice.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:17.173Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-string
+    title: InstrumentPrice.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:22.110Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-proto-message
+    title: InstrumentPrice.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:27.383Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-proto-reflect
+    title: InstrumentPrice.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:32.573Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-descriptor
+    title: InstrumentPrice.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:37.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-get-instrument
+    title: InstrumentPrice.GetInstrument
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:42.882Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-get-date
+    title: InstrumentPrice.GetDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:47.984Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-get-close
+    title: InstrumentPrice.GetClose
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:52.957Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-get-source
+    title: InstrumentPrice.GetSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:44:57.962Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-price-get-primary
+    title: InstrumentPrice.GetPrimary
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:03.098Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-listing
+    title: InstrumentListing
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:07.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-listing-reset
+    title: InstrumentListing.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:12.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-listing-string
+    title: InstrumentListing.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:17.735Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-listing-proto-message
+    title: InstrumentListing.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:22.868Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-listing-proto-reflect
+    title: InstrumentListing.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:27.918Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-listing-descriptor
+    title: InstrumentListing.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:32.967Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-listing-get-instrument
+    title: InstrumentListing.GetInstrument
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:37.920Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-listing-get-price-source
+    title: InstrumentListing.GetPriceSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:42.989Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-listing-get-latest-price
+    title: InstrumentListing.GetLatestPrice
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:48.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class
+    title: InstrumentExemptionClass
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:52.453Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class-reset
+    title: InstrumentExemptionClass.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:45:57.510Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class-string
+    title: InstrumentExemptionClass.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:02.630Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class-proto-message
+    title: InstrumentExemptionClass.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:07.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class-proto-reflect
+    title: InstrumentExemptionClass.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:12.722Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class-descriptor
+    title: InstrumentExemptionClass.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:17.866Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class-get-wrapper
+    title: InstrumentExemptionClass.GetWrapper
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:22.986Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class-get-exemption-class
+    title: InstrumentExemptionClass.GetExemptionClass
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:28.068Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class-get-owner-chosen
+    title: InstrumentExemptionClass.GetOwnerChosen
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:33.153Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-exemption-class-get-known
+    title: InstrumentExemptionClass.GetKnown
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:38.187Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail
+    title: InstrumentDetail
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:42.514Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail-reset
+    title: InstrumentDetail.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:47.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail-string
+    title: InstrumentDetail.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:52.698Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail-proto-message
+    title: InstrumentDetail.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:46:57.941Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail-proto-reflect
+    title: InstrumentDetail.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:03.076Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail-descriptor
+    title: InstrumentDetail.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:08.125Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail-get-isin
+    title: InstrumentDetail.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:13.171Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail-get-listings
+    title: InstrumentDetail.GetListings
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:18.108Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail-get-asset-class
+    title: InstrumentDetail.GetAssetClass
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:23.093Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-detail-get-exemption-classes
+    title: InstrumentDetail.GetExemptionClasses
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:28.029Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-request
+    title: GetInstrumentRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:32.411Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-request-reset
+    title: GetInstrumentRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:37.326Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-request-string
+    title: GetInstrumentRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:42.267Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-request-proto-message
+    title: GetInstrumentRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:47.420Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-request-proto-reflect
+    title: GetInstrumentRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:52.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-request-descriptor
+    title: GetInstrumentRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:47:57.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-request-get-isin
+    title: GetInstrumentRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:02.676Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-response
+    title: GetInstrumentResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:07.060Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-response-reset
+    title: GetInstrumentResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:11.989Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-response-string
+    title: GetInstrumentResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:17.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-response-proto-message
+    title: GetInstrumentResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:22.097Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-response-proto-reflect
+    title: GetInstrumentResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:27.091Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-response-descriptor
+    title: GetInstrumentResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:32.266Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-get-instrument-response-get-instrument
+    title: GetInstrumentResponse.GetInstrument
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:37.449Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-request
+    title: ListInstrumentPricesRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:41.832Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-request-reset
+    title: ListInstrumentPricesRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:46.845Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-request-string
+    title: ListInstrumentPricesRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:51.902Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-request-proto-message
+    title: ListInstrumentPricesRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:48:56.996Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-request-proto-reflect
+    title: ListInstrumentPricesRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:02.139Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-request-descriptor
+    title: ListInstrumentPricesRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:07.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-request-get-isin
+    title: ListInstrumentPricesRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:12.222Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-request-get-from
+    title: ListInstrumentPricesRequest.GetFrom
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:17.155Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-request-get-to
+    title: ListInstrumentPricesRequest.GetTo
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:22.099Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-response
+    title: ListInstrumentPricesResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:26.458Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-response-reset
+    title: ListInstrumentPricesResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:31.368Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-response-string
+    title: ListInstrumentPricesResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:36.328Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-response-proto-message
+    title: ListInstrumentPricesResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:41.235Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-response-proto-reflect
+    title: ListInstrumentPricesResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:46.248Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-response-descriptor
+    title: ListInstrumentPricesResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:51.178Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-response-get-isin
+    title: ListInstrumentPricesResponse.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:49:56.254Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-prices-response-get-prices
+    title: ListInstrumentPricesResponse.GetPrices
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:01.510Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding
+    title: InstrumentHolding
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:05.934Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding-reset
+    title: InstrumentHolding.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:11.146Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding-string
+    title: InstrumentHolding.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:16.288Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding-proto-message
+    title: InstrumentHolding.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:21.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding-proto-reflect
+    title: InstrumentHolding.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:26.450Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding-descriptor
+    title: InstrumentHolding.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:31.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding-get-account-id
+    title: InstrumentHolding.GetAccountId
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:36.663Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding-get-instrument
+    title: InstrumentHolding.GetInstrument
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:41.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding-get-quantity
+    title: InstrumentHolding.GetQuantity
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:46.994Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-instrument-holding-get-lots
+    title: InstrumentHolding.GetLots
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:52.080Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-request
+    title: ListInstrumentHoldingsRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:50:56.633Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-request-reset
+    title: ListInstrumentHoldingsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:01.700Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-request-string
+    title: ListInstrumentHoldingsRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:06.891Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-request-proto-message
+    title: ListInstrumentHoldingsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:11.914Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-request-proto-reflect
+    title: ListInstrumentHoldingsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:16.874Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-request-descriptor
+    title: ListInstrumentHoldingsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:21.860Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-request-get-isin
+    title: ListInstrumentHoldingsRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:26.953Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-request-get-date
+    title: ListInstrumentHoldingsRequest.GetDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:32.027Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-response
+    title: ListInstrumentHoldingsResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:36.498Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-response-reset
+    title: ListInstrumentHoldingsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:41.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-response-string
+    title: ListInstrumentHoldingsResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:46.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-response-proto-message
+    title: ListInstrumentHoldingsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:51.767Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-response-proto-reflect
+    title: ListInstrumentHoldingsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:51:56.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-response-descriptor
+    title: ListInstrumentHoldingsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:01.966Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-response-get-isin
+    title: ListInstrumentHoldingsResponse.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:07.119Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-response-get-date
+    title: ListInstrumentHoldingsResponse.GetDate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:12.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-holdings-response-get-holdings
+    title: ListInstrumentHoldingsResponse.GetHoldings
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:17.211Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-request
+    title: ListInstrumentTransactionsRequest
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:21.593Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-request-reset
+    title: ListInstrumentTransactionsRequest.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:26.634Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-request-string
+    title: ListInstrumentTransactionsRequest.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:31.707Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-request-proto-message
+    title: ListInstrumentTransactionsRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:36.749Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-request-proto-reflect
+    title: ListInstrumentTransactionsRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:41.873Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-request-descriptor
+    title: ListInstrumentTransactionsRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:46.939Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-request-get-isin
+    title: ListInstrumentTransactionsRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:52.075Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-request-get-page-size
+    title: ListInstrumentTransactionsRequest.GetPageSize
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:52:57.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-request-get-page-token
+    title: ListInstrumentTransactionsRequest.GetPageToken
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:02.448Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-response
+    title: ListInstrumentTransactionsResponse
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:06.864Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-response-reset
+    title: ListInstrumentTransactionsResponse.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:12.064Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-response-string
+    title: ListInstrumentTransactionsResponse.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:17.156Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-response-proto-message
+    title: ListInstrumentTransactionsResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:22.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-response-proto-reflect
+    title: ListInstrumentTransactionsResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:27.464Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-response-descriptor
+    title: ListInstrumentTransactionsResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:32.717Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-response-get-transactions
+    title: ListInstrumentTransactionsResponse.GetTransactions
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:37.843Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pb-list-instrument-transactions-response-get-next-page-token
+    title: ListInstrumentTransactionsResponse.GetNextPageToken
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:43.088Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pbconnect-read-service-client-list-activity
+    title: readServiceClient.ListActivity
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:48.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pbconnect-read-service-client-list-sync-statuses
+    title: readServiceClient.ListSyncStatuses
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:52.719Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pbconnect-read-service-client-list-sync-attempts
+    title: readServiceClient.ListSyncAttempts
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:53:57.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pbconnect-read-service-client-get-instrument
+    title: readServiceClient.GetInstrument
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:01.859Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pbconnect-read-service-client-list-instrument-prices
+    title: readServiceClient.ListInstrumentPrices
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:06.369Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pbconnect-read-service-client-list-instrument-holdings
+    title: readServiceClient.ListInstrumentHoldings
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:10.987Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pbconnect-read-service-client-list-instrument-transactions
+    title: readServiceClient.ListInstrumentTransactions
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:15.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-list-activity
+    title: UnimplementedReadServiceHandler.ListActivity
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:19.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-activity
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-list-sync-statuses
+    title: UnimplementedReadServiceHandler.ListSyncStatuses
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:24.439Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-list-sync-attempts
+    title: UnimplementedReadServiceHandler.ListSyncAttempts
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:28.919Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-sync-history
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-get-instrument
+    title: UnimplementedReadServiceHandler.GetInstrument
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:33.303Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-prices
+    title: UnimplementedReadServiceHandler.ListInstrumentPrices
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:37.692Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-holdings
+    title: UnimplementedReadServiceHandler.ListInstrumentHoldings
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:42.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-transactions
+    title: UnimplementedReadServiceHandler.ListInstrumentTransactions
+    sourceFile: sdk/go/gen/openfief/views/v1/viewsv1connect/read_service.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:46.429Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-uiv2
+      - type: implements
+        target: REQ-views-instrument-page
+  - id: SYM-views-app-test-helper-scoped
+    title: scoped
+    sourceFile: internal/views/app/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:50.242Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-app-uiv2
+  - id: SYM-views-connectapi-test-helper-item-body
+    title: itemBody
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:53.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2
+  - id: SYM-views-connectapi-test-helper-detail
+    title: detail
+    sourceFile: internal/views/connectapi/uiv2_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T02:54:57.777Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-uiv2

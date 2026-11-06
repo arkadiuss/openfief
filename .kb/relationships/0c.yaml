@@ -538,3 +538,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9db030f270fd
+  - type: implements
+    from: SYM-views-parse-activity-bound
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:00:01.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5b6cf649ded7
+  - type: covered_by
+    from: SYM-views-parse-activity-bound
+    to: TEST-views-activity
+    created_at: 2026-11-06T02:00:01.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6156ace250f

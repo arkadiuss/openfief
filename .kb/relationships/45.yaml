@@ -776,3 +776,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb3e7890f605
+  - type: implements
+    from: SYM-views-failure-activity
+    to: REQ-views-activity
+    created_at: 2026-11-06T01:59:07.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c9353c30059
+  - type: covered_by
+    from: SYM-views-failure-activity
+    to: TEST-views-activity
+    created_at: 2026-11-06T01:59:07.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-876613410536
+  - type: executable_for
+    from: SYM-views-test-helper-change-at
+    to: TEST-views-activity
+    created_at: 2026-11-06T02:04:32.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28fa698c3c04
+  - type: executable_for
+    from: SYM-views-app-test-helper-holding-accounts
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:07:27.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-265df9457a23
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-response
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:43:29.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3b6017346b1
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-response
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:43:29.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66d6c9667b5a

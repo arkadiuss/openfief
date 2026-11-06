@@ -608,3 +608,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9270fcaf6c39
+  - type: implements
+    from: SYM-views-pb-activity-get-change
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:37:53.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb60e8935ea2
+  - type: covered_by
+    from: SYM-views-pb-activity-get-change
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:37:53.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c84d025f8f0

@@ -867,3 +867,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44a41827b10e
+  - type: implements
+    from: SYM-views-activity-bound-of
+    to: REQ-views-activity
+    created_at: 2026-11-06T01:59:45.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a2ddeeba28a
+  - type: covered_by
+    from: SYM-views-activity-bound-of
+    to: TEST-views-activity
+    created_at: 2026-11-06T01:59:45.670Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b07f8a0be3f
+  - type: implements
+    from: SYM-views-pb-activity-proto-reflect
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:37:17.736Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb9637b51438
+  - type: covered_by
+    from: SYM-views-pb-activity-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:37:17.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47ec12545640

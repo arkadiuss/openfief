@@ -692,3 +692,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-14c0165eedeb
+  - type: implements
+    from: SYM-views-instrument-holding
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:00:40.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ad75138b5e4
+  - type: covered_by
+    from: SYM-views-instrument-holding
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:00:40.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f1979933456
+  - type: implements
+    from: SYM-views-pb-attention-item-group-number
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:31:35.835Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fa95c21a4c3
+  - type: covered_by
+    from: SYM-views-pb-attention-item-group-number
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:31:35.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94d6847c543a
+  - type: implements
+    from: SYM-views-pb-instrument-holding-get-instrument
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:50:43.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c4a3fa7827a
+  - type: covered_by
+    from: SYM-views-pb-instrument-holding-get-instrument
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:50:43.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74161c86fb86
+  - type: implements
+    from: SYM-views-pb-list-instrument-holdings-request-reset
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:51:03.265Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-695090de3595
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-holdings-request-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:51:03.302Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-288a30fccbbf

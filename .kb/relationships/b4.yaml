@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f6f01b691157
+  - type: implements
+    from: SYM-views-pb-instrument-holding-proto-reflect
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:50:27.973Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d87d6c8cd222
+  - type: covered_by
+    from: SYM-views-pb-instrument-holding-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:50:28.003Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bec8affab33e

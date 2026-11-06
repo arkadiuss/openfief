@@ -643,3 +643,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec2a339c4469
+  - type: implements
+    from: SYM-views-pb-activity-change-string
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:54.094Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d73d36f9bac6
+  - type: covered_by
+    from: SYM-views-pb-activity-change-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:54.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69cc469fb92a
+  - type: implements
+    from: SYM-views-pb-instrument-exemption-class-get-exemption-class
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:46:29.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-765fc1b2ea4d
+  - type: covered_by
+    from: SYM-views-pb-instrument-exemption-class-get-exemption-class
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:46:29.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-853e254d3712

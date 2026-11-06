@@ -643,3 +643,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-598c9c8bfbd6
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-response-get-attempts
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:44:04.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fca9688ef38c
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-response-get-attempts
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:44:04.468Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87ba3b6dcb1a
+  - type: implements
+    from: SYM-views-pb-instrument-holding-descriptor
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:50:33.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e4daf7157c7
+  - type: covered_by
+    from: SYM-views-pb-instrument-holding-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:50:33.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-758bacc5a693

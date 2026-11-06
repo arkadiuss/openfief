@@ -797,3 +797,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e08eb5823149
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-changes-recorded-changes
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:07:58.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a196fd861620
+  - type: implements
+    from: SYM-views-pb-activity-kind-number
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:32:44.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d15804ec7406
+  - type: covered_by
+    from: SYM-views-pb-activity-kind-number
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:32:44.752Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7ddc84a3751
+  - type: implements
+    from: SYM-views-pb-list-attention-items-response-get-acknowledged
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:34:16.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1397c301b89d
+  - type: covered_by
+    from: SYM-views-pb-list-attention-items-response-get-acknowledged
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:34:16.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6747517a3a0
+  - type: implements
+    from: SYM-views-pb-instrument-detail
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:46:43.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce0304d6ae28
+  - type: covered_by
+    from: SYM-views-pb-instrument-detail
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:46:44.024Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7541c42f094

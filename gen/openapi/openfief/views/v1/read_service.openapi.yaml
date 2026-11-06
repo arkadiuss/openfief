@@ -59,6 +59,152 @@ components:
       title: Account
       additionalProperties: false
       description: Account is one account at an institution. It belongs to one sleeve.
+    openfief.views.v1.Activity:
+      type: object
+      properties:
+        kind:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ActivityKind'
+          title: kind
+        at:
+          type: string
+          title: at
+          description: |-
+            When it happened: the batch finished, the attempt ended or the
+             version was recorded. RFC 3339, UTC.
+        connectorInstance:
+          type: string
+          title: connector_instance
+          description: |-
+            The connector instance of an import or a sync; empty for a coupon or
+             a correction.
+        batch:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ActivityBatch'
+          title: batch
+          description: Set for an import or a sync.
+        attempt:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.SyncAttempt'
+          title: attempt
+          description: Set for a failed sync attempt.
+        change:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.ActivityChange'
+          title: change
+          description: Set for a coupon or a correction.
+      title: Activity
+      additionalProperties: false
+      description: Activity is one entry of the recent activity.
+    openfief.views.v1.ActivityBatch:
+      type: object
+      properties:
+        batchId:
+          type: string
+          title: batch_id
+        source:
+          type: string
+          title: source
+          description: 'The ingest path that ran it: "sync", "upload", "entry" or "file".'
+        mode:
+          type: string
+          title: mode
+          description: '"opening" or "transactions" (D-23).'
+        institution:
+          type: string
+          title: institution
+          description: The institution its delivery named, such as "xtb".
+        transactions:
+          type: integer
+          title: transactions
+          format: int32
+          description: |-
+            The transactions the mapping produced, and of them those new to the
+             ledger and those that corrected one.
+        newTransactions:
+          type: integer
+          title: new_transactions
+          format: int32
+        corrected:
+          type: integer
+          title: corrected
+          format: int32
+        failedAssertions:
+          type: integer
+          title: failed_assertions
+          format: int32
+          description: Balance assertions that didn't match.
+        problems:
+          type: integer
+          title: problems
+          format: int32
+          description: Rows the mapping left out, and of them those OpenFief can't book yet.
+        unsupported:
+          type: integer
+          title: unsupported
+          format: int32
+      title: ActivityBatch
+      additionalProperties: false
+      description: |-
+        ActivityBatch is a completed import batch: what came in and what the
+         ledger did with it. Only counts, never an amount (GR-12).
+    openfief.views.v1.ActivityChange:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        source:
+          type: string
+          title: source
+        externalId:
+          type: string
+          title: external_id
+        version:
+          type: integer
+          title: version
+          format: int32
+          description: The version recorded, from 1.
+        deleted:
+          type: boolean
+          title: deleted
+          description: True for a deletion (D-100), which has no kind and no postings.
+        kind:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.TransactionKind'
+          title: kind
+        date:
+          type: string
+          title: date
+          description: The transaction's date, YYYY-MM-DD.
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+          description: The instrument a coupon was paid on; unset for any other change.
+        amount:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: amount
+          description: |-
+            A coupon's cash received, after any tax withheld; unset for any other
+             change.
+      title: ActivityChange
+      additionalProperties: false
+      description: |-
+        ActivityChange is a transaction version the ledger recorded: a coupon or
+         a correction.
+    openfief.views.v1.ActivityKind:
+      type: string
+      title: ActivityKind
+      enum:
+        - ACTIVITY_KIND_UNSPECIFIED
+        - ACTIVITY_KIND_IMPORT
+        - ACTIVITY_KIND_SYNC
+        - ACTIVITY_KIND_SYNC_FAILED
+        - ACTIVITY_KIND_COUPON
+        - ACTIVITY_KIND_CORRECTION
+      description: ActivityKind is what happened (D-193).
     openfief.views.v1.AllocationDimension:
       type: string
       title: AllocationDimension
@@ -166,6 +312,30 @@ components:
             $ref: '#/components/schemas/openfief.views.v1.AttentionItemChange'
           title: history
           description: Its history, oldest first.
+        group:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.AttentionItemGroup'
+          title: group
+          description: What the owner does about it, as the Inbox groups items (D-196).
+        accountId:
+          type: string
+          title: account_id
+          description: |-
+            The account it is tied to, such as a flagged balance assertion's;
+             empty for an item tied to no account.
+        isin:
+          type: string
+          title: isin
+          description: |-
+            The ISIN of the instrument it is about, such as a price check's;
+             empty for none.
+        connectorInstance:
+          type: string
+          title: connector_instance
+          description: |-
+            The connector instance it is about, such as an unmapped broker
+             account's, a failing sync's or an import batch's: an item tied to no
+             account names only its instance (D-165).
       title: AttentionItem
       additionalProperties: false
       description: AttentionItem is something a check found that needs the owner (D-130).
@@ -196,6 +366,17 @@ components:
       title: AttentionItemChange
       additionalProperties: false
       description: AttentionItemChange is one entry of an attention item's history.
+    openfief.views.v1.AttentionItemGroup:
+      type: string
+      title: AttentionItemGroup
+      enum:
+        - ATTENTION_ITEM_GROUP_UNSPECIFIED
+        - ATTENTION_ITEM_GROUP_DATA_COMING_IN
+        - ATTENTION_ITEM_GROUP_NUMBERS_TO_CHECK
+        - ATTENTION_ITEM_GROUP_DECISIONS
+      description: |-
+        AttentionItemGroup is what the owner does about an attention item, as
+         the Inbox groups items (D-196).
     openfief.views.v1.AttentionItemReason:
       type: string
       title: AttentionItemReason
@@ -217,6 +398,17 @@ components:
         - ATTENTION_ITEM_STATE_ACKNOWLEDGED
         - ATTENTION_ITEM_STATE_RESOLVED
       description: AttentionItemState is where an attention item stands (D-130).
+    openfief.views.v1.AttentionView:
+      type: string
+      title: AttentionView
+      enum:
+        - ATTENTION_VIEW_UNSPECIFIED
+        - ATTENTION_VIEW_OPEN
+        - ATTENTION_VIEW_ACKNOWLEDGED
+        - ATTENTION_VIEW_DONE
+      description: |-
+        AttentionView is which attention items to list, as the Inbox's views
+         split them (D-196).
     openfief.views.v1.BacktestDay:
       type: object
       properties:
@@ -475,6 +667,23 @@ components:
           title: unvalued
       title: GetAllocationResponse
       additionalProperties: false
+    openfief.views.v1.GetInstrumentRequest:
+      type: object
+      properties:
+        isin:
+          type: string
+          title: isin
+      title: GetInstrumentRequest
+      additionalProperties: false
+    openfief.views.v1.GetInstrumentResponse:
+      type: object
+      properties:
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.InstrumentDetail'
+          title: instrument
+      title: GetInstrumentResponse
+      additionalProperties: false
     openfief.views.v1.GetModelPortfolioRequest:
       type: object
       properties:
@@ -710,6 +919,130 @@ components:
       title: Instrument
       additionalProperties: false
       description: 'Instrument is something that can be held: an ISIN plus a venue symbol.'
+    openfief.views.v1.InstrumentDetail:
+      type: object
+      properties:
+        isin:
+          type: string
+          title: isin
+        listings:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.InstrumentListing'
+          title: listings
+          description: Its listings, in symbol order.
+        assetClass:
+          type: string
+          title: asset_class
+          description: '"listed" or "treasury_bond", as the allocation classes it.'
+        exemptionClasses:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.InstrumentExemptionClass'
+          title: exemption_classes
+      title: InstrumentDetail
+      additionalProperties: false
+      description: InstrumentDetail is an instrument across the caller's accounts (D-195).
+    openfief.views.v1.InstrumentExemptionClass:
+      type: object
+      properties:
+        wrapper:
+          type: string
+          title: wrapper
+          description: The tax wrapper, such as "oki".
+        exemptionClass:
+          type: string
+          title: exemption_class
+          description: The class it counts in, such as a savings or an investment asset.
+        ownerChosen:
+          type: boolean
+          title: owner_chosen
+          description: True when the owner chose the class.
+        known:
+          type: boolean
+          title: known
+          description: |-
+            False when the pack can't tell and the owner hasn't chosen: it counts
+             in exemption_class until the owner classifies it.
+      title: InstrumentExemptionClass
+      additionalProperties: false
+      description: |-
+        InstrumentExemptionClass is an instrument's class in one wrapper's
+         yearly tax, such as OKI's (D-127, D-132).
+    openfief.views.v1.InstrumentHolding:
+      type: object
+      properties:
+        accountId:
+          type: string
+          title: account_id
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+        quantity:
+          type: string
+          title: quantity
+          description: A decimal string.
+        lots:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Lot'
+          title: lots
+      title: InstrumentHolding
+      additionalProperties: false
+      description: |-
+        InstrumentHolding is one account's holding of one listing of an
+         instrument, with its open lots.
+    openfief.views.v1.InstrumentListing:
+      type: object
+      properties:
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+        priceSource:
+          type: string
+          title: price_source
+          description: The source the listing is valued at; empty when none has priced it.
+        latestPrice:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.InstrumentPrice'
+          title: latest_price
+          description: The latest price of that source; unset when none.
+      title: InstrumentListing
+      additionalProperties: false
+      description: InstrumentListing is one listing an instrument is held or traded under.
+    openfief.views.v1.InstrumentPrice:
+      type: object
+      properties:
+        instrument:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Instrument'
+          title: instrument
+          description: The listing, an ISIN and a venue symbol.
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+        close:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.Money'
+          title: close
+        source:
+          type: string
+          title: source
+          description: The connector instance it came from.
+        primary:
+          type: boolean
+          title: primary
+          description: |-
+            True when its source is the one the listing is valued at; another
+             source's price only cross-checks it (D-22, D-94).
+      title: InstrumentPrice
+      additionalProperties: false
+      description: |-
+        InstrumentPrice is a stored end-of-day price of one listing of an
+         instrument from one source (D-94).
     openfief.views.v1.ListAccountValuationsRequest:
       type: object
       properties:
@@ -772,6 +1105,37 @@ components:
           title: accounts
       title: ListAccountsResponse
       additionalProperties: false
+    openfief.views.v1.ListActivityRequest:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          title: page_size
+          format: int32
+          description: The most entries to return, 1 to 500; 0 means 100.
+        pageToken:
+          type: string
+          title: page_token
+          description: The next_page_token of the previous page; empty for the first page.
+      title: ListActivityRequest
+      additionalProperties: false
+    openfief.views.v1.ListActivityResponse:
+      type: object
+      properties:
+        activities:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Activity'
+          title: activities
+          description: |-
+            Newest first. A page may hold fewer than page_size entries, even none,
+             and still have a next page.
+        nextPageToken:
+          type: string
+          title: next_page_token
+          description: Pass as page_token to get the next page; empty on the last page.
+      title: ListActivityResponse
+      additionalProperties: false
     openfief.views.v1.ListAssertionChecksRequest:
       type: object
       properties:
@@ -800,6 +1164,26 @@ components:
       additionalProperties: false
     openfief.views.v1.ListAttentionItemsRequest:
       type: object
+      properties:
+        view:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.AttentionView'
+          title: view
+          description: Only the items in this view; unspecified for every item.
+        accountId:
+          type: string
+          title: account_id
+          description: |-
+            Only the items tied to this account, such as an account page's
+             banner; empty for any.
+        isin:
+          type: string
+          title: isin
+          description: Only the items about the instrument with this ISIN; empty for any.
+        connectorInstance:
+          type: string
+          title: connector_instance
+          description: Only the items about this connector instance; empty for any.
       title: ListAttentionItemsRequest
       additionalProperties: false
     openfief.views.v1.ListAttentionItemsResponse:
@@ -814,7 +1198,19 @@ components:
           type: integer
           title: open
           format: int32
-          description: How many items are open.
+          description: |-
+            How many of the items the account, ISIN and instance filters select
+             are open, whatever the view.
+        acknowledged:
+          type: integer
+          title: acknowledged
+          format: int32
+          description: How many of them are acknowledged.
+        done:
+          type: integer
+          title: done
+          format: int32
+          description: How many of them are done.
       title: ListAttentionItemsResponse
       additionalProperties: false
     openfief.views.v1.ListCashRequest:
@@ -887,6 +1283,96 @@ components:
           title: holdings
       title: ListHoldingsResponse
       additionalProperties: false
+    openfief.views.v1.ListInstrumentHoldingsRequest:
+      type: object
+      properties:
+        isin:
+          type: string
+          title: isin
+        date:
+          type: string
+          title: date
+          description: YYYY-MM-DD.
+      title: ListInstrumentHoldingsRequest
+      additionalProperties: false
+    openfief.views.v1.ListInstrumentHoldingsResponse:
+      type: object
+      properties:
+        isin:
+          type: string
+          title: isin
+        date:
+          type: string
+          title: date
+        holdings:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.InstrumentHolding'
+          title: holdings
+          description: In account then symbol order.
+      title: ListInstrumentHoldingsResponse
+      additionalProperties: false
+    openfief.views.v1.ListInstrumentPricesRequest:
+      type: object
+      properties:
+        isin:
+          type: string
+          title: isin
+        from:
+          type: string
+          title: from
+          description: YYYY-MM-DD, both inclusive; at most 3700 days apart.
+        to:
+          type: string
+          title: to
+      title: ListInstrumentPricesRequest
+      additionalProperties: false
+    openfief.views.v1.ListInstrumentPricesResponse:
+      type: object
+      properties:
+        isin:
+          type: string
+          title: isin
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.InstrumentPrice'
+          title: prices
+          description: In listing, date and source order.
+      title: ListInstrumentPricesResponse
+      additionalProperties: false
+    openfief.views.v1.ListInstrumentTransactionsRequest:
+      type: object
+      properties:
+        isin:
+          type: string
+          title: isin
+        pageSize:
+          type: integer
+          title: page_size
+          format: int32
+          description: The most transactions to return, 1 to 500; 0 means 100.
+        pageToken:
+          type: string
+          title: page_token
+          description: The next_page_token of the previous page; empty for the first page.
+      title: ListInstrumentTransactionsRequest
+      additionalProperties: false
+    openfief.views.v1.ListInstrumentTransactionsResponse:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.Transaction'
+          title: transactions
+          description: Each with its account_id.
+        nextPageToken:
+          type: string
+          title: next_page_token
+          description: Pass as page_token to get the next page; empty on the last page.
+      title: ListInstrumentTransactionsResponse
+      additionalProperties: false
     openfief.views.v1.ListLotsRequest:
       type: object
       properties:
@@ -939,6 +1425,12 @@ components:
             - $ref: '#/components/schemas/openfief.views.v1.PriceCheckStatus'
           title: status
           description: Only checks with this status, such as flagged; unspecified for all.
+        isin:
+          type: string
+          title: isin
+          description: |-
+            Only checks of the instrument with this ISIN, every one with its
+             history, oldest first (D-112, D-195); empty for every instrument.
       title: ListPriceChecksRequest
       additionalProperties: false
     openfief.views.v1.ListPriceChecksResponse:
@@ -985,6 +1477,57 @@ components:
             $ref: '#/components/schemas/openfief.views.v1.Sleeve'
           title: sleeves
       title: ListSleevesResponse
+      additionalProperties: false
+    openfief.views.v1.ListSyncAttemptsRequest:
+      type: object
+      properties:
+        connectorInstance:
+          type: string
+          title: connector_instance
+        pageSize:
+          type: integer
+          title: page_size
+          format: int32
+          description: The most attempts to return, 1 to 500; 0 means 100.
+        pageToken:
+          type: string
+          title: page_token
+          description: The next_page_token of the previous page; empty for the first page.
+      title: ListSyncAttemptsRequest
+      additionalProperties: false
+    openfief.views.v1.ListSyncAttemptsResponse:
+      type: object
+      properties:
+        status:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.SyncStatus'
+          title: status
+          description: The instance's status; unset for an instance that was never synced.
+        attempts:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.SyncAttempt'
+          title: attempts
+          description: Newest first.
+        nextPageToken:
+          type: string
+          title: next_page_token
+          description: Pass as page_token to get the next page; empty on the last page.
+      title: ListSyncAttemptsResponse
+      additionalProperties: false
+    openfief.views.v1.ListSyncStatusesRequest:
+      type: object
+      title: ListSyncStatusesRequest
+      additionalProperties: false
+    openfief.views.v1.ListSyncStatusesResponse:
+      type: object
+      properties:
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/openfief.views.v1.SyncStatus'
+          title: statuses
+      title: ListSyncStatusesResponse
       additionalProperties: false
     openfief.views.v1.ListTransactionsRequest:
       type: object
@@ -1635,6 +2178,110 @@ components:
         - SLEEVE_ROLE_DEFENSIVE
         - SLEEVE_ROLE_OFFENSIVE
       description: SleeveRole is what a sleeve is for.
+    openfief.views.v1.SyncAttempt:
+      type: object
+      properties:
+        connectorInstance:
+          type: string
+          title: connector_instance
+        batchId:
+          type: string
+          title: batch_id
+          description: |-
+            The import batch it ran; a failed attempt's batch is retried with the
+             same ID.
+        mode:
+          type: string
+          title: mode
+          description: '"opening" or "transactions" (D-23).'
+        startedAt:
+          type: string
+          title: started_at
+          description: RFC 3339, UTC.
+        endedAt:
+          type: string
+          title: ended_at
+        failed:
+          type: boolean
+          title: failed
+          description: True for a failed attempt.
+        errorClass:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.SyncErrorClass'
+          title: error_class
+          description: Why it failed; unspecified for a successful attempt.
+        failures:
+          type: integer
+          title: failures
+          format: int32
+          description: |-
+            How many attempts in a row have failed, this one included; 0 after a
+             success.
+        nextSyncAt:
+          type: string
+          title: next_sync_at
+          description: When the attempt scheduled the next one, RFC 3339, UTC.
+      title: SyncAttempt
+      additionalProperties: false
+      description: SyncAttempt is one attempt to sync a connector instance.
+    openfief.views.v1.SyncErrorClass:
+      type: string
+      title: SyncErrorClass
+      enum:
+        - SYNC_ERROR_CLASS_UNSPECIFIED
+        - SYNC_ERROR_CLASS_TIMEOUT
+        - SYNC_ERROR_CLASS_UNAVAILABLE
+        - SYNC_ERROR_CLASS_CONNECTOR_ERROR
+        - SYNC_ERROR_CLASS_INVALID_DELIVERY
+        - SYNC_ERROR_CLASS_REFUSED
+        - SYNC_ERROR_CLASS_BOOKING
+        - SYNC_ERROR_CLASS_INTERRUPTED
+        - SYNC_ERROR_CLASS_OTHER
+      description: |-
+        SyncErrorClass says why a sync attempt failed, without the error's text
+         (GR-12).
+    openfief.views.v1.SyncStatus:
+      type: object
+      properties:
+        connectorInstance:
+          type: string
+          title: connector_instance
+        lastAttemptAt:
+          type: string
+          title: last_attempt_at
+          description: When the latest attempt ended, RFC 3339, UTC; empty before any.
+        lastSuccessAt:
+          type: string
+          title: last_success_at
+          description: When the latest successful attempt ended; empty before any.
+        failures:
+          type: integer
+          title: failures
+          format: int32
+          description: How many attempts in a row have failed since the latest success.
+        failingSince:
+          type: string
+          title: failing_since
+          description: When the first of them started; empty while none has failed.
+        lastErrorClass:
+          allOf:
+            - $ref: '#/components/schemas/openfief.views.v1.SyncErrorClass'
+          title: last_error_class
+          description: Why the latest of them failed; unspecified while none has.
+        nextSyncAt:
+          type: string
+          title: next_sync_at
+          description: When the next attempt is due; empty when it is due at once.
+        keepsFailing:
+          type: boolean
+          title: keeps_failing
+          description: |-
+            Whether the sync keeps failing: at least three attempts in a row
+             failed, spanning at least fifteen minutes, which raises an attention
+             item of kind "connector-sync-failing" (D-196).
+      title: SyncStatus
+      additionalProperties: false
+      description: SyncStatus is where a connector instance's syncs stand.
     openfief.views.v1.Transaction:
       type: object
       properties:
@@ -1679,6 +2326,10 @@ components:
             True when that instance is no longer installed (D-58). The transaction
              stays; reinstalling the instance under the same name continues from it.
              False while the core can't tell which instances are installed.
+        accountId:
+          type: string
+          title: account_id
+          description: The account the transaction is in.
       title: Transaction
       additionalProperties: false
       description: |-
@@ -2216,6 +2867,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListAccountValuationsResponse'
+  /v1/activity:
+    get:
+      tags:
+        - ReadService
+      summary: ListActivity
+      description: |-
+        ListActivity returns the recent activity, newest first (D-193):
+         import batches that completed (uploads, entries and syncs), sync
+         attempts that failed, coupons booked and corrections, a page at a time.
+         Coupons and corrections come only from accounts the caller may view
+         (D-163); imports and syncs name their connector instance only (D-165).
+      operationId: openfief.views.v1.ReadService.ListActivity
+      parameters:
+        - name: pageSize
+          in: query
+          description: The most entries to return, 1 to 500; 0 means 100.
+          schema:
+            type: integer
+            title: page_size
+            format: int32
+        - name: pageToken
+          in: query
+          description: The next_page_token of the previous page; empty for the first page.
+          schema:
+            type: string
+            title: page_token
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListActivityResponse'
   /v1/allocation:
     get:
       tags:
@@ -2271,6 +2955,34 @@ paths:
          acknowledges or resolves them through the AttentionService, or on the
          page of the check that raised them, not here.
       operationId: openfief.views.v1.ReadService.ListAttentionItems
+      parameters:
+        - name: view
+          in: query
+          description: Only the items in this view; unspecified for every item.
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/openfief.views.v1.AttentionView'
+            title: view
+        - name: accountId
+          in: query
+          description: |-
+            Only the items tied to this account, such as an account page's
+             banner; empty for any.
+          schema:
+            type: string
+            title: account_id
+        - name: isin
+          in: query
+          description: Only the items about the instrument with this ISIN; empty for any.
+          schema:
+            type: string
+            title: isin
+        - name: connectorInstance
+          in: query
+          description: Only the items about this connector instance; empty for any.
+          schema:
+            type: string
+            title: connector_instance
       responses:
         "200":
           description: Success
@@ -2294,6 +3006,179 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListConnectorBindingsResponse'
+  /v1/connector-instances/{connectorInstance}/sync-attempts:
+    get:
+      tags:
+        - ReadService
+      summary: ListSyncAttempts
+      description: |-
+        ListSyncAttempts returns one connector instance's sync attempts, newest
+         first, a page at a time, with its status: what happened, for an
+         instance whose sync keeps failing (D-196). An attempt keeps its error
+         class, never the error's text (GR-12).
+      operationId: openfief.views.v1.ReadService.ListSyncAttempts
+      parameters:
+        - name: connectorInstance
+          in: path
+          description: The connectorInstance path parameter.
+          required: true
+          schema:
+            type: string
+            title: connector_instance
+        - name: pageSize
+          in: query
+          description: The most attempts to return, 1 to 500; 0 means 100.
+          schema:
+            type: integer
+            title: page_size
+            format: int32
+        - name: pageToken
+          in: query
+          description: The next_page_token of the previous page; empty for the first page.
+          schema:
+            type: string
+            title: page_token
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListSyncAttemptsResponse'
+  /v1/instruments/{isin}:
+    get:
+      tags:
+        - ReadService
+      summary: GetInstrument
+      description: |-
+        GetInstrument returns one instrument by its ISIN (D-195): the listings
+         the caller's accounts hold or trade it under, with each one's price
+         source and latest price, its asset class and its exemption class in
+         each wrapper's yearly tax, such as OKI's (D-127, D-132). An ISIN that
+         no viewable account posts to and that has no stored price is not
+         found.
+      operationId: openfief.views.v1.ReadService.GetInstrument
+      parameters:
+        - name: isin
+          in: path
+          description: The isin path parameter.
+          required: true
+          schema:
+            type: string
+            title: isin
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.GetInstrumentResponse'
+  /v1/instruments/{isin}/holdings:
+    get:
+      tags:
+        - ReadService
+      summary: ListInstrumentHoldings
+      description: |-
+        ListInstrumentHoldings returns an instrument's holdings and open lots
+         on a date across the accounts the caller may view, in account order
+         (D-195).
+      operationId: openfief.views.v1.ReadService.ListInstrumentHoldings
+      parameters:
+        - name: isin
+          in: path
+          description: The isin path parameter.
+          required: true
+          schema:
+            type: string
+            title: isin
+        - name: date
+          in: query
+          description: YYYY-MM-DD.
+          schema:
+            type: string
+            title: date
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListInstrumentHoldingsResponse'
+  /v1/instruments/{isin}/prices:
+    get:
+      tags:
+        - ReadService
+      summary: ListInstrumentPrices
+      description: |-
+        ListInstrumentPrices returns an instrument's stored prices in a date
+         range, from every source (D-94), each marked when it is the source its
+         listing is valued at (D-195).
+      operationId: openfief.views.v1.ReadService.ListInstrumentPrices
+      parameters:
+        - name: isin
+          in: path
+          description: The isin path parameter.
+          required: true
+          schema:
+            type: string
+            title: isin
+        - name: from
+          in: query
+          description: YYYY-MM-DD, both inclusive; at most 3700 days apart.
+          schema:
+            type: string
+            title: from
+        - name: to
+          in: query
+          description: The to query parameter.
+          schema:
+            type: string
+            title: to
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListInstrumentPricesResponse'
+  /v1/instruments/{isin}/transactions:
+    get:
+      tags:
+        - ReadService
+      summary: ListInstrumentTransactions
+      description: |-
+        ListInstrumentTransactions returns the current transactions that post
+         to an instrument, across the accounts the caller may view, in date then
+         key order, a page at a time like ListTransactions (D-195).
+      operationId: openfief.views.v1.ReadService.ListInstrumentTransactions
+      parameters:
+        - name: isin
+          in: path
+          description: The isin path parameter.
+          required: true
+          schema:
+            type: string
+            title: isin
+        - name: pageSize
+          in: query
+          description: The most transactions to return, 1 to 500; 0 means 100.
+          schema:
+            type: integer
+            title: page_size
+            format: int32
+        - name: pageToken
+          in: query
+          description: The next_page_token of the previous page; empty for the first page.
+          schema:
+            type: string
+            title: page_token
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListInstrumentTransactionsResponse'
   /v1/model-portfolio:
     get:
       tags:
@@ -2422,6 +3307,14 @@ paths:
             allOf:
               - $ref: '#/components/schemas/openfief.views.v1.PriceCheckStatus'
             title: status
+        - name: isin
+          in: query
+          description: |-
+            Only checks of the instrument with this ISIN, every one with its
+             history, oldest first (D-112, D-195); empty for every instrument.
+          schema:
+            type: string
+            title: isin
       responses:
         "200":
           description: Success
@@ -2474,6 +3367,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/openfief.views.v1.ListSleevesResponse'
+  /v1/sync-status:
+    get:
+      tags:
+        - ReadService
+      summary: ListSyncStatuses
+      description: |-
+        ListSyncStatuses returns where each connector instance's syncs stand,
+         in instance order: its latest attempt and success, the failures in a
+         row since, and whether it keeps failing (D-196).
+      operationId: openfief.views.v1.ReadService.ListSyncStatuses
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/openfief.views.v1.ListSyncStatusesResponse'
   /v1/transfers:
     get:
       tags:
@@ -2575,4 +3485,6 @@ tags:
     description: |-
       ReadService reads the record: sleeves, accounts, transactions, holdings,
        tax lots, cash, balance assertions, valuations, price checks, the
-       allocation and the portfolio's performance.
+       allocation and the portfolio's performance; and what the owner's pages
+       show around it: each instrument, the attention items, the recent
+       activity and the connectors' syncs.

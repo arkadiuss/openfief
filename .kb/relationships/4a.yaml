@@ -685,3 +685,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4d38248b0090
+  - type: implements
+    from: SYM-views-app-views-change-activity
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:01:19.503Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-951b1ed5f798
+  - type: covered_by
+    from: SYM-views-app-views-change-activity
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:01:19.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f9d3c60ee360
+  - type: executable_for
+    from: SYM-views-test-instrument-transactions-and-listings
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:05:02.863Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70f4b3c48965
+  - type: implements
+    from: SYM-views-pb-list-sync-statuses-request-reset
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:41:48.231Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d7a76ca37d2
+  - type: covered_by
+    from: SYM-views-pb-list-sync-statuses-request-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:41:48.263Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8074c4515524
+  - type: implements
+    from: SYM-views-pb-instrument-exemption-class
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:45:53.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f0595cdd5f2
+  - type: covered_by
+    from: SYM-views-pb-instrument-exemption-class
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:45:53.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c68d661b419
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-response-reset
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:49:32.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c4dfd519233
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-response-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:49:32.931Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cce3644f2e00

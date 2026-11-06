@@ -52,6 +52,19 @@ func readAccess() map[protoreflect.Name]string {
 		"GetSettings":           beyondD137,
 		"ListYearlyTaxes":       beyondD137,
 		"ListAssertionChecks":   beyondD137,
+		// D-193's recent activity: coupons and corrections are
+		// transactions, but import batches and sync attempts are not on
+		// D-137's list.
+		"ListActivity": beyondD137,
+		// D-196's failing sync: the connectors' sync history.
+		"ListSyncStatuses": beyondD137,
+		"ListSyncAttempts": beyondD137,
+		// D-195's instrument page: its listings, prices and exemption
+		// classes, then its holdings, lots and transactions across accounts.
+		"GetInstrument":              beyondD137,
+		"ListInstrumentPrices":       beyondD137,
+		"ListInstrumentHoldings":     "holdings",
+		"ListInstrumentTransactions": "transactions",
 	}
 }
 
@@ -144,7 +157,7 @@ func checkServed(t *testing.T, served map[string]bool) {
 // opaque cursor into a listing that the caller sends back for the next
 // page, and it proves nothing.
 func namedLikeASecret(f protoreflect.FieldDescriptor) bool {
-	if f.FullName() == "openfief.views.v1.ListTransactionsResponse.next_page_token" {
+	if f.Name() == "next_page_token" {
 		return false
 	}
 	name := strings.ToLower(string(f.Name()))

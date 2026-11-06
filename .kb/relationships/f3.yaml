@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-927c846c2254
+  - type: implements
+    from: SYM-views-pb-instrument-price-get-date
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:44:49.516Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-349b9e323fde
+  - type: covered_by
+    from: SYM-views-pb-instrument-price-get-date
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:44:49.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ba7cb94122b

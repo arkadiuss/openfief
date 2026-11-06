@@ -461,3 +461,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d8c67cabe36
+  - type: implements
+    from: SYM-views-pb-instrument-listing-reset
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:45:14.173Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acc62f2edc0f
+  - type: covered_by
+    from: SYM-views-pb-instrument-listing-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:45:14.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-777d16ccfdec
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-transactions
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:54:47.941Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40e8ea0a046d
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-transactions
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:54:47.960Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6913b30b21a2

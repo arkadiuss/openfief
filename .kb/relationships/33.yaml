@@ -622,3 +622,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e2eb37b61a12
+  - type: implements
+    from: SYM-views-asset-of
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:00:48.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a7dafdb6470
+  - type: covered_by
+    from: SYM-views-asset-of
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:00:48.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-678bb9e9a923
+  - type: implements
+    from: SYM-views-pb-list-sync-statuses-response
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:42:11.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1e81fcdc5b5
+  - type: covered_by
+    from: SYM-views-pb-list-sync-statuses-response
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:42:11.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab731c2f2061
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-activity
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:54:21.513Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-389f147bd104
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-activity
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:54:21.541Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b32760dbd51

@@ -804,3 +804,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85f2ff7e7ecb
+  - type: implements
+    from: SYM-views-pb-activity-reset
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:37:02.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6bfa4d6b55d
+  - type: covered_by
+    from: SYM-views-pb-activity-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:37:02.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a2e976a5205
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-request
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:48:43.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a7ea93b496c
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-request
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:48:43.341Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-207d1d521ba6

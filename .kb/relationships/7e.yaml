@@ -601,3 +601,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46974f4550c1
+  - type: implements
+    from: SYM-views-pb-sync-attempt-get-failed
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:40:14.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f00d71a77ab
+  - type: covered_by
+    from: SYM-views-pb-sync-attempt-get-failed
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:40:14.604Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc45ff51eaa3

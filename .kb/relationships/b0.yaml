@@ -664,3 +664,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b85796defde2
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-request-proto-reflect
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:43:05.055Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f601c1e8c102
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-request-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:43:05.102Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-17000ce2995f
+  - type: implements
+    from: SYM-views-pb-get-instrument-response-proto-message
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:48:23.643Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6e2d4abc993
+  - type: covered_by
+    from: SYM-views-pb-get-instrument-response-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:48:23.669Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0d1457aacbd

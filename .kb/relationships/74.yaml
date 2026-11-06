@@ -902,3 +902,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2f11e19dcfa2
+  - type: implements
+    from: SYM-views-pb-attention-view-enum
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:31:49.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76e003836cee
+  - type: covered_by
+    from: SYM-views-pb-attention-view-enum
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:31:49.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3773b937ef

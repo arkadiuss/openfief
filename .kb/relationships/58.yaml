@@ -671,3 +671,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d5046b6bbfdd
+  - type: executable_for
+    from: SYM-views-test-merge-activity-pages
+    to: TEST-views-activity
+    created_at: 2026-11-06T02:04:43.298Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9b3c133b239
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-prices-latest-prices
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:06:59.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c902ceb08c65
+  - type: implements
+    from: SYM-views-pb-activity-get-connector-instance
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:37:38.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eaf2c2f15368
+  - type: covered_by
+    from: SYM-views-pb-activity-get-connector-instance
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:37:38.706Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a8e4ec41dbb

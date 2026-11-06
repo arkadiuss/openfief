@@ -811,3 +811,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-239d738dc132
+  - type: implements
+    from: SYM-views-app-views-instrument-listings
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:02:06.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ff0b16710e6
+  - type: covered_by
+    from: SYM-views-app-views-instrument-listings
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:02:06.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e1a64679bb2
+  - type: implements
+    from: SYM-views-pb-sync-attempt-get-failures
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:40:24.741Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-66eaff4b47a8
+  - type: covered_by
+    from: SYM-views-pb-sync-attempt-get-failures
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:40:24.770Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-39daff878082

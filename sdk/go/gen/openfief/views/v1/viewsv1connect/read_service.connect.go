@@ -113,6 +113,27 @@ const (
 	// ReadServiceListAttentionItemsProcedure is the fully-qualified name of the ReadService's
 	// ListAttentionItems RPC.
 	ReadServiceListAttentionItemsProcedure = "/openfief.views.v1.ReadService/ListAttentionItems"
+	// ReadServiceListActivityProcedure is the fully-qualified name of the ReadService's ListActivity
+	// RPC.
+	ReadServiceListActivityProcedure = "/openfief.views.v1.ReadService/ListActivity"
+	// ReadServiceListSyncStatusesProcedure is the fully-qualified name of the ReadService's
+	// ListSyncStatuses RPC.
+	ReadServiceListSyncStatusesProcedure = "/openfief.views.v1.ReadService/ListSyncStatuses"
+	// ReadServiceListSyncAttemptsProcedure is the fully-qualified name of the ReadService's
+	// ListSyncAttempts RPC.
+	ReadServiceListSyncAttemptsProcedure = "/openfief.views.v1.ReadService/ListSyncAttempts"
+	// ReadServiceGetInstrumentProcedure is the fully-qualified name of the ReadService's GetInstrument
+	// RPC.
+	ReadServiceGetInstrumentProcedure = "/openfief.views.v1.ReadService/GetInstrument"
+	// ReadServiceListInstrumentPricesProcedure is the fully-qualified name of the ReadService's
+	// ListInstrumentPrices RPC.
+	ReadServiceListInstrumentPricesProcedure = "/openfief.views.v1.ReadService/ListInstrumentPrices"
+	// ReadServiceListInstrumentHoldingsProcedure is the fully-qualified name of the ReadService's
+	// ListInstrumentHoldings RPC.
+	ReadServiceListInstrumentHoldingsProcedure = "/openfief.views.v1.ReadService/ListInstrumentHoldings"
+	// ReadServiceListInstrumentTransactionsProcedure is the fully-qualified name of the ReadService's
+	// ListInstrumentTransactions RPC.
+	ReadServiceListInstrumentTransactionsProcedure = "/openfief.views.v1.ReadService/ListInstrumentTransactions"
 )
 
 // ReadServiceClient is a client for the openfief.views.v1.ReadService service.
@@ -221,6 +242,40 @@ type ReadServiceClient interface {
 	// acknowledges or resolves them through the AttentionService, or on the
 	// page of the check that raised them, not here.
 	ListAttentionItems(context.Context, *connect.Request[v1.ListAttentionItemsRequest]) (*connect.Response[v1.ListAttentionItemsResponse], error)
+	// ListActivity returns the recent activity, newest first (D-193):
+	// import batches that completed (uploads, entries and syncs), sync
+	// attempts that failed, coupons booked and corrections, a page at a time.
+	// Coupons and corrections come only from accounts the caller may view
+	// (D-163); imports and syncs name their connector instance only (D-165).
+	ListActivity(context.Context, *connect.Request[v1.ListActivityRequest]) (*connect.Response[v1.ListActivityResponse], error)
+	// ListSyncStatuses returns where each connector instance's syncs stand,
+	// in instance order: its latest attempt and success, the failures in a
+	// row since, and whether it keeps failing (D-196).
+	ListSyncStatuses(context.Context, *connect.Request[v1.ListSyncStatusesRequest]) (*connect.Response[v1.ListSyncStatusesResponse], error)
+	// ListSyncAttempts returns one connector instance's sync attempts, newest
+	// first, a page at a time, with its status: what happened, for an
+	// instance whose sync keeps failing (D-196). An attempt keeps its error
+	// class, never the error's text (GR-12).
+	ListSyncAttempts(context.Context, *connect.Request[v1.ListSyncAttemptsRequest]) (*connect.Response[v1.ListSyncAttemptsResponse], error)
+	// GetInstrument returns one instrument by its ISIN (D-195): the listings
+	// the caller's accounts hold or trade it under, with each one's price
+	// source and latest price, its asset class and its exemption class in
+	// each wrapper's yearly tax, such as OKI's (D-127, D-132). An ISIN that
+	// no viewable account posts to and that has no stored price is not
+	// found.
+	GetInstrument(context.Context, *connect.Request[v1.GetInstrumentRequest]) (*connect.Response[v1.GetInstrumentResponse], error)
+	// ListInstrumentPrices returns an instrument's stored prices in a date
+	// range, from every source (D-94), each marked when it is the source its
+	// listing is valued at (D-195).
+	ListInstrumentPrices(context.Context, *connect.Request[v1.ListInstrumentPricesRequest]) (*connect.Response[v1.ListInstrumentPricesResponse], error)
+	// ListInstrumentHoldings returns an instrument's holdings and open lots
+	// on a date across the accounts the caller may view, in account order
+	// (D-195).
+	ListInstrumentHoldings(context.Context, *connect.Request[v1.ListInstrumentHoldingsRequest]) (*connect.Response[v1.ListInstrumentHoldingsResponse], error)
+	// ListInstrumentTransactions returns the current transactions that post
+	// to an instrument, across the accounts the caller may view, in date then
+	// key order, a page at a time like ListTransactions (D-195).
+	ListInstrumentTransactions(context.Context, *connect.Request[v1.ListInstrumentTransactionsRequest]) (*connect.Response[v1.ListInstrumentTransactionsResponse], error)
 }
 
 // NewReadServiceClient constructs a client for the openfief.views.v1.ReadService service. By
@@ -395,34 +450,90 @@ func NewReadServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		listActivity: connect.NewClient[v1.ListActivityRequest, v1.ListActivityResponse](
+			httpClient,
+			baseURL+ReadServiceListActivityProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListActivity")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		listSyncStatuses: connect.NewClient[v1.ListSyncStatusesRequest, v1.ListSyncStatusesResponse](
+			httpClient,
+			baseURL+ReadServiceListSyncStatusesProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListSyncStatuses")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		listSyncAttempts: connect.NewClient[v1.ListSyncAttemptsRequest, v1.ListSyncAttemptsResponse](
+			httpClient,
+			baseURL+ReadServiceListSyncAttemptsProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListSyncAttempts")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		getInstrument: connect.NewClient[v1.GetInstrumentRequest, v1.GetInstrumentResponse](
+			httpClient,
+			baseURL+ReadServiceGetInstrumentProcedure,
+			connect.WithSchema(readServiceMethods.ByName("GetInstrument")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		listInstrumentPrices: connect.NewClient[v1.ListInstrumentPricesRequest, v1.ListInstrumentPricesResponse](
+			httpClient,
+			baseURL+ReadServiceListInstrumentPricesProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListInstrumentPrices")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		listInstrumentHoldings: connect.NewClient[v1.ListInstrumentHoldingsRequest, v1.ListInstrumentHoldingsResponse](
+			httpClient,
+			baseURL+ReadServiceListInstrumentHoldingsProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListInstrumentHoldings")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
+		listInstrumentTransactions: connect.NewClient[v1.ListInstrumentTransactionsRequest, v1.ListInstrumentTransactionsResponse](
+			httpClient,
+			baseURL+ReadServiceListInstrumentTransactionsProcedure,
+			connect.WithSchema(readServiceMethods.ByName("ListInstrumentTransactions")),
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // readServiceClient implements ReadServiceClient.
 type readServiceClient struct {
-	listSleeves           *connect.Client[v1.ListSleevesRequest, v1.ListSleevesResponse]
-	listSleeveKinds       *connect.Client[v1.ListSleeveKindsRequest, v1.ListSleeveKindsResponse]
-	getSettings           *connect.Client[v1.GetSettingsRequest, v1.GetSettingsResponse]
-	listYearlyTaxes       *connect.Client[v1.ListYearlyTaxesRequest, v1.ListYearlyTaxesResponse]
-	listAccounts          *connect.Client[v1.ListAccountsRequest, v1.ListAccountsResponse]
-	listConnectorBindings *connect.Client[v1.ListConnectorBindingsRequest, v1.ListConnectorBindingsResponse]
-	getAccount            *connect.Client[v1.GetAccountRequest, v1.GetAccountResponse]
-	listTransactions      *connect.Client[v1.ListTransactionsRequest, v1.ListTransactionsResponse]
-	listHoldings          *connect.Client[v1.ListHoldingsRequest, v1.ListHoldingsResponse]
-	listLots              *connect.Client[v1.ListLotsRequest, v1.ListLotsResponse]
-	listCash              *connect.Client[v1.ListCashRequest, v1.ListCashResponse]
-	listAssertionChecks   *connect.Client[v1.ListAssertionChecksRequest, v1.ListAssertionChecksResponse]
-	listAccountValuations *connect.Client[v1.ListAccountValuationsRequest, v1.ListAccountValuationsResponse]
-	getValuationStatus    *connect.Client[v1.GetValuationStatusRequest, v1.GetValuationStatusResponse]
-	listValuationTotals   *connect.Client[v1.ListValuationTotalsRequest, v1.ListValuationTotalsResponse]
-	listValuationStatuses *connect.Client[v1.ListValuationStatusesRequest, v1.ListValuationStatusesResponse]
-	listPriceChecks       *connect.Client[v1.ListPriceChecksRequest, v1.ListPriceChecksResponse]
-	getAllocation         *connect.Client[v1.GetAllocationRequest, v1.GetAllocationResponse]
-	getPerformance        *connect.Client[v1.GetPerformanceRequest, v1.GetPerformanceResponse]
-	listTransfers         *connect.Client[v1.ListTransfersRequest, v1.ListTransfersResponse]
-	getModelPortfolio     *connect.Client[v1.GetModelPortfolioRequest, v1.GetModelPortfolioResponse]
-	listPlugins           *connect.Client[v1.ListPluginsRequest, v1.ListPluginsResponse]
-	listAttentionItems    *connect.Client[v1.ListAttentionItemsRequest, v1.ListAttentionItemsResponse]
+	listSleeves                *connect.Client[v1.ListSleevesRequest, v1.ListSleevesResponse]
+	listSleeveKinds            *connect.Client[v1.ListSleeveKindsRequest, v1.ListSleeveKindsResponse]
+	getSettings                *connect.Client[v1.GetSettingsRequest, v1.GetSettingsResponse]
+	listYearlyTaxes            *connect.Client[v1.ListYearlyTaxesRequest, v1.ListYearlyTaxesResponse]
+	listAccounts               *connect.Client[v1.ListAccountsRequest, v1.ListAccountsResponse]
+	listConnectorBindings      *connect.Client[v1.ListConnectorBindingsRequest, v1.ListConnectorBindingsResponse]
+	getAccount                 *connect.Client[v1.GetAccountRequest, v1.GetAccountResponse]
+	listTransactions           *connect.Client[v1.ListTransactionsRequest, v1.ListTransactionsResponse]
+	listHoldings               *connect.Client[v1.ListHoldingsRequest, v1.ListHoldingsResponse]
+	listLots                   *connect.Client[v1.ListLotsRequest, v1.ListLotsResponse]
+	listCash                   *connect.Client[v1.ListCashRequest, v1.ListCashResponse]
+	listAssertionChecks        *connect.Client[v1.ListAssertionChecksRequest, v1.ListAssertionChecksResponse]
+	listAccountValuations      *connect.Client[v1.ListAccountValuationsRequest, v1.ListAccountValuationsResponse]
+	getValuationStatus         *connect.Client[v1.GetValuationStatusRequest, v1.GetValuationStatusResponse]
+	listValuationTotals        *connect.Client[v1.ListValuationTotalsRequest, v1.ListValuationTotalsResponse]
+	listValuationStatuses      *connect.Client[v1.ListValuationStatusesRequest, v1.ListValuationStatusesResponse]
+	listPriceChecks            *connect.Client[v1.ListPriceChecksRequest, v1.ListPriceChecksResponse]
+	getAllocation              *connect.Client[v1.GetAllocationRequest, v1.GetAllocationResponse]
+	getPerformance             *connect.Client[v1.GetPerformanceRequest, v1.GetPerformanceResponse]
+	listTransfers              *connect.Client[v1.ListTransfersRequest, v1.ListTransfersResponse]
+	getModelPortfolio          *connect.Client[v1.GetModelPortfolioRequest, v1.GetModelPortfolioResponse]
+	listPlugins                *connect.Client[v1.ListPluginsRequest, v1.ListPluginsResponse]
+	listAttentionItems         *connect.Client[v1.ListAttentionItemsRequest, v1.ListAttentionItemsResponse]
+	listActivity               *connect.Client[v1.ListActivityRequest, v1.ListActivityResponse]
+	listSyncStatuses           *connect.Client[v1.ListSyncStatusesRequest, v1.ListSyncStatusesResponse]
+	listSyncAttempts           *connect.Client[v1.ListSyncAttemptsRequest, v1.ListSyncAttemptsResponse]
+	getInstrument              *connect.Client[v1.GetInstrumentRequest, v1.GetInstrumentResponse]
+	listInstrumentPrices       *connect.Client[v1.ListInstrumentPricesRequest, v1.ListInstrumentPricesResponse]
+	listInstrumentHoldings     *connect.Client[v1.ListInstrumentHoldingsRequest, v1.ListInstrumentHoldingsResponse]
+	listInstrumentTransactions *connect.Client[v1.ListInstrumentTransactionsRequest, v1.ListInstrumentTransactionsResponse]
 }
 
 // ListSleeves calls openfief.views.v1.ReadService.ListSleeves.
@@ -540,6 +651,41 @@ func (c *readServiceClient) ListAttentionItems(ctx context.Context, req *connect
 	return c.listAttentionItems.CallUnary(ctx, req)
 }
 
+// ListActivity calls openfief.views.v1.ReadService.ListActivity.
+func (c *readServiceClient) ListActivity(ctx context.Context, req *connect.Request[v1.ListActivityRequest]) (*connect.Response[v1.ListActivityResponse], error) {
+	return c.listActivity.CallUnary(ctx, req)
+}
+
+// ListSyncStatuses calls openfief.views.v1.ReadService.ListSyncStatuses.
+func (c *readServiceClient) ListSyncStatuses(ctx context.Context, req *connect.Request[v1.ListSyncStatusesRequest]) (*connect.Response[v1.ListSyncStatusesResponse], error) {
+	return c.listSyncStatuses.CallUnary(ctx, req)
+}
+
+// ListSyncAttempts calls openfief.views.v1.ReadService.ListSyncAttempts.
+func (c *readServiceClient) ListSyncAttempts(ctx context.Context, req *connect.Request[v1.ListSyncAttemptsRequest]) (*connect.Response[v1.ListSyncAttemptsResponse], error) {
+	return c.listSyncAttempts.CallUnary(ctx, req)
+}
+
+// GetInstrument calls openfief.views.v1.ReadService.GetInstrument.
+func (c *readServiceClient) GetInstrument(ctx context.Context, req *connect.Request[v1.GetInstrumentRequest]) (*connect.Response[v1.GetInstrumentResponse], error) {
+	return c.getInstrument.CallUnary(ctx, req)
+}
+
+// ListInstrumentPrices calls openfief.views.v1.ReadService.ListInstrumentPrices.
+func (c *readServiceClient) ListInstrumentPrices(ctx context.Context, req *connect.Request[v1.ListInstrumentPricesRequest]) (*connect.Response[v1.ListInstrumentPricesResponse], error) {
+	return c.listInstrumentPrices.CallUnary(ctx, req)
+}
+
+// ListInstrumentHoldings calls openfief.views.v1.ReadService.ListInstrumentHoldings.
+func (c *readServiceClient) ListInstrumentHoldings(ctx context.Context, req *connect.Request[v1.ListInstrumentHoldingsRequest]) (*connect.Response[v1.ListInstrumentHoldingsResponse], error) {
+	return c.listInstrumentHoldings.CallUnary(ctx, req)
+}
+
+// ListInstrumentTransactions calls openfief.views.v1.ReadService.ListInstrumentTransactions.
+func (c *readServiceClient) ListInstrumentTransactions(ctx context.Context, req *connect.Request[v1.ListInstrumentTransactionsRequest]) (*connect.Response[v1.ListInstrumentTransactionsResponse], error) {
+	return c.listInstrumentTransactions.CallUnary(ctx, req)
+}
+
 // ReadServiceHandler is an implementation of the openfief.views.v1.ReadService service.
 type ReadServiceHandler interface {
 	// ListSleeves returns every sleeve, in ID order.
@@ -646,6 +792,40 @@ type ReadServiceHandler interface {
 	// acknowledges or resolves them through the AttentionService, or on the
 	// page of the check that raised them, not here.
 	ListAttentionItems(context.Context, *connect.Request[v1.ListAttentionItemsRequest]) (*connect.Response[v1.ListAttentionItemsResponse], error)
+	// ListActivity returns the recent activity, newest first (D-193):
+	// import batches that completed (uploads, entries and syncs), sync
+	// attempts that failed, coupons booked and corrections, a page at a time.
+	// Coupons and corrections come only from accounts the caller may view
+	// (D-163); imports and syncs name their connector instance only (D-165).
+	ListActivity(context.Context, *connect.Request[v1.ListActivityRequest]) (*connect.Response[v1.ListActivityResponse], error)
+	// ListSyncStatuses returns where each connector instance's syncs stand,
+	// in instance order: its latest attempt and success, the failures in a
+	// row since, and whether it keeps failing (D-196).
+	ListSyncStatuses(context.Context, *connect.Request[v1.ListSyncStatusesRequest]) (*connect.Response[v1.ListSyncStatusesResponse], error)
+	// ListSyncAttempts returns one connector instance's sync attempts, newest
+	// first, a page at a time, with its status: what happened, for an
+	// instance whose sync keeps failing (D-196). An attempt keeps its error
+	// class, never the error's text (GR-12).
+	ListSyncAttempts(context.Context, *connect.Request[v1.ListSyncAttemptsRequest]) (*connect.Response[v1.ListSyncAttemptsResponse], error)
+	// GetInstrument returns one instrument by its ISIN (D-195): the listings
+	// the caller's accounts hold or trade it under, with each one's price
+	// source and latest price, its asset class and its exemption class in
+	// each wrapper's yearly tax, such as OKI's (D-127, D-132). An ISIN that
+	// no viewable account posts to and that has no stored price is not
+	// found.
+	GetInstrument(context.Context, *connect.Request[v1.GetInstrumentRequest]) (*connect.Response[v1.GetInstrumentResponse], error)
+	// ListInstrumentPrices returns an instrument's stored prices in a date
+	// range, from every source (D-94), each marked when it is the source its
+	// listing is valued at (D-195).
+	ListInstrumentPrices(context.Context, *connect.Request[v1.ListInstrumentPricesRequest]) (*connect.Response[v1.ListInstrumentPricesResponse], error)
+	// ListInstrumentHoldings returns an instrument's holdings and open lots
+	// on a date across the accounts the caller may view, in account order
+	// (D-195).
+	ListInstrumentHoldings(context.Context, *connect.Request[v1.ListInstrumentHoldingsRequest]) (*connect.Response[v1.ListInstrumentHoldingsResponse], error)
+	// ListInstrumentTransactions returns the current transactions that post
+	// to an instrument, across the accounts the caller may view, in date then
+	// key order, a page at a time like ListTransactions (D-195).
+	ListInstrumentTransactions(context.Context, *connect.Request[v1.ListInstrumentTransactionsRequest]) (*connect.Response[v1.ListInstrumentTransactionsResponse], error)
 }
 
 // NewReadServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -816,6 +996,55 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	readServiceListActivityHandler := connect.NewUnaryHandler(
+		ReadServiceListActivityProcedure,
+		svc.ListActivity,
+		connect.WithSchema(readServiceMethods.ByName("ListActivity")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	readServiceListSyncStatusesHandler := connect.NewUnaryHandler(
+		ReadServiceListSyncStatusesProcedure,
+		svc.ListSyncStatuses,
+		connect.WithSchema(readServiceMethods.ByName("ListSyncStatuses")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	readServiceListSyncAttemptsHandler := connect.NewUnaryHandler(
+		ReadServiceListSyncAttemptsProcedure,
+		svc.ListSyncAttempts,
+		connect.WithSchema(readServiceMethods.ByName("ListSyncAttempts")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	readServiceGetInstrumentHandler := connect.NewUnaryHandler(
+		ReadServiceGetInstrumentProcedure,
+		svc.GetInstrument,
+		connect.WithSchema(readServiceMethods.ByName("GetInstrument")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	readServiceListInstrumentPricesHandler := connect.NewUnaryHandler(
+		ReadServiceListInstrumentPricesProcedure,
+		svc.ListInstrumentPrices,
+		connect.WithSchema(readServiceMethods.ByName("ListInstrumentPrices")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	readServiceListInstrumentHoldingsHandler := connect.NewUnaryHandler(
+		ReadServiceListInstrumentHoldingsProcedure,
+		svc.ListInstrumentHoldings,
+		connect.WithSchema(readServiceMethods.ByName("ListInstrumentHoldings")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
+	readServiceListInstrumentTransactionsHandler := connect.NewUnaryHandler(
+		ReadServiceListInstrumentTransactionsProcedure,
+		svc.ListInstrumentTransactions,
+		connect.WithSchema(readServiceMethods.ByName("ListInstrumentTransactions")),
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/openfief.views.v1.ReadService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ReadServiceListSleevesProcedure:
@@ -864,6 +1093,20 @@ func NewReadServiceHandler(svc ReadServiceHandler, opts ...connect.HandlerOption
 			readServiceListPluginsHandler.ServeHTTP(w, r)
 		case ReadServiceListAttentionItemsProcedure:
 			readServiceListAttentionItemsHandler.ServeHTTP(w, r)
+		case ReadServiceListActivityProcedure:
+			readServiceListActivityHandler.ServeHTTP(w, r)
+		case ReadServiceListSyncStatusesProcedure:
+			readServiceListSyncStatusesHandler.ServeHTTP(w, r)
+		case ReadServiceListSyncAttemptsProcedure:
+			readServiceListSyncAttemptsHandler.ServeHTTP(w, r)
+		case ReadServiceGetInstrumentProcedure:
+			readServiceGetInstrumentHandler.ServeHTTP(w, r)
+		case ReadServiceListInstrumentPricesProcedure:
+			readServiceListInstrumentPricesHandler.ServeHTTP(w, r)
+		case ReadServiceListInstrumentHoldingsProcedure:
+			readServiceListInstrumentHoldingsHandler.ServeHTTP(w, r)
+		case ReadServiceListInstrumentTransactionsProcedure:
+			readServiceListInstrumentTransactionsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -963,4 +1206,32 @@ func (UnimplementedReadServiceHandler) ListPlugins(context.Context, *connect.Req
 
 func (UnimplementedReadServiceHandler) ListAttentionItems(context.Context, *connect.Request[v1.ListAttentionItemsRequest]) (*connect.Response[v1.ListAttentionItemsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListAttentionItems is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListActivity(context.Context, *connect.Request[v1.ListActivityRequest]) (*connect.Response[v1.ListActivityResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListActivity is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListSyncStatuses(context.Context, *connect.Request[v1.ListSyncStatusesRequest]) (*connect.Response[v1.ListSyncStatusesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListSyncStatuses is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListSyncAttempts(context.Context, *connect.Request[v1.ListSyncAttemptsRequest]) (*connect.Response[v1.ListSyncAttemptsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListSyncAttempts is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) GetInstrument(context.Context, *connect.Request[v1.GetInstrumentRequest]) (*connect.Response[v1.GetInstrumentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.GetInstrument is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListInstrumentPrices(context.Context, *connect.Request[v1.ListInstrumentPricesRequest]) (*connect.Response[v1.ListInstrumentPricesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListInstrumentPrices is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListInstrumentHoldings(context.Context, *connect.Request[v1.ListInstrumentHoldingsRequest]) (*connect.Response[v1.ListInstrumentHoldingsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListInstrumentHoldings is not implemented"))
+}
+
+func (UnimplementedReadServiceHandler) ListInstrumentTransactions(context.Context, *connect.Request[v1.ListInstrumentTransactionsRequest]) (*connect.Response[v1.ListInstrumentTransactionsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.views.v1.ReadService.ListInstrumentTransactions is not implemented"))
 }

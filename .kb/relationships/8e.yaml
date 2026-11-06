@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9125b069b19f
+  - type: implements
+    from: SYM-views-app-with-sync-history
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:01:23.874Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e85ea132c3a
+  - type: covered_by
+    from: SYM-views-app-with-sync-history
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:01:23.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8ee5c6d5dcb

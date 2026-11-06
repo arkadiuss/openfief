@@ -958,3 +958,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e4555789d615
+  - type: implements
+    from: SYM-views-pb-attention-item-group-string
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:31:21.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15523bb6e7b4
+  - type: covered_by
+    from: SYM-views-pb-attention-item-group-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:31:21.118Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a9fdf12f84a
+  - type: implements
+    from: SYM-views-pb-activity-change-get-version
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:36:28.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8ed3451d4485
+  - type: covered_by
+    from: SYM-views-pb-activity-change-get-version
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:36:28.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d3eb93f95a6e
+  - type: implements
+    from: SYM-views-pb-sync-status-proto-reflect
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:40:54.353Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ed447025b96
+  - type: covered_by
+    from: SYM-views-pb-sync-status-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:40:54.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d22d374ee448
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-prices
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:54:39.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d5d844269121
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-prices
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:54:39.269Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63f8fae5fd5b

@@ -531,3 +531,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-49ef0b5970dc
+  - type: implements
+    from: SYM-views-pb-activity-kind-enum-descriptor
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:32:49.778Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d87b2f03012
+  - type: covered_by
+    from: SYM-views-pb-activity-kind-enum-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:32:49.808Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4c5153f428d

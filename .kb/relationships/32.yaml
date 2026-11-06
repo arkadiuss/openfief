@@ -622,3 +622,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f4c3f04cfb3
+  - type: implements
+    from: SYM-views-app-views-sync-attempts
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:01:36.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c45bfc7cdc2e
+  - type: covered_by
+    from: SYM-views-app-views-sync-attempts
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:01:36.524Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-959f3607ebc0
+  - type: implements
+    from: SYM-views-app-with-instrument-prices
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:01:44.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fb59d23a82e2
+  - type: covered_by
+    from: SYM-views-app-with-instrument-prices
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:01:44.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c1da92ea136
+  - type: implements
+    from: SYM-views-pb-instrument-price-string
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:44:23.645Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a368ec98d190
+  - type: covered_by
+    from: SYM-views-pb-instrument-price-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:44:23.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c15664ee32d

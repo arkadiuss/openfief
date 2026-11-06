@@ -797,3 +797,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce7423aaddfd
+  - type: implements
+    from: SYM-views-pb-sync-attempt-get-connector-instance
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:39:48.802Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ced2daad0fa2
+  - type: covered_by
+    from: SYM-views-pb-sync-attempt-get-connector-instance
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:39:48.832Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59ef1fd974b0

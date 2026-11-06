@@ -56,6 +56,9 @@ type Views struct {
 	authz       identityapp.Authorizer
 	portfolio   Portfolio
 	payouts     PayoutSettings
+	syncs       SyncHistory
+	changes     RecordedChanges
+	prices      InstrumentPrices
 }
 
 // New returns the queries over the given ports, with totals, valuations and

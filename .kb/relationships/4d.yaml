@@ -818,3 +818,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7abe2f86d075
+  - type: executable_for
+    from: SYM-views-test-merge-activity
+    to: TEST-views-activity
+    created_at: 2026-11-06T02:04:39.469Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db8970e01888
+  - type: implements
+    from: SYM-views-pb-attention-item-group-descriptor
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:31:26.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e47fe976652
+  - type: covered_by
+    from: SYM-views-pb-attention-item-group-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:31:26.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44768cbdb7b0

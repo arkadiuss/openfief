@@ -720,3 +720,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d5cef914d74d
+  - type: executable_for
+    from: SYM-views-app-test-activity
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:06:28.260Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6da473fa8e88
+  - type: executable_for
+    from: SYM-views-connectapi-test-u-iv2-enums-match
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:08:59.714Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8c9af1cf3206
+  - type: implements
+    from: SYM-views-pb-attention-item-get-isin
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:33:46.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da0eb522f080
+  - type: covered_by
+    from: SYM-views-pb-attention-item-get-isin
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:33:47.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a82bada1898
+  - type: implements
+    from: SYM-views-pb-activity-change-reset
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:49.101Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-728dbdb38f73
+  - type: covered_by
+    from: SYM-views-pb-activity-change-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:49.130Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04baf36b7242
+  - type: implements
+    from: SYM-views-pb-list-activity-request-proto-reflect
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:38:19.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7d22793a0d4
+  - type: covered_by
+    from: SYM-views-pb-list-activity-request-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:38:19.143Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8977478ca7a
+  - type: implements
+    from: SYM-views-pb-sync-status-get-failing-since
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:41:24.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1aa375f80b5f
+  - type: covered_by
+    from: SYM-views-pb-sync-status-get-failing-since
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:41:24.270Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f10c34b4856
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-request-get-page-token
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:43:24.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ff915fc7777
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-request-get-page-token
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:43:24.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc4b9dc190a5

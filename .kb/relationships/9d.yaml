@@ -594,3 +594,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ea10b4e45c6a
+  - type: executable_for
+    from: SYM-views-app-test-helper-external-i-ds
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:07:23.794Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84da27693e55
+  - type: implements
+    from: SYM-views-pb-instrument-price-proto-message
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:44:28.962Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-697bf0639398
+  - type: covered_by
+    from: SYM-views-pb-instrument-price-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:44:28.988Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51dde83c569b

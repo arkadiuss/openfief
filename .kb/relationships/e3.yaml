@@ -755,3 +755,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f8fcea1d5ca8
+  - type: implements
+    from: SYM-views-pb-activity-change-descriptor
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:36:08.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83eeae999508
+  - type: covered_by
+    from: SYM-views-pb-activity-change-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:36:08.725Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-515460290d71
+  - type: implements
+    from: SYM-views-pb-instrument-exemption-class-get-known
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:46:39.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7e30f924fe0
+  - type: covered_by
+    from: SYM-views-pb-instrument-exemption-class-get-known
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:46:39.719Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-685f712a07a8

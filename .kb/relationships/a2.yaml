@@ -713,3 +713,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d26292a2217e
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-prices-price-history
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:08:05.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c3f4ed072d
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-attention-inbox
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:08:24.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98b6369ef0e0

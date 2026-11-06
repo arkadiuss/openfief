@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fcaec04bdaa7
+  - type: implements
+    from: SYM-views-pb-activity-change-get-kind
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:36:38.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2f68e39f303
+  - type: covered_by
+    from: SYM-views-pb-activity-change-get-kind
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:36:38.253Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-668de23b04a5

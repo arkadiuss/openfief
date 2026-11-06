@@ -552,3 +552,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f55376a9e549
+  - type: implements
+    from: SYM-views-pb-sync-error-class-enum-descriptor
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:33:22.758Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1988dbe92641
+  - type: covered_by
+    from: SYM-views-pb-sync-error-class-enum-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:33:22.782Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d98b447cd138
+  - type: implements
+    from: SYM-views-pb-list-instrument-holdings-response-get-holdings
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:52:18.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82afbfd951d1
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-holdings-response-get-holdings
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:52:18.781Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-201ba283226b

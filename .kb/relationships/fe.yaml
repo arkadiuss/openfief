@@ -552,3 +552,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-94d5ce15f785
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-prices-latest-prices
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:08:09.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53cd158c3990
+  - type: implements
+    from: SYM-views-pb-activity-batch-get-failed-assertions
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:29.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46b94f03e2a4
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-get-failed-assertions
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:29.872Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf4f34451047

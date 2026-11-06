@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45d98371a4d5
+  - type: executable_for
+    from: SYM-views-test-helper-failure-at
+    to: TEST-views-activity
+    created_at: 2026-11-06T02:04:28.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b2c399c6d4
