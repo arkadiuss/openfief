@@ -118,6 +118,8 @@ func checkLotDeletedWithCoupons(t *testing.T, dsn string, port int32) {
 		d.entries.set(connectrpc.NewClient(connectrpc.H2CClient(), func(string) (string, error) {
 			return fmt.Sprintf("http://127.0.0.1:%d", port), nil
 		}, staticTokens{}))
+		// bonds-main books for the treasury bond registry (D-182).
+		d.entries.setDiscovery(bondsDiscovery{})
 		purchased, err := kernel.ParseDate("2024-10-10")
 		if err != nil {
 			return fmt.Errorf("delete: %w", err)

@@ -121,6 +121,8 @@ func deleteBondLot(ctx context.Context, dsn string, port int32, key ingest.BondL
 		d.entries.set(connectrpc.NewClient(connectrpc.H2CClient(), func(string) (string, error) {
 			return fmt.Sprintf("http://127.0.0.1:%d", port), nil
 		}, staticTokens{}))
+		// bonds-main books for the treasury bond registry (D-182).
+		d.entries.setDiscovery(bondsDiscovery{})
 		res.batch, res.err = newBondLots(d, everyAccountOwner{}).Delete(ctx, localUI, "session", demo.BondsAccount, key)
 		return nil
 	})
