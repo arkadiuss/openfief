@@ -134199,3 +134199,185 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-valuation-pg-price-history
+  - id: SYM-attention-group
+    title: Group
+    sourceFile: internal/attention/scope.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:07.782Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-scope
+      - type: implements
+        target: REQ-attention-inbox-groups
+  - id: SYM-attention-group-string
+    title: Group.String
+    sourceFile: internal/attention/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:12.795Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-scope
+      - type: implements
+        target: REQ-attention-inbox-groups
+  - id: SYM-attention-group-of
+    title: GroupOf
+    sourceFile: internal/attention/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:18.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-scope
+      - type: implements
+        target: REQ-attention-group-of-kind
+      - type: implements
+        target: REQ-attention-inbox-groups
+  - id: SYM-attention-scope
+    title: Scope
+    sourceFile: internal/attention/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:23.045Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-scope
+      - type: implements
+        target: REQ-attention-item-scope
+  - id: SYM-attention-scope-of
+    title: ScopeOf
+    sourceFile: internal/attention/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:28.750Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-scope
+      - type: implements
+        target: REQ-attention-item-scope
+  - id: SYM-attention-account-scope
+    title: accountScope
+    sourceFile: internal/attention/scope.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:33.825Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-scope
+      - type: implements
+        target: REQ-attention-item-scope
+  - id: SYM-attention-app-syncs
+    title: Syncs
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:38.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-failing-syncs
+      - type: implements
+        target: REQ-attention-sync-failing-check
+  - id: SYM-attention-app-failing-syncs
+    title: FailingSyncs
+    sourceFile: internal/attention/app/checks.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:42.627Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-failing-syncs
+      - type: implements
+        target: REQ-attention-sync-failing-check
+      - type: implements
+        target: REQ-attention-sync-keeps-failing-item
+  - id: SYM-attention-test-group-of
+    title: TestGroupOf
+    sourceFile: internal/attention/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:46.527Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-scope
+  - id: SYM-attention-test-scope-of
+    title: TestScopeOf
+    sourceFile: internal/attention/scope_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:50.440Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-scope
+  - id: SYM-attention-app-test-helper-fake-syncs
+    title: fakeSyncs
+    sourceFile: internal/attention/app/syncs_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:54.138Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-failing-syncs
+  - id: SYM-attention-app-test-helper-fake-syncs-sync-statuses
+    title: fakeSyncs.SyncStatuses
+    sourceFile: internal/attention/app/syncs_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:27:57.883Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-failing-syncs
+  - id: SYM-attention-app-test-failing-syncs
+    title: TestFailingSyncs
+    sourceFile: internal/attention/app/syncs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:28:02.079Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-failing-syncs
+  - id: SYM-attention-app-test-failing-sync-item
+    title: TestFailingSyncItem
+    sourceFile: internal/attention/app/syncs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:28:06.465Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-failing-syncs
+  - id: SYM-attention-app-test-helper-sweep-syncs
+    title: sweepSyncs
+    sourceFile: internal/attention/app/syncs_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T01:28:10.176Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-failing-syncs

@@ -552,3 +552,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a6176bf608f0
+  - type: implements
+    from: SYM-attention-group-of
+    to: REQ-attention-inbox-groups
+    created_at: 2026-11-06T01:27:19.721Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d1c3e1364c4
+  - type: implements
+    from: SYM-attention-group-of
+    to: REQ-attention-group-of-kind
+    created_at: 2026-11-06T01:27:19.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5f77e82779ed
+  - type: covered_by
+    from: SYM-attention-group-of
+    to: TEST-attention-scope
+    created_at: 2026-11-06T01:27:19.767Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-477fc5c4633c

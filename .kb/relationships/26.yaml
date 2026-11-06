@@ -650,3 +650,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bbad11dd7e3e
+  - type: implements
+    from: SYM-attention-group
+    to: REQ-attention-inbox-groups
+    created_at: 2026-11-06T01:27:09.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4113816f8f9d
+  - type: covered_by
+    from: SYM-attention-group
+    to: TEST-attention-scope
+    created_at: 2026-11-06T01:27:09.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b592fcac95de

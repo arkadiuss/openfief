@@ -615,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb6ef07afafc
+  - type: validates
+    from: TEST-attention-app-failing-syncs
+    to: REQ-attention-sync-keeps-failing-item
+    created_at: 2026-11-06T01:28:15.689Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d27ce5e7fcdc

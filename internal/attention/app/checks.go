@@ -243,6 +243,40 @@ func ImportProblems(im Imports) Check {
 	}}
 }
 
+// Syncs reads where each connector instance's syncs stand;
+// *ingest/postgres.Store implements it.
+type Syncs interface {
+	// SyncStatuses returns every instance's sync status, in instance
+	// order.
+	SyncStatuses(ctx context.Context) ([]ingest.SyncStatus, error)
+}
+
+// FailingSyncs is the check of connector syncs (D-196): each instance whose
+// sync keeps failing (ingest.SyncStatus.KeepsFailing) is a condition, its
+// subject the instance, its detail when the failures began, to the minute,
+// in UTC. The detail stays the same while the same run of failures goes
+// on, so an acknowledged item stays acknowledged; the item clears with the
+// next success, and a new run of failures raises it again. What happened
+// in each attempt is the read API's sync history, not the detail.
+func FailingSyncs(s Syncs) Check {
+	return Check{Kind: attention.KindSyncFailing, Find: func(ctx context.Context) ([]attention.Condition, error) {
+		statuses, err := s.SyncStatuses(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("loading sync statuses: %w", err)
+		}
+		var out []attention.Condition
+		for i := range statuses {
+			if st := &statuses[i]; st.KeepsFailing() {
+				out = append(out, attention.Condition{
+					Kind: attention.KindSyncFailing, Subject: st.Instance,
+					Detail: "failing since " + st.FailingSince.UTC().Format("2006-01-02T15:04Z"),
+				})
+			}
+		}
+		return out, nil
+	}}
+}
+
 // MissingSettings is the check of the owner's settings (D-78): while some
 // account's tax wrapper can't have a liquidation value without a setting
 // the owner hasn't set, such as the marginal income tax rate for IKZE,

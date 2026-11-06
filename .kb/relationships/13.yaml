@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-699ffb0c2f0f
+  - type: executable_for
+    from: SYM-attention-app-test-failing-syncs
+    to: TEST-attention-app-failing-syncs
+    created_at: 2026-11-06T01:28:03.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf9be5e4f3c7

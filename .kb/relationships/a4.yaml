@@ -811,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0dfc60e01475
+  - type: implements
+    from: SYM-attention-scope-of
+    to: REQ-attention-item-scope
+    created_at: 2026-11-06T01:27:30.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f6135e7a91a
+  - type: covered_by
+    from: SYM-attention-scope-of
+    to: TEST-attention-scope
+    created_at: 2026-11-06T01:27:30.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-596394fe9602

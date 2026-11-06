@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-58d56bc4da7e
+  - type: constrains
+    from: REQ-attention-sync-keeps-failing-item
+    to: FACT-SUBJECT-C75CAB1ED3CD4D1D
+    created_at: 2026-11-06T01:26:44.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a65d9f18b344
+  - type: requires_property
+    from: REQ-attention-sync-keeps-failing-item
+    to: FACT-PROP-240D0551BF1CB828
+    created_at: 2026-11-06T01:26:44.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-972a7b7dc8cf

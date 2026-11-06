@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f77aff31ea6
+  - type: validates
+    from: TEST-attention-scope
+    to: REQ-attention-inbox-groups
+    created_at: 2026-11-06T01:28:14.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-263edfb1633d
