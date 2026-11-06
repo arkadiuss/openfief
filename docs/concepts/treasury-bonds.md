@@ -237,5 +237,5 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 
 ## Not built yet
 
-- **D-9**, **D-97**: anything that fetches series terms (the owner types each series' terms with its lots; D-97 waits on OQ-30); and an import of the bond service's export, if one exists (OQ-22).
+- **D-9**, **D-97**: anything that fetches series terms (the owner types each series' terms with its lots; D-97's reading of the Ministry of Finance's published data and its fee table aren't built); and an import of the bond service's export, if one exists (OQ-22).
 - **D-145**: OKI's rate for 2028 on and its exempt amounts for 2030 on come from the finance minister's announcements, added with each release; none is announced yet, so those years' taxes wait for the release that adds them.

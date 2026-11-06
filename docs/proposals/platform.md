@@ -35,26 +35,5 @@ Interface outlines, not code. Every plugin also follows D-11, D-13, D-16, D-17, 
 
 - **[P-48] Each target's drawdown in its own currency.** A target's own max drawdown (D-54) is computed in the target's own currency, as drawdowns are usually quoted, so it can use the target's whole history. The model's drawdown is in the reporting currency (D-62), like its backtest.
 - **[P-49] Cross rates through PLN.** When the reporting currency (D-62) isn't PLN, M0 converts with NBP table A cross rates: an amount in X becomes X→PLN divided by reporting-currency→PLN, on the same table. One FX source then serves any reporting currency until another FX plugin exists, and tax keeps using NBP directly (D-20). NBP's history starts on 2002-01-02 (R-17). Resolves T-12 if accepted.
+- **[T-12]** Reporting currency vs exchange rates. D-62 makes the reporting currency a setting, but D-20 converts amounts with NBP table A, which quotes every currency only against PLN. A reporting currency other than PLN needs cross rates through PLN or another FX plugin. Proposed: P-49. Deferred past M0 (D-201).
 
-## M0 acceptance
-
-- **[P-10] M0 acceptance criteria.** Each becomes a kibi scenario on the requirement it checks when work on that area starts, and leaves this list.
-  1. **Consolidation.** The author's real IBKR, XTB (stocks and ETFs) and treasury bond holdings appear in one view. Every broker-reported position and cash balance is stored as a balance assertion and matches the derived value to 0.01 of the account currency. Open XTB CFDs appear only as flagged, unsupported items.
-  2. **Double-entry.** Every transaction's postings sum to zero per currency, and a check over the whole log passes.
-  3. **Idempotent, versioned imports.** Re-importing the same file adds nothing. A changed row creates a new version, and the old one remains, marked superseded.
-  4. **Opening lots.** IBKR and XTB accounts are seeded from current lot-level positions, each lot with open date and cost, and PLN cost at the NBP table A rate from the day before the open date.
-  5. **Bonds.** For every held series, the gross accrued value matches an open-source reference valuer on the same date to within 0.01 PLN, and net-if-redeemed matches a hand calculation for at least one series of each type held. Totals use the configured basis, net by default.
-  6. **Prices and FX.** Every PLN figure uses NBP table A. End-of-day prices come from the market-data plugin; where IBKR Flex reports a price for the same instrument and date, a difference beyond a configured tolerance is flagged.
-  7. **Read API.** `/v1` serves accounts, transactions, tax lots, holdings and valuations as its OpenAPI spec describes, rejects unauthenticated calls, and has no write endpoint. The Connect clients generated from the same definitions return the same data.
-  8. **Built-in UI.** Passkey login works on `localhost`, and a passkey created for a second hostname through a one-time link works there. The allocation and value-over-time charts are drawn using only the read API.
-  9. **Ghostfolio.** After a sync, Ghostfolio's OpenFief-owned accounts hold exactly the projected activities. A second sync changes nothing. A manually edited activity in an owned account is reverted, and accounts OpenFief did not create are untouched.
-  10. **Plugin isolation.** Each plugin runs in its own pod. The XTB parser has no egress at all. A test plugin's request through the proxy for a host outside its grant is refused, and attempts to bypass the proxy (a direct connection, a DNS lookup) fail.
-  11. **Operator.** A `Plugin` without a matching `PluginGrant` is not deployed. An upgrade requesting a new egress host stays on the old version until granted. An image referenced by tag, or without a valid cosign signature from a trusted signer, is rejected, including when applied with plain `kubectl`. The `Plugin`'s status shows verified only for an image the catalog pins.
-  12. **Operator scope.** The operator's ServiceAccount cannot create or change anything outside the `openfief` namespace.
-  13. **Exposure.** The default installation creates no route, no LoadBalancer or NodePort Service and no tunnel. With the HTTPRoute component, the core, and through it the UI, is reachable over HTTPS on the owner's hostname through their Gateway.
-  14. **Secrets.** Credentials exist only as Kubernetes Secrets, mounted only into plugins granted them.
-  15. **Portability.** The whole acceptance suite passes on both kind and k3d.
-  16. **Egress.** Outbound traffic goes only to configured destinations (IBKR's Flex service, NBP, GUS, the market-data vendor, the user's Ghostfolio), verified from the egress proxy's logs.
-  17. **Core-to-plugin.** A call to a connector from any pod other than the core fails, and a call from the core without a valid token for that instance is refused.
-  18. **Uninstall.** Uninstalling a connector instance removes its pod, grant, secrets and allow-list; its imported transactions remain, marked as coming from a removed instance.
-  19. **Model portfolio.** While off, the UI and the read API show nothing of it. When on, the backtest of a two-target basket over a synthetic price series matches a hand calculation across one yearly rebalance, and each max drawdown matches the series' known peak and trough dates.

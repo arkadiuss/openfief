@@ -46,6 +46,7 @@ site/                    the docs site: Hugo config, theme, site-only pages (doc
 **Money (P).** Never `float64` for amounts, prices, rates or quantities. Use the kernel's decimal-backed types, and every amount carries its currency.
 
 **Layering:**
+- A context's Kubernetes API types (`internal/plugins/operator/v1alpha1`, its CRDs) are a contract, like `proto/`: the context's adapters and `cmd` may import them.
 - `app` imports domain packages.
 - Adapters import `app` and domain packages.
 - Only `cmd` imports adapters.
@@ -57,6 +58,8 @@ site/                    the docs site: Hugo config, theme, site-only pages (doc
 **Interfaces.** Declare an interface where it's consumed (in `app`), keep it small, and return concrete types.
 
 **Anti-corruption.** Broker and vendor formats are parsed and translated in their adapter or plugin. Domain code never sees an IBKR, XTB or Ghostfolio shape.
+
+**Support packages.** `internal/demo` holds the synthetic demo dataset and is no context: it imports domain packages only, and only `cmd` imports it. `internal/kernel` is the shared kernel above.
 
 **Banned packages.** No `util`, `common`, `helpers`, `models` or `types`. Find the context the code belongs to.
 
@@ -80,7 +83,7 @@ Lint checks what one file does; architecture tests check how the code fits toget
 - **Plugins.** Nothing under `plugins/` or `sdk/` imports `internal/` or `cmd/`.
 - **Schemas.** A context's SQL, in its migrations and in its packages' query strings, names only its own schema; `valuation` also owns `river`, River's job queue (D-36). SQL comments don't count.
 - **Money.** No `float32` or `float64` in domain, `app` and kernel packages, and no `float` or `double` field in the contracts under `proto/`. Code that only draws, such as chart coordinates, is listed by package.
-- **Pure domain.** No `go` statements and no package-level variables other than errors (and `_`) in domain and kernel packages, beyond what depguard and forbidigo already ban.
+- **Pure domain.** No `go` statements and no package-level variables other than errors, compiled regular expressions (and `_`) in domain and kernel packages, beyond what depguard and forbidigo already ban.
 - **Privacy (GR-12).** No logging call (`log/slog`, `log`, logr, logrus) takes a value of a money, quantity, decimal, price, FX rate, ISIN or script token type as an argument, or an error, whose text may quote one: an error is logged through a `LogSafe` function, such as `kernel.LogSafe`. Attribute constructors, `fmt.Sprint*`, `.String()` and `.Error()` are looked through. A string holding an account number or a token has no type to tell it apart, so review still owns those.
 - **Banned packages.** No package, test-only ones included, named `util`, `common`, `helpers`, `models` or `types`.
 - **Stable tests.** No `time.Sleep` and no `Skip` in tests, outside a listed few that wait on something outside the process or need a tool a contributor may lack, each with its reason.

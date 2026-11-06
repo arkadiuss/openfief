@@ -206,4 +206,4 @@ Not covered by tests: `cmd/egress-proxy`, and anything that needs a real cluster
 ## Not built yet
 
 - **A TypeScript SDK (D-11).** Only Go plugins get the token handling for free; R-14 notes Node's built-in client reads `HTTPS_PROXY` only with `NODE_USE_ENV_PROXY=1`.
-- **End-to-end checks of the proxy itself.** `test/e2e` checks a plugin's allow-list entry, but no CONNECT goes through the proxy (D-12), since the suite calls no external host. P-10's acceptance items 10 and 16 (a refused host, failed bypass attempts, destinations checked in the proxy's logs) are proposals, not decisions.
+- **End-to-end checks of the proxy itself.** `test/e2e` checks a plugin's allow-list entry, but no CONNECT goes through the proxy (D-12), since the suite calls no external host. D-200's exit criteria 10 and 16 (a refused host, failed bypass attempts, destinations checked in the proxy's logs) are proposals, not decisions.
