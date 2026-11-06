@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/valuation"
@@ -34,8 +35,9 @@ type PriceCheckList struct {
 }
 
 // PriceChecks returns the price checks, only those with status when status
-// is not zero.
-func (v *Views) PriceChecks(ctx context.Context, status valuation.PriceCheckStatus) (PriceCheckList, error) {
+// is not zero, and only those of the listings of the instrument with ISIN
+// isin, its check history, when isin is not empty (D-112, D-195).
+func (v *Views) PriceChecks(ctx context.Context, status valuation.PriceCheckStatus, isin string) (PriceCheckList, error) {
 	if v.priceChecks == nil {
 		return PriceCheckList{}, nil
 	}
@@ -45,9 +47,15 @@ func (v *Views) PriceChecks(ctx context.Context, status valuation.PriceCheckStat
 	}
 	out := PriceCheckList{Threshold: v.priceChecks.Threshold(), Checks: checks[:0:0]}
 	for i := range checks {
-		if status == 0 || checks[i].Status == status {
+		if (status == 0 || checks[i].Status == status) && (isin == "" || ofISIN(checks[i].CrossCheck.Instrument, isin)) {
 			out.Checks = append(out.Checks, checks[i])
 		}
 	}
 	return out, nil
+}
+
+// ofISIN reports whether instrument, written as ledger.Instrument.String()
+// ("<ISIN>/<symbol>"), is a listing of isin.
+func ofISIN(instrument, isin string) bool {
+	return instrument == isin || strings.HasPrefix(instrument, isin+"/")
 }

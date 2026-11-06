@@ -867,3 +867,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c6adb20f271
+  - type: implements
+    from: SYM-views-pb-activity-batch-get-institution
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:09.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15fe1e020813
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-get-institution
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:09.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a430dd8db98f
+  - type: implements
+    from: SYM-views-pb-sync-attempt-reset
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:39:23.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6113c5837478
+  - type: covered_by
+    from: SYM-views-pb-sync-attempt-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:39:23.903Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e5cf5b9d50c
+  - type: implements
+    from: SYM-views-pb-list-instrument-transactions-response-string
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:53:18.668Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0afeea7b5302
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-transactions-response-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:53:18.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95066fa7a54b

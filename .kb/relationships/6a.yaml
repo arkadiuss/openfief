@@ -510,3 +510,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-259ef1e084b7
+  - type: executable_for
+    from: SYM-ingest-conn-rpc-test-helper-answering-connector
+    to: TEST-ingest-connectrpc-sync-errors
+    created_at: 2026-11-05T23:41:00.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b5635a06255
+  - type: implements
+    from: SYM-views-activity-cursor
+    to: REQ-views-activity
+    created_at: 2026-11-06T01:59:16.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-351d5039516a
+  - type: covered_by
+    from: SYM-views-activity-cursor
+    to: TEST-views-activity
+    created_at: 2026-11-06T01:59:16.227Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c87df82c10a
+  - type: implements
+    from: SYM-core-history-options
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:03:33.637Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aeed5ddb7813
+  - type: implements
+    from: SYM-core-history-options
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:03:33.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87ec856fad9d
+  - type: covered_by
+    from: SYM-core-history-options
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:03:33.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfe44236ae77

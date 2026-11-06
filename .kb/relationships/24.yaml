@@ -671,3 +671,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ae6a33c9c4a8
+  - type: implements
+    from: SYM-ingest-sync-error-class
+    to: REQ-ingest-sync-attempt-history
+    created_at: 2026-11-05T23:39:18.243Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5914e85df3af
+  - type: covered_by
+    from: SYM-ingest-sync-error-class
+    to: TEST-ingest-sync-attempt
+    created_at: 2026-11-05T23:39:18.267Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00c3793fb071
+  - type: executable_for
+    from: SYM-ledger-pg-test-helper-recorded-changes
+    to: TEST-ledger-pg-recorded-changes
+    created_at: 2026-11-06T01:12:53.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b23bead9c10
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-response-string
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:49:37.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99655123e0be
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-response-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:49:37.826Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-281d66936559
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-holdings
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:54:43.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-192e4956ab22
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-instrument-holdings
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:54:43.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81154d0b3023

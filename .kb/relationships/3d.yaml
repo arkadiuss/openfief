@@ -524,3 +524,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7bfbb36c26dd
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-request-get-page-size
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:43:19.816Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2f2c9dfb316
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-request-get-page-size
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:43:19.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7c3f10aebdc0

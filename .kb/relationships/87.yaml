@@ -699,3 +699,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9876ddc3c524
+  - type: implements
+    from: SYM-valuation-pg-store-latest-prices
+    to: REQ-valuation-instrument-price-history
+    created_at: 2026-11-06T01:13:09.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ca3b33b0057
+  - type: covered_by
+    from: SYM-valuation-pg-store-latest-prices
+    to: TEST-valuation-pg-price-history
+    created_at: 2026-11-06T01:13:10.020Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d01b37d0e97
+  - type: implements
+    from: SYM-views-holdings-of
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:00:44.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11615946affb
+  - type: covered_by
+    from: SYM-views-holdings-of
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:00:44.504Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7797deb5190a
+  - type: implements
+    from: SYM-views-app-attention-list
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:03:00.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f9a17f75063
+  - type: covered_by
+    from: SYM-views-app-attention-list
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:03:00.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e30a4cd6053b

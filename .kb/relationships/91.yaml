@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bb9d5b9b7a27
+  - type: verified_by
+    from: SCEN-valuation-instrument-price-history
+    to: TEST-valuation-pg-price-history
+    created_at: 2026-11-06T01:12:21.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-65643a0486eb
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-fake-prices
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:08:02.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eabf7169047

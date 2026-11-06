@@ -440,3 +440,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1ba87175c633
+  - type: executable_for
+    from: SYM-views-connectapi-test-rest-instrument-holdings
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:08:55.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8561ad294b8
+  - type: implements
+    from: SYM-views-pb-activity-batch-string
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:34:35.142Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d23c7b168d4
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:34:35.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-76b335cc7e54

@@ -119,9 +119,11 @@ func (s *Store) StartBatch(ctx context.Context, instance string, b app.OpenBatch
 	return nil
 }
 
-// CompleteSync records b as completed and stores the instance's watermark,
-// next sync and released claim, in one database transaction.
-func (s *Store) CompleteSync(ctx context.Context, instance string, b *ingest.Batch, watermark string, next, at time.Time) error {
+// CompleteSync records b as completed when a ended, stores the instance's
+// watermark, next sync and released claim, and appends a to its sync
+// history, in one database transaction.
+func (s *Store) CompleteSync(ctx context.Context, b *ingest.Batch, watermark string, a *ingest.SyncAttempt) error {
+	instance, next, at := a.Instance, a.NextSync, a.Ended
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		tag, err := tx.Exec(ctx, `
 			UPDATE ingest.import_batches SET state = 'completed', attempts = attempts + 1, last_attempt_at = $3,
@@ -144,7 +146,7 @@ func (s *Store) CompleteSync(ctx context.Context, instance string, b *ingest.Bat
 			instance, watermark, next); err != nil {
 			return fmt.Errorf("storing the watermark: %w", err)
 		}
-		return nil
+		return appendAttempt(ctx, tx, a)
 	})
 	if err != nil {
 		return fmt.Errorf("completing batch %s of %s: %w", b.ID, instance, err)
@@ -152,10 +154,11 @@ func (s *Store) CompleteSync(ctx context.Context, instance string, b *ingest.Bat
 	return nil
 }
 
-// FailSync counts a failed attempt of the open batch id and stores the
-// instance's failures, next sync and released claim, in one database
-// transaction; the batch stays open.
-func (s *Store) FailSync(ctx context.Context, instance string, id ingest.BatchID, failures int, next, at time.Time) error {
+// FailSync counts a, a failed attempt of the open batch a.Batch, stores the
+// instance's failures, next sync and released claim, and appends a to its
+// sync history, in one database transaction; the batch stays open.
+func (s *Store) FailSync(ctx context.Context, a *ingest.SyncAttempt) error {
+	instance, id, failures, next, at := a.Instance, a.Batch, a.Failures, a.NextSync, a.Ended
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		tag, err := tx.Exec(ctx, `
 			UPDATE ingest.import_batches SET attempts = attempts + 1, last_attempt_at = $3
@@ -173,7 +176,7 @@ func (s *Store) FailSync(ctx context.Context, instance string, id ingest.BatchID
 			instance, failures, next); err != nil {
 			return fmt.Errorf("scheduling the retry: %w", err)
 		}
-		return nil
+		return appendAttempt(ctx, tx, a)
 	})
 	if err != nil {
 		return fmt.Errorf("failing batch %s of %s: %w", id, instance, err)

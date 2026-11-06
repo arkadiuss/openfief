@@ -62,14 +62,16 @@ type SyncStore interface {
 	// StartBatch records b as the claimed instance's open batch, started at
 	// at; a batch it replaces is recorded as abandoned.
 	StartBatch(ctx context.Context, instance string, b OpenBatch, at time.Time) error
-	// CompleteSync records the open batch b as completed at at, stores
-	// watermark, resets its failures, sets its next sync and releases the
-	// claim, all at once.
-	CompleteSync(ctx context.Context, instance string, b *ingest.Batch, watermark string, next, at time.Time) error
-	// FailSync records a failed attempt of the open batch id at at, keeps
-	// the batch open, sets the instance's failures and next sync and
-	// releases the claim.
-	FailSync(ctx context.Context, instance string, id ingest.BatchID, failures int, next, at time.Time) error
+	// CompleteSync records the open batch b as completed when a, its
+	// successful attempt, ended, stores watermark, resets its failures,
+	// sets its next sync to a's and releases the claim, and appends a to the
+	// instance's sync history, all at once.
+	CompleteSync(ctx context.Context, b *ingest.Batch, watermark string, a *ingest.SyncAttempt) error
+	// FailSync records a, a failed attempt of the open batch a.Batch, keeps
+	// the batch open, sets the instance's failures and next sync to a's,
+	// releases the claim and appends a to the instance's sync history, all
+	// at once.
+	FailSync(ctx context.Context, a *ingest.SyncAttempt) error
 	// SyncStates returns the state of every instance that has one.
 	SyncStates(ctx context.Context) ([]SyncState, error)
 }
@@ -321,26 +323,30 @@ func (s *Scheduler) run(ctx context.Context, instance string, claim *SyncClaim, 
 			return SyncResult{}, fmt.Errorf("starting a batch of %s: %w", instance, err)
 		}
 	}
+	started := s.Now()
 	actx, cancel := context.WithTimeout(ctx, s.Timeout)
 	res, syncErr := s.Connectors.Sync(actx, instance, call)
 	cancel()
 	ended := s.Now()
+	a := ingest.SyncAttempt{Instance: instance, Batch: b.ID, Mode: b.Mode, Started: started, Ended: ended}
 	// Record the outcome even when ctx ended during the attempt.
 	rctx := context.WithoutCancel(ctx)
 	if syncErr != nil {
 		failures := claim.Failures + 1
-		if err := s.Store.FailSync(rctx, instance, b.ID, failures, s.Policy.NextSync(ended, failures, 0), ended); err != nil {
+		a.Class, a.Failures, a.NextSync = SyncErrorClassOf(syncErr), failures, s.Policy.NextSync(ended, failures, 0)
+		if err := s.Store.FailSync(rctx, &a); err != nil {
 			return SyncResult{}, errors.Join(syncErr, fmt.Errorf("recording the failure: %w", err))
 		}
-		s.logger().Info("connector sync attempt failed", "instance", instance, "batch", string(b.ID), "failures", failures)
+		s.logger().Info("connector sync attempt failed", "instance", instance, "batch", string(b.ID), "failures", failures,
+			"class", a.Class.String())
 		return SyncResult{}, syncErr
 	}
 	watermark := res.Watermark
 	if keep {
 		watermark = call.Watermark
 	}
-	next := s.Policy.NextSync(ended, 0, s.Jitter(s.Policy.Jitter))
-	if err := s.Store.CompleteSync(rctx, instance, &res.Batch, watermark, next, ended); err != nil {
+	a.NextSync = s.Policy.NextSync(ended, 0, s.Jitter(s.Policy.Jitter))
+	if err := s.Store.CompleteSync(rctx, &res.Batch, watermark, &a); err != nil {
 		return SyncResult{}, fmt.Errorf("recording sync %s of %s: %w", b.ID, instance, err)
 	}
 	s.logger().Info("connector synced", "instance", instance, "batch", string(b.ID), "mode", b.Mode.String(),

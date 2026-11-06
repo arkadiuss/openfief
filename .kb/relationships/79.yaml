@@ -909,3 +909,87 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b25c1d2dfd29
+  - type: implements
+    from: SYM-ingest-batch-record
+    to: REQ-ingest-completed-batches-pages
+    created_at: 2026-11-05T23:39:51.547Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d49eac30dc8
+  - type: covered_by
+    from: SYM-ingest-batch-record
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:39:51.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b49e72c7b0f
+  - type: implements
+    from: SYM-views-connectapi-attention-view
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:03:29.372Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8412d089a698
+  - type: covered_by
+    from: SYM-views-connectapi-attention-view
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:03:29.412Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fca2ded74153
+  - type: implements
+    from: SYM-views-pb-sync-error-class
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:32:54.122Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc160b5e9d56
+  - type: covered_by
+    from: SYM-views-pb-sync-error-class
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:32:54.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69da1931ec8c
+  - type: implements
+    from: SYM-views-pb-list-activity-response
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:38:38.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e270086bfae
+  - type: covered_by
+    from: SYM-views-pb-list-activity-response
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:38:38.551Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1309fe883d42
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-request
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:42:45.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ca2f0163e25
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-request
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:42:45.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0946e938ec27
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-request-get-to
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:49:23.611Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ffd59917c005
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-request-get-to
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:49:23.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f234ebb7a58a

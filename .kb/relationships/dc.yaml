@@ -559,3 +559,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7bcd5d16264
+  - type: implements
+    from: SYM-views-pb-attention-item-group-type
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:31:30.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e7c3564a413
+  - type: covered_by
+    from: SYM-views-pb-attention-item-group-type
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:31:30.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a3a28127e42
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-response-get-next-page-token
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:44:09.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-94ba1cdb9ae8
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-response-get-next-page-token
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:44:09.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d227811b9eb9

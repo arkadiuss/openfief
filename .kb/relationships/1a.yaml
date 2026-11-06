@@ -587,3 +587,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-00f0b1360529
+  - type: implements
+    from: SYM-views-merge-activity
+    to: REQ-views-activity
+    created_at: 2026-11-06T01:59:37.145Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52997a353ef8
+  - type: covered_by
+    from: SYM-views-merge-activity
+    to: TEST-views-activity
+    created_at: 2026-11-06T01:59:37.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7f84530c5fd6
+  - type: executable_for
+    from: SYM-views-app-test-attention-views-and-scopes
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:05:48.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ceb3acf03924

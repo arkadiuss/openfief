@@ -615,3 +615,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04b83413d5b4
+  - type: implements
+    from: SYM-views-instrument-classes
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:00:23.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b726a40cd8a9
+  - type: covered_by
+    from: SYM-views-instrument-classes
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:00:23.340Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a86732bf04c9
+  - type: implements
+    from: SYM-views-app-attention-query-scopes
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:02:56.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-010fedab4835
+  - type: covered_by
+    from: SYM-views-app-attention-query-scopes
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:02:56.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac0d8f9c48b
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-changes-recorded-changes
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:06:20.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82730673fa54
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-response-get-isin
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:49:57.858Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a41e0f93318f
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-response-get-isin
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:49:57.888Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d4ef7067d1b

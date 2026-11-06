@@ -83,7 +83,7 @@ func TestPriceChecks(t *testing.T) {
 			if err != nil {
 				t.Fatalf("app.New: %v", err)
 			}
-			got, err := v.PriceChecks(reader(t), tt.status)
+			got, err := v.PriceChecks(reader(t), tt.status, "")
 			if diff := cmp.Diff(tt.wantErr, err, cmpopts.EquateErrors()); diff != "" {
 				t.Fatalf("PriceChecks() error (-want +got):\n%s", diff)
 			}

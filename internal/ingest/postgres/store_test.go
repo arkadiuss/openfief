@@ -128,7 +128,7 @@ func TestSyncStoreLifecycle(t *testing.T) {
 		t.Fatalf("StartBatch: %v", err)
 	}
 	retry := t0().Add(5 * time.Minute)
-	if err := s.FailSync(ctx, "xtb-main", "b-1", 1, retry, t0().Add(time.Minute)); err != nil {
+	if err := s.FailSync(ctx, failed("b-1", 1, retry, t0().Add(time.Minute))); err != nil {
 		t.Fatalf("FailSync: %v", err)
 	}
 	want := app.SyncClaim{Failures: 1, Open: &open}
@@ -165,7 +165,7 @@ func TestSyncStoreStartBatchAbandonsTheOpenOne(t *testing.T) {
 	if got := batchState(t, pool, "b-1"); got != "abandoned after 0" {
 		t.Errorf("b-1 is %s, want abandoned after 0", got)
 	}
-	if err := s.FailSync(ctx, "xtb-main", "b-2", 1, t0(), t0()); err != nil {
+	if err := s.FailSync(ctx, failed("b-2", 1, t0(), t0())); err != nil {
 		t.Fatalf("FailSync: %v", err)
 	}
 	want := app.SyncClaim{Failures: 1, Open: &app.OpenBatch{ID: "b-2", Mode: ingest.ModeTransactions}}
@@ -287,7 +287,7 @@ func checkCompletion(t *testing.T, pool *pgxpool.Pool, s *postgres.Store) {
 		Imported: ingest.ImportSummary{New: 2}, Problems: []ingest.Problem{ingest.Skipped("row 3", "summary row")},
 	}
 	next := t0().Add(6 * time.Hour)
-	if err := s.CompleteSync(ctx, "xtb-main", b, "w-1", next, t0().Add(3*time.Minute)); err != nil {
+	if err := s.CompleteSync(ctx, b, "w-1", succeeded("xtb-main", b, next, t0().Add(3*time.Minute))); err != nil {
 		t.Fatalf("CompleteSync: %v", err)
 	}
 	if diff := cmp.Diff(app.SyncClaim{Watermark: "w-1"}, claim(t, s, "xtb-main", t0().Add(4*time.Minute))); diff != "" {
@@ -303,10 +303,10 @@ func checkCompletion(t *testing.T, pool *pgxpool.Pool, s *postgres.Store) {
 	if problems != 1 || newTxs != 2 {
 		t.Errorf("stored problems = %d, new = %d; want 1 and 2", problems, newTxs)
 	}
-	if err := s.CompleteSync(ctx, "xtb-main", b, "w-2", next, t0().Add(5*time.Minute)); !errors.Is(err, postgres.ErrBatchNotOpen) {
+	if err := s.CompleteSync(ctx, b, "w-2", succeeded("xtb-main", b, next, t0().Add(5*time.Minute))); !errors.Is(err, postgres.ErrBatchNotOpen) {
 		t.Errorf("completing a completed batch = %v, want ErrBatchNotOpen", err)
 	}
-	if err := s.FailSync(ctx, "xtb-main", "b-1", 1, next, t0().Add(5*time.Minute)); !errors.Is(err, postgres.ErrBatchNotOpen) {
+	if err := s.FailSync(ctx, failed("b-1", 1, next, t0().Add(5*time.Minute))); !errors.Is(err, postgres.ErrBatchNotOpen) {
 		t.Errorf("failing a completed batch = %v, want ErrBatchNotOpen", err)
 	}
 }

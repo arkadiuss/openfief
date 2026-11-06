@@ -615,3 +615,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f6d8edba7ff
+  - type: implements
+    from: SYM-ingest-sync-attempt
+    to: REQ-ingest-sync-attempt-history
+    created_at: 2026-11-05T23:39:30.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dc1b5b227262
+  - type: covered_by
+    from: SYM-ingest-sync-attempt
+    to: TEST-ingest-sync-attempt
+    created_at: 2026-11-05T23:39:30.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-758e34d5d2c9
+  - type: executable_for
+    from: SYM-attention-test-scope-of
+    to: TEST-attention-scope
+    created_at: 2026-11-06T01:27:51.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98826ea90a78
+  - type: implements
+    from: SYM-views-pb-list-activity-request
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:37:58.321Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efe3f2b21203
+  - type: covered_by
+    from: SYM-views-pb-list-activity-request
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:37:58.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af07a037037e
+  - type: implements
+    from: SYM-views-pb-sync-status-reset
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:40:39.370Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2cc85a23029
+  - type: covered_by
+    from: SYM-views-pb-sync-status-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:40:39.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74d09bd2cbbe

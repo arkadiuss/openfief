@@ -671,3 +671,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f26b6c277691
+  - type: implements
+    from: SYM-views-activity-cursor-encode
+    to: REQ-views-activity
+    created_at: 2026-11-06T01:59:24.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bd39244f887
+  - type: covered_by
+    from: SYM-views-activity-cursor-encode
+    to: TEST-views-activity
+    created_at: 2026-11-06T01:59:24.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e6689abbc63b
+  - type: executable_for
+    from: SYM-views-app-test-instrument-prices
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:07:15.127Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ad1b56c32be
+  - type: executable_for
+    from: SYM-views-app-test-price-checks-of-an-instrument
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:07:32.196Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-73e66f82b9ea
+  - type: implements
+    from: SYM-views-pb-sync-error-class-enum
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:32:58.959Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-996ed5fe022b
+  - type: covered_by
+    from: SYM-views-pb-sync-error-class-enum
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:32:58.991Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-391453dee055

@@ -629,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-561609612212
+  - type: executable_for
+    from: SYM-views-test-asset-of
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:05:18.521Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e384d90678f4

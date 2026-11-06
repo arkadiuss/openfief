@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2c8d7d4e1f6b
+  - type: implements
+    from: SYM-views-pb-activity-change-get-account-id
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:36:13.601Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3df1c875a372
+  - type: covered_by
+    from: SYM-views-pb-activity-change-get-account-id
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:36:13.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7a5bb662efd

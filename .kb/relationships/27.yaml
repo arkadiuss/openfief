@@ -503,3 +503,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1ccdeffeeef
+  - type: executable_for
+    from: SYM-ledger-pg-test-recorded-changes
+    to: TEST-ledger-pg-recorded-changes
+    created_at: 2026-11-06T01:12:57.745Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f6fa07af795
+  - type: implements
+    from: SYM-attention-scope
+    to: REQ-attention-item-scope
+    created_at: 2026-11-06T01:27:24.879Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9316b9b6b915
+  - type: covered_by
+    from: SYM-attention-scope
+    to: TEST-attention-scope
+    created_at: 2026-11-06T01:27:24.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-264fb0652332
+  - type: implements
+    from: SYM-views-pb-activity-batch-reset
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:34:30.214Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-830dce912189
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:34:30.235Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-129702fd2816
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-response-proto-reflect
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:49:47.776Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3038ff8e30e6
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-response-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:49:47.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00150e52aacc

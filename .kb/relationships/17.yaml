@@ -433,3 +433,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-13d2ed21ff6e
+  - type: constrains
+    from: REQ-attention-group-of-kind
+    to: FACT-SUBJECT-C2D78C1C4660711A
+    created_at: 2026-11-06T01:27:00.971Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e3767e80e9b
+  - type: requires_property
+    from: REQ-attention-group-of-kind
+    to: FACT-PROP-61CCAC4568A8ED0D
+    created_at: 2026-11-06T01:27:01.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a5fab15acc9
+  - type: specified_by
+    from: REQ-attention-group-of-kind
+    to: SCEN-attention-group-of-kind
+    created_at: 2026-11-06T01:27:01.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82d257926c21
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-prices-source-of
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:07:03.200Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-329094507e15
+  - type: implements
+    from: SYM-views-pb-activity-batch-proto-message
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:34:40.158Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35acde17d24b
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:34:40.188Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c31a58556f64

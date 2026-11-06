@@ -713,3 +713,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a90da1a82d7
+  - type: implements
+    from: SYM-views-app-views-instrument-transactions
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:02:35.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cc98e91c673
+  - type: covered_by
+    from: SYM-views-app-views-instrument-transactions
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:02:35.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a673076f6484
+  - type: implements
+    from: SYM-views-pb-activity-proto-message
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:37:12.331Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc8934d2b79e
+  - type: covered_by
+    from: SYM-views-pb-activity-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:37:12.361Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37531f57bd28
+  - type: implements
+    from: SYM-views-pb-instrument-detail-get-listings
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:47:19.622Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bab67cb6ab6
+  - type: covered_by
+    from: SYM-views-pb-instrument-detail-get-listings
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:47:19.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8408041ec907
+  - type: implements
+    from: SYM-views-pb-list-instrument-transactions-request-reset
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:52:28.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-834136347547
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-transactions-request-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:52:28.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7bee68652af
+  - type: implements
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-sync-statuses
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:54:25.984Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0c1690c5609
+  - type: covered_by
+    from: SYM-views-pbconnect-unimplemented-read-service-handler-list-sync-statuses
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:54:26.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2af70adc8701

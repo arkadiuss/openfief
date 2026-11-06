@@ -958,3 +958,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3e99cbcedc12
+  - type: implements
+    from: SYM-views-pb-activity-batch-get-problems
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:34.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed3078bb78aa
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-get-problems
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:34.948Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b14df37f0d74

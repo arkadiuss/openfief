@@ -776,3 +776,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6553f1d96d42
+  - type: implements
+    from: SYM-views-pb-activity-batch-descriptor
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:34:49.996Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb4b66ca1fda
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:34:50.022Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-03167e2d8c3c
+  - type: implements
+    from: SYM-views-pb-list-instrument-holdings-response-string
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:51:48.203Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25a7396ba605
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-holdings-response-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:51:48.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-db0e0c195dc4

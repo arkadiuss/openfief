@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-45e8d0e530ec
+  - type: implements
+    from: SYM-ingest-app-sync-error-class-of
+    to: REQ-ingest-sync-attempt-history
+    created_at: 2026-11-05T23:40:00.033Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea45c1261922
+  - type: covered_by
+    from: SYM-ingest-app-sync-error-class-of
+    to: TEST-ingest-app-sync-errors
+    created_at: 2026-11-05T23:40:00.061Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a51b5bcc1b8d

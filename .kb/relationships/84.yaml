@@ -748,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4286d489ba68
+  - type: executable_for
+    from: SYM-views-app-test-helper-item
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:05:40.697Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc1d6742e833
+  - type: implements
+    from: SYM-views-pb-list-instrument-holdings-request-get-date
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:51:33.624Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15a422acebc1
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-holdings-request-get-date
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:51:33.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef6d43936746

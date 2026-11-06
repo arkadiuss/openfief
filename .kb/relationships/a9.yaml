@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4fc20f5be29b
+  - type: implements
+    from: SYM-views-listing-of
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:00:35.674Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-118774a57104
+  - type: covered_by
+    from: SYM-views-listing-of
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:00:35.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-efc36eb8c2b9

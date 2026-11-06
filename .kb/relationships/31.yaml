@@ -615,3 +615,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9032c6f2def7
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-response-descriptor
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:43:54.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e01e0ccd01a3
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-response-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:43:54.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a5c48cde44f2

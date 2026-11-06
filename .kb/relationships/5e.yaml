@@ -769,3 +769,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9089173dab92
+  - type: implements
+    from: SYM-attention-account-scope
+    to: REQ-attention-item-scope
+    created_at: 2026-11-06T01:27:35.333Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4767a06e095
+  - type: covered_by
+    from: SYM-attention-account-scope
+    to: TEST-attention-scope
+    created_at: 2026-11-06T01:27:35.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c197f2d35a1d
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-response-proto-reflect
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:43:49.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-036aeb173c9f
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-response-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:43:49.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84b8347992b2
+  - type: implements
+    from: SYM-views-pb-instrument-detail-get-exemption-classes
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:47:29.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-87072e5fbdf9
+  - type: covered_by
+    from: SYM-views-pb-instrument-detail-get-exemption-classes
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:47:29.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-99bd8b06d817

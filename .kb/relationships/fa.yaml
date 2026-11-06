@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cda3de9a0dad
+  - type: executable_for
+    from: SYM-attention-app-test-failing-sync-item
+    to: TEST-attention-app-failing-syncs
+    created_at: 2026-11-06T01:28:08.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38f28145fb1a
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-request-proto-message
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:48:58.526Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2bf2f433779
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-request-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:48:58.558Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-49c99831c58d

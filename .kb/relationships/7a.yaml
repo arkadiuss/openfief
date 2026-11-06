@@ -699,3 +699,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aaa36faa0bcc
+  - type: implements
+    from: SYM-ingest-sync-status
+    to: REQ-ingest-sync-keeps-failing
+    created_at: 2026-11-05T23:39:38.286Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8705ff25dc50
+  - type: covered_by
+    from: SYM-ingest-sync-status
+    to: TEST-ingest-sync-attempt
+    created_at: 2026-11-05T23:39:38.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9538079d6460
+  - type: executable_for
+    from: SYM-views-test-helper-names
+    to: TEST-views-activity
+    created_at: 2026-11-06T02:04:35.679Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f58b53bf225f
+  - type: implements
+    from: SYM-views-pb-list-attention-items-request-get-connector-instance
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:34:11.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df8f2f64a8e0
+  - type: covered_by
+    from: SYM-views-pb-list-attention-items-request-get-connector-instance
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:34:11.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-acbbbc48e6c8

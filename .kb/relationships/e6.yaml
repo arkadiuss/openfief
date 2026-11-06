@@ -776,3 +776,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52114ab592b8
+  - type: implements
+    from: SYM-ingest-batch-query
+    to: REQ-ingest-completed-batches-pages
+    created_at: 2026-11-05T23:39:55.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-77b1b7a0b612
+  - type: covered_by
+    from: SYM-ingest-batch-query
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:39:55.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a525dcf611d
+  - type: implements
+    from: SYM-views-next-source
+    to: REQ-views-activity
+    created_at: 2026-11-06T01:59:41.387Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc4898eeb7b0
+  - type: covered_by
+    from: SYM-views-next-source
+    to: TEST-views-activity
+    created_at: 2026-11-06T01:59:41.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8103debfdf42

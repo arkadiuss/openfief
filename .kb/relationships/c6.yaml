@@ -748,3 +748,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3ded5967982a
+  - type: constrains
+    from: REQ-views-sync-history
+    to: FACT-SUBJECT-FB737A7407F8F80B
+    created_at: 2026-11-06T01:58:43.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00dc880508be
+  - type: requires_property
+    from: REQ-views-sync-history
+    to: FACT-PROP-775A93299A970941
+    created_at: 2026-11-06T01:58:43.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a539726b40c7
+  - type: specified_by
+    from: REQ-views-sync-history
+    to: SCEN-views-sync-history
+    created_at: 2026-11-06T01:58:43.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4f84a8833167
+  - type: implements
+    from: SYM-views-activity-cursor-json
+    to: REQ-views-activity
+    created_at: 2026-11-06T01:59:20.309Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-603ecd78998a
+  - type: covered_by
+    from: SYM-views-activity-cursor-json
+    to: TEST-views-activity
+    created_at: 2026-11-06T01:59:20.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-42278e6f790e
+  - type: executable_for
+    from: SYM-views-connectapi-test-helper-item-body
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:54:55.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eded1df2d2d5

@@ -601,3 +601,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8c3ed6fa1cc
+  - type: implements
+    from: SYM-ledger-app-recorded-version-is-correction
+    to: REQ-ledger-recorded-changes-pages
+    created_at: 2026-11-06T01:12:38.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e5c0465ef072
+  - type: covered_by
+    from: SYM-ledger-app-recorded-version-is-correction
+    to: TEST-ledger-pg-recorded-changes
+    created_at: 2026-11-06T01:12:38.579Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95404aebc284
+  - type: implements
+    from: SYM-views-instrument-listings
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:00:14.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-177ac0161df6
+  - type: covered_by
+    from: SYM-views-instrument-listings
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:00:14.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb557e81eb97
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-items
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:05:33.716Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c3b6413a4df
+  - type: implements
+    from: SYM-views-pb-instrument-holding-string
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:50:17.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53f841a718e2
+  - type: covered_by
+    from: SYM-views-pb-instrument-holding-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:50:17.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-82ef9ad6b10a
+  - type: implements
+    from: SYM-views-pb-list-instrument-holdings-response-proto-reflect
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:51:58.424Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa9fe5512d28
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-holdings-response-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:51:58.448Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f0ec8b0eabf

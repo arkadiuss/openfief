@@ -125,7 +125,7 @@ func pbTransaction(t *ledger.Transaction, origin views.Origin) *viewsv1.Transact
 		Source: t.Key.Source, ExternalId: t.Key.ExternalID, Kind: viewsv1.TransactionKind(enumNumber(int(t.Kind))),
 		Date: pbDate(t.Date), LotOpened: pbDate(t.LotOpened), Description: t.Description,
 		Postings:          make([]*viewsv1.Posting, 0, len(t.Postings)),
-		ConnectorInstance: origin.Instance, ConnectorInstanceRemoved: origin.Removed,
+		ConnectorInstance: origin.Instance, ConnectorInstanceRemoved: origin.Removed, AccountId: string(t.Account),
 	}
 	for i := range t.Postings {
 		p := &t.Postings[i]

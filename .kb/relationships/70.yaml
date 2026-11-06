@@ -454,3 +454,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c28e5a4574e9
+  - type: implements
+    from: SYM-views-pb-sync-status-get-last-success-at
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:41:14.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4531a1accb58
+  - type: covered_by
+    from: SYM-views-pb-sync-status-get-last-success-at
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:41:14.432Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63ad51b43b4b

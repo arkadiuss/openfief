@@ -714,27 +714,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-a4b8566254d9
   - type: implements
-    from: SYM-identity-app-auth-demo-state
-    to: REQ-identity-demo-loading-no-wizard
-    created_at: 2026-11-03T19:28:53.552Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2d6e232df684
-  - type: implements
-    from: SYM-identity-app-auth-demo-state
-    to: REQ-identity-demo-sessions
-    created_at: 2026-11-03T19:28:53.672Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f1bc3b5912b9
-  - type: covered_by
-    from: SYM-identity-app-auth-demo-state
-    to: TEST-identity-auth-app
-    created_at: 2026-11-03T19:28:53.952Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-416b26a6aa39
-  - type: implements
     from: SYM-pl-validate-no-separator
     to: REQ-plugins-no-double-hyphen-in-instance-or-role
     created_at: 2026-11-03T18:25:14.114Z
@@ -755,3 +734,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1a52a9533dc1
+  - type: executable_for
+    from: SYM-ingest-pg-test-sync-attempts-pages
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:41:33.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5df52456c582
+  - type: implements
+    from: SYM-identity-app-auth-demo-state
+    to: REQ-identity-demo-loading-no-wizard
+    created_at: 2026-11-03T19:28:53.552Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d6e232df684
+  - type: implements
+    from: SYM-identity-app-auth-demo-state
+    to: REQ-identity-demo-sessions
+    created_at: 2026-11-03T19:28:53.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1bc3b5912b9
+  - type: covered_by
+    from: SYM-identity-app-auth-demo-state
+    to: TEST-identity-auth-app
+    created_at: 2026-11-03T19:28:53.952Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-416b26a6aa39
+  - type: executable_for
+    from: SYM-views-test-helper-buy-of
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:04:58.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a4c3eaaa801c
+  - type: implements
+    from: SYM-views-pb-list-attention-items-request-get-view
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:33:56.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9473a9d1cbe5
+  - type: covered_by
+    from: SYM-views-pb-list-attention-items-request-get-view
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:33:56.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a28eb185eb5e

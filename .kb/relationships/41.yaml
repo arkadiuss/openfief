@@ -692,3 +692,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da02378beeb2
+  - type: implements
+    from: SYM-ingest-pg-scan-status
+    to: REQ-ingest-sync-keeps-failing
+    created_at: 2026-11-05T23:40:28.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70d5a4f238b3
+  - type: covered_by
+    from: SYM-ingest-pg-scan-status
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:40:28.442Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a8b98730afaf
+  - type: implements
+    from: SYM-views-connectapi-pb-sync-attempt
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:03:25.345Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b5cfb0e09fea
+  - type: implements
+    from: SYM-views-connectapi-pb-sync-attempt
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:03:25.373Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d8f145fe450
+  - type: covered_by
+    from: SYM-views-connectapi-pb-sync-attempt
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:03:25.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2f5fc0e7cda
+  - type: implements
+    from: SYM-views-pb-activity-batch-get-unsupported
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:39.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68de9e3d5a63
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-get-unsupported
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:39.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4416c5807b9e
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-request-proto-reflect
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:49:03.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-242862e008eb
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-request-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:49:03.711Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3c36a31dc36

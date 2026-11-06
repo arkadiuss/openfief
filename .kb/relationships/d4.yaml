@@ -657,3 +657,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ee1c8b7ddae6
+  - type: implements
+    from: SYM-views-pb-attention-view-string
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:31:54.538Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-743ebab18ae4
+  - type: covered_by
+    from: SYM-views-pb-attention-view-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:31:54.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0fac282dd17d

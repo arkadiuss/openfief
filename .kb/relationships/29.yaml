@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d942ffca466
+  - type: implements
+    from: SYM-views-pb-activity-change-get-source
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:36:18.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c5f93e83c80
+  - type: covered_by
+    from: SYM-views-pb-activity-change-get-source
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:36:18.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ecfe7868472b

@@ -594,3 +594,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fc0560250beb
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-must-fail
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:41:22.285Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-556139108e40
+  - type: executable_for
+    from: SYM-views-test-helper-batch-at
+    to: TEST-views-activity
+    created_at: 2026-11-06T02:04:24.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f62dcf688ee7
+  - type: implements
+    from: SYM-views-pb-attention-view-number
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:32:09.702Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4786c68dd2e0
+  - type: covered_by
+    from: SYM-views-pb-attention-view-number
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:32:09.731Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba845422d707
+  - type: implements
+    from: SYM-views-pb-activity-change-proto-message
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:58.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-abc7be5bbb78
+  - type: covered_by
+    from: SYM-views-pb-activity-change-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:58.936Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d34c998ea8ab

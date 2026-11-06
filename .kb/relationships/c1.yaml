@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85a0955f6116
+  - type: implements
+    from: SYM-views-pb-instrument-holding-get-lots
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:50:53.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb14a3818438
+  - type: covered_by
+    from: SYM-views-pb-instrument-holding-get-lots
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:50:53.726Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04c1cf46f21e

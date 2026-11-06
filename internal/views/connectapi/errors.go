@@ -20,6 +20,8 @@ var errBadParameter = errors.New("invalid parameter")
 // quote account IDs, amounts or what was asked for.
 var (
 	errNoSuchAccount = errors.New("no such account")
+	errNoInstrument  = errors.New("no such instrument")
+	errNoInstance    = errors.New("no such connector instance")
 	errModelOff      = errors.New("no model portfolio")
 	errNoPlugins     = errors.New("the installed plugins can't be read now")
 	errBadRange      = errors.New("the date range ends before it starts or is too long")
@@ -52,14 +54,20 @@ func invalidMessage(err error) error {
 }
 
 // toConnectError returns the Connect error err stands for: not found for an
-// unknown account, invalid argument for an invalid request, unavailable
-// while the installed plugins can't be read, failed precondition while a
-// yearly tax lacks an FX rate (D-127), and internal,
-// logged under the request ID only, for anything else. Vanguard maps these
-// codes to HTTP statuses for REST (404, 400, 500).
+// unknown account, instrument or connector instance, invalid argument for
+// an invalid request, unavailable while the installed plugins can't be
+// read, failed precondition while a yearly tax lacks an FX rate (D-127),
+// and internal, logged under the request ID only, for anything else.
+// Vanguard maps these codes to HTTP statuses for REST (404, 400, 500).
 func toConnectError(ctx context.Context, log *slog.Logger, err error) *connect.Error {
 	if errors.Is(err, app.ErrUnknownAccount) {
 		return connect.NewError(connect.CodeNotFound, errNoSuchAccount)
+	}
+	if errors.Is(err, app.ErrUnknownInstrument) {
+		return connect.NewError(connect.CodeNotFound, errNoInstrument)
+	}
+	if errors.Is(err, app.ErrUnknownInstance) {
+		return connect.NewError(connect.CodeNotFound, errNoInstance)
 	}
 	if errors.Is(err, app.ErrModelOff) {
 		return connect.NewError(connect.CodeNotFound, errModelOff)

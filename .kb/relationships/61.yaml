@@ -622,3 +622,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6740992480e
+  - type: implements
+    from: SYM-views-pb-activity-batch-get-new-transactions
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:19.817Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a2a7cc787ed2
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-get-new-transactions
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:19.838Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-60da7c77878c
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-response
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:49:27.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ca54f5317e8
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-response
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:49:27.928Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d7d1e4103cae
+  - type: implements
+    from: SYM-views-pb-list-instrument-transactions-response-get-next-page-token
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:53:44.660Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1640d4150f1
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-transactions-response-get-next-page-token
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:53:44.685Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ef4431b337c

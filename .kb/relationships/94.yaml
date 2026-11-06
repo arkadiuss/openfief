@@ -699,3 +699,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a5225f988ed8
+  - type: implements
+    from: SYM-ledger-app-recorded-version
+    to: REQ-ledger-recorded-changes-pages
+    created_at: 2026-11-06T01:12:34.035Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81cdbc597d58
+  - type: covered_by
+    from: SYM-ledger-app-recorded-version
+    to: TEST-ledger-pg-recorded-changes
+    created_at: 2026-11-06T01:12:34.062Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe02ab5cb22f
+  - type: implements
+    from: SYM-views-pb-instrument-listing-string
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:45:19.289Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7aef1c622bf7
+  - type: covered_by
+    from: SYM-views-pb-instrument-listing-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:45:19.317Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12ac250f57c5

@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb83d366a3ff
+  - type: implements
+    from: SYM-views-connectapi-pb-time
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:03:21.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-714be198e962
+  - type: implements
+    from: SYM-views-connectapi-pb-time
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:03:21.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-12fbaaf70d2a
+  - type: covered_by
+    from: SYM-views-connectapi-pb-time
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:03:21.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-80d27495cb1a

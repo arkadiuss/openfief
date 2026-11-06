@@ -22,7 +22,9 @@ import "google/api/annotations.proto";
 
 // ReadService reads the record: sleeves, accounts, transactions, holdings,
 // tax lots, cash, balance assertions, valuations, price checks, the
-// allocation and the portfolio's performance.
+// allocation and the portfolio's performance; and what the owner's pages
+// show around it: each instrument, the attention items, the recent
+// activity and the connectors' syncs.
 service ReadService {
   // ListSleeves returns every sleeve, in ID order.
   rpc ListSleeves(ListSleevesRequest) returns (ListSleevesResponse) {
@@ -218,6 +220,68 @@ service ReadService {
   rpc ListAttentionItems(ListAttentionItemsRequest) returns (ListAttentionItemsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {get: "/v1/attention-items"};
+  }
+
+  // ListActivity returns the recent activity, newest first (D-193):
+  // import batches that completed (uploads, entries and syncs), sync
+  // attempts that failed, coupons booked and corrections, a page at a time.
+  // Coupons and corrections come only from accounts the caller may view
+  // (D-163); imports and syncs name their connector instance only (D-165).
+  rpc ListActivity(ListActivityRequest) returns (ListActivityResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/activity"};
+  }
+
+  // ListSyncStatuses returns where each connector instance's syncs stand,
+  // in instance order: its latest attempt and success, the failures in a
+  // row since, and whether it keeps failing (D-196).
+  rpc ListSyncStatuses(ListSyncStatusesRequest) returns (ListSyncStatusesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/sync-status"};
+  }
+
+  // ListSyncAttempts returns one connector instance's sync attempts, newest
+  // first, a page at a time, with its status: what happened, for an
+  // instance whose sync keeps failing (D-196). An attempt keeps its error
+  // class, never the error's text (GR-12).
+  rpc ListSyncAttempts(ListSyncAttemptsRequest) returns (ListSyncAttemptsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/connector-instances/{connector_instance}/sync-attempts"};
+  }
+
+  // GetInstrument returns one instrument by its ISIN (D-195): the listings
+  // the caller's accounts hold or trade it under, with each one's price
+  // source and latest price, its asset class and its exemption class in
+  // each wrapper's yearly tax, such as OKI's (D-127, D-132). An ISIN that
+  // no viewable account posts to and that has no stored price is not
+  // found.
+  rpc GetInstrument(GetInstrumentRequest) returns (GetInstrumentResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/instruments/{isin}"};
+  }
+
+  // ListInstrumentPrices returns an instrument's stored prices in a date
+  // range, from every source (D-94), each marked when it is the source its
+  // listing is valued at (D-195).
+  rpc ListInstrumentPrices(ListInstrumentPricesRequest) returns (ListInstrumentPricesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/instruments/{isin}/prices"};
+  }
+
+  // ListInstrumentHoldings returns an instrument's holdings and open lots
+  // on a date across the accounts the caller may view, in account order
+  // (D-195).
+  rpc ListInstrumentHoldings(ListInstrumentHoldingsRequest) returns (ListInstrumentHoldingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/instruments/{isin}/holdings"};
+  }
+
+  // ListInstrumentTransactions returns the current transactions that post
+  // to an instrument, across the accounts the caller may view, in date then
+  // key order, a page at a time like ListTransactions (D-195).
+  rpc ListInstrumentTransactions(ListInstrumentTransactionsRequest) returns (ListInstrumentTransactionsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {get: "/v1/instruments/{isin}/transactions"};
   }
 }
 
@@ -448,6 +512,8 @@ message Transaction {
   // stays; reinstalling the instance under the same name continues from it.
   // False while the core can't tell which instances are installed.
   bool connector_instance_removed = 9;
+  // The account the transaction is in.
+  string account_id = 10;
 }
 
 // Holding is the quantity of one instrument held.
@@ -825,6 +891,9 @@ message ListValuationStatusesResponse {
 message ListPriceChecksRequest {
   // Only checks with this status, such as flagged; unspecified for all.
   PriceCheckStatus status = 1;
+  // Only checks of the instrument with this ISIN, every one with its
+  // history, oldest first (D-112, D-195); empty for every instrument.
+  string isin = 2;
 }
 
 message ListPriceChecksResponse {
@@ -1227,12 +1296,354 @@ message AttentionItem {
   bool owner_resolves = 6;
   // Its history, oldest first.
   repeated AttentionItemChange history = 7;
+  // What the owner does about it, as the Inbox groups items (D-196).
+  AttentionItemGroup group = 8;
+  // The account it is tied to, such as a flagged balance assertion's;
+  // empty for an item tied to no account.
+  string account_id = 9;
+  // The ISIN of the instrument it is about, such as a price check's;
+  // empty for none.
+  string isin = 10;
+  // The connector instance it is about, such as an unmapped broker
+  // account's, a failing sync's or an import batch's: an item tied to no
+  // account names only its instance (D-165).
+  string connector_instance = 11;
 }
 
-message ListAttentionItemsRequest {}
+// AttentionItemGroup is what the owner does about an attention item, as
+// the Inbox groups items (D-196).
+enum AttentionItemGroup {
+  ATTENTION_ITEM_GROUP_UNSPECIFIED = 0;
+  // Data coming in: tickers to confirm, unmapped broker accounts, failing
+  // syncs, import problems, market data that stopped or was dropped.
+  ATTENTION_ITEM_GROUP_DATA_COMING_IN = 1;
+  // Numbers to check: balance mismatches and price differences.
+  ATTENTION_ITEM_GROUP_NUMBERS_TO_CHECK = 2;
+  // Decisions: transfers to confirm, missing settings, instruments to
+  // classify, and any kind the core doesn't know.
+  ATTENTION_ITEM_GROUP_DECISIONS = 3;
+}
+
+// AttentionView is which attention items to list, as the Inbox's views
+// split them (D-196).
+enum AttentionView {
+  // Every item.
+  ATTENTION_VIEW_UNSPECIFIED = 0;
+  // Open items: what needs the owner.
+  ATTENTION_VIEW_OPEN = 1;
+  // Acknowledged items: seen, and their condition still stands.
+  ATTENTION_VIEW_ACKNOWLEDGED = 2;
+  // Done items: resolved, by their check or the owner.
+  ATTENTION_VIEW_DONE = 3;
+}
+
+message ListAttentionItemsRequest {
+  // Only the items in this view; unspecified for every item.
+  AttentionView view = 1;
+  // Only the items tied to this account, such as an account page's
+  // banner; empty for any.
+  string account_id = 2;
+  // Only the items about the instrument with this ISIN; empty for any.
+  string isin = 3;
+  // Only the items about this connector instance; empty for any.
+  string connector_instance = 4;
+}
 
 message ListAttentionItemsResponse {
   repeated AttentionItem items = 1;
-  // How many items are open.
+  // How many of the items the account, ISIN and instance filters select
+  // are open, whatever the view.
   int32 open = 2;
+  // How many of them are acknowledged.
+  int32 acknowledged = 3;
+  // How many of them are done.
+  int32 done = 4;
+}
+
+// ActivityKind is what happened (D-193).
+enum ActivityKind {
+  ACTIVITY_KIND_UNSPECIFIED = 0;
+  // An import the owner started completed: a statement upload or a manual
+  // entry.
+  ACTIVITY_KIND_IMPORT = 1;
+  // A connector sync completed its batch.
+  ACTIVITY_KIND_SYNC = 2;
+  // A connector sync attempt failed.
+  ACTIVITY_KIND_SYNC_FAILED = 3;
+  // A coupon was booked (D-101).
+  ACTIVITY_KIND_COUPON = 4;
+  // A transaction was corrected or deleted (D-18, D-100).
+  ACTIVITY_KIND_CORRECTION = 5;
+}
+
+// ActivityBatch is a completed import batch: what came in and what the
+// ledger did with it. Only counts, never an amount (GR-12).
+message ActivityBatch {
+  string batch_id = 1;
+  // The ingest path that ran it: "sync", "upload", "entry" or "file".
+  string source = 2;
+  // "opening" or "transactions" (D-23).
+  string mode = 3;
+  // The institution its delivery named, such as "xtb".
+  string institution = 4;
+  // The transactions the mapping produced, and of them those new to the
+  // ledger and those that corrected one.
+  int32 transactions = 5;
+  int32 new_transactions = 6;
+  int32 corrected = 7;
+  // Balance assertions that didn't match.
+  int32 failed_assertions = 8;
+  // Rows the mapping left out, and of them those OpenFief can't book yet.
+  int32 problems = 9;
+  int32 unsupported = 10;
+}
+
+// ActivityChange is a transaction version the ledger recorded: a coupon or
+// a correction.
+message ActivityChange {
+  string account_id = 1;
+  string source = 2;
+  string external_id = 3;
+  // The version recorded, from 1.
+  int32 version = 4;
+  // True for a deletion (D-100), which has no kind and no postings.
+  bool deleted = 5;
+  TransactionKind kind = 6;
+  // The transaction's date, YYYY-MM-DD.
+  string date = 7;
+  // The instrument a coupon was paid on; unset for any other change.
+  Instrument instrument = 8;
+  // A coupon's cash received, after any tax withheld; unset for any other
+  // change.
+  Money amount = 9;
+}
+
+// Activity is one entry of the recent activity.
+message Activity {
+  ActivityKind kind = 1;
+  // When it happened: the batch finished, the attempt ended or the
+  // version was recorded. RFC 3339, UTC.
+  string at = 2;
+  // The connector instance of an import or a sync; empty for a coupon or
+  // a correction.
+  string connector_instance = 3;
+  // Set for an import or a sync.
+  ActivityBatch batch = 4;
+  // Set for a failed sync attempt.
+  SyncAttempt attempt = 5;
+  // Set for a coupon or a correction.
+  ActivityChange change = 6;
+}
+
+message ListActivityRequest {
+  // The most entries to return, 1 to 500; 0 means 100.
+  int32 page_size = 1;
+  // The next_page_token of the previous page; empty for the first page.
+  string page_token = 2;
+}
+
+message ListActivityResponse {
+  // Newest first. A page may hold fewer than page_size entries, even none,
+  // and still have a next page.
+  repeated Activity activities = 1;
+  // Pass as page_token to get the next page; empty on the last page.
+  string next_page_token = 2;
+}
+
+// SyncErrorClass says why a sync attempt failed, without the error's text
+// (GR-12).
+enum SyncErrorClass {
+  SYNC_ERROR_CLASS_UNSPECIFIED = 0;
+  // The attempt ran past its timeout.
+  SYNC_ERROR_CLASS_TIMEOUT = 1;
+  // The connector couldn't be reached, such as a plugin that isn't
+  // running.
+  SYNC_ERROR_CLASS_UNAVAILABLE = 2;
+  // The connector answered with an error of its own, such as a broker
+  // refusing its credentials.
+  SYNC_ERROR_CLASS_CONNECTOR_ERROR = 3;
+  // The connector's answer doesn't translate into a delivery.
+  SYNC_ERROR_CLASS_INVALID_DELIVERY = 4;
+  // The core refused the delivery, such as an institution the plugin's
+  // manifest doesn't declare.
+  SYNC_ERROR_CLASS_REFUSED = 5;
+  // The ledger refused to book what was delivered.
+  SYNC_ERROR_CLASS_BOOKING = 6;
+  // The core stopped while the attempt ran.
+  SYNC_ERROR_CLASS_INTERRUPTED = 7;
+  // Any other failure, such as the database.
+  SYNC_ERROR_CLASS_OTHER = 8;
+}
+
+// SyncAttempt is one attempt to sync a connector instance.
+message SyncAttempt {
+  string connector_instance = 1;
+  // The import batch it ran; a failed attempt's batch is retried with the
+  // same ID.
+  string batch_id = 2;
+  // "opening" or "transactions" (D-23).
+  string mode = 3;
+  // RFC 3339, UTC.
+  string started_at = 4;
+  string ended_at = 5;
+  // True for a failed attempt.
+  bool failed = 6;
+  // Why it failed; unspecified for a successful attempt.
+  SyncErrorClass error_class = 7;
+  // How many attempts in a row have failed, this one included; 0 after a
+  // success.
+  int32 failures = 8;
+  // When the attempt scheduled the next one, RFC 3339, UTC.
+  string next_sync_at = 9;
+}
+
+// SyncStatus is where a connector instance's syncs stand.
+message SyncStatus {
+  string connector_instance = 1;
+  // When the latest attempt ended, RFC 3339, UTC; empty before any.
+  string last_attempt_at = 2;
+  // When the latest successful attempt ended; empty before any.
+  string last_success_at = 3;
+  // How many attempts in a row have failed since the latest success.
+  int32 failures = 4;
+  // When the first of them started; empty while none has failed.
+  string failing_since = 5;
+  // Why the latest of them failed; unspecified while none has.
+  SyncErrorClass last_error_class = 6;
+  // When the next attempt is due; empty when it is due at once.
+  string next_sync_at = 7;
+  // Whether the sync keeps failing: at least three attempts in a row
+  // failed, spanning at least fifteen minutes, which raises an attention
+  // item of kind "connector-sync-failing" (D-196).
+  bool keeps_failing = 8;
+}
+
+message ListSyncStatusesRequest {}
+
+message ListSyncStatusesResponse {
+  repeated SyncStatus statuses = 1;
+}
+
+message ListSyncAttemptsRequest {
+  string connector_instance = 1;
+  // The most attempts to return, 1 to 500; 0 means 100.
+  int32 page_size = 2;
+  // The next_page_token of the previous page; empty for the first page.
+  string page_token = 3;
+}
+
+message ListSyncAttemptsResponse {
+  // The instance's status; unset for an instance that was never synced.
+  SyncStatus status = 1;
+  // Newest first.
+  repeated SyncAttempt attempts = 2;
+  // Pass as page_token to get the next page; empty on the last page.
+  string next_page_token = 3;
+}
+
+// InstrumentPrice is a stored end-of-day price of one listing of an
+// instrument from one source (D-94).
+message InstrumentPrice {
+  // The listing, an ISIN and a venue symbol.
+  Instrument instrument = 1;
+  // YYYY-MM-DD.
+  string date = 2;
+  Money close = 3;
+  // The connector instance it came from.
+  string source = 4;
+  // True when its source is the one the listing is valued at; another
+  // source's price only cross-checks it (D-22, D-94).
+  bool primary = 5;
+}
+
+// InstrumentListing is one listing an instrument is held or traded under.
+message InstrumentListing {
+  Instrument instrument = 1;
+  // The source the listing is valued at; empty when none has priced it.
+  string price_source = 2;
+  // The latest price of that source; unset when none.
+  InstrumentPrice latest_price = 3;
+}
+
+// InstrumentExemptionClass is an instrument's class in one wrapper's
+// yearly tax, such as OKI's (D-127, D-132).
+message InstrumentExemptionClass {
+  // The tax wrapper, such as "oki".
+  string wrapper = 1;
+  // The class it counts in, such as a savings or an investment asset.
+  string exemption_class = 2;
+  // True when the owner chose the class.
+  bool owner_chosen = 3;
+  // False when the pack can't tell and the owner hasn't chosen: it counts
+  // in exemption_class until the owner classifies it.
+  bool known = 4;
+}
+
+// InstrumentDetail is an instrument across the caller's accounts (D-195).
+message InstrumentDetail {
+  string isin = 1;
+  // Its listings, in symbol order.
+  repeated InstrumentListing listings = 2;
+  // "listed" or "treasury_bond", as the allocation classes it.
+  string asset_class = 3;
+  repeated InstrumentExemptionClass exemption_classes = 4;
+}
+
+message GetInstrumentRequest {
+  string isin = 1;
+}
+
+message GetInstrumentResponse {
+  InstrumentDetail instrument = 1;
+}
+
+message ListInstrumentPricesRequest {
+  string isin = 1;
+  // YYYY-MM-DD, both inclusive; at most 3700 days apart.
+  string from = 2;
+  string to = 3;
+}
+
+message ListInstrumentPricesResponse {
+  string isin = 1;
+  // In listing, date and source order.
+  repeated InstrumentPrice prices = 2;
+}
+
+// InstrumentHolding is one account's holding of one listing of an
+// instrument, with its open lots.
+message InstrumentHolding {
+  string account_id = 1;
+  Instrument instrument = 2;
+  // A decimal string.
+  string quantity = 3;
+  repeated Lot lots = 4;
+}
+
+message ListInstrumentHoldingsRequest {
+  string isin = 1;
+  // YYYY-MM-DD.
+  string date = 2;
+}
+
+message ListInstrumentHoldingsResponse {
+  string isin = 1;
+  string date = 2;
+  // In account then symbol order.
+  repeated InstrumentHolding holdings = 3;
+}
+
+message ListInstrumentTransactionsRequest {
+  string isin = 1;
+  // The most transactions to return, 1 to 500; 0 means 100.
+  int32 page_size = 2;
+  // The next_page_token of the previous page; empty for the first page.
+  string page_token = 3;
+}
+
+message ListInstrumentTransactionsResponse {
+  // Each with its account_id.
+  repeated Transaction transactions = 1;
+  // Pass as page_token to get the next page; empty on the last page.
+  string next_page_token = 2;
 }

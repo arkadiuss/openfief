@@ -853,3 +853,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12f2b4c33fd3
+  - type: implements
+    from: SYM-views-pb-list-activity-request-get-page-size
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:38:29.306Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-182d99dfd2c0
+  - type: covered_by
+    from: SYM-views-pb-list-activity-request-get-page-size
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:38:29.336Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cffb58791c9
+  - type: implements
+    from: SYM-views-pb-sync-status
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:40:34.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bc47d232870b
+  - type: covered_by
+    from: SYM-views-pb-sync-status
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:40:34.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b85e9a037a3
+  - type: implements
+    from: SYM-views-pb-instrument-detail-proto-message
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:46:59.506Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c072046df273
+  - type: covered_by
+    from: SYM-views-pb-instrument-detail-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:46:59.537Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f8c775505713

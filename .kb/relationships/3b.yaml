@@ -580,3 +580,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fb2ffda4730f
+  - type: implements
+    from: SYM-views-connectapi-read-service-list-activity
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:03:37.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-810f8c51f818
+  - type: covered_by
+    from: SYM-views-connectapi-read-service-list-activity
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:03:37.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0aa087eb47f2
+  - type: executable_for
+    from: SYM-views-app-test-helper-history
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:06:24.189Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b364fca6a5e6
+  - type: implements
+    from: SYM-views-pb-activity-kind-enum
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:32:24.241Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e3f7798ffbc
+  - type: covered_by
+    from: SYM-views-pb-activity-kind-enum
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:32:24.266Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2631cc97f0a

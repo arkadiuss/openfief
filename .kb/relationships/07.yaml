@@ -643,3 +643,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c7ceefde551
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-prices-price-history
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:06:56.463Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed1f1920150d
+  - type: implements
+    from: SYM-views-pb-activity-change-get-date
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:36:43.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e220afcfc6cf
+  - type: covered_by
+    from: SYM-views-pb-activity-change-get-date
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:36:43.225Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f63b85cca925
+  - type: implements
+    from: SYM-views-pb-sync-attempt-proto-reflect
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:39:38.842Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b2039752dc3b
+  - type: covered_by
+    from: SYM-views-pb-sync-attempt-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:39:38.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a2c035ae1e8

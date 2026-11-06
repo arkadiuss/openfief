@@ -791,6 +791,20 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-0bbca38ddea4
   - type: implements
+    from: SYM-plugins-validate-secret-mounts
+    to: REQ-plugins-no-double-hyphen-in-instance-or-role
+    created_at: 2026-11-03T18:26:59.182Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ada964cbe9c8
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-records-attempts
+    to: TEST-ingest-app-sync-errors
+    created_at: 2026-11-05T23:40:56.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bdd6d3af40a
+  - type: implements
     from: SYM-identity-app-auth-demo-loading
     to: REQ-identity-demo-loading-no-wizard
     created_at: 2026-11-03T19:28:39.074Z
@@ -804,10 +818,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7abe2f86d075
-  - type: implements
-    from: SYM-plugins-validate-secret-mounts
-    to: REQ-plugins-no-double-hyphen-in-instance-or-role
-    created_at: 2026-11-03T18:26:59.182Z
+  - type: executable_for
+    from: SYM-views-test-merge-activity
+    to: TEST-views-activity
+    created_at: 2026-11-06T02:04:39.469Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-ada964cbe9c8
+    id: rel-db8970e01888
+  - type: implements
+    from: SYM-views-pb-attention-item-group-descriptor
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:31:26.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e47fe976652
+  - type: covered_by
+    from: SYM-views-pb-attention-item-group-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:31:26.045Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-44768cbdb7b0

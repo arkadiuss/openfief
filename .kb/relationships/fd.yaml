@@ -664,3 +664,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8bbebca805a3
+  - type: implements
+    from: SYM-views-pb-list-attention-items-request-get-isin
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:34:06.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6067b8a243ea
+  - type: covered_by
+    from: SYM-views-pb-list-attention-items-request-get-isin
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:34:06.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e48d960d148
+  - type: implements
+    from: SYM-views-pb-list-sync-attempts-response-proto-message
+    to: REQ-views-sync-history
+    created_at: 2026-11-06T02:43:44.434Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75675304df35
+  - type: covered_by
+    from: SYM-views-pb-list-sync-attempts-response-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:43:44.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f12ee340e676
+  - type: implements
+    from: SYM-views-pb-instrument-price-descriptor
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:44:39.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b8bc3c7db7e0
+  - type: covered_by
+    from: SYM-views-pb-instrument-price-descriptor
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:44:39.332Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05357c6ac3bb
+  - type: implements
+    from: SYM-views-pb-get-instrument-request-get-isin
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:48:04.187Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a144b125578e
+  - type: covered_by
+    from: SYM-views-pb-get-instrument-request-get-isin
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:48:04.216Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-786832daa4ac
+  - type: implements
+    from: SYM-views-pb-list-instrument-holdings-request-proto-message
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:51:13.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe5e6c75633a
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-holdings-request-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:51:13.426Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00c8372324a2

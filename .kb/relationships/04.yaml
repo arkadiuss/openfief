@@ -727,3 +727,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3b28a2a03e7
+  - type: implements
+    from: SYM-views-pb-get-instrument-request-string
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:47:43.823Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f593b06dded9
+  - type: covered_by
+    from: SYM-views-pb-get-instrument-request-string
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:47:43.850Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45765f273fd3
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-request-reset
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:48:48.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f58d96e9aa47
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-request-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:48:48.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fe9b55045f4

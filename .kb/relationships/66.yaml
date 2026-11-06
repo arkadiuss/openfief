@@ -496,3 +496,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-09be9ca6263b
+  - type: implements
+    from: SYM-views-app-attention-list-add
+    to: REQ-views-attention-inbox
+    created_at: 2026-11-06T02:03:04.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-00810b40f8d0
+  - type: covered_by
+    from: SYM-views-app-attention-list-add
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:03:04.619Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0198cb543fc1
+  - type: executable_for
+    from: SYM-views-app-test-helper-fake-prices
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:06:52.978Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f3e066abc5b
+  - type: implements
+    from: SYM-views-pb-get-instrument-response-proto-reflect
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:48:28.655Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c5773e6fcfb
+  - type: covered_by
+    from: SYM-views-pb-get-instrument-response-proto-reflect
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:48:28.675Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-89c848427cda

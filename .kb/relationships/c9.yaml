@@ -713,3 +713,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17a57d81cf96
+  - type: implements
+    from: SYM-views-app-views-source-of
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:02:18.639Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c9d74506c272
+  - type: covered_by
+    from: SYM-views-app-views-source-of
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:02:18.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e149380a7838
+  - type: implements
+    from: SYM-views-pb-activity-batch
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:34:25.390Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1f63a5c76165
+  - type: covered_by
+    from: SYM-views-pb-activity-batch
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:34:25.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-456bcee0d16a
+  - type: implements
+    from: SYM-views-pb-activity-change-get-external-id
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:36:23.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-063d417d9e24
+  - type: covered_by
+    from: SYM-views-pb-activity-change-get-external-id
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:36:23.595Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0d0c6de44b6
+  - type: implements
+    from: SYM-views-pb-activity-get-kind
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:37:28.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f975b5c73d5f
+  - type: covered_by
+    from: SYM-views-pb-activity-get-kind
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:37:28.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-442128df6b02
+  - type: implements
+    from: SYM-views-pb-instrument-price-reset
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:44:18.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c3e013db89
+  - type: covered_by
+    from: SYM-views-pb-instrument-price-reset
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:44:18.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-465f95d16def

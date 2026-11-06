@@ -124,6 +124,22 @@ func valuationSettings(ctx context.Context, recorder *valuationapp.InputRecorder
 	return valuationapp.NewCrossChecks(vstore, owners), nil
 }
 
+// historyOptions has the views read the connectors' sync history and import
+// batches from the ingest store, the coupons and corrections from the
+// ledger store and instruments' prices from vstore, for the owner's pages
+// (D-193, D-195, D-196).
+func historyOptions(pool *pgxpool.Pool, vstore *valuationpg.Store) viewsapp.Option {
+	opts := []viewsapp.Option{
+		viewsapp.WithSyncHistory(ingestpg.New(pool)), viewsapp.WithRecordedChanges(ledgerpg.New(pool)),
+		viewsapp.WithInstrumentPrices(vstore),
+	}
+	return func(v *viewsapp.Views) {
+		for _, o := range opts {
+			o(v)
+		}
+	}
+}
+
 // newCore wires the core over a migrated database: the ledger with
 // valuation's import hook (D-36), the River revaluation workers, the views
 // and the read API with sessions, script tokens and the view plugins callers
@@ -174,7 +190,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	authz := identityapp.Policy{}
 	opts := append(viewOptions(models, checks, installed), viewsapp.WithConnections(ingestpg.New(pool)),
 		viewsapp.WithJurisdiction(jurisdictionPack(), vstore), viewsapp.WithAttention(attn.items), viewsapp.WithAuthorizer(authz),
-		viewsapp.WithPortfolio(sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)))
+		viewsapp.WithPortfolio(sleeves), viewsapp.WithPayoutSettings(ingestpg.New(pool)), historyOptions(pool, vstore))
 	views, err := viewsapp.New(l, vstore, vstore, vstore, jurisdictionPack().ReportingCurrency(), cfg.Reporting, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("views: %w", err)

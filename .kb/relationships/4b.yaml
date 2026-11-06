@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a966f1999d7e
+  - type: implements
+    from: SYM-ingest-attempt-query
+    to: REQ-ingest-sync-attempt-history
+    created_at: 2026-11-05T23:39:47.169Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e0398c915e99
+  - type: covered_by
+    from: SYM-ingest-attempt-query
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:39:47.205Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33cb86fedd8e

@@ -699,3 +699,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9cea6689d8d3
+  - type: executable_for
+    from: SYM-views-test-activity-cursor
+    to: TEST-views-activity
+    created_at: 2026-11-06T02:04:50.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5eee72dfe24
+  - type: implements
+    from: SYM-views-pb-activity-batch-get-transactions
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:35:14.708Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84a86321f8ff
+  - type: covered_by
+    from: SYM-views-pb-activity-batch-get-transactions
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:35:14.734Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4322271d925f
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-response-get-prices
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:50:03.002Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cce7f50aef6
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-response-get-prices
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:50:03.037Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d40bbc939f52

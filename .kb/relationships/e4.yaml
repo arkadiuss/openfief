@@ -552,3 +552,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-910ab679c47e
+  - type: executable_for
+    from: SYM-attention-app-test-helper-sweep-syncs
+    to: TEST-attention-app-failing-syncs
+    created_at: 2026-11-06T01:28:11.625Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-494880c5493c
+  - type: executable_for
+    from: SYM-views-test-helper-taxed-wrappers
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:05:14.452Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7df59ab1e42d
+  - type: implements
+    from: SYM-views-pb-list-instrument-prices-response-proto-message
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:49:42.727Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e2bbc042831
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-prices-response-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:49:42.751Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4cd577ee5877

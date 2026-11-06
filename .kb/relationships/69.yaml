@@ -573,3 +573,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da37b65df7b4
+  - type: executable_for
+    from: SYM-views-test-instrument-classes
+    to: TEST-views-instrument
+    created_at: 2026-11-06T02:05:22.628Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-16e07e384a6d
+  - type: executable_for
+    from: SYM-views-app-test-helper-activity-kinds
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:06:31.665Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d8c3d63743c
+  - type: executable_for
+    from: SYM-views-app-test-sync-attempts-refuses
+    to: TEST-views-app-uiv2
+    created_at: 2026-11-06T02:06:49.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e78d3466a17
+  - type: implements
+    from: SYM-views-pbconnect-read-service-client-list-instrument-prices
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:54:07.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ce622e015ea
+  - type: covered_by
+    from: SYM-views-pbconnect-read-service-client-list-instrument-prices
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:54:08.017Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9eaaccd23c30

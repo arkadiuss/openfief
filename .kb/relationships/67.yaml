@@ -860,6 +860,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f96c80d69a7
+  - type: executable_for
+    from: SYM-ingest-pg-test-helper-row
+    to: TEST-ingest-pg-sync-history
+    created_at: 2026-11-05T23:41:25.906Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5c40e4f01ed4
   - type: implements
     from: SYM-core-write-connect-error
     to: REQ-identity-demo-loading-no-wizard
@@ -895,3 +902,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a2c36fbe2e65
+  - type: implements
+    from: SYM-views-pb-instrument-listing
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:45:09.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f922ac81b3da
+  - type: covered_by
+    from: SYM-views-pb-instrument-listing
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:45:09.099Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7e380995d0dc
+  - type: implements
+    from: SYM-views-pbconnect-read-service-client-list-activity
+    to: REQ-views-activity
+    created_at: 2026-11-06T02:53:49.779Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d62a08efef3
+  - type: covered_by
+    from: SYM-views-pbconnect-read-service-client-list-activity
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:53:49.810Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a4f8a9565c5

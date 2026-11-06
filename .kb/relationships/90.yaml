@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-588e61940076
+  - type: executable_for
+    from: SYM-ledger-pg-test-recorded-changes-pages
+    to: TEST-ledger-pg-recorded-changes
+    created_at: 2026-11-06T01:13:01.692Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dcf2f1f1eb16
+  - type: implements
+    from: SYM-views-pb-list-instrument-holdings-response-proto-message
+    to: REQ-views-instrument-page
+    created_at: 2026-11-06T02:51:53.300Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02d1aa3623a6
+  - type: covered_by
+    from: SYM-views-pb-list-instrument-holdings-response-proto-message
+    to: TEST-views-connectapi-uiv2
+    created_at: 2026-11-06T02:51:53.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-772c5d84a5ce
