@@ -1021,3 +1021,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ba86bc440376
+  - type: specified_by
+    from: REQ-identity-read-api-refuses-connector-tokens
+    to: SCEN-e2e-core-refuses-bad-plugin-tokens
+    created_at: 2026-11-06T20:50:08.587Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae6dd44096cf

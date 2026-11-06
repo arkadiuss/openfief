@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7d8e8446f417
+  - type: executable_for
+    from: SYM-e2e-isolation-outside-grant
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:34:08.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e7e51789221

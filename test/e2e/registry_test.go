@@ -62,9 +62,10 @@ var (
 // pluginImages are the plugin images task e2e:images pushes to the
 // registry, which the suite signs: the NBP FX connector, the built-in UI,
 // which the operator deploys for the demo's ui instance (editApp), and the
-// suite's synthetic connector's two images (test/e2e/connector).
+// suite's synthetic connector's two images (test/e2e/connector), and the
+// XTB connector, which isolation_test.go installs.
 func pluginImages() []string {
-	return []string{fxImage, uiImage, connectorImage, connectorEgressImage}
+	return []string{fxImage, uiImage, connectorImage, connectorEgressImage, xtbImage}
 }
 
 // pluginResource is the operator's Plugin resource.

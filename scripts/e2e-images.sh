@@ -3,7 +3,7 @@
 # GHCR holds, and makes them available to the local cluster in one of two ways:
 #   - core, operator, egress-proxy and demo-seed are loaded into the nodes under the tags test/e2e/overlays/openfief
 #     names, openfief.test/<name>:e2e (.test never resolves, so nothing pulls them);
-#   - the plugin images the operator deploys, nbp-fx, the built-in UI and the suite's synthetic connector
+#   - the plugin images the operator deploys, nbp-fx, the built-in UI, xtb and the suite's synthetic connector
 #     (test/e2e/connector, two images with different manifests), go to the suite's registry, because the
 #     operator deploys a plugin only after it has read the image's signature from its registry (D-56, D-57). The suite
 #     signs them there with a key it makes at run time (test/e2e/registry_test.go);
@@ -44,7 +44,7 @@ pushed=()
 # The images the bootstrap install runs (deploy/operator, deploy/egress-proxy, deploy/core), which the bundle pins.
 bundle=(core operator egress-proxy)
 for dockerfile in cmd/core/Dockerfile cmd/operator/Dockerfile cmd/egress-proxy/Dockerfile cmd/demo-seed/Dockerfile \
-  plugins/nbp-fx/Dockerfile plugins/ui/Dockerfile; do
+  plugins/nbp-fx/Dockerfile plugins/ui/Dockerfile plugins/xtb/Dockerfile; do
   name="$(basename "$(dirname "$dockerfile")")"
   image="openfief.test/$name:e2e"
   echo "e2e-images: building $image from $dockerfile"

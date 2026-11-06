@@ -902,3 +902,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6aac08330391
+  - type: constrains
+    from: REQ-e2e-plugin-isolation
+    to: FACT-SUBJECT-E5B3988DBF72D3FD
+    created_at: 2026-11-06T20:49:59.553Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed23acbda4d5
+  - type: requires_property
+    from: REQ-e2e-plugin-isolation
+    to: FACT-PROP-4F07B19CA6794808
+    created_at: 2026-11-06T20:49:59.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7c7c7af071c
+  - type: specified_by
+    from: REQ-e2e-plugin-isolation
+    to: SCEN-e2e-xtb-no-egress
+    created_at: 2026-11-06T20:49:59.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-24f198e6f975
+  - type: specified_by
+    from: REQ-e2e-plugin-isolation
+    to: SCEN-e2e-egress-outside-grant-refused
+    created_at: 2026-11-06T20:49:59.680Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6fc0cc80cef9
+  - type: specified_by
+    from: REQ-e2e-plugin-isolation
+    to: SCEN-e2e-egress-bypass-fails
+    created_at: 2026-11-06T20:49:59.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10f25bb9b0f0
+  - type: depends_on
+    from: REQ-e2e-plugin-isolation
+    to: REQ-plugins-network-access-core-proxy-service
+    created_at: 2026-11-06T20:49:59.720Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-daef20fcceae
+  - type: depends_on
+    from: REQ-e2e-plugin-isolation
+    to: REQ-AUTO-48C62B395F846700
+    created_at: 2026-11-06T20:49:59.738Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ad86d6b722f
+  - type: depends_on
+    from: REQ-e2e-plugin-isolation
+    to: REQ-plugins-egress-through-proxy
+    created_at: 2026-11-06T20:49:59.759Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8e30d83b33c

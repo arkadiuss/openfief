@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-40673967adf5
+  - type: verified_by
+    from: SCEN-e2e-connector-refuses-bad-core-token
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:30:01.417Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe0e341c050f

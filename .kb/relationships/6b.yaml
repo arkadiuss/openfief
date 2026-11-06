@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a3a7a1797071
+  - type: executable_for
+    from: SYM-e2e-isolation-pod-target-port
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:31:16.276Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10f4c2b71fa6

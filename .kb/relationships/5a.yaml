@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-04df2c7c72f1
+  - type: executable_for
+    from: SYM-e2e-isolation-selector-string
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:32:17.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72a69a72dda4

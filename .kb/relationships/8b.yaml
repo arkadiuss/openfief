@@ -888,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d54c6b366ebb
+  - type: executable_for
+    from: SYM-e2e-isolation-probe-result-string
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:32:27.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-942546eb66ce

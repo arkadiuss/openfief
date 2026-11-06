@@ -832,3 +832,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fdef257d7569
+  - type: executable_for
+    from: SYM-e2e-isolation-dns-failed
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:32:57.818Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83215edbc971

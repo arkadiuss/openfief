@@ -1007,3 +1007,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7885996339d2
+  - type: verified_by
+    from: SCEN-e2e-egress-outside-grant-refused
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:29:59.320Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4f83d1cdce2

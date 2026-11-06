@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-922bc83cb6b7
+  - type: executable_for
+    from: SYM-e2e-isolation-install-xtb
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:30:15.656Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51501495b14e
+  - type: executable_for
+    from: SYM-e2e-isolation-wanted-line
+    to: TEST-e2e-isolation
+    created_at: 2026-11-06T20:34:43.789Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-19e3c8a32e8d
