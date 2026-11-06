@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2ac8ad3f4f5
+  - type: implements
+    from: SYM-archtest-banned
+    to: REQ-tooling-archtest-imports
+    created_at: 2026-11-06T18:07:57.646Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a98c54e8281
+  - type: covered_by
+    from: SYM-archtest-banned
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:07:57.678Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61313c7d3782

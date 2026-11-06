@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-855f2ca55563
+  - type: implements
+    from: SYM-archtest-context-map
+    to: REQ-tooling-archtest-imports
+    created_at: 2026-11-06T18:07:21.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-af3937002e57
+  - type: covered_by
+    from: SYM-archtest-context-map
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:07:21.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-475ce8ad1969

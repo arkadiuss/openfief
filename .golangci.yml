@@ -26,7 +26,7 @@ linters:
       rules:
         domain:
           # Domain packages are pure: no I/O, no clock, no concurrency (docs/dev/code-organization.md).
-          # depguard matches import prefixes only; cross-context adapter imports need go-arch-lint once code exists.
+          # depguard matches import prefixes only; the context map and layering are the architecture tests' (tools/archtest).
           list-mode: lax
           files:
             - "**/internal/*/*.go"

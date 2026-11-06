@@ -70,20 +70,20 @@ site/                    the docs site: Hugo config, theme, site-only pages (doc
 
 **New context.** Add it to the table above and its terms to the glossary, and get the author's OK. Contexts are design decisions, not refactors.
 
+
 ## Architecture tests
 
-Not built yet: they follow the alpha.1 tag, and until then lint enforces only the domain's purity.
+Lint checks what one file does; architecture tests check how the code fits together, from the whole repository's packages, types, SQL, contracts and tests. They live in [tools/archtest](../../tools/archtest/doc.go) and run in `task check` with the other Go tests (`go test ./...`), and in the pre-commit hook whenever a change can affect them. Each rule they enforce is stated above or in [testing.md](testing.md), and a failure names the rule and this section:
 
-Lint checks what one file does; architecture tests check how the code fits together, from the whole module's packages, types and SQL. They run in `task check` with the other Go tests and fail on a new violation. Each rule they enforce is stated above or in [testing.md](testing.md):
-
-- **Context map.** No context imports another that the map doesn't name, and `kernel` imports no context.
-- **Layering.** A domain package imports only the kernel, its own context's domain and the domains the map allows; an `app` package imports domain and other contexts' `app` packages, never an adapter; no context imports another context's adapters; only `cmd` imports adapters.
+- **Context map.** No context imports another that the map doesn't name, and `kernel` imports no context. Every package under `internal/` belongs to a context in the table, or is the demo dataset (`internal/demo`, [demo.md](demo.md)), which is not a context: it reads only domain packages and only `cmd` imports it **(P)**.
+- **Layering.** A domain package imports only the kernel, its own context's domain and the domains the map allows; an `app` package imports domain and other contexts' `app` packages, never an adapter; no context imports another context's adapters; only `cmd` imports adapters (and only `cmd` imports `cmd`). An adapter is everything below `internal/<context>/` other than `app`; its own subpackages, such as `cosign/cosigntest`, count as the adapter.
 - **Plugins.** Nothing under `plugins/` or `sdk/` imports `internal/` or `cmd/`.
-- **Schemas.** A context's SQL, in its migrations and its adapters' queries, names only its own schema.
+- **Schemas.** A context's SQL, in its migrations and in its packages' query strings, names only its own schema; `valuation` also owns `river`, River's job queue (D-36). SQL comments don't count.
 - **Money.** No `float32` or `float64` in domain, `app` and kernel packages, and no `float` or `double` field in the contracts under `proto/`. Code that only draws, such as chart coordinates, is listed by package.
-- **Pure domain.** No `go` statements and no package-level variables other than errors and constants in domain packages, beyond what depguard and forbidigo already ban.
-- **Privacy (GR-12).** No logging call takes a value of a money, quantity, price or rate type, an ISIN, a broker account number or a token, as an argument or inside an error it logs.
-- **Banned packages.** No package named `util`, `common`, `helpers`, `models` or `types`.
-- **Stable tests.** No `time.Sleep` and no `t.Skip` in tests, outside a listed few that wait on something outside the process or need a tool a contributor may lack, each with its reason.
+- **Pure domain.** No `go` statements and no package-level variables other than errors (and `_`) in domain and kernel packages, beyond what depguard and forbidigo already ban.
+- **Privacy (GR-12).** No logging call (`log/slog`, `log`, logr, logrus) takes a value of a money, quantity, decimal, price, FX rate, ISIN or script token type as an argument, or an error, whose text may quote one: an error is logged through a `LogSafe` function, such as `kernel.LogSafe`. Attribute constructors, `fmt.Sprint*`, `.String()` and `.Error()` are looked through. A string holding an account number or a token has no type to tell it apart, so review still owns those.
+- **Banned packages.** No package, test-only ones included, named `util`, `common`, `helpers`, `models` or `types`.
+- **Stable tests.** No `time.Sleep` and no `Skip` in tests, outside a listed few that wait on something outside the process or need a tool a contributor may lack, each with its reason.
+- **Catalog-independent tests.** The embedded plugin catalog (`internal/plugins/catalog`, D-43) grows with every release (D-88), so no test pins it: a test never compares the number of `catalog.Load()` entries with a literal, never picks an entry by a literal index, and never spells out a digest the catalog pins; a test that inspects what a function of its package returns, when that function reads the catalog, derives its expectation from `catalog.Load()` too, directly or through a helper. Checking only the error is fine **(P)**.
 
-A rule that the code breaks today starts with those breaks listed in a checked-in baseline, each with its reason. The test fails on any break the baseline doesn't list and on any listed break that no longer happens, so the list only shrinks and is never edited to get green.
+A rule that the code breaks today starts with those breaks listed in a checked-in baseline, [tools/archtest/baseline.txt](../../tools/archtest/baseline.txt), each with its reason; the few breaks a rule allows for good (the listed tests, drawing packages) are in [exceptions.txt](../../tools/archtest/exceptions.txt). A break is named by a stable key (an import edge, a package, file or function), never a line number. The test fails on any break neither list names and on any listed break that no longer happens, so the baseline only shrinks, both lists stay exact, and neither is ever edited to get green: fix the code, and delete the line in the same change.

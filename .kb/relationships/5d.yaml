@@ -580,3 +580,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-88da654092e2
+  - type: implements
+    from: SYM-archtest-is-logging
+    to: REQ-tooling-archtest-privacy
+    created_at: 2026-11-06T18:10:47.420Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e137b2ce353
+  - type: covered_by
+    from: SYM-archtest-is-logging
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:10:47.458Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b31a7fdec4ef
+  - type: executable_for
+    from: SYM-archtest-test-load-fixture
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:11:42.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddf64e0900fc

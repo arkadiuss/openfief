@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47dd3bfdc78d
+  - type: implements
+    from: SYM-archtest-layer
+    to: REQ-tooling-archtest-imports
+    created_at: 2026-11-06T18:08:17.391Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0355cedc5558
+  - type: covered_by
+    from: SYM-archtest-layer
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:08:17.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-171f86c8a62e

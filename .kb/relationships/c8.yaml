@@ -685,3 +685,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6eb4d8a68409
+  - type: implements
+    from: SYM-archtest-ignored-calls
+    to: REQ-tooling-archtest-catalog-tests
+    created_at: 2026-11-06T18:06:36.582Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bf2a8cae86c2
+  - type: covered_by
+    from: SYM-archtest-ignored-calls
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:06:36.613Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-379c3aea6bb7

@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8eea41faec75
+  - type: implements
+    from: SYM-archtest-repo-walk
+    to: REQ-tooling-archtest-baseline
+    created_at: 2026-11-06T18:09:33.949Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6bf0da3ebb95
+  - type: covered_by
+    from: SYM-archtest-repo-walk
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:09:33.985Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-234986580170
+  - type: covered_by
+    from: SYM-archtest-repo-walk
+    to: TEST-tooling-archtest-repo
+    created_at: 2026-11-06T18:09:34.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ca44a8776851

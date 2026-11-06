@@ -755,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6e3956550a4a
+  - type: implements
+    from: SYM-archtest-catalog-tests
+    to: REQ-tooling-archtest-catalog-tests
+    created_at: 2026-11-06T18:05:29.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07424d7a5817
+  - type: covered_by
+    from: SYM-archtest-catalog-tests
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:05:29.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b46511bc3291

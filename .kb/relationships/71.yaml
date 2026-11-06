@@ -748,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ffe101283ce
+  - type: implements
+    from: SYM-archtest-package
+    to: REQ-tooling-archtest-baseline
+    created_at: 2026-11-06T18:09:03.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-35ccfc9406b8
+  - type: covered_by
+    from: SYM-archtest-package
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:09:03.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aad7594e7ce4
+  - type: covered_by
+    from: SYM-archtest-package
+    to: TEST-tooling-archtest-repo
+    created_at: 2026-11-06T18:09:03.710Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-047736797dc6

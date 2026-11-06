@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01510b04a772
+  - type: executable_for
+    from: SYM-archtest-test-test-parse-list
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:11:59.897Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e2f58598b0cf

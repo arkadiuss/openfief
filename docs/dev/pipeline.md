@@ -10,6 +10,7 @@ covers:
   - .golangci.yml
   - tools/affected/**
   - tools/protobreak/**
+  - tools/archtest/**
 ---
 
 This page explains the machinery that takes a change from a commit on a branch to signed container images, a tagged release and the demo environment. It describes what the repository contains today, file by file. The rules this machinery enforces are in [sdlc.md](sdlc.md) and aren't repeated here. Where the two disagree, [Not built yet](#not-built-yet) says so.
@@ -141,6 +142,8 @@ The tool sorts each changed path by the first rule that matches it, in [classify
 | `internal/plugins/egress` (two packages import it) | fmt, lint, govulncheck and tests of 3 packages, kibi:staged | 30 seconds |
 | `internal/kernel` (41 packages import it) | fmt, lint, govulncheck and tests of 41 packages, kibi:staged | 63 seconds |
 | `go.mod` | check:commit:full | 7 minutes |
+
+The architecture tests ([tools/archtest](../../tools/archtest/doc.go), [code-organization.md](code-organization.md#architecture-tests)) read the whole repository, and name the directories they walk as relative literals (`"../../internal"`, `"../../plugins"` and the others), so the hook reruns them for a change under any of those directories.
 
 The hook is less strict than CI by design: CI's `task check` stays whole, and runs on every pull request and every push to `main`. Linting a subset of packages can miss a finding that needs other packages (`dupl` compares code across packages), and a test that reads a file through a path built at run time, rather than a literal, isn't rerun when that file changes. [testing.md](testing.md#stability) asks tests to name such files with literal paths.
 

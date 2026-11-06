@@ -874,3 +874,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1aa373ecb32b
+  - type: implements
+    from: SYM-archtest-floats
+    to: REQ-tooling-archtest-money-purity
+    created_at: 2026-11-06T18:09:53.805Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e1e50a59af6
+  - type: covered_by
+    from: SYM-archtest-floats
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:09:53.847Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b92dfb0788f

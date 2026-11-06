@@ -727,3 +727,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-648a84c89fa2
+  - type: implements
+    from: SYM-archtest-pin
+    to: REQ-tooling-archtest-catalog-tests
+    created_at: 2026-11-06T18:05:39.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-64d12ac3a640
+  - type: covered_by
+    from: SYM-archtest-pin
+    to: TEST-tooling-archtest-rules
+    created_at: 2026-11-06T18:05:39.086Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52b186f0293c

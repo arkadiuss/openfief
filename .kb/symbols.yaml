@@ -151522,3 +151522,1281 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-release-smoke
+  - id: SYM-archtest-entry
+    title: Entry
+    sourceFile: tools/archtest/baseline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:00.764Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-parse-list
+    title: ParseList
+    sourceFile: tools/archtest/baseline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:06.750Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-rules
+    title: Rules
+    sourceFile: tools/archtest/baseline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:11.686Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-check
+    title: Check
+    sourceFile: tools/archtest/baseline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:17.624Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-compare
+    title: Compare
+    sourceFile: tools/archtest/baseline.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:22.820Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-catalog-tests
+    title: CatalogTests
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:27.729Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-pins
+    title: pins
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:32.475Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-pin
+    title: pin
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:37.271Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-loaded-catalogs
+    title: loadedCatalogs
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:42.401Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-is-call
+    title: isCall
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:47.664Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-is-comparison
+    title: isComparison
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:52.883Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-is-int
+    title: isInt
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:05:58.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-entries-of
+    title: entriesOf
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:03.356Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-len-of-entries
+    title: lenOfEntries
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:08.558Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-pins-digest
+    title: pinsDigest
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:13.434Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-indirect-reads
+    title: indirectReads
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:18.697Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-indirect-tests
+    title: indirectTests
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:23.867Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-inspected-calls
+    title: inspectedCalls
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:29.017Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-ignored-calls
+    title: ignoredCalls
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:34.516Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-blanks-but-last
+    title: blanksButLast
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:40.675Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-callee-name
+    title: calleeName
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:46.708Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-closure
+    title: closure
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:51.989Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-call-graph
+    title: callGraph
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:06:57.781Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-calls-any
+    title: callsAny
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:03.545Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-called-names
+    title: calledNames
+    sourceFile: tools/archtest/catalog.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:08.757Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-catalog-tests
+  - id: SYM-archtest-edge
+    title: edge
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:13.610Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-context-map
+    title: contextMap
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:19.003Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-known
+    title: known
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:23.965Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-context-map-break
+    title: contextMapBreak
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:28.715Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-dataset-break
+    title: datasetBreak
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:33.145Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-layering
+    title: Layering
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:37.500Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-layering-break
+    title: layeringBreak
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:42.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-adapter-break
+    title: adapterBreak
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:46.521Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-plugins
+    title: Plugins
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:51.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-banned
+    title: Banned
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:07:55.794Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-violation
+    title: Violation
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:00.312Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-violation-string
+    title: Violation.String
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:05.630Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-rule-title
+    title: ruleTitle
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:10.589Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-layer
+    title: Layer
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:15.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-place
+    title: Place
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:20.511Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-place-of
+    title: PlaceOf
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:25.420Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-datasets
+    title: datasets
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:35.642Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-may-import
+    title: mayImport
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:40.879Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-is-repo
+    title: isRepo
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:46.286Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-under
+    title: under
+    sourceFile: tools/archtest/layout.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:51.624Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports
+  - id: SYM-archtest-config
+    title: Config
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:08:57.023Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-package
+    title: Package
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:01.915Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-source-file
+    title: SourceFile
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:06.982Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-repo
+    title: Repo
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:11.410Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-load
+    title: Load
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:16.649Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-repo-convert
+    title: Repo.convert
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:21.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-repo-rel
+    title: Repo.rel
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:26.815Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-repo-walk
+    title: Repo.walk
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:32.062Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-skip-dir
+    title: skipDir
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:37.150Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-repo-add
+    title: Repo.add
+    sourceFile: tools/archtest/load.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:42.336Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-repo
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-baseline
+  - id: SYM-archtest-money
+    title: Money
+    sourceFile: tools/archtest/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:47.039Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-floats
+    title: floats
+    sourceFile: tools/archtest/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:51.856Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-uses-float
+    title: usesFloat
+    sourceFile: tools/archtest/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:09:56.680Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-is-float
+    title: isFloat
+    sourceFile: tools/archtest/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:01.321Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-decl-name
+    title: declName
+    sourceFile: tools/archtest/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:05.764Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-gen-decl-name
+    title: genDeclName
+    sourceFile: tools/archtest/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:10.339Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-recv-name
+    title: recvName
+    sourceFile: tools/archtest/money.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:15.007Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-sensitive-types
+    title: sensitiveTypes
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:20.227Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-loggers
+    title: loggers
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:25.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-privacy
+    title: Privacy
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:30.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-log-breaks
+    title: logBreaks
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:35.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-callee
+    title: callee
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:40.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-is-logging
+    title: isLogging
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:45.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-leaks
+    title: leaks
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:50.798Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-look-through
+    title: lookThrough
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:10:56.120Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-is-formatter
+    title: isFormatter
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:01.100Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-sensitive
+    title: sensitive
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:06.282Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-is-error
+    title: isError
+    sourceFile: tools/archtest/privacy.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:11.421Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-privacy
+  - id: SYM-archtest-pure-domain
+    title: PureDomain
+    sourceFile: tools/archtest/purity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:16.118Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-go-statements
+    title: goStatements
+    sourceFile: tools/archtest/purity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:21.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-package-vars
+    title: packageVars
+    sourceFile: tools/archtest/purity.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:26.134Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-money-purity
+  - id: SYM-archtest-test-test-architecture
+    title: TestArchitecture
+    sourceFile: tools/archtest/repo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:31.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-archtest-repo
+  - id: SYM-archtest-test-read-list
+    title: readList
+    sourceFile: tools/archtest/repo_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:35.721Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-archtest-repo
+  - id: SYM-archtest-test-load-fixture
+    title: loadFixture
+    sourceFile: tools/archtest/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:40.719Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-archtest-rules
+  - id: SYM-archtest-test-test-rules
+    title: TestRules
+    sourceFile: tools/archtest/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:45.712Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-archtest-rules
+  - id: SYM-archtest-test-test-place-of
+    title: TestPlaceOf
+    sourceFile: tools/archtest/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:51.464Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-archtest-rules
+  - id: SYM-archtest-test-test-parse-list
+    title: TestParseList
+    sourceFile: tools/archtest/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:11:57.703Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-archtest-rules
+  - id: SYM-archtest-test-test-compare
+    title: TestCompare
+    sourceFile: tools/archtest/rules_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:03.876Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-archtest-rules
+  - id: SYM-archtest-schema-owners
+    title: schemaOwners
+    sourceFile: tools/archtest/schemas.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:09.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-schemas
+  - id: SYM-archtest-schemas
+    title: Schemas
+    sourceFile: tools/archtest/schemas.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:13.817Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-schemas
+  - id: SYM-archtest-schema-breaks
+    title: schemaBreaks
+    sourceFile: tools/archtest/schemas.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:18.603Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-schemas
+  - id: SYM-archtest-strip-sql-comments
+    title: stripSQLComments
+    sourceFile: tools/archtest/schemas.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:23.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-schemas
+  - id: SYM-archtest-sql-literals
+    title: sqlLiterals
+    sourceFile: tools/archtest/schemas.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:28.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-schemas
+  - id: SYM-archtest-dir-of
+    title: dirOf
+    sourceFile: tools/archtest/schemas.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:33.563Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-schemas
+  - id: SYM-archtest-base-name
+    title: baseName
+    sourceFile: tools/archtest/schemas.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:38.867Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-schemas
+  - id: SYM-archtest-dedupe
+    title: dedupe
+    sourceFile: tools/archtest/schemas.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:44.054Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-schemas
+  - id: SYM-archtest-stable-tests
+    title: StableTests
+    sourceFile: tools/archtest/tests.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:49.385Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-stable-tests
+  - id: SYM-archtest-unstable
+    title: unstable
+    sourceFile: tools/archtest/tests.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:12:54.963Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-stable-tests
+  - id: SYM-archtest-import-name
+    title: importName
+    sourceFile: tools/archtest/tests.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:13:00.285Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-stable-tests
+  - id: SYM-archtest-tester-names
+    title: testerNames
+    sourceFile: tools/archtest/tests.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:13:05.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-stable-tests
+  - id: SYM-archtest-is-tester
+    title: isTester
+    sourceFile: tools/archtest/tests.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:13:10.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-stable-tests
+  - id: SYM-archtest-context-map-rule
+    title: ContextMap
+    sourceFile: tools/archtest/imports.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T18:36:25.437Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-archtest-rules
+      - type: implements
+        target: REQ-tooling-archtest-imports

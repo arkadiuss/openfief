@@ -741,3 +741,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-599278ffac87
+  - type: executable_for
+    from: SYM-archtest-test-read-list
+    to: TEST-tooling-archtest-repo
+    created_at: 2026-11-06T18:11:37.499Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81ddfeea113d

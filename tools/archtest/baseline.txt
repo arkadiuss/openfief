@@ -1,0 +1,77 @@
+# Architecture test baseline (docs/dev/code-organization.md#architecture-tests).
+#
+# The breaks the code has today, one per line: <rule> | <key> | <reason>.
+# TestArchitecture fails on a break not listed here and on a listed one that no
+# longer happens, so this list only shrinks. Never add a line to get green: fix
+# the code. When a fix lands, delete its line in the same change.
+
+# Context map. Decided in the design session: no new arrow from ingest to
+# portfolio; ingest/app declares a port for what it reads of portfolio, and
+# cmd/core wires it.
+context-map | internal/ingest/app -> internal/portfolio | ingest reads portfolio directly until its ingest/app port, wired in cmd/core, lands
+context-map | internal/ingest/connectapi -> internal/portfolio | ingest reads portfolio directly until its ingest/app port, wired in cmd/core, lands
+
+# Layering: an adapter importing a sibling adapter of its own context.
+layering | internal/plugins/kube -> internal/plugins/operator/v1alpha1 | the kube adapter reads the operator's custom resource types; they move out of the operator adapter, or are named a contract
+layering | internal/plugins/smokescreen -> internal/plugins/egress | the proxy adapter applies egress.CheckAddress (net/netip, which the domain may not import); the check moves into plugins/app or the proxy adapter
+
+# Plugins: the first-party plugins were built as thin binaries over internal/
+# adapters before the rule that a plugin imports only sdk/go.
+plugins | plugins/eodhd -> internal/ingest | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/eodhd -> internal/ingest/delivery | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/eodhd -> internal/kernel | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/eodhd -> internal/ledger | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/eodhd -> internal/valuation/eodhd | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/ghostfolio -> internal/ledger | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/ghostfolio -> internal/plugins | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/ghostfolio -> internal/views/ghostfolio | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/ibkr-flex -> internal/ingest | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/ibkr-flex -> internal/ingest/delivery | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/ibkr-flex -> internal/ingest/ibkrflex | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/nbp-fx -> internal/ingest/delivery | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/nbp-fx -> internal/kernel | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/nbp-fx -> internal/valuation/app | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/nbp-fx -> internal/valuation/nbp | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/treasury-bonds -> internal/ingest | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/treasury-bonds -> internal/ingest/delivery | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/treasury-bonds -> internal/ingest/treasurybonds | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/treasury-bonds -> internal/jurisdiction/pl | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/treasury-bonds -> internal/kernel | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/treasury-bonds -> internal/valuation/gus | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/treasury-bonds -> internal/valuation/nbp | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/ui -> internal/views/ui | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/xtb -> internal/ingest/delivery | built on internal/ before the rule: move what it needs into sdk/go
+plugins | plugins/xtb -> internal/ingest/xtb | built on internal/ before the rule: move what it needs into sdk/go
+
+# Privacy (GR-12): errors logged as they are, whose text may quote a value.
+privacy | cmd/core clusterOrNil logs an error | logs an error raw: pass it through kernel.LogSafe
+privacy | cmd/core main logs an error | logs an error raw: pass it through kernel.LogSafe
+privacy | cmd/core runConnectors logs an error | logs an error raw: pass it through kernel.LogSafe
+privacy | cmd/core start logs an error | logs an error raw: pass it through kernel.LogSafe
+privacy | cmd/core startCluster logs an error | logs an error raw: pass it through kernel.LogSafe
+privacy | cmd/demo-seed fxRates logs an error | logs an error raw: pass it through kernel.LogSafe
+privacy | cmd/demo-seed main logs an error | logs an error raw: pass it through kernel.LogSafe
+privacy | cmd/egress-proxy main logs an error | logs an error raw (logrus WithError): pass it through kernel.LogSafe
+privacy | cmd/egress-proxy run logs an error | logs an error raw (logrus WithError): pass it through kernel.LogSafe
+privacy | internal/identity/connectapi toConnectError logs an error | logs a classified sentinel's text with .Error(): pass it through kernel.LogSafe with its class
+privacy | internal/ledger/connectapi checkpointService.fail logs an error | logs an error raw: pass it through kernel.LogSafe like the context's other services
+privacy | internal/plugins/operator PluginReconciler.allPluginsIfNamed logs an error | logs an error raw (logr): pass it through kernel.LogSafe
+privacy | internal/plugins/operator PluginReconciler.otherClaimants logs an error | logs an error raw (logr): pass it through kernel.LogSafe
+privacy | internal/plugins/smokescreen Proxy.closeTunnels logs an error | logs an error raw (logrus WithError): pass it through kernel.LogSafe
+privacy | internal/views/browserproxy Proxy.refuse logs an error | logs an error raw: pass it through kernel.LogSafe
+privacy | internal/views/browserproxy Proxy.unreachable logs an error | logs an error raw: pass it through kernel.LogSafe
+privacy | plugins/eodhd serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
+privacy | plugins/ghostfolio loop logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
+privacy | plugins/ghostfolio serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
+privacy | plugins/ibkr-flex serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
+privacy | plugins/nbp-fx serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
+privacy | plugins/treasury-bonds serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
+privacy | plugins/ui serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
+privacy | plugins/xtb serve logs an error | logs an error raw; a plugin has no LogSafe until the SDK offers one
+
+# Pure domain: package-level variables.
+pure-domain | internal/attention var kindPattern | a compiled regular expression held as package state; compile it in a function
+pure-domain | internal/ingest var instanceName | a compiled regular expression held as package state; compile it in a function
+
+# Stable tests.
+stable-tests | sdk/go/openfief/run_test.go TestServeConnector time.Sleep | polls an in-process server with sleeps; wait on its readiness instead
