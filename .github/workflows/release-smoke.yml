@@ -1,0 +1,75 @@
+# Post-release smoke test (docs/dev/pipeline.md#releases): installs a PUBLISHED release on a fresh kind cluster
+# exactly as the install guide tells the owner to (docs/guides/install.md, steps 1 to 7), from the GitHub release's
+# own assets, never from anything a run built: it downloads them, verifies the CLI, its checksums and SBOM and every
+# image with cosign against the identities the guide gives (and checks cosign refuses a wrong one), checks the
+# CloudNativePG manifest's pinned sha256, applies CloudNativePG, the CRDs, the database and the install, waits for
+# every rollout, runs `openfief plugin install ui --yes` and `openfief enroll` from the downloaded CLI, and has
+# Chromium create the first passkey and sign in again (test/e2e/passkey.mjs). task release:smoke
+# (scripts/release-smoke.sh) runs the steps.
+# release.yml calls it after every real publish; run it by hand against any published release with
+#   gh workflow run release-smoke.yml --ref main -f version=2026.11.0-alpha.1 -f cli_version=false
+# (cli_version=false for a release that predates `openfief version`). It needs only read access to the repository:
+# the release's assets and its images are public.
+name: Release smoke test
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: The published release to install, e.g. 2026.11.0-alpha.2
+        type: string
+        required: true
+      cli_version:
+        description: Check that `openfief version` names the release (false for 2026.11.0-alpha.1, which predates it)
+        type: boolean
+        default: true
+  workflow_call:
+    inputs:
+      version:
+        description: The published release to install
+        type: string
+        required: true
+      cli_version:
+        description: Check that `openfief version` names the release
+        type: boolean
+        default: true
+
+permissions: {}
+
+concurrency:
+  group: release-smoke-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    name: install ${{ inputs.version }} as the guide says
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    permissions:
+      contents: read # download the release's assets and read the commit its tag names
+    steps:
+      # The checkout brings only the harness: the task, the script and the browser's passkey ceremonies. Everything
+      # installed comes from the release.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          tools: 'false'
+          # The passkey ceremonies drive the runner's Chrome with playwright-core (task release:smoke installs the
+          # npm packages), as the e2e passkey test does.
+          node: 'true'
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+      - name: Create a kind cluster
+        uses: helm/kind-action@1544676c07bb3570fcb70166beaa07c4528fd4aa # v1.15.1
+        with:
+          cluster_name: openfief-smoke
+          # renovate: datasource=github-releases depName=kubernetes-sigs/kind
+          version: v0.33.0
+      - name: task release:smoke
+        run: task release:smoke VERSION="$VERSION" REPO="$REPO" CLI_VERSION="$CLI_VERSION"
+        env:
+          VERSION: ${{ inputs.version }}
+          REPO: ${{ github.repository }}
+          CLI_VERSION: ${{ inputs.cli_version && '1' || '0' }}
+          GH_TOKEN: ${{ github.token }}

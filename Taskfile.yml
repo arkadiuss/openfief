@@ -808,8 +808,24 @@ tasks:
     cmds:
       - PATH='{{.BIN}}':"$PATH" bash scripts/release-verify.sh images '{{.FILE}}' '{{.REPO}}' {{if .TAG}}'{{.TAG}}'{{end}}
 
+  release:smoke:
+    desc: 'Install a PUBLISHED release on the local kind or k3d cluster exactly as docs/guides/install.md says, from its GitHub release''s assets: download, cosign-verify the CLI, checksums, SBOM and images (and a wrong identity refused), CloudNativePG, CRDs, database, install, `openfief plugin install ui`, `openfief enroll` and the first passkey in Chromium; CLI_VERSION=0 skips the `openfief version` check (needs gh with GH_TOKEN, cosign, kubectl, Chrome), e.g. task release:smoke VERSION=2026.11.0-alpha.1 REPO=arkadiuss/openfief CLI_VERSION=0'
+    # kibi:install brings playwright-core, with which test/e2e/passkey.mjs drives Chromium.
+    deps: [kibi:install]
+    requires:
+      vars: [VERSION, REPO]
+    vars:
+      SMOKE_DIR: '{{.ROOT_DIR}}/.bin/release-smoke'
+    cmds:
+      - bash scripts/assert-local-cluster.sh
+      - rm -rf '{{.SMOKE_DIR}}'
+      - >-
+        CNPG_VERSION='{{.CNPG_VERSION}}' CNPG_SHA256='{{.CNPG_MANIFEST_SHA256}}' PASSKEY=test/e2e/passkey.mjs
+        CLI_VERSION='{{.CLI_VERSION | default "1"}}'
+        bash scripts/release-smoke.sh '{{.VERSION}}' '{{.REPO}}' '{{.SMOKE_DIR}}'
+
   release:bundle:
-    desc: 'Render the release bundle into OUT (default dist/bundle): openfief-crds-VERSION.yaml, openfief-install-VERSION.yaml with every image pinned to a given digest, openfief-db-VERSION.yaml and CloudNativePG''s release manifest cnpg-CNPG_VERSION.yaml, checked against its pinned sha256. IMAGES lists repository@sha256:digest refs; in CI, DIGESTS=<dir> PREFIX=<registry prefix> reads images.yml''s digest files instead, and VERIFY=1 REPO=<owner/repo> checks each signature with cosign; a dry run passes PLACEHOLDER=1 PREFIX=... for all-zeros digests, e.g. task release:bundle VERSION=2026.11.0-alpha.1 IMAGES="ghcr.io/owner/openfief/core@sha256:..."'
+    desc:'Render the release bundle into OUT (default dist/bundle): openfief-crds-VERSION.yaml, openfief-install-VERSION.yaml with every image pinned to a given digest, openfief-db-VERSION.yaml and CloudNativePG''s release manifest cnpg-CNPG_VERSION.yaml, checked against its pinned sha256. IMAGES lists repository@sha256:digest refs; in CI, DIGESTS=<dir> PREFIX=<registry prefix> reads images.yml''s digest files instead, and VERIFY=1 REPO=<owner/repo> checks each signature with cosign; a dry run passes PLACEHOLDER=1 PREFIX=... for all-zeros digests, e.g. task release:bundle VERSION=2026.11.0-alpha.1 IMAGES="ghcr.io/owner/openfief/core@sha256:..."'
     deps: [tool:kustomize, tool:gojq]
     requires:
       vars: [VERSION]

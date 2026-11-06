@@ -307,6 +307,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
 
+  smoke:
+    # The post-release smoke test (docs/dev/pipeline.md#releases): installs the release just published on a fresh
+    # kind cluster from its GitHub release's assets, exactly as docs/guides/install.md says, through the first
+    # passkey. It runs after publish, so a failure doesn't hold the release back; it marks this run failed, and
+    # "Re-run failed jobs" runs it again on the same release.
+    name: smoke test
+    needs: [plan, publish]
+    if: needs.plan.outputs.publish == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/release-smoke.yml
+    with:
+      version: ${{ inputs.version }}
+
   deploy-demo:
     # Alphas and betas deploy to demo (docs/dev/sdlc.md#releases): the pre-release's signed digests are published as
     # the demo's signed manifests artifact, and Flux applies it. Without a demo machine nothing pulls it: see the

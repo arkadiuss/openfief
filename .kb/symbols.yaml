@@ -146396,3 +146396,151 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-cmd-openfief-version
+  - id: SYM-release-smoke-fail
+    title: fail
+    status: active
+    sourceFile: scripts/release-smoke.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:42:37.531Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-smoke
+      - type: implements
+        target: REQ-tooling-release-smoke
+  - id: SYM-release-smoke-say
+    title: say
+    status: active
+    sourceFile: scripts/release-smoke.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:42:41.960Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-smoke
+      - type: implements
+        target: REQ-tooling-release-smoke
+  - id: SYM-release-smoke-diagnose
+    title: diagnose
+    status: active
+    sourceFile: scripts/release-smoke.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:42:46.427Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-smoke
+      - type: implements
+        target: REQ-tooling-release-smoke
+  - id: SYM-release-smoke-finish
+    title: finish
+    status: active
+    sourceFile: scripts/release-smoke.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:42:50.956Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-smoke
+      - type: implements
+        target: REQ-tooling-release-smoke
+  - id: SYM-release-smoke-verify-blob
+    title: verify_blob
+    status: active
+    sourceFile: scripts/release-smoke.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:42:55.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-smoke
+      - type: implements
+        target: REQ-tooling-release-smoke
+  - id: SYM-release-smoke-verify-image
+    title: verify_image
+    status: active
+    sourceFile: scripts/release-smoke.sh
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:42:59.824Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-release-smoke
+      - type: implements
+        target: REQ-tooling-release-smoke
+  - id: SYM-release-smoke-test-release
+    title: release
+    status: active
+    sourceFile: scripts/tests/release-smoke.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:43:04.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-smoke
+  - id: SYM-release-smoke-test-cnpg-sum
+    title: cnpg_sum
+    status: active
+    sourceFile: scripts/tests/release-smoke.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:43:08.909Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-smoke
+  - id: SYM-release-smoke-test-run
+    title: run
+    status: active
+    sourceFile: scripts/tests/release-smoke.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:43:13.380Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-smoke
+  - id: SYM-release-smoke-test-check
+    title: check
+    status: active
+    sourceFile: scripts/tests/release-smoke.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:43:17.902Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-smoke
+  - id: SYM-release-smoke-test-yes-if
+    title: yes_if
+    status: active
+    sourceFile: scripts/tests/release-smoke.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:43:22.391Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-smoke
+  - id: SYM-release-smoke-test-passes
+    title: passes
+    status: active
+    sourceFile: scripts/tests/release-smoke.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:43:26.801Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-smoke
+  - id: SYM-release-smoke-test-fails-with
+    title: fails_with
+    status: active
+    sourceFile: scripts/tests/release-smoke.test.sh
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T16:43:31.358Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-release-smoke

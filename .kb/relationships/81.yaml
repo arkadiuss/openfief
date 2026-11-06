@@ -629,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1626b5c0fd6b
+  - type: executable_for
+    from: SYM-release-smoke-test-cnpg-sum
+    to: TEST-tooling-release-smoke
+    created_at: 2026-11-06T16:43:10.583Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08c76caf6b28

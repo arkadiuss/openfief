@@ -139,6 +139,12 @@ The UI is a plugin like any other ([Built-in UI](../concepts/ui.md)), and the pa
 openfief plugin install ui
 ```
 
+The operator then verifies the image again and starts the UI. The passkey pages are the UI's, so wait until it is ready before you enrol:
+
+```bash
+kubectl -n openfief wait plugin.openfief.io/ui --for=condition=Ready --timeout=5m
+```
+
 ## 7. Create the first passkey
 
 ```bash
@@ -152,5 +158,7 @@ It forwards `localhost:8080` to the core, prints a one-time link such as `http:/
 - [Expose OpenFief](expose.md): reach the install from your browser and scripts without a port-forward.
 - [Import an XTB account](xtb.md), and the other connectors in the catalog, with `openfief plugin install <name>` ([Plugins](../concepts/plugins.md)).
 - [Script the read API](read-api.md).
+
+OpenFief's release pipeline runs these same steps, 1 to 7, against every release it publishes, on a fresh kind cluster with the release's own assets ([Delivery pipeline](../dev/pipeline.md#releases)).
 
 From the first release on, every change to stored data ships with a migration of what is already stored (D-161), so a later release keeps the record this one starts. Verify each release's assets the same way before you apply them.

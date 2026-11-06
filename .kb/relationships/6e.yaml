@@ -706,3 +706,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb7d1e0bbc5c
+  - type: executable_for
+    from: SYM-release-smoke-test-release
+    to: TEST-tooling-release-smoke
+    created_at: 2026-11-06T16:43:06.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4589e5dd8754
