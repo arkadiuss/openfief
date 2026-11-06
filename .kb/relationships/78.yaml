@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d64dde2bd68b
+  - type: implements
+    from: SYM-ui-item-title
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:34:53.997Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09d08f50929b
+  - type: covered_by
+    from: SYM-ui-item-title
+    to: TEST-ui-attention
+    created_at: 2026-11-06T04:34:54.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-310834cae16d

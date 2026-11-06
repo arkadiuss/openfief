@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-deabd87448db
+  - type: implements
+    from: SYM-ingestv1-retry-sync-response-proto-reflect
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:25:37.262Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-23184f630d92
+  - type: covered_by
+    from: SYM-ingestv1-retry-sync-response-proto-reflect
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:25:37.287Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8fc8a2843fe

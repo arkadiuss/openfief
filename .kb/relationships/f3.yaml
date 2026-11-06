@@ -231,20 +231,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e371d8dd3f07
   - type: implements
-    from: SYM-ui-server-assertions-page
-    to: REQ-ui-account-pages
-    created_at: 2026-10-28T19:51:27.690Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3d07d08d992a
-  - type: covered_by
-    from: SYM-ui-server-assertions-page
-    to: TEST-ui-pages
-    created_at: 2026-10-28T19:51:27.710Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1a75330dcd6f
-  - type: implements
     from: SYM-ui-server-login-page
     to: REQ-ui-login-flows
     created_at: 2026-10-28T19:51:37.185Z
@@ -559,3 +545,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ba7cb94122b
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-recording-trigger
+    to: TEST-ingest-app-retries
+    created_at: 2026-11-06T04:23:43.330Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a68a050ebb1c
+  - type: executable_for
+    from: SYM-ingest-connect-test-helper-trigger
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:24:25.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccdfa5c45b8d
+  - type: verified_by
+    from: SCEN-ui-inbox-price-checks
+    to: TEST-ui-pricechecks
+    created_at: 2026-11-06T04:32:08.687Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06df0baea2e9
+  - type: constrains
+    from: REQ-ui-removed-pages-redirect
+    to: FACT-SUBJECT-EAF0F9966EDF26D1
+    created_at: 2026-11-06T04:33:00.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ba2301f25f36
+  - type: requires_property
+    from: REQ-ui-removed-pages-redirect
+    to: FACT-PROP-BA6C7E1CAC6ED074
+    created_at: 2026-11-06T04:33:00.543Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70759fc0a51d
+  - type: specified_by
+    from: REQ-ui-removed-pages-redirect
+    to: SCEN-ui-removed-pages-redirect
+    created_at: 2026-11-06T04:33:00.571Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ab53dc472c7d
+  - type: implements
+    from: SYM-ui-removed-check-pages
+    to: REQ-ui-removed-pages-redirect
+    created_at: 2026-11-06T04:35:03.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72a8cf634b46
+  - type: implements
+    from: SYM-ui-removed-check-pages
+    to: REQ-ui-no-check-pages
+    created_at: 2026-11-06T04:35:03.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea1bf7a5c288
+  - type: covered_by
+    from: SYM-ui-removed-check-pages
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:35:03.160Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83d929511e80

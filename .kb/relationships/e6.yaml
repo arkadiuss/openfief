@@ -804,3 +804,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8103debfdf42
+  - type: constrains
+    from: REQ-ui-inbox-sync-timeline
+    to: FACT-SUBJECT-BF8827AE5AF75C88
+    created_at: 2026-11-06T04:33:04.089Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-609086ec29e4
+  - type: requires_property
+    from: REQ-ui-inbox-sync-timeline
+    to: FACT-PROP-3DFDD3ED65CF7433
+    created_at: 2026-11-06T04:33:04.136Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4c43cb2ae82e
+  - type: specified_by
+    from: REQ-ui-inbox-sync-timeline
+    to: SCEN-ui-inbox-sync-timeline
+    created_at: 2026-11-06T04:33:04.174Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68e166a22f3e

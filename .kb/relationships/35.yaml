@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c6965b7f4699
+  - type: executable_for
+    from: SYM-ui-test-removed-check-pages-redirect
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:36:58.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-311262d28709

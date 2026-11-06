@@ -94,48 +94,8 @@ func latestPerInstrument(checks []*viewsv1.PriceCheck, def string, owner bool) [
 	return out
 }
 
-// priceChecksView is what the price checks page shows: the default
-// threshold as a percentage, empty when the core compares no prices, the
-// checks grouped by instrument, how many instruments' latest check is
-// open, and the owner's refused form's reason.
-type priceChecksView struct {
-	Threshold   string
-	Instruments []instrumentChecks
-	Open        int
-	Error       string
-}
-
-// priceChecksPage shows the latest price check of every instrument with
-// its history (D-112): a day on which an institution's own price, such as
-// IBKR's mark price, is compared with the latest price holdings are valued
-// at on or before it (D-111). The owner can acknowledge a flagged check
-// and set an instrument's threshold (D-110); nothing changes a price here.
-func (s *server) priceChecksPage(w http.ResponseWriter, r *http.Request, sess session) {
-	s.renderPriceChecks(w, r, sess, http.StatusOK, "")
-}
-
-// renderPriceChecks shows the price checks page with status, and with the
-// reason the core refused what the owner posted.
-func (s *server) renderPriceChecks(w http.ResponseWriter, r *http.Request, sess session, status int, refusal string) {
-	resp, err := s.read.ListPriceChecks(r.Context(), bearer(&viewsv1.ListPriceChecksRequest{}, sess))
-	if err != nil {
-		s.coreFailed(w, r, "ListPriceChecks", err)
-		return
-	}
-	view := priceChecksView{
-		Threshold:   percent(resp.Msg.GetThreshold()),
-		Instruments: latestPerInstrument(resp.Msg.GetChecks(), resp.Msg.GetThreshold(), sess.Owner()), Error: refusal,
-	}
-	for i := range view.Instruments {
-		if view.Instruments[i].Open() {
-			view.Open++
-		}
-	}
-	s.show(w, r, status, "price-checks", page{Title: "Price checks", Session: &sess, Data: view})
-}
-
 // acknowledgePriceCheck records the owner's acknowledgement of the
-// flagged check the form names (D-112) and shows the page again.
+// flagged check the form names (D-112) and shows the Inbox again.
 func (s *server) acknowledgePriceCheck(w http.ResponseWriter, r *http.Request, sess session) {
 	if err := r.ParseForm(); err != nil {
 		s.errorPage(w, r, http.StatusBadRequest, "The form is malformed.")
@@ -157,7 +117,7 @@ func (s *server) setPriceCheckThreshold(w http.ResponseWriter, r *http.Request, 
 	}
 	threshold, err := fractionOf(r.PostForm.Get("threshold"))
 	if err != nil {
-		s.renderPriceChecks(w, r, sess, http.StatusBadRequest, err.Error())
+		s.renderInbox(w, r, sess, http.StatusBadRequest, "", err.Error())
 		return
 	}
 	_, err = s.priceChecks.SetPriceCheckThreshold(r.Context(), connect.NewRequest(&valuationv1.SetPriceCheckThresholdRequest{
@@ -167,20 +127,15 @@ func (s *server) setPriceCheckThreshold(w http.ResponseWriter, r *http.Request, 
 	s.afterPriceCheckForm(w, r, sess, "SetPriceCheckThreshold", err)
 }
 
-// afterPriceCheckForm answers a posted price check form: back to the page
-// when the core took it, the page with the core's reason when it refused
-// it, and any other failure like any failed call to the core.
+// afterPriceCheckForm answers a posted price check form: back to the
+// Inbox when the core took it, the Inbox with the core's reason when it
+// refused it, and any other failure like any failed call to the core.
 func (s *server) afterPriceCheckForm(w http.ResponseWriter, r *http.Request, sess session, name string, err error) {
 	if err == nil {
-		http.Redirect(w, r, "/price-checks", http.StatusSeeOther)
+		http.Redirect(w, r, backToInbox(r), http.StatusSeeOther)
 		return
 	}
-	code := connect.CodeOf(err)
-	if status, refused := refusalStatus(code); refused && code != connect.CodePermissionDenied {
-		s.renderPriceChecks(w, r, sess, status, "The core refused this: "+connectMessage(err))
-		return
-	}
-	s.coreFailed(w, r, name, err)
+	s.afterInboxForm(w, r, sess, name, err)
 }
 
 // fractionOf turns a threshold the owner typed in percent, such as "2.5",

@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-263edfb1633d
+  - type: implements
+    from: SYM-ui-inbox-evidence-type
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:33:35.880Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff217e75abdc
+  - type: covered_by
+    from: SYM-ui-inbox-evidence-type
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:33:35.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-edbc63151012

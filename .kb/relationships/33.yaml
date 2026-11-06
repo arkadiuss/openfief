@@ -664,3 +664,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b32760dbd51
+  - type: implements
+    from: SYM-ui-server-inbox-evidence
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:35:25.255Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e9af93d65c56
+  - type: covered_by
+    from: SYM-ui-server-inbox-evidence
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:35:25.281Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97ec37921e51
+  - type: implements
+    from: SYM-ui-server-transfer-evidence
+    to: REQ-ui-inbox-transfers
+    created_at: 2026-11-06T04:36:10.039Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b470d77344f3
+  - type: covered_by
+    from: SYM-ui-server-transfer-evidence
+    to: TEST-ui-transfers
+    created_at: 2026-11-06T04:36:10.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a14a5c1dec27

@@ -790,3 +790,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b8eddfe2cdc9
+  - type: implements
+    from: SYM-ui-server-sync-evidence
+    to: REQ-ui-inbox-sync-timeline
+    created_at: 2026-11-06T04:36:01.150Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75fa08a36362
+  - type: covered_by
+    from: SYM-ui-server-sync-evidence
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:36:01.178Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dd6aafba7ef7

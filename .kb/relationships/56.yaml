@@ -517,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e49f962c501e
+  - type: implements
+    from: SYM-ingestv1connect-sync-service-client
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:26:24.029Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6051f2fbd9fe
+  - type: covered_by
+    from: SYM-ingestv1connect-sync-service-client
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:26:24.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-676c3b10e201

@@ -790,3 +790,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-be58153a7239
+  - type: implements
+    from: SYM-ui-to-inbox
+    to: REQ-ui-removed-pages-redirect
+    created_at: 2026-11-06T04:36:27.882Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0cde777e3a92
+  - type: covered_by
+    from: SYM-ui-to-inbox
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:36:27.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4d505b81f3dd

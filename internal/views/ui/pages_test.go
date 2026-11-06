@@ -16,7 +16,7 @@ import (
 func TestPagesNeedSession(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	for _, path := range []string{"/", "/accounts/" + accountID, "/assertions", "/settings", "/allocation?by=currency"} {
+	for _, path := range []string{"/", "/accounts/" + accountID, "/inbox", "/settings", "/allocation?by=currency"} {
 		rec := h.serve(t, request(http.MethodGet, path, ""))
 		wantStatus(t, rec, http.StatusSeeOther)
 		if got := rec.Header().Get("Location"); got != "/login" {
@@ -71,7 +71,7 @@ func TestOverview(t *testing.T) {
 		"time-weighted return as an index, 100 on 2026-03-30", `Its value with cash on 2026-03-31 is <span class="mono">1`,
 		`&#34;values&#34;:[&#34;100&#34;,&#34;101.5&#34;]`,
 		"/static/vendor/chart-4.5.1.umd.min.js", "/static/app.js",
-		`<a href="/assertions">1 flagged balance assertion(s)</a>`,
+		`<a href="/inbox">1 flagged balance assertion(s)</a>`,
 	)
 	wantNoBody(t, rec, "model portfolio", "Model", "TWR: not built", "series")
 	bearers := seen(h.read, func() []string { return h.read.bearers })
@@ -159,15 +159,6 @@ func TestTransactionsPaging(t *testing.T) {
 	if diff := cmp.Diff([]string{"page-2"}, seen(h.read, func() []string { return h.read.pageTokens })); diff != "" {
 		t.Errorf("page tokens (-want +got):\n%s", diff)
 	}
-}
-
-// TestAssertionsPage checks the list of flagged balance assertions.
-func TestAssertionsPage(t *testing.T) {
-	t.Parallel()
-	h := newHarness(t)
-	rec := h.serve(t, withSession(request(http.MethodGet, "/assertions", ""), demoSession))
-	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "Synthetic brokerage", "2026-03-15", "cash EUR", "100,00", "90,00", "flagged")
 }
 
 // TestReadScopeHidesOwnerActions checks that a read-scoped session, such as

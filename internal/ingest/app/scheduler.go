@@ -193,6 +193,40 @@ func (s *Scheduler) SyncNow(ctx context.Context, instance string, mode ingest.Mo
 	return s.attempt(ctx, instance, mode)
 }
 
+// Retry starts one sync of instance at once, in the modes its accounts call
+// for, and returns once the instance is claimed for it, without waiting
+// for it to end: the owner's "Retry now" (D-196). It fails with
+// ErrNoInstance for an instance that isn't listed, and with ErrSyncRunning
+// while a sync of it runs, in this process or, through the store's claim,
+// in another (D-49). The attempt is recorded, and a failure counts, like a
+// scheduled one; Wait waits for it too.
+func (s *Scheduler) Retry(ctx context.Context, instance string) error {
+	names, err := s.Instances.ConnectorInstances(ctx)
+	if err != nil {
+		return fmt.Errorf("listing connector instances: %w", err)
+	}
+	if !slices.Contains(names, instance) {
+		return fmt.Errorf("%w: %s", ErrNoInstance, instance)
+	}
+	if !s.begin(instance, 0) {
+		return fmt.Errorf("%w: %s", ErrSyncRunning, instance)
+	}
+	// The attempt outlives the owner's request.
+	bg := context.WithoutCancel(ctx)
+	run, err := s.prepare(bg, instance, 0)
+	if err != nil {
+		s.end(instance)
+		return err
+	}
+	s.wg.Go(func() {
+		defer s.end(instance)
+		if _, err := run(); err != nil {
+			s.logger().Warn("connector sync the owner retried failed", "instance", instance, "error", LogSafe(err))
+		}
+	})
+	return nil
+}
+
 // workers is how many syncs Tick runs at once (D-189).
 func (s *Scheduler) workers() int { return max(s.Workers, 1) }
 
@@ -225,21 +259,39 @@ func (s *Scheduler) end(instance string) {
 // seeded accounts miss none of their transactions, and the instance is
 // claimed again for the second.
 func (s *Scheduler) attempt(ctx context.Context, instance string, mode ingest.Mode) (SyncResult, error) {
+	run, err := s.prepare(ctx, instance, mode)
+	if err != nil {
+		return SyncResult{}, err
+	}
+	return run()
+}
+
+// prepare plans an attempt of instance and claims the instance for it, and
+// returns what runs the attempt's batches; a claim another attempt holds
+// fails with ErrSyncRunning before anything runs.
+func (s *Scheduler) prepare(ctx context.Context, instance string, mode ingest.Mode) (func() (SyncResult, error), error) {
 	plan, err := s.plan(ctx, instance, mode)
 	if err != nil {
-		return SyncResult{}, fmt.Errorf("planning a sync of %s: %w", instance, err)
+		return nil, fmt.Errorf("planning a sync of %s: %w", instance, err)
 	}
 	now := s.Now()
 	claim, err := s.Store.ClaimSync(ctx, instance, now, now.Add(s.Timeout+leaseMargin))
 	if err != nil {
-		return SyncResult{}, fmt.Errorf("claiming %s: %w", instance, err)
+		return nil, fmt.Errorf("claiming %s: %w", instance, err)
 	}
+	return func() (SyncResult, error) { return s.runBatches(ctx, instance, mode, &plan, claim) }, nil
+}
+
+// runBatches runs the batches of an attempt of instance planned as plan,
+// on its claim, in turn.
+func (s *Scheduler) runBatches(ctx context.Context, instance string, mode ingest.Mode, plan *syncPlan, claim SyncClaim) (SyncResult, error) {
+	var err error
 	batches := batchesFor(&claim, mode, plan.modes, s.NewBatchID)
 	watermark := claim.Watermark
 	var res SyncResult
 	for i, b := range batches {
 		if i > 0 {
-			now = s.Now()
+			now := s.Now()
 			if claim, err = s.Store.ClaimSync(ctx, instance, now, now.Add(s.Timeout+leaseMargin)); err != nil {
 				return res, fmt.Errorf("claiming %s: %w", instance, err)
 			}

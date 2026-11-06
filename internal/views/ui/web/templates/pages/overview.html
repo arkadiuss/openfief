@@ -3,10 +3,10 @@
 <script src="/static/app.js" defer></script>
 {{end}}
 {{define "content"}}
-{{with $.Session.Attention}}<p class="alert alert-warn"><a href="/attention">{{.}} attention item(s)</a> wait for you: checks that need you, in one place.</p>{{end}}
+{{with $.Session.Attention}}<p class="alert alert-warn"><a href="/inbox">{{.}} attention item(s)</a> wait for you in the Inbox.</p>{{end}}
 {{with .Data}}
-{{if .Flagged}}<p class="alert alert-warn"><a href="/assertions">{{.Flagged}} flagged balance assertion(s)</a> need attention.</p>{{end}}
-{{if .FlaggedPrices}}<p class="alert alert-warn"><a href="/price-checks">{{.FlaggedPrices}} flagged price check(s)</a>: an institution's own price differs from the valuation price.</p>{{end}}
+{{if .Flagged}}<p class="alert alert-warn"><a href="/inbox">{{.Flagged}} flagged balance assertion(s)</a> need attention.</p>{{end}}
+{{if .FlaggedPrices}}<p class="alert alert-warn"><a href="/inbox">{{.FlaggedPrices}} flagged price check(s)</a>: an institution's own price differs from the valuation price.</p>{{end}}
 <section class="card total" aria-labelledby="total-title">
   <h2 id="total-title" class="eyebrow">Total on {{.Date}}</h2>
   {{with .Total}}
@@ -38,7 +38,7 @@
       <td>{{.Account.Sleeve}}</td>
       {{with .Total}}{{template "three-values" .}}{{else}}<td colspan="3" class="num empty">not valued</td>{{end}}
       <td>{{template "valuation-status" .Status}}</td>
-      <td class="num">{{if .Flagged}}<a href="/assertions">{{.Flagged}}</a>{{else}}0{{end}}</td>
+      <td class="num">{{if .Flagged}}<a href="/inbox">{{.Flagged}}</a>{{else}}0{{end}}</td>
     </tr>
     {{end}}
     </tbody>
@@ -81,7 +81,7 @@
   <div class="chart"><canvas data-chart="{{.Chart}}" role="img" aria-label="Time-weighted return{{if .Model}} and the model portfolio's backtest{{end}} from {{.From}} to {{.To}}, 100 on {{.From}}{{if .Default}}; tracking began on {{.Default}}{{end}}"></canvas></div>
   <p class="muted">From {{.From}} to {{.To}}: the portfolio's time-weighted return as an index, 100 on {{.From}}, so deposits, withdrawals and the transfers between your accounts you confirmed don't count as performance.{{with .Default}} Tracking began on <span class="mono">{{.}}</span>.{{end}}{{with .Value}} Its value with cash on {{$.Data.History.To}} is <span class="mono">{{money .}}</span>.{{end}} In {{.Currency}}.{{if .Gap}} The line stops at {{.To}}: {{.Gap}}.{{end}}</p>
   {{if .Pending}}<p><span class="pill pill-neutral"><span class="dot" aria-hidden="true"></span>Revaluation pending</span> <span class="muted">The line may still change.</span></p>{{end}}
-  {{if .Suggested}}<p class="alert alert-warn"><a href="/transfers">{{.Suggested}} suggested transfer(s)</a> between your accounts wait for you: until you confirm one, its withdrawal and deposit count as money in and out.</p>{{end}}
+  {{if .Suggested}}<p class="alert alert-warn"><a href="/inbox">{{.Suggested}} suggested transfer(s)</a> between your accounts wait for you: until you confirm one, its withdrawal and deposit count as money in and out.</p>{{end}}
   {{else}}
   <p class="muted">No valued days yet.</p>
   {{end}}

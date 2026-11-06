@@ -699,3 +699,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-46efdd7290b9
+  - type: verified_by
+    from: SCEN-ui-inbox-sync-timeline
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:32:11.156Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4cee267874d

@@ -545,13 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-26c9e3c0f215
-  - type: implements
-    from: SYM-ui-server-suggested-transfers
-    to: REQ-ui-transfers-page
-    created_at: 2026-10-30T07:27:17.076Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c4f596940b6f
   - type: covered_by
     from: SYM-ui-server-suggested-transfers
     to: TEST-ui-transfers
@@ -769,3 +762,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d370daf597e8
+  - type: implements
+    from: SYM-ingestv1connect-sync-service-client-impl
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:26:39.746Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0e5d7551f433
+  - type: covered_by
+    from: SYM-ingestv1connect-sync-service-client-impl
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:26:39.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1ab5a501bb2
+  - type: implements
+    from: SYM-ui-server-suggested-transfers
+    to: REQ-ui-inbox-transfers
+    created_at: 2026-11-06T04:42:02.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d96d60aa99b4

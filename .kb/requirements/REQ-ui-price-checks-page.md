@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must show the price checks on their own page for any session, with both prices, their sources, the difference in percent, the status and each instrument's threshold, offer only the owner the acknowledgement of a flagged check and an instrument's threshold in percent, and count and link the instruments whose latest check is flagged and not acknowledged on the overview.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-112
 tags:
   - strict-modeling

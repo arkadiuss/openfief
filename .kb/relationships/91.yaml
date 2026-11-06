@@ -706,3 +706,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9eabf7169047
+  - type: implements
+    from: SYM-ingest-connect-syncs
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:24:12.801Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ce90774e79a8
+  - type: covered_by
+    from: SYM-ingest-connect-syncs
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:24:12.825Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-723123448565
+  - type: verified_by
+    from: SCEN-ui-account-attention-banner
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:32:12.313Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-322b2a705b94
+  - type: verified_by
+    from: SCEN-ui-account-attention-banner
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-06T04:32:12.352Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f6285343b01
+  - type: constrains
+    from: REQ-ui-inbox-price-checks
+    to: FACT-SUBJECT-BF8827AE5AF75C88
+    created_at: 2026-11-06T04:32:56.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d140e3ecd2a8
+  - type: requires_property
+    from: REQ-ui-inbox-price-checks
+    to: FACT-PROP-8D8373B4EC6518BD
+    created_at: 2026-11-06T04:32:56.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7ffb6450793
+  - type: specified_by
+    from: REQ-ui-inbox-price-checks
+    to: SCEN-ui-inbox-price-checks
+    created_at: 2026-11-06T04:32:56.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-255002aef1a6
+  - type: supersedes
+    from: REQ-ui-inbox-price-checks
+    to: REQ-ui-price-checks-page
+    created_at: 2026-11-06T04:32:56.979Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-870c1a216387
+  - type: implements
+    from: SYM-ui-assertions-on
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:33:10.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d267b2f0a350
+  - type: covered_by
+    from: SYM-ui-assertions-on
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:33:10.640Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53f4e55898c7

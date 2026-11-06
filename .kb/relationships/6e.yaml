@@ -692,3 +692,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c68700aca3ec
+  - type: implements
+    from: SYM-ingestv1-retry-sync-request-proto-reflect
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:25:15.407Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a12479a68e8
+  - type: covered_by
+    from: SYM-ingestv1-retry-sync-request-proto-reflect
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:25:15.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-eb7d1e0bbc5c

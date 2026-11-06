@@ -617,13 +617,6 @@ relationships:
     id: rel-61d99d7840b4
   - type: implements
     from: SYM-ui-attention-kind
-    to: REQ-ui-attention-page
-    created_at: 2026-10-31T18:51:58.315Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-64af0081c346
-  - type: implements
-    from: SYM-ui-attention-kind
     to: REQ-ui-attention-items-one-place
     created_at: 2026-10-31T18:51:58.351Z
     created_by: kibi/upsert
@@ -706,3 +699,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8da8f26d5b16
+  - type: implements
+    from: SYM-ui-item-pill
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:34:49.397Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef24953ae9d6
+  - type: covered_by
+    from: SYM-ui-item-pill
+    to: TEST-ui-attention
+    created_at: 2026-11-06T04:34:49.423Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ce8cbbc01a0
+  - type: executable_for
+    from: SYM-ui-test-inbox-empty
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:36:41.180Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-665b0193400f
+  - type: implements
+    from: SYM-ui-attention-kind
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:40:05.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58486f35d17c

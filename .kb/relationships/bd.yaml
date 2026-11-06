@@ -699,3 +699,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-755b26e8930a
+  - type: verified_by
+    from: SCEN-ui-removed-pages-redirect
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:32:09.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70b38a7b9a32
+  - type: verified_by
+    from: SCEN-ui-removed-pages-redirect
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-06T04:32:09.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13f93eb04341

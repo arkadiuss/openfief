@@ -671,3 +671,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-758bacc5a693
+  - type: implements
+    from: SYM-ui-server-inbox-routes
+    to: REQ-ui-inbox-settle-in-place
+    created_at: 2026-11-06T04:35:34.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-667158b07fca
+  - type: implements
+    from: SYM-ui-server-inbox-routes
+    to: REQ-ui-no-check-pages
+    created_at: 2026-11-06T04:35:34.149Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-789113803a0d
+  - type: covered_by
+    from: SYM-ui-server-inbox-routes
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:35:34.170Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69536d6e07df

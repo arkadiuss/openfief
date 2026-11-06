@@ -40,17 +40,19 @@ func newTickers(d *connectorDeps, owners ingestapp.Owners) *ingestapp.Tickers {
 	return &ingestapp.Tickers{Owners: owners, Store: ingestpg.New(d.pool), Ledger: ledgerImporter{ledger: d.ledger}}
 }
 
-// withStatementService returns h with the StatementService and the
-// TickerService mounted next to it (D-49, D-79, D-116): their calls go to
-// the uploads' and the tickers' handlers, admitted like the AuthService's,
-// view plugins only, every other path to h. Nothing may store their
-// responses.
-func withStatementService(h http.Handler, uploads *ingestapp.Uploads, t *ingestapp.Tickers, callers identityconnect.Callers, log *slog.Logger) http.Handler {
+// withStatementService returns h with the StatementService, the
+// TickerService and the SyncService mounted next to it (D-49, D-79, D-116,
+// D-196): their calls go to the uploads', the tickers' and the retries'
+// handlers, admitted like the AuthService's, view plugins only, every other
+// path to h. Nothing may store their responses.
+func withStatementService(h http.Handler, uploads *ingestapp.Uploads, t *ingestapp.Tickers, r *ingestapp.Retries, callers identityconnect.Callers, log *slog.Logger) http.Handler {
 	statementPath, statementHandler := ingestconnect.NewStatements(uploads, identityconnect.NewCallerInterceptor(callers, log), log)
 	tickerPath, tickerHandler := ingestconnect.NewTickers(t, identityconnect.NewCallerInterceptor(callers, log), log)
+	syncPath, syncHandler := ingestconnect.NewSyncs(r, identityconnect.NewCallerInterceptor(callers, log), log)
 	mux := http.NewServeMux()
 	mux.Handle(statementPath, noStore(statementHandler))
 	mux.Handle(tickerPath, noStore(tickerHandler))
+	mux.Handle(syncPath, noStore(syncHandler))
 	mux.Handle("/", h)
 	return mux
 }

@@ -755,3 +755,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c3c36a31dc36
+  - type: implements
+    from: SYM-ingestv1-retry-sync-request-get-instance
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:25:50.058Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d6b7fe568e24
+  - type: covered_by
+    from: SYM-ingestv1-retry-sync-request-get-instance
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:25:50.095Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15a863152245
+  - type: executable_for
+    from: SYM-ui-test-inbox-transfers
+    to: TEST-ui-transfers
+    created_at: 2026-11-06T04:37:44.599Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ed9be6234967

@@ -573,3 +573,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7349fe3ac330
+  - type: executable_for
+    from: SYM-ingest-app-test-scheduler-retry-respects-another-claim
+    to: TEST-ingest-app-retries
+    created_at: 2026-11-06T04:24:04.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28312ebaeb61

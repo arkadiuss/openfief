@@ -706,3 +706,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-07f60008a883
+  - type: implements
+    from: SYM-ingestv1-retry-sync-response-reset
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:25:41.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbcad429a92b
+  - type: covered_by
+    from: SYM-ingestv1-retry-sync-response-reset
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:25:41.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1d2d951227be
+  - type: implements
+    from: SYM-ui-server-evidence-steps
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:35:20.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-50d070be3c3c
+  - type: covered_by
+    from: SYM-ui-server-evidence-steps
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:35:20.797Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-83c6e6c6eeb8

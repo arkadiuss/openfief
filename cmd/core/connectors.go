@@ -117,6 +117,9 @@ type connectorDeps struct {
 	// attention raises an attention item for a connector instance that
 	// delivers bond terms or index levels it may not deliver (D-179).
 	attention attentionItems
+	// syncs is the scheduler the owner's sync retries go to (D-196);
+	// runConnectors sets it once the scheduler runs.
+	syncs *syncTrigger
 }
 
 // withConnectorDeps connects to dsn, migrates, and runs fn with what the
@@ -193,7 +196,7 @@ func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery,
 
 // runConnectors starts discovery and runs the scheduler until ctx ends.
 // Once discovery runs, the owner's manual entries can reach the instances
-// too (d.entries). Neither ever fails the core: a cluster that can't be
+// too (d.entries), and the owner's sync retries the scheduler (d.syncs). Neither ever fails the core: a cluster that can't be
 // reached is logged and leaves the read API serving.
 func runConnectors(ctx context.Context, d *connectorDeps, c *cluster, cfg *syncConfig) {
 	discovery := ingestkube.NewDiscovery(c.dynamic, c.client, c.namespace, discoveryResync)
@@ -209,7 +212,11 @@ func runConnectors(ctx context.Context, d *connectorDeps, c *cluster, cfg *syncC
 	ticker := time.NewTicker(schedulerTick)
 	defer ticker.Stop()
 	d.log.Info("connector scheduler running", "every", cfg.Policy.Interval.String())
-	newScheduler(d, c, discovery, cfg).Run(ctx, ticker.C)
+	scheduler := newScheduler(d, c, discovery, cfg)
+	if d.syncs != nil {
+		d.syncs.set(scheduler)
+	}
+	scheduler.Run(ctx, ticker.C)
 }
 
 // connectorCommand runs connector bind or connector sync over the

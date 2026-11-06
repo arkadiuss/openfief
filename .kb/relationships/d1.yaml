@@ -321,13 +321,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9fbd403538a8
-  - type: covered_by
-    from: SYM-ui-price-checks-view
-    to: TEST-ui-pricechecks
-    created_at: 2026-10-29T07:05:40.824Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-40d40f159768
   - type: implements
     from: SYM-plugins-cosign-new-key
     to: REQ-plugins-cli-install-verifies
@@ -398,13 +391,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-23e5f657eb50
-  - type: implements
-    from: SYM-ui-price-checks-view
-    to: REQ-ui-price-check-latest-per-instrument
-    created_at: 2026-10-30T05:19:46.913Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dbe7a97974ee
   - type: verified_by
     from: SCEN-valuation-holding-three-values
     to: TEST-valuation-revaluation

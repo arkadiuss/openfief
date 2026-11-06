@@ -475,3 +475,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c31a58556f64
+  - type: executable_for
+    from: SYM-ui-test-helper-browser-inbox-items
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-06T04:37:59.803Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ecffcc8d679

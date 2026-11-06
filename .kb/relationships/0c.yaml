@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e6156ace250f
+  - type: implements
+    from: SYM-ingest-app-sync-trigger
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:23:26.338Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-488869a68152
+  - type: covered_by
+    from: SYM-ingest-app-sync-trigger
+    to: TEST-ingest-app-retries
+    created_at: 2026-11-06T04:23:26.360Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3faa6ce43af2

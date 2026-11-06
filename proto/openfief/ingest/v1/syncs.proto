@@ -1,0 +1,47 @@
+// OpenFief's sync retry contract (docs/DESIGN.md D-196, D-49, D-79).
+//
+// The core calls connectors on its own schedule and retries a failed sync
+// after a backoff (D-49). When a sync keeps failing, its attention item is
+// settled in place in the Inbox (D-196): the owner may ask for one sync of
+// the connector instance at once, without waiting for the next retry. The
+// built-in UI hands that request to the core through SyncService, one
+// owner-only service (D-79), on the core's plugin port (D-115).
+//
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto), as in tickers.proto:
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, an origin off the core's allow-list, or an owner
+//   the authorizer doesn't let change every account bound to the instance
+//   (D-163), fails with PERMISSION_DENIED.
+// - An instance that isn't a running connector fails with NOT_FOUND; one
+//   whose sync runs now, here or in another core, fails with
+//   FAILED_PRECONDITION saying so (the single-flight claim, D-49); a retry
+//   of an instance retried less than a minute ago fails with
+//   RESOURCE_EXHAUSTED; a core whose connector scheduler isn't running,
+//   such as one outside a cluster, fails with UNAVAILABLE.
+syntax = "proto3";
+
+package openfief.ingest.v1;
+
+// SyncService takes the owner's request to sync a connector instance now.
+service SyncService {
+  // RetrySync starts one sync of the instance at once and answers when it
+  // has started, not when it ends: the attempt is recorded in the sync
+  // history like a scheduled one (ListSyncAttempts in the read API), and a
+  // failure counts like one, so its backoff goes on from there.
+  rpc RetrySync(RetrySyncRequest) returns (RetrySyncResponse);
+}
+
+message RetrySyncRequest {
+  string origin = 1;
+  string session_token = 2;
+  // The connector instance to sync, such as "xtb-main".
+  string instance = 3;
+}
+
+message RetrySyncResponse {}

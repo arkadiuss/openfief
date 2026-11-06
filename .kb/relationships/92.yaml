@@ -720,3 +720,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e259e506a4d2
+  - type: implements
+    from: SYM-ui-inbox-evidence-evidence
+    to: REQ-ui-inbox-settle-in-place
+    created_at: 2026-11-06T04:33:44.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-707210fcaab5
+  - type: covered_by
+    from: SYM-ui-inbox-evidence-evidence
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:33:44.382Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b6e7d5a2ae0
+  - type: executable_for
+    from: SYM-ui-test-inbox-tickers
+    to: TEST-ui-tickers
+    created_at: 2026-11-06T04:37:36.696Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cdfac4e2dfcd

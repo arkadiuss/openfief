@@ -734,3 +734,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ca4f609731c8
+  - type: implements
+    from: SYM-ui-server-retry-sync
+    to: REQ-ui-inbox-sync-timeline
+    created_at: 2026-11-06T04:35:56.760Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c0496c1bfd91
+  - type: implements
+    from: SYM-ui-server-retry-sync
+    to: REQ-ui-inbox-settle-in-place
+    created_at: 2026-11-06T04:35:56.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d2256d684d3
+  - type: covered_by
+    from: SYM-ui-server-retry-sync
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:35:56.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbc9df205e4f
+  - type: executable_for
+    from: SYM-ui-test-inbox-settles-attention-items
+    to: TEST-ui-attention
+    created_at: 2026-11-06T04:37:25.163Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd71a08aef51

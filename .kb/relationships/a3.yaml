@@ -1014,3 +1014,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63f8fae5fd5b
+  - type: implements
+    from: SYM-ui-inbox-evidence-ticker
+    to: REQ-ui-inbox-tickers
+    created_at: 2026-11-06T04:34:10.886Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9afa726623aa
+  - type: covered_by
+    from: SYM-ui-inbox-evidence-ticker
+    to: TEST-ui-tickers
+    created_at: 2026-11-06T04:34:10.927Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c32b823aff93

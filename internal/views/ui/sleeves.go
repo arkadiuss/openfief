@@ -33,6 +33,8 @@ func returnTo(next, fallback string) string {
 		return setupSleeves
 	case setupAccounts:
 		return setupAccounts
+	case inboxPath:
+		return inboxPath
 	}
 	return fallback
 }

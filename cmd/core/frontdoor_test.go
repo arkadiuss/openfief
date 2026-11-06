@@ -72,6 +72,7 @@ func pluginOnlyPaths() []string {
 		"/openfief.ingest.v1.BondLotService/AddBondLot",
 		"/openfief.ingest.v1.StatementService/UploadStatement",
 		"/openfief.ingest.v1.TickerService/ListPendingTickers",
+		"/openfief.ingest.v1.SyncService/RetrySync",
 		"/openfief.portfolio.v1.SleeveService/AddSleeveKind",
 		"/openfief.portfolio.v1.ModelPortfolioService/GetModelPortfolio",
 	}

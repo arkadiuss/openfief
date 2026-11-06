@@ -14,6 +14,7 @@ import (
 
 	ingestv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/ingest/v1/ingestv1connect"
+	viewsv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/views/v1"
 )
 
 // Refusals of the fake core.
@@ -84,46 +85,55 @@ func xtbUploadResponse() *ingestv1.UploadStatementResponse {
 	}
 }
 
-// TestTickersPage checks the owner's tickers page (D-116): each ticker
-// waiting with its name, instance and rows, the proposal filled in to
-// confirm, a field to type the ISIN when there is none, a choice of
-// trading currency on an exchange that quotes in more than one, required
-// when the proposal names none (D-170), and the link in the menu; a read
-// session gets no page.
-func TestTickersPage(t *testing.T) {
+// tickerItems adds the open items of the three tickers the fake core's
+// TickerService lists.
+func tickerItems(h *harness) {
+	for i, symbol := range []string{"TESTA.PL", "TESTB.UK", "TESTE.UK"} {
+		h.attention.add(&viewsv1.AttentionItem{
+			Id: int64(20 + i), Kind: "ticker-unconfirmed", Subject: "xtb-main/" + symbol, Detail: "rows wait",
+			State: viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN, Group: viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_DATA_COMING_IN,
+			ConnectorInstance: "xtb-main",
+		})
+	}
+}
+
+// TestInboxTickers checks a ticker to confirm in the Inbox (D-116, D-196):
+// each with its proposal filled in to confirm in place, a field to type
+// the ISIN when there is none, a choice of trading currency on an
+// exchange that quotes in more than one, required when the proposal names
+// none (D-170); a read session sees the items without the form.
+func TestInboxTickers(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	rec := h.serve(t, withSession(request(http.MethodGet, "/tickers", ""), ownerSession))
+	tickerItems(h)
+	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "<title>Tickers to confirm", `<a href="/tickers" aria-current="page">Tickers</a>`, "TESTA.PL", "Test Alpha SA",
-		`value="PLTESTA00002"`, "Proposed: TEST ALPHA", ">Confirm</button>", "TESTB.UK", "Test Beta &lt;PLC&gt;",
-		"No proposal: the lookup found none.", ">Save</button>", `action="/tickers/confirm"`, `<td class="num">2</td>`,
+	wantBody(t, rec, "Confirm the ISIN of TESTA.PL", `value="PLTESTA00002"`, "ISIN, proposed: TEST ALPHA", "Confirm and book 2 row(s)",
+		"Confirm the ISIN of TESTB.UK", "No proposal: the lookup found none.", "Save and book 1 row(s)", `action="/inbox/tickers/confirm"`,
 		`<select id="currency-xtb-main-TESTB.UK" name="currency" aria-describedby="currency-xtb-main-TESTB.UK-help" required>`,
-		`<option value="" selected disabled>Trading currency</option>`, `<option value="GBX">GBX</option>`,
+		`<option value="" selected disabled>Pick one</option>`, `<option value="GBX">GBX</option>`,
 		`<option value="GBP">GBP</option>`, `<option value="USD">USD</option>`,
 		`<select id="currency-xtb-main-TESTE.UK" name="currency" aria-describedby="currency-xtb-main-TESTE.UK-help">`,
 		`<option value="" selected>The listing's: GBX</option>`, "The proposed listing quotes in GBX.")
-	wantNoBody(t, rec, "<script>", "style=", "Test Beta <PLC>", `id="currency-xtb-main-TESTA.PL"`)
-	read := h.serve(t, withSession(request(http.MethodGet, "/tickers", ""), readSession))
-	if read.Code == http.StatusOK {
-		t.Errorf("GET /tickers for a read session = %d, want no page", read.Code)
-	}
-	overview := h.serve(t, withSession(request(http.MethodGet, "/price-checks", ""), readSession))
-	wantNoBody(t, overview, `href="/tickers"`)
+	wantNoBody(t, rec, "<script>", "style=", `id="currency-xtb-main-TESTA.PL"`)
+	read := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), readSession))
+	wantStatus(t, read, http.StatusOK)
+	wantBody(t, read, "Confirm the ISIN of TESTA.PL")
+	wantNoBody(t, read, `action="/inbox/tickers/confirm"`)
 }
 
 // TestConfirmTicker checks that the owner's ISIN, trimmed and in upper
 // case, reaches the core with the ticker, instance and the trading
-// currency picked, that the page then says how many rows were booked, and
+// currency picked, that the Inbox then says how many rows were booked, and
 // that the core's refusals, such as one naming the currencies to pick from
 // (D-170), and an overlong ISIN or currency are shown on the page.
 func TestConfirmTicker(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	rec := h.serve(t, withSession(form("/tickers/confirm", "instance=xtb-main&symbol=TESTB.UK&isin=+gbtestb00000+&currency=GBX"), ownerSession))
+	rec := h.serve(t, withSession(form("/inbox/tickers/confirm", "instance=xtb-main&symbol=TESTB.UK&isin=+gbtestb00000+&currency=GBX"), ownerSession))
 	wantStatus(t, rec, http.StatusSeeOther)
-	if loc := rec.Header().Get("Location"); loc != "/tickers?booked=2" {
-		t.Errorf("redirect to %q, want /tickers?booked=2", loc)
+	if loc := rec.Header().Get("Location"); loc != "/inbox?booked=2" {
+		t.Errorf("redirect to %q, want /inbox?booked=2", loc)
 	}
 	h.tickers.mu.Lock()
 	got := h.tickers.confirmed
@@ -132,31 +142,31 @@ func TestConfirmTicker(t *testing.T) {
 	if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
 		t.Errorf("confirmations handed to the core (-want +got):\n%s", diff)
 	}
-	booked := h.serve(t, withSession(request(http.MethodGet, "/tickers?booked=2", ""), ownerSession))
+	booked := h.serve(t, withSession(request(http.MethodGet, "/inbox?booked=2", ""), ownerSession))
 	wantBody(t, booked, "Confirmed: 2 waiting row(s) booked.")
-	forged := h.serve(t, withSession(request(http.MethodGet, "/tickers?booked=all", ""), ownerSession))
-	wantNoBody(t, forged, "Confirmed:")
-	refused := h.serve(t, withSession(form("/tickers/confirm", "instance=xtb-main&symbol=TESTC.PL&isin=PLTESTC00008"), ownerSession))
+	forged := h.serve(t, withSession(request(http.MethodGet, "/inbox?booked=all", ""), ownerSession))
+	wantBody(t, forged, "Confirmed:  waiting row(s) booked.")
+	refused := h.serve(t, withSession(form("/inbox/tickers/confirm", "instance=xtb-main&symbol=TESTC.PL&isin=PLTESTC00008"), ownerSession))
 	wantStatus(t, refused, http.StatusBadRequest)
 	wantBody(t, refused, "The core refused this: the ticker&#39;s ISIN is already confirmed")
-	unpicked := h.serve(t, withSession(form("/tickers/confirm", "instance=xtb-main&symbol=TESTB.UK&isin=GBTESTB00000"), ownerSession))
+	unpicked := h.serve(t, withSession(form("/inbox/tickers/confirm", "instance=xtb-main&symbol=TESTB.UK&isin=GBTESTB00000"), ownerSession))
 	wantStatus(t, unpicked, http.StatusBadRequest)
 	wantBody(t, unpicked, "The core refused this: pick TESTB.UK&#39;s trading currency, one of GBX, GBP, USD")
-	longCurrency := h.serve(t, withSession(form("/tickers/confirm", "instance=xtb-main&symbol=TESTB.UK&isin=GBTESTB00000&currency=POUNDS"), ownerSession))
+	longCurrency := h.serve(t, withSession(form("/inbox/tickers/confirm", "instance=xtb-main&symbol=TESTB.UK&isin=GBTESTB00000&currency=POUNDS"), ownerSession))
 	wantStatus(t, longCurrency, http.StatusBadRequest)
 	wantBody(t, longCurrency, "A trading currency has 3 letters")
-	long := h.serve(t, withSession(form("/tickers/confirm", "instance=xtb-main&symbol=TESTA.PL&isin="+strings.Repeat("X", 13)), ownerSession))
+	long := h.serve(t, withSession(form("/inbox/tickers/confirm", "instance=xtb-main&symbol=TESTA.PL&isin="+strings.Repeat("X", 13)), ownerSession))
 	wantStatus(t, long, http.StatusBadRequest)
 	wantBody(t, long, "An ISIN has 12 characters")
 }
 
 // TestUploadWaitingForTickers checks that an upload whose rows wait for
-// their tickers' ISINs links the owner to the tickers page.
+// their tickers' ISINs links the owner to the Inbox.
 func TestUploadWaitingForTickers(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
 	rec := h.serve(t, withSession(uploadRequest(modePart("transactions"), filePart("xtb.xlsx", strings.NewReader("PK\x03\x04"))), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "Import batch b-8 from xtb", `2 of the rows wait for their ticker's ISIN: <a href="/tickers">confirm the tickers</a>`,
+	wantBody(t, rec, "Import batch b-8 from xtb", `2 of the rows wait for their ticker's ISIN: <a href="/inbox">confirm the tickers in the Inbox</a>`,
 		"waits for the owner to confirm the ISIN of TESTA.PL")
 }

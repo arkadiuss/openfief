@@ -595,27 +595,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-89d0a6f2756d
   - type: implements
-    from: SYM-ui-server-check-routes
-    to: REQ-ui-attention-page
-    created_at: 2026-10-31T18:54:07.516Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7fc5d37a930b
-  - type: implements
-    from: SYM-ui-server-check-routes
-    to: REQ-ui-attention-items-one-place
-    created_at: 2026-10-31T18:54:07.563Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d4adc92c9b73
-  - type: covered_by
-    from: SYM-ui-server-check-routes
-    to: TEST-ui-attention
-    created_at: 2026-10-31T18:54:07.606Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f31fae482999
-  - type: implements
     from: SYM-views-app-views-accounts-in
     to: REQ-views-oki-tax-days
     created_at: 2026-10-31T18:36:42.472Z

@@ -895,3 +895,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47ec12545640
+  - type: implements
+    from: SYM-ui-evidence-step
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:33:27.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-505e52d36b93
+  - type: covered_by
+    from: SYM-ui-evidence-step
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:33:27.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6859af6d460

@@ -66,6 +66,9 @@ type accountData struct {
 	Upload *ingestv1.UploadStatementResponse
 	// Error is why the core refused what the owner posted.
 	Error string
+	// Items are the account's own open attention items, for the banner at
+	// the top of its page (D-196).
+	Items []inboxItem
 }
 
 // accountForm is what the owner posted to an account's page and why it was
@@ -127,7 +130,7 @@ func (s *server) renderAccount(w http.ResponseWriter, r *http.Request, sess sess
 	}
 	data := accountData{
 		Date: date.String(), Account: acc.Msg.GetAccount(), Status: status.Msg.GetStatus(), Error: form.Error,
-		Upload: form.Upload,
+		Upload: form.Upload, Items: s.accountItems(r, sess, id),
 	}
 	if data.Charts, err = s.accountCharts(r, sess, id, start, date); err != nil {
 		s.coreFailed(w, r, "account charts", err)
@@ -226,34 +229,4 @@ func (s *server) transactionsFragment(w http.ResponseWriter, r *http.Request, se
 		return
 	}
 	s.showTemplate(w, r, http.StatusOK, "account", "transaction-rows", view)
-}
-
-// flaggedAccount is an account with its flagged balance assertion checks.
-type flaggedAccount struct {
-	Account *viewsv1.Account
-	Checks  []*viewsv1.AssertionCheck
-}
-
-// assertionsPage lists every flagged balance assertion check, per account:
-// each is an error for the owner to resolve (D-18).
-func (s *server) assertionsPage(w http.ResponseWriter, r *http.Request, sess session) {
-	accounts, err := s.read.ListAccounts(r.Context(), bearer(&viewsv1.ListAccountsRequest{}, sess))
-	if err != nil {
-		s.coreFailed(w, r, "ListAccounts", err)
-		return
-	}
-	var flagged []flaggedAccount
-	for _, a := range accounts.Msg.GetAccounts() {
-		checks, err := s.read.ListAssertionChecks(r.Context(), bearer(&viewsv1.ListAssertionChecksRequest{
-			AccountId: a.GetId(), Status: viewsv1.AssertionStatus_ASSERTION_STATUS_FLAGGED,
-		}, sess))
-		if err != nil {
-			s.coreFailed(w, r, "ListAssertionChecks", err)
-			return
-		}
-		if len(checks.Msg.GetChecks()) > 0 {
-			flagged = append(flagged, flaggedAccount{Account: a, Checks: checks.Msg.GetChecks()})
-		}
-	}
-	s.show(w, r, http.StatusOK, "assertions", page{Title: "Flagged balance assertions", Session: &sess, Data: flagged})
 }

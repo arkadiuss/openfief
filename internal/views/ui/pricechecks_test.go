@@ -92,27 +92,38 @@ func (f *fakePriceChecks) locked(fn func()) {
 	fn()
 }
 
-// TestPriceChecksPage checks the price checks page (D-112): the latest
-// check of each instrument, with both prices, their sources, the price's
-// own date when earlier, the difference in percent and the status, its
-// history behind it, and each instrument's threshold (D-110), for any
-// session, with the owner's forms only for the owner; without a session,
-// the login page.
-func TestPriceChecksPage(t *testing.T) {
+// priceCheckItem adds the open item of the synthetic instrument's flagged
+// price check.
+func priceCheckItem(h *harness) {
+	h.attention.add(&viewsv1.AttentionItem{
+		Id: 30, Kind: "price-check-flagged", Subject: "XX0000000001/SYN", Detail: "2026-03-15 ibkr-main 0.028232",
+		State: viewsv1.AttentionItemState_ATTENTION_ITEM_STATE_OPEN, Group: viewsv1.AttentionItemGroup_ATTENTION_ITEM_GROUP_NUMBERS_TO_CHECK,
+		Isin: "XX0000000001",
+	})
+}
+
+// TestInboxPriceChecks checks the price checks in the Inbox (D-112, D-196):
+// a flagged check's item shows both prices side by side, their sources,
+// the price's own date when earlier, the difference and the threshold,
+// its history, and, for the owner only, Acknowledge and the threshold
+// form; the done view lists every instrument's checks with their history
+// (D-110), so nothing the old page showed is lost.
+func TestInboxPriceChecks(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	rec := h.serve(t, withSession(request(http.MethodGet, "/price-checks", ""), demoSession))
+	priceCheckItem(h)
+	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), demoSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "<title>Price checks", "2026-03-15", "XX0000000001", "84,125 GBP", "(2026-03-13)", "86,5 GBP", "ibkr-main",
-		"2.8232%", "by more than 1%", `<span class="pill pill-warn">flagged</span>`, "History: 1 earlier check(s)", "0.2381%",
-		"XX0000000002", `<span class="pill pill-warn">currency mismatch</span>`, "Flagged beyond 5%, this instrument's own threshold",
-		"1 instrument(s) have a flagged price check")
-	wantNoBody(t, rec, "<script>", "style=", "Acknowledge</button>", "/price-checks/threshold")
-	rec = h.serve(t, withSession(request(http.MethodGet, "/price-checks", ""), ownerSession))
-	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, `action="/price-checks/acknowledge"`, `name="date" value="2026-03-15"`, "Acknowledge</button>",
-		`action="/price-checks/threshold"`, `name="threshold" inputmode="decimal" maxlength="12" value="5"`)
-	rec = h.serve(t, request(http.MethodGet, "/price-checks", ""))
+	wantBody(t, rec, "Numbers to check · 1", "The price of XX0000000001/SYN differs", "84,125 GBP", "(2026-03-13)", "86,5 GBP",
+		"ibkr-main", "2.8232%", "threshold 1%", "History: 1 earlier check(s)", "0.2381%")
+	wantNoBody(t, rec, "<script>", "style=", "Acknowledge</button>", "/inbox/price-checks/threshold")
+	rec = h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), ownerSession))
+	wantBody(t, rec, `action="/inbox/price-checks/acknowledge"`, `name="date" value="2026-03-15"`, "Acknowledge</button>",
+		`action="/inbox/price-checks/threshold"`)
+	rec = h.serve(t, withSession(request(http.MethodGet, "/inbox?view=done", ""), ownerSession))
+	wantBody(t, rec, "Every price check: 2 instrument(s)", "XX0000000002", `<span class="pill pill-warn">currency mismatch</span>`,
+		"Flagged beyond 5%, this instrument's own threshold", `name="threshold" inputmode="decimal" maxlength="12" value="5"`)
+	rec = h.serve(t, request(http.MethodGet, "/inbox", ""))
 	wantStatus(t, rec, http.StatusSeeOther)
 	if got := rec.Header().Get("Location"); got != "/login" {
 		t.Errorf("Location = %q, want /login", got)
@@ -126,10 +137,10 @@ func TestPriceChecksPage(t *testing.T) {
 func TestPriceCheckForms(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	rec := h.serve(t, withSession(form("/price-checks/acknowledge", "isin=XX0000000001&symbol=SYN&date=2026-03-15&source=ibkr-main"), ownerSession))
+	rec := h.serve(t, withSession(form("/inbox/price-checks/acknowledge", "isin=XX0000000001&symbol=SYN&date=2026-03-15&source=ibkr-main"), ownerSession))
 	wantStatus(t, rec, http.StatusSeeOther)
 	for _, in := range []string{"2.5", url.QueryEscape(" 3 %"), ""} {
-		rec = h.serve(t, withSession(form("/price-checks/threshold", "isin=XX0000000002&symbol=THIN&threshold="+in), ownerSession))
+		rec = h.serve(t, withSession(form("/inbox/price-checks/threshold", "isin=XX0000000002&symbol=THIN&threshold="+in), ownerSession))
 		wantStatus(t, rec, http.StatusSeeOther)
 	}
 	var got []string
@@ -151,15 +162,15 @@ func TestPriceCheckForms(t *testing.T) {
 		}
 	}
 	for _, bad := range []string{"0", "100", "-1", "two", "1e2"} {
-		rec = h.serve(t, withSession(form("/price-checks/threshold", "isin=XX0000000002&symbol=THIN&threshold="+bad), ownerSession))
+		rec = h.serve(t, withSession(form("/inbox/price-checks/threshold", "isin=XX0000000002&symbol=THIN&threshold="+bad), ownerSession))
 		wantStatus(t, rec, http.StatusBadRequest)
 		wantBody(t, rec, "a percent greater than 0 and less than 100")
 	}
-	rec = h.serve(t, withSession(form("/price-checks/threshold", "isin=XX0000000002&symbol=THIN&threshold=100%25"), ownerSession))
+	rec = h.serve(t, withSession(form("/inbox/price-checks/threshold", "isin=XX0000000002&symbol=THIN&threshold=100%25"), ownerSession))
 	wantStatus(t, rec, http.StatusBadRequest)
-	rec = h.serve(t, withSession(form("/price-checks/threshold", "isin=XX0000000002&symbol=THIN&threshold=99.99999999"), ownerSession))
+	rec = h.serve(t, withSession(form("/inbox/price-checks/threshold", "isin=XX0000000002&symbol=THIN&threshold=99.99999999"), ownerSession))
 	wantStatus(t, rec, http.StatusBadRequest)
-	rec = h.serve(t, withSession(form("/price-checks/acknowledge", "isin=XX0000000001&symbol=SYN&date=2026-03-15&source=ibkr-main"), readSession))
+	rec = h.serve(t, withSession(form("/inbox/price-checks/acknowledge", "isin=XX0000000001&symbol=SYN&date=2026-03-15&source=ibkr-main"), readSession))
 	wantStatus(t, rec, http.StatusForbidden)
 }
 
@@ -195,13 +206,13 @@ func TestFractionOf(t *testing.T) {
 
 // TestOverviewFlagsPriceChecks checks that the overview counts the
 // instruments whose latest price check is flagged and not acknowledged,
-// and links the page, next to the flagged balance assertions.
+// and links the Inbox, next to the flagged balance assertions.
 func TestOverviewFlagsPriceChecks(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, `<a href="/price-checks">1 flagged price check(s)</a>`, `<a href="/price-checks">Price checks</a>`)
+	wantBody(t, rec, `<a href="/inbox">1 flagged price check(s)</a>`)
 }
 
 func TestPercent(t *testing.T) {

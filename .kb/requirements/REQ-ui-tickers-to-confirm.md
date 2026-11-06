@@ -1,6 +1,6 @@
 ---
 title: The owner's UI must list the tickers waiting for their ISIN with the proposal to confirm or a field to type it, hand the owner's confirmation to the core, and link the page from an upload whose rows wait.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-116
 tags:
   - strict-modeling

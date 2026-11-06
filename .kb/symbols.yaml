@@ -52034,32 +52034,6 @@ symbols:
         target: TEST-ui-pages
       - type: implements
         target: REQ-ui-account-pages
-  - id: SYM-ui-flagged-account
-    title: flaggedAccount
-    sourceFile: internal/views/ui/account.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:51:21.886Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-ui-account-pages
-  - id: SYM-ui-server-assertions-page
-    title: server.assertionsPage
-    sourceFile: internal/views/ui/account.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T19:51:26.431Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pages
-      - type: implements
-        target: REQ-ui-account-pages
   - id: SYM-ui-login-data
     title: loginData
     sourceFile: internal/views/ui/auth.go
@@ -53680,16 +53654,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-28T20:01:25.574Z
-    relationships:
-      - type: executable_for
-        target: TEST-ui-pages
-  - id: SYM-ui-test-assertions-page
-    title: TestAssertionsPage
-    sourceFile: internal/views/ui/pages_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-28T20:01:29.248Z
     relationships:
       - type: executable_for
         target: TEST-ui-pages
@@ -63726,13 +63690,13 @@ symbols:
       - type: covered_by
         target: TEST-ui-transfers
       - type: implements
+        target: REQ-ui-inbox-transfers
+      - type: implements
         target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
       - type: implements
         target: REQ-ui-performance-chart-from-charts-start
-      - type: implements
-        target: REQ-ui-transfers-page
   - id: SYM-ui-model-view
     title: modelView
     sourceFile: internal/views/ui/performance.go
@@ -63871,13 +63835,13 @@ symbols:
       - type: covered_by
         target: TEST-ui-transfers
       - type: implements
+        target: REQ-ui-inbox-transfers
+      - type: implements
         target: REQ-ui-model-portfolio-performance-chart
       - type: implements
         target: REQ-ui-overview-values
       - type: implements
         target: REQ-ui-performance-chart-from-charts-start
-      - type: implements
-        target: REQ-ui-transfers-page
   - id: SYM-views-ghostfolio-activity-type
     title: ActivityType
     sourceFile: internal/views/ghostfolio/model.go
@@ -75006,35 +74970,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
-        target: REQ-ui-price-checks-page
-  - id: SYM-ui-price-checks-view
-    title: priceChecksView
-    sourceFile: internal/views/ui/pricechecks.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T07:05:38.986Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pricechecks
-      - type: implements
-        target: REQ-ui-price-check-latest-per-instrument
-  - id: SYM-ui-server-price-checks-page
-    title: server.priceChecksPage
-    sourceFile: internal/views/ui/pricechecks.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T07:05:45.410Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pricechecks
-      - type: implements
-        target: REQ-AUTO-7374F67D85269872
-      - type: implements
-        target: REQ-ui-price-check-latest-per-instrument
+        target: REQ-ui-inbox-price-checks
   - id: SYM-ui-server-flagged-price-checks
     title: server.flaggedPriceChecks
     sourceFile: internal/views/ui/pricechecks.go
@@ -75047,7 +74983,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
-        target: REQ-ui-price-checks-page
+        target: REQ-ui-inbox-price-checks
   - id: SYM-ui-test-helper-fake-read-list-price-checks
     title: fakeRead.ListPriceChecks
     sourceFile: internal/views/ui/pricechecks_test.go
@@ -75055,16 +74991,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-29T07:05:58.423Z
-    relationships:
-      - type: executable_for
-        target: TEST-ui-pricechecks
-  - id: SYM-ui-test-price-checks-page
-    title: TestPriceChecksPage
-    sourceFile: internal/views/ui/pricechecks_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T07:06:04.512Z
     relationships:
       - type: executable_for
         target: TEST-ui-pricechecks
@@ -90765,19 +90691,6 @@ symbols:
         target: TEST-ui-pricechecks
       - type: implements
         target: REQ-ui-price-check-latest-per-instrument
-  - id: SYM-ui-uc-server-render-price-checks
-    title: server.renderPriceChecks
-    sourceFile: internal/views/ui/pricechecks.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-30T06:18:38.150Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-pricechecks
-      - type: implements
-        target: REQ-ui-price-check-latest-per-instrument
   - id: SYM-ui-uc-server-acknowledge-price-check
     title: server.acknowledgePriceCheck
     sourceFile: internal/views/ui/pricechecks.go
@@ -90790,7 +90703,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
-        target: REQ-ui-price-checks-page
+        target: REQ-ui-inbox-price-checks
   - id: SYM-ui-uc-server-set-price-check-threshold
     title: server.setPriceCheckThreshold
     sourceFile: internal/views/ui/pricechecks.go
@@ -90803,7 +90716,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
-        target: REQ-ui-price-checks-page
+        target: REQ-ui-inbox-price-checks
   - id: SYM-ui-uc-server-after-price-check-form
     title: server.afterPriceCheckForm
     sourceFile: internal/views/ui/pricechecks.go
@@ -90816,7 +90729,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
-        target: REQ-ui-price-checks-page
+        target: REQ-ui-inbox-price-checks
   - id: SYM-ui-uc-fraction-of
     title: fractionOf
     sourceFile: internal/views/ui/pricechecks.go
@@ -90829,7 +90742,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-pricechecks
       - type: implements
-        target: REQ-ui-price-checks-page
+        target: REQ-ui-inbox-price-checks
   - id: SYM-ui-uc-test-pc-other-instrument
     title: otherInstrument
     sourceFile: internal/views/ui/pricechecks_test.go
@@ -101828,45 +101741,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-transfers
-  - id: SYM-ui-transfers-view
-    title: transfersView
-    sourceFile: internal/views/ui/transfers.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-30T07:26:47.401Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-transfers
-      - type: implements
-        target: REQ-ui-transfers-page
-  - id: SYM-ui-server-transfers-page
-    title: server.transfersPage
-    sourceFile: internal/views/ui/transfers.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-30T07:26:56.167Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-transfers
-      - type: implements
-        target: REQ-ui-transfers-page
-  - id: SYM-ui-server-render-transfers
-    title: server.renderTransfers
-    sourceFile: internal/views/ui/transfers.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-30T07:27:04.620Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-transfers
-      - type: implements
-        target: REQ-ui-transfers-page
   - id: SYM-ui-server-suggested-transfers
     title: server.suggestedTransfers
     sourceFile: internal/views/ui/transfers.go
@@ -101879,7 +101753,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-transfers
       - type: implements
-        target: REQ-ui-transfers-page
+        target: REQ-ui-inbox-transfers
   - id: SYM-ui-server-confirm-transfer
     title: server.confirmTransfer
     sourceFile: internal/views/ui/transfers.go
@@ -101892,9 +101766,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-transfers
       - type: implements
-        target: REQ-ui-transfer-confirmation
+        target: REQ-ui-inbox-transfers
       - type: implements
-        target: REQ-ui-transfers-page
+        target: REQ-ui-transfer-confirmation
   - id: SYM-ui-server-reject-transfer
     title: server.rejectTransfer
     sourceFile: internal/views/ui/transfers.go
@@ -101907,9 +101781,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-transfers
       - type: implements
-        target: REQ-ui-transfer-confirmation
+        target: REQ-ui-inbox-transfers
       - type: implements
-        target: REQ-ui-transfers-page
+        target: REQ-ui-transfer-confirmation
   - id: SYM-ui-server-decide-transfer
     title: server.decideTransfer
     sourceFile: internal/views/ui/transfers.go
@@ -101922,7 +101796,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-transfers
       - type: implements
-        target: REQ-ui-transfers-page
+        target: REQ-ui-inbox-transfers
   - id: SYM-ui-transfer-form
     title: transferForm
     sourceFile: internal/views/ui/transfers.go
@@ -101935,7 +101809,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-transfers
       - type: implements
-        target: REQ-ui-transfers-page
+        target: REQ-ui-inbox-transfers
   - id: SYM-ui-parse-transfer-form
     title: parseTransferForm
     sourceFile: internal/views/ui/transfers.go
@@ -101948,7 +101822,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-transfers
       - type: implements
-        target: REQ-ui-transfers-page
+        target: REQ-ui-inbox-transfers
   - id: SYM-ui-test-helper-fake-transfers
     title: fakeTransfers
     sourceFile: internal/views/ui/transfers_test.go
@@ -102007,16 +101881,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-30T07:28:44.994Z
-    relationships:
-      - type: executable_for
-        target: TEST-ui-transfers
-  - id: SYM-ui-test-transfers-page
-    title: TestTransfersPage
-    sourceFile: internal/views/ui/transfers_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-30T07:28:54.164Z
     relationships:
       - type: executable_for
         target: TEST-ui-transfers
@@ -109643,7 +109507,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-unconfirmed-ticker-waits
       - type: implements
-        target: REQ-ui-tickers-to-confirm
+        target: REQ-ui-inbox-tickers
   - id: SYM-ui-server-statement-routes
     title: server.statementRoutes
     sourceFile: internal/views/ui/tickers.go
@@ -109656,54 +109520,7 @@ symbols:
       - type: covered_by
         target: TEST-ui-tickers
       - type: implements
-        target: REQ-ui-tickers-to-confirm
-  - id: SYM-ui-tickers-view
-    title: tickersView
-    sourceFile: internal/views/ui/tickers.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:40:11.649Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-tickers
-      - type: implements
-        target: REQ-ingest-xtb-isin-owner-confirms
-      - type: implements
-        target: REQ-ui-tickers-to-confirm
-  - id: SYM-ui-server-tickers-page
-    title: server.tickersPage
-    sourceFile: internal/views/ui/tickers.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:40:18.471Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-tickers
-      - type: implements
-        target: REQ-ingest-xtb-isin-owner-confirms
-      - type: implements
-        target: REQ-ui-ticker-currency-choice
-      - type: implements
-        target: REQ-ui-tickers-to-confirm
-  - id: SYM-ui-server-render-tickers
-    title: server.renderTickers
-    sourceFile: internal/views/ui/tickers.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:40:25.194Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-tickers
-      - type: implements
-        target: REQ-ingest-xtb-isin-owner-confirms
-      - type: implements
-        target: REQ-ui-tickers-to-confirm
+        target: REQ-ui-inbox-tickers
   - id: SYM-ui-server-confirm-ticker
     title: server.confirmTicker
     sourceFile: internal/views/ui/tickers.go
@@ -109718,9 +109535,7 @@ symbols:
       - type: implements
         target: REQ-ingest-xtb-isin-owner-confirms
       - type: implements
-        target: REQ-ui-ticker-currency-choice
-      - type: implements
-        target: REQ-ui-tickers-to-confirm
+        target: REQ-ui-inbox-tickers
   - id: SYM-ui-test-helper-fake-tickers
     title: fakeTickers
     sourceFile: internal/views/ui/tickers_test.go
@@ -109759,16 +109574,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-10-31T13:40:53.925Z
-    relationships:
-      - type: executable_for
-        target: TEST-ui-tickers
-  - id: SYM-ui-test-tickers-page
-    title: TestTickersPage
-    sourceFile: internal/views/ui/tickers_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T13:41:00.380Z
     relationships:
       - type: executable_for
         target: TEST-ui-tickers
@@ -117191,7 +116996,7 @@ symbols:
       - type: implements
         target: REQ-ui-attention-items-one-place
       - type: implements
-        target: REQ-ui-attention-page
+        target: REQ-ui-inbox-page
   - id: SYM-ui-attention-kind-of
     title: attentionKindOf
     sourceFile: internal/views/ui/attention.go
@@ -117206,67 +117011,7 @@ symbols:
       - type: implements
         target: REQ-ui-attention-items-one-place
       - type: implements
-        target: REQ-ui-attention-page
-  - id: SYM-ui-attention-row
-    title: attentionRow
-    sourceFile: internal/views/ui/attention.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T18:52:08.409Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-attention
-      - type: implements
-        target: REQ-ui-attention-items-one-place
-      - type: implements
-        target: REQ-ui-attention-page
-  - id: SYM-ui-attention-view
-    title: attentionView
-    sourceFile: internal/views/ui/attention.go
-    status: active
-    symbol_role: type-shape
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T18:52:14.316Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-attention
-      - type: implements
-        target: REQ-ui-attention-items-one-place
-      - type: implements
-        target: REQ-ui-attention-page
-  - id: SYM-ui-server-attention-page
-    title: server.attentionPage
-    sourceFile: internal/views/ui/attention.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T18:52:20.914Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-attention
-      - type: implements
-        target: REQ-ui-attention-items-one-place
-      - type: implements
-        target: REQ-ui-attention-page
-  - id: SYM-ui-server-render-attention
-    title: server.renderAttention
-    sourceFile: internal/views/ui/attention.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T18:52:27.355Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-attention
-      - type: implements
-        target: REQ-ui-attention-items-one-place
-      - type: implements
-        target: REQ-ui-attention-page
+        target: REQ-ui-inbox-page
   - id: SYM-ui-server-acknowledge-attention-item
     title: server.acknowledgeAttentionItem
     sourceFile: internal/views/ui/attention.go
@@ -117281,7 +117026,7 @@ symbols:
       - type: implements
         target: REQ-ui-attention-items-one-place
       - type: implements
-        target: REQ-ui-attention-page
+        target: REQ-ui-inbox-page
   - id: SYM-ui-server-resolve-attention-item
     title: server.resolveAttentionItem
     sourceFile: internal/views/ui/attention.go
@@ -117296,7 +117041,7 @@ symbols:
       - type: implements
         target: REQ-ui-attention-items-one-place
       - type: implements
-        target: REQ-ui-attention-page
+        target: REQ-ui-inbox-page
   - id: SYM-ui-posted-item
     title: postedItem
     sourceFile: internal/views/ui/attention.go
@@ -117311,7 +117056,7 @@ symbols:
       - type: implements
         target: REQ-ui-attention-items-one-place
       - type: implements
-        target: REQ-ui-attention-page
+        target: REQ-ui-inbox-page
   - id: SYM-ui-server-after-attention-form
     title: server.afterAttentionForm
     sourceFile: internal/views/ui/attention.go
@@ -117326,7 +117071,7 @@ symbols:
       - type: implements
         target: REQ-ui-attention-items-one-place
       - type: implements
-        target: REQ-ui-attention-page
+        target: REQ-ui-inbox-page
   - id: SYM-ui-server-open-attention
     title: server.openAttention
     sourceFile: internal/views/ui/attention.go
@@ -117345,7 +117090,7 @@ symbols:
       - type: implements
         target: REQ-ui-attention-items-one-place
       - type: implements
-        target: REQ-ui-attention-page
+        target: REQ-ui-inbox-page
   - id: SYM-ui-test-helper-fake-attention
     title: fakeAttention
     sourceFile: internal/views/ui/attention_test.go
@@ -117417,26 +117162,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-attention
-  - id: SYM-ui-test-attention-page
-    title: TestAttentionPage
-    sourceFile: internal/views/ui/attention_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T18:53:47.171Z
-    relationships:
-      - type: executable_for
-        target: TEST-ui-attention
-  - id: SYM-ui-test-attention-refusals
-    title: TestAttentionRefusals
-    sourceFile: internal/views/ui/attention_test.go
-    status: active
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T18:53:52.870Z
-    relationships:
-      - type: executable_for
-        target: TEST-ui-attention
   - id: SYM-ui-test-broken-transfer
     title: TestBrokenTransfer
     sourceFile: internal/views/ui/attention_test.go
@@ -117447,21 +117172,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-ui-attention
-  - id: SYM-ui-server-check-routes
-    title: server.checkRoutes
-    sourceFile: internal/views/ui/server.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-31T18:54:05.287Z
-    relationships:
-      - type: covered_by
-        target: TEST-ui-attention
-      - type: implements
-        target: REQ-ui-attention-items-one-place
-      - type: implements
-        target: REQ-ui-attention-page
   - id: SYM-attentionv1-acknowledge-attention-item-request
     title: AcknowledgeAttentionItemRequest
     sourceFile: sdk/go/gen/openfief/attention/v1/attention.pb.go
@@ -140258,3 +139968,1539 @@ symbols:
         target: TEST-views-connectapi-uiv2
       - type: implements
         target: REQ-views-activity
+  - id: SYM-ingest-app-retries
+    title: Retries
+    sourceFile: internal/ingest/app/retries.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:07.191Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-retries
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingest-app-retries-retry-sync
+    title: Retries.RetrySync
+    sourceFile: internal/ingest/app/retries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:11.556Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-retries
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingest-app-retries-reserve
+    title: Retries.reserve
+    sourceFile: internal/ingest/app/retries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:15.973Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-retries
+      - type: implements
+        target: REQ-ingest-retry-rate-limited
+  - id: SYM-ingest-app-retries-release
+    title: Retries.release
+    sourceFile: internal/ingest/app/retries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:20.395Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-retries
+      - type: implements
+        target: REQ-ingest-retry-rate-limited
+  - id: SYM-ingest-app-sync-trigger
+    title: SyncTrigger
+    sourceFile: internal/ingest/app/retries.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:24.769Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-retries
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingest-app-scheduler-retry
+    title: Scheduler.Retry
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:29.151Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-retries
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingest-app-scheduler-prepare
+    title: Scheduler.prepare
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:33.594Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-retries
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+      - type: implements
+        target: REQ-ingest-scheduler-single-flight
+  - id: SYM-ingest-app-scheduler-run-batches
+    title: Scheduler.runBatches
+    sourceFile: internal/ingest/app/scheduler.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:37.992Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-scheduler-retry
+  - id: SYM-ingest-app-test-helper-recording-trigger
+    title: recordingTrigger
+    sourceFile: internal/ingest/app/retries_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:41.801Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-retries
+  - id: SYM-ingest-app-test-helper-recording-trigger-retry
+    title: recordingTrigger.Retry
+    sourceFile: internal/ingest/app/retries_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:45.537Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-retries
+  - id: SYM-ingest-app-test-retries-refuse-without-the-owner
+    title: TestRetriesRefuseWithoutTheOwner
+    sourceFile: internal/ingest/app/retries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:49.847Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-retries
+  - id: SYM-ingest-app-test-retries-rate-limit
+    title: TestRetriesRateLimit
+    sourceFile: internal/ingest/app/retries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:54.186Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-retries
+  - id: SYM-ingest-app-test-scheduler-retry
+    title: TestSchedulerRetry
+    sourceFile: internal/ingest/app/retries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:23:58.482Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-retries
+  - id: SYM-ingest-app-test-scheduler-retry-respects-another-claim
+    title: TestSchedulerRetryRespectsAnotherClaim
+    sourceFile: internal/ingest/app/retries_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:02.941Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-retries
+  - id: SYM-ingest-connect-new-syncs
+    title: NewSyncs
+    sourceFile: internal/ingest/connectapi/syncs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:07.394Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingest-connect-syncs
+    title: syncs
+    sourceFile: internal/ingest/connectapi/syncs.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:11.297Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingest-connect-syncs-retry-sync
+    title: syncs.RetrySync
+    sourceFile: internal/ingest/connectapi/syncs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:15.609Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingest-connect-syncs-fail
+    title: syncs.fail
+    sourceFile: internal/ingest/connectapi/syncs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:19.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+      - type: implements
+        target: REQ-ingest-retry-rate-limited
+  - id: SYM-ingest-connect-test-helper-trigger
+    title: trigger
+    sourceFile: internal/ingest/connectapi/syncs_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:23.787Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-syncs
+  - id: SYM-ingest-connect-test-helper-trigger-retry
+    title: trigger.Retry
+    sourceFile: internal/ingest/connectapi/syncs_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:27.477Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-syncs
+  - id: SYM-ingest-connect-test-sync-service-retry
+    title: TestSyncServiceRetry
+    sourceFile: internal/ingest/connectapi/syncs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:31.748Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-syncs
+  - id: SYM-ingest-connect-test-sync-service-retry-too-soon
+    title: TestSyncServiceRetryTooSoon
+    sourceFile: internal/ingest/connectapi/syncs_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:36.101Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectapi-syncs
+  - id: SYM-core-sync-trigger
+    title: syncTrigger
+    sourceFile: cmd/core/syncs.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:39.818Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-core-sync-trigger-retry
+    title: syncTrigger.Retry
+    sourceFile: cmd/core/syncs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:44.161Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-core-sync-trigger-set
+    title: syncTrigger.set
+    sourceFile: cmd/core/syncs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:48.644Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-core-new-retries
+    title: newRetries
+    sourceFile: cmd/core/syncs.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:53.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-front-door
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-request
+    title: RetrySyncRequest
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:24:56.847Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-response
+    title: RetrySyncResponse
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:00.689Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-request-descriptor
+    title: RetrySyncRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:05.049Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-request-proto-message
+    title: RetrySyncRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:09.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-request-proto-reflect
+    title: RetrySyncRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:13.818Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-request-reset
+    title: RetrySyncRequest.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:18.289Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-request-string
+    title: RetrySyncRequest.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:22.635Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-response-descriptor
+    title: RetrySyncResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:26.924Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-response-proto-message
+    title: RetrySyncResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:31.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-response-proto-reflect
+    title: RetrySyncResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:35.733Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-response-reset
+    title: RetrySyncResponse.Reset
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:40.056Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-response-string
+    title: RetrySyncResponse.String
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:44.318Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-request-get-instance
+    title: RetrySyncRequest.GetInstance
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:48.554Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-request-get-origin
+    title: RetrySyncRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:52.896Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-retry-sync-request-get-session-token
+    title: RetrySyncRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:25:57.252Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-init-syncs
+    title: init
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:01.600Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-file_openfief_ingest_v1_syncs_proto_init
+    title: file_openfief_ingest_v1_syncs_proto_init
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:05.970Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1-file_openfief_ingest_v1_syncs_proto_rawDescGZIP
+    title: file_openfief_ingest_v1_syncs_proto_rawDescGZIP
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:10.307Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1connect-new-sync-service-client
+    title: NewSyncServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/syncs.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:14.588Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1connect-new-sync-service-handler
+    title: NewSyncServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/syncs.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:18.857Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1connect-sync-service-client
+    title: SyncServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/syncs.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:22.564Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1connect-sync-service-handler
+    title: SyncServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/syncs.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:26.124Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1connect-unimplemented-sync-service-handler
+    title: UnimplementedSyncServiceHandler
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/syncs.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:29.834Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1connect-unimplemented-sync-service-handler-retry-sync
+    title: UnimplementedSyncServiceHandler.RetrySync
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/syncs.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:34.130Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1connect-sync-service-client-impl
+    title: syncServiceClient
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/syncs.connect.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:38.199Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ingestv1connect-sync-service-client-retry-sync-impl
+    title: syncServiceClient.RetrySync
+    sourceFile: sdk/go/gen/openfief/ingest/v1/ingestv1connect/syncs.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:26:42.661Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync
+  - id: SYM-ui-assertions-on
+    title: assertionsOn
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:09.086Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-back-to-inbox
+    title: backToInbox
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:13.416Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+  - id: SYM-ui-brokers-of
+    title: brokersOf
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:17.749Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+  - id: SYM-ui-digits-only
+    title: digitsOnly
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:22.004Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-inbox-tickers
+  - id: SYM-ui-evidence-step
+    title: evidenceStep
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:26.283Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-group-index
+    title: groupIndex
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:30.674Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-inbox-evidence-type
+    title: inboxEvidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:34.409Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-inbox-evidence-broken-transfer
+    title: inboxEvidence.brokenTransfer
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:38.576Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+  - id: SYM-ui-inbox-evidence-evidence
+    title: inboxEvidence.evidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:42.839Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+  - id: SYM-ui-inbox-evidence-extras
+    title: inboxEvidence.extras
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:47.144Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-inbox-price-checks
+      - type: implements
+        target: REQ-ui-inbox-transfers
+  - id: SYM-ui-inbox-evidence-item
+    title: inboxEvidence.item
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:51.665Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-inbox-evidence-map-form
+    title: inboxEvidence.mapForm
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:33:56.198Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+  - id: SYM-ui-inbox-evidence-price-checks
+    title: inboxEvidence.priceChecks
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:00.658Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-inbox-price-checks
+  - id: SYM-ui-inbox-evidence-sync-of
+    title: inboxEvidence.syncOf
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:05.090Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-sync-timeline
+  - id: SYM-ui-inbox-evidence-ticker
+    title: inboxEvidence.ticker
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:09.349Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-inbox-tickers
+  - id: SYM-ui-inbox-filter
+    title: inboxFilter
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:13.626Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-views-and-counts
+  - id: SYM-ui-inbox-group
+    title: inboxGroup
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:17.457Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-inbox-group-count
+    title: inboxGroup.Count
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:21.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-inbox-item
+    title: inboxItem
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:25.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-inbox-link
+    title: inboxLink
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:30.399Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-inbox-notice
+    title: inboxNotice
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:34.711Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+  - id: SYM-ui-inbox-view
+    title: inboxView
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:39.072Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-item-links
+    title: itemLinks
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:43.405Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+  - id: SYM-ui-item-pill
+    title: itemPill
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:47.868Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-item-title
+    title: itemTitle
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:52.470Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-new-inbox-groups
+    title: newInboxGroups
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:34:56.942Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-removed-check-pages
+    title: removedCheckPages
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:01.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-no-check-pages
+      - type: implements
+        target: REQ-ui-removed-pages-redirect
+  - id: SYM-ui-server-account-items
+    title: server.accountItems
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:06.014Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-account-attention-banner
+      - type: implements
+        target: REQ-ui-inbox-views-and-counts
+  - id: SYM-ui-server-after-inbox-form
+    title: server.afterInboxForm
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:10.415Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+  - id: SYM-ui-server-assertion-evidence
+    title: server.assertionEvidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:14.792Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-server-evidence-steps
+    title: server.evidenceSteps
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:19.221Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-server-inbox-evidence
+    title: server.inboxEvidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:23.715Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-server-inbox-page
+    title: server.inboxPage
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:28.123Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+      - type: implements
+        target: REQ-ui-inbox-views-and-counts
+  - id: SYM-ui-server-inbox-routes
+    title: server.inboxRoutes
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:32.529Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+      - type: implements
+        target: REQ-ui-no-check-pages
+  - id: SYM-ui-server-item-evidence
+    title: server.itemEvidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:37.127Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-server-pending-tickers
+    title: server.pendingTickers
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:41.669Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-inbox-tickers
+  - id: SYM-ui-server-price-check-evidence
+    title: server.priceCheckEvidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:46.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-pricechecks
+      - type: implements
+        target: REQ-ui-inbox-price-checks
+  - id: SYM-ui-server-render-inbox
+    title: server.renderInbox
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:50.759Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+      - type: implements
+        target: REQ-ui-inbox-views-and-counts
+  - id: SYM-ui-server-retry-sync
+    title: server.retrySync
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:55.209Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+      - type: implements
+        target: REQ-ui-inbox-sync-timeline
+  - id: SYM-ui-server-sync-evidence
+    title: server.syncEvidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:35:59.640Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-sync-timeline
+  - id: SYM-ui-server-ticker-evidence
+    title: server.tickerEvidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:04.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-tickers
+      - type: implements
+        target: REQ-ui-inbox-tickers
+  - id: SYM-ui-server-transfer-evidence
+    title: server.transferEvidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:08.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-transfers
+      - type: implements
+        target: REQ-ui-inbox-transfers
+  - id: SYM-ui-server-unmapped-evidence
+    title: server.unmappedEvidence
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:13.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-settle-in-place
+  - id: SYM-ui-status-pill
+    title: statusPill
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:17.518Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-page
+  - id: SYM-ui-sync-timeline
+    title: syncTimeline
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:22.078Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-inbox-sync-timeline
+  - id: SYM-ui-to-inbox
+    title: toInbox
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:26.367Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-inbox
+      - type: implements
+        target: REQ-ui-removed-pages-redirect
+  - id: SYM-ui-view-of
+    title: viewOf
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:30.701Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-attention
+      - type: implements
+        target: REQ-ui-inbox-views-and-counts
+  - id: SYM-ui-test-account-banner
+    title: TestAccountBanner
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:35.094Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-inbox-empty
+    title: TestInboxEmpty
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:39.628Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-inbox-failing-sync
+    title: TestInboxFailingSync
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:43.990Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-inbox-maps-broker-account
+    title: TestInboxMapsBrokerAccount
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:48.287Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-navigation
+    title: TestNavigation
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:52.658Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-removed-check-pages-redirect
+    title: TestRemovedCheckPagesRedirect
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:36:56.988Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-helper-fake-read-list-sync-attempts
+    title: fakeRead.ListSyncAttempts
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:00.747Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-helper-fake-syncs
+    title: fakeSyncs
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:04.407Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-helper-fake-syncs-retry-sync
+    title: fakeSyncs.RetrySync
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:08.048Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-helper-retry-post
+    title: retryPost
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:11.648Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-helper-sync-item
+    title: syncItem
+    sourceFile: internal/views/ui/inbox_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:15.247Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-inbox
+  - id: SYM-ui-test-inbox-refusals
+    title: TestInboxRefusals
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:19.476Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-inbox-settles-attention-items
+    title: TestInboxSettlesAttentionItems
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:23.690Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-helper-fake-attention-add
+    title: fakeAttention.add
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:27.362Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-helper-view-of-state
+    title: viewOfState
+    sourceFile: internal/views/ui/attention_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:31.007Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-attention
+  - id: SYM-ui-test-inbox-tickers
+    title: TestInboxTickers
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:35.152Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-ui-test-helper-ticker-items
+    title: tickerItems
+    sourceFile: internal/views/ui/tickers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:38.933Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-tickers
+  - id: SYM-ui-test-inbox-transfers
+    title: TestInboxTransfers
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:43.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-helper-reject-from-done
+    title: rejectFromDone
+    sourceFile: internal/views/ui/transfers_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:46.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-transfers
+  - id: SYM-ui-test-inbox-price-checks
+    title: TestInboxPriceChecks
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:50.920Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-test-helper-price-check-item
+    title: priceCheckItem
+    sourceFile: internal/views/ui/pricechecks_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:54.726Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-pricechecks
+  - id: SYM-ui-test-helper-browser-inbox-items
+    title: browserInboxItems
+    sourceFile: internal/views/ui/browser_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T04:37:58.364Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-browser-checks
+  - id: SYM-ingestv1-x-syncs
+    title: x
+    sourceFile: sdk/go/gen/openfief/ingest/v1/syncs.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T05:00:03.790Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectapi-syncs
+      - type: implements
+        target: REQ-ingest-owner-retries-sync

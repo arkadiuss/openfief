@@ -454,13 +454,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aaab25f97931
-  - type: implements
-    from: SYM-ui-server-performance
-    to: REQ-ui-transfers-page
-    created_at: 2026-10-30T06:33:31.967Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c8f97ffffc84
   - type: covered_by
     from: SYM-ui-server-performance
     to: TEST-ui-transfers
@@ -608,3 +601,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ceb3acf03924
+  - type: implements
+    from: SYM-ui-server-performance
+    to: REQ-ui-inbox-transfers
+    created_at: 2026-11-06T04:41:35.768Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74cbedc6b022

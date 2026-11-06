@@ -496,3 +496,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82f0b814c9ab
+  - type: constrains
+    from: REQ-ui-inbox-page
+    to: FACT-SUBJECT-BF8827AE5AF75C88
+    created_at: 2026-11-06T04:32:36.597Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f06a1fa7d905
+  - type: requires_property
+    from: REQ-ui-inbox-page
+    to: FACT-PROP-BE624610DCA53C4C
+    created_at: 2026-11-06T04:32:36.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98cd7f60e9bf
+  - type: specified_by
+    from: REQ-ui-inbox-page
+    to: SCEN-ui-inbox-page
+    created_at: 2026-11-06T04:32:36.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21b4da8ac13b
+  - type: supersedes
+    from: REQ-ui-inbox-page
+    to: REQ-ui-attention-page
+    created_at: 2026-11-06T04:32:36.681Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70a6d0fdebdc

@@ -727,3 +727,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-12ac250f57c5
+  - type: verified_by
+    from: SCEN-ingest-retry-rate-limited
+    to: TEST-ingest-app-retries
+    created_at: 2026-11-06T04:22:57.474Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1daa2628b39
+  - type: verified_by
+    from: SCEN-ingest-retry-rate-limited
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:22:57.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be4bd303ca97
+  - type: constrains
+    from: REQ-ui-inbox-views-and-counts
+    to: FACT-SUBJECT-BF8827AE5AF75C88
+    created_at: 2026-11-06T04:32:29.428Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4de22dc2b25
+  - type: requires_property
+    from: REQ-ui-inbox-views-and-counts
+    to: FACT-PROP-6B44FACE20F52BDF
+    created_at: 2026-11-06T04:32:29.470Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-973f07b86631
+  - type: specified_by
+    from: REQ-ui-inbox-views-and-counts
+    to: SCEN-ui-inbox-views-and-counts
+    created_at: 2026-11-06T04:32:29.505Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-021b87e1b8dd
+  - type: implements
+    from: SYM-ui-server-pending-tickers
+    to: REQ-ui-inbox-tickers
+    created_at: 2026-11-06T04:35:43.244Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-676307475232
+  - type: covered_by
+    from: SYM-ui-server-pending-tickers
+    to: TEST-ui-tickers
+    created_at: 2026-11-06T04:35:43.305Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67a013ac1c9a

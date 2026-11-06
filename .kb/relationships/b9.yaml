@@ -1021,3 +1021,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9001a2a9e2e7
+  - type: implements
+    from: SYM-ingestv1-file_openfief_ingest_v1_syncs_proto_init
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:26:07.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15edc7f330a5
+  - type: covered_by
+    from: SYM-ingestv1-file_openfief_ingest_v1_syncs_proto_init
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:26:07.564Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2860dae5648d

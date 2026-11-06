@@ -664,3 +664,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-74d09bd2cbbe
+  - type: executable_for
+    from: SYM-ingest-app-test-retries-rate-limit
+    to: TEST-ingest-app-retries
+    created_at: 2026-11-06T04:23:55.700Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4faca6376d2
+  - type: executable_for
+    from: SYM-ingest-connect-test-sync-service-retry-too-soon
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:24:37.608Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0220e2cc065e

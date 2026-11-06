@@ -27,15 +27,9 @@
   <div class="menu" id="menu">
   <nav aria-label="Main">
     <a href="/"{{if eq $.Title "Overview"}} aria-current="page"{{end}}>Overview</a>
-    <a href="/attention"{{if eq $.Title "Attention"}} aria-current="page"{{end}}>Attention{{if .Attention}}&nbsp;<span class="pill pill-warn">{{.Attention}} open</span>{{end}}</a>
-    <a href="/assertions"{{if eq $.Title "Flagged balance assertions"}} aria-current="page"{{end}}>Balance assertions</a>
-    <a href="/price-checks"{{if eq $.Title "Price checks"}} aria-current="page"{{end}}>Price checks</a>
-    <a href="/transfers"{{if eq $.Title "Transfers"}} aria-current="page"{{end}}>Transfers</a>
     <a href="/accounts"{{if eq $.Title "Accounts"}} aria-current="page"{{end}}>Accounts</a>
-    <a href="/sleeves"{{if eq $.Title "Sleeves"}} aria-current="page"{{end}}>Sleeves</a>
-    <a href="/plugins"{{if eq $.Title "Plugins"}} aria-current="page"{{end}}>Plugins</a>
-    {{if .Owner}}<a href="/tickers"{{if eq $.Title "Tickers to confirm"}} aria-current="page"{{end}}>Tickers</a>{{end}}
-    {{if .Owner}}<a href="/settings"{{if eq $.Title "Settings"}} aria-current="page"{{end}}>Settings</a>{{end}}
+    <a href="/inbox"{{if eq $.Title "Inbox"}} aria-current="page"{{end}}>Inbox{{if .Attention}}&nbsp;<span class="pill pill-gold" title="{{.Attention}} open">{{.Attention}}<span class="sr-only"> open</span></span>{{end}}</a>
+    <a href="{{if .Owner}}/settings{{else}}/sleeves{{end}}"{{if or (eq $.Title "Settings") (eq $.Title "Sleeves") (eq $.Title "Plugins")}} aria-current="page"{{end}}>Settings</a>
   </nav>
   <div class="session">
     <span class="pill pill-neutral" title="What this session may do">{{.ScopeLabel}} access</span>

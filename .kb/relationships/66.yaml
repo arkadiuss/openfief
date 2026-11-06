@@ -440,13 +440,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-10d6b692a990
-  - type: executable_for
-    from: SYM-ui-test-attention-refusals
-    to: TEST-ui-attention
-    created_at: 2026-10-31T18:53:55.235Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e3c42ab0b877
   - type: implements
     from: SYM-jurisdiction-asset
     to: REQ-pl-oki-exemption-class
@@ -531,3 +524,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-89c848427cda
+  - type: verified_by
+    from: SCEN-ui-four-places
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:32:00.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e788c60fb556
+  - type: verified_by
+    from: SCEN-ui-four-places
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-06T04:32:00.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dbbe5bcf5b29
+  - type: verified_by
+    from: SCEN-ui-inbox-settle-in-place
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:32:02.773Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f468a9ce80b
+  - type: verified_by
+    from: SCEN-ui-inbox-settle-in-place
+    to: TEST-ui-attention
+    created_at: 2026-11-06T04:32:02.807Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a1b61fea9859
+  - type: verified_by
+    from: SCEN-ui-inbox-settle-in-place
+    to: TEST-ui-tickers
+    created_at: 2026-11-06T04:32:02.834Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-151d7b4fbc93
+  - type: verified_by
+    from: SCEN-ui-inbox-settle-in-place
+    to: TEST-ui-transfers
+    created_at: 2026-11-06T04:32:02.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e34ba526f5b
+  - type: verified_by
+    from: SCEN-ui-inbox-settle-in-place
+    to: TEST-ui-pricechecks
+    created_at: 2026-11-06T04:32:02.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9faf3da6af26

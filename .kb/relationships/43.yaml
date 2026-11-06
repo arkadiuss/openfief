@@ -545,27 +545,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01a5663b95b5
-  - type: implements
-    from: SYM-ui-server-transfers-page
-    to: REQ-ui-transfers-page
-    created_at: 2026-10-30T07:26:59.173Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-eb4f22dfdc9b
-  - type: covered_by
-    from: SYM-ui-server-transfers-page
-    to: TEST-ui-transfers
-    created_at: 2026-10-30T07:26:59.217Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f047d47f09a9
-  - type: implements
-    from: SYM-ui-parse-transfer-form
-    to: REQ-ui-transfers-page
-    created_at: 2026-10-30T07:27:59.054Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a0a833a13a44
   - type: covered_by
     from: SYM-ui-parse-transfer-form
     to: TEST-ui-transfers
@@ -741,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-85e2b2ace5b3
+  - type: implements
+    from: SYM-ui-parse-transfer-form
+    to: REQ-ui-inbox-transfers
+    created_at: 2026-11-06T04:40:19.561Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d1c47e56a5e2

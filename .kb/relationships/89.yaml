@@ -727,3 +727,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8643da90cc40
+  - type: executable_for
+    from: SYM-ui-test-inbox-maps-broker-account
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:36:49.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fe5de9c22b1

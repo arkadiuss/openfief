@@ -713,3 +713,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-83d3ed2e8a50
+  - type: executable_for
+    from: SYM-ingest-connect-test-helper-trigger-retry
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:24:28.965Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-137ff939094e
+  - type: implements
+    from: SYM-ui-server-price-check-evidence
+    to: REQ-ui-inbox-price-checks
+    created_at: 2026-11-06T04:35:47.813Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f7c47e197aad
+  - type: covered_by
+    from: SYM-ui-server-price-check-evidence
+    to: TEST-ui-pricechecks
+    created_at: 2026-11-06T04:35:47.840Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0679d74a44ca

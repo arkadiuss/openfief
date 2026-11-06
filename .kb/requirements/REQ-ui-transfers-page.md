@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must list the suggested, confirmed and rejected transfers on a transfers page where an owner session confirms or rejects each suggestion through the core's TransferService and can correct either decision later, while a read session only sees them.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-105
 tags:
   - strict-modeling

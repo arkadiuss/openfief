@@ -610,13 +610,6 @@ relationships:
     id: rel-5c1622d37d6b
   - type: implements
     from: SYM-ui-server-acknowledge-attention-item
-    to: REQ-ui-attention-page
-    created_at: 2026-10-31T18:52:36.462Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-47f7453b975f
-  - type: implements
-    from: SYM-ui-server-acknowledge-attention-item
     to: REQ-ui-attention-items-one-place
     created_at: 2026-10-31T18:52:36.505Z
     created_by: kibi/upsert
@@ -783,3 +776,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1d31bf07002a
+  - type: implements
+    from: SYM-ingest-app-scheduler-run-batches
+    to: REQ-ingest-scheduler-retry
+    created_at: 2026-11-06T04:23:39.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dfab623b7357
+  - type: covered_by
+    from: SYM-ingest-app-scheduler-run-batches
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-11-06T04:23:39.578Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a48fcac3cc0
+  - type: implements
+    from: SYM-ui-server-acknowledge-attention-item
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:40:46.756Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6664fdd49d3a

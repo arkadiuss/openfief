@@ -2,6 +2,7 @@
 <script src="/static/webauthn.js" defer></script>
 {{end}}
 {{define "content"}}
+{{template "settings-nav" .}}
 {{with .Data}}
 {{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
 

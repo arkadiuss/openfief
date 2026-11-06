@@ -573,3 +573,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cf4f34451047
+  - type: implements
+    from: SYM-core-new-retries
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:24:54.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-55588ca980ce
+  - type: covered_by
+    from: SYM-core-new-retries
+    to: TEST-core-front-door
+    created_at: 2026-11-06T04:24:54.630Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6958e52cba0f
+  - type: verified_by
+    from: SCEN-ui-no-check-pages
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:32:01.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37b20e101069
+  - type: verified_by
+    from: SCEN-ui-no-check-pages
+    to: TEST-ui-browser-checks
+    created_at: 2026-11-06T04:32:01.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0b6f93333c2

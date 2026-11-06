@@ -1,0 +1,197 @@
+{{define "inbox-transfer-keys"}}<input type="hidden" name="withdrawal_source" value="{{.WithdrawalSource}}"><input type="hidden" name="withdrawal_id" value="{{.WithdrawalExternalId}}"><input type="hidden" name="deposit_source" value="{{.DepositSource}}"><input type="hidden" name="deposit_id" value="{{.DepositExternalId}}">{{end}}
+
+{{define "inbox-transfer"}}<p class="pair"><span>Withdrawn from {{with .WithdrawalAccountId}}<a href="/accounts/{{.}}">{{.}}</a>{{else}}<span class="mono">{{.WithdrawalSource}}/{{.WithdrawalExternalId}}</span>{{end}} on <span class="mono">{{.WithdrawalDate}}</span></span>
+<span>deposited into {{with .DepositAccountId}}<a href="/accounts/{{.}}">{{.}}</a>{{else}}<span class="mono">{{.DepositSource}}/{{.DepositExternalId}}</span>{{end}} on <span class="mono">{{.DepositDate}}</span></span>
+<span class="num">{{with .Amount}}{{money .}}{{else}}<span class="muted">no amount</span>{{end}}</span></p>{{end}}
+
+{{define "inbox-price-check"}}
+{{$c := .Latest.Check}}
+<dl class="evidence">
+  <div><dt>Valued at · {{$c.PriceSource}}{{if ne $c.PriceDate $c.Date}} ({{$c.PriceDate}}){{end}}</dt><dd class="num">{{money $c.Price}}</dd></div>
+  <div><dt>{{$c.CrossCheckSource}}'s own price · {{$c.Date}}</dt><dd class="num">{{money $c.CrossCheck}}</dd></div>
+  <div><dt>Difference · threshold {{.Threshold}}</dt><dd class="num">{{if $c.RelativeDifference}}{{percent $c.RelativeDifference}}{{else}}currency mismatch{{end}}</dd></div>
+</dl>
+{{if .History}}
+<details class="change">
+  <summary>History: {{len .History}} earlier check(s)</summary>
+  <div class="table"><table>
+    <thead><tr><th scope="col">Date</th><th scope="col" class="num">Price</th><th scope="col">From</th><th scope="col" class="num">Cross-check</th><th scope="col">From</th><th scope="col" class="num">Difference</th><th scope="col">Status</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+    <tbody>{{range .History}}<tr>{{template "price-check-row" .}}</tr>{{end}}</tbody>
+  </table></div>
+</details>
+{{end}}
+{{end}}
+
+{{define "price-check-status"}}{{if eq .Status.String "PRICE_CHECK_STATUS_FLAGGED"}}{{if .Acknowledged}}<span class="pill pill-neutral">acknowledged</span>{{else}}<span class="pill pill-warn">flagged</span>{{end}}{{else if eq .Status.String "PRICE_CHECK_STATUS_CURRENCY_MISMATCH"}}<span class="pill pill-warn">currency mismatch</span>{{else}}<span class="pill pill-ok">matched</span>{{end}}{{end}}
+
+{{define "price-check-row"}}
+<td class="mono">{{.Check.Date}}</td>
+<td class="num">{{money .Check.Price}}</td><td>{{.Check.PriceSource}}{{if ne .Check.PriceDate .Check.Date}} <span class="muted">({{.Check.PriceDate}})</span>{{end}}</td>
+<td class="num">{{money .Check.CrossCheck}}</td><td>{{.Check.CrossCheckSource}}</td>
+<td class="num">{{if .Check.RelativeDifference}}{{percent .Check.RelativeDifference}}{{else}}<span class="muted">none</span>{{end}}</td>
+<td>{{template "price-check-status" .Check}}</td>
+<td>{{if .Acknowledge}}{{template "price-check-acknowledge" .Check}}{{end}}</td>
+{{end}}
+
+{{define "price-check-acknowledge"}}<form method="post" action="/inbox/price-checks/acknowledge" class="inline">
+  <input type="hidden" name="isin" value="{{.Instrument.Isin}}"><input type="hidden" name="symbol" value="{{.Instrument.Symbol}}">
+  <input type="hidden" name="date" value="{{.Date}}"><input type="hidden" name="source" value="{{.CrossCheckSource}}">
+  <button type="submit">Acknowledge</button></form>{{end}}
+
+{{define "price-check-threshold"}}
+<form method="post" action="/inbox/price-checks/threshold" class="threshold">
+  <input type="hidden" name="isin" value="{{.Instrument.Isin}}"><input type="hidden" name="symbol" value="{{.Instrument.Symbol}}">
+  <div class="field">
+    <label for="threshold-{{.Instrument.Isin}}-{{.Instrument.Symbol}}">Threshold for {{instrument .Instrument}}, in percent</label>
+    <input id="threshold-{{.Instrument.Isin}}-{{.Instrument.Symbol}}" name="threshold" inputmode="decimal" maxlength="12" value="{{.Custom}}" aria-describedby="threshold-help-{{.Instrument.Isin}}-{{.Instrument.Symbol}}">
+    <p class="help" id="threshold-help-{{.Instrument.Isin}}-{{.Instrument.Symbol}}">Empty for the default, 1%. A thinly traded listing may need more.</p>
+  </div>
+  <div class="actions"><button type="submit" class="secondary">Set threshold</button></div>
+</form>
+{{end}}
+
+{{define "inbox-ticker"}}
+<form method="post" action="/inbox/tickers/confirm" class="settle">
+  <input type="hidden" name="instance" value="{{.Instance}}"><input type="hidden" name="symbol" value="{{.Symbol}}">
+  <div class="field">
+    <label for="isin-{{.Instance}}-{{.Symbol}}">ISIN{{if .ProposedIsin}}, proposed{{if .ProposedName}}: {{.ProposedName}}{{end}}{{end}}</label>
+    <input id="isin-{{.Instance}}-{{.Symbol}}" name="isin" class="mono" maxlength="12" autocomplete="off" spellcheck="false" value="{{.ProposedIsin}}" placeholder="ISIN">
+    {{if .ProposedIsin}}<p class="help">Check it before you confirm.</p>{{else}}<p class="help">No proposal: the lookup found none. Type it.</p>{{end}}
+  </div>
+  {{if .CurrencyChoices}}
+  <div class="field">
+    <label for="currency-{{.Instance}}-{{.Symbol}}">Trading currency</label>
+    <select id="currency-{{.Instance}}-{{.Symbol}}" name="currency" aria-describedby="currency-{{.Instance}}-{{.Symbol}}-help"{{if not .ProposedCurrency}} required{{end}}>
+      {{if .ProposedCurrency}}<option value="" selected>The listing's: {{.ProposedCurrency}}</option>{{else}}<option value="" selected disabled>Pick one</option>{{end}}
+      {{range .CurrencyChoices}}<option value="{{.}}">{{.}}</option>{{end}}
+    </select>
+    <p class="help" id="currency-{{.Instance}}-{{.Symbol}}-help">{{if .ProposedCurrency}}The proposed listing quotes in {{.ProposedCurrency}}. If you type another ISIN, pick its trading currency{{else}}Its exchange quotes in more than one currency: pick the one its prices are in{{end}} (GBX is pence).</p>
+  </div>
+  {{end}}
+  <div class="actions"><button type="submit" class="primary">{{if .ProposedIsin}}Confirm and book {{.Waiting}} row(s){{else}}Save and book {{.Waiting}} row(s){{end}}</button></div>
+</form>
+{{end}}
+
+{{define "inbox-sync"}}
+<details class="change timeline">
+  <summary>What happened{{with .Status}}: {{.Failures}} failed attempt(s) in a row{{with .FailingSince}} since <span class="mono">{{.}}</span>{{end}}{{end}}</summary>
+  {{with .Status}}<p class="muted">Last good sync: {{with .LastSuccessAt}}<span class="mono">{{.}}</span>{{else}}none yet{{end}}. Next try: <span class="mono">{{.NextSyncAt}}</span>.</p>{{end}}
+  <ol>
+  {{range .Attempts}}<li><span class="mono">{{.StartedAt}}</span> {{.Mode}} sync of batch <span class="mono">{{.BatchId}}</span>: {{if .Failed}}failed, {{enum .ErrorClass.String "SYNC_ERROR_CLASS_"}}; next try at <span class="mono">{{.NextSyncAt}}</span>{{else}}went through{{end}}</li>{{end}}
+  </ol>
+</details>
+{{if .Retry}}<form method="post" action="/inbox/retry-sync" class="inline"><input type="hidden" name="instance" value="{{.Status.ConnectorInstance}}"><button type="submit" class="primary">Retry now</button></form>{{end}}
+{{end}}
+
+{{define "inbox-map"}}
+<form method="post" action="/accounts/bind" class="settle">
+  <input type="hidden" name="next" value="/inbox">
+  <div class="field">
+    <label for="map-broker-{{.Item.Id}}">Broker account</label>
+    <select id="map-broker-{{.Item.Id}}" name="broker" required>
+      {{range .Brokers}}<option value="{{.ConnectorInstance}}/{{.Id}}">{{.ConnectorInstance}}/{{.Id}}</option>{{end}}
+    </select>
+  </div>
+  <div class="field">
+    <label for="map-account-{{.Item.Id}}">Book it in</label>
+    <select id="map-account-{{.Item.Id}}" name="account" required>
+      {{range .Accounts}}<option value="{{.Id}}">{{.Name}}</option>{{end}}
+    </select>
+  </div>
+  <div class="actions"><button type="submit" class="primary">Map</button> <a href="/accounts">Or create its account</a></div>
+</form>
+{{end}}
+
+{{define "inbox-item"}}
+<li class="item" id="item-{{.Item.Id}}">
+  <div class="item-head">
+    <div>
+      <p class="item-title">{{.Title}}</p>
+      <p class="muted">{{.Item.Detail}}{{range .Links}} · <a href="{{.Href}}">{{.Text}}</a>{{end}}</p>
+    </div>
+    <span class="pill {{.Pill.Class}}">{{.Pill.Word}}</span>
+  </div>
+  {{with .Ticker}}{{template "inbox-ticker" .}}{{end}}
+  {{with .PriceCheck}}{{template "inbox-price-check" .}}{{end}}
+  {{with .Sync}}{{template "inbox-sync" .}}{{end}}
+  {{with .Assertions}}
+  {{template "checks" .}}
+  {{end}}
+  {{with .Transfer}}{{template "inbox-transfer" .}}{{end}}
+  {{if .Brokers}}{{template "inbox-map" .}}{{end}}
+  <div class="actions">
+    {{with .PriceCheck}}{{if .Latest.Acknowledge}}{{template "price-check-acknowledge" .Latest.Check}}{{end}}{{end}}
+    {{if and .Transfer .Acknowledge}}<form method="post" action="/inbox/transfers/reject" class="inline">{{template "inbox-transfer-keys" .Transfer}}<button type="submit" class="danger">Reject the pair</button></form>{{end}}
+    {{if .Acknowledge}}<form method="post" action="/inbox/acknowledge" class="inline"><input type="hidden" name="item" value="{{.Item.Id}}"><button type="submit">Acknowledge</button></form>{{end}}
+    {{if .Resolve}}<form method="post" action="/inbox/resolve" class="inline"><input type="hidden" name="item" value="{{.Item.Id}}"><button type="submit">Resolve</button></form>{{end}}
+  </div>
+  {{with .PriceCheck}}{{if .Owner}}{{template "price-check-threshold" .}}{{end}}{{end}}
+  <details class="change">
+    <summary>History: {{len .Item.History}} change(s)</summary>
+    <ol>
+    {{range .Item.History}}<li><span class="mono">{{.At}}</span> {{enum .Reason.String "ATTENTION_ITEM_REASON_"}}{{with .Detail}}: {{.}}{{end}}</li>{{end}}
+    </ol>
+  </details>
+</li>
+{{end}}
+
+{{define "content"}}
+{{$owner := .Session.Owner}}
+{{with .Data}}
+<p class="lede">Everything that needs you, in one place, whatever check raised it. Act here, or open the account it is about.</p>
+{{if .Error}}<p class="alert alert-error" role="alert">{{.Error}}</p>{{end}}
+{{if .Notice}}<p class="alert alert-info" role="status">{{.Notice}}</p>{{end}}
+<nav class="segmented" aria-label="Inbox views">
+  {{range .Filters}}<a href="/inbox?view={{.Key}}"{{if .Current}} aria-current="page"{{end}}>{{.Label}} <span class="count">{{.Count}}</span></a>{{end}}
+</nav>
+{{range .Groups}}
+<section class="card inbox-group" aria-labelledby="{{.ID}}-title">
+  <h2 id="{{.ID}}-title" class="eyebrow">{{.Title}} · {{.Count}}</h2>
+  {{if .Items}}<ul class="items">{{range .Items}}{{template "inbox-item" .}}{{end}}</ul>{{end}}
+  {{if .Suggested}}
+  <ul class="items">
+  {{range .Suggested}}
+  <li class="item">
+    <div class="item-head"><p class="item-title">Confirm a transfer between your accounts</p><span class="pill pill-warn">Needs you</span></div>
+    <p class="muted">Until you confirm it, the withdrawal and the deposit count as money in and out of the time-weighted return.</p>
+    {{template "inbox-transfer" .}}
+    {{if $owner}}<div class="actions"><form method="post" action="/inbox/transfers/confirm" class="inline">{{template "inbox-transfer-keys" .}}<button type="submit" class="primary">Confirm</button></form>
+      <form method="post" action="/inbox/transfers/reject" class="inline">{{template "inbox-transfer-keys" .}}<button type="submit" class="danger">Not a transfer</button></form></div>{{else}}<p class="muted">Waiting for the owner.</p>{{end}}
+  </li>
+  {{end}}
+  </ul>
+  {{end}}
+  {{if and (not .Items) (not .Suggested) (not .Confirmed) (not .Rejected) (not .PriceChecks)}}<p class="muted">{{if eq $.Data.View "open"}}{{.Empty}}{{else}}Nothing here.{{end}}</p>{{end}}
+  {{if or .Confirmed .Rejected}}
+  <details class="change">
+    <summary>Transfers you decided: {{len .Confirmed}} confirmed, {{len .Rejected}} rejected</summary>
+    <ul class="items">
+    {{range .Confirmed}}<li class="item">{{template "inbox-transfer" .}}<div class="actions"><span class="pill pill-ok">Confirmed</span>{{if $owner}} <form method="post" action="/inbox/transfers/reject" class="inline"><input type="hidden" name="view" value="done">{{template "inbox-transfer-keys" .}}<button type="submit" class="danger">Not a transfer</button></form>{{end}}</div></li>{{end}}
+    {{range .Rejected}}<li class="item">{{template "inbox-transfer" .}}<div class="actions"><span class="pill pill-neutral">Rejected</span>{{if $owner}} <form method="post" action="/inbox/transfers/confirm" class="inline"><input type="hidden" name="view" value="done">{{template "inbox-transfer-keys" .}}<button type="submit">Confirm</button></form>{{end}}</div></li>{{end}}
+    </ul>
+  </details>
+  {{end}}
+  {{if .PriceChecks}}
+  <details class="change" id="price-checks">
+    <summary>Every price check: {{len .PriceChecks}} instrument(s)</summary>
+    {{range .PriceChecks}}
+    <h3>{{instrument .Instrument}}</h3>
+    <p class="muted">Flagged beyond {{.Threshold}}{{if .Custom}}, this instrument's own threshold{{end}}.</p>
+    <div class="table"><table>
+      <thead><tr><th scope="col">Date</th><th scope="col" class="num">Price</th><th scope="col">From</th><th scope="col" class="num">Cross-check</th><th scope="col">From</th><th scope="col" class="num">Difference</th><th scope="col">Status</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+      <tbody><tr>{{template "price-check-row" .Latest}}</tr>{{range .History}}<tr>{{template "price-check-row" .}}</tr>{{end}}</tbody>
+    </table></div>
+    {{if .Owner}}{{template "price-check-threshold" .}}{{end}}
+    {{end}}
+  </details>
+  {{end}}
+</section>
+{{end}}
+{{if .Calm}}
+<div class="card state">{{template "kasztan" "asleep"}}<div>
+  <p class="state-title">Nothing needs you.</p>
+  <p class="muted">No check has found anything new to look at.</p>
+</div></div>
+{{end}}
+{{end}}
+{{end}}

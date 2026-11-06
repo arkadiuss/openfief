@@ -101,6 +101,7 @@ func newHandler(log *slog.Logger) (http.Handler, error) {
 		MarketData:  valuationv1connect.NewMarketDataServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		PriceChecks: valuationv1connect.NewPriceCheckServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Tickers:     ingestv1connect.NewTickerServiceClient(authClient(openfief.TokenFile{}), coreURL),
+		Syncs:       ingestv1connect.NewSyncServiceClient(authClient(openfief.TokenFile{}), coreURL),
 		Read:        viewsv1connect.NewReadServiceClient(readClient(), coreURL),
 		Log:         log,
 		Settings:    valuationv1connect.NewSettingsServiceClient(authClient(openfief.TokenFile{}), coreURL),

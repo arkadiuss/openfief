@@ -539,13 +539,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-7aa944cb85a4
   - type: executable_for
-    from: SYM-ui-test-tickers-page
-    to: TEST-ui-tickers
-    created_at: 2026-10-31T13:41:02.861Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5f09387e90aa
-  - type: executable_for
     from: SYM-pl-test-oki-yearly-tax
     to: TEST-pl-oki
     created_at: 2026-10-31T19:03:58.518Z
@@ -790,3 +783,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3b61927c106a
+  - type: implements
+    from: SYM-ui-inbox-notice
+    to: REQ-ui-inbox-settle-in-place
+    created_at: 2026-11-06T04:34:36.211Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3cf6f0900f70
+  - type: covered_by
+    from: SYM-ui-inbox-notice
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:34:36.238Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b22d4ee0bba

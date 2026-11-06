@@ -468,13 +468,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-36a318b84a45
-  - type: implements
-    from: SYM-ui-waiting-rows
-    to: REQ-ui-tickers-to-confirm
-    created_at: 2026-10-31T13:39:59.964Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-cf4be7595555
   - type: covered_by
     from: SYM-ui-waiting-rows
     to: TEST-ui-tickers
@@ -657,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80d27495cb1a
+  - type: implements
+    from: SYM-ui-waiting-rows
+    to: REQ-ui-inbox-tickers
+    created_at: 2026-11-06T04:42:43.765Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a28b53a5784

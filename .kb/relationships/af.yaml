@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2d064369fdd8
+  - type: executable_for
+    from: SYM-ui-test-account-banner
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:36:36.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2af4fca610b

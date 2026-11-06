@@ -671,3 +671,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c9539ed625aa
+  - type: constrains
+    from: REQ-ui-no-check-pages
+    to: FACT-SUBJECT-EAF0F9966EDF26D1
+    created_at: 2026-11-06T04:32:20.827Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d9cf4ab9527
+  - type: requires_property
+    from: REQ-ui-no-check-pages
+    to: FACT-PROP-9FD52B2AED023C44
+    created_at: 2026-11-06T04:32:20.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e06fe5547b21
+  - type: specified_by
+    from: REQ-ui-no-check-pages
+    to: SCEN-ui-no-check-pages
+    created_at: 2026-11-06T04:32:20.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4459100b836
+  - type: executable_for
+    from: SYM-ui-test-helper-retry-post
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:37:13.085Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-56b99ff2d1ad

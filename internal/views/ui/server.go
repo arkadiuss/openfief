@@ -35,7 +35,7 @@ const staticCacheControl = "public, max-age=3600"
 const hstsValue = "max-age=31536000"
 
 // ErrMissingDependency reports a Config without one of its clients.
-var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService, TickerService, AttentionService and ReadService clients")
+var ErrMissingDependency = errors.New("ui: config needs AuthService, ModelPortfolioService, BondLotService, StatementService, SleeveService, AccountService, MarketDataService, PriceCheckService, SettingsService, TransferService, TickerService, AttentionService, SyncService and ReadService clients")
 
 // Config is what the UI needs.
 type Config struct {
@@ -76,6 +76,9 @@ type Config struct {
 	// Attention calls the core's AttentionService (D-130, D-79) like Auth:
 	// the owner's acknowledgements and resolutions of attention items.
 	Attention attentionv1connect.AttentionServiceClient
+	// Syncs calls the core's SyncService (D-196, D-79) like Auth: the
+	// owner's "Retry now" on a failing sync.
+	Syncs ingestv1connect.SyncServiceClient
 	// Read calls the core's public read API (D-6). It must not set
 	// Authorization itself: every call carries the session token.
 	Read viewsv1connect.ReadServiceClient
@@ -91,7 +94,7 @@ type Config struct {
 func (cfg *Config) missingClient() bool {
 	clients := []any{
 		cfg.Auth, cfg.Model, cfg.BondLots, cfg.Statements, cfg.Read, cfg.Sleeves, cfg.Accounts, cfg.MarketData,
-		cfg.PriceChecks, cfg.Settings, cfg.Transfers, cfg.Tickers, cfg.Attention,
+		cfg.PriceChecks, cfg.Settings, cfg.Transfers, cfg.Tickers, cfg.Attention, cfg.Syncs,
 	}
 	return slices.Contains(clients, nil)
 }
@@ -117,6 +120,7 @@ type server struct {
 	settings    valuationv1connect.SettingsServiceClient
 	transfers   ledgerv1connect.TransferServiceClient
 	attention   attentionv1connect.AttentionServiceClient
+	syncs       ingestv1connect.SyncServiceClient
 }
 
 // New returns the UI's HTTP handler: its pages, their static files, the
@@ -141,7 +145,7 @@ func New(cfg *Config) (http.Handler, error) {
 	s := &server{
 		auth: cfg.Auth, model: cfg.Model, bondLots: cfg.BondLots, statements: cfg.Statements, read: cfg.Read,
 		sleeves: cfg.Sleeves, accounts: cfg.Accounts, marketData: cfg.MarketData, priceChecks: cfg.PriceChecks,
-		settings: cfg.Settings, transfers: cfg.Transfers, tickers: cfg.Tickers, attention: cfg.Attention,
+		settings: cfg.Settings, transfers: cfg.Transfers, tickers: cfg.Tickers, attention: cfg.Attention, syncs: cfg.Syncs,
 		pages: p, pwa: app, today: cfg.Today, log: cfg.Log,
 	}
 	if s.today == nil {
@@ -151,21 +155,6 @@ func New(cfg *Config) (http.Handler, error) {
 		s.log = slog.New(slog.DiscardHandler)
 	}
 	return securityHeaders(sameOrigin(s.routes(static))), nil
-}
-
-// checkRoutes maps the paths of the checks that need the owner: the
-// attention items (D-130) and the pages of the checks that raise them.
-func (s *server) checkRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("GET /attention", s.withSession(s.attentionPage))
-	mux.HandleFunc("POST /attention/acknowledge", s.withOwner(s.acknowledgeAttentionItem))
-	mux.HandleFunc("POST /attention/resolve", s.withOwner(s.resolveAttentionItem))
-	mux.HandleFunc("GET /assertions", s.withSession(s.assertionsPage))
-	mux.HandleFunc("GET /price-checks", s.withSession(s.priceChecksPage))
-	mux.HandleFunc("POST /price-checks/acknowledge", s.withOwner(s.acknowledgePriceCheck))
-	mux.HandleFunc("POST /price-checks/threshold", s.withOwner(s.setPriceCheckThreshold))
-	mux.HandleFunc("GET /transfers", s.withSession(s.transfersPage))
-	mux.HandleFunc("POST /transfers/confirm", s.withOwner(s.confirmTransfer))
-	mux.HandleFunc("POST /transfers/reject", s.withOwner(s.rejectTransfer))
 }
 
 // routes maps every path to its handler.
@@ -192,7 +181,7 @@ func (s *server) routes(static fs.FS) *http.ServeMux {
 	mux.HandleFunc("GET /accounts/{id}/transactions", s.withSession(s.transactionsFragment))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots", s.withOwner(s.addBondLot))
 	mux.HandleFunc("POST /accounts/{id}/bond-lots/delete", s.withOwner(s.deleteBondLot))
-	s.checkRoutes(mux)
+	s.inboxRoutes(mux)
 	mux.HandleFunc("GET /plugins", s.withSession(s.pluginsPage))
 	s.settingsRoutes(mux)
 	s.onboardingRoutes(mux)

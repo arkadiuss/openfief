@@ -853,3 +853,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5ca36a4d8159
+  - type: implements
+    from: SYM-ui-sync-timeline
+    to: REQ-ui-inbox-sync-timeline
+    created_at: 2026-11-06T04:36:23.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4ece2c962aef
+  - type: covered_by
+    from: SYM-ui-sync-timeline
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:36:23.605Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2c0482ce9067

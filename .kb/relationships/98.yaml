@@ -720,3 +720,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95b0273cbdb0
+  - type: implements
+    from: SYM-ingestv1-retry-sync-request-reset
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:25:19.843Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-957e2602bbdf
+  - type: covered_by
+    from: SYM-ingestv1-retry-sync-request-reset
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:25:19.871Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b41465087f3

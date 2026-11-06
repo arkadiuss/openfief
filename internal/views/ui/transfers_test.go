@@ -102,53 +102,66 @@ func transferPost(path, w string) *http.Request {
 	return r
 }
 
-// TestTransfersPage checks the transfers page (D-105): the suggestion with
-// its accounts, dates and amount; the owner confirms it, then corrects it
-// as not a transfer, and the page lists it under each decision.
-func TestTransfersPage(t *testing.T) {
+// TestInboxTransfers checks the transfers in the Inbox (D-105, D-196): the
+// suggestion with its accounts, dates and amount among the decisions,
+// confirmed in place; the confirmed pair in the done view, corrected there
+// as not a transfer, back to the done view.
+func TestInboxTransfers(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	rec := h.serve(t, withSession(request(http.MethodGet, "/transfers", ""), ownerSession))
+	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, "Suggested", "acc-1", "acc-2", "2026-03-02", "2026-03-04", "2\u202f500 PLN",
-		`action="/transfers/confirm"`, `name="withdrawal_id" value="w1"`, "No confirmed transfers yet.")
+	wantBody(t, rec, "Decisions · 1", "Confirm a transfer between your accounts", "acc-1", "acc-2", "2026-03-02", "2026-03-04",
+		"2\u202f500 PLN", `action="/inbox/transfers/confirm"`, `name="withdrawal_id" value="w1"`)
 	wantNoBody(t, rec, "<script>", "style=")
 
-	for _, step := range []struct {
-		path, wantSection string
-	}{
-		{"/transfers/confirm", "No rejected pairs."},
-		{"/transfers/reject", "No confirmed transfers yet."},
-	} {
-		rec = h.serve(t, withSession(transferPost(step.path, "w1"), ownerSession))
-		wantStatus(t, rec, http.StatusSeeOther)
-		if got := rec.Header().Get("Location"); got != "/transfers" {
-			t.Errorf("POST %s: Location = %q, want /transfers", step.path, got)
-		}
-		rec = h.serve(t, withSession(request(http.MethodGet, "/transfers", ""), ownerSession))
-		wantBody(t, rec, step.wantSection, "No suggested transfers.", "2\u202f500 PLN")
+	rec = h.serve(t, withSession(transferPost("/inbox/transfers/confirm", "w1"), ownerSession))
+	wantStatus(t, rec, http.StatusSeeOther)
+	if got := rec.Header().Get("Location"); got != "/inbox" {
+		t.Errorf("confirm: Location = %q, want /inbox", got)
 	}
+	rec = h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), ownerSession))
+	wantBody(t, rec, "Decisions · 0", "No transfers to confirm")
+	rec = h.serve(t, withSession(request(http.MethodGet, "/inbox?view=done", ""), ownerSession))
+	wantBody(t, rec, "Transfers you decided: 1 confirmed, 0 rejected", `<span class="pill pill-ok">Confirmed</span>`, "2\u202f500 PLN")
+
+	rec = h.serve(t, withSession(rejectFromDone(), ownerSession))
+	wantStatus(t, rec, http.StatusSeeOther)
+	if got := rec.Header().Get("Location"); got != "/inbox?view=done" {
+		t.Errorf("reject from the done view: Location = %q, want /inbox?view=done", got)
+	}
+	rec = h.serve(t, withSession(request(http.MethodGet, "/inbox?view=done", ""), ownerSession))
+	wantBody(t, rec, "Transfers you decided: 0 confirmed, 1 rejected")
+}
+
+// rejectFromDone posts a rejection of test/w1 -> test/d1 from the done
+// view.
+func rejectFromDone() *http.Request {
+	form := url.Values{"withdrawal_source": {"test"}, "withdrawal_id": {"w1"}, "deposit_source": {"test"}, "deposit_id": {"d1"}, "view": {"done"}}
+	r := request(http.MethodPost, "/inbox/transfers/reject", form.Encode())
+	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	return r
 }
 
 // TestTransfersRefusals checks that a read session sees the transfers but
-// can't decide, that the core's refusal shows on the page, and that a
+// can't decide, that the core's refusal shows in the Inbox, and that a
 // malformed form is refused before the core.
 func TestTransfersRefusals(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
-	rec := h.serve(t, withSession(request(http.MethodGet, "/transfers", ""), readSession))
+	rec := h.serve(t, withSession(request(http.MethodGet, "/inbox", ""), readSession))
 	wantStatus(t, rec, http.StatusOK)
 	wantBody(t, rec, "Waiting for the owner")
-	wantNoBody(t, rec, `action="/transfers/confirm"`)
+	wantNoBody(t, rec, `action="/inbox/transfers/confirm"`)
 
-	rec = h.serve(t, withSession(transferPost("/transfers/confirm", "w1"), readSession))
+	rec = h.serve(t, withSession(transferPost("/inbox/transfers/confirm", "w1"), readSession))
 	wantStatus(t, rec, http.StatusForbidden)
 
-	rec = h.serve(t, withSession(transferPost("/transfers/confirm", "w2"), ownerSession))
+	rec = h.serve(t, withSession(transferPost("/inbox/transfers/confirm", "w2"), ownerSession))
 	wantStatus(t, rec, http.StatusBadRequest)
 	wantBody(t, rec, "The decision was not recorded: test/d1 is already a leg of a confirmed transfer")
 
-	bad := request(http.MethodPost, "/transfers/reject", "withdrawal_source=test")
+	bad := request(http.MethodPost, "/inbox/transfers/reject", "withdrawal_source=test")
 	bad.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	rec = h.serve(t, withSession(bad, ownerSession))
 	wantStatus(t, rec, http.StatusBadRequest)
@@ -158,13 +171,13 @@ func TestTransfersRefusals(t *testing.T) {
 }
 
 // TestOverviewLinksSuggestedTransfers checks that the performance section
-// counts the suggested transfers and links the transfers page.
+// counts the suggested transfers and links the Inbox.
 func TestOverviewLinksSuggestedTransfers(t *testing.T) {
 	t.Parallel()
 	h := newHarness(t)
 	rec := h.serve(t, withSession(request(http.MethodGet, "/", ""), ownerSession))
 	wantStatus(t, rec, http.StatusOK)
-	wantBody(t, rec, `<a href="/transfers">1 suggested transfer(s)</a>`, `<a href="/transfers">Transfers</a>`)
+	wantBody(t, rec, `<a href="/inbox">1 suggested transfer(s)</a>`, `<a href="/inbox">Inbox`)
 	if strings.Contains(rec.Body.String(), "suggested transfer(s)</a>") && h.transfers.decision != 0 {
 		t.Error("the fake changed without a decision")
 	}

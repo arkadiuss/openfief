@@ -1,0 +1,7 @@
+{{define "settings-nav"}}
+<nav class="segmented" aria-label="Settings">
+  {{if .Session.Owner}}<a href="/settings"{{if eq .Title "Settings"}} aria-current="page"{{end}}>General</a>{{end}}
+  <a href="/sleeves"{{if eq .Title "Sleeves"}} aria-current="page"{{end}}>Sleeves</a>
+  <a href="/plugins"{{if eq .Title "Plugins"}} aria-current="page"{{end}}>Plugins</a>
+</nav>
+{{end}}

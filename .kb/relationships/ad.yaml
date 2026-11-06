@@ -965,3 +965,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f9eb4f1c93c
+  - type: implements
+    from: SYM-ingest-app-retries-release
+    to: REQ-ingest-retry-rate-limited
+    created_at: 2026-11-06T04:23:21.954Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6f3c84659937
+  - type: covered_by
+    from: SYM-ingest-app-retries-release
+    to: TEST-ingest-app-retries
+    created_at: 2026-11-06T04:23:21.987Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e22938ac0aa9
+  - type: implements
+    from: SYM-ingestv1-retry-sync-request-descriptor
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:25:06.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa82d0b3720d
+  - type: covered_by
+    from: SYM-ingestv1-retry-sync-request-descriptor
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:25:06.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9748174fba16
+  - type: implements
+    from: SYM-ingestv1connect-new-sync-service-client
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:26:16.092Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4a0462ddd0d
+  - type: covered_by
+    from: SYM-ingestv1connect-new-sync-service-client
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:26:16.124Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8fb7e5fe6f86

@@ -748,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5dc281cf3fd8
+  - type: constrains
+    from: REQ-ingest-owner-retries-sync
+    to: FACT-SUBJECT-E4D322C8278B6635
+    created_at: 2026-11-06T04:23:02.586Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3342b1d7a5d5
+  - type: requires_property
+    from: REQ-ingest-owner-retries-sync
+    to: FACT-PROP-35F26750F9D5E5A0
+    created_at: 2026-11-06T04:23:02.635Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-538fdf30d0cb
+  - type: specified_by
+    from: REQ-ingest-owner-retries-sync
+    to: SCEN-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:23:02.677Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1afed1adbb41

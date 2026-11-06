@@ -692,3 +692,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b727e241d186
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-recording-trigger-retry
+    to: TEST-ingest-app-retries
+    created_at: 2026-11-06T04:23:47.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-729c84886e5e
+  - type: verified_by
+    from: SCEN-ui-inbox-views-and-counts
+    to: TEST-ui-attention
+    created_at: 2026-11-06T04:32:04.009Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe1df14f903d
+  - type: verified_by
+    from: SCEN-ui-inbox-views-and-counts
+    to: TEST-ui-inbox
+    created_at: 2026-11-06T04:32:04.051Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2719312dee3f
+  - type: implements
+    from: SYM-ui-view-of
+    to: REQ-ui-inbox-views-and-counts
+    created_at: 2026-11-06T04:36:32.237Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-68a106cf2751
+  - type: covered_by
+    from: SYM-ui-view-of
+    to: TEST-ui-attention
+    created_at: 2026-11-06T04:36:32.264Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c8d7749c50fc

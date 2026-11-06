@@ -580,3 +580,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4cd577ee5877
+  - type: implements
+    from: SYM-ui-server-after-inbox-form
+    to: REQ-ui-inbox-settle-in-place
+    created_at: 2026-11-06T04:35:11.926Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dec4f1e5bab1
+  - type: covered_by
+    from: SYM-ui-server-after-inbox-form
+    to: TEST-ui-attention
+    created_at: 2026-11-06T04:35:11.951Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a97c97655d8

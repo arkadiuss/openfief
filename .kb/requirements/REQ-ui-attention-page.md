@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must list attention items on one page by state with their history and a link to where the owner acts, count the open ones in its navigation and overview, and offer the owner's actions to an owner session only.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-130
 tags:
   - strict-modeling

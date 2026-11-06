@@ -727,3 +727,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-11b7a874c130
+  - type: implements
+    from: SYM-ingest-connect-syncs-fail
+    to: REQ-ingest-owner-retries-sync
+    created_at: 2026-11-06T04:24:21.530Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c4242267ddb
+  - type: implements
+    from: SYM-ingest-connect-syncs-fail
+    to: REQ-ingest-retry-rate-limited
+    created_at: 2026-11-06T04:24:21.560Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a27a6d3c6816
+  - type: covered_by
+    from: SYM-ingest-connect-syncs-fail
+    to: TEST-ingest-connectapi-syncs
+    created_at: 2026-11-06T04:24:21.584Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-921b6cc1653c

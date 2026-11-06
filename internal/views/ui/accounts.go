@@ -132,6 +132,10 @@ func (s *server) renderAccounts(w http.ResponseWriter, r *http.Request, sess ses
 		s.renderSetup(w, r, sess, status, stepAccounts, message)
 		return
 	}
+	if next == inboxPath {
+		s.renderInbox(w, r, sess, status, "", "The core refused this: "+message)
+		return
+	}
 	data, err := s.loadAccounts(r, sess, accountsPath)
 	if err != nil {
 		s.coreFailed(w, r, "ListAccounts", err)

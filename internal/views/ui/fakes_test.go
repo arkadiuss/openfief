@@ -622,6 +622,7 @@ type harness struct {
 	transfers  *fakeTransfers
 	attention  *fakeAttention
 	tickers    *fakeTickers
+	syncs      *fakeSyncs
 	read       *fakeRead
 	handler    http.Handler
 	tokenFile  string
@@ -640,6 +641,7 @@ func newHarness(t *testing.T) *harness {
 	h.attention = newFakeAttention()
 	h.read.attention = h.attention
 	h.tickers = &fakeTickers{}
+	h.syncs = &fakeSyncs{}
 	h.read.transfers = h.transfers
 	mux := http.NewServeMux()
 	mux.Handle(identityv1connect.NewAuthServiceHandler(h.auth))
@@ -654,6 +656,7 @@ func newHarness(t *testing.T) *harness {
 	mux.Handle(ledgerv1connect.NewTransferServiceHandler(h.transfers))
 	mux.Handle(attentionv1connect.NewAttentionServiceHandler(h.attention))
 	mux.Handle(ingestv1connect.NewTickerServiceHandler(h.tickers))
+	mux.Handle(ingestv1connect.NewSyncServiceHandler(h.syncs))
 	mux.Handle(viewsv1connect.NewReadServiceHandler(h.read))
 	core := httptest.NewServer(mux)
 	t.Cleanup(core.Close)
@@ -674,6 +677,7 @@ func newHarness(t *testing.T) *harness {
 		Transfers:   ledgerv1connect.NewTransferServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Tickers:     ingestv1connect.NewTickerServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 		Attention:   attentionv1connect.NewAttentionServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
+		Syncs:       ingestv1connect.NewSyncServiceClient(openfief.CoreHTTPClient(openfief.TokenFile{Path: h.tokenFile}), core.URL),
 	})
 	if err != nil {
 		t.Fatalf("New: %v", err)

@@ -624,13 +624,6 @@ relationships:
     id: rel-bc3af420d77f
   - type: implements
     from: SYM-ui-server-open-attention
-    to: REQ-ui-attention-page
-    created_at: 2026-10-31T18:53:01.153Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2c83e4aa31c2
-  - type: implements
-    from: SYM-ui-server-open-attention
     to: REQ-ui-attention-items-one-place
     created_at: 2026-10-31T18:53:01.189Z
     created_by: kibi/upsert
@@ -755,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8fe9b55045f4
+  - type: implements
+    from: SYM-ui-server-open-attention
+    to: REQ-ui-inbox-page
+    created_at: 2026-11-06T04:41:29.108Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30cf32de26fa
