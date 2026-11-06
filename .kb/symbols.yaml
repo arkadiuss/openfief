@@ -76310,7 +76310,7 @@ symbols:
       - type: implements
         target: REQ-identity-enroll-localhost-forward
       - type: implements
-        target: REQ-identity-first-run-wizard-follows
+        target: REQ-identity-first-run-wizard-follows-outside-demo
   - id: SYM-fd-identity-kube-core-access
     title: CoreAccess
     sourceFile: internal/identity/kube/firstpasskey.go
@@ -81098,9 +81098,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-setup-data-steps
     title: setupData.Steps
     sourceFile: internal/views/ui/setup.go
@@ -81113,9 +81113,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-setup-step
     title: setupStep
     sourceFile: internal/views/ui/setup.go
@@ -81128,9 +81128,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-server-setup-page
     title: server.setupPage
     sourceFile: internal/views/ui/setup.go
@@ -81145,9 +81145,9 @@ symbols:
       - type: implements
         target: REQ-ui-demo-no-wizard
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-server-render-setup
     title: server.renderSetup
     sourceFile: internal/views/ui/setup.go
@@ -81160,9 +81160,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-server-onboarding-routes
     title: server.onboardingRoutes
     sourceFile: internal/views/ui/setup.go
@@ -81175,9 +81175,9 @@ symbols:
       - type: covered_by
         target: TEST-ui-onboarding
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-first-run
     title: firstRun
     sourceFile: internal/views/ui/setup.go
@@ -81192,9 +81192,9 @@ symbols:
       - type: implements
         target: REQ-ui-demo-no-wizard
       - type: implements
-        target: REQ-ui-first-run-wizard
+        target: REQ-ui-first-run-wizard-outside-demo
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-ui-return-to
     title: returnTo
     sourceFile: internal/views/ui/sleeves.go
@@ -88081,7 +88081,7 @@ symbols:
       - type: implements
         target: REQ-identity-enroll-origin
       - type: implements
-        target: REQ-identity-first-run-wizard-follows
+        target: REQ-identity-first-run-wizard-follows-outside-demo
   - id: SYM-exp-identity-kube-core-access-ready-pod
     title: CoreAccess.readyPod
     sourceFile: internal/identity/kube/firstpasskey.go
@@ -133204,6 +133204,8 @@ symbols:
       - type: covered_by
         target: TEST-identity-demo-loading
       - type: implements
+        target: REQ-demo-no-wizard-until-loaded
+      - type: implements
         target: REQ-identity-demo-loading-no-wizard
   - id: SYM-identity-app-auth-demo-loading
     title: Auth.DemoLoading
@@ -133284,6 +133286,8 @@ symbols:
       - type: covered_by
         target: TEST-core-demo-loading
       - type: implements
+        target: REQ-demo-owner-changes-after-load
+      - type: implements
         target: REQ-identity-demo-loading-no-wizard
   - id: SYM-core-write-connect-error
     title: writeConnectError
@@ -133322,6 +133326,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ui-onboarding
+      - type: implements
+        target: REQ-demo-no-wizard-until-loaded
       - type: implements
         target: REQ-ui-demo-no-wizard
   - id: SYM-identity-test-demo-deployment
@@ -133451,7 +133457,7 @@ symbols:
       - type: implements
         target: REQ-ui-demo-no-wizard
       - type: implements
-        target: REQ-ui-first-run-wizard-steps
+        target: REQ-ui-first-run-wizard-steps-outside-demo
   - id: SYM-identity-app-test-helper-check-demo-methods
     title: checkDemoMethods
     sourceFile: internal/identity/app/auth_test.go

@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bf877c68691d
+  - type: implements
+    from: SYM-identity-demo-loading
+    to: REQ-demo-no-wizard-until-loaded
+    created_at: 2026-11-06T00:09:26.555Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b008fad2d36

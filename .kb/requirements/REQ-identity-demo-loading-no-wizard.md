@@ -1,7 +1,7 @@
 ---
 title: A core running with demo sessions on must report, while the database does not carry the demo marker yet, that the demo data is loading, and must refuse every change of sleeves, sleeve kinds and accounts until the marker exists, so that nothing the first-run wizard would write can be stored on a demo before its dataset is loaded.
 status: open
-text_ref: docs/dev/demo.md#demo-data
+text_ref: docs/DESIGN.md#D-191
 tags:
   - strict-modeling
   - confidence:0.90
@@ -34,10 +34,10 @@ A core running with demo sessions on must report, while the database does not ca
 
 ## Context
 
-On a fresh demo database, before cmd/demo-seed has written the demo marker, a visitor who enrolled a passkey landed in the first-run wizard, whose sleeves and accounts are data without the marker; the loader's guard (demo.DecideLoad) then refused the database as a real one, and the demo stayed stuck without View demo. The author approved this demo-only change in chat on 2026-11-03, relayed by the orchestrator; it is not in DESIGN.md yet, so this requirement has default firmness. It narrows, for demo deployments only, the firm REQ-ui-first-run-wizard and REQ-identity-first-run-wizard-follows and the default REQ-ui-first-run-wizard-steps: an install without demo sessions keeps the wizard unchanged.
+On a fresh demo database, before cmd/demo-seed has written the demo marker, a visitor who enrolled a passkey landed in the first-run wizard, whose sleeves and accounts are data without the marker; the loader's guard (demo.DecideLoad) then refused the database as a real one, and the demo stayed stuck without View demo. The author approved this demo-only change in chat on 2026-11-03 and recorded it as D-191. This requirement is the implementation's reading of D-191, with default firmness; the firm REQ-demo-no-wizard-until-loaded and REQ-demo-owner-changes-after-load import D-191 itself. With it, REQ-ui-first-run-wizard-outside-demo, REQ-identity-first-run-wizard-follows-outside-demo and REQ-ui-first-run-wizard-steps-outside-demo superseded the wizard requirements: an install without demo sessions keeps the wizard unchanged.
 
 ## Source
 
-> Author-approved demo-only change: a demo deployment never shows the first-run setup wizard; until the demo marker exists, the front door shows a "demo data loading" state instead.
+> **[D-191]** A demo shows no first-run wizard: until the demo dataset's marker exists, it shows that the demo data is loading, so nothing entered before the seed runs can stop it from loading. Once loaded, the owner can still sign in and change it (D-68) until the next reseed.
 
-Author decision given in chat (2026-11-03); docs/dev/demo.md#demo-data
+docs/DESIGN.md#D-191; docs/dev/demo.md#demo-data

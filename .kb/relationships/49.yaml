@@ -307,20 +307,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1dc3d08088d0
-  - type: implements
-    from: SYM-ui-setup-step
-    to: REQ-ui-first-run-wizard-steps
-    created_at: 2026-10-29T13:16:03.985Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-af8a0faf0aaa
-  - type: implements
-    from: SYM-ui-setup-step
-    to: REQ-ui-first-run-wizard
-    created_at: 2026-10-29T13:16:04.013Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-59b9be9d3833
   - type: covered_by
     from: SYM-ui-setup-step
     to: TEST-ui-onboarding
@@ -531,3 +517,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7889a516a32a
+  - type: implements
+    from: SYM-ui-setup-step
+    to: REQ-ui-first-run-wizard-outside-demo
+    created_at: 2026-11-06T00:08:11.077Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-dda8712fa743
+  - type: implements
+    from: SYM-ui-setup-step
+    to: REQ-ui-first-run-wizard-steps-outside-demo
+    created_at: 2026-11-06T00:08:24.667Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f725fd8d953a

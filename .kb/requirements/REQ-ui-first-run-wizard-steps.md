@@ -1,6 +1,6 @@
 ---
 title: An owner session on an install with no account must be sent from the overview to the first-run wizard, whose steps show the sleeves with their forms, then the accounts with the reported broker accounts and the installed connector instances to bind, then where to go next, with every form returning to its step.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-73
 tags:
   - strict-modeling

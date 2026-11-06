@@ -1,6 +1,6 @@
 ---
 title: The first-run wizard must follow the creation of the first passkey.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90
