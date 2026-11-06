@@ -12,6 +12,7 @@
 //	                        [--trusted-signers FILE] [--yes]
 //	openfief plugin uninstall <instance> [--yes]
 //	openfief plugin list
+//	openfief version
 //
 // install reads the catalog entry or the image, verifies the image's
 // signature with the operator's trust policy and signature check, shows the
@@ -26,7 +27,9 @@
 // origin, which the core refuses unless it is in its OPENFIEF_AUTH_ORIGINS
 // (D-126), and with no port-forward; without it, it forwards localhost:8080 to the core, the only
 // entry point for browsers (D-81), prints the link for it and keeps
-// forwarding until Ctrl-C. Every command takes --kubeconfig and --context.
+// forwarding until Ctrl-C. Every cluster command takes --kubeconfig and
+// --context. version prints the release the binary was built for, stamped by
+// the release (scripts/release-cli.sh), or dev, and the commit Go recorded.
 package main
 
 import (
@@ -75,6 +78,9 @@ func main() {
 
 // run builds the real adapters and runs the command line.
 func run(ctx context.Context, args []string) error {
+	if len(args) > 0 && args[0] == "version" {
+		return runVersion(args[1:], os.Stdout)
+	}
 	if len(args) > 0 && args[0] == "enroll" {
 		connectTo := func(kubeconfig, kubeContext string) (identitycli.Core, error) {
 			core, err := connectCore(kubeconfig, kubeContext)
