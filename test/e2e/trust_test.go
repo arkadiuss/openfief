@@ -511,7 +511,13 @@ func createCredential(t *testing.T, k *kube, instance string) string {
 	t.Helper()
 	credential := syntheticCredential(t)
 	s := &corev1.Secret{
-		ObjectMeta: metav1.ObjectMeta{Name: credentialSecret(instance), Namespace: namespace},
+		// Labelled with its instance, as the owner labels it (D-182): uninstall
+		// deletes only the Secrets that label names as the instance's own.
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      credentialSecret(instance),
+			Namespace: namespace,
+			Labels:    map[string]string{plugins.OwnerInstanceLabel: instance},
+		},
 		StringData: map[string]string{connectorKey: credential},
 	}
 	if _, err := k.clients.CoreV1().Secrets(namespace).Create(t.Context(), s, metav1.CreateOptions{FieldManager: fieldManager}); err != nil {
