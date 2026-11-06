@@ -141,6 +141,8 @@ The ubiquitous language: one term, one meaning, one code name. Use these names i
 | Owner | identity | `identity.Owner` | The person who runs an installation: one individual investor, who holds every account and alone changes anything. | user, customer |
 | Viewer | identity | `identity.Viewer` | A person the owner enrolls with their own passkey and grants accounts to; sees only those accounts, read-only (D-65). From the second alpha. | guest, user |
 | Script token | identity | `identity.ScriptToken` | A scoped, expiring, read-only personal API token. | API key |
+| Grant | identity | `identity.Grant` | The owner's permission for a viewer, a script token or a view plugin to view one account or one sleeve, a sleeve's covering the accounts added to it later (D-209). | share, permission |
+| Audit log | identity | `identity.AuditEntry` | The append-only record of every change of state and access event: who, what, which records by ID, when and the outcome, never amounts or secrets (D-211). | activity log |
 | Script token secret | identity | `identity.FormatSecret` | What a script presents as its bearer token: `ofs_`, the script token's ID, `_` and a random key. Shown once when the token is issued; only the SHA-256 hash of the key is stored. | API key, password |
 | Authenticator | identity | `identity.Authenticator` | A way for the owner to prove who they are before the core issues a session: a passkey (owner scope), or the demo authenticator (read scope, demo databases only). Every authenticator resolves to the one owner. | login provider, IdP |
 | Passkey | identity | `identity.Passkey` | One of the owner's WebAuthn credentials. It works only on the host it was created on, its relying party ID. | security key, password |
