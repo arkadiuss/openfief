@@ -6,11 +6,14 @@
 //
 // What it never does: cache a page, an htmx fragment, a form's answer or any
 // other response. Pages hold the owner's record, so a page always comes from
-// the network; offline, a navigation gets the static offline page instead.
-// Every other request passes through untouched.
+// the network; offline, a navigation gets the static offline page instead,
+// on which offline.js shows the last overview, the one thing of the
+// owner's the app keeps, encrypted, in IndexedDB (D-151). Every other
+// request passes through untouched.
 //
 // The cache is filled when the worker installs and after a sign-in, emptied
 // on sign-out, and a new version (any static file changed) drops the old one.
+// Sign-out also deletes the kept overview and its key.
 'use strict';
 
 const assets = new Set(CONFIG.assets);
@@ -36,6 +39,16 @@ function drop(keep) {
   });
 }
 
+// wipeOffline deletes the database holding the kept overview and its key.
+function wipeOffline() {
+  return new Promise(function (resolve) {
+    const req = indexedDB.deleteDatabase(CONFIG.offlineDb);
+    req.onsuccess = req.onerror = req.onblocked = function () {
+      resolve();
+    };
+  });
+}
+
 self.addEventListener('install', function (event) {
   self.skipWaiting();
   event.waitUntil(precache());
@@ -54,10 +67,10 @@ self.addEventListener('fetch', function (event) {
     return;
   }
   if (request.method === 'POST') {
-    // Sign-out empties the cache and sign-in fills it; the request itself
-    // goes to the network untouched.
+    // Sign-out empties the cache and wipes the kept overview, and sign-in
+    // fills the cache; the request itself goes to the network untouched.
     if (url.pathname === CONFIG.signOut) {
-      event.waitUntil(drop(''));
+      event.waitUntil(Promise.all([drop(''), wipeOffline()]));
     } else if (CONFIG.signIn.indexOf(url.pathname) >= 0) {
       event.waitUntil(precache());
     }

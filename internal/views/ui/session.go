@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"connectrpc.com/connect"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/arkadiuss/openfief/internal/kernel"
 	identityv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/identity/v1"
@@ -43,6 +44,10 @@ type session struct {
 	// Attention is how many attention items are open (D-130), for the
 	// navigation and the overview.
 	Attention int
+	// Described is the session as WhoAmI describes it, with when it ends
+	// (sessionEnd), when the overview kept for offline reading is wiped
+	// (D-151).
+	Described *identityv1.Session
 }
 
 // Owner reports whether the session may do what only the owner may: manage
@@ -108,9 +113,10 @@ func setSession(w http.ResponseWriter, token string, s *identityv1.Session) {
 }
 
 // clearSiteData is the Clear-Site-Data value that ends a session: the
-// browser deletes this origin's storage, whatever the app kept of the
-// owner's record among it, and the service worker with its cache (D-151).
-// Cookies are not named: the session cookie goes with its own Set-Cookie.
+// browser deletes this origin's storage, the overview the installed app
+// keeps offline with its key among it (D-151), and the service worker with
+// its cache. Cookies are not named: the session cookie goes with its own
+// Set-Cookie.
 const clearSiteData = `"storage"`
 
 // clearSession removes the session cookie from the browser and has it wipe
@@ -119,6 +125,21 @@ const clearSiteData = `"storage"`
 func clearSession(w http.ResponseWriter) {
 	http.SetCookie(w, sessionCookie("", time.Unix(0, 0), -1))
 	w.Header().Set("Clear-Site-Data", clearSiteData)
+}
+
+// sessionEnd is when s ends unless it is used again: the earlier of its
+// idle and absolute expiry, whichever are set; zero when neither is.
+func sessionEnd(s *identityv1.Session) time.Time {
+	var end time.Time
+	for _, t := range []*timestamppb.Timestamp{s.GetIdleExpiresAt(), s.GetExpiresAt()} {
+		if t == nil {
+			continue
+		}
+		if at := t.AsTime(); end.IsZero() || at.Before(end) {
+			end = at
+		}
+	}
+	return end
 }
 
 // sessionToken returns the session token the browser sent, or "".
@@ -153,7 +174,7 @@ func (s *server) withSession(h sessionHandler) http.HandlerFunc {
 			s.coreFailed(w, r, "WhoAmI", err)
 			return
 		}
-		sess := session{Token: token, Scope: who.Msg.GetSession().GetScope(), Origin: origin}
+		sess := session{Token: token, Scope: who.Msg.GetSession().GetScope(), Origin: origin, Described: who.Msg.GetSession()}
 		settings, err := s.read.GetSettings(r.Context(), bearer(&viewsv1.GetSettingsRequest{}, sess))
 		if err != nil {
 			s.coreFailed(w, r, "GetSettings", err)

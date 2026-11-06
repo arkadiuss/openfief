@@ -629,3 +629,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7646f0d6441c
+  - type: executable_for
+    from: SYM-ui-test-overview-hands-over-only-the-overview
+    to: TEST-ui-offline
+    created_at: 2026-11-02T10:25:09.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a49cbdc7ad3

@@ -1,6 +1,6 @@
 ---
 title: The UI's service worker must cache only static files (styles, scripts, fonts, icons, the manifest and a static offline page) and never a page, fragment or form response; it must empty its cache on sign-out and drop it on a new version, and show the offline page, with no data, when the network is gone.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-69
 tags:
   - strict-modeling

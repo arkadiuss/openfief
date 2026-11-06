@@ -811,3 +811,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90a015af660b
+  - type: validates
+    from: TEST-ui-browser-checks
+    to: REQ-ui-offline-keeps-last-overview-only
+    created_at: 2026-11-02T10:10:54.204Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b59d3b39840e
+  - type: validates
+    from: TEST-ui-browser-checks
+    to: REQ-ui-offline-overview-unexportable-key
+    created_at: 2026-11-02T10:10:54.290Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3b6c68a95166
+  - type: validates
+    from: TEST-ui-browser-checks
+    to: REQ-ui-offline-overview-wiped-on-session-end
+    created_at: 2026-11-02T10:10:54.362Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ab7ff7ac8ec
+  - type: validates
+    from: TEST-ui-browser-checks
+    to: REQ-ui-offline-never-keeps-records
+    created_at: 2026-11-02T10:10:54.409Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a6513aa8929e

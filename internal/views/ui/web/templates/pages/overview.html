@@ -5,6 +5,7 @@
 {{end}}
 {{define "content"}}
 {{with .Data}}
+<div hidden data-offline-overview="{{.Offline}}"></div>
 <section class="card ask" id="ask" aria-labelledby="status-title">
   <h2 id="status-title" class="status">{{.Status.Sentence}}</h2>
   {{if or $.Session.Attention .Flagged .FlaggedPrices}}<p class="muted status-links">{{with $.Session.Attention}}<a href="/inbox">{{.}} attention item(s)</a> wait for you in the Inbox.{{end}}

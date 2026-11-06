@@ -16,6 +16,8 @@ const (
 	serveMargin = 5 * time.Second
 	// browserSignIn is where the browser checks get the owner's session.
 	browserSignIn = "/test/sign-in"
+	// browserEndedSession is where they get a session the core rejects.
+	browserEndedSession = "/test/ended-session"
 )
 
 // browserInboxItems adds an item of each kind the Inbox settles in place
@@ -61,6 +63,12 @@ func TestServeForBrowser(t *testing.T) {
 	// from a Set-Cookie header, as the UI's own sign-in sends it.
 	mux.HandleFunc("GET "+browserSignIn, func(w http.ResponseWriter, r *http.Request) {
 		setSession(w, ownerSession, issued(identityv1.SessionScope_SESSION_SCOPE_OWNER))
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	})
+	// Here the browser gets a session the core no longer accepts, as one
+	// that expired or was revoked (D-151's wipe when the session ends).
+	mux.HandleFunc("GET "+browserEndedSession, func(w http.ResponseWriter, r *http.Request) {
+		setSession(w, "session-ended", issued(identityv1.SessionScope_SESSION_SCOPE_OWNER))
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	})
 	srv := &http.Server{Addr: addr, Handler: mux, ReadHeaderTimeout: time.Second}

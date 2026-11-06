@@ -559,3 +559,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8854eed19479
+  - type: validates
+    from: TEST-ui-offline
+    to: REQ-ui-offline-keeps-last-overview-only
+    created_at: 2026-11-02T10:10:51.319Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c569a7b5df1
+  - type: validates
+    from: TEST-ui-offline
+    to: REQ-ui-offline-overview-unexportable-key
+    created_at: 2026-11-02T10:10:51.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-646adc778356
+  - type: validates
+    from: TEST-ui-offline
+    to: REQ-ui-offline-overview-wiped-on-session-end
+    created_at: 2026-11-02T10:10:51.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a081794b2b9d
+  - type: validates
+    from: TEST-ui-offline
+    to: REQ-ui-offline-never-keeps-records
+    created_at: 2026-11-02T10:10:51.471Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d304d156cf99

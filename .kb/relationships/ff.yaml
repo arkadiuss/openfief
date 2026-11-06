@@ -811,3 +811,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-47b51c642cca
+  - type: constrains
+    from: REQ-ui-offline-overview-wipe-triggers
+    to: FACT-SUBJECT-6AC55871A4F16CF6
+    created_at: 2026-11-02T10:11:27.804Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-940d59c8813d
+  - type: requires_property
+    from: REQ-ui-offline-overview-wipe-triggers
+    to: FACT-PROP-6F356F782896AC81
+    created_at: 2026-11-02T10:11:27.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6319511ddae6
+  - type: specified_by
+    from: REQ-ui-offline-overview-wipe-triggers
+    to: SCEN-ui-offline-overview-wipe
+    created_at: 2026-11-02T10:11:27.967Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34ffb7880c8b

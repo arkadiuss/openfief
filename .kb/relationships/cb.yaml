@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-08a3b971915a
+  - type: implements
+    from: SYM-ui-clear-session
+    to: REQ-ui-offline-overview-wipe-triggers
+    created_at: 2026-11-02T10:24:19.550Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a16e97ac2d68
+  - type: covered_by
+    from: SYM-ui-clear-session
+    to: TEST-ui-offline
+    created_at: 2026-11-02T10:24:19.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b60ada8bbcdb

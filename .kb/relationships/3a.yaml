@@ -398,13 +398,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c17d7c63f82
-  - type: implements
-    from: SYM-ui-pwa-sign-in-paths
-    to: REQ-ui-service-worker-static-only
-    created_at: 2026-10-30T08:33:20.251Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a853a07e1191
   - type: covered_by
     from: SYM-ui-pwa-sign-in-paths
     to: TEST-ui-pwa
@@ -622,3 +615,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f273991d672
+  - type: implements
+    from: SYM-ui-pwa-sign-in-paths
+    to: REQ-ui-service-worker-static-files
+    created_at: 2026-11-02T10:27:27.114Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-577fa6e3e013
