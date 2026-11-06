@@ -608,13 +608,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-65bb586976d4
-  - type: implements
-    from: SYM-connectorv1-bond-payout-enum
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:34:51.631Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dfb455242a03
   - type: constrains
     from: REQ-operator-plugin-resources
     to: FACT-SUBJECT-B8AF2A954C333973
@@ -846,3 +839,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e7c4b2631c5
+  - type: implements
+    from: SYM-connectorv1-bond-payout-enum
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:13:29.018Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e78048ec086
+  - type: implements
+    from: SYM-ledger-connectapi-checkpoint-service
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T03:52:25.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-26d9e68ee879
+  - type: covered_by
+    from: SYM-ledger-connectapi-checkpoint-service
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T03:52:25.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e86cd2118c4f

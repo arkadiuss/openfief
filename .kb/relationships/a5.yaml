@@ -517,13 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0c39c64df48e
-  - type: validates
-    from: TEST-attention-read-subject
-    to: REQ-identity-read-access-no-broker-account-numbers
-    created_at: 2026-11-01T10:05:30.070Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-160a8a4b7036
   - type: executable_for
     from: SYM-ingest-connectrpc-test-client-import-file-opening-cash
     to: TEST-ingest-connectrpc-client
@@ -685,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e1bb31ce3f15
+  - type: validates
+    from: TEST-attention-read-subject
+    to: REQ-identity-read-access-never-broker-account-numbers
+    created_at: 2026-11-02T01:19:28.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-37cf49f9eb1e

@@ -1,6 +1,6 @@
 ---
 title: Authenticators must only prove that a caller is the owner and must be separate from the session that follows; in M0 the authenticators must be passkeys and, on a demo, the demo authenticator.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

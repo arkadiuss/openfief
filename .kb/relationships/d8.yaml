@@ -587,13 +587,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ddbe9e335d7c
-  - type: implements
-    from: SYM-connectorv1-account-holdings-get-bond-payout-since
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:34:20.128Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2228a434dff8
   - type: executable_for
     from: SYM-fd-browserproxy-test-check-security-headers
     to: TEST-views-browser-proxy
@@ -664,3 +657,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51f5c9a4ae07
+  - type: implements
+    from: SYM-connectorv1-account-holdings-get-bond-payout-since
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:12:55.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3a1f6621b84d
+  - type: validates
+    from: TEST-core-cash-checkpoints
+    to: REQ-ledger-owner-enters-institution-cash
+    created_at: 2026-11-02T03:49:55.147Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b300bf2515d
+  - type: validates
+    from: TEST-core-cash-checkpoints
+    to: REQ-ledger-owner-cash-stored-as-assertion
+    created_at: 2026-11-02T03:49:55.206Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-768bdb6ce9b8
+  - type: validates
+    from: TEST-core-cash-checkpoints
+    to: REQ-ledger-owner-cash-mismatch-attention-item
+    created_at: 2026-11-02T03:49:55.268Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ebc80201c3be
+  - type: validates
+    from: TEST-core-cash-checkpoints
+    to: REQ-ledger-owner-cash-difference-booked
+    created_at: 2026-11-02T03:49:55.304Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1fcc2e07d5b5

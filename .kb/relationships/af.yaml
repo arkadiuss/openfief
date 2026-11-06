@@ -650,13 +650,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0e26bf636d10
-  - type: implements
-    from: SYM-ingest-app-connectors-record-starts
-    to: REQ-ingest-opening-upload-starts-account
-    created_at: 2026-11-01T17:21:50.437Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-84ea7e6c623a
   - type: covered_by
     from: SYM-ingest-app-connectors-record-starts
     to: TEST-ingest-app-starts
@@ -692,13 +685,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-785e97c659a9
-  - type: implements
-    from: SYM-ingest-connectapi-tickers-fail
-    to: REQ-ingest-ticker-currency-pick-required
-    created_at: 2026-11-01T23:59:48.632Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2d4d3eedbb19
   - type: executable_for
     from: SYM-views-connectapi-test-authz-acc1-only
     to: TEST-views-connectapi-authz
@@ -895,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f36484702968
+  - type: implements
+    from: SYM-ingest-app-connectors-record-starts
+    to: REQ-ingest-opening-upload-records-go-live
+    created_at: 2026-11-02T01:04:09.975Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7b7691fc4b11
+  - type: implements
+    from: SYM-ingest-connectapi-tickers-fail
+    to: REQ-ingest-owner-picks-ambiguous-trading-currency
+    created_at: 2026-11-02T02:38:12.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9a4f849d883

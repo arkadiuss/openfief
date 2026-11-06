@@ -552,3 +552,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-793dab07cb8f
+  - type: implements
+    from: SYM-core-with-ledger-entries
+    to: REQ-core-owner-entry-service-callers
+    created_at: 2026-11-06T13:36:46.083Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bba1adf0a23
+  - type: covered_by
+    from: SYM-core-with-ledger-entries
+    to: TEST-core-transfers
+    created_at: 2026-11-06T13:36:46.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-70b50d6eff8e

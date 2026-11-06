@@ -63,7 +63,7 @@ func GroupOf(k Kind) Group {
 	case KindTickerUnconfirmed, KindBrokerAccountUnmapped, KindSyncFailing, KindImportProblems,
 		kindUndeclared, kindMarketDataGap:
 		return GroupDataComingIn
-	case KindAssertionFlagged, KindPriceCheckFlagged:
+	case KindAssertionFlagged, KindCashCheckpointMismatch, KindPriceCheckFlagged:
 		return GroupNumbersToCheck
 	case KindTransferBroken, KindTransferSuggested, KindSettingMissing, kindUnclassified:
 	}
@@ -86,6 +86,7 @@ type Scope struct {
 //
 //   - balance-assertion-flagged "<account>/<date>/<ISIN>/<symbol>" or
 //     ".../cash:<currency>": the account and the instrument;
+//   - cash-checkpoint-mismatch "<account>/<date>/<currency>": the account;
 //   - price-check-flagged "<ISIN>/<symbol>", instrument-unclassified
 //     "<ISIN>": the instrument;
 //   - market-data-gap "<account>/<kind>/<key>": the account, and the
@@ -99,7 +100,7 @@ type Scope struct {
 func ScopeOf(it *Item) Scope {
 	parts := strings.Split(it.Subject, "/")
 	switch it.Kind {
-	case KindAssertionFlagged, kindMarketDataGap:
+	case KindAssertionFlagged, KindCashCheckpointMismatch, kindMarketDataGap:
 		return accountScope(it.Kind, parts)
 	case KindPriceCheckFlagged, kindUnclassified:
 		return Scope{Instrument: parts[0]}

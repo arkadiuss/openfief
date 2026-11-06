@@ -804,3 +804,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-768ba3123ec3
+  - type: constrains
+    from: REQ-ui-charts-start-stored-setting
+    to: FACT-SUBJECT-9106B40681FB54C7
+    created_at: 2026-11-02T00:55:57.924Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7d8cead2401b
+  - type: requires_property
+    from: REQ-ui-charts-start-stored-setting
+    to: FACT-PROP-7B1C5C1D23736BB1
+    created_at: 2026-11-02T00:55:57.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d22fc205016c
+  - type: supersedes
+    from: REQ-ui-charts-start-stored-setting
+    to: REQ-ui-chart-start-view-parameter
+    created_at: 2026-11-02T00:55:58.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b471dc4d7e2
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-init
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:44:49.466Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6451ee237542
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-init
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:44:49.517Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c6851501056

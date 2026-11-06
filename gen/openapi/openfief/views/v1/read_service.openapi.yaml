@@ -276,6 +276,12 @@ components:
           allOf:
             - $ref: '#/components/schemas/openfief.views.v1.AssertionStatus'
           title: status
+        entered:
+          type: boolean
+          title: entered
+          description: |-
+            Whether the owner entered it as a cash checkpoint: the cash an
+             institution showed (D-158). Otherwise a connector's import reported it.
       title: AssertionCheck
       additionalProperties: false
       description: |-

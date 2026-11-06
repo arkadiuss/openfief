@@ -580,13 +580,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-29f0c427d2d4
-  - type: implements
-    from: SYM-connectorv1-account-holdings-get-bond-payout-earlier
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:28:08.292Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c87b819e45dc
   - type: covered_by
     from: SYM-connectorv1-account-holdings-get-bond-payout-earlier
     to: TEST-ingest-connectrpc-held
@@ -678,3 +671,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8a2c035ae1e8
+  - type: implements
+    from: SYM-connectorv1-account-holdings-get-bond-payout-earlier
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:12:43.981Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1b6dda2fbe75
+  - type: executable_for
+    from: SYM-ledger-test-cash-checkpoint-is-entered-cash
+    to: TEST-ledger-cash-checkpoint
+    created_at: 2026-11-02T03:55:02.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b72a507bfeae

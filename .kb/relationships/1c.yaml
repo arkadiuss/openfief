@@ -846,3 +846,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fe3f59c6d411
+  - type: implements
+    from: SYM-ledger-connectapi-new-cash-checkpoints
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T03:52:19.762Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-586bbc006e1f
+  - type: covered_by
+    from: SYM-ledger-connectapi-new-cash-checkpoints
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T03:52:19.799Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f45f2e4cb8c6
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-proto-message
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:39:30.786Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb633de5a5d3
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-proto-message
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:39:30.839Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8d15fdde0adf
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-date
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:41:25.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff7466b78edb
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-get-date
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:41:26.028Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae4c8d2c22dc

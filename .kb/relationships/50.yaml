@@ -580,13 +580,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b02a1990e268
-  - type: implements
-    from: SYM-connectorv1-bond-payout-period-get-since
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:29:07.447Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-2bfe75372325
   - type: covered_by
     from: SYM-connectorv1-bond-payout-period-get-since
     to: TEST-ingest-connectrpc-held
@@ -594,13 +587,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-200ca5f61d95
-  - type: implements
-    from: SYM-ingest-xtb-opening-date
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:50:55.143Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1c72302fdf8a
   - type: executable_for
     from: SYM-plugins-test-helper-named-signers
     to: TEST-plugins-untrusted-signer
@@ -608,13 +594,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af86ec7fdb67
-  - type: implements
-    from: SYM-ingest-pending-ticker-currency-choices
-    to: REQ-ingest-ticker-currency-pick-required
-    created_at: 2026-11-01T23:58:20.561Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0661dc528af9
   - type: covered_by
     from: SYM-ingest-pending-ticker-currency-choices
     to: TEST-ingest-listing
@@ -727,3 +706,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d3529793f364
+  - type: implements
+    from: SYM-ingest-xtb-opening-date
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T01:00:39.416Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e10121be0d3
+  - type: implements
+    from: SYM-connectorv1-bond-payout-period-get-since
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:14:37.384Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d76232e01820
+  - type: implements
+    from: SYM-ingest-pending-ticker-currency-choices
+    to: REQ-ingest-owner-picks-ambiguous-trading-currency
+    created_at: 2026-11-02T02:38:37.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a48d73b98f4e

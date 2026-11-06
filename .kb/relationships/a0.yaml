@@ -699,13 +699,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-021cb7d7b412
-  - type: implements
-    from: SYM-ingest-xtb-mapping-opening
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:39:08.905Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f4f18e971f9b
   - type: constrains
     from: REQ-views-ghostfolio-checks-version-before-writes
     to: FACT-SUBJECT-494CEF16128E84E0
@@ -818,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7b843b67c435
+  - type: implements
+    from: SYM-ingest-xtb-mapping-opening
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T00:59:48.456Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8d6b6cabc85

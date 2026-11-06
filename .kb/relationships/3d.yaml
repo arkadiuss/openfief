@@ -412,13 +412,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9cbf883edc7c
-  - type: implements
-    from: SYM-ingest-app-accounts-supersede-payouts
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:21:22.750Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-e2e53e4a2f35
   - type: covered_by
     from: SYM-ingest-app-accounts-supersede-payouts
     to: TEST-ingest-connectapi-accounts
@@ -426,13 +419,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4dcaeadae55c
-  - type: implements
-    from: SYM-ingestv1-bond-payout-descriptor
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:32:45.598Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ada6bc7e748c
   - type: implements
     from: SYM-core-bound-bodies
     to: REQ-core-ports-bound-bodies
@@ -594,3 +580,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6b5c75fd835f
+  - type: implements
+    from: SYM-ingest-app-accounts-supersede-payouts
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:08:29.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a0184aed4ae4
+  - type: implements
+    from: SYM-ingestv1-bond-payout-descriptor
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:10:41.219Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58f3b582c10b
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-get-checkpoint
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:42:22.496Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddcc69a5b70a
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response-get-checkpoint
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:42:22.529Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-687c2d7e4812

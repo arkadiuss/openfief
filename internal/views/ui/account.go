@@ -93,6 +93,15 @@ type accountData struct {
 	Lots       []*viewsv1.Lot
 	Cash       []*viewsv1.Money
 	Checks     []*viewsv1.AssertionCheck
+	// Checkpoints are the cash checkpoints the owner entered, with their
+	// differences (D-158), on the Cash tab.
+	Checkpoints []checkpointRow
+	// CheckpointForm is the owner's "Enter cash balance" form on the Cash
+	// tab; nil for a read session and on the other tabs.
+	CheckpointForm *checkpointForm
+	// EnterCash is the owner's "Enter cash balance" link in the header,
+	// to the Cash tab's form (D-158, D-195); empty for a read session.
+	EnterCash string
 	// Transactions are a page of the account's transactions.
 	Transactions transactionsView
 	// Charts are the account's value over time and performance from the
@@ -158,9 +167,10 @@ func (d *accountData) tabQuery(tab string) string {
 // accountForm is what the owner posted to an account's page and why it was
 // refused, to show again; the zero value is a fresh page.
 type accountForm struct {
-	Lot    *bondLotForm
-	Upload *ingestv1.UploadStatementResponse
-	Error  string
+	Lot        *bondLotForm
+	Checkpoint *checkpointForm
+	Upload     *ingestv1.UploadStatementResponse
+	Error      string
 	// Tab is the tab the form was on, shown again; empty is the request's.
 	Tab string
 }
@@ -185,7 +195,8 @@ func joinValuations(holdings []*viewsv1.Holding, valuations []*viewsv1.Valuation
 // accountPage shows one account on a date: its header with its sleeve,
 // wrapper and sync, its open items, its figure cards and the tab the
 // request names; to the owner, it also offers the "Upload statement"
-// form, and a bond account's page the "Add bond lot" form.
+// form, the "Enter cash balance" form on the Cash tab (D-158), and a bond
+// account's page the "Add bond lot" form.
 func (s *server) accountPage(w http.ResponseWriter, r *http.Request, sess session) {
 	s.renderAccount(w, r, sess, http.StatusOK, accountForm{})
 }
@@ -255,6 +266,7 @@ func (s *server) accountView(r *http.Request, sess session, form accountForm) (*
 	if method, tabErr := s.accountTab(r, sess, data); tabErr != nil {
 		return nil, &readError{Method: method, Err: tabErr}
 	}
+	s.checkpointForms(sess, data, form.Checkpoint)
 	return data, nil
 }
 
@@ -356,6 +368,11 @@ func (s *server) accountTab(r *http.Request, sess session, data *accountData) (s
 			return "ListCash", fmt.Errorf("ListCash: %w", err)
 		}
 		data.Cash = cash.Msg.GetBalances()
+		checks, err := s.read.ListAssertionChecks(ctx, bearer(&viewsv1.ListAssertionChecksRequest{AccountId: id}, sess))
+		if err != nil {
+			return "ListAssertionChecks", fmt.Errorf("ListAssertionChecks: %w", err)
+		}
+		data.Checkpoints = checkpointRows(checks.Msg.GetChecks())
 	case tabReconciliation:
 		checks, err := s.read.ListAssertionChecks(ctx, bearer(&viewsv1.ListAssertionChecksRequest{AccountId: id}, sess))
 		if err != nil {

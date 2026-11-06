@@ -650,13 +650,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-118c903797c2
-  - type: implements
-    from: SYM-ingest-app-payout-ledger
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:21:01.089Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-53e6569ec7cb
   - type: covered_by
     from: SYM-ingest-app-payout-ledger
     to: TEST-ingest-connectapi-accounts
@@ -769,3 +762,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4a19b6337db7
+  - type: implements
+    from: SYM-ingest-app-payout-ledger
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:08:39.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a66607d4d60
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-date
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:39:56.455Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f5845a3e56b7
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-date
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:39:56.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d0eb947e221b

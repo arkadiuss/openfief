@@ -678,13 +678,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9f2db44963f2
-  - type: implements
-    from: SYM-ingest-app-connectors-go-live
-    to: REQ-ingest-opening-upload-starts-account
-    created_at: 2026-11-01T17:21:43.452Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-780654ca22d9
   - type: covered_by
     from: SYM-ingest-app-connectors-go-live
     to: TEST-ingest-app-starts
@@ -818,3 +811,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-194f034fbe3a
+  - type: implements
+    from: SYM-ingest-app-connectors-go-live
+    to: REQ-ingest-opening-upload-records-go-live
+    created_at: 2026-11-02T01:03:59.570Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0c316aa3fd94
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-checkpoint-book-book
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T03:56:45.307Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-10c024aee206

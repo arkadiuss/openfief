@@ -741,3 +741,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5d13b69e1df7
+  - type: constrains
+    from: REQ-ledger-cash-checkpoint-service
+    to: FACT-SUBJECT-D76CF65945DB4D93
+    created_at: 2026-11-02T03:50:17.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-908a4623375a
+  - type: requires_property
+    from: REQ-ledger-cash-checkpoint-service
+    to: FACT-PROP-E32BF6890805D98E
+    created_at: 2026-11-02T03:50:17.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-14685b3ea522
+  - type: specified_by
+    from: REQ-ledger-cash-checkpoint-service
+    to: SCEN-ledger-cash-checkpoint-service-refusals
+    created_at: 2026-11-02T03:50:17.909Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-96fef1be5b7f
+  - type: constrains
+    from: REQ-ui-cash-checkpoints
+    to: FACT-SUBJECT-E62B2DC90EAF94C7
+    created_at: 2026-11-02T03:50:26.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72aa5714d49c
+  - type: requires_property
+    from: REQ-ui-cash-checkpoints
+    to: FACT-PROP-F718680289CF80A8
+    created_at: 2026-11-02T03:50:26.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d55c46e1863
+  - type: specified_by
+    from: REQ-ui-cash-checkpoints
+    to: SCEN-ui-cash-checkpoints
+    created_at: 2026-11-02T03:50:26.591Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-080845084cbe

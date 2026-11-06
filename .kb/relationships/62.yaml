@@ -916,13 +916,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-51f1b05823bf
-  - type: implements
-    from: SYM-ingestv1-account-get-bond-payout-since
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:32:24.465Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-8078a3e68ff6
   - type: executable_for
     from: SYM-e2e-firstrun-test-bundle-first-run
     to: TEST-e2e-bundle-first-run
@@ -1105,3 +1098,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8d06acfe251f
+  - type: implements
+    from: SYM-ingestv1-account-get-bond-payout-since
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:10:17.459Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b3becd08f167

@@ -23,6 +23,7 @@ func TestGroupOf(t *testing.T) {
 		{ingest.KindUndeclaredDeliveries, attention.GroupDataComingIn},
 		{valuationapp.GapKind, attention.GroupDataComingIn},
 		{attention.KindAssertionFlagged, attention.GroupNumbersToCheck},
+		{attention.KindCashCheckpointMismatch, attention.GroupNumbersToCheck},
 		{attention.KindPriceCheckFlagged, attention.GroupNumbersToCheck},
 		{attention.KindTransferBroken, attention.GroupDecisions},
 		{attention.KindTransferSuggested, attention.GroupDecisions},
@@ -64,6 +65,10 @@ func TestScopeOf(t *testing.T) {
 		},
 		{
 			name: "a cash balance assertion", kind: attention.KindAssertionFlagged, subject: "acc-1/2026-03-02/cash:PLN",
+			want: attention.Scope{Account: "acc-1"},
+		},
+		{
+			name: "a mismatched cash checkpoint", kind: attention.KindCashCheckpointMismatch, subject: "acc-1/2026-03-31/PLN",
 			want: attention.Scope{Account: "acc-1"},
 		},
 		{

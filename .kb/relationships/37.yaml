@@ -888,3 +888,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3d3db44c9d1f
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-checkpoint-book
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T03:56:31.430Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cc605164c183

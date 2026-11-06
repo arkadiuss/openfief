@@ -634,6 +634,8 @@ func itemTitle(it *viewsv1.AttentionItem) string {
 		return "The price of " + subject + " differs"
 	case kindAssertion:
 		return "A balance in " + it.GetAccountId() + " doesn't match"
+	case kindCashCheckpoint:
+		return "The cash balance you entered for " + it.GetAccountId() + " differs"
 	case kindSettingMissing:
 		return "Set " + subject
 	case kindUnclassified:
@@ -643,7 +645,9 @@ func itemTitle(it *viewsv1.AttentionItem) string {
 }
 
 // itemLinks returns the pages an item links to: its accounts, and the page
-// where a kind not settled in place is settled.
+// where a kind not settled in place is settled; a mismatched cash
+// checkpoint's is its account's Cash tab, where the owner books the
+// difference (D-158).
 func itemLinks(it *viewsv1.AttentionItem) []inboxLink {
 	var out []inboxLink
 	accounts := it.GetAccountIds()
@@ -658,6 +662,11 @@ func itemLinks(it *viewsv1.AttentionItem) []inboxLink {
 	}
 	if page := attentionKindOf(it.GetKind()).Page; page != "" {
 		out = append(out, inboxLink{Href: page, Text: attentionKindOf(it.GetKind()).Action})
+	}
+	if it.GetKind() == kindCashCheckpoint {
+		if page := checkpointPage(it.GetSubject()); page != "" {
+			out = append(out, inboxLink{Href: page, Text: "Book the difference"})
+		}
 	}
 	return out
 }

@@ -1,0 +1,99 @@
+// OpenFief's cash checkpoint contract (docs/DESIGN.md D-158, D-79).
+//
+// The owner enters the cash an institution shows for an account on a date,
+// such as the bond registry's or a bank's. The core stores it as a balance
+// assertion (D-18) and checks it against the cash derived from the
+// transaction log, which it never changes. A mismatch raises an attention
+// item (D-130); from it the owner books the difference as an ordinary
+// manual transaction: a deposit when the institution shows more cash, a
+// withdrawal when it shows less, so an unexplained difference never shows
+// as return. One owner-only service for this kind of entry (D-79).
+//
+// Calling conventions are the AuthService's
+// (proto/openfief/identity/v1/auth.proto), as in transfers.proto:
+// - Every call carries the view plugin's projected ServiceAccount token
+//   (audience openfief-core, D-27) as "Authorization: Bearer <token>"; a
+//   call without one, or from a plugin that is not a view plugin, fails
+//   with PERMISSION_DENIED.
+// - Every request carries origin and the owner's session_token. A missing,
+//   unknown, expired or revoked session fails with UNAUTHENTICATED; a
+//   read-scoped session, or an origin off the core's allow-list, fails with
+//   PERMISSION_DENIED.
+// - A malformed date, currency or amount fails with INVALID_ARGUMENT; an
+//   account or a checkpoint that is not stored with NOT_FOUND; booking the
+//   difference of a checkpoint that matches with FAILED_PRECONDITION.
+//   Nothing is stored then.
+syntax = "proto3";
+
+package openfief.ledger.v1;
+
+import "openfief/ledger/v1/transfers.proto";
+
+// CashCheckpointService records the cash institutions show and books the
+// differences the owner explains.
+service CashCheckpointService {
+  // RecordCashCheckpoint stores the cash the institution showed for an
+  // account at the end of a date and checks it against the derived cash.
+  // A checkpoint for the same account, date and currency replaces the
+  // earlier one.
+  rpc RecordCashCheckpoint(RecordCashCheckpointRequest) returns (RecordCashCheckpointResponse);
+
+  // BookCashDifference books the difference between a checkpoint and the
+  // cash derived on its date as a deposit or a withdrawal, dated on the
+  // checkpoint's date, so the checkpoint matches. Booking the same
+  // difference again books nothing new.
+  rpc BookCashDifference(BookCashDifferenceRequest) returns (BookCashDifferenceResponse);
+}
+
+// CashCheckpoint is the cash an institution showed and the cash derived on
+// the same date.
+message CashCheckpoint {
+  string account_id = 1;
+  // YYYY-MM-DD.
+  string date = 2;
+  // An ISO 4217 code, such as "PLN".
+  string currency = 3;
+  // The cash the institution showed, a decimal string.
+  string shown = 4;
+  // The cash derived from the transaction log at the end of the date, a
+  // decimal string.
+  string derived = 5;
+  // Whether the two are equal.
+  bool matched = 6;
+}
+
+message RecordCashCheckpointRequest {
+  string origin = 1;
+  string session_token = 2;
+  string account_id = 3;
+  // YYYY-MM-DD.
+  string date = 4;
+  // An ISO 4217 code, such as "PLN".
+  string currency = 5;
+  // The cash the institution showed, a decimal string such as "1250.00".
+  string amount = 6;
+}
+
+message RecordCashCheckpointResponse {
+  CashCheckpoint checkpoint = 1;
+}
+
+message BookCashDifferenceRequest {
+  string origin = 1;
+  string session_token = 2;
+  string account_id = 3;
+  // The checkpoint's date, YYYY-MM-DD.
+  string date = 4;
+  // The checkpoint's currency.
+  string currency = 5;
+}
+
+message BookCashDifferenceResponse {
+  // The booked transaction's key, with source "owner:cash-checkpoint".
+  TransactionKey key = 1;
+  // "deposit" or "withdrawal".
+  string kind = 2;
+  // The amount deposited or withdrawn, positive, a decimal string.
+  string amount = 3;
+  string currency = 4;
+}

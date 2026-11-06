@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9349c4d396e7
+  - type: implements
+    from: SYM-attention-app-cash-checkpoints
+    to: REQ-ledger-owner-cash-mismatch-attention-item
+    created_at: 2026-11-02T03:52:59.764Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fa567846ecc5
+  - type: covered_by
+    from: SYM-attention-app-cash-checkpoints
+    to: TEST-attention-app-checks
+    created_at: 2026-11-02T03:52:59.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2815b343193a

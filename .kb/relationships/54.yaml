@@ -839,3 +839,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ed9de013673a
+  - type: implements
+    from: SYM-ledger-checkpoint-detail
+    to: REQ-ledger-owner-cash-mismatch-attention-item
+    created_at: 2026-11-02T03:50:57.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7a64a0f93149
+  - type: covered_by
+    from: SYM-ledger-checkpoint-detail
+    to: TEST-ledger-cash-checkpoint
+    created_at: 2026-11-02T03:50:57.892Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8fe470981c2
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-descriptor
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:44:10.860Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f0c15ae3f97
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-descriptor
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:44:10.912Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-036e29f73cc1

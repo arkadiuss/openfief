@@ -559,13 +559,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ce5a1b7fb77e
-  - type: implements
-    from: SYM-ingest-exchange-currencies
-    to: REQ-ingest-ticker-currency-picked
-    created_at: 2026-11-01T23:57:37.230Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d28324715761
   - type: covered_by
     from: SYM-ingest-exchange-currencies
     to: TEST-ingest-listing
@@ -720,3 +713,73 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e486e19ff72f
+  - type: constrains
+    from: REQ-identity-read-access-kinds-of-record
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-02T00:53:30.822Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-02083b62801f
+  - type: requires_property
+    from: REQ-identity-read-access-kinds-of-record
+    to: FACT-PROP-E0C6C7004926D992
+    created_at: 2026-11-02T00:53:30.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b7fb61d99a18
+  - type: supersedes
+    from: REQ-identity-read-access-kinds-of-record
+    to: REQ-identity-read-access-scope
+    created_at: 2026-11-02T00:53:30.918Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9ca18a014ef3
+  - type: constrains
+    from: REQ-identity-read-access-never-broker-account-numbers
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-02T00:53:43.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9d277264efb2
+  - type: requires_property
+    from: REQ-identity-read-access-never-broker-account-numbers
+    to: FACT-PROP-843453EC42A95A22
+    created_at: 2026-11-02T00:53:43.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6319d3e4b0c9
+  - type: supersedes
+    from: REQ-identity-read-access-never-broker-account-numbers
+    to: REQ-identity-read-access-no-broker-account-numbers
+    created_at: 2026-11-02T00:53:43.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-021ae0de687e
+  - type: implements
+    from: SYM-ingest-exchange-currencies
+    to: REQ-ingest-trading-currency-listing-or-exchange
+    created_at: 2026-11-02T02:36:22.128Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63976001499e
+  - type: implements
+    from: SYM-ingest-exchange-currencies
+    to: REQ-ingest-owner-picks-ambiguous-trading-currency
+    created_at: 2026-11-02T02:36:22.166Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8e1714d2365e
+  - type: implements
+    from: SYM-views-pb-assertion-check-get-entered
+    to: REQ-views-api-contract
+    created_at: 2026-11-02T04:46:11.358Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-21e6df7be677
+  - type: covered_by
+    from: SYM-views-pb-assertion-check-get-entered
+    to: TEST-views-connectapi-connect
+    created_at: 2026-11-02T04:46:11.403Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e735072f9f3

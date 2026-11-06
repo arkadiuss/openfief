@@ -706,13 +706,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f09dbee0b39a
-  - type: implements
-    from: SYM-demo-seed-loader-build
-    to: REQ-demo-reseed-on-new-loader
-    created_at: 2026-11-01T17:20:40.959Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-4e8a8a0fb641
   - type: covered_by
     from: SYM-demo-seed-loader-build
     to: TEST-demo-seed-unit
@@ -846,3 +839,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d2386aa4feb6
+  - type: constrains
+    from: REQ-ingest-waiting-positions-join-opening
+    to: FACT-SUBJECT-35AB9D52039A8BCF
+    created_at: 2026-11-02T00:54:42.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a4c2e27f2df
+  - type: requires_property
+    from: REQ-ingest-waiting-positions-join-opening
+    to: FACT-PROP-0608C15BBC923492
+    created_at: 2026-11-02T00:54:42.090Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2effe92e53e8
+  - type: supersedes
+    from: REQ-ingest-waiting-positions-join-opening
+    to: REQ-ingest-opening-upload-starts-account
+    created_at: 2026-11-02T00:54:42.155Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48274bdf0aac
+  - type: specified_by
+    from: REQ-ingest-waiting-positions-join-opening
+    to: SCEN-ingest-opening-upload-starts-account
+    created_at: 2026-11-02T00:54:42.201Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04bd915375dd
+  - type: implements
+    from: SYM-demo-seed-loader-build
+    to: REQ-demo-reseeded-before-first-release
+    created_at: 2026-11-02T01:04:58.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d552886ba244

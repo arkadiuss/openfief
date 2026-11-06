@@ -433,13 +433,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3aee1d0d342b
-  - type: implements
-    from: SYM-core-read-tokens-verify-token
-    to: REQ-identity-read-access-holders
-    created_at: 2026-11-01T10:13:39.795Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0f6fd74177f1
   - type: executable_for
     from: SYM-views-connectapi-test-ra-check-served
     to: TEST-views-connectapi-read-access
@@ -671,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a02b86f54ffb
+  - type: implements
+    from: SYM-core-read-tokens-verify-token
+    to: REQ-identity-read-access-holders-incl-owner
+    created_at: 2026-11-02T01:20:04.913Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-de1d81d9631f

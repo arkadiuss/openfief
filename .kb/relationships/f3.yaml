@@ -454,13 +454,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0ed1dc58d559
-  - type: implements
-    from: SYM-ingest-app-accounts-payout
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:31:32.523Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-d619b75c46c2
   - type: validates
     from: TEST-operator-policy-verifier
     to: REQ-plugins-untrusted-signer-named
@@ -629,3 +622,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cb2cadfb4187
+  - type: implements
+    from: SYM-ingest-app-accounts-payout
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:08:10.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8be10a0807f3
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-fake-book
+    to: TEST-ledger-app-cash-checkpoints
+    created_at: 2026-11-02T03:56:04.636Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38afe21488e8

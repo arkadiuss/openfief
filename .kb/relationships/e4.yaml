@@ -524,13 +524,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5576708ed896
-  - type: implements
-    from: SYM-viewsv1-bond-payout-descriptor
-    to: REQ-ui-bond-payout-change-date
-    created_at: 2026-11-01T17:36:51.340Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-945e5f298755
   - type: constrains
     from: REQ-demo-seed-waits-for-database
     to: FACT-SUBJECT-8FB08B0A7E84540E
@@ -622,3 +615,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e5de5be56ecd
+  - type: constrains
+    from: REQ-identity-owner-holds-every-account
+    to: FACT-SUBJECT-6BDAB5D17470D2C2
+    created_at: 2026-11-02T00:53:14.576Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-546110ea6986
+  - type: requires_property
+    from: REQ-identity-owner-holds-every-account
+    to: FACT-PROP-E8AC59F70DC533B7
+    created_at: 2026-11-02T00:53:14.671Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-30d843c0a0d0
+  - type: implements
+    from: SYM-viewsv1-bond-payout-descriptor
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:17:30.777Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67530fe102af

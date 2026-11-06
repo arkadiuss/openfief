@@ -510,3 +510,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-da2e657f8082
+  - type: implements
+    from: SYM-ledger-app-cash-checkpoints-book-difference
+    to: REQ-ledger-owner-cash-difference-booked
+    created_at: 2026-11-02T03:52:12.662Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d842edfb06f8
+  - type: covered_by
+    from: SYM-ledger-app-cash-checkpoints-book-difference
+    to: TEST-ledger-app-cash-checkpoints
+    created_at: 2026-11-02T03:52:12.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63c339400ec2

@@ -1,6 +1,6 @@
 ---
 title: The built-in UI must offer, on a hand-entered bond account's change form, the payout setting and the day the change takes effect from, and hand both to the core.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-162
 tags:
   - strict-modeling

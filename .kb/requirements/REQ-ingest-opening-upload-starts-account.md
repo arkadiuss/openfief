@@ -1,6 +1,6 @@
 ---
 title: An opening upload must record its account's go-live at once, even when nothing can be booked yet, so later uploads are transactions and waiting positions join the opening on that date.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-160
 tags:
   - strict-modeling

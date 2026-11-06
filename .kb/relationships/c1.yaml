@@ -615,13 +615,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef27e818df1d
-  - type: implements
-    from: SYM-connectorv1-bond-payout-period-proto-reflect
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:28:45.447Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-fbfffccce39f
   - type: covered_by
     from: SYM-connectorv1-bond-payout-period-proto-reflect
     to: TEST-ingest-connectrpc-held
@@ -790,3 +783,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-19e033a4b367
+  - type: implements
+    from: SYM-connectorv1-bond-payout-period-proto-reflect
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:15:00.229Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91bdb377d2a0
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-string
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:40:40.712Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ae3d8419e52f
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-request-string
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:40:40.757Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53e2e81cd75c

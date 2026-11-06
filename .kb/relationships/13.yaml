@@ -671,13 +671,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a9e7dc6b03f0
-  - type: implements
-    from: SYM-ingestv1-confirm-ticker-request-get-currency
-    to: REQ-ingest-ticker-currency-pick-required
-    created_at: 2026-11-01T23:59:37.395Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ff0a9d397ea5
   - type: covered_by
     from: SYM-ingestv1-confirm-ticker-request-get-currency
     to: TEST-core-xtb-upload
@@ -769,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0fd57ed9ad58
+  - type: implements
+    from: SYM-ingestv1-confirm-ticker-request-get-currency
+    to: REQ-ingest-owner-picks-ambiguous-trading-currency
+    created_at: 2026-11-02T02:39:20.910Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c21c487aba3d

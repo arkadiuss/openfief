@@ -594,13 +594,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-6d52120838b8
-  - type: implements
-    from: SYM-ingest-xtb-mapping-price
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:39:39.974Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-56e6448b1288
   - type: verified_by
     from: SCEN-ingest-delivery-declared-institution
     to: TEST-ingest-app-connectors
@@ -713,3 +706,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fdef9cfe3f42
+  - type: implements
+    from: SYM-ingest-xtb-mapping-price
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T01:00:18.966Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-91d76d4a899f
+  - type: executable_for
+    from: SYM-ui-test-helper-form-post
+    to: TEST-ui-cash-checkpoints
+    created_at: 2026-11-02T03:58:15.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0bff1af4e770

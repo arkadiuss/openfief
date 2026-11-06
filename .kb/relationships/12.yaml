@@ -707,13 +707,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-e77b7fd601b3
   - type: implements
-    from: SYM-ingest-ticker-entry-priced-by-listing
-    to: REQ-ingest-ticker-currency-picked
-    created_at: 2026-11-01T23:40:49.232Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-f91c85a1019f
-  - type: implements
     from: SYM-plugins-app-caching-token-reviewer
     to: REQ-plugins-token-review-not-amplified
     created_at: 2026-11-03T00:13:19.336Z
@@ -804,3 +797,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-032c5e85f3f0
+  - type: implements
+    from: SYM-ingest-ticker-entry-priced-by-listing
+    to: REQ-ingest-xtb-opening-lot-cost-trading-currency
+    created_at: 2026-11-02T01:03:39.063Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddd411c6607f

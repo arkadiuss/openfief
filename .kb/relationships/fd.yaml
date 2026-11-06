@@ -517,13 +517,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d678c5bf9ad5
-  - type: implements
-    from: SYM-ingest-xtb-bought-volume
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:38:07.924Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-563ddaa78232
   - type: covered_by
     from: SYM-ingest-xtb-zip-parts-shared-strings
     to: TEST-ingest-xtb-xlsx
@@ -741,3 +734,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4cea93a10535
+  - type: implements
+    from: SYM-ingest-xtb-bought-volume
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T00:58:48.905Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fd696162f670
+  - type: validates
+    from: TEST-ui-cash-checkpoints
+    to: REQ-ledger-owner-enters-institution-cash
+    created_at: 2026-11-02T03:49:57.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7287212a3874
+  - type: validates
+    from: TEST-ui-cash-checkpoints
+    to: REQ-ledger-owner-cash-difference-booked
+    created_at: 2026-11-02T03:49:57.531Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1d296912cec

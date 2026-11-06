@@ -594,13 +594,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ecba4bd2f99e
-  - type: implements
-    from: SYM-ingest-xtb-record-instant
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:51:06.009Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c6ed53a84957
   - type: verified_by
     from: SCEN-identity-protected-actions-need-recent-check
     to: TEST-identity-passkey-check-app
@@ -762,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4c0ec194b234
+  - type: implements
+    from: SYM-ingest-xtb-record-instant
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T01:00:49.273Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ddb8c24ddad6

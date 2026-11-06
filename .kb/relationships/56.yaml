@@ -531,3 +531,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-676c3b10e201
+  - type: constrains
+    from: REQ-identity-read-access-holders-incl-owner
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-02T00:53:55.844Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a55541bd7f10
+  - type: requires_property
+    from: REQ-identity-read-access-holders-incl-owner
+    to: FACT-PROP-9123E17712EBD0E8
+    created_at: 2026-11-02T00:53:55.902Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7fdb21b1acfa
+  - type: supersedes
+    from: REQ-identity-read-access-holders-incl-owner
+    to: REQ-identity-read-access-holders
+    created_at: 2026-11-02T00:53:55.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2519164e1fda
+  - type: verified_by
+    from: SCEN-ui-cash-checkpoints
+    to: TEST-ui-cash-checkpoints
+    created_at: 2026-11-02T03:50:20.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d3cebd33020
+  - type: verified_by
+    from: SCEN-ui-cash-checkpoints
+    to: TEST-ui-attention
+    created_at: 2026-11-02T03:50:20.221Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-912030b12b3b
+  - type: executable_for
+    from: SYM-ledger-connectapi-test-helper-checkpoint-api
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T03:56:52.168Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34d3868f652d

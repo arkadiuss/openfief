@@ -839,3 +839,66 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-391bc6a38f6d
+  - type: constrains
+    from: REQ-ingest-isin-lookup-allowed-connectors-only
+    to: FACT-SUBJECT-63BFE47B61E806B3
+    created_at: 2026-11-02T00:55:48.252Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-011f46cd1391
+  - type: requires_property
+    from: REQ-ingest-isin-lookup-allowed-connectors-only
+    to: FACT-PROP-6E59A59E75D4850C
+    created_at: 2026-11-02T00:55:48.308Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3e2f799465e
+  - type: implements
+    from: SYM-ledger-cash-checkpoint
+    to: REQ-ledger-owner-enters-institution-cash
+    created_at: 2026-11-02T03:50:36.515Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-53ba0ed8ce23
+  - type: implements
+    from: SYM-ledger-cash-checkpoint
+    to: REQ-ledger-owner-cash-stored-as-assertion
+    created_at: 2026-11-02T03:50:36.563Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-58f85db38c7b
+  - type: covered_by
+    from: SYM-ledger-cash-checkpoint
+    to: TEST-ledger-cash-checkpoint
+    created_at: 2026-11-02T03:50:36.588Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d346ec33c37e
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:42:28.030Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-650cb7ab6ce6
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:42:28.078Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aebf4795d640
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-proto-reflect
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:42:53.806Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7065826fb5a
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-proto-reflect
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:42:53.849Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-13e47009d21f

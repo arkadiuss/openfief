@@ -678,13 +678,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb46a015cfc1
-  - type: implements
-    from: SYM-connectorv1-bond-payout-type
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:35:34.118Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a7c83d800718
   - type: verified_by
     from: SCEN-ingest-ticker-currency-pick-required
     to: TEST-ingest-listing
@@ -762,3 +755,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c04802b1359e
+  - type: implements
+    from: SYM-connectorv1-bond-payout-type
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:15:48.484Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c66fc917d778
+  - type: executable_for
+    from: SYM-ledger-app-test-helper-fake-attention-raise
+    to: TEST-ledger-app-cash-checkpoints
+    created_at: 2026-11-02T03:55:22.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a68ba641d9b7

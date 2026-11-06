@@ -20,7 +20,7 @@ type attentionKind struct {
 }
 
 // The core's kinds of attention items the UI tells apart (D-130, D-131,
-// D-132, D-94, D-105, D-179, D-196).
+// D-132, D-94, D-105, D-158, D-179, D-196).
 const (
 	kindAssertion         = "balance-assertion-flagged"
 	kindPriceCheck        = "price-check-flagged"
@@ -32,6 +32,7 @@ const (
 	kindTransferSuggested = "transfer-suggested"
 	kindUnclassified      = "instrument-unclassified"
 	kindSyncFailing       = "connector-sync-failing"
+	kindCashCheckpoint    = "cash-checkpoint-mismatch"
 )
 
 // attentionKindOf names kind, one of the core's kinds of attention items
@@ -52,6 +53,7 @@ func attentionKindOf(kind string) attentionKind {
 		"market-data-gap":                       {Label: "Market data stopped arriving", Page: "/settings#series-sources-title", Action: "Open the sources"},
 		"bond-terms-or-index-levels-undeclared": {Label: "Bond terms, index levels or readings dropped", Page: pluginsPath, Action: openPlugins},
 		kindSyncFailing:                         {Label: "Sync keeps failing", Page: pluginsPath, Action: openPlugins},
+		kindCashCheckpoint:                      {Label: "Cash balance differs"},
 	}
 	if k, ok := kinds[kind]; ok {
 		return k

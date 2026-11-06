@@ -706,3 +706,59 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e7226b431310
+  - type: validates
+    from: TEST-ledger-app-cash-checkpoints
+    to: REQ-ledger-owner-enters-institution-cash
+    created_at: 2026-11-02T03:49:50.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-650a820d77b6
+  - type: validates
+    from: TEST-ledger-app-cash-checkpoints
+    to: REQ-ledger-owner-cash-stored-as-assertion
+    created_at: 2026-11-02T03:49:50.464Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b78ea34fe038
+  - type: validates
+    from: TEST-ledger-app-cash-checkpoints
+    to: REQ-ledger-owner-cash-mismatch-attention-item
+    created_at: 2026-11-02T03:49:50.527Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a881e6fc2615
+  - type: validates
+    from: TEST-ledger-app-cash-checkpoints
+    to: REQ-ledger-owner-cash-difference-booked
+    created_at: 2026-11-02T03:49:50.572Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6a219b09a113
+  - type: validates
+    from: TEST-ledger-app-cash-checkpoints
+    to: REQ-ledger-owner-cash-difference-default-deposit
+    created_at: 2026-11-02T03:49:50.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-95d995eef5a2
+  - type: validates
+    from: TEST-ledger-app-cash-checkpoints
+    to: REQ-ledger-derived-cash-never-overwritten
+    created_at: 2026-11-02T03:49:50.653Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-944c7470727d
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:41:44.393Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5fb14cf37e61
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-record-cash-checkpoint-response
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:41:44.437Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-234506aca452

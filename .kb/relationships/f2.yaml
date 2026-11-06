@@ -538,13 +538,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a73d060637a4
-  - type: implements
-    from: SYM-ingest-currency-places
-    to: REQ-ingest-ticker-currency-picked
-    created_at: 2026-11-01T23:39:03.425Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-66e836ffe1a4
   - type: executable_for
     from: SYM-cosign-test-fixtures-github-run
     to: TEST-plugins-cosign
@@ -643,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8815e4955b2c
+  - type: constrains
+    from: REQ-ui-opened-account-keeps-default-start
+    to: FACT-SUBJECT-9106B40681FB54C7
+    created_at: 2026-11-02T00:56:14.422Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ca1b4038b66
+  - type: requires_property
+    from: REQ-ui-opened-account-keeps-default-start
+    to: FACT-PROP-F477F96333FDDDD9
+    created_at: 2026-11-02T00:56:14.473Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9e302da32c08
+  - type: implements
+    from: SYM-ingest-currency-places
+    to: REQ-ingest-xtb-opening-lot-cost-trading-currency
+    created_at: 2026-11-02T01:01:38.493Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b9d0f23f5fd

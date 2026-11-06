@@ -748,3 +748,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-288a30fccbbf
+  - type: implements
+    from: SYM-ledger-connectapi-checkpoint-service-fail
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T03:52:52.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3289342fc4d2
+  - type: covered_by
+    from: SYM-ledger-connectapi-checkpoint-service-fail
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T03:52:52.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b722ac181d2e
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-file-openfief-ledger-v1-cash-checkpoints-proto-raw-desc-gzip
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:44:42.893Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cde8608a70e
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-file-openfief-ledger-v1-cash-checkpoints-proto-raw-desc-gzip
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:44:42.929Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2a309b8673f8

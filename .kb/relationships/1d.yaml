@@ -805,13 +805,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-08937a75a435
   - type: implements
-    from: SYM-ingest-xtbtest-report
-    to: REQ-ingest-xtb-opening-lot-trading-currency
-    created_at: 2026-11-01T17:51:38.379Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-85f1e058b175
-  - type: implements
     from: SYM-ingest-declarations
     to: REQ-ingest-market-data-list-declared-granted
     created_at: 2026-11-01T10:12:20.766Z
@@ -909,3 +902,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-465f7145591f
+  - type: implements
+    from: SYM-ingest-xtbtest-report
+    to: REQ-ingest-xtb-open-price-trading-currency
+    created_at: 2026-11-02T01:01:18.478Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-caa9135aeabd
+  - type: validates
+    from: TEST-ledger-cash-checkpoint
+    to: REQ-ledger-owner-cash-stored-as-assertion
+    created_at: 2026-11-02T03:49:47.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-965c7ba4259b
+  - type: validates
+    from: TEST-ledger-cash-checkpoint
+    to: REQ-ledger-owner-cash-difference-booked
+    created_at: 2026-11-02T03:49:47.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aaf1e6b0ab63
+  - type: validates
+    from: TEST-ledger-cash-checkpoint
+    to: REQ-ledger-owner-cash-difference-default-deposit
+    created_at: 2026-11-02T03:49:47.995Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0e15494cf75
+  - type: validates
+    from: TEST-ledger-cash-checkpoint
+    to: REQ-ledger-derived-cash-never-overwritten
+    created_at: 2026-11-02T03:49:48.047Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d382ee1a272c

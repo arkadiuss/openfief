@@ -575,6 +575,9 @@ message AssertionCheck {
   // A decimal string.
   string derived = 4;
   AssertionStatus status = 5;
+  // Whether the owner entered it as a cash checkpoint: the cash an
+  // institution showed (D-158). Otherwise a connector's import reported it.
+  bool entered = 6;
 }
 
 // ValuationBasis says how a holding's gross value was found.

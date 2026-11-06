@@ -2424,8 +2424,11 @@ type AssertionCheck struct {
 	// A decimal string.
 	Reported string `protobuf:"bytes,3,opt,name=reported,proto3" json:"reported,omitempty"`
 	// A decimal string.
-	Derived       string          `protobuf:"bytes,4,opt,name=derived,proto3" json:"derived,omitempty"`
-	Status        AssertionStatus `protobuf:"varint,5,opt,name=status,proto3,enum=openfief.views.v1.AssertionStatus" json:"status,omitempty"`
+	Derived string          `protobuf:"bytes,4,opt,name=derived,proto3" json:"derived,omitempty"`
+	Status  AssertionStatus `protobuf:"varint,5,opt,name=status,proto3,enum=openfief.views.v1.AssertionStatus" json:"status,omitempty"`
+	// Whether the owner entered it as a cash checkpoint: the cash an
+	// institution showed (D-158). Otherwise a connector's import reported it.
+	Entered       bool `protobuf:"varint,6,opt,name=entered,proto3" json:"entered,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2493,6 +2496,13 @@ func (x *AssertionCheck) GetStatus() AssertionStatus {
 		return x.Status
 	}
 	return AssertionStatus_ASSERTION_STATUS_UNSPECIFIED
+}
+
+func (x *AssertionCheck) GetEntered() bool {
+	if x != nil {
+		return x.Entered
+	}
+	return false
 }
 
 // Valuation is the stored value of a holding on a date, with its basis and
@@ -8570,13 +8580,14 @@ const file_openfief_views_v1_read_service_proto_rawDesc = "" +
 	"\rorigin_source\x18\x06 \x01(\tR\foriginSource\x12,\n" +
 	"\x12origin_external_id\x18\a \x01(\tR\x10originExternalId\x12*\n" +
 	"\x11no_longer_updated\x18\b \x01(\bR\x0fnoLongerUpdated\x12+\n" +
-	"\x11removed_instances\x18\t \x03(\tR\x10removedInstances\"\xc3\x01\n" +
+	"\x11removed_instances\x18\t \x03(\tR\x10removedInstances\"\xdd\x01\n" +
 	"\x0eAssertionCheck\x12\x12\n" +
 	"\x04date\x18\x01 \x01(\tR\x04date\x12+\n" +
 	"\x04book\x18\x02 \x01(\v2\x17.openfief.views.v1.BookR\x04book\x12\x1a\n" +
 	"\breported\x18\x03 \x01(\tR\breported\x12\x18\n" +
 	"\aderived\x18\x04 \x01(\tR\aderived\x12:\n" +
-	"\x06status\x18\x05 \x01(\x0e2\".openfief.views.v1.AssertionStatusR\x06status\"\x82\x04\n" +
+	"\x06status\x18\x05 \x01(\x0e2\".openfief.views.v1.AssertionStatusR\x06status\x12\x18\n" +
+	"\aentered\x18\x06 \x01(\bR\aentered\"\x82\x04\n" +
 	"\tValuation\x12\x12\n" +
 	"\x04date\x18\x01 \x01(\tR\x04date\x12=\n" +
 	"\n" +

@@ -475,13 +475,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8925452ea137
-  - type: implements
-    from: SYM-ingestv1-update-account-request-get-bond-payout-from
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:29:14.884Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-5340131868ba
   - type: covered_by
     from: SYM-ingestv1-update-account-request-get-bond-payout-from
     to: TEST-ingest-connectapi-accounts
@@ -489,13 +482,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c46f8a57dca1
-  - type: implements
-    from: SYM-ingest-listing-price
-    to: REQ-ingest-ticker-currency-picked
-    created_at: 2026-11-01T23:39:35.103Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-72e7a4e7ea4b
   - type: constrains
     from: REQ-ingest-delivery-declared-institution
     to: FACT-SUBJECT-CAD68A36D51B31B5
@@ -615,3 +601,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9603e733177c
+  - type: constrains
+    from: REQ-identity-one-household-no-tenants
+    to: FACT-SUBJECT-9E65336818B65141
+    created_at: 2026-11-02T00:52:59.467Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f3a6ad96c723
+  - type: requires_property
+    from: REQ-identity-one-household-no-tenants
+    to: FACT-PROP-37F7344BF2BF15FD
+    created_at: 2026-11-02T00:52:59.535Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a113e1a01f0a
+  - type: supersedes
+    from: REQ-identity-one-household-no-tenants
+    to: REQ-identity-single-owner
+    created_at: 2026-11-02T00:52:59.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b4e4de8af0e3
+  - type: implements
+    from: SYM-ingest-listing-price
+    to: REQ-ingest-minor-unit-price-to-major
+    created_at: 2026-11-02T01:02:29.704Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2f951b89ca6c
+  - type: implements
+    from: SYM-ingestv1-update-account-request-get-bond-payout-from
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:12:20.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfe212ecb72c

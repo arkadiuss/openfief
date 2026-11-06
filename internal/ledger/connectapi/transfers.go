@@ -1,7 +1,9 @@
 // Package connectapi serves the ledger context's TransferService
-// (proto/openfief/ledger/v1/transfers.proto) to view plugins over Connect:
-// the built-in UI hands the owner's decision on a suggested transfer to the
-// core through it (D-105, D-79). Callers are admitted by the interceptor
+// (proto/openfief/ledger/v1/transfers.proto) and CashCheckpointService
+// (cash_checkpoints.proto) to view plugins over Connect: the built-in UI
+// hands the owner's decision on a suggested transfer (D-105), and the cash
+// an institution showed with the differences the owner books (D-158), to
+// the core through them (D-79). Callers are admitted by the interceptor
 // the caller passes, cmd/core's view-plugin check; the owner's session
 // travels in the request and the use case checks its scope. Errors map to
 // Connect codes: no valid session is unauthenticated, a session that is not

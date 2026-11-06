@@ -958,3 +958,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-408942745b4f
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-account-id
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:39:50.113Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09e80bb9fd47
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-cash-checkpoint-get-account-id
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:39:50.159Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6504a1eb8928

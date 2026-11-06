@@ -510,13 +510,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5723a5dc6ed0
-  - type: implements
-    from: SYM-ingestv1-account-get-bond-payout
-    to: REQ-ingest-bond-payout-change-from-day
-    created_at: 2026-11-01T17:32:13.601Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-1ff39f314d70
   - type: executable_for
     from: SYM-sdk-go-test-connector-server-limits
     to: TEST-sdk-go-serve
@@ -622,3 +615,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fd567345bf09
+  - type: constrains
+    from: REQ-ingest-later-uploads-transactions
+    to: FACT-SUBJECT-35AB9D52039A8BCF
+    created_at: 2026-11-02T00:54:48.349Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b32e192877fa
+  - type: requires_property
+    from: REQ-ingest-later-uploads-transactions
+    to: FACT-PROP-2C834CA2AD5F0F6F
+    created_at: 2026-11-02T00:54:48.404Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d9e655a95000
+  - type: supersedes
+    from: REQ-ingest-later-uploads-transactions
+    to: REQ-ingest-opening-upload-starts-account
+    created_at: 2026-11-02T00:54:48.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a4e2a58f527
+  - type: specified_by
+    from: REQ-ingest-later-uploads-transactions
+    to: SCEN-ingest-opening-upload-starts-account
+    created_at: 2026-11-02T00:54:48.482Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29bd6133468a
+  - type: implements
+    from: SYM-ingestv1-account-get-bond-payout
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:10:05.486Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b4a9160d113

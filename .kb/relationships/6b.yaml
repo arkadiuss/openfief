@@ -672,13 +672,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-422b67426e68
   - type: implements
-    from: SYM-connectorv1-bond-payout-number
-    to: REQ-ingest-sync-carries-payout-history
-    created_at: 2026-11-01T17:35:12.899Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-a1707c24a594
-  - type: implements
     from: SYM-core-owner-sessions-changeable
     to: REQ-identity-authz-one-interface
     created_at: 2026-11-01T22:47:19.611Z
@@ -867,3 +860,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bdff2f0279c2
+  - type: constrains
+    from: REQ-identity-read-access-never-secrets
+    to: FACT-SUBJECT-2D17F0782309FD5E
+    created_at: 2026-11-02T00:53:37.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1bca51330a42
+  - type: requires_property
+    from: REQ-identity-read-access-never-secrets
+    to: FACT-PROP-F6766D56E8F4F5C8
+    created_at: 2026-11-02T00:53:37.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-75f1d41a01d0
+  - type: supersedes
+    from: REQ-identity-read-access-never-secrets
+    to: REQ-identity-read-access-no-secrets
+    created_at: 2026-11-02T00:53:37.295Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9a057309f69a
+  - type: implements
+    from: SYM-connectorv1-bond-payout-number
+    to: REQ-ingest-payout-change-rebooks-after-date
+    created_at: 2026-11-02T01:13:51.294Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f64d8b00f548

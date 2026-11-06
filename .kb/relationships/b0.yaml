@@ -762,3 +762,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ffcbecc35b81
+  - type: constrains
+    from: REQ-ingest-minor-unit-price-to-major
+    to: FACT-SUBJECT-D71C9249729CE51B
+    created_at: 2026-11-02T00:54:29.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c059983b1cf
+  - type: requires_property
+    from: REQ-ingest-minor-unit-price-to-major
+    to: FACT-PROP-D9B2A8B0EA2870AB
+    created_at: 2026-11-02T00:54:29.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-62a70f36b6ed
+  - type: supersedes
+    from: REQ-ingest-minor-unit-price-to-major
+    to: REQ-ingest-ticker-trading-currency
+    created_at: 2026-11-02T00:54:29.957Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e69f3598198
+  - type: specified_by
+    from: REQ-ingest-minor-unit-price-to-major
+    to: SCEN-ingest-ticker-trading-currency
+    created_at: 2026-11-02T00:54:29.990Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-289470c25256
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-currency
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:43:32.396Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84c5363164ee
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-request-get-currency
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:43:32.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-800a4ceb8930

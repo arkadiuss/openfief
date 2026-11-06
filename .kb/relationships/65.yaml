@@ -672,13 +672,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ab27867f3927
   - type: implements
-    from: SYM-viewsv1-bond-payout-enum
-    to: REQ-ui-bond-payout-change-date
-    created_at: 2026-11-01T17:37:06.223Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-84d7869c149d
-  - type: implements
     from: SYM-viewsv1-plugin-get-requested-index-levels
     to: REQ-ingest-bond-terms-index-levels-declared-approved
     created_at: 2026-11-02T22:26:39.558Z
@@ -790,3 +783,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-909d0c6b8ebd
+  - type: implements
+    from: SYM-viewsv1-bond-payout-enum
+    to: REQ-ledger-payout-change-from-owner-date
+    created_at: 2026-11-02T01:17:42.787Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ead39905f3a6
+  - type: implements
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-proto-message
+    to: REQ-ledger-cash-checkpoint-service
+    created_at: 2026-11-02T04:43:57.889Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2b3571b61b15
+  - type: covered_by
+    from: SYM-ledgerv1-cash-checkpoints-book-cash-difference-response-proto-message
+    to: TEST-ledger-connectapi-cash-checkpoints
+    created_at: 2026-11-02T04:43:57.935Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8353ecddb244

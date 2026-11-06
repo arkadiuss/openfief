@@ -573,20 +573,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d49fd37e4dbb
-  - type: implements
-    from: SYM-ingest-parse-trading-currency
-    to: REQ-ingest-ticker-currency-picked
-    created_at: 2026-11-01T23:39:56.641Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0c95ab8ead89
-  - type: implements
-    from: SYM-ingest-pg-listing-row-listing
-    to: REQ-ingest-ticker-currency-picked
-    created_at: 2026-11-01T23:40:27.902Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-344b5cfd782b
   - type: executable_for
     from: SYM-views-app-test-authz-test-views-without-a-caller
     to: TEST-views-app-authz
@@ -727,3 +713,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-309d204f537c
+  - type: implements
+    from: SYM-ingest-parse-trading-currency
+    to: REQ-ingest-trading-currency-listing-or-exchange
+    created_at: 2026-11-02T01:02:50.080Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-11c98ef2dd39
+  - type: implements
+    from: SYM-ingest-pg-listing-row-listing
+    to: REQ-ingest-trading-currency-listing-or-exchange
+    created_at: 2026-11-02T01:03:19.408Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98b0a0dfa07c

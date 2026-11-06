@@ -167,6 +167,7 @@ func pbCheck(c *ledgerapp.AssertionCheck) *viewsv1.AssertionCheck {
 	return &viewsv1.AssertionCheck{
 		Date: pbDate(c.Assertion.Date), Book: pbBook(c.Assertion.Book), Reported: c.Assertion.Balance.String(),
 		Derived: c.Derived.String(), Status: viewsv1.AssertionStatus(enumNumber(int(c.Status))),
+		Entered: c.Assertion.Entered,
 	}
 }
 

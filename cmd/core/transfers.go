@@ -6,6 +6,8 @@ import (
 	"log/slog"
 	"net/http"
 
+	attentionapp "github.com/arkadiuss/openfief/internal/attention/app"
+
 	"github.com/arkadiuss/openfief/internal/identity"
 	identityapp "github.com/arkadiuss/openfief/internal/identity/app"
 	identityconnect "github.com/arkadiuss/openfief/internal/identity/connectapi"
@@ -86,4 +88,18 @@ func (s transferSuggestions) SuggestedTransfers(ctx context.Context) ([]ledger.T
 		out = append(out, suggested[i].Pair())
 	}
 	return out, nil
+}
+
+// withLedgerEntries returns h with the ledger's and the attention items'
+// owner services mounted next to it (D-79): the TransferService (D-105),
+// the AttentionService (D-130), the InstrumentService (D-197) and the
+// CashCheckpointService (D-158), each checking the owner's session with
+// owners where the ledger does.
+func withLedgerEntries(h http.Handler, l *ledgerapp.Ledger, owners ledgerapp.Owners, items *attentionapp.Items,
+	names *ledgerapp.Names, callers identityconnect.Callers, log *slog.Logger,
+) http.Handler {
+	h = withTransferService(h, newTransfers(l, owners), callers, log)
+	h = withAttentionService(h, items, callers, log)
+	h = withInstrumentService(h, names, callers, log)
+	return withCashCheckpointService(h, newCashCheckpoints(l, owners), callers, log)
 }

@@ -16,6 +16,9 @@ var ErrUnknownAccount = errors.New("unknown account")
 type Ledger struct {
 	store    Store
 	onImport []ImportHook
+	// attention raises and clears cash checkpoints' items (D-158); nil
+	// raises none.
+	attention AttentionRaiser
 }
 
 // New returns the use cases over store. Every successful import calls

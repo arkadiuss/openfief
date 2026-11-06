@@ -151,7 +151,8 @@ func historyOptions(pool *pgxpool.Pool, vstore *valuationpg.Store) viewsapp.Opti
 // BondLotService (D-9, D-49), the StatementService (D-7, D-49), the
 // MarketDataService (D-94), the PriceCheckService (D-110, D-112), the
 // onboarding services, the SettingsService (D-78, D-113), the
-// TransferService (D-105) and the AttentionService (D-130), to the view
+// TransferService (D-105), the AttentionService (D-130) and the
+// CashCheckpointService (D-158), to the view
 // plugins callers accepts (D-69, D-79, D-115). The read API
 // lists the installed plugins from installed, and without it, outside a
 // cluster, answers that they are unknown. Start the River client to run
@@ -216,8 +217,7 @@ func newCore(ctx context.Context, pool *pgxpool.Pool, cfg *serveConfig, now func
 	plugin = withOnboardingServices(plugin, newSleeves(sleeves, auth, cfg.Auth.Origins),
 		newAccounts(deps, owners, accountTerms{recorder, vstore}), auth, callers, log)
 	plugin = withSettingsService(plugin, newSettings(recorder, vstore, valuationOwners(auth, cfg.Auth.Origins), cfg), callers, log)
-	plugin = withInstrumentService(withAttentionService(withTransferService(plugin, newTransfers(l, ledgerOwners(auth, cfg.Auth.Origins, authz)), callers, log),
-		attn.items, callers, log), names, callers, log)
+	plugin = withLedgerEntries(plugin, l, ledgerOwners(auth, cfg.Auth.Origins, authz), attn.items, names, callers, log)
 	return &core{browserPort: apis.browser, pluginPort: plugin, river: client, deps: deps, plugins: installed, attention: attn}, nil
 }
 

@@ -1,6 +1,6 @@
 ---
 title: Each sync request must carry each bound account's payout setting with the day it took effect and the settings in force before it, and a plugin must refuse settings out of order.
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-162
 tags:
   - strict-modeling
