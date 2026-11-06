@@ -811,3 +811,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a1a7698cb73d
+  - type: constrains
+    from: REQ-sdk-endpoint-extra-ca-bundle
+    to: FACT-SUBJECT-61C572C580F4D0DE
+    created_at: 2026-11-06T21:55:10.707Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fe2e30b70ab5
+  - type: requires_property
+    from: REQ-sdk-endpoint-extra-ca-bundle
+    to: FACT-PROP-3E44172731F2DB22
+    created_at: 2026-11-06T21:55:10.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ccf27f4e4c3c
+  - type: specified_by
+    from: REQ-sdk-endpoint-extra-ca-bundle
+    to: SCEN-sdk-endpoint-extra-ca-bundle
+    created_at: 2026-11-06T21:55:10.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8efddda095cd
+  - type: executable_for
+    from: SYM-sdk-go-endpoint-test-test-endpoint-roots
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:57:48.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-98ce6801dbfe

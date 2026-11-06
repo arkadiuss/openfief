@@ -157503,3 +157503,448 @@ symbols:
         target: TEST-e2e-connector-credentials
       - type: implements
         target: REQ-plugins-uninstall-keeps-data
+  - id: SYM-plugins-cli-optional-text
+    title: optionalText
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:55:12.414Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-optional-secret-cli
+      - type: implements
+        target: REQ-plugins-optional-secret-mount
+  - id: SYM-plugins-test-test-build-objects-optional-secret
+    title: TestBuildObjectsOptionalSecret
+    sourceFile: internal/plugins/operator/optional_secret_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:55:17.580Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-optional-secret-objects
+  - id: SYM-plugins-test-test-render-proposal-optional-secret
+    title: TestRenderProposalOptionalSecret
+    sourceFile: internal/plugins/cli/optional_secret_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:55:22.692Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-optional-secret-cli
+  - id: SYM-plugins-test-test-instances-keep-optional-secret
+    title: TestInstancesKeepOptionalSecret
+    sourceFile: internal/plugins/kube/optional_secret_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:55:27.960Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-optional-secret-kube
+  - id: SYM-sdk-go-endpoint-endpoint
+    title: Endpoint
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:55:33.163Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+      - type: implements
+        target: REQ-sdk-endpoint-extra-ca-bundle
+  - id: SYM-sdk-go-endpoint-base-url
+    title: BaseURL
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:55:38.935Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-valid-base-url
+    title: validBaseURL
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:55:44.507Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-new-endpoint
+    title: NewEndpoint
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:55:50.200Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-extra-ca-bundle
+  - id: SYM-sdk-go-endpoint-load-endpoint
+    title: LoadEndpoint
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:55:56.156Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-extra-ca-bundle
+  - id: SYM-sdk-go-endpoint-read-ca-bundle
+    title: ReadCABundle
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:02.045Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-extra-ca-bundle
+  - id: SYM-sdk-go-endpoint-endpoint-roots
+    title: Endpoint.Roots
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:07.592Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-extra-ca-bundle
+  - id: SYM-sdk-go-endpoint-endpoint-tls-config
+    title: Endpoint.TLSConfig
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:13.040Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-extra-ca-bundle
+  - id: SYM-sdk-go-endpoint-endpoint-within
+    title: Endpoint.Within
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:18.432Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-endpoint-new-egress-client
+    title: Endpoint.NewEgressClient
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:23.743Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+      - type: implements
+        target: REQ-sdk-endpoint-extra-ca-bundle
+  - id: SYM-sdk-go-endpoint-endpoint-transport
+    title: endpointTransport
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:28.597Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-endpoint-transport-round-trip
+    title: endpointTransport.RoundTrip
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:34.167Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-endpoint-transport-close-idle-connections
+    title: endpointTransport.CloseIdleConnections
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:39.914Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-within
+    title: within
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:45.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-same-host
+    title: sameHost
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:51.254Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-valid-port
+    title: validPort
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:56:56.881Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-port-or443
+    title: portOr443
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:02.410Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-base-url-https
+  - id: SYM-sdk-go-endpoint-append-bundle
+    title: appendBundle
+    sourceFile: sdk/go/openfief/endpoint.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:07.855Z
+    relationships:
+      - type: covered_by
+        target: TEST-sdk-go-endpoint
+      - type: implements
+        target: REQ-sdk-endpoint-extra-ca-bundle
+  - id: SYM-sdk-go-endpoint-test-test-base-url
+    title: TestBaseURL
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:13.455Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-test-new-endpoint-bundle
+    title: TestNewEndpointBundle
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:19.245Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-test-read-ca-bundle
+    title: TestReadCABundle
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:24.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-test-endpoint-trusts-extra-ca
+    title: TestEndpointTrustsExtraCA
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:30.246Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-test-endpoint-refuses-redirect-elsewhere
+    title: TestEndpointRefusesRedirectElsewhere
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:35.741Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-test-endpoint-within
+    title: TestEndpointWithin
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:41.266Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-test-endpoint-roots
+    title: TestEndpointRoots
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:46.777Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-counting-transport
+    title: countingTransport
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:52.271Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-counting-transport-round-trip
+    title: countingTransport.RoundTrip
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:57:57.814Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-get-via
+    title: getVia
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:58:03.431Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-endpoint-client
+    title: endpointClient
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:58:08.861Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-test-ca
+    title: testCA
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:58:14.342Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-test-ca-pool
+    title: testCA.pool
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:58:19.880Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-new-test-ca
+    title: newTestCA
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:58:25.565Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-tls-server
+    title: tlsServer
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:58:31.341Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint
+  - id: SYM-sdk-go-endpoint-test-tls-server-with
+    title: tlsServerWith
+    sourceFile: sdk/go/openfief/endpoint_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-06T21:58:36.890Z
+    relationships:
+      - type: executable_for
+        target: TEST-sdk-go-endpoint

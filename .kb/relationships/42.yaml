@@ -825,3 +825,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2e519b1a6722
+  - type: executable_for
+    from: SYM-plugins-test-test-build-objects-optional-secret
+    to: TEST-plugins-optional-secret-objects
+    created_at: 2026-11-06T21:55:19.378Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-69664fdff825

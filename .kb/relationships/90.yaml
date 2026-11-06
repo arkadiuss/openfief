@@ -685,3 +685,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-90428e1a56b0
+  - type: executable_for
+    from: SYM-sdk-go-endpoint-test-new-test-ca
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:58:27.507Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9b6144e4cee7

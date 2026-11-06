@@ -120,10 +120,12 @@ type ProjectedToken struct {
 }
 
 // SecretVolume mounts one Secret from the openfief namespace into the plugin.
+// An Optional one need not exist: the pod starts without it.
 type SecretVolume struct {
 	SecretName string
 	MountPath  string
 	ReadOnly   bool
+	Optional   bool
 }
 
 // ConfigMapVolume mounts one ConfigMap from the openfief namespace into the
@@ -210,7 +212,7 @@ func Compile(e *EffectivePermissions, t *Topology) (Workload, error) {
 		SigningKeys:     ConfigMapVolume{ConfigMapName: SigningKeysConfigMap, MountPath: SigningKeysMountPath},
 	}
 	for _, s := range e.secrets {
-		w.Secrets = append(w.Secrets, SecretVolume{SecretName: SecretName(e.plugin, s.Role), MountPath: s.MountPath, ReadOnly: true})
+		w.Secrets = append(w.Secrets, SecretVolume{SecretName: SecretName(e.plugin, s.Role), MountPath: s.MountPath, ReadOnly: true, Optional: s.Optional})
 	}
 	if len(e.egress) > 0 {
 		w.addEgressProxy(e, t)

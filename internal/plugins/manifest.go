@@ -50,10 +50,13 @@ func (d DataTier) valid() bool {
 // asks to have mounted read-only at MountPath. The manifest names it by its
 // Role, such as "flex-token"; each instance mounts its own Secret,
 // SecretName(instance, role), so two instances of one image never share one
-// (D-89).
+// (D-89). An Optional Secret need not exist: the pod starts without it and
+// sees an empty directory at MountPath, as for the extra CA bundle a
+// connector trusts only when the owner creates one.
 type SecretMount struct {
 	Role      string
 	MountPath string
+	Optional  bool
 }
 
 // SecretNameSeparator joins an instance and a role in the name of the

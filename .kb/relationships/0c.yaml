@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-42d8ecbc75f3
+  - type: verified_by
+    from: SCEN-sdk-endpoint-extra-ca-bundle
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:55:01.855Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c83e0b9b831
+  - type: implements
+    from: SYM-sdk-go-endpoint-read-ca-bundle
+    to: REQ-sdk-endpoint-extra-ca-bundle
+    created_at: 2026-11-06T21:56:03.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-811823e8eb39
+  - type: covered_by
+    from: SYM-sdk-go-endpoint-read-ca-bundle
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:56:03.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5a91c39f3d35

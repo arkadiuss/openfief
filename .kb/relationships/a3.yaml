@@ -1105,3 +1105,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4ee7baf25339
+  - type: executable_for
+    from: SYM-plugins-test-test-instances-keep-optional-secret
+    to: TEST-plugins-optional-secret-kube
+    created_at: 2026-11-06T21:55:29.895Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34ed56b7baa9

@@ -107,7 +107,7 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 		p.Manifest.DataTiers = append(p.Manifest.DataTiers, plugins.DataTier(d))
 	}
 	for _, sm := range m.Secrets {
-		p.Manifest.Secrets = append(p.Manifest.Secrets, plugins.SecretMount{Role: sm.Role, MountPath: sm.MountPath})
+		p.Manifest.Secrets = append(p.Manifest.Secrets, plugins.SecretMount{Role: sm.Role, MountPath: sm.MountPath, Optional: sm.Optional})
 	}
 	var errs []error
 	for _, h := range m.Egress {

@@ -636,3 +636,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7a49cbdc7ad3
+  - type: implements
+    from: SYM-plugins-cli-optional-text
+    to: REQ-plugins-optional-secret-mount
+    created_at: 2026-11-06T21:55:14.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-115108e8c4e3
+  - type: covered_by
+    from: SYM-plugins-cli-optional-text
+    to: TEST-plugins-optional-secret-cli
+    created_at: 2026-11-06T21:55:14.256Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5d047786bd51

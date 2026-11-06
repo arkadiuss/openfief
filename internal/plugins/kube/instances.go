@@ -293,7 +293,7 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 		plugin.Spec.ClusterService = &ref
 	}
 	for _, s := range m.Secrets {
-		plugin.Spec.Manifest.Secrets = append(plugin.Spec.Manifest.Secrets, v1alpha1.SecretMount{Role: s.Role, MountPath: s.MountPath})
+		plugin.Spec.Manifest.Secrets = append(plugin.Spec.Manifest.Secrets, v1alpha1.SecretMount{Role: s.Role, MountPath: s.MountPath, Optional: s.Optional})
 	}
 	grant := &v1alpha1.PluginGrant{
 		TypeMeta:   metav1.TypeMeta{APIVersion: v1alpha1.GroupVersion().String(), Kind: "PluginGrant"},

@@ -797,3 +797,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3fa06e8dfbf2
+  - type: implements
+    from: SYM-sdk-go-endpoint-endpoint-within
+    to: REQ-sdk-endpoint-base-url-https
+    created_at: 2026-11-06T21:56:20.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40cf98de86a7
+  - type: covered_by
+    from: SYM-sdk-go-endpoint-endpoint-within
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:56:20.185Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0f250348819

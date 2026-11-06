@@ -769,3 +769,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-fbb9b9413b98
+  - type: executable_for
+    from: SYM-sdk-go-endpoint-test-test-base-url
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:57:15.283Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-84163ca6677a
+  - type: executable_for
+    from: SYM-sdk-go-endpoint-test-counting-transport-round-trip
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:57:59.633Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cf2169cfc3c9
+  - type: executable_for
+    from: SYM-sdk-go-endpoint-test-test-ca-pool
+    to: TEST-sdk-go-endpoint
+    created_at: 2026-11-06T21:58:21.713Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a20cff3c8e7

@@ -220,6 +220,12 @@ spec:
                           maxLength: 1024
                           minLength: 2
                           type: string
+                        optional:
+                          description: |-
+                            Optional lets the plugin run while the Secret doesn't exist, such as
+                            the extra CA bundle a connector trusts only when the owner creates
+                            one.
+                          type: boolean
                         role:
                           description: |-
                             Role names the Secret's purpose, such as flex-token; the instance's
@@ -481,6 +487,12 @@ spec:
                               maxLength: 1024
                               minLength: 2
                               type: string
+                            optional:
+                              description: |-
+                                Optional lets the plugin run while the Secret doesn't exist, such as
+                                the extra CA bundle a connector trusts only when the owner creates
+                                one.
+                              type: boolean
                             role:
                               description: |-
                                 Role names the Secret's purpose, such as flex-token; the instance's

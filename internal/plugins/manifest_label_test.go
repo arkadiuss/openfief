@@ -47,6 +47,14 @@ func TestParseManifestLabel(t *testing.T) {
 			},
 		},
 		{
+			name: "an optional Secret, such as an extra CA bundle",
+			in:   `{"capabilities":["connector"],"secrets":[{"role":"ca-bundle","mountPath":"/etc/openfief/ca-bundle","optional":true}]}`,
+			want: plugins.Manifest{
+				Capabilities: []plugins.Capability{plugins.CapabilityConnector},
+				Secrets:      []plugins.SecretMount{{Role: "ca-bundle", MountPath: "/etc/openfief/ca-bundle", Optional: true}},
+			},
+		},
+		{
 			name: "config host and in-cluster service",
 			in:   `{"capabilities":["view"],"egressFromConfig":["url"],"clusterService":{"description":"the owner's Ghostfolio"}}`,
 			want: plugins.Manifest{
