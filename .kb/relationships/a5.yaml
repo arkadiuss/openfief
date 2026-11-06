@@ -491,13 +491,6 @@ relationships:
     id: rel-24aa7c3d1874
   - type: validates
     from: TEST-plugins-treasury-bonds
-    to: REQ-treasurybonds-delivers-coupons
-    created_at: 2026-10-31T18:08:49.616Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-7e02a9e156c5
-  - type: validates
-    from: TEST-plugins-treasury-bonds
     to: REQ-treasurybonds-one-instance-all-accounts
     created_at: 2026-10-31T18:10:10.121Z
     created_by: kibi/upsert

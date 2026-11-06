@@ -608,13 +608,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-aba5e5d6d5cc
-  - type: implements
-    from: SYM-treasurybonds-due-coupons
-    to: REQ-treasurybonds-delivers-coupons
-    created_at: 2026-10-31T18:08:22.187Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0e296a62af7a
   - type: executable_for
     from: SYM-valuation-app-test-needed-series
     to: TEST-valuation-app-series
@@ -741,3 +734,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8e0d01a8f170
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-mem-store-release-sync
+    to: TEST-ingest-app-scheduler
+    created_at: 2026-11-02T11:52:03.415Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08a3b971915a

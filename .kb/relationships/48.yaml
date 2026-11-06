@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af58627e80ef
+  - type: implements
+    from: SYM-ingest-app-scheduler-run
+    to: REQ-ingest-bond-lot-delete-excludes-sync
+    created_at: 2026-11-02T11:51:06.812Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cd21edca00d
+  - type: covered_by
+    from: SYM-ingest-app-scheduler-run
+    to: TEST-ingest-app-held
+    created_at: 2026-11-02T11:51:06.857Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e1e39644f86

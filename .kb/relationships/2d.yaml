@@ -720,3 +720,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-017274ce40b5
+  - type: implements
+    from: SYM-ingest-app-bond-lots-claim
+    to: REQ-ingest-bond-lot-delete-excludes-sync
+    created_at: 2026-11-02T12:16:42.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e4c8aa33f9de
+  - type: covered_by
+    from: SYM-ingest-app-bond-lots-claim
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-11-02T12:16:42.440Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0ffdc549603f
+  - type: validates
+    from: TEST-core-undeclared-cross-check-prices
+    to: REQ-ingest-undeclared-cross-check-prices-dropped
+    created_at: 2026-11-02T13:17:16.388Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c58df36d9746
+  - type: validates
+    from: TEST-core-undeclared-cross-check-prices
+    to: REQ-ingest-undeclared-cross-check-prices-attention-item
+    created_at: 2026-11-02T13:17:16.462Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bb0f588fd4ac
+  - type: validates
+    from: TEST-core-undeclared-cross-check-prices
+    to: REQ-ingest-undeclared-cross-check-prices-rest-imported
+    created_at: 2026-11-02T13:17:16.520Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d2c09c58c0d8

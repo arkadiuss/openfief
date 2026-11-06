@@ -692,3 +692,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ec7145f89992
+  - type: validates
+    from: TEST-valuation-postgres-price-check-settings
+    to: REQ-valuation-price-check-threshold-clear-restores-default
+    created_at: 2026-11-02T13:17:30.642Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-92c2f36f670e

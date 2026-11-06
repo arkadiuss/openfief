@@ -594,3 +594,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-63adcc2e0f01
+  - type: supersedes
+    from: REQ-treasurybonds-coupons-since-purchase-every-sync
+    to: REQ-treasurybonds-delivers-coupons
+    created_at: 2026-11-02T11:22:28.824Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-48585538ea25

@@ -13,20 +13,28 @@ import (
 	"github.com/arkadiuss/openfief/internal/valuation"
 )
 
-// deliveryAttention records the attention items raised and cleared, as
-// "raise kind subject" and "clear kind subject".
+// deliveryAttention records the attention items of undeclared deliveries
+// (ingest.KindUndeclaredDeliveries) raised and cleared, as "raise kind
+// subject" and "clear kind subject"; it ignores the other kinds, such as
+// undeclared cross-check prices' (D-141).
 type deliveryAttention struct {
 	calls   []string
 	details []string
 }
 
 func (f *deliveryAttention) Raise(_ context.Context, kind, subject, detail string) error {
+	if kind != ingest.KindUndeclaredDeliveries {
+		return nil
+	}
 	f.calls = append(f.calls, "raise "+kind+" "+subject)
 	f.details = append(f.details, detail)
 	return nil
 }
 
 func (f *deliveryAttention) Clear(_ context.Context, kind, subject string) error {
+	if kind != ingest.KindUndeclaredDeliveries {
+		return nil
+	}
 	f.calls = append(f.calls, "clear "+kind+" "+subject)
 	return nil
 }

@@ -1,6 +1,6 @@
 ---
 title: 'A sync, or a statement uploaded in transactions mode, must not book again what an account''s seeding holds: an opening batch must leave out the seeding of an account already seeded, and a transactions batch the transactions and ticker entries of a seeded account dated on or before its go-live date, each as a skipped ingest problem, while opening uploads and bond lots are booked as the owner sent them.'
-status: open
+status: closed
 text_ref: docs/DESIGN.md#D-23
 tags:
   - strict-modeling

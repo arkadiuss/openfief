@@ -55,18 +55,15 @@ type SyncState struct {
 // SyncStore keeps each connector instance's watermark and sync state, and
 // the history of its import batches.
 type SyncStore interface {
-	// ClaimSync claims instance for one attempt from now until until, and
-	// returns its state; it fails with ErrSyncRunning while another
-	// unexpired claim holds it.
-	ClaimSync(ctx context.Context, instance string, now, until time.Time) (SyncClaim, error)
 	// StartBatch records b as the claimed instance's open batch, started at
 	// at; a batch it replaces is recorded as abandoned.
 	StartBatch(ctx context.Context, instance string, b OpenBatch, at time.Time) error
 	// CompleteSync records the open batch b as completed when a, its
 	// successful attempt, ended, stores watermark, resets its failures,
-	// sets its next sync to a's and releases the claim, and appends a to the
-	// instance's sync history, all at once.
-	CompleteSync(ctx context.Context, b *ingest.Batch, watermark string, a *ingest.SyncAttempt) error
+	// sets its next sync to a's and releases the claim, or with a non-zero
+	// hold keeps the claim until hold instead, for the attempt's next batch
+	// (D-154), and appends a to the instance's sync history, all at once.
+	CompleteSync(ctx context.Context, b *ingest.Batch, watermark string, a *ingest.SyncAttempt, hold time.Time) error
 	// FailSync records a, a failed attempt of the open batch a.Batch, keeps
 	// the batch open, sets the instance's failures and next sync to a's,
 	// releases the claim and appends a to the instance's sync history, all
@@ -74,6 +71,22 @@ type SyncStore interface {
 	FailSync(ctx context.Context, a *ingest.SyncAttempt) error
 	// SyncStates returns the state of every instance that has one.
 	SyncStates(ctx context.Context) ([]SyncState, error)
+	SyncClaims
+}
+
+// SyncClaims claims a connector instance against its syncs and releases
+// it. A sync claims its instance before it reads what the bound accounts
+// hold, and a bond lot deletion claims it for as long as it runs, so a
+// sync never books a coupon of a lot deleted after it read the lots
+// (D-154).
+type SyncClaims interface {
+	// ClaimSync claims instance from now until until, and returns its
+	// sync state; it fails with ErrSyncRunning while another unexpired
+	// claim holds it.
+	ClaimSync(ctx context.Context, instance string, now, until time.Time) (SyncClaim, error)
+	// ReleaseSync releases the claim on instance that holds it until
+	// until, and leaves any other claim alone.
+	ReleaseSync(ctx context.Context, instance string, until time.Time) error
 }
 
 // ScopeSource says what market-data connectors are asked to price (D-93).
@@ -252,12 +265,14 @@ func (s *Scheduler) end(instance string) {
 	delete(s.running, instance)
 }
 
-// attempt runs one sync attempt of instance: it plans the attempt's
-// batches, claims the instance, and runs each batch in turn, retrying an
-// open batch first. When an opening batch is followed by a transactions
-// batch, both ask from the watermark the instance had before them, so the
-// seeded accounts miss none of their transactions, and the instance is
-// claimed again for the second.
+// attempt runs one sync attempt of instance: it claims the instance, plans
+// the attempt's batches and runs each batch in turn, retrying an open batch
+// first. The plan, with what the bound accounts hold, is read under the
+// claim, and the claim is held from the first batch to the last, so no
+// bond lot deletion, which claims the instance too, runs between reading a
+// lot and booking its coupons (D-154). When an opening batch is followed
+// by a transactions batch, both ask from the watermark the instance had
+// before them, so the seeded accounts miss none of their transactions.
 func (s *Scheduler) attempt(ctx context.Context, instance string, mode ingest.Mode) (SyncResult, error) {
 	run, err := s.prepare(ctx, instance, mode)
 	if err != nil {
@@ -266,24 +281,30 @@ func (s *Scheduler) attempt(ctx context.Context, instance string, mode ingest.Mo
 	return run()
 }
 
-// prepare plans an attempt of instance and claims the instance for it, and
-// returns what runs the attempt's batches; a claim another attempt holds
-// fails with ErrSyncRunning before anything runs.
+// prepare claims instance for an attempt and plans the attempt under the
+// claim (D-154), and returns what runs the attempt's batches; a claim
+// another attempt or a bond lot deletion holds fails with ErrSyncRunning
+// before anything runs, and a plan that fails releases the claim.
 func (s *Scheduler) prepare(ctx context.Context, instance string, mode ingest.Mode) (func() (SyncResult, error), error) {
-	plan, err := s.plan(ctx, instance, mode)
-	if err != nil {
-		return nil, fmt.Errorf("planning a sync of %s: %w", instance, err)
-	}
 	now := s.Now()
-	claim, err := s.Store.ClaimSync(ctx, instance, now, now.Add(s.Timeout+leaseMargin))
+	until := now.Add(s.Timeout + leaseMargin)
+	claim, err := s.Store.ClaimSync(ctx, instance, now, until)
 	if err != nil {
 		return nil, fmt.Errorf("claiming %s: %w", instance, err)
+	}
+	plan, err := s.plan(ctx, instance, mode)
+	if err != nil {
+		err = fmt.Errorf("planning a sync of %s: %w", instance, err)
+		if rerr := s.Store.ReleaseSync(context.WithoutCancel(ctx), instance, until); rerr != nil {
+			return nil, errors.Join(err, fmt.Errorf("releasing %s: %w", instance, rerr))
+		}
+		return nil, err
 	}
 	return func() (SyncResult, error) { return s.runBatches(ctx, instance, mode, &plan, claim) }, nil
 }
 
 // runBatches runs the batches of an attempt of instance planned as plan,
-// on its claim, in turn.
+// on its claim, in turn, holding the claim from the first to the last.
 func (s *Scheduler) runBatches(ctx context.Context, instance string, mode ingest.Mode, plan *syncPlan, claim SyncClaim) (SyncResult, error) {
 	var err error
 	batches := batchesFor(&claim, mode, plan.modes, s.NewBatchID)
@@ -291,10 +312,9 @@ func (s *Scheduler) runBatches(ctx context.Context, instance string, mode ingest
 	var res SyncResult
 	for i, b := range batches {
 		if i > 0 {
-			now := s.Now()
-			if claim, err = s.Store.ClaimSync(ctx, instance, now, now.Add(s.Timeout+leaseMargin)); err != nil {
-				return res, fmt.Errorf("claiming %s: %w", instance, err)
-			}
+			// The completed batch reset the failures, closed its batch and
+			// kept the claim for this one.
+			claim = SyncClaim{Watermark: watermark}
 		}
 		call := SyncCall{ID: b.ID, Mode: b.Mode, Watermark: watermark, Scope: plan.scope, Held: plan.held, BondTerms: plan.terms}
 		keep := i < len(batches)-1
@@ -366,8 +386,8 @@ func (s *Scheduler) told(ctx context.Context, instance string, bound []ledger.Ac
 // run runs one batch of an attempt on the claimed instance: it starts the
 // batch unless it is the claim's open one, calls the connector and imports
 // the delivery within the timeout, and records the outcome with the next
-// sync's due time. With keep, the instance keeps its watermark, because
-// another batch follows from it.
+// sync's due time. With keep, the instance keeps its watermark and its
+// claim, renewed for one more batch, because another batch follows from it.
 func (s *Scheduler) run(ctx context.Context, instance string, claim *SyncClaim, call *SyncCall, keep bool) (SyncResult, error) {
 	b := OpenBatch{ID: call.ID, Mode: call.Mode}
 	if claim.Open == nil || *claim.Open != b {
@@ -394,11 +414,12 @@ func (s *Scheduler) run(ctx context.Context, instance string, claim *SyncClaim, 
 		return SyncResult{}, syncErr
 	}
 	watermark := res.Watermark
+	var hold time.Time
 	if keep {
-		watermark = call.Watermark
+		watermark, hold = call.Watermark, ended.Add(s.Timeout+leaseMargin)
 	}
 	a.NextSync = s.Policy.NextSync(ended, 0, s.Jitter(s.Policy.Jitter))
-	if err := s.Store.CompleteSync(rctx, &res.Batch, watermark, &a); err != nil {
+	if err := s.Store.CompleteSync(rctx, &res.Batch, watermark, &a, hold); err != nil {
 		return SyncResult{}, fmt.Errorf("recording sync %s of %s: %w", b.ID, instance, err)
 	}
 	s.logger().Info("connector synced", "instance", instance, "batch", string(b.ID), "mode", b.Mode.String(),

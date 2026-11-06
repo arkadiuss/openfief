@@ -49,7 +49,7 @@ func syncHistory(t *testing.T) (*postgres.Store, *pgxpool.Pool) {
 	mustFail(t, s, failed("b-1", 2, at(17), at(7)))
 	claim(t, s, "xtb-main", at(17))
 	b1 := &ingest.Batch{ID: "b-1", Institution: "xtb", Source: app.SourceSync, Mode: ingest.ModeOpening, Transactions: 3, Imported: ingest.ImportSummary{New: 3}, Accounts: []ledger.AccountID{"acc-1", "acc-2"}}
-	if err := s.CompleteSync(ctx, b1, "w-1", succeeded("xtb-main", b1, at(100), at(18))); err != nil {
+	if err := s.CompleteSync(ctx, b1, "w-1", succeeded("xtb-main", b1, at(100), at(18)), time.Time{}); err != nil {
 		t.Fatalf("CompleteSync b-1: %v", err)
 	}
 	for i, m := range []int{101, 107, 120} {
@@ -71,7 +71,7 @@ func syncHistory(t *testing.T) (*postgres.Store, *pgxpool.Pool) {
 		t.Fatalf("StartBatch n-1: %v", err)
 	}
 	n1 := &ingest.Batch{ID: "n-1", Institution: "nbp", Source: app.SourceSync, Mode: ingest.ModeTransactions}
-	if err := s.CompleteSync(ctx, n1, "w-n", succeeded("nbp", n1, at(400), at(31))); err != nil {
+	if err := s.CompleteSync(ctx, n1, "w-n", succeeded("nbp", n1, at(400), at(31)), time.Time{}); err != nil {
 		t.Fatalf("CompleteSync n-1: %v", err)
 	}
 	return s, pool

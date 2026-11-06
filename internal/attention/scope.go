@@ -23,6 +23,9 @@ const (
 	// kindUndeclared is ingest's deliveries dropped as undeclared (D-179,
 	// D-186). Subject: the instance.
 	kindUndeclared Kind = "bond-terms-or-index-levels-undeclared"
+	// kindUndeclaredCrossChecks is ingest's cross-check prices dropped as
+	// undeclared (D-141). Subject: the instance.
+	kindUndeclaredCrossChecks Kind = "cross-check-prices-undeclared"
 )
 
 // Group is what the owner does about an item, as the Inbox groups items
@@ -61,7 +64,7 @@ func (g Group) String() string {
 func GroupOf(k Kind) Group {
 	switch k {
 	case KindTickerUnconfirmed, KindBrokerAccountUnmapped, KindSyncFailing, KindImportProblems,
-		kindUndeclared, kindMarketDataGap:
+		kindUndeclared, kindUndeclaredCrossChecks, kindMarketDataGap:
 		return GroupDataComingIn
 	case KindAssertionFlagged, KindCashCheckpointMismatch, KindPriceCheckFlagged:
 		return GroupNumbersToCheck
@@ -92,8 +95,8 @@ type Scope struct {
 //   - market-data-gap "<account>/<kind>/<key>": the account, and the
 //     instrument of a prices series;
 //   - broker-account-unmapped and ticker-unconfirmed "<instance>/...",
-//     connector-sync-failing and bond-terms-or-index-levels-undeclared
-//     "<instance>": the instance;
+//     connector-sync-failing, bond-terms-or-index-levels-undeclared and
+//     cross-check-prices-undeclared "<instance>": the instance;
 //   - import-problems: the instance its detail names;
 //   - setting-missing, transfer-broken and transfer-suggested (a pair of
 //     transaction keys) and any other kind: nothing.
@@ -104,7 +107,7 @@ func ScopeOf(it *Item) Scope {
 		return accountScope(it.Kind, parts)
 	case KindPriceCheckFlagged, kindUnclassified:
 		return Scope{Instrument: parts[0]}
-	case KindBrokerAccountUnmapped, KindTickerUnconfirmed, KindSyncFailing, kindUndeclared:
+	case KindBrokerAccountUnmapped, KindTickerUnconfirmed, KindSyncFailing, kindUndeclared, kindUndeclaredCrossChecks:
 		return Scope{Instance: parts[0]}
 	case KindImportProblems:
 		if instance, _, found := strings.Cut(it.Current().Detail, ": "); found {

@@ -137,6 +137,45 @@ func (f *fixedHeld) HeldAccounts(_ context.Context, accounts []ledger.AccountID)
 	return f.held, nil, nil
 }
 
+// TestSchedulerReadsHoldingsUnderItsClaim checks that a sync reads what the
+// bound accounts hold only once it holds its instance's claim, so a bond
+// lot deletion holding the claim can't run between the read and the
+// booking (D-154), and that a sync failing to read them releases the claim.
+func TestSchedulerReadsHoldingsUnderItsClaim(t *testing.T) {
+	t.Parallel()
+	caller := &fakeCaller{delivery: app.Delivery{Institution: "treasury-bonds"}}
+	conns := connectors(t, caller, &fakeLedger{}, &fakeStores{})
+	conns.Bindings = &fakeBindings{accounts: []ledger.AccountID{"acc-1"}}
+	source := &fixedHeld{}
+	store := newMemStore()
+	s := &app.Scheduler{
+		Connectors: conns, Instances: listed{names: []string{"bonds"}}, Store: store, Held: source,
+		Policy:  ingest.SyncPolicy{Interval: time.Hour, RetryFirst: time.Minute, RetryMax: time.Hour},
+		Timeout: time.Minute, Now: t0, NewBatchID: func() ingest.BatchID { return "b-1" },
+		Jitter: func(time.Duration) time.Duration { return 0 },
+	}
+	if _, err := store.ClaimSync(t.Context(), "bonds", t0(), t0().Add(time.Minute)); err != nil {
+		t.Fatalf("a deletion's claim: %v", err)
+	}
+	if _, err := s.SyncNow(t.Context(), "bonds", ingest.ModeTransactions); !errors.Is(err, app.ErrSyncRunning) {
+		t.Errorf("SyncNow while claimed = %v, want ErrSyncRunning", err)
+	}
+	if source.asked != nil || caller.instance != "" {
+		t.Errorf("a sync without the claim read the holdings of %v and called %q", source.asked, caller.instance)
+	}
+	if err := store.ReleaseSync(t.Context(), "bonds", t0().Add(time.Minute)); err != nil {
+		t.Fatalf("ReleaseSync: %v", err)
+	}
+
+	conns.Bindings = &fakeBindings{err: errList}
+	if _, err := s.SyncNow(t.Context(), "bonds", ingest.ModeTransactions); !errors.Is(err, errList) {
+		t.Errorf("SyncNow failing to plan = %v, want the bindings' error", err)
+	}
+	if _, err := store.ClaimSync(t.Context(), "bonds", t0(), t0().Add(time.Minute)); err != nil {
+		t.Errorf("claim after a failed plan: %v, want it released", err)
+	}
+}
+
 // TestSchedulerSendsWhatBoundAccountsHold checks that every sync of an
 // instance bound to accounts carries what they hold (D-117), and a
 // market-data connector, bound to none, gets none.

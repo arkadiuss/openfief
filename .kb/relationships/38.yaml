@@ -888,3 +888,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-73ee24c69d96
+  - type: validates
+    from: TEST-ingest-app-connectors
+    to: REQ-ingest-undeclared-cross-check-prices-dropped
+    created_at: 2026-11-02T13:17:25.093Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72c5394510e5
+  - type: validates
+    from: TEST-ingest-app-connectors
+    to: REQ-ingest-undeclared-cross-check-prices-attention-item
+    created_at: 2026-11-02T13:17:25.148Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bfb1e838dfd7
+  - type: validates
+    from: TEST-ingest-app-connectors
+    to: REQ-ingest-undeclared-cross-check-prices-rest-imported
+    created_at: 2026-11-02T13:17:25.198Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6250bbf0dc73

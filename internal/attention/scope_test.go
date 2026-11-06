@@ -21,6 +21,7 @@ func TestGroupOf(t *testing.T) {
 		{attention.KindSyncFailing, attention.GroupDataComingIn},
 		{attention.KindImportProblems, attention.GroupDataComingIn},
 		{ingest.KindUndeclaredDeliveries, attention.GroupDataComingIn},
+		{ingest.KindUndeclaredCrossCheckPrices, attention.GroupDataComingIn},
 		{valuationapp.GapKind, attention.GroupDataComingIn},
 		{attention.KindAssertionFlagged, attention.GroupNumbersToCheck},
 		{attention.KindCashCheckpointMismatch, attention.GroupNumbersToCheck},
@@ -102,6 +103,10 @@ func TestScopeOf(t *testing.T) {
 		{
 			name: "undeclared deliveries", kind: ingest.KindUndeclaredDeliveries, subject: "bonds-main",
 			want: attention.Scope{Instance: "bonds-main"},
+		},
+		{
+			name: "undeclared cross-check prices", kind: ingest.KindUndeclaredCrossCheckPrices, subject: "flex-main",
+			want: attention.Scope{Instance: "flex-main"},
 		},
 		{
 			name: "import problems name the instance in the detail", kind: attention.KindImportProblems, subject: "b-1",

@@ -412,13 +412,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4635e93250ff
-  - type: implements
-    from: SYM-ingest-app-connectors-go-live-dates
-    to: REQ-ingest-keeps-from-go-live-uploads
-    created_at: 2026-11-01T08:09:01.059Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-9dee20bafa1e
   - type: constrains
     from: REQ-ui-market-data-series-sources
     to: FACT-SUBJECT-2A377580A998A994
@@ -580,3 +573,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a19fbee5dde1
+  - type: implements
+    from: SYM-ingest-app-connectors-go-live-dates
+    to: REQ-ingest-keeps-from-go-live-opening-uploads
+    created_at: 2026-11-02T13:18:58.916Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7d93b460813
+  - type: covered_by
+    from: SYM-ingest-app-connectors-go-live-dates
+    to: TEST-ingest-app-uploads
+    created_at: 2026-11-02T13:18:58.945Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4aa7974d87f5

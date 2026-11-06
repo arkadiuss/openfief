@@ -110,10 +110,23 @@ func joinKinds(kinds []string) string {
 	return strings.Join(kinds[:last], ", ") + " and " + kinds[last]
 }
 
+// KindUndeclaredCrossCheckPrices is the kind of the attention item (D-130)
+// a connector instance raises when its manifest doesn't declare the
+// cross-check prices it sends, so they are dropped (D-141). Its subject is
+// the instance; it resolves on the instance's next delivery that carries
+// no undeclared ones.
+const KindUndeclaredCrossCheckPrices = "cross-check-prices-undeclared"
+
+// UndeclaredCrossCheckPricesDetail is the detail of that attention item. It
+// names no count or batch, so a later delivery that drops prices again
+// doesn't reopen an item the owner acknowledged.
+const UndeclaredCrossCheckPricesDetail = "the connector sends cross-check prices its signed manifest doesn't declare, " +
+	"so they are dropped and the rest of its deliveries is imported; install a version that declares crossCheckPrices"
+
 // UndeclaredCrossCheckPrices is the ingest problem a delivery's n
 // cross-check prices become when its connector's manifest doesn't declare
-// them (D-112): none of them is stored, and the rest of the delivery is
-// imported.
+// them (D-112, D-141): none of them is stored, and the rest of the delivery
+// is imported.
 func UndeclaredCrossCheckPrices(n int) Problem {
 	return Skipped("cross_check_prices", strconv.Itoa(n)+
 		" cross-check prices not stored: the connector's manifest doesn't declare that it sends them")

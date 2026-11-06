@@ -63,6 +63,17 @@ func (s *Store) ClaimSync(ctx context.Context, instance string, now, until time.
 	return claim, nil
 }
 
+// ReleaseSync releases the claim on instance that holds it until until; a
+// claim that lapsed and was taken since is left alone.
+func (s *Store) ReleaseSync(ctx context.Context, instance string, until time.Time) error {
+	if _, err := s.pool.Exec(ctx, `
+		UPDATE ingest.connector_instances SET lease_until = NULL WHERE instance = $1 AND lease_until = $2`,
+		instance, until); err != nil {
+		return fmt.Errorf("releasing %s: %w", instance, err)
+	}
+	return nil
+}
+
 // scanClaim reads one row of ClaimSync's RETURNING.
 func scanClaim(row pgx.CollectableRow) (app.SyncClaim, error) {
 	var (
@@ -120,10 +131,15 @@ func (s *Store) StartBatch(ctx context.Context, instance string, b app.OpenBatch
 }
 
 // CompleteSync records b as completed when a ended, stores the instance's
-// watermark, next sync and released claim, and appends a to its sync
-// history, in one database transaction.
-func (s *Store) CompleteSync(ctx context.Context, b *ingest.Batch, watermark string, a *ingest.SyncAttempt) error {
+// watermark, next sync and released claim, or with a non-zero hold its
+// claim renewed until hold (D-154), and appends a to its sync history, in
+// one database transaction.
+func (s *Store) CompleteSync(ctx context.Context, b *ingest.Batch, watermark string, a *ingest.SyncAttempt, hold time.Time) error {
 	instance, next, at := a.Instance, a.NextSync, a.Ended
+	var lease *time.Time
+	if !hold.IsZero() {
+		lease = &hold
+	}
 	err := pgx.BeginFunc(ctx, s.pool, func(tx pgx.Tx) error {
 		tag, err := tx.Exec(ctx, `
 			UPDATE ingest.import_batches SET state = 'completed', attempts = attempts + 1, last_attempt_at = $3,
@@ -142,9 +158,9 @@ func (s *Store) CompleteSync(ctx context.Context, b *ingest.Batch, watermark str
 		}
 		if _, err := tx.Exec(ctx, `
 			UPDATE ingest.connector_instances SET watermark = $2, failures = 0,
-				next_sync_at = $3, lease_until = NULL, open_batch = NULL
+				next_sync_at = $3, lease_until = $4, open_batch = NULL
 			WHERE instance = $1`,
-			instance, watermark, next); err != nil {
+			instance, watermark, next, lease); err != nil {
 			return fmt.Errorf("storing the watermark: %w", err)
 		}
 		return appendAttempt(ctx, tx, a)

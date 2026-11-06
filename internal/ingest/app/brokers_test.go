@@ -218,7 +218,7 @@ func TestConnectorsImportFileByBrokerAccount(t *testing.T) {
 		{Instance: "ibkr-main", ID: "U0000003"},
 	}}
 	c.Brokers = brokers
-	b, err := c.ImportFile(t.Context(), "ibkr-main", "b-1", ingest.ModeTransactions, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("x")})
+	b, err := c.ImportFile(t.Context(), "ibkr-main", "b-1", ingest.ModeTransactions, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("x")}, nil)
 	if err != nil {
 		t.Fatalf("ImportFile: %v", err)
 	}
@@ -228,7 +228,7 @@ func TestConnectorsImportFileByBrokerAccount(t *testing.T) {
 		t.Errorf("transactions, accounts, unmapped, booked (-want +got):\n%s", diff)
 	}
 	brokers.accounts[1].Account = "acc-9"
-	_, err = c.ImportFile(t.Context(), "ibkr-main", "b-2", ingest.ModeTransactions, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("x")})
+	_, err = c.ImportFile(t.Context(), "ibkr-main", "b-2", ingest.ModeTransactions, app.NamedFile{Name: "s.xml", Contents: strings.NewReader("x")}, nil)
 	if diff := cmp.Diff(ingest.ErrAccountNotBound, err, cmpopts.EquateErrors()); diff != "" {
 		t.Errorf("ImportFile into an account not bound to the instance error (-want +got):\n%s", diff)
 	}

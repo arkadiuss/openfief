@@ -748,3 +748,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d41956107d1e
+  - type: executable_for
+    from: SYM-core-test-helper-gated-coupons
+    to: TEST-core-bond-lot-sync-race
+    created_at: 2026-11-02T11:52:42.610Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1098e53b73d5

@@ -930,3 +930,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-80058e90582d
+  - type: executable_for
+    from: SYM-core-test-helper-check-undeclared-item
+    to: TEST-core-undeclared-cross-check-prices
+    created_at: 2026-11-02T13:23:03.004Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d556bb94ba4d

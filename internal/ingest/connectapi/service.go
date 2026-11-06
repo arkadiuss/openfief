@@ -124,6 +124,8 @@ func (s *service) fail(ctx context.Context, err error) *connect.Error {
 	case errors.Is(err, app.ErrNoConnector), errors.Is(err, app.ErrNoEntries), errors.Is(err, ingest.ErrAccountNotBound),
 		errors.Is(err, ingest.ErrUndeclaredInstitution):
 		return connect.NewError(connect.CodeFailedPrecondition, err)
+	case errors.Is(err, app.ErrLotSyncing):
+		return connect.NewError(connect.CodeFailedPrecondition, app.ErrLotSyncing)
 	case errors.Is(err, app.ErrConnectorUnavailable):
 		return connect.NewError(connect.CodeUnavailable, app.ErrConnectorUnavailable)
 	}

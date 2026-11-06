@@ -278,6 +278,7 @@ func TestAttentionKindOf(t *testing.T) {
 		{"market-data-gap", attentionKind{"Market data stopped arriving", "/settings#series-sources-title", "Open the sources"}},
 		{"connector-sync-failing", attentionKind{"Sync keeps failing", "/plugins", "Open the plugins"}},
 		{"cash-checkpoint-mismatch", attentionKind{Label: "Cash balance differs"}},
+		{"cross-check-prices-undeclared", attentionKind{"Undeclared cross-check prices dropped", "/plugins", "Open the plugins"}},
 		{"some-later-check", attentionKind{Label: "some-later-check"}},
 	}
 	for _, tt := range tests {

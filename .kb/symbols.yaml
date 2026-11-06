@@ -21372,8 +21372,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-uploads
       - type: implements
         target: REQ-ingest-connector-batches
+      - type: implements
+        target: REQ-ingest-multi-account-transactions-books-every-mapped
       - type: implements
         target: REQ-ingest-uploads-through-core
   - id: SYM-ingest-conn-app-connectors-deliver
@@ -21393,6 +21397,8 @@ symbols:
         target: REQ-ingest-delivery-declared-institution
       - type: implements
         target: REQ-ingest-instance-scoped-keys
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-rest-imported
   - id: SYM-ingest-conn-app-connectors-store-inputs
     title: Connectors.storeInputs
     sourceFile: internal/ingest/app/connectors.go
@@ -38746,7 +38752,11 @@ symbols:
       recorded_at: 2026-10-28T16:52:20.988Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-held
+      - type: covered_by
         target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
       - type: implements
         target: REQ-ingest-core-owns-schedules
       - type: implements
@@ -39439,6 +39449,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-postgres
       - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+      - type: implements
         target: REQ-ingest-scheduler-retry
       - type: implements
         target: REQ-ingest-sync-store
@@ -39790,11 +39802,15 @@ symbols:
       - type: covered_by
         target: TEST-core-connectors
       - type: covered_by
+        target: TEST-core-undeclared-cross-check-prices
+      - type: covered_by
         target: TEST-core-undeclared-deliveries
       - type: implements
         target: REQ-core-connector-commands
       - type: implements
         target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
   - id: SYM-core-conn-new-scheduler
     title: newScheduler
     sourceFile: cmd/core/connectors.go
@@ -39807,6 +39823,8 @@ symbols:
       - type: covered_by
         target: TEST-core-connectors
       - type: covered_by
+        target: TEST-core-undeclared-cross-check-prices
+      - type: covered_by
         target: TEST-core-undeclared-deliveries
       - type: implements
         target: REQ-core-connector-commands
@@ -39814,6 +39832,8 @@ symbols:
         target: REQ-ingest-core-owns-schedules
       - type: implements
         target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
   - id: SYM-core-conn-run-connectors
     title: runConnectors
     sourceFile: cmd/core/connectors.go
@@ -66825,6 +66845,8 @@ symbols:
       - type: covered_by
         target: TEST-ingest-connectapi
       - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+      - type: implements
         target: REQ-ingest-bond-lot-service
       - type: implements
         target: REQ-ingest-uploads-through-core
@@ -68965,11 +68987,15 @@ symbols:
       - type: covered_by
         target: TEST-core-bond-coupons
       - type: covered_by
+        target: TEST-core-bond-lot-sync-race
+      - type: covered_by
         target: TEST-core-bond-lots
       - type: implements
         target: REQ-core-bond-lot-service
       - type: implements
         target: REQ-ingest-bond-lot-delete-deletes-coupons
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
       - type: implements
         target: REQ-ingest-uploads-through-core
   - id: SYM-core-with-bond-lot-service
@@ -70878,11 +70904,15 @@ symbols:
       - type: covered_by
         target: TEST-core-statements
       - type: covered_by
+        target: TEST-core-undeclared-cross-check-prices
+      - type: covered_by
         target: TEST-core-undeclared-deliveries
       - type: implements
         target: REQ-ingest-statement-upload-bound-instance
       - type: implements
         target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
   - id: SYM-core-new-uploads
     title: newUploads
     sourceFile: cmd/core/uploads.go
@@ -71098,6 +71128,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-upload-changes-every-bound
+      - type: implements
+        target: REQ-ingest-multi-account-upload-mode-of-uploaded-account
       - type: implements
         target: REQ-ingest-statement-mode-chosen-by-core
       - type: implements
@@ -74171,6 +74205,8 @@ symbols:
         target: TEST-valuation-crosscheck
       - type: implements
         target: REQ-valuation-price-check-instrument-threshold
+      - type: implements
+        target: REQ-valuation-price-check-threshold-fraction-range
   - id: SYM-valuation-price-check-status
     title: PriceCheckStatus
     sourceFile: internal/valuation/crosscheck.go
@@ -78534,8 +78570,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-brokers
+      - type: covered_by
+        target: TEST-ingest-app-uploads
       - type: implements
         target: REQ-ingest-broker-account-resolve
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
   - id: SYM-ingest-broker-account-id
     title: BrokerAccountID
     sourceFile: internal/ingest/brokeraccount.go
@@ -85099,9 +85139,11 @@ symbols:
       recorded_at: 2026-10-29T17:12:26.957Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: covered_by
         target: TEST-ingest-app-scheduler
       - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
   - id: SYM-ingest-app-connectors-go-live-dates
@@ -85115,10 +85157,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-scheduler
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
       - type: implements
         target: REQ-ingest-sync-mode-from-ledger
-      - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
   - id: SYM-ingest-app-connectors-keep-from-go-live
     title: Connectors.keepFromGoLive
     sourceFile: internal/ingest/app/connectors.go
@@ -85130,8 +85174,12 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-ingest-app-connectors
+      - type: covered_by
+        target: TEST-ingest-app-uploads
       - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
   - id: SYM-ingest-app-test-helper-fixed-seeding
     title: fixedSeeding
     sourceFile: internal/ingest/app/connectors_test.go
@@ -85417,7 +85465,11 @@ symbols:
       recorded_at: 2026-10-29T17:15:20.258Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-held
+      - type: covered_by
         target: TEST-ingest-app-scheduler
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
       - type: implements
         target: REQ-ingest-seeded-account-transactions-mode
       - type: implements
@@ -85558,7 +85610,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-golive
       - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
   - id: SYM-ingest-test-helper-go-live-date
     title: goLiveDate
     sourceFile: internal/ingest/golive_test.go
@@ -88569,6 +88621,10 @@ symbols:
         target: TEST-valuation-app-crosscheck
       - type: implements
         target: REQ-valuation-price-check-instrument-threshold
+      - type: implements
+        target: REQ-valuation-price-check-threshold-clear-restores-default
+      - type: implements
+        target: REQ-valuation-price-check-threshold-fraction-range
   - id: SYM-valuation-app-cross-checks-acknowledge
     title: CrossChecks.Acknowledge
     sourceFile: internal/valuation/app/crosscheck.go
@@ -88580,6 +88636,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-app-crosscheck
+      - type: implements
+        target: REQ-valuation-acknowledgement-covers-one-check
       - type: implements
         target: REQ-valuation-price-check-acknowledge
       - type: implements
@@ -88813,6 +88871,8 @@ symbols:
         target: REQ-valuation-price-check-instrument-threshold
       - type: implements
         target: REQ-valuation-price-check-one-percent
+      - type: implements
+        target: REQ-valuation-price-check-threshold-clear-restores-default
   - id: SYM-valuation-latest-on-or-before
     title: latestOnOrBefore
     sourceFile: internal/valuation/crosscheck.go
@@ -88839,6 +88899,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-crosscheck
       - type: implements
+        target: REQ-valuation-acknowledgement-covers-one-check
+      - type: implements
         target: REQ-valuation-price-check-acknowledge
       - type: implements
         target: REQ-valuation-price-check-acknowledgement-lapses
@@ -88854,6 +88916,8 @@ symbols:
       - type: covered_by
         target: TEST-valuation-crosscheck
       - type: implements
+        target: REQ-valuation-acknowledgement-covers-one-check
+      - type: implements
         target: REQ-valuation-price-check-acknowledge
       - type: implements
         target: REQ-valuation-price-check-acknowledgement-lapses
@@ -88868,6 +88932,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-crosscheck
+      - type: implements
+        target: REQ-valuation-acknowledgement-covers-one-check
       - type: implements
         target: REQ-valuation-price-check-acknowledge
       - type: implements
@@ -88918,6 +88984,8 @@ symbols:
         target: TEST-valuation-postgres-price-check-settings
       - type: implements
         target: REQ-valuation-price-check-instrument-threshold
+      - type: implements
+        target: REQ-valuation-price-check-threshold-clear-restores-default
   - id: SYM-valuation-postgres-store-price-check-acknowledgements
     title: Store.PriceCheckAcknowledgements
     sourceFile: internal/valuation/postgres/crosscheck.go
@@ -89787,7 +89855,7 @@ symbols:
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
   - id: SYM-ingest-app-connectors-declared-cross-checks
-    title: declaredCrossChecks
+    title: Connectors.declaredCrossChecks
     sourceFile: internal/ingest/app/connectors.go
     status: active
     symbol_role: behavioral
@@ -89799,6 +89867,12 @@ symbols:
         target: TEST-ingest-app-connectors
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-dropped
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-item-per-instance
   - id: SYM-ingest-app-test-conn-fake-declarations
     title: fakeDeclarations
     sourceFile: internal/ingest/app/connectors_test.go
@@ -89949,6 +90023,8 @@ symbols:
       - type: implements
         target: REQ-ingest-statement-mode-chosen-by-core
       - type: implements
+        target: REQ-plugins-statement-files-declared-in-manifest
+      - type: implements
         target: REQ-ui-statement-upload-file-connectors-only
   - id: SYM-ingest-mapped-accounts
     title: MappedAccounts
@@ -90070,6 +90146,8 @@ symbols:
         target: TEST-ingest-declarations
       - type: implements
         target: REQ-ingest-cross-check-prices-declared-only
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-dropped
   - id: SYM-ingest-upload-mode
     title: UploadMode
     sourceFile: internal/ingest/declarations.go
@@ -90141,6 +90219,8 @@ symbols:
         target: REQ-ingest-market-data-list-declared-granted
       - type: implements
         target: REQ-plugins-manifest-declarations
+      - type: implements
+        target: REQ-plugins-statement-files-declared-in-manifest
   - id: SYM-ingest-kube-test-test-deployed-declarations
     title: TestDeployedDeclarations
     sourceFile: internal/ingest/kube/discovery_test.go
@@ -90582,6 +90662,8 @@ symbols:
         target: REQ-plugins-install-shows-market-data-list
       - type: implements
         target: REQ-plugins-manifest-declarations
+      - type: implements
+        target: REQ-plugins-statement-files-capability-not-permission
   - id: SYM-demo-cross-check-prices
     title: crossCheckPrices
     sourceFile: internal/demo/crosscheck.go
@@ -102429,6 +102511,8 @@ symbols:
       - type: implements
         target: REQ-ingest-bond-lot-delete-entry
       - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+      - type: implements
         target: REQ-ingest-bond-lot-delete-supersedes
   - id: SYM-ingest-app-test-bond-lots-delete
     title: TestBondLotsDelete
@@ -104060,7 +104144,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasurybonds-due-coupons
     title: DueCoupons
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104076,8 +104160,6 @@ symbols:
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-coupons-since-purchase-every-sync
-      - type: implements
-        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-due-on-lot
     title: dueOnLot
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104093,8 +104175,6 @@ symbols:
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-coupons-since-purchase-every-sync
-      - type: implements
-        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-terms-of
     title: termsOf
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104109,7 +104189,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasurybonds-lot-ref
     title: lotRef
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104151,8 +104231,6 @@ symbols:
         target: REQ-ledger-coupons-as-interest
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
-      - type: implements
-        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-ref
     title: couponRef
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104183,8 +104261,6 @@ symbols:
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
         target: REQ-treasurybonds-coupons-keyed-per-lot-and-date
-      - type: implements
-        target: REQ-treasurybonds-delivers-coupons
   - id: SYM-treasurybonds-coupon-sync
     title: CouponSync
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104200,7 +104276,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasurybonds-coupon-sync-coupons
     title: CouponSync.Coupons
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104215,7 +104291,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasurybonds-earliest-purchase
     title: earliestPurchase
     sourceFile: internal/ingest/treasurybonds/coupons.go
@@ -104392,7 +104468,7 @@ symbols:
       - type: implements
         target: REQ-treasurybonds-coupons-booked-every-sync
       - type: implements
-        target: REQ-treasurybonds-delivers-coupons
+        target: REQ-treasurybonds-coupons-since-purchase-every-sync
   - id: SYM-treasury-bonds-test-helper-held-request
     title: heldRequest
     sourceFile: plugins/treasury-bonds/connector_test.go
@@ -114111,7 +114187,7 @@ symbols:
       - type: covered_by
         target: TEST-ingest-golive
       - type: implements
-        target: REQ-ingest-keeps-from-go-live-uploads
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
   - id: SYM-ingest-test-keep-from-go-live-ticker-entries
     title: TestKeepFromGoLiveTickerEntries
     sourceFile: internal/ingest/golive_test.go
@@ -118742,6 +118818,10 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-core-unclassified
+      - type: covered_by
+        target: TEST-core-undeclared-cross-check-prices
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
       - type: implements
         target: REQ-valuation-unclassified-attention
   - id: SYM-core-valuation-attention-raise
@@ -129926,11 +130006,225 @@ symbols:
       recorded_at: 2026-11-02T22:25:19.254Z
     relationships:
       - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: covered_by
         target: TEST-ingest-app-undeclared-deliveries
       - type: implements
         target: REQ-ingest-undeclared-bond-terms-index-levels-dropped
       - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-item-per-instance
+      - type: implements
         target: REQ-ingest-undeclared-deliveries-item-per-instance
+  - id: SYM-ingest-app-connectors-clear-undeclared
+    status: active
+    title: Connectors.clearUndeclared
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:18.315Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-connectors
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-attention-item
+      - type: implements
+        target: REQ-ingest-undeclared-cross-check-prices-item-per-instance
+  - id: SYM-ingest-app-delivery-scope
+    status: active
+    title: deliveryScope
+    sourceFile: internal/ingest/app/connectors.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:25.475Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
+  - id: SYM-ingest-app-uploads-plan
+    status: active
+    title: Uploads.plan
+    sourceFile: internal/ingest/app/uploads.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:32.424Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-upload-changes-every-bound
+      - type: implements
+        target: REQ-ingest-multi-account-upload-mode-of-uploaded-account
+  - id: SYM-ingest-app-upload-plan
+    status: active
+    title: uploadPlan
+    sourceFile: internal/ingest/app/uploads.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:39.454Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
+      - type: implements
+        target: REQ-ingest-multi-account-upload-mode-of-uploaded-account
+  - id: SYM-ingest-app-uploads-started-others
+    status: active
+    title: Uploads.startedOthers
+    sourceFile: internal/ingest/app/uploads.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:46.484Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-uploads
+      - type: implements
+        target: REQ-ingest-keeps-from-go-live-opening-uploads
+      - type: implements
+        target: REQ-ingest-multi-account-opening-seeds-unseeded-only
+  - id: SYM-ingest-app-test-helper-history-of
+    title: historyOf
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:51.936Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-history-of-has-transactions-from
+    title: historyOf.HasTransactionsFrom
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:21:58.220Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-opening-cash
+    title: openingCash
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:04.548Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-uploads-multi-account-opening
+    title: TestUploadsMultiAccountOpening
+    sourceFile: internal/ingest/app/uploads_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:10.783Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-uploads
+  - id: SYM-ingest-app-test-helper-fake-attention
+    title: fakeAttention
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:15.982Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-helper-fake-attention-raise
+    title: fakeAttention.Raise
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:22.481Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-helper-fake-attention-clear
+    title: fakeAttention.Clear
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:29.074Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-ingest-app-test-connectors-undeclared-cross-check-prices-raise-attention
+    title: TestConnectorsUndeclaredCrossCheckPricesRaiseAttention
+    sourceFile: internal/ingest/app/connectors_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:35.674Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-connectors
+  - id: SYM-core-test-helper-undeclared-connector
+    title: undeclaredConnector
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:41.366Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices
+  - id: SYM-core-test-helper-undeclared-connector-sync
+    title: undeclaredConnector.Sync
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:47.808Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices
+  - id: SYM-core-test-helper-stored-attention-items
+    title: storedAttentionItems
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:22:54.154Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices
+  - id: SYM-core-test-helper-check-undeclared-item
+    title: checkUndeclaredItem
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:23:00.721Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices
+  - id: SYM-core-test-undeclared-cross-check-prices-raise-attention
+    title: TestUndeclaredCrossCheckPricesRaiseAttention
+    sourceFile: cmd/core/undeclared_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T13:23:07.247Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-undeclared-cross-check-prices
   - id: SYM-ingest-app-connectors-declared-deliveries
     status: active
     title: Connectors.declaredDeliveries
@@ -150754,3 +151048,283 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-core-bond-coupons
+  - id: SYM-ingest-app-sync-claims
+    status: active
+    title: SyncClaims
+    sourceFile: internal/ingest/app/scheduler.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:50:10.961Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-held
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+  - id: SYM-ingest-app-bond-lots-delete-claimed
+    status: active
+    title: BondLots.deleteClaimed
+    sourceFile: internal/ingest/app/bondlots.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:50:24.059Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-deletes-coupons
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+  - id: SYM-ingest-pg-store-release-sync
+    status: active
+    title: Store.ReleaseSync
+    sourceFile: internal/ingest/postgres/store.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:50:32.142Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-postgres
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+  - id: SYM-ingest-app-test-helper-sync-during-delete
+    title: syncDuringDelete
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:51:27.925Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-helper-sync-during-delete-import-bond-lots
+    title: syncDuringDelete.ImportBondLots
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:51:36.256Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-bond-lots-delete-holds-the-sync-claim
+    title: TestBondLotsDeleteHoldsTheSyncClaim
+    sourceFile: internal/ingest/app/bondlots_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:51:44.337Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-bondlots
+  - id: SYM-ingest-app-test-scheduler-reads-holdings-under-its-claim
+    title: TestSchedulerReadsHoldingsUnderItsClaim
+    sourceFile: internal/ingest/app/held_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:51:52.456Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-held
+  - id: SYM-ingest-app-test-helper-mem-store-release-sync
+    title: memStore.ReleaseSync
+    sourceFile: internal/ingest/app/scheduler_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:00.416Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-app-scheduler
+  - id: SYM-ingest-pg-test-sync-store-holds-and-releases-claims
+    title: TestSyncStoreHoldsAndReleasesClaims
+    sourceFile: internal/ingest/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:08.495Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-postgres
+  - id: SYM-core-test-helper-gate
+    title: gate
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:15.958Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-new-gate
+    title: newGate
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:23.651Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gate-pass
+    title: gate.pass
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:31.697Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gated-coupons
+    title: gatedCoupons
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:39.646Z
+    granularity_reason: module-level-behavior
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gated-coupons-sync
+    title: gatedCoupons.Sync
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:52:55.112Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gated-coupons-import-bond-lots
+    title: gatedCoupons.ImportBondLots
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:02.815Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-gated-coupons-syncs-seen
+    title: gatedCoupons.syncsSeen
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:10.658Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-result
+    title: result
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:18.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-sync-bonds
+    title: syncBonds
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:26.443Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-delete-bond-lot
+    title: deleteBondLot
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:33.975Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-current-keys
+    title: currentKeys
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:41.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-helper-bond-race
+    title: bondRace
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:49.180Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-bond-lot-deletion-during-sync
+    title: TestBondLotDeletionDuringSync
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:53:57.122Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-core-test-sync-during-bond-lot-deletion
+    title: TestSyncDuringBondLotDeletion
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T11:54:05.104Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race
+  - id: SYM-ingest-app-bond-lots-claim
+    status: active
+    title: BondLots.claim
+    sourceFile: internal/ingest/app/bondlots.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T12:16:39.535Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-excludes-sync
+  - id: SYM-ingest-app-bond-lots-delete-lot
+    status: active
+    title: BondLots.deleteLot
+    sourceFile: internal/ingest/app/bondlots.go
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T12:16:48.043Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-app-bondlots
+      - type: implements
+        target: REQ-ingest-bond-lot-delete-deletes-coupons
+  - id: SYM-core-test-helper-new-bond-race
+    title: newBondRace
+    sourceFile: cmd/core/couponrace_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-02T12:16:56.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-bond-lot-sync-race

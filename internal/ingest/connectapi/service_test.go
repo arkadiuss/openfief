@@ -336,6 +336,7 @@ func TestDeleteBondLotRefusals(t *testing.T) {
 		{name: "a series that isn't one", series: "EDO536", want: connect.CodeInvalidArgument},
 		{name: "a date that isn't one", date: "4.5.2026", want: connect.CodeInvalidArgument},
 		{name: "a lot never entered", ledger: fmt.Errorf("importing: %w", ledger.ErrNothingToDelete), want: connect.CodeInvalidArgument},
+		{name: "a sync of the account's connector is running", ledger: fmt.Errorf("claiming: %w", app.ErrLotSyncing), want: connect.CodeFailedPrecondition},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

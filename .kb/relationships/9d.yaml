@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4f4c3906239f
+  - type: implements
+    from: SYM-ingest-app-bond-lots-delete
+    to: REQ-ingest-bond-lot-delete-excludes-sync
+    created_at: 2026-11-02T11:50:42.518Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-74e87ce2f80b

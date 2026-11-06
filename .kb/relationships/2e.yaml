@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-bed915ccd922
+  - type: implements
+    from: SYM-core-entry-connectors
+    to: REQ-ingest-undeclared-cross-check-prices-attention-item
+    created_at: 2026-11-02T13:20:04.439Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-869cec6f8f30
+  - type: covered_by
+    from: SYM-core-entry-connectors
+    to: TEST-core-undeclared-cross-check-prices
+    created_at: 2026-11-02T13:20:04.498Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b238eabcaaa4

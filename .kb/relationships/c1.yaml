@@ -531,13 +531,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d8609ed35585
-  - type: implements
-    from: SYM-treasurybonds-due-on-lot
-    to: REQ-treasurybonds-delivers-coupons
-    created_at: 2026-10-31T18:08:31.540Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-3d6c59ac509d
   - type: validates
     from: TEST-ingest-connectapi-accounts
     to: REQ-treasurybonds-account-payout-setting

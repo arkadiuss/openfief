@@ -657,13 +657,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-458f910f1c28
-  - type: implements
-    from: SYM-ingest-keep-from-go-live
-    to: REQ-ingest-keeps-from-go-live-uploads
-    created_at: 2026-11-01T08:09:23.028Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-bb9ec09dfab0
   - type: executable_for
     from: SYM-valuation-test-helper-sourced-price
     to: TEST-valuation-series
@@ -853,3 +846,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1b62eff959f0
+  - type: implements
+    from: SYM-ingest-keep-from-go-live
+    to: REQ-ingest-keeps-from-go-live-opening-uploads
+    created_at: 2026-11-02T13:18:45.761Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-298d6ec61e17
+  - type: implements
+    from: SYM-core-valuation-attention
+    to: REQ-ingest-undeclared-cross-check-prices-attention-item
+    created_at: 2026-11-02T13:20:10.502Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1a98c6f49938
+  - type: covered_by
+    from: SYM-core-valuation-attention
+    to: TEST-core-undeclared-cross-check-prices
+    created_at: 2026-11-02T13:20:10.544Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7750bc8c0a11

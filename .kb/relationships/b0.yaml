@@ -804,3 +804,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-800a4ceb8930
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-sync-during-delete-import-bond-lots
+    to: TEST-ingest-app-bondlots
+    created_at: 2026-11-02T11:51:39.208Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2d91127cbca5

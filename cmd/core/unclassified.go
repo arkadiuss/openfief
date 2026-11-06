@@ -48,7 +48,8 @@ type attentionItems interface {
 // AttentionRaiser, so the items a revaluation raises and clears, such as
 // an instrument to classify (D-132), land in the attention store; ingest's
 // port, ingest/app.AttentionRaiser, has the same shape, so it serves
-// ingest's undeclared bond terms and index levels too (D-179). The
+// ingest's undeclared cross-check prices (D-141) and bond terms and index
+// levels (D-179) too. The
 // valuation context declares its port with plain strings and the
 // attention context its own condition, so neither imports the other.
 type valuationAttention struct {

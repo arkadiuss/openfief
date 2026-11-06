@@ -951,3 +951,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5556a5237da2
+  - type: executable_for
+    from: SYM-ingest-app-test-helper-history-of
+    to: TEST-ingest-app-uploads
+    created_at: 2026-11-02T13:21:54.175Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a38a0534e779

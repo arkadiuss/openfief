@@ -636,3 +636,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5e973b1537c7
+  - type: implements
+    from: SYM-ingest-app-delivery-scope
+    to: REQ-ingest-multi-account-opening-seeds-unseeded-only
+    created_at: 2026-11-02T13:21:27.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3915d7dd7a25
+  - type: implements
+    from: SYM-ingest-app-delivery-scope
+    to: REQ-ingest-keeps-from-go-live-opening-uploads
+    created_at: 2026-11-02T13:21:27.911Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-25e10dae3214
+  - type: covered_by
+    from: SYM-ingest-app-delivery-scope
+    to: TEST-ingest-app-uploads
+    created_at: 2026-11-02T13:21:27.940Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63265b84bb19

@@ -36,7 +36,7 @@ const (
 )
 
 // attentionKindOf names kind, one of the core's kinds of attention items
-// (D-130, D-131, D-132, D-94, D-179, D-196); a kind it doesn't know shows
+// (D-130, D-131, D-132, D-94, D-141, D-179, D-196); a kind it doesn't know shows
 // its own name and no page. Kinds the Inbox settles in place name no page:
 // their item links its account instead.
 func attentionKindOf(kind string) attentionKind {
@@ -54,6 +54,7 @@ func attentionKindOf(kind string) attentionKind {
 		"bond-terms-or-index-levels-undeclared": {Label: "Bond terms, index levels or readings dropped", Page: pluginsPath, Action: openPlugins},
 		kindSyncFailing:                         {Label: "Sync keeps failing", Page: pluginsPath, Action: openPlugins},
 		kindCashCheckpoint:                      {Label: "Cash balance differs"},
+		"cross-check-prices-undeclared":         {Label: "Undeclared cross-check prices dropped", Page: pluginsPath, Action: openPlugins},
 	}
 	if k, ok := kinds[kind]; ok {
 		return k

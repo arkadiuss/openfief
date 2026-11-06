@@ -136,7 +136,8 @@ func (e *entryCaller) get() (*connectrpc.Client, error) {
 // recorded in the ingest schema. The connector is told the go-live of an
 // account seeded with opening lots, from the ledger, as a sync is, so such
 // an account's opening lots keep their keys (D-98); and a deleted lot's
-// connector learns what it booked in the account from the ledger (D-154).
+// connector learns what it booked in the account from the ledger, while the
+// deletion holds the instance's sync claim in the ingest schema (D-154).
 func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots {
 	store := ingestpg.New(d.pool)
 	connectors := entryConnectors(d, store)
@@ -144,6 +145,8 @@ func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots 
 	return &ingestapp.BondLots{
 		Owners: owners, Bindings: store, Batches: store, Connectors: connectors,
 		Booked:     ledgerImporter{ledger: d.ledger},
+		Claims:     store,
+		Now:        d.now,
 		Today:      d.today,
 		NewBatchID: newBatchID,
 	}
@@ -154,8 +157,9 @@ func newBondLots(d *connectorDeps, owners ingestapp.Owners) *ingestapp.BondLots 
 // and broker accounts (D-72), its tickers without an ISIN, looked up by
 // the market-data connectors through d.entries (D-116),
 // and the delivery imported into the ledger and valuation like a sync's,
-// cross-check prices included (D-22), with an attention item for bond
-// terms or index levels the instance may not deliver (D-179).
+// cross-check prices included (D-22), with an attention item for
+// undeclared ones (D-141) and one for bond terms or index levels the
+// instance may not deliver (D-179).
 func entryConnectors(d *connectorDeps, store *ingestpg.Store) *ingestapp.Connectors {
 	inputs := valuationInputs{recorder: d.recorder}
 	return &ingestapp.Connectors{

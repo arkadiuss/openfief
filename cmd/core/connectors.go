@@ -115,7 +115,8 @@ type connectorDeps struct {
 	// scheduler sets it once it has found the instances.
 	entries *entryCaller
 	// attention raises an attention item for a connector instance that
-	// delivers bond terms or index levels it may not deliver (D-179).
+	// delivers bond terms or index levels it may not deliver (D-179), and
+	// one for its undeclared cross-check prices (D-141).
 	attention attentionItems
 	// syncs is the scheduler the owner's sync retries go to (D-196);
 	// runConnectors sets it once the scheduler runs.
@@ -166,7 +167,7 @@ func withConnectorDeps(ctx context.Context, dsn string, log *slog.Logger, fn fun
 // hold (D-117), which instances may send
 // cross-check prices from their manifests (D-112), and which may deliver
 // bond terms and index levels, raising an attention item for those that
-// deliver them undeclared (D-179).
+// deliver them undeclared (D-141, D-179).
 func newScheduler(d *connectorDeps, c *cluster, discovery *ingestkube.Discovery, cfg *syncConfig) *ingestapp.Scheduler {
 	tokens := identitykube.NewCoreTokens(c.client, c.namespace, cfg.ServiceAccount, d.now)
 	store := ingestpg.New(d.pool)

@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/arkadiuss/openfief/internal/ingest"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 )
 
@@ -124,9 +125,14 @@ func (u *Uploads) FileAccounts(ctx context.Context, origin, sessionToken string)
 // owner entered once, goes to the connector only with the opening upload
 // of an account not yet seeded, and fails with
 // ingest.ErrOpeningCashOutsideOpening or ingest.ErrOpeningCashEntered
-// otherwise (ingest.CheckOpeningCash). A statement of several accounts books every
-// mapped account bound to the instance and lists the broker accounts that
-// aren't mapped (Batch.Unmapped). Only the last element of the file's
+// otherwise (ingest.CheckOpeningCash). A statement of several accounts
+// runs in the mode chosen for account (D-140): a transactions upload books
+// every mapped account bound to the instance, and an opening upload seeds
+// only the accounts not seeded yet, leaving out the seeding of the others
+// that have started, by go-live or from their whole history (startedOthers);
+// either lists the broker accounts that aren't mapped (Batch.Unmapped).
+// Since it may book any account bound to the instance, the caller must be
+// allowed to change each of them (D-163). Only the last element of the file's
 // name, cleaned by ingest.FileNameHint, reaches the connector, and its
 // media type is Sniff's. Errors wrap ErrNoSession or ErrNotOwner for a
 // caller who may not, ErrInvalidUpload for an empty file,
@@ -141,30 +147,16 @@ func (u *Uploads) Upload(ctx context.Context, origin, sessionToken string, accou
 	if err := mayChange(ctx, u.Owners, origin, sessionToken, account); err != nil {
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
 	}
-	instance, err := boundInstance(ctx, u.Bindings, account)
+	p, err := u.plan(ctx, origin, sessionToken, account, mode, file.OpeningCash)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
-	}
-	goLive, err := u.Connectors.GoLiveDates(ctx, []ledger.AccountID{account})
-	if err != nil {
-		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
-	}
-	_, seeded := goLive[account]
-	booked, err := u.booked(ctx, account, seeded)
-	if err != nil {
-		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
-	}
-	if mode, err = ingest.StartMode(seeded, booked, mode); err != nil {
-		return ingest.Batch{}, fmt.Errorf("uploading a statement for %s: %w", account, err)
-	}
-	if cashErr := ingest.CheckOpeningCash(file.OpeningCash, mode, seeded); cashErr != nil {
-		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", cashErr)
 	}
 	out, err := u.prepare(file)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
 	}
-	batch, err := u.Connectors.ImportFile(ctx, instance, u.NewBatchID(), mode, out)
+	instance := p.instance
+	batch, err := u.Connectors.ImportFile(ctx, instance, u.NewBatchID(), p.mode, out, p.started)
 	if err != nil {
 		return ingest.Batch{}, fmt.Errorf("uploading a statement: %w", err)
 	}
@@ -207,6 +199,85 @@ func (u *Uploads) fileAccountsOf(ctx context.Context, instance string) ([]FileAc
 			return nil, err
 		}
 		out = append(out, FileAccount{Account: a, Instance: instance, Mode: mode})
+	}
+	return out, nil
+}
+
+// uploadPlan is where an upload for an account goes and how it runs: the
+// one instance bound to the account, the mode, and in an opening upload the
+// other accounts that have already started (startedOthers).
+type uploadPlan struct {
+	instance string
+	mode     ingest.Mode
+	started  map[ledger.AccountID]kernel.Date
+}
+
+// plan returns the plan of an upload for account in mode, the owner's
+// override or zero, with cash, the opening cash entered: the one instance
+// bound to account; the caller must be allowed to change every account
+// bound to it (D-163), since a statement of several accounts may book any
+// of them (D-140); the mode the core chooses (ingest.StartMode), with the
+// opening cash checked (ingest.CheckOpeningCash); and in opening mode the
+// other accounts already started.
+func (u *Uploads) plan(ctx context.Context, origin, sessionToken string, account ledger.AccountID, mode ingest.Mode, cash *kernel.Money) (uploadPlan, error) {
+	instance, err := boundInstance(ctx, u.Bindings, account)
+	if err != nil {
+		return uploadPlan{}, err
+	}
+	bound, err := u.Connectors.Bindings.BoundAccounts(ctx, instance)
+	if err != nil {
+		return uploadPlan{}, fmt.Errorf("accounts bound to %s: %w", instance, err)
+	}
+	if authErr := mayChange(ctx, u.Owners, origin, sessionToken, bound...); authErr != nil {
+		return uploadPlan{}, authErr
+	}
+	goLive, err := u.Connectors.GoLiveDates(ctx, slices.Concat(bound, []ledger.AccountID{account}))
+	if err != nil {
+		return uploadPlan{}, err
+	}
+	_, seeded := goLive[account]
+	booked, err := u.booked(ctx, account, seeded)
+	if err != nil {
+		return uploadPlan{}, err
+	}
+	if mode, err = ingest.StartMode(seeded, booked, mode); err != nil {
+		return uploadPlan{}, fmt.Errorf("the mode for %s: %w", account, err)
+	}
+	if cashErr := ingest.CheckOpeningCash(cash, mode, seeded); cashErr != nil {
+		return uploadPlan{}, fmt.Errorf("the opening cash: %w", cashErr)
+	}
+	started, err := u.startedOthers(ctx, account, mode, bound, goLive)
+	if err != nil {
+		return uploadPlan{}, err
+	}
+	return uploadPlan{instance: instance, mode: mode, started: started}, nil
+}
+
+// startedOthers returns, for an upload in mode opening, those of bound, the
+// accounts bound to the upload's instance, other than account that have
+// already started (D-140): with their go-live, as goLive holds it, or, for
+// one that started from a statement of its whole history and has none, the
+// zero date (D-136). In transactions mode it returns none.
+func (u *Uploads) startedOthers(ctx context.Context, account ledger.AccountID, mode ingest.Mode, bound []ledger.AccountID, goLive map[ledger.AccountID]kernel.Date) (map[ledger.AccountID]kernel.Date, error) {
+	out := map[ledger.AccountID]kernel.Date{}
+	if mode != ingest.ModeOpening {
+		return out, nil
+	}
+	for _, a := range bound {
+		if a == account {
+			continue
+		}
+		if day, ok := goLive[a]; ok {
+			out[a] = day
+			continue
+		}
+		booked, err := u.booked(ctx, a, false)
+		if err != nil {
+			return nil, err
+		}
+		if booked {
+			out[a] = kernel.Date{}
+		}
 	}
 	return out, nil
 }

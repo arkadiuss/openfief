@@ -150,6 +150,38 @@ func TestSyncStoreClaimExpires(t *testing.T) {
 	claim(t, s, "other", t0().Add(11*time.Minute))
 }
 
+// TestSyncStoreHoldsAndReleasesClaims checks the claim a bond lot deletion
+// and a sync of several batches rely on (D-154): a completed batch can keep
+// the claim for the next one, and ReleaseSync releases only the claim it
+// names, never one taken after it lapsed.
+func TestSyncStoreHoldsAndReleasesClaims(t *testing.T) {
+	t.Parallel()
+	s := postgres.New(newPool(t))
+	ctx := t.Context()
+	claim(t, s, "bonds-main", t0())
+	if err := s.StartBatch(ctx, "bonds-main", app.OpenBatch{ID: "b-1", Mode: ingest.ModeOpening}, t0()); err != nil {
+		t.Fatalf("StartBatch: %v", err)
+	}
+	b := &ingest.Batch{ID: "b-1", Institution: "treasury-bonds", Source: app.SourceSync, Mode: ingest.ModeOpening}
+	hold := t0().Add(20 * time.Minute)
+	if err := s.CompleteSync(ctx, b, "", succeeded("bonds-main", b, t0().Add(time.Hour), t0().Add(time.Minute)), hold); err != nil {
+		t.Fatalf("CompleteSync holding the claim: %v", err)
+	}
+	if _, err := s.ClaimSync(ctx, "bonds-main", t0().Add(15*time.Minute), t0().Add(time.Hour)); !errors.Is(err, app.ErrSyncRunning) {
+		t.Errorf("claim while a completed batch holds it = %v, want ErrSyncRunning", err)
+	}
+	if err := s.ReleaseSync(ctx, "bonds-main", t0().Add(10*time.Minute)); err != nil {
+		t.Fatalf("ReleaseSync of another claim: %v", err)
+	}
+	if _, err := s.ClaimSync(ctx, "bonds-main", t0().Add(15*time.Minute), t0().Add(time.Hour)); !errors.Is(err, app.ErrSyncRunning) {
+		t.Errorf("claim after releasing another claim = %v, want ErrSyncRunning", err)
+	}
+	if err := s.ReleaseSync(ctx, "bonds-main", hold); err != nil {
+		t.Fatalf("ReleaseSync: %v", err)
+	}
+	claim(t, s, "bonds-main", t0().Add(15*time.Minute))
+}
+
 func TestSyncStoreStartBatchAbandonsTheOpenOne(t *testing.T) {
 	t.Parallel()
 	pool := newPool(t)
@@ -287,7 +319,7 @@ func checkCompletion(t *testing.T, pool *pgxpool.Pool, s *postgres.Store) {
 		Imported: ingest.ImportSummary{New: 2}, Problems: []ingest.Problem{ingest.Skipped("row 3", "summary row")},
 	}
 	next := t0().Add(6 * time.Hour)
-	if err := s.CompleteSync(ctx, b, "w-1", succeeded("xtb-main", b, next, t0().Add(3*time.Minute))); err != nil {
+	if err := s.CompleteSync(ctx, b, "w-1", succeeded("xtb-main", b, next, t0().Add(3*time.Minute)), time.Time{}); err != nil {
 		t.Fatalf("CompleteSync: %v", err)
 	}
 	if diff := cmp.Diff(app.SyncClaim{Watermark: "w-1"}, claim(t, s, "xtb-main", t0().Add(4*time.Minute))); diff != "" {
@@ -303,7 +335,7 @@ func checkCompletion(t *testing.T, pool *pgxpool.Pool, s *postgres.Store) {
 	if problems != 1 || newTxs != 2 {
 		t.Errorf("stored problems = %d, new = %d; want 1 and 2", problems, newTxs)
 	}
-	if err := s.CompleteSync(ctx, b, "w-2", succeeded("xtb-main", b, next, t0().Add(5*time.Minute))); !errors.Is(err, postgres.ErrBatchNotOpen) {
+	if err := s.CompleteSync(ctx, b, "w-2", succeeded("xtb-main", b, next, t0().Add(5*time.Minute)), time.Time{}); !errors.Is(err, postgres.ErrBatchNotOpen) {
 		t.Errorf("completing a completed batch = %v, want ErrBatchNotOpen", err)
 	}
 	if err := s.FailSync(ctx, failed("b-1", 1, next, t0().Add(5*time.Minute))); !errors.Is(err, postgres.ErrBatchNotOpen) {

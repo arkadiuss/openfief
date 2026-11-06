@@ -937,3 +937,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d382ee1a272c
+  - type: implements
+    from: SYM-ingest-app-uploads-file-accounts-of
+    to: REQ-plugins-statement-files-declared-in-manifest
+    created_at: 2026-11-02T13:18:09.617Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bc516a84ed1

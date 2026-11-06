@@ -762,3 +762,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-eb2ee2bd6213
+  - type: executable_for
+    from: SYM-ingest-app-test-connectors-undeclared-cross-check-prices-raise-attention
+    to: TEST-ingest-app-connectors
+    created_at: 2026-11-02T13:22:38.233Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f903c0d5e6a8

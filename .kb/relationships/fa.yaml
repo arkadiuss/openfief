@@ -685,3 +685,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a223efd79613
+  - type: implements
+    from: SYM-ingest-app-uploads-plan
+    to: REQ-ingest-multi-account-upload-mode-of-uploaded-account
+    created_at: 2026-11-02T13:21:34.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d4f2581b2d08
+  - type: implements
+    from: SYM-ingest-app-uploads-plan
+    to: REQ-ingest-multi-account-upload-changes-every-bound
+    created_at: 2026-11-02T13:21:34.785Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0156d3987473
+  - type: covered_by
+    from: SYM-ingest-app-uploads-plan
+    to: TEST-ingest-app-uploads
+    created_at: 2026-11-02T13:21:34.821Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a645b10bc292
