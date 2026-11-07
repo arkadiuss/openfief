@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3f90a09c2f4e
+  - type: verified_by
+    from: SCEN-docs-coverage-paged
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T15:49:48.593Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b23701d95ded

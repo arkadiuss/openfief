@@ -163994,3 +163994,13 @@ symbols:
         target: TEST-ingest-connectrpc-mapping
       - type: implements
         target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-kibi-coverage-test-run
+    title: run
+    sourceFile: scripts/tests/kibi-coverage.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T15:49:51.136Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-coverage
