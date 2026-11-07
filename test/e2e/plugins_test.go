@@ -142,7 +142,10 @@ func fxGrant(name string) *unstructured.Unstructured {
 }
 
 // fxPluginObject is the Plugin of an NBP FX connector instance name with image,
-// written as given, declaring the connector's own manifest.
+// written as given, declaring the connector's own manifest and expecting an
+// extra CA bundle. Applied without the CLI, so no checksum is stamped and
+// the suite never creates that Secret: the operator says so from the spec,
+// and the plugin runs without it.
 func fxPluginObject(t *testing.T, name, image string) *unstructured.Unstructured {
 	t.Helper()
 	data, err := os.ReadFile(fxManifest)
@@ -160,6 +163,7 @@ func fxPluginObject(t *testing.T, name, image string) *unstructured.Unstructured
 			"image":    image,
 			"manifest": manifest,
 			"config":   map[string]any{"start": fxStart},
+			"extraCa":  true,
 		},
 	}}
 }
@@ -264,6 +268,12 @@ func checkSignature(t *testing.T, p *v1alpha1.Plugin) {
 	}
 	if diff := cmp.Diff(effective, p.Status.Effective); diff != "" {
 		t.Errorf("status.effective (-want +got):\n%s", diff)
+	}
+	// Applied without the CLI, it expects a CA bundle and nothing stamped
+	// its checksum: reported from the spec, never waited for.
+	ca := meta.FindStatusCondition(p.Status.Conditions, v1alpha1.ConditionCABundleMissing)
+	if ca == nil || ca.Status != metav1.ConditionTrue || ca.Reason != operator.ReasonCABundleChecksumNotStamped {
+		t.Errorf("condition %s: %+v; want True, reason %s", v1alpha1.ConditionCABundleMissing, ca, operator.ReasonCABundleChecksumNotStamped)
 	}
 }
 

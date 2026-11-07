@@ -650,3 +650,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-25248dffd854
+  - type: executable_for
+    from: SYM-plugins-test-ca-bundle-state-of
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:37:11.356Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c18ac3b4136e

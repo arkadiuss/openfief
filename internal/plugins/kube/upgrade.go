@@ -98,7 +98,9 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 			IndexReadings:    m.IndexReadings,
 			Institutions:     m.Institutions,
 		},
-		Config: rawOf(r.Spec.Config),
+		Config:         rawOf(r.Spec.Config),
+		ExtraCA:        r.Spec.ExtraCA,
+		CABundleSHA256: r.Spec.CABundleSHA256,
 	}
 	for _, c := range m.Capabilities {
 		p.Manifest.Capabilities = append(p.Manifest.Capabilities, plugins.Capability(c))

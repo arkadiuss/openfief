@@ -923,3 +923,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-17d3ffb98ea9
+  - type: executable_for
+    from: SYM-operator-test-helper-stamp
+    to: TEST-operator-ca-bundle
+    created_at: 2026-11-07T17:39:03.830Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63135f6c843c

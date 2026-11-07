@@ -832,3 +832,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0fd0b1dba309
+  - type: implements
+    from: SYM-plugins-valid-ca-bundle-checksum
+    to: REQ-plugins-cli-ca-bundle-set
+    created_at: 2026-11-07T17:36:43.974Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b6afca392038
+  - type: covered_by
+    from: SYM-plugins-valid-ca-bundle-checksum
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T17:36:44.012Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-174a4b439f8e
+  - type: executable_for
+    from: SYM-plugins-cli-test-run-ca-bundle-set
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:40:09.896Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0435b9c715fa

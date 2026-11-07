@@ -46,6 +46,10 @@ type fakeCluster struct {
 	deleted   []string
 	// granted is what each Create's grant approves.
 	granted []plugins.Permissions
+	// caBundles are the CA bundle Secrets by instance; caWrites lists, in
+	// order, "secret <instance>" and "stamp <instance>" for each write.
+	caBundles map[string][]byte
+	caWrites  []string
 }
 
 func (c *fakeCluster) List(context.Context) ([]app.Instance, error) {
@@ -103,6 +107,32 @@ func (c *fakeCluster) Delete(_ context.Context, name string, secrets []string) e
 
 func (c *fakeCluster) OwnerSigners(context.Context) ([]plugins.Signer, error) { return c.signers, nil }
 
+func (c *fakeCluster) PutCABundle(_ context.Context, instance string, pem []byte) error {
+	if c.caBundles == nil {
+		c.caBundles = map[string][]byte{}
+	}
+	c.caBundles[instance] = pem
+	c.caWrites = append(c.caWrites, "secret "+instance)
+	return nil
+}
+
+func (c *fakeCluster) DeleteCABundle(_ context.Context, instance string) error {
+	delete(c.caBundles, instance)
+	c.caWrites = append(c.caWrites, "delete "+instance)
+	return nil
+}
+
+func (c *fakeCluster) StampCABundle(_ context.Context, instance, checksum string) error {
+	p, ok := c.plugins[instance]
+	if !ok {
+		return app.ErrNotInstalled
+	}
+	p.CABundleSHA256 = checksum
+	c.plugins[instance] = p
+	c.caWrites = append(c.caWrites, "stamp "+instance)
+	return nil
+}
+
 // fakeImages signs sampleImage by OpenFief's CI and ownerImage by the
 // owner's CI.
 type fakeImages struct{}
@@ -114,6 +144,12 @@ func (fakeImages) Inspect(_ context.Context, image plugins.ImageRef) (plugins.Si
 			Capabilities:     []plugins.Capability{plugins.CapabilityView},
 			EgressFromConfig: []string{"url"},
 			ClusterService:   &plugins.ClusterServiceRequest{Description: "the owner's Ghostfolio"},
+		}}, nil
+	}
+	if image.String() == caImage {
+		return plugins.SignedImage{Image: image, Signatures: []plugins.SignerIdentity{id}, Manifest: plugins.Manifest{
+			Capabilities: []plugins.Capability{plugins.CapabilityConnector},
+			Secrets:      []plugins.SecretMount{{Role: plugins.CABundleRole, MountPath: "/etc/openfief/ca-bundle", Optional: true}},
 		}}, nil
 	}
 	if image.String() == galleryImage {
@@ -188,6 +224,9 @@ func env(c *fakeCluster, in string, out, errOut *bytes.Buffer) *cli.Env {
 		},
 		IngressRule: func(instance string, cs plugins.ClusterService, info *app.ClusterServiceInfo) ([]byte, error) {
 			return []byte("kind: NetworkPolicy\nnamespace: " + cs.Namespace + "\nfrom: " + instance + "\nport: " + info.TargetPort + "\n"), nil
+		},
+		RenderCABundle: func(instance string, _ []byte, checksum string) ([]byte, error) {
+			return []byte("kind: Secret\nname: " + instance + "--ca-bundle\ncaBundleSha256: " + checksum + "\n"), nil
 		},
 	}
 }

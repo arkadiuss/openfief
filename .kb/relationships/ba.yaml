@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-2a16cd5bc2a3
+  - type: implements
+    from: SYM-plugins-kube-ca-bundle-secret
+    to: REQ-plugins-cli-ca-bundle-set
+    created_at: 2026-11-07T17:37:21.574Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b1423acbeb43
+  - type: covered_by
+    from: SYM-plugins-kube-ca-bundle-secret
+    to: TEST-plugins-kube-ca-bundle
+    created_at: 2026-11-07T17:37:21.606Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32805704ad2e

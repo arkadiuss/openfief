@@ -96,6 +96,17 @@ type Plugin struct {
 	Manifest       Manifest
 	Config         []byte
 	ClusterService *ClusterService
+	// ExtraCA says the owner expects an extra CA bundle for this instance,
+	// such as for an endpoint a private CA signs: only then is its
+	// <instance>--ca-bundle Secret mounted, and its absence reported. It is
+	// an instance setting, not config, so no plugin's config schema repeats
+	// it.
+	ExtraCA bool
+	// CABundleSHA256 is the hex SHA-256 of the CA bundle the owner set
+	// (`openfief plugin ca-bundle set`), which the operator copies to the
+	// pod template so a new bundle restarts the plugin; empty when none is
+	// stamped. The operator never reads the Secret itself.
+	CABundleSHA256 string
 }
 
 // Requested returns the permissions p asks for, sorted: its manifest's
@@ -161,6 +172,7 @@ func (p *Plugin) Validate() error {
 		errs = append(errs, prefixed("", err)...)
 	}
 	errs = append(errs, p.validateClusterService()...)
+	errs = append(errs, p.validateExtraCA()...)
 	return errors.Join(errs...)
 }
 

@@ -103,7 +103,7 @@ func RenderProposal(p *app.Proposal) string {
 		b.WriteString("  Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself\n")
 		fmt.Fprintf(&b, "                and label it %s=%s, or uninstall leaves it in place (D-182)\n", plugins.OwnerInstanceLabel, shown(p.Plugin.Name))
 		for _, s := range m.Secrets {
-			fmt.Fprintf(&b, "                %s (role %s) at %s%s\n", shown(plugins.SecretName(p.Plugin.Name, s.Role)), shown(s.Role), shown(s.MountPath), optionalText(s.Optional))
+			fmt.Fprintf(&b, "                %s (role %s) at %s%s\n", shown(plugins.SecretName(p.Plugin.Name, s.Role)), shown(s.Role), shown(s.MountPath), optionalText(s.Optional)+caBundleText(&p.Plugin, s.Role))
 		}
 	}
 	fmt.Fprintf(&b, "  Data tiers:   %s\n", joinOr(shownAll(strsOf(m.DataTiers)), noneText))
@@ -324,6 +324,21 @@ func writeDeclarations(b *strings.Builder, m *plugins.Manifest) {
 	}
 	if m.IndexReadings {
 		b.WriteString("  Declares:     it delivers index readings such as CPI, which the core stores once approved (D-186)\n")
+	}
+}
+
+// caBundleText says whether the instance mounts its extra CA bundle
+// Secret, which it does only when the owner expects one (--extra-ca); empty
+// for any other role.
+func caBundleText(p *plugins.Plugin, role string) string {
+	switch {
+	case role != plugins.CABundleRole:
+		return ""
+	case p.ExtraCA:
+		return "\n                  expected (--extra-ca): set it with `openfief plugin ca-bundle set " + shown(p.Name) + " <pem-file>`," +
+			"\n                  which also stamps its checksum, so the plugin restarts when it changes"
+	default:
+		return "\n                  not mounted: install or upgrade with --extra-ca to trust extra CAs from it"
 	}
 }
 

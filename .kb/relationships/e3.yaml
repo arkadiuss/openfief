@@ -867,3 +867,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-774b82917235
+  - type: verified_by
+    from: SCEN-plugins-cli-ca-bundle-unset
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:32:52.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5838b18e0ffc
+  - type: verified_by
+    from: SCEN-plugins-cli-ca-bundle-unset
+    to: TEST-plugins-kube-ca-bundle
+    created_at: 2026-11-07T17:32:52.644Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5ab70f22a175

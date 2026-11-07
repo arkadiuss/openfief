@@ -839,6 +839,27 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d9651f05abbf
+  - type: verified_by
+    from: SCEN-operator-ca-bundle-missing-condition
+    to: TEST-operator-ca-bundle
+    created_at: 2026-11-07T10:22:59.878Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f896d064178e
+  - type: verified_by
+    from: SCEN-operator-ca-bundle-missing-condition
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T10:22:59.950Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7cdce906b912
+  - type: executable_for
+    from: SYM-plugins-test-helper-ca-grant
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:37:06.239Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0b96f7914b73
   - type: implements
     from: SYM-mfbonds-sheet-rates
     to: REQ-valuation-mfbonds-published-rates

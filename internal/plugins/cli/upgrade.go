@@ -27,7 +27,7 @@ func upgrade(ctx context.Context, env *Env, o *options, instance, version string
 	if err != nil {
 		return err
 	}
-	up, err := in.PrepareUpgrade(ctx, cluster, app.UpgradeRequest{Instance: instance, Version: version, Config: config})
+	up, err := in.PrepareUpgrade(ctx, cluster, app.UpgradeRequest{Instance: instance, Version: version, Config: config, ExtraCA: o.extraCAChoice()})
 	if err != nil {
 		return fmt.Errorf("upgrade: %w", err)
 	}
@@ -45,6 +45,20 @@ func upgrade(ctx context.Context, env *Env, o *options, instance, version string
 		return fmt.Errorf("upgrade: %w", err)
 	}
 	return say(env.Out, "Upgraded "+instance+". The operator verifies the new image again and replaces the running version.\n")
+}
+
+// extraCAChoice is what --extra-ca or --no-extra-ca asked of an upgrade;
+// nil keeps what the instance expects.
+func (o *options) extraCAChoice() *bool {
+	switch {
+	case o.extraCA:
+		on := true
+		return &on
+	case o.noExtraCA:
+		off := false
+		return &off
+	}
+	return nil
 }
 
 // RenderUpgrade describes an upgrade for the owner's confirmation (D-90): the
@@ -65,6 +79,7 @@ func RenderUpgrade(up *app.UpgradeProposal) string {
 		writePermissions(&b, "  - ", &up.Diff.Removed)
 	}
 	writeShared(&b, up.Shared)
+	writeExtraCA(&b, up)
 	if r := up.Plugin.Manifest.ClusterService; r != nil {
 		writeClusterService(&b, r, up.Plugin.ClusterService)
 	}
@@ -130,4 +145,32 @@ func writeShared(b *strings.Builder, shared []plugins.SharedInstitution) {
 		fmt.Fprintf(b, "\nWarning: %s already books for %s. Both instances will book for it; make sure that is what you want (D-185).\n",
 			shown(s.Instance), shown(s.Institution))
 	}
+}
+
+// writeExtraCA says, for a new version whose manifest asks for the CA bundle
+// role, whether the instance expects an extra CA bundle, and what a change
+// of it means; nothing for one that doesn't ask for the role.
+func writeExtraCA(b *strings.Builder, up *app.UpgradeProposal) {
+	p := &up.Plugin
+	if !p.Manifest.AsksForCABundle() {
+		return
+	}
+	switch {
+	case p.ExtraCA && !up.From.ExtraCA:
+		fmt.Fprintf(b, "\nExtra CA:     expected from now on: set it with `openfief plugin ca-bundle set %s <pem-file>`\n", shown(p.Name))
+	case p.ExtraCA:
+		fmt.Fprintf(b, "\nExtra CA:     expected, %s\n", stampText(p.CABundleSHA256))
+	case up.From.ExtraCA:
+		b.WriteString("\nExtra CA:     no longer expected: the bundle isn't mounted and its stamp is cleared\n")
+	default:
+		b.WriteString("\nExtra CA:     not expected; --extra-ca expects one\n")
+	}
+}
+
+// stampText says whether a CA bundle checksum is stamped.
+func stampText(checksum string) string {
+	if checksum == "" {
+		return "none set yet"
+	}
+	return "set (sha256 " + checksum + ")"
 }

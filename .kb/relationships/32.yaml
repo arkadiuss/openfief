@@ -769,3 +769,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-52d3430e4c50
+  - type: implements
+    from: SYM-operator-ca-bundle-condition
+    to: REQ-operator-ca-bundle-missing-condition
+    created_at: 2026-11-07T11:36:55.946Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fbb0b64ddf10
+  - type: covered_by
+    from: SYM-operator-ca-bundle-condition
+    to: TEST-operator-ca-bundle
+    created_at: 2026-11-07T11:36:55.972Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9cf5dde81137

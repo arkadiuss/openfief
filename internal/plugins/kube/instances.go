@@ -282,7 +282,7 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 				IndexReadings:    m.IndexReadings,
 				Institutions:     slices.Clone(m.Institutions),
 			},
-			Config: raw(p.Config),
+			Config: raw(p.Config), ExtraCA: p.ExtraCA, CABundleSHA256: p.CABundleSHA256,
 		},
 	}
 	if m.ClusterService != nil {

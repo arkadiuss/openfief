@@ -85140,19 +85140,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-cli-upgrade
-  - id: SYM-pl-command-args
-    title: commandArgs
-    sourceFile: internal/plugins/cli/cli.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T17:08:10.830Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-cli-upgrade
-      - type: implements
-        target: REQ-plugins-cli-upgrade
   - id: SYM-pl-fake-cluster-get
     title: fakeCluster.Get
     sourceFile: internal/plugins/cli/cli_test.go
@@ -165583,3 +165570,854 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-tooling-kibi-dedupe
+  - id: SYM-plugins-ca-bundle-state
+    title: CABundleState
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:35:42.232Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-operator-ca-bundle-missing-condition
+  - id: SYM-plugins-ca-bundle-state-of
+    title: CABundleStateOf
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:35:47.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-operator-ca-bundle-missing-condition
+  - id: SYM-plugins-effective-permissions-ca-bundle-secret
+    title: EffectivePermissions.CABundleSecret
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:35:58.061Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-manifest-asks-for-ca-bundle
+    title: Manifest.AsksForCABundle
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:03.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-plugin-validate-extra-ca
+    title: Plugin.validateExtraCA
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:08.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-plugin-set-extra-ca
+    title: Plugin.SetExtraCA
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:13.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-cli-ca-bundle-text
+    title: caBundleText
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:39.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-operator-stamp-ca-bundle
+    title: StampCABundle
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:44.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-ca-bundle
+      - type: implements
+        target: REQ-operator-ca-bundle-rolls-pod
+  - id: SYM-operator-ca-bundle-condition
+    title: caBundleCondition
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:54.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-ca-bundle
+      - type: implements
+        target: REQ-operator-ca-bundle-missing-condition
+  - id: SYM-plugins-test-helper-ca-connector
+    title: caConnector
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:59.370Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-helper-ca-grant
+    title: caGrant
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:04.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-ca-bundle-state-of
+    title: TestCABundleStateOf
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:09.649Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-helper-ca-mounts
+    title: caMounts
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:25.216Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-helper-mounts-of
+    title: mountsOf
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:30.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-effective-ca-bundle
+    title: TestEffectiveCABundle
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:35.690Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-set-extra-ca
+    title: TestSetExtraCA
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:40.860Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-plan-upgrade-keeps-extra-ca
+    title: TestPlanUpgradeKeepsExtraCA
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:46.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-config-host-change-keeps-approved-allow-list
+    title: TestConfigHostChangeKeepsApprovedAllowList
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:51.316Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-kube-test-helper-ca-plan
+    title: caPlan
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:56.203Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-instances-keep-extra-ca
+    title: TestInstancesKeepExtraCA
+    sourceFile: internal/plugins/kube/optional_secret_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:15.420Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-cli-test-run-install-extra-ca
+    title: TestRunInstallExtraCA
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:20.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-check-extra-ca-install
+    title: checkExtraCAInstall
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:25.292Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-operator-test-stamp-ca-bundle
+    title: TestStampCABundle
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:30.199Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-operator-test-helper-ca-bundle-state
+    title: caBundleState
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:55.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-operator-test-ca-bundle
+    title: testCABundle
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:39:00.037Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-operator-test-helper-test-cluster-ca-bundle-state
+    title: testCluster.caBundleState
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:39:05.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-plugins-ca-bundle
+    title: CABundle
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:25.534Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-parse-ca-bundle
+    title: ParseCABundle
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:31.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-ca-bundle-checksum
+    title: CABundleChecksum
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:36.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-valid-ca-bundle-checksum
+    title: validCABundleChecksum
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:42.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-plugin-stamp-ca-bundle
+    title: Plugin.StampCABundle
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:47.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-app-ca-bundle-store
+    title: CABundleStore
+    sourceFile: internal/plugins/app/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:58.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-app-set-ca-bundle
+    title: SetCABundle
+    sourceFile: internal/plugins/app/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:04.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-app-unset-ca-bundle
+    title: UnsetCABundle
+    sourceFile: internal/plugins/app/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:09.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-app-plan-upgrade
+    title: planUpgrade
+    sourceFile: internal/plugins/app/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:14.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-kube-ca-bundle-secret
+    title: CABundleSecret
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:19.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-kube-ca-bundle-yaml
+    title: CABundleYAML
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:24.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-kube-instances-put-ca-bundle
+    title: Instances.PutCABundle
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:30.046Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-kube-instances-delete-ca-bundle
+    title: Instances.DeleteCABundle
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:35.187Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-kube-instances-stamp-ca-bundle
+    title: Instances.StampCABundle
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:40.436Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-cli-ca-bundle-args
+    title: caBundleArgs
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:45.951Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-cli-ca-bundle
+    title: caBundle
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:51.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-cli-set-ca-bundle
+    title: setCABundle
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:57.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-cli-print-ca-bundle
+    title: printCABundle
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:02.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-cli-render-ca-bundle-note
+    title: RenderCABundleNote
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:08.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-cli-unset-ca-bundle
+    title: unsetCABundle
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:14.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-cli-args-fit
+    title: argsFit
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:19.502Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-plugins-cli-options-extra-ca-choice
+    title: options.extraCAChoice
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:24.614Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-cli-write-extra-ca
+    title: writeExtraCA
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:29.635Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-cli-stamp-text
+    title: stampText
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:34.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-test-helper-test-cert
+    title: testCert
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:40.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-parse-ca-bundle
+    title: TestParseCABundle
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:45.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-ca-bundle-checksum
+    title: TestCABundleChecksum
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:51.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-plugin-stamp-ca-bundle
+    title: TestPluginStampCABundle
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:56.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-operator-test-helper-stamp
+    title: stamp
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:02.031Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-plugins-kube-test-ca-bundle-yaml
+    title: TestCABundleYAML
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:07.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-instances-put-ca-bundle
+    title: TestInstancesPutCABundle
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:12.773Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-instances-stamp-ca-bundle
+    title: TestInstancesStampCABundle
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:18.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-helper-check-ca-bundle-secret
+    title: checkCABundleSecret
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:23.662Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-instances-keep-ca-bundle-stamp
+    title: TestInstancesKeepCABundleStamp
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:29.203Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-cli-test-helper-test-cert-pem
+    title: testCertPEM
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:45.862Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-run-with-files
+    title: runWithFiles
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:51.701Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-ca-fixture
+    title: caFixture
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:57.260Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-ca-files
+    title: caFiles
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:02.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-run-ca-bundle-set
+    title: TestRunCABundleSet
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:08.074Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-check-ca-bundle-set
+    title: checkCABundleSet
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:13.486Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-run-ca-bundle-unset
+    title: TestRunCABundleUnset
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:18.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-run-upgrade-extra-ca
+    title: TestRunUpgradeExtraCA
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:24.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-fake-cluster-put-ca-bundle
+    title: fakeCluster.PutCABundle
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:30.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-fake-cluster-delete-ca-bundle
+    title: fakeCluster.DeleteCABundle
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:35.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-fake-cluster-stamp-ca-bundle
+    title: fakeCluster.StampCABundle
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:41.177Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-e2e-test-helper-set-ca-bundle-with-cli
+    title: setCABundleWithCLI
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:46.600Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-test-helper-check-ca-bundle-stamped
+    title: checkCABundleStamped
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:52.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-test-helper-wait-ca-bundle-rolled
+    title: waitCABundleRolled
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:57.966Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path

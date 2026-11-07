@@ -1035,3 +1035,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4853fbacd53a
+  - type: executable_for
+    from: SYM-plugins-test-helper-ca-connector
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:37:01.074Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06da46d7963c

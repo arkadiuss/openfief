@@ -720,3 +720,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-245c86bb4525
+  - type: implements
+    from: SYM-plugins-app-set-ca-bundle
+    to: REQ-plugins-cli-ca-bundle-set
+    created_at: 2026-11-07T17:37:05.968Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-86600718ec9f
+  - type: covered_by
+    from: SYM-plugins-app-set-ca-bundle
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:37:05.994Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f2252693315b
+  - type: executable_for
+    from: SYM-plugins-cli-test-run-upgrade-extra-ca
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:40:26.057Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3d83d3c56a12

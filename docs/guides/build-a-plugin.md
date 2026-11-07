@@ -123,7 +123,7 @@ A plugin of your own should import only the SDK module, [sdk/go](../../sdk/go/),
 - `egress`: it may reach `api.nbp.pl` on port 443, the default. NBP's API is public, so it needs no credential.
 - `egressFromConfig` and `baseUrl`: the owner may point it at another endpoint, such as a mirror, with the config's `baseUrl`. The schema takes only `https://host[:port][/path]`, so plain `http` is refused before anything is shown; the install reads the host from the config and asks the grant for it beside `api.nbp.pl` (D-75). Without `baseUrl` it calls NBP.
 - `clusterService`: the owner may instead pick a service in the cluster at install (D-74), which the plugin then calls directly, outside the proxy. Picking none is fine, and is what the install does with `--yes` or `--print` without `--cluster-service`.
-- `secrets`: an optional extra CA bundle, `<instance>--ca-bundle`, for an endpoint whose certificate a private CA signs. It is `optional`, so the plugin runs without it.
+- `secrets`: an optional extra CA bundle, `<instance>--ca-bundle`, for an endpoint whose certificate a private CA signs. It is `optional`, so the plugin runs without it, and it is mounted only when the owner installs, or upgrades, with `--extra-ca`.
 - `configSchema`: an instance takes two optional keys, `start`, the first day of the first sync, and `baseUrl`. The CLI and the operator both check the owner's config against it.
 
 Ask for as little as you can. Every entry is something the owner has to approve, and the [Manifest reference](#manifest-reference) below lists every field.
@@ -219,23 +219,32 @@ For every request, the client's `EgressTransport` reads the egress token file ag
 
 ### A self-hosted endpoint
 
-The first-party network connectors, nbp-fx, eodhd, ibkr-flex and treasury-bonds, each take a base URL in their config (`baseUrl`; treasury-bonds `gusBaseUrl` and `nbpBaseUrl`) and trust an optional extra CA bundle, so an owner can point one at a mirror, a self-hosted service or a corporate TLS proxy without a switch that only tests use. Say the owner runs a mirror of NBP's API at `https://rates.example.org/nbp`, whose certificate their own CA signs. They put that CA's certificate in the instance's Secret, under the key `ca.crt`, and the base URL in the config:
+The first-party network connectors, nbp-fx, eodhd, ibkr-flex and treasury-bonds, each take a base URL in their config (`baseUrl`; treasury-bonds `gusBaseUrl` and `nbpBaseUrl`) and trust an optional extra CA bundle, so an owner can point one at a mirror, a self-hosted service or a corporate TLS proxy without a switch that only tests use. Say the owner runs a mirror of NBP's API at `https://rates.example.org/nbp`, whose certificate their own CA signs. They put the base URL in the config, install with `--extra-ca`, which says a bundle is expected, and set the bundle, their CA's certificate, with the CLI:
 
 ```sh
-kubectl -n openfief create secret generic nbp-dev--ca-bundle --from-file=ca.crt=./my-ca.pem
-kubectl -n openfief label secret nbp-dev--ca-bundle openfief.io/instance=nbp-dev
 echo '{"baseUrl": "https://rates.example.org/nbp"}' > config.json
-openfief plugin install registry.example.org/you/nbp-fx@sha256:… --name nbp-dev --config config.json
+openfief plugin install registry.example.org/you/nbp-fx@sha256:… --name nbp-dev --config config.json --extra-ca
+openfief plugin ca-bundle set nbp-dev ./my-ca.pem
 ```
 
-The install shows `rates.example.org:443` among the egress hosts, as the host of config field `baseUrl`, beside `api.nbp.pl:443`, which the manifest still requests, and the grant approves both. The proxy then lets the plugin reach the mirror, and the plugin trusts the mirror's certificate through the bundle while NBP's public certificate still verifies against the system's roots. The base URL must be `https`; its host must be a name, not an IP address, and resolve to a public address, since the egress proxy refuses private and internal ones (D-32). The plugin reads the bundle when it starts: after creating or changing the Secret, delete the plugin's pod so a new one reads it.
+`ca-bundle set` refuses a file that isn't PEM certificates, such as a private key, then creates the Secret `nbp-dev--ca-bundle` in `openfief`, the file under the key `ca.crt`, labelled `openfief.io/instance=nbp-dev` so the uninstall deletes it, and stamps the file's SHA-256 on the `Plugin` as `spec.caBundleSha256`. Running it again with a new file rotates the bundle; `openfief plugin ca-bundle unset nbp-dev` removes it. An instance installed without `--extra-ca` gets it with `openfief plugin upgrade nbp-dev <version> --extra-ca`, no reinstall needed.
+
+The install shows `rates.example.org:443` among the egress hosts, as the host of config field `baseUrl`, beside `api.nbp.pl:443`, which the manifest still requests, and the grant approves both. The proxy then lets the plugin reach the mirror, and the plugin trusts the mirror's certificate through the bundle while NBP's public certificate still verifies against the system's roots. The base URL must be `https`; its host must be a name, not an IP address, and resolve to a public address, since the egress proxy refuses private and internal ones (D-32). A mirror with a public certificate needs no bundle: leave out `--extra-ca` and `ca-bundle set`.
+
+The operator never reads the Secret: its Role reads no Secret at all (D-15, D-29). It learns of a bundle from the stamp, which it copies to the pod template, so a new bundle restarts the plugin, which reads it when it starts. While `--extra-ca` is set and nothing is stamped, the `Plugin` says so instead of TLS failing silently, and the plugin runs anyway:
+
+```sh
+kubectl -n openfief get plugin nbp-dev -o jsonpath='{.status.conditions[?(@.type=="CABundleMissing")]}'
+```
+
+`True` with reason `ChecksumNotStamped` means no bundle was set: run `ca-bundle set` as above. `False` with reason `ChecksumStamped` means one was. With GitOps, `openfief plugin ca-bundle set nbp-dev ./my-ca.pem --print` writes the Secret and the `Plugin`'s stamp instead of applying them; commit both, and keep the stamp the `sha256sum` of the Secret's `ca.crt` whenever the bundle changes. A stamp that doesn't match shows only as the plugin's TLS failures, and a Secret changed without a new stamp reaches the plugin only when it next restarts.
 
 A mirror in the same cluster has a private address, so the proxy would refuse it. Pick it as the instance's in-cluster service instead (D-74); its certificate, signed by the CA in the bundle, names its in-cluster DNS name, which goes in the base URL:
 
 ```sh
 echo '{"baseUrl": "https://rates-mirror.tools.svc/nbp"}' > config.json
 openfief plugin install registry.example.org/you/nbp-fx@sha256:… --name nbp-dev --config config.json \
-  --cluster-service tools/rates-mirror:443
+  --cluster-service tools/rates-mirror:443 --extra-ca
 ```
 
 The grant approves that service, and the operator gives the plugin an egress rule to its pods and its address in `OPENFIEF_CLUSTER_SERVICE_ADDRESS`. Plugins have no DNS, so the plugin connects to that address and uses the base URL's host only to verify the certificate and fill the `Host` header. Its traffic skips the egress proxy, but stays HTTPS: the SDK's endpoint client never falls back to plain HTTP. An in-cluster Ollama for a model provider (D-205) is reached the same way.
@@ -248,7 +257,7 @@ The label holds one JSON object. [ParseManifestLabel](../../internal/plugins/man
 |---|---|---|
 | `capabilities` | Required, at least one: `connector` or `view`, no repeats. | `["connector"]` |
 | `egress` | Egress hosts, `host` or `host:port`; the port defaults to 443. Canonical lower-case hostnames of at least two labels: no IP address, no wildcard, no single-label name. | `["api.nbp.pl"]` |
-| `secrets` | Secrets by role, each a `role` (a DNS label without `--`) and a `mountPath`, mounted read-only. Each instance mounts the Secret `<instance>--<role>` in the `openfief` namespace (D-89). The path is absolute and clean, isn't `/`, doesn't overlap another, and stays out of `/var/run/secrets`. The owner creates the Secrets (D-29). With `"optional": true` the plugin runs while the Secret doesn't exist and sees an empty directory, as for the extra CA bundle, role `ca-bundle` at `/etc/openfief/ca-bundle`, that the SDK's `LoadEndpoint` reads. | `[{"role": "flex-token", "mountPath": "/etc/openfief/ibkr-flex"}]` |
+| `secrets` | Secrets by role, each a `role` (a DNS label without `--`) and a `mountPath`, mounted read-only. Each instance mounts the Secret `<instance>--<role>` in the `openfief` namespace (D-89). The path is absolute and clean, isn't `/`, doesn't overlap another, and stays out of `/var/run/secrets`. The owner creates the Secrets (D-29). With `"optional": true` the plugin runs while the Secret doesn't exist and sees an empty directory, as for the extra CA bundle, role `ca-bundle` at `/etc/openfief/ca-bundle`, that the SDK's `LoadEndpoint` reads; that one is mounted only for an instance installed, or upgraded, with `--extra-ca`, and the owner sets it with `openfief plugin ca-bundle set`. | `[{"role": "flex-token", "mountPath": "/etc/openfief/ibkr-flex"}]` |
 | `egressFromConfig` | Top-level config fields whose value, an `https` URL, gives a host the plugin reaches through the egress proxy instead of a fixed one (D-75). The install shows the host and the grant approves exactly it; an IP address, a wildcard or plain `http` is refused, and an absent or empty field asks for nothing. | `["url"]` |
 | `clusterService` | Asks for one service in the same cluster that the owner picks at install, with a `description` the CLI shows when it asks (D-74). The plugin reaches it directly, outside the proxy, at the address in `OPENFIEF_CLUSTER_SERVICE_ADDRESS` (`ClusterIP:port`), possibly over plain HTTP. | `{"description": "a Ghostfolio running in this cluster"}` |
 | `dataTiers` | Names of classes of data, 1 to 32 letters, digits, `-` or `_`. D-206 defines them; nothing enforces them yet. | No first-party plugin declares one |
@@ -379,6 +388,7 @@ It requests, and the PluginGrant will approve, exactly:
   Secrets:      this instance's own, mounted read-only; create each in namespace openfief yourself
                 and label it openfief.io/instance=nbp-dev, or uninstall leaves it in place (D-182)
                 nbp-dev--ca-bundle (role ca-bundle) at /etc/openfief/ca-bundle, optional: the plugin runs without it
+                  not mounted: install or upgrade with --extra-ca to trust extra CAs from it
   Data tiers:   none
   In-cluster:   none picked (it asks for an in-cluster HTTPS service to call instead of NBP, at the baseUrl path, its certificate issued for the baseUrl host)
   Institutions: nbp

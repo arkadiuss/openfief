@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-130471785d51
+  - type: executable_for
+    from: SYM-operator-test-stamp-ca-bundle
+    to: TEST-operator-ca-bundle
+    created_at: 2026-11-07T11:38:31.873Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfa0471f45de

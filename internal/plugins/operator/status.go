@@ -31,6 +31,11 @@ const (
 	ReasonInvalidImage         = "InvalidImage"
 	ReasonBrowserPathHeld      = "BrowserPathHeld"
 	ReasonSecretHeld           = "SecretHeld"
+	// ReasonCABundleChecksumNotStamped and ReasonCABundleChecksumStamped
+	// are the reasons of the CABundleMissing condition, which the operator
+	// reads from the Plugin's spec alone.
+	ReasonCABundleChecksumNotStamped = "ChecksumNotStamped"
+	ReasonCABundleChecksumStamped    = "ChecksumStamped"
 )
 
 // maxMessageLen keeps condition messages short; the full error is logged by
@@ -54,6 +59,10 @@ type observation struct {
 	// image when it was refused; nil otherwise.
 	previousSignature *Verification
 	rollout           plugins.Rollout
+	// instance is the Plugin's name, and caBundle what its spec says of
+	// its extra CA bundle.
+	instance string
+	caBundle plugins.CABundleState
 	// runSpec is the version that runs, nil when nothing does.
 	runSpec         *v1alpha1.PluginSpec
 	deploymentReady bool
@@ -83,6 +92,11 @@ func pluginStatus(o *observation, old []metav1.Condition) v1alpha1.PluginStatus 
 	set(v1alpha1.ConditionReady, ready.status, ready.reason, ready.message)
 	set(v1alpha1.ConditionApprovalRequired, approval.status, approval.reason, approval.message)
 	set(v1alpha1.ConditionSignatureVerified, o.signature.Status, o.signature.Reason, o.signature.Message)
+	if c, ok := caBundleCondition(o); ok {
+		set(v1alpha1.ConditionCABundleMissing, c.status, c.reason, c.message)
+	} else {
+		meta.RemoveStatusCondition(&st.Conditions, v1alpha1.ConditionCABundleMissing)
+	}
 	if o.signature.Verified() && o.signature.Signature != nil {
 		st.Signature = o.signature.Signature.DeepCopy()
 	}
@@ -113,6 +127,31 @@ type condition struct {
 	status  metav1.ConditionStatus
 	reason  string
 	message string
+}
+
+// caBundleCondition is the CABundleMissing condition, read from the
+// Plugin's spec alone: the operator never reads the Secret, so it says
+// whether a bundle's checksum is stamped and how to set one; false when the
+// Plugin expects no bundle.
+func caBundleCondition(o *observation) (condition, bool) {
+	instance := o.instance
+	secret := plugins.SecretName(instance, plugins.CABundleRole)
+	switch o.caBundle {
+	case plugins.CABundleNotStamped:
+		return condition{metav1.ConditionTrue, ReasonCABundleChecksumNotStamped, fmt.Sprintf(
+			"spec.extraCa expects a CA bundle in Secret %s, but no spec.caBundleSha256 is stamped, so none was set and the plugin likely trusts only the system's roots: "+
+				"run `openfief plugin ca-bundle set %s <pem-file>`, which creates the Secret and stamps its checksum, or apply what its --print writes",
+			secret, instance,
+		)}, true
+	case plugins.CABundleStamped:
+		return condition{
+			metav1.ConditionFalse, ReasonCABundleChecksumStamped,
+			"spec.caBundleSha256 is stamped and restarts the plugin when it changes; the operator doesn't read Secret " + secret +
+				", so a bundle that doesn't match shows only as the plugin's TLS failures",
+		}, true
+	case plugins.CABundleNotExpected:
+	}
+	return condition{}, false
 }
 
 // readyCondition explains whether the plugin runs and, if not, the first

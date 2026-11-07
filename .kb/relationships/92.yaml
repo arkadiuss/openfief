@@ -825,6 +825,13 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-921b218c8de5
+  - type: executable_for
+    from: SYM-plugins-test-helper-mounts-of
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:37:32.165Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f1910a830e84
   - type: implements
     from: SYM-mfbonds-attr
     to: REQ-valuation-mfbonds-published-rates

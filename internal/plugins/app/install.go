@@ -199,12 +199,14 @@ type InstanceStore interface {
 // InstallRequest is what the owner asked to install: the argument (a
 // catalog name or an image reference), the instance name, which may be
 // empty, the config, a JSON document or nothing, and the in-cluster service
-// the owner picked for a manifest that asks for one (D-74), or nil.
+// the owner picked for a manifest that asks for one (D-74), or nil, and
+// whether the owner expects an extra CA bundle for the instance.
 type InstallRequest struct {
 	Arg            string
 	Name           string
 	Config         []byte
 	ClusterService *plugins.ClusterService
+	ExtraCA        bool
 }
 
 // Proposal is an install ready for the owner's confirmation: what will be
@@ -267,6 +269,9 @@ func (in *Installer) Prepare(ctx context.Context, req InstallRequest) (Proposal,
 	}
 	p, g, err := plugins.PlanInstall(name, &signed, req.Config, req.ClusterService)
 	if err != nil {
+		return Proposal{}, fmt.Errorf("plan install: %w", err)
+	}
+	if err := p.SetExtraCA(req.ExtraCA); err != nil {
 		return Proposal{}, fmt.Errorf("plan install: %w", err)
 	}
 	out := Proposal{Plugin: p, Grant: g, Decision: decision, ConfigHosts: configHosts(&p)}
