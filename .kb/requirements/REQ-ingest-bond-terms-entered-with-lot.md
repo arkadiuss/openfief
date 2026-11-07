@@ -1,6 +1,6 @@
 ---
 title: Until obligacjeskarbowe.pl's terms of use are confirmed to allow reading series terms from it, the owner must enter a series' terms with a lot.
-status: open
+status: closed
 tags:
   - strict-modeling
   - confidence:0.90

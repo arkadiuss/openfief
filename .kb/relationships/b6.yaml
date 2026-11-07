@@ -678,3 +678,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-598720d954a8
+  - type: executable_for
+    from: SYM-tooling-kibi-timed-test-timed
+    to: TEST-tooling-kibi-timed
+    created_at: 2026-11-07T19:28:12.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-008f70a8c2e9
+  - type: executable_for
+    from: SYM-plugins-test-effective-ca-bundle
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:37:37.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-08f27d0fa7a1
+  - type: implements
+    from: SYM-plugins-cli-write-extra-ca
+    to: REQ-plugins-extra-ca-setting
+    created_at: 2026-11-07T17:38:31.425Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4ea1716e7e7
+  - type: covered_by
+    from: SYM-plugins-cli-write-extra-ca
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:38:31.451Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fc305381c2ea

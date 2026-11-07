@@ -18,6 +18,12 @@ const (
 	ConditionSignatureVerified = "SignatureVerified"
 	// ConditionValid, on a PluginGrant, is True when the grant is well-formed.
 	ConditionValid = "Valid"
+	// ConditionCABundleMissing is True when the Plugin expects an extra CA
+	// bundle (spec.extraCa) and no checksum is stamped for it
+	// (spec.caBundleSha256); False when one is. It is read from the spec
+	// alone, never from the Secret, is absent when no bundle is expected,
+	// and never keeps the plugin from running.
+	ConditionCABundleMissing = "CABundleMissing"
 )
 
 // Plugin is what a plugin's vendor requests: a digest-pinned image, a
@@ -64,6 +70,23 @@ type PluginSpec struct {
 	// directly at its ClusterIP, not through the egress proxy.
 	// +optional
 	ClusterService *ClusterServiceRef `json:"clusterService,omitempty"`
+
+	// ExtraCA says the owner expects an extra CA bundle for this instance,
+	// such as for an endpoint whose certificate a private CA signs. Only
+	// then does the operator mount the Secret <instance>--ca-bundle, which
+	// the manifest must ask for as role ca-bundle, and report in the
+	// CABundleMissing condition whether a bundle's checksum is stamped.
+	// +optional
+	ExtraCA bool `json:"extraCa,omitempty"`
+
+	// CABundleSHA256 is the hex SHA-256 of the CA bundle Secret's ca.crt,
+	// which `openfief plugin ca-bundle set` computes and stamps. The
+	// operator never reads the Secret: it copies this to the pod template,
+	// so a new stamp restarts the plugin. The owner keeps it in step with
+	// the Secret; a mismatch shows only as the plugin's TLS failures.
+	// +optional
+	// +kubebuilder:validation:Pattern=`^[0-9a-f]{64}$`
+	CABundleSHA256 string `json:"caBundleSha256,omitempty"`
 }
 
 // ClusterServiceRef names a Service port in another namespace than

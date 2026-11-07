@@ -664,3 +664,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-1fd2ccf9b252
+  - type: executable_for
+    from: SYM-plugins-cli-test-helper-check-extra-ca-install
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T11:38:26.875Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-47abc8f43166

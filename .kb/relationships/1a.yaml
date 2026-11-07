@@ -769,3 +769,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-82d049a7d1b2
+  - type: constrains
+    from: REQ-plugins-cli-ca-bundle-unset
+    to: FACT-SUBJECT-EDA76E97425B8A83
+    created_at: 2026-11-07T17:33:07.546Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-06ed8c20df57
+  - type: requires_property
+    from: REQ-plugins-cli-ca-bundle-unset
+    to: FACT-PROP-7452A47814A096D2
+    created_at: 2026-11-07T17:33:07.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-04ebee8c9b22
+  - type: specified_by
+    from: REQ-plugins-cli-ca-bundle-unset
+    to: SCEN-plugins-cli-ca-bundle-unset
+    created_at: 2026-11-07T17:33:07.634Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-33ab047a3b08

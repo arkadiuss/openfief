@@ -1,6 +1,7 @@
 package postgres_test
 
 import (
+	"errors"
 	"testing"
 	"time"
 
@@ -129,6 +130,36 @@ func TestBondTermsAttribution(t *testing.T) {
 	}
 	got, _, err = store.BondTerms(ctx, in.bond)
 	check(t, "the owner's terms", entered, got, err)
+}
+
+// TestBondFeeSource stores where a series' fee came from with its terms
+// and lists every stored series' terms; the owner's fee replaces only the
+// fee and its source, and a series without terms has no fee to change
+// (D-97).
+func TestBondFeeSource(t *testing.T) {
+	t.Parallel()
+	store, _ := newStore(t)
+	ctx := t.Context()
+	in := syntheticInputs(t)
+	assumed := in.terms
+	assumed.FeeSource = pl.FeeAssumed
+	if err := store.SaveBondTerms(ctx, in.bond, &assumed, "treasury-bonds", nil); err != nil {
+		t.Fatalf("SaveBondTerms: %v", err)
+	}
+	all, err := store.AllBondTerms(ctx)
+	check(t, "every stored series' terms", map[ledger.ISIN]pl.Terms{in.bond: assumed}, all, err)
+	fee := money(t, "2.50", "PLN")
+	if saveErr := store.SaveBondFee(ctx, in.bond, fee, pl.FeeEntered, nil); saveErr != nil {
+		t.Fatalf("SaveBondFee: %v", saveErr)
+	}
+	owner := assumed
+	owner.EarlyRedemptionFee, owner.FeeSource = fee, pl.FeeEntered
+	got, _, err := store.BondTerms(ctx, in.bond)
+	check(t, "the owner's fee", owner, got, err)
+	other := instrument(t, etfISIN, "SYNTH").ISIN
+	if saveErr := store.SaveBondFee(ctx, other, fee, pl.FeeEntered, nil); !errors.Is(saveErr, postgres.ErrNoBondTerms) {
+		t.Errorf("SaveBondFee without terms: %v, want ErrNoBondTerms", saveErr)
+	}
 }
 
 func check[T any](t *testing.T, what string, want, got T, err error) {

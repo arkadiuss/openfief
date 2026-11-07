@@ -727,3 +727,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a77524767664
+  - type: verified_by
+    from: SCEN-pl-fee-carried-forward-assumed
+    to: TEST-pl-fees
+    created_at: 2026-11-07T13:26:25.755Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3462cd5d03fd
+  - type: executable_for
+    from: SYM-treasurybonds-test-missing-terms
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T13:29:14.514Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-09c8fde2ec65
+  - type: implements
+    from: SYM-plugins-plugin-validate-extra-ca
+    to: REQ-plugins-extra-ca-setting
+    created_at: 2026-11-07T11:36:10.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7670ab22ee31
+  - type: covered_by
+    from: SYM-plugins-plugin-validate-extra-ca
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T11:36:10.414Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8179e9526af2
+  - type: executable_for
+    from: SYM-operator-test-ca-bundle
+    to: TEST-operator-ca-bundle
+    created_at: 2026-11-07T11:39:01.690Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d8c9606d2da9
+  - type: implements
+    from: SYM-tooling-kibi-coverage-cache-off
+    to: REQ-tooling-kibi-coverage-cache
+    created_at: 2026-11-07T21:14:29.657Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-97880ee137ab
+  - type: covered_by
+    from: SYM-tooling-kibi-coverage-cache-off
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:14:29.686Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2ee036a115ab

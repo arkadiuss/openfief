@@ -9,11 +9,14 @@ import (
 
 // UpgradeRequest is what the owner asked to upgrade (D-90): the instance,
 // the version (a catalog version or a digest-pinned image reference) and a
-// new config, or nil to keep the instance's.
+// new config, or nil to keep the instance's, and whether the instance
+// expects an extra CA bundle from now on, or nil to keep that while the new
+// manifest still asks for its Secret role.
 type UpgradeRequest struct {
 	Instance string
 	Version  string
 	Config   []byte
+	ExtraCA  *bool
 }
 
 // UpgradeProposal is an upgrade ready for the owner's confirmation: the new
@@ -32,6 +35,8 @@ type UpgradeProposal struct {
 // PrepareUpgrade resolves the version against the catalog and the
 // instance's current image, verifies the new image with the operator's
 // trust policy (D-56) and checks the config, without changing anything.
+// --extra-ca on a new version whose manifest doesn't ask for the CA bundle
+// role fails with plugins.ErrExtraCANotRequested.
 // An instance that isn't installed fails with ErrNotInstalled, and a
 // version that would name another instance's Secret with ErrSecretInUse.
 func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, req UpgradeRequest) (UpgradeProposal, error) {
@@ -55,7 +60,7 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 	if err != nil {
 		return UpgradeProposal{}, err
 	}
-	p, g, err := plugins.PlanUpgrade(&current, &signed, config)
+	p, g, err := planUpgrade(&current, &signed, config, req.ExtraCA)
 	if err != nil {
 		return UpgradeProposal{}, fmt.Errorf("plan upgrade: %w", err)
 	}
@@ -75,6 +80,22 @@ func (in *Installer) PrepareUpgrade(ctx context.Context, store InstanceStore, re
 		return UpgradeProposal{}, fmt.Errorf("upgrade %q: %w", req.Instance, err)
 	}
 	return out, nil
+}
+
+// planUpgrade plans the upgrade of current to signed with config and,
+// unless extraCA is nil, sets whether the instance expects an extra CA
+// bundle from now on.
+func planUpgrade(current *plugins.Plugin, signed *plugins.SignedImage, config []byte, extraCA *bool) (plugins.Plugin, plugins.Grant, error) {
+	p, g, err := plugins.PlanUpgrade(current, signed, config)
+	if err != nil {
+		return plugins.Plugin{}, plugins.Grant{}, fmt.Errorf("plan: %w", err)
+	}
+	if extraCA != nil {
+		if setErr := p.SetExtraCA(*extraCA); setErr != nil {
+			return plugins.Plugin{}, plugins.Grant{}, fmt.Errorf("extra CA: %w", setErr)
+		}
+	}
+	return p, g, nil
 }
 
 // checkUpgrade refuses the version p, with its grant g, when it declares a

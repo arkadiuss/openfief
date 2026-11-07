@@ -846,3 +846,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-959901cd9d7a
+  - type: implements
+    from: SYM-ui-server-set-bond-fee
+    to: REQ-valuation-owner-sets-bond-fee
+    created_at: 2026-11-07T13:33:33.335Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e7afb8340641
+  - type: implements
+    from: SYM-ui-server-set-bond-fee
+    to: REQ-ui-instrument-bond-terms
+    created_at: 2026-11-07T13:33:33.368Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7bf66804211c
+  - type: covered_by
+    from: SYM-ui-server-set-bond-fee
+    to: TEST-ui-bond-terms
+    created_at: 2026-11-07T13:33:33.389Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6ae112e5dbef

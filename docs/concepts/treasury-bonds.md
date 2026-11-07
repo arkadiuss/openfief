@@ -50,7 +50,13 @@ D-97 has the treasury bond connector read the first-period rate and margin from 
 | ROS | 0.70 PLN, then 2.00 PLN | October 2016 (ROS1022), September 2024 (ROS0930) |
 | ROD | 2.00 PLN, then 3.00 PLN | October 2016 (ROD1028), September 2024 (ROD0936) |
 
-`SaleMonth` is a series' sale month, its maturity month less its type's term, and `EarlyRedemptionFee` the fee of the latest row of its type on or before it. A series sold before its type's first row (one that matured, or nearly, before the table was written) or after `FeesReviewedThrough` fails with `ErrNoReviewedFee`: the table holds no fee no letter was read for, so the owner enters that series' fee until the next release reviews the new letters.
+`SaleMonth` is a series' sale month, its maturity month less its type's term, and `EarlyRedemptionFee` the fee of the latest row of its type on or before it, as a `TableFee`: the fee, where it came from (`FeeSource`) and the row, which names its letter. The table has no hard end:
+
+- **Within the reviewed months**, the fee is the table's own, `FeeFromTable`.
+- **After `FeesReviewedThrough`**, no letter was read yet, so the type's latest reviewed fee is carried forward as `FeeAssumed`. Every held series with an assumed fee raises one [attention item](attention.md), `bond-fee-assumed`, whose detail `AssumedFeeDetail` writes, such as "confirm the early-redemption fee for EDO1137: 3.00 PLN assumed from the latest reviewed letter, list emisyjny nr 96/2024 (EDO0934)"; `FeesToConfirm` picks those series. The owner confirming the fee (`Terms.ConfirmFee`) or entering another (`Terms.OverrideFee`) makes it the owner's, `FeeEntered`, which clears the item.
+- **Before a type's first row** (a series that matured, or nearly, before the table was written) it still fails with `ErrNoReviewedFee`: there is no fee to carry back, so the owner enters it.
+
+`Terms.FeeSource` keeps where a stored fee came from (`ParseFeeSource` reads it back); like the attribution, it doesn't change what the terms value. Every release re-reviews the table against the letters of the series sold since ([sdlc.md](../dev/sdlc.md#releases)).
 - **Overrides.** Terms the owner enters with a lot win over what the connector reads, and the core keeps one set of terms per series, replaced by the latest delivered, so the latest entry wins ([Ingest](ingest.md#treasury-bond-lots)).
 
 ### Interest periods and indexation
@@ -116,7 +122,7 @@ Inside OKI no Belka tax is due; instead, the act on OKI, in force from 2027-01-0
 | [series.go](../../internal/jurisdiction/pl/series.go) | `BondType` and its `Structure` (term, period, `Indexation`, `Payout`); `Series` and `ParseSeries` |
 | [terms.go](../../internal/jurisdiction/pl/terms.go) | `Nominal`, `ExchangePrice`, `Terms` with its `Attribution`, `Indices`, `Terms.PeriodRate`, `MissingIndexError`, `CheckBondISIN` (series terms need a Polish ISIN, D-179) |
 | [published.go](../../internal/jurisdiction/pl/published.go) | `Attribution` and `Attribution.Validate`, `PublishedRates`, `Published`, `Published.RatesOf`, `ErrNotPublished` (D-97) |
-| [fees.go](../../internal/jurisdiction/pl/fees.go) | `FeeRow`, `EarlyRedemptionFees`, `FeesReviewedThrough`, `SaleMonth`, `EarlyRedemptionFee`, `ErrNoReviewedFee` (D-97) |
+| [fees.go](../../internal/jurisdiction/pl/fees.go) | `FeeRow`, `EarlyRedemptionFees`, `FeesReviewedThrough`, `SaleMonth`, `EarlyRedemptionFee` and its `TableFee`, `FeeSource` and `ParseFeeSource`, `AssumedFeeDetail`, `FeesToConfirm`, `Terms.ConfirmFee`, `Terms.OverrideFee`, `ErrNoReviewedFee`, `ErrFeeNotAssumed` (D-97) |
 | [calendar.go](../../internal/jurisdiction/pl/calendar.go) | `Maturity`, `PeriodStart`, `CPIMonth` |
 | [businessday.go](../../internal/jurisdiction/pl/businessday.go) | `IsBusinessDay`, `ReferenceRateDay`, `RateChange`, `RateInForce`, `FirstCalendarYear`, `ErrOutsideCalendar` |
 | [value.go](../../internal/jurisdiction/pl/value.go) | `Purchase`, `LotValue`, `ValueLot` |
@@ -220,7 +226,7 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 
 ## Decisions
 
-- **D-97**: series rates from the ministry's published data with its attribution (`Published`, `Attribution`), fees from the reviewed table of the issue letters (`EarlyRedemptionFees`), the owner's terms override and the latest entry wins. Read as: the table applies a fee only up to the month it was reviewed through, so a series sold later needs the owner's fee until a release reviews its letter.
+- **D-97**: series rates from the ministry's published data with its attribution (`Published`, `Attribution`), fees from the reviewed table of the issue letters (`EarlyRedemptionFees`), the owner's terms override and the latest entry wins. Read as: past the month the table was reviewed through, the type's latest reviewed fee is carried forward as assumed and the owner is asked to confirm it; before a type's first row the owner enters the fee; each release re-reviews the table.
 - **D-9**: manual bond lots, valuation computed. `ValueLot` needs more than D-9's series, quantity and purchase date. In a revaluation the purchase date is the lot's open date and the price per bond its cost over its quantity; the series terms (per ISIN), the index readings and the account's tax wrapper are recorded separately. The owner enters a lot with its series' terms in the built-in UI, and the treasury-bonds connector delivers both ([Ingest](ingest.md#treasury-bond-lots)); the lot's rules reuse `ValueLot`: a lot is accepted only if it can be valued on its purchase date.
 - **D-20**: Polish tax uses NBP rates, from the day before (`TaxRateCutoff`, the pack's `TaxRateDate`); the cost basis of a listed holding converts at it.
 - **D-70**: `Pack` is the Polish jurisdiction pack, pure functions behind `jurisdiction.Pack`. Bond accrual (`ValueLot`) stays a Polish function that valuation calls directly, since only Polish bonds have series terms; the pack turns its parts into values.
@@ -251,7 +257,8 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 | OKI's yearly tax and the totals' taxes ([Valuation](valuation.md#verification)) | `TestOKIYearlyTax` in [oki_test.go](../../internal/jurisdiction/pl/oki_test.go), `TestTotals` in [totals_test.go](../../internal/jurisdiction/pl/totals_test.go) | REQ-pl-oki-tax-base-average-value, REQ-pl-totals-tax-pit38, TEST-pl-oki, TEST-pl-totals |
 | Matches the issuer's daily interest tables | `TestValueLotMatchesInterestTables` in [official_test.go](../../internal/jurisdiction/pl/official_test.go) | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-2-tos-base-unrounded, TEST-pl-official |
 | The published data: a series' rates or `ErrNotPublished`; an attribution lacking any part the licence asks for is refused | `TestPublishedRatesOf`, `TestAttributionValidate` in [published_test.go](../../internal/jurisdiction/pl/published_test.go) | REQ-pl-published-series-rates, SCEN-pl-published-series-rates, TEST-pl-published |
-| The fee table: each type's fee by sale month on both sides of every change, none before a type's first row or after the reviewed month; the table's shape | `TestSaleMonth`, `TestEarlyRedemptionFee`, `TestEarlyRedemptionFeesTable` in [fees_test.go](../../internal/jurisdiction/pl/fees_test.go) | REQ-pl-early-redemption-fee-table, SCEN-pl-early-redemption-fee-table, TEST-pl-fees |
+| The fee table: each type's fee by sale month on both sides of every change, the latest carried forward as assumed after the reviewed month, none before a type's first row; the table's shape | `TestSaleMonth`, `TestEarlyRedemptionFee`, `TestEarlyRedemptionFeesTable`, `TestParseFeeSource` in [fees_test.go](../../internal/jurisdiction/pl/fees_test.go) | REQ-treasurybonds-fees-from-reviewed-table, REQ-pl-fee-carried-forward-assumed, SCEN-pl-fee-carried-forward-assumed, TEST-pl-fees |
+| An assumed fee: the held series to confirm, in series order; what the owner is asked; confirming keeps the fee as the owner's, overriding takes any PLN fee of zero or more | `TestFeesToConfirm`, `TestAssumedFeeDetail`, `TestConfirmFee`, `TestOverrideFee` | REQ-pl-assumed-fee-confirmed-by-owner, SCEN-pl-assumed-fee-confirmed-by-owner, TEST-pl-fees |
 | Coupon dates per type, none for the last period, capitalized types or OTS; one bond's coupon at the period rate, half up; a missing reading | `TestCouponDates`, `TestCoupon`, `TestCouponWithoutItsReading` in [coupon_test.go](../../internal/jurisdiction/pl/coupon_test.go) | REQ-pl-coupon-payments, SCEN-pl-coupon-payments, TEST-pl-coupons |
 | Matches the issuer's worked early-redemption examples | `TestValueLotMatchesWorkedExamples` | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-3-belka-half-up, TEST-pl-official |
 | Belka tax 19%, half up, none in IKE, IKZE or OKI; the wrappers' keys | `TestBelkaTax`, `TestBelkaRate`, `TestTaxWrapperNames` in [tax_test.go](../../internal/jurisdiction/pl/tax_test.go) | REQ-pl-values-per-wrapper, REQ-decision-d37-3-belka-half-up, REQ-pl-tax-wrappers, TEST-pl-tax |
@@ -264,5 +271,5 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 ## Not built yet
 
 - **D-9**: an import of the bond service's export, if one exists (OQ-22).
-- **D-97**: the fee table's rows for series sold after November 2026 wait for a release that reviews their issue letters; until then the owner enters those series' fees..
+- **D-97**: the fee table's rows for series sold after November 2026 wait for a release that reviews their issue letters; until then those series carry the latest reviewed fee as assumed, for the owner to confirm.
 - **D-145**: OKI's rate for 2028 on and its exempt amounts for 2030 on come from the finance minister's announcements, added with each release; none is announced yet, so those years' taxes wait for the release that adds them.

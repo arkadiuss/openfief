@@ -1127,9 +1127,23 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ca9ec9d7fc3c
   - type: executable_for
+    from: SYM-operator-test-helper-test-cluster-ca-bundle-state
+    to: TEST-operator-ca-bundle
+    created_at: 2026-11-07T11:39:06.658Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d22558f08ada
+  - type: executable_for
     from: SYM-mfbonds-test-parse-workbook
     to: TEST-valuation-mfbonds
     created_at: 2026-11-07T08:22:43.473Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0d339b60d65
+  - type: executable_for
+    from: SYM-plugins-kube-test-helper-check-ca-bundle-secret
+    to: TEST-plugins-kube-ca-bundle
+    created_at: 2026-11-07T17:39:25.461Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-46d0c1cdfc8d

@@ -34,6 +34,7 @@ const (
 	kindUnclassified      = "instrument-unclassified"
 	kindSyncFailing       = "connector-sync-failing"
 	kindCashCheckpoint    = "cash-checkpoint-mismatch"
+	kindBondFeeAssumed    = "bond-fee-assumed"
 )
 
 // openAccounts is the words of an item's link to the accounts page.
@@ -58,6 +59,7 @@ func attentionKindOf(kind string) attentionKind {
 		"bond-terms-or-index-levels-undeclared": {Label: "Bond terms, index levels or readings dropped", Page: pluginsPath, Action: openPlugins},
 		kindSyncFailing:                         {Label: "Sync keeps failing", Page: pluginsPath, Action: openPlugins},
 		kindCashCheckpoint:                      {Label: "Cash balance differs"},
+		kindBondFeeAssumed:                      {Label: "Bond fee to confirm"},
 		"cross-check-prices-undeclared":         {Label: "Undeclared cross-check prices dropped", Page: pluginsPath, Action: openPlugins},
 	}
 	if k, ok := kinds[kind]; ok {

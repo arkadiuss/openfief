@@ -874,3 +874,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-340416f6e214
+  - type: implements
+    from: SYM-mfbonds-parse-workbook
+    to: REQ-treasurybonds-rates-from-ministry-data
+    created_at: 2026-11-07T12:38:43.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f0752997cf7b

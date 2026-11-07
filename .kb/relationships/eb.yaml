@@ -888,3 +888,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-cdabc63b83a1
+  - type: executable_for
+    from: SYM-pl-test-parse-fee-source
+    to: TEST-pl-fees
+    created_at: 2026-11-07T13:28:42.766Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e9cba1ecc00
+  - type: executable_for
+    from: SYM-valuation-app-test-set-early-redemption-fee
+    to: TEST-valuation-app-bondfee
+    created_at: 2026-11-07T13:31:25.887Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-18b775e062ec
+  - type: implements
+    from: SYM-viewsv1-instrument-detail-get-bond-terms
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:20:49.479Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27d6ac129c46
+  - type: covered_by
+    from: SYM-viewsv1-instrument-detail-get-bond-terms
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:20:49.511Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-393eec8f54cd
+  - type: executable_for
+    from: SYM-tooling-kibi-coverage-test-cached
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:15:19.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d776e7768ad8

@@ -144,8 +144,8 @@ func openLotFrom(l *connectorv1.OpenLot) (ledger.Lot, error) {
 	return ledger.Lot{Instrument: in, Opened: opened, Quantity: q, Cost: cost, Opening: l.GetOpening()}, nil
 }
 
-// bondTermsFrom reads one series' terms; the series is the instrument's
-// symbol.
+// bondTermsFrom reads one series' terms, with where its fee came from;
+// the series is the instrument's symbol.
 func bondTermsFrom(t *connectorv1.BondTerms) (ingest.BondTerms, error) {
 	in, err := instrumentFrom(t.GetInstrument())
 	if err != nil {
@@ -167,8 +167,12 @@ func bondTermsFrom(t *connectorv1.BondTerms) (ingest.BondTerms, error) {
 	if err != nil {
 		return ingest.BondTerms{}, err
 	}
+	src, err := FeeSourceFrom(t.GetFeeSource())
+	if err != nil {
+		return ingest.BondTerms{}, fmt.Errorf("fee_source: %w", err)
+	}
 	return ingest.BondTerms{
-		Instrument: in, Terms: pl.Terms{Series: s, FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: fee},
+		Instrument: in, Terms: pl.Terms{Series: s, FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: fee, FeeSource: src},
 	}, nil
 }
 

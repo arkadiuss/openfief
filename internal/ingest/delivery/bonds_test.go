@@ -106,6 +106,7 @@ func TestBondTerms(t *testing.T) {
 		t.Fatalf("ParseDate: %v", err)
 	}
 	published := edoTerms(t)
+	published.FeeSource = pl.FeeFromTable
 	published.Attribution = &pl.Attribution{
 		Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
 		URL: "https://www.example.org/attachment/x", Made: made, Processing: "read",
@@ -117,10 +118,12 @@ func TestBondTerms(t *testing.T) {
 		{
 			Instrument:      &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"},
 			FirstPeriodRate: "0.068", Margin: "0.02", EarlyRedemptionFee: &connectorv1.Money{Amount: "2", Currency: "PLN"},
+			FeeSource: connectorv1.BondFeeSource_BOND_FEE_SOURCE_ENTERED,
 		},
 		{
 			Instrument:      &connectorv1.Instrument{Isin: "PLEDO0536000", Symbol: "EDO0536"},
 			FirstPeriodRate: "0.068", Margin: "0.02", EarlyRedemptionFee: &connectorv1.Money{Amount: "2", Currency: "PLN"},
+			FeeSource: connectorv1.BondFeeSource_BOND_FEE_SOURCE_TABLE,
 			// D-97: the attribution travels with terms read from published data.
 			Attribution: &connectorv1.BondTermsAttribution{
 				Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
@@ -190,4 +193,26 @@ func withPurchase(p connectorv1.BondPurchase) *connectorv1.BondLot {
 	l := lotMessage()
 	l.Purchase = p
 	return l
+}
+
+// TestFeeSource writes where a fee came from and reads it back (D-97):
+// unspecified reads as entered, and a value the contract doesn't define is
+// refused.
+func TestFeeSource(t *testing.T) {
+	t.Parallel()
+	for _, s := range []pl.FeeSource{pl.FeeEntered, pl.FeeFromTable, pl.FeeAssumed} {
+		got, err := delivery.FeeSourceFrom(delivery.FeeSource(s))
+		if err != nil || got != s {
+			t.Errorf("FeeSourceFrom(FeeSource(%s)) = %s, %v", s, got, err)
+		}
+	}
+	if got := delivery.FeeSource(pl.FeeSource(9)); got != connectorv1.BondFeeSource_BOND_FEE_SOURCE_UNSPECIFIED {
+		t.Errorf("FeeSource of an invalid source = %v, want unspecified", got)
+	}
+	if got, err := delivery.FeeSourceFrom(connectorv1.BondFeeSource_BOND_FEE_SOURCE_UNSPECIFIED); err != nil || got != pl.FeeEntered {
+		t.Errorf("FeeSourceFrom(unspecified) = %s, %v; want entered", got, err)
+	}
+	if _, err := delivery.FeeSourceFrom(connectorv1.BondFeeSource(9)); !errors.Is(err, delivery.ErrUnknownFeeSource) {
+		t.Errorf("FeeSourceFrom(9) = %v, want ErrUnknownFeeSource", err)
+	}
 }

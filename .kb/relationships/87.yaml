@@ -874,3 +874,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5a44aa7d18b5
+  - type: implements
+    from: SYM-plugins-kube-instances-put-ca-bundle
+    to: REQ-plugins-cli-ca-bundle-set
+    created_at: 2026-11-07T17:37:31.864Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff1c490e6ff1
+  - type: covered_by
+    from: SYM-plugins-kube-instances-put-ca-bundle
+    to: TEST-plugins-kube-ca-bundle
+    created_at: 2026-11-07T17:37:31.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-558e34909f1e
+  - type: executable_for
+    from: SYM-tooling-kibi-coverage-test-has
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:15:13.923Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ff31354b42bc

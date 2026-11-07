@@ -1084,3 +1084,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3cd3bfd2491a
+  - type: constrains
+    from: REQ-ingest-bond-terms-owner-overrides
+    to: FACT-SUBJECT-BDB16DBA9CB82400
+    created_at: 2026-11-07T12:37:43.964Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-855f06f4c059
+  - type: requires_property
+    from: REQ-ingest-bond-terms-owner-overrides
+    to: FACT-PROP-CA48FC3F3BB09823
+    created_at: 2026-11-07T12:37:44.021Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0e75b745c16
+  - type: specified_by
+    from: REQ-ingest-bond-terms-owner-overrides
+    to: SCEN-ingest-bond-lot-terms-optional
+    created_at: 2026-11-07T12:37:44.066Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2393421427e5
+  - type: supersedes
+    from: REQ-ingest-bond-terms-owner-overrides
+    to: REQ-ingest-bond-terms-entered-with-lot
+    created_at: 2026-11-07T12:37:44.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7ee2fa773248
+  - type: executable_for
+    from: SYM-tooling-kibi-coverage-test-kibi-calls
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:15:08.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7070d7d8b2c1

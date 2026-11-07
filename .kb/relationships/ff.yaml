@@ -944,3 +944,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-0f9faf98c36b
+  - type: executable_for
+    from: SYM-plugins-test-ca-bundle-checksum
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T17:38:52.999Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8b72e0d21e98

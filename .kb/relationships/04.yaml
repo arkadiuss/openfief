@@ -867,3 +867,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-dd767b65df46
+  - type: implements
+    from: SYM-ingest-connectrpc-fee-source-to
+    to: REQ-valuation-bond-fee-source-stored
+    created_at: 2026-11-07T13:30:09.955Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4669a31c6082
+  - type: covered_by
+    from: SYM-ingest-connectrpc-fee-source-to
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T13:30:09.989Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4a16109e416c
+  - type: implements
+    from: SYM-plugins-cli-args-fit
+    to: REQ-plugins-cli-ca-bundle-set
+    created_at: 2026-11-07T17:38:21.220Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8a97d792e5a1
+  - type: implements
+    from: SYM-plugins-cli-args-fit
+    to: REQ-plugins-cli-upgrade
+    created_at: 2026-11-07T17:38:21.250Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3e4c0bd8915e
+  - type: covered_by
+    from: SYM-plugins-cli-args-fit
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:38:21.272Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-45f460ce73c2

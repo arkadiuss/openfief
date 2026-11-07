@@ -11,6 +11,7 @@ import (
 	"github.com/riverqueue/river/rivertype"
 
 	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
+	"github.com/arkadiuss/openfief/internal/kernel"
 	"github.com/arkadiuss/openfief/internal/ledger"
 	ledgerapp "github.com/arkadiuss/openfief/internal/ledger/app"
 	"github.com/arkadiuss/openfief/internal/valuation"
@@ -206,25 +207,28 @@ func (s *Store) SaveIndexReadings(ctx context.Context, readings []valuation.Inde
 
 // SaveBondTerms upserts the series terms of the bond with isin, with the
 // connector instance source that delivered them (D-179) and their
-// attribution, if any (D-97), and enqueues revals in one transaction. The
-// latest terms replace the row whole, so terms the owner entered after
-// published ones drop the attribution.
+// attribution, if any, and where their fee came from (D-97), and enqueues
+// revals in one transaction. The latest terms replace the row whole, so
+// terms the owner entered after published ones drop the attribution.
 func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.Terms, source string, revals []valuation.Revaluation) error {
 	att := attributionColumns(terms.Attribution)
 	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {
 		_, err := tx.Exec(ctx, `
 			INSERT INTO valuation.bond_terms (isin, series, first_period_rate, margin, early_redemption_fee, source,
-			    source_publisher, source_dataset, source_license, source_url, source_made, source_fetched, source_processing)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::date, $12, $13)
+			    source_publisher, source_dataset, source_license, source_url, source_made, source_fetched, source_processing,
+			    fee_source)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11::date, $12, $13, $14)
 			ON CONFLICT (isin) DO UPDATE SET series = EXCLUDED.series, first_period_rate = EXCLUDED.first_period_rate,
 			    margin = EXCLUDED.margin, early_redemption_fee = EXCLUDED.early_redemption_fee, source = EXCLUDED.source,
+			    fee_source = EXCLUDED.fee_source,
 			    source_publisher = EXCLUDED.source_publisher, source_dataset = EXCLUDED.source_dataset,
 			    source_license = EXCLUDED.source_license, source_url = EXCLUDED.source_url,
 			    source_made = EXCLUDED.source_made, source_fetched = EXCLUDED.source_fetched,
 			    source_processing = EXCLUDED.source_processing`,
 			isin.String(), terms.Series.String(), terms.FirstPeriodRate.String(), terms.Margin.String(),
 			terms.EarlyRedemptionFee.Amount().String(), source,
-			att.publisher, att.dataset, att.license, att.url, att.made, att.fetched, att.processing)
+			att.publisher, att.dataset, att.license, att.url, att.made, att.fetched, att.processing,
+			terms.FeeSource.String())
 		if err != nil {
 			return fmt.Errorf("upserting: %w", err)
 		}
@@ -232,6 +236,27 @@ func (s *Store) SaveBondTerms(ctx context.Context, isin ledger.ISIN, terms *pl.T
 	})
 	if err != nil {
 		return fmt.Errorf("saving bond terms of %s: %w", isin, err)
+	}
+	return nil
+}
+
+// SaveBondFee stores fee as the early-redemption fee of the bond with
+// isin, from source, keeping its other terms, and enqueues revals in one
+// transaction (D-97). Terms that are not stored fail with ErrNoBondTerms.
+func (s *Store) SaveBondFee(ctx context.Context, isin ledger.ISIN, fee kernel.Money, source pl.FeeSource, revals []valuation.Revaluation) error {
+	err := s.inTx(ctx, revals, func(tx pgx.Tx) error {
+		tag, err := tx.Exec(ctx, `UPDATE valuation.bond_terms SET early_redemption_fee = $2, fee_source = $3 WHERE isin = $1`,
+			isin.String(), fee.Amount().String(), source.String())
+		if err != nil {
+			return fmt.Errorf("updating: %w", err)
+		}
+		if tag.RowsAffected() == 0 {
+			return ErrNoBondTerms
+		}
+		return nil
+	})
+	if err != nil {
+		return fmt.Errorf("saving the early-redemption fee of %s: %w", isin, err)
 	}
 	return nil
 }

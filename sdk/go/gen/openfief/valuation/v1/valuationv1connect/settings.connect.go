@@ -25,6 +25,10 @@
 // - A number format key that is not one of number_formats, a marginal rate
 //   that is not a decimal above 0 and below 1, or a charts' start that is
 //   not a YYYY-MM-DD date, fails with INVALID_ARGUMENT and nothing changes.
+// - SetEarlyRedemptionFee for an ISIN whose series terms are not stored
+//   fails with NOT_FOUND; without a fee, for a series whose fee is not
+//   assumed, with FAILED_PRECONDITION; a fee that is not a decimal of zero
+//   or more, with INVALID_ARGUMENT. Nothing changes then.
 // - A charts' start of an account the owner may not change (D-163) fails
 //   with PERMISSION_DENIED, whether it is stored or not; one of an account
 //   that is not stored, with NOT_FOUND.
@@ -76,6 +80,9 @@ const (
 	// SettingsServiceSetExemptionClassProcedure is the fully-qualified name of the SettingsService's
 	// SetExemptionClass RPC.
 	SettingsServiceSetExemptionClassProcedure = "/openfief.valuation.v1.SettingsService/SetExemptionClass"
+	// SettingsServiceSetEarlyRedemptionFeeProcedure is the fully-qualified name of the
+	// SettingsService's SetEarlyRedemptionFee RPC.
+	SettingsServiceSetEarlyRedemptionFeeProcedure = "/openfief.valuation.v1.SettingsService/SetEarlyRedemptionFee"
 	// SettingsServiceSetChartStartProcedure is the fully-qualified name of the SettingsService's
 	// SetChartStart RPC.
 	SettingsServiceSetChartStartProcedure = "/openfief.valuation.v1.SettingsService/SetChartStart"
@@ -97,6 +104,15 @@ type SettingsServiceClient interface {
 	// it can't read. The choice stays with the instrument; setting it again
 	// replaces it. It revalues nothing: the yearly tax is computed when read.
 	SetExemptionClass(context.Context, *connect.Request[v1.SetExemptionClassRequest]) (*connect.Response[v1.SetExemptionClassResponse], error)
+	// SetEarlyRedemptionFee confirms or overrides a treasury bond series'
+	// early-redemption fee (D-97). Without a fee it confirms the fee assumed
+	// from the reviewed table's latest issue letter for a series sold after
+	// the month the table was reviewed through: the same fee becomes the
+	// owner's, and nothing is revalued. With a fee it replaces the series'
+	// fee, whatever it came from, and every account that held the series is
+	// revalued. Either way the attention item asking to confirm the fee
+	// clears.
+	SetEarlyRedemptionFee(context.Context, *connect.Request[v1.SetEarlyRedemptionFeeRequest]) (*connect.Response[v1.SetEarlyRedemptionFeeResponse], error)
 	// SetChartStart stores the day the time charts start on (D-138) as the
 	// owner's setting (D-167): the portfolio's, or one account's. An empty
 	// start clears the setting, so the charts start on their default again.
@@ -140,6 +156,12 @@ func NewSettingsServiceClient(httpClient connect.HTTPClient, baseURL string, opt
 			connect.WithSchema(settingsServiceMethods.ByName("SetExemptionClass")),
 			connect.WithClientOptions(opts...),
 		),
+		setEarlyRedemptionFee: connect.NewClient[v1.SetEarlyRedemptionFeeRequest, v1.SetEarlyRedemptionFeeResponse](
+			httpClient,
+			baseURL+SettingsServiceSetEarlyRedemptionFeeProcedure,
+			connect.WithSchema(settingsServiceMethods.ByName("SetEarlyRedemptionFee")),
+			connect.WithClientOptions(opts...),
+		),
 		setChartStart: connect.NewClient[v1.SetChartStartRequest, v1.SetChartStartResponse](
 			httpClient,
 			baseURL+SettingsServiceSetChartStartProcedure,
@@ -151,11 +173,12 @@ func NewSettingsServiceClient(httpClient connect.HTTPClient, baseURL string, opt
 
 // settingsServiceClient implements SettingsServiceClient.
 type settingsServiceClient struct {
-	getOwnerSettings  *connect.Client[v1.GetOwnerSettingsRequest, v1.GetOwnerSettingsResponse]
-	setNumberFormat   *connect.Client[v1.SetNumberFormatRequest, v1.SetNumberFormatResponse]
-	setMarginalRate   *connect.Client[v1.SetMarginalRateRequest, v1.SetMarginalRateResponse]
-	setExemptionClass *connect.Client[v1.SetExemptionClassRequest, v1.SetExemptionClassResponse]
-	setChartStart     *connect.Client[v1.SetChartStartRequest, v1.SetChartStartResponse]
+	getOwnerSettings      *connect.Client[v1.GetOwnerSettingsRequest, v1.GetOwnerSettingsResponse]
+	setNumberFormat       *connect.Client[v1.SetNumberFormatRequest, v1.SetNumberFormatResponse]
+	setMarginalRate       *connect.Client[v1.SetMarginalRateRequest, v1.SetMarginalRateResponse]
+	setExemptionClass     *connect.Client[v1.SetExemptionClassRequest, v1.SetExemptionClassResponse]
+	setEarlyRedemptionFee *connect.Client[v1.SetEarlyRedemptionFeeRequest, v1.SetEarlyRedemptionFeeResponse]
+	setChartStart         *connect.Client[v1.SetChartStartRequest, v1.SetChartStartResponse]
 }
 
 // GetOwnerSettings calls openfief.valuation.v1.SettingsService.GetOwnerSettings.
@@ -176,6 +199,11 @@ func (c *settingsServiceClient) SetMarginalRate(ctx context.Context, req *connec
 // SetExemptionClass calls openfief.valuation.v1.SettingsService.SetExemptionClass.
 func (c *settingsServiceClient) SetExemptionClass(ctx context.Context, req *connect.Request[v1.SetExemptionClassRequest]) (*connect.Response[v1.SetExemptionClassResponse], error) {
 	return c.setExemptionClass.CallUnary(ctx, req)
+}
+
+// SetEarlyRedemptionFee calls openfief.valuation.v1.SettingsService.SetEarlyRedemptionFee.
+func (c *settingsServiceClient) SetEarlyRedemptionFee(ctx context.Context, req *connect.Request[v1.SetEarlyRedemptionFeeRequest]) (*connect.Response[v1.SetEarlyRedemptionFeeResponse], error) {
+	return c.setEarlyRedemptionFee.CallUnary(ctx, req)
 }
 
 // SetChartStart calls openfief.valuation.v1.SettingsService.SetChartStart.
@@ -199,6 +227,15 @@ type SettingsServiceHandler interface {
 	// it can't read. The choice stays with the instrument; setting it again
 	// replaces it. It revalues nothing: the yearly tax is computed when read.
 	SetExemptionClass(context.Context, *connect.Request[v1.SetExemptionClassRequest]) (*connect.Response[v1.SetExemptionClassResponse], error)
+	// SetEarlyRedemptionFee confirms or overrides a treasury bond series'
+	// early-redemption fee (D-97). Without a fee it confirms the fee assumed
+	// from the reviewed table's latest issue letter for a series sold after
+	// the month the table was reviewed through: the same fee becomes the
+	// owner's, and nothing is revalued. With a fee it replaces the series'
+	// fee, whatever it came from, and every account that held the series is
+	// revalued. Either way the attention item asking to confirm the fee
+	// clears.
+	SetEarlyRedemptionFee(context.Context, *connect.Request[v1.SetEarlyRedemptionFeeRequest]) (*connect.Response[v1.SetEarlyRedemptionFeeResponse], error)
 	// SetChartStart stores the day the time charts start on (D-138) as the
 	// owner's setting (D-167): the portfolio's, or one account's. An empty
 	// start clears the setting, so the charts start on their default again.
@@ -238,6 +275,12 @@ func NewSettingsServiceHandler(svc SettingsServiceHandler, opts ...connect.Handl
 		connect.WithSchema(settingsServiceMethods.ByName("SetExemptionClass")),
 		connect.WithHandlerOptions(opts...),
 	)
+	settingsServiceSetEarlyRedemptionFeeHandler := connect.NewUnaryHandler(
+		SettingsServiceSetEarlyRedemptionFeeProcedure,
+		svc.SetEarlyRedemptionFee,
+		connect.WithSchema(settingsServiceMethods.ByName("SetEarlyRedemptionFee")),
+		connect.WithHandlerOptions(opts...),
+	)
 	settingsServiceSetChartStartHandler := connect.NewUnaryHandler(
 		SettingsServiceSetChartStartProcedure,
 		svc.SetChartStart,
@@ -254,6 +297,8 @@ func NewSettingsServiceHandler(svc SettingsServiceHandler, opts ...connect.Handl
 			settingsServiceSetMarginalRateHandler.ServeHTTP(w, r)
 		case SettingsServiceSetExemptionClassProcedure:
 			settingsServiceSetExemptionClassHandler.ServeHTTP(w, r)
+		case SettingsServiceSetEarlyRedemptionFeeProcedure:
+			settingsServiceSetEarlyRedemptionFeeHandler.ServeHTTP(w, r)
 		case SettingsServiceSetChartStartProcedure:
 			settingsServiceSetChartStartHandler.ServeHTTP(w, r)
 		default:
@@ -279,6 +324,10 @@ func (UnimplementedSettingsServiceHandler) SetMarginalRate(context.Context, *con
 
 func (UnimplementedSettingsServiceHandler) SetExemptionClass(context.Context, *connect.Request[v1.SetExemptionClassRequest]) (*connect.Response[v1.SetExemptionClassResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.valuation.v1.SettingsService.SetExemptionClass is not implemented"))
+}
+
+func (UnimplementedSettingsServiceHandler) SetEarlyRedemptionFee(context.Context, *connect.Request[v1.SetEarlyRedemptionFeeRequest]) (*connect.Response[v1.SetEarlyRedemptionFeeResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("openfief.valuation.v1.SettingsService.SetEarlyRedemptionFee is not implemented"))
 }
 
 func (UnimplementedSettingsServiceHandler) SetChartStart(context.Context, *connect.Request[v1.SetChartStartRequest]) (*connect.Response[v1.SetChartStartResponse], error) {

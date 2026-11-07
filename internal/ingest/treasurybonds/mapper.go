@@ -83,7 +83,9 @@ type Mapper struct {
 // dated as adding it was, and of everything e.Booked says was booked for
 // it since: its coupons, its redemption and their payout withdrawals, so
 // their cash goes with it (D-154). Map also returns each series' terms once, in the
-// order the series first appear. Any invalid lot, one series bought on one
+// order the series first appear, but none for a lot still pending (its
+// series not in the ministry's data yet, BondLot.Pending): a later sync fills
+// those in. Any invalid lot, one series bought on one
 // day twice in the batch, or one series with two different terms refuses
 // the whole batch.
 //
@@ -113,8 +115,10 @@ func (m Mapper) Map(e *ingest.BondLotEntries, today kernel.Date) (ingest.Mapping
 		if err != nil {
 			return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w", i+1, err)
 		}
-		if terms, err = addTerms(terms, bySer, in, &l.Terms); err != nil {
-			return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w", i+1, err)
+		if !l.Pending() {
+			if terms, err = addTerms(terms, bySer, in, &l.Terms); err != nil {
+				return ingest.Mapping{}, nil, fmt.Errorf("lot %d: %w", i+1, err)
+			}
 		}
 		txs, err := m.lotTransactions(in, l, e.GoLive)
 		if err != nil {

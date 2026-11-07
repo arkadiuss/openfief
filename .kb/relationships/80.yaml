@@ -552,3 +552,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ab56d4ce2984
+  - type: implements
+    from: SYM-pl-published-rates-of
+    to: REQ-treasurybonds-rates-from-ministry-data
+    created_at: 2026-11-07T12:38:30.615Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0024dced220f
+  - type: executable_for
+    from: SYM-pl-test-assumed-fee-detail
+    to: TEST-pl-fees
+    created_at: 2026-11-07T13:28:37.699Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2255cb455d80
+  - type: implements
+    from: SYM-viewsv1-bond-terms-attribution-proto-message
+    to: REQ-views-bond-series-terms
+    created_at: 2026-11-07T14:20:24.436Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1886e82e0442
+  - type: covered_by
+    from: SYM-viewsv1-bond-terms-attribution-proto-message
+    to: TEST-views-connectapi-bondterms
+    created_at: 2026-11-07T14:20:24.460Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1ac1a447fd36
+  - type: constrains
+    from: REQ-tooling-kibi-slow-query-warning
+    to: FACT-SUBJECT-AA869FD5FC3816C8
+    created_at: 2026-11-07T19:28:01.861Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f74b7ad22709
+  - type: requires_property
+    from: REQ-tooling-kibi-slow-query-warning
+    to: FACT-PROP-5EA14B0CBA412425
+    created_at: 2026-11-07T19:28:01.901Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-63e50ae90ab3
+  - type: specified_by
+    from: REQ-tooling-kibi-slow-query-warning
+    to: SCEN-tooling-kibi-slow-query-warned
+    created_at: 2026-11-07T19:28:01.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05cdbeeb25ae

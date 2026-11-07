@@ -37,3 +37,87 @@ index d86a055..550c405 100644
              const journaledLive = existsSync(path.join(livePath, "storage.json"));
              if (recoveryBackupPath !== undefined) {
                  if (!existsSync(livePath)) {
+diff --git a/node_modules/kibi-cli/dist/engine.js b/node_modules/kibi-cli/dist/engine.js
+index dfdb5c7..ec9fda3 100644
+--- a/node_modules/kibi-cli/dist/engine.js
++++ b/node_modules/kibi-cli/dist/engine.js
+@@ -815,6 +815,7 @@ export class EngineClient {
+     requestTail = Promise.resolve();
+     lastResult = null;
+     replacingStaleDaemon = false;
++    localDedupeReported = false;
+     constructor(options) {
+         if (!isValidBranchName(options.branch)) {
+             throw new Error(`Invalid Kibi engine branch name: ${options.branch}`);
+@@ -837,6 +838,7 @@ export class EngineClient {
+             try {
+                 await this.reconcileRuntime();
+                 await this.reconcileAttachment();
++                await this.reportLocalDedupe();
+                 return;
+             }
+             catch (error) {
+@@ -855,6 +857,29 @@ export class EngineClient {
+             }
+         }
+     }
++    /**
++     * Local patch (OpenFief, patches/kibi-cli+2.36.0.patch): print what the
++     * attach-time dedupe of patches/kibi-core+0.26.1.patch removed from the
++     * store this engine serves, once per client. The engine daemon's own
++     * stderr goes nowhere, so the count travels as kb_dedupe_report/2. Under
++     * GitHub Actions the line is a workflow warning.
++     */
++    async reportLocalDedupe() {
++        if (this.localDedupeReported)
++            return;
++        this.localDedupeReported = true;
++        let result;
++        try {
++            result = await this.query("kb:kb_dedupe_report(Triples, Entities)");
++        }
++        catch {
++            return;
++        }
++        if (!result?.success)
++            return;
++        const line = `kibi (local patch): removed ${result.bindings.Triples} duplicate triples (${result.bindings.Entities} entities stored twice) from the published store - kibi's publish defect, see docs/dev/kibi.md`;
++        console.error(process.env.GITHUB_ACTIONS === "true" ? `::warning title=kibi publish defect::${line}` : line);
++    }
+     async connect(allowSpawn = true) {
+         if (this.socket !== null && !this.socket.destroyed)
+             return;
+diff --git a/node_modules/kibi-cli/dist/prolog.js b/node_modules/kibi-cli/dist/prolog.js
+index abcabac..4bc388a 100644
+--- a/node_modules/kibi-cli/dist/prolog.js
++++ b/node_modules/kibi-cli/dist/prolog.js
+@@ -356,7 +356,19 @@ export class PrologProcess {
+                 };
+                 const timeoutId = setTimeout(() => {
+                     const stage = this.lastDiagnosticStage(this.errorBuffer) ?? "unknown";
+-                    const msg = `Query timeout after ${this.timeout / 1000}s (stage=${stage}, pid=${this.process?.pid ?? 0}, killed=${this.process?.killed ? "yes" : "no"}, exitCode=${this.process?.exitCode ?? "null"}, signal=${this.process?.signalCode ?? "null"}, goal=${goalLabel}). If several fresh Kibi commands hang or crawl the same way, the engine state is likely wedged: run 'kibi engine stop' (then 'kibi sync --rebuild' if needed) and retry.`;
++                    // Local patch (OpenFief, patches/kibi-cli+2.36.0.patch): the
++                    // message reported killed=no, read before terminate() below
++                    // stops the process, and suggested a wedged engine. It now
++                    // reports the process after the stop: a timed-out query's
++                    // SWI process is gone, and the engine's next request boots a
++                    // fresh session (EngineSession.ensureLive).
++                    const child = this.process;
++                    const describeStop = () => child === null
++                        ? "its Prolog process was already gone"
++                        : child.exitCode === null && child.signalCode === null
++                            ? `its Prolog process (pid ${child.pid ?? 0}) did not stop after SIGTERM and SIGKILL`
++                            : `its Prolog process (pid ${child.pid ?? 0}) was stopped (exitCode=${child.exitCode ?? "null"}, signal=${child.signalCode ?? "null"}); the engine starts a fresh session for its next request`;
++                    const msg = `Query timeout after ${this.timeout / 1000}s (stage=${stage}, goal=${goalLabel})`;
+                     if (debug) {
+                         console.error(`[prolog debug] timeout: ${msg}`);
+                         const runtime = this.errorBuffer
+@@ -367,7 +379,7 @@ export class PrologProcess {
+                     settle();
+                     this.terminationReason = `query timeout: ${goalLabel}`;
+                     void this.terminate().finally(() => {
+-                        reject(new Error(msg));
++                        reject(new Error(`${msg}; ${describeStop()}.`));
+                     });
+                 }, this.timeout);
+                 const checkResult = () => {

@@ -1,6 +1,8 @@
 package treasurybonds_test
 
 import (
+	"encoding/binary"
+	"slices"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -106,6 +108,8 @@ func TestParseWorkbookRefuses(t *testing.T) {
 	}{
 		{name: "not a compound file", data: []byte("<html>not a spreadsheet</html>"), wantErr: treasurybonds.ErrNotWorkbook},
 		{name: "cut short", data: good[:1024], wantErr: treasurybonds.ErrNotWorkbook},
+		{name: "a stream larger than the file", data: patched(good, workbookSizeAt, 0x7FFFFFFF), wantErr: treasurybonds.ErrNotWorkbook},
+		{name: "a directory chain that loops", data: patched(good, directoryFATAt, 1), wantErr: treasurybonds.ErrNotWorkbook},
 		{name: "percentages", wantErr: treasurybonds.ErrNotFraction, data: xls(t, xsheet{name: "TOS", rows: [][]xcell{
 			header(-1), {text(0, "TOS0199"), num(9, "4.4")},
 		}})},
@@ -126,6 +130,22 @@ func TestParseWorkbookRefuses(t *testing.T) {
 			}
 		})
 	}
+}
+
+// Offsets in the synthetic compound file (compoundFile): the Workbook
+// directory entry's stream size, and the FAT entry of the directory's
+// sector, sector 1.
+const (
+	workbookSizeAt = 512 + 512 + 128 + 120
+	directoryFATAt = 512 + 4
+)
+
+// patched returns a copy of data with the 32-bit little-endian value v at
+// off.
+func patched(data []byte, off int, v uint32) []byte {
+	out := slices.Clone(data)
+	binary.LittleEndian.PutUint32(out[off:], v)
+	return out
 }
 
 // FuzzParseWorkbook feeds the reader damaged workbooks: whatever the bytes,

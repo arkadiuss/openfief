@@ -965,3 +965,45 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4b2ffb194865
+  - type: constrains
+    from: REQ-ui-instrument-bond-terms
+    to: FACT-SUBJECT-125585B15F19664A
+    created_at: 2026-11-07T13:27:17.226Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-59c81f2ebbf8
+  - type: requires_property
+    from: REQ-ui-instrument-bond-terms
+    to: FACT-PROP-6F3DB2BA9EA0E191
+    created_at: 2026-11-07T13:27:17.277Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9959e9ba1498
+  - type: specified_by
+    from: REQ-ui-instrument-bond-terms
+    to: SCEN-ui-instrument-bond-terms
+    created_at: 2026-11-07T13:27:17.326Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-404703a550ea
+  - type: executable_for
+    from: SYM-core-test-helper-check-bond-fee-refusals
+    to: TEST-core-settings
+    created_at: 2026-11-07T13:31:36.438Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-29d8ae54cbbe
+  - type: implements
+    from: SYM-plugins-ca-bundle
+    to: REQ-plugins-cli-ca-bundle-set
+    created_at: 2026-11-07T17:36:27.376Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-27c2e973c82a
+  - type: covered_by
+    from: SYM-plugins-ca-bundle
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T17:36:27.419Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-993bba7f5988

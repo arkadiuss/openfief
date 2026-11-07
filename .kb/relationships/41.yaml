@@ -860,3 +860,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-f38ab2991a86
+  - type: implements
+    from: SYM-attention-app-held-isins
+    to: REQ-attention-bond-fee-assumed
+    created_at: 2026-11-07T13:31:52.983Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-203e6c3c1bc6
+  - type: covered_by
+    from: SYM-attention-app-held-isins
+    to: TEST-attention-app-bondfees
+    created_at: 2026-11-07T13:31:53.013Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-683d9ce162e2
+  - type: verified_by
+    from: SCEN-plugins-extra-ca-setting
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T10:22:58.869Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-da692684c897
+  - type: verified_by
+    from: SCEN-plugins-extra-ca-setting
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T10:22:58.937Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1db4c9e2b59d
+  - type: verified_by
+    from: SCEN-plugins-extra-ca-setting
+    to: TEST-plugins-kube-ca-bundle
+    created_at: 2026-11-07T17:32:49.774Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a96d418f8f23

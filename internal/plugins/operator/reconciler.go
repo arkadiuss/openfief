@@ -125,7 +125,7 @@ func (o *observation) result() ctrl.Result {
 // the rollout. Problems that are the owner's to fix are recorded in the
 // observation; only API failures are returned.
 func (r *PluginReconciler) observe(ctx context.Context, p *v1alpha1.Plugin) (*observation, error) {
-	o := &observation{generation: p.Generation}
+	o := &observation{generation: p.Generation, instance: p.Name, caBundle: plugins.CABundleStateOf(p.Spec.ExtraCA, p.Spec.CABundleSHA256)}
 	current, specErr := pluginFromSpec(p.Name, &p.Spec)
 	o.specErr = specErr
 	if current != nil {
@@ -338,6 +338,9 @@ func (r *PluginReconciler) apply(ctx context.Context, p *v1alpha1.Plugin, o *obs
 		if err := r.applyOwned(ctx, p, obj); err != nil {
 			return false, err
 		}
+	}
+	if _, mounted := o.rollout.Run.CABundleSecret(); mounted {
+		StampCABundle(objs.Deployment, p.Spec.CABundleSHA256)
 	}
 	if err := r.applyOwned(ctx, p, objs.Deployment); err != nil {
 		return false, err

@@ -85140,19 +85140,6 @@ symbols:
     relationships:
       - type: executable_for
         target: TEST-plugins-cli-upgrade
-  - id: SYM-pl-command-args
-    title: commandArgs
-    sourceFile: internal/plugins/cli/cli.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-10-29T17:08:10.830Z
-    relationships:
-      - type: covered_by
-        target: TEST-plugins-cli-upgrade
-      - type: implements
-        target: REQ-plugins-cli-upgrade
   - id: SYM-pl-fake-cluster-get
     title: fakeCluster.Get
     sourceFile: internal/plugins/cli/cli_test.go
@@ -161795,6 +161782,8 @@ symbols:
         target: TEST-pl-published
       - type: implements
         target: REQ-pl-published-series-rates
+      - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
   - id: SYM-pl-attribution
     title: Attribution
     sourceFile: internal/jurisdiction/pl/published.go
@@ -161835,7 +161824,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-fees
       - type: implements
-        target: REQ-pl-early-redemption-fee-table
+        target: REQ-pl-fee-carried-forward-assumed
   - id: SYM-pl-fees-reviewed-through
     title: FeesReviewedThrough
     sourceFile: internal/jurisdiction/pl/fees.go
@@ -161848,7 +161837,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-fees
       - type: implements
-        target: REQ-pl-early-redemption-fee-table
+        target: REQ-pl-fee-carried-forward-assumed
   - id: SYM-pl-early-redemption-fees
     title: EarlyRedemptionFees
     sourceFile: internal/jurisdiction/pl/fees.go
@@ -161861,7 +161850,9 @@ symbols:
       - type: covered_by
         target: TEST-pl-fees
       - type: implements
-        target: REQ-pl-early-redemption-fee-table
+        target: REQ-pl-fee-carried-forward-assumed
+      - type: implements
+        target: REQ-treasurybonds-fees-from-reviewed-table
   - id: SYM-pl-first-of-month
     title: firstOfMonth
     sourceFile: internal/jurisdiction/pl/fees.go
@@ -161874,7 +161865,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-fees
       - type: implements
-        target: REQ-pl-early-redemption-fee-table
+        target: REQ-pl-fee-carried-forward-assumed
   - id: SYM-pl-sale-month
     title: SaleMonth
     sourceFile: internal/jurisdiction/pl/fees.go
@@ -161887,7 +161878,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-fees
       - type: implements
-        target: REQ-pl-early-redemption-fee-table
+        target: REQ-pl-fee-carried-forward-assumed
   - id: SYM-pl-early-redemption-fee
     title: EarlyRedemptionFee
     sourceFile: internal/jurisdiction/pl/fees.go
@@ -161900,7 +161891,9 @@ symbols:
       - type: covered_by
         target: TEST-pl-fees
       - type: implements
-        target: REQ-pl-early-redemption-fee-table
+        target: REQ-pl-fee-carried-forward-assumed
+      - type: implements
+        target: REQ-treasurybonds-fees-from-reviewed-table
   - id: SYM-pl-fee-row-of
     title: feeRow
     sourceFile: internal/jurisdiction/pl/fees.go
@@ -161913,7 +161906,7 @@ symbols:
       - type: covered_by
         target: TEST-pl-fees
       - type: implements
-        target: REQ-pl-early-redemption-fee-table
+        target: REQ-pl-fee-carried-forward-assumed
   - id: SYM-pl-test-sale-month
     title: TestSaleMonth
     sourceFile: internal/jurisdiction/pl/fees_test.go
@@ -162340,19 +162333,6 @@ symbols:
         target: TEST-valuation-mfbonds
       - type: implements
         target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-dir-entry
-    title: dirEntry
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:13:41.377Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
   - id: SYM-mfbonds-read-stream
     title: readStream
     sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
@@ -162361,149 +162341,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-07T08:13:49.899Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-parse-compound-file
-    title: parseCompoundFile
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:13:58.338Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-compound-file-read-header
-    title: compoundFile.readHeader
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:14:06.645Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-compound-file-fat-sectors
-    title: compoundFile.fatSectors
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:14:15.184Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-compound-file-read-mini
-    title: compoundFile.readMini
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:14:23.653Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-compound-file-sectors
-    title: compoundFile.sectors
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:14:32.023Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-compound-file-sector
-    title: compoundFile.sector
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:14:40.387Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-compound-file-chain
-    title: compoundFile.chain
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:14:48.915Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-compound-file-mini-chain
-    title: compoundFile.miniChain
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:14:57.341Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-trim
-    title: trim
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:15:05.575Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-dir-entries
-    title: dirEntries
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:15:13.880Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-uint32s
-    title: uint32s
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: behavioral
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:15:22.284Z
     relationships:
       - type: covered_by
         target: TEST-valuation-mfbonds
@@ -162530,20 +162367,6 @@ symbols:
     origin:
       kind: agent
       recorded_at: 2026-11-07T08:15:39.064Z
-    relationships:
-      - type: covered_by
-        target: TEST-valuation-mfbonds
-      - type: implements
-        target: REQ-valuation-mfbonds-published-rates
-  - id: SYM-mfbonds-compound-file
-    title: compoundFile
-    sourceFile: internal/ingest/treasurybonds/ministry_cfb.go
-    status: active
-    symbol_role: type-shape
-    granularity_reason: module-level-behavior
-    origin:
-      kind: agent
-      recorded_at: 2026-11-07T08:15:46.543Z
     relationships:
       - type: covered_by
         target: TEST-valuation-mfbonds
@@ -162586,6 +162409,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
       - type: implements
         target: REQ-valuation-mfbonds-published-rates
   - id: SYM-mfbonds-client-from-gov-pl
@@ -162848,6 +162673,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-valuation-mfbonds
+      - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
       - type: implements
         target: REQ-valuation-mfbonds-published-rates
   - id: SYM-mfbonds-columns
@@ -163476,6 +163303,8 @@ symbols:
       - type: covered_by
         target: TEST-treasurybonds-published
       - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
+      - type: implements
         target: REQ-treasurybonds-terms-from-published-data
   - id: SYM-treasurybonds-complete
     title: Complete
@@ -163488,6 +163317,8 @@ symbols:
     relationships:
       - type: covered_by
         target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
       - type: implements
         target: REQ-treasurybonds-terms-from-published-data
   - id: SYM-treasurybonds-test-helper-published
@@ -163578,6 +163409,8 @@ symbols:
         target: TEST-ingest-bondlot
       - type: implements
         target: REQ-ingest-bond-lot-terms-optional
+      - type: implements
+        target: REQ-ingest-bond-terms-owner-overrides
   - id: SYM-ingest-connectapi-entered-terms
     title: enteredTerms
     sourceFile: internal/ingest/connectapi/service.go
@@ -163673,6 +163506,8 @@ symbols:
         target: TEST-ingest-delivery-bonds
       - type: implements
         target: REQ-ingest-bond-lot-terms-optional
+      - type: implements
+        target: REQ-ingest-bond-terms-owner-overrides
   - id: SYM-ingest-delivery-attribution
     title: Attribution
     sourceFile: internal/ingest/delivery/bonds.go
@@ -163994,3 +163829,2704 @@ symbols:
         target: TEST-ingest-connectrpc-mapping
       - type: implements
         target: REQ-ingest-bond-terms-attribution-contract
+  - id: SYM-pl-fee-source
+    title: FeeSource
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:27:25.035Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-fee-carried-forward-assumed
+  - id: SYM-pl-fee-source-string
+    title: FeeSource.String
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:27:30.897Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-fee-carried-forward-assumed
+  - id: SYM-pl-parse-fee-source
+    title: ParseFeeSource
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:27:36.779Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-fee-carried-forward-assumed
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-pl-table-fee
+    title: TableFee
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:27:42.630Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-fee-carried-forward-assumed
+  - id: SYM-pl-fee-from
+    title: feeFrom
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:27:48.325Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-fee-carried-forward-assumed
+      - type: implements
+        target: REQ-treasurybonds-fees-from-reviewed-table
+  - id: SYM-pl-assumed-fee-detail
+    title: AssumedFeeDetail
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:27:53.800Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-assumed-fee-confirmed-by-owner
+  - id: SYM-pl-fees-to-confirm
+    title: FeesToConfirm
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:27:59.229Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-assumed-fee-confirmed-by-owner
+  - id: SYM-pl-in-grosze
+    title: inGrosze
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:04.541Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-assumed-fee-confirmed-by-owner
+  - id: SYM-pl-terms-confirm-fee
+    title: Terms.ConfirmFee
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:09.966Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-assumed-fee-confirmed-by-owner
+  - id: SYM-pl-terms-override-fee
+    title: Terms.OverrideFee
+    sourceFile: internal/jurisdiction/pl/fees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:15.322Z
+    relationships:
+      - type: covered_by
+        target: TEST-pl-fees
+      - type: implements
+        target: REQ-pl-assumed-fee-confirmed-by-owner
+  - id: SYM-pl-test-confirm-fee
+    title: TestConfirmFee
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:20.410Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-pl-test-override-fee
+    title: TestOverrideFee
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:25.610Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-pl-test-fees-to-confirm
+    title: TestFeesToConfirm
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:30.730Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-pl-test-assumed-fee-detail
+    title: TestAssumedFeeDetail
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:35.875Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-pl-test-parse-fee-source
+    title: TestParseFeeSource
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:41.023Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-pl-test-helper-terms
+    title: terms
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:45.894Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-ingest-bond-lot-pending
+    title: BondLot.Pending
+    sourceFile: internal/ingest/bondlot.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:51.327Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-bondlot
+      - type: implements
+        target: REQ-treasurybonds-sync-fills-missing-terms
+  - id: SYM-ingest-test-bond-lot-pending
+    title: TestBondLotPending
+    sourceFile: internal/ingest/bondlot_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:28:56.679Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-bondlot
+  - id: SYM-treasurybonds-missing-terms
+    title: MissingTerms
+    sourceFile: internal/ingest/treasurybonds/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:02.031Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-treasurybonds-sync-fills-missing-terms
+  - id: SYM-treasurybonds-fill-missing
+    title: FillMissing
+    sourceFile: internal/ingest/treasurybonds/published.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:07.355Z
+    relationships:
+      - type: covered_by
+        target: TEST-treasurybonds-published
+      - type: implements
+        target: REQ-treasurybonds-rates-from-ministry-data
+      - type: implements
+        target: REQ-treasurybonds-sync-fills-missing-terms
+  - id: SYM-treasurybonds-test-missing-terms
+    title: TestMissingTerms
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:12.740Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-fill-missing
+    title: TestFillMissing
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:18.189Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-helper-held
+    title: held
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:22.972Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-helper-series
+    title: series
+    sourceFile: internal/ingest/treasurybonds/published_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:28.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-published
+  - id: SYM-treasurybonds-test-map-pending-lot
+    title: TestMapPendingLot
+    sourceFile: internal/ingest/treasurybonds/mapper_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:33.983Z
+    relationships:
+      - type: executable_for
+        target: TEST-treasurybonds-mapper
+  - id: SYM-mfbonds-test-helper-patched
+    title: patched
+    sourceFile: internal/ingest/treasurybonds/ministry_workbook_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:39.314Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-mfbonds
+  - id: SYM-ingest-delivery-fee-source
+    title: FeeSource
+    sourceFile: internal/ingest/delivery/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:45.346Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-bonds
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-ingest-delivery-fee-source-from
+    title: FeeSourceFrom
+    sourceFile: internal/ingest/delivery/bonds.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:51.326Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-delivery-bonds
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-ingest-delivery-test-fee-source
+    title: TestFeeSource
+    sourceFile: internal/ingest/delivery/bonds_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:29:56.732Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-delivery-bonds
+  - id: SYM-ingest-connectrpc-fee-source-from
+    title: feeSourceFrom
+    sourceFile: internal/ingest/connectrpc/mapping.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:02.530Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-ingest-connectrpc-fee-source-to
+    title: feeSourceTo
+    sourceFile: internal/ingest/connectrpc/held.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:08.050Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-valuation-postgres-terms-row
+    title: termsRow
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:13.374Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-valuation-postgres-terms-row-scan
+    title: termsRow.scan
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:19.177Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-valuation-postgres-terms-row-terms
+    title: termsRow.terms
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:24.663Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-valuation-postgres-store-all-bond-terms
+    title: Store.AllBondTerms
+    sourceFile: internal/valuation/postgres/store.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:30.204Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-valuation-postgres-store-save-bond-fee
+    title: Store.SaveBondFee
+    sourceFile: internal/valuation/postgres/queue.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:35.868Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-postgres-store
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-valuation-postgres-test-bond-fee-source
+    title: TestBondFeeSource
+    sourceFile: internal/valuation/postgres/store_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:41.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-postgres-store
+  - id: SYM-valuation-app-bond-fees
+    title: BondFees
+    sourceFile: internal/valuation/app/bondfee.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:46.741Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-bondfee
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuation-app-settings-with-bond-fees
+    title: Settings.WithBondFees
+    sourceFile: internal/valuation/app/bondfee.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:52.354Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-bondfee
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuation-app-settings-set-early-redemption-fee
+    title: Settings.SetEarlyRedemptionFee
+    sourceFile: internal/valuation/app/bondfee.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:30:58.016Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-bondfee
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuation-app-fee-change
+    title: feeChange
+    sourceFile: internal/valuation/app/bondfee.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:03.699Z
+    relationships:
+      - type: covered_by
+        target: TEST-valuation-app-bondfee
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuation-app-test-fake-bond-fees
+    title: fakeBondFees
+    sourceFile: internal/valuation/app/bondfee_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:08.701Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-bondfee
+  - id: SYM-valuation-app-test-fake-bond-fees-bond-terms
+    title: fakeBondFees.BondTerms
+    sourceFile: internal/valuation/app/bondfee_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:13.581Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-bondfee
+  - id: SYM-valuation-app-test-fake-bond-fees-save-bond-fee
+    title: fakeBondFees.SaveBondFee
+    sourceFile: internal/valuation/app/bondfee_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:18.561Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-bondfee
+  - id: SYM-valuation-app-test-set-early-redemption-fee
+    title: TestSetEarlyRedemptionFee
+    sourceFile: internal/valuation/app/bondfee_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:24.136Z
+    relationships:
+      - type: executable_for
+        target: TEST-valuation-app-bondfee
+  - id: SYM-valuation-connectapi-settings-service-set-early-redemption-fee
+    title: settingsService.SetEarlyRedemptionFee
+    sourceFile: internal/valuation/connectapi/settings.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:29.598Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-core-test-helper-check-bond-fee-refusals
+    title: checkBondFeeRefusals
+    sourceFile: cmd/core/settings_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:34.519Z
+    relationships:
+      - type: executable_for
+        target: TEST-core-settings
+  - id: SYM-attention-app-bond-terms
+    title: BondTerms
+    sourceFile: internal/attention/app/bondfees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:40.169Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-bondfees
+      - type: implements
+        target: REQ-attention-bond-fee-assumed
+  - id: SYM-attention-app-assumed-bond-fees
+    title: AssumedBondFees
+    sourceFile: internal/attention/app/bondfees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:45.591Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-bondfees
+      - type: implements
+        target: REQ-attention-bond-fee-assumed
+  - id: SYM-attention-app-held-isins
+    title: heldISINs
+    sourceFile: internal/attention/app/bondfees.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:51.166Z
+    relationships:
+      - type: covered_by
+        target: TEST-attention-app-bondfees
+      - type: implements
+        target: REQ-attention-bond-fee-assumed
+  - id: SYM-attention-app-test-fake-bond-terms
+    title: fakeBondTerms
+    sourceFile: internal/attention/app/bondfees_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:31:56.170Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-bondfees
+  - id: SYM-attention-app-test-fake-bond-terms-all-bond-terms
+    title: fakeBondTerms.AllBondTerms
+    sourceFile: internal/attention/app/bondfees_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:01.231Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-bondfees
+  - id: SYM-attention-app-test-helper-bond-terms
+    title: bondTerms
+    sourceFile: internal/attention/app/bondfees_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:06.210Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-bondfees
+  - id: SYM-attention-app-test-assumed-bond-fees
+    title: TestAssumedBondFees
+    sourceFile: internal/attention/app/bondfees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:11.755Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-bondfees
+  - id: SYM-attention-app-test-assumed-bond-fee-resolves-itself
+    title: TestAssumedBondFeeResolvesItself
+    sourceFile: internal/attention/app/bondfees_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:17.140Z
+    relationships:
+      - type: executable_for
+        target: TEST-attention-app-bondfees
+  - id: SYM-views-app-bond-terms
+    title: BondTerms
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:22.456Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-views-app-with-bond-terms
+    title: WithBondTerms
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:27.931Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-views-app-views-series-terms
+    title: Views.seriesTerms
+    sourceFile: internal/views/app/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:33.323Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-views-connectapi-pb-series-terms
+    title: pbSeriesTerms
+    sourceFile: internal/views/connectapi/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:38.660Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-views-connectapi-test-fake-series-terms
+    title: fakeSeriesTerms
+    sourceFile: internal/views/connectapi/bondterms_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:43.639Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-bondterms
+  - id: SYM-views-connectapi-test-fake-series-terms-bond-terms
+    title: fakeSeriesTerms.BondTerms
+    sourceFile: internal/views/connectapi/bondterms_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:48.606Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-bondterms
+  - id: SYM-views-connectapi-test-bond-terms-json
+    title: bondTermsJSON
+    sourceFile: internal/views/connectapi/bondterms_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:53.526Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-bondterms
+  - id: SYM-views-connectapi-test-rest-bond-terms
+    title: TestRESTBondTerms
+    sourceFile: internal/views/connectapi/bondterms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:32:58.969Z
+    relationships:
+      - type: executable_for
+        target: TEST-views-connectapi-bondterms
+  - id: SYM-ui-series-terms
+    title: seriesTerms
+    sourceFile: internal/views/ui/bondterms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:04.495Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-terms
+      - type: implements
+        target: REQ-ui-instrument-bond-terms
+  - id: SYM-ui-term-source-label
+    title: termSourceLabel
+    sourceFile: internal/views/ui/bondterms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:09.889Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-terms
+      - type: implements
+        target: REQ-ui-instrument-bond-terms
+  - id: SYM-ui-series-terms-view
+    title: seriesTermsView
+    sourceFile: internal/views/ui/bondterms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:15.285Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-terms
+      - type: implements
+        target: REQ-ui-instrument-bond-terms
+  - id: SYM-ui-number-format-percent
+    title: numberFormat.percent
+    sourceFile: internal/views/ui/bondterms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:20.738Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-terms
+      - type: implements
+        target: REQ-ui-instrument-bond-terms
+  - id: SYM-ui-attribution-line
+    title: attributionLine
+    sourceFile: internal/views/ui/bondterms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:26.076Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-terms
+      - type: implements
+        target: REQ-ui-instrument-bond-terms
+  - id: SYM-ui-server-set-bond-fee
+    title: server.setBondFee
+    sourceFile: internal/views/ui/bondterms.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:31.601Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-terms
+      - type: implements
+        target: REQ-ui-instrument-bond-terms
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-ui-instrument-data-bond
+    title: instrumentData.Bond
+    sourceFile: internal/views/ui/instrument.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:37.193Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-terms
+      - type: implements
+        target: REQ-ui-instrument-bond-terms
+  - id: SYM-ui-test-helper-bond-detail
+    title: bondDetail
+    sourceFile: internal/views/ui/bondterms_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:42.231Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-terms
+  - id: SYM-ui-test-fake-settings-set-early-redemption-fee
+    title: fakeSettings.SetEarlyRedemptionFee
+    sourceFile: internal/views/ui/bondterms_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:47.280Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-terms
+  - id: SYM-ui-test-helper-cmp-or
+    title: cmpOr
+    sourceFile: internal/views/ui/bondterms_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:52.347Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-terms
+  - id: SYM-ui-test-bond-terms-on-instrument-page
+    title: TestBondTermsOnInstrumentPage
+    sourceFile: internal/views/ui/bondterms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:33:58.089Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-terms
+  - id: SYM-ui-test-set-bond-fee
+    title: TestSetBondFee
+    sourceFile: internal/views/ui/bondterms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:34:03.931Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-terms
+  - id: SYM-ui-test-bond-fee-item
+    title: TestBondFeeItem
+    sourceFile: internal/views/ui/bondterms_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:34:09.726Z
+    relationships:
+      - type: executable_for
+        target: TEST-ui-bond-terms
+  - id: SYM-treasury-bonds-missing-terms
+    title: missingTerms
+    sourceFile: plugins/treasury-bonds/connector.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:34:15.584Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-treasury-bonds
+      - type: implements
+        target: REQ-treasurybonds-sync-fills-missing-terms
+  - id: SYM-treasury-bonds-test-sync-fills-missing-terms
+    title: TestSyncFillsMissingTerms
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:34:21.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-treasury-bonds-test-import-bond-lots-pending-terms
+    title: TestImportBondLotsPendingTerms
+    sourceFile: plugins/treasury-bonds/connector_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T13:34:27.274Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-treasury-bonds
+  - id: SYM-ingest-connectrpc-test-bond-terms-fee-source
+    title: TestBondTermsFeeSource
+    sourceFile: internal/ingest/connectrpc/mapping_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:15:13.460Z
+    relationships:
+      - type: executable_for
+        target: TEST-ingest-connectrpc-mapping
+  - id: SYM-pl-test-helper-table-fee-problems
+    title: tableFeeProblems
+    sourceFile: internal/jurisdiction/pl/fees_test.go
+    status: active
+    granularity_reason: test-suite
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:15:18.600Z
+    relationships:
+      - type: executable_for
+        target: TEST-pl-fees
+  - id: SYM-ui-instrument-titles
+    title: instrumentTitles
+    sourceFile: internal/views/ui/inbox.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:15:24.604Z
+    relationships:
+      - type: covered_by
+        target: TEST-ui-bond-terms
+      - type: implements
+        target: REQ-ui-instrument-bond-terms
+  - id: SYM-connectorv1-bond-fee-source
+    title: BondFeeSource
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:15:30.030Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-connectorv1-bond-fee-source-descriptor
+    title: BondFeeSource.Descriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:15:36.138Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-connectorv1-bond-fee-source-enum
+    title: BondFeeSource.Enum
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:15:42.349Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-connectorv1-bond-fee-source-enum-descriptor
+    title: BondFeeSource.EnumDescriptor
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:15:48.624Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-connectorv1-bond-fee-source-number
+    title: BondFeeSource.Number
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:15:54.944Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-connectorv1-bond-fee-source-string
+    title: BondFeeSource.String
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:01.044Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-connectorv1-bond-fee-source-type
+    title: BondFeeSource.Type
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:07.371Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-connectorv1-bond-terms-get-fee-source
+    title: BondTerms.GetFeeSource
+    sourceFile: sdk/go/gen/openfief/connector/v1/connector.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:13.527Z
+    relationships:
+      - type: covered_by
+        target: TEST-ingest-connectrpc-mapping
+      - type: implements
+        target: REQ-valuation-bond-fee-source-stored
+  - id: SYM-valuationv1-set-early-redemption-fee-request
+    title: SetEarlyRedemptionFeeRequest
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:19.096Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-request-descriptor
+    title: SetEarlyRedemptionFeeRequest.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:25.257Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-request-get-fee
+    title: SetEarlyRedemptionFeeRequest.GetFee
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:31.104Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-request-get-isin
+    title: SetEarlyRedemptionFeeRequest.GetIsin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:37.056Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-request-get-origin
+    title: SetEarlyRedemptionFeeRequest.GetOrigin
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:43.009Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-request-get-session-token
+    title: SetEarlyRedemptionFeeRequest.GetSessionToken
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:48.981Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-request-proto-message
+    title: SetEarlyRedemptionFeeRequest.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:16:54.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-request-proto-reflect
+    title: SetEarlyRedemptionFeeRequest.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:00.791Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-request-reset
+    title: SetEarlyRedemptionFeeRequest.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:06.474Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-request-string
+    title: SetEarlyRedemptionFeeRequest.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:12.218Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-response
+    title: SetEarlyRedemptionFeeResponse
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:17.279Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-response-descriptor
+    title: SetEarlyRedemptionFeeResponse.Descriptor
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:22.821Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-response-proto-message
+    title: SetEarlyRedemptionFeeResponse.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:28.447Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-response-proto-reflect
+    title: SetEarlyRedemptionFeeResponse.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:34.232Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-response-reset
+    title: SetEarlyRedemptionFeeResponse.Reset
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:40.000Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1-set-early-redemption-fee-response-string
+    title: SetEarlyRedemptionFeeResponse.String
+    sourceFile: sdk/go/gen/openfief/valuation/v1/settings.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:45.765Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1connect-unimplemented-settings-service-handler-set-early-redemption-fee
+    title: UnimplementedSettingsServiceHandler.SetEarlyRedemptionFee
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:51.533Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-valuationv1connect-settings-service-client-set-early-redemption-fee
+    title: settingsServiceClient.SetEarlyRedemptionFee
+    sourceFile: sdk/go/gen/openfief/valuation/v1/valuationv1connect/settings.connect.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:17:57.347Z
+    relationships:
+      - type: covered_by
+        target: TEST-core-settings
+      - type: implements
+        target: REQ-valuation-owner-sets-bond-fee
+  - id: SYM-viewsv1-bond-series-terms
+    title: BondSeriesTerms
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:18:02.567Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-descriptor
+    title: BondSeriesTerms.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:18:09.230Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-get-attribution
+    title: BondSeriesTerms.GetAttribution
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:18:15.786Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-get-early-redemption-fee
+    title: BondSeriesTerms.GetEarlyRedemptionFee
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:18:22.549Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-get-fee-source
+    title: BondSeriesTerms.GetFeeSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:18:29.259Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-get-first-period-rate
+    title: BondSeriesTerms.GetFirstPeriodRate
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:18:35.747Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-get-margin
+    title: BondSeriesTerms.GetMargin
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:18:42.238Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-get-rates-source
+    title: BondSeriesTerms.GetRatesSource
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:18:48.822Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-get-series
+    title: BondSeriesTerms.GetSeries
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:18:55.540Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-proto-message
+    title: BondSeriesTerms.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:02.171Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-proto-reflect
+    title: BondSeriesTerms.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:08.553Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-reset
+    title: BondSeriesTerms.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:15.114Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-series-terms-string
+    title: BondSeriesTerms.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:21.384Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution
+    title: BondTermsAttribution
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: type-shape
+    granularity_reason: module-level-behavior
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:26.997Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-descriptor
+    title: BondTermsAttribution.Descriptor
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:33.220Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-get-dataset
+    title: BondTermsAttribution.GetDataset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:39.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-get-fetched
+    title: BondTermsAttribution.GetFetched
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:45.884Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-get-license
+    title: BondTermsAttribution.GetLicense
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:52.052Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-get-made
+    title: BondTermsAttribution.GetMade
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:19:58.178Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-get-processing
+    title: BondTermsAttribution.GetProcessing
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:20:04.360Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-get-publisher
+    title: BondTermsAttribution.GetPublisher
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:20:10.472Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-get-url
+    title: BondTermsAttribution.GetUrl
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:20:16.552Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-proto-message
+    title: BondTermsAttribution.ProtoMessage
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:20:22.714Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-proto-reflect
+    title: BondTermsAttribution.ProtoReflect
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:20:28.953Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-reset
+    title: BondTermsAttribution.Reset
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:20:35.195Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-bond-terms-attribution-string
+    title: BondTermsAttribution.String
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:20:41.445Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-viewsv1-instrument-detail-get-bond-terms
+    title: InstrumentDetail.GetBondTerms
+    sourceFile: sdk/go/gen/openfief/views/v1/read_service.pb.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T14:20:47.753Z
+    relationships:
+      - type: covered_by
+        target: TEST-views-connectapi-bondterms
+      - type: implements
+        target: REQ-views-bond-series-terms
+  - id: SYM-tooling-kibi-timed-test-timed
+    title: timed
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:10.427Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-timed-test-check
+    title: check
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:16.051Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-timed-test-has
+    title: has
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:21.577Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-timed-test-lacks
+    title: lacks
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:26.822Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-timed-test-clean-stdout
+    title: clean_stdout
+    sourceFile: scripts/tests/kibi-timed.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:32.250Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-timed
+  - id: SYM-tooling-kibi-dedupe-test-run
+    title: run
+    sourceFile: scripts/tests/kibi-dedupe.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:38.141Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-dedupe
+  - id: SYM-tooling-kibi-dedupe-test-check
+    title: check
+    sourceFile: scripts/tests/kibi-dedupe.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T19:28:43.804Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-dedupe
+  - id: SYM-plugins-ca-bundle-state
+    title: CABundleState
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:35:42.232Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-operator-ca-bundle-missing-condition
+  - id: SYM-plugins-ca-bundle-state-of
+    title: CABundleStateOf
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:35:47.555Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-operator-ca-bundle-missing-condition
+  - id: SYM-plugins-effective-permissions-ca-bundle-secret
+    title: EffectivePermissions.CABundleSecret
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:35:58.061Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-manifest-asks-for-ca-bundle
+    title: Manifest.AsksForCABundle
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:03.338Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-plugin-validate-extra-ca
+    title: Plugin.validateExtraCA
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:08.631Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-plugin-set-extra-ca
+    title: Plugin.SetExtraCA
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:13.979Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-cli-ca-bundle-text
+    title: caBundleText
+    sourceFile: internal/plugins/cli/render.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:39.105Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-operator-stamp-ca-bundle
+    title: StampCABundle
+    sourceFile: internal/plugins/operator/objects.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:44.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-ca-bundle
+      - type: implements
+        target: REQ-operator-ca-bundle-rolls-pod
+  - id: SYM-operator-ca-bundle-condition
+    title: caBundleCondition
+    sourceFile: internal/plugins/operator/status.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:54.300Z
+    relationships:
+      - type: covered_by
+        target: TEST-operator-ca-bundle
+      - type: implements
+        target: REQ-operator-ca-bundle-missing-condition
+  - id: SYM-plugins-test-helper-ca-connector
+    title: caConnector
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:36:59.370Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-helper-ca-grant
+    title: caGrant
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:04.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-ca-bundle-state-of
+    title: TestCABundleStateOf
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:09.649Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-helper-ca-mounts
+    title: caMounts
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:25.216Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-helper-mounts-of
+    title: mountsOf
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:30.424Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-effective-ca-bundle
+    title: TestEffectiveCABundle
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:35.690Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-set-extra-ca
+    title: TestSetExtraCA
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:40.860Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-plan-upgrade-keeps-extra-ca
+    title: TestPlanUpgradeKeepsExtraCA
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:46.072Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-config-host-change-keeps-approved-allow-list
+    title: TestConfigHostChangeKeepsApprovedAllowList
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:51.316Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-kube-test-helper-ca-plan
+    title: caPlan
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:37:56.203Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-instances-keep-extra-ca
+    title: TestInstancesKeepExtraCA
+    sourceFile: internal/plugins/kube/optional_secret_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:15.420Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-cli-test-run-install-extra-ca
+    title: TestRunInstallExtraCA
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:20.415Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-check-extra-ca-install
+    title: checkExtraCAInstall
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:25.292Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-operator-test-stamp-ca-bundle
+    title: TestStampCABundle
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:30.199Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-operator-test-helper-ca-bundle-state
+    title: caBundleState
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:38:55.060Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-operator-test-ca-bundle
+    title: testCABundle
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:39:00.037Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-operator-test-helper-test-cluster-ca-bundle-state
+    title: testCluster.caBundleState
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T11:39:05.038Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-plugins-ca-bundle
+    title: CABundle
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:25.534Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-parse-ca-bundle
+    title: ParseCABundle
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:31.131Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-ca-bundle-checksum
+    title: CABundleChecksum
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:36.831Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-valid-ca-bundle-checksum
+    title: validCABundleChecksum
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:42.206Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-plugin-stamp-ca-bundle
+    title: Plugin.StampCABundle
+    sourceFile: internal/plugins/ca_bundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:47.681Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-app-ca-bundle-store
+    title: CABundleStore
+    sourceFile: internal/plugins/app/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:36:58.687Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-app-set-ca-bundle
+    title: SetCABundle
+    sourceFile: internal/plugins/app/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:04.202Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-app-unset-ca-bundle
+    title: UnsetCABundle
+    sourceFile: internal/plugins/app/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:09.520Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-app-plan-upgrade
+    title: planUpgrade
+    sourceFile: internal/plugins/app/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:14.861Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-kube-ca-bundle-secret
+    title: CABundleSecret
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:19.814Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-kube-ca-bundle-yaml
+    title: CABundleYAML
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:24.888Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-kube-instances-put-ca-bundle
+    title: Instances.PutCABundle
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:30.046Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-kube-instances-delete-ca-bundle
+    title: Instances.DeleteCABundle
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:35.187Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-kube-instances-stamp-ca-bundle
+    title: Instances.StampCABundle
+    sourceFile: internal/plugins/kube/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:40.436Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-kube-ca-bundle
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-cli-ca-bundle-args
+    title: caBundleArgs
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:45.951Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-cli-ca-bundle
+    title: caBundle
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:51.513Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-cli-set-ca-bundle
+    title: setCABundle
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:37:57.135Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-cli-print-ca-bundle
+    title: printCABundle
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:02.758Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-cli-render-ca-bundle-note
+    title: RenderCABundleNote
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:08.380Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+  - id: SYM-plugins-cli-unset-ca-bundle
+    title: unsetCABundle
+    sourceFile: internal/plugins/cli/cabundle.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:14.024Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-unset
+  - id: SYM-plugins-cli-args-fit
+    title: argsFit
+    sourceFile: internal/plugins/cli/cli.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:19.502Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-cli-ca-bundle-set
+      - type: implements
+        target: REQ-plugins-cli-upgrade
+  - id: SYM-plugins-cli-options-extra-ca-choice
+    title: options.extraCAChoice
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:24.614Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-cli-write-extra-ca
+    title: writeExtraCA
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:29.635Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-cli-stamp-text
+    title: stampText
+    sourceFile: internal/plugins/cli/upgrade.go
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:34.732Z
+    relationships:
+      - type: covered_by
+        target: TEST-plugins-cli-extra-ca
+      - type: implements
+        target: REQ-plugins-extra-ca-setting
+  - id: SYM-plugins-test-helper-test-cert
+    title: testCert
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:40.344Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-parse-ca-bundle
+    title: TestParseCABundle
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:45.836Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-ca-bundle-checksum
+    title: TestCABundleChecksum
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:51.227Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-plugins-test-plugin-stamp-ca-bundle
+    title: TestPluginStampCABundle
+    sourceFile: internal/plugins/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:38:56.637Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-ca-bundle
+  - id: SYM-operator-test-helper-stamp
+    title: stamp
+    sourceFile: internal/plugins/operator/ca_bundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:02.031Z
+    relationships:
+      - type: executable_for
+        target: TEST-operator-ca-bundle
+  - id: SYM-plugins-kube-test-ca-bundle-yaml
+    title: TestCABundleYAML
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:07.395Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-instances-put-ca-bundle
+    title: TestInstancesPutCABundle
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:12.773Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-instances-stamp-ca-bundle
+    title: TestInstancesStampCABundle
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:18.222Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-helper-check-ca-bundle-secret
+    title: checkCABundleSecret
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:23.662Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-kube-test-instances-keep-ca-bundle-stamp
+    title: TestInstancesKeepCABundleStamp
+    sourceFile: internal/plugins/kube/cabundle_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:29.203Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-kube-ca-bundle
+  - id: SYM-plugins-cli-test-helper-test-cert-pem
+    title: testCertPEM
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:45.862Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-run-with-files
+    title: runWithFiles
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:51.701Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-ca-fixture
+    title: caFixture
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:39:57.260Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-ca-files
+    title: caFiles
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:02.587Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-run-ca-bundle-set
+    title: TestRunCABundleSet
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:08.074Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-helper-check-ca-bundle-set
+    title: checkCABundleSet
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:13.486Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-run-ca-bundle-unset
+    title: TestRunCABundleUnset
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:18.958Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-run-upgrade-extra-ca
+    title: TestRunUpgradeExtraCA
+    sourceFile: internal/plugins/cli/extra_ca_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:24.291Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-extra-ca
+  - id: SYM-plugins-cli-test-fake-cluster-put-ca-bundle
+    title: fakeCluster.PutCABundle
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:30.006Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-fake-cluster-delete-ca-bundle
+    title: fakeCluster.DeleteCABundle
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:35.663Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-plugins-cli-test-fake-cluster-stamp-ca-bundle
+    title: fakeCluster.StampCABundle
+    sourceFile: internal/plugins/cli/cli_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:41.177Z
+    relationships:
+      - type: executable_for
+        target: TEST-plugins-cli-run
+  - id: SYM-e2e-test-helper-set-ca-bundle-with-cli
+    title: setCABundleWithCLI
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:46.600Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-test-helper-check-ca-bundle-stamped
+    title: checkCABundleStamped
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:52.353Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-e2e-test-helper-wait-ca-bundle-rolled
+    title: waitCABundleRolled
+    sourceFile: test/e2e/datapath_setup_test.go
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T17:40:57.966Z
+    relationships:
+      - type: executable_for
+        target: TEST-e2e-data-path
+  - id: SYM-tooling-kibi-coverage-cache-off
+    title: cache_off
+    sourceFile: scripts/kibi-coverage.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:14:27.680Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-kibi-coverage
+      - type: implements
+        target: REQ-tooling-kibi-coverage-cache
+  - id: SYM-tooling-kibi-coverage-version
+    title: version
+    sourceFile: scripts/kibi-coverage.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:14:33.277Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-kibi-coverage
+      - type: implements
+        target: REQ-tooling-kibi-coverage-cache
+  - id: SYM-tooling-kibi-coverage-cache-key
+    title: cache_key
+    sourceFile: scripts/kibi-coverage.sh
+    status: active
+    symbol_role: behavioral
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:14:38.726Z
+    relationships:
+      - type: covered_by
+        target: TEST-tooling-kibi-coverage
+      - type: implements
+        target: REQ-tooling-kibi-coverage-cache
+  - id: SYM-tooling-kibi-coverage-test-run
+    title: run
+    sourceFile: scripts/tests/kibi-coverage.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:14:44.782Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-coverage
+  - id: SYM-tooling-kibi-coverage-test-check
+    title: check
+    sourceFile: scripts/tests/kibi-coverage.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:14:50.441Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-coverage
+  - id: SYM-tooling-kibi-coverage-test-ids
+    title: ids
+    sourceFile: scripts/tests/kibi-coverage.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:14:56.043Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-coverage
+  - id: SYM-tooling-kibi-coverage-test-coverage-calls
+    title: coverage_calls
+    sourceFile: scripts/tests/kibi-coverage.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:15:01.582Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-coverage
+  - id: SYM-tooling-kibi-coverage-test-kibi-calls
+    title: kibi_calls
+    sourceFile: scripts/tests/kibi-coverage.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:15:06.796Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-coverage
+  - id: SYM-tooling-kibi-coverage-test-has
+    title: has
+    sourceFile: scripts/tests/kibi-coverage.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:15:12.167Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-coverage
+  - id: SYM-tooling-kibi-coverage-test-cached
+    title: cached
+    sourceFile: scripts/tests/kibi-coverage.test.sh
+    status: active
+    origin:
+      kind: agent
+      recorded_at: 2026-11-07T21:15:17.635Z
+    relationships:
+      - type: executable_for
+        target: TEST-tooling-kibi-coverage

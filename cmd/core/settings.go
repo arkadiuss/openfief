@@ -23,9 +23,10 @@ type accountTerms struct {
 
 // newSettings returns the owner's settings use cases (D-78, D-113) over
 // recorder and vstore, with the reporting currency, the Polish pack's
-// defaults and the owner's sessions checked by owners.
+// defaults, the bonds' early-redemption fees in vstore, which the owner
+// confirms or overrides (D-97), and the owner's sessions checked by owners.
 func newSettings(recorder *valuationapp.InputRecorder, vstore *valuationpg.Store, owners valuationapp.Owners, cfg *serveConfig) *valuationapp.Settings {
-	return valuationapp.NewSettings(recorder, vstore, owners, jurisdictionPack(), cfg.Reporting)
+	return valuationapp.NewSettings(recorder, vstore, owners, jurisdictionPack(), cfg.Reporting).WithBondFees(vstore)
 }
 
 // newChartStarts returns the owner's setting of the charts' start (D-167)

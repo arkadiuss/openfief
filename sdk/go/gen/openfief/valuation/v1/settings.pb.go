@@ -25,6 +25,10 @@
 // - A number format key that is not one of number_formats, a marginal rate
 //   that is not a decimal above 0 and below 1, or a charts' start that is
 //   not a YYYY-MM-DD date, fails with INVALID_ARGUMENT and nothing changes.
+// - SetEarlyRedemptionFee for an ISIN whose series terms are not stored
+//   fails with NOT_FOUND; without a fee, for a series whose fee is not
+//   assumed, with FAILED_PRECONDITION; a fee that is not a decimal of zero
+//   or more, with INVALID_ARGUMENT. Nothing changes then.
 // - A charts' start of an account the owner may not change (D-163) fails
 //   with PERMISSION_DENIED, whether it is stored or not; one of an account
 //   that is not stored, with NOT_FOUND.
@@ -750,6 +754,113 @@ func (*SetChartStartResponse) Descriptor() ([]byte, []int) {
 	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{11}
 }
 
+type SetEarlyRedemptionFeeRequest struct {
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	Origin       string                 `protobuf:"bytes,1,opt,name=origin,proto3" json:"origin,omitempty"`
+	SessionToken string                 `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
+	// The treasury bond series' ISIN, as stored with its terms.
+	Isin string `protobuf:"bytes,3,opt,name=isin,proto3" json:"isin,omitempty"`
+	// The fee per bond in PLN, a decimal string of zero or more, such as
+	// "3.00"; empty confirms the assumed fee.
+	Fee           string `protobuf:"bytes,4,opt,name=fee,proto3" json:"fee,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetEarlyRedemptionFeeRequest) Reset() {
+	*x = SetEarlyRedemptionFeeRequest{}
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetEarlyRedemptionFeeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetEarlyRedemptionFeeRequest) ProtoMessage() {}
+
+func (x *SetEarlyRedemptionFeeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetEarlyRedemptionFeeRequest.ProtoReflect.Descriptor instead.
+func (*SetEarlyRedemptionFeeRequest) Descriptor() ([]byte, []int) {
+	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *SetEarlyRedemptionFeeRequest) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *SetEarlyRedemptionFeeRequest) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+func (x *SetEarlyRedemptionFeeRequest) GetIsin() string {
+	if x != nil {
+		return x.Isin
+	}
+	return ""
+}
+
+func (x *SetEarlyRedemptionFeeRequest) GetFee() string {
+	if x != nil {
+		return x.Fee
+	}
+	return ""
+}
+
+type SetEarlyRedemptionFeeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetEarlyRedemptionFeeResponse) Reset() {
+	*x = SetEarlyRedemptionFeeResponse{}
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetEarlyRedemptionFeeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetEarlyRedemptionFeeResponse) ProtoMessage() {}
+
+func (x *SetEarlyRedemptionFeeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_openfief_valuation_v1_settings_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetEarlyRedemptionFeeResponse.ProtoReflect.Descriptor instead.
+func (*SetEarlyRedemptionFeeResponse) Descriptor() ([]byte, []int) {
+	return file_openfief_valuation_v1_settings_proto_rawDescGZIP(), []int{13}
+}
+
 var File_openfief_valuation_v1_settings_proto protoreflect.FileDescriptor
 
 const file_openfief_valuation_v1_settings_proto_rawDesc = "" +
@@ -797,12 +908,19 @@ const file_openfief_valuation_v1_settings_proto_rawDesc = "" +
 	"\n" +
 	"account_id\x18\x03 \x01(\tR\taccountId\x12\x14\n" +
 	"\x05start\x18\x04 \x01(\tR\x05start\"\x17\n" +
-	"\x15SetChartStartResponse2\xd3\x04\n" +
+	"\x15SetChartStartResponse\"\x81\x01\n" +
+	"\x1cSetEarlyRedemptionFeeRequest\x12\x16\n" +
+	"\x06origin\x18\x01 \x01(\tR\x06origin\x12#\n" +
+	"\rsession_token\x18\x02 \x01(\tR\fsessionToken\x12\x12\n" +
+	"\x04isin\x18\x03 \x01(\tR\x04isin\x12\x10\n" +
+	"\x03fee\x18\x04 \x01(\tR\x03fee\"\x1f\n" +
+	"\x1dSetEarlyRedemptionFeeResponse2\xd8\x05\n" +
 	"\x0fSettingsService\x12x\n" +
 	"\x10GetOwnerSettings\x12..openfief.valuation.v1.GetOwnerSettingsRequest\x1a/.openfief.valuation.v1.GetOwnerSettingsResponse\"\x03\x90\x02\x01\x12p\n" +
 	"\x0fSetNumberFormat\x12-.openfief.valuation.v1.SetNumberFormatRequest\x1a..openfief.valuation.v1.SetNumberFormatResponse\x12p\n" +
 	"\x0fSetMarginalRate\x12-.openfief.valuation.v1.SetMarginalRateRequest\x1a..openfief.valuation.v1.SetMarginalRateResponse\x12v\n" +
-	"\x11SetExemptionClass\x12/.openfief.valuation.v1.SetExemptionClassRequest\x1a0.openfief.valuation.v1.SetExemptionClassResponse\x12j\n" +
+	"\x11SetExemptionClass\x12/.openfief.valuation.v1.SetExemptionClassRequest\x1a0.openfief.valuation.v1.SetExemptionClassResponse\x12\x82\x01\n" +
+	"\x15SetEarlyRedemptionFee\x123.openfief.valuation.v1.SetEarlyRedemptionFeeRequest\x1a4.openfief.valuation.v1.SetEarlyRedemptionFeeResponse\x12j\n" +
 	"\rSetChartStart\x12+.openfief.valuation.v1.SetChartStartRequest\x1a,.openfief.valuation.v1.SetChartStartResponseB\xec\x01\n" +
 	"\x19com.openfief.valuation.v1B\rSettingsProtoP\x01ZJgithub.com/arkadiuss/openfief/sdk/go/gen/openfief/valuation/v1;valuationv1\xa2\x02\x03OVX\xaa\x02\x15Openfief.Valuation.V1\xca\x02\x15Openfief\\Valuation\\V1\xe2\x02!Openfief\\Valuation\\V1\\GPBMetadata\xea\x02\x17Openfief::Valuation::V1b\x06proto3"
 
@@ -818,20 +936,22 @@ func file_openfief_valuation_v1_settings_proto_rawDescGZIP() []byte {
 	return file_openfief_valuation_v1_settings_proto_rawDescData
 }
 
-var file_openfief_valuation_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_openfief_valuation_v1_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_openfief_valuation_v1_settings_proto_goTypes = []any{
-	(*NumberFormat)(nil),              // 0: openfief.valuation.v1.NumberFormat
-	(*GetOwnerSettingsRequest)(nil),   // 1: openfief.valuation.v1.GetOwnerSettingsRequest
-	(*GetOwnerSettingsResponse)(nil),  // 2: openfief.valuation.v1.GetOwnerSettingsResponse
-	(*InstrumentClass)(nil),           // 3: openfief.valuation.v1.InstrumentClass
-	(*SetExemptionClassRequest)(nil),  // 4: openfief.valuation.v1.SetExemptionClassRequest
-	(*SetExemptionClassResponse)(nil), // 5: openfief.valuation.v1.SetExemptionClassResponse
-	(*SetNumberFormatRequest)(nil),    // 6: openfief.valuation.v1.SetNumberFormatRequest
-	(*SetNumberFormatResponse)(nil),   // 7: openfief.valuation.v1.SetNumberFormatResponse
-	(*SetMarginalRateRequest)(nil),    // 8: openfief.valuation.v1.SetMarginalRateRequest
-	(*SetMarginalRateResponse)(nil),   // 9: openfief.valuation.v1.SetMarginalRateResponse
-	(*SetChartStartRequest)(nil),      // 10: openfief.valuation.v1.SetChartStartRequest
-	(*SetChartStartResponse)(nil),     // 11: openfief.valuation.v1.SetChartStartResponse
+	(*NumberFormat)(nil),                  // 0: openfief.valuation.v1.NumberFormat
+	(*GetOwnerSettingsRequest)(nil),       // 1: openfief.valuation.v1.GetOwnerSettingsRequest
+	(*GetOwnerSettingsResponse)(nil),      // 2: openfief.valuation.v1.GetOwnerSettingsResponse
+	(*InstrumentClass)(nil),               // 3: openfief.valuation.v1.InstrumentClass
+	(*SetExemptionClassRequest)(nil),      // 4: openfief.valuation.v1.SetExemptionClassRequest
+	(*SetExemptionClassResponse)(nil),     // 5: openfief.valuation.v1.SetExemptionClassResponse
+	(*SetNumberFormatRequest)(nil),        // 6: openfief.valuation.v1.SetNumberFormatRequest
+	(*SetNumberFormatResponse)(nil),       // 7: openfief.valuation.v1.SetNumberFormatResponse
+	(*SetMarginalRateRequest)(nil),        // 8: openfief.valuation.v1.SetMarginalRateRequest
+	(*SetMarginalRateResponse)(nil),       // 9: openfief.valuation.v1.SetMarginalRateResponse
+	(*SetChartStartRequest)(nil),          // 10: openfief.valuation.v1.SetChartStartRequest
+	(*SetChartStartResponse)(nil),         // 11: openfief.valuation.v1.SetChartStartResponse
+	(*SetEarlyRedemptionFeeRequest)(nil),  // 12: openfief.valuation.v1.SetEarlyRedemptionFeeRequest
+	(*SetEarlyRedemptionFeeResponse)(nil), // 13: openfief.valuation.v1.SetEarlyRedemptionFeeResponse
 }
 var file_openfief_valuation_v1_settings_proto_depIdxs = []int32{
 	0,  // 0: openfief.valuation.v1.GetOwnerSettingsResponse.number_format:type_name -> openfief.valuation.v1.NumberFormat
@@ -842,14 +962,16 @@ var file_openfief_valuation_v1_settings_proto_depIdxs = []int32{
 	6,  // 5: openfief.valuation.v1.SettingsService.SetNumberFormat:input_type -> openfief.valuation.v1.SetNumberFormatRequest
 	8,  // 6: openfief.valuation.v1.SettingsService.SetMarginalRate:input_type -> openfief.valuation.v1.SetMarginalRateRequest
 	4,  // 7: openfief.valuation.v1.SettingsService.SetExemptionClass:input_type -> openfief.valuation.v1.SetExemptionClassRequest
-	10, // 8: openfief.valuation.v1.SettingsService.SetChartStart:input_type -> openfief.valuation.v1.SetChartStartRequest
-	2,  // 9: openfief.valuation.v1.SettingsService.GetOwnerSettings:output_type -> openfief.valuation.v1.GetOwnerSettingsResponse
-	7,  // 10: openfief.valuation.v1.SettingsService.SetNumberFormat:output_type -> openfief.valuation.v1.SetNumberFormatResponse
-	9,  // 11: openfief.valuation.v1.SettingsService.SetMarginalRate:output_type -> openfief.valuation.v1.SetMarginalRateResponse
-	5,  // 12: openfief.valuation.v1.SettingsService.SetExemptionClass:output_type -> openfief.valuation.v1.SetExemptionClassResponse
-	11, // 13: openfief.valuation.v1.SettingsService.SetChartStart:output_type -> openfief.valuation.v1.SetChartStartResponse
-	9,  // [9:14] is the sub-list for method output_type
-	4,  // [4:9] is the sub-list for method input_type
+	12, // 8: openfief.valuation.v1.SettingsService.SetEarlyRedemptionFee:input_type -> openfief.valuation.v1.SetEarlyRedemptionFeeRequest
+	10, // 9: openfief.valuation.v1.SettingsService.SetChartStart:input_type -> openfief.valuation.v1.SetChartStartRequest
+	2,  // 10: openfief.valuation.v1.SettingsService.GetOwnerSettings:output_type -> openfief.valuation.v1.GetOwnerSettingsResponse
+	7,  // 11: openfief.valuation.v1.SettingsService.SetNumberFormat:output_type -> openfief.valuation.v1.SetNumberFormatResponse
+	9,  // 12: openfief.valuation.v1.SettingsService.SetMarginalRate:output_type -> openfief.valuation.v1.SetMarginalRateResponse
+	5,  // 13: openfief.valuation.v1.SettingsService.SetExemptionClass:output_type -> openfief.valuation.v1.SetExemptionClassResponse
+	13, // 14: openfief.valuation.v1.SettingsService.SetEarlyRedemptionFee:output_type -> openfief.valuation.v1.SetEarlyRedemptionFeeResponse
+	11, // 15: openfief.valuation.v1.SettingsService.SetChartStart:output_type -> openfief.valuation.v1.SetChartStartResponse
+	10, // [10:16] is the sub-list for method output_type
+	4,  // [4:10] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -866,7 +988,7 @@ func file_openfief_valuation_v1_settings_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openfief_valuation_v1_settings_proto_rawDesc), len(file_openfief_valuation_v1_settings_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

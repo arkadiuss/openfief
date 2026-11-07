@@ -748,3 +748,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-384aa2d1e9d2
+  - type: implements
+    from: SYM-ingest-delivery-lot-terms
+    to: REQ-ingest-bond-terms-owner-overrides
+    created_at: 2026-11-07T12:39:49.629Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6d6d0cbe5722
+  - type: executable_for
+    from: SYM-attention-app-test-assumed-bond-fee-resolves-itself
+    to: TEST-attention-app-bondfees
+    created_at: 2026-11-07T13:32:18.853Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-3c0b9027f3b1
+  - type: executable_for
+    from: SYM-plugins-cli-test-run-ca-bundle-unset
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:40:20.649Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-38bfcb4df321

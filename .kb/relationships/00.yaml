@@ -671,3 +671,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-533b20c9be81
+  - type: executable_for
+    from: SYM-tooling-kibi-dedupe-test-run
+    to: TEST-tooling-kibi-dedupe
+    created_at: 2026-11-07T19:28:39.976Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a09ccc0c3f85

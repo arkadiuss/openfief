@@ -616,12 +616,24 @@ func fixedTitles() map[string]string {
 	}
 }
 
+// instrumentTitles are the titles of the kinds whose subject is an
+// instrument's ISIN, as formats of it.
+func instrumentTitles() map[string]string {
+	return map[string]string{
+		kindUnclassified:   "Classify %s for the yearly tax",
+		kindBondFeeAssumed: "Confirm the early-redemption fee of %s",
+	}
+}
+
 // itemTitle says in a few words what an item asks of the owner.
 func itemTitle(it *viewsv1.AttentionItem) string {
 	if title, ok := fixedTitles()[it.GetKind()]; ok {
 		return title
 	}
 	subject := it.GetSubject()
+	if format, ok := instrumentTitles()[it.GetKind()]; ok {
+		return fmt.Sprintf(format, subject)
+	}
 	switch it.GetKind() {
 	case kindTicker:
 		_, symbol, _ := strings.Cut(subject, "/")
@@ -638,8 +650,6 @@ func itemTitle(it *viewsv1.AttentionItem) string {
 		return "The cash balance you entered for " + it.GetAccountId() + " differs"
 	case kindSettingMissing:
 		return settingTitle(subject)
-	case kindUnclassified:
-		return "Classify " + subject + " for the yearly tax"
 	}
 	return attentionKindOf(it.GetKind()).Label
 }

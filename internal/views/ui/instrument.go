@@ -100,7 +100,15 @@ type instrumentData struct {
 	Corrected string
 	Txs       transactionsView
 	Accounts  map[string]string
+	// Terms are a treasury bond series' stored terms with where each came
+	// from (D-97), nil for none; FeeSet says the owner's fee was saved.
+	Terms  *seriesTerms
+	FeeSet bool
 }
+
+// Bond reports whether the instrument is a treasury bond series, whose
+// page shows its series' terms.
+func (d *instrumentData) Bond() bool { return d.Detail.GetAssetClass() == assetTreasuryBond }
 
 // Name is the instrument's display name, or its ISIN when it has none
 // (D-197).
@@ -127,6 +135,7 @@ type instrumentForm struct {
 	Error     string
 	Renamed   bool
 	Corrected string
+	FeeSet    bool
 }
 
 // priceCharts groups an instrument's stored prices by listing (D-195),
@@ -225,7 +234,7 @@ func instrumentCrumbs(name, account string, names map[string]string) []crumb {
 
 // instrumentPage shows one instrument (D-195).
 func (s *server) instrumentPage(w http.ResponseWriter, r *http.Request, sess session) {
-	form := instrumentForm{Renamed: r.URL.Query().Has("renamed")}
+	form := instrumentForm{Renamed: r.URL.Query().Has("renamed"), FeeSet: r.URL.Query().Has("fee")}
 	if n, err := strconv.Atoi(r.URL.Query().Get("corrected")); err == nil && n >= 0 {
 		form.Corrected = strconv.Itoa(n)
 	}
@@ -266,6 +275,7 @@ func (s *server) instrumentView(r *http.Request, sess session, isin string, form
 	data := &instrumentData{
 		Date: date.String(), Detail: in.Msg.GetInstrument(), Owner: sess.Owner(), Error: form.Error, Renamed: form.Renamed, Corrected: form.Corrected,
 		Rename: cmp.Or(form.Name, in.Msg.GetInstrument().GetName()), Items: s.instrumentItems(r, sess, isin),
+		Terms: seriesTermsView(in.Msg.GetInstrument().GetBondTerms(), requestFormat(r)), FeeSet: form.FeeSet,
 	}
 	if method, readErr := s.instrumentRecord(r, sess, date, data); readErr != nil {
 		return nil, method, readErr

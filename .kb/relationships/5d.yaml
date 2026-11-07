@@ -657,3 +657,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-3c75ee70331a
+  - type: constrains
+    from: REQ-operator-ca-bundle-missing-condition
+    to: FACT-SUBJECT-29F81CEF6C72F36B
+    created_at: 2026-11-07T10:23:10.254Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8f0627b5909d
+  - type: requires_property
+    from: REQ-operator-ca-bundle-missing-condition
+    to: FACT-PROP-9675223E927158AB
+    created_at: 2026-11-07T10:23:10.311Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c21c1b33dad0
+  - type: specified_by
+    from: REQ-operator-ca-bundle-missing-condition
+    to: SCEN-operator-ca-bundle-missing-condition
+    created_at: 2026-11-07T10:23:10.363Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8af48ed85f89

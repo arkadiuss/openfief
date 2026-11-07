@@ -1175,3 +1175,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9a823c5f3767
+  - type: executable_for
+    from: SYM-valuation-postgres-test-bond-fee-source
+    to: TEST-valuation-postgres-store
+    created_at: 2026-11-07T13:30:43.091Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-367babf1e5f6

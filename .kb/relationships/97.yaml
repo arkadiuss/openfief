@@ -917,20 +917,6 @@ relationships:
     source: mcp://kibi/upsert
     id: rel-ec845f42d72a
   - type: implements
-    from: SYM-mfbonds-trim
-    to: REQ-valuation-mfbonds-published-rates
-    created_at: 2026-11-07T08:15:08.280Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-aba44bc80463
-  - type: covered_by
-    from: SYM-mfbonds-trim
-    to: TEST-valuation-mfbonds
-    created_at: 2026-11-07T08:15:08.327Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-c7841701126e
-  - type: implements
     from: SYM-ingest-bond-lot-entered
     to: REQ-ingest-bond-lot-terms-optional
     created_at: 2026-11-07T08:27:14.236Z
@@ -958,3 +944,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5b0e039dfbf9
+  - type: implements
+    from: SYM-ingest-bond-lot-entered
+    to: REQ-ingest-bond-terms-owner-overrides
+    created_at: 2026-11-07T12:39:36.031Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-269ec3f19fd4
+  - type: implements
+    from: SYM-valuation-postgres-terms-row
+    to: REQ-valuation-bond-fee-source-stored
+    created_at: 2026-11-07T13:30:15.364Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4bb384a697d2
+  - type: covered_by
+    from: SYM-valuation-postgres-terms-row
+    to: TEST-valuation-postgres-store
+    created_at: 2026-11-07T13:30:15.400Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-88e137651632

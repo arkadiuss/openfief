@@ -42,8 +42,9 @@ func attentionOwners(auth *identityapp.Auth, origins identity.Origins) *ownerSes
 // core's checks: flagged balance assertions and price checks, import
 // problems, unmapped broker accounts, unconfirmed tickers, the missing
 // marginal rate, broken and suggested transfers, syncs that keep failing,
-// mismatched cash checkpoints (D-158) and instruments to classify for a
-// yearly tax (D-148), and hands the items to l, which raises a mismatched
+// mismatched cash checkpoints (D-158), instruments to classify for a
+// yearly tax (D-148) and held bonds whose early-redemption fee is assumed
+// (D-97), and hands the items to l, which raises a mismatched
 // cash checkpoint's at once. Its events go to a log publisher.
 func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.Store, checks *valuationapp.CrossChecks,
 	owners attentionapp.Owners, now func() time.Time, log *slog.Logger,
@@ -62,6 +63,7 @@ func newAttention(pool *pgxpool.Pool, l *ledgerapp.Ledger, vstore *valuationpg.S
 		attentionapp.FailingSyncs(imports),
 		attentionapp.CashCheckpoints(l),
 		attentionapp.UnclassifiedInstruments(l, vstore, vstore, jurisdictionPack()),
+		attentionapp.AssumedBondFees(l, vstore, vstore),
 	)
 	l.WithAttention(ledgerAttention{items: items})
 	return &attention{items: items, relay: &attentionapp.Relay{Outbox: store, Publisher: attentionapp.LogPublisher{Log: log}, Now: now}}

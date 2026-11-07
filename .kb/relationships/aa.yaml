@@ -888,3 +888,52 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d1d51e4c9fb2
+  - type: verified_by
+    from: SCEN-valuation-bond-fee-source-stored
+    to: TEST-valuation-postgres-store
+    created_at: 2026-11-07T13:26:30.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6cc1c0f5b1e0
+  - type: verified_by
+    from: SCEN-valuation-bond-fee-source-stored
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-11-07T13:26:30.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5eb844bbce37
+  - type: verified_by
+    from: SCEN-valuation-bond-fee-source-stored
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T13:26:30.568Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c7afb5304177
+  - type: implements
+    from: SYM-attention-app-assumed-bond-fees
+    to: REQ-attention-bond-fee-assumed
+    created_at: 2026-11-07T13:31:47.413Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-142fd7460980
+  - type: covered_by
+    from: SYM-attention-app-assumed-bond-fees
+    to: TEST-attention-app-bondfees
+    created_at: 2026-11-07T13:31:47.445Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac8122772545
+  - type: implements
+    from: SYM-ui-instrument-data-bond
+    to: REQ-ui-instrument-bond-terms
+    created_at: 2026-11-07T13:33:39.010Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e8f8ee8a3eda
+  - type: covered_by
+    from: SYM-ui-instrument-data-bond
+    to: TEST-ui-bond-terms
+    created_at: 2026-11-07T13:33:39.042Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1c28788a3096
