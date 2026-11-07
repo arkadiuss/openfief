@@ -636,3 +636,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-363d808781aa
+  - type: executable_for
+    from: SYM-tooling-kibi-coverage-test-ids
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:14:57.851Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df5d14bca335

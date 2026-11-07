@@ -1112,3 +1112,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-7ee2fa773248
+  - type: executable_for
+    from: SYM-tooling-kibi-coverage-test-kibi-calls
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:15:08.539Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-7070d7d8b2c1

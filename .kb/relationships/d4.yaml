@@ -811,3 +811,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5c071f422c58
+  - type: verified_by
+    from: SCEN-tooling-kibi-coverage-cached
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:14:20.859Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6e3254d2d8a3

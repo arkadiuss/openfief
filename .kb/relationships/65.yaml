@@ -853,3 +853,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-acc7dc9010c4
+  - type: verified_by
+    from: SCEN-tooling-kibi-slow-query-warned
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:14:20.172Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c1f92dc79810

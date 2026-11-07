@@ -741,3 +741,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-b23085b14217
+  - type: implements
+    from: SYM-tooling-kibi-coverage-cache-key
+    to: REQ-tooling-kibi-coverage-cache
+    created_at: 2026-11-07T21:14:40.638Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-72d969a94ad4
+  - type: covered_by
+    from: SYM-tooling-kibi-coverage-cache-key
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:14:40.672Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-928e5f40d5f8

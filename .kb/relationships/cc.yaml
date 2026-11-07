@@ -699,3 +699,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28e00594dd04
+  - type: constrains
+    from: REQ-tooling-kibi-coverage-cache
+    to: FACT-SUBJECT-AA869FD5FC3816C8
+    created_at: 2026-11-07T21:14:26.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-05935bbbc575
+  - type: requires_property
+    from: REQ-tooling-kibi-coverage-cache
+    to: FACT-PROP-4DC25F44A1472058
+    created_at: 2026-11-07T21:14:26.481Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f4017c7fa21b
+  - type: specified_by
+    from: REQ-tooling-kibi-coverage-cache
+    to: SCEN-tooling-kibi-coverage-cached
+    created_at: 2026-11-07T21:14:26.523Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-20b0ad5f31ea

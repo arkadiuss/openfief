@@ -902,11 +902,9 @@ tasks:
       - mkdir -p site/.gen/content site/.gen/diagrams site/.gen/static
       - go list -json ./... >site/.gen/packages.json
       - '{{.TASK_EXE}} --list-all --json >site/.gen/tasks.json'
-      # A cheap query first attaches the store, so the attach, and the local patch's dedupe of a store kibi sync just
-      # published with duplicates, isn't counted in the coverage query's 120 s.
-      - '{{.KIBI}} query req --limit 1 >/dev/null'
-      # One query for the whole report; kibi-timed.sh prints how long it took and warns from 90 s, three quarters of kibi's limit.
-      - bash scripts/kibi-timed.sh '{{.KIBI}}' coverage --by req --include-passing --limit 100000 --format json >site/.gen/coverage.json
+      # The coverage report a page of 300 requirements at a time, each page timed (warns from 90 s, three quarters of
+      # kibi's 120 s query limit); outside CI it is reused while the .kb files, kibi and its patches are unchanged.
+      - bash scripts/kibi-coverage.sh '{{.KIBI}}' site/.gen/coverage.json
       - go run ./tools/docgen reference -packages site/.gen/packages.json -tasks site/.gen/tasks.json -coverage site/.gen/coverage.json -out site/.gen/content
       - '{{.KIBI}} report --output site/.gen/static/requirements >/dev/null'
 

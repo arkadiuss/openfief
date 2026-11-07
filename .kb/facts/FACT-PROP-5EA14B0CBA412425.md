@@ -16,8 +16,8 @@ canonical_key: mcp-kibi-model-requirement:tooling.kibi_gate:warns_from_half_of_q
 operator: eq
 value_type: bool
 value_bool: true
-claim_key: CLAIM-31F84E41A5116998
-claim_text: The docs build must ask kibi for the requirement coverage report in one query after a query that attaches the store, print how long it took, and warn when it took 90 seconds or more, three quarters of kibi's 120-second query limit, as a workflow warning in CI.
+claim_key: CLAIM-453DE1B77AABDEE8
+claim_text: The docs build must ask kibi for the requirement coverage report at most 300 requirements at a time, after a query that attaches the store, print how long each page took, and warn when a page took 90 seconds or more, three quarters of kibi's 120-second query limit, as a workflow warning in CI.
 origin:
   kind: agent
   recorded_at: '2026-11-07T19:28:01.095Z'

@@ -916,3 +916,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-393eec8f54cd
+  - type: executable_for
+    from: SYM-tooling-kibi-coverage-test-cached
+    to: TEST-tooling-kibi-coverage
+    created_at: 2026-11-07T21:15:19.350Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d776e7768ad8
