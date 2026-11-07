@@ -32,6 +32,27 @@ A bond is bought for cash at the nominal, or by exchange (zamiana) of maturing b
 
 Each issue letter fixes three numbers for its series: the first-period rate, the [margin](../glossary.md) and the [early-redemption fee](../glossary.md). They change from issue to issue, so they are [series terms](../glossary.md) supplied as data, never constants. Rates are yearly fractions: 5.35% is `0.0535`.
 
+### Where series terms come from
+
+D-97 has the treasury bond connector read the first-period rate and margin from the Ministry of Finance's published retail bond data, and the fee from a reviewed table, while the owner can override any series' terms and the latest entry wins. The package holds the pure parts:
+
+- **Published rates.** `Published` is the ministry's spreadsheet as read: a `PublishedRates` per series (its first-period rate and margin, the margin zero for OTS and TOS) and the `Attribution` its licence asks for. The ministry publishes the spreadsheet on gov.pl and as dataset 805 on dane.gov.pl under CC BY 4.0, whose re-use terms ask that the ministry be named as the source with when the data was made and taken and how it was processed (R-27). So `Attribution` carries the publisher, the dataset, the licence, the file's address, the day made, the time taken and the processing, and `Attribution.Validate` refuses one that lacks any. `Published.RatesOf` finds a series, or fails with `ErrNotPublished`, such as for a series too new to be in the file. `Terms.Attribution` keeps it with terms read that way; terms the owner entered have none. Reading the file is the connector's `MinistryClient` ([Ingest](ingest.md#the-ministrys-retail-bond-data)); the connector never reads obligacjeskarbowe.pl, whose pages carry no grant of use (D-8).
+- **The fee table.** The spreadsheet holds no early-redemption fee, so `EarlyRedemptionFees` is a checked-in table per bond type, each row a `FeeRow`: the type, the first day of the sale month from which its fee applies, the fee and the issue letter it was read from. Every series' issue letter of every type, from each type's first row through the sale month `FeesReviewedThrough` (November 2026), was read at the ministry's letter search on finanse.mf.gov.pl (R-28), and the fee changes where the table has a row:
+
+| Bond type | Fee per bond | From the series sold in |
+|---|---|---|
+| OTS | none: an early redemption pays the nominal and no interest | October 2017 (OTS0118) |
+| ROR | 0.50 PLN | June 2022 (ROR0623) |
+| DOR | 0.70 PLN | June 2022 (DOR0624) |
+| TOS | 0.70 PLN, then 1.00 PLN | August 2022 (TOS0825), September 2024 (TOS0927) |
+| COI | 1.00 PLN, then 0.70 PLN, then 2.00 PLN | January 2014 (COI0118), April 2015 (COI0419), September 2024 (COI0928) |
+| EDO | 2.00 PLN, then 3.00 PLN | January 2014 (EDO0124), September 2024 (EDO0934) |
+| ROS | 0.70 PLN, then 2.00 PLN | October 2016 (ROS1022), September 2024 (ROS0930) |
+| ROD | 2.00 PLN, then 3.00 PLN | October 2016 (ROD1028), September 2024 (ROD0936) |
+
+`SaleMonth` is a series' sale month, its maturity month less its type's term, and `EarlyRedemptionFee` the fee of the latest row of its type on or before it. A series sold before its type's first row (one that matured, or nearly, before the table was written) or after `FeesReviewedThrough` fails with `ErrNoReviewedFee`: the table holds no fee no letter was read for, so the owner enters that series' fee until the next release reviews the new letters.
+- **Overrides.** Terms the owner enters with a lot win over what the connector reads, and the core keeps one set of terms per series, replaced by the latest delivered, so the latest entry wins ([Ingest](ingest.md#treasury-bond-lots)).
+
 ### Interest periods and indexation
 
 Interest periods count from the purchase date: a bond bought on 15 March has yearly periods starting each 15 March. Month steps land on the same day of the month, or on the last day of a shorter month, and always count from the purchase date itself. A bond bought on the 31st therefore returns to the 31st after February; this is the schedule the ROR issue letter prints.
@@ -93,7 +114,9 @@ Inside OKI no Belka tax is due; instead, the act on OKI, in force from 2027-01-0
 | File | Contents |
 |---|---|
 | [series.go](../../internal/jurisdiction/pl/series.go) | `BondType` and its `Structure` (term, period, `Indexation`, `Payout`); `Series` and `ParseSeries` |
-| [terms.go](../../internal/jurisdiction/pl/terms.go) | `Nominal`, `ExchangePrice`, `Terms`, `Indices`, `Terms.PeriodRate`, `MissingIndexError`, `CheckBondISIN` (series terms need a Polish ISIN, D-179) |
+| [terms.go](../../internal/jurisdiction/pl/terms.go) | `Nominal`, `ExchangePrice`, `Terms` with its `Attribution`, `Indices`, `Terms.PeriodRate`, `MissingIndexError`, `CheckBondISIN` (series terms need a Polish ISIN, D-179) |
+| [published.go](../../internal/jurisdiction/pl/published.go) | `Attribution` and `Attribution.Validate`, `PublishedRates`, `Published`, `Published.RatesOf`, `ErrNotPublished` (D-97) |
+| [fees.go](../../internal/jurisdiction/pl/fees.go) | `FeeRow`, `EarlyRedemptionFees`, `FeesReviewedThrough`, `SaleMonth`, `EarlyRedemptionFee`, `ErrNoReviewedFee` (D-97) |
 | [calendar.go](../../internal/jurisdiction/pl/calendar.go) | `Maturity`, `PeriodStart`, `CPIMonth` |
 | [businessday.go](../../internal/jurisdiction/pl/businessday.go) | `IsBusinessDay`, `ReferenceRateDay`, `RateChange`, `RateInForce`, `FirstCalendarYear`, `ErrOutsideCalendar` |
 | [value.go](../../internal/jurisdiction/pl/value.go) | `Purchase`, `LotValue`, `ValueLot` |
@@ -197,6 +220,7 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 
 ## Decisions
 
+- **D-97**: series rates from the ministry's published data with its attribution (`Published`, `Attribution`), fees from the reviewed table of the issue letters (`EarlyRedemptionFees`), the owner's terms override and the latest entry wins. Read as: the table applies a fee only up to the month it was reviewed through, so a series sold later needs the owner's fee until a release reviews its letter.
 - **D-9**: manual bond lots, valuation computed. `ValueLot` needs more than D-9's series, quantity and purchase date. In a revaluation the purchase date is the lot's open date and the price per bond its cost over its quantity; the series terms (per ISIN), the index readings and the account's tax wrapper are recorded separately. The owner enters a lot with its series' terms in the built-in UI, and the treasury-bonds connector delivers both ([Ingest](ingest.md#treasury-bond-lots)); the lot's rules reuse `ValueLot`: a lot is accepted only if it can be valued on its purchase date.
 - **D-20**: Polish tax uses NBP rates, from the day before (`TaxRateCutoff`, the pack's `TaxRateDate`); the cost basis of a listed holding converts at it.
 - **D-70**: `Pack` is the Polish jurisdiction pack, pure functions behind `jurisdiction.Pack`. Bond accrual (`ValueLot`) stays a Polish function that valuation calls directly, since only Polish bonds have series terms; the pack turns its parts into values.
@@ -226,6 +250,8 @@ In IKE the lot nets 1030.20 and liquidates at 1024.46 PLN (no fee, Belka tax on 
 | Gross, net and liquidation of a listed holding, a bond lot and cash in each wrapper; IKZE without the owner's rate; values never above gross (seeded property test); the pack's defaults | `TestPackDefaults`, `TestValueListed`, `TestValueAccrued`, `TestValueCash`, `TestValuesProperties` in [pack_test.go](../../internal/jurisdiction/pl/pack_test.go) | REQ-pl-values-per-wrapper, SCEN-pl-values-per-wrapper, REQ-pl-tax-wrappers, REQ-pl-oki-no-belka-tax, REQ-pl-ikze-early-withdrawal-tax, REQ-pl-ikze-liquidation-missing, REQ-jurisdiction-pl-number-format, TEST-pl-pack |
 | OKI's yearly tax and the totals' taxes ([Valuation](valuation.md#verification)) | `TestOKIYearlyTax` in [oki_test.go](../../internal/jurisdiction/pl/oki_test.go), `TestTotals` in [totals_test.go](../../internal/jurisdiction/pl/totals_test.go) | REQ-pl-oki-tax-base-average-value, REQ-pl-totals-tax-pit38, TEST-pl-oki, TEST-pl-totals |
 | Matches the issuer's daily interest tables | `TestValueLotMatchesInterestTables` in [official_test.go](../../internal/jurisdiction/pl/official_test.go) | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-2-tos-base-unrounded, TEST-pl-official |
+| The published data: a series' rates or `ErrNotPublished`; an attribution lacking any part the licence asks for is refused | `TestPublishedRatesOf`, `TestAttributionValidate` in [published_test.go](../../internal/jurisdiction/pl/published_test.go) | REQ-pl-published-series-rates, SCEN-pl-published-series-rates, TEST-pl-published |
+| The fee table: each type's fee by sale month on both sides of every change, none before a type's first row or after the reviewed month; the table's shape | `TestSaleMonth`, `TestEarlyRedemptionFee`, `TestEarlyRedemptionFeesTable` in [fees_test.go](../../internal/jurisdiction/pl/fees_test.go) | REQ-pl-early-redemption-fee-table, SCEN-pl-early-redemption-fee-table, TEST-pl-fees |
 | Coupon dates per type, none for the last period, capitalized types or OTS; one bond's coupon at the period rate, half up; a missing reading | `TestCouponDates`, `TestCoupon`, `TestCouponWithoutItsReading` in [coupon_test.go](../../internal/jurisdiction/pl/coupon_test.go) | REQ-pl-coupon-payments, SCEN-pl-coupon-payments, TEST-pl-coupons |
 | Matches the issuer's worked early-redemption examples | `TestValueLotMatchesWorkedExamples` | REQ-decision-d37-1-follow-issuer-tables, REQ-decision-d37-3-belka-half-up, TEST-pl-official |
 | Belka tax 19%, half up, none in IKE, IKZE or OKI; the wrappers' keys | `TestBelkaTax`, `TestBelkaRate`, `TestTaxWrapperNames` in [tax_test.go](../../internal/jurisdiction/pl/tax_test.go) | REQ-pl-values-per-wrapper, REQ-decision-d37-3-belka-half-up, REQ-pl-tax-wrappers, TEST-pl-tax |
@@ -237,5 +263,6 @@ Run them with `task test`, or just this package with `go test ./internal/jurisdi
 
 ## Not built yet
 
-- **D-9**, **D-97**: anything that fetches series terms (the owner types each series' terms with its lots; D-97's reading of the Ministry of Finance's published data and its fee table aren't built); and an import of the bond service's export, if one exists (OQ-22).
+- **D-9**: an import of the bond service's export, if one exists (OQ-22).
+- **D-97**: the fee table's rows for series sold after November 2026 wait for a release that reviews their issue letters; until then the owner enters those series' fees..
 - **D-145**: OKI's rate for 2028 on and its exempt amounts for 2030 on come from the finance minister's announcements, added with each release; none is announced yet, so those years' taxes wait for the release that adds them.

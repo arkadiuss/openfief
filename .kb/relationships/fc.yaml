@@ -713,3 +713,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c75e73d3ff51
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-fuzz-parse-workbook
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:22:58.274Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a77524767664

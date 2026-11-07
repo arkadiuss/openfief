@@ -678,3 +678,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-8bd8fcfefdb5
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-u32
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:23:59.197Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0316c54b9f40

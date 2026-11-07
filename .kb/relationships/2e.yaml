@@ -958,3 +958,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ef9333d01df8
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-gov-site-handler
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:21:26.117Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4b2ffb194865

@@ -923,3 +923,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8871c5f68c7
+  - type: implements
+    from: SYM-mfbonds-compound-file-fat-sectors
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:14:17.884Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40fd9c00d584
+  - type: covered_by
+    from: SYM-mfbonds-compound-file-fat-sectors
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:14:17.933Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ee115a77c18f
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-text
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:23:28.545Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4e0e5fa6884c

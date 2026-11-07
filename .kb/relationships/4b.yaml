@@ -923,3 +923,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d84b81497dbb
+  - type: implements
+    from: SYM-mfbonds-dir-entries
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:15:16.534Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1338247f0acb
+  - type: covered_by
+    from: SYM-mfbonds-dir-entries
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:15:16.592Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-40b13f2de265
+  - type: executable_for
+    from: SYM-plugins-treasury-bonds-test-helper-fake-published
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-07T08:29:09.596Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-832f52a6bbf8

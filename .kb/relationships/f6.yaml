@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c8ee8b19f20a
+  - type: implements
+    from: SYM-treasurybonds-complete
+    to: REQ-treasurybonds-terms-from-published-data
+    created_at: 2026-11-07T08:26:11.278Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ef4247123628
+  - type: covered_by
+    from: SYM-treasurybonds-complete
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T08:26:11.323Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-aa7d48c0be47

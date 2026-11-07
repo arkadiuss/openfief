@@ -860,3 +860,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-023ca51b2599
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-xsheet
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:23:21.048Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cb313058b904
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-to-byte
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:25:46.453Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cd9ff7213bae

@@ -909,3 +909,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-c2d9a1539d8f
+  - type: constrains
+    from: REQ-valuation-mfbonds-published-rates
+    to: FACT-SUBJECT-BAA7ACE63F3D3E43
+    created_at: 2026-11-07T08:06:39.739Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-df089ebb32fb
+  - type: requires_property
+    from: REQ-valuation-mfbonds-published-rates
+    to: FACT-PROP-0E1B5ABEB8DAE1FC
+    created_at: 2026-11-07T08:06:39.811Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2e1b537051ec
+  - type: specified_by
+    from: REQ-valuation-mfbonds-published-rates
+    to: SCEN-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:06:39.870Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-cfd67ce4cd3e
+  - type: implements
+    from: SYM-connectorv1-bond-terms-attribution-get-processing
+    to: REQ-ingest-bond-terms-attribution-contract
+    created_at: 2026-11-07T08:57:05.098Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6b5200a01239
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-attribution-get-processing
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T08:57:05.153Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0f9faf98c36b

@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98ce6801dbfe
+  - type: implements
+    from: SYM-ingest-connectrpc-attribution-from
+    to: REQ-ingest-bond-terms-attribution-contract
+    created_at: 2026-11-07T08:28:04.652Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9f3d20e3ae69
+  - type: covered_by
+    from: SYM-ingest-connectrpc-attribution-from
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T08:28:04.698Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-847ce241ce62

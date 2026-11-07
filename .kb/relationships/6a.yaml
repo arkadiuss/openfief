@@ -678,3 +678,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-01b32b41a3a9
+  - type: implements
+    from: SYM-mfbonds-client
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:17:02.735Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-32339d2ea152
+  - type: covered_by
+    from: SYM-mfbonds-client
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:17:02.772Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-28241cb54605

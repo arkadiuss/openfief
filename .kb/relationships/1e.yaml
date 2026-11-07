@@ -888,3 +888,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-62564098a209
+  - type: implements
+    from: SYM-mfbonds-global-records-add
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:12:46.528Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ac88a37a0d63
+  - type: covered_by
+    from: SYM-mfbonds-global-records-add
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:12:46.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-8696544a0839

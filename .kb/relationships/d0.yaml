@@ -769,3 +769,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-af4796969301
+  - type: implements
+    from: SYM-mfbonds-links-next
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:17:19.348Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-52e064bc4c4d
+  - type: covered_by
+    from: SYM-mfbonds-links-next
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:17:19.386Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85e34bdb9207
+  - type: implements
+    from: SYM-treasurybonds-complete-terms
+    to: REQ-treasurybonds-terms-from-published-data
+    created_at: 2026-11-07T08:26:03.027Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e93ecb6dddf8
+  - type: covered_by
+    from: SYM-treasurybonds-complete-terms
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T08:26:03.068Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-22ae18299de7

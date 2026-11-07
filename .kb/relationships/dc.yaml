@@ -629,3 +629,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d44a5dbe2694
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-cell-kind
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:23:05.907Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2bcd7c665a5a
+  - type: implements
+    from: SYM-connectorv1-bond-terms-attribution-get-url
+    to: REQ-ingest-bond-terms-attribution-contract
+    created_at: 2026-11-07T08:56:38.819Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-5e951a2c9b60
+  - type: covered_by
+    from: SYM-connectorv1-bond-terms-attribution-get-url
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T08:56:38.866Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-07c7ab2ceef1

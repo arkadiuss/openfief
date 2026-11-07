@@ -888,3 +888,31 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-d23da30ef444
+  - type: implements
+    from: SYM-mfbonds-client-published
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:16:14.139Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a7d289612714
+  - type: covered_by
+    from: SYM-mfbonds-client-published
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:16:14.183Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1842d993d3a9
+  - type: implements
+    from: SYM-mfbonds-segments
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:21:11.181Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c27ba5501794
+  - type: covered_by
+    from: SYM-mfbonds-segments
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:21:11.230Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-51d877e3350a

@@ -853,3 +853,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-98fc2bb2f298
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-want-attribution
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:21:57.684Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-61d4a57e3294
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-header
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:22:28.186Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-fcdee2072174
+  - type: executable_for
+    from: SYM-plugins-treasury-bonds-test-helper-index-clients
+    to: TEST-plugins-treasury-bonds-endpoint
+    created_at: 2026-11-07T08:29:41.743Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c6fde3caafe3

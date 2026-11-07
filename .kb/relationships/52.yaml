@@ -1007,3 +1007,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-513965109e5c
+  - type: verified_by
+    from: SCEN-ingest-bond-terms-attribution-contract
+    to: TEST-ingest-connectrpc-mapping
+    created_at: 2026-11-07T08:06:10.917Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-d00b3d37480d
+  - type: verified_by
+    from: SCEN-ingest-bond-terms-attribution-contract
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-11-07T08:06:10.993Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e3bcb2dafea4
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-num
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:23:36.135Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-1e9e3ba0b13c

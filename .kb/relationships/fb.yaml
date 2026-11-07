@@ -986,3 +986,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-704242bbf418
+  - type: validates
+    from: TEST-treasurybonds-published
+    to: REQ-ingest-bond-terms-latest-entry-wins
+    created_at: 2026-11-07T08:05:58.740Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-bdb24edf547e

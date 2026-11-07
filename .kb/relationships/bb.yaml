@@ -909,3 +909,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9ff9de632040
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-ieee
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:24:21.800Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-81da81006b69

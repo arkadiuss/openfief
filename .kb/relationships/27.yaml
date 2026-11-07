@@ -601,3 +601,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-78037d6057ac
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-want-published
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:22:05.223Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-ea35744f346a
+  - type: implements
+    from: SYM-ingest-delivery-attribution
+    to: REQ-ingest-bond-terms-attribution-contract
+    created_at: 2026-11-07T08:28:29.472Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-622b6026dc2f
+  - type: covered_by
+    from: SYM-ingest-delivery-attribution
+    to: TEST-ingest-delivery-bonds
+    created_at: 2026-11-07T08:28:29.508Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-470d70ecf69d

@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-35aa0ac89ddd
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-dane-handler
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:21:34.435Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-b0d4f84c667a

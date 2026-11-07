@@ -10,6 +10,7 @@ import (
 	"github.com/arkadiuss/openfief/internal/ingest"
 	"github.com/arkadiuss/openfief/internal/ingest/delivery"
 	"github.com/arkadiuss/openfief/internal/ingest/treasurybonds"
+	"github.com/arkadiuss/openfief/internal/jurisdiction/pl"
 	"github.com/arkadiuss/openfief/internal/kernel"
 	connectorv1 "github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1"
 	"github.com/arkadiuss/openfief/sdk/go/gen/openfief/connector/v1/connectorv1connect"
@@ -22,10 +23,11 @@ import (
 type connector struct {
 	connectorv1connect.UnimplementedConnectorServiceHandler
 
-	mapper  treasurybonds.Mapper
-	indices *treasurybonds.IndexSync
-	coupons *treasurybonds.CouponSync
-	today   func() kernel.Date
+	mapper    treasurybonds.Mapper
+	indices   *treasurybonds.IndexSync
+	coupons   *treasurybonds.CouponSync
+	published treasurybonds.PublishedSource
+	today     func() kernel.Date
 }
 
 // Sync delivers the CPI and reference-rate readings for the months after
@@ -86,12 +88,23 @@ func withCoupons(ctx context.Context, coupons *treasurybonds.CouponSync, req *co
 func status(code connect.Code, err error) *connect.Error { return connect.NewError(code, err) }
 
 // ImportBondLots maps the lots into deposits and buys in the account the
-// core names with them (D-118), plus each series' terms. A lot that doesn't parse or breaks a
-// rule is InvalidArgument, naming the rule, and nothing is delivered.
-func (c *connector) ImportBondLots(_ context.Context, req *connect.Request[connectorv1.ImportBondLotsRequest]) (*connect.Response[connectorv1.ImportBondLotsResponse], error) {
+// core names with them (D-118), plus each series' terms: those the owner
+// entered, and for the rest the first-period rate and margin from the
+// Ministry of Finance's published data, with its attribution, and the fee
+// from the reviewed table (D-97, treasurybonds.CompleteTerms). A lot that
+// doesn't parse or breaks a rule, or whose series the published data or
+// the fee table doesn't cover, is InvalidArgument, naming the rule, and
+// nothing is delivered; published data that can't be read is Unavailable.
+func (c *connector) ImportBondLots(ctx context.Context, req *connect.Request[connectorv1.ImportBondLotsRequest]) (*connect.Response[connectorv1.ImportBondLotsResponse], error) {
 	entries, err := delivery.BondLotEntries(req.Msg)
 	if err != nil {
 		return nil, status(connect.CodeInvalidArgument, err)
+	}
+	if termsErr := treasurybonds.CompleteTerms(ctx, c.published, &entries); termsErr != nil {
+		if errors.Is(termsErr, pl.ErrNotPublished) || errors.Is(termsErr, pl.ErrNoReviewedFee) {
+			return nil, status(connect.CodeInvalidArgument, fmt.Errorf("%w; enter the series' terms with the lot", termsErr))
+		}
+		return nil, status(connect.CodeUnavailable, fmt.Errorf("treasury-bonds: %w", termsErr))
 	}
 	m, terms, err := c.mapper.Map(&entries, c.today())
 	if err != nil {

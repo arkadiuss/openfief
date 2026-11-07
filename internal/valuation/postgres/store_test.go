@@ -102,6 +102,35 @@ func TestInputsRoundTrip(t *testing.T) {
 	}
 }
 
+// TestBondTermsAttribution stores terms read from published data with
+// their attribution, then terms the owner entered for the same series,
+// which replace them and their attribution: the latest entry wins (D-97).
+func TestBondTermsAttribution(t *testing.T) {
+	t.Parallel()
+	store, _ := newStore(t)
+	ctx := t.Context()
+	in := syntheticInputs(t)
+	published := in.terms
+	published.Attribution = &pl.Attribution{
+		Publisher: "Ministerstwo Finansów", Dataset: "Dane dotyczące obligacji detalicznych", License: "CC BY 4.0",
+		URL: "https://www.example.org/attachment/x", Made: date(t, "2026-10-26"),
+		Fetched: time.Date(2026, time.November, 7, 6, 0, 0, 0, time.UTC), Processing: "read",
+	}
+	err := store.SaveBondTerms(ctx, in.bond, &published, "treasury-bonds", nil)
+	if err != nil {
+		t.Fatalf("SaveBondTerms: %v", err)
+	}
+	got, _, err := store.BondTerms(ctx, in.bond)
+	check(t, "published terms", published, got, err)
+	entered := in.terms
+	entered.FirstPeriodRate = dec(t, "0.0575")
+	if err = store.SaveBondTerms(ctx, in.bond, &entered, "treasury-bonds", nil); err != nil {
+		t.Fatalf("SaveBondTerms: %v", err)
+	}
+	got, _, err = store.BondTerms(ctx, in.bond)
+	check(t, "the owner's terms", entered, got, err)
+}
+
 func check[T any](t *testing.T, what string, want, got T, err error) {
 	t.Helper()
 	if err != nil {

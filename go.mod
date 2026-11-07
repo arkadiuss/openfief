@@ -22,6 +22,7 @@ require (
 	github.com/sigstore/sigstore-go v1.3.0
 	github.com/sirupsen/logrus v1.10.1
 	github.com/stripe/smokescreen v0.1.1-0.20261022111441-68e7b8218e22
+	golang.org/x/net v0.62.0
 	golang.org/x/tools v0.51.0
 	google.golang.org/protobuf v1.36.12
 	k8s.io/api v0.37.1
@@ -113,7 +114,6 @@ require (
 	go.yaml.in/yaml/v2 v2.4.4 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/mod v0.41.0 // indirect
-	golang.org/x/net v0.62.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sync v0.24.0 // indirect
 	golang.org/x/sys v0.49.0 // indirect

@@ -972,3 +972,38 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-91259d6dbea5
+  - type: implements
+    from: SYM-mfbonds-record
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:10:33.059Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-67f0f1fd25a6
+  - type: covered_by
+    from: SYM-mfbonds-record
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:10:33.110Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6c47b8eeb88c
+  - type: implements
+    from: SYM-mfbonds-one-cell
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:11:31.199Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-a44ac875105e
+  - type: covered_by
+    from: SYM-mfbonds-one-cell
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:11:31.249Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-2029c8e45d91
+  - type: executable_for
+    from: SYM-mfbonds-test-helper-units
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:25:22.899Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-e1addd981593

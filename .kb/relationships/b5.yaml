@@ -881,3 +881,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-331c77d16d4f
+  - type: implements
+    from: SYM-mfbonds-bond-types
+    to: REQ-valuation-mfbonds-published-rates
+    created_at: 2026-11-07T08:18:50.394Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-34b047f28d46
+  - type: covered_by
+    from: SYM-mfbonds-bond-types
+    to: TEST-valuation-mfbonds
+    created_at: 2026-11-07T08:18:50.441Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-389f14bf6467

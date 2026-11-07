@@ -23,7 +23,10 @@ type bondLotCase struct {
 	fee       string
 	feeCcy    string
 	purchase  ingest.BondPurchase
-	wantErr   error
+	// published and reviewed leave the rates and the fee to the connector
+	// (D-97).
+	published, reviewed bool
+	wantErr             error
 }
 
 // lot builds the case's lot, filling the blank fields with a valid
@@ -55,7 +58,7 @@ func (c *bondLotCase) lot(t *testing.T) ingest.BondLot {
 	}
 	l := ingest.BondLot{
 		Terms:    pl.Terms{Series: series, FirstPeriodRate: first, Margin: margin, EarlyRedemptionFee: kernel.NewMoney(fee, ccy)},
-		Quantity: q, Purchase: c.purchase,
+		Quantity: q, Purchase: c.purchase, PublishedRates: c.published, ReviewedFee: c.reviewed,
 	}
 	if c.purchased != "none" {
 		if l.Purchased, err = kernel.ParseDate(or(c.purchased, "2026-05-04")); err != nil {
@@ -84,6 +87,9 @@ func TestBondLotValidate(t *testing.T) {
 		{name: "fee not in PLN", feeCcy: "EUR", wantErr: ingest.ErrInvalidBondLot},
 		{name: "bought by exchange of maturing bonds", purchase: ingest.PurchaseExchange},
 		{name: "a purchase neither cash nor exchange", purchase: ingest.BondPurchase(5), wantErr: ingest.ErrInvalidBondLot},
+		{name: "the rates left to the connector: what they hold isn't checked", published: true, first: "-0.01", margin: "-0.01"},
+		{name: "the fee left to the connector: what it holds isn't checked", reviewed: true, fee: "-1"},
+		{name: "every term left out, purchase date of another series", published: true, reviewed: true, purchased: "2026-06-01", wantErr: ingest.ErrInvalidBondLot},
 	}
 	today, err := kernel.ParseDate("2026-10-29")
 	if err != nil {

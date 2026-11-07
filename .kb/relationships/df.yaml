@@ -755,3 +755,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-95bfc81c1994
+  - type: verified_by
+    from: SCEN-pl-early-redemption-fee-table
+    to: TEST-pl-fees
+    created_at: 2026-11-07T08:06:02.192Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-9c56b2619eff

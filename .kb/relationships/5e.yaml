@@ -909,3 +909,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-a0ed5d128b61
+  - type: verified_by
+    from: SCEN-treasurybonds-terms-from-published-data
+    to: TEST-treasurybonds-published
+    created_at: 2026-11-07T08:06:07.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-528c8d025fb7
+  - type: verified_by
+    from: SCEN-treasurybonds-terms-from-published-data
+    to: TEST-plugins-treasury-bonds
+    created_at: 2026-11-07T08:06:07.395Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4743e8e14954
