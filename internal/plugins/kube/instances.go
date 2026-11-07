@@ -116,8 +116,7 @@ func describeStatus(in *app.Instance, st *v1alpha1.PluginStatus) {
 }
 
 // Create applies a new instance: with an in-cluster service (D-74), the Role
-// and RoleBinding that let the operator read that Service; expecting an
-// extra CA bundle, those that let it get that Secret; then its Plugin,
+// and RoleBinding that let the operator read that Service; then its Plugin,
 // which runs nothing without a grant; then its PluginGrant. It fails with
 // app.ErrInstanceExists when either already exists.
 func (s *Instances) Create(ctx context.Context, p *plugins.Plugin, g *plugins.Grant) error {
@@ -131,8 +130,10 @@ func (s *Instances) Create(ctx context.Context, p *plugins.Plugin, g *plugins.Gr
 			return fmt.Errorf("look up %q: %w", p.Name, err)
 		}
 	}
-	if err := s.createAccess(ctx, p); err != nil {
-		return err
+	if p.ClusterService != nil {
+		if err := s.createServiceAccess(ctx, p.Name, *p.ClusterService); err != nil {
+			return err
+		}
 	}
 	if err := s.Client.Create(ctx, plugin); err != nil {
 		return fmt.Errorf("create plugin %q: %w", p.Name, err)
@@ -147,10 +148,10 @@ func (s *Instances) Create(ctx context.Context, p *plugins.Plugin, g *plugins.Gr
 // it at once, then its Plugin, whose owned workload objects the garbage
 // collector deletes and whose egress allow-list entry the operator drops
 // (D-58), then the named Secrets that are labelled as the instance's
-// (D-182), when the Plugin names an in-cluster service, the Role and
-// RoleBinding that let the operator read it (D-74), and those that let it
-// get the instance's CA bundle Secret. Objects already gone are skipped; a
-// Secret not labelled as the instance's is left alone and reported.
+// (D-182) and, when the Plugin names an in-cluster service, the Role and
+// RoleBinding that let the operator read it (D-74). Objects already gone are
+// skipped; a Secret not labelled as the instance's is left alone and
+// reported.
 func (s *Instances) Delete(ctx context.Context, name string, secrets []string) error {
 	access, hasAccess, err := s.clusterServiceOfPlugin(ctx, name)
 	if err != nil {
@@ -174,7 +175,6 @@ func (s *Instances) Delete(ctx context.Context, name string, secrets []string) e
 	if hasAccess {
 		errs = append(errs, s.deleteServiceAccess(ctx, name, access)...)
 	}
-	errs = append(errs, s.deleteCABundleAccess(ctx, name)...)
 	return errors.Join(errs...)
 }
 
@@ -282,7 +282,7 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 				IndexReadings:    m.IndexReadings,
 				Institutions:     slices.Clone(m.Institutions),
 			},
-			Config: raw(p.Config), ExtraCA: p.ExtraCA,
+			Config: raw(p.Config), ExtraCA: p.ExtraCA, CABundleSHA256: p.CABundleSHA256,
 		},
 	}
 	if m.ClusterService != nil {
@@ -329,17 +329,12 @@ func Resources(p *plugins.Plugin, g *plugins.Grant) (*v1alpha1.Plugin, *v1alpha1
 // ResourcesYAML renders an install's Plugin and PluginGrant as one YAML
 // stream, for GitOps (D-46): no status, no server-set fields. With an
 // in-cluster service (D-74), the Role and RoleBinding that let the operator
-// read it come first, and so do those that let it get the CA bundle Secret
-// of an instance that expects one.
+// read it come first.
 func ResourcesYAML(p *plugins.Plugin, g *plugins.Grant) ([]byte, error) {
 	plugin, grant := Resources(p, g)
 	objs := []any{plugin, grant}
 	if p.ClusterService != nil {
 		role, binding := ServiceAccess(p.Name, *p.ClusterService)
-		objs = append([]any{role, binding}, objs...)
-	}
-	if p.ExtraCA {
-		role, binding := CABundleAccess(p.Name)
 		objs = append([]any{role, binding}, objs...)
 	}
 	var out []byte

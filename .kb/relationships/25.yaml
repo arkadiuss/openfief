@@ -839,13 +839,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-44d17a4ef79f
-  - type: executable_for
-    from: SYM-plugins-kube-test-ca-bundle-access
-    to: TEST-plugins-kube-ca-bundle-access
-    created_at: 2026-11-07T11:38:02.857Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ae242685e47a
   - type: implements
     from: SYM-mfbonds-compound-file-sectors
     to: REQ-valuation-mfbonds-published-rates

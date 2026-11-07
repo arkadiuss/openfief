@@ -32,12 +32,6 @@ const (
 	// namespaceNameLabel is the label Kubernetes sets on every namespace to
 	// its name.
 	namespaceNameLabel = "kubernetes.io/metadata.name"
-	// rbacAPIVersion, kindRole and kindRoleBinding type the Roles and
-	// RoleBindings the CLI creates for the operator.
-	rbacAPIVersion  = "rbac.authorization.k8s.io/v1"
-	rbacGroup       = "rbac.authorization.k8s.io"
-	kindRole        = "Role"
-	kindRoleBinding = "RoleBinding"
 )
 
 // ServiceAccessName names the Role and RoleBinding that let the operator
@@ -57,16 +51,16 @@ func ServiceAccess(instance string, cs plugins.ClusterService) (*rbacv1.Role, *r
 		Labels: map[string]string{labelPlugin: instance, labelManagedBy: cliName},
 	}
 	role := &rbacv1.Role{
-		TypeMeta:   metav1.TypeMeta{APIVersion: rbacAPIVersion, Kind: kindRole},
+		TypeMeta:   metav1.TypeMeta{APIVersion: "rbac.authorization.k8s.io/v1", Kind: "Role"},
 		ObjectMeta: meta,
 		Rules: []rbacv1.PolicyRule{{
 			APIGroups: []string{""}, Resources: []string{"services"}, ResourceNames: []string{cs.Service}, Verbs: []string{"get"},
 		}},
 	}
 	binding := &rbacv1.RoleBinding{
-		TypeMeta:   metav1.TypeMeta{APIVersion: rbacAPIVersion, Kind: kindRoleBinding},
+		TypeMeta:   metav1.TypeMeta{APIVersion: "rbac.authorization.k8s.io/v1", Kind: "RoleBinding"},
 		ObjectMeta: *meta.DeepCopy(),
-		RoleRef:    rbacv1.RoleRef{APIGroup: rbacGroup, Kind: kindRole, Name: meta.Name},
+		RoleRef:    rbacv1.RoleRef{APIGroup: "rbac.authorization.k8s.io", Kind: "Role", Name: meta.Name},
 		Subjects:   []rbacv1.Subject{{Kind: "ServiceAccount", Name: OperatorServiceAccount, Namespace: plugins.Namespace}},
 	}
 	return role, binding

@@ -2,21 +2,48 @@ package kube_test
 
 import (
 	"context"
-	"strings"
+	"errors"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	rbacv1 "k8s.io/api/rbac/v1"
+	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/internal/plugins/app"
 	"github.com/arkadiuss/openfief/internal/plugins/kube"
 )
 
+// caSum is a synthetic CA bundle checksum.
+const caSum = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+
+// caYAML is what `ca-bundle set rates --print` writes for the bundle
+// "PEM": the Secret, then the Plugin's stamp.
+const caYAML = `---
+apiVersion: v1
+data:
+  ca.crt: UEVN
+kind: Secret
+metadata:
+  labels:
+    openfief.io/instance: rates
+  name: rates--ca-bundle
+  namespace: openfief
+type: Opaque
+---
+apiVersion: openfief.io/v1alpha1
+kind: Plugin
+metadata:
+  name: rates
+  namespace: openfief
+spec:
+  caBundleSha256: ` + caSum + `
+`
+
 // caPlan is an install of instance rates, a connector whose manifest asks
-// for the optional CA bundle Secret, expecting a bundle when extraCA.
-func caPlan(t *testing.T, extraCA bool) (plugins.Plugin, plugins.Grant) {
+// for the optional CA bundle Secret, expecting a bundle.
+func caPlan(t *testing.T) (plugins.Plugin, plugins.Grant) {
 	t.Helper()
 	img, err := plugins.ParseImageRef(sampleImage)
 	if err != nil {
@@ -30,80 +57,121 @@ func caPlan(t *testing.T, extraCA bool) (plugins.Plugin, plugins.Grant) {
 	if err != nil {
 		t.Fatalf("plan: %v", err)
 	}
-	if err := p.SetExtraCA(extraCA); err != nil {
+	if err := p.SetExtraCA(true); err != nil {
 		t.Fatalf("SetExtraCA: %v", err)
 	}
 	return p, g
 }
 
-func TestCABundleAccess(t *testing.T) {
+func TestCABundleYAML(t *testing.T) {
 	t.Parallel()
-	role, binding := kube.CABundleAccess("rates")
-	wantRules := []rbacv1.PolicyRule{{APIGroups: []string{""}, Resources: []string{"secrets"}, ResourceNames: []string{"rates--ca-bundle"}, Verbs: []string{"get"}}}
-	if role.Namespace != "openfief" || role.Name != "openfief-plugin-rates-ca-bundle" || !cmp.Equal(wantRules, role.Rules) {
-		t.Errorf("role %s/%s %+v, want get on that one Secret only", role.Namespace, role.Name, role.Rules)
+	got, err := kube.CABundleYAML("rates", []byte("PEM"), caSum)
+	if err != nil {
+		t.Fatalf("CABundleYAML: %v", err)
 	}
-	wantSubjects := []rbacv1.Subject{{Kind: "ServiceAccount", Name: "openfief-operator", Namespace: "openfief"}}
-	if !cmp.Equal(wantSubjects, binding.Subjects) || binding.RoleRef.Name != role.Name {
-		t.Errorf("binding %+v to %+v, want the operator bound to the role", binding.Subjects, binding.RoleRef)
+	if diff := cmp.Diff(caYAML, string(got)); diff != "" {
+		t.Errorf("YAML (-want +got):\n%s", diff)
 	}
 }
 
-// TestInstancesCABundleAccess checks that installing an instance that
-// expects a CA bundle lets the operator get that Secret, that an upgrade
-// that no longer expects one takes that back and one that does gives it
-// again, that uninstalling removes it, that an instance expecting none
-// never gets it, and that --print's YAML holds it exactly when expected.
-func TestInstancesCABundleAccess(t *testing.T) {
+// TestInstancesPutCABundle checks that the CLI's store creates the CA
+// bundle Secret labelled as the instance's, replaces its data on a
+// rotation, deletes it, and leaves alone and reports one labelled as
+// another instance's.
+func TestInstancesPutCABundle(t *testing.T) {
 	t.Parallel()
 	ctx := context.Background()
 	store := fakeCluster(t)
-	p, g := caPlan(t, true)
-	if err := store.Create(ctx, &p, &g); err != nil {
-		t.Fatalf("create: %v", err)
-	}
-	checkCABundleAccess(t, store, "after install", true)
-	off, _ := caPlan(t, false)
-	if err := store.Update(ctx, &off, &g); err != nil {
-		t.Fatalf("update: %v", err)
-	}
-	checkCABundleAccess(t, store, "after an upgrade expecting none", false)
-	if err := store.Update(ctx, &p, &g); err != nil {
-		t.Fatalf("update: %v", err)
-	}
-	checkCABundleAccess(t, store, "after an upgrade expecting one again", true)
-	if err := store.Delete(ctx, "rates", nil); err != nil {
-		t.Fatalf("delete: %v", err)
-	}
-	checkCABundleAccess(t, store, "after uninstall", false)
-	if err := store.Create(ctx, &off, &g); err != nil {
-		t.Fatalf("create: %v", err)
-	}
-	checkCABundleAccess(t, store, "after an install expecting none", false)
-
-	for _, tt := range []struct {
-		plugin *plugins.Plugin
-		want   bool
-	}{{&p, true}, {&off, false}} {
-		out, err := kube.ResourcesYAML(tt.plugin, &g)
-		if err != nil {
-			t.Fatalf("ResourcesYAML: %v", err)
+	for _, pem := range []string{"first", "second"} {
+		if err := store.PutCABundle(ctx, "rates", []byte(pem)); err != nil {
+			t.Fatalf("PutCABundle(%s): %v", pem, err)
 		}
-		if got := strings.Contains(string(out), "name: openfief-plugin-rates-ca-bundle"); got != tt.want {
-			t.Errorf("YAML with extraCA %v holds the CA bundle Role: %v, want %v\n%s", tt.plugin.ExtraCA, got, tt.want, out)
+		checkCABundleSecret(t, store, pem)
+	}
+	for range 2 { // the second time it is already gone
+		if err := store.DeleteCABundle(ctx, "rates"); err != nil {
+			t.Fatalf("DeleteCABundle: %v", err)
 		}
+		checkCABundleSecret(t, store, "")
+	}
+	foreign := fakeCluster(t, ownedSecret("rates--ca-bundle", "other"))
+	if err := foreign.PutCABundle(ctx, "rates", []byte("first")); !errors.Is(err, app.ErrSecretNotOwned) {
+		t.Errorf("PutCABundle over another instance's Secret: %v, want %v", err, app.ErrSecretNotOwned)
 	}
 }
 
-// checkCABundleAccess fails t unless the Role and RoleBinding that let the
-// operator get rates's CA bundle Secret exist exactly when want.
-func checkCABundleAccess(t *testing.T, store *kube.Instances, step string, want bool) {
-	t.Helper()
-	key := client.ObjectKey{Namespace: "openfief", Name: "openfief-plugin-rates-ca-bundle"}
-	for _, obj := range []client.Object{&rbacv1.Role{}, &rbacv1.RoleBinding{}} {
-		err := store.Client.Get(context.Background(), key, obj)
-		if (err == nil) != want || (err != nil && !apierrors.IsNotFound(err)) {
-			t.Errorf("%s: %T: error = %v, want it to exist: %v", step, obj, err, want)
+// TestInstancesStampCABundle checks that the store stamps and clears the
+// checksum on the Plugin without touching the rest of its spec, and that
+// stamping a Plugin that isn't installed fails with app.ErrNotInstalled.
+func TestInstancesStampCABundle(t *testing.T) {
+	t.Parallel()
+	ctx := context.Background()
+	store := fakeCluster(t)
+	p, g := caPlan(t)
+	if err := store.Create(ctx, &p, &g); err != nil {
+		t.Fatalf("create: %v", err)
+	}
+	for _, sum := range []string{caSum, ""} {
+		if err := store.StampCABundle(ctx, "rates", sum); err != nil {
+			t.Fatalf("StampCABundle(%q): %v", sum, err)
 		}
+		got, _, err := store.Get(ctx, "rates")
+		if err != nil {
+			t.Fatalf("Get: %v", err)
+		}
+		want := p
+		want.CABundleSHA256 = sum
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("Plugin after stamping %q (-want +got):\n%s", sum, diff)
+		}
+	}
+	if err := store.StampCABundle(ctx, "other", caSum); !errors.Is(err, app.ErrNotInstalled) {
+		t.Errorf("StampCABundle of no Plugin: %v, want %v", err, app.ErrNotInstalled)
+	}
+}
+
+// checkCABundleSecret fails t unless rates's CA bundle Secret holds exactly
+// pem under ca.crt, labelled as rates's; for an empty pem, unless it is
+// gone.
+func checkCABundleSecret(t *testing.T, store *kube.Instances, pem string) {
+	t.Helper()
+	var s corev1.Secret
+	err := store.Client.Get(context.Background(), client.ObjectKey{Namespace: "openfief", Name: "rates--ca-bundle"}, &s)
+	if pem == "" {
+		if !apierrors.IsNotFound(err) {
+			t.Errorf("Secret after delete: %v, want not found", err)
+		}
+		return
+	}
+	if err != nil {
+		t.Fatalf("get Secret: %v", err)
+	}
+	if diff := cmp.Diff(map[string][]byte{"ca.crt": []byte(pem)}, s.Data); diff != "" {
+		t.Errorf("Secret data (-want +got):\n%s", diff)
+	}
+	if s.Labels[plugins.OwnerInstanceLabel] != "rates" {
+		t.Errorf("Secret labels %v, want %s=rates", s.Labels, plugins.OwnerInstanceLabel)
+	}
+}
+
+// TestInstancesKeepCABundleStamp checks that the checksum stamped on a
+// Plugin survives the resource the CLI writes, as spec.caBundleSha256,
+// and reads back for an upgrade.
+func TestInstancesKeepCABundleStamp(t *testing.T) {
+	t.Parallel()
+	p, g := caPlan(t)
+	if err := p.StampCABundle(caSum); err != nil {
+		t.Fatalf("StampCABundle: %v", err)
+	}
+	plugin, grant := kube.Resources(&p, &g)
+	if plugin.Spec.CABundleSHA256 != caSum {
+		t.Errorf("spec.caBundleSha256 = %q, want %q", plugin.Spec.CABundleSHA256, caSum)
+	}
+	got, _, err := fakeCluster(t, plugin, grant).Get(context.Background(), "rates")
+	if err != nil {
+		t.Fatalf("Get: %v", err)
+	}
+	if got.CABundleSHA256 != caSum {
+		t.Errorf("stamp read back = %q, want %q", got.CABundleSHA256, caSum)
 	}
 }

@@ -24,7 +24,9 @@ const Usage = `usage:
                           [--cluster-service NAMESPACE/SERVICE:PORT] [--extra-ca]
                           [--trusted-signers FILE] [--yes] [--print]
   openfief plugin upgrade <instance> <catalog-version|image@sha256:...> [--config FILE]
-                          [--trusted-signers FILE] [--yes]
+                          [--extra-ca | --no-extra-ca] [--trusted-signers FILE] [--yes]
+  openfief plugin ca-bundle set <instance> <pem-file> [--print]
+  openfief plugin ca-bundle unset <instance> [--yes]
   openfief plugin uninstall <instance> [--yes]
   openfief plugin list
   openfief enroll [--port 8080] [--ttl 15m]
@@ -40,9 +42,11 @@ var (
 )
 
 // Cluster is the owner's cluster, reached with their kubeconfig: the
-// installed instances, and the owner's trusted signers the operator reads.
+// installed instances, their extra CA bundles, and the owner's trusted
+// signers the operator reads.
 type Cluster interface {
 	app.InstanceStore
+	app.CABundleStore
 	OwnerSigners(ctx context.Context) ([]plugins.Signer, error)
 	// ClusterService reads an in-cluster service the owner picked (D-74).
 	ClusterService(ctx context.Context, cs plugins.ClusterService) (app.ClusterServiceInfo, error)
@@ -70,6 +74,9 @@ type Env struct {
 	// IngressRule renders the NetworkPolicy the owner adds in an in-cluster
 	// service's namespace that has NetworkPolicies of its own (D-74).
 	IngressRule func(instance string, cs plugins.ClusterService, info *app.ClusterServiceInfo) ([]byte, error)
+	// RenderCABundle renders, for `ca-bundle set --print`, the CA bundle
+	// Secret and the Plugin stamp of its checksum as YAML.
+	RenderCABundle func(instance string, pem []byte, checksum string) ([]byte, error)
 }
 
 // options are the parsed flags of one command, and the owner's input.
@@ -77,7 +84,7 @@ type options struct {
 	kubeconfig, context string
 	name, config        string
 	clusterService      string
-	extraCA             bool
+	extraCA, noExtraCA  bool
 	trustedSigners      string
 	yes, print          bool
 	// in reads the owner's answers, line by line.
@@ -96,10 +103,12 @@ func Run(ctx context.Context, args []string, env *Env) error {
 		return err
 	}
 	o.in = bufio.NewReader(env.In)
-	if n, ok := commandArgs()[cmd]; !ok || len(pos) != n {
+	if !argsFit(cmd, pos) {
 		return fmt.Errorf("%w\n%s", ErrUsage, Usage)
 	}
 	switch cmd {
+	case cmdCABundle:
+		return caBundle(ctx, env, &o, pos)
 	case cmdInstall:
 		return install(ctx, env, &o, pos[0])
 	case cmdUpgrade:
@@ -116,13 +125,19 @@ const (
 	cmdUpgrade   = "upgrade"
 	cmdUninstall = "uninstall"
 	cmdList      = "list"
+	cmdCABundle  = "ca-bundle"
 	// upgradeArgs are an instance and a version.
 	upgradeArgs = 2
 )
 
-// commandArgs is how many arguments each command takes.
-func commandArgs() map[string]int {
-	return map[string]int{cmdInstall: 1, cmdUpgrade: upgradeArgs, cmdUninstall: 1, cmdList: 0}
+// argsFit reports whether cmd is a command and pos its arguments: how many
+// each command takes, and for ca-bundle a subcommand with its own.
+func argsFit(cmd string, pos []string) bool {
+	if cmd == cmdCABundle {
+		return caBundleArgs(pos)
+	}
+	n, ok := map[string]int{cmdInstall: 1, cmdUpgrade: upgradeArgs, cmdUninstall: 1, cmdList: 0}[cmd]
+	return ok && len(pos) == n
 }
 
 // parseFlags parses one command's flags, which may come before, between or
@@ -146,10 +161,16 @@ func parseFlags(cmd string, args []string) (options, []string, error) {
 		fs.BoolVar(&o.print, "print", false, "print the Plugin and PluginGrant as YAML for GitOps instead of applying them")
 	case cmdUpgrade:
 		fs.StringVar(&o.config, "config", "", "JSON file with the instance's new config; default: keep its config")
+		fs.BoolVar(&o.extraCA, "extra-ca", false,
+			"expect an extra CA bundle from now on; the new manifest must ask for role ca-bundle; default: keep what the instance expects")
+		fs.BoolVar(&o.noExtraCA, "no-extra-ca", false, "expect no extra CA bundle from now on")
 		fs.StringVar(&o.trustedSigners, "trusted-signers", "", "the owner's signers file; default: the cluster's openfief-trusted-signers ConfigMap")
 		fs.BoolVar(&o.yes, "yes", false, "upgrade without asking")
 	case cmdUninstall:
 		fs.BoolVar(&o.yes, "yes", false, "uninstall without asking")
+	case cmdCABundle:
+		fs.BoolVar(&o.yes, "yes", false, "unset without asking")
+		fs.BoolVar(&o.print, "print", false, "print the Secret and the Plugin's checksum stamp as YAML for GitOps instead of applying them")
 	}
 	var pos []string
 	for {
@@ -157,6 +178,9 @@ func parseFlags(cmd string, args []string) (options, []string, error) {
 			return options{}, nil, fmt.Errorf("%w: %w\n%s", ErrUsage, err, Usage)
 		}
 		if fs.NArg() == 0 {
+			if o.extraCA && o.noExtraCA {
+				return options{}, nil, fmt.Errorf("%w: --extra-ca and --no-extra-ca together\n%s", ErrUsage, Usage)
+			}
 			return o, pos, nil
 		}
 		pos = append(pos, fs.Arg(0))

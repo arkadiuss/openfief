@@ -40,6 +40,9 @@ var (
 	// ErrExtraCANotRequested: a Plugin expects an extra CA bundle while its
 	// manifest doesn't ask for the CA bundle Secret role.
 	ErrExtraCANotRequested = errors.New("an extra CA bundle is expected but the manifest doesn't ask for its Secret role")
+	// ErrCABundleChecksum: a CA bundle checksum stamped on a Plugin isn't a
+	// hex SHA-256 (64 lower-case hex digits).
+	ErrCABundleChecksum = errors.New("not a hex SHA-256")
 )
 
 // Errors that are not about a single field.

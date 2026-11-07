@@ -748,13 +748,6 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9cf5dde81137
-  - type: executable_for
-    from: SYM-operator-test-helper-forbidden
-    to: TEST-operator-ca-bundle
-    created_at: 2026-11-07T11:38:51.714Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-dd2380f5a7ce
   - type: constrains
     from: REQ-treasurybonds-terms-from-published-data
     to: FACT-SUBJECT-E337F59B66613971

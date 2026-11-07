@@ -1,43 +1,43 @@
 ---
-title: When a running plugin instance expects an extra CA bundle and its ca-bundle Secret does not exist, the operator must set the Plugin condition CABundleMissing to True with what to do, False when the Secret exists, Unknown when it may not read it, and no condition when none is expected, never holding the Secret data and never keeping the plugin from running.
+title: 'The operator must set the Plugin condition CABundleMissing from the spec alone: True with reason ChecksumNotStamped when extraCa is set and no caBundleSha256 is stamped, False when one is, and no condition when extraCa is not set, never reading the Secret and never keeping the plugin from running.'
 status: open
-text_ref: design-session:connector-endpoint-ca-refinements
+text_ref: design-session:connector-endpoint-ca-bundle-cli
 tags:
   - strict-modeling
   - confidence:0.90
   - confidence-band:high
-  - provenance:design-session-connector-endpoint-ca-refinements
+  - provenance:design-session-connector-endpoint-ca-bundle-cli
   - lane:strict
-semantic_text: When a running plugin instance expects an extra CA bundle and its ca-bundle Secret does not exist, the operator must set the Plugin condition CABundleMissing to True with what to do, False when the Secret exists, Unknown when it may not read it, and no condition when none is expected, never holding the Secret data and never keeping the plugin from running.
+semantic_text: 'The operator must set the Plugin condition CABundleMissing from the spec alone: True with reason ChecksumNotStamped when extraCa is set and no caBundleSha256 is stamped, False when one is, and no condition when extraCa is not set, never reading the Secret and never keeping the plugin from running.'
 logic_claims:
-  - CLAIM-7C1D90B7861616A1
+  - CLAIM-675338357AD22ADF
 semantic_clauses:
-  - When a running plugin instance expects an extra CA bundle and its ca-bundle Secret does not exist, the operator must set the Plugin condition CABundleMissing to True with what to do, False when the Secret exists, Unknown when it may not read it, and no condition when none is expected, never holding the Secret data and never keeping the plugin from running.
+  - 'The operator must set the Plugin condition CABundleMissing from the spec alone: True with reason ChecksumNotStamped when extraCa is set and no caBundleSha256 is stamped, False when one is, and no condition when extraCa is not set, never reading the Secret and never keeping the plugin from running.'
 semantic_inventory_version: kibi.semantic-inventory.v1
 semantic_source_field: semantic_text
-semantic_source_hash: 63e8d6c8f57b6a836232ce87cf72fabcb54c1f542c6d8b68f6dd69563fcbc0c0
+semantic_source_hash: af410295576de1f9db313e5f69ce8f9dd680394354b30c55abf0d603b8ec70ff
 semantic_inventory:
-  - claim_key: CLAIM-7C1D90B7861616A1
-    claim_text: When a running plugin instance expects an extra CA bundle and its ca-bundle Secret does not exist, the operator must set the Plugin condition CABundleMissing to True with what to do, False when the Secret exists, Unknown when it may not read it, and no condition when none is expected, never holding the Secret data and never keeping the plugin from running
-    role: condition
+  - claim_key: CLAIM-675338357AD22ADF
+    claim_text: 'The operator must set the Plugin condition CABundleMissing from the spec alone: True with reason ChecksumNotStamped when extraCa is set and no caBundleSha256 is stamped, False when one is, and no condition when extraCa is not set, never reading the Secret and never keeping the plugin from running'
+    role: normative
     status: modeled
     span:
       start: 0
-      end: 357
+      end: 297
 origin:
   kind: agent
   recorded_at: '2026-11-07T10:23:10.246Z'
 id: REQ-operator-ca-bundle-missing-condition
 type: req
 ---
-When a running plugin instance expects an extra CA bundle and its ca-bundle Secret does not exist, the operator must set the Plugin condition CABundleMissing to True with what to do, False when the Secret exists, Unknown when it may not read it, and no condition when none is expected, never holding the Secret data and never keeping the plugin from running.
+The operator must set the Plugin condition CABundleMissing from the spec alone: True with reason ChecksumNotStamped when extraCa is set and no caBundleSha256 is stamped, False when one is, and no condition when extraCa is not set, never reading the Secret and never keeping the plugin from running.
 
 ## Context
 
-Design session refinements of the connector endpoint decision (an https base URL plus an optional extra CA bundle Secret <instance>--ca-bundle added to the system roots), given to the implementation agent by the orchestrator on 2026-11-07, with an update that the expectation of a bundle must be explicit, a boolean extraCA instance setting, never inferred from a base URL that differs from its default, since mirrors and other providers may have public certificates. So the owner sees why TLS to a custom endpoint fails instead of it failing silently. GR-12 keeps Secret contents out of status, logs and events; the bundle stays optional, nothing waits for it.
+Design session refinement of the connector endpoint decision (an https base URL plus an optional extra CA bundle Secret <instance>--ca-bundle added to the system roots, expected only when the instance setting extraCa says so), given to the implementation agent by the orchestrator on 2026-11-07 as option (a): the operator keeps no Secret access at all (D-15, D-29), so the owner CLI writes the bundle Secret and stamps its SHA-256 on the Plugin spec, and the operator reads only the spec. It replaces an earlier build in which the owner install let the operator get that one Secret through a per-instance Role and re-read it every minute. So the owner sees that no bundle was set instead of TLS failing silently; a stamp that does not match the Secret shows up only as the plugin TLS failures, never as Secret reads (GR-12, D-15, D-29).
 
 ## Source
 
-> Raise CABundleMissing only when extraCA is set and <instance>--ca-bundle is absent. Otherwise behaviour is unchanged; still informational, never blocks deployment.
+> Condition CABundleMissing read from the spec alone: True (reason e.g. ChecksumNotStamped) when extraCa is set and no checksum is stamped; False when stamped; absent when extraCa is not set. Never blocks deployment.
 
-design-session:connector-endpoint-ca-refinements
+design-session:connector-endpoint-ca-bundle-cli

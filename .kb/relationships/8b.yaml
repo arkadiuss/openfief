@@ -930,10 +930,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-4043f09149e7
-  - type: verified_by
-    from: SCEN-operator-ca-bundle-rolls-pod
-    to: TEST-plugins-ca-bundle
-    created_at: 2026-11-07T10:23:00.922Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0e394442a235

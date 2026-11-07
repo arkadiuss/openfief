@@ -341,12 +341,15 @@ func dataPathInstances(ca []byte, tokens fixtureTokens) []dataPathInstance {
 	}
 }
 
-// installDataPath creates each data path instance's Secrets, labelled with
-// it as the owner labels them (D-182), installs it with the openfief CLI
-// built from this checkout, `openfief plugin install <image> --name
-// <instance> --config <file> --extra-ca --cluster-service <fixture> --yes`, and waits
-// until each runs. Each is uninstalled with the CLI when t ends, which
-// deletes its Secrets and the Role in the fixture's namespace.
+// installDataPath creates each data path instance's Secrets but its CA
+// bundle, labelled with it as the owner labels them (D-182), installs it
+// with the openfief CLI built from this checkout, `openfief plugin install
+// <image> --name <instance> --config <file> --extra-ca --cluster-service
+// <fixture> --yes`, sets its CA bundle with `openfief plugin ca-bundle set
+// <instance> <pem-file>`, which creates the Secret and stamps its checksum,
+// and waits until each runs with the stamped bundle. Each is uninstalled
+// with the CLI when t ends, which deletes its Secrets and the Role in the
+// fixture's namespace.
 func installDataPath(t *testing.T, k *kube, reg suiteRegistry, instances []dataPathInstance) {
 	t.Helper()
 	for i := range instances {
@@ -357,25 +360,80 @@ func installDataPath(t *testing.T, k *kube, reg suiteRegistry, instances []dataP
 		}
 		t.Cleanup(func() { uninstallWithCLI(t, in.name) })
 		for role, files := range in.secrets {
-			createInstanceSecret(t, k, in.name, role, files)
+			if role != caBundleRole {
+				createInstanceSecret(t, k, in.name, role, files)
+			}
 		}
 		installWithCLI(t, in, img.cluster)
+		if files, ok := in.secrets[caBundleRole]; ok {
+			setCABundleWithCLI(t, in.name, []byte(files[caBundleFile]))
+		}
 	}
 	for i := range instances {
-		p := waitPluginReady(t, k, instances[i].name)
-		if _, ok := instances[i].secrets[caBundleRole]; ok {
-			checkCABundlePresent(t, p)
+		in := &instances[i]
+		p := waitPluginReady(t, k, in.name)
+		if files, ok := in.secrets[caBundleRole]; ok {
+			checkCABundleStamped(t, p)
+			waitCABundleRolled(t, k, in.name, p.Spec.CABundleSHA256, []byte(files[caBundleFile]))
 		}
 	}
 }
 
-// checkCABundlePresent checks that the operator, which the CLI's
-// --extra-ca let get the instance's CA bundle Secret, found it.
-func checkCABundlePresent(t *testing.T, p *v1alpha1.Plugin) {
+// setCABundleWithCLI runs `openfief plugin ca-bundle set <instance>
+// <pem-file>` with bundle, as the owner does with their kubeconfig.
+func setCABundleWithCLI(t *testing.T, instance string, bundle []byte) {
+	t.Helper()
+	file := filepath.Join(t.TempDir(), instance+"-ca.pem")
+	if err := os.WriteFile(file, bundle, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(t.Context(), cliTimeout)
+	defer cancel()
+	cmd := exec.CommandContext(ctx, cliPath)
+	// The arguments are the suite's own: a name and a file it wrote.
+	cmd.Args = append(cmd.Args, "plugin", "ca-bundle", "set", instance, file)
+	out, err := cmd.CombinedOutput()
+	if err != nil || !strings.Contains(string(out), "stamped on Plugin "+instance) {
+		t.Fatalf("openfief plugin ca-bundle set %s: %v\n%s\nwant it stamped", instance, err, out)
+	}
+}
+
+// checkCABundleStamped checks that the operator, which never reads the
+// CA bundle Secret, reports the checksum the CLI stamped.
+func checkCABundleStamped(t *testing.T, p *v1alpha1.Plugin) {
 	t.Helper()
 	c := apimeta.FindStatusCondition(p.Status.Conditions, v1alpha1.ConditionCABundleMissing)
-	if c == nil || c.Status != metav1.ConditionFalse || c.Reason != operator.ReasonCABundleSecretPresent {
-		t.Errorf("plugin %s: condition %s: %+v; want False, reason %s", p.Name, v1alpha1.ConditionCABundleMissing, c, operator.ReasonCABundleSecretPresent)
+	if c == nil || c.Status != metav1.ConditionFalse || c.Reason != operator.ReasonCABundleChecksumStamped {
+		t.Errorf("plugin %s: condition %s: %+v; want False, reason %s", p.Name, v1alpha1.ConditionCABundleMissing, c, operator.ReasonCABundleChecksumStamped)
+	}
+}
+
+// waitCABundleRolled waits until every pod of plugin instance carries the
+// stamped checksum, which must be the SHA-256 of bundle, and is ready: the
+// stamp rolled the pod that may have started before the Secret existed.
+func waitCABundleRolled(t *testing.T, k *kube, instance, sum string, bundle []byte) {
+	t.Helper()
+	if want := plugins.CABundleChecksum(bundle); sum != want {
+		t.Fatalf("plugin %s: spec.caBundleSha256 %q, want the SHA-256 of the bundle, %q", instance, sum, want)
+	}
+	err := waitFor(t.Context(), pluginTimeout, func(ctx context.Context) (string, bool, error) {
+		pods, err := k.clients.CoreV1().Pods(namespace).List(ctx, metav1.ListOptions{LabelSelector: operator.LabelPlugin + "=" + instance})
+		if err != nil {
+			return "", false, fmt.Errorf("%w: listing the pods of plugin %s: %w", errRetry, instance, err)
+		}
+		rolled := len(pods.Items) > 0
+		for i := range pods.Items {
+			pod := &pods.Items[i]
+			ready := false
+			for _, c := range pod.Status.Conditions {
+				ready = ready || (c.Type == corev1.PodReady && c.Status == corev1.ConditionTrue)
+			}
+			rolled = rolled && ready && pod.Annotations[operator.AnnotationCABundleHash] == sum
+		}
+		return fmt.Sprintf("%d pods, rolled %v", len(pods.Items), rolled), rolled, nil
+	})
+	if err != nil {
+		t.Fatalf("waiting for plugin %s to run with its CA bundle: %v", instance, err)
 	}
 }
 

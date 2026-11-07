@@ -545,3 +545,24 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-5f49c41e6982
+  - type: verified_by
+    from: SCEN-plugins-cli-ca-bundle-set
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:32:51.829Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-0d6d504f123a
+  - type: verified_by
+    from: SCEN-plugins-cli-ca-bundle-set
+    to: TEST-plugins-kube-ca-bundle
+    created_at: 2026-11-07T17:32:51.865Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-575b79c93e1f
+  - type: verified_by
+    from: SCEN-plugins-cli-ca-bundle-set
+    to: TEST-plugins-ca-bundle
+    created_at: 2026-11-07T17:32:51.894Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-6db727fe16c9

@@ -34,8 +34,9 @@ func pluginFromSpec(name string, spec *v1alpha1.PluginSpec) (*plugins.Plugin, er
 			IndexReadings:    spec.Manifest.IndexReadings,
 			Institutions:     spec.Manifest.Institutions,
 		},
-		Config:  rawJSON(spec.Config),
-		ExtraCA: spec.ExtraCA,
+		Config:         rawJSON(spec.Config),
+		ExtraCA:        spec.ExtraCA,
+		CABundleSHA256: spec.CABundleSHA256,
 	}
 	if r := spec.Manifest.ClusterService; r != nil {
 		p.Manifest.ClusterService = &plugins.ClusterServiceRequest{Description: r.Description}

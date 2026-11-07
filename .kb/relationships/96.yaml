@@ -666,8 +666,8 @@ relationships:
     id: rel-579de3678170
   - type: executable_for
     from: SYM-plugins-kube-test-helper-ca-plan
-    to: TEST-plugins-kube-ca-bundle-access
-    created_at: 2026-11-07T11:37:57.972Z
+    to: TEST-plugins-kube-ca-bundle
+    created_at: 2026-11-07T17:39:36.581Z
     created_by: kibi/upsert
     source: mcp://kibi/upsert
-    id: rel-f15e5a6c3205
+    id: rel-8fb4c1751136

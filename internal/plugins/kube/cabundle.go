@@ -4,64 +4,104 @@ import (
 	"context"
 	"fmt"
 
-	rbacv1 "k8s.io/api/rbac/v1"
+	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
+	"github.com/arkadiuss/openfief/internal/plugins/app"
+	"github.com/arkadiuss/openfief/internal/plugins/operator/v1alpha1"
 )
 
-// CABundleAccess returns the Role and RoleBinding, in the openfief
-// namespace, that let the operator's ServiceAccount get one instance's CA
-// bundle Secret, <instance>--ca-bundle, and no other Secret: the operator's
-// own Role reads none. The owner's install creates them for an instance
-// that expects an extra CA bundle, so the operator can report the Secret
-// missing and restart the plugin when it changes; the uninstall deletes
-// them.
-func CABundleAccess(instance string) (*rbacv1.Role, *rbacv1.RoleBinding) {
-	meta := metav1.ObjectMeta{
-		Name: plugins.CABundleAccessName(instance), Namespace: plugins.Namespace,
-		Labels: map[string]string{labelPlugin: instance, labelManagedBy: cliName},
+// CABundleSecret is the Secret that holds an instance's extra CA bundle:
+// <instance>--ca-bundle in the openfief namespace, the PEM under
+// plugins.CABundleKey, labelled as the instance's (D-182), so uninstall
+// deletes it.
+func CABundleSecret(instance string, pem []byte) *corev1.Secret {
+	return &corev1.Secret{
+		TypeMeta: metav1.TypeMeta{APIVersion: "v1", Kind: "Secret"},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: plugins.SecretName(instance, plugins.CABundleRole), Namespace: plugins.Namespace,
+			Labels: map[string]string{plugins.OwnerInstanceLabel: instance},
+		},
+		Type: corev1.SecretTypeOpaque,
+		Data: map[string][]byte{plugins.CABundleKey: pem},
 	}
-	role := &rbacv1.Role{
-		TypeMeta:   metav1.TypeMeta{APIVersion: rbacAPIVersion, Kind: kindRole},
-		ObjectMeta: meta,
-		Rules: []rbacv1.PolicyRule{{
-			APIGroups: []string{""}, Resources: []string{"secrets"},
-			ResourceNames: []string{plugins.SecretName(instance, plugins.CABundleRole)}, Verbs: []string{"get"},
-		}},
-	}
-	binding := &rbacv1.RoleBinding{
-		TypeMeta:   metav1.TypeMeta{APIVersion: rbacAPIVersion, Kind: kindRoleBinding},
-		ObjectMeta: *meta.DeepCopy(),
-		RoleRef:    rbacv1.RoleRef{APIGroup: rbacGroup, Kind: kindRole, Name: meta.Name},
-		Subjects:   []rbacv1.Subject{{Kind: "ServiceAccount", Name: OperatorServiceAccount, Namespace: plugins.Namespace}},
-	}
-	return role, binding
 }
 
-// createCABundleAccess creates the Role and RoleBinding of CABundleAccess;
-// ones that already exist are left as they are.
-func (s *Instances) createCABundleAccess(ctx context.Context, instance string) error {
-	role, binding := CABundleAccess(instance)
-	for _, obj := range []client.Object{role, binding} {
-		if err := s.Client.Create(ctx, obj); err != nil && !apierrors.IsAlreadyExists(err) {
-			return fmt.Errorf("create %T %s/%s: %w", obj, obj.GetNamespace(), obj.GetName(), err)
+// CABundleYAML renders, for GitOps, what `openfief plugin ca-bundle set`
+// applies: the CA bundle Secret, then a partial Plugin that stamps its
+// checksum, to merge into the instance's Plugin (for example as a
+// kustomize patch). The owner keeps the two in step.
+func CABundleYAML(instance string, pem []byte, checksum string) ([]byte, error) {
+	stamp := map[string]any{
+		"apiVersion": v1alpha1.GroupVersion().String(),
+		"kind":       "Plugin",
+		"metadata":   map[string]any{"name": instance, "namespace": plugins.Namespace},
+		"spec":       map[string]any{"caBundleSha256": checksum},
+	}
+	var out []byte
+	for _, obj := range []any{CABundleSecret(instance, pem), stamp} {
+		doc, err := cleanYAML(obj)
+		if err != nil {
+			return nil, err
 		}
+		out = append(out, "---\n"...)
+		out = append(out, doc...)
+	}
+	return out, nil
+}
+
+// PutCABundle creates the instance's CA bundle Secret, or replaces the data
+// of the one that exists, which must be labelled as the instance's (D-182):
+// a Secret of that name labelled otherwise, or not at all, is left alone
+// and fails with app.ErrSecretNotOwned. It writes the Secret, never reads
+// back more than it needs to update it, and logs nothing of it.
+func (s *Instances) PutCABundle(ctx context.Context, instance string, pem []byte) error {
+	want := CABundleSecret(instance, pem)
+	var cur corev1.Secret
+	err := s.Client.Get(ctx, client.ObjectKeyFromObject(want), &cur)
+	switch {
+	case apierrors.IsNotFound(err):
+		if createErr := s.Client.Create(ctx, want); createErr != nil {
+			return fmt.Errorf("create Secret %q: %w", want.Name, createErr)
+		}
+		return nil
+	case err != nil:
+		return fmt.Errorf("read Secret %q: %w", want.Name, err)
+	case cur.Labels[plugins.OwnerInstanceLabel] != instance:
+		return fmt.Errorf("%w: %s, label %s=%s to replace it", app.ErrSecretNotOwned, want.Name, plugins.OwnerInstanceLabel, instance)
+	}
+	cur.Data, cur.StringData = want.Data, nil
+	if err := s.Client.Update(ctx, &cur); err != nil {
+		return fmt.Errorf("update Secret %q: %w", want.Name, err)
 	}
 	return nil
 }
 
-// deleteCABundleAccess deletes the Role and RoleBinding of CABundleAccess;
-// ones already gone, or never created, are skipped.
-func (s *Instances) deleteCABundleAccess(ctx context.Context, instance string) []error {
-	role, binding := CABundleAccess(instance)
-	var errs []error
-	for _, obj := range []client.Object{binding, role} {
-		if err := s.Client.Delete(ctx, obj); err != nil && !apierrors.IsNotFound(err) {
-			errs = append(errs, fmt.Errorf("delete %T %s/%s: %w", obj, obj.GetNamespace(), obj.GetName(), err))
-		}
+// DeleteCABundle deletes the instance's CA bundle Secret when it is
+// labelled as the instance's; one already gone is not an error.
+func (s *Instances) DeleteCABundle(ctx context.Context, instance string) error {
+	return s.deleteOwnedSecret(ctx, instance, plugins.SecretName(instance, plugins.CABundleRole))
+}
+
+// StampCABundle sets spec.caBundleSha256 on the instance's Plugin, or
+// clears it for an empty checksum, with a merge patch that touches nothing
+// else. A missing Plugin fails with app.ErrNotInstalled.
+func (s *Instances) StampCABundle(ctx context.Context, instance, checksum string) error {
+	var p v1alpha1.Plugin
+	err := s.Client.Get(ctx, client.ObjectKey{Namespace: plugins.Namespace, Name: instance}, &p)
+	switch {
+	case apierrors.IsNotFound(err):
+		return fmt.Errorf("%w: %q", app.ErrNotInstalled, instance)
+	case err != nil:
+		return fmt.Errorf("read plugin %q: %w", instance, err)
 	}
-	return errs
+	base := p.DeepCopy()
+	p.Spec.CABundleSHA256 = checksum
+	if err := s.Client.Patch(ctx, &p, client.MergeFrom(base)); err != nil {
+		return fmt.Errorf("stamp plugin %q: %w", instance, err)
+	}
+	return nil
 }

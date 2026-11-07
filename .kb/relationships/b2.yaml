@@ -790,3 +790,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-379dc0db9100
+  - type: implements
+    from: SYM-plugins-kube-instances-delete-ca-bundle
+    to: REQ-plugins-cli-ca-bundle-unset
+    created_at: 2026-11-07T17:37:37.049Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-85a99d654947
+  - type: covered_by
+    from: SYM-plugins-kube-instances-delete-ca-bundle
+    to: TEST-plugins-kube-ca-bundle
+    created_at: 2026-11-07T17:37:37.096Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-4510d27d4cd8

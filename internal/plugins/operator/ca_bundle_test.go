@@ -2,20 +2,16 @@ package operator_test
 
 import (
 	"context"
-	"errors"
 	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/arkadiuss/openfief/internal/plugins"
 	"github.com/arkadiuss/openfief/internal/plugins/operator"
@@ -53,45 +49,27 @@ func TestStampCABundle(t *testing.T) {
 	}
 }
 
-// forbiddenSecrets is a client.Reader that may read no Secret, as the
-// operator without the owner's Role for a CA bundle.
-type forbiddenSecrets struct{}
-
-func (forbiddenSecrets) Get(_ context.Context, key client.ObjectKey, _ client.Object, _ ...client.GetOption) error {
-	return forbidden(key.Name)
-}
-
-func (forbiddenSecrets) List(context.Context, client.ObjectList, ...client.ListOption) error {
-	return forbidden("")
-}
-
-// forbidden is the API server's refusal to read Secret name.
-func forbidden(name string) *apierrors.StatusError {
-	return apierrors.NewForbidden(schema.GroupResource{Resource: "secrets"}, name, errNoRole)
-}
-
-// errNoRole is why forbiddenSecrets refuses.
-var errNoRole = errors.New("no Role grants it")
-
 // caBundleState is what testCABundle checks after a reconcile: the
 // CABundleMissing condition as "Status/Reason", "" when absent, the
 // checksum on the pod template, whether the pod mounts the CA bundle
-// Secret, and the Ready condition as "Status/Reason": Progressing, the
-// Deployment applied and waiting for no bundle.
+// Secret, the Ready condition as "Status/Reason": Progressing, the
+// Deployment applied and waiting for no bundle, and whether the reconcile
+// asked to run again.
 type caBundleState struct {
 	Condition string
 	Checksum  string
 	Mounted   bool
 	Ready     string
+	Requeue   bool
 }
 
 // testCABundle checks that an instance expecting an extra CA bundle
-// (spec.extraCa) runs while its Secret is missing and says so in the
-// CABundleMissing condition, never with the Secret's data; that creating,
-// changing and deleting the Secret changes the checksum on the pod
-// template, which rolls the pod, and that it is read again every minute;
-// that a Secret the operator may not read is reported as unknown; and that
-// an instance expecting none neither mounts the Secret nor reports it.
+// (spec.extraCa) runs with no checksum stamped and says so in the
+// CABundleMissing condition; that a stamped checksum turns it False and is
+// copied to the pod template, so a new stamp rolls the pod; that the
+// operator reads no Secret for it, so a Secret appearing changes nothing
+// and nothing is read again on a timer; and that an instance expecting
+// none neither mounts the Secret nor reports it.
 func testCABundle(t *testing.T, tc *testCluster, r *operator.PluginReconciler) {
 	t.Helper()
 	ctx := t.Context()
@@ -106,61 +84,50 @@ func testCABundle(t *testing.T, tc *testCluster, r *operator.PluginReconciler) {
 	create(ctx, t, tc.client, g)
 	check := func(step string, want caBundleState) {
 		t.Helper()
-		tc.reconcile(ctx, t, r, name)
-		if diff := cmp.Diff(want, tc.caBundleState(ctx, t, name)); diff != "" {
+		req := ctrl.Request{NamespacedName: types.NamespacedName{Namespace: "openfief", Name: name}}
+		res, err := r.Reconcile(ctx, req)
+		if err != nil {
+			t.Fatalf("%s: Reconcile: %v", step, err)
+		}
+		got := tc.caBundleState(ctx, t, name)
+		got.Requeue = res.RequeueAfter > 0
+		if diff := cmp.Diff(want, got); diff != "" {
 			t.Errorf("%s (-want +got):\n%s", step, diff)
 		}
 	}
-	check("missing", caBundleState{Condition: "True/SecretMissing", Mounted: true, Ready: "False/Progressing"})
-	// The operator may only get the Secret, never watch it: it reads it
-	// again every minute.
-	req := ctrl.Request{NamespacedName: types.NamespacedName{Namespace: "openfief", Name: name}}
-	if res, err := r.Reconcile(ctx, req); err != nil || res.RequeueAfter <= 0 {
-		t.Errorf("Reconcile = %+v, %v; want a requeue while a bundle is expected", res, err)
-	}
+	check("nothing stamped", caBundleState{Condition: "True/ChecksumNotStamped", Mounted: true, Ready: "False/Progressing"})
 
-	data := map[string][]byte{"ca.crt": []byte("-----BEGIN CERTIFICATE-----\nAA==\n-----END CERTIFICATE-----\n")}
+	// A Secret the owner created without the CLI changes nothing: the
+	// operator never reads it.
 	s := &corev1.Secret{ObjectMeta: metav1.ObjectMeta{
 		Name: name + "--ca-bundle", Namespace: "openfief", Labels: map[string]string{plugins.OwnerInstanceLabel: name},
-	}, Data: data}
+	}, Data: map[string][]byte{plugins.CABundleKey: []byte("synthetic")}}
 	create(ctx, t, tc.client, s)
-	check("created", caBundleState{
-		Condition: "False/SecretPresent", Checksum: plugins.SecretDataChecksum(data), Mounted: true, Ready: "False/Progressing",
-	})
+	check("a Secret, nothing stamped", caBundleState{Condition: "True/ChecksumNotStamped", Mounted: true, Ready: "False/Progressing"})
 
-	changed := map[string][]byte{"ca.crt": []byte("-----BEGIN CERTIFICATE-----\nBB==\n-----END CERTIFICATE-----\n")}
-	s.Data = changed
-	if err := tc.client.Update(ctx, s); err != nil {
-		t.Fatalf("update secret: %v", err)
-	}
-	check("changed", caBundleState{
-		Condition: "False/SecretPresent", Checksum: plugins.SecretDataChecksum(changed), Mounted: true, Ready: "False/Progressing",
-	})
+	first, second := plugins.CABundleChecksum([]byte("first")), plugins.CABundleChecksum([]byte("second"))
+	stamp(ctx, t, tc, func(spec *v1alpha1.PluginSpec) { spec.CABundleSHA256 = first })
+	check("stamped", caBundleState{Condition: "False/ChecksumStamped", Checksum: first, Mounted: true, Ready: "False/Progressing"})
+	stamp(ctx, t, tc, func(spec *v1alpha1.PluginSpec) { spec.CABundleSHA256 = second })
+	check("rotated", caBundleState{Condition: "False/ChecksumStamped", Checksum: second, Mounted: true, Ready: "False/Progressing"})
+	stamp(ctx, t, tc, func(spec *v1alpha1.PluginSpec) { spec.CABundleSHA256 = "" })
+	check("unset", caBundleState{Condition: "True/ChecksumNotStamped", Mounted: true, Ready: "False/Progressing"})
 
-	if err := tc.client.Delete(ctx, s); err != nil {
-		t.Fatalf("delete secret: %v", err)
-	}
-	check("deleted", caBundleState{Condition: "True/SecretMissing", Mounted: true, Ready: "False/Progressing"})
+	stamp(ctx, t, tc, func(spec *v1alpha1.PluginSpec) { spec.ExtraCA, spec.CABundleSHA256 = false, first })
+	check("not expected", caBundleState{Ready: "False/Progressing"})
+}
 
-	// Without the owner's Role for the Secret, the operator can't tell, and
-	// says how to let it; the plugin still runs.
-	unread := *r
-	unread.SecretReader = forbiddenSecrets{}
-	tc.reconcile(ctx, t, &unread, name)
-	want := caBundleState{Condition: "Unknown/SecretUnreadable", Mounted: true, Ready: "False/Progressing"}
-	if got := tc.caBundleState(ctx, t, name); got != want {
-		t.Errorf("unreadable: %+v, want %+v", got, want)
-	}
-
+// stamp changes the spec of testCABundle's Plugin with change.
+func stamp(ctx context.Context, t *testing.T, tc *testCluster, change func(*v1alpha1.PluginSpec)) {
+	t.Helper()
 	var cur v1alpha1.Plugin
-	if err := tc.client.Get(ctx, types.NamespacedName{Namespace: "openfief", Name: name}, &cur); err != nil {
+	if err := tc.client.Get(ctx, types.NamespacedName{Namespace: "openfief", Name: "cabundle"}, &cur); err != nil {
 		t.Fatalf("get plugin: %v", err)
 	}
-	cur.Spec.ExtraCA = false
+	change(&cur.Spec)
 	if err := tc.client.Update(ctx, &cur); err != nil {
 		t.Fatalf("update plugin: %v", err)
 	}
-	check("not expected", caBundleState{Ready: "False/Progressing"})
 }
 
 // caBundleState reads what testCABundle checks of Plugin name, and fails t
@@ -174,7 +141,7 @@ func (tc *testCluster) caBundleState(ctx context.Context, t *testing.T, name str
 	var s caBundleState
 	if c := meta.FindStatusCondition(p.Status.Conditions, v1alpha1.ConditionCABundleMissing); c != nil {
 		s.Condition = string(c.Status) + "/" + c.Reason
-		if strings.Contains(c.Message, "BEGIN CERTIFICATE") {
+		if strings.Contains(c.Message, "synthetic") {
 			t.Errorf("the condition shows the Secret's data: %s", c.Message)
 		}
 	}

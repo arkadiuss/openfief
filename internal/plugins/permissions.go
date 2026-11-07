@@ -102,6 +102,11 @@ type Plugin struct {
 	// an instance setting, not config, so no plugin's config schema repeats
 	// it.
 	ExtraCA bool
+	// CABundleSHA256 is the hex SHA-256 of the CA bundle the owner set
+	// (`openfief plugin ca-bundle set`), which the operator copies to the
+	// pod template so a new bundle restarts the plugin; empty when none is
+	// stamped. The operator never reads the Secret itself.
+	CABundleSHA256 string
 }
 
 // Requested returns the permissions p asks for, sorted: its manifest's

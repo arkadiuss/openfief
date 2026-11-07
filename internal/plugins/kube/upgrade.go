@@ -34,8 +34,7 @@ func (s *Instances) Get(ctx context.Context, name string) (plugins.Plugin, plugi
 // Update replaces an installed instance's Plugin spec, then its grant's,
 // for an upgrade the owner confirmed (D-90). With a new in-cluster service
 // it first lets the operator read it, and afterwards takes back the access
-// to a service the instance no longer names (D-74); likewise the operator's
-// access to the instance's CA bundle Secret follows whether it expects one.
+// to a service the instance no longer names (D-74).
 func (s *Instances) Update(ctx context.Context, p *plugins.Plugin, g *plugins.Grant) error {
 	var plugin v1alpha1.Plugin
 	var grant v1alpha1.PluginGrant
@@ -46,8 +45,10 @@ func (s *Instances) Update(ctx context.Context, p *plugins.Plugin, g *plugins.Gr
 	if err != nil {
 		return err
 	}
-	if err := s.createAccess(ctx, p); err != nil {
-		return err
+	if p.ClusterService != nil {
+		if err := s.createServiceAccess(ctx, p.Name, *p.ClusterService); err != nil {
+			return err
+		}
 	}
 	wantPlugin, wantGrant := Resources(p, g)
 	plugin.Spec, grant.Spec = wantPlugin.Spec, wantGrant.Spec
@@ -57,27 +58,8 @@ func (s *Instances) Update(ctx context.Context, p *plugins.Plugin, g *plugins.Gr
 	if err := s.Client.Update(ctx, &grant); err != nil {
 		return fmt.Errorf("update plugin grant %q: %w", p.Name, err)
 	}
-	var errs []error
 	if hadAccess && (p.ClusterService == nil || *p.ClusterService != old) {
-		errs = append(errs, s.deleteServiceAccess(ctx, p.Name, old)...)
-	}
-	if !p.ExtraCA {
-		errs = append(errs, s.deleteCABundleAccess(ctx, p.Name)...)
-	}
-	return errors.Join(errs...)
-}
-
-// createAccess lets the operator read what p needs read outside its own
-// Role: its in-cluster service (D-74) and, expecting an extra CA bundle,
-// that Secret.
-func (s *Instances) createAccess(ctx context.Context, p *plugins.Plugin) error {
-	if p.ClusterService != nil {
-		if err := s.createServiceAccess(ctx, p.Name, *p.ClusterService); err != nil {
-			return err
-		}
-	}
-	if p.ExtraCA {
-		return s.createCABundleAccess(ctx, p.Name)
+		return errors.Join(s.deleteServiceAccess(ctx, p.Name, old)...)
 	}
 	return nil
 }
@@ -116,8 +98,9 @@ func pluginOf(r *v1alpha1.Plugin) (plugins.Plugin, error) {
 			IndexReadings:    m.IndexReadings,
 			Institutions:     m.Institutions,
 		},
-		Config:  rawOf(r.Spec.Config),
-		ExtraCA: r.Spec.ExtraCA,
+		Config:         rawOf(r.Spec.Config),
+		ExtraCA:        r.Spec.ExtraCA,
+		CABundleSHA256: r.Spec.CABundleSHA256,
 	}
 	for _, c := range m.Capabilities {
 		p.Manifest.Capabilities = append(p.Manifest.Capabilities, plugins.Capability(c))

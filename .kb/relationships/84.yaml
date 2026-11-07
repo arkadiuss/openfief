@@ -916,24 +916,3 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-28791db8e196
-  - type: implements
-    from: SYM-operator-plugin-reconciler-ca-bundle
-    to: REQ-operator-ca-bundle-rolls-pod
-    created_at: 2026-11-07T11:36:50.807Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-52eb8d530bd4
-  - type: implements
-    from: SYM-operator-plugin-reconciler-ca-bundle
-    to: REQ-operator-ca-bundle-missing-condition
-    created_at: 2026-11-07T11:36:50.843Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-ca20d313a207
-  - type: covered_by
-    from: SYM-operator-plugin-reconciler-ca-bundle
-    to: TEST-operator-ca-bundle
-    created_at: 2026-11-07T11:36:50.867Z
-    created_by: kibi/upsert
-    source: mcp://kibi/upsert
-    id: rel-0c245521aa0f

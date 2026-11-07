@@ -769,3 +769,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-9c56b2619eff
+  - type: executable_for
+    from: SYM-plugins-cli-test-helper-ca-files
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:40:04.381Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-c3a77a37fcb0

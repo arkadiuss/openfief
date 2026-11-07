@@ -839,3 +839,17 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-34b9e6aa50cf
+  - type: implements
+    from: SYM-plugins-app-plan-upgrade
+    to: REQ-plugins-extra-ca-setting
+    created_at: 2026-11-07T17:37:16.577Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-15c5fc4898cc
+  - type: covered_by
+    from: SYM-plugins-app-plan-upgrade
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:37:16.607Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-168b1cf53102

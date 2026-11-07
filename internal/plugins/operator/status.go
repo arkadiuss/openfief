@@ -31,12 +31,11 @@ const (
 	ReasonInvalidImage         = "InvalidImage"
 	ReasonBrowserPathHeld      = "BrowserPathHeld"
 	ReasonSecretHeld           = "SecretHeld"
-	// ReasonCABundleSecretMissing, ReasonCABundleSecretPresent and
-	// ReasonCABundleSecretUnreadable are the reasons of the CABundleMissing
-	// condition.
-	ReasonCABundleSecretMissing    = "SecretMissing"
-	ReasonCABundleSecretPresent    = "SecretPresent"
-	ReasonCABundleSecretUnreadable = "SecretUnreadable"
+	// ReasonCABundleChecksumNotStamped and ReasonCABundleChecksumStamped
+	// are the reasons of the CABundleMissing condition, which the operator
+	// reads from the Plugin's spec alone.
+	ReasonCABundleChecksumNotStamped = "ChecksumNotStamped"
+	ReasonCABundleChecksumStamped    = "ChecksumStamped"
 )
 
 // maxMessageLen keeps condition messages short; the full error is logged by
@@ -60,10 +59,10 @@ type observation struct {
 	// image when it was refused; nil otherwise.
 	previousSignature *Verification
 	rollout           plugins.Rollout
-	// caBundle is what the running version's extra CA bundle Secret,
-	// caBundleSecret, looks like; empty when it mounts none.
-	caBundle       plugins.CABundleState
-	caBundleSecret string
+	// instance is the Plugin's name, and caBundle what its spec says of
+	// its extra CA bundle.
+	instance string
+	caBundle plugins.CABundleState
 	// runSpec is the version that runs, nil when nothing does.
 	runSpec         *v1alpha1.PluginSpec
 	deploymentReady bool
@@ -130,25 +129,26 @@ type condition struct {
 	message string
 }
 
-// caBundleCondition is the CABundleMissing condition, which says what to do
-// about a missing CA bundle; false when the running version expects none.
+// caBundleCondition is the CABundleMissing condition, read from the
+// Plugin's spec alone: the operator never reads the Secret, so it says
+// whether a bundle's checksum is stamped and how to set one; false when the
+// Plugin expects no bundle.
 func caBundleCondition(o *observation) (condition, bool) {
+	instance := o.instance
+	secret := plugins.SecretName(instance, plugins.CABundleRole)
 	switch o.caBundle {
-	case plugins.CABundleMissing:
-		return condition{metav1.ConditionTrue, ReasonCABundleSecretMissing, fmt.Sprintf(
-			"spec.extraCa expects Secret %s, which doesn't exist, so the plugin trusts only the system's roots and TLS to an endpoint a private CA signs fails: "+
-				"create it in namespace %s with the CA certificates in PEM under the key ca.crt, labelled %s=%s; the pod restarts with it",
-			o.caBundleSecret, plugins.Namespace, plugins.OwnerInstanceLabel, o.rollout.Run.Plugin(),
+	case plugins.CABundleNotStamped:
+		return condition{metav1.ConditionTrue, ReasonCABundleChecksumNotStamped, fmt.Sprintf(
+			"spec.extraCa expects a CA bundle in Secret %s, but no spec.caBundleSha256 is stamped, so none was set and the plugin likely trusts only the system's roots: "+
+				"run `openfief plugin ca-bundle set %s <pem-file>`, which creates the Secret and stamps its checksum, or apply what its --print writes",
+			secret, instance,
 		)}, true
-	case plugins.CABundlePresent:
-		return condition{metav1.ConditionFalse, ReasonCABundleSecretPresent, "Secret " + o.caBundleSecret + " exists and is mounted"}, true
-	case plugins.CABundleUnreadable:
-		access := plugins.CABundleAccessName(o.rollout.Run.Plugin())
-		return condition{metav1.ConditionUnknown, ReasonCABundleSecretUnreadable, fmt.Sprintf(
-			"the operator may not read Secret %s, so it can't tell whether it exists nor restart the plugin when it changes: "+
-				"apply the Role and RoleBinding %s in namespace %s that let it get that one Secret, which `openfief plugin install --extra-ca` creates and --print shows",
-			o.caBundleSecret, access, plugins.Namespace,
-		)}, true
+	case plugins.CABundleStamped:
+		return condition{
+			metav1.ConditionFalse, ReasonCABundleChecksumStamped,
+			"spec.caBundleSha256 is stamped and restarts the plugin when it changes; the operator doesn't read Secret " + secret +
+				", so a bundle that doesn't match shows only as the plugin's TLS failures",
+		}, true
 	case plugins.CABundleNotExpected:
 	}
 	return condition{}, false

@@ -106,9 +106,8 @@ func scopeNamespaces() []string {
 // deploy/operator grants: in the openfief namespace exactly the Role's
 // verbs on the Role's resources, and nothing at all on any other resource,
 // in any other namespace or on any cluster-scoped resource. So it can't
-// list or read Secrets, but for the CA bundle Secret an owner's --extra-ca
-// install lets it get by name, nor create or change anything outside
-// openfief (D-15; SCEN-e2e-operator-namespace-scoped).
+// read a Secret anywhere or create or change anything outside openfief
+// (D-15; SCEN-e2e-operator-namespace-scoped).
 func TestBundleOperatorScope(t *testing.T) {
 	holdsCore(t)
 	t.Parallel()

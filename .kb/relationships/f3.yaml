@@ -720,3 +720,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-ff37e38d9788
+  - type: executable_for
+    from: SYM-plugins-cli-test-fake-cluster-put-ca-bundle
+    to: TEST-plugins-cli-run
+    created_at: 2026-11-07T17:40:31.932Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-be2751fabdfd

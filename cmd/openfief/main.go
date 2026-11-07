@@ -164,6 +164,7 @@ func newEnv() (*cli.Env, error) {
 		ValidateConfig: operator.ValidateConfig,
 		Render:         kube.ResourcesYAML,
 		IngressRule:    kube.IngressRuleYAML,
+		RenderCABundle: kube.CABundleYAML,
 	}, nil
 }
 

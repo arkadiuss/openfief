@@ -335,10 +335,10 @@ func caBundleText(p *plugins.Plugin, role string) string {
 	case role != plugins.CABundleRole:
 		return ""
 	case p.ExtraCA:
-		return "\n                  expected (--extra-ca): the operator may get this one Secret, says so in the Plugin's" +
-			"\n                  CABundleMissing condition while it doesn't exist, and restarts the plugin when it changes"
+		return "\n                  expected (--extra-ca): set it with `openfief plugin ca-bundle set " + shown(p.Name) + " <pem-file>`," +
+			"\n                  which also stamps its checksum, so the plugin restarts when it changes"
 	default:
-		return "\n                  not mounted: install with --extra-ca to trust extra CAs from it"
+		return "\n                  not mounted: install or upgrade with --extra-ca to trust extra CAs from it"
 	}
 }
 

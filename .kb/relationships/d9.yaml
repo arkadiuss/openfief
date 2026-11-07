@@ -832,3 +832,10 @@ relationships:
     created_by: kibi/upsert
     source: mcp://kibi/upsert
     id: rel-e3003755f6d2
+  - type: executable_for
+    from: SYM-plugins-cli-test-helper-check-ca-bundle-set
+    to: TEST-plugins-cli-extra-ca
+    created_at: 2026-11-07T17:40:15.324Z
+    created_by: kibi/upsert
+    source: mcp://kibi/upsert
+    id: rel-f46b73cd8ba6

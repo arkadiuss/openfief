@@ -328,7 +328,7 @@ func TestReconcile(t *testing.T) {
 		t.Parallel()
 		testSharedSecret(t, tc, signed)
 	})
-	t.Run("an expected CA bundle is reported and rolls the pod", func(t *testing.T) {
+	t.Run("an expected CA bundle is reported from the spec and its stamp rolls the pod", func(t *testing.T) {
 		t.Parallel()
 		testCABundle(t, tc, signed)
 	})
