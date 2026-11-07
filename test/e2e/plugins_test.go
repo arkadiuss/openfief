@@ -259,7 +259,8 @@ func checkSignature(t *testing.T, p *v1alpha1.Plugin) {
 	effective := &v1alpha1.Permissions{
 		Capabilities: []string{"connector"},
 		Egress:       []string{fxEgress + ":443"},
-		Institutions: &[]string{"nbp"}, // D-185: the manifest declares nbp and the grant approves it
+		Secrets:      []string{plugins.SecretName(fxPlugin, fxCABundleRole)}, // the optional CA bundle role the manifest requests
+		Institutions: &[]string{"nbp"},                                       // D-185: the manifest declares nbp and the grant approves it
 	}
 	if diff := cmp.Diff(effective, p.Status.Effective); diff != "" {
 		t.Errorf("status.effective (-want +got):\n%s", diff)
